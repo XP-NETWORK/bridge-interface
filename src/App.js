@@ -4,7 +4,14 @@ import "./Global.css";
 import "./Responsive.css";
 import XpBridge from "./pages/XpBridge";
 import Aleart from "./components/Aleart";
-import NFTaccount from "./pages/NFTaccount";
+import NFTaccount from "./components/NFTaccount";
+import NFTsuccess from "./components/NFTsuccess";
+import NFTworng from "./components/NFTworng";
+import NFTaccountList from "./components/NFTaccountList";
+import NFTOnaccount from "./components/NFTOnaccount";
+
+import Transactionhistory from './components/Transactionhistory';
+import NFTNoaccounts from "./components/NFTnoaccounts";
 
 function App() {
 return (
@@ -12,7 +19,13 @@ return (
       <Router>
         <XpBridge/>
         <NFTaccount/>
-        <Aleart/>
+        <NFTaccountList />
+        <NFTOnaccount />
+        <NFTNoaccounts/>
+        <Transactionhistory />
+        <NFTsuccess />
+        <NFTworng />
+        <Aleart />
       </Router>
     </div>
   );

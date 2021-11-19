@@ -46,10 +46,13 @@ a, a:hover {
 }
 
 img {
-  display: block;
   max-width: 100%;
 }
 
+h3 {
+    font-size: 18px;
+    margin: 0;
+}
 
 .bridgeBody:after {
     content: "";
@@ -577,7 +580,6 @@ span.wallet {
 .SearchDrop.dropdown .btn {
     background: transparent;
     border: 0;
-    outline: none;
     padding: 0;
     display: flex;
     align-items: center;
@@ -585,6 +587,58 @@ span.wallet {
     width: 40px;
     height: 40px;
     margin-right: 8px;
+    outline: none;
+    box-shadow: none !important;
+}
+
+.SearchDrop.dropdown .dropdown-menu {
+    right: 0 !important;
+    left: auto !important;
+    width: 185px;
+    background: rgba(98, 113, 138, 0.1);
+    border-radius: 10px;
+    transform: unset !important;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.SearchDrop.dropdown .dropdown-menu form {
+    display: contents;
+}
+
+.SearchDrop.dropdown input {
+    max-width: 100%;
+    border: 0;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    line-height: 140%;
+    color: #62718A;
+    padding-left: 16px;
+    padding-right: 40px;
+    color: rgb(255 255 255 / 80%);
+}
+
+.SearchDrop.dropdown input::placeholder {
+    color: rgb(98 113 138 / 50%);
+}
+
+.SearchDrop.dropdown form button {
+    border: 0;
+    outline: none;
+    position: absolute;
+    right: 7px;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    padding: 0;
+    background: transparent;
+}
+
+.SearchDrop.dropdown .btn:active{
+    background: unset;
 }
 
 .SearchDrop.dropdown .dropdown-toggle::after {
@@ -620,9 +674,31 @@ span.wallet {
 }
 
 .singleNft {
-    margin-bottom: 26px;
     border-radius: 8%;
     overflow: hidden;
+    height: 100%;
+}
+
+.singleNft.missing {
+    background: linear-gradient(335deg, rgba(41, 47, 63, 0.3) -0.71%, rgba(41, 47, 63, 0) 61.32%);
+    border: 1px dashed #36405A;
+    padding-bottom: 138%;
+}
+
+.nftListBox> .row> div {
+    margin-bottom: 24px;
+}
+
+.reloadNfts {
+    background: rgba(98, 113, 138, 0.1);
+    box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
+    border-radius: 8px;
+    padding: 6px;
+    cursor: pointer;
+}
+
+.reloadNfts img:last-child {
+    margin: 0 0 0 8px !important;
 }
 
 .nftImageBox {
@@ -640,6 +716,9 @@ span.wallet {
     height: 18px;
     background: #fff;
     border-radius: 3px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
 }
 
 .nftCont {
@@ -653,6 +732,22 @@ span.wallet {
     font-size: 14px;
     line-height: 20px;
     margin-top: 8px;
+}
+
+span.nftName {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+span.NFTInf {
+    margin: 0 !important;
+    cursor: pointer;
+    transition: .1s ease all;
+}
+
+span.NFTInf:hover img {
+    filter: brightness(100);
 }
 
 .selectNft img {
@@ -669,9 +764,23 @@ span.wallet {
     background: #232833;
     border-radius: 20px;
     padding: 16px 24px;
+    height: 100%;
+    position: relative;
+    z-index: 1;
 }
 
-.nftListBox {max-height: 760px;overflow: hidden auto;margin-right: -24px;padding-right: 24px;margin-top: 26px;}
+.nftListBox {
+    max-height: 680px;
+    overflow: hidden auto;
+    margin-right: -24px;
+    padding-right: 24px;
+    margin-top: 26px;
+    padding-left: 1px;
+}
+
+.singleNft.nftSelect {
+    outline: 1px solid #3E64ED;
+}
 
 .nftImageBox:after {
     content: "";
@@ -695,4 +804,709 @@ span.wallet {
 .ListView {
     display: block;
     cursor: pointer;
+}
+
+.NFTaccount {
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+
+.sendNftTit {
+    text-align: center;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 58px;
+    margin-bottom: 2px;
+}
+
+.sendNftBox {
+    background: linear-gradient(316.2deg, #232833 -4.13%, rgba(35, 40, 51, 0) 136.63%);
+    box-shadow: 0px 4px 14px rgba(47, 61, 84, 0.05);
+    border-radius: 20px;
+    padding: 0px 16px 38px;
+    height: 100%;
+    min-height: 778px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sendNftBox> form {
+    display: contents;
+}
+
+.nftSendBtn {
+    margin-top: auto;
+}
+
+.destiAddress {
+    background: linear-gradient(309.48deg, #232833 -3.65%, rgba(35, 40, 51, 0) 122.77%);
+    border-radius: 20px;
+    padding: 12px 15px 16px;
+    margin-bottom: 12px;
+}
+
+.desChain {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    margin-bottom: 12px;
+}
+
+.desChain span {
+    margin-left: 10px;
+    color: #ffff;
+}
+
+.destiReload {
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    background: rgba(98, 113, 138, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.destiReload img:last-child {
+    margin: 0 0 0 7px !important;
+}
+
+.destiAddress input {
+    background: #242936;
+    border-radius: 10px;
+    height: 42px;
+    padding: 10px 12px;
+    display: block;
+    width: 100%;
+    border: 1px solid #4235A3;
+    color: #fff;
+    outline: none;
+}
+
+.desChain span img {
+    margin-right: 8px;
+}
+
+.nftSelectList {
+    background: linear-gradient(309.48deg, #232833 -3.65%, rgba(35, 40, 51, 0) 122.77%);
+    border-radius: 20px;
+}
+
+.destiAddress input::placeholder {
+    color: #62718A;
+}
+
+.destiAddress input:focus {
+    border: 1px solid #fff;
+}
+
+.selectedNft {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    padding: 16px 16px 12px;
+}
+
+.clearNft {
+    margin-left: auto;
+    border: 0;
+    outline: none;
+    background: transparent;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 160%;
+    color: #3E64ED;
+    padding: 0;
+}
+
+.selectedNft span {
+    color: #fff;
+    margin-left: 3px;
+}
+
+ul.nftSelected {
+    list-style: none;
+    max-height: 220px;
+    overflow: auto;
+}
+
+.nftSelecItem {
+    display: flex;
+    align-items: center;
+    padding: 6px 16px;
+    color: #fff;
+}
+
+li.nftSelecItem> img {
+    display: block;
+    height: 32px;
+    margin-right: 13px;
+}
+
+li.nftSelecItem .Close {
+    margin-left: auto;
+}
+
+.nftSelecItem:hover {
+    background: rgba(73, 82, 108, 0.1);
+}
+
+li.nftSelecItem .Close:hover img {
+    filter: brightness(100);
+}
+
+li.nftSelecItem .Close:hover {
+    cursor: pointer;
+}
+
+.approValBox {
+    margin-top: 12px;
+    background: linear-gradient(309.48deg, #232833 -3.65%, rgba(35, 40, 51, 0) 122.77%);
+    border-radius: 20px;
+    margin-top: 12px;
+    padding: 16px 16px 24px 16px;
+}
+
+.appInf {
+    position: relative;
+    z-index: 1;
+}
+
+.infText {
+    display: block;
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    width: 211px;
+    left: 50%;
+    bottom: 100%;
+    transform: translate(-50%);
+    border: #2D3342 1px solid;
+    border-radius: 6px;
+    background: #262A36;
+    font-size: 12px;
+    line-height: 140%;
+    padding: 12px 12px 20px;
+    margin-bottom: 10px;
+    color: #fff;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.approvTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+    height: 28px;
+    margin-bottom: 12px;
+    color: #62718A;
+}
+
+.infText:after {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 100%;
+    display: block;
+    content: "";
+    width: 15px;
+    height: 15px;
+    content: "";
+    border: #2D3342 1px solid;
+    background: #262A36;
+    border-left: 0;
+    border-top: 0;
+    transform: translate(-50%) rotate(45deg);
+    margin-top: -6px;
+}
+
+.appInf:hover .infText {
+    opacity: 1;
+    visibility: visible;
+}
+
+.approveBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+}
+
+.approveBtn input {
+    display: none;
+}
+
+.approveBtn label {
+    margin: 0;
+    width: 56px;
+    height: 31px;
+    background: #49526C;
+    border-radius: 56px;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    transition: .3s ease all;
+}
+
+.checkCircle {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 40px;
+    top: 50%;
+    left: 4px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .3s ease all;
+}
+
+.approveBtn input:checked + label {
+    background: #08D70D;
+}
+
+.approveBtn input:checked + label .checkCircle {
+    left: 27px;
+}
+
+.checkCircle:after {
+    content: "";
+    background-image: url(./assets/img/icons/CheckGray.svg);
+    width: 15px;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: .3s ease all;
+}
+
+.approveBtn input:checked + label .checkCircle:after {
+    background-image: url(./assets/img/icons/CheckGreen.svg);
+}
+
+.nftFees {
+    margin: 12px 0;
+    background: linear-gradient(309.48deg, #232833 -3.65%, rgba(35, 40, 51, 0) 122.77%);
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    color: #62718A;
+    height: 62px;
+    padding: 16px;
+}
+
+.NftDetails .modal-dialog {
+    max-width: 630px;
+}
+
+.nftDetailBox {display: flex;padding-top: 10px;flex-wrap: wrap;padding-bottom: 10px;}
+
+.nftDetImg {
+    flex-shrink: 0;
+    width: 50%;
+    padding: 0 15px 0 30px;
+}
+
+.nftDetIg {
+    width: 50%;
+    padding: 0 30px 0 15px;
+    max-height: 297px;
+    overflow: auto;
+}
+
+.nftInfBox {
+    background: #272C39;
+    border: 1px solid #2D3342;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 9px;
+}
+
+.nftInfBox label {
+    color: #62718A;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    margin: 0 0 6px 0;
+}
+
+.nftInfBox p {
+    font-size: 14px;
+    line-height: 140%;
+    color: #fff;
+    margin: 0;
+}
+
+.nftInfBox:last-child {
+    margin-bottom: 0;
+}
+
+.nftInfDesc.nftInfBox {
+    padding-right: 5px;
+}
+
+.nftDetailBox {display: flex;padding-top: 10px;flex-wrap: wrap;padding-bottom: 10px;}
+
+.nftDetImg {
+    flex-shrink: 0;
+    width: 50%;
+    padding: 0 15px 0 30px;
+}
+
+.nftDetIg {
+    width: 50%;
+    padding: 0 30px 0 15px;
+    max-height: 297px;
+    overflow: auto;
+}
+
+.nftInfBox {
+    background: #272C39;
+    border: 1px solid #2D3342;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 9px;
+}
+
+.nftInfBox label {
+    color: #62718A;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    margin: 0 0 6px 0;
+}
+
+.nftInfBox p {
+    font-size: 14px;
+    line-height: 140%;
+    color: #fff;
+    margin: 0;
+}
+
+.nftInfBox:last-child {
+    margin-bottom: 0;
+}
+
+.nftInfDesc.nftInfBox {
+    padding-right: 5px;
+}
+
+.nftSuccessMod .modal-dialog {
+    max-width: 570px;
+}
+
+.nftSuccessMod .modal-header {
+    border: 0;
+    margin-top: 26px;
+    margin-bottom: 6px;
+}
+
+.nftSuccessMod .modal-content {padding: 0 60px;}
+
+.nftSuccessMod .CloseModal {
+    right: 0;
+}
+
+.successBox {
+    background: linear-gradient(309.48deg, #282E3C -3.65%, rgba(40, 46, 60, 0) 122.77%);
+    border-radius: 6px;
+    padding: 8px 30px;
+    margin-bottom: 12px;
+}
+
+.nftSuccessMod .nftSelectList {
+    background: linear-gradient(309.48deg, #282E3C -3.65%, rgba(40, 46, 60, 0) 122.77%);
+    border-radius: 6px;
+}
+
+.sucesList label {
+    margin: 0;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 126%;
+    color: #62718A;
+}
+
+.sucesList {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    color: #fff;
+}
+
+.colBlue {
+    color: #297EFF !important;
+}
+
+.SentFrom img {
+    margin-right: 5px;
+}
+
+span.statComp {color: #10B67A;}
+
+.sucesList span {
+    display: flex;
+    align-items: center;
+}
+
+span.copyTokk img {
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+span.statComp img {
+    margin-right: 5px;
+}
+
+.nftSuccessMod .nftSelecItem {
+    padding: 6px 30px;
+}
+
+.bluTextBtn {
+    display: inline-block;
+    cursor: pointer;
+    margin-left: auto;
+    text-align: center;
+    font-size: 14px;
+    line-height: 140%;
+    color: #3763FF;
+    background: rgba(98, 113, 138, 0.1);
+    border-radius: 6px;
+    padding: 2px 6px;
+}
+
+.bluTextBtn:hover {
+    background: rgba(98, 113, 138, 0.1);
+    box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
+}
+
+.nftSuccessMod .selectedNft {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.nftWornTop h3 {color: #fff;margin: 22px 0 14px;}
+
+.nftWornTop p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.nftWornTop {
+    margin-bottom: 65px;
+}
+
+.switchingAcc img {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 15px;
+}
+
+.switchingAcc p {
+    color: #62718A;
+    margin-top: 9px;
+    margin-bottom: 0;
+}
+
+.wrongNFT {
+    padding-bottom: 24px;
+}
+
+.nftListView span.NFTInf {
+    margin-left: auto !important;
+    display: block;
+}
+
+.nftListView span.Close {
+    margin-left: 16px;
+}
+
+.nftListView .nftSelecItem {
+    height: 58px;
+}
+
+.nftListView .nftSelected {max-height: 100%;overflow: auto;}
+
+.nftListBox.nftListView {
+    margin-right: 0px !important;
+    margin-right: -25px !important;
+}
+ .nft_selectBox.nftListView {
+    padding: 16px 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.nftListView .nftListTop {
+    padding: 0 24px;
+}
+
+.nft_selectBox.nftListView .nftListBox {
+    flex-grow: 1;
+}
+
+.transTableCont {
+    background: linear-gradient(316.2deg, #232833 -4.13%, rgba(35, 40, 51, 0) 136.63%);
+    box-shadow: 0px 4px 14px rgba(47, 61, 84, 0.05);
+    border-radius: 20px;
+    padding: 15px 0 23px;
+}
+
+.transTitle {
+    color: #fff;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+table.transferTable.table {
+    margin: 0;
+    border: 0;
+    overflow: auto;
+}
+
+.transferTable.table thead th, 
+.transferTable.table tr td {
+    border: 0;
+    color: #62718A;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 126%;
+    height: 56px;
+    padding: 0;
+    vertical-align: middle;
+    padding: 14px 0;
+}
+
+.transferTable.table tbody tr td {
+    color: #fff;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    padding: 12px 0;
+}
+
+.transferTable.table thead {
+    background: linear-gradient(309.48deg, #232833 -3.65%, rgba(35, 40, 51, 0) 122.77%);
+}
+
+.transferTable.table img.nftImg {
+    height: 32px;
+}
+
+.transferTable.table tbody tr td:last-child {
+    padding-right: 10px;
+}
+
+.transferTable.table tbody tr td:first-child {
+    padding-left: 16px;
+}
+
+span.transFail, span.transPend, span.statComp {
+    display: flex;
+    align-items: center;
+}
+
+span.transFail img,
+span.transPend img, 
+span.statComp img {
+    width: 16px;
+    margin-right: 7px !important;
+    flex-shrink: 0;
+}
+
+.transferTableBox {
+    max-height: 310px;
+    overflow: auto;
+}
+
+.nonftContainer {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.nonftAcc {
+    position: absolute;
+    left: 50%;
+    top: 160px;
+    width: 505px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    transform: translate(-50%);
+    margin-left: -9%;
+    padding-left: 20%;
+    height: 415px;
+    font-size: 16px;
+    line-height: 160%;
+    color: rgb(255 255 255 / 80%);
+    background-image: url('./assets/img/noNftBG.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.nonftAcc img.nonft {
+    margin-bottom: 35px;
+    display: block;
+}
+
+.nonftAcc h2 {
+    font-weight: 800;
+    font-size: 38px;
+    line-height: 49px;
+    color: #fff;
+}
+
+.switching {
+    background: #3E64ED;
+    border-radius: 16px;
+    color: #fff;
+    font-size: 16px;
+    line-height: 126%;
+    padding: 18px 45px;
+}
+
+.switching:hover {
+    background: #174AFF;
+    color: #fff;
+}
+
+.nonftAcc .switching {
+    margin-top: 9px;
+}
+
+.desAddress {
+    position: relative;
+    z-index: 1;
+}
+
+span.invalid {
+    background: linear-gradient(273.47deg, #1D212A 6.6%, #4B041E 221.21%);
+    border-radius: 10px;
+    display: none;
+    align-items: center;
+    padding: 2px 7px;
+    margin-top: 6px;
+}
+
+span.invalid img {
+    display: inline-block;
+    margin-right: 3px;
 }
