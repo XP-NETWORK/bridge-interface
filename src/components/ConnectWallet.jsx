@@ -35,7 +35,7 @@ function ConnectWallet() {
                     <span className="wallet">
                         <img src={Wallet} alt="" />
                     </span>
-                    <Modal.Title>Select destination chain</Modal.Title>
+                    <Modal.Title>Connect Wallet</Modal.Title>
                     <span className="CloseModal" onClick={handleClose}>
                         <img src={Close} alt="" />
                     </span>

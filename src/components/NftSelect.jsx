@@ -36,9 +36,8 @@ function NftSelect() {
                 </div>
                 <SelectDestination/>
                 <ConnectWallet/>
-
                 <div className="connectNft disenable">
-                    <a href="#" className="themBtn">Continue bridging -> </a>
+                    <a href="#" className="themBtn">Continue bridging - </a>
                 </div>
                 <div className="aboutNft">
                     <a href="#" target="_blank" className="videoLink"><img src={Video} />   Learn how to use NFT bridge</a>

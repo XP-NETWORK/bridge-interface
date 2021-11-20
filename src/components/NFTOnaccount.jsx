@@ -2,6 +2,13 @@ import React from 'react'
 import { Image, Modal, Button, Header, Title, Body, Container, Dropdown, Toggle, Menu, Item } from "react-bootstrap";
 
 import NFTdetails from './NFTdetails';
+import DestinationChainReload from './innercomponents/DestinationChainReload';
+import NFTlistTopValid from './innercomponents/NFTlistTopValid';
+import NFTOnValid from './innercomponents/NFTOnValid';
+import SelectedNFT from './innercomponents/SelectedNFT';
+import Approval from './innercomponents/Approval';
+import SendFees from './innercomponents/SendFees';
+
 import Algorand from '../assets/img/chain/Algarand.svg';
 import BSC from '../assets/img/chain/Binance.svg';
 import Search from '../assets/img/icons/Search.svg';
@@ -42,143 +49,34 @@ function NFTOnaccount() {
                 <NFTdetails />
                 <div className="row">
                     <div className="nftListCol col-lg-8">
-
-                        <div className="nft_selectBox">
-                            <div className="nftListTop">
-                                <div className="yourNft">
-                                    Your NFTs on <span className="reloadNfts"><img src={BSC} alt="NFT Name" /> BSC <img src={RelBlue} /></span>
-                                </div>
-                                <div className="nftTopRIght">
-                                    <div className="searchNft">
-                                        <Dropdown className="SearchDrop">
-                                            <Dropdown.Toggle id="SearchDrop" >
-                                                <img src={Search} />
-                                            </Dropdown.Toggle>
-                                            <Dropdown.Menu>
-                                                <form action="#">
-                                                    <input type="search" placeholder="Search NFT" />
-                                                    <button type="button"><img src={Search} /></button>
-                                                </form>
-                                            </Dropdown.Menu>
-                                        </Dropdown>
-                                    </div>
-                                    <div className="nftViewBtn">
-                                        <span className="ListView"><img src={ListView} /></span>
-                                    </div>
-                                    <div className="selectAll">
-                                        Select All
-                                    </div>
-                                </div>
+                        <div className="mobileOnly">
+                            <div className="sendNftTit">
+                                <h3>Send NFT</h3>
                             </div>
-                            <div className="nftListBox">
-                                <div className="row">
-                                    <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-                                        <div className="singleNft nftSelect">
-                                            <div className="nftImageBox">
-                                                <span className="selectNft"><img src={CheckGreen} /></span>
-                                                <span className="nftImage"><img src={NFT_1} /></span>
-                                            </div>
-                                            <div className="nftCont">
-                                                <span className="nftName">TheMonaLana <span className="NFTInf"><img src={INF} /></span></span>
-                                                <span className="nftNumber">784</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-                                        <div className="singleNft missing">
-
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-                                        <div className="singleNft missing">
-
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-                                        <div className="singleNft missing">
-
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-                                        <div className="singleNft missing">
-
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-                                        <div className="singleNft missing">
-
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-                                        <div className="singleNft missing">
-
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-                                        <div className="singleNft missing">
-
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-                                        <div className="singleNft missing">
-
-                                        </div>
-                                    </div>
-                                </div>
+                            <DestinationChainReload />
+                        </div>
+                        <div className="nft_selectBox">
+                            <NFTlistTopValid/>
+                            <NFTOnValid/>
+                        </div>
+                        <div className="mobileOnly">
+                            <Approval />
+                            <SendFees />
+                            <div className="nftSendBtn disenable">
+                                <a href="#" className="themBtn">Send</a>
                             </div>
                         </div>
                     </div>
-                    <div className="sendNftCol col-lg-4">
+                    <div className="sendNftCol col-lg-4 mtm50">
                         <div className="sendNftBox">
                             <form action="#">
                                 <div className="sendNftTit">
                                     <h3>Send NFT</h3>
                                 </div>
-                                <div className="destiAddress">
-                                    <div className="desChain">
-                                        Destination Chain <span className="destiReload"><img src={Avalanche} alt="" /> Avalanche <img src={RelWhit} /></span>
-                                    </div>
-                                   <div className="desAddress">
-                                        <input type="text" placeholder="Paste destination address" />
-                                        <span className="invalid"><img src={RedClose} alt="Close" /> Invalid address</span>
-                                   </div>
-                                </div>
-                                <div className="nftSelectList">
-                                    <div className="nftSeleTop">
-                                        <div className="selectedNft">
-                                            Selected NFT <span>/ 1</span>
-                                            <button className="clearNft">Clear all</button>
-                                        </div>
-                                    </div>
-                                    <ul className="nftSelected">
-                                        <li className="nftSelecItem">
-                                            <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="Close"><img src={Close} /></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className="approValBox">
-                                    <div className="approvTop">
-                                        Approval
-                                        <div className="appInf">
-                                            <span className="infText">
-                                                We'd like to make sure you really want to send the NFT and pay the associated fees.
-                                            </span>
-                                            <img src={InfLith} alt="Inf" />
-                                        </div>
-                                    </div>
-                                    <div className="approveBtn">
-                                        Approve all NFTs
-                                        <div className="approveBtn">
-                                            <input type="checkbox" id="approveCheck" />
-                                            <label htmlFor="approveCheck">
-                                                <span className="checkCircle"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nftFees">
-                                    Fees <span>0 BNB</span>
-                                </div>
+                                <DestinationChainReload/>
+                                <SelectedNFT />
+                                <Approval />
+                                <SendFees />
                                 <div className="nftSendBtn ">
                                     <a href="#" className="themBtn">Send</a>
                                 </div>

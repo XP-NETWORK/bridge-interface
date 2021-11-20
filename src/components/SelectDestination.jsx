@@ -24,7 +24,7 @@ function SelectDestination() {
         <div>
 
             {/* <Button variant="primary" onClick={handleShow}>
-                Departure Chain
+                Select destination chain
             </Button> */}
 
             <Modal show={show} onHide={handleClose} className="ChainModal">

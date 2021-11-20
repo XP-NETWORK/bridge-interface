@@ -54,20 +54,6 @@ h3 {
     margin: 0;
 }
 
-.bridgeBody:after {
-    content: "";
-    background-image: url('./assets/img/body_art.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    display: block;
-    width: 886px;
-    height: 518px;
-    left: 50%;
-    transform: translate(-50%);
-    top: 60px;
-    position: absolute;
-}
-
 .HeaderArea {
     padding: 8px 45px;
 }
@@ -105,6 +91,22 @@ div#root {
     flex-direction: column;
     position: relative;
     z-index: 1;
+    overflow: hidden;
+}
+
+div#root:after {
+    content: "";
+    background-image: url('./assets/img/body_art.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: block;
+    width: 886px;
+    height: 518px;
+    left: 50%;
+    transform: translate(-50%);
+    top: 110px;
+    position: absolute;
+    z-index: -1;
 }
 
 footer {
@@ -501,6 +503,7 @@ span.closeBox {
 /* .scrollSty */
 ::-webkit-scrollbar {
   width: 4px;
+  height: 4px;
 }
 
 /* Track */
@@ -619,6 +622,12 @@ span.wallet {
     padding-left: 16px;
     padding-right: 40px;
     color: rgb(255 255 255 / 80%);
+    height: 38px;
+    border-radius: 9px;
+}
+
+.SearchDrop.dropdown input:focus {
+    outline: 1px solid #174AFF;
 }
 
 .SearchDrop.dropdown input::placeholder {
@@ -734,6 +743,11 @@ span.wallet {
     margin-top: 8px;
 }
 
+span.nftImage img {
+    display: block;
+    width: 100%;
+}
+
 span.nftName {
     display: flex;
     align-items: center;
@@ -804,6 +818,11 @@ span.NFTInf:hover img {
 .ListView {
     display: block;
     cursor: pointer;
+}
+
+.ListView:hover {
+    background: rgba(98, 113, 138, 0.1);
+    border-radius: 10px;
 }
 
 .NFTaccount {
@@ -1340,11 +1359,12 @@ span.statComp img {
     margin-right: 0px !important;
     margin-right: -25px !important;
 }
+/* 
  .nft_selectBox.nftListView {
     padding: 16px 0px;
     display: flex;
     flex-direction: column;
-}
+} */
 
 .nftListView .nftListTop {
     padding: 0 24px;
@@ -1401,7 +1421,7 @@ table.transferTable.table {
 }
 
 .transferTable.table img.nftImg {
-    height: 32px;
+    width: 32px;
 }
 
 .transferTable.table tbody tr td:last-child {
@@ -1509,4 +1529,40 @@ span.invalid {
 span.invalid img {
     display: inline-block;
     margin-right: 3px;
+}
+
+.ComentBox {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px;
+}
+
+.ComentBox img {
+    display: block;
+    width: 27px;
+    margin-right: 10px;
+}
+
+.ComentBox p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 140%;
+    color: #fff;
+}
+
+
+.navbar-light .navbar-toggler span.navbar-toggler-icon {
+    display: none;
+}
+
+.navbar-light .navbar-toggler:after {
+    content: url('./assets/img/icons/Hambar.svg');
+}
+
+.collecSlideCont .slideItem {
+    padding: 0 15px;
+}
+
+.collecSlideCont {
+    margin-top: 90px;
 }

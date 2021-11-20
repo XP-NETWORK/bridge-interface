@@ -1,15 +1,61 @@
-import React from 'react'
+import React, { Component } from "react";
+import Slider from "react-slick";
+
 import Slider1 from '../assets/img/slider/slider_1.png';
 import Slider2 from '../assets/img/slider/slider_2.png';
 import Slider3 from '../assets/img/slider/slider_3.png';
 import Slider4 from '../assets/img/slider/slider_4.png';
 
-function NftSlider() {
-    return (
-        <div className="NftSlider">
-            <div className="sliderContainer">
-                <div className="row">
-                    <div className="col-3">
+export default class Collecthead extends Component {
+    render() {
+        var settings = {
+            dots: true,
+            infinite: false,
+            speed: 500,
+            centerPadding: 100,
+            slidesToShow: 4,
+            slidesToScroll: 2,
+            initialSlide: 0,
+            infinite: false,
+            dots: true,
+            arrows: false,
+            pauseOnHover: true,
+            responsive: [
+                {
+                    breakpoint: 991,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 1,
+                        infinite: false,
+                        dots: false,
+                        arrows: false,
+                    }
+                },
+                {
+                    breakpoint: 767,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 1,
+                        initialSlide: 1,
+                        arrows: false,
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        initialSlide: 1,
+                        arrows: false,
+                        infinite: true,
+                    }
+                }
+            ]
+        };
+        return (
+            <div className="collecSlideCont container">
+                <Slider {...settings}>
+                    <div className="slideItem">
                         <div className="nftSlideBox">
                             <div className="nfgSlidImg">
                                 <img src={Slider1} alt="" />
@@ -20,7 +66,7 @@ function NftSlider() {
                             </div>
                         </div>
                     </div>
-                    <div className="col-3">
+                    <div className="slideItem">
                         <div className="nftSlideBox">
                             <div className="nfgSlidImg">
                                 <img src={Slider2} alt="" />
@@ -31,7 +77,7 @@ function NftSlider() {
                             </div>
                         </div>
                     </div>
-                    <div className="col-3">
+                    <div className="slideItem">
                         <div className="nftSlideBox">
                             <div className="nfgSlidImg">
                                 <img src={Slider3} alt="" />
@@ -42,7 +88,7 @@ function NftSlider() {
                             </div>
                         </div>
                     </div>
-                    <div className="col-3">
+                    <div className="slideItem">
                         <div className="nftSlideBox">
                             <div className="nfgSlidImg">
                                 <img src={Slider4} alt="" />
@@ -53,10 +99,8 @@ function NftSlider() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </Slider>
             </div>
-        </div>
-    )
+        );
+    }
 }
-
-export default NftSlider

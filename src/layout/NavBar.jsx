@@ -1,6 +1,8 @@
 import React from 'react'
 import Logo from '../assets/img/nav/Logo.svg';
 import Start from '../assets/img/nav/star_menu.svg';
+import Hambar from '../assets/img/icons/Hambar.svg';
+
 
 import { Navbar, Container, Brand, Toggle, Collapse, Nav, Link, NavDropdown, Item,   Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 
@@ -8,7 +10,7 @@ import { Navbar, Container, Brand, Toggle, Collapse, Nav, Link, NavDropdown, Ite
 function NavBar() {
     return (
         <header className="HeaderArea" id="Header"> 
-            <Navbar expand="lg">
+            <Navbar expand="md">
                 <Navbar.Brand href="#home" className="navBrand"><img src={Logo} alt="Xp Network" /></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">

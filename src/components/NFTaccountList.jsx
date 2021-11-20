@@ -2,6 +2,15 @@ import React from 'react'
 import { Image, Modal, Button, Header, Title, Body, Container, Dropdown, Toggle, Menu, Item } from "react-bootstrap";
 
 import NFTdetails from './NFTdetails';
+import NFTlistView from './innercomponents/NFTlistView';
+import DestinationChain from './innercomponents/DestinationChain';
+import DestinationChainReload from './innercomponents/DestinationChainReload';
+import SelectedNFT from './innercomponents/SelectedNFT';
+import Approval from './innercomponents/Approval';
+import NFTgridView from './innercomponents/NFTgridView';
+import SendFees from './innercomponents/SendFees';
+import NFTlistTop from './innercomponents/NFTlistTop';
+
 
 import Algorand from '../assets/img/chain/Algarand.svg';
 import BSC from '../assets/img/chain/Binance.svg';
@@ -43,172 +52,34 @@ function NFTaccountList() {
                 <NFTdetails />
                 <div className="row">
                     <div className="nftListCol col-lg-8">
-                        {/* For List View Add This className "nftListView" */}
-                        <div className="nft_selectBox nftListView">
-                            <div className="nftListTop">
-                                <div className="yourNft">
-                                    Your NFTs on <span><img src={BSC} alt="NFT Name" /> BSC</span>
-                                </div>
-                                <div className="nftTopRIght">
-                                    <div className="searchNft">
-                                        <Dropdown className="SearchDrop">
-                                            <Dropdown.Toggle id="SearchDrop" >
-                                                <img src={Search} />
-                                            </Dropdown.Toggle>
-                                            <Dropdown.Menu>
-                                                <form action="#">
-                                                    <input type="search" placeholder="Search NFT" />
-                                                    <button type="button"><img src={Search} /></button>
-                                                </form>
-                                            </Dropdown.Menu>
-                                        </Dropdown>
-                                    </div>
-                                    <div className="nftViewBtn">
-                                        <span className="ListView"><img src={ListView} /></span>
-                                    </div>
-                                    <div className="selectAll">
-                                        Select All
-                                    </div>
-                                </div>
+                        <div className="mobileOnly">
+                            <div className="sendNftTit">
+                                <h3>Send NFT</h3>
                             </div>
-                            <div className="nftListBox ">
-                                <ul className="nftSelected">
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_3} alt="NFT" /> 333333 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_4} alt="NFT" /> 2222 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_5} alt="NFT" /> name 111 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_3} alt="NFT" /> 333333 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_4} alt="NFT" /> 2222 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_5} alt="NFT" /> name 111 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_3} alt="NFT" /> 333333 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_4} alt="NFT" /> 2222 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_5} alt="NFT" /> name 111 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                    <li className="nftSelecItem">
-                                        <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
-                                    </li>
-                                </ul>
+                            <DestinationChainReload />
+                        </div>
+                        <div className="nft_selectBox">
+                            <NFTlistTop/>
+                            <NFTlistView/>
+                        </div>
+                        <div className="mobileOnly">
+                            <Approval />
+                            <SendFees />
+                            <div className="nftSendBtn disenable">
+                                <a href="#" className="themBtn">Send</a>
                             </div>
                         </div>
                     </div>
-                    <div className="sendNftCol col-lg-4">
+                    <div className="sendNftCol col-lg-4 desktopOnly">
                         <div className="sendNftBox">
                             <form action="#">
                                 <div className="sendNftTit">
                                     <h3>Send NFT</h3>
                                 </div>
-                                <div className="destiAddress">
-                                    <div className="desChain">
-                                        Destination Chain <span><img src={Avalanche} alt="" /> Avalanche</span>
-                                    </div>
-                                    <div className="desAddress">
-                                        <input type="text" placeholder="Paste destination address" />
-                                        <span className="invalid"><img src={RedClose} alt="Close" /> Invalid address</span>
-                                    </div>
-                                </div>
-                                <div className="nftSelectList">
-                                    <div className="nftSeleTop">
-                                        <div className="selectedNft">
-                                            Selected NFT <span>/ 8</span>
-                                            <button className="clearNft">Clear all</button>
-                                        </div>
-                                    </div>
-                                    <ul className="nftSelected">
-                                        <li className="nftSelecItem">
-                                            <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="Close"><img src={Close} /></span>
-                                        </li>
-                                        <li className="nftSelecItem">
-                                            <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <span className="Close"><img src={Close} /></span>
-                                        </li>
-                                        <li className="nftSelecItem">
-                                            <img src={SelectedNFT_3} alt="NFT" /> 333333 NFT <span className="Close"><img src={Close} /></span>
-                                        </li>
-                                        <li className="nftSelecItem">
-                                            <img src={SelectedNFT_4} alt="NFT" /> 2222 NFT <span className="Close"><img src={Close} /></span>
-                                        </li>
-                                        <li className="nftSelecItem">
-                                            <img src={SelectedNFT_5} alt="NFT" /> name 111 NFT <span className="Close"><img src={Close} /></span>
-                                        </li>
-                                        <li className="nftSelecItem">
-                                            <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="Close"><img src={Close} /></span>
-                                        </li>
-                                        <li className="nftSelecItem">
-                                            <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <span className="Close"><img src={Close} /></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className="approValBox">
-                                    <div className="approvTop">
-                                        Approval
-                                        <div className="appInf">
-                                            <span className="infText">
-                                                We'd like to make sure you really want to send the NFT and pay the associated fees.
-                                            </span>
-                                            <img src={InfLith} alt="Inf" />
-                                        </div>
-                                    </div>
-                                    <div className="approveBtn">
-                                        Approve all NFTs
-                                        <div className="approveBtn">
-                                            <input type="checkbox" id="approveCheck" />
-                                            <label htmlFor="approveCheck">
-                                                <span className="checkCircle"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="nftFees">
-                                    Fees <span>0 BNB</span>
-                                </div>
+                                <DestinationChain />
+                                <SelectedNFT />
+                                <Approval />
+                                <SendFees />
                                 <div className="nftSendBtn disenable">
                                     <a href="#" className="themBtn">Send</a>
                                 </div>

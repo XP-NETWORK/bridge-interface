@@ -5,3 +5,323 @@
     }
    
 }
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    
+}
+
+@media only screen and (max-width: 1199px) {
+    
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+
+}
+
+@media only screen and (max-width: 991px) {
+
+}
+    
+@media only screen and (min-width: 426px) and (max-width: 767px) {
+   
+}
+
+@media only screen and (min-width: 768px) {
+    .mobileOnly {
+        display: none !important;
+    }
+}
+      
+@media only screen and (max-width: 767px) {
+
+    .mobileOnly.seleNftMob {
+        display: flex;
+        align-items: center;
+        color: #62718A;
+    }
+
+    .mobileOnly.seleNftMob span {
+        color: #297EFF;
+        display: inline-block;
+        margin-left: 5px;
+    }
+
+    .desktopOnly {
+        display: none !important;
+    }
+
+    .col-lg-4.col-md-4.col-sm-6.col-6 {
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+    .nft_selectBox {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    .nftListBox> .row> div {
+        margin-bottom: 12px;
+    }
+
+    .selectNft {
+        left: 12px;
+        top: 12px;
+    }
+
+    .nftListBox> .row {
+        margin-right: -8px;
+        margin-left: -8px;
+    }
+
+    .nftListBox {
+        margin-right: -12px;
+        padding-right: 12px;
+    }
+
+    .aleartBox {
+        width: 90vw;
+    }
+
+    .modal {
+        padding: 0 !important;
+    }
+
+    .nftWorng .modal-dialog,
+    .ChainModal .modal-dialog,
+    .NftDetails .modal-dialog {
+        max-width: 343px;
+    }
+
+    .nftDetailBox {
+        display: block;
+        height: 80vh;
+        overflow: auto;
+        max-height: 660px;
+    }
+
+    .nftDetailBox> div {
+        width: 100%;
+        padding: 0 20px;
+        overflow: unset;
+    }
+
+    .nftDetImg {
+        margin-bottom: 8px;
+    }
+
+    .modal-dialog {
+        margin: 30px auto 0 auto;
+    }
+   
+    .nftSuccessMod .modal-dialog {
+        width: 375px;
+    }
+
+    .nftSuccessMod .modal-content {
+        padding: 0 20px;
+        border-radius: 0;
+    }
+
+    .modal-header {
+        min-height: 56px;
+    }
+
+    .nftSuccessMod .modal-header {
+        margin-top: 20px;
+    }
+
+    .transferTable.table thead th, .transferTable.table tr td {
+        padding: 12px !important;
+        white-space: nowrap;
+    }
+
+    .transferTable.table tbody tr td:first-child {
+        min-width: 64px;
+    }
+
+    table.transferTable.table {
+        min-width: 1020px;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    .footLeft {
+        margin-bottom: 30px;
+    }
+
+    .footRight {
+        flex-direction: column;
+        text-align: left;
+        justify-content: flex-start;
+    }
+
+    .footContainer {
+        flex-direction: column;
+    }
+
+    .priPoli a {
+        margin: 0 22px 0 0;
+    }
+
+    .footRight> div {
+        min-height: 46px;
+        display: flex;
+        align-items: center;
+    }
+
+    .powerBy {
+        margin-bottom: 14px;
+    }
+
+    .nftTitle h2 {
+        font-size: 28px;
+    }
+
+    .nftContainer {
+        margin-top: 60px;
+    }
+
+    .HeaderArea {
+        padding: 8px 16px;
+    }
+
+    .navbar {
+        padding: 0 !important;
+    }
+
+    .nftTopRIght {
+        position: relative;
+    }
+
+    .nftListTop {
+        flex-wrap: wrap;
+    }
+
+    .seleNftMob {
+        width: 50%;
+    }
+
+    .nftTopRIght {
+        width: 50%;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: row-reverse;
+    }
+
+    .mobSearch {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin-top: 20px;
+    }
+
+    .mobSearch form {
+        display: contents;
+    }
+
+    .mobSearch input {
+        display: block;
+        flex-grow: 1;
+        border: 0;
+        background: rgba(98, 113, 138, 0.1);
+        border-radius: 10px;
+        height: 40px;
+        font-size: 16px;
+        line-height: 160%;
+        padding: 0 40px 0 16px;
+        color: #62718A;
+        outline: none;
+    }
+
+    .mobSearch input::placeholder {
+        color: rgb(98 113 138 / 50%);
+    }
+
+    .mobSearch button {
+        position: absolute;
+        right: 0;
+        background: transparent;
+        border: 0;
+        outline: none;
+        width: 40px;
+        height: 40px;
+    }
+
+    .mobSearch input:focus {
+        outline: 1px solid #174AFF;
+    }
+
+    .selectAll {
+        background: rgba(98, 113, 138, 0.1);
+        border-radius: 8px;
+    }
+
+    .nft_selectBox {
+        height: auto;
+    }
+
+    .nftSendBtn a.themBtn {
+        width: 100%;
+        max-width: unset;
+    }
+
+    .nftselectedtop {
+        justify-content: space-between !important;
+    }
+
+    .nftselectedtop .clearNft {
+        margin: 0;
+    }
+
+    .nftselectedtop span.mobileOnly {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 126%;
+        color: #62718A;
+    }
+
+    .mtm50 {
+        margin-top: 50px;
+    }
+
+    .sendNftBox {
+        height: auto;
+        min-height: unset;
+    }
+
+    .collecSlideCont .slideItem {
+        padding: 0 11px;
+    }
+
+
+} /* max-width: 767px */
+       
+@media only screen and (max-width: 575px) {
+   
+}
+    
+@media only screen and (min-width: 320px) and (max-width: 425px) {
+	
+}    
+
+@media only screen and (max-width: 480px) {
+
+    .collecSlideCont.container {
+        width: 250px;
+    }
+
+    .collecSlideCont .slick-list {
+        overflow: visible;
+    }
+
+	
+}
+      
+@media only screen and (max-width: 375px) {
+
+}
+   
