@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useEffect, useState} from 'react'
 import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 
 // Chain
@@ -17,22 +17,30 @@ import INF from '../assets/img/icons/Inf.svg';
 
 import Close from '../assets/img/icons/close.svg';
 import Search from '../assets/img/icons/Search.svg';
+import NFTSelectBox from './NFTSelectBox';
+import { useDispatch, useSelector } from 'react-redux';
+import { setChainModal } from "../store/reducers/generalSlice"
 
 
 function SelectDestination() {
+    const dispatch = useDispatch()
+    // const [show, setShow] = useState(false);
+    const handleClose = () => dispatch(setChainModal(false))
+    // const handleShow = () => setShow(true);
+    const show = useSelector(state => state.general.showChainModal)
+    const from = useSelector(state => state.general.from)
+    const to = useSelector(state => state.general.to)
 
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    useEffect(() => {
+    }, [to, from])
 
     return (
         <div>
-
             {/* <Button variant="primary" onClick={handleShow}>
                 Select destination chain
             </Button> */}
-            <div className="nftSelectBox">
+            {/* NFT Select Box Component */}
+            {/* <div className="nftSelectBox">
                     <div className="selChain seleDepat" onClick={handleShow}>
                         <div className="seleDepatSelec">
                             <img src={Departure} alt="" />
@@ -47,7 +55,8 @@ function SelectDestination() {
                             Select destination chain
                         </div>
                     </div>
-            </div>
+            </div> */}
+            <NFTSelectBox />
             <Modal show={show} onHide={handleClose} className="ChainModal">
                 <Modal.Header className="text-left">
                     <Modal.Title>Select destination chain</Modal.Title>

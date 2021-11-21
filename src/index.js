@@ -5,6 +5,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from 'react-router';
 import { Provider } from "react-redux";
+import store from "../src/store/store";
 import './Global.css';
 import App from './App';
 import NavBar from './layout/NavBar';
@@ -13,9 +14,11 @@ import Footer from './layout/Footer';
 
 ReactDOM.render(
   <React.StrictMode>
-    <NavBar/>
-    <App />
-    <Footer />
+    <Provider store={store}>
+      <NavBar/>
+      <App />
+      <Footer />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
