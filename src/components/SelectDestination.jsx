@@ -35,8 +35,8 @@ function SelectDestination() {
     const from = useSelector(state => state.general.from)
     const to = useSelector(state => state.general.to)
 
-    useEffect(() => {
-    }, [to, from])
+    // useEffect(() => {
+    // }, [to, from])
 
     return (
         <div>

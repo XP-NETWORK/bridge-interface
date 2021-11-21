@@ -1,19 +1,28 @@
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Search from '../assets/img/icons/Search.svg';
 import { chains }from '../components/values'
-import Etherium from '../assets/img/chain/Etherium.svg';
-import Heco from '../assets/img/chain/Heco.svg';
-import Elrond from '../assets/img/chain/Elrond.svg';
-import Binance from '../assets/img/chain/Binance.svg';
-import Cardano from '../assets/img/chain/Cardano.svg';
-import Algorand from '../assets/img/chain/Algarand.svg';
-import Tron from "../assets/img/chain/Tron.svg"
-import Polygon from "../assets/img/chain/Polygon.svg"
-import Avalanche from "../assets/img/chain/Avalanche.svg"
-import Fantom from "../assets/img/chain/Fantom.svg"
-import Xdai from "../assets/img/chain/Xdai.svg"
-import Solana from "../assets/img/chain/Solana.svg"
+import { setChainModal, setDepartureOrDestination, setTo, setFrom } from "../store/reducers/generalSlice"
+
 
 export default function NFTChainListBox() {
+    const dispatch = useDispatch()
+    const departureOrDestination = useSelector(state => state.general.departureOrDestination)
+    const handleClose = () => {
+        dispatch(setChainModal(false))
+        dispatch(setDepartureOrDestination(""))
+    }
+    const chainSelectHandler = value => {
+        if(departureOrDestination === "departure"){
+            dispatch(setFrom(value))
+            handleClose()
+        }
+        else{
+            dispatch(setTo(value))
+            handleClose()
+        }
+    }
+
     return (
         <div className="nftChainListBox">
         <form action="#">
@@ -26,7 +35,7 @@ export default function NFTChainListBox() {
             { chains ? chains.map( chain => { 
                 const { image, text, key, value, coming } = chain;
                 return ( 
-                <li className="nftChainItem"><img className="modalSelectOptionsImage" src={image.src} alt={key} />
+                <li onClick={() => chainSelectHandler(value)} className="nftChainItem"><img className="modalSelectOptionsImage" src={image.src} alt={key} />
                     <div className="modalSelectOptionsText">
                         {text}
                     </div>
