@@ -20,6 +20,7 @@ import Search from '../assets/img/icons/Search.svg';
 import NFTSelectBox from './NFTSelectBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { setChainModal } from "../store/reducers/generalSlice"
+import NFTChainListBox from './NFTChainListBox';
 
 
 function SelectDestination() {
@@ -65,7 +66,7 @@ function SelectDestination() {
                     </span>
                 </Modal.Header>
                 <Modal.Body>
-                    <div className="nftChainListBox">
+                    {/* <div className="nftChainListBox">
                         <form action="#">
                             <div className="searchChain">
                                 <input type="search" placeholder="Search" />
@@ -86,7 +87,8 @@ function SelectDestination() {
                             <li className="nftChainItem"><img src={Cardano} /> Cardano</li>
                             <li className="nftChainItem"><img src={Algorand} /> Algorand</li>
                         </ul> 
-                    </div>
+                    </div> */}
+                    <NFTChainListBox />
                 </Modal.Body>
             </Modal>
         </div>

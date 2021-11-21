@@ -21,7 +21,6 @@ import { setChainModal } from "../store/reducers/generalSlice"
 
 export default function NFTSelectBox() {
     const dispatch = useDispatch()
-    const [show, setShow] = useState(false);
     const handleShow = () => dispatch(setChainModal(true));
 
     return (
