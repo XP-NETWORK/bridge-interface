@@ -24,6 +24,7 @@ import NFTChainListBox from './NFTChainListBox';
 
 
 function SelectDestination() {
+    const departureOrDestination = useSelector(state => state.general.departureOrDestination)
     const dispatch = useDispatch()
     const handleClose = () => {
         dispatch(setChainModal(false))
@@ -42,7 +43,7 @@ function SelectDestination() {
             <NFTSelectBox />
             <Modal show={show} onHide={() => handleClose()} className="ChainModal">
                 <Modal.Header className="text-left">
-                    <Modal.Title>Select destination chain</Modal.Title>
+                    <Modal.Title>{`Select ${departureOrDestination === 'destination' ? 'destination' : 'departure'} chain`}</Modal.Title>
                     <span className="CloseModal" onClick={() => handleClose()}>
                     <img src={Close} alt="" />
                     </span>

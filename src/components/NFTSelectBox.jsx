@@ -18,6 +18,7 @@ import LineArrow from '../assets/img/nftSelect/Line.svg';
 // import Search from '../assets/img/icons/Search.svg';
 import { useDispatch } from 'react-redux';
 import { setChainModal, setDepartureOrDestination } from "../store/reducers/generalSlice"
+import { useSelector } from 'react-redux';
 
 export default function NFTSelectBox() {
     const dispatch = useDispatch()
