@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  step: 1,
 };
 
 const generalSlice = createSlice({
@@ -21,6 +22,9 @@ const generalSlice = createSlice({
     },
     setChainSearch(state, action){
       state.chainSearch = action.payload
+    },
+    setStep(state, action){
+      state.step = action.payload
     }
   },
 });
@@ -30,7 +34,8 @@ export const { toggleNFTInfo,
     setFrom,
     setChainModal,
     setDepartureOrDestination,
-    setChainSearch
+    setChainSearch,
+    setStep
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
