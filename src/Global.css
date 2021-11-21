@@ -540,6 +540,7 @@ span.wallet {
     padding: 19px 30px 10px 30px;
     background: linear-gradient(309.48deg, #282E3C -3.65%, rgba(40, 46, 60, 0) 122.77%);
     border-bottom: 1px solid #2D3342;
+    overflow-y: scroll;
 }
 
 .walletList {

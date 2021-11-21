@@ -19,7 +19,7 @@ import NFTworng from './NFTworng';
 function ConnectWallet() {
 
     const [show, setShow] = useState(false);
-
+    const OFF = { opacity: 0.6, pointerEvents: "none" };
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -34,9 +34,6 @@ function ConnectWallet() {
                 </div>
             <Modal show={show} onHide={handleClose} className="ChainModal">
                 <Modal.Header>
-                    <span className="wallet">
-                        <img src={Wallet} alt="" />
-                    </span>
                     <Modal.Title>Connect Wallet</Modal.Title>
                     <span className="CloseModal" onClick={handleClose}>
                         <img src={Close} alt="" />
@@ -46,10 +43,12 @@ function ConnectWallet() {
                     <div className="walletListBox">
                         <ul className="walletList scrollSty">
                             <NFTworng/>
+                            <li className="wllListItem"><img src={MetaMask} /> MetaMAsk</li>
                             <li className="wllListItem"><img src={Elrond} /> Elrond</li>
                             <li className="wllListItem"><img src={Ledger} /> Ledger</li>
                             <li className="wllListItem"><img src={Maiar} /> Maiar</li>
                             <li className="wllListItem"><img src={Trezor} /> Trezor</li>
+                            <li className="wllListItem"><img src={"#"} /> WalletConnect</li>
                         </ul>
                     </div>
                 </Modal.Body>

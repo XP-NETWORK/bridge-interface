@@ -18,7 +18,7 @@ function NFTworng() {
         <div>
 
             
-            <li className="wllListItem" onClick={handleShow}><img src={MetaMask} /> MetaMask</li>
+            {/* <li className="wllListItem" onClick={handleShow}><img src={MetaMask} /> MetaMask</li> */}
             <Modal show={show} onHide={handleClose} className="nftWorng">
                 <Modal.Header className="border-0">
                     <Modal.Title>Wrong Network</Modal.Title>
