@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@elrondnetwork/erdjs": "^8.0.1-alpha.10",
+    "@elrondnetwork/erdjs": "^8.0.1-alpha.12",
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -28,7 +28,7 @@
     "slick-carousel": "^1.8.1",
     "web-vitals": "^1.1.2",
     "web3-utils": "^1.6.0",
-    "xp.network": "git+https://github.com/xp-network/xpjs#bleeding-edge"
+    "xp.network": "^0.1.2"
   },
   "scripts": {
     "start": "react-scripts start",

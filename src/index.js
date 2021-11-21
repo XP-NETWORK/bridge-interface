@@ -10,15 +10,22 @@ import './Global.css';
 import App from './App';
 import NavBar from './layout/NavBar';
 import Footer from './layout/Footer';
+import { Web3ReactProvider } from "@web3-react/core";
+import Web3 from "web3";
 
+function getLibrary(provider) {
+  return new Web3(provider);
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <NavBar/>
-      <App />
-      <Footer />
-    </Provider>
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <Provider store={store}>
+        <NavBar/>
+        <App />
+        <Footer />
+      </Provider>
+    </Web3ReactProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
