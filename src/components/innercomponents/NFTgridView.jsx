@@ -24,7 +24,7 @@ import InfLith from '../../assets/img/icons/infoLifht.svg';
 import INF from '../../assets/img/icons/Inf.svg';
 
 import RedClose from '../../assets/img/icons/RedClose.svg';
-
+import NFTdetails from '../NFTdetails';
 function NFTgridView() {
     return (
 
@@ -37,7 +37,7 @@ function NFTgridView() {
                             <span className="nftImage"><img src={NFT_1} /></span>
                         </div>
                         <div className="nftCont">
-                            <span className="nftName">TheMonaLana <span className="NFTInf"><img src={INF} /></span></span>
+                            <span className="nftName">TheMonaLana <NFTdetails/></span>
                             <span className="nftNumber">784</span>
                         </div>
                     </div>
@@ -49,7 +49,7 @@ function NFTgridView() {
                             <span className="nftImage"><img src={NFT_2} /></span>
                         </div>
                         <div className="nftCont">
-                            <span className="nftName">TheMonaLana <span className="NFTInf"><img src={INF} /></span></span>
+                            <span className="nftName">TheMonaLana <NFTdetails/></span>
                             <span className="nftNumber">784</span>
                         </div>
                     </div>
@@ -61,7 +61,7 @@ function NFTgridView() {
                             <span className="nftImage"><img src={NFT_3} /></span>
                         </div>
                         <div className="nftCont">
-                            <span className="nftName">TheMonaLana <span className="NFTInf"><img src={INF} /></span></span>
+                            <span className="nftName">TheMonaLana <NFTdetails/></span>
                             <span className="nftNumber">784</span>
                         </div>
                     </div>
@@ -73,7 +73,7 @@ function NFTgridView() {
                             <span className="nftImage"><img src={NFT_4} /></span>
                         </div>
                         <div className="nftCont">
-                            <span className="nftName">TheMonaLana <span className="NFTInf"><img src={INF} /></span></span>
+                            <span className="nftName">TheMonaLana <NFTdetails/></span>
                             <span className="nftNumber">784</span>
                         </div>
                     </div>

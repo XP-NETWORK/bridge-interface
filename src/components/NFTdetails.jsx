@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 
 // Chain
@@ -9,7 +9,7 @@ import Search from '../assets/img/icons/Search.svg';
 // Wallet
 import nftDetails_1 from '../assets/img/nfts/nftDetails_1.png';
 
-
+import INF from '../assets/img/icons/Inf.svg';
 
 function NFTdetails() {
 
@@ -19,12 +19,12 @@ function NFTdetails() {
     const handleShow = () => setShow(true);
 
     return (
-        <div>
+        <>
 
-            <Button variant="primary" onClick={handleShow}>
+           {/* <Button variant="primary" onClick={handleShow}>
                 NFT Details
-            </Button>
-
+            </Button> */} 
+            <span className="NFTInf" onClick={handleShow}><img src={INF} /></span>
             <Modal show={show} onHide={handleClose} className="NftDetails">
                 <Modal.Header>
                     <Modal.Title>NFT Details</Modal.Title>
@@ -54,7 +54,7 @@ function NFTdetails() {
                     </div>
                 </Modal.Body>
             </Modal>
-        </div>
+        </>
     )
 }
 

@@ -5,7 +5,7 @@ import Close from '../assets/img/icons/close.svg';
 import Wrong from '../assets/img/Wrong.svg';
 import Switch from '../assets/img/Switch.svg';
 
-
+import MetaMask from '../assets/img/wallet/MetaMask.svg';
 
 function NFTworng() {
 
@@ -17,10 +17,8 @@ function NFTworng() {
     return (
         <div>
 
-            <Button variant="primary" onClick={handleShow}>
-                NFT Worng
-            </Button>
-
+            
+            <li className="wllListItem" onClick={handleShow}><img src={MetaMask} /> MetaMask</li>
             <Modal show={show} onHide={handleClose} className="nftWorng">
                 <Modal.Header className="border-0">
                     <Modal.Title>Wrong Network</Modal.Title>

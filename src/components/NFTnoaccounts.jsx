@@ -46,7 +46,7 @@ function NFTNoaccounts() {
     return (
         <div className="NFTaccount">
             <Container className="nftSlectContaine">
-                <NFTdetails />
+                
                 <div className="row">
                     <div className="nftListCol col-lg-8">
                         <div className="mobileOnly">

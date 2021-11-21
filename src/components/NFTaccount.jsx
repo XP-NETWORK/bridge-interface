@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Image, Modal, Button, Header, Title, Body, Container, Dropdown, Toggle, Menu, Item  } from "react-bootstrap";
 
 import NFTdetails from './NFTdetails';
@@ -41,12 +41,13 @@ import InfLith from '../assets/img/icons/infoLifht.svg';
 import INF from '../assets/img/icons/Inf.svg';
 
 import RedClose from '../assets/img/icons/RedClose.svg';
-
+import NFTsuccess from './NFTsuccess';
 function NFTaccount() {
+    
     return (
-        <div className="NFTaccount">
+        <div className="NFTaccount" >
             <Container className="nftSlectContaine">
-                <NFTdetails/>
+                
                 <div className="row">
                     <div className="nftListCol col-lg-8">
                         <div className="mobileOnly">
@@ -63,7 +64,7 @@ function NFTaccount() {
                             <Approval />
                             <SendFees />
                             <div className="nftSendBtn disenable">
-                                <a href="#" className="themBtn">Send</a>
+                            <NFTsuccess/>
                             </div>
                         </div>
                     </div>

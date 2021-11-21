@@ -33,10 +33,10 @@ function NFTsuccess() {
     return (
         <div>
 
-            <Button variant="primary" onClick={handleShow}>
+            {/*<Button variant="primary" onClick={handleShow}>
                 NFT Success
-            </Button>
-
+    </Button>*/}
+            <a href="#" className="themBtn" onClick={handleShow}>Send</a>
             <Modal show={show} onHide={handleClose} className="nftSuccessMod">
                 <Modal.Header>
                     <Modal.Title><img src={Success} /> Success</Modal.Title>

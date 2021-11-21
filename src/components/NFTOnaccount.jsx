@@ -38,15 +38,17 @@ import RelBlue from '../assets/img/icons/RelBlue.svg';
 import RelWhit from '../assets/img/icons/RelWhit.svg';
 
 import RedClose from '../assets/img/icons/RedClose.svg';
+import NFTsuccess from './NFTsuccess';
 
 
 
 
 function NFTOnaccount() {
+    
     return (
         <div className="NFTaccount">
             <Container className="nftSlectContaine">
-                <NFTdetails />
+                
                 <div className="row">
                     <div className="nftListCol col-lg-8">
                         <div className="mobileOnly">
@@ -62,8 +64,8 @@ function NFTOnaccount() {
                         <div className="mobileOnly">
                             <Approval />
                             <SendFees />
-                            <div className="nftSendBtn disenable">
-                                <a href="#" className="themBtn">Send</a>
+                            <div className="nftSendBtn">
+                            <NFTsuccess/>
                             </div>
                         </div>
                     </div>
@@ -78,7 +80,7 @@ function NFTOnaccount() {
                                 <Approval />
                                 <SendFees />
                                 <div className="nftSendBtn ">
-                                    <a href="#" className="themBtn">Send</a>
+                                    <NFTsuccess/>
                                 </div>
                             </form>
                         </div>

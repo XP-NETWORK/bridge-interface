@@ -37,7 +37,7 @@ function NFTlistTopValid() {
             <div className="yourNft desktopOnly">
                 Your NFTs on <span className="reloadNfts"><img src={BSC} alt="NFT Name" /> BSC <img src={RelBlue} /></span>
             </div>
-            <div className="yourNft seleNftMob">
+            <div className="yourNft seleNftMob mobileOnly">
                 Select NFT <span>/ 12</span>
             </div>
             <div className="nftTopRIght">

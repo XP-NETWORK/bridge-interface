@@ -24,8 +24,6 @@ return (
         <NFTOnaccount />
         <NFTNoaccounts/>
         <Transactionhistory />
-        <NFTsuccess />
-        <NFTworng />
         <Aleart />
       </Router>
     </div>

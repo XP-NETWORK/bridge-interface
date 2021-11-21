@@ -31,6 +31,7 @@ import InfLith from '../../assets/img/icons/infoLifht.svg';
 import INF from '../../assets/img/icons/Inf.svg';
 
 import RedClose from '../../assets/img/icons/RedClose.svg';
+import NFTdetails from '../NFTdetails';
 
 function NFTlistView() {
     return (
@@ -38,67 +39,67 @@ function NFTlistView() {
         <div className="nftListBox nftListView">
             <ul className="nftSelected">
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_3} alt="NFT" /> 333333 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_3} alt="NFT" /> 333333 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_4} alt="NFT" /> 2222 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_4} alt="NFT" /> 2222 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_5} alt="NFT" /> name 111 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_5} alt="NFT" /> name 111 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_3} alt="NFT" /> 333333 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_3} alt="NFT" /> 333333 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_4} alt="NFT" /> 2222 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_4} alt="NFT" /> 2222 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_5} alt="NFT" /> name 111 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_5} alt="NFT" /> name 111 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_3} alt="NFT" /> 333333 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_3} alt="NFT" /> 333333 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_4} alt="NFT" /> 2222 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_4} alt="NFT" /> 2222 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_5} alt="NFT" /> name 111 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_5} alt="NFT" /> name 111 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <span className="NFTInf"><img src={INF} /></span> <span className="Close"><img src={Close} /></span>
+                    <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>
             </ul>
         </div>

@@ -29,7 +29,7 @@ import INF from '../../assets/img/icons/Inf.svg';
 import RelBlue from '../../assets/img/icons/RelBlue.svg';
 import RelWhit from '../../assets/img/icons/RelWhit.svg';
 import RedClose from '../../assets/img/icons/RedClose.svg';
-
+import NFTdetails from '../NFTdetails';
 
 
 function NFTOnValid() {
@@ -43,7 +43,7 @@ function NFTOnValid() {
                             <span className="nftImage"><img src={NFT_1} /></span>
                         </div>
                         <div className="nftCont">
-                            <span className="nftName">TheMonaLana <span className="NFTInf"><img src={INF} /></span></span>
+                            <span className="nftName">TheMonaLana <NFTdetails/></span>
                             <span className="nftNumber">784</span>
                         </div>
                     </div>

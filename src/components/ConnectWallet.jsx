@@ -14,7 +14,7 @@ import Elrond from '../assets/img/wallet/Elrond.svg';
 import Ledger from '../assets/img/wallet/Ledger.svg';
 import Maiar from '../assets/img/wallet/Maiar.svg';
 import Trezor from '../assets/img/wallet/Trezor.svg';
-
+import NFTworng from './NFTworng';
 
 function ConnectWallet() {
 
@@ -29,7 +29,9 @@ function ConnectWallet() {
             {/* <Button variant="primary" onClick={handleShow}>
                 Wallet
             </Button> */}
-
+            <div className="connectNft">
+                    <a href="#" className="themBtn" onClick={handleShow}>Continue bridging -<span>{'>'}</span> </a>
+                </div>
             <Modal show={show} onHide={handleClose} className="ChainModal">
                 <Modal.Header>
                     <span className="wallet">
@@ -43,7 +45,7 @@ function ConnectWallet() {
                 <Modal.Body>
                     <div className="walletListBox">
                         <ul className="walletList scrollSty">
-                            <li className="wllListItem"><img src={MetaMask} /> MetaMask</li>
+                            <NFTworng/>
                             <li className="wllListItem"><img src={Elrond} /> Elrond</li>
                             <li className="wllListItem"><img src={Ledger} /> Ledger</li>
                             <li className="wllListItem"><img src={Maiar} /> Maiar</li>

@@ -43,13 +43,13 @@ import InfLith from '../assets/img/icons/infoLifht.svg';
 import INF from '../assets/img/icons/Inf.svg';
 
 import RedClose from '../assets/img/icons/RedClose.svg';
-
+import NFTsuccess from './NFTsuccess';
 
 function NFTaccountList() {
     return (
         <div className="NFTaccount">
             <Container className="nftSlectContaine">
-                <NFTdetails />
+                
                 <div className="row">
                     <div className="nftListCol col-lg-8">
                         <div className="mobileOnly">
@@ -66,7 +66,7 @@ function NFTaccountList() {
                             <Approval />
                             <SendFees />
                             <div className="nftSendBtn disenable">
-                                <a href="#" className="themBtn">Send</a>
+                            <NFTsuccess/>
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@ function NFTaccountList() {
                                 <Approval />
                                 <SendFees />
                                 <div className="nftSendBtn disenable">
-                                    <a href="#" className="themBtn">Send</a>
+                                <NFTsuccess/>
                                 </div>
                             </form>
                         </div>
