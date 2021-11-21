@@ -15,6 +15,9 @@ const generalSlice = createSlice({
     },
     setChainModal(state, action){
         state.showChainModal = action.payload;
+    },
+    setDepartureOrDestination(state, action){
+      state.departureOrDestination = action.payload
     }
   },
 });
@@ -22,7 +25,8 @@ const generalSlice = createSlice({
 export const { toggleNFTInfo, 
     setTo, 
     setFrom,
-    setChainModal
+    setChainModal,
+    setDepartureOrDestination
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

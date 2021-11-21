@@ -14,8 +14,6 @@ import Xdai from "../assets/img/chain/Xdai.svg"
 import Solana from "../assets/img/chain/Solana.svg"
 
 export default function NFTChainListBox() {
-    console.log("chains", chains);
-
     return (
         <div className="nftChainListBox">
         <form action="#">
