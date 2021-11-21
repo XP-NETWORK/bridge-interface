@@ -9,6 +9,7 @@ import ChainSearch from './innercomponents/ChainSearch';
 export default function NFTChainListBox() {
     const dispatch = useDispatch()
     const departureOrDestination = useSelector(state => state.general.departureOrDestination)
+    const chainSearch = useSelector(state => state.general.chainSearch)
     const handleClose = () => {
         dispatch(setChainModal(false))
         dispatch(setDepartureOrDestination(""))
@@ -24,18 +25,14 @@ export default function NFTChainListBox() {
         }
     }
 
-    // const handleChange = e => {
-    //     setSearch(e.target.value)
-    // }
-
     return (
         <div className="nftChainListBox">
         <ChainSearch />
         <ul className="nftChainList scrollSty">
-            { chains ? chains.map( chain => { 
-                const { image, text, key, value, coming } = chain;
+            { chains ? chains.filter(chain => chain.text.includes(chainSearch ? chainSearch : '')).map( filteredChain => { 
+                const { image, text, key, value, coming } = filteredChain;
                 return ( 
-                <li onClick={() => chainSelectHandler(chain)} className="nftChainItem"><img className="modalSelectOptionsImage" src={image.src} alt={key} />
+                <li onClick={() => chainSelectHandler(filteredChain)} className="nftChainItem"><img className="modalSelectOptionsImage" src={image.src} alt={key} />
                     <div className="modalSelectOptionsText">
                         {text}
                     </div>

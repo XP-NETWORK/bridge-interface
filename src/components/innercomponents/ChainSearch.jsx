@@ -8,6 +8,7 @@ export default function ChainSearch() {
     const search = useSelector(state => state.general.chainSearch)
     const dispatch = useDispatch()
     const handleChange = e => {
+        e.preventDefault()
         dispatch(setChainSearch(e.target.value))
     }
 
