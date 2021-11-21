@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { chains }from '../components/values'
-import { setChainModal, setDepartureOrDestination, setTo, setFrom } from "../store/reducers/generalSlice"
+import { setChainModal, setDepartureOrDestination, setTo, setFrom, setChainSearch } from "../store/reducers/generalSlice"
 import ChainSearch from './innercomponents/ChainSearch';
 
 
@@ -13,6 +13,7 @@ export default function NFTChainListBox() {
     const handleClose = () => {
         dispatch(setChainModal(false))
         dispatch(setDepartureOrDestination(""))
+        dispatch(setChainSearch(''))
     }
     const chainSelectHandler = chain => {
         if(departureOrDestination === "departure"){
