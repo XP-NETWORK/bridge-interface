@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import Search from '../assets/img/icons/Search.svg';
 import { chains }from '../components/values'
 import { setChainModal, setDepartureOrDestination, setTo, setFrom } from "../store/reducers/generalSlice"
+import ChainSearch from './innercomponents/ChainSearch';
 
 
 export default function NFTChainListBox() {
@@ -23,14 +24,13 @@ export default function NFTChainListBox() {
         }
     }
 
+    // const handleChange = e => {
+    //     setSearch(e.target.value)
+    // }
+
     return (
         <div className="nftChainListBox">
-        <form action="#">
-            <div className="searchChain">
-                <input type="search" placeholder="Search" />
-                <button type="submit"><img src={Search} alt="" /></button>
-            </div>
-        </form>
+        <ChainSearch />
         <ul className="nftChainList scrollSty">
             { chains ? chains.map( chain => { 
                 const { image, text, key, value, coming } = chain;
