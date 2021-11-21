@@ -10,6 +10,7 @@ import Search from '../assets/img/icons/Search.svg';
 import Wallet from '../assets/img/wallet/wallet.svg';
 
 import MetaMask from '../assets/img/wallet/MetaMask.svg';
+import Tron from '../assets/img/wallet/Tron.svg';
 import Elrond from '../assets/img/wallet/Elrond.svg';
 import Ledger from '../assets/img/wallet/Ledger.svg';
 import Maiar from '../assets/img/wallet/Maiar.svg';
@@ -45,12 +46,13 @@ function ConnectWallet() {
                     <div className="walletListBox">
                         <ul className="walletList scrollSty">
                             <NFTworng/>
-                            <li className="wllListItem"><img src={MetaMask} /> MetaMask</li>
-                            <li className="wllListItem"><img src={Elrond} /> Elrond</li>
-                            <li className="wllListItem"><img src={Ledger} /> Ledger</li>
-                            <li className="wllListItem"><img src={Maiar} /> Maiar</li>
-                            <li className="wllListItem"><img src={Trezor} /> Trezor</li>
-                            <li className="wllListItem"><img src={WalletConnect} /> WalletConnect</li>
+                            <li style={ from.type === "EVM" ? {} : OFF } className="wllListItem"><img src={MetaMask} /> MetaMask</li>
+                            <li style={ from.type === "Elrond" ? {} : OFF }  className="wllListItem"><img src={Elrond} /> Elrond</li>
+                            <li style={ OFF } className="wllListItem"><img src={Ledger} /> Ledger</li>
+                            <li style={ from.type === "Elrond" ? {} : OFF } className="wllListItem"><img src={Maiar} /> Maiar</li>
+                            <li style={ OFF } className="wllListItem"><img src={Trezor} /> Trezor</li>
+                            <li style={ from.type === "EVM" ? {} : OFF } className="wllListItem"><img src={WalletConnect} /> WalletConnect</li>
+                            <li style={ from.type === "Tron" ? {} : OFF } className="wllListItem"><img src={Tron} /> TronLink</li>
                         </ul>
                     </div>
                 </Modal.Body>
