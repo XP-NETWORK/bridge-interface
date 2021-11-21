@@ -12,13 +12,13 @@ export default function NFTChainListBox() {
         dispatch(setChainModal(false))
         dispatch(setDepartureOrDestination(""))
     }
-    const chainSelectHandler = value => {
+    const chainSelectHandler = chain => {
         if(departureOrDestination === "departure"){
-            dispatch(setFrom(value))
+            dispatch(setFrom(chain))
             handleClose()
         }
         else{
-            dispatch(setTo(value))
+            dispatch(setTo(chain))
             handleClose()
         }
     }
@@ -35,7 +35,7 @@ export default function NFTChainListBox() {
             { chains ? chains.map( chain => { 
                 const { image, text, key, value, coming } = chain;
                 return ( 
-                <li onClick={() => chainSelectHandler(value)} className="nftChainItem"><img className="modalSelectOptionsImage" src={image.src} alt={key} />
+                <li onClick={() => chainSelectHandler(chain)} className="nftChainItem"><img className="modalSelectOptionsImage" src={image.src} alt={key} />
                     <div className="modalSelectOptionsText">
                         {text}
                     </div>

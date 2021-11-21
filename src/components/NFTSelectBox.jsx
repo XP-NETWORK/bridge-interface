@@ -21,28 +21,43 @@ import { setChainModal, setDepartureOrDestination } from "../store/reducers/gene
 import { useSelector } from 'react-redux';
 
 export default function NFTSelectBox() {
+
     const dispatch = useDispatch()
+
+    const from = useSelector(state => state.general.from)
+    const to = useSelector(state => state.general.to)
+
     const handleShow = (str) => {
-        // debuggers
         dispatch(setChainModal(true));
         str === "departure" ? dispatch(setDepartureOrDestination("departure")) : dispatch(setDepartureOrDestination("destination"))
     }
 
+
     return (
         <div className="nftSelectBox">
         <div className="selChain seleDepat" onClick={() => handleShow("departure")}>
-            <div className="seleDepatSelec">
-                <img src={Departure} alt="" />
-                Select departure chain
-            </div>
+            { from ? 
+                <div className="seleDepatSelec">
+                    <img src={from.image.src} alt="" />{from.text}
+                </div>
+                :
+                <div className="seleDepatSelec">
+                    <img src={Departure} alt="" />Select departure chain
+                </div>
+            }
         </div>
-        <span className="chainArrow"><img src={ChainArrow} alt="" /></span>
-        <span className="LineArrow"><img src={LineArrow} alt="" /></span>
+        <span className="chainArrow"><img src={ ChainArrow } alt="" /></span>
+        <span className="LineArrow"><img src={ LineArrow } alt="" /></span>
         <div className="selChain seleDesti" onClick={() => handleShow("destination")}>
-            <div className="seleDestiSele">
-                <img src={Destination} alt="" />
-                Select destination chain
-            </div>
+            { to ?
+                <div className="seleDestiSele">
+                    <img src={to.image.src} alt="" />{to.text}
+                </div>
+                :
+                <div className="seleDestiSele">
+                    <img src={Destination} alt="" />Select destination chain
+                </div>
+            }
         </div>
 </div>
     )
