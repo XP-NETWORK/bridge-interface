@@ -12,13 +12,9 @@ import Departure from '../assets/img/nftSelect/departure.svg';
 import Destination from '../assets/img/nftSelect/destination.svg';
 import ChainArrow from '../assets/img/nftSelect/ChianArrow.svg';
 import LineArrow from '../assets/img/nftSelect/Line.svg';
-// import Video from '../assets/img/icons/Video_icon.svg';
-// import INF from '../assets/img/icons/Inf.svg';
-// import Close from '../assets/img/icons/close.svg';
-// import Search from '../assets/img/icons/Search.svg';
 import { useDispatch } from 'react-redux';
-import { setChainModal, setDepartureOrDestination } from "../store/reducers/generalSlice"
-import { useSelector } from 'react-redux';
+import { setChainModal, setDepartureOrDestination, setTo, setFrom  } from "../store/reducers/generalSlice"
+import { useSelector, } from 'react-redux';
 
 export default function NFTSelectBox() {
 
@@ -32,6 +28,12 @@ export default function NFTSelectBox() {
         str === "departure" ? dispatch(setDepartureOrDestination("departure")) : dispatch(setDepartureOrDestination("destination"))
     }
 
+    const switchChains = e => {
+        e.preventDefault();
+        const temp = to
+        dispatch(setTo(from))
+        dispatch(setFrom(temp))
+    }
 
     return (
         <div className="nftSelectBox">
@@ -46,7 +48,7 @@ export default function NFTSelectBox() {
                 </div>
             }
         </div>
-        <span className="chainArrow"><img src={ ChainArrow } alt="" /></span>
+        <span onClick={ e => switchChains(e)} className="chainArrow"><img src={ ChainArrow } alt="" /></span>
         <span className="LineArrow"><img src={ LineArrow } alt="" /></span>
         <div className="selChain seleDesti" onClick={() => handleShow("destination")}>
             { to ?

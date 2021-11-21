@@ -14,6 +14,23 @@
     
 }
 
+@media only screen and (max-width: 1024px) {
+    
+    .infText {
+        right: -32px;
+        left: auto;
+        transform: unset;
+    }
+
+    .infText:after {
+        left: auto;
+        transform: rotate(45deg);
+        right: 35px;
+    }
+
+}
+
+
 @media only screen and (min-width: 768px) and (max-width: 991px) {
 
 }
@@ -170,6 +187,7 @@
         min-height: 46px;
         display: flex;
         align-items: center;
+        width: 100%;
     }
 
     .powerBy {
@@ -295,6 +313,22 @@
 
     .collecSlideCont .slideItem {
         padding: 0 11px;
+    }
+        
+    .yourNft.seleNftMob.mobileOnly span {
+        height: auto;
+    }
+
+    .navMenu.navbar-nav .nav-link {
+        margin-left: 0;
+    }
+
+    .infText {
+        right: -15px;
+    }
+
+    .infText:after {
+        right: 18px;
     }
 
 
