@@ -272,6 +272,10 @@ span.chainArrow {
     z-index: 2000;
 }
 
+span.chainArrow:hover {
+    cursor: pointer;
+}
+
 span.LineArrow img {
     display: block;
     width: 100%;

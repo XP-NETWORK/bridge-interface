@@ -19,12 +19,12 @@ return (
     <div className={"App"}>
       <Router>
         <XpBridge/>
-        <NFTaccount/>
-        <NFTaccountList />
-        <NFTOnaccount />
-        <NFTNoaccounts/>
-        <Transactionhistory />
-        <Aleart />
+        {/* <NFTaccount/> */}
+        {/* <NFTaccountList /> */}
+        {/* <NFTOnaccount /> */}
+        {/* <NFTNoaccounts/> */}
+        {/* <Transactionhistory /> */}
+        {/* <Aleart /> */}
       </Router>
     </div>
   );
