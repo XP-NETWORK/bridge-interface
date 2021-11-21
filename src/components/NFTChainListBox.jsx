@@ -17,17 +17,17 @@ export default function NFTChainListBox() {
         </form>
         <ul className="nftChainList scrollSty">
             <li className="nftChainItem"><img src={Ethereum} /> Ethereum</li>
-            <li className="nftChainItem"><img src={HECO} /> HECO</li>
-            <li className="nftChainItem"><img src={Elrond} /> Elrond</li>
             <li className="nftChainItem"><img src={BSC} /> BSC</li>
-            <li className="nftChainItem"><img src={Cardano} /> Cardano</li>
-            <li className="nftChainItem"><img src={Algorand} /> Algorand</li>
-            <li className="nftChainItem"><img src={Ethereum} /> Ethereum</li>
-            <li className="nftChainItem"><img src={HECO} /> HECO</li>
+            {/* <li className="nftChainItem"><img src={Tron} /> Tron</li> */}
             <li className="nftChainItem"><img src={Elrond} /> Elrond</li>
-            <li className="nftChainItem"><img src={BSC} /> BSC</li>
-            <li className="nftChainItem"><img src={Cardano} /> Cardano</li>
+            {/* <li className="nftChainItem"><img src={Polygon} /> Polygon</li> */}
+            {/* <li className="nftChainItem"><img src={Avalanche} /> Avalanche</li> */}
+            {/* <li className="nftChainItem"><img src={Fantom} /> Fantom</li> */}
             <li className="nftChainItem"><img src={Algorand} /> Algorand</li>
+            {/* <li className="nftChainItem"><img src={xDai} /> xDai</li> */}
+            {/* <li className="nftChainItem"><img src={Solana} /> Solana</li> */}
+            <li className="nftChainItem"><img src={Cardano} /> Cardano</li>
+            <li className="nftChainItem"><img src={HECO} /> HECO</li>
         </ul> 
     </div>
     )

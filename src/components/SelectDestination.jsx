@@ -66,28 +66,6 @@ function SelectDestination() {
                     </span>
                 </Modal.Header>
                 <Modal.Body>
-                    {/* <div className="nftChainListBox">
-                        <form action="#">
-                            <div className="searchChain">
-                                <input type="search" placeholder="Search" />
-                                <button type="submit"><img src={Search} alt="" /></button>
-                            </div>
-                        </form>
-                        <ul className="nftChainList scrollSty">
-                            <li className="nftChainItem"><img src={Ethereum} /> Ethereum</li>
-                            <li className="nftChainItem"><img src={HECO} /> HECO</li>
-                            <li className="nftChainItem"><img src={Elrond} /> Elrond</li>
-                            <li className="nftChainItem"><img src={BSC} /> BSC</li>
-                            <li className="nftChainItem"><img src={Cardano} /> Cardano</li>
-                            <li className="nftChainItem"><img src={Algorand} /> Algorand</li>
-                            <li className="nftChainItem"><img src={Ethereum} /> Ethereum</li>
-                            <li className="nftChainItem"><img src={HECO} /> HECO</li>
-                            <li className="nftChainItem"><img src={Elrond} /> Elrond</li>
-                            <li className="nftChainItem"><img src={BSC} /> BSC</li>
-                            <li className="nftChainItem"><img src={Cardano} /> Cardano</li>
-                            <li className="nftChainItem"><img src={Algorand} /> Algorand</li>
-                        </ul> 
-                    </div> */}
                     <NFTChainListBox />
                 </Modal.Body>
             </Modal>
