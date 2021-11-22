@@ -40,7 +40,7 @@ function NFTgridView() {
     return (
         <div className="nftListBox">
             <div className="row">
-                { nfts ? nfts.map( (nft, i) => <NFT nft={nft} index={i} />) : <NFTempty /> }
+                { nfts ? nfts.map((nft, index) => <NFT nft={nft} index={index} />) : <NFTempty /> }
                 {/* <div className="col-lg-4 col-md-4 col-sm-6 col-6">
                     <div className="singleNft  nftSelect">
                         <div className="nftImageBox">

@@ -37,7 +37,7 @@ const generalSlice = createSlice({
       state.NFTList = action.payload
     },
     setSelectedNFTList(state, action){
-      state.selectedNFTList = [...state.selectedNFTList, action.payload] 
+      state.selectedNFTList = [...state.selectedNFTList, action.payload]
     },
     cleanSelectedNFTList(state, action){
       state.selectedNFTList = []
