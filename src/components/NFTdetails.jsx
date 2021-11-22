@@ -11,8 +11,8 @@ import nftDetails_1 from '../assets/img/nfts/nftDetails_1.png';
 
 import INF from '../assets/img/icons/Inf.svg';
 
-function NFTdetails( nftInf ){
-    const { name, description, image, attributes, uri, native } = nftInf.nftInf
+function NFTdetails({ nftInf }){
+    const { name, description, image, attributes, uri, native } = nftInf
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);

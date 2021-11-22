@@ -6,6 +6,7 @@ import SelectedNFT_5 from '../../assets/img/nfts/SelectedNFT_5.png';
 import Close from '../../assets/img/icons/close.svg';
 import NFTdetails from '../NFTdetails';
 import { useSelector } from 'react-redux';
+import NFTempty from './NFTempty';
 
 function NFTlistView() {
     const nfts = useSelector(state => state.general.NFTList)
@@ -15,9 +16,13 @@ function NFTlistView() {
     return (
         <div className="nftListBox nftListView">
             <ul className="nftSelected">
+            { nfts ?  nfts.filter(nft => nft.name.includes(search ? search : '') || nft.native.owner.includes(search ? search : '')).map((nft, index) => 
                 <li className="nftSelecItem">
-                    <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
-                </li>
+                    <img src={nft.image} alt="NFT" /> 333333 NFT <NFTdetails nftInf={nft}/> <span className="Close"><img src={Close} /></span>
+                </li>) 
+                : 
+                <NFTempty />}
+                {/* { nfts ?  nfts.filter(nft => nft.name.includes(search ? search : '') || nft.native.owner.includes(search ? search : '')).map((nft, index) => <NFT nft={nft} index={index} />) : <NFTempty />} */}
                 {/* <li className="nftSelecItem">
                     <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <NFTdetails/> <span className="Close"><img src={Close} /></span>
                 </li>

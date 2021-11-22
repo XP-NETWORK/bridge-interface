@@ -20,6 +20,7 @@ import { parseNFTS } from "../wallet/helpers"
 function NFTaccount() {
     const dispatch = useDispatch()
     const from = useSelector(state => state.general.from.key)
+    const NFTListView = useSelector(state => state.general.NFTListView)
     const account = useSelector(state => state.general.account)
     const mainnetConfig = ChainFactoryConfigs.MainNet;
     const factory = ChainFactory(Config, mainnetConfig());
@@ -79,7 +80,8 @@ function NFTaccount() {
                         </div>
                         <div className="nft_selectBox">
                             <NFTlistTop />
-                            <NFTgridView/>
+                            {/* <NFTgridView/> */}
+                            { NFTListView ? <NFTlistView /> : <NFTgridView/>}
                             {/* <NFTlistView /> */}
                         </div>
                         <div className="mobileOnly">
