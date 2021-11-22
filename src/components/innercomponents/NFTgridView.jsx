@@ -29,35 +29,18 @@ import NFTdetails from '../NFTdetails';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedNFTList }  from "../../store/reducers/generalSlice"
 import NFTempty from './NFTempty';
+import NFT from './NFT';
 
 function NFTgridView() {
     const nfts = useSelector(state => state.general.NFTList)
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
-    const dispatch = useDispatch()
-
-    const addToSelectedList = nft => {
-        dispatch(setSelectedNFTList(nft))
-    }
-
-
 
     useEffect(() => { }, [selectedNFTs])
 
     return (
         <div className="nftListBox">
             <div className="row">
-                { nfts ? nfts.map( (nft, i) => <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                <div onClick={ ()=> addToSelectedList(nft)} className="singleNft">
-                    <div className="nftImageBox">
-                            <span className="selectNft"><img src={CheckGreen} /></span>
-                            <span className="nftImage"><img src={nft.image} /></span>
-                        </div>
-                        <div className="nftCont">
-                            <span className="nftName">{nft.name} <NFTdetails nftInf={nft} index={i} /></span>
-                            <span className="nftNumber">{nft.native.tokenId}</span>
-                        </div>
-                    </div>
-                </div>) : <NFTempty /> }
+                { nfts ? nfts.map( (nft, i) => <NFT nft={nft} index={i} />) : <NFTempty /> }
                 {/* <div className="col-lg-4 col-md-4 col-sm-6 col-6">
                     <div className="singleNft  nftSelect">
                         <div className="nftImageBox">

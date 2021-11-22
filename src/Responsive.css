@@ -321,6 +321,7 @@
 
     .navMenu.navbar-nav .nav-link {
         margin-left: 0;
+        max-width: fit-content;
     }
 
     .infText {

@@ -24,18 +24,6 @@ body {
     z-index: 1;
 }
 
-.crossChainTab * {
-  font-family: 'Inconsolata', monospace !important;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5 {
-  font-family: 'Inconsolata', monospace !important;
-}
-
 ul {
   margin: 0;
   padding: 0;
@@ -78,7 +66,7 @@ h3 {
     text-align: right;
     color: #F4F3F9;
     opacity: 0.9;
-    max-width: fit-content;
+    /* max-width: fit-content; */
 }
 
 .navMenu.navbar-nav .nav-link.active,
@@ -121,6 +109,7 @@ footer {
     flex-wrap: wrap;
     padding: 8px 45px 25px 45px;
     border: 1px solid #292F3F;
+    margin-top: 250px;
 }
 
 ul.socialLInks {
@@ -269,11 +258,6 @@ span.chainArrow {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 2000;
-}
-
-span.chainArrow:hover {
-    cursor: pointer;
 }
 
 span.LineArrow img {
@@ -544,7 +528,6 @@ span.wallet {
     padding: 19px 30px 10px 30px;
     background: linear-gradient(309.48deg, #282E3C -3.65%, rgba(40, 46, 60, 0) 122.77%);
     border-bottom: 1px solid #2D3342;
-    overflow-y: scroll;
 }
 
 .walletList {
@@ -1479,7 +1462,7 @@ span.statComp img {
 
 .nonftAcc {
     position: absolute;
-    left: 50%;
+    left: 49%;
     top: 160px;
     width: 505px;
     display: flex;
