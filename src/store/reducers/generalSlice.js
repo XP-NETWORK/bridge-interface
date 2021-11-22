@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   step: 1,
+  selectedNFTList:[],
 };
 
 const generalSlice = createSlice({
@@ -36,8 +37,7 @@ const generalSlice = createSlice({
       state.NFTList = action.payload
     },
     setSelectedNFTList(state, action){
-      state.selectedNFTList ? state.selectedNFTList = [...state.selectedNFTList, action.payload] :
-      state.selectedNFTList =  action.payload
+      state.selectedNFTList = [...state.selectedNFTList, action.payload] 
     }
   },
 });
