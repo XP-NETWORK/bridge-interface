@@ -38,6 +38,9 @@ const generalSlice = createSlice({
     },
     setSelectedNFTList(state, action){
       state.selectedNFTList = [...state.selectedNFTList, action.payload] 
+    },
+    cleanSelectedNFTList(state, action){
+      state.selectedNFTList = []
     }
   },
 });
@@ -52,7 +55,8 @@ export const { toggleNFTInfo,
     setAccount,
     setMetaMask,
     setNFTList,
-    setSelectedNFTList
+    setSelectedNFTList,
+    cleanSelectedNFTList
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

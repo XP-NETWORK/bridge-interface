@@ -40,14 +40,14 @@ function NFTgridView() {
     return (
         <div className="nftListBox">
             <div className="row">
-                { nfts ? nfts.map( nft => <div className="col-lg-4 col-md-4 col-sm-6 col-6">
+                { nfts ? nfts.map( (nft, i) => <div className="col-lg-4 col-md-4 col-sm-6 col-6">
                     <div onClick={ ()=> addToSelectedList(nft)} className="singleNft">
                     <div className="nftImageBox">
                             <span className="selectNft"><img src={CheckGreen} /></span>
                             <span className="nftImage"><img src={nft.image} /></span>
                         </div>
                         <div className="nftCont">
-                            <span className="nftName">{nft.name} <NFTdetails nftInf={nft} /></span>
+                            <span className="nftName">{nft.name} <NFTdetails nftInf={nft} index={i} /></span>
                             <span className="nftNumber">{nft.native.tokenId}</span>
                         </div>
                     </div>

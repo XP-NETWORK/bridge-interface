@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import SelectedNFT_1 from '../../assets/img/nfts/SelectedNFT_1.png';
 import SelectedNFT_2 from '../../assets/img/nfts/SelectedNFT_2.png';
@@ -8,10 +8,16 @@ import SelectedNFT_5 from '../../assets/img/nfts/SelectedNFT_5.png';
 import Close from '../../assets/img/icons/close.svg';
 import Back from '../../assets/img/icons/Back.svg';
 import { useSelector } from 'react-redux';
+import { cleanSelectedNFTList } from "../../store/reducers/generalSlice"
+import { useDispatch } from 'react-redux';
 
 function SelectedNFT() {
-
+    const dispatch = useDispatch()
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
+    const handleClear = () => {
+        dispatch(cleanSelectedNFTList())
+    }
+    useEffect(() => { }, [selectedNFTs])
 
     return (
         <div className="nftSelectList">
@@ -20,7 +26,7 @@ function SelectedNFT() {
                     <a href="#" className="backBtn mobileOnly"><img src={Back} alt="Back" /></a>
                     <span className="mobileOnly">Selected NFTs</span>
                     <span className="desktopOnly">Selected NFT <span>/ {selectedNFTs.length}</span></span>
-                    <button className="clearNft">Clear all</button>
+                    <button onClick={() => handleClear()} className="clearNft">Clear all</button>
                 </div>
             </div>
             <ul className="nftSelected">
