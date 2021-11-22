@@ -25,12 +25,27 @@ import INF from '../../assets/img/icons/Inf.svg';
 
 import RedClose from '../../assets/img/icons/RedClose.svg';
 import NFTdetails from '../NFTdetails';
-function NFTgridView() {
-    return (
+import { useSelector } from 'react-redux';
 
+function NFTgridView() {
+    const nfts = useSelector(state => state.general.NFTList)
+
+    return (
         <div className="nftListBox">
             <div className="row">
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
+                {/* { nfts ? nfts.map( nft => <div className="col-lg-4 col-md-4 col-sm-6 col-6">
+                    <div className="singleNft nftSelect">
+                    <div className="nftImageBox">
+                            <span className="selectNft"><img src={CheckGreen} /></span>
+                            <span className="nftImage"><img src={nft.uri} /></span>
+                        </div>
+                        <div className="nftCont">
+                            <span className="nftName">TheMonaLana <NFTdetails/></span>
+                            <span className="nftNumber">784</span>
+                        </div>
+                    </div>
+                </div>) : '' } */}
+                {/* <div className="col-lg-4 col-md-4 col-sm-6 col-6">
                     <div className="singleNft nftSelect">
                         <div className="nftImageBox">
                             <span className="selectNft"><img src={CheckGreen} /></span>
@@ -41,8 +56,8 @@ function NFTgridView() {
                             <span className="nftNumber">784</span>
                         </div>
                     </div>
-                </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
+                </div> */}
+                {/* <div className="col-lg-4 col-md-4 col-sm-6 col-6">
                     <div className="singleNft">
                         <div className="nftImageBox">
                             <span className="selectNft"><img src={CheckGreen} /></span>
@@ -137,7 +152,7 @@ function NFTgridView() {
                             <span className="nftNumber">784</span>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )
