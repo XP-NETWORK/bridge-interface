@@ -17,7 +17,7 @@ function XpBridge() {
         <div className="nftContainer">
             { step === 1 ? <><NftSelect/><NftSlider/></> : "" }
             { step === 2 ? <NFTaccount/>  : '' }
-            <NFTworng />
+            {/* <NFTworng /> */}
             {/* { step === 3 ? <NFTsuccess/> : '' } */}
         </div>
     )

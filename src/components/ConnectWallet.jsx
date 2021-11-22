@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/connectors"
 import { EVM, ELROND, chainsConfig } from "../components/values"
-import { setAccount, setMetaMask } from "../store/reducers/generalSlice"
+import { setAccount, setMetaMask, setStep } from "../store/reducers/generalSlice"
 // import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
 function ConnectWallet() {
@@ -27,6 +27,7 @@ function ConnectWallet() {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const metaMask = useSelector(state => state.general.MetaMask)
     const {
         connector,
         library,
@@ -73,7 +74,8 @@ function ConnectWallet() {
 
     useEffect(() => {
         dispatch(setAccount(account))
-    }, [account])
+        if(metaMask)dispatch(setStep(2))
+    }, [account, metaMask])
 
     return (
         <div>
