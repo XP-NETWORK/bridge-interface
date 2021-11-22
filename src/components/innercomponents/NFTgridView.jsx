@@ -24,17 +24,24 @@ import InfLith from '../../assets/img/icons/infoLifht.svg';
 import INF from '../../assets/img/icons/Inf.svg';
 
 import RedClose from '../../assets/img/icons/RedClose.svg';
+
 import NFTdetails from '../NFTdetails';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSelectedNFTList }  from "../../store/reducers/generalSlice"
 
 function NFTgridView() {
     const nfts = useSelector(state => state.general.NFTList)
+    const dispatch = useDispatch()
+
+    const addToSelectedList = nft => {
+        dispatch(setSelectedNFTList(nft))
+    }
 
     return (
         <div className="nftListBox">
             <div className="row">
                 { nfts ? nfts.map( nft => <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft">
+                    <div onClick={ ()=> addToSelectedList(nft)} className="singleNft">
                     <div className="nftImageBox">
                             <span className="selectNft"><img src={CheckGreen} /></span>
                             <span className="nftImage"><img src={nft.image} /></span>
