@@ -4,6 +4,7 @@ import "./Global.css";
 import "./Responsive.css";
 import XpBridge from "./pages/XpBridge";
 import Alert from "./components/Alert";
+import NFTaccountList from "./components/NFTaccountList";
 
 
 
@@ -18,7 +19,8 @@ return (
         {/* <NFTNoaccounts/> */}
         {/* <Transactionhistory /> */}
         {/* <Aleart /> */}
-        <Alert />
+        {/* <Alert /> */}
+        {/* <NFTaccountList/> */}
       </Router>
     </div>
   );

@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   step: 1,
   selectedNFTList:[],
+  NFTListView: false
 };
 
 const generalSlice = createSlice({
@@ -50,6 +51,9 @@ const generalSlice = createSlice({
     },
     allSelected(state){
       state.selectedNFTList = state.NFTList 
+    },
+    setNFTsListView(state){
+      state.NFTListView = !state.NFTListView
     }
   },
 });
@@ -68,7 +72,8 @@ export const { toggleNFTInfo,
     cleanSelectedNFTList,
     removeFromSelectedNFTList,
     setSearchNFTList,
-    allSelected
+    allSelected,
+    setNFTsListView
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

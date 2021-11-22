@@ -5,6 +5,7 @@ import DestinationChainReload from './innercomponents/DestinationChainReload';
 import SelectedNFT from './innercomponents/SelectedNFT';
 import Approval from './innercomponents/Approval';
 import NFTgridView from './innercomponents/NFTgridView';
+import NFTlistView from './innercomponents/NFTlistView';
 import SendFees from './innercomponents/SendFees';
 import NFTlistTop from './innercomponents/NFTlistTop';
 
@@ -79,6 +80,7 @@ function NFTaccount() {
                         <div className="nft_selectBox">
                             <NFTlistTop />
                             <NFTgridView/>
+                            {/* <NFTlistView /> */}
                         </div>
                         <div className="mobileOnly">
                             <Approval />
