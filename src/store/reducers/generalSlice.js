@@ -44,6 +44,9 @@ const generalSlice = createSlice({
     },
     removeFromSelectedNFTList(state, action){
       state.selectedNFTList = state.selectedNFTList.filter((n,i) => i !== action.payload)
+    },
+    setSearchNFTList(state, action){
+      state.NFTListSearch = action.payload
     }
   },
 });
@@ -60,7 +63,8 @@ export const { toggleNFTInfo,
     setNFTList,
     setSelectedNFTList,
     cleanSelectedNFTList,
-    removeFromSelectedNFTList
+    removeFromSelectedNFTList,
+    setSearchNFTList
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
