@@ -33,122 +33,26 @@ function NFTgridView() {
     return (
         <div className="nftListBox">
             <div className="row">
-                {/* { nfts ? nfts.map( nft => <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft nftSelect">
+                { nfts ? nfts.map( nft => <div className="col-lg-4 col-md-4 col-sm-6 col-6">
+                    <div className="singleNft">
                     <div className="nftImageBox">
                             <span className="selectNft"><img src={CheckGreen} /></span>
-                            <span className="nftImage"><img src={nft.uri} /></span>
+                            <span className="nftImage"><img src={nft.image} /></span>
                         </div>
                         <div className="nftCont">
-                            <span className="nftName">TheMonaLana <NFTdetails/></span>
-                            <span className="nftNumber">784</span>
+                            <span className="nftName">{nft.name} <NFTdetails nftInf={nft} /></span>
+                            <span className="nftNumber">{nft.native.tokenId}</span>
                         </div>
                     </div>
-                </div>) : '' } */}
+                </div>) : '' }
                 {/* <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft nftSelect">
-                        <div className="nftImageBox">
-                            <span className="selectNft"><img src={CheckGreen} /></span>
-                            <span className="nftImage"><img src={NFT_1} /></span>
-                        </div>
-                        <div className="nftCont">
-                            <span className="nftName">TheMonaLana <NFTdetails/></span>
-                            <span className="nftNumber">784</span>
-                        </div>
-                    </div>
-                </div> */}
-                {/* <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft">
+                    <div className="singleNft  nftSelect">
                         <div className="nftImageBox">
                             <span className="selectNft"><img src={CheckGreen} /></span>
                             <span className="nftImage"><img src={NFT_2} /></span>
                         </div>
                         <div className="nftCont">
                             <span className="nftName">TheMonaLana <NFTdetails/></span>
-                            <span className="nftNumber">784</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft">
-                        <div className="nftImageBox">
-                            <span className="selectNft"><img src={CheckGreen} /></span>
-                            <span className="nftImage"><img src={NFT_3} /></span>
-                        </div>
-                        <div className="nftCont">
-                            <span className="nftName">TheMonaLana <NFTdetails/></span>
-                            <span className="nftNumber">784</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft nftSelect">
-                        <div className="nftImageBox">
-                            <span className="selectNft"><img src={CheckGreen} /></span>
-                            <span className="nftImage"><img src={NFT_4} /></span>
-                        </div>
-                        <div className="nftCont">
-                            <span className="nftName">TheMonaLana <NFTdetails/></span>
-                            <span className="nftNumber">784</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft">
-                        <div className="nftImageBox">
-                            <span className="selectNft"><img src={CheckGreen} /></span>
-                            <span className="nftImage"><img src={NFT_5} /></span>
-                        </div>
-                        <div className="nftCont">
-                            <span className="nftName">TheMonaLana <span className="NFTInf"><img src={INF} /></span></span>
-                            <span className="nftNumber">784</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft">
-                        <div className="nftImageBox">
-                            <span className="selectNft"><img src={CheckGreen} /></span>
-                            <span className="nftImage"><img src={NFT_6} /></span>
-                        </div>
-                        <div className="nftCont">
-                            <span className="nftName">TheMonaLana <span className="NFTInf"><img src={INF} /></span></span>
-                            <span className="nftNumber">784</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft">
-                        <div className="nftImageBox">
-                            <span className="selectNft"><img src={CheckGreen} /></span>
-                            <span className="nftImage"><img src={NFT_7} /></span>
-                        </div>
-                        <div className="nftCont">
-                            <span className="nftName">TheMonaLana <span className="NFTInf"><img src={INF} /></span></span>
-                            <span className="nftNumber">784</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft">
-                        <div className="nftImageBox">
-                            <span className="selectNft"><img src={CheckGreen} /></span>
-                            <span className="nftImage"><img src={NFT_8} /></span>
-                        </div>
-                        <div className="nftCont">
-                            <span className="nftName">TheMonaLana <span className="NFTInf"><img src={INF} /></span></span>
-                            <span className="nftNumber">784</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft">
-                        <div className="nftImageBox">
-                            <span className="selectNft"><img src={CheckGreen} /></span>
-                            <span className="nftImage"><img src={NFT_9} /></span>
-                        </div>
-                        <div className="nftCont">
-                            <span className="nftName">TheMonaLana <span className="NFTInf"><img src={INF} /></span></span>
                             <span className="nftNumber">784</span>
                         </div>
                     </div>

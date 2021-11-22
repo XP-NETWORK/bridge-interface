@@ -44,7 +44,6 @@ function NFTaccount() {
     const getNFTsList = async () => {
         try {
             const chain = await handleChainFactory()
-            const bsc = await factory.inner(Chain.BSC);
             const nfts = await factory.nftList(
                 chain,    // The chain of interest 
                 account    // The public key of the NFT owner

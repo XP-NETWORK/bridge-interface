@@ -11,10 +11,9 @@ import nftDetails_1 from '../assets/img/nfts/nftDetails_1.png';
 
 import INF from '../assets/img/icons/Inf.svg';
 
-function NFTdetails() {
-
+function NFTdetails( nftInf ){
+    const { name, description, image, attributes, uri, native } = nftInf.nftInf
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -35,19 +34,19 @@ function NFTdetails() {
                 <Modal.Body className="modalBody">
                     <div className="nftDetailBox">
                         <div className="nftDetImg">
-                            <img src={nftDetails_1} alt="NFT" />
+                            <img src={image} alt="NFT" />
                         </div>
                         <div className="nftDetIg">
                             <div className="nftName nftInfBox">
                                 <label>Name</label>
-                                <p>Meka #3241</p>
+                                <p>{name}</p>
                             </div>
                             <div className="nftToken nftInfBox">
                                 <label>Token ID</label>
-                                <p>464566</p>
+                                <p>{native.tokenId}</p>
                             </div>
                             <div className="nftInfDesc nftInfBox">
-                                <label>Name</label>
+                                <label>About</label>
                                 <p>Meka from the MekaVerse - A collection of 8,888 unique generative NFTs from another universe. Meka from the MekaVerse - A collection of 8,888 unique generative NFTs from an other universe.</p>
                             </div>
                         </div>
