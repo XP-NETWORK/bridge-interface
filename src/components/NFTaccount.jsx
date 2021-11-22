@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, Modal, Button, Header, Title, Body, Container, Dropdown, Toggle, Menu, Item  } from "react-bootstrap";
 
 import NFTdetails from './NFTdetails';
@@ -42,7 +42,61 @@ import INF from '../assets/img/icons/Inf.svg';
 
 import RedClose from '../assets/img/icons/RedClose.svg';
 import NFTsuccess from './NFTsuccess';
+import {  ChainFactoryConfigs,    ChainFactory,
+    ElrondHelper,           ElrondParams,
+    TronHelper,             TronParams,
+    Web3Helper,             Web3Params,
+} from "xp.network/dist";
+
+import { Wallet } from "ethers";
+import { useSelector } from 'react-redux';
+import {Chain, Config} from 'xp.network/dist/consts';
+import { setNFTList } from "../store/reducers/generalSlice"
+import { useDispatch } from 'react-redux';
+
 function NFTaccount() {
+    const dispatch = useDispatch()
+    const from = useSelector(state => state.general.from.key)
+    const account = useSelector(state => state.general.account)
+    const mainnetConfig = ChainFactoryConfigs.MainNet;
+    const factory = ChainFactory(Config, mainnetConfig());
+
+
+
+    const handleChainFactory = async () => {
+        let chain
+        from === "Ethereum" ? chain = await factory.inner(Chain.ETHEREUM) : 
+        from === "BSC" ? chain = await factory.inner(Chain.BSC) :
+        from === "Tron" ? chain = await factory.inner(Chain.TRON) :
+        from === "Elrond" ? chain = await factory.inner(Chain.ELROND) :
+        from === "Polygon" ? chain = await factory.inner(Chain.POLYGON) :
+        from === "Avalanche" ? chain = await factory.inner(Chain.AVALANCHE) :
+        from === "Fantom" ? chain = await factory.inner(Chain.FANTOM) :
+        from === "Algorand" ? chain = await factory.inner(Chain.ALGORAND) :
+        from === "xDai" ? chain = await factory.inner(Chain.XDAI) :
+        from === "Solana" ? chain = await factory.inner(Chain.SOLANA) :
+        from === "Cardano" ? chain = await factory.inner(Chain.CARDANO) : chain = ""
+        return chain
+    }
+    
+    const getNFTsList = async () => {
+        debugger
+        try {
+            const chain = await handleChainFactory()
+            const bsc = await factory.inner(Chain.BSC);
+            const nfts = await factory.nftList(
+                chain,    // The chain of interest 
+                account    // The public key of the NFT owner
+            );
+            dispatch(setNFTList(nfts))
+        } catch (error) {  
+            console.log(error); 
+        }
+    }
+
+    useEffect( async () => {
+        await getNFTsList()
+    }, [])
     
     return (
         <div className="NFTaccount" >

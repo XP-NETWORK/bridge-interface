@@ -1,5 +1,5 @@
 import Etherium from '../assets/img/chain/Etherium.svg';
-import Heco from '../assets/img/chain/Heco.svg';
+import Heco from "../assets/img/chain/HECO.svg"
 import Elrond from '../assets/img/chain/Elrond.svg';
 import Binance from '../assets/img/chain/Binance.svg';
 import Cardano from '../assets/img/chain/Cardano.svg';
