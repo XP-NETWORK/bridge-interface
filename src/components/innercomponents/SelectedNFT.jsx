@@ -1,15 +1,10 @@
 import React, { useEffect } from 'react'
-
-import SelectedNFT_1 from '../../assets/img/nfts/SelectedNFT_1.png';
-import SelectedNFT_2 from '../../assets/img/nfts/SelectedNFT_2.png';
-import SelectedNFT_3 from '../../assets/img/nfts/SelectedNFT_3.png';
-import SelectedNFT_4 from '../../assets/img/nfts/SelectedNFT_4.png';
-import SelectedNFT_5 from '../../assets/img/nfts/SelectedNFT_5.png';
 import Close from '../../assets/img/icons/close.svg';
 import Back from '../../assets/img/icons/Back.svg';
 import { useSelector } from 'react-redux';
-import { cleanSelectedNFTList } from "../../store/reducers/generalSlice"
+import { cleanSelectedNFTList, removeFromSelectedNFTList } from "../../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
+import Selected from './Selected';
 
 function SelectedNFT() {
     const dispatch = useDispatch()
@@ -30,7 +25,8 @@ function SelectedNFT() {
                 </div>
             </div>
             <ul className="nftSelected">
-                { selectedNFTs ? selectedNFTs.map( nft => <li className="nftSelecItem"><img src={nft.image} alt="NFT" />{nft.name}<span className="Close"><img src={Close} /></span></li> ) : ''}
+                { selectedNFTs ? selectedNFTs.map( (nft, i) => <Selected index={i} img={nft.image} name={nft.name} />) : ''}
+                {/* { selectedNFTs ? selectedNFTs.map( nft => <li className="nftSelecItem"><img src={nft.image} alt="NFT" />{nft.name}<span className="Close"><img src={Close} /></span></li> ) : ''} */}
             </ul>
         </div>
     )
