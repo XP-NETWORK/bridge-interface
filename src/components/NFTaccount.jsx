@@ -49,7 +49,12 @@ function NFTaccount() {
                 account    // The public key of the NFT owner
             );
             const parsedNFTs = await parseNFTS(nfts)
-            dispatch(setNFTList(parsedNFTs))
+            if(parsedNFTs.length){
+                dispatch(setNFTList(parsedNFTs))
+            }
+            else{
+                console.log('No NFTs...');
+            }
         } catch (error) {  
             console.log(error); 
         }
