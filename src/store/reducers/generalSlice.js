@@ -25,6 +25,12 @@ const generalSlice = createSlice({
     },
     setStep(state, action){
       state.step = action.payload
+    },
+    setMetaMask(state, action){
+      state.MetaMask = action.payload
+    },
+    setAccount(state, action){
+      state.account = action.payload
     }
   },
 });
@@ -35,7 +41,9 @@ export const { toggleNFTInfo,
     setChainModal,
     setDepartureOrDestination,
     setChainSearch,
-    setStep
+    setStep,
+    setAccount,
+    setMetaMask
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

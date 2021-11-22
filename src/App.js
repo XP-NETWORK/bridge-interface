@@ -3,15 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./Global.css";
 import "./Responsive.css";
 import XpBridge from "./pages/XpBridge";
-import Aleart from "./components/Aleart";
-import NFTaccount from "./components/NFTaccount";
-import NFTsuccess from "./components/NFTsuccess";
-import NFTworng from "./components/NFTworng";
-import NFTaccountList from "./components/NFTaccountList";
-import NFTOnaccount from "./components/NFTOnaccount";
+import Alert from "./components/Alert";
 
-import Transactionhistory from './components/Transactionhistory';
-import NFTNoaccounts from "./components/NFTnoaccounts";
 
 
 function App() {
@@ -25,6 +18,7 @@ return (
         {/* <NFTNoaccounts/> */}
         {/* <Transactionhistory /> */}
         {/* <Aleart /> */}
+        <Alert />
       </Router>
     </div>
   );

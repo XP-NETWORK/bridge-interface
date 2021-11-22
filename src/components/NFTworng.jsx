@@ -16,8 +16,6 @@ function NFTworng() {
 
     return (
         <div>
-
-            
             {/* <li className="wllListItem" onClick={handleShow}><img src={MetaMask} /> MetaMask</li> */}
             <Modal show={show} onHide={handleClose} className="nftWorng">
                 <Modal.Header className="border-0">

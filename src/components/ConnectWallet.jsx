@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 import Close from '../assets/img/icons/close.svg';
-import Search from '../assets/img/icons/Search.svg';
-import Wallet from '../assets/img/wallet/wallet.svg';
+// import Search from '../assets/img/icons/Search.svg';
+// import Wallet from '../assets/img/wallet/wallet.svg';
 import MetaMask from '../assets/img/wallet/MetaMask.svg';
 import Tron from '../assets/img/wallet/Tron.svg';
 import Elrond from '../assets/img/wallet/Elrond.svg';
@@ -11,22 +11,17 @@ import Maiar from '../assets/img/wallet/Maiar.svg';
 import Trezor from '../assets/img/wallet/Trezor.svg';
 import WalletConnect from "../assets/img/wallet/WalletConnect 3.svg"
 import NFTworng from './NFTworng';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/connectors"
-// import {  
-//     ChainFactoryConfigs,
-//     ChainFactory,
-//     ElrondHelper,
-//     ElrondParams,
-//     TronHelper,
-//     TronParams,
-//     Web3Helper,
-//     Web3Params,
-// } from "xp.network/dist";
+import { EVM, ELROND, chainsConfig } from "../components/values"
+import { setAccount, setMetaMask } from "../store/reducers/generalSlice"
+// import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
 function ConnectWallet() {
+    const walletConnectDeepLink = "https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet.dev&link=";
     const from = useSelector(state => state.general.from)
+    const dispatch = useDispatch()
     const to = useSelector(state => state.general.to)
     const [show, setShow] = useState(false);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -44,18 +39,41 @@ function ConnectWallet() {
         error,
       } = useWeb3React();
 
-    // MetaMask connection.
+    //! MetaMask connection.
     const onInjected = async () => {
         try {
             if(!window.ethereum && window.innerWidth <= 600)  {
               window.open(`https://metamask.app.link/dapp/${window.location.host}/`)
             }
             await activate(injected);
+            dispatch(setMetaMask(true))
           } 
           catch (ex) {
               console.log(ex)
           }
     }
+
+        //! WalletConnect connection.
+    // const onWalletConnect = async () => {
+    //     const { rpc, chainId } = chainsConfig[from.key]
+    //     try {
+    //         const walletConnect = new WalletConnectConnector({ 
+    //             rpc: {
+    //               [chainId]: rpc
+    //             },
+    //               chainId,
+    //               qrcode: true,
+    //           })
+    //           walletConnect.networkId = chainId
+    //           await activate(walletConnect, undefined, true)
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    //  }
+
+    useEffect(() => {
+        dispatch(setAccount(account))
+    }, [account])
 
     return (
         <div>
