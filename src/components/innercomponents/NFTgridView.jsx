@@ -6,13 +6,16 @@ import NFT from './NFT';
 function NFTgridView() {
     const nfts = useSelector(state => state.general.NFTList)
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
+    const search = useSelector(state => state.general.NFTListSearch)
 
     useEffect(() => { }, [selectedNFTs])
 
     return (
         <div className="nftListBox">
             <div className="row">
-                { nfts ? nfts.map((nft, index) => <NFT nft={nft} index={index} />) : <NFTempty /> }
+                {/* chains.filter(chain => chain.text.includes(chainSearch ? chainSearch : '')).map */}
+                { nfts ?  nfts.filter(nft => nft.name.includes(search ? search : '') || nft.native.owner.includes(search ? search : '')).map((nft, index) => <NFT nft={nft} index={index} />) : <NFTempty />}
+                {/* { nfts ? nfts.map((nft, index) => <NFT nft={nft} index={index} />) : <NFTempty /> } */}
             </div>
         </div>
     )
