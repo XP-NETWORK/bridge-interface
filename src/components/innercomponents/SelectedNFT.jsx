@@ -9,6 +9,7 @@ import Selected from './Selected';
 function SelectedNFT() {
     const dispatch = useDispatch()
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
+    const OFF = { opacity: 0.6, pointerEvents: "none" };
     const handleClear = () => {
         dispatch(cleanSelectedNFTList())
     }
@@ -21,7 +22,7 @@ function SelectedNFT() {
                     <a href="#" className="backBtn mobileOnly"><img src={Back} alt="Back" /></a>
                     <span className="mobileOnly">Selected NFTs</span>
                     <span className="desktopOnly">Selected NFT <span>/ {selectedNFTs.length}</span></span>
-                    <button onClick={() => handleClear()} className="clearNft">Clear all</button>
+                    <button style={selectedNFTs.length ? {} : OFF } onClick={() => handleClear()} className="clearNft">Clear all</button>
                 </div>
             </div>
             <ul className="nftSelected">

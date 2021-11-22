@@ -1,16 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Dropdown } from "react-bootstrap";
 import BSC from '../../assets/img/chain/Binance.svg';
 import Search from '../../assets/img/icons/Search.svg';
 import ListView from '../../assets/img/icons/ListView.svg';
 import { useDispatch } from 'react-redux';
-import { setSearchNFTList } from "../../store/reducers/generalSlice"
+import { setSearchNFTList, allSelected } from "../../store/reducers/generalSlice"
+import { useSelector } from 'react-redux';
 
 function NFTlistTop() {
     const dispatch = useDispatch()
+    const nfts = useSelector(state => state.general.nfts)
+    const OFF = { opacity: 0.6, pointerEvents: "none" };
+
     const handleSearch = e => {
         dispatch(setSearchNFTList(e.target.value))
     }
+ 
     return (
         <div className="nftListTop">
             <div className="yourNft desktopOnly">
@@ -36,7 +41,7 @@ function NFTlistTop() {
                 <div className="nftViewBtn">
                     <span className="ListView"><img src={ListView} /></span>
                 </div>
-                <div className="selectAll">
+                <div stye={ nfts ? {} : OFF } onClick={() => dispatch(allSelected())} className="selectAll">
                     Select All
                 </div>
             </div>
