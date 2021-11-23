@@ -24,7 +24,7 @@ function NFTaccount() {
     const account = useSelector(state => state.general.account)
     const mainnetConfig = ChainFactoryConfigs.MainNet;
     const factory = ChainFactory(Config, mainnetConfig());
-
+    
 
 
     const handleChainFactory = async () => {

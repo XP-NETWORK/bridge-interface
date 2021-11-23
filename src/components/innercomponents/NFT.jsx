@@ -4,7 +4,7 @@ import { setSelectedNFTList, removeFromSelectedNFTList }  from "../../store/redu
 import CheckGreen from '../../assets/img/icons/check_green.svg';
 import NFTdetails from '../NFTdetails';
 import { useSelector } from 'react-redux';
-import { compareSingleNFTs } from '../helpers';
+import { isEqual, searchInSelected } from '../helpers';
 
 export default function NFT({nft, index}) {
 
@@ -12,15 +12,15 @@ export default function NFT({nft, index}) {
     // const NFT = nft.nft
     const dispatch = useDispatch()
 
-    const addRemoveNFT = nft => compareSingleNFTs(nft, selectedNFTs) ? dispatch(removeFromSelectedNFTList(index)) : dispatch(setSelectedNFTList(nft))
+    const addRemoveNFT = nft => searchInSelected(nft, selectedNFTs) ? dispatch(removeFromSelectedNFTList(index)) : dispatch(setSelectedNFTList(nft))
 
     useEffect(() => { }, [selectedNFTs])
 
     return ( 
         <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-            <div onClick={ () => addRemoveNFT(nft)} className={compareSingleNFTs(nft, selectedNFTs) ? "singleNft nftSelect" : "singleNft"}>
-                <div className="nftImageBox nftSelect">
-                    <span className="selectNft">{ compareSingleNFTs(nft, selectedNFTs) ? <img src={CheckGreen} /> : ''}</span>
+            <div onClick={ () => addRemoveNFT(nft)} className={searchInSelected(nft, selectedNFTs) ? "singleNft nftSelect" : "singleNft"}>
+                <div className="nftImageBox">
+                    <span className="selectNft">{ searchInSelected(nft, selectedNFTs) ? <img src={CheckGreen} /> : ''}</span>
                     <span className="nftImage"><img src={nft.image} /></span>
                 </div>
                 <div className="nftCont">

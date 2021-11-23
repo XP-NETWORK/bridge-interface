@@ -1,4 +1,4 @@
-const isEqual = (obj1, obj2) => {
+export const isEqual = (obj1, obj2) => {
     // debugger
     if(obj1 && obj2){
         const values1 = Object.values(obj1.native)
@@ -19,25 +19,31 @@ const isEqual = (obj1, obj2) => {
     return true
 }
 
-export const runOnArrays = (nfts, selectedNFTs) => {
-    let isEquals;
-    if(nfts && selectedNFTs){
-        nfts.forEach((nft, index) => {
-            if(isEqual(nft, selectedNFTs[index])){
-                isEquals = true
-            }
-            else {
-                isEquals = false
-            }
-        })
-    }
-    else{
-        // console.log("No array to run on...");
-    }
-    return isEquals
+export const searchInSelected = ( single, selectedNFTs ) => {
+    return selectedNFTs.some( nft => isEqual(nft, single))
 }
 
-export const compareSingleNFTs = (nft, selectedNFT) => {
-    // debugger
-   return isEqual(nft, selectedNFT[0]) ? true : false
-}
+
+// export const runOnArrays = (nfts, selectedNFTs) => {
+//     debugger
+//     let isEquals;
+//     if(nfts && selectedNFTs){
+//         nfts.forEach((nft, index) => {
+//             if(isEqual(nft, selectedNFTs[index])){
+//                 isEquals = true
+//             }
+//             else {
+//                 isEquals = false
+//             }
+//         })
+//     }
+//     else{
+//         // console.log("No array to run on...");
+//     }
+//     return isEquals
+// }
+
+// export const compareSingleNFTs = (nft, selectedNFT) => {
+//     // debugger
+//    return isEqual(nft, selectedNFT[0]) ? true : false
+// }

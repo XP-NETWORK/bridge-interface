@@ -18,9 +18,8 @@ export default function NFTChainListBox() {
         dispatch(setChainSearch(''))
     }
     const chainSelectHandler = chain => {
-        // debugger
         if(departureOrDestination === "departure"){
-            if(chain.key !== to.key){
+            if(to && chain.key !== to.key){
                 dispatch(setFrom(chain))
                 handleClose()
             }

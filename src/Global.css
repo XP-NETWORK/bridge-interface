@@ -801,6 +801,11 @@ span.NFTInf:hover img {
     outline: 1px solid #3E64ED;
 }
 
+/* .nftListed.nftSelect {
+    border: 1px solid #3E64ED;
+    border-radius: 5px;
+} */
+
 .nftImageBox:after {
     content: "";
     position: absolute;
@@ -950,6 +955,12 @@ span.NFTInf:hover img {
 }
 
 ul.nftSelected {
+    list-style: none;
+    max-height: 220px;
+    overflow: auto;
+}
+
+ul.nftList {
     list-style: none;
     max-height: 220px;
     overflow: auto;
