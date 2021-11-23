@@ -10,6 +10,8 @@ export default function NFTChainListBox() {
     const dispatch = useDispatch()
     const departureOrDestination = useSelector(state => state.general.departureOrDestination)
     const chainSearch = useSelector(state => state.general.chainSearch)
+    const from = useSelector(state => state.general.from)
+    console.log(from);
     const handleClose = () => {
         dispatch(setChainModal(false))
         dispatch(setDepartureOrDestination(""))
@@ -28,18 +30,19 @@ export default function NFTChainListBox() {
 
     return (
         <div className="nftChainListBox">
-        <ChainSearch />
-        <ul className="nftChainList scrollSty">
-            { chains ? chains.filter(chain => chain.text.includes(chainSearch ? chainSearch : '')).map( filteredChain => { 
-                const { image, text, key, value, coming } = filteredChain;
-                return ( 
-                <li onClick={() => chainSelectHandler(filteredChain)} className="nftChainItem"><img className="modalSelectOptionsImage" src={image.src} alt={key} />
-                    <div className="modalSelectOptionsText">
-                        {text}
-                    </div>
-                </li>)
-             } ) : "" }            
-        </ul> 
-    </div>
+            <ChainSearch />
+            <ul className="nftChainList scrollSty">
+                { chains ? chains.filter(chain => from ? chain.text !== from.key : chain.text.includes(chainSearch ? chainSearch : '' )).map( filteredChain => { 
+                    const { image, text, key, value, coming } = filteredChain;
+                    return ( 
+                        <li onClick={() => chainSelectHandler(filteredChain)} className="nftChainItem"><img className="modalSelectOptionsImage" src={image.src} alt={key} />
+                            <div className="modalSelectOptionsText">
+                                {text}
+                            </div>
+                        </li>
+                    )
+                 } ) : "" }            
+            </ul> 
+        </div>
     )
 }

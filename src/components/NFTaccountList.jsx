@@ -1,13 +1,11 @@
 import React from 'react'
-import { Image, Modal, Button, Header, Title, Body, Container, Dropdown, Toggle, Menu, Item } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
-import NFTdetails from './NFTdetails';
 import NFTlistView from './innercomponents/NFTlistView';
 import DestinationChain from './innercomponents/DestinationChain';
 import DestinationChainReload from './innercomponents/DestinationChainReload';
 import SelectedNFT from './innercomponents/SelectedNFT';
 import Approval from './innercomponents/Approval';
-import NFTgridView from './innercomponents/NFTgridView';
 import SendFees from './innercomponents/SendFees';
 import NFTlistTop from './innercomponents/NFTlistTop';
 import NFTsuccess from './NFTsuccess';

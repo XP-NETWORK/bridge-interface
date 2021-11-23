@@ -1,13 +1,7 @@
 import React, { useState} from 'react'
 import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 
-// // Chain
-// import Ethereum from '../assets/img/chain/Etherium.svg';
-// import Heco from '../assets/img/chain/HECO.svg';
-// import Elrond from '../assets/img/chain/Elrond.svg';
-// import BSC from '../assets/img/chain/Binance.svg';
-// import Cardano from '../assets/img/chain/Cardano.svg';
-// import Algorand from '../assets/img/chain/Algarand.svg';
+
 import Departure from '../assets/img/nftSelect/departure.svg';
 import Destination from '../assets/img/nftSelect/destination.svg';
 import ChainArrow from '../assets/img/nftSelect/ChianArrow.svg';
