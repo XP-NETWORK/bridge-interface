@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import NFTempty from './NFTempty';
 import NFT from './NFT';
 
+
 function NFTgridView() {
     const nfts = useSelector(state => state.general.NFTList)
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)

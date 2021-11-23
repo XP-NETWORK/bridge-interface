@@ -58,7 +58,7 @@ function NFTaccount() {
                 console.log('No NFTs...');
             }
         } catch (error) {  
-            console.log(error); 
+            console.log("...",error); 
         }
     }
 

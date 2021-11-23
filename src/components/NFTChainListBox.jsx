@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { chains }from '../components/values'
@@ -11,16 +10,25 @@ export default function NFTChainListBox() {
     const departureOrDestination = useSelector(state => state.general.departureOrDestination)
     const chainSearch = useSelector(state => state.general.chainSearch)
     const from = useSelector(state => state.general.from)
-    console.log(from);
+    const to = useSelector(state => state.general.to)
+
     const handleClose = () => {
         dispatch(setChainModal(false))
         dispatch(setDepartureOrDestination(""))
         dispatch(setChainSearch(''))
     }
     const chainSelectHandler = chain => {
+        // debugger
         if(departureOrDestination === "departure"){
-            dispatch(setFrom(chain))
-            handleClose()
+            if(chain.key !== to.key){
+                dispatch(setFrom(chain))
+                handleClose()
+            }
+            else{
+                dispatch(setTo(''))
+                dispatch(setFrom(chain))
+                handleClose()
+            }
         }
         else{
             dispatch(setTo(chain))

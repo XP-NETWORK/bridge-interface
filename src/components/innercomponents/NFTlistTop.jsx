@@ -11,7 +11,7 @@ function NFTlistTop() {
     const dispatch = useDispatch()
     const nfts = useSelector(state => state.general.nfts)
     const OFF = { opacity: 0.6, pointerEvents: "none" };
-
+    const from = useSelector(state => state.general.from)
     const handleSearch = e => {
         dispatch(setSearchNFTList(e.target.value))
     }
@@ -23,7 +23,7 @@ function NFTlistTop() {
     return (
         <div className="nftListTop">
             <div className="yourNft desktopOnly">
-                Your NFTs on <span><img src={BSC} alt="NFT Name" /> BSC</span>
+                Your NFTs on <span><img src={from.image.src} alt="NFT Name" /> {from.key}</span>
             </div>
             <div className="mobileOnly seleNftMob">
                 Select NFT <span>/ 12</span>

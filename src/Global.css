@@ -688,11 +688,14 @@ span.wallet {
     border-radius: 8%;
     overflow: hidden;
     height: 100%;
+    margin-left: 3px;
+    margin-top: 2px;
 }
 
 .singleNft.missing {
     background: linear-gradient(335deg, rgba(41, 47, 63, 0.3) -0.71%, rgba(41, 47, 63, 0) 61.32%);
     border: 1px dashed #36405A;
+    padding-top: 3px;
     padding-bottom: 138%;
 }
 
