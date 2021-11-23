@@ -952,6 +952,38 @@ ul.nftSelected {
     overflow: auto;
 }
 
+.nftListed {
+    display: flex;
+    align-items: center;
+    padding: 6px 16px 6px 30px;
+    color: #fff;
+    position: relative;
+}
+
+li.nftListed> img {
+    display: block;
+    height: 32px;
+    margin-right: 13px;
+}
+
+.nftListed:hover {
+    cursor: pointer;
+}
+
+.selectNftListed {
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    top: 13px;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-radius: 3px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
 .nftSelecItem {
     display: flex;
     align-items: center;
