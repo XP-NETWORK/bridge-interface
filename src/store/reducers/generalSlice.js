@@ -72,9 +72,6 @@ const generalSlice = createSlice({
     setReceiver(state, action){
       state.receiver = action.payload
     },
-    setFees(state, action){
-      state.fees = state.fees + action.payload
-    }
   },
 });
 
@@ -97,7 +94,6 @@ export const { toggleNFTInfo,
     updateApprovedNFTs,
     setApproved,
     setReceiver,
-    setFees,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

@@ -13,7 +13,7 @@ import NFTsuccess from './NFTsuccess';
 import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import { useSelector } from 'react-redux';
 import {Chain, Config} from 'xp.network/dist/consts';
-import { setNFTList, setFees } from "../store/reducers/generalSlice"
+import { setNFTList, setSelectedNFTList } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
 import { parseNFTS } from "../wallet/helpers"
 import { BigNumber } from "bignumber.js";
@@ -28,10 +28,12 @@ function NFTaccount() {
     const mainnetConfig = ChainFactoryConfigs.MainNet;
     const factory = ChainFactory(Config, mainnetConfig());
     const approvedNFTList = useSelector(state => state.general.approvedNFTList)
+    const selectedNFTList = useSelector(state => state.general.selectedNFTList)
     const receiver = useSelector(state => state.general.receiver)
     const Web3Utils = require("web3-utils");
     const approved = useSelector(state => state.general.approved)
     const [estimateInterval, setEstimateInterval] = useState()
+    const [fees, setFees] = useState(0)
 
     const handleChainFactory = async (someChain) => {
         let chain
@@ -68,28 +70,47 @@ function NFTaccount() {
         }
     }
 
-    const estimateEach = async nft => {
+    // const estimateEach = async nft => {
+    //     console.log("estimateEach");
+    //     debugger
+    //     let fees
+    //     try {
+    //         const fromChain = await handleChainFactory(from)
+    //         const toChain = await handleChainFactory(to)
+    //         const wallet = account
+    //         const fee = await factory.estimateFees(fromChain, toChain, nft, wallet);
+    //         const bigNum = fee.multipliedBy(1.8).decimalPlaces(0).toString();
+    //         fees = await Web3Utils.fromWei(bigNum, "ether")
+    //     } catch (err) {
+    //       console.log(err);
+    //     }
+    //     return fees
+    // };
+
+    // const estimate = () => {
+    //     if(selectedNFTList.length !== 0){
+    //         selectedNFTList.forEach( nft => {
+    //         estimateEach(nft)
+    //         })
+    //     }
+    // }
+
+
+    const estimate = async () => {
         try {
             const fromChain = await handleChainFactory(from)
             const toChain = await handleChainFactory(to)
             const wallet = account
-            const fee = await factory.estimateFees(fromChain, toChain, nft, wallet);
-            const bign = fee
-              .multipliedBy(1.8)
-              .decimalPlaces(0)
-              .toString();
-              const fees = await Web3Utils.fromWei(bign, "ether")
-              dispatch(setFees(+fees))
+            const fee = await factory.estimateFees(fromChain, toChain, selectedNFTList[0], wallet);
+            const bigNum = fee.multipliedBy(1.8).decimalPlaces(0).toString();
+            const fees = await Web3Utils.fromWei(bigNum, "ether")
+            setFees(selectedNFTList.length * fees) 
         } catch (err) {
           console.log(err);
         }
-    };
-
-    const estimate = () => {
-        approvedNFTList.forEach( nft => {
-            estimateEach(nft)
-        })
     }
+
+
 
     const sendEach = async (nft) => {
         const toChain = await handleChainFactory(to)
@@ -127,7 +148,7 @@ function NFTaccount() {
         const s = setInterval(() => estimate(), 1000 * 30);
         setEstimateInterval(s)
         return () => clearInterval(s);
-    }, [approvedNFTList])
+    }, [selectedNFTList])
     
     return (
         <div className="NFTaccount" >
@@ -163,7 +184,7 @@ function NFTaccount() {
                                 <DestinationChain/>
                                 <SelectedNFT />
                                 <Approval />
-                                <SendFees/>
+                                <SendFees fees={fees}/>
                                 {/* <div className="nftSendBtn disabled"> */}
                                 <div onClick={sendAllNFTs} className={approved && receiver ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
                                     <a href="#" className="themBtn">Send</a>

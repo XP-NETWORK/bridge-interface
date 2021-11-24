@@ -66,12 +66,9 @@ function Approval(props) {
     };
     
     useEffect(() => {
-        console.log(selectedNFTList, approvedNFTList)
-        if(selectedNFTList.length > 0){ 
-            dispatch(setApproved(isALLNFTsApproved()))
-        }else{
-            dispatch(setApproved(false))
-        }
+
+        if(selectedNFTList.length > 0) dispatch(setApproved(isALLNFTsApproved()))
+        else dispatch(setApproved(false))
     },[selectedNFTList, approvedNFTList])
 
     return (
