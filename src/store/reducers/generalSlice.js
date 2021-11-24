@@ -45,7 +45,11 @@ const generalSlice = createSlice({
       state.selectedNFTList = []
     },
     removeFromSelectedNFTList(state, action){
-      state.selectedNFTList = state.selectedNFTList.filter((n,i) => i !== action.payload)
+      const {tokenId, contract, chainId} = action.payload.native
+      console.log(tokenId, contract, chainId)
+      state.selectedNFTList = state.selectedNFTList.filter(n => !(
+        n.native.tokenId === tokenId && n.native.contract === contract && n.native.chainId === chainId
+      ))
     },
     setSearchNFTList(state, action){
       state.NFTListSearch = action.payload

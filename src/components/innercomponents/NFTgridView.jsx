@@ -10,7 +10,6 @@ function NFTgridView() {
     const search = useSelector(state => state.general.NFTListSearch)
     
     useEffect(() => { }, [selectedNFTs])
-
     return (
         <div className="nftListBox">
             <div className="row">

@@ -4,7 +4,7 @@ import Back from '../../assets/img/icons/Back.svg';
 import { useSelector } from 'react-redux';
 import { cleanSelectedNFTList, removeFromSelectedNFTList } from "../../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
-import Selected from './Selected';
+
 
 function SelectedNFT() {
     const dispatch = useDispatch()
@@ -13,6 +13,11 @@ function SelectedNFT() {
     const handleClear = () => {
         dispatch(cleanSelectedNFTList())
     }
+
+    const handleRemove = (nft) => {
+        dispatch(removeFromSelectedNFTList(nft))
+    }
+
     useEffect(() => { }, [selectedNFTs])
 
     return (
@@ -26,8 +31,7 @@ function SelectedNFT() {
                 </div>
             </div>
             <ul className="nftSelected">
-                { selectedNFTs ? selectedNFTs.map( (nft, i) => <Selected index={i} img={nft.image} name={nft.name} />) : ''}
-                {/* { selectedNFTs ? selectedNFTs.map( nft => <li className="nftSelecItem"><img src={nft.image} alt="NFT" />{nft.name}<span className="Close"><img src={Close} /></span></li> ) : ''} */}
+                { selectedNFTs ? selectedNFTs.map( nft => <li onClick={() => handleRemove(nft)} className="nftSelecItem"><img src={nft.image} alt="NFT" />{nft.name}<span className="Close"><img  alt="" src={Close} /></span></li> ) : ''}
             </ul>
         </div>
     )

@@ -4,23 +4,33 @@ import { setSelectedNFTList, removeFromSelectedNFTList }  from "../../store/redu
 import CheckGreen from '../../assets/img/icons/check_green.svg';
 import NFTdetails from '../NFTdetails';
 import { useSelector } from 'react-redux';
-import { isEqual, searchInSelected } from '../helpers';
+import { findInArray } from '../helpers';
 
 export default function NFT({nft, index}) {
 
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
-    // const NFT = nft.nft
     const dispatch = useDispatch()
+    // const addRemoveNFT = nft => searchInSelected(nft, selectedNFTs) ? dispatch(removeFromSelectedNFTList(index)) : dispatch(setSelectedNFTList(nft))
+    const isSelected = selectedNFTs.filter(n => n.native.tokenId === nft.native.tokenId && n.native.contract === nft.native.contract && n.native.chainId === nft.native.chainId)[0]
 
-    const addRemoveNFT = nft => searchInSelected(nft, selectedNFTs) ? dispatch(removeFromSelectedNFTList(index)) : dispatch(setSelectedNFTList(nft))
+    function addRemoveNFT (chosen){
+        if(!isSelected){
+            dispatch(setSelectedNFTList(chosen))
+        }
+        else{
+            console.log(nft);
+            dispatch(removeFromSelectedNFTList(nft))
+        }
+    }
 
     useEffect(() => { }, [selectedNFTs])
 
     return ( 
         <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-            <div onClick={ () => addRemoveNFT(nft)} className={searchInSelected(nft, selectedNFTs) ? "singleNft nftSelect" : "singleNft"}>
-                <div className="nftImageBox">
-                    <span className="selectNft">{ searchInSelected(nft, selectedNFTs) ? <img src={CheckGreen} /> : ''}</span>
+            {/* <div onClick={() => addRemoveNFT(nft)} className={searchInSelected(nft, selectedNFTs) ? "singleNft nftSelect" : "singleNft"}> */}
+            <div onClick={() => addRemoveNFT(nft)} className="singleNft">
+                <div className={`nftImageBox ${isSelected ? 'nftSelect': ''}`}>
+                    <span className="selectNft">{<img src={CheckGreen} />}</span>
                     <span className="nftImage"><img src={nft.image} /></span>
                 </div>
                 <div className="nftCont">

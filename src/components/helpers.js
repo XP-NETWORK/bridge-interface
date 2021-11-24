@@ -1,56 +1,52 @@
-export const isEqual = (obj1, obj2) => {
-    // debugger
-    if(obj1 && obj2 && !Array.isArray(obj1) && !Array.isArray(obj2)){
-        // debugger
-        const values1 = Object.values(obj1.native)
-        const values2 = Object.values(obj2.native)
-        if(values1.length !== values2.length){
-            return false
-        }
-        for(let value of values1){
-            if(obj1[value] !== obj2[value]){
+function isEqual(object1, object2) {
+    const keys1 = Object.keys(object1);
+    const keys2 = Object.keys(object2);
+    if (keys1.length !== keys2.length) {
+      return false;
+    }
+    for (let key of keys1) {
+      if (object1[key] !== object2[key]) {
+        return false;
+      }
+    }
+    return true;
+  }
 
-                return false
-            }
-        }
+export const findInArray = (given, array) => {
+    let alow = false
+    if(array.length){
+        alow = !array.some(arrayObj => isEqual(arrayObj, given))
     }
     else{
-        // console.log("No objects to compare...");
-        return
+       console.log("Empty array"); 
+       alow = true
     }
-    return true
+    return alow
 }
 
-export const searchInSelected = ( single, arrayNFTs ) => {
-    // debugger
-    const some = arrayNFTs.some( nft => isEqual(nft, single))
-    console.log("searchInSelected", some);
-    return some
-}
-let counter = 0
-export const searchInApproved = ( single, arrayNFTs ) => {
-    // debugger
-    const some = arrayNFTs.some( nft => isEqual(nft, single))
-    console.log("searchInSelected", some, counter);
-    counter++
-    return some
-}
+// export const searchInSelected = ( single, arrayNFTs ) => {
+//     debugger
+//     return !arrayNFTs.some( nft => isEqual(nft, single))
+// }
 
+// export const searchInApproved = ( single, arrayNFTs ) => {
+//    return arrayNFTs.some( nft => isEqual(nft, single))
+// }
 
-export const runOnArrays = (approvedNFTList, selectedNFTs) => {
-    let isEquals;
-    if(approvedNFTList.length && selectedNFTs.length){
-        approvedNFTList.forEach((nft, index) => {
-            if(isEqual(nft, selectedNFTs[index])){
-                isEquals = true
-            }
-            else {
-                isEquals = false
-            }
-        })
-    }
-    else{
-        console.log("No array to run on...");
-    }
-    return isEquals
-}
+// export const runOnArrays = (approvedNFTList, selectedNFTs) => {
+//     let isEquals;
+//     if(approvedNFTList.length && selectedNFTs.length){
+//         approvedNFTList.forEach((nft, index) => {
+//             if(isEqual(nft, selectedNFTs[index])){
+//                 isEquals = true
+//             }
+//             else {
+//                 isEquals = false
+//             }
+//         })
+//     }
+//     else{
+//         console.log("No array to run on...");
+//     }
+//     return isEquals
+// }

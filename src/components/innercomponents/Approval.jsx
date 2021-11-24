@@ -5,7 +5,7 @@ import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import {Chain, Config} from 'xp.network/dist/consts';
 import { ethers } from "ethers";
 import { updateApprovedNFTs, setApproved } from '../../store/reducers/generalSlice';
-import { searchInApproved } from '../helpers';
+import { findInArray } from '../helpers';
 
 function Approval(props) {
     
@@ -64,19 +64,20 @@ function Approval(props) {
         }
     };
     useEffect(() => {
-        if(approvedNFTList.length && selectedNFTList.length){
-            if(!searchInApproved(approvedNFTList, selectedNFTList)){ 
-                dispatch(setApproved(true))
-                console.log("All nfts approved.");
-            }
-            else{
-                dispatch(setApproved(false))
-                console.log("Not all NFTs approved.");
-            }
-        }
-        else{
-            console.log("Both arrays empty");
-        }
+        // // debugger
+        // if(approvedNFTList.length && selectedNFTList.length){
+        //     if(!findInArray(approvedNFTList, selectedNFTList)){ 
+        //         dispatch(setApproved(true))
+        //         console.log("All nfts approved.");
+        //     }
+        //     else{
+        //         dispatch(setApproved(false))
+        //         console.log("Not all NFTs approved.");
+        //     }
+        // }
+        // else{
+        //     dispatch(setApproved(false))
+        // }
     },[selectedNFTList, approvedNFTList])
 
     return (
