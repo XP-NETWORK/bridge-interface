@@ -1337,6 +1337,10 @@ span.copyTokk img {
     margin-left: 5px;
 }
 
+span.copyTokk:hover{
+    cursor: pointer;
+}
+
 span.statComp img {
     margin-right: 5px;
 }

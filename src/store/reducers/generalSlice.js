@@ -5,6 +5,7 @@ const initialState = {
   selectedNFTList: [],
   NFTListView: false,
   approvedNFTList: [],
+  txnHashArr: [],
   fees : 0
 };
 
@@ -72,6 +73,9 @@ const generalSlice = createSlice({
     setReceiver(state, action){
       state.receiver = action.payload
     },
+    setTxnHash(state, action){
+      state.txnHashArr = [...state.txnHashArr, action.payload]
+    }
   },
 });
 
@@ -94,6 +98,7 @@ export const { toggleNFTInfo,
     updateApprovedNFTs,
     setApproved,
     setReceiver,
+    setTxnHash
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

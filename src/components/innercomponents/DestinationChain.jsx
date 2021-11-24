@@ -4,11 +4,12 @@ import { useSelector } from 'react-redux';
 import Avalanche from '../../assets/img/chain/Avalanche.svg';
 import RedClose from '../../assets/img/icons/RedClose.svg';
 import { setReceiver } from "../../store/reducers/generalSlice"
+// import web3 from
 
 function DestinationChain() {
 
     const from = useSelector(state => state.general.from)
-    
+    const Web3Utils = require("web3-utils");
     const dispatch = useDispatch()
     const receiver = useSelector(state => state.general.receiver)
 

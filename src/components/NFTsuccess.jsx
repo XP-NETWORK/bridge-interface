@@ -1,42 +1,43 @@
 
 import React, { useState } from 'react'
-import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
-
-// Chain
-
+import { Modal, Image  } from "react-bootstrap";
 import Close from '../assets/img/icons/close.svg';
-import Search from '../assets/img/icons/Search.svg';
-
-// Chain
-import BSC from '../assets/img/chain/Binance.svg';
-import Avalanche from '../assets/img/chain/Avalanche.svg';
-
 import Success from '../assets/img/icons/Success.svg';
 import Check from '../assets/img/icons/Check_circle.svg';
 import FileCopy from '../assets/img/icons/FileCopy.svg';
-
-
-import SelectedNFT_1 from '../assets/img/nfts/SelectedNFT_1.png';
-import SelectedNFT_2 from '../assets/img/nfts/SelectedNFT_2.png';
-import SelectedNFT_3 from '../assets/img/nfts/SelectedNFT_3.png';
-import SelectedNFT_4 from '../assets/img/nfts/SelectedNFT_4.png';
-import SelectedNFT_5 from '../assets/img/nfts/SelectedNFT_5.png';
 import { useSelector } from 'react-redux';
+import { chainsConfig } from './values';
+import moment from 'moment';
+import {CopyToClipboard } from 'react-copy-to-clipboard';
 
+// !TODO TX AVALANCHE
 
 function NFTsuccess() {
 
-    const [show, setShow] = useState(false);
+    const from = useSelector(state => state.general.from)
+    const to = useSelector(state => state.general.to)
+    const account = useSelector(state => state.general.account)
+    const receiver = useSelector(state => state.general.receiver)
+    const txnHashArr = useSelector(state => state.general.txnHashArr)
+    const selectedNFTList = useSelector(state => state.general.selectedNFTList)
+
+
+    const [show, setShow] = useState(true);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
+    const [copied, setCopy] = useState()
     const showSuccess = useSelector(state => state.showSuccess)
+
+    const copy = () => {
+      setCopy(true)
+      setTimeout(() => setCopy(false), 2000)
+    }
 
     return (
         <div>
 
             {/* <a href="#" className="themBtn" onClick={handleShow}>Send</a> */}
-            <Modal show={show} onHide={handleClose} className="nftSuccessMod">
+            <Modal show={txnHashArr.length} onHide={handleClose} className="nftSuccessMod">
                 <Modal.Header>
                     <Modal.Title><img src={Success} /> Success</Modal.Title>
                     <span className="CloseModal" onClick={handleClose}>
@@ -50,54 +51,44 @@ function NFTsuccess() {
                                 <label>Status</label> <span className="statComp"><img src={Check} /> Completed</span>
                             </div>
                             <div className="sucesList">
-                                <label>Date</label> <span className="statDate">2021-07-04 20:50</span>
+                                <label>Date</label> <span className="statDate">{moment().format("YYYY-MM-DD hh:mm")}</span>
                             </div>
-                            <div className="sucesList">
-                                <label>Txn Hash</label> <span className="statTok colBlue">0xfytyuiolkjh9ijk...678h <span className="copyTokk"><img src={FileCopy} /></span></span>
-                            </div>
+                            <CopyToClipboard 
+                              text={txnHashArr[0]}
+                              onCopy={copy}
+                            >   
+                                <div className="sucesList">
+                                    <label>Txn Hash</label> <span className="statTok colBlue">{txnHashArr.length ? `${txnHashArr[0].substring(0, 10)}...${txnHashArr[0].substring(txnHashArr[0].length - 6)}` : ''}<Image src={FileCopy} className="ml5 copyTokk" /></span>
+                                </div>
+                                {/* <span className="copyTokk"><img src={FileCopy} /></span> */}
+                            </CopyToClipboard>
                         </div>
                         <div className="successBox SentFrom">
                             <div className="sucesList">
-                                <label>Sent From</label> <span className=""><img src={BSC} /> BSC</span>
+                                <label>Sent From</label> <span className=""><img alt="" src={from ? from.image.src : ''} /> {from ? from.key : ''}</span>
                             </div>
                             <div className="sucesList">
-                                <label>Departure Address</label> <span className="colBlue">0x9es455689jk...678h</span>
+                                <label>Departure Address</label> <span className="colBlue">{account ?`${account.substring(0, 10)}...${account.substring(account.length - 6)}`:''}</span>
                             </div>
                             <div className="sucesList">
-                                <label>Sent To</label> <span className=""><img src={Avalanche} /> Avalanche</span>
+                                <label>Sent To</label> <span className=""><img  alt="" src={to ? to.image.src : ''} /> {to ? to.key : ''}</span>
                             </div>
                             <div className="sucesList">
-                                <label>Destination address</label> <span className="colBlue">0x9es455689jk...678h</span>
+                                <label>Destination address</label> <span className="colBlue">{receiver ?`${receiver.substring(0, 10)}...${receiver.substring(receiver.length - 6)}`:'test'}</span>
                             </div>
                         </div>
                         <div className="nftSelectList">
                             <div className="nftSeleTop">
                                 <div className="selectedNft">
-                                    Sent NFT <span>/ 8</span>
+                                    Sent NFT <span>/{ selectedNFTList?.length }</span>
                                 </div>
                             </div>
                             <ul className="nftSelected">
+                                { selectedNFTList.length ? selectedNFTList.map(( nft, index) => 
                                 <li className="nftSelecItem">
-                                    <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="bluTextBtn">View Txn</span>
+                                    <img src={nft.image} alt="NFT" /> {nft.name}<span className="bluTextBtn"><a href={`${chainsConfig[from.key].tx + txnHashArr[index]}`} target="_blank">View Txn</a></span>
                                 </li>
-                                <li className="nftSelecItem">
-                                    <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <span className="bluTextBtn">View Txn</span>
-                                </li>
-                                <li className="nftSelecItem">
-                                    <img src={SelectedNFT_3} alt="NFT" /> 333333 NFT <span className="bluTextBtn">View Txn</span>
-                                </li>
-                                <li className="nftSelecItem">
-                                    <img src={SelectedNFT_4} alt="NFT" /> 2222 NFT <span className="bluTextBtn">View Txn</span>
-                                </li>
-                                <li className="nftSelecItem">
-                                    <img src={SelectedNFT_5} alt="NFT" /> name 111 NFT <span className="bluTextBtn">View Txn</span>
-                                </li>
-                                <li className="nftSelecItem">
-                                    <img src={SelectedNFT_1} alt="NFT" /> 77777 NFT <span className="bluTextBtn">View Txn</span>
-                                </li>
-                                <li className="nftSelecItem">
-                                    <img src={SelectedNFT_2} alt="NFT" /> 99999 NFT <span className="bluTextBtn">View Txn</span>
-                                </li>
+                                ):''}
                             </ul>
                         </div>
                     </div>

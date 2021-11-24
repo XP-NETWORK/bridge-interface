@@ -13,7 +13,7 @@ import NFTsuccess from './NFTsuccess';
 import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import { useSelector } from 'react-redux';
 import {Chain, Config} from 'xp.network/dist/consts';
-import { setNFTList, setSelectedNFTList } from "../store/reducers/generalSlice"
+import { setNFTList, setSelectedNFTList, setTxnHash } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
 import { parseNFTS } from "../wallet/helpers"
 import { BigNumber } from "bignumber.js";
@@ -70,32 +70,6 @@ function NFTaccount() {
         }
     }
 
-    // const estimateEach = async nft => {
-    //     console.log("estimateEach");
-    //     debugger
-    //     let fees
-    //     try {
-    //         const fromChain = await handleChainFactory(from)
-    //         const toChain = await handleChainFactory(to)
-    //         const wallet = account
-    //         const fee = await factory.estimateFees(fromChain, toChain, nft, wallet);
-    //         const bigNum = fee.multipliedBy(1.8).decimalPlaces(0).toString();
-    //         fees = await Web3Utils.fromWei(bigNum, "ether")
-    //     } catch (err) {
-    //       console.log(err);
-    //     }
-    //     return fees
-    // };
-
-    // const estimate = () => {
-    //     if(selectedNFTList.length !== 0){
-    //         selectedNFTList.forEach( nft => {
-    //         estimateEach(nft)
-    //         })
-    //     }
-    // }
-
-
     const estimate = async () => {
         try {
             const fromChain = await handleChainFactory(from)
@@ -110,14 +84,11 @@ function NFTaccount() {
         }
     }
 
-
-
     const sendEach = async (nft) => {
         const toChain = await handleChainFactory(to)
         const fromChain = await handleChainFactory(from)
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner(account)
-        console.log(signer)
         try {
             const result = await factory.transferNft(
                 fromChain, // The Source Chain.
@@ -127,6 +98,7 @@ function NFTaccount() {
                 receiver   // The address who you are transferring the NFT to.
             )
             console.log(result);
+            dispatch(setTxnHash(result))
             
         } catch (error) {
             console.log(error);
