@@ -144,7 +144,8 @@ function NFTaccount() {
     }, [])
 
     useEffect(() => {
-        estimate();
+        if(selectedNFTList.length > 0) estimate();
+        else setFees("0")
         const s = setInterval(() => estimate(), 1000 * 30);
         setEstimateInterval(s)
         return () => clearInterval(s);
