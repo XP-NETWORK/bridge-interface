@@ -30,6 +30,7 @@ function NFTaccount() {
     const approvedNFTList = useSelector(state => state.general.approvedNFTList)
     const receiver = useSelector(state => state.general.receiver)
     const Web3Utils = require("web3-utils");
+    const approved = useSelector(state => state.general.approved)
     const [estimateInterval, setEstimateInterval] = useState()
 
     const handleChainFactory = async (someChain) => {
@@ -163,8 +164,8 @@ function NFTaccount() {
                                 <SelectedNFT />
                                 <Approval />
                                 <SendFees/>
-                                {/* <div className="nftSendBtn disenable"> */}
-                                <div onClick={sendAllNFTs} className="nftSendBtn">
+                                {/* <div className="nftSendBtn disabled"> */}
+                                <div onClick={sendAllNFTs} className={approved && receiver ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
                                     <a href="#" className="themBtn">Send</a>
                                 </div>
                             </form>

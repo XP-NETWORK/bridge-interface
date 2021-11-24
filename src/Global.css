@@ -288,7 +288,7 @@ span.LineArrow img {
     color: #fff;
 }
 
-.disenable .themBtn {
+.disabled .themBtn {
     background: linear-gradient(0deg, rgba(73, 82, 108, 0.1), rgba(73, 82, 108, 0.1));
     border: 1px solid #37405B;
     color: #5A6177;
