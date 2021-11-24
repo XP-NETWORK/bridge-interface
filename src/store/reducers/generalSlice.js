@@ -2,8 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   step: 1,
-  selectedNFTList:[],
-  NFTListView: false
+  selectedNFTList: [],
+  NFTListView: false,
+  approvedNFTList: []
 };
 
 const generalSlice = createSlice({
@@ -54,6 +55,12 @@ const generalSlice = createSlice({
     },
     setNFTsListView(state){
       state.NFTListView = !state.NFTListView
+    },
+    updateApprovedNFTs(state, action){
+      state.approvedNFTList = [...state.approvedNFTList, action.payload]
+    },
+    setApproved(state, action){
+      state.approved = action.payload
     }
   },
 });
@@ -73,7 +80,9 @@ export const { toggleNFTInfo,
     removeFromSelectedNFTList,
     setSearchNFTList,
     allSelected,
-    setNFTsListView
+    setNFTsListView,
+    updateApprovedNFTs,
+    setApproved
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

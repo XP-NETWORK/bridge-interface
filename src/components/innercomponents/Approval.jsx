@@ -1,16 +1,20 @@
-import React from 'react'
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import InfLith from '../../assets/img/icons/infoLifht.svg';
 import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import {Chain, Config} from 'xp.network/dist/consts';
-import { Wallet, Web3Provider } from "ethers";
 import { ethers } from "ethers";
+import { updateApprovedNFTs, setApproved } from '../../store/reducers/generalSlice';
+import { searchInApproved } from '../helpers';
 
-function Approval() {
+function Approval(props) {
     
+    const dispatch = useDispatch()
     const from = useSelector(state => state.general.from)
     const account = useSelector(state => state.general.account)
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
+    const approvedNFTList = useSelector(state => state.general.approvedNFTList)
+    const approved = useSelector(state => state.general.approved)
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const mainnetConfig = ChainFactoryConfigs.MainNet;
     const factory = ChainFactory(Config, mainnetConfig());
@@ -31,19 +35,50 @@ function Approval() {
         return chain
     }
 
-    // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
-    const approve = async () => {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner(account)
+    const approveEach = async (nft, signer, chain, index) => {
         try {
-            const chain = await handleChainFactory()
-            const isApproved = await chain.approveForMinter(selectedNFTList[0], signer);
-            console.log("Is Approved:", isApproved) 
+            const isApproved = await chain.approveForMinter(nft, signer);
+            // if(searchInApproved(nft, approvedNFTList) === false){
+                dispatch(updateApprovedNFTs(nft))
+            // }
+            // else{
+            //     console.log("You have nft like this in approved nfts.");
+            // }
         } catch (error) {
             console.log(error);
         }
-    };
+    }
     
+    // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
+    const approveAllNFTs = async () => {
+        if(from.type === "EVM"){
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = provider.getSigner(account)
+            const chain = await handleChainFactory()
+            selectedNFTList.forEach((nft, index) => {
+                approveEach(nft, signer, chain, index)
+            })
+        }
+        else {
+            console.log("Not EVM Network")
+        }
+    };
+    useEffect(() => {
+        if(approvedNFTList.length && selectedNFTList.length){
+            if(!searchInApproved(approvedNFTList, selectedNFTList)){ 
+                dispatch(setApproved(true))
+                console.log("All nfts approved.");
+            }
+            else{
+                dispatch(setApproved(false))
+                console.log("Not all NFTs approved.");
+            }
+        }
+        else{
+            console.log("Both arrays empty");
+        }
+    },[selectedNFTList, approvedNFTList])
+
     return (
         <div className="approValBox">
             <div className="approvTop">
@@ -55,12 +90,12 @@ function Approval() {
                     <img src={InfLith} alt="Inf" />
                 </div>
             </div>
-            <div style={selectedNFTList.length ? {} : OFF} onClick={() => approve()} className="approveBtn">
+            <div style={selectedNFTList.length ? {} : OFF} className="approveBtn">
                 Approve all NFTs
-                <div className="approveBtn">
-                    <input type="checkbox" id="approveCheck" />
+                <div   className="approveBtn">
+                    <input checked={approved} type="checkbox" id="approveCheck" />
                     <label htmlFor="approveCheck">
-                        <span className="checkCircle"></span>
+                        <span onClick={approveAllNFTs} className="checkCircle"></span>
                     </label>
                 </div>
             </div>

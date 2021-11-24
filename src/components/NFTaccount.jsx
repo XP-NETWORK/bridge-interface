@@ -85,8 +85,8 @@ function NFTaccount() {
                             {/* <NFTlistView /> */}
                         </div>
                         <div className="mobileOnly">
-                            <Approval />
-                            <SendFees />
+                            <Approval getNft={getNFTsList} />
+                            {/* <SendFees /> */}
                             <div className="nftSendBtn disenable">
                             <NFTsuccess/>
                             </div>
