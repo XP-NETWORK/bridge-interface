@@ -18,7 +18,7 @@ function XpBridge() {
             { step === 1 ? <><NftSelect/><NftSlider/></> : "" }
             { step === 2 ? <NFTaccount/>  : '' }
             {/* <NFTworng /> */}
-            {/* { step === 3 ? <NFTsuccess/> : '' } */}
+            <NFTsuccess/>
         </div>
     )
 }

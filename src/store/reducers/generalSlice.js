@@ -4,7 +4,8 @@ const initialState = {
   step: 1,
   selectedNFTList: [],
   NFTListView: false,
-  approvedNFTList: []
+  approvedNFTList: [],
+  fees : 0
 };
 
 const generalSlice = createSlice({
@@ -46,7 +47,6 @@ const generalSlice = createSlice({
     },
     removeFromSelectedNFTList(state, action){
       const {tokenId, contract, chainId} = action.payload.native
-      console.log(tokenId, contract, chainId)
       state.selectedNFTList = state.selectedNFTList.filter(n => !(
         n.native.tokenId === tokenId && n.native.contract === contract && n.native.chainId === chainId
       ))
@@ -60,11 +60,20 @@ const generalSlice = createSlice({
     setNFTsListView(state){
       state.NFTListView = !state.NFTListView
     },
-    updateApprovedNFTs(state, action){
+    updateApprovedNFTs(state, action) {
+      const {tokenId, contract, chainId} = action.payload.native
+      const isInApprovedNFTs = state.approvedNFTList.filter(n => n.native.tokenId === tokenId && n.native.contract === contract && chainId === n.native.chainId )[0]
+      if(!isInApprovedNFTs)
       state.approvedNFTList = [...state.approvedNFTList, action.payload]
     },
     setApproved(state, action){
       state.approved = action.payload
+    },
+    setReceiver(state, action){
+      state.receiver = action.payload
+    },
+    setFees(state, action){
+      state.fees = state.fees + action.payload
     }
   },
 });
@@ -86,7 +95,9 @@ export const { toggleNFTInfo,
     allSelected,
     setNFTsListView,
     updateApprovedNFTs,
-    setApproved
+    setApproved,
+    setReceiver,
+    setFees,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

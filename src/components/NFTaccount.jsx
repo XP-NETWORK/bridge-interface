@@ -8,44 +8,49 @@ import NFTgridView from './innercomponents/NFTgridView';
 import NFTlistView from './innercomponents/NFTlistView';
 import SendFees from './innercomponents/SendFees';
 import NFTlistTop from './innercomponents/NFTlistTop';
-
+import { ethers } from "ethers";
 import NFTsuccess from './NFTsuccess';
 import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import { useSelector } from 'react-redux';
 import {Chain, Config} from 'xp.network/dist/consts';
-import { setNFTList } from "../store/reducers/generalSlice"
+import { setNFTList, setFees } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
 import { parseNFTS } from "../wallet/helpers"
+import { BigNumber } from "bignumber.js";
+
 
 function NFTaccount() {
     const dispatch = useDispatch()
     const from = useSelector(state => state.general.from.key)
+    const to = useSelector(state => state.general.to.key)
     const NFTListView = useSelector(state => state.general.NFTListView)
     const account = useSelector(state => state.general.account)
     const mainnetConfig = ChainFactoryConfigs.MainNet;
     const factory = ChainFactory(Config, mainnetConfig());
-    
+    const approvedNFTList = useSelector(state => state.general.approvedNFTList)
+    const receiver = useSelector(state => state.general.receiver)
+    const Web3Utils = require("web3-utils");
+    const [estimateInterval, setEstimateInterval] = useState()
 
-
-    const handleChainFactory = async () => {
+    const handleChainFactory = async (someChain) => {
         let chain
-        from === "Ethereum" ? chain = await factory.inner(Chain.ETHEREUM) : 
-        from === "BSC" ? chain = await factory.inner(Chain.BSC) :
-        from === "Tron" ? chain = await factory.inner(Chain.TRON) :
-        from === "Elrond" ? chain = await factory.inner(Chain.ELROND) :
-        from === "Polygon" ? chain = await factory.inner(Chain.POLYGON) :
-        from === "Avalanche" ? chain = await factory.inner(Chain.AVALANCHE) :
-        from === "Fantom" ? chain = await factory.inner(Chain.FANTOM) :
-        from === "Algorand" ? chain = await factory.inner(Chain.ALGORAND) :
-        from === "xDai" ? chain = await factory.inner(Chain.XDAI) :
-        from === "Solana" ? chain = await factory.inner(Chain.SOLANA) :
-        from === "Cardano" ? chain = await factory.inner(Chain.CARDANO) : chain = ""
+        someChain === "Ethereum" ? chain = await factory.inner(Chain.ETHEREUM) : 
+        someChain === "BSC" ? chain = await factory.inner(Chain.BSC) :
+        someChain === "Tron" ? chain = await factory.inner(Chain.TRON) :
+        someChain === "Elrond" ? chain = await factory.inner(Chain.ELROND) :
+        someChain === "Polygon" ? chain = await factory.inner(Chain.POLYGON) :
+        someChain === "Avalanche" ? chain = await factory.inner(Chain.AVALANCHE) :
+        someChain === "Fantom" ? chain = await factory.inner(Chain.FANTOM) :
+        someChain === "Algorand" ? chain = await factory.inner(Chain.ALGORAND) :
+        someChain === "xDai" ? chain = await factory.inner(Chain.XDAI) :
+        someChain === "Solana" ? chain = await factory.inner(Chain.SOLANA) :
+        someChain === "Cardano" ? chain = await factory.inner(Chain.CARDANO) : chain = ""
         return chain
     }
     
     const getNFTsList = async () => {
         try {
-            const chain = await handleChainFactory()
+            const chain = await handleChainFactory(from)
             const nfts = await factory.nftList(
                 chain,    // The chain of interest 
                 account    // The public key of the NFT owner
@@ -62,14 +67,70 @@ function NFTaccount() {
         }
     }
 
+    const estimateEach = async nft => {
+        try {
+            const fromChain = await handleChainFactory(from)
+            const toChain = await handleChainFactory(to)
+            const wallet = account
+            const fee = await factory.estimateFees(fromChain, toChain, nft, wallet);
+            const bign = fee
+              .multipliedBy(1.8)
+              .decimalPlaces(0)
+              .toString();
+              const fees = await Web3Utils.fromWei(bign, "ether")
+              dispatch(setFees(+fees))
+        } catch (err) {
+          console.log(err);
+        }
+    };
+
+    const estimate = () => {
+        approvedNFTList.forEach( nft => {
+            estimateEach(nft)
+        })
+    }
+
+    const sendEach = async (nft) => {
+        const toChain = await handleChainFactory(to)
+        const fromChain = await handleChainFactory(from)
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner(account)
+        console.log(signer)
+        try {
+            const result = await factory.transferNft(
+                fromChain, // The Source Chain.
+                toChain,   // The Destination Chain.
+                nft,       // Or the NFT you have chosen.
+                signer,    // Or tronlink or maiar.
+                receiver   // The address who you are transferring the NFT to.
+            )
+            console.log(result);
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const sendAllNFTs = () => {
+        approvedNFTList.forEach( nft => {
+            sendEach(nft)
+        })
+    }
+
     useEffect( async () => {
         await getNFTsList()
     }, [])
+
+    useEffect(() => {
+        estimate();
+        const s = setInterval(() => estimate(), 1000 * 30);
+        setEstimateInterval(s)
+        return () => clearInterval(s);
+    }, [approvedNFTList])
     
     return (
         <div className="NFTaccount" >
             <Container className="nftSlectContaine">
-                
                 <div className="row">
                     <div className="nftListCol col-lg-8">
                         <div className="mobileOnly">
@@ -102,7 +163,8 @@ function NFTaccount() {
                                 <SelectedNFT />
                                 <Approval />
                                 <SendFees/>
-                                <div className="nftSendBtn disenable">
+                                {/* <div className="nftSendBtn disenable"> */}
+                                <div onClick={sendAllNFTs} className="nftSendBtn">
                                     <a href="#" className="themBtn">Send</a>
                                 </div>
                             </form>

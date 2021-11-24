@@ -5,7 +5,8 @@ import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import {Chain, Config} from 'xp.network/dist/consts';
 import { ethers } from "ethers";
 import { updateApprovedNFTs, setApproved } from '../../store/reducers/generalSlice';
-import { findInArray } from '../helpers';
+import { isEqual } from '../helpers';
+import { isALLNFTsApproved } from '../../wallet/helpers';
 
 function Approval(props) {
     
@@ -37,13 +38,13 @@ function Approval(props) {
 
     const approveEach = async (nft, signer, chain, index) => {
         try {
-            const isApproved = await chain.approveForMinter(nft, signer);
-            // if(searchInApproved(nft, approvedNFTList) === false){
+            const { tokenId, contract, chainId } = nft.native
+            const isInApprovedNFTs = approvedNFTList.filter(n => n.native.tokenId === tokenId && n.native.contract === contract && chainId === n.native.chainId )[0]
+            if(!isInApprovedNFTs) {
+                const isApproved = await chain.approveForMinter(nft, signer);
                 dispatch(updateApprovedNFTs(nft))
-            // }
-            // else{
-            //     console.log("You have nft like this in approved nfts.");
-            // }
+            }
+
         } catch (error) {
             console.log(error);
         }
@@ -63,21 +64,14 @@ function Approval(props) {
             console.log("Not EVM Network")
         }
     };
+    
     useEffect(() => {
-        // // debugger
-        // if(approvedNFTList.length && selectedNFTList.length){
-        //     if(!findInArray(approvedNFTList, selectedNFTList)){ 
-        //         dispatch(setApproved(true))
-        //         console.log("All nfts approved.");
-        //     }
-        //     else{
-        //         dispatch(setApproved(false))
-        //         console.log("Not all NFTs approved.");
-        //     }
-        // }
-        // else{
-        //     dispatch(setApproved(false))
-        // }
+        console.log(selectedNFTList, approvedNFTList)
+        if(selectedNFTList.length > 0){ 
+            dispatch(setApproved(isALLNFTsApproved()))
+        }else{
+            dispatch(setApproved(false))
+        }
     },[selectedNFTList, approvedNFTList])
 
     return (

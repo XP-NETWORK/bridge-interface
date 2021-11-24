@@ -21,22 +21,21 @@ import SelectedNFT_2 from '../assets/img/nfts/SelectedNFT_2.png';
 import SelectedNFT_3 from '../assets/img/nfts/SelectedNFT_3.png';
 import SelectedNFT_4 from '../assets/img/nfts/SelectedNFT_4.png';
 import SelectedNFT_5 from '../assets/img/nfts/SelectedNFT_5.png';
+import { useSelector } from 'react-redux';
 
 
 function NFTsuccess() {
 
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const showSuccess = useSelector(state => state.showSuccess)
 
     return (
         <div>
 
-            {/*<Button variant="primary" onClick={handleShow}>
-                NFT Success
-    </Button>*/}
-            <a href="#" className="themBtn" onClick={handleShow}>Send</a>
+            {/* <a href="#" className="themBtn" onClick={handleShow}>Send</a> */}
             <Modal show={show} onHide={handleClose} className="nftSuccessMod">
                 <Modal.Header>
                     <Modal.Title><img src={Success} /> Success</Modal.Title>

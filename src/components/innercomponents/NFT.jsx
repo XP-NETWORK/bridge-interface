@@ -4,13 +4,12 @@ import { setSelectedNFTList, removeFromSelectedNFTList }  from "../../store/redu
 import CheckGreen from '../../assets/img/icons/check_green.svg';
 import NFTdetails from '../NFTdetails';
 import { useSelector } from 'react-redux';
-import { findInArray } from '../helpers';
+
 
 export default function NFT({nft, index}) {
 
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const dispatch = useDispatch()
-    // const addRemoveNFT = nft => searchInSelected(nft, selectedNFTs) ? dispatch(removeFromSelectedNFTList(index)) : dispatch(setSelectedNFTList(nft))
     const isSelected = selectedNFTs.filter(n => n.native.tokenId === nft.native.tokenId && n.native.contract === nft.native.contract && n.native.chainId === nft.native.chainId)[0]
 
     function addRemoveNFT (chosen){

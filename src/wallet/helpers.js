@@ -77,3 +77,18 @@ export const parseNFTS = async (nfts) => {
 }
 
 
+export const isALLNFTsApproved = () => {
+    const { selectedNFTList, approvedNFTList } = store.getState().general
+    if(selectedNFTList.length <= approvedNFTList.length) {
+        const approvedNFTs = []
+        approvedNFTList.forEach(n => {
+            const {native} = n
+            const isInSelected = selectedNFTList.filter(y => {
+                const { tokenId, contract, chainId } = y.native
+                return tokenId ===native.tokenId && contract === native.contract &&  chainId === native.chainId
+            })[0]
+            if(isInSelected) approvedNFTs.push(isInSelected)
+        })
+        return approvedNFTs.length === selectedNFTList.length
+    }
+}
