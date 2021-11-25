@@ -98,7 +98,6 @@ function NFTaccount() {
                 signer,    // Or tronlink or maiar.
                 receiver   // The address who you are transferring the NFT to.
             )
-            console.log(result);
             dispatch(setTxnHash(result))
             
         } catch (error) {

@@ -85,6 +85,18 @@ const generalSlice = createSlice({
     },
     setReset(){
       return initialState
+    },
+    setElrondAccount(state, action){
+      state.elrondAccount = action.payload
+    },
+    setMaiarProvider(state, action){
+      state.maiarProvider = action.payload
+    },
+    setOnMaiar(state, action){
+      state.onMaiar = action.payload
+    },
+    setTronWallet(state, action){
+      state.tronWallet = action.payload
     }
   },
 });
@@ -111,7 +123,11 @@ export const { toggleNFTInfo,
     setReceiver,
     setTxnHash,
     setWrongNetwork,
-    setMetaMaskActive
+    setMetaMaskActive,
+    setElrondAccount,
+    setMaiarProvider,
+    setOnMaiar,
+    setTronWallet
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { chains }from '../components/values'
 import { setChainModal, setDepartureOrDestination, setTo, setFrom, setChainSearch } from "../store/reducers/generalSlice"
 import ChainSearch from './innercomponents/ChainSearch';
+import SelectDestination from './SelectDestination';
 
 
 export default function NFTChainListBox() {
@@ -35,21 +37,27 @@ export default function NFTChainListBox() {
         }
     }
 
+    useEffect(() => {
+    }, [to])
+
     return (
-        <div className="nftChainListBox">
-            <ChainSearch />
-            <ul className="nftChainList scrollSty">
-                { chains ? chains.filter(chain => from ? chain.text !== from.key : chain.text.includes(chainSearch ? chainSearch : '' )).map( filteredChain => { 
-                    const { image, text, key, value, coming } = filteredChain;
-                    return ( 
-                        <li onClick={() => chainSelectHandler(filteredChain)} className="nftChainItem"><img className="modalSelectOptionsImage" src={image.src} alt={key} />
-                            <div className="modalSelectOptionsText">
-                                {text}
-                            </div>
-                        </li>
-                    )
-                 } ) : "" }            
-            </ul> 
-        </div>
+        <>
+            {/* <SelectDestination /> */}
+            <div className="nftChainListBox">
+                <ChainSearch />
+                <ul className="nftChainList scrollSty">
+                    { chains ? chains.filter(chain => from ? chain.text !== from.key : chain.text.includes(chainSearch ? chainSearch : '' )).map( filteredChain => { 
+                        const { image, text, key, value, coming } = filteredChain;
+                        return ( 
+                            <li onClick={() => chainSelectHandler(filteredChain)} className="nftChainItem"><img className="modalSelectOptionsImage" src={image.src} alt={key} />
+                                <div className="modalSelectOptionsText">
+                                    {text}
+                                </div>
+                            </li>
+                        )
+                     } ) : "" }            
+                </ul> 
+            </div>
+        </>
     )
 }

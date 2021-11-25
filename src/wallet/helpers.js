@@ -37,7 +37,7 @@ export const parseNFTS = async (nfts) => {
     const { from, to } = store.getState().general
 
     const result = await Promise.all(nfts.map(async n => {
-        console.log(n)
+
     return await new Promise(async resolve => {
         try {
             if(!n.uri) resolve({ ...n })
@@ -49,7 +49,7 @@ export const parseNFTS = async (nfts) => {
                 } else resolve(undefined)
             } catch(err) {
                 if(err) {
-                    console.log(n)
+
                     try {
                         const res = await axios.post('https://wnfts.xp.network/get-uri', 
                         { blockchain: from.type, uri: n.uri, contract: n.native.contract ? n.native.contract: 'alsa' }
@@ -58,7 +58,7 @@ export const parseNFTS = async (nfts) => {
                             try {
                                 const {uri} = res.data
                                 const result = await axios.get(setupURI(uri?.uri))
-                                console.log(result)
+
                                 resolve({...result.data, ...n, cantSend: true})
                             } catch(err) {
                                 resolve(undefined)

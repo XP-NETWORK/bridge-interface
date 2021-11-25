@@ -17,7 +17,6 @@ export default function NFT({nft, index}) {
             dispatch(setSelectedNFTList(chosen))
         }
         else{
-            console.log(nft);
             dispatch(removeFromSelectedNFTList(nft))
         }
     }

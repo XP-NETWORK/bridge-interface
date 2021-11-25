@@ -1,9 +1,8 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import Avalanche from '../../assets/img/chain/Avalanche.svg';
 import RedClose from '../../assets/img/icons/RedClose.svg';
-import { setReceiver } from "../../store/reducers/generalSlice"
+import { setChainModal, setReceiver } from "../../store/reducers/generalSlice"
 // import web3 from
 
 function DestinationChain() {
@@ -14,19 +13,21 @@ function DestinationChain() {
     const receiver = useSelector(state => state.general.receiver)
 
     const handleChange = e => {
-        console.log(e.target.value);
         dispatch(setReceiver(e.target.value))
     }
 
+    function handleSwitchChain() {
+        dispatch(setChainModal(true))
+    }
 
     return (
         <div className="destiAddress">
-            <div className="desChain">
+            <div onClick={() => handleSwitchChain()} className="desChain">
                 Destination Chain <span><img src={from.image.src} alt="" /> {from.key}</span>
             </div>
             <div className="desAddress">
                 <input value={receiver} onChange={ e => handleChange(e)} type="text" placeholder="Paste destination address" />
-                <span className="invalid"><img src={RedClose} alt="Close" /> Invalid address</span>
+                <span  className="invalid"><img src={RedClose} alt="Close" /> Invalid address</span>
             </div>
         </div>
     )

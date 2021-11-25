@@ -536,6 +536,18 @@ span.wallet {
     overflow-y: scroll;
 }
 
+.maiarModal{
+    padding: 19px 30px 10px 30px;
+    background: linear-gradient(309.48deg, #282E3C -3.65%, rgba(40, 46, 60, 0) 122.77%);
+    border-bottom: 1px solid #2D3342;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
 .walletList {
     list-style: none;
     max-height: 336px;
@@ -1562,6 +1574,25 @@ span.statComp img {
     padding: 18px 45px;
 }
 
+.maiarConnectBtn{
+    background: #3E64ED;
+    border-radius: 16px;
+    color: #fff;
+    font-size: 16px;
+    line-height: 126%;
+    padding: 18px 45px;
+    margin: 15px;
+}
+
+.maiarSubtitle{
+    padding-bottom: 5px;
+}
+
+.maiarConnectBtn:hover {
+    background: #174AFF;
+    color: #fff;
+}
+
 .switching:hover {
     background: #174AFF;
     color: #fff;
@@ -1760,3 +1791,4 @@ span.transFail {
 span.transPend {
     color: #C058FF;
 }
+
