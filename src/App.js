@@ -5,10 +5,25 @@ import "./Responsive.css";
 import XpBridge from "./pages/XpBridge";
 import Alert from "./components/Alert";
 import NFTaccountList from "./components/NFTaccountList";
-
+import { useWeb3React } from "@web3-react/core";
+import { useDispatch } from "react-redux";
+import { setReset } from "./store/reducers/generalSlice";
 
 
 function App() {
+  const dispatch = useDispatch()
+  const { active } = useWeb3React();
+
+  const checkIfActive = () => {
+    return active
+  }
+
+  useEffect(() => {
+    if (!active) {
+      dispatch(setReset())
+    }
+  }, [active])
+
 return (
     <div className={"App"}>
       <Router>

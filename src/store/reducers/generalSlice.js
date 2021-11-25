@@ -79,11 +79,18 @@ const generalSlice = createSlice({
     setWrongNetwork(state, action){
       console.log("setWrongNetwork");
       state.wrongNetwork = action.payload
+    },
+    setMetaMaskActive(state, action){
+      state.metaMaskActive = action.payload
+    },
+    setReset(){
+      return initialState
     }
   },
 });
 
 export const { toggleNFTInfo, 
+    setReset,
     setTo, 
     setFrom,
     setChainModal,
@@ -103,7 +110,8 @@ export const { toggleNFTInfo,
     setApproved,
     setReceiver,
     setTxnHash,
-    setWrongNetwork
+    setWrongNetwork,
+    setMetaMaskActive
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

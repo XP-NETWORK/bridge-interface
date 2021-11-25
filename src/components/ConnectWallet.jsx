@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/connectors"
 import { EVM, ELROND, chainsConfig } from "../components/values"
-import { setAccount, setMetaMask, setStep, setWrongNetwork } from "../store/reducers/generalSlice"
+import { setAccount, setMetaMask, setStep, setWrongNetwork, setMetaMaskActive } from "../store/reducers/generalSlice"
 import { CHAIN_INFO } from '../components/values';
 // import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
@@ -41,8 +41,7 @@ function ConnectWallet() {
         active,
         error,
       } = useWeb3React();
-    
-    // console.log("Info", CHAIN_INFO[from.key]);
+
 
     //! MetaMask connection.
     const onInjected = async () => {
