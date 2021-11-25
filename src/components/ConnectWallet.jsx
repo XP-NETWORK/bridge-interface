@@ -24,7 +24,7 @@ function ConnectWallet() {
     const from = useSelector(state => state.general.from)
     const dispatch = useDispatch()
     const to = useSelector(state => state.general.to)
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState();
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -56,6 +56,7 @@ function ConnectWallet() {
           catch (ex) {
               console.log(ex)
           }
+          setShow(false)
     }
 
         //! WalletConnect connection.
@@ -77,18 +78,19 @@ function ConnectWallet() {
     //  }
 
     useEffect(() => {
+        const correct = from ? CHAIN_INFO[from.key].chainId === chainId : false
+        console.log("correct", correct);
         dispatch(setAccount(account))
-        if(metaMask)dispatch(setStep(2))
-        console.log("from", from ? CHAIN_INFO[from.key].chainId : '');
-        console.log("chainFromProvider", chainId);
         if(from){
             dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
         }
+        if(metaMask && correct)dispatch(setStep(2))
     
-    }, [account, metaMask])
+    }, [account, metaMask, chainId])
 
     return (
         <div>
+            <NFTworng />
             {/* <Button variant="primary" onClick={handleShow}>
                 Wallet
             </Button> */}

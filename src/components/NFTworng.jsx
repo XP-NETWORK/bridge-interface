@@ -16,14 +16,14 @@ function NFTworng() {
 
 
     const handleClose = () => dispatch(setWrongNetwork(false))
-    const from = useSelector(state => state.general.from.key)
+    const from = useSelector(state => state.general.from)
     const showWrong = useSelector(state => state.general.wrongNetwork)
     console.log("showWrong", showWrong);
     const account = useSelector(state => state.general.account)
     const dispatch = useDispatch()
 
     async function switchNetwork (){
-        const info = CHAIN_INFO[from]
+        const info = CHAIN_INFO[from?.key]
         const chainId = `0x${info.chainId.toString(16)}`;
         try {
             await window.ethereum.request({

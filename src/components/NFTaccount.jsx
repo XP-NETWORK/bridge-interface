@@ -127,7 +127,6 @@ function NFTaccount() {
     return (
         <div className="NFTaccount" >
             <Container className="nftSlectContaine">
-                <NFTworng />
                 <div className="row">
                     <div className="nftListCol col-lg-8">
                         <div className="mobileOnly">
