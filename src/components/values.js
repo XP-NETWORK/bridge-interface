@@ -187,3 +187,120 @@ export const chainsConfig = {
     }
 
 }
+
+export const coins = [
+    "eGLD", // 0
+    "HT", // 1
+    "BNB", // 2
+    "ETH", // 3
+    "AVAX", // 4
+    "MATIC", // 5
+    "FTM", // 6
+    "TRX", // 7
+    "CELO", // 8
+    "ONE", // 9
+    "ONG", // 10
+    "XDAI"
+  ];
+
+export const CHAIN_INFO = {
+    Elrond: { nonce: 2, native: "EGLD", decimals: 1e18 },
+    HECO: {
+      nonce: 3,
+      native: coins[1],
+      chainId: 256,
+      rpcUrl: "https://http-testnet.hecochain.com",
+      decimals: 1e18,
+      contract: "0x1247a6cB7aA2c90C6B9eF96AE3E7b269139BE06b",
+      blockExplorerUrls: "https://testnet.hecoinfo.com/tx",
+    },
+    BSC: {
+      nonce: 4,
+      native: coins[2],
+      chainId: 56,
+      rpcUrl: "https://data-seed-prebsc-1-s1.binance.org:8545",
+      decimals: 1e18,
+      contract: "0x12889E870A48Be2A04564e74f66fC91D439Da03e",
+      blockExplorerUrls: "https://testnet.bscscan.com/tx",
+    },
+    Ethereum: {
+      nonce: 5,
+      native: coins[3],
+      chainId: 1,
+      rpcUrl: "https://ropsten.infura.io/v3/182b3d3fb2d14d5fbe7421348624d1ce",
+      decimals: 1e18,
+      contract: "0x2C742F65E6FEcDbb4ceE3D35473e39012aEDf3DD",
+      blockExplorerUrls: "https://ropsten.etherscan.io/tx",
+    },
+    Avalanche: {
+      nonce: 6,
+      native: coins[4],
+      chainId: 43113,
+      rpcUrl: "https://api.avax-test.network/ext/bc/C/rpc",
+      decimals: 1e18,
+      blockExplorerUrls: "https://cchain.explorer.avax-test.network/tx",
+      contract: "0xAcFB2E7d6e6272f192D0D573A9bD1CC9d534dE1c",
+    },
+    Polygon: {
+      nonce: 0x7,
+      native: coins[5],
+      chainId: 137,
+      decimals: 1e18,
+      rpcUrl: "https://matic-testnet-archive-rpc.bwarelabs.com",
+      contract: "0x9E93256Df2a4fE757f8AEB533D3943E56ba8CF94",
+      blockExplorerUrls: "https://mumbai.polygonscan.com/tx",
+    },
+    Fantom: {
+      native: coins[6],
+      nonce: 0x8,
+      rpcUrl: "https://rpc.testnet.fantom.network/",
+      decimals: 1e18,
+      chainId: 250,
+      contract: "0xbc53f71E12007b93Ed2868E5f6CAE1D2ceB7287C",
+      blockExplorerUrls: "https://explorer.testnet.fantom.network/transactions",
+    },
+    Tron: {
+      native: coins[7],
+      nonce: 0x9,
+      rpcUrl: "https://api.shasta.trongrid.io/",
+      decimals: 1e6,
+      contract: "4179ff0b4e9e3f67806ff17e1d708a9490ef121e29",
+      blockExplorerUrls: "https://shasta.tronscan.org/#/transaction",
+    },
+    Celo: {
+      native: coins[8],
+      nonce: 0xb,
+      decimals: 1e18,
+      rpcUrl: "https://alfajores-forno.celo-testnet.org",
+      chainId: 44787,
+      blockExplorerUrls: "https://alfajores-blockscout.celo-testnet.org/tx",
+      contract: "0xE595D1CD77619d891A338dD09Fd64A57704a5375",
+    },
+    Harmony: {
+      native: coins[9],
+      nonce: 0xc,
+      decimals: 1e18,
+      rpcUrl: "https://api.s0.b.hmny.io",
+      chainId: 1666700000,
+      blockExplorerUrls: "https://explorer.pops.one/tx",
+      contract: "0x22ddFB8954c9D75598385c6ad82cDeb124a78Bb3",
+    },
+    Ont: {
+      native: coins[10],
+      nonce: 0xd,
+      decimals: 1e18,
+      rpcUrl: "https://testing-bridge.xp.network/ontio",
+      chainId: 5851,
+      blockExplorerUrls: "https://explorer.ont.io/testnet/tx",
+      contract: "0xdceB7a6b2d2cC149aA74E049231c94D072eDF3E8",
+    },
+    xDai: {
+        native: coins[11],
+        nonce: 14,
+        decimals: 1e18,
+        rpcUrl: "https://rpc.xdaichain.com/",
+        chainId: 100,
+        blockExplorerUrls: "https://blockscout.com/xdai/mainnet/",
+        contract: "0xdceB7a6b2d2cC149aA74E049231c94D072eDF3E8",
+    }
+  };

@@ -17,6 +17,7 @@ import { setNFTList, setSelectedNFTList, setTxnHash } from "../store/reducers/ge
 import { useDispatch } from 'react-redux';
 import { parseNFTS } from "../wallet/helpers"
 import { BigNumber } from "bignumber.js";
+import NFTworng from './NFTworng';
 
 
 function NFTaccount() {
@@ -126,6 +127,7 @@ function NFTaccount() {
     return (
         <div className="NFTaccount" >
             <Container className="nftSlectContaine">
+                <NFTworng />
                 <div className="row">
                     <div className="nftListCol col-lg-8">
                         <div className="mobileOnly">
@@ -136,13 +138,13 @@ function NFTaccount() {
                         </div>
                         <div className="nft_selectBox">
                             <NFTlistTop />
-                            {/* <NFTgridView/> */}
-                            { NFTListView ? <NFTlistView /> : <NFTgridView/>}
-                            {/* <NFTlistView /> */}
+                            { NFTListView ? 
+                            <NFTlistView /> 
+                            : 
+                            <NFTgridView/>}
                         </div>
                         <div className="mobileOnly">
                             <Approval getNft={getNFTsList} />
-                            {/* <SendFees /> */}
                             <div className="nftSendBtn disenable">
                             <NFTsuccess/>
                             </div>

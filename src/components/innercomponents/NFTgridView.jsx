@@ -13,7 +13,9 @@ function NFTgridView() {
     return (
         <div className="nftListBox">
             <div className="row">
-                { nfts ?  nfts.filter(nft => nft.name.includes(search ? search : '') || nft.native.owner.includes(search ? search : '')).map((nft, index) => <NFT nft={nft} index={index} />) : <NFTempty />}
+                { nfts ?  nfts.filter(nft => nft.name.includes(search ? search : '') || nft.native.owner.includes(search ? search : '')).map((nft, index) => <NFT nft={nft} index={index} />) 
+                : 
+                <NFTempty />}
             </div>
         </div>
     )

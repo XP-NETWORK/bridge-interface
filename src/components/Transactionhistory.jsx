@@ -1,11 +1,8 @@
 import React from 'react'
-import { Image, Modal, Button, Header, Title, Body, Container, Dropdown, Toggle, Menu, Item } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 import SelectedNFT_1 from '../assets/img/nfts/SelectedNFT_1.png';
-import SelectedNFT_2 from '../assets/img/nfts/SelectedNFT_2.png';
-import SelectedNFT_3 from '../assets/img/nfts/SelectedNFT_3.png';
-import SelectedNFT_4 from '../assets/img/nfts/SelectedNFT_4.png';
-import SelectedNFT_5 from '../assets/img/nfts/SelectedNFT_5.png';
+
 
 import Check from '../assets/img/icons/Check_circle.svg';
 import Failed from '../assets/img/icons/Failed.svg';

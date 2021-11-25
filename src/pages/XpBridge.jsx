@@ -5,6 +5,7 @@ import NftSelect from '../components/NftSelect';
 import NftSlider from '../components/NftSlider';
 import NFTsuccess from '../components/NFTsuccess';
 import NFTworng from '../components/NFTworng';
+import Transactionhistory from '../components/Transactionhistory';
 
 function XpBridge() {
 
@@ -19,6 +20,7 @@ function XpBridge() {
             { step === 2 ? <NFTaccount/>  : '' }
             {/* <NFTworng /> */}
             <NFTsuccess/>
+            {/* <Transactionhistory />     // !! TO DO */}
         </div>
     )
 }

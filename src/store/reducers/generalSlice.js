@@ -75,6 +75,10 @@ const generalSlice = createSlice({
     },
     setTxnHash(state, action){
       state.txnHashArr = [...state.txnHashArr, action.payload]
+    },
+    setWrongNetwork(state, action){
+      console.log("setWrongNetwork");
+      state.wrongNetwork = action.payload
     }
   },
 });
@@ -98,7 +102,8 @@ export const { toggleNFTInfo,
     updateApprovedNFTs,
     setApproved,
     setReceiver,
-    setTxnHash
+    setTxnHash,
+    setWrongNetwork
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

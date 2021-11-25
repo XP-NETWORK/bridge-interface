@@ -15,7 +15,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/connectors"
 import { EVM, ELROND, chainsConfig } from "../components/values"
-import { setAccount, setMetaMask, setStep } from "../store/reducers/generalSlice"
+import { setAccount, setMetaMask, setStep, setWrongNetwork } from "../store/reducers/generalSlice"
+import { CHAIN_INFO } from '../components/values';
 // import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
 function ConnectWallet() {
@@ -28,6 +29,7 @@ function ConnectWallet() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const metaMask = useSelector(state => state.general.MetaMask)
+    const chainFromProvider = useSelector(state => state.chainIdFromProvider)
     const {
         connector,
         library,
@@ -39,6 +41,8 @@ function ConnectWallet() {
         active,
         error,
       } = useWeb3React();
+    
+    // console.log("Info", CHAIN_INFO[from.key]);
 
     //! MetaMask connection.
     const onInjected = async () => {
@@ -75,6 +79,12 @@ function ConnectWallet() {
     useEffect(() => {
         dispatch(setAccount(account))
         if(metaMask)dispatch(setStep(2))
+        console.log("from", from ? CHAIN_INFO[from.key].chainId : '');
+        console.log("chainFromProvider", chainId);
+        if(from){
+            dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
+        }
+    
     }, [account, metaMask])
 
     return (
@@ -95,7 +105,6 @@ function ConnectWallet() {
                 <Modal.Body>
                     <div className="walletListBox">
                         <ul className="walletList scrollSty">
-                            <NFTworng/>
                             <li onClick={() => onInjected()} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li>
                             <li style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Elrond</li>
                             <li style={ OFF } className="wllListItem"><img src={Ledger} alt="Ledger Icon" /> Ledger</li>

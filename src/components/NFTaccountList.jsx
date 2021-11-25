@@ -9,12 +9,12 @@ import Approval from './innercomponents/Approval';
 import SendFees from './innercomponents/SendFees';
 import NFTlistTop from './innercomponents/NFTlistTop';
 import NFTsuccess from './NFTsuccess';
+import NFTworng from './NFTworng';
 
 function NFTaccountList() {
     return (
         <div className="NFTaccount">
             <Container className="nftSlectContaine">
-                
                 <div className="row">
                     <div className="nftListCol col-lg-8">
                         <div className="mobileOnly">
