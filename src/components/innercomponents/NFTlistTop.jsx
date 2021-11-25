@@ -1,19 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { Dropdown } from "react-bootstrap";
+import { Dropdown, Modal } from "react-bootstrap";
 import BSC from '../../assets/img/chain/Binance.svg';
 import Search from '../../assets/img/icons/Search.svg';
 import ListView from '../../assets/img/icons/ListView.svg';
 import { useDispatch } from 'react-redux';
-import { setSearchNFTList, allSelected, setNFTsListView } from "../../store/reducers/generalSlice"
+import { setSearchNFTList, allSelected, setNFTsListView, setTo, setSwitchDestination } from "../../store/reducers/generalSlice"
 import { useSelector } from 'react-redux';
+import SelectDestination from '../SelectDestination';
+import NFTChainListBox from '../NFTChainListBox';
+import Close from '../../assets/img/icons/close.svg';
+
 
 function NFTlistTop() {
     const dispatch = useDispatch()
     const nfts = useSelector(state => state.general.nfts)
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector(state => state.general.from)
+    const chainSearch = useSelector(state => state.general.chainSearch)
+    const switchDestination = useSelector(state => state.general.switchDestination)
     const handleSearch = e => {
         dispatch(setSearchNFTList(e.target.value))
+    }
+
+    const handleClose = () => {
+        dispatch(setSwitchDestination(false))
     }
 
     const handleView = () => {
@@ -22,6 +32,17 @@ function NFTlistTop() {
  
     return (
         <div className="nftListTop">
+            <Modal show={switchDestination} onHide={() => handleClose()} className="ChainModal">
+                <Modal.Header className="text-left">
+                    <Modal.Title>Change destination chain</Modal.Title>
+                    <span className="CloseModal" onClick={() => handleClose()}>
+                        <img src={Close} alt="" />
+                    </span>
+                </Modal.Header>
+                <Modal.Body>
+                    <NFTChainListBox />
+                </Modal.Body>
+            </Modal>
             <div className="yourNft desktopOnly">
                 Your NFTs on <span><img src={from.image.src} alt="NFT Name" /> {from.key}</span>
             </div>

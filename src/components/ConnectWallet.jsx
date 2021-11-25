@@ -15,10 +15,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/connectors"
 import { EVM, ELROND, chainsConfig } from "../components/values"
-import { setTronWallet, setAccount, setMetaMask, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset } from "../store/reducers/generalSlice"
+import { setTronWallet, setAccount, setConfirmMaiarMob, setMetaMask, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset } from "../store/reducers/generalSlice"
 import { Address, ExtensionProvider, WalletConnectProvider, ProxyProvider } from "@elrondnetwork/erdjs"
 import { CHAIN_INFO } from '../components/values';
 import QRCode from 'qrcode'
+import MaiarModal from './MaiarModal';
 // import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
 function ConnectWallet() {
@@ -75,7 +76,8 @@ function ConnectWallet() {
     const onClientConnect = (maiarProvider) => {
         return {
           onClientLogin: async () => {
-            const add = await maiarProvider.getAddress()
+              const add = await maiarProvider.getAddress()
+            dispatch(setConfirmMaiarMob(true))
             dispatch(setElrondAccount(add))
             dispatch(setMaiarProvider(maiarProvider))
             dispatch(setOnMaiar(true))
@@ -88,26 +90,26 @@ function ConnectWallet() {
         }
     }
 
-    // async function connectTronlink() {
-    //     if(window.innerWidth <= 600 && !window.tronWeb){
-    //     //   dispatch(setTronPopUp(true))
-    //     }else{
-    //       try {
-    //         try {
-    //           const accounts = await window.tronWeb.request({ method: "tron_requestAccounts" });
-    //           } catch(err) {
-    //             console.log(err);
-    //             }
-    //         if(window.tronLink && window.tronWeb.defaultAddress.base58) {
-    //           const publicAddress = window.tronWeb.defaultAddress.base58
-    //           dispatch(setTronWallet(publicAddress))
-    //           handleClose()
-    //         }
-    //       } catch(err) {
-    //           console.log(err)
-    //       }
-    //     }
-    //   }
+    async function connectTronlink() {
+        if(window.innerWidth <= 600 && !window.tronWeb){
+        //   dispatch(setTronPopUp(true))
+        }else{
+          try {
+            try {
+              const accounts = await window.tronWeb.request({ method: "tron_requestAccounts" });
+              } catch(err) {
+                console.log(err);
+                }
+            if(window.tronLink && window.tronWeb.defaultAddress.base58) {
+              const publicAddress = window.tronWeb.defaultAddress.base58
+              dispatch(setTronWallet(publicAddress))
+              handleClose()
+            }
+          } catch(err) {
+              console.log(err)
+          }
+        }
+      }
 
     const onMaiar = async () => {
         // setOnMaiarConnect(true)
@@ -179,27 +181,13 @@ function ConnectWallet() {
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 <li style={ OFF } className="wllListItem"><img src={Trezor} alt="Trezor Icon" /> Trezor</li>
                                 <li style={ from ? from.type === "EVM" ? {} : OFF : ""} className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
-                                <li style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
+                                <li style={  OFF } className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                             </ul>
                         </div>
                     </Modal.Body>
                 </Modal>
                 :
-                <Modal show={show} onHide={handleClose} className="ChainModal">
-                    <Modal.Header>
-                        <Modal.Title>Maiar Login</Modal.Title>
-                        <span className="CloseModal" onClick={handleClose}>
-                            <img src={Close} alt="" />
-                        </span>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div className="maiarModal">
-                        <div className="maiarSubtitle">Scan the QR code using Maiar</div>
-                            <Image src={strQR} />
-                            <a href= {`${walletConnectDeepLink}https://maiar.com/?wallet-connect=${encodeURIComponent(qrCodeString)}`} className="maiarConnectBtn">Maiar Login</a>
-                        </div>
-                    </Modal.Body>
-                </Modal>
+                <MaiarModal handleClose={handleClose} strQR={strQR} qrCodeString={qrCodeString} show={show} />
             }
         </div>
     )

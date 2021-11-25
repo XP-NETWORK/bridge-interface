@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { chains }from '../components/values'
-import { setChainModal, setDepartureOrDestination, setTo, setFrom, setChainSearch } from "../store/reducers/generalSlice"
+import { setChainModal, setDepartureOrDestination, setTo, setFrom, setChainSearch, setSwitchDestination } from "../store/reducers/generalSlice"
 import ChainSearch from './innercomponents/ChainSearch';
 import SelectDestination from './SelectDestination';
 
@@ -24,16 +24,19 @@ export default function NFTChainListBox() {
             if(to && chain.key !== to.key){
                 dispatch(setFrom(chain))
                 handleClose()
+                // dispatch(setSwitchDestination(false))
             }
             else{
                 dispatch(setTo(''))
                 dispatch(setFrom(chain))
                 handleClose()
+                // dispatch(setSwitchDestination(false))
             }
         }
         else{
             dispatch(setTo(chain))
-            handleClose()
+                dispatch(setSwitchDestination(false))
+                handleClose()
         }
     }
 

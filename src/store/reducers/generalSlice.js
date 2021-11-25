@@ -6,7 +6,8 @@ const initialState = {
   NFTListView: false,
   approvedNFTList: [],
   txnHashArr: [],
-  fees : 0
+  fees : 0,
+  // confirmMaiarMob: false
 };
 
 const generalSlice = createSlice({
@@ -97,6 +98,12 @@ const generalSlice = createSlice({
     },
     setTronWallet(state, action){
       state.tronWallet = action.payload
+    },
+    setConfirmMaiarMob(state, action){
+      state.confirmMaiarMob = action.payload
+    },
+    setSwitchDestination(state, action){
+      state.switchDestination = action.payload
     }
   },
 });
@@ -127,7 +134,9 @@ export const { toggleNFTInfo,
     setElrondAccount,
     setMaiarProvider,
     setOnMaiar,
-    setTronWallet
+    setTronWallet,
+    setConfirmMaiarMob,
+    setSwitchDestination,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
