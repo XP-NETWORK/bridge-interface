@@ -4,6 +4,7 @@ import NFTaccount from '../components/NFTaccount';
 import NftSelect from '../components/NftSelect';
 import NftSlider from '../components/NftSlider';
 import NFTsuccess from '../components/NFTsuccess';
+import NFTOnaccount from "../components/NFTOnaccount"
 import NFTworng from '../components/NFTworng';
 import Transactionhistory from '../components/Transactionhistory';
 

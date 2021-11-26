@@ -77,8 +77,3 @@ export default function NFTChainListBox() {
         </>
     )
 }
-
-
-// TODO if from defined show me to
-// TODO show to with no from chain
-// TODO filter to if to includes search
