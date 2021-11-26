@@ -8,6 +8,7 @@ import NFTaccountList from "./components/NFTaccountList";
 import { useWeb3React } from "@web3-react/core";
 import { useDispatch } from "react-redux";
 import { setReset } from "./store/reducers/generalSlice";
+import NFTSlider from "./components/NftSlider";
 
 
 function App() {

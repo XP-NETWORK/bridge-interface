@@ -27,7 +27,7 @@ function DestinationChain() {
     return (
         <div className="destiAddress">
             <div onClick={() => handleSwitchChain()} className="desChain">
-                Destination Chain <span><img src={to.image.src} alt="" /> {to.key}</span>
+                Destination<span><img src={to.image.src} alt="" /> {to.key}</span>
             </div>
             <div className="desAddress">
                 <input value={receiver} onChange={ e => handleChange(e)} type="text" placeholder="Paste destination address" />

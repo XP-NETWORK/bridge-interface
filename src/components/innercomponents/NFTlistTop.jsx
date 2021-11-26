@@ -14,9 +14,9 @@ import Close from '../../assets/img/icons/close.svg';
 function NFTlistTop() {
     const dispatch = useDispatch()
     const nfts = useSelector(state => state.general.nfts)
+    const NFTListView = useSelector(state => state.general.NFTListView)
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector(state => state.general.from)
-    const chainSearch = useSelector(state => state.general.chainSearch)
     const switchDestination = useSelector(state => state.general.switchDestination)
     const handleSearch = e => {
         dispatch(setSearchNFTList(e.target.value))

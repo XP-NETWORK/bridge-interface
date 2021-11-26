@@ -26,7 +26,7 @@ function DestinationChainReload() {
     return (
         <div className="destiAddress">
             <div onClick={() => handleSwitchChain()} className="desChain">
-                Destination Chain <span className="destiReload"><img src={to.image.src} alt="" /> {to.key} <img src={RelWhit} /></span>
+                Destination<span className="destiReload"><img src={to.image.src} alt="" /> {to.key} <img src={RelWhit} /></span>
             </div>
             <div className="desAddress">
                 <input onChange={ e => handleChange(e)} type="text" placeholder="Paste destination address" />

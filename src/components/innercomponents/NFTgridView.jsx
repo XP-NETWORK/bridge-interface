@@ -19,7 +19,7 @@ function NFTgridView() {
                 { nfts ? nfts.filter(nft => nft.name.includes(search ? search : '') || nft.native.owner.includes(search ? search : '')).map((nft, index) => <NFT nft={nft} index={index} />)
                 : 
                 <NFTempty />}
-                { nfts.length > 0 && nfts.length < 9 ? placeholders.map(n => <Missing />) : ''}
+                { nfts && nfts?.length < 10 ? placeholders.map(n => <Missing />) : ''}
             </div>
         </div>
     )

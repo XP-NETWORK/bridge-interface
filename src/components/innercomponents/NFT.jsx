@@ -11,6 +11,7 @@ export default function NFT({nft, index}) {
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const dispatch = useDispatch()
     const isSelected = selectedNFTs.filter(n => n.native.tokenId === nft.native.tokenId && n.native.contract === nft.native.contract && n.native.chainId === nft.native.chainId)[0]
+    const [imageLoaded, setImageLoaded]= useState(false);
 
     function addRemoveNFT (chosen){
         if(!isSelected){
@@ -21,6 +22,7 @@ export default function NFT({nft, index}) {
         }
     }
 
+
     useEffect(() => { }, [selectedNFTs])
 
 
@@ -29,13 +31,17 @@ export default function NFT({nft, index}) {
             <div onClick={() => addRemoveNFT(nft)} className="singleNft">
                 <div className={`nftImageBox ${isSelected ? 'nftSelect': ''}`}>
                     <span className="selectNft">{<img src={CheckGreen} />}</span>
-                    <span className="nftImage"><img alt="NFT" src={nft.image} /></span>
-                    <span className="nftImage--loader"></span>
+                    <span className="nftImage"><img onLoad={() => setImageLoaded(true)} alt="NFT" src={nft.image} /></span>
+                    {!imageLoaded && (
+                          <div className="nft__image--loader"></div>
+                    )}
                 </div>
-                <div className="nftCont">
+                {imageLoaded && (
+                    <div className="nftCont">
                     <span className="nftName">{nft.name} <NFTdetails nftInf={nft} index={index} /></span>
                     <span className="nftNumber">{nft.native.tokenId}</span>
                 </div>
+                )}
             </div>
         </div>
     )
