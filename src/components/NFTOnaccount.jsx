@@ -35,7 +35,7 @@ function NFTOnaccount() {
                             <Approval />
                             <SendFees />
                             <div className="nftSendBtn">
-                            <NFTsuccess/>
+                            {/* <NFTsuccess/> */}
                             </div>
                         </div>
                     </div>
