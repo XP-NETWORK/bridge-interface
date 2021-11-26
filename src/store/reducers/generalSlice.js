@@ -104,6 +104,9 @@ const generalSlice = createSlice({
     },
     setSwitchDestination(state, action){
       state.switchDestination = action.payload
+    },
+    setAccountModal(state, action){
+      state.accountModal = action.payload
     }
   },
 });
@@ -137,6 +140,7 @@ export const { toggleNFTInfo,
     setTronWallet,
     setConfirmMaiarMob,
     setSwitchDestination,
+    setAccountModal
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

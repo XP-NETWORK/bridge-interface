@@ -31,21 +31,6 @@ function NavBar() {
                         <Nav.Link href="#NFT" className="nftConnect" onClick={handleShow}>{account ?`${account.substring(0, 6)}...${account.substring(account.length - 2)}`:''} <img src={NftSelect} /></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
-                <div className="accountBox" show={show} onHide={handleClose} >
-                    <div className="accountTit">
-                        Account <span className="CloseModal" onClick={handleClose}> <img src={Close}/> </span>
-                    </div>
-                    <p className="">Connected with MetaMask</p>
-                    <div className="nftLink">
-                        <img src={NftSelect} />
-                        0x925ea338...45
-                        <span className="copyTokk"><img src={FileCopy} /></span>
-                    </div>
-                    <div className="accountBtn">
-                        <a href="#" className="changeBtn">Change</a>
-                        <a href="#" className="disconBtn">Disconnect</a>
-                    </div>
-                </div>
             </Navbar>
         </header>
     )
