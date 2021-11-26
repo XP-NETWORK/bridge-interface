@@ -17,6 +17,7 @@ import { setNFTList, setSelectedNFTList, setTxnHash } from "../store/reducers/ge
 import { useDispatch } from 'react-redux';
 import { parseNFTS } from "../wallet/helpers"
 import { BigNumber } from "bignumber.js";
+import Comment from "../components/innercomponents/Comment"
 import NFTworng from './NFTworng';
 
 
@@ -25,6 +26,7 @@ function NFTaccount() {
     const from = useSelector(state => state.general.from.key)
     const to = useSelector(state => state.general.to.key)
     const NFTListView = useSelector(state => state.general.NFTListView)
+    const nfts = useSelector(state => state.general.NFTList)
     const account = useSelector(state => state.general.account)
     const mainnetConfig = ChainFactoryConfigs.MainNet;
     const factory = ChainFactory(Config, mainnetConfig());
@@ -155,13 +157,19 @@ function NFTaccount() {
                                     <h3>Send NFT</h3>
                                 </div>
                                 <DestinationChain/>
-                                <SelectedNFT />
-                                <Approval />
-                                <SendFees fees={fees}/>
-                                {/* <div className="nftSendBtn disabled"> */}
-                                <div onClick={sendAllNFTs} className={approved && receiver ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
-                                    <a href="#" className="themBtn">Send</a>
-                                </div>
+                                { nfts ? 
+                                    <>
+                                        <SelectedNFT />
+                                        <Approval />
+                                        <SendFees fees={fees}/>
+                                        {/* <div className="nftSendBtn disabled"> */}
+                                        <div onClick={sendAllNFTs} className={approved && receiver ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
+                                            <a href="#" className="themBtn">Send</a>
+                                        </div>
+                                    </>
+                                    :
+                                    <Comment />
+                                }
                             </form>
                         </div>
                     </div>
