@@ -10,7 +10,7 @@ function DestinationChainReload() {
 
     const dispatch = useDispatch()
     const receiver = useSelector(state => state.general.receiver)
-    const to = useSelector(state => state.general.from)
+    const to = useSelector(state => state.general.to)
     const handleChange = e => {
         dispatch(setReceiver(e.target.value))
     }
