@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../assets/img/nav/Logo.svg';
 import Start from '../assets/img/nav/star_menu.svg';
 import Hambar from '../assets/img/icons/Hambar.svg';
@@ -18,7 +18,11 @@ function NavBar() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const step = useSelector(state => state.general.step)
     
+
+    useEffect(() => {}, [step])
+
     return (
         <header className="HeaderArea" id="Header"> 
             <Navbar expand="md">
@@ -33,7 +37,7 @@ function NavBar() {
                         { account ? <Nav.Link href="#NFT" className="nftConnect" onClick={handleShow}>{account ?`${account.substring(0, 6)}...${account.substring(account.length - 2)}`:''} <img src={NftSelect} /></Nav.Link> :''}
                     </Nav>
                 </Navbar.Collapse>
-                <AccountModal />
+                {/* <AccountModal /> */}
             </Navbar>
         </header>
     )

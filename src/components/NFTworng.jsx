@@ -77,8 +77,8 @@ function NFTworng() {
                     <div className="wrongNFT">
                         <div className="nftWornTop">
                             <span className="worngImg"><img src={Wrong} alt="Worng" /></span>
-                            <h3>Switch to Polygon Mainnet</h3>
-                            <p className="">XP.network Bridge requires you to <br /> connect to the Polygon Mainnet</p>
+                            <h3>Switch to {from?.key} Mainnet</h3>
+                            <p className="">XP.network Bridge requires you to <br /> connect to the {from?.key} Mainnet</p>
                         </div>
                         <a onClick={() => switchNetwork()} href="#" className="switching">Switch Network</a>
                         <div style={{visibility: "hidden"}} className="switchingAcc">

@@ -1679,9 +1679,15 @@ span.invalid img {
 }
 
 .navMenu.navbar-nav .nftConnect.nav-link {
-    border: 1px solid #297EFF;
+    border: 1px solid #4532B5;
+    background: #232833;
     border-radius: 8px;
     padding: 8px 20px;
+}
+
+.navMenu.navbar-nav .nftConnect.nav-link:hover{
+    border: 1px solid #297EFF;
+    background: none;
 }
 
 .navMenu.navbar-nav .nftConnect.nav-link img {

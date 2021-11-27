@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Navbar, Nav, Modal } from "react-bootstrap";
 import Logo from '../assets/img/nav/Logo.svg';
 import Start from '../assets/img/nav/star_menu.svg';
@@ -20,6 +20,7 @@ export default function AccountModal() {
     const MetaMask = useSelector(state => state.general.MetaMask)
     const onMaiar = useSelector(state => state.general.onMaiar)
     const show = useSelector(state => state.general.accountModal)
+    const step = useSelector(state => state.general.step)
     const handleClose = () => dispatch(setAccountModal(false))
     const accountModal = useRef()
     const handleDisconnect = () => {
@@ -27,6 +28,8 @@ export default function AccountModal() {
     }
 
     DetectOutsideClick(accountModal, () => setTimeout(() => handleClose(), 100));
+
+
 
     return (
     <div ref={accountModal} className="accountBox" show={show} onHide={handleClose} >
