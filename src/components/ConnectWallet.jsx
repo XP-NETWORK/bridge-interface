@@ -161,8 +161,8 @@ function ConnectWallet() {
             {/* <Button variant="primary" onClick={handleShow}>
                 Wallet
             </Button> */}
-            <div style={ from && to ? {} : OFF} className="connectNft">
-                    <a href="#" className="themBtn" onClick={handleShow}>Continue bridging -<span>{'>'}</span> </a>
+            <div className={from && to ? "connectNft" : "disabled"}>
+                    <a href="#" className="themBtn disabled" onClick={handleShow}>Continue bridging -<span>{'>'}</span> </a>
             </div>
             { !strQR ?
                 <Modal show={show} onHide={handleClose} className="ChainModal">
@@ -181,7 +181,7 @@ function ConnectWallet() {
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 <li style={ OFF } className="wllListItem"><img src={Trezor} alt="Trezor Icon" /> Trezor</li>
                                 <li style={ from ? from.type === "EVM" ? {} : OFF : ""} className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
-                                <li style={  OFF } className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
+                                <li style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                             </ul>
                         </div>
                     </Modal.Body>
