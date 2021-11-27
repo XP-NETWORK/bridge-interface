@@ -683,6 +683,10 @@ span.wallet {
     color: white !important;
 }
 
+.modalSelectOptionsText{
+    color: white;
+}
+
 .yourNft, .yourNft span {
     display: flex;
     align-items: center;
