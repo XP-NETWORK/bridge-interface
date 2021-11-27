@@ -57,18 +57,13 @@ export default function NFTChainListBox() {
                     { !from ? fromChains.filter(chain => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).map( filteredChain => { 
                         const { image, text, key, value, coming } = filteredChain;
                         return ( 
-                            <Chain chainSelectHandler={chainSelectHandler} text={text} filteredChain={filteredChain} image={image} key={key} />
-                            // <li onClick={() => chainSelectHandler(filteredChain)} className="nftChainItem"><img className="modalSelectOptionsImage" src={image.src} alt={key} />
-                            //     <div className="modalSelectOptionsText">
-                            //         {text}
-                            //     </div>
-                            // </li>
+                            <Chain chainSelectHandler={chainSelectHandler} coming={coming} text={text} filteredChain={filteredChain} image={image} key={key} />
                         )
                      }) 
                      :
                      toChains.filter(chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).map(chain => {
                         const { image, text, key, value, coming } = chain;
-                        return chain.key !== from.key ? <Chain chainSelectHandler={chainSelectHandler} text={text} filteredChain={chain} image={image} key={key} />
+                        return chain.key !== from.key ? <Chain chainSelectHandler={chainSelectHandler} coming={coming} text={text} filteredChain={chain} image={image} key={key} />
                         :''
                      })
                     }            

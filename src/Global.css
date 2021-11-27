@@ -679,6 +679,10 @@ span.wallet {
     cursor: pointer;
 }
 
+.seleDestiSele{
+    color: white !important;
+}
+
 .yourNft, .yourNft span {
     display: flex;
     align-items: center;
