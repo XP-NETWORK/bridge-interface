@@ -8,7 +8,7 @@ import FileCopy from '../assets/img/icons/FileCopy.svg';
 import { useSelector } from 'react-redux';
 import { chainsConfig } from './values';
 import moment from 'moment';
-import {CopyToClipboard } from 'react-copy-to-clipboard';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 // !TODO TX AVALANCHE
 

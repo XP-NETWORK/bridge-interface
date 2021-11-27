@@ -10,6 +10,8 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setAccountModal, setReset } from '../store/reducers/generalSlice';
 import { DetectOutsideClick } from "../components/helpers"
+import {CopyToClipboard } from 'react-copy-to-clipboard';
+
 
 
 export default function AccountModal() {
@@ -21,8 +23,19 @@ export default function AccountModal() {
     const onMaiar = useSelector(state => state.general.onMaiar)
     const show = useSelector(state => state.general.accountModal)
     const step = useSelector(state => state.general.step)
-    const handleClose = () => dispatch(setAccountModal(false))
-    const accountModal = useRef()
+
+    const handleClose = () => {
+        dispatch(setAccountModal(false))
+    }
+
+    const [copied, setCopy] = useState()
+
+    const copy = () => {
+        setCopy(true)
+        setTimeout(() => setCopy(false), 2000)
+      }
+
+    const accountModal = useRef(null)
     const handleDisconnect = () => {
         dispatch(setReset())
     }
@@ -31,21 +44,25 @@ export default function AccountModal() {
 
 
 
-    return (
-    <div ref={accountModal} className="accountBox" show={show} onHide={handleClose} >
-        <div className="accountTit">
-            Account <span className="CloseModal" onClick={handleClose}> <img src={Close}/> </span>
+    return ( show ?
+        <div ref={accountModal} className="accountBox" show={show} onHide={handleClose} >
+            <div className="accountTit">
+                Account <span className="CloseModal" onClick={handleClose}> <img src={Close}/> </span>
+            </div>
+            <p className="">{`Connected with ${MetaMask ? 'MetaMask' : onMaiar ? "Maiar Wallet" : ''}`}</p>
+            <CopyToClipboard text={account} onCopy={copy}>
+                <div className="nftLink">
+                    <img src={NftSelect} />
+                    {account ?`${account.substring(0, 10)}...${account.substring(account.length - 2)}` : elrondAccount ? `${elrondAccount.substring(0, 10)}...${elrondAccount.substring(elrondAccount.length - 2)}`: ''}
+                    <span className="copyTokk"><img src={FileCopy} /></span>
+                </div>
+            </CopyToClipboard>
+            <div className="accountBtn">
+                <a href="#" className="changeBtn">Change</a>
+                <a onClick={() => handleDisconnect()} href="#" className="changeBtn">Disconnect</a>
+            </div>
         </div>
-        <p className="">{`Connected with ${MetaMask ? 'MetaMask' : onMaiar ? "Maiar Wallet" : ''}`}</p>
-        <div className="nftLink">
-            <img src={NftSelect} />
-            {account ?`${account.substring(0, 10)}...${account.substring(account.length - 2)}` : elrondAccount ? `${elrondAccount.substring(0, 10)}...${elrondAccount.substring(elrondAccount.length - 2)}`: ''}
-            <span className="copyTokk"><img src={FileCopy} /></span>
-        </div>
-        <div className="accountBtn">
-            <a href="#" className="changeBtn">Change</a>
-            <a onClick={() => handleDisconnect()} href="#" className="changeBtn">Disconnect</a>
-        </div>
-    </div>
+    :
+    ''
     )
 }

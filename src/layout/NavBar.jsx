@@ -15,11 +15,9 @@ import { setAccountModal } from '../store/reducers/generalSlice';
 function NavBar() {
     const dispatch = useDispatch()
     const account = useSelector(state => state.general.account)
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => dispatch(setAccountModal(true));
     const step = useSelector(state => state.general.step)
-    
+        const [copied, setCopy] = useState()
 
     useEffect(() => {}, [step])
 
@@ -37,7 +35,7 @@ function NavBar() {
                         { account ? <Nav.Link href="#NFT" className="nftConnect" onClick={handleShow}>{account ?`${account.substring(0, 6)}...${account.substring(account.length - 2)}`:''} <img src={NftSelect} /></Nav.Link> :''}
                     </Nav>
                 </Navbar.Collapse>
-                {/* <AccountModal /> */}
+                <AccountModal />
             </Navbar>
         </header>
     )

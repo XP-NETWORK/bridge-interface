@@ -687,6 +687,14 @@ span.wallet {
     color: white;
 }
 
+.accountBox{
+    position: absolute;
+    background: #262a36;
+    top: 60px;
+    right: 15px;
+    z-index: 100;
+}
+
 .yourNft, .yourNft span {
     display: flex;
     align-items: center;
@@ -1369,6 +1377,7 @@ span.statComp {color: #10B67A;}
     align-items: center;
 }
 
+
 span.copyTokk img {
     cursor: pointer;
     margin-left: 5px;
@@ -1744,6 +1753,7 @@ span.invalid img {
     align-items: center;
     color: #fff;
     margin-bottom: 25px;
+    width: 100%;
 }
 
 .nftLink img {
