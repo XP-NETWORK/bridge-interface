@@ -35,7 +35,7 @@ return (
         {/* <NFTNoaccounts/> */}
         {/* <Transactionhistory /> */}
         {/* <Aleart /> */}
-        {/* <Alert /> */}
+        <Alert />
         {/* <NFTaccountList/> */}
       </Router>
     </div>

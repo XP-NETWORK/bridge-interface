@@ -8,6 +8,7 @@ import NFTOnaccount from "../components/NFTOnaccount"
 import NFTworng from '../components/NFTworng';
 import Transactionhistory from '../components/Transactionhistory';
 import AccountModal from '../components/AccountModal';
+import { Alert } from 'react-bootstrap';
 
 function XpBridge() {
 
@@ -22,8 +23,8 @@ function XpBridge() {
             { step === 2 ? <NFTaccount />  : '' }
             {/* <NFTOnaccount /> */}
             {/* <NFTworng /> */}
+            <Alert />
             <NFTsuccess/>
-            <AccountModal/>
             {/* <Transactionhistory />     // !! TO DO */}
         </div>
     )
