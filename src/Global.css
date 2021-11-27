@@ -713,7 +713,7 @@ span.wallet {
 }
 
 .singleNft {
-    border-radius: 8%;
+    border-radius: 25px;
     overflow: hidden;
     height: 100%;
     margin-left: 3px;
@@ -745,16 +745,17 @@ span.wallet {
 
 .nftImageBox {
     position: relative;
+    /* top: -30px; */
     z-index: -1;
     cursor: pointer;
-    height: 160px;
+    height: 230px;
 }
 
 .selectNft {
     position: absolute;
     z-index: 3;
     left: 19px;
-    top: 19px;
+    top: 49px;
     width: 18px;
     height: 18px;
     background: #fff;
@@ -769,7 +770,7 @@ span.wallet {
 .nftCont {
     background: #292F3F;
     padding: 6px 12px 20px;
-    height: 120px;
+    height: 90px;
     /* z-index: 10; */
 }
 
