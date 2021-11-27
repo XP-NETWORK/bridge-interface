@@ -3,6 +3,7 @@ import { Dropdown, Modal } from "react-bootstrap";
 import BSC from '../../assets/img/chain/Binance.svg';
 import Search from '../../assets/img/icons/Search.svg';
 import ListView from '../../assets/img/icons/ListView.svg';
+import GridView from "../../assets/img/icons/GridView.svg"
 import { useDispatch } from 'react-redux';
 import { setSearchNFTList, allSelected, setNFTsListView, setTo, setSwitchDestination } from "../../store/reducers/generalSlice"
 import { useSelector } from 'react-redux';
@@ -64,7 +65,11 @@ function NFTlistTop() {
                     </Dropdown>
                 </div>
                 <div onClick={() => handleView()} className="nftViewBtn">
-                    <span  className="ListView"><img src={ListView} /></span>
+                    { NFTListView ? 
+                        <span  className="ListView"><img src={GridView} /></span>
+                    :
+                        <span  className="ListView"><img src={ListView} /></span>
+                    }
                 </div>
                 <div stye={ nfts ? {} : OFF } onClick={() => dispatch(allSelected())} className="selectAll">
                     Select All
