@@ -7,17 +7,22 @@ import NftSelect from '../assets/img/nftselect.svg';
 import Close from '../assets/img/icons/close.svg';
 import FileCopy from '../assets/img/icons/FileCopy.svg';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setAccountModal } from '../store/reducers/generalSlice';
 
 
 
 export default function AccountModal() {
-    const [show, setShow] = useState(false);
+    // const [show, setShow] = useState(false);
+    const dispatch = useDispatch()
     const account = useSelector(state => state.general.account)
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const show = useSelector(state => state.general.accountModal)
+    const handleClose = () => dispatch(setAccountModal(false))
+    
+
 
     return (
-        <Modal className="accountBox" show={show} onHide={handleClose} >
+    <Modal className="accountBox" show={show} onHide={handleClose} >
         <div className="accountTit">
             Account <span className="CloseModal" onClick={handleClose}> <img src={Close}/> </span>
         </div>

@@ -7,15 +7,15 @@ import Close from '../assets/img/icons/close.svg';
 import FileCopy from '../assets/img/icons/FileCopy.svg';
 
 import { Navbar, Nav, Modal } from "react-bootstrap";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAccountModal } from '../store/reducers/generalSlice';
 
 
 function NavBar() {
-
+    const dispatch = useDispatch()
     const [show, setShow] = useState(false);
     const account = useSelector(state => state.general.account)
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => dispatch(setAccountModal(true));
     
     return (
         <header className="HeaderArea" id="Header"> 
@@ -28,7 +28,7 @@ function NavBar() {
                         <Nav.Link href="#Docs">Docs</Nav.Link>
                         <Nav.Link href="#FAQs">FAQs</Nav.Link>
                         <Nav.Link href="#GetFeatured"><img src={Start} /> Get Featured</Nav.Link>
-                        <Nav.Link href="#NFT" className="nftConnect" onClick={handleShow}>{account ?`${account.substring(0, 6)}...${account.substring(account.length - 2)}`:''} <img src={NftSelect} /></Nav.Link>
+                        { account ? <Nav.Link href="#NFT" className="nftConnect" onClick={handleShow}>{account ?`${account.substring(0, 6)}...${account.substring(account.length - 2)}`:''} <img src={NftSelect} /></Nav.Link> :''}
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

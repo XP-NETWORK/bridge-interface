@@ -1688,15 +1688,12 @@ span.invalid img {
     margin-left: 6px;
 }
 
-.accountBox {
-    display: none;
-}
 
 .accountBox {
-    position: absolute;
-    right: 0;
-    top: 60px;
-    background: #262A36;
+    /* position: absolute; */
+    /* right: 0; */
+    /* top: 60px; */
+    /* background: #262A36; */
     border: 1px solid #2D3342;
     box-sizing: border-box;
     border-radius: 20px;

@@ -7,6 +7,7 @@ import NFTsuccess from '../components/NFTsuccess';
 import NFTOnaccount from "../components/NFTOnaccount"
 import NFTworng from '../components/NFTworng';
 import Transactionhistory from '../components/Transactionhistory';
+import AccountModal from '../components/AccountModal';
 
 function XpBridge() {
 
@@ -22,6 +23,7 @@ function XpBridge() {
             {/* <NFTOnaccount /> */}
             {/* <NFTworng /> */}
             <NFTsuccess/>
+            <AccountModal/>
             {/* <Transactionhistory />     // !! TO DO */}
         </div>
     )

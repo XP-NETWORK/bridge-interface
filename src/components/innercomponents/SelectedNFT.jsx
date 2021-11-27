@@ -27,7 +27,7 @@ function SelectedNFT() {
                 <div className="selectedNft nftselectedtop">
                     <a href="#" className="backBtn mobileOnly"><img src={Back} alt="Back" /></a>
                     <span className="mobileOnly">Selected NFTs</span>
-                    <span className="desktopOnly">Selected NFT <span>{nfts?.length} / {selectedNFTs.length}</span></span>
+                    <span className="desktopOnly">Selected NFT <span>{selectedNFTs.length} / {nfts?.length}</span></span>
                     <button style={selectedNFTs.length ? {} : OFF } onClick={() => handleClear()} className="clearNft">Clear all</button>
                 </div>
             </div>

@@ -19,6 +19,7 @@ import { parseNFTS } from "../wallet/helpers"
 import { BigNumber } from "bignumber.js";
 import Comment from "../components/innercomponents/Comment"
 import NFTworng from './NFTworng';
+import AccountModal from './AccountModal';
 
 
 function NFTaccount() {
@@ -127,6 +128,7 @@ function NFTaccount() {
     
     return (
         <div className="NFTaccount" >
+            
             <Container className="nftSlectContaine">
                 <div className="row">
                     <div className="nftListCol col-lg-8">
