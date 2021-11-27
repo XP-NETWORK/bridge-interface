@@ -8,7 +8,7 @@ import Close from '../assets/img/icons/close.svg';
 import FileCopy from '../assets/img/icons/FileCopy.svg';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setAccountModal } from '../store/reducers/generalSlice';
+import { setAccountModal, setReset } from '../store/reducers/generalSlice';
 import { DetectOutsideClick } from "../components/helpers"
 
 
@@ -16,10 +16,15 @@ export default function AccountModal() {
     // const [show, setShow] = useState(false);
     const dispatch = useDispatch()
     const account = useSelector(state => state.general.account)
+    const elrondAccount = useSelector(state => state.general.elrondAccount)
+    const MetaMask = useSelector(state => state.general.MetaMask)
+    const onMaiar = useSelector(state => state.general.onMaiar)
     const show = useSelector(state => state.general.accountModal)
     const handleClose = () => dispatch(setAccountModal(false))
     const accountModal = useRef()
-    // const handleDisconnect
+    const handleDisconnect = () => {
+        dispatch(setReset())
+    }
 
     DetectOutsideClick(accountModal, () => setTimeout(() => handleClose(), 100));
 
@@ -28,15 +33,15 @@ export default function AccountModal() {
         <div className="accountTit">
             Account <span className="CloseModal" onClick={handleClose}> <img src={Close}/> </span>
         </div>
-        <p className="">Connected with MetaMask</p>
+        <p className="">{`Connected with ${MetaMask ? 'MetaMask' : onMaiar ? "Maiar Wallet" : ''}`}</p>
         <div className="nftLink">
             <img src={NftSelect} />
-            0x925ea338...45
+            {account ?`${account.substring(0, 10)}...${account.substring(account.length - 2)}` : elrondAccount ? `${elrondAccount.substring(0, 10)}...${elrondAccount.substring(elrondAccount.length - 2)}`: ''}
             <span className="copyTokk"><img src={FileCopy} /></span>
         </div>
         <div className="accountBtn">
             <a href="#" className="changeBtn">Change</a>
-            <a href="#" className="disconBtn">Disconnect</a>
+            <a onClick={() => handleDisconnect()} href="#" className="changeBtn">Disconnect</a>
         </div>
     </div>
     )
