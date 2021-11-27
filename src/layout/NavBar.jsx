@@ -5,17 +5,19 @@ import Hambar from '../assets/img/icons/Hambar.svg';
 import NftSelect from '../assets/img/nftselect.svg';
 import Close from '../assets/img/icons/close.svg';
 import FileCopy from '../assets/img/icons/FileCopy.svg';
-
+import AccountModal from "../components/AccountModal"
 import { Navbar, Nav, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { setAccountModal } from '../store/reducers/generalSlice';
 
 
+
 function NavBar() {
     const dispatch = useDispatch()
-    const [show, setShow] = useState(false);
     const account = useSelector(state => state.general.account)
-    const handleShow = () => dispatch(setAccountModal(true));
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     
     return (
         <header className="HeaderArea" id="Header"> 
@@ -31,6 +33,7 @@ function NavBar() {
                         { account ? <Nav.Link href="#NFT" className="nftConnect" onClick={handleShow}>{account ?`${account.substring(0, 6)}...${account.substring(account.length - 2)}`:''} <img src={NftSelect} /></Nav.Link> :''}
                     </Nav>
                 </Navbar.Collapse>
+                <AccountModal />
             </Navbar>
         </header>
     )

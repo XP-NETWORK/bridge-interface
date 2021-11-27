@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Navbar, Nav, Modal } from "react-bootstrap";
 import Logo from '../assets/img/nav/Logo.svg';
 import Start from '../assets/img/nav/star_menu.svg';
@@ -9,7 +9,7 @@ import FileCopy from '../assets/img/icons/FileCopy.svg';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setAccountModal } from '../store/reducers/generalSlice';
-
+import { DetectOutsideClick } from "../components/helpers"
 
 
 export default function AccountModal() {
@@ -18,11 +18,13 @@ export default function AccountModal() {
     const account = useSelector(state => state.general.account)
     const show = useSelector(state => state.general.accountModal)
     const handleClose = () => dispatch(setAccountModal(false))
-    
+    const accountModal = useRef()
+    // const handleDisconnect
 
+    DetectOutsideClick(accountModal, () => setTimeout(() => handleClose(), 100));
 
     return (
-    <Modal className="accountBox" show={show} onHide={handleClose} >
+    <div ref={accountModal} className="accountBox" show={show} onHide={handleClose} >
         <div className="accountTit">
             Account <span className="CloseModal" onClick={handleClose}> <img src={Close}/> </span>
         </div>
@@ -36,6 +38,6 @@ export default function AccountModal() {
             <a href="#" className="changeBtn">Change</a>
             <a href="#" className="disconBtn">Disconnect</a>
         </div>
-    </Modal>
+    </div>
     )
 }

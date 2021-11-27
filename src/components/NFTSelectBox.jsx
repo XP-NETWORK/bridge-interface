@@ -1,11 +1,11 @@
 import React, { useState} from 'react'
 import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
-
-
 import Departure from '../assets/img/nftSelect/departure.svg';
 import Destination from '../assets/img/nftSelect/destination.svg';
 import ChainArrow from '../assets/img/nftSelect/ChianArrow.svg';
 import LineArrow from '../assets/img/nftSelect/Line.svg';
+import SwapHover from "../assets/img/icons/SwapHover.png"
+import SwapPressed from "../assets/img/icons/SwapPressed.png"
 import { useDispatch } from 'react-redux';
 import { setChainModal, setDepartureOrDestination, setTo, setFrom  } from "../store/reducers/generalSlice"
 import { useSelector, } from 'react-redux';
@@ -29,6 +29,9 @@ export default function NFTSelectBox() {
         dispatch(setFrom(temp))
     }
 
+    const [swapHover, setSwapHover] = useState()
+    const [swapDown, setSwapDown] = useState()
+
     return (
         <div className="nftSelectBox">
         <div className="selChain seleDepat" onClick={() => handleShow("departure")}>
@@ -42,7 +45,11 @@ export default function NFTSelectBox() {
                 </div>
             }
         </div>
-        <span onClick={ e => switchChains(e)} className="chainArrow"><img src={ ChainArrow } alt="" /></span>
+        { from && to ?
+            <span onMouseDown={() => setSwapDown(true)} onMouseUp={()=>setSwapDown(false)} onMouseOut={()=> setSwapHover(false)} onMouseOver={() => setSwapHover(prev =>!prev)} onClick={ e => switchChains(e)} className="chainArrow"><img src={ swapDown ? SwapPressed : swapHover ? SwapHover : ChainArrow } alt="" /></span>
+        :
+            <span className="chainArrow"><img src={ ChainArrow } alt="" /></span> 
+        }
         <span className="LineArrow"><img src={ LineArrow } alt="" /></span>
         <div className="selChain seleDesti" onClick={() => handleShow("destination")}>
             { to ?
