@@ -114,6 +114,9 @@ const generalSlice = createSlice({
     },
     setApproveLoader(state, action){
       state.approveLoader = action.payload
+    },
+    setTronLink(state, action){
+      state.tronLink = action.payload
     }
   },
 });
@@ -149,7 +152,8 @@ export const { toggleNFTInfo,
     setSwitchDestination,
     setAccountModal,
     setBigLoader,
-    setApproveLoader
+    setApproveLoader,
+    setTronLink
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

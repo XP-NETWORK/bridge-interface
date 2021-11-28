@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/connectors"
 import { EVM, ELROND, chainsConfig } from "../components/values"
-import { setTronWallet, setAccount, setConfirmMaiarMob, setMetaMask, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset } from "../store/reducers/generalSlice"
+import { setTronWallet, setAccount, setConfirmMaiarMob, setTronLink, setMetaMask, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset } from "../store/reducers/generalSlice"
 import { Address, ExtensionProvider, WalletConnectProvider, ProxyProvider } from "@elrondnetwork/erdjs"
 import { CHAIN_INFO } from '../components/values';
 import QRCode from 'qrcode'
@@ -32,6 +32,7 @@ function ConnectWallet() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const metaMask = useSelector(state => state.general.MetaMask)
+    const tronLink = useSelector(state => state.general.tronLink)
     const chainFromProvider = useSelector(state => state.chainIdFromProvider)
     const [qrCodeString, setQqrCodeString] = useState()
     const [strQR, setStrQr] = useState()
@@ -103,6 +104,7 @@ function ConnectWallet() {
             if(window.tronLink && window.tronWeb.defaultAddress.base58) {
               const publicAddress = window.tronWeb.defaultAddress.base58
               dispatch(setTronWallet(publicAddress))
+              dispatch(setTronLink(true))
               handleClose()
             }
           } catch(err) {
@@ -152,8 +154,9 @@ function ConnectWallet() {
         if(from){
             dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
         }
-        if(metaMask && correct)dispatch(setStep(2))
-    }, [account, metaMask, chainId])
+        // debugger
+        if((metaMask && correct)||(tronLink && correct))dispatch(setStep(2))
+    }, [account, metaMask, chainId, tronLink])
 
     return (
         <div>
@@ -181,7 +184,7 @@ function ConnectWallet() {
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 <li style={ OFF } className="wllListItem"><img src={Trezor} alt="Trezor Icon" /> Trezor</li>
                                 <li style={ from ? from.type === "EVM" ? {} : OFF : ""} className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
-                                <li style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
+                                <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                             </ul>
                         </div>
                     </Modal.Body>

@@ -1,8 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Navbar, Nav, Modal } from "react-bootstrap";
-import Logo from '../assets/img/nav/Logo.svg';
-import Start from '../assets/img/nav/star_menu.svg';
-import Hambar from '../assets/img/icons/Hambar.svg';
+import React, { useRef, useState } from 'react'
 import NftSelect from '../assets/img/nftselect.svg';
 import Close from '../assets/img/icons/close.svg';
 import FileCopy from '../assets/img/icons/FileCopy.svg';
@@ -12,7 +8,6 @@ import { useDispatch } from 'react-redux';
 import { setAccountModal, setReset } from '../store/reducers/generalSlice';
 import { DetectOutsideClick } from "../components/helpers"
 import {CopyToClipboard } from 'react-copy-to-clipboard';
-import { getAddEthereumChain } from "../wallet/chains"
 
 export default function AccountModal() {
     const dispatch = useDispatch()
@@ -41,20 +36,6 @@ export default function AccountModal() {
     }
 
     DetectOutsideClick(accountModal, () => setTimeout(() => handleClose(), 100));
-
-
-    // async function switchNetwork (){
-    //     try {
-    //         await window.ethereum.request({
-    //                 method: "wallet_addEthereumChain",
-    //                 params: [params, account],
-    //             })
-            
-    //     } catch (error) {
-            
-    //     }
-    // }
-
 
     return ( show ?
         <div ref={accountModal} className="accountBox" show={show} onHide={handleClose} >

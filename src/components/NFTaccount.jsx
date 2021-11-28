@@ -118,6 +118,13 @@ function NFTaccount() {
         return () => clearInterval(s);
     }, [selectedNFTList])
 
+    useEffect(() => {
+        clearInterval(estimateInterval)
+        const s = setInterval(() => estimate(), 1000 * 30);
+        setEstimateInterval(s)
+        return () => clearInterval(s)
+    }, [to])
+
     return (
         <div className="NFTaccount" >
             
