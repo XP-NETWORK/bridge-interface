@@ -856,6 +856,28 @@ span.NFTInf:hover img {
     outline: 1px solid #3E64ED;
 }
 
+.nft-sceleton.singleNft{
+    position: absolute;
+    top: 0;
+    width: 90%;
+    background: linear-gradient(242.44deg, #62718A -3.49%, #383F56 46.4%, #62718A 102.48%);
+}
+
+.nft-sceleton.nftName{
+    height: 20px;
+    width: 100%;
+    border-radius: 10px;
+    background: linear-gradient(242.44deg, #62718A -3.49%, #383F56 46.4%, #62718A 102.48%);
+}
+
+.nft-sceleton.nftNumber{
+    height: 20px;
+    width: 50%;
+    border-radius: 10px;
+    background: linear-gradient(242.44deg, #62718A -3.49%, #383F56 46.4%, #62718A 102.48%);
+}
+
+
 /* .nftListed.nftSelect {
     border: 1px solid #3E64ED;
     border-radius: 5px;
