@@ -5,7 +5,7 @@ import Search from '../../assets/img/icons/Search.svg';
 import ListView from '../../assets/img/icons/ListView.svg';
 import GridView from "../../assets/img/icons/GridView.svg"
 import { useDispatch } from 'react-redux';
-import { setSearchNFTList, allSelected, setNFTsListView, setTo, setSwitchDestination } from "../../store/reducers/generalSlice"
+import { setSearchNFTList, allSelected, setNFTsListView, setTo, setSwitchDestination, cleanSelectedNFTList } from "../../store/reducers/generalSlice"
 import { useSelector } from 'react-redux';
 import SelectDestination from '../SelectDestination';
 import NFTChainListBox from '../NFTChainListBox';
@@ -14,11 +14,13 @@ import Close from '../../assets/img/icons/close.svg';
 
 function NFTlistTop() {
     const dispatch = useDispatch()
-    const nfts = useSelector(state => state.general.nfts)
+    const nfts = useSelector(state => state.general.NFTList)
+    const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const NFTListView = useSelector(state => state.general.NFTListView)
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector(state => state.general.from)
     const switchDestination = useSelector(state => state.general.switchDestination)
+
     const handleSearch = e => {
         dispatch(setSearchNFTList(e.target.value))
     }
@@ -30,7 +32,7 @@ function NFTlistTop() {
     const handleView = () => {
         dispatch(setNFTsListView())
     }
- 
+
     return (
         <div className="nftListTop">
             <Modal show={switchDestination} onHide={() => handleClose()} className="ChainModal">
@@ -71,9 +73,13 @@ function NFTlistTop() {
                         <span  className="ListView"><img src={ListView} /></span>
                     }
                 </div>
-                <div stye={ nfts ? {} : OFF } onClick={() => dispatch(allSelected())} className="selectAll">
-                    Select All
-                </div>
+                { nfts?.length === selectedNFTs?.length ? 
+                    <div onClick={() => dispatch(cleanSelectedNFTList())} className="selectAll">Clear ll</div>
+                :   
+                    <div stye={ nfts ? {} : OFF } onClick={() => dispatch(allSelected())} className="selectAll">
+                        Select All
+                    </div>
+                }
             </div>
             <div className="mobileOnly mobSearch">
                 <form action="#">
