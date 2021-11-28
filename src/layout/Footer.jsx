@@ -13,10 +13,10 @@ function Footer() {
             <div className="footContainer">
                 <div className="footLeft">
                     <ul className="socialLInks">
-                        <li><a href="#" target="_blank" className="socliLink"><img src={Linkedin} alt="" /></a></li>
-                        <li><a href="#" target="_blank" className="socliLink"><img src={Telegram} alt="" /></a></li>
-                        <li><a href="#" target="_blank" className="socliLink"><img src={Twitter} alt="" /></a></li>
-                        <li><a href="#" target="_blank" className="socliLink"><img src={Redit} alt="" /></a></li>
+                        <li><a href="https://www.linkedin.com/company/xp-network/mycompany/" target="_blank" className="socliLink"><img src={Linkedin} alt="" /></a></li>
+                        <li><a href="https://t.me/xp_network" target="_blank" className="socliLink"><img src={Telegram} alt="" /></a></li>
+                        <li><a href="https://twitter.com/xpnetwork_" target="_blank" className="socliLink"><img src={Twitter} alt="" /></a></li>
+                        <li><a href="https://www.reddit.com/user/XP_network/" target="_blank" className="socliLink"><img src={Redit} alt="" /></a></li>
                     </ul>
                 </div>
                 <div className="footRight">
@@ -27,8 +27,8 @@ function Footer() {
                         </a>
                     </div>
                     <div className="priPoli">
-                        <a href="#" className="pripolink">Terms</a>
-                        <a href="#" className="pripolink">Privacy Policy</a>
+                        {/* <a href="#" className="pripolink">Terms</a> */}
+                        <a href="https://xp.network/privacy-policy/" target="_blank" className="pripolink">Privacy Policy</a>
                     </div>
                 </div>
             </div>

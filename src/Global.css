@@ -1485,6 +1485,10 @@ span.statComp img {
     margin-bottom: 15px;
 }
 
+.switching:hover{
+    cursor: pointer;
+}
+
 .switchingAcc p {
     color: #62718A;
     margin-top: 9px;
