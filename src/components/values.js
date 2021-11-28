@@ -21,6 +21,7 @@ export const chains = [
         key: 'Ethereum',
         text: 'Ethereum',
         value: 'Ethereum',
+        order: 1,
         image: { avatar: true, src: Etherium },
     },
     {
@@ -28,6 +29,7 @@ export const chains = [
         key: 'BSC',
         text: 'BSC',
         value: 'BSC',
+        order: 2,
         image: { avatar: true, src: Binance },
     },
     {
@@ -35,6 +37,7 @@ export const chains = [
         key: 'Tron',
         text: 'Tron',
         value: 'Tron',
+        order: 4,
         image: { avatar: true, src: Tron },
     },
     {
@@ -42,6 +45,7 @@ export const chains = [
         key: ELROND,
         text: ELROND,
         value: ELROND,
+        order: 5,
         image: { avatar: true, src: Elrond },
     },
     {
@@ -49,6 +53,7 @@ export const chains = [
         key: 'Polygon',
         text: 'Polygon',
         value: 'Polygon',
+        order: 3,
         image: { avatar: true, src: Polygon },
     },
     {
@@ -56,6 +61,7 @@ export const chains = [
         key: 'Avalanche',
         text: 'Avalanche',
         value: 'Avalanche',
+        order: 6,
         image: { avatar: true, src: Avalanche },
     },
     {
@@ -63,6 +69,7 @@ export const chains = [
         key: 'Fantom',
         text: 'Fantom',
         value: 'Fantom',
+        order: 7,
         image: { avatar: true, src: Fantom },
     },
     {
@@ -70,6 +77,7 @@ export const chains = [
         key: 'Algorand',
         text: 'Algorand',
         value: 'Algorand',
+        order: 9,
         coming: true,
         image: { avatar: true, src: Algorand },
     },
@@ -78,6 +86,7 @@ export const chains = [
         key: 'xDai',
         text: 'xDai',
         value: 'xDai',
+        order: 8,
         image: { avatar: true, src: Xdai },
     },
     {
@@ -85,6 +94,7 @@ export const chains = [
         key: 'Solana',
         text: 'Solana',
         value: 'Solana',
+        order: 10,
         coming: true,
         image: { avatar: true, src: Solana },
     },
@@ -93,6 +103,7 @@ export const chains = [
         key: 'Cardano',
         text: 'Cardano',
         value: 'Cardano',
+        order: 11,
         coming: true,
         image: { avatar: true, src: Cardano },
     },
@@ -101,6 +112,7 @@ export const chains = [
         key: 'Heco',
         text: 'Heco',
         value: 'Heco',
+        order: 12,
         coming: true,
         image: { avatar: true, src: Heco },
     },

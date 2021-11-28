@@ -12,11 +12,9 @@ import { useDispatch } from 'react-redux';
 import { setAccountModal, setReset } from '../store/reducers/generalSlice';
 import { DetectOutsideClick } from "../components/helpers"
 import {CopyToClipboard } from 'react-copy-to-clipboard';
-
-
+import { getAddEthereumChain } from "../wallet/chains"
 
 export default function AccountModal() {
-    // const [show, setShow] = useState(false);
     const dispatch = useDispatch()
     const account = useSelector(state => state.general.account)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
@@ -45,6 +43,18 @@ export default function AccountModal() {
     DetectOutsideClick(accountModal, () => setTimeout(() => handleClose(), 100));
 
 
+    // async function switchNetwork (){
+    //     try {
+    //         await window.ethereum.request({
+    //                 method: "wallet_addEthereumChain",
+    //                 params: [params, account],
+    //             })
+            
+    //     } catch (error) {
+            
+    //     }
+    // }
+
 
     return ( show ?
         <div ref={accountModal} className="accountBox" show={show} onHide={handleClose} >
@@ -60,7 +70,7 @@ export default function AccountModal() {
                 </div>
             </CopyToClipboard>
             <div className="accountBtn">
-                <a href="#" className="changeBtn">Change</a>
+                <a href="#" className="disconBtn">Change</a>
                 <a onClick={() => handleDisconnect()} href="#" className="changeBtn">Disconnect</a>
             </div>
         </div>

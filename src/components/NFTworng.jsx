@@ -18,7 +18,6 @@ function NFTworng() {
     const handleClose = () => dispatch(setWrongNetwork(false))
     const from = useSelector(state => state.general.from)
     const showWrong = useSelector(state => state.general.wrongNetwork)
-    console.log("showWrong", showWrong);
     const account = useSelector(state => state.general.account)
     const dispatch = useDispatch()
 

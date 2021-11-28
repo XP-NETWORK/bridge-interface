@@ -15,7 +15,7 @@ function Alert() {
         <div>
             {   (from && to) || !show? '' :
                 <div className="aleartBox">
-                    Select Departure Chain and Destiantion to continue bridging
+                    Select Departure and Destination Chain to continue bridging
                     <span onClick={()=> handleClose()} className="closeBox"><img src={Close} alt="" /></span>
                 </div>
             }
