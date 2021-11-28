@@ -8,7 +8,6 @@ const initialState = {
   txnHashArr: [],
   fees : 0,
   bigLoader : true
-  // confirmMaiarMob: false
 };
 
 const generalSlice = createSlice({
@@ -112,6 +111,9 @@ const generalSlice = createSlice({
     },
     setBigLoader(state, action){
       state.bigLoader = action.payload
+    },
+    setApproveLoader(state, action){
+      state.approveLoader = action.payload
     }
   },
 });
@@ -146,7 +148,8 @@ export const { toggleNFTInfo,
     setConfirmMaiarMob,
     setSwitchDestination,
     setAccountModal,
-    setBigLoader
+    setBigLoader,
+    setApproveLoader
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

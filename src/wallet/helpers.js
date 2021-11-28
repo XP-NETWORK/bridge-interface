@@ -37,9 +37,8 @@ export const preloadItem = (item, type, setLoaded) => {
 
 export const parseNFTS = async (nfts) => {
     const { from, to } = store.getState().general
-
     const result = await Promise.all(nfts.map(async n => {
-
+        
     return await new Promise(async resolve => {
         try {
             if(!n.uri) resolve({ ...n })

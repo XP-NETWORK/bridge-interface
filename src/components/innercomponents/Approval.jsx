@@ -4,16 +4,15 @@ import InfLith from '../../assets/img/icons/infoLifht.svg';
 import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import {Chain, Config} from 'xp.network/dist/consts';
 import { ethers } from "ethers";
-import { updateApprovedNFTs, setApproved } from '../../store/reducers/generalSlice';
+import { updateApprovedNFTs, setApproved, setApproveLoader } from '../../store/reducers/generalSlice';
 import { isEqual } from '../helpers';
-import { getFactory, handleChainFactory, isALLNFTsApproved } from '../../wallet/helpers';
+import { getFactory, handleChainFactory, isALLNFTsApproved, } from '../../wallet/helpers';
 
 function Approval(props) {
     
     const dispatch = useDispatch()
     const [finishedApproving, setFinishedApproving] = useState([])
     const [approvedLoading, setApprovedLoading] = useState()
-
     const from = useSelector(state => state.general.from)
     const account = useSelector(state => state.general.account)
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
@@ -28,17 +27,15 @@ function Approval(props) {
                 const isInApprovedNFTs = approvedNFTList.filter(n => n.native.tokenId === tokenId && n.native.contract === contract && chainId === n.native.chainId )[0]
                 if(!isInApprovedNFTs) {
                     try {
+                        console.log('asdkal', chain, '1233218913289321893321892139')
                         const ap = await chain.approveForMinter(nft, signer);
-                        console.log(ap, 'approved finisjhed')
                         dispatch(updateApprovedNFTs(nft))
                         setFinishedApproving(arr)
                     } catch(err) {
-                        console.log('askladsk', arr)
+                        console.log('askladsk', arr, err)
                         setFinishedApproving(arr)
                     }
-
                 }
-    
             } catch (error) {
                 setFinishedApproving(arr)
                 console.log(error);
@@ -47,13 +44,15 @@ function Approval(props) {
     
     // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
     const approveAllNFTs = async () => {
+        // debugger
         if(!approvedLoading) {
+                dispatch(setApproveLoader(true))
                 setApprovedLoading(true)
                 setFinishedApproving([])
             if(from.type === "EVM"){
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner(account)
-                const chain = await handleChainFactory()
+                const chain = await handleChainFactory(from.key)
                 selectedNFTList.forEach((nft, index) => {
                     approveEach(nft, signer, chain, index)
                 })
@@ -62,18 +61,24 @@ function Approval(props) {
                 console.log("Not EVM Network")
             }
         }
+
     };
     
     useEffect(() => {
         if(finishedApproving.length === selectedNFTList.length && approvedLoading) {
             setApprovedLoading(false)
+            dispatch(setApproveLoader(false))
             setFinishedApproving([])
         }
         
         if(selectedNFTList.length > 0) {
             dispatch(setApproved(isALLNFTsApproved()))
+            
         }
-        else dispatch(setApproved(false))
+        else {
+            dispatch(setApproved(false))
+            dispatch(setApproveLoader(false))
+        }
     },[selectedNFTList, approvedNFTList, finishedApproving])
 
     return (
@@ -98,8 +103,8 @@ function Approval(props) {
                 Approve all NFTs
                 <div className="approveBtn">
                     <input checked={approved} type="checkbox" id="approveCheck" />
-                    <label htmlFor="approveCheck">
-                        <span onClick={approveAllNFTs} className="checkCircle"></span>
+                    <label onClick={approveAllNFTs} htmlFor="approveCheck">
+                        <span className="checkCircle"></span>
                     </label>
                 </div>
             </div>

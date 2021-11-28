@@ -9,6 +9,7 @@ import NFTworng from '../components/NFTworng';
 import Transactionhistory from '../components/Transactionhistory';
 import AccountModal from '../components/AccountModal';
 import { Alert } from 'react-bootstrap';
+import ApproveLoader from '../components/innercomponents/ApproveLoader';
 
 function XpBridge() {
     useEffect(() => {

@@ -20,6 +20,7 @@ import { BigNumber } from "bignumber.js";
 import Comment from "../components/innercomponents/Comment"
 import NFTworng from './NFTworng';
 import AccountModal from './AccountModal';
+import ApproveLoader from './innercomponents/ApproveLoader';
 
 
 function NFTaccount() {
@@ -110,14 +111,13 @@ function NFTaccount() {
     }, [])
 
     useEffect(() => {
-        console.log('hello')
         if(selectedNFTList.length > 0) estimate();
         else setFees("0")
         const s = setInterval(() => estimate(), 1000 * 30);
         setEstimateInterval(s)
         return () => clearInterval(s);
     }, [selectedNFTList])
-    console.log('hello')
+
     return (
         <div className="NFTaccount" >
             
@@ -169,6 +169,7 @@ function NFTaccount() {
                         </div>
                     </div>
                 </div>
+
             </Container>
         </div>
     )
