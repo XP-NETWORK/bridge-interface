@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
+import moment from 'moment';
 
 // Chain
 
@@ -12,7 +13,7 @@ import nftDetails_1 from '../assets/img/nfts/nftDetails_1.png';
 import INF from '../assets/img/icons/Inf.svg';
 
 function NFTdetails({ nftInf }){
-    const { name, description, image, attributes, uri, native } = nftInf
+    const { name, description, image, attributes, uri, native} = nftInf
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -46,9 +47,10 @@ function NFTdetails({ nftInf }){
                                 <p>{native.tokenId}</p>
                             </div>
                             <div className="nftInfDesc nftInfBox">
-                                <label>About</label>
+                                <label>Description</label>
                                 <p>Meka from the MekaVerse - A collection of 8,888 unique generative NFTs from another universe. Meka from the MekaVerse - A collection of 8,888 unique generative NFTs from an other universe.</p>
                             </div>
+                            { attributes && attributes.map((n,i) => <Attribute {...n} key={`attribute-${i}`}/>) }
                         </div>
                     </div>
                 </Modal.Body>
@@ -58,3 +60,25 @@ function NFTdetails({ nftInf }){
 }
 
 export default NFTdetails
+
+
+function Attribute(props) {
+    const { trait_type, display_type, value } = props
+    console.log(props)
+    return  <div className="nftDetContList ">
+    <div className="label">{ 
+    trait_type ?
+    trait_type.split('_').map(n =>  n.charAt(0).toUpperCase() + n.slice(1).toLowerCase()).join(' ')
+    : '-'
+    }</div>
+    <div className="details">
+      {
+        display_type === 'date' 
+        ? moment(new Date(value * 1000)).format('MM-DD-YYYY') 
+        : display_type === 'boolean' ?
+        value === true ? 'True' : 'False'
+        : value
+      }
+    </div>
+  </div>
+  }

@@ -1489,6 +1489,35 @@ span.statComp img {
     cursor: pointer;
 }
 
+.nftDetContList {
+    margin-bottom: 8px;
+    background: #272C39;
+    border-radius: 6px;
+    padding: 8px 12px;
+}
+
+.label {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+/*     background: #272C39;
+    border: 1px solid #2D3342;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 9px; */
+
+.details {
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 160%;
+    word-break: break-all;
+    color: #ffffff;
+}
+
 .switchingAcc p {
     color: #62718A;
     margin-top: 9px;
