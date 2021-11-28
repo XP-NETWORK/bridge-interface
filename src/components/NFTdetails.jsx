@@ -48,7 +48,7 @@ function NFTdetails({ nftInf }){
                             </div>
                             <div className="nftInfDesc nftInfBox">
                                 <label>Description</label>
-                                <p>Meka from the MekaVerse - A collection of 8,888 unique generative NFTs from another universe. Meka from the MekaVerse - A collection of 8,888 unique generative NFTs from an other universe.</p>
+                                <p>{description}</p>
                             </div>
                             { attributes && attributes.map((n,i) => <Attribute {...n} key={`attribute-${i}`}/>) }
                         </div>

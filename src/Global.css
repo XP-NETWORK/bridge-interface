@@ -728,6 +728,9 @@ span.wallet {
     padding-top: 3px;
     padding-bottom: 138%;
 }
+.singleNft.missing:hover{
+    cursor: unset;
+}
 .nftListBox {
     width: 100%;
     overflow: hidden !important;
