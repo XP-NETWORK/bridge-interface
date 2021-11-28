@@ -15,9 +15,7 @@ export default function NFTChainListBox() {
     const from = useSelector(state => state.general.from)
     const to = useSelector(state => state.general.to)
     const fromChains = chains
-    console.log("fromChains", fromChains, "from", from);
     const toChains = chains
-    console.log("toChains", toChains, "to", to);
 
     const handleClose = () => {
         dispatch(setChainModal(false))

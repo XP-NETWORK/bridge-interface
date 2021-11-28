@@ -6,6 +6,7 @@ import Hambar from '../assets/img/icons/Hambar.svg';
 import NftSelect from '../assets/img/nftselect.svg';
 import Close from '../assets/img/icons/close.svg';
 import FileCopy from '../assets/img/icons/FileCopy.svg';
+import CopyHover from '../assets/img/icons/CopyHover.svg';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setAccountModal, setReset } from '../store/reducers/generalSlice';
@@ -22,7 +23,8 @@ export default function AccountModal() {
     const MetaMask = useSelector(state => state.general.MetaMask)
     const onMaiar = useSelector(state => state.general.onMaiar)
     const show = useSelector(state => state.general.accountModal)
-    const step = useSelector(state => state.general.step)
+    const [copyIconHover, setCopyIconHover] = useState()
+
 
     const handleClose = () => {
         dispatch(setAccountModal(false))
@@ -54,7 +56,7 @@ export default function AccountModal() {
                 <div className="nftLink">
                     <img src={NftSelect} />
                     {account ?`${account.substring(0, 10)}...${account.substring(account.length - 2)}` : elrondAccount ? `${elrondAccount.substring(0, 10)}...${elrondAccount.substring(elrondAccount.length - 2)}`: ''}
-                    <span className="copyTokk"><img src={FileCopy} /></span>
+                    <span onMouseOver={() => setCopyIconHover(true)} onMouseOut={()=> setCopyIconHover(false)} className="copyTokk"><img src={ copyIconHover ? CopyHover : FileCopy} /></span>
                 </div>
             </CopyToClipboard>
             <div className="accountBtn">
