@@ -1811,7 +1811,7 @@ span.invalid img {
     box-sizing: border-box;
     border-radius: 20px;
     padding: 16px 24px 24px;
-    width: 318px;
+    width: 310px;
 }
 
 .accountTit {
@@ -1858,6 +1858,8 @@ span.invalid img {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    /* flex-wrap: wrap; */
+
 }
 
 .changeBtn {
@@ -1866,7 +1868,7 @@ span.invalid img {
     background: #3E64ED;
     border-radius: 10px;
     color: #fff;
-    padding: 0 34px;
+    padding: 0 14px;
     margin: 0 2px;
     height: 40px;
     display: inherit;

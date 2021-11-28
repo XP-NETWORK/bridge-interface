@@ -22,7 +22,9 @@ function NFTworng() {
     const dispatch = useDispatch()
 
     async function switchNetwork (){
+        debugger
         const info = CHAIN_INFO[from?.key]
+        console.log("info", info);
         const chainId = `0x${info.chainId.toString(16)}`;
         try {
             await window.ethereum.request({

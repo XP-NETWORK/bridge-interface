@@ -8,6 +8,8 @@ import { useDispatch } from 'react-redux';
 import { setAccountModal, setReset } from '../store/reducers/generalSlice';
 import { DetectOutsideClick } from "../components/helpers"
 import {CopyToClipboard } from 'react-copy-to-clipboard';
+import { CHAIN_INFO } from '../components/values';
+import { getAddEthereumChain } from "../wallet/chains"
 
 export default function AccountModal() {
     const dispatch = useDispatch()
@@ -17,6 +19,7 @@ export default function AccountModal() {
     const onMaiar = useSelector(state => state.general.onMaiar)
     const show = useSelector(state => state.general.accountModal)
     const [copyIconHover, setCopyIconHover] = useState()
+    const from = useSelector(state => state.general.from)
 
 
     const handleClose = () => {
@@ -35,6 +38,44 @@ export default function AccountModal() {
         dispatch(setReset())
     }
 
+    async function switchNetwork (){
+        const info = CHAIN_INFO[from?.key]
+        console.log("info", info);
+        const chainId = `0x${info.chainId.toString(16)}`;
+        try {
+            await window.ethereum.request({
+                method: "wallet_switchEthereumChain",
+                params: [{ chainId }],
+              })
+        } catch (error) {
+            console.log(error);
+            try {
+                const toHex = (num) => {
+                    return '0x'+num.toString(16)
+                }
+                const chain = getAddEthereumChain()[parseInt(chainId).toString()]
+                const params = {
+                    chainId: toHex(chain.chainId), // A 0x-prefixed hexadecimal string
+                    chainName: chain.name,
+                    nativeCurrency: {
+                      name: chain.nativeCurrency.name,
+                      symbol: chain.nativeCurrency.symbol, // 2-6 characters long
+                      decimals: chain.nativeCurrency.decimals,
+                    },
+                    rpcUrls: chain.rpc,
+                    blockExplorerUrls: [ ((chain.explorers && chain.explorers.length > 0 && chain.explorers[0].url) ? chain.explorers[0].url : chain.infoURL) ]
+                  }
+                await window.ethereum.request({
+                    method: "wallet_addEthereumChain",
+                    params: [params, account],
+                })
+                
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
     DetectOutsideClick(accountModal, () => setTimeout(() => handleClose(), 100));
 
     return ( show ?
@@ -51,7 +92,7 @@ export default function AccountModal() {
                 </div>
             </CopyToClipboard>
             <div className="accountBtn">
-                <a href="#" className="disconBtn">Change</a>
+                <a onClick={() => switchNetwork()} href="#" className="changeBtn">Change Network</a>
                 <a onClick={() => handleDisconnect()} href="#" className="changeBtn">Disconnect</a>
             </div>
         </div>
