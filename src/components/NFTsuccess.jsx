@@ -23,7 +23,9 @@ function NFTsuccess() {
 
 
     const [show, setShow] = useState(true);
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        window.location.reload()
+    };
     const handleShow = () => setShow(true);
     const [copied, setCopy] = useState()
     const showSuccess = useSelector(state => state.showSuccess)

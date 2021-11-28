@@ -1,3 +1,5 @@
+import { ChainFactory, ChainFactoryConfigs } from 'xp.network'
+import { Chain, Config } from 'xp.network/dist/consts'
 import store from '../store/store'
 
 
@@ -91,4 +93,30 @@ export const isALLNFTsApproved = () => {
         })
         return approvedNFTs.length === selectedNFTList.length
     }
+}
+export const getFactory = () => {
+    const mainnetConfig = ChainFactoryConfigs.MainNet;
+    const factory = ChainFactory(Config, mainnetConfig());  
+    return factory
+}
+
+export const handleChainFactory = async (someChain) => {
+// debugger
+
+    const factory = getFactory()
+    console.log( factory, Chain)
+    let chain
+    someChain === "Ethereum" ? chain = await factory.inner(Chain.ETHEREUM) : 
+    someChain === "BSC" ? chain = await factory.inner(Chain.BSC) :
+    someChain === "Tron" ? chain = await factory.inner(Chain.TRON) :
+    someChain === "Elrond" ? chain = await factory.inner(Chain.ELROND) :
+    someChain === "Polygon" ? chain = await factory.inner(Chain.POLYGON) :
+    someChain === "Avalanche" ? chain = await factory.inner(Chain.AVALANCHE) :
+    someChain === "Fantom" ? chain = await factory.inner(Chain.FANTOM) :
+    someChain === "Algorand" ? chain = await factory.inner(Chain.ALGORAND) :
+    someChain === "xDai" ? chain = await factory.inner(Chain.XDAI) :
+    someChain === "Solana" ? chain = await factory.inner(Chain.SOLANA) :
+    someChain === "Cardano" ? chain = await factory.inner(Chain.CARDANO) : chain = ""
+
+    return chain
 }

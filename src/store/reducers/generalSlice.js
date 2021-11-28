@@ -39,6 +39,7 @@ const generalSlice = createSlice({
       state.account = action.payload
     },
     setNFTList(state, action){
+      console.log("sdgfdsfgdfg");
       state.NFTList = action.payload
     },
     setSelectedNFTList(state, action){

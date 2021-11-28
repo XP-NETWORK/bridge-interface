@@ -47,6 +47,7 @@
     .mobileOnly {
         display: none !important;
     }
+  
 }
       
 @media only screen and (max-width: 767px) {
@@ -335,8 +336,11 @@
 
 } /* max-width: 767px */
        
-@media only screen and (max-width: 575px) {
-   
+@media only screen and (max-width: 775px) {
+    .accountBox {
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
 }
     
 @media only screen and (min-width: 320px) and (max-width: 425px) {

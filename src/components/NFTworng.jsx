@@ -80,8 +80,8 @@ function NFTworng() {
                             <h3>Switch to {from?.key} Mainnet</h3>
                             <p className="">XP.network Bridge requires you to <br /> connect to the {from?.key} Mainnet</p>
                         </div>
-                        <a onClick={() => switchNetwork()} href="#" className="switching">Switch Network</a>
-                        <div style={{visibility: "hidden"}} className="switchingAcc">
+                        <a onClick={() => switchNetwork()}  className="switching">Switch Network</a>
+                        <div style={{display: "none"}} className="switchingAcc">
                             <img src={Switch} alt="Switching" />
                             <p className="">Switching to Mainnet</p>
                             <p className="">Follow instructions in MetaMask</p>

@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 import {Chain, Config} from 'xp.network/dist/consts';
 import { setNFTList, setSelectedNFTList, setTxnHash } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
-import { parseNFTS } from "../wallet/helpers"
+import { getFactory, handleChainFactory, parseNFTS } from "../wallet/helpers"
 import { BigNumber } from "bignumber.js";
 import Comment from "../components/innercomponents/Comment"
 import NFTworng from './NFTworng';
@@ -24,13 +24,13 @@ import AccountModal from './AccountModal';
 
 function NFTaccount() {
     const dispatch = useDispatch()
+    const [loading, setLoading] = useState()
     const from = useSelector(state => state.general.from.key)
     const to = useSelector(state => state.general.to.key)
     const NFTListView = useSelector(state => state.general.NFTListView)
     const nfts = useSelector(state => state.general.NFTList)
     const account = useSelector(state => state.general.account)
-    const mainnetConfig = ChainFactoryConfigs.MainNet;
-    const factory = ChainFactory(Config, mainnetConfig());
+    const factory = getFactory()
     const approvedNFTList = useSelector(state => state.general.approvedNFTList)
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
     const receiver = useSelector(state => state.general.receiver)
@@ -39,30 +39,20 @@ function NFTaccount() {
     const [estimateInterval, setEstimateInterval] = useState()
     const [fees, setFees] = useState(0)
 
-    const handleChainFactory = async (someChain) => {
-        let chain
-        someChain === "Ethereum" ? chain = await factory.inner(Chain.ETHEREUM) : 
-        someChain === "BSC" ? chain = await factory.inner(Chain.BSC) :
-        someChain === "Tron" ? chain = await factory.inner(Chain.TRON) :
-        someChain === "Elrond" ? chain = await factory.inner(Chain.ELROND) :
-        someChain === "Polygon" ? chain = await factory.inner(Chain.POLYGON) :
-        someChain === "Avalanche" ? chain = await factory.inner(Chain.AVALANCHE) :
-        someChain === "Fantom" ? chain = await factory.inner(Chain.FANTOM) :
-        someChain === "Algorand" ? chain = await factory.inner(Chain.ALGORAND) :
-        someChain === "xDai" ? chain = await factory.inner(Chain.XDAI) :
-        someChain === "Solana" ? chain = await factory.inner(Chain.SOLANA) :
-        someChain === "Cardano" ? chain = await factory.inner(Chain.CARDANO) : chain = ""
-        return chain
-    }
+  
     
-    const getNFTsList = async () => {
+    async function getNFTsList(){
+        // debugger
         try {
             const chain = await handleChainFactory(from)
+            console.log(chain,123)
             const nfts = await factory.nftList(
                 chain,    // The chain of interest 
                 account    // The public key of the NFT owner
             );
+            console.log('asdkldsak132')
             const parsedNFTs = await parseNFTS(nfts)
+            console.log(parsedNFTs)
             if(parsedNFTs.length){
                 dispatch(setNFTList(parsedNFTs))
             }
@@ -109,9 +99,13 @@ function NFTaccount() {
     }
 
     const sendAllNFTs = () => {
-        approvedNFTList.forEach( nft => {
-            sendEach(nft)
-        })
+        if(!loading) {
+            setLoading(true)
+            approvedNFTList.forEach( nft => {
+                sendEach(nft)
+            })
+        }
+  
     }
 
     useEffect( async () => {
@@ -119,13 +113,14 @@ function NFTaccount() {
     }, [])
 
     useEffect(() => {
+        console.log('hello')
         if(selectedNFTList.length > 0) estimate();
         else setFees("0")
         const s = setInterval(() => estimate(), 1000 * 30);
         setEstimateInterval(s)
         return () => clearInterval(s);
     }, [selectedNFTList])
-    
+    console.log('hello')
     return (
         <div className="NFTaccount" >
             
@@ -164,9 +159,10 @@ function NFTaccount() {
                                         <SelectedNFT />
                                         <Approval />
                                         <SendFees fees={fees}/>
-                                        {/* <div className="nftSendBtn disabled"> */}
-                                        <div onClick={sendAllNFTs} className={approved && receiver ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
-                                            <a href="#" className="themBtn">Send</a>
+                                        <div onClick={sendAllNFTs} className={approved && receiver && !loading ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
+                                            <a  className="themBtn">
+                                                {loading ? 'Processing' : 'Send' }
+                                            </a>
                                         </div>
                                     </>
                                     :

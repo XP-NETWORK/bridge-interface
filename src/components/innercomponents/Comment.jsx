@@ -5,7 +5,7 @@ function Comment() {
     return (
         <div className="ComentBox">
             <img src={Coment} alt="Coment" />
-            <p className="">Try to  swithch to another Network to Lorem ipsum tra ta ta</p>
+            <p className="">Try to switching to another network</p>
         </div>
     )
 }

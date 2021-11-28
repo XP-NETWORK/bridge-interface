@@ -11,9 +11,7 @@ import AccountModal from '../components/AccountModal';
 import { Alert } from 'react-bootstrap';
 
 function XpBridge() {
-
     useEffect(() => {
-
     }, [])
 
     const step = useSelector(state => state.general.step)

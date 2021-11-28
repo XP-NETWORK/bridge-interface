@@ -28,20 +28,18 @@ export default function NFT({nft, index}) {
 
     return ( 
         <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-            <div onClick={() => addRemoveNFT(nft)} className="singleNft">
-                <div className={`nftImageBox ${isSelected ? 'nftSelect': ''}`}>
-                    <span className="selectNft">{<img src={CheckGreen} />}</span>
-                    <span className="nftImage"><img onLoad={() => setImageLoaded(true)} alt="NFT" src={nft.image} /></span>
+            <div className="singleNft">
+                <div onClick={() => addRemoveNFT(nft)}  className={`nftImageBox ${isSelected ? 'nftSelect': ''}`}>
+                    <span onClick={() => addRemoveNFT(nft)}  className="selectNft">{<img src={CheckGreen} />}</span>
+                    <span onClick={() => addRemoveNFT(nft)}  className="nftImage"><img onLoad={() => setImageLoaded(true)} alt="NFT" src={nft.image} /></span>
                     {!imageLoaded && (
                           <div className="nft__image--loader"></div>
                     )}
                 </div>
-                {imageLoaded && (
                     <div className="nftCont">
                     <span className="nftName">{nft.name} <NFTdetails nftInf={nft} index={index} /></span>
                     <span className="nftNumber">{nft.native.tokenId}</span>
                 </div>
-                )}
             </div>
         </div>
     )

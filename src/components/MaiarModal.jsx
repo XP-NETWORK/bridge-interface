@@ -37,7 +37,7 @@ export default function MaiarModal({ strQR, qrCodeString, show, handleClose }) {
                     <div className="maiarModal">
                     <div className="maiarSubtitle">Scan the QR code using Maiar</div>
                         <Image src={strQR} />
-                        <a href= {`${walletConnectDeepLink}https://maiar.com/?wallet-connect=${encodeURIComponent(qrCodeString)}`} className="maiarConnectBtn">Maiar Login</a>
+                        {window.innerWidth <=600 ? <a href= {`${walletConnectDeepLink}https://maiar.com/?wallet-connect=${encodeURIComponent(qrCodeString)}`} className="maiarConnectBtn">Maiar Login</a> : ''}
                     </div>
             </Modal.Body>   
         </Modal>
