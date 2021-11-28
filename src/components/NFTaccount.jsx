@@ -13,7 +13,7 @@ import NFTsuccess from './NFTsuccess';
 import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import { useSelector } from 'react-redux';
 import {Chain, Config} from 'xp.network/dist/consts';
-import { setNFTList, setSelectedNFTList, setTxnHash } from "../store/reducers/generalSlice"
+import { setBigLoader, setNFTList, setSelectedNFTList, setTxnHash } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
 import { getFactory, handleChainFactory, parseNFTS } from "../wallet/helpers"
 import { BigNumber } from "bignumber.js";
@@ -42,17 +42,14 @@ function NFTaccount() {
   
     
     async function getNFTsList(){
-        // debugger
         try {
             const chain = await handleChainFactory(from)
-            console.log(chain,123)
             const nfts = await factory.nftList(
                 chain,    // The chain of interest 
                 account    // The public key of the NFT owner
             );
-            console.log('asdkldsak132')
             const parsedNFTs = await parseNFTS(nfts)
-            console.log(parsedNFTs)
+            dispatch(setBigLoader(false))
             if(parsedNFTs.length){
                 dispatch(setNFTList(parsedNFTs))
             }

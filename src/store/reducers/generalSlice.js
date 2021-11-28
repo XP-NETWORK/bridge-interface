@@ -7,6 +7,7 @@ const initialState = {
   approvedNFTList: [],
   txnHashArr: [],
   fees : 0,
+  bigLoader : true
   // confirmMaiarMob: false
 };
 
@@ -108,6 +109,9 @@ const generalSlice = createSlice({
     },
     setAccountModal(state, action){
       state.accountModal = action.payload
+    },
+    setBigLoader(state, action){
+      state.bigLoader = action.payload
     }
   },
 });
@@ -141,7 +145,8 @@ export const { toggleNFTInfo,
     setTronWallet,
     setConfirmMaiarMob,
     setSwitchDestination,
-    setAccountModal
+    setAccountModal,
+    setBigLoader
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
