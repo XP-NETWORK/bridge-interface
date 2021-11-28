@@ -12,7 +12,7 @@ export default function NFT({nft, index}) {
     const dispatch = useDispatch()
     const isSelected = selectedNFTs.filter(n => n.native.tokenId === nft.native.tokenId && n.native.contract === nft.native.contract && n.native.chainId === nft.native.chainId)[0]
     const [imageLoaded, setImageLoaded]= useState(false);
-    const HIDDEN = { visibility: "hidden" };
+    const HIDDEN = { visibility: "hidden"};
 
     function addRemoveNFT (chosen){
         if(!isSelected){
@@ -40,7 +40,7 @@ export default function NFT({nft, index}) {
                 </div>
             </div>
             <div style={ imageLoaded ? HIDDEN : {} } className="nft-sceleton singleNft">
-                <div className="nft-sceleton nftImageBox"></div>
+                <div className="nft-sceleton-img"></div>
                 <div className="nft-sceleton nftCont">
                     <span className="nft-sceleton nftName"></span>
                     <span className="nft-sceleton nftNumber"></span>

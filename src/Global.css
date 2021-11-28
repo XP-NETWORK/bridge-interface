@@ -719,6 +719,8 @@ span.wallet {
     cursor: pointer;
 }
 
+
+
 .singleNft.missing {
     background: linear-gradient(335deg, rgba(41, 47, 63, 0.3) -0.71%, rgba(41, 47, 63, 0) 61.32%);
     border: 1px dashed #36405A;
@@ -753,6 +755,15 @@ span.wallet {
     
 }
 .nftImageBox {
+    position: relative;
+    display: flex;
+    /* top: -30px; */
+    overflow: hidden;
+    cursor: pointer;
+    height: 220px;
+}
+
+.nft-sceleton-img{
     position: relative;
     display: flex;
     /* top: -30px; */
@@ -878,10 +889,6 @@ span.NFTInf:hover img {
 }
 
 
-/* .nftListed.nftSelect {
-    border: 1px solid #3E64ED;
-    border-radius: 5px;
-} */
 
 .nftImageBox:after {
     content: "";
@@ -1991,5 +1998,3 @@ span.transPend {
     top: 30% !important;
 }
 
-.approve-modal{
-}
