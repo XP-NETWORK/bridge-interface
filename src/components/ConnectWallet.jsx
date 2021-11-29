@@ -14,8 +14,9 @@ import NFTworng from './NFTworng';
 import { useDispatch, useSelector } from 'react-redux';
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/connectors"
+import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { EVM, ELROND, chainsConfig } from "../components/values"
-import { setTronWallet, setAccount, setConfirmMaiarMob, setTronLink, setMetaMask, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset } from "../store/reducers/generalSlice"
+import { setTronWallet, setAccount, setConfirmMaiarMob, setTronLink, setMetaMask, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC } from "../store/reducers/generalSlice"
 import { Address, ExtensionProvider, WalletConnectProvider, ProxyProvider } from "@elrondnetwork/erdjs"
 import { CHAIN_INFO } from '../components/values';
 import QRCode from 'qrcode'
@@ -33,6 +34,7 @@ function ConnectWallet() {
     const handleShow = () => setShow(true);
     const metaMask = useSelector(state => state.general.MetaMask)
     const tronLink = useSelector(state => state.general.tronLink)
+    const onWC = useSelector(state => state.general.WalletConnect)
     const chainFromProvider = useSelector(state => state.chainIdFromProvider)
     const [qrCodeString, setQqrCodeString] = useState()
     const [strQR, setStrQr] = useState()
@@ -74,23 +76,6 @@ function ConnectWallet() {
         }
       }
 
-    const onClientConnect = (maiarProvider) => {
-        return {
-          onClientLogin: async () => {
-              const add = await maiarProvider.getAddress()
-            dispatch(setConfirmMaiarMob(true))
-            dispatch(setElrondAccount(add))
-            dispatch(setMaiarProvider(maiarProvider))
-            dispatch(setOnMaiar(true))
-            dispatch(setStep(2))
-          },
-          onClientLogout: async () => {
-            console.log("Loged Out");
-            dispatch(setReset())
-          }
-        }
-    }
-
     async function connectTronlink() {
         if(window.innerWidth <= 600 && !window.tronWeb){
         //   dispatch(setTronPopUp(true))
@@ -113,6 +98,24 @@ function ConnectWallet() {
         }
       }
 
+    const onClientConnect = (maiarProvider) => {
+      console.log(maiarProvider);
+      return {
+        onClientLogin: async () => {
+            const add = await maiarProvider.getAddress()
+          dispatch(setConfirmMaiarMob(true))
+          dispatch(setElrondAccount(add))
+          dispatch(setMaiarProvider(maiarProvider))
+          dispatch(setOnMaiar(true))
+          dispatch(setStep(2))
+        },
+        onClientLogout: async () => {
+          console.log("Loged Out");
+          dispatch(setReset())
+        }
+      }
+    }
+
     const onMaiar = async () => {
         // setOnMaiarConnect(true)
         const provider = new ProxyProvider( "https://gateway.elrond.com")
@@ -131,32 +134,35 @@ function ConnectWallet() {
       }
 
         //! WalletConnect connection.
-    // const onWalletConnect = async () => {
-    //     const { rpc, chainId } = chainsConfig[from.key]
-    //     try {
-    //         const walletConnect = new WalletConnectConnector({ 
-    //             rpc: {
-    //               [chainId]: rpc
-    //             },
-    //               chainId,
-    //               qrcode: true,
-    //           })
-    //           walletConnect.networkId = chainId
-    //           await activate(walletConnect, undefined, true)
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    //  }
+    const onWalletConnect = async () => {
+        const { rpc, chainId } = chainsConfig[from.key]
+        try {
+            const walletConnect = new WalletConnectConnector({ 
+                rpc: {
+                  [chainId]: rpc
+                },
+                  chainId,
+                  qrcode: true,
+              })
+              walletConnect.networkId = chainId
+              await activate(walletConnect, undefined, true)
+              dispatch(setOnWC(true))
+              dispatch(setWC(walletConnect))
+        } catch (error) {
+            console.log(error);
+        }
+     }
 
     useEffect(() => {
+      debugger
         const correct = from ? CHAIN_INFO[from.key].chainId === chainId : false
         dispatch(setAccount(account))
         if(from){
             dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
         }
         // debugger
-        if((metaMask && correct)||(tronLink && correct))dispatch(setStep(2))
-    }, [account, metaMask, chainId, tronLink])
+        if((metaMask && correct)||(tronLink && correct)||(onWC && correct))dispatch(setStep(2))
+    }, [account, metaMask, chainId, tronLink, onWC])
 
     return (
         <div>
@@ -179,7 +185,7 @@ function ConnectWallet() {
                         <div className="walletListBox">
                             <ul className="walletList scrollSty">
                                 <li onClick={() => onInjected()} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li>
-                                <li style={ from ? from.type === "EVM" ? {} : OFF : ""} className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
+                                <li onClick={() => onWalletConnect()} style={ from ? from.type === "EVM" ? {} : OFF : ""} className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
                                 <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 <li style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Elrond</li>

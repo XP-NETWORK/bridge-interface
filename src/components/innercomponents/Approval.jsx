@@ -21,26 +21,28 @@ function Approval(props) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
 
     const approveEach = async (nft, signer, chain, index) => {
+        // debugger
         const arr = new Array(index + 1).fill(0)
             try {
                 const { tokenId, contract, chainId } = nft.native
                 const isInApprovedNFTs = approvedNFTList.filter(n => n.native.tokenId === tokenId && n.native.contract === contract && chainId === n.native.chainId )[0]
                 if(!isInApprovedNFTs) {
                     try {
-                        console.log('asdkal', chain, '1233218913289321893321892139')
                         const ap = await chain.approveForMinter(nft, signer);
                         dispatch(updateApprovedNFTs(nft))
                         setFinishedApproving(arr)
                     } catch(err) {
-                        console.log('askladsk', arr, err)
+                        console.log(arr, err)
                         setFinishedApproving(arr)
                     }
                 }
             } catch (error) {
                 setFinishedApproving(arr)
+                // dispatch(setApproved(false))
                 console.log(error);
             }
     }
+    
     
     // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
     const approveAllNFTs = async () => {
@@ -103,7 +105,7 @@ function Approval(props) {
                 Approve all NFTs
                 <div className="approveBtn">
                     <input checked={approved} type="checkbox" id="approveCheck" />
-                    <label onClick={approveAllNFTs} htmlFor="approveCheck">
+                    <label style={approved ? {pointerEvents: "none"} : {}} onClick={approveAllNFTs} htmlFor="approveCheck">
                         <span className="checkCircle"></span>
                     </label>
                 </div>

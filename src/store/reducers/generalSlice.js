@@ -39,7 +39,6 @@ const generalSlice = createSlice({
       state.account = action.payload
     },
     setNFTList(state, action){
-      console.log("sdgfdsfgdfg");
       state.NFTList = action.payload
     },
     setSelectedNFTList(state, action){
@@ -79,7 +78,6 @@ const generalSlice = createSlice({
       state.txnHashArr = [...state.txnHashArr, action.payload]
     },
     setWrongNetwork(state, action){
-      console.log("setWrongNetwork");
       state.wrongNetwork = action.payload
     },
     setMetaMaskActive(state, action){
@@ -117,6 +115,12 @@ const generalSlice = createSlice({
     },
     setTronLink(state, action){
       state.tronLink = action.payload
+    },
+    setOnWC(state, action){
+      state.WalletConnect = action.payload
+    },
+    setWC(state, action){
+      state.WCProvider = action.payload
     }
   },
 });
@@ -153,7 +157,9 @@ export const { toggleNFTInfo,
     setAccountModal,
     setBigLoader,
     setApproveLoader,
-    setTronLink
+    setTronLink,
+    setOnWC,
+    setWC
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
