@@ -35,7 +35,7 @@ export default function NFT({nft, index}) {
                     <span className="nftImage"><img onLoad={() => setImageLoaded(true)} alt="NFT" src={nft.image} /></span>
                 </div>
                     <div className="nftCont">
-                    <span className="nftName">{nft.name} <NFTdetails nftInf={nft} index={index} /></span>
+                    <span className="nftName"><span className="name">{nft.name}</span><NFTdetails nftInf={nft} index={index} /></span>
                     <span className="nftNumber">{nft.native.tokenId}</span>
                 </div>
             </div>

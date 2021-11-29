@@ -18,6 +18,7 @@ function Approval(props) {
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
     const approvedNFTList = useSelector(state => state.general.approvedNFTList)
     const approved = useSelector(state => state.general.approved)
+    const receiver = useSelector(state => state.general.receiver)
     const OFF = { opacity: 0.6, pointerEvents: "none" };
 
     const approveEach = async (nft, signer, chain, index) => {
@@ -105,7 +106,7 @@ function Approval(props) {
                 Approve all NFTs
                 <div className="approveBtn">
                     <input checked={approved} type="checkbox" id="approveCheck" />
-                    <label style={approved ? {pointerEvents: "none"} : {}} onClick={approveAllNFTs} htmlFor="approveCheck">
+                    <label style={!receiver ? {pointerEvents: "none", opacity: "0.6"} : approved ? {pointerEvents: "none"} : {}} onClick={approveAllNFTs} htmlFor="approveCheck">
                         <span className="checkCircle"></span>
                     </label>
                 </div>
