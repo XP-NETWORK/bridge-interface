@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { getAddEthereumChain } from "../wallet/chains"
 import { useDispatch } from 'react-redux';
 import { setWrongNetwork } from '../store/reducers/generalSlice';
+import ChangeNetworkLoader from './innercomponents/ChangeNetworkLoader';
 
 
 function NFTworng() {
@@ -20,11 +21,11 @@ function NFTworng() {
     const showWrong = useSelector(state => state.general.wrongNetwork)
     const account = useSelector(state => state.general.account)
     const dispatch = useDispatch()
+    const [loader, setLoader] = useState(false)
 
     async function switchNetwork (){
-        debugger
+        setLoader(true)
         const info = CHAIN_INFO[from?.key]
-        console.log("info", info);
         const chainId = `0x${info.chainId.toString(16)}`;
         try {
             await window.ethereum.request({
@@ -32,7 +33,9 @@ function NFTworng() {
                 params: [{ chainId }],
               })
               dispatch(setWrongNetwork(false))
+              setLoader(false)
         } catch (error) {
+            setLoader(false)
             console.log(error);
             try {
                 const toHex = (num) => {
@@ -55,7 +58,9 @@ function NFTworng() {
                     params: [params, account],
                 })
                 dispatch(setWrongNetwork(false))
+                setLoader(false)
             } catch (error) {
+                setLoader(false)
                 console.log(error);
             }
         }
@@ -81,12 +86,13 @@ function NFTworng() {
                             <h3>Switch to {from?.key} Mainnet</h3>
                             <p className="">XP.network Bridge requires you to <br /> connect to the {from?.key} Mainnet</p>
                         </div>
-                        <a onClick={() => switchNetwork()}  className="switching">Switch Network</a>
-                        <div style={{display: "block"}} className="switchingAcc">
-                            <img src={Switch} alt="Switching" />
+                        { loader && 
+                        <div className="switchingAcc">
+                            <ChangeNetworkLoader />
                             <p className="">Switching to Mainnet</p>
                             <p className="">Follow instructions in MetaMask</p>
-                        </div>
+                        </div>}
+                        { !loader && <a onClick={() => switchNetwork()}  className="switching">Switch Network</a> }
                     </div>
                 </Modal.Body>
             </Modal>

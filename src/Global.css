@@ -2066,9 +2066,9 @@ span.transPend {
   animation: load7 1.8s infinite ease-in-out;
 }
 .changeNetwork-loader {
-  color: #ffffff;
-  font-size: 10px;
-  margin: 80px auto;
+  color: #3E64ED;
+  font-size: 4px;
+  margin: 20px auto;
   position: relative;
   text-indent: -9999em;
   -webkit-transform: translateZ(0);
