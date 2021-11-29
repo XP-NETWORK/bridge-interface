@@ -109,7 +109,7 @@ footer {
     flex-wrap: wrap;
     padding: 8px 45px 25px 45px;
     border: 1px solid #292F3F;
-    margin-top: 250px;
+    /* margin-top: 250px; */
 }
 
 ul.socialLInks {
@@ -768,7 +768,7 @@ span.wallet {
     /* top: -30px; */
     overflow: hidden;
     cursor: pointer;
-    height: 220px;
+    /* height: 220px; */
 }
 
 .nft-sceleton-img{
@@ -911,6 +911,13 @@ span.NFTInf:hover img {
     opacity: 0;
     visibility: hidden;
 }
+
+@media screen and (max-width: 600px) {
+    .nftImageBox:hover:after{
+        background-color: unset;
+    }
+}
+
 
 .nftImageBox:hover:after {
     opacity: .8;
