@@ -9,11 +9,23 @@ import AccountModal from "../components/AccountModal"
 import { Navbar, Nav, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { setAccountModal, setReset } from '../store/reducers/generalSlice';
-// import info 
-
+import info from "../assets/img/icons/infoInactive.svg"
+import infoHover from "../assets/img/icons/infoActive.svg" 
+import faq from "../assets/img/icons/faqsInactive.svg"
+import faqHover from "../assets/img/icons/faqsActive.svg"
+import docs from "../assets/img/icons/docsInactive.svg"
+import docsHover from "../assets/img/icons/docsActive.svg"
+import feat from "../assets/img/icons/featuredInactive.svg"
+import featHover from "../assets/img/icons//featuredActive.svg"
 
 
 function NavBar() {
+
+    const [infHover, setInfHover] = useState(false)
+    const [faqHover, setFaqHover] = useState(false)
+    const [docsHover, setDocsHover] = useState(false)
+    const [featHover, setFeatHover] = useState(false)
+
     const dispatch = useDispatch()
     const account = useSelector(state => state.general.account)
     const tronAccount = useSelector(state => state.general.tronWallet)
@@ -35,7 +47,7 @@ function NavBar() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="navMenu">
-                        <Nav.Link href="#home">About</Nav.Link>
+                        <Nav.Link onMouseEnter={() => setInfHover(true)}   onMouseOut={() => setInfHover(false)} href="#home">About</Nav.Link>
                         <Nav.Link href="#Docs">Docs</Nav.Link>
                         <Nav.Link href="#FAQs">FAQs</Nav.Link>
                         <Nav.Link href="#GetFeatured"><img src={Start} /> Get Featured</Nav.Link>

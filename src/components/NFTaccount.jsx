@@ -40,7 +40,7 @@ function NFTaccount() {
     const onMaiar = useSelector(state => state.general.onMaiar)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
 
-    
+    let counter = 0
     
     async function getNFTsList(){
         try {
@@ -48,19 +48,21 @@ function NFTaccount() {
             const nfts = await factory.nftList(
                 chain,    // The chain of interest 
                 elrondAccount ? elrondAccount : account    // The public key of the NFT owner
-            );
-            const parsedNFTs = await parseNFTS(nfts)
-            dispatch(setBigLoader(false))
-            if(parsedNFTs.length){
-                dispatch(setNFTList(parsedNFTs))
+                );
+                const parsedNFTs = await parseNFTS(nfts)
+                dispatch(setBigLoader(false))
+                if(parsedNFTs.length){
+                    dispatch(setNFTList(parsedNFTs))
+                }
+                else{
+                    console.log('No NFTs...');
+                }
+            } catch (error) {  
+                console.log("...",error); 
             }
-            else{
-                console.log('No NFTs...');
-            }
-        } catch (error) {  
-            console.log("...",error); 
+            
+            console.log("counter", counter, counter++);
         }
-    }
 
     const estimate = async () => {
         try {

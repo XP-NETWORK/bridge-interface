@@ -1,9 +1,9 @@
 import React from 'react'
-import { Modal } from 'react-bootstrap'
+import { Modal, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import Close from '../../assets/img/icons/close.svg';
 import { setError } from '../../store/reducers/generalSlice';
-
+import ERR from "../../assets/img/icons/ERROR.svg"
 
 export default function Error() {
     
@@ -14,10 +14,13 @@ export default function Error() {
     return (
         <>
             <Modal.Header className="border-0">
+                <div style={{display: "flex", flexDirection: "column"}}>
+                <img style={{margin: "30px"}} src={ERR} />
                     <Modal.Title>An error has accrued</Modal.Title>
                     <span className="CloseModal" onHide={handleClose} onClick={handleClose}>
                         <img src={Close} alt="" />
                     </span>
+                </div>
                 </Modal.Header>
                 <Modal.Body className="modalBody text-center">
                     <div className="wrongNFT">

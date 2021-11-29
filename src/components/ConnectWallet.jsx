@@ -158,7 +158,7 @@ function ConnectWallet() {
      }
 
     useEffect(() => {
-      debugger
+      // debugger
         const correct = from ? CHAIN_INFO[from.key].chainId === chainId : false
         dispatch(setAccount(account))
         if(from){
@@ -192,7 +192,8 @@ function ConnectWallet() {
                                 <li onClick={() => onWalletConnect()} style={ from ? from.type === "EVM" ? {} : OFF : ""} className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
                                 <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
-                                <li style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Elrond</li>
+                                {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
+                                <li style={ OFF }  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Elrond</li>
                                 <li style={ OFF } className="wllListItem"><img src={Ledger} alt="Ledger Icon" /> Ledger</li>
                                 <li style={ OFF } className="wllListItem"><img src={Trezor} alt="Trezor Icon" /> Trezor</li>
                             </ul>
