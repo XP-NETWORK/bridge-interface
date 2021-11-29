@@ -121,6 +121,9 @@ const generalSlice = createSlice({
     },
     setWC(state, action){
       state.WCProvider = action.payload
+    },
+    setError(state, action){
+      state.error = action.payload
     }
   },
 });
@@ -159,7 +162,8 @@ export const { toggleNFTInfo,
     setApproveLoader,
     setTronLink,
     setOnWC,
-    setWC
+    setWC,
+    setError
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

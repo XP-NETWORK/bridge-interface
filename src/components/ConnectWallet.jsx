@@ -4,7 +4,7 @@ import Close from '../assets/img/icons/close.svg';
 // import Search from '../assets/img/icons/Search.svg';
 // import Wallet from '../assets/img/wallet/wallet.svg';
 import MetaMask from '../assets/img/wallet/MetaMask.svg';
-import Tron from '../assets/img/wallet/Tron.svg';
+import Tron from '../assets/img/wallet/TronLink.svg';
 import Elrond from '../assets/img/wallet/Elrond.svg';
 import Ledger from '../assets/img/wallet/Ledger.svg';
 import Maiar from '../assets/img/wallet/Maiar.svg';
@@ -16,7 +16,7 @@ import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/connectors"
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { EVM, ELROND, chainsConfig } from "../components/values"
-import { setTronWallet, setAccount, setConfirmMaiarMob, setTronLink, setMetaMask, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC } from "../store/reducers/generalSlice"
+import { setTronWallet, setAccount, setConfirmMaiarMob, setTronLink, setMetaMask, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError } from "../store/reducers/generalSlice"
 import { Address, ExtensionProvider, WalletConnectProvider, ProxyProvider } from "@elrondnetwork/erdjs"
 import { CHAIN_INFO } from '../components/values';
 import QRCode from 'qrcode'
@@ -61,6 +61,7 @@ function ConnectWallet() {
             dispatch(setMetaMask(true))
           } 
           catch (ex) {
+              dispatch(setError(ex))
               console.log(ex)
           }
           setShow(false)
@@ -93,6 +94,7 @@ function ConnectWallet() {
               handleClose()
             }
           } catch(err) {
+            dispatch(setError(err))
               console.log(err)
           }
         }
@@ -129,6 +131,7 @@ function ConnectWallet() {
             console.log(qr);
             setStrQr(qr)
           } catch (error) {
+            dispatch(setError(error))
             console.log(error);
           }
       }
@@ -149,6 +152,7 @@ function ConnectWallet() {
               dispatch(setOnWC(true))
               dispatch(setWC(walletConnect))
         } catch (error) {
+            dispatch(setError(error))
             console.log(error);
         }
      }

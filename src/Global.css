@@ -1286,6 +1286,10 @@ li.nftSelecItem .Close:hover {
     color: #fff;
 }
 
+.modal-dialog{
+    margin-top: 15vh;
+}
+
 .NftDetails .modal-dialog {
     max-width: 630px;
 }

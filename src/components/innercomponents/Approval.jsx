@@ -4,7 +4,7 @@ import InfLith from '../../assets/img/icons/infoLifht.svg';
 import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import {Chain, Config} from 'xp.network/dist/consts';
 import { ethers } from "ethers";
-import { updateApprovedNFTs, setApproved, setApproveLoader } from '../../store/reducers/generalSlice';
+import { updateApprovedNFTs, setApproved, setApproveLoader, setError } from '../../store/reducers/generalSlice';
 import { isEqual } from '../helpers';
 import { getFactory, handleChainFactory, isALLNFTsApproved, } from '../../wallet/helpers';
 
@@ -39,6 +39,7 @@ function Approval(props) {
                 }
             } catch (error) {
                 setFinishedApproving(arr)
+                dispatch(setError(error))
                 // dispatch(setApproved(false))
                 console.log(error);
             }

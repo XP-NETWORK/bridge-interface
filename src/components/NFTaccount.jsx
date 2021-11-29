@@ -13,7 +13,7 @@ import NFTsuccess from './NFTsuccess';
 import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import { useSelector } from 'react-redux';
 import {Chain, Config} from 'xp.network/dist/consts';
-import { setBigLoader, setNFTList, setSelectedNFTList, setTxnHash } from "../store/reducers/generalSlice"
+import { setBigLoader, setError, setNFTList, setSelectedNFTList, setTxnHash } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
 import { getFactory, handleChainFactory, parseNFTS } from "../wallet/helpers"
 import { BigNumber } from "bignumber.js";
@@ -92,6 +92,7 @@ function NFTaccount() {
             dispatch(setTxnHash(result))
             
         } catch (error) {
+            dispatch(setError(error))
             console.log(error);
         }
     }

@@ -11,12 +11,14 @@ import { setReset } from "./store/reducers/generalSlice";
 import NFTSlider from "./components/NftSlider";
 import ApproveLoader from "./components/innercomponents/ApproveLoader";
 import { Modal } from "react-bootstrap"
+import Error from "./components/innercomponents/Error";
 
 
 function App() {
   const dispatch = useDispatch()
   const { active } = useWeb3React();
   const loader = useSelector(state => state.general.approveLoader)
+  const error = useSelector(state => state.general.error)
 
   const checkIfActive = () => {
     return active
@@ -38,6 +40,9 @@ return (
         }} 
         show={loader}>
           <ApproveLoader />
+        </Modal>
+        <Modal show={error} >
+          <Error />
         </Modal>
       <Router>
         <XpBridge/>
