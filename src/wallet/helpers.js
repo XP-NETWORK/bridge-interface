@@ -1,6 +1,7 @@
 import { ChainFactory, ChainFactoryConfigs } from 'xp.network'
 import { Chain, Config } from 'xp.network/dist/consts'
 import store from '../store/store'
+import { getOldFactory } from './oldHelper'
 
 
 const axios = require('axios')
@@ -96,16 +97,16 @@ export const isALLNFTsApproved = () => {
         return approvedNFTs.length === selectedNFTList.length
     }
 }
-export const getFactory = () => {
+export const getFactory = async () => {
     const mainnetConfig = ChainFactoryConfigs.MainNet;
-    const factory = ChainFactory(Config, mainnetConfig());  
+    const factory = await getOldFactory()
     return factory
 }
 
 export const handleChainFactory = async (someChain) => {
 // debugger
 
-    const factory = getFactory()
+    const factory = await getFactory()
     console.log( factory, Chain)
     let chain
     someChain === "Ethereum" ? chain = await factory.inner(Chain.ETHEREUM) : 

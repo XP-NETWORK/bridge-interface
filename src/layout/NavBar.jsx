@@ -21,10 +21,10 @@ import featHover from "../assets/img/icons//featuredActive.svg"
 
 function NavBar() {
 
-    // const [infHover, setInfHover] = useState(false)
-    // const [faqHover, setFaqHover] = useState(false)
-    // const [docHover, setDocsHover] = useState(false)
-    // const [featHover, setFeatHover] = useState(false)
+    const [infHover, setInfHover] = useState(false)
+    const [faqHover, setFaqHover] = useState(false)
+    const [docsHover, setDocsHover] = useState(false)
+    const [featHover, setFeatHover] = useState(false)
 
     const dispatch = useDispatch()
     const account = useSelector(state => state.general.account)
@@ -40,8 +40,6 @@ function NavBar() {
         return elrondAccount || tronAccount || account
     }
 
-    
-
     return (
         <header className="HeaderArea" id="Header"> 
             <Navbar expand="md">
@@ -49,10 +47,10 @@ function NavBar() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="navMenu">
-                        <Nav.Link href="#home"><img className="nav-icon" src={infoHover} />About</Nav.Link>
-                        <Nav.Link href="#Docs"><img className="nav-icon" src={docsHover} />Docs</Nav.Link>
-                        <Nav.Link href="#FAQs"><img className="nav-icon" src={faqHover} />FAQs</Nav.Link>
-                        <Nav.Link href="#GetFeatured"><img className="nav-icon" src={featHover} /> Get Featured</Nav.Link>
+                        <Nav.Link onMouseDown={() => setInfHover(true)}   onMouseUp={() => setInfHover(false)} href="#home"><img src={infoHover} />About</Nav.Link>
+                        <Nav.Link href="#Docs">Docs</Nav.Link>
+                        <Nav.Link href="#FAQs">FAQs</Nav.Link>
+                        <Nav.Link href="#GetFeatured"><img src={Start} /> Get Featured</Nav.Link>
                         { setAddress() ? <Nav.Link href="#NFT" className="nftConnect" onClick={handleShow}>{setAddress() ?`${setAddress().substring(0, 6)}...${setAddress().substring(setAddress().length - 2)}`:''} <img src={NftSelect} /></Nav.Link> :''}
                     </Nav>
                 </Navbar.Collapse>

@@ -18,7 +18,7 @@ import { useDispatch } from 'react-redux';
 import { getFactory, handleChainFactory, parseNFTS } from "../wallet/helpers"
 import { BigNumber } from "bignumber.js";
 import Comment from "../components/innercomponents/Comment"
-
+import{getOldFactory} from '../wallet/oldHelper'
 
 
 function NFTaccount() {
@@ -26,8 +26,10 @@ function NFTaccount() {
     const [loading, setLoading] = useState()
     const from = useSelector(state => state.general.from.key)
     const to = useSelector(state => state.general.to.key)
+    const isToEVM = useSelector(state => state.general.to).type === 'EVM'
     const NFTListView = useSelector(state => state.general.NFTListView)
     const nfts = useSelector(state => state.general.NFTList)
+    const tronWallet = useSelector(state => state.general.tronWallet)
     const account = useSelector(state => state.general.account)
     const factory = getFactory()
     const approvedNFTList = useSelector(state => state.general.approvedNFTList)
@@ -45,10 +47,12 @@ function NFTaccount() {
     async function getNFTsList(){
         try {
             const chain = await handleChainFactory(from)
+            const factory = await getOldFactory()
             const nfts = await factory.nftList(
                 chain,    // The chain of interest 
-                elrondAccount ? elrondAccount : account    // The public key of the NFT owner
+                tronWallet ? tronWallet : elrondAccount ? elrondAccount : account    // The public key of the NFT owner
                 );
+                console.log(nfts)
                 const parsedNFTs = await parseNFTS(nfts)
                 dispatch(setBigLoader(false))
                 if(parsedNFTs.length){
@@ -63,13 +67,18 @@ function NFTaccount() {
             
             console.log("counter", counter, counter++);
         }
-
+        console.log(to, '123128912389')
     const estimate = async () => {
         try {
             const fromChain = await handleChainFactory(from)
             const toChain = await handleChainFactory(to)
-            const wallet = account
-            const fee = await factory.estimateFees(fromChain, toChain, selectedNFTList[0], wallet);
+            const wallet = to ==='Tron' ? 'TCCKoPRcYoCGkxVThCaY9vRPaKiTjE4x1C' :
+            from === 'Tron' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
+            : account 
+            const fact = await getOldFactory()
+            console.log(selectedNFTList[0],'123891289', wallet)
+            const fee = from === 'Tron' ? await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet) :
+            await factory.estimateFees(fromChain, toChain, selectedNFTList[0], wallet);
             const bigNum = fee.multipliedBy(1.8).decimalPlaces(0).toString();
             const fees = await Web3Utils.fromWei(bigNum, "ether")
             setFees(selectedNFTList.length * fees) 
@@ -81,17 +90,31 @@ function NFTaccount() {
     const sendEach = async (nft) => {
         const toChain = await handleChainFactory(to)
         const fromChain = await handleChainFactory(from)
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner(account)
+        const provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : ''
+        const signer = from === 'Tron' ? window.tronLink : provider.getSigner(account)
         try {
-            const result = await factory.transferNft(
-                fromChain, // The Source Chain.
-                toChain,   // The Destination Chain.
-                nft,       // Or the NFT you have chosen.
-                signer,    // Or tronlink or maiar.
-                receiver   // The address who you are transferring the NFT to.
-            )
-            dispatch(setTxnHash(result))
+            if(from === 'Tron') {
+                const fact = await getOldFactory()
+                console.log(fact, nft)
+                const result = await fact.transferNft(
+                    fromChain, // The Source Chain.
+                    toChain,   // The Destination Chain.
+                    nft,       // Or the NFT you have chosen.
+                    undefined,    // Or tronlink or maiar.
+                    receiver   // The address who you are transferring the NFT to.
+                )
+                dispatch(setTxnHash(result))
+            } else {
+                const result = await factory.transferNft(
+                    fromChain, // The Source Chain.
+                    toChain,   // The Destination Chain.
+                    nft,       // Or the NFT you have chosen.
+                    signer,    // Or tronlink or maiar.
+                    receiver   // The address who you are transferring the NFT to.
+                )
+                dispatch(setTxnHash(result))
+            }
+
             
         } catch (error) {
             dispatch(setError(error))

@@ -11,6 +11,7 @@
     "@web3-react/core": "^6.1.9",
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.2.8",
+    "add": "^2.0.6",
     "axios": "^0.24.0",
     "bignumber.js": "^9.0.1",
     "bootstrap": "^4.6.0",
@@ -29,7 +30,8 @@
     "slick-carousel": "^1.8.1",
     "web-vitals": "^1.1.2",
     "web3-utils": "^1.6.0",
-    "xp.network": "^0.1.2"
+    "xp.network": "git+https://github.com/xp-network/xpjs#master-dist",
+    "yarn": "^1.22.17"
   },
   "scripts": {
     "start": "react-scripts start",

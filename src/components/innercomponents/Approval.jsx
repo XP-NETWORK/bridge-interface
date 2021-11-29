@@ -7,7 +7,7 @@ import { ethers } from "ethers";
 import { updateApprovedNFTs, setApproved, setApproveLoader, setError } from '../../store/reducers/generalSlice';
 import { isEqual } from '../helpers';
 import { getFactory, handleChainFactory, isALLNFTsApproved, } from '../../wallet/helpers';
-
+const TronWeb = require('tronweb')
 function Approval(props) {
     
     const dispatch = useDispatch()
@@ -26,6 +26,7 @@ function Approval(props) {
         const arr = new Array(index + 1).fill(0)
             try {
                 const { tokenId, contract, chainId } = nft.native
+                console.log(nft)
                 const isInApprovedNFTs = approvedNFTList.filter(n => n.native.tokenId === tokenId && n.native.contract === contract && chainId === n.native.chainId )[0]
                 if(!isInApprovedNFTs) {
                     try {
@@ -53,12 +54,17 @@ function Approval(props) {
                 dispatch(setApproveLoader(true))
                 setApprovedLoading(true)
                 setFinishedApproving([])
-            if(from.type === "EVM"){
+            if(from.type === "EVM" ){
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner(account)
                 const chain = await handleChainFactory(from.key)
                 selectedNFTList.forEach((nft, index) => {
                     approveEach(nft, signer, chain, index)
+                })
+            } else if (from.type === 'Tron') {
+                setFinishedApproving(selectedNFTList)
+                selectedNFTList.forEach((nft, index) => {
+                    dispatch(updateApprovedNFTs(nft))
                 })
             }
             else {
