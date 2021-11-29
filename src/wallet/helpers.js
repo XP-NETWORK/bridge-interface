@@ -6,6 +6,8 @@ import store from '../store/store'
 const axios = require('axios')
 
 export const setupURI = (uri) => {
+    debugger
+    console.log("setupURI", uri);
     if(uri && uri.includes('ipfs://')) return 'https://ipfs.io/' + uri.replace(':/', '')
     else if(uri) return uri.replace('http://', 'https://')
     return uri
@@ -58,6 +60,7 @@ export const parseNFTS = async (nfts) => {
                         if(res.data) {
                             try {
                                 const {uri} = res.data
+                                // console.log("setupURI(uri?.uri)",setupURI(uri?.uri));
                                 const result = await axios.get(setupURI(uri?.uri))
 
                                 resolve({...result.data, ...n, cantSend: true})

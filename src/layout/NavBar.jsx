@@ -8,23 +8,29 @@ import FileCopy from '../assets/img/icons/FileCopy.svg';
 import AccountModal from "../components/AccountModal"
 import { Navbar, Nav, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
-import { setAccountModal } from '../store/reducers/generalSlice';
+import { setAccountModal, setReset } from '../store/reducers/generalSlice';
 
 
 
 function NavBar() {
     const dispatch = useDispatch()
     const account = useSelector(state => state.general.account)
+    const tronAccount = useSelector(state => state.general.tronWallet)
+    const elrondAccount = useSelector(state => state.general.elrondAccount)
     const handleShow = () => dispatch(setAccountModal(true));
     const step = useSelector(state => state.general.step)
         const [copied, setCopy] = useState()
 
     useEffect(() => {}, [step])
 
+    const setAddress = () => {
+        return elrondAccount || tronAccount || account
+    }
+
     return (
         <header className="HeaderArea" id="Header"> 
             <Navbar expand="md">
-                <Navbar.Brand href="#home" className="navBrand"><img src={Logo} alt="Xp Network" /></Navbar.Brand>
+                <Navbar.Brand onClick={() => dispatch(setReset())} href="#home" className="navBrand"><img src={Logo} alt="Xp Network" /></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="navMenu">
@@ -32,7 +38,7 @@ function NavBar() {
                         <Nav.Link href="#Docs">Docs</Nav.Link>
                         <Nav.Link href="#FAQs">FAQs</Nav.Link>
                         <Nav.Link href="#GetFeatured"><img src={Start} /> Get Featured</Nav.Link>
-                        { account ? <Nav.Link href="#NFT" className="nftConnect" onClick={handleShow}>{account ?`${account.substring(0, 6)}...${account.substring(account.length - 2)}`:''} <img src={NftSelect} /></Nav.Link> :''}
+                        { setAddress() ? <Nav.Link href="#NFT" className="nftConnect" onClick={handleShow}>{setAddress() ?`${setAddress().substring(0, 6)}...${setAddress().substring(setAddress().length - 2)}`:''} <img src={NftSelect} /></Nav.Link> :''}
                     </Nav>
                 </Navbar.Collapse>
                 <AccountModal />

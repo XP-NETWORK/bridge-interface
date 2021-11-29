@@ -18,9 +18,7 @@ import { useDispatch } from 'react-redux';
 import { getFactory, handleChainFactory, parseNFTS } from "../wallet/helpers"
 import { BigNumber } from "bignumber.js";
 import Comment from "../components/innercomponents/Comment"
-import NFTworng from './NFTworng';
-import AccountModal from './AccountModal';
-import ApproveLoader from './innercomponents/ApproveLoader';
+
 
 
 function NFTaccount() {
@@ -39,15 +37,17 @@ function NFTaccount() {
     const approved = useSelector(state => state.general.approved)
     const [estimateInterval, setEstimateInterval] = useState()
     const [fees, setFees] = useState(0)
+    const onMaiar = useSelector(state => state.general.onMaiar)
+    const elrondAccount = useSelector(state => state.general.elrondAccount)
 
-  
+    
     
     async function getNFTsList(){
         try {
             const chain = await handleChainFactory(from)
             const nfts = await factory.nftList(
                 chain,    // The chain of interest 
-                account    // The public key of the NFT owner
+                elrondAccount ? elrondAccount : account    // The public key of the NFT owner
             );
             const parsedNFTs = await parseNFTS(nfts)
             dispatch(setBigLoader(false))

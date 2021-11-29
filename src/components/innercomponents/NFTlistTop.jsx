@@ -50,7 +50,7 @@ function NFTlistTop() {
                 Your NFTs on <span><img src={from.image.src} alt="NFT Name" /> {from.key}</span>
             </div>
             <div className="mobileOnly seleNftMob">
-                Select NFT <span>/ 12</span>
+                Select NFTs <span>{ nfts?.length }</span>
             </div>
             <div className="nftTopRIght">
                 <div className="searchNft desktopOnly">
