@@ -20,9 +20,10 @@ function Approval(props) {
     const approved = useSelector(state => state.general.approved)
     const receiver = useSelector(state => state.general.receiver)
     const OFF = { opacity: 0.6, pointerEvents: "none" };
+    const WCProvider = useSelector(state => state.general.WCProvider)
 
     const approveEach = async (nft, signer, chain, index) => {
-        // debugger
+
         const arr = new Array(index + 1).fill(0)
             try {
                 const { tokenId, contract, chainId } = nft.native
@@ -54,7 +55,7 @@ function Approval(props) {
                 setApprovedLoading(true)
                 setFinishedApproving([])
             if(from.type === "EVM"){
-                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const provider = new ethers.providers.Web3Provider(WCProvider || window.ethereum);
                 const signer = provider.getSigner(account)
                 const chain = await handleChainFactory(from.key)
                 selectedNFTList.forEach((nft, index) => {

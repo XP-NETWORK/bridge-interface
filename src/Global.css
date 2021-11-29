@@ -768,7 +768,17 @@ span.wallet {
     /* top: -30px; */
     overflow: hidden;
     cursor: pointer;
-    /* height: 220px; */
+    /* max-height: 220px; */
+}
+
+.copyTokk{
+    position: relative;
+}
+
+.copytoltip{
+    position: absolute;
+    top: 40px;
+    left: 130px;
 }
 
 .nft-sceleton-img{
@@ -1455,6 +1465,7 @@ span.statComp {color: #10B67A;}
 span.copyTokk img {
     cursor: pointer;
     margin-left: 5px;
+    position: relative;
 }
 
 span.copyTokk:hover{
