@@ -19,6 +19,7 @@ import { getFactory, handleChainFactory, parseNFTS } from "../wallet/helpers"
 import { BigNumber } from "bignumber.js";
 import Comment from "../components/innercomponents/Comment"
 import{ getOldFactory } from '../wallet/oldHelper'
+import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 
 
 function NFTaccount() {
@@ -31,6 +32,7 @@ function NFTaccount() {
     const nfts = useSelector(state => state.general.NFTList)
     const tronWallet = useSelector(state => state.general.tronWallet)
     const account = useSelector(state => state.general.account)
+    const maiarProvider = useSelector(state => state.general.maiarProvider)
     const factory = getFactory()
     const approvedNFTList = useSelector(state => state.general.approvedNFTList)
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
@@ -52,7 +54,7 @@ function NFTaccount() {
                 chain,    // The chain of interest 
                 tronWallet ? tronWallet : elrondAccount ? elrondAccount : account    // The public key of the NFT owner
                 );
-                console.log("asdasdasdasdasd", nfts, tronWallet ? tronWallet : elrondAccount ? elrondAccount : account )
+                console.log("asdasdasdasdasd", nfts, tronWallet ? tronWallet : elrondAccount ? elrondAccount : account, nfts )
                 const parsedNFTs = await parseNFTS(nfts)
                 console.log(parsedNFTs,'1231191 parsed')
                 dispatch(setBigLoader(false))
@@ -86,13 +88,16 @@ function NFTaccount() {
           console.log(err);
         }
     }
-
+    
     const sendEach = async (nft) => {
         const toChain = await handleChainFactory(to)
         const fromChain = await handleChainFactory(from)
         const factory = await getFactory()
         const provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : ''
-        const signer = from === 'Tron' ? window.tronLink : provider.getSigner(account)
+        const signer = 
+        from === 'Elrond' ? maiarProvider ? maiarProvider : ExtensionProvider.getInstance() :
+        from === 'Tron' ? window.tronLink 
+        : provider.getSigner(account)
         try {
             if(from === 'Tron') {
                 const fact = await getOldFactory()

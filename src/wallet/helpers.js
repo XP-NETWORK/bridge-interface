@@ -7,7 +7,7 @@ import { getOldFactory } from './oldHelper'
 const axios = require('axios')
 
 export const setupURI = (uri) => {
-    debugger
+    // debugger
     console.log("setupURI", uri, uri.includes('ipfs://'));
     if(uri && uri.includes('ipfs://')) {
         return 'https://ipfs.io/' + uri.replace(':/', '')

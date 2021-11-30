@@ -58,10 +58,15 @@ function Approval(props) {
                 try {
                     const factory = await getOldFactory()
                     const chain = await factory.inner(Chain.ELROND)
+                    console.log(bigNumberFees,'1231')
                     const signer = maiarProvider ? maiarProvider : ExtensionProvider.getInstance()
                     const swap = await chain.preTransfer(signer, nft, bigNumberFees)
-                    
+                    console.log(swap, 'hell oswap')
+                    dispatch(updateApprovedNFTs(nft))
+                    setFinishedApproving(arr)
                 } catch (error) {
+                    setFinishedApproving(arr)
+                    dispatch(setError(error))
                     console.log(error)
                 }
             }
