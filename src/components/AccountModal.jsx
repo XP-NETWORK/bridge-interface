@@ -10,6 +10,8 @@ import { DetectOutsideClick } from "../components/helpers"
 import {CopyToClipboard } from 'react-copy-to-clipboard';
 import { CHAIN_INFO } from '../components/values';
 import { getAddEthereumChain } from "../wallet/chains"
+import copyTT from "../assets/img/icons/copytt.png"
+import copiedIcon from "../assets/img/icons/Copied.png"
 
 export default function AccountModal() {
     const dispatch = useDispatch()
@@ -19,6 +21,7 @@ export default function AccountModal() {
     const onMaiar = useSelector(state => state.general.onMaiar)
     const show = useSelector(state => state.general.accountModal)
     const [copyIconHover, setCopyIconHover] = useState()
+    const [copied, setCopied] = useState()
     const from = useSelector(state => state.general.from)
 
 
@@ -26,17 +29,19 @@ export default function AccountModal() {
         dispatch(setAccountModal(false))
     }
 
-    const [copied, setCopy] = useState()
+    
 
     const copy = () => {
-        setCopy(true)
-        setTimeout(() => setCopy(false), 2000)
+        setCopied(true)
+        setTimeout(() => setCopied(false), 3000)
       }
 
     const accountModal = useRef(null)
     const handleDisconnect = () => {
         dispatch(setReset())
     }
+
+
 
     async function switchNetwork (){
         const info = CHAIN_INFO[from?.key]
@@ -84,11 +89,15 @@ export default function AccountModal() {
                 Account <span className="CloseModal" onClick={handleClose}> <img src={Close}/> </span>
             </div>
             <p className="">{`Connected with ${MetaMask ? 'MetaMask' : onMaiar ? "Maiar Wallet" : ''}`}</p>
-            <CopyToClipboard text={account} onCopy={copy}>
+                        { copyIconHover && <img className="copytoltip" src={copyTT} /> }
+                        { copied && <img className="copytoltip" src={copiedIcon} /> }
+            <CopyToClipboard text={account}>
                 <div className="nftLink">
                     <img src={NftSelect} />
                     {account ?`${account.substring(0, 10)}...${account.substring(account.length - 2)}` : elrondAccount ? `${elrondAccount.substring(0, 10)}...${elrondAccount.substring(elrondAccount.length - 2)}`: ''}
-                    <span onMouseOver={() => setCopyIconHover(true)} onMouseOut={()=> setCopyIconHover(false)} className="copyTokk"><img src={ copyIconHover ? CopyHover : FileCopy} /></span>
+                    <span onClick={() => copy()} onMouseOver={() => setCopyIconHover(true)} onMouseOut={()=> setCopyIconHover(false)} className="copyTokk">
+                        <img src={ copyIconHover ? CopyHover : FileCopy} />
+                    </span>
                 </div>
             </CopyToClipboard>
             <div className="accountBtn">

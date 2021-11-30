@@ -20,9 +20,9 @@ function Approval(props) {
     const approved = useSelector(state => state.general.approved)
     const receiver = useSelector(state => state.general.receiver)
     const OFF = { opacity: 0.6, pointerEvents: "none" };
+    const WCProvider = useSelector(state => state.general.WCProvider)
 
     const approveEach = async (nft, signer, chain, index) => {
-        // debugger
         const arr = new Array(index + 1).fill(0)
             try {
                 const { tokenId, contract, chainId } = nft.native
@@ -45,7 +45,7 @@ function Approval(props) {
                 console.log(error);
             }
     }
-    
+    // sdsdsd
     
     // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
     const approveAllNFTs = async () => {
@@ -54,8 +54,8 @@ function Approval(props) {
                 dispatch(setApproveLoader(true))
                 setApprovedLoading(true)
                 setFinishedApproving([])
-            if(from.type === "EVM" ){
-                const provider = new ethers.providers.Web3Provider(window.ethereum);
+            if(from.type === "EVM"){
+                const provider = new ethers.providers.Web3Provider(WCProvider || window.ethereum);
                 const signer = provider.getSigner(account)
                 const chain = await handleChainFactory(from.key)
                 selectedNFTList.forEach((nft, index) => {
@@ -73,7 +73,7 @@ function Approval(props) {
         }
 
     };
-    
+    // sdsdfsddsfsdf
     useEffect(() => {
         if(finishedApproving.length === selectedNFTList.length && approvedLoading) {
             setApprovedLoading(false)
