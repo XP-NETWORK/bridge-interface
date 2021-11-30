@@ -14,6 +14,11 @@ export default function TronPopUp() {
     const [onHover, setOnHover] = useState()
     const [copied, setCopied] = useState()
 
+    const copy = () => {
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+      }
+
     return (
         <div>
             <Modal.Header className="border-0">
@@ -38,7 +43,7 @@ export default function TronPopUp() {
                             { copied && <img className="copyTronTTc" src={copiedIcon} /> }
                             <div className="tron-modal_address">https://bridge.xp.network</div>
                             <CopyToClipboard text={"https://bridge.xp.network"}>
-                            <div className="tron-modal__copyIcon"><img onMouseOver={() => setOnHover(true)} onMouseOut={() => setOnHover(false)} onMouseDown={() => setCopied(true)} onMouseUp={() => setCopied(false) } src={ onHover ? CopyHover : FileCopy} /></div>
+                            <div className="tron-modal__copyIcon"><img onClick={() => copy()} onMouseOver={() => setOnHover(true)} onMouseOut={() => setOnHover(false)} onMouseDown={() => setCopied(true)} onMouseUp={() => setCopied(false) } src={ onHover ? CopyHover : FileCopy} /></div>
                             </CopyToClipboard>
                             
                         </div>

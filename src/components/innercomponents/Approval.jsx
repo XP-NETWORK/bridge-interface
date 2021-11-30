@@ -7,6 +7,10 @@ import { ethers } from "ethers";
 import { updateApprovedNFTs, setApproved, setApproveLoader, setError } from '../../store/reducers/generalSlice';
 import { isEqual } from '../helpers';
 import { getFactory, handleChainFactory, isALLNFTsApproved, } from '../../wallet/helpers';
+import { getOldFactory } from '../../wallet/oldHelper';
+import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
+
+
 const TronWeb = require('tronweb')
 function Approval(props) {
     
@@ -22,38 +26,51 @@ function Approval(props) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const WCProvider = useSelector(state => state.general.WCProvider)
     const onMaiar = useSelector(state => state.general.onMaiar)
-    const maiarProvider = useSelector(state => state.maiarProvider)
+    const maiarProvider = useSelector(state => state.general.maiarProvider)
+    const bigNumberFees = useSelector(state => state.general.bigNumberFees)
+    
 
     const approveEach = async (nft, signer, chain, index) => {
-        
         const arr = new Array(index + 1).fill(0)
-            try {
-                const { tokenId, contract, chainId } = nft.native
-                console.log(nft)
-                const isInApprovedNFTs = approvedNFTList.filter(n => n.native.tokenId === tokenId && n.native.contract === contract && chainId === n.native.chainId )[0]
-                if(!isInApprovedNFTs) {
-                    try {
-                        console.log("approveEach", chain);
-                        const ap = await chain.approveForMinter(nft, signer);
-                        dispatch(updateApprovedNFTs(nft))
-                        setFinishedApproving(arr)
-                    } catch(err) {
-                        console.log(arr, err)
-                        setFinishedApproving(arr)
+            if(from.type !== "Elrond"){
+                try {
+                    const { tokenId, contract, chainId } = nft.native
+                    const isInApprovedNFTs = approvedNFTList.filter(n => n.native.tokenId === tokenId && n.native.contract === contract && chainId === n.native.chainId )[0]
+                    if(!isInApprovedNFTs) {
+                        try {
+                            console.log("approveEach", chain);
+                            const ap = await chain.approveForMinter(nft, signer);
+                            dispatch(updateApprovedNFTs(nft))
+                            setFinishedApproving(arr)
+                        } catch(err) {
+                            console.log(arr, err)
+                            setFinishedApproving(arr)
+                        }
                     }
+                } catch (error) {
+                    setFinishedApproving(arr)
+                    dispatch(setError(error))
+                    // dispatch(setApproved(false))
+                    console.log(error);
                 }
-            } catch (error) {
-                setFinishedApproving(arr)
-                dispatch(setError(error))
-                // dispatch(setApproved(false))
-                console.log(error);
+            }
+            else{
+                try {
+                    const factory = await getOldFactory()
+                    const chain = await factory.inner(Chain.ELROND)
+                    const signer = maiarProvider ? maiarProvider : ExtensionProvider.getInstance()
+                    const swap = await chain.preTransfer(signer, nft, bigNumberFees)
+                    
+                } catch (error) {
+                    console.log(error)
+                }
             }
     }
 
     
     // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
     const approveAllNFTs = async () => {
-        
+        // debugger
         if(!approvedLoading) {
                 dispatch(setApproveLoader(true))
                 setApprovedLoading(true)
@@ -72,7 +89,9 @@ function Approval(props) {
                 })
             }
             else {
-                console.log("Not EVM Network")
+                selectedNFTList.forEach((nft, index) => {
+                    approveEach(nft, undefined, undefined, index)
+                })
             }
         }
 

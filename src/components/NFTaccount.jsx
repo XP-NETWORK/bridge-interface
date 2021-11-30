@@ -13,12 +13,12 @@ import NFTsuccess from './NFTsuccess';
 import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import { useSelector } from 'react-redux';
 import {Chain, Config} from 'xp.network/dist/consts';
-import { setBigLoader, setError, setNFTList, setSelectedNFTList, setTxnHash } from "../store/reducers/generalSlice"
+import { setBigLoader, setBigNumFees, setError, setNFTList, setSelectedNFTList, setTxnHash } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
 import { getFactory, handleChainFactory, parseNFTS } from "../wallet/helpers"
 import { BigNumber } from "bignumber.js";
 import Comment from "../components/innercomponents/Comment"
-import{getOldFactory} from '../wallet/oldHelper'
+import{ getOldFactory } from '../wallet/oldHelper'
 
 
 function NFTaccount() {
@@ -74,12 +74,12 @@ function NFTaccount() {
             const toChain = await handleChainFactory(to)
             const wallet = to ==='Tron' ? 'TCCKoPRcYoCGkxVThCaY9vRPaKiTjE4x1C' :
             from === 'Tron' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
+            : from === 'Elrond' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
             : account 
             const fact = await getOldFactory()
-            console.log(selectedNFTList[0],'123891289', wallet)
             const fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
-            console.log(fee, 'haklsklda')
             const bigNum = fee.multipliedBy(1.1).decimalPlaces(0).toString();
+            dispatch(setBigNumFees(bigNum))
             const fees = await Web3Utils.fromWei(bigNum, "ether")
             setFees(selectedNFTList.length * fees) 
         } catch (err) {

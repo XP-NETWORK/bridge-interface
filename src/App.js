@@ -25,7 +25,9 @@ function App() {
   const handleClose = () => {
     dispatch(setTronPopUp(false))
   }
-
+  useEffect(() => {
+    localStorage.clear()
+  },[])
   const checkIfActive = () => {
     return active
   }
@@ -51,7 +53,7 @@ return (
         <Modal show={error} >
           <Error />
         </Modal>
-        <Modal size="sm" show={false} close={handleClose()} onHide={handleClose()}>
+        <Modal size="sm" show={tronPopUp} close={handleClose()} onHide={handleClose()}>
           <TronPopUp />
         </Modal>
       <Router>
