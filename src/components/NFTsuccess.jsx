@@ -34,7 +34,7 @@ function NFTsuccess() {
       setCopy(true)
       setTimeout(() => setCopy(false), 2000)
     }
-
+    console.log(txnHashArr, '12313819328')
     return (
         <div>
 
