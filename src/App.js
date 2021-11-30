@@ -7,11 +7,12 @@ import Alert from "./components/Alert";
 import NFTaccountList from "./components/NFTaccountList";
 import { useWeb3React } from "@web3-react/core";
 import { useDispatch, useSelector } from "react-redux";
-import { setReset } from "./store/reducers/generalSlice";
+import { setReset, setTronPopUp } from "./store/reducers/generalSlice";
 import NFTSlider from "./components/NftSlider";
 import ApproveLoader from "./components/innercomponents/ApproveLoader";
 import { Modal } from "react-bootstrap"
 import Error from "./components/innercomponents/Error";
+import TronPopUp from "./components/innercomponents/TronPopUp";
 
 
 function App() {
@@ -19,7 +20,14 @@ function App() {
   const { active } = useWeb3React();
   const loader = useSelector(state => state.general.approveLoader)
   const error = useSelector(state => state.general.error)
-
+  const tronPopUp = useSelector(state => state.general.tronPopUp)
+  
+  const handleClose = () => {
+    dispatch(setTronPopUp(false))
+  }
+  useEffect(() => {
+    localStorage.clear()
+  },[])
   const checkIfActive = () => {
     return active
   }
@@ -33,6 +41,7 @@ function App() {
 return (
     <div className={"App"}>
         <Modal 
+        centered
         className="approve-modal"
         style={{
           overflow: "hidden",
@@ -43,6 +52,9 @@ return (
         </Modal>
         <Modal show={error} >
           <Error />
+        </Modal>
+        <Modal size="sm" show={tronPopUp} close={handleClose()} onHide={handleClose()}>
+          <TronPopUp />
         </Modal>
       <Router>
         <XpBridge/>

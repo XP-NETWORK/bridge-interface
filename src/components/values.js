@@ -77,7 +77,7 @@ export const chains = [
         key: 'Algorand',
         text: 'Algorand',
         value: 'Algorand',
-        order: 8,
+        order: 9,
         coming: true,
         image: { avatar: true, src: Algorand },
     },
@@ -86,7 +86,7 @@ export const chains = [
         key: 'xDai',
         text: 'xDai',
         value: 'xDai',
-        order: 9,
+        order: 8,
         image: { avatar: true, src: Xdai },
     },
     {

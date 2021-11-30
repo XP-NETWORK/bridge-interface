@@ -16,7 +16,7 @@ import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/connectors"
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { EVM, ELROND, chainsConfig } from "../components/values"
-import { setTronWallet, setAccount, setConfirmMaiarMob, setTronLink, setMetaMask, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError } from "../store/reducers/generalSlice"
+import { setTronWallet, setAccount, setConfirmMaiarMob, setTronLink, setMetaMask, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp } from "../store/reducers/generalSlice"
 import { Address, ExtensionProvider, WalletConnectProvider, ProxyProvider } from "@elrondnetwork/erdjs"
 import { CHAIN_INFO } from '../components/values';
 import QRCode from 'qrcode'
@@ -79,7 +79,7 @@ function ConnectWallet() {
 
     async function connectTronlink() {
         if(window.innerWidth <= 600 && !window.tronWeb){
-        //   dispatch(setTronPopUp(true))
+          dispatch(setTronPopUp(true))
         }else{
           try {
             try {

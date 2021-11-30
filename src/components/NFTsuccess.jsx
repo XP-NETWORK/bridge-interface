@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { chainsConfig } from './values';
 import moment from 'moment';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { setupURI } from '../wallet/oldHelper';
 
 // !TODO TX AVALANCHE
 
@@ -19,6 +20,8 @@ function NFTsuccess() {
     const account = useSelector(state => state.general.account)
     const receiver = useSelector(state => state.general.receiver)
     const txnHashArr = useSelector(state => state.general.txnHashArr)
+
+
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
 
 
@@ -34,12 +37,12 @@ function NFTsuccess() {
       setCopy(true)
       setTimeout(() => setCopy(false), 2000)
     }
-    console.log(txnHashArr, '12313819328')
+    const tx = txnHashArr && txnHashArr.length > 0 ? typeof txnHashArr[0] === 'object' ? txnHashArr[0].hash.toString() : txnHashArr[0] : ''
     return (
         <div>
 
             {/* <a href="#" className="themBtn" onClick={handleShow}>Send</a> */}
-            <Modal show={txnHashArr.length} onHide={handleClose} className="nftSuccessMod">
+            <Modal show={txnHashArr?.length} onHide={handleClose} className="nftSuccessMod">
                 <Modal.Header>
                     <Modal.Title><img src={Success} /> Success</Modal.Title>
                     <span className="CloseModal" onClick={handleClose}>
@@ -56,11 +59,11 @@ function NFTsuccess() {
                                 <label>Date</label> <span className="statDate">{moment().format("YYYY-MM-DD hh:mm")}</span>
                             </div>
                             <CopyToClipboard 
-                              text={txnHashArr[0]}
+                              text={tx}
                               onCopy={copy}
                             >   
                                 <div className="sucesList">
-                                    <label>Txn Hash</label> <span className="statTok colBlue">{txnHashArr.length ? `${txnHashArr[0].substring(0, 10)}...${txnHashArr[0].substring(txnHashArr[0].length - 6)}` : ''}<Image src={FileCopy} className="ml5 copyTokk" /></span>
+                                    <label>Txn Hash</label> <span className="statTok colBlue">{ tx ? `${tx.substring(0, 10)}...${tx.substring(tx.length - 6)}` : '' }<Image src={FileCopy} className="ml5 copyTokk" /></span>
                                 </div>
                                 {/* <span className="copyTokk"><img src={FileCopy} /></span> */}
                             </CopyToClipboard>
@@ -88,7 +91,7 @@ function NFTsuccess() {
                             <ul className="nftSelected">
                                 { selectedNFTList.length ? selectedNFTList.map(( nft, index) => 
                                 <li className="nftSelecItem">
-                                    <img src={nft.image} alt="NFT" /> {nft.name}<span className="bluTextBtn"><a href={`${chainsConfig[from.key].tx + txnHashArr[index]}`} target="_blank">View Txn</a></span>
+                                    <img src={setupURI(nft.image)} alt="NFT" /> {nft.name}<span className="bluTextBtn"><a href={`${chainsConfig[from.key].tx + tx}`} target="_blank">View Txn</a></span>
                                 </li>
                                 ):''}
                             </ul>

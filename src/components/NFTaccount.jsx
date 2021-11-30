@@ -13,12 +13,13 @@ import NFTsuccess from './NFTsuccess';
 import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import { useSelector } from 'react-redux';
 import {Chain, Config} from 'xp.network/dist/consts';
-import { setBigLoader, setError, setNFTList, setSelectedNFTList, setTxnHash } from "../store/reducers/generalSlice"
+import { setBigLoader, setBigNumFees, setError, setNFTList, setSelectedNFTList, setTxnHash } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
 import { getFactory, handleChainFactory, parseNFTS } from "../wallet/helpers"
 import { BigNumber } from "bignumber.js";
 import Comment from "../components/innercomponents/Comment"
-import{getOldFactory} from '../wallet/oldHelper'
+import{ getOldFactory } from '../wallet/oldHelper'
+import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 
 
 function NFTaccount() {
@@ -31,6 +32,7 @@ function NFTaccount() {
     const nfts = useSelector(state => state.general.NFTList)
     const tronWallet = useSelector(state => state.general.tronWallet)
     const account = useSelector(state => state.general.account)
+    const maiarProvider = useSelector(state => state.general.maiarProvider)
     const factory = getFactory()
     const approvedNFTList = useSelector(state => state.general.approvedNFTList)
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
@@ -48,12 +50,14 @@ function NFTaccount() {
         try {
             const chain = await handleChainFactory(from)
             const factory = await getOldFactory()
+            console.log(factory, 'hello')
             const nfts = await factory.nftList(
                 chain,    // The chain of interest 
                 tronWallet ? tronWallet : elrondAccount ? elrondAccount : account    // The public key of the NFT owner
                 );
-                console.log(nfts)
+                console.log("asdasdasdasdasd", nfts, tronWallet ? tronWallet : elrondAccount ? elrondAccount : account, nfts )
                 const parsedNFTs = await parseNFTS(nfts)
+                console.log(parsedNFTs,'1231191 parsed')
                 dispatch(setBigLoader(false))
                 if(parsedNFTs.length){
                     dispatch(setNFTList(parsedNFTs))
@@ -73,25 +77,28 @@ function NFTaccount() {
             const toChain = await handleChainFactory(to)
             const wallet = to ==='Tron' ? 'TCCKoPRcYoCGkxVThCaY9vRPaKiTjE4x1C' :
             from === 'Tron' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
+            : from === 'Elrond' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
             : account 
             const fact = await getOldFactory()
-            console.log(selectedNFTList[0],'123891289', wallet)
             const fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
-            console.log(fee, 'haklsklda')
             const bigNum = fee.multipliedBy(1.1).decimalPlaces(0).toString();
+            dispatch(setBigNumFees(bigNum))
             const fees = await Web3Utils.fromWei(bigNum, "ether")
             setFees(selectedNFTList.length * fees) 
         } catch (err) {
           console.log(err);
         }
     }
-
+    
     const sendEach = async (nft) => {
         const toChain = await handleChainFactory(to)
         const fromChain = await handleChainFactory(from)
         const factory = await getFactory()
         const provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : ''
-        const signer = from === 'Tron' ? window.tronLink : provider.getSigner(account)
+        const signer = 
+        from === 'Elrond' ? maiarProvider ? maiarProvider : ExtensionProvider.getInstance() :
+        from === 'Tron' ? window.tronLink 
+        : provider.getSigner(account)
         try {
             if(from === 'Tron') {
                 const fact = await getOldFactory()
@@ -123,7 +130,7 @@ function NFTaccount() {
     }
 
     const sendAllNFTs = () => {
-        if(!loading) {
+        if(!loading && approved) {
             setLoading(true)
             approvedNFTList.forEach( nft => {
                 sendEach(nft)
@@ -146,6 +153,7 @@ function NFTaccount() {
 
     useEffect(() => {
         clearInterval(estimateInterval)
+        estimate()
         const s = setInterval(() => estimate(), 1000 * 30);
         setEstimateInterval(s)
         return () => clearInterval(s)

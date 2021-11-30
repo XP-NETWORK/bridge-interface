@@ -91,7 +91,7 @@ export default function AccountModal() {
             <p className="">{`Connected with ${MetaMask ? 'MetaMask' : onMaiar ? "Maiar Wallet" : ''}`}</p>
                         { copyIconHover && <img className="copytoltip" src={copyTT} /> }
                         { copied && <img className="copytoltip" src={copiedIcon} /> }
-            <CopyToClipboard text={account}>
+            <CopyToClipboard text={elrondAccount ? elrondAccount : account}>
                 <div className="nftLink">
                     <img src={NftSelect} />
                     {account ?`${account.substring(0, 10)}...${account.substring(account.length - 2)}` : elrondAccount ? `${elrondAccount.substring(0, 10)}...${elrondAccount.substring(elrondAccount.length - 2)}`: ''}

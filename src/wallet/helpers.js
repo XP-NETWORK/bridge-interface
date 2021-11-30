@@ -8,8 +8,10 @@ const axios = require('axios')
 
 export const setupURI = (uri) => {
     // debugger
-    console.log("setupURI", uri);
-    if(uri && uri.includes('ipfs://')) return 'https://ipfs.io/' + uri.replace(':/', '')
+    console.log("setupURI", uri, uri.includes('ipfs://'));
+    if(uri && uri.includes('ipfs://')) {
+        return 'https://ipfs.io/' + uri.replace(':/', '')
+    }
     else if(uri) return uri.replace('http://', 'https://')
     return uri
 }
@@ -45,6 +47,7 @@ export const parseNFTS = async (nfts) => {
     return await new Promise(async resolve => {
         try {
             if(!n.uri) resolve({ ...n })
+            console.log(setupURI(n.uri),'38931289321893218932189321892398329832389213898391329132983§2')
             const res = await axios.get(setupURI(n.uri))
             if(res && res.data) {
                 if(res.data.animation_url) preloadItem(res.data.animation_url, 'video', () => {})

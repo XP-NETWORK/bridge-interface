@@ -14,8 +14,8 @@ export default function NFTChainListBox() {
     const chainSearch = useSelector(state => state.general.chainSearch)
     const from = useSelector(state => state.general.from)
     const to = useSelector(state => state.general.to)
-    const fromChains = chains
-    const toChains = chains
+    const fromChains = chains.sort((a,b) =>  a.order - b.order);
+    const toChains = chains.sort((a,b) =>  a.order - b.order);
 
     const handleClose = () => {
         dispatch(setChainModal(false))

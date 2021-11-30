@@ -11,6 +11,7 @@ import Search from '../assets/img/icons/Search.svg';
 import nftDetails_1 from '../assets/img/nfts/nftDetails_1.png';
 
 import INF from '../assets/img/icons/Inf.svg';
+import { setupURI } from '../wallet/oldHelper';
 
 function NFTdetails({ nftInf }){
     const { name, description, image, attributes, uri, native} = nftInf
@@ -35,7 +36,7 @@ function NFTdetails({ nftInf }){
                 <Modal.Body className="modalBody">
                     <div className="nftDetailBox">
                         <div className="nftDetImg">
-                            <img src={image} alt="NFT" />
+                            <img src={setupURI(image)} alt="NFT" />
                         </div>
                         <div className="nftDetIg">
                             <div className="nftName nftInfBox">
@@ -65,20 +66,19 @@ export default NFTdetails
 function Attribute(props) {
     const { trait_type, display_type, value } = props
     console.log(props)
-    return  <div className="nftDetContList ">
-    <div className="label">{ 
+    return  <div className="nftToken nftInfBox">
+    <label>{ 
     trait_type ?
     trait_type.split('_').map(n =>  n.charAt(0).toUpperCase() + n.slice(1).toLowerCase()).join(' ')
     : '-'
-    }</div>
-    <div className="details">
-      {
+    }</label>
+    <p>      {
         display_type === 'date' 
         ? moment(new Date(value * 1000)).format('MM-DD-YYYY') 
         : display_type === 'boolean' ?
         value === true ? 'True' : 'False'
         : value
-      }
-    </div>
-  </div>
+      }</p>
+</div>
+    
   }
