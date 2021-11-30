@@ -66,8 +66,7 @@ function NFTaccount() {
             }
             
             console.log("counter", counter, counter++);
-        }
-        console.log(to, '123128912389')
+    }
     const estimate = async () => {
         try {
             const fromChain = await handleChainFactory(from)
@@ -77,9 +76,9 @@ function NFTaccount() {
             : account 
             const fact = await getOldFactory()
             console.log(selectedNFTList[0],'123891289', wallet)
-            const fee = from === 'Tron' ? await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet) :
-            await factory.estimateFees(fromChain, toChain, selectedNFTList[0], wallet);
-            const bigNum = fee.multipliedBy(1.8).decimalPlaces(0).toString();
+            const fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
+            console.log(fee, 'haklsklda')
+            const bigNum = fee.multipliedBy(1.1).decimalPlaces(0).toString();
             const fees = await Web3Utils.fromWei(bigNum, "ether")
             setFees(selectedNFTList.length * fees) 
         } catch (err) {
@@ -90,6 +89,7 @@ function NFTaccount() {
     const sendEach = async (nft) => {
         const toChain = await handleChainFactory(to)
         const fromChain = await handleChainFactory(from)
+        const factory = await getFactory()
         const provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : ''
         const signer = from === 'Tron' ? window.tronLink : provider.getSigner(account)
         try {

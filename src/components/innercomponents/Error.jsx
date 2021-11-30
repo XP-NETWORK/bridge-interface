@@ -24,7 +24,7 @@ export default function Error() {
                 </Modal.Header>
                 <Modal.Body className="modalBody text-center">
                     <div className="wrongNFT">
-                        {error}
+                        {typeof error === 'object' ? error?.message : error}
                     </div>
             </Modal.Body>
         </>
