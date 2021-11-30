@@ -1377,6 +1377,9 @@ li.nftSelecItem .Close:hover {
     line-height: 140%;
     color: #fff;
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .nftInfBox:last-child {
