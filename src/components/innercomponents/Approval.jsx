@@ -67,7 +67,7 @@ function Approval(props) {
         }
 
     };
-    // sdsdfsdfsd
+    // sdsdfsddsfsdf
     useEffect(() => {
         if(finishedApproving.length === selectedNFTList.length && approvedLoading) {
             setApprovedLoading(false)
