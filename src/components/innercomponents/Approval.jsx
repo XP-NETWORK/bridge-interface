@@ -44,7 +44,7 @@ function Approval(props) {
                 console.log(error);
             }
     }
-    
+    // sdsdsd
     
     // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
     const approveAllNFTs = async () => {
