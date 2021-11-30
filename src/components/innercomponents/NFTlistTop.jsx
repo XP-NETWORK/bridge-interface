@@ -35,7 +35,7 @@ function NFTlistTop() {
 
     return (
         <div className="nftListTop">
-            <Modal show={switchDestination} onHide={() => handleClose()} className="ChainModal">
+            <Modal animation={false} show={switchDestination} onHide={() => handleClose()} className="ChainModal">
                 <Modal.Header className="text-left">
                     <Modal.Title>Change destination chain</Modal.Title>
                     <span className="CloseModal" onClick={() => handleClose()}>

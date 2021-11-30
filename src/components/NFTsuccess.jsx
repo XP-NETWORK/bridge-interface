@@ -42,7 +42,7 @@ function NFTsuccess() {
         <div>
 
             {/* <a href="#" className="themBtn" onClick={handleShow}>Send</a> */}
-            <Modal show={txnHashArr?.length} onHide={handleClose} className="nftSuccessMod">
+            <Modal animation={false} show={txnHashArr?.length} onHide={handleClose} className="nftSuccessMod">
                 <Modal.Header>
                     <Modal.Title><img src={Success} /> Success</Modal.Title>
                     <span className="CloseModal" onClick={handleClose}>

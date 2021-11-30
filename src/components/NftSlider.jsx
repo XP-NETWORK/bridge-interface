@@ -61,8 +61,8 @@ export default class Collecthead extends Component {
                                 <img src={Slider1} alt="" />
                             </div>
                             <div className="nftSlidImg">
-                                <p className="nftSlidNumber">#8945</p>
-                                <div className="nftAut"><a href="#" className="">Dima_U</a></div>
+                                {/* <p className="nftSlidNumber">#8945</p> */}
+                                {/* <div className="nftAut"><a href="#" className="">Dima_U</a></div> */}
                             </div>
                         </div>
                     </div>
@@ -72,8 +72,8 @@ export default class Collecthead extends Component {
                                 <img src={Slider2} alt="" />
                             </div>
                             <div className="nftSlidImg">
-                                <p className="nftSlidNumber">#8945</p>
-                                <div className="nftAut"><a href="#" className="">Dima_U</a></div>
+                                {/* <p className="nftSlidNumber">#8945</p> */}
+                                {/* <div className="nftAut"><a href="#" className="">Dima_U</a></div> */}
                             </div>
                         </div>
                     </div>
@@ -83,8 +83,8 @@ export default class Collecthead extends Component {
                                 <img src={Slider3} alt="" />
                             </div>
                             <div className="nftSlidImg">
-                                <p className="nftSlidNumber">#8945</p>
-                                <div className="nftAut"><a href="#" className="">Dima_U</a></div>
+                                {/* <p className="nftSlidNumber">#8945</p> */}
+                                {/* <div className="nftAut"><a href="#" className="">Dima_U</a></div> */}
                             </div>
                         </div>
                     </div>
@@ -94,8 +94,8 @@ export default class Collecthead extends Component {
                                 <img src={Slider4} alt="" />
                             </div>
                             <div className="nftSlidImg">
-                                <p className="nftSlidNumber">#8945</p>
-                                <div className="nftAut"><a href="#" className="">Dima_U</a></div>
+                                {/* <p className="nftSlidNumber">#8945</p> */}
+                                {/* <div className="nftAut"><a href="#" className="">Dima_U</a></div> */}
                             </div>
                         </div>
                     </div>

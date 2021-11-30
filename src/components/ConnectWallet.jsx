@@ -178,7 +178,7 @@ function ConnectWallet() {
                     <a href="#" className="themBtn disabled" onClick={handleShow}>Continue bridging -<span>{'>'}</span> </a>
             </div>
             { !strQR ?
-                <Modal show={show} onHide={handleClose} className="ChainModal">
+                <Modal show={show} onHide={handleClose} animation={false} className="ChainModal">
                     <Modal.Header>
                         <Modal.Title>Connect Wallet</Modal.Title>
                         <span className="CloseModal" onClick={handleClose}>
@@ -189,13 +189,13 @@ function ConnectWallet() {
                         <div className="walletListBox">
                             <ul className="walletList scrollSty">
                                 <li onClick={() => onInjected()} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li>
-                                <li onClick={() => onWalletConnect()} style={ from ? from.type === "EVM" ? {} : OFF : ""} className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
+                                <li onClick={() => onWalletConnect()} style={ from ? from.type === "EVM" ? OFF : OFF : ""} className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
                                 <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
-                                <li style={ OFF }  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Elrond</li>
+                                <li style={ OFF }  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
                                 <li style={ OFF } className="wllListItem"><img src={Ledger} alt="Ledger Icon" /> Ledger</li>
-                                <li style={ OFF } style={{marginBottom: 0 + "px"}} className="wllListItem"><img src={Trezor} alt="Trezor Icon" /> Trezor</li>
+                                <li style={ OFF } style={{marginBottom: 0 + "px", ...OFF}} className="wllListItem"><img src={Trezor} alt="Trezor Icon" /> Trezor</li>
                             </ul>
                         </div>
                     </Modal.Body>

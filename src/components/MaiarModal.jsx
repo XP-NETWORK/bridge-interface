@@ -26,7 +26,7 @@ export default function MaiarModal({ strQR, qrCodeString, show, handleClose }) {
                 <p>To continue transaction XP.network requires confirmation on Maiar wallet.</p>
             </Modal.Body>   
         </Modal> */}
-        <Modal show={show} onHide={handleClose} className="ChainModal">
+        <Modal show={show} animation={false} onHide={handleClose} className="ChainModal">
             <Modal.Header>
                 <Modal.Title>Maiar Login</Modal.Title>
                 <span className="CloseModal" onClick={handleClose}>

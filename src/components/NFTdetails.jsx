@@ -26,7 +26,7 @@ function NFTdetails({ nftInf }){
                 NFT Details
             </Button> */} 
             <span className="NFTInf" onClick={handleShow}><img src={INF} /></span>
-            <Modal show={show} onHide={handleClose} className="NftDetails">
+            <Modal animation={false} show={show} onHide={handleClose} className="NftDetails">
                 <Modal.Header>
                     <Modal.Title>NFT Details</Modal.Title>
                     <span className="CloseModal" onClick={handleClose}>

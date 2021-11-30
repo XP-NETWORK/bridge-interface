@@ -47,10 +47,11 @@ function NavBar() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="navMenu">
-                        <Nav.Link href="#home">About</Nav.Link>
-                        <Nav.Link href="#Docs">Docs</Nav.Link>
-                        <Nav.Link href="#FAQs">FAQs</Nav.Link>
-                        <Nav.Link href="#GetFeatured">Get Featured</Nav.Link>
+                        <Nav.Link target="_blank" href="https://xp.network/">Home</Nav.Link>
+                        <Nav.Link target="_blank" href="https://docs.xp.network/">Docs</Nav.Link>
+                        <Nav.Link target="_blank" href="https://xp.network/api/">Bridge API</Nav.Link>
+                        <Nav.Link target="_blank" href="https://xp.network/stake/">Staking</Nav.Link>
+                        <Nav.Link target="_blank" href="https://blog.xp.network/">Blog</Nav.Link>
                         { setAddress() ? <Nav.Link href="#NFT" className="nftConnect" onClick={handleShow}>{setAddress() ?`${setAddress().substring(0, 6)}...${setAddress().substring(setAddress().length - 2)}`:''} <img src={NftSelect} /></Nav.Link> :''}
                     </Nav>
                 </Navbar.Collapse>

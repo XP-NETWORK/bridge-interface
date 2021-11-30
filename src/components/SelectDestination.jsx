@@ -24,7 +24,7 @@ function SelectDestination() {
     return (
         <div>
             <NFTSelectBox />
-            <Modal show={show} onHide={() => handleClose()} className="ChainModal">
+            <Modal animation={false} show={show} onHide={() => handleClose()} className="ChainModal">
                 <Modal.Header className="text-left">
                     <Modal.Title>{`Select ${departureOrDestination === 'destination' ? 'destination' : 'departure'} chain`}</Modal.Title>
                     <span className="CloseModal" onClick={() => handleClose()}>

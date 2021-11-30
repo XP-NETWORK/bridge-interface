@@ -28,7 +28,7 @@ export default function NFT({nft, index}) {
     useEffect(() => { }, [selectedNFTs])
     return ( 
         <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-            <div onClick={() => addRemoveNFT(nft)} style={ !imageLoaded ? HIDDEN : {}} className="singleNft">
+            <div onClick={() => addRemoveNFT(nft)} style={ !imageLoaded ? HIDDEN : {}} className={`singleNft ${isSelected ? 'singleNft-selected' : ''}`}>
                 <div className={`nftImageBox ${isSelected ? 'nftSelect': ''}`}>
                     <span className="selectNft">{<img src={CheckGreen} />}</span>
                     <span className="nftImage"><img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} /></span>

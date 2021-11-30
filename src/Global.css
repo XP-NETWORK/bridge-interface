@@ -296,6 +296,14 @@ span.LineArrow img {
     pointer-events: none;
 }
 
+
+.changeBtn.disabled{
+    background: linear-gradient(0deg, rgba(73, 82, 108, 0.1), rgba(73, 82, 108, 0.1));
+    border: 1px solid #37405B;
+    color: #5A6177;
+    pointer-events: none;
+}
+
 .aboutNft {
     text-align: center;
     padding-top: 22px;
@@ -378,7 +386,9 @@ span.LineArrow img {
     padding: 14px 54px 14px 16px;
     color: #fff;
 }
-
+.Close img {
+    width: 18px;
+}
 span.closeBox {
     height: 20px;
     width: 28px;
@@ -398,10 +408,14 @@ span.closeBox {
 .modal-content {
     background: #232833;
     border: 1px solid #2D3342;
+    background: linear-gradient(309.48deg, #232833 -3.65%, rgba(40, 46, 60, 1) 122.77%);
     box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.13);
     border-radius: 20px;
 }
-
+.modal-backdrop {
+    background: #1D212A;
+opacity: 0.9;
+}
 .modal-header {
     border-bottom: 1px solid #2D3342;
     position: relative;
@@ -719,9 +733,12 @@ span.wallet {
     border-radius: 25px;
     overflow: hidden;
     cursor: pointer;
+    border: 1px solid transparent;
 }
 
-
+.singleNft-selected {
+    border: 1px solid #3E64ED !important;
+}
 
 .singleNft.missing {
     background: linear-gradient(335deg, rgba(41, 47, 63, 0.3) -0.71%, rgba(41, 47, 63, 0) 61.32%);
@@ -1090,7 +1107,9 @@ ul.nftList {
     color: #fff;
     position: relative;
 }
-
+.nftListed:hover {
+    background: rgba(73, 82, 108, 0.1);
+}
 li.nftListed> img {
     display: block;
     height: 32px;
@@ -1818,7 +1837,7 @@ span.invalid img {
 
 .navMenu.navbar-nav .nftConnect.nav-link {
     border: 1px solid #4532B5;
-    background: #000000;
+    background: #1D212A;
     border-radius: 8px;
     padding: 8px 20px;
 }
