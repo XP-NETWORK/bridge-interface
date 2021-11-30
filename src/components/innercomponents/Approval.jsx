@@ -23,7 +23,6 @@ function Approval(props) {
     const WCProvider = useSelector(state => state.general.WCProvider)
 
     const approveEach = async (nft, signer, chain, index) => {
-
         const arr = new Array(index + 1).fill(0)
             try {
                 const { tokenId, contract, chainId } = nft.native
