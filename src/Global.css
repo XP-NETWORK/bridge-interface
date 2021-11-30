@@ -1020,8 +1020,19 @@ span.NFTInf:hover img {
     cursor: pointer;
     margin-left: 10px;
     color: #ffff;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0px 12px;
 }
+.desChain span:hover {
+    background: rgba(98, 113, 138, 0.1);
+    border-radius: 8px;
 
+}
+.desChain span img:nth-child(2) {
+    margin-left: 4px;
+}
 .destiReload {
     display: flex;
     align-items: center;
@@ -1849,6 +1860,7 @@ span.invalid img {
 
 .navMenu.navbar-nav .nftConnect.nav-link img {
     margin-left: 6px;
+    margin-top: -2px;
 }
 
 
