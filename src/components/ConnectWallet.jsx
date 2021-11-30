@@ -195,7 +195,7 @@ function ConnectWallet() {
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
                                 <li style={ OFF }  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Elrond</li>
                                 <li style={ OFF } className="wllListItem"><img src={Ledger} alt="Ledger Icon" /> Ledger</li>
-                                <li style={ OFF } className="wllListItem"><img src={Trezor} alt="Trezor Icon" /> Trezor</li>
+                                <li style={ OFF } style={{marginBottom: 0 + "px"}} className="wllListItem"><img src={Trezor} alt="Trezor Icon" /> Trezor</li>
                             </ul>
                         </div>
                     </Modal.Body>
