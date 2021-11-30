@@ -21,8 +21,11 @@ function Approval(props) {
     const receiver = useSelector(state => state.general.receiver)
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const WCProvider = useSelector(state => state.general.WCProvider)
+    const onMaiar = useSelector(state => state.general.onMaiar)
+    const maiarProvider = useSelector(state => state.maiarProvider)
 
     const approveEach = async (nft, signer, chain, index) => {
+        
         const arr = new Array(index + 1).fill(0)
             try {
                 const { tokenId, contract, chainId } = nft.native
@@ -30,6 +33,7 @@ function Approval(props) {
                 const isInApprovedNFTs = approvedNFTList.filter(n => n.native.tokenId === tokenId && n.native.contract === contract && chainId === n.native.chainId )[0]
                 if(!isInApprovedNFTs) {
                     try {
+                        console.log("approveEach", chain);
                         const ap = await chain.approveForMinter(nft, signer);
                         dispatch(updateApprovedNFTs(nft))
                         setFinishedApproving(arr)
@@ -45,11 +49,11 @@ function Approval(props) {
                 console.log(error);
             }
     }
-    // sdsdsd
+
     
     // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
     const approveAllNFTs = async () => {
-        // debugger
+        
         if(!approvedLoading) {
                 dispatch(setApproveLoader(true))
                 setApprovedLoading(true)

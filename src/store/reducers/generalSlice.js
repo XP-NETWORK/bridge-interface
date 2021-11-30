@@ -124,6 +124,9 @@ const generalSlice = createSlice({
     },
     setError(state, action){
       state.error = action.payload
+    },
+    setTronPopUp(state, action){
+      state.tronPopUp = action.payload
     }
   },
 });
@@ -163,7 +166,8 @@ export const { toggleNFTInfo,
     setTronLink,
     setOnWC,
     setWC,
-    setError
+    setError,
+    setTronPopUp
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

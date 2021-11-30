@@ -52,8 +52,9 @@ function NFTaccount() {
                 chain,    // The chain of interest 
                 tronWallet ? tronWallet : elrondAccount ? elrondAccount : account    // The public key of the NFT owner
                 );
-                console.log(nfts)
+                console.log("asdasdasdasdasd", nfts, tronWallet ? tronWallet : elrondAccount ? elrondAccount : account )
                 const parsedNFTs = await parseNFTS(nfts)
+                console.log(parsedNFTs,'1231191 parsed')
                 dispatch(setBigLoader(false))
                 if(parsedNFTs.length){
                     dispatch(setNFTList(parsedNFTs))

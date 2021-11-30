@@ -2128,7 +2128,41 @@ span.transPend {
   }
 }
 
-
-.walletList li:last-child{
-    /* margin-bottom: 100px !important; */
+.tron-PopUp__list{
+    width: calc(100% - 100px);
+    margin: 0 auto 10px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
+
+.tron-PopUp__header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tron-PopUp__icon{
+    margin: 30px 0 20px 0;
+}
+
+.link__items{
+    display: flex;
+    justify-content: center;
+}
+
+.tron-modal__copyIcon{
+    margin: 0 4px;
+}
+
+.tron-modal__link {
+    margin: 0 auto;
+    width: 260px;
+    height: 40px;
+    background: #50505077;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
