@@ -12,7 +12,7 @@ import copiedIcon from "../../assets/img/icons/Copied.png"
 export default function TronPopUp() {
 
     const [onHover, setOnHover] = useState()
-    const [onMouseDown, setOnMouseDown] = useState()
+    const [copied, setCopied] = useState()
 
     return (
         <div>
@@ -34,10 +34,13 @@ export default function TronPopUp() {
                     </div>
                     <div className="tron-modal__link">
                         <div className="link__items">
+                            { onHover && <img className="copyTronTT" src={copyTT} /> }
+                            { copied && <img className="copyTronTTc" src={copiedIcon} /> }
                             <div className="tron-modal_address">https://bridge.xp.network</div>
                             <CopyToClipboard text={"https://bridge.xp.network"}>
-                            <div className="tron-modal__copyIcon"><img onMouseOver={() => setOnHover(true)} onMouseOut={() => setOnHover(false)} onMouseDown={() => setOnMouseDown(true)} onMouseUp={() => setOnMouseDown(false) } src={ onHover ? CopyHover : FileCopy} /></div>
+                            <div className="tron-modal__copyIcon"><img onMouseOver={() => setOnHover(true)} onMouseOut={() => setOnHover(false)} onMouseDown={() => setCopied(true)} onMouseUp={() => setCopied(false) } src={ onHover ? CopyHover : FileCopy} /></div>
                             </CopyToClipboard>
+                            
                         </div>
                     </div>
             </Modal.Body>

@@ -2166,3 +2166,16 @@ span.transPend {
     align-items: center;
     justify-content: center;
   }
+
+  .copyTronTT{
+      position: absolute;
+      top: 90px;
+      right: -10px;
+  }
+
+  .copyTronTTc{
+    position: absolute;
+    top: 90px;
+    right: -20px;
+    z-index: 200;
+  }

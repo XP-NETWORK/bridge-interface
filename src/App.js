@@ -21,7 +21,7 @@ function App() {
   const loader = useSelector(state => state.general.approveLoader)
   const error = useSelector(state => state.general.error)
   const tronPopUp = useSelector(state => state.general.tronPopUp)
-
+  
   const handleClose = () => {
     dispatch(setTronPopUp(false))
   }
@@ -48,10 +48,10 @@ return (
         show={loader}>
           <ApproveLoader />
         </Modal>
-        <Modal show={error} close={() => handleClose()} onHide={() => handleClose()} >
+        <Modal show={error} >
           <Error />
         </Modal>
-        <Modal size="sm" show={false}>
+        <Modal size="sm" show={false} close={handleClose()} onHide={handleClose()}>
           <TronPopUp />
         </Modal>
       <Router>
