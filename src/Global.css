@@ -1105,6 +1105,10 @@ span.NFTInf:hover img {
     margin-left: 3px;
 }
 
+.nftSelected__name{
+    min-width: 250px ;
+}
+
 ul.nftSelected {
     list-style: none;
     max-height: 220px;

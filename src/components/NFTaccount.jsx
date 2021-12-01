@@ -48,10 +48,10 @@ function NFTaccount() {
     let counter = 0
     
     async function getNFTsList(){
+        debugger
         try {
-            const chain = await handleChainFactory(from)
+            // const chain = await handleChainFactory(from)
             const factory = await getOldFactory()
-            console.log(factory, 'hello')
             const w = tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             const chainId = ChainData[from].nonce
             const res = await axios.get(`https://nft-lister.herokuapp.com/nfts/${chainId}/${w}`, {
@@ -59,25 +59,18 @@ function NFTaccount() {
                     Authorization: 'Bearer eyJhbGciOiJFUzI1NiJ9.eyJhdXRob3JpdHkiOjI2ODQzNTQ1NSwiaWF0IjoxNjM4MTg3MTk5LCJleHAiOjE2Mzg3OTE5OTl9.aKs8K2V8K_rWqQPshae1EzuAEpPMVWBZakfmyBeeq-nJuiEKb1KBSle1F8LNemXLW_3_4KFwDjZrNOx0zA_GNw'
                 }
             })
-            console.log(res.data.data)
-            // const nfts = await factory.nftList(
-            //     chain,    // The chain of interest 
-            //     w    // The public key of the NFT owner
-            //     );
-                const parsedNFTs = await parseNFTS(res.data.data)
-                console.log(parsedNFTs,'1231191 parsed')
-                dispatch(setBigLoader(false))
-                if(parsedNFTs.length){
-                    dispatch(setNFTList(parsedNFTs))
-                }
-                else{
-                    console.log('No NFTs...');
-                }
-            } catch (error) {  
-                console.log("...",error); 
+            const parsedNFTs = await parseNFTS(res.data.data)
+            dispatch(setBigLoader(false))
+            if(parsedNFTs.length){
+                dispatch(setNFTList(parsedNFTs))
             }
-            
-            console.log("counter", counter, counter++);
+            else{
+                console.log('No NFTs...');
+            }
+        } 
+        catch (error) {  
+                console.log("...",error); 
+        }
     }
     const estimate = async () => {
         try {
@@ -193,7 +186,7 @@ function NFTaccount() {
                             </div>
                         </div>
                     </div>
-                    <div className="sendNftCol col-lg-4 desktopOnly">
+                    <div className="sendNftCol col-lg-4 ">
                         <div className="sendNftBox">
                             <form action="#">
                                 <div className="sendNftTit">

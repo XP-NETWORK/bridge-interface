@@ -91,7 +91,7 @@ function NFTsuccess() {
                             <ul className="nftSelected">
                                 { selectedNFTList.length ? selectedNFTList.map(( nft, index) => 
                                 <li className="nftSelecItem">
-                                    <img src={setupURI(nft.image)} alt="NFT" /> {nft.name}<span className="bluTextBtn"><a href={`${chainsConfig[from.key].tx + tx}`} target="_blank">View Txn</a></span>
+                                    <img src={setupURI(nft.image)} alt="NFT" /><span className="nftSelected__name">{nft.name}</span><span className="bluTextBtn"><a href={`${chainsConfig[from.key].tx + tx}`} target="_blank">View Txn</a></span>
                                 </li>
                                 ):''}
                             </ul>
