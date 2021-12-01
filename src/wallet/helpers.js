@@ -1,7 +1,7 @@
 import { ChainFactory, ChainFactoryConfigs } from 'xp.network'
 import { Chain, Config } from 'xp.network/dist/consts'
 import store from '../store/store'
-import { getOldFactory } from './oldHelper'
+import { ChainData, getOldFactory } from './oldHelper'
 
 
 const axios = require('axios')
@@ -125,4 +125,38 @@ export const handleChainFactory = async (someChain) => {
     someChain === "Cardano" ? chain = await factory.inner(Chain.CARDANO) : chain = ""
 
     return chain
+}
+
+export const getNFTS =async  (wallet, from) => {
+    const chain = await handleChainFactory(from)
+    const factory = await getOldFactory()
+    const chainId = ChainData[from].nonce
+    const res = await Promise.all([
+        await axios.get(`https://nftindexing.herokuapp.com/${chainId}/${wallet}`, {
+        headers: {
+            Authorization: 'Bearer eyJhbGciOiJFUzI1NiJ9.eyJhdXRob3JpdHkiOjI2ODQzNTQ1NSwiaWF0IjoxNjM4MTg3MTk5LCJleHAiOjE2Mzg3OTE5OTl9.aKs8K2V8K_rWqQPshae1EzuAEpPMVWBZakfmyBeeq-nJuiEKb1KBSle1F8LNemXLW_3_4KFwDjZrNOx0zA_GNw'
+        }
+    }),await factory.nftList(
+        chain,    // The chain of interest 
+        wallet   // The public key of the NFT owner
+    )
+    ])
+    const unique = {}
+    try {
+        const allNFTs = [ ...res[0].data.result, ...res[1] ].filter(n => n.native).filter(n => {
+            const {tokenId, contract, chainId} =  n?.native 
+            if(unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`]) return false
+            else {
+                unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`] = true
+    
+                return true
+            }
+        })
+        console.log(unique, '12382932189231dsahijasdjhd')
+        return allNFTs
+
+    } catch(err) {
+        return []
+    }
+
 }
