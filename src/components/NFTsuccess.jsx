@@ -11,6 +11,7 @@ import { chainsConfig } from './values';
 import moment from 'moment';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { setupURI } from '../wallet/oldHelper';
+import CopyIcons from './innercomponents/CopyIcons';
 
 // !TODO TX AVALANCHE
 
@@ -46,7 +47,8 @@ function NFTsuccess() {
         <div>
 
             {/* <a href="#" className="themBtn" onClick={handleShow}>Send</a> */}
-            <Modal animation={false} show={txnHashArr?.length} onHide={handleClose} className="nftSuccessMod">
+            {/* show={txnHashArr?.length} */}
+            <Modal animation={false} show={true} onHide={handleClose} className="nftSuccessMod">
                 <Modal.Header>
                     <Modal.Title><img src={Success} /> Success</Modal.Title>
                     <span className="CloseModal" onClick={handleClose}>
@@ -67,7 +69,11 @@ function NFTsuccess() {
                               onCopy={copy}
                             >   
                                 <div className="sucesList">
-                                    <label>Txn Hash</label> <span className="statTok colBlue">{ tx ? `${tx.substring(0, 10)}...${tx.substring(tx.length - 6)}` : '' }<Image onMouseOver={() => setSetCopyHover(true)}  onMouseOut={() => setSetCopyHover(false)} src={copyHover ? CopyHover : FileCopy} className="success__copy" /></span>
+                                    <label>Txn Hash</label>
+                                    <span className="statTok colBlue">{ tx ? `${tx.substring(0, 10)}...${tx.substring(tx.length - 6)}` : '' }
+                                        <CopyIcons />
+                                        {/* <Image onMouseOver={() => setSetCopyHover(true)}  onMouseOut={() => setSetCopyHover(false)} src={copyHover ? CopyHover : FileCopy} className="success__copy" /> */}
+                                    </span>
                                 </div>
                                 {/* <span className="copyTokk"><img src={FileCopy} /></span> */}
                             </CopyToClipboard>

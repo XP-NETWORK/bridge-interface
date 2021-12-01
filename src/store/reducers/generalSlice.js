@@ -132,7 +132,7 @@ const generalSlice = createSlice({
       state.bigNumberFees = action.payload
     },
     setTronLoginError(state, action){
-      state.TronLoginError = action.payload
+      state.tronLoginError = action.payload
     }
   },
 });
