@@ -12,6 +12,7 @@ import nftDetails_1 from '../assets/img/nfts/nftDetails_1.png';
 
 import INF from '../assets/img/icons/Inf.svg';
 import { setupURI } from '../wallet/oldHelper';
+import { chainsConfig } from './values';
 
 function NFTdetails({ nftInf }){
     const { name, description, image, attributes, uri, native} = nftInf
@@ -65,14 +66,17 @@ export default NFTdetails
 
 function Attribute(props) {
     const { trait_type, display_type, value } = props
-    console.log(props)
+   console.log(trait_type === 'Original Chain', chainsConfig[value])
     return  <div className="nftToken nftInfBox">
-    <label>{ 
+    <label>
+        { 
     trait_type ?
     trait_type.split('_').map(n =>  n.charAt(0).toUpperCase() + n.slice(1).toLowerCase()).join(' ')
     : '-'
     }</label>
-    <p>      {
+    <p>    {
+            trait_type === 'Original Chain' ? <img style={{marginRight: '4px'}} src={chainsConfig[value]?.img} /> : ''
+        }  {
         display_type === 'date' 
         ? moment(new Date(value * 1000)).format('MM-DD-YYYY') 
         : display_type === 'boolean' ?
