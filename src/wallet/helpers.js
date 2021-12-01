@@ -143,7 +143,8 @@ export const getNFTS =async  (wallet, from) => {
     ])
     const unique = {}
     try {
-        const allNFTs = [ ...res[0].data.result, ...res[1] ].filter(n => n.native).filter(n => {
+        const p = res[0].data.ok ? res[0].data.result : []
+        const allNFTs = [ ...p, ...res[1] ].filter(n => n.native).filter(n => {
             const {tokenId, contract, chainId} =  n?.native 
             if(unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`]) return false
             else {
