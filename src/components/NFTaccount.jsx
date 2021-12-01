@@ -18,8 +18,9 @@ import { useDispatch } from 'react-redux';
 import { getFactory, handleChainFactory, parseNFTS } from "../wallet/helpers"
 import { BigNumber } from "bignumber.js";
 import Comment from "../components/innercomponents/Comment"
-import{ getOldFactory } from '../wallet/oldHelper'
+import{ ChainData, getOldFactory } from '../wallet/oldHelper'
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
+import axios from 'tronweb/node_modules/axios';
 
 
 function NFTaccount() {
@@ -51,12 +52,19 @@ function NFTaccount() {
             const chain = await handleChainFactory(from)
             const factory = await getOldFactory()
             console.log(factory, 'hello')
-            const nfts = await factory.nftList(
-                chain,    // The chain of interest 
-                tronWallet ? tronWallet : elrondAccount ? elrondAccount : account    // The public key of the NFT owner
-                );
-                console.log("asdasdasdasdasd", nfts, tronWallet ? tronWallet : elrondAccount ? elrondAccount : account, nfts )
-                const parsedNFTs = await parseNFTS(nfts)
+            const w = tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
+            const chainId = ChainData[from].nonce
+            const res = await axios.get(`https://nft-lister.herokuapp.com/nfts/${chainId}/${w}`, {
+                headers: {
+                    Authorization: 'Bearer eyJhbGciOiJFUzI1NiJ9.eyJhdXRob3JpdHkiOjI2ODQzNTQ1NSwiaWF0IjoxNjM4MTg3MTk5LCJleHAiOjE2Mzg3OTE5OTl9.aKs8K2V8K_rWqQPshae1EzuAEpPMVWBZakfmyBeeq-nJuiEKb1KBSle1F8LNemXLW_3_4KFwDjZrNOx0zA_GNw'
+                }
+            })
+            console.log(res.data.data)
+            // const nfts = await factory.nftList(
+            //     chain,    // The chain of interest 
+            //     w    // The public key of the NFT owner
+            //     );
+                const parsedNFTs = await parseNFTS(res.data.data)
                 console.log(parsedNFTs,'1231191 parsed')
                 dispatch(setBigLoader(false))
                 if(parsedNFTs.length){

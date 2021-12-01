@@ -98,8 +98,8 @@ export default function AccountModal() {
                 </div>
             </CopyToClipboard>
             <div className="accountBtn">
-                <a onClick={() => switchNetwork()} href="#" className="changeBtn disabled">Change Network</a>
-                <a onClick={() => handleDisconnect()} href="#" className="changeBtn">Disconnect</a>
+                <a onClick={() => switchNetwork()} className="changeBtn disabled">Change Network</a>
+                <a onClick={() => handleDisconnect()} className="changeBtn">Disconnect</a>
             </div>
         </div>
     :

@@ -17,8 +17,8 @@ function NftSelect() {
                 <SelectDestination/>
                 <ConnectWallet/>
                 <div className="aboutNft">
-                    <a href="#" target="_blank" className="videoLink"><img src={Video} />   Learn how to use NFT bridge</a>
-                    <a href="#" target="_blank" className="about_Nft"><img src={INF} alt="" /> What is NFT</a>
+                    <a target="_blank" className="videoLink"><img src={Video} />   Learn how to use NFT bridge</a>
+                    <a target="_blank" className="about_Nft"><img src={INF} alt="" /> What is NFT</a>
                 </div>
             </div>
         </div>

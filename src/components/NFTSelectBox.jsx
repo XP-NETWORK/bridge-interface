@@ -31,7 +31,6 @@ export default function NFTSelectBox() {
 
     const [swapHover, setSwapHover] = useState()
     const [swapDown, setSwapDown] = useState()
-
     return (
         <div className="nftSelectBox">
         <div className="selChain seleDepat" onClick={() => handleShow("departure")}>
