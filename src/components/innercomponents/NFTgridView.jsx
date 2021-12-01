@@ -13,7 +13,7 @@ function NFTgridView() {
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const search = useSelector(state => state.general.NFTListSearch)
     const nftsPlace = window.innerWidth <= 600 ? 2 : 9
-    const placeholders = new Array(nfts ? nftsPlace - nfts.length : 0).fill(0)
+    const placeholders = new Array(nfts ? nftsPlace - nfts.length >= 0 ? nftsPlace - nfts.length : 0 : 0).fill(0)
     const loader = useSelector(state => state.general.bigLoader)
     
     useEffect(() => { }, [selectedNFTs])
