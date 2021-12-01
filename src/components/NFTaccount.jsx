@@ -54,7 +54,7 @@ function NFTaccount() {
             console.log(factory, 'hello')
             const w = tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             const chainId = ChainData[from].nonce
-            const res = await axios.get(`https://nft-lister.herokuapp.com/nfts/${chainId}/${w}`, {
+            const res = await axios.get(`https://nftindexing.herokuapp.com/${chainId}/${w}`, {
                 headers: {
                     Authorization: 'Bearer eyJhbGciOiJFUzI1NiJ9.eyJhdXRob3JpdHkiOjI2ODQzNTQ1NSwiaWF0IjoxNjM4MTg3MTk5LCJleHAiOjE2Mzg3OTE5OTl9.aKs8K2V8K_rWqQPshae1EzuAEpPMVWBZakfmyBeeq-nJuiEKb1KBSle1F8LNemXLW_3_4KFwDjZrNOx0zA_GNw'
                 }
@@ -64,7 +64,8 @@ function NFTaccount() {
             //     chain,    // The chain of interest 
             //     w    // The public key of the NFT owner
             //     );
-                const parsedNFTs = await parseNFTS(res.data.data)
+            //     console.log(nfts, '12318231989')
+                const parsedNFTs = await parseNFTS(res.data.result)
                 console.log(parsedNFTs,'1231191 parsed')
                 dispatch(setBigLoader(false))
                 if(parsedNFTs.length){
