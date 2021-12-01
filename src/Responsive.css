@@ -49,7 +49,11 @@
     }
   
 }
-      
+@media(max-width: 768px) {
+    .sendNftTit {
+        margin-top: -50px;
+    }
+}
 @media only screen and (max-width: 767px) {
 
     .mobileOnly.seleNftMob {
@@ -88,13 +92,69 @@
     }
 
     .nftListBox> .row {
-        margin-right: -8px;
-        margin-left: -8px;
+        margin-right: 0px;
+        margin-left: 0px;
+        display: flex;
+        justify-content: space-between;
+    }span.nftImage img {
+        width: 100%;
+        height: auto;
     }
-
+    .nftImageBox {
+        width: 100%;
+    }
+    .span.nftImage img {
+        width: 100%;
+    }
+    .nftName {
+        width: 100% !important;
+    }
+    .nftListBox .col-lg-4.col-md-4.col-sm-6.col-6 {
+        padding-right: 0px;
+        padding-left: 0px;
+        max-width: 48%;
+    }
+    .nftCont span :first-child{
+        width: 100%;
+    }
+    .nftName {
+        margin-top: 0px !important;
+    }
+    .nftCont  {
+        padding-bottom: 0px;
+        height: 78px;
+    }
+    .singleNft {
+    }
+    .nftImageBox {
+    }
+    .desChain span {
+        margin-left: 20px;
+        padding: 0px 20px;
+        justify-content: space-between;
+    }
+    .desChain span img:nth-child(2) {
+        margin-top: 3px !important;
+        margin-left: 18px !important;
+        margin-right: 2px !important;
+    }
+    .desChain span img {
+        border-radius: 50%;
+    }
+    span.NFTInf img {
+        width: 24px !important;
+    }
+    .destiReload {
+        padding: 0px 18px;
+    }
+    .NFTInf {
+        width: 24px !important;
+    }
     .nftListBox {
         margin-right: -12px;
         padding-right: 12px;
+        padding-left: 0px;
+        padding-right: 0px;
     }
 
     .aleartBox {
@@ -209,8 +269,14 @@
 
     .navbar {
         padding: 0 !important;
+        align-items: center;
     }
-
+    .navbar-light .navbar-toggler:after{
+        margin-top: 21px;
+        top: -13px;
+        right: 0px;
+        position: absolute;
+    }
     .nftTopRIght {
         position: relative;
     }

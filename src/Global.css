@@ -219,6 +219,7 @@ ul.socialLInks li img:hover {
 
 .selChain img {
     display: block;
+    width: 24px;
     margin-right: 16px;
 }
 
@@ -1065,7 +1066,7 @@ span.NFTInf:hover img {
 }
 
 .desChain span img {
-    margin-right: 8px;
+    margin-right: 10px;
 }
 
 .nftSelectList {
@@ -1977,8 +1978,9 @@ span.wallet img {
 }
 
 .nftListBox .col-lg-4.col-md-4.col-sm-6.col-6 {
-    padding-right: 12px;
-    padding-left: 12px;
+    padding-right: 8px;
+    padding-left: 8px;
+    margin: 0px;
 }
 
 .nftSuccessMod .modal-title img {

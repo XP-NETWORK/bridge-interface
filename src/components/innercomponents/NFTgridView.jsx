@@ -12,7 +12,8 @@ function NFTgridView() {
     const nfts = useSelector(state => state.general.NFTList)
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const search = useSelector(state => state.general.NFTListSearch)
-    const placeholders = new Array(nfts ? 9 - nfts.length : 0).fill(0)
+    const nftsPlace = window.innerWidth <= 600 ? 2 : 9
+    const placeholders = new Array(nfts ? nftsPlace - nfts.length : 0).fill(0)
     const loader = useSelector(state => state.general.bigLoader)
     
     useEffect(() => { }, [selectedNFTs])
@@ -25,7 +26,7 @@ function NFTgridView() {
                         { nfts ? nfts.filter(nft => nft.name?.toLowerCase().includes(search ? search?.toLowerCase() : '') || nft.native.owner.includes(search ? search : '')).map((nft, index) => <NFT nft={nft} index={index} />)
                         : 
                         <NFTempty /> }
-                        { nfts && nfts?.length < 10 ? placeholders.map(n => <Missing />) : ''}
+                        { nfts && nfts?.length < nftsPlace ? placeholders.map(n => <Missing />) : ''}
                     </div>
                 }
         </div>
