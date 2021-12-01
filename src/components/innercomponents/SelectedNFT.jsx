@@ -32,7 +32,7 @@ function SelectedNFT() {
                 </div>
             </div>
             <ul className="nftSelected">
-                { selectedNFTs ? selectedNFTs.map( nft => <li onClick={() => handleRemove(nft)} className="nftSelecItem"><img src={nft.image} alt="NFT" />{nft.name}<span className="Close"><img  alt="" src={Close} /></span></li> ) : ''}
+                { selectedNFTs ? selectedNFTs.map( nft => <li onClick={() => handleRemove(nft)} className="nftSelecItem"><img src={nft.image} alt="NFT" /><span className="nftSelecItem__name">{nft.name}</span><span className="Close"><img  alt="" src={Close} /></span></li> ) : ''}
             </ul>
         </div>
     )

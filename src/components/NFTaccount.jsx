@@ -48,9 +48,9 @@ function NFTaccount() {
     let counter = 0
     
     async function getNFTsList(){
-        debugger
+        // debugger
         try {
-            // const chain = await handleChainFactory(from)
+            const chain = await handleChainFactory(from)
             const factory = await getOldFactory()
             const w = tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             const chainId = ChainData[from].nonce
@@ -183,12 +183,6 @@ function NFTaccount() {
                             <Approval getNft={getNFTsList} />
                             <div className="nftSendBtn disenable">
                             <NFTsuccess/>
-                            <SendFees fees={fees}/>
-                            <div onClick={sendAllNFTs} className={approved && receiver && !loading ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
-                                            <a  className="themBtn">
-                                                {loading ? 'Processing' : 'Send' }
-                                            </a>
-                                        </div>
                             </div>
                         </div>
                     </div>
