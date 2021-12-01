@@ -106,7 +106,8 @@ function ConnectWallet() {
               const accounts = await window.tronWeb.request({ method: "tron_requestAccounts" });
             } 
             catch(err){
-                console.log(err);
+              dispatch(setTronPopUp(true))
+              console.log(err);
             }
             
             if(window.tronLink && window.tronWeb.defaultAddress.base58) {

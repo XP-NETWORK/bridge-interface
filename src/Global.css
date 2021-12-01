@@ -694,6 +694,7 @@ span.wallet {
     padding: 5px 11px;
     color: #3E64ED;
     cursor: pointer;
+    flex-wrap: nowrap;
 }
 
 .seleDestiSele{
@@ -759,6 +760,7 @@ span.wallet {
 
 .nftViewBtn{
     margin: 0 5px;
+    min-width: 40px;
 }
 
 .reloadNfts {
