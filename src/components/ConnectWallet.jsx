@@ -30,7 +30,12 @@ function ConnectWallet() {
     const to = useSelector(state => state.general.to)
     const [show, setShow] = useState();
     const OFF = { opacity: 0.6, pointerEvents: "none" };
-    const handleClose = () => setShow(false);
+    const handleClose = () => { 
+      setShow(false)
+      if(strQR){
+        setStrQr('')
+      }
+    }
     const handleShow = () => setShow(true);
     const metaMask = useSelector(state => state.general.MetaMask)
     const tronLink = useSelector(state => state.general.tronLink)
