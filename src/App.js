@@ -72,7 +72,7 @@ return (
         <Modal show={error} >
           <Error />
         </Modal>
-        <Modal size="sm" show={tronPopUp} close={handleClose()} onHide={handleClose()}>
+        <Modal  show={tronPopUp} close={handleClose()} onHide={handleClose()}>
           <TronPopUp />
         </Modal>
       <Router>

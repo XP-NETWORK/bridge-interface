@@ -23,18 +23,16 @@ export default function AccountModal() {
     const [copyIconHover, setCopyIconHover] = useState()
     const [copied, setCopied] = useState()
     const from = useSelector(state => state.general.from)
-
+    const tronWallet = useSelector(state => state.general.tronWallet)
 
     const handleClose = () => {
         dispatch(setAccountModal(false))
     }
 
-    
-
     const copy = () => {
         setCopied(true)
         setTimeout(() => setCopied(false), 3000)
-      }
+    }
 
     const accountModal = useRef(null)
     const handleDisconnect = () => {
@@ -45,7 +43,6 @@ export default function AccountModal() {
 
     async function switchNetwork (){
         const info = CHAIN_INFO[from?.key]
-        console.log("info", info);
         const chainId = `0x${info.chainId.toString(16)}`;
         try {
             await window.ethereum.request({
@@ -91,7 +88,7 @@ export default function AccountModal() {
             <p className="">{`Connected with ${MetaMask ? 'MetaMask' : onMaiar ? "Maiar Wallet" : ''}`}</p>
                         { copyIconHover && <img className="copytoltip" src={copyTT} /> }
                         { copied && <img className="copytoltip" src={copiedIcon} /> }
-            <CopyToClipboard text={elrondAccount ? elrondAccount : account}>
+            <CopyToClipboard text={elrondAccount || account || tronWallet}>
                 <div className="nftLink">
                     <img src={NftSelect} />
                     {account ?`${account.substring(0, 10)}...${account.substring(account.length - 2)}` : elrondAccount ? `${elrondAccount.substring(0, 10)}...${elrondAccount.substring(elrondAccount.length - 2)}`: ''}
