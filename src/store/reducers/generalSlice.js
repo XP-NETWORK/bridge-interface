@@ -130,6 +130,9 @@ const generalSlice = createSlice({
     },
     setBigNumFees(state, action){
       state.bigNumberFees = action.payload
+    },
+    setTronLoginError(state, action){
+      state.TronLoginError = action.payload
     }
   },
 });
@@ -171,7 +174,8 @@ export const { toggleNFTInfo,
     setWC,
     setError,
     setBigNumFees,
-    setTronPopUp
+    setTronPopUp,
+    setTronLoginError
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
