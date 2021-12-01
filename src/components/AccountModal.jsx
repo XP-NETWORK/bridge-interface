@@ -85,13 +85,13 @@ export default function AccountModal() {
             <div className="accountTit">
                 Account <span className="CloseModal" onClick={handleClose}> <img src={Close}/> </span>
             </div>
-            <p className="">{`Connected with ${MetaMask ? 'MetaMask' : onMaiar ? "Maiar Wallet" : ''}`}</p>
+            <p className="">{`Connected with ${MetaMask ? 'MetaMask' : onMaiar ? "Maiar Wallet" : 'Tron Link'}`}</p>
                         { copyIconHover && <img className="copytoltip" src={copyTT} /> }
-                        { copied && <img className="copytoltip" src={copiedIcon} /> }
+                        { copied && <img className="copytoltip-tron" src={copiedIcon} /> }
             <CopyToClipboard text={elrondAccount || account || tronWallet}>
                 <div className="nftLink">
                     <img src={NftSelect} />
-                    {account ?`${account.substring(0, 10)}...${account.substring(account.length - 2)}` : elrondAccount ? `${elrondAccount.substring(0, 10)}...${elrondAccount.substring(elrondAccount.length - 2)}`: ''}
+                    {account ?`${account.substring(0, 10)}...${account.substring(account.length - 2)}` : elrondAccount ? `${elrondAccount.substring(0, 10)}...${elrondAccount.substring(elrondAccount.length - 2)}`: `${tronWallet.substring(0, 10)}...${tronWallet.substring(tronWallet.length - 2)}`}
                     <span onClick={() => copy()} onMouseOver={() => setCopyIconHover(true)} onMouseOut={()=> setCopyIconHover(false)} className="copyTokk">
                         <img src={ copyIconHover ? CopyHover : FileCopy} />
                     </span>

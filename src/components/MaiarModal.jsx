@@ -5,27 +5,13 @@ import Close from '../assets/img/icons/close.svg';
 
 
 export default function MaiarModal({ strQR, qrCodeString, show, handleClose }) {
-    const [maiarApproval, setMaiarApproval] = useState(false)
-    // const [show, setShow] = useState();
+ 
 
     const confirmMaiarMob = useSelector(state => state.general.confirmMaiarMob)
     const walletConnectDeepLink = "https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet.dev&link=";
 
     return (      
     <>
-        {/* <Modal show={confirmMaiarMob}>
-            <Modal.Header>
-            <Modal.Title>Maiar Login</Modal.Title>
-                <span className="CloseModal" onClick={handleClose}>
-                    <img src={Close} alt="" />
-                </span>
-            </Modal.Header>
-            <Modal.Body>
-                <div className="maiar--modal__header"><img src="#" alt="Maiar Wallet Icon" /></div>
-                <p>Confirm on Maiar Wallet</p>
-                <p>To continue transaction XP.network requires confirmation on Maiar wallet.</p>
-            </Modal.Body>   
-        </Modal> */}
         <Modal show={show} animation={false} onHide={handleClose} className="ChainModal">
             <Modal.Header>
                 <Modal.Title>Maiar Login</Modal.Title>
@@ -44,21 +30,3 @@ export default function MaiarModal({ strQR, qrCodeString, show, handleClose }) {
     </>
     )
 }
-
-
-// { window.innerWidth <= 600 ?
-//     <div className="maiar__deeplink">
-//     <a
-//       id="accessWalletBtn"
-//       data-testid="accessWalletBtn"
-//       className="btn btn-primary px-4 mt-4"
-//       href= {`${walletConnectDeepLink}https://maiar.com/?wallet-connect=${encodeURIComponent(
-//         qrCodeString
-//       )}`}
-
-//       rel="noopener noreferrer nofollow"
-//       target="_blank"
-//     >Maiar Login</a>
-//     </div>
-//     : null
-//     }
