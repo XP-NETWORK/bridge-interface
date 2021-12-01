@@ -799,6 +799,12 @@ span.wallet {
     left: 130px;
 }
 
+.copytoltip-tron{
+    position: absolute;
+    top: 40px;
+    left: 120px;
+}
+
 .nft-sceleton-img{
     position: relative;
     display: flex;
