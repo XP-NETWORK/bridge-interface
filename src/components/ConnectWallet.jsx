@@ -77,24 +77,38 @@ function ConnectWallet() {
         }
       }
 
+//       tronLink: Proxy
+// [[Handler]]: Object
+// [[Target]]: Object
+// ready: false
+// request: ƒ (e)
+// sunWeb: false
+// tronWeb: false
+
+
     async function connectTronlink() {
+      debugger
         if(window.innerWidth <= 600 && !window.tronWeb){
           dispatch(setTronPopUp(true))
-        }else{
-          try {
-            try {
+        }
+        else{
+          try{
+            try{
               const accounts = await window.tronWeb.request({ method: "tron_requestAccounts" });
-              } catch(err) {
+            } 
+            catch(err){
                 console.log(err);
-                }
+            }
+            
             if(window.tronLink && window.tronWeb.defaultAddress.base58) {
               const publicAddress = window.tronWeb.defaultAddress.base58
               dispatch(setTronWallet(publicAddress))
               dispatch(setTronLink(true))
               handleClose()
             }
-          } catch(err) {
-            dispatch(setError(err))
+          } 
+          catch(err) {
+              dispatch(setError(err))
               console.log(err)
           }
         }

@@ -552,7 +552,7 @@ span.wallet {
 }
 
 .maiarModal{
-    padding: 19px 30px 10px 30px;
+    padding: 20px 30px;
     background: linear-gradient(309.48deg, #282E3C -3.65%, rgba(40, 46, 60, 0) 122.77%);
     border-bottom: 1px solid #2D3342;
     overflow-y: scroll;
@@ -1773,7 +1773,8 @@ span.statComp img {
 }
 
 .maiarSubtitle{
-    padding-bottom: 5px;
+    padding-bottom: 10px;
+    color: white;
 }
 
 .maiarConnectBtn:hover {
