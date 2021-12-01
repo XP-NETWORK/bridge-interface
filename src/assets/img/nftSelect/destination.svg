@@ -1,43 +1,10 @@
-<svg width="28" height="28" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_1733_2814)">
-<path d="M12.9898 10.2578L17.3597 5.88968L21.7314 10.2614L24.2727 7.71833L17.3597 0.803589L10.4468 7.71655L12.9898 10.2578Z" fill="white"/>
-<path d="M6.10693 12.0546L8.6482 9.5116L11.1912 12.0546L8.6482 14.5959L6.10693 12.0546Z" fill="white"/>
-<path d="M12.9898 13.8492L17.3597 18.2191L21.7314 13.8474L24.2745 16.3869L17.3615 23.3016L10.4468 16.3922L12.9898 13.8492Z" fill="white"/>
-<path d="M23.5225 12.0546L26.0637 9.5116L28.6068 12.0529L26.0637 14.5977L23.5225 12.0546Z" fill="white"/>
-<path d="M19.9384 12.0526L17.3598 9.47223L15.453 11.3791L15.2326 11.5977L14.7812 12.049L17.3598 14.6258L19.9384 12.0544V12.0526Z" fill="white"/>
-</g>
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="18" cy="18" r="18" fill="#4755CE"/>
 <mask id="mask0_1733_2814" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="36" height="36">
 <circle cx="18" cy="18" r="18" fill="#EEEFF6"/>
 </mask>
 <g mask="url(#mask0_1733_2814)">
-<g style="mix-blend-mode:multiply">
-<circle cx="5.99902" cy="9" r="18" fill="#FF8058"/>
+<rect x="18.4546" y="14.7907" width="25.7143" height="27" transform="rotate(45 18.4546 14.7907)" fill="#0A3C88"/>
+<rect x="11.4106" y="-3.85712" width="29.222" height="30.6831" transform="rotate(45 11.4106 -3.85712)" fill="#AF569C"/>
 </g>
-<g style="mix-blend-mode:multiply">
-<circle cx="16.501" cy="31.5" r="18" fill="#37405B"/>
-</g>
-<g style="mix-blend-mode:multiply">
-<circle cx="32.999" cy="21.0009" r="9" fill="#7EB8FC"/>
-</g>
-<g style="mix-blend-mode:multiply">
-<circle cx="27.749" cy="6.75085" r="12.75" fill="#E664D9"/>
-</g>
-</g>
-<circle cx="18" cy="18" r="18" fill="#2892B4"/>
-<mask id="mask1_1733_2814" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="36" height="36">
-<circle cx="18" cy="18" r="18" fill="#EEEFF6"/>
-</mask>
-<g mask="url(#mask1_1733_2814)">
-<g style="mix-blend-mode:multiply">
-<rect x="18.4546" y="14.7907" width="25.7143" height="27" transform="rotate(45 18.4546 14.7907)" fill="#2776ED"/>
-</g>
-<g style="mix-blend-mode:color-dodge">
-<rect x="11.4106" y="-3.85712" width="29.222" height="30.6831" transform="rotate(45 11.4106 -3.85712)" fill="#CE1AA6"/>
-</g>
-</g>
-<defs>
-<clipPath id="clip0_1733_2814">
-<rect width="22.5" height="22.5" fill="white" transform="translate(6.10693 0.803589)"/>
-</clipPath>
-</defs>
 </svg>

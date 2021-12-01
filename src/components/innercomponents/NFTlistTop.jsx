@@ -76,7 +76,7 @@ function NFTlistTop() {
                 { nfts?.length === selectedNFTs?.length ? 
                     <div onClick={() => dispatch(cleanSelectedNFTList())} className="selectAll">Clear all</div>
                 :   
-                    <div stye={ nfts ? {} : OFF } onClick={() => dispatch(allSelected())} className="selectAll">
+                    <div style={ nfts ? {} : OFF } onClick={() => dispatch(allSelected())} className="selectAll">
                         Select all
                     </div>
                 }

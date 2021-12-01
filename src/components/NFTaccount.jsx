@@ -190,6 +190,12 @@ function NFTaccount() {
                             <Approval getNft={getNFTsList} />
                             <div className="nftSendBtn disenable">
                             <NFTsuccess/>
+                            <SendFees fees={fees}/>
+                            <div onClick={sendAllNFTs} className={approved && receiver && !loading ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
+                                            <a  className="themBtn">
+                                                {loading ? 'Processing' : 'Send' }
+                                            </a>
+                                        </div>
                             </div>
                         </div>
                     </div>
