@@ -31,13 +31,13 @@ function App() {
     const to = new URLSearchParams(window.location.search).get('to')
     if(from !== to) {
       if(from) {
-        const fromChain = chains.filter(n => n.text === from)[0]
+        const fromChain = chains.filter(n => n.text === from.replace('/', ''))[0]
         if(fromChain) {
           dispatch(setFrom(fromChain))
         }
       }
       if(to) {
-        const toChain = chains.filter(n => n.text === to)[0]
+        const toChain = chains.filter(n => n.text === to.replace('/', ''))[0]
         if(toChain) {
           console.log('hellosadsa')
           dispatch(setTo(toChain))
@@ -51,11 +51,11 @@ function App() {
     return active
   }
 
-  useEffect(() => {
-    if (!active && loadedApp) {
-      dispatch(setReset())
-    } else setLoadedApp(true)
-  }, [active])
+  // useEffect(() => {
+  //   if (!active && loadedApp) {
+  //     dispatch(setReset())
+  //   } else setLoadedApp(true)
+  // }, [active])
 console.log(useSelector(s => s.general))
 return (
     <div className={"App"}>
