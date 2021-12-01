@@ -62,7 +62,7 @@ export default class Collecthead extends Component {
                             </div>
                             <div className="nftSlidImg">
                                 {/* <p className="nftSlidNumber">#8945</p> */}
-                                {/* <div className="nftAut"><a href="#" className="">Dima_U</a></div> */}
+                                {/* <div className="nftAut"><a className="">Dima_U</a></div> */}
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@ export default class Collecthead extends Component {
                             </div>
                             <div className="nftSlidImg">
                                 {/* <p className="nftSlidNumber">#8945</p> */}
-                                {/* <div className="nftAut"><a href="#" className="">Dima_U</a></div> */}
+                                {/* <div className="nftAut"><a className="">Dima_U</a></div> */}
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@ export default class Collecthead extends Component {
                             </div>
                             <div className="nftSlidImg">
                                 {/* <p className="nftSlidNumber">#8945</p> */}
-                                {/* <div className="nftAut"><a href="#" className="">Dima_U</a></div> */}
+                                {/* <div className="nftAut"><a className="">Dima_U</a></div> */}
                             </div>
                         </div>
                     </div>
@@ -95,7 +95,7 @@ export default class Collecthead extends Component {
                             </div>
                             <div className="nftSlidImg">
                                 {/* <p className="nftSlidNumber">#8945</p> */}
-                                {/* <div className="nftAut"><a href="#" className="">Dima_U</a></div> */}
+                                {/* <div className="nftAut"><a className="">Dima_U</a></div> */}
                             </div>
                         </div>
                     </div>
