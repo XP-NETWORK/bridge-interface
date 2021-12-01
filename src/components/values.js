@@ -129,6 +129,7 @@ export const chainsConfig = {
         type: 'TRON',
         chainId: 0x9,
         token: 'TRX', 
+        img: Tron,
         rpc: 'https://api.trongrid.io/',
         tx: 'https://tronscan.org/#/transaction/',
         // chainData: ChainData.Tron,
@@ -136,6 +137,7 @@ export const chainsConfig = {
     },
     Ethereum: {
         type: EVM,
+        img: Etherium,
         chainId: 1,
         rpc: 'https://rough-dawn-meadow.quiknode.pro/2629bf63052353892b121c240f57f6b19a74ac8c/',
         tx: 'https://etherscan.io/tx/',
@@ -146,6 +148,7 @@ export const chainsConfig = {
     BSC: {
         type: EVM,
         token: 'BNB',
+        img: Binance,
         chainId: 56,
         tx: 'https://bscscan.com/tx/',
         rpc: 'https://wandering-shy-leaf.bsc.quiknode.pro/8fb0366ce43528907ebf07a02b1f5a1f7df0f1b7/',
@@ -155,7 +158,7 @@ export const chainsConfig = {
     Polygon: {
         type: EVM,
         token: 'MATIC',
-
+        img: Polygon,
         tx: 'https://polygonscan.com/tx/',
         chainId: 137,
         rpc: 'https://red-black-water.matic.quiknode.pro/a1bec0e749c6fed57405002677902b7046c59689/',
@@ -165,6 +168,7 @@ export const chainsConfig = {
     xDai: {
         type: EVM,
         token: 'XDAI',
+        img: Xdai,
         tx: 'https://blockscout.com/xdai/mainnet/tx/',
         chainId: 100,
         rpc: 'https://wandering-wispy-lake.xdai.quiknode.pro/0ba55a1ce5cfbed132c1f91eef80958173559918/',
@@ -174,6 +178,7 @@ export const chainsConfig = {
     Fantom: {
         type: EVM,
         token: 'FTM',
+        img: Fantom,
         chainId: 250,
         tx: 'https://ftmscan.com/tx/',
         rpc: 'https://summer-dark-sea.fantom.quiknode.pro/96ff3e9e727ddccec57f93e68ad321c6e02e88a0/',
@@ -183,6 +188,7 @@ export const chainsConfig = {
     Elrond: {
         type: ELROND,
         token: 'EGLD',
+        img: Elrond,
         // chainData: ChainData.Elrond,
         Chain: Chain.ELROND,
         tx: 'https://explorer.elrond.com/transactions/'
@@ -190,6 +196,7 @@ export const chainsConfig = {
     },
     Avalanche: {
         type: EVM,
+        img: Avalanche,
         token: 'AVAX',
         rpc: 'https://avaxnode.xp.network/ext/bc/C/rpc',
         chainId: 43114,
