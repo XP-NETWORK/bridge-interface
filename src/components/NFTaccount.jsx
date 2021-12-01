@@ -48,8 +48,10 @@ function NFTaccount() {
     let counter = 0
     
     async function getNFTsList(){
-        // debugger
         try {
+            const chain = await handleChainFactory(from)
+            const factory = await getOldFactory()
+            console.log(factory, 'hello')
             const w = tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             const chainId = ChainData[from].nonce
             const res = await axios.get(`https://nftindexing.herokuapp.com/${chainId}/${w}`, {
@@ -62,7 +64,7 @@ function NFTaccount() {
             //     chain,    // The chain of interest 
             //     w    // The public key of the NFT owner
             //     );
-            //     console.log(nfts, '12318231989')
+            //     console.log(nfts,)
                 const parsedNFTs = await parseNFTS(res.data.result)
                 console.log(parsedNFTs,'1231191 parsed')
                 dispatch(setBigLoader(false))
@@ -76,6 +78,7 @@ function NFTaccount() {
                 console.log("...",error); 
             }
             
+            console.log("counter", counter, counter++);
     }
     const estimate = async () => {
         try {
@@ -188,10 +191,16 @@ function NFTaccount() {
                             <Approval getNft={getNFTsList} />
                             <div className="nftSendBtn disenable">
                             <NFTsuccess/>
+                            <SendFees fees={fees}/>
+                            <div onClick={sendAllNFTs} className={approved && receiver && !loading ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
+                                            <a  className="themBtn">
+                                                {loading ? 'Processing' : 'Send' }
+                                            </a>
+                                        </div>
                             </div>
                         </div>
                     </div>
-                    <div className="sendNftCol col-lg-4 ">
+                    <div className="sendNftCol col-lg-4 desktopOnly">
                         <div className="sendNftBox">
                             <form action="#">
                                 <div className="sendNftTit">
