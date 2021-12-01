@@ -12,6 +12,6 @@ export default function Selected({ img, name, index }) {
     }
     
     return (
-        <li className="nftSelecItem"><img src={img} alt="NFT" />{name}<span className="Close"><img onClick={() => handleRemove()} src={Close} /></span></li>
+        <li className="nftSelecItem"><img src={img} alt="NFT" /><span className="nftSelecItem__name">{name}</span><span className="Close"><img onClick={() => handleRemove()} src={Close} /></span></li>
     )
 }
