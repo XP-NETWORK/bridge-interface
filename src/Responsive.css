@@ -96,7 +96,9 @@
         margin-left: 0px;
         display: flex;
         justify-content: space-between;
-    }span.nftImage img {
+    }
+    
+    span.nftImage img {
         width: 100%;
         height: auto;
     }

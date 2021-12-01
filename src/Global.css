@@ -763,6 +763,10 @@ span.wallet {
     min-width: 40px;
 }
 
+.nft--success{
+    margin-bottom: 70px;
+}
+
 .reloadNfts {
     background: rgba(98, 113, 138, 0.1);
     box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
@@ -788,11 +792,15 @@ span.wallet {
     /* top: -30px; */
     overflow: hidden;
     cursor: pointer;
-    max-height: 220px;
+    /* max-height: 220px; */
 }
 
 .copyTokk{
     position: relative;
+}
+
+.success__copy{
+    margin-left: 10px;
 }
 
 .copytoltip{
@@ -2227,4 +2235,26 @@ span.transPend {
     top: 90px;
     right: -20px;
     z-index: 200;
+  }
+
+  .copy-icon__box{
+      position: relative;
+      z-index: 1;
+      width: 170px;
+      display: flex;
+      justify-content: flex-end;
+  }
+
+  .copytooltip{
+      position: absolute;
+      z-index: 5;
+      bottom: 10px;
+      right: -55px;
+  }
+
+  .copytooltip--v{
+    position: absolute;
+    z-index: 5;
+    bottom: 10px;
+    right: -65px;
   }

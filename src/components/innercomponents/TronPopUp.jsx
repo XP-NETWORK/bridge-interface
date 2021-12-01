@@ -8,12 +8,16 @@ import FileCopy from '../../assets/img/icons/FileCopy.svg'
 import CopyHover from '../../assets/img/icons/CopyHover.svg';
 import copyTT from "../../assets/img/icons/copytt.png"
 import copiedIcon from "../../assets/img/icons/Copied.png"
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setTronPopUp } from '../../store/reducers/generalSlice';
 
 export default function TronPopUp() {
 
     const [onHover, setOnHover] = useState()
     const [copied, setCopied] = useState()
-
+    const tronLoginError = useSelector(state => state.general.tronLoginError)
+    const dispatch = useDispatch()
     const copy = () => {
         setCopied(true)
         setTimeout(() => setCopied(false), 2000)
@@ -25,7 +29,7 @@ export default function TronPopUp() {
                 <div className="tron-PopUp__header">
                 <img className="tron-PopUp__icon"  src={tronPopUp} alt="" />
                     <Modal.Title>To continue bridging:</Modal.Title>
-                    <span className="CloseModal" onHide={""} onClick={""}>
+                    <span className="CloseModal" onHide={() => dispatch(setTronPopUp(false))} onClick={() => dispatch(setTronPopUp(false))}>
                         <img src={Close} alt="" />
                     </span>
                 </div>

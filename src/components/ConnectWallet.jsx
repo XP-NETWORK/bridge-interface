@@ -16,7 +16,7 @@ import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/connectors"
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { EVM, ELROND, chainsConfig } from "../components/values"
-import { setTronWallet, setAccount, setConfirmMaiarMob, setTronLink, setMetaMask, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp } from "../store/reducers/generalSlice"
+import { setTronWallet, setAccount, setConfirmMaiarMob, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp } from "../store/reducers/generalSlice"
 import { Address, ExtensionProvider, WalletConnectProvider, ProxyProvider } from "@elrondnetwork/erdjs"
 import { CHAIN_INFO } from '../components/values';
 import QRCode from 'qrcode'
@@ -24,9 +24,8 @@ import MaiarModal from './MaiarModal';
 // import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
 function ConnectWallet() {
-    const walletConnectDeepLink = "https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet.dev&link=";
-    const from = useSelector(state => state.general.from)
     const dispatch = useDispatch()
+    const from = useSelector(state => state.general.from)
     const to = useSelector(state => state.general.to)
     const [show, setShow] = useState();
     const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -40,19 +39,12 @@ function ConnectWallet() {
     const metaMask = useSelector(state => state.general.MetaMask)
     const tronLink = useSelector(state => state.general.tronLink)
     const onWC = useSelector(state => state.general.WalletConnect)
-    const chainFromProvider = useSelector(state => state.chainIdFromProvider)
     const [qrCodeString, setQqrCodeString] = useState()
     const [strQR, setStrQr] = useState()
     const {
-        connector,
-        library,
         chainId,
         account,
-        user,
         activate,
-        deactivate,
-        active,
-        error,
       } = useWeb3React();
 
 
@@ -86,17 +78,8 @@ function ConnectWallet() {
         }
       }
 
-//       tronLink: Proxy
-// [[Handler]]: Object
-// [[Target]]: Object
-// ready: false
-// request: ƒ (e)
-// sunWeb: false
-// tronWeb: false
-
-
     async function connectTronlink() {
-      // debugger
+      debugger
         if(window.innerWidth <= 600 && !window.tronWeb){
           dispatch(setTronPopUp(true))
         }
@@ -104,9 +87,14 @@ function ConnectWallet() {
           try{
             try{
               const accounts = await window.tronWeb.request({ method: "tron_requestAccounts" });
+              console.log(accounts);
+              if(!accounts){
+                // dispatch(setTronPopUp(true))
+                // dispatch(setTronLoginError(true))
+              }
             } 
             catch(err){
-              dispatch(setTronPopUp(true))
+              
               console.log(err);
             }
             
@@ -114,7 +102,7 @@ function ConnectWallet() {
               const publicAddress = window.tronWeb.defaultAddress.base58
               dispatch(setTronWallet(publicAddress))
               dispatch(setTronLink(true))
-              handleClose()
+
             }
           } 
           catch(err) {
