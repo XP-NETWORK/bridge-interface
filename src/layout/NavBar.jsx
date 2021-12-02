@@ -1,30 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Logo from '../assets/img/nav/Logo.svg';
-import Start from '../assets/img/nav/star_menu.svg';
-import Hambar from '../assets/img/icons/Hambar.svg';
 import NftSelect from '../assets/img/nftselect.svg';
-import Close from '../assets/img/icons/close.svg';
-import FileCopy from '../assets/img/icons/FileCopy.svg';
 import AccountModal from "../components/AccountModal"
 import { Navbar, Nav, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { setAccountModal, setReset } from '../store/reducers/generalSlice';
-import info from "../assets/img/icons/infoInactive.svg"
-import infoHover from "../assets/img/icons/infoActive.svg" 
-import faq from "../assets/img/icons/faqsInactive.svg"
-import faqHover from "../assets/img/icons/faqsActive.svg"
-import docs from "../assets/img/icons/docsInactive.svg"
-import docsHover from "../assets/img/icons/docsActive.svg"
-import feat from "../assets/img/icons/featuredInactive.svg"
-import featHover from "../assets/img/icons//featuredActive.svg"
-
 
 function NavBar() {
-
-    const [infHover, setInfHover] = useState(false)
-    const [faqHover, setFaqHover] = useState(false)
-    const [docsHover, setDocsHover] = useState(false)
-    const [featHover, setFeatHover] = useState(false)
 
     const dispatch = useDispatch()
     const account = useSelector(state => state.general.account)
@@ -32,7 +14,6 @@ function NavBar() {
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const handleShow = () => dispatch(setAccountModal(true));
     const step = useSelector(state => state.general.step)
-        const [copied, setCopy] = useState()
 
     useEffect(() => {}, [step])
 
@@ -49,12 +30,12 @@ function NavBar() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="navMenu">
-                        <Nav.Link target="_blank" href="https://xp.network/">Home</Nav.Link>
-                        <Nav.Link target="_blank" href="https://docs.xp.network/">Docs</Nav.Link>
-                        {/* <Nav.Link target="_blank" href="https://xp.network/api/">Bridge API</Nav.Link> */}
-                        <Nav.Link target="_blank" href="https://stake.xp.network">Staking</Nav.Link>
-                        <Nav.Link target="_blank" href="https://blog.xp.network/">Blog</Nav.Link>
-                        { setAddress() ? <Nav.Link  className="nftConnect" onClick={handleShow}>{setAddress() ?`${setAddress().substring(0, 6)}...${setAddress().substring(setAddress().length - 2)}`:''} <img src={NftSelect} /></Nav.Link> :''}
+                        <Nav.Link className="navMenu__link" target="_blank" href="https://xp.network/">Home</Nav.Link>
+                        <Nav.Link className="navMenu__link" target="_blank" href="https://docs.xp.network/">Docs</Nav.Link>
+                        {/* <Nav.Link className="" target="_blank" href="https://xp.network/api/">Bridge API</Nav.Link> */}
+                        <Nav.Link className="navMenu__link" target="_blank" href="https://stake.xp.network">Staking</Nav.Link>
+                        <Nav.Link className="navMenu__link" target="_blank" href="https://blog.xp.network/">Blog</Nav.Link>
+                        { setAddress() ? <Nav.Link className="nftConnect navMenu__link" onClick={handleShow}>{setAddress() ?`${setAddress().substring(0, 6)}...${setAddress().substring(setAddress().length - 2)}`:''} <img src={NftSelect} /></Nav.Link> :''}
                     </Nav>
                 </Navbar.Collapse>
                 <AccountModal />

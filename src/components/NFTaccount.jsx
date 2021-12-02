@@ -125,6 +125,7 @@ function NFTaccount() {
 
             
         } catch (error) {
+            setLoading(false)
             dispatch(setError(error))
             console.log(error);
         }

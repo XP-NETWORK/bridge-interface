@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import NftSelect from '../assets/img/nftselect.svg';
 import Close from '../assets/img/icons/close.svg';
 import FileCopy from '../assets/img/icons/FileCopy.svg';
@@ -24,6 +24,7 @@ export default function AccountModal() {
     const [copied, setCopied] = useState()
     const from = useSelector(state => state.general.from)
     const tronWallet = useSelector(state => state.general.tronWallet)
+    const step = useSelector(state => state.general.step)
 
     const handleClose = () => {
         dispatch(setAccountModal(false))
@@ -39,6 +40,8 @@ export default function AccountModal() {
     function handleDisconnect(){
         dispatch(setReset())
     }
+
+
 
     async function switchNetwork (){
         const info = CHAIN_INFO[from?.key]
@@ -78,6 +81,8 @@ export default function AccountModal() {
     }
 
     DetectOutsideClick(accountModal, () => setTimeout(() => handleClose(), 100));
+
+    // useEffect(() => { }, [step])
 
     return ( show ?
         <div ref={accountModal} className="accountBox" show={show} onHide={handleClose} >

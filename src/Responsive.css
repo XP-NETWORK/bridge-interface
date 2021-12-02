@@ -53,6 +53,35 @@
     .sendNftTit {
         margin-top: -50px;
     }
+    .navMenu{
+        /* background-color: #232833;
+        padding:  0 24px; */
+        /* overflow: hidden; */
+        border-radius: 20px;
+        border: 1px solid #2D3342;
+    }
+
+    .navMenu .navMenu__link{
+        width: 100%;
+        background-color: #232833;
+        padding: 23px;
+        margin: 0 !important;
+        
+    }
+
+    .nftConnect{
+        
+        display: flex;
+        justify-content: center;
+    }
+
+    .navMenu__link:hover{
+        background-color: #292E3B;
+    }
+
+    .nftConnect{
+        padding-bottom: 24px;
+    }
 }
 @media only screen and (max-width: 767px) {
 
@@ -389,8 +418,8 @@
     }
 
     .navMenu.navbar-nav .nav-link {
-        margin-left: 0;
-        max-width: fit-content;
+        /* margin-left: 0;
+        max-width: fit-content; */
     }
 
     .infText {
