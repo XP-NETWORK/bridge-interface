@@ -38,7 +38,7 @@ function Approval(props) {
                     const isInApprovedNFTs = approvedNFTList.filter(n => n.native.tokenId === tokenId && n.native.contract === contract && chainId === n.native.chainId )[0]
                     if(!isInApprovedNFTs) {
                         try {
-                            console.log("approveEach", chain);
+                            
                             const ap = await chain.approveForMinter(nft, signer);
                             dispatch(updateApprovedNFTs(nft))
                             setFinishedApproving(arr)
@@ -58,10 +58,10 @@ function Approval(props) {
                 try {
                     const factory = await getOldFactory()
                     const chain = await factory.inner(Chain.ELROND)
-                    console.log(bigNumberFees,'1231')
+                
                     const signer = maiarProvider ? maiarProvider : ExtensionProvider.getInstance()
                     const swap = await chain.preTransfer(signer, nft, bigNumberFees)
-                    console.log(swap, 'hell oswap')
+                
                     dispatch(updateApprovedNFTs(nft))
                     setFinishedApproving(arr)
                 } catch (error) {
@@ -75,11 +75,12 @@ function Approval(props) {
     
     // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
     const approveAllNFTs = async () => {
-        // debugger
+        debugger
         if(!approvedLoading) {
                 dispatch(setApproveLoader(true))
                 setApprovedLoading(true)
                 setFinishedApproving([])
+                console.log("provider: ", window.ethereum || WCProvider);
             if(from.type === "EVM"){
                 const provider = new ethers.providers.Web3Provider(WCProvider || window.ethereum);
                 const signer = provider.getSigner(account)

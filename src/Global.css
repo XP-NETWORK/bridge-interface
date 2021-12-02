@@ -349,9 +349,13 @@ span.LineArrow img {
 }
 
 .nftSlidNumber {
+    max-width: 198px;
     margin: 0 0 9px 0;
     color: #FFFFFF;
     opacity: 0.8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .nftSlidImg {

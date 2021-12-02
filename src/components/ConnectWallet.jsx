@@ -201,7 +201,7 @@ function ConnectWallet() {
                         <div className="walletListBox">
                             <ul className="walletList scrollSty">
                                 <li onClick={() => onInjected()} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li>
-                                <li onClick={() => onWalletConnect()} style={ from ? from.type === "EVM" ? OFF : OFF : ""} className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
+                                <li onClick={() => onWalletConnect()} style={ from?.type === "EVM" ? {} : OFF} className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
                                 <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
