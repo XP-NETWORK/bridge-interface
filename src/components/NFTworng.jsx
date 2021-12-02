@@ -28,18 +28,18 @@ function NFTworng() {
         const info = CHAIN_INFO[from?.key]
         const chainId = `0x${info.chainId.toString(16)}`;
         try {
-            await window.ethereum.request({
+            const success = await window.ethereum.request({
                 method: "wallet_switchEthereumChain",
                 params: [{ chainId }],
               })
-              .catch(result => {
-                dispatch(setWrongNetwork(true))
-                    // dispatch(setMetaMask(false))
-                })
-              dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
-              setLoader(false)
-        } catch (error) {
-            debugger
+            //   .catch(result => {
+            //     dispatch(setWrongNetwork(true))
+            //         // dispatch(setMetaMask(false))
+            //     })
+            //   dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
+            //   setLoader(false)
+        } 
+        catch (error) {
             setLoader(false)
             console.log(error);
             try {
