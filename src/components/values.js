@@ -254,7 +254,7 @@ export const CHAIN_INFO = {
     Avalanche: {
       nonce: 6,
       native: coins[4],
-      chainId: 43113,
+      chainId: 43114,
       rpcUrl: "https://api.avax-test.network/ext/bc/C/rpc",
       decimals: 1e18,
       blockExplorerUrls: "https://cchain.explorer.avax-test.network/tx",
