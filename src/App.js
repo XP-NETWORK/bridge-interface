@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import "./Global.css";
 import "./Responsive.css";
 import XpBridge from "./pages/XpBridge";
 import Alert from "./components/Alert";
-import { useWeb3React } from "@web3-react/core";
 import { useDispatch, useSelector } from "react-redux";
-import { setFrom, setReset, setTo, setTronPopUp } from "./store/reducers/generalSlice";
+import { setFrom, setTo, setTronPopUp } from "./store/reducers/generalSlice";
 import ApproveLoader from "./components/innercomponents/ApproveLoader";
 import { Modal } from "react-bootstrap"
 import Error from "./components/innercomponents/Error";
@@ -41,7 +40,6 @@ function App() {
         }
       }
     }
-
     localStorage.clear()
   },[])
 

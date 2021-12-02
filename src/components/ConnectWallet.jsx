@@ -41,21 +41,14 @@ function ConnectWallet() {
     const onWC = useSelector(state => state.general.WalletConnect)
     const [qrCodeString, setQqrCodeString] = useState()
     const [strQR, setStrQr] = useState()
-    const {
-        chainId,
-        account,
-        activate,
-      } = useWeb3React();
+    const { chainId, account, activate } = useWeb3React();
 
 
     //! MetaMask connection.
     const onInjected = async () => {
         try {
-            if(!
-              window.ethereum && 
-              window.innerWidth <= 600)  {
+            if(!window.ethereum && window.innerWidth <= 600) {
                 const uri = `https://metamask.app.link/dapp/${window.location.host + `?to=${to.text}&from=${from.text}`}/`
-                console.log(uri)
               window.open(uri)
             }
             await activate(injected);
@@ -201,7 +194,7 @@ function ConnectWallet() {
                         <div className="walletListBox">
                             <ul className="walletList scrollSty">
                                 <li onClick={() => onInjected()} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li>
-                                <li onClick={() => onWalletConnect()} style={ from?.type === "EVM" ? {} : OFF} className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
+                                <li onClick={() => onWalletConnect()} style={ OFF } className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
                                 <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}

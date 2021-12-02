@@ -10,7 +10,7 @@ function NftSelect() {
     return (
         <div className="NftSelect">
             <div className="nftTitle">
-                <h2>Transfer NFT’s <br /> between blockchains</h2>
+                <h2>Transfer NFTs <br /> between blockchains</h2>
             </div>
             <div className="nftSlectArea">
                 

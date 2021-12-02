@@ -9,7 +9,7 @@ import MetaMask from '../assets/img/wallet/MetaMask.svg';
 import { useSelector } from 'react-redux';
 import { getAddEthereumChain } from "../wallet/chains"
 import { useDispatch } from 'react-redux';
-import { setWrongNetwork } from '../store/reducers/generalSlice';
+import { setMetaMask, setReset, setWrongNetwork } from '../store/reducers/generalSlice';
 import ChangeNetworkLoader from './innercomponents/ChangeNetworkLoader';
 
 
@@ -32,6 +32,10 @@ function NFTworng() {
                 method: "wallet_switchEthereumChain",
                 params: [{ chainId }],
               })
+              .catch(result => {
+                dispatch(setWrongNetwork(true))
+                    // dispatch(setMetaMask(false))
+                })
               dispatch(setWrongNetwork(false))
               setLoader(false)
         } catch (error) {

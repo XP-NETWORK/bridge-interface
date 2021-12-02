@@ -35,11 +35,10 @@ export default function AccountModal() {
     }
 
     const accountModal = useRef(null)
-    const handleDisconnect = () => {
+
+    function handleDisconnect(){
         dispatch(setReset())
     }
-
-
 
     async function switchNetwork (){
         const info = CHAIN_INFO[from?.key]
