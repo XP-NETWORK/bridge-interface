@@ -752,7 +752,6 @@ span.wallet {
 }
 .nftListBox {
     width: 100%;
-    overflow: hidden !important;
 }
 .nftListBox> .row> div {
     margin-bottom: 24px;
