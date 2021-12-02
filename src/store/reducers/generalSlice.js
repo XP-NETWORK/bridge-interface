@@ -7,6 +7,7 @@ const initialState = {
   approvedNFTList: [],
   txnHashArr: [],
   fees : 0,
+  currentTx: 0,
   bigLoader : true
 };
 
@@ -75,7 +76,17 @@ const generalSlice = createSlice({
       state.receiver = action.payload
     },
     setTxnHash(state, action){
-      state.txnHashArr = [...state.txnHashArr, action.payload]
+      const {nft, txn} = action.payload
+      const { tokenId, contract, chainId } = nft.native
+      state.txnHashArr = [...state.txnHashArr, action.payload.txn]
+      console.log()
+      state.selectedNFTList = state.selectedNFTList.map(n => {
+        const {native} = n
+        if(native.tokenId === tokenId && native.contract === contract && native.chainId === chainId) {
+          n.txn = txn
+        }
+        return n
+      })
     },
     setWrongNetwork(state, action){
       state.wrongNetwork = action.payload

@@ -99,6 +99,7 @@ function NFTaccount() {
         from === 'Elrond' ? maiarProvider ? maiarProvider : ExtensionProvider.getInstance() :
         from === 'Tron' ? window.tronLink 
         : provider.getSigner(account)
+        console.log(nft)
         try {
             if(from === 'Tron') {
                 const fact = await getOldFactory()
@@ -110,7 +111,7 @@ function NFTaccount() {
                     undefined,    // Or tronlink or maiar.
                     receiver   // The address who you are transferring the NFT to.
                 )
-                dispatch(setTxnHash(result))
+                dispatch(setTxnHash({txn: result, nft}))
             } else {
                 const result = await factory.transferNft(
                     fromChain, // The Source Chain.
@@ -119,7 +120,7 @@ function NFTaccount() {
                     signer,    // Or tronlink or maiar.
                     receiver   // The address who you are transferring the NFT to.
                 )
-                dispatch(setTxnHash(result))
+                dispatch(setTxnHash({txn: result, nft}))
             }
 
             
@@ -128,11 +129,10 @@ function NFTaccount() {
             console.log(error);
         }
     }
-
     const sendAllNFTs = () => {
         if(!loading && approved) {
             setLoading(true)
-            approvedNFTList.forEach( nft => {
+            selectedNFTList.forEach( nft => {
                 sendEach(nft)
             })
         }

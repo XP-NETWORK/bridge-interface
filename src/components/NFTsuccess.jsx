@@ -22,7 +22,7 @@ function NFTsuccess() {
     const account = useSelector(state => state.general.account)
     const receiver = useSelector(state => state.general.receiver)
     const txnHashArr = useSelector(state => state.general.txnHashArr)
-
+    const currentTX = useSelector(s => s.general.currrentTx)
 
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
 
@@ -42,7 +42,7 @@ function NFTsuccess() {
 
       setTimeout(() => setCopy(false), 2000)
     }
-    const tx = txnHashArr && txnHashArr.length > 0 ? typeof txnHashArr[0] === 'object' ? txnHashArr[0].hash.toString() : txnHashArr[0] : ''
+    const tx = txnHashArr && txnHashArr.length > 0 ? typeof txnHashArr[currentTX] === 'object' ? txnHashArr[currentTX].hash.toString() : txnHashArr[currentTX] : ''
     return (
         <div>
 
@@ -100,9 +100,7 @@ function NFTsuccess() {
                             </div>
                             <ul className="nftSelected nft--success">
                                 { selectedNFTList.length ? selectedNFTList.map(( nft, index) => 
-                                <li className="nftSelecItem">
-                                    <img src={setupURI(nft.image)} alt="NFT" /><span className="nftSelected__name">{nft.name}</span><span className="bluTextBtn"><a href={`${chainsConfig[from.key].tx + tx}`} target="_blank">View Txn</a></span>
-                                </li>
+                                <SuccessNFT nft={nft} index={index} key={`${index}-nft-succeess`} from={from} />
                                 ):''}
                             </ul>
                         </div>
@@ -114,3 +112,16 @@ function NFTsuccess() {
 }
 
 export default NFTsuccess
+
+
+function SuccessNFT({nft, from, index}) {
+    const tx = nft.txn ? typeof nft.txn === 'object' ? nft.txn.hash.toString() : nft.txn : ''
+    return  (
+        <li className="nftSelecItem">
+            <img src={setupURI(nft.image)} alt="NFT" />
+            <span className="nftSelected__name">{nft.name}</span>
+            <span className="bluTextBtn"><a href={`${chainsConfig[from.key].tx + tx}`} target="_blank">View Txn</a>
+            </span>
+        </li>
+    )
+}

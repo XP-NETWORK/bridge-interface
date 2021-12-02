@@ -2239,7 +2239,7 @@ span.transPend {
   .copy-icon__box{
       position: relative;
       z-index: 1;
-      width: 170px;
+      width: 24px;
       display: flex;
       justify-content: flex-end;
   }
