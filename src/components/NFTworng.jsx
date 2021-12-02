@@ -11,17 +11,20 @@ import { getAddEthereumChain } from "../wallet/chains"
 import { useDispatch } from 'react-redux';
 import { setMetaMask, setReset, setWrongNetwork } from '../store/reducers/generalSlice';
 import ChangeNetworkLoader from './innercomponents/ChangeNetworkLoader';
+import { useWeb3React } from '@web3-react/core';
 
 
 function NFTworng() {
 
 
-    const handleClose = () => dispatch(setWrongNetwork(false))
+    const handleClose = () => dispatch(setReset())
     const from = useSelector(state => state.general.from)
     const showWrong = useSelector(state => state.general.wrongNetwork)
     const account = useSelector(state => state.general.account)
     const dispatch = useDispatch()
     const [loader, setLoader] = useState(false)
+    const { chainId } = useWeb3React()
+
 
     async function switchNetwork (){
         setLoader(true)
@@ -36,7 +39,7 @@ function NFTworng() {
                 dispatch(setWrongNetwork(true))
                     // dispatch(setMetaMask(false))
                 })
-              dispatch(setWrongNetwork(false))
+              dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
               setLoader(false)
         } catch (error) {
             setLoader(false)
