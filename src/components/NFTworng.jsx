@@ -23,7 +23,6 @@ function NFTworng() {
 
 
     async function switchNetwork (){
-        debugger
         setLoader(true)
         const info = CHAIN_INFO[from?.key]
         const chainId = `0x${info.chainId.toString(16)}`;
