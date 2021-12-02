@@ -70,6 +70,7 @@ const generalSlice = createSlice({
       state.approvedNFTList = [...state.approvedNFTList, action.payload]
     },
     setApproved(state, action){
+      console.log("setApproved", action);
       state.approved = action.payload
     },
     setReceiver(state, action){

@@ -99,6 +99,7 @@ export const isALLNFTsApproved = () => {
         })
         return approvedNFTs.length === selectedNFTList.length
     }
+    else return false
 }
 export const getFactory = async () => {
     const mainnetConfig = ChainFactoryConfigs.MainNet;

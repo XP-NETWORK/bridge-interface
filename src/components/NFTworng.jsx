@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
-
+import { Modal } from "react-bootstrap";
 import Close from '../assets/img/icons/close.svg';
 import Wrong from '../assets/img/Wrong.svg';
-import Switch from '../assets/img/Switch.svg';
 import { CHAIN_INFO } from "../components/values";
-import MetaMask from '../assets/img/wallet/MetaMask.svg';
 import { useSelector } from 'react-redux';
 import { getAddEthereumChain } from "../wallet/chains"
 import { useDispatch } from 'react-redux';
-import { setMetaMask, setReset, setWrongNetwork } from '../store/reducers/generalSlice';
+import { setReset, setWrongNetwork } from '../store/reducers/generalSlice';
 import ChangeNetworkLoader from './innercomponents/ChangeNetworkLoader';
 import { useWeb3React } from '@web3-react/core';
 
 
 function NFTworng() {
-
 
     const handleClose = () => dispatch(setReset())
     const from = useSelector(state => state.general.from)
@@ -27,6 +23,7 @@ function NFTworng() {
 
 
     async function switchNetwork (){
+        debugger
         setLoader(true)
         const info = CHAIN_INFO[from?.key]
         const chainId = `0x${info.chainId.toString(16)}`;
@@ -42,6 +39,7 @@ function NFTworng() {
               dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
               setLoader(false)
         } catch (error) {
+            debugger
             setLoader(false)
             console.log(error);
             try {

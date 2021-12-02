@@ -53,6 +53,7 @@ export default function AccountModal() {
               })
         } catch (error) {
             console.log(error);
+            debugger
             try {
                 const toHex = (num) => {
                     return '0x'+num.toString(16)
