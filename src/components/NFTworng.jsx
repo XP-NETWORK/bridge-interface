@@ -23,7 +23,6 @@ function NFTworng() {
 
 
     async function switchNetwork (){
-        debugger
         setLoader(true)
         const info = CHAIN_INFO[from?.key]
         const chainId = `0x${info.chainId.toString(16)}`;
@@ -39,7 +38,7 @@ function NFTworng() {
               dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
               setLoader(false)
         } catch (error) {
-            debugger
+            
             setLoader(false)
             console.log(error);
             try {

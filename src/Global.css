@@ -945,11 +945,16 @@ span.NFTInf:hover img {
 .nft-sceleton.nftNumber{
     height: 20px;
     width: 50%;
+
     border-radius: 10px;
     background: linear-gradient(242.44deg, #62718A -3.49%, #383F56 46.4%, #62718A 102.48%);
 }
 
-
+.nftCont span {
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
 
 .nftImageBox:after {
     content: "";
@@ -2127,7 +2132,7 @@ span.transPend {
     background: none !important;
     border: none !important;
     position: absolute !important;
-    top: 30% !important;
+    top: 20% !important;
 }
 
 .changeNetwork-loader,
