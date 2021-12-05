@@ -157,8 +157,7 @@
     }
     .singleNft {
     }
-    .nftImageBox {
-    }
+
     .desChain span {
         margin-left: 20px;
         padding: 0px 20px;
@@ -437,6 +436,9 @@
     .accountBox {
         left: 50%;
         transform: translate(-50%, 0);
+    }
+    .singleNft{
+            /* max-height: 160px !important; */
     }
 }
     

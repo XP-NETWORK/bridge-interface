@@ -20,6 +20,7 @@ function NFTlistTop() {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector(state => state.general.from)
     const switchDestination = useSelector(state => state.general.switchDestination)
+    const search = useSelector(state => state.general.NFTListSearch)
 
     const handleSearch = e => {
         dispatch(setSearchNFTList(e.target.value))
@@ -60,8 +61,9 @@ function NFTlistTop() {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             <form action="#">
-                                <input onChange={e => handleSearch(e)}  type="search" placeholder="Search NFT" />
-                                <button type="button"><img src={Search} /></button>
+                                <input onClick={e => console.log(e)} onChange={e => handleSearch(e)}  type="text" placeholder="Search NFT" />
+                                {/* { search ?  <button type="button"><img src={Close} alt="" /></button> : <button type="button"><img src={Search} alt=""/></button>} */}
+                                <button type="button"><img src={Search} /></button>e
                             </form>
                         </Dropdown.Menu>
                     </Dropdown>
@@ -83,7 +85,7 @@ function NFTlistTop() {
             </div>
             <div className="mobileOnly mobSearch">
                 <form action="#">
-                    <input type="search" placeholder="Search NFT" />
+                    <input onClick={e => console.log(e)} type="search" placeholder="Search NFT" />
                     <button type="button"><img src={Search} /></button>
                 </form>
             </div>

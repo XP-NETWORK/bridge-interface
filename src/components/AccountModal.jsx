@@ -18,13 +18,14 @@ export default function AccountModal() {
     const account = useSelector(state => state.general.account)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const MetaMask = useSelector(state => state.general.MetaMask)
+    const trustWallet = useSelector(state => state.general.trustWallet)
     const onMaiar = useSelector(state => state.general.onMaiar)
     const show = useSelector(state => state.general.accountModal)
     const [copyIconHover, setCopyIconHover] = useState()
     const [copied, setCopied] = useState()
     const from = useSelector(state => state.general.from)
     const tronWallet = useSelector(state => state.general.tronWallet)
-    const step = useSelector(state => state.general.step)
+    // const step = useSelector(state => state.general.step)
 
     const handleClose = () => {
         dispatch(setAccountModal(false))
@@ -89,7 +90,7 @@ export default function AccountModal() {
             <div className="accountTit">
                 Account <span className="CloseModal" onClick={handleClose}> <img src={Close}/> </span>
             </div>
-            <p className="">{`Connected with ${MetaMask ? 'MetaMask' : onMaiar ? "Maiar Wallet" : 'Tron Link'}`}</p>
+            <p className="">{`Connected with ${MetaMask ? 'MetaMask' : onMaiar ? "Maiar Wallet" : trustWallet ? "Trust Wallet" : 'Tron Link'}`}</p>
                         { copyIconHover && <img className="copytoltip" src={copyTT} /> }
                         { copied && <img className="copytoltip-tron" src={copiedIcon} /> }
             <CopyToClipboard text={elrondAccount || account || tronWallet}>

@@ -9,6 +9,7 @@ import Elrond from '../assets/img/wallet/Elrond.svg';
 import Ledger from '../assets/img/wallet/Ledger.svg';
 import Maiar from '../assets/img/wallet/Maiar.svg';
 import Trezor from '../assets/img/wallet/Trezor.svg';
+import TrustWallet from "../assets/img/wallet/TWT.svg"
 import WalletConnect from "../assets/img/wallet/WalletConnect 3.svg"
 import NFTworng from './NFTworng';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,7 +17,7 @@ import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/connectors"
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { EVM, ELROND, chainsConfig } from "../components/values"
-import { setTronWallet, setAccount, setConfirmMaiarMob, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp } from "../store/reducers/generalSlice"
+import { setTronWallet, setAccount, setConfirmMaiarMob, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp, setTrustWallet } from "../store/reducers/generalSlice"
 import { Address, ExtensionProvider, WalletConnectProvider, ProxyProvider } from "@elrondnetwork/erdjs"
 import { CHAIN_INFO } from '../components/values';
 import QRCode from 'qrcode'
@@ -38,11 +39,22 @@ function ConnectWallet() {
     const handleShow = () => setShow(true);
     const metaMask = useSelector(state => state.general.MetaMask)
     const tronLink = useSelector(state => state.general.tronLink)
+    const trustWallet = useSelector(state => state.general.trustWallet)
     const onWC = useSelector(state => state.general.WalletConnect)
     const [qrCodeString, setQqrCodeString] = useState()
     const [strQR, setStrQr] = useState()
     const { chainId, account, activate } = useWeb3React();
 
+
+    function getMobOps() {
+      // debugger
+      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+      if (/android/i.test(userAgent)) {
+          return true
+      }
+
+  }
 
     //! MetaMask connection.
     const onInjected = async () => {
@@ -59,6 +71,23 @@ function ConnectWallet() {
               console.log(ex)
           }
           setShow(false)
+    }
+
+    const onTrustWallet = async () => {
+      try {
+        if(!window.ethereum && window.innerWidth <= 600){
+          const uri = `https://link.trustwallet.com/open_url?coin_id=60&url=https://${window.location.host + `?to=${to.text}&from=${from.text}`}/`
+          window.open(uri)
+        }
+        await activate(injected);
+        dispatch(setTrustWallet(true))
+      } 
+      catch (error) {
+        dispatch(setError(error))
+        console.log(error)
+        
+      }
+      setShow(false)
     }
 
 
@@ -163,15 +192,15 @@ function ConnectWallet() {
      }
 
     useEffect(() => {
-      // debugger
+      // debugger 
         const correct = from ? CHAIN_INFO[from.key].chainId === chainId : false
         dispatch(setAccount(account))
         if(from){
             dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
         }
         // debugger
-        if((metaMask && correct)||(tronLink && correct)||(onWC && correct))dispatch(setStep(2))
-    }, [account, metaMask, chainId, tronLink, onWC])
+        if((metaMask && correct)||(tronLink && correct)||(onWC && correct)||(trustWallet && correct))dispatch(setStep(2))
+    }, [account, metaMask, chainId, tronLink, onWC, trustWallet])
 
     return (
         <div>
@@ -195,12 +224,13 @@ function ConnectWallet() {
                             <ul className="walletList scrollSty">
                                 <li onClick={() => onInjected()} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li>
                                 <li onClick={() => onWalletConnect()} style={ OFF } className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
+                                <li onClick={() => onTrustWallet()} style={(getMobOps() && window.innerWidth <= 600) || (window.ethereum && window.innerWidth <= 600) ? {} : OFF } className="wllListItem"><img src={TrustWallet} alt="WalletConnect Icon" /> Trust Wallet</li>
                                 <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
                                 <li style={ OFF }  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
                                 <li style={ OFF } className="wllListItem"><img src={Ledger} alt="Ledger Icon" /> Ledger</li>
-                                <li style={ OFF } style={{marginBottom: 0 + "px", ...OFF}} className="wllListItem"><img src={Trezor} alt="Trezor Icon" /> Trezor</li>
+                                <li style={ OFF } style={ OFF } className="wllListItem"><img src={Trezor} alt="Trezor Icon" /> Trezor</li>
                             </ul>
                         </div>
                     </Modal.Body>

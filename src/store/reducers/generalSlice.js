@@ -145,6 +145,9 @@ const generalSlice = createSlice({
     },
     setTronLoginError(state, action){
       state.tronLoginError = action.payload
+    },
+    setTrustWallet(state, action){
+      state.trustWallet = action.payload
     }
   },
 });
@@ -187,7 +190,8 @@ export const { toggleNFTInfo,
     setError,
     setBigNumFees,
     setTronPopUp,
-    setTronLoginError
+    setTronLoginError,
+    setTrustWallet
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

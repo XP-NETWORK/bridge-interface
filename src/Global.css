@@ -576,6 +576,7 @@ span.wallet {
 .wllListItem {
     margin-bottom: 12px;
     height: 56px;
+    /* width: 100px; */
     border: 1px solid rgba(111, 123, 165, 0.1);
     box-sizing: border-box;
     border-radius: 16px;
@@ -591,6 +592,7 @@ span.wallet {
 }
 
 .wllListItem img {
+    /* width: 100%; */
     display: block;
     margin-right: 13px;
 }
@@ -795,7 +797,7 @@ span.wallet {
     /* top: -30px; */
     overflow: hidden;
     cursor: pointer;
-    /* max-height: 220px; */
+    max-height: 160px;
 }
 
 .copyTokk{
@@ -2266,3 +2268,6 @@ span.transPend {
     bottom: 10px;
     right: -65px;
   }
+
+
+  
