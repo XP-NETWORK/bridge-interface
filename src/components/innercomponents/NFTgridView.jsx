@@ -6,7 +6,7 @@ import Missing from './Missing';
 import { useDispatch } from 'react-redux';
 import BigLoader from "../innercomponents/BigLoader"
 
-///sdsdfsdfsdß
+///sds
 function NFTgridView() {
     const dispatch = useDispatch()
     const nfts = useSelector(state => state.general.NFTList)
