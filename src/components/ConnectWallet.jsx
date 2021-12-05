@@ -192,7 +192,7 @@ function ConnectWallet() {
      }
 
     useEffect(() => {
-      // debugger 
+      
         const correct = from ? CHAIN_INFO[from.key].chainId === chainId : false
         dispatch(setAccount(account))
         if(from){
