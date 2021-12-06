@@ -1,15 +1,20 @@
 @media screen and (max-width: 375px) {
-    .nft__container{
-        /* background-color: tomato; */
+    /* .nft__container{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .nft__box{
+        background-color: tomato;
     }
 
     .nftImageBox {
         position: relative;
         display: flex;
-        /* top: -30px; */
+    
         overflow: hidden;
         cursor: pointer;
-    }
+    } */
 }
 
 /* 

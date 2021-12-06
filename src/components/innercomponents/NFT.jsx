@@ -35,18 +35,44 @@ export default function NFT({nft, index}) {
                     <span className="selectNft">{<img src={CheckGreen} />}</span>
                     <span className="nftImage"><img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} /></span>
                 </div>
-                    <div className="nftCont">
+                <div className="nftCont">
                     <span className="nftName"><span className="name">{nft.name}</span><NFTdetails nftInf={nft} index={index} /></span>
                     <span className="nftNumber">{nft.native.tokenId}</span>
                 </div>
             </div>
-            <div style={ imageLoaded ? HIDDEN : {} } className="nft-sceleton singleNft">
+            {/* <div style={ imageLoaded ? HIDDEN : {} } className="nft-sceleton singleNft">
                 <div className="nft-sceleton-img"></div>
                 <div className="nft-sceleton nftCont">
                     <span className="nft-sceleton nftName"></span>
                     <span className="nft-sceleton nftNumber"></span>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
+
+    // useEffect(() => { }, [selectedNFTs])
+    // return ( 
+    //     <div className="nft__box">
+    //     {/* // <div className="nft__container"> */}
+    //         {/* <div style={ !imageLoaded ? HIDDEN : {}} className={`singleNft ${isSelected ? 'singleNft-selected' : ''}`}> */}
+    //         <div style={ !imageLoaded ? HIDDEN : {}} className="">
+    //             {/* <div onClick={() => addRemoveNFT(nft)} className={`nftImageBox ${isSelected ? 'nftSelect': ''}`}> */}
+    //             <div onClick={() => addRemoveNFT(nft)} className="">
+    //                 <span className="">{<img src={CheckGreen} />}</span>
+    //                 <span className=""><img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} /></span>
+    //             </div>
+    //             <div className="">
+    //                 <span className=""><span className="">{nft.name}</span><NFTdetails nftInf={nft} index={index} /></span>
+    //                 <span className="">{nft.native.tokenId}</span>
+    //             </div>
+    //         </div>
+    //         {/* <div style={ imageLoaded ? HIDDEN : {} } className="nft-sceleton singleNft">
+    //             <div className="nft-sceleton-img"></div>
+    //             <div className="nft-sceleton nftCont">
+    //                 <span className="nft-sceleton nftName"></span>
+    //                 <span className="nft-sceleton nftNumber"></span>
+    //             </div>
+    //         </div> */}
+    //     </div>
+    // )
 }

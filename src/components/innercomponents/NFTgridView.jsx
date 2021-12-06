@@ -22,8 +22,8 @@ function NFTgridView() {
                 { loader ? 
                     <BigLoader />
                 :
+                    // <div className="nft__container">
                     <div className="row">
-                    {/* // <div className="nfts__container"> */}
                         { nfts ? nfts.filter(nft => nft.name?.toLowerCase().includes(search ? search?.toLowerCase() : '') || nft.native.owner.includes(search ? search : '')).map((nft, index) => <NFT nft={nft} index={index} />)
                         : 
                         <NFTempty /> }
