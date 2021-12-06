@@ -5,6 +5,7 @@ import CheckGreen from '../../assets/img/icons/check_green.svg';
 import NFTdetails from '../NFTdetails';
 import { useSelector } from 'react-redux';
 import { setupURI } from '../../wallet/oldHelper';
+import  "../styles/NFT.css"
 
 
 export default function NFT({nft, index}) {
@@ -28,6 +29,7 @@ export default function NFT({nft, index}) {
     useEffect(() => { }, [selectedNFTs])
     return ( 
         <div className="col-lg-4 col-md-4 col-sm-6 col-6">
+        {/* // <div className="nft__container"> */}
             <div  style={ !imageLoaded ? HIDDEN : {}} className={`singleNft ${isSelected ? 'singleNft-selected' : ''}`}>
                 <div onClick={() => addRemoveNFT(nft)} className={`nftImageBox ${isSelected ? 'nftSelect': ''}`}>
                     <span className="selectNft">{<img src={CheckGreen} />}</span>

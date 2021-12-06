@@ -1,0 +1,51 @@
+@media screen and (max-width: 375px) {
+    .nft__container{
+        /* background-color: tomato; */
+    }
+
+    .nftImageBox {
+        position: relative;
+        display: flex;
+        /* top: -30px; */
+        overflow: hidden;
+        cursor: pointer;
+    }
+}
+
+/* 
+.singleNft.nftSelect {
+    outline: 1px solid #3E64ED;
+}
+
+.singleNft.missing:hover{
+    cursor: unset;
+}
+
+.singleNft.missing {
+    background: linear-gradient(335deg, rgba(41, 47, 63, 0.3) -0.71%, rgba(41, 47, 63, 0) 61.32%);
+    border: 1px dashed #36405A;
+    padding-top: 3px;
+    padding-bottom: 138%;
+}
+
+.singleNft-selected {
+    border: 1px solid #3E64ED !important;
+}
+
+.singleNft {
+    border-radius: 25px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid transparent;
+} */
+
+/* .nft-sceleton.singleNft{
+    position: absolute;
+    top: 0;
+    width: 90%;
+    background: linear-gradient(242.44deg, #62718A -3.49%, #383F56 46.4%, #62718A 102.48%);
+}
+
+.singleNft.nftSelect {
+    outline: 1px solid #3E64ED;
+} */

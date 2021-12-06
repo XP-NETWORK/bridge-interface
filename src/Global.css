@@ -797,7 +797,7 @@ span.wallet {
     /* top: -30px; */
     overflow: hidden;
     cursor: pointer;
-    max-height: 160px;
+    /* max-height: 160px; */
 }
 
 .copyTokk{
