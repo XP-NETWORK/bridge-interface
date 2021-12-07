@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Image, Modal, Button, Header, Title, Body, Container, Dropdown, Toggle, Menu, Item  } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import DestinationChain from './innercomponents/DestinationChain';
 import DestinationChainReload from './innercomponents/DestinationChainReload';
 import SelectedNFT from './innercomponents/SelectedNFT';
@@ -10,17 +10,14 @@ import SendFees from './innercomponents/SendFees';
 import NFTlistTop from './innercomponents/NFTlistTop';
 import { ethers } from "ethers";
 import NFTsuccess from './NFTsuccess';
-import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import { useSelector } from 'react-redux';
-import {Chain, Config} from 'xp.network/dist/consts';
-import { setBigLoader, setBigNumFees, setError, setNFTList, setSelectedNFTList, setTxnHash } from "../store/reducers/generalSlice"
+import { setBigLoader, setBigNumFees, setError, setNFTList, setTxnHash } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
 import { getFactory, getNFTS, handleChainFactory, parseNFTS } from "../wallet/helpers"
-import { BigNumber } from "bignumber.js";
 import Comment from "../components/innercomponents/Comment"
 import{ ChainData, getOldFactory } from '../wallet/oldHelper'
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
-import axios from 'tronweb/node_modules/axios';
+
 
 
 function NFTaccount() {
@@ -45,31 +42,26 @@ function NFTaccount() {
     const onMaiar = useSelector(state => state.general.onMaiar)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
 
-    let counter = 0
     
     async function getNFTsList(){
+        debugger
         try {
             const chain = await handleChainFactory(from)
             const factory = await getOldFactory()
-            console.log(factory, 'hello')
             const w = tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             const chainId = ChainData[from].nonce
             const res = await getNFTS(w, from)
-            //     console.log(nfts,)
-                const parsedNFTs = await parseNFTS(res)
-                console.log(parsedNFTs,'1231191 parsed')
-                dispatch(setBigLoader(false))
-                if(parsedNFTs.length){
-                    dispatch(setNFTList(parsedNFTs))
-                }
-                else{
-                    console.log('No NFTs...');
-                }
+            const parsedNFTs = await parseNFTS(res)
+            dispatch(setBigLoader(false))
+            if(parsedNFTs.length){
+                dispatch(setNFTList(parsedNFTs))
+            }
+            else{
+                console.log('No NFTs...');
+            }
             } catch (error) {  
                 console.log("...",error); 
             }
-            
-            console.log("counter", counter, counter++);
     }
     const estimate = async () => {
         try {

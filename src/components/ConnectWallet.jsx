@@ -7,6 +7,7 @@ import MetaMask from '../assets/img/wallet/MetaMask.svg';
 import Tron from '../assets/img/wallet/TronLink.svg';
 import Elrond from '../assets/img/wallet/Elrond.svg';
 import Ledger from '../assets/img/wallet/Ledger.svg';
+import AlgoSignerIcon from '../assets/img/wallet/Algo Signer.png';
 import Maiar from '../assets/img/wallet/Maiar.svg';
 import Trezor from '../assets/img/wallet/Trezor.svg';
 import TrustWallet from "../assets/img/wallet/TWT.svg"
@@ -40,6 +41,7 @@ function ConnectWallet() {
     const metaMask = useSelector(state => state.general.MetaMask)
     const tronLink = useSelector(state => state.general.tronLink)
     const trustWallet = useSelector(state => state.general.trustWallet)
+    const AlgoSigner = useSelector(state => state.general.AlgoSigner)
     const onWC = useSelector(state => state.general.WalletConnect)
     const [qrCodeString, setQqrCodeString] = useState()
     const [strQR, setStrQr] = useState()
@@ -211,15 +213,15 @@ function ConnectWallet() {
     })
 
     useEffect(() => {
-      
+
         const correct = from ? CHAIN_INFO[from.key].chainId === chainId : false
         dispatch(setAccount(account))
         if(from){
             dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
         }
         // debugger
-        if((metaMask && correct)||(tronLink && correct)||(onWC && correct)||(trustWallet && correct))dispatch(setStep(2))
-    }, [account, metaMask, chainId, tronLink, onWC, trustWallet])
+        if((metaMask && correct)||(tronLink && correct)||(onWC && correct)||(trustWallet && correct)||(AlgoSigner))dispatch(setStep(2))
+    }, [account, metaMask, chainId, tronLink, onWC, trustWallet,AlgoSigner])
 
     return (
         <div>
@@ -244,7 +246,7 @@ function ConnectWallet() {
                                 <li onClick={() => onInjected()} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li>
                                 <li onClick={() => onWalletConnect()} style={ OFF } className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
                                 <li onClick={() => onTrustWallet()} style={(getMobOps() && window.innerWidth <= 600) || (window.ethereum && window.innerWidth <= 600) ? {} : OFF } className="wllListItem"><img src={TrustWallet} alt="WalletConnect Icon" /> Trust Wallet</li>
-                                <li onClick={onAlgoSigner} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem"><img src="#" alt="Algor Signer Icon" /> Algo Signer</li>
+                                <li onClick={onAlgoSigner} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo Signer</li>
                                 
                                 <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>

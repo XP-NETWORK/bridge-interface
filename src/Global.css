@@ -591,6 +591,11 @@ span.wallet {
     cursor: pointer;
 }
 
+.algo img{
+    width: 28px;
+    border-radius: 5px;
+}
+
 .wllListItem img {
     /* width: 100%; */
     display: block;

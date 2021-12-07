@@ -242,6 +242,15 @@ export const CHAIN_INFO = {
       contract: "0x12889E870A48Be2A04564e74f66fC91D439Da03e",
       blockExplorerUrls: "https://testnet.bscscan.com/tx",
     },
+    Algorand: {
+        nonce: 15,
+        native: coins[8],
+        chainId: 15,
+        rpcUrl: "https://algorand-node.xp.network/",
+        decimals: 1e6,
+        contract: "MGEZOCMF263SDRXYKNGVNTCIGM4RZXAF3HLS4MNTFVFTJC6LWGAGLBCW7E",
+        blockExplorerUrls: "https://algoexplorer.io/tx/"
+    },
     Ethereum: {
       nonce: 5,
       native: coins[3],

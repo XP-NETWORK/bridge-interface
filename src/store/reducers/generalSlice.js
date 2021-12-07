@@ -154,6 +154,9 @@ const generalSlice = createSlice({
     },
     setAlgorandAccount(state, action){
       state.algorandAccount = action.payload
+    },
+    setShowAbout(state, action){
+      state.about = action.payload
     }
   },
 });
@@ -199,7 +202,8 @@ export const { toggleNFTInfo,
     setTronLoginError,
     setTrustWallet,
     setAlgoSigner,
-    setAlgorandAccount
+    setAlgorandAccount,
+    setShowAbout
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

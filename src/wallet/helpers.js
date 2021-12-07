@@ -109,9 +109,7 @@ export const getFactory = async () => {
 
 export const handleChainFactory = async (someChain) => {
 // debugger
-
     const factory = await getFactory()
-    console.log( factory, Chain)
     let chain
     someChain === "Ethereum" ? chain = await factory.inner(Chain.ETHEREUM) : 
     someChain === "BSC" ? chain = await factory.inner(Chain.BSC) :
@@ -124,7 +122,6 @@ export const handleChainFactory = async (someChain) => {
     someChain === "xDai" ? chain = await factory.inner(Chain.XDAI) :
     someChain === "Solana" ? chain = await factory.inner(Chain.SOLANA) :
     someChain === "Cardano" ? chain = await factory.inner(Chain.CARDANO) : chain = ""
-
     return chain
 }
 
@@ -154,7 +151,7 @@ export const getNFTS =async  (wallet, from) => {
                 return true
             }
         })
-        console.log(unique, '12382932189231dsahijasdjhd')
+
         return allNFTs
 
     } catch(err) {
