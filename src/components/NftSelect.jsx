@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Video from '../assets/img/icons/Video_icon.svg';
 import INF from '../assets/img/icons/Inf.svg';
 
 import SelectDestination from './SelectDestination';
 import ConnectWallet from './ConnectWallet';
+import { useDispatch } from 'react-redux';
+import { setShowAbout } from '../store/reducers/generalSlice';
 
 
 function NftSelect() {
+    const dispatch = useDispatch()
+    
+    function handleAboutClick() {
+        dispatch(setShowAbout(true))
+    }
+
     return (
         <div className="NftSelect">
             <div className="nftTitle">
@@ -18,7 +26,7 @@ function NftSelect() {
                 <ConnectWallet/>
                 <div className="aboutNft">
                     <a target="_blank" className="videoLink"><img src={Video} />   Learn how to use NFT bridge</a>
-                    <a target="_blank" className="about_Nft"><img src={INF} alt="" /> What is NFT</a>
+                    <a onClick={() => handleAboutClick()} target="_blank" className="about_Nft"><img src={INF} alt=""/> What is NFT</a>
                 </div>
             </div>
         </div>

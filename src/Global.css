@@ -336,6 +336,18 @@ span.LineArrow img {
     margin-bottom: 9px;
 }
 
+.aboutNft a:hover{
+    cursor: pointer;
+}
+
+.about__text{
+    /* background-color: tomato; */
+    width: 80%;
+    height: 300px;
+    margin: 0 auto;
+    overflow: scroll;
+}
+
 .sliderContainer {
     max-width: 1170px;
     margin: 0 auto;

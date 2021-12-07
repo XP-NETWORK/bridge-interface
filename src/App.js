@@ -11,6 +11,7 @@ import { Modal } from "react-bootstrap"
 import Error from "./components/innercomponents/Error";
 import TronPopUp from "./components/innercomponents/TronPopUp";
 import { chains } from "./components/values";
+import About from "./components/innercomponents/About";
 
 
 function App() {
@@ -46,22 +47,23 @@ function App() {
 
 return (
     <div className={"App"}>
-        <Modal 
-        centered
-        className="approve-modal"
-        style={{
-          overflow: "hidden",
-          backgroundColor: "#00000090",
-        }} 
-        show={loader}>
-          <ApproveLoader />
-        </Modal>
-        <Modal show={error} >
-          <Error />
-        </Modal>
-        <Modal show={tronPopUp} onHide={() => handleClose()}>
-          <TronPopUp />
-        </Modal>
+      <About />
+      <Modal 
+      centered
+      className="approve-modal"
+      style={{
+        overflow: "hidden",
+        backgroundColor: "#00000090",
+      }} 
+      show={loader}>
+        <ApproveLoader />
+      </Modal>
+      <Modal show={error} >
+        <Error />
+      </Modal>
+      <Modal show={tronPopUp} onHide={() => handleClose()}>
+        <TronPopUp />
+      </Modal>
       <Router>
         <XpBridge/>
         <Alert />
