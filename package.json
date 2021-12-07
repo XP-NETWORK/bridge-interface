@@ -29,6 +29,7 @@
     "semantic-ui-react": "^2.0.3",
     "slick-carousel": "^1.8.1",
     "web-vitals": "^1.1.2",
+    "web3": "^1.6.1",
     "web3-utils": "^1.6.0",
     "xp.network": "git+https://github.com/xp-network/xpjs#master-dist",
     "yarn": "^1.22.17"
