@@ -8,6 +8,7 @@ export default function Chain({ filteredChain, chainSelectHandler, text, image, 
         <li style={ coming ? OFF : {}} onClick={() => chainSelectHandler(filteredChain)} className="nftChainItem"><img className="modalSelectOptionsImage" src={image.src} alt={key} />
             <div className="modalSelectOptionsText">
                 {text}
+            { coming ? <div className="coming__chain">coming soon</div> : ''}
             </div>
         </li>
     )

@@ -708,7 +708,11 @@ span.wallet {
 }
 
 .modalSelectOptionsText{
+    width: 100%;
     color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .accountBox{
@@ -2269,5 +2273,14 @@ span.transPend {
     right: -65px;
   }
 
-
-  
+.coming__chain{
+    width: 96px;
+    height: 20px;
+    background: #2B313E;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #3E64ED;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
