@@ -78,7 +78,7 @@ export const chains = [
         text: 'Algorand',
         value: 'Algorand',
         order: 9,
-        coming: true,
+        
         image: { avatar: true, src: Algorand },
     },
     {

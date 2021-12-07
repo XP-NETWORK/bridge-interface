@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 import Close from '../assets/img/icons/close.svg';
 // import Search from '../assets/img/icons/Search.svg';
@@ -17,7 +17,7 @@ import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/connectors"
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { EVM, ELROND, chainsConfig } from "../components/values"
-import { setTronWallet, setAccount, setConfirmMaiarMob, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp, setTrustWallet } from "../store/reducers/generalSlice"
+import { setTronWallet, setAccount, setConfirmMaiarMob, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp, setTrustWallet, setAlgoSigner, setAlgorandAccount } from "../store/reducers/generalSlice"
 import { Address, ExtensionProvider, WalletConnectProvider, ProxyProvider } from "@elrondnetwork/erdjs"
 import { CHAIN_INFO } from '../components/values';
 import QRCode from 'qrcode'
@@ -189,7 +189,26 @@ function ConnectWallet() {
             dispatch(setError(error))
             console.log(error);
         }
-     }
+    }
+
+    const onAlgoSigner = useCallback(async () => {
+      if (typeof window.AlgoSigner !== undefined) {
+        try {
+          await window.AlgoSigner.connect()
+          const algo = await window.AlgoSigner.accounts({
+            ledger: 'MainNet'
+          });
+          const { address } = algo[0]
+          dispatch(setAlgoSigner(true))
+          dispatch(setAlgorandAccount(address))
+        } catch (e) {
+          console.error(e);
+      return JSON.stringify(e, null, 2);
+        }
+      } else {
+        console.log("Algo Signer not installed.");
+      }
+    })
 
     useEffect(() => {
       
@@ -225,6 +244,8 @@ function ConnectWallet() {
                                 <li onClick={() => onInjected()} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li>
                                 <li onClick={() => onWalletConnect()} style={ OFF } className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
                                 <li onClick={() => onTrustWallet()} style={(getMobOps() && window.innerWidth <= 600) || (window.ethereum && window.innerWidth <= 600) ? {} : OFF } className="wllListItem"><img src={TrustWallet} alt="WalletConnect Icon" /> Trust Wallet</li>
+                                <li onClick={onAlgoSigner} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem"><img src="#" alt="Algor Signer Icon" /> Algo Signer</li>
+                                
                                 <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
