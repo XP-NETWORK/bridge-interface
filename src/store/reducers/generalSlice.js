@@ -157,6 +157,9 @@ const generalSlice = createSlice({
     },
     setShowAbout(state, action){
       state.about = action.payload
+    },
+    setShowVideo(state, action){
+      state.video = action.payload
     }
   },
 });
@@ -203,7 +206,8 @@ export const { toggleNFTInfo,
     setTrustWallet,
     setAlgoSigner,
     setAlgorandAccount,
-    setShowAbout
+    setShowAbout,
+    setShowVideo
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

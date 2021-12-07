@@ -5,7 +5,7 @@ import INF from '../assets/img/icons/Inf.svg';
 import SelectDestination from './SelectDestination';
 import ConnectWallet from './ConnectWallet';
 import { useDispatch } from 'react-redux';
-import { setShowAbout } from '../store/reducers/generalSlice';
+import { setShowAbout, setShowVideo } from '../store/reducers/generalSlice';
 
 
 function NftSelect() {
@@ -13,6 +13,10 @@ function NftSelect() {
     
     function handleAboutClick() {
         dispatch(setShowAbout(true))
+    }
+
+    function handleVideoClick() {
+        dispatch(setShowVideo(true))
     }
 
     return (
@@ -25,7 +29,7 @@ function NftSelect() {
                 <SelectDestination/>
                 <ConnectWallet/>
                 <div className="aboutNft">
-                    <a target="_blank" className="videoLink"><img src={Video} />   Learn how to use NFT bridge</a>
+                    <a onClick={() => handleVideoClick()} target="_blank" className="videoLink"><img src={Video} />   Learn how to use NFT bridge</a>
                     <a onClick={() => handleAboutClick()} target="_blank" className="about_Nft"><img src={INF} alt=""/> What is NFT</a>
                 </div>
             </div>

@@ -12,6 +12,7 @@ import Error from "./components/innercomponents/Error";
 import TronPopUp from "./components/innercomponents/TronPopUp";
 import { chains } from "./components/values";
 import About from "./components/innercomponents/About";
+import Video from "./components/innercomponents/Video";
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
 return (
     <div className={"App"}>
       <About />
+      <Video />
       <Modal 
       centered
       className="approve-modal"

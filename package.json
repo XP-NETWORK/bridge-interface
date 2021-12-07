@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@elrondnetwork/erdjs": "^8.0.1-alpha.12",
+    "@elrondnetwork/erdjs": "^8.0.1-alpha.13",
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -15,7 +15,7 @@
     "axios": "^0.24.0",
     "bignumber.js": "^9.0.1",
     "bootstrap": "^4.6.0",
-    "ethers": "^5.5.1",
+    "ethers": "^5.5.2",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
@@ -30,7 +30,7 @@
     "slick-carousel": "^1.8.1",
     "web-vitals": "^1.1.2",
     "web3-utils": "^1.6.0",
-    "xp.network": "git+https://github.com/xp-network/xpjs#master-dist",
+    "xp.network": "^0.1.2",
     "yarn": "^1.22.17"
   },
   "scripts": {
