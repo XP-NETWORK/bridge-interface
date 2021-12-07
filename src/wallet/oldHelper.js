@@ -312,6 +312,9 @@ export const getOldFactory = async () => {
     // '0xEBAC44f9e63988112Eb4AfE8B8E03e179b6429A6'
   ]
   export const ChainData = {
+      Algorand: {
+          nonce: 15
+      },
     Elrond: {
       node_uri: "https://elrondnode.xp.network/proxy/",
       minter_address: "erd1qqqqqqqqqqqqqpgq98ufyktqukxqw79f7n22sr3u6n05u7d7p7tqmzhv32",
