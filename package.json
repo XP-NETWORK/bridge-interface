@@ -30,7 +30,7 @@
     "slick-carousel": "^1.8.1",
     "web-vitals": "^1.1.2",
     "web3-utils": "^1.6.0",
-    "xp.network": "^0.1.2",
+    "xp.network": "git+https://github.com/xp-network/xpjs#master-dist",
     "yarn": "^1.22.17"
   },
   "scripts": {
