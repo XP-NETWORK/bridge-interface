@@ -7,7 +7,6 @@ const axios = require("axios");
 
 export const setupURI = (uri) => {
   // debugger
-  console.log("setupURI", uri, uri.includes("ipfs://"));
   if (uri && uri.includes("ipfs://")) {
     return "https://ipfs.io/" + uri.replace(":/", "");
   } else if (uri) return uri.replace("http://", "https://");
@@ -44,10 +43,7 @@ export const parseNFTS = async (nfts) => {
       return await new Promise(async (resolve) => {
         try {
           if (!n.uri) resolve({ ...n });
-          console.log(
-            setupURI(n.uri),
-            "38931289321893218932189321892398329832389213898391329132983§2"
-          );
+      
           const res = await axios.get(setupURI(n.uri));
           if (res && res.data) {
             if (res.data.animation_url)
@@ -66,7 +62,6 @@ export const parseNFTS = async (nfts) => {
               if (res.data) {
                 try {
                   const { uri } = res.data;
-                  // console.log("setupURI(uri?.uri)",setupURI(uri?.uri));
                   const result = await axios.get(setupURI(uri?.uri));
 
                   resolve({ ...result.data, ...n, cantSend: true });
@@ -143,25 +138,20 @@ export const handleChainFactory = async (someChain) => {
 };
 
 export const getNFTS = async (wallet, from) => {
+  const {algorandAccount} = store.getState().general
   const chain = await handleChainFactory(from);
   const factory = await getOldFactory();
   const chainId = ChainData[from].nonce;
-  const res = await Promise.all([
-    await axios.get(`https://nftindexing.herokuapp.com/${chainId}/${wallet}`, {
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJFUzI1NiJ9.eyJhdXRob3JpdHkiOjI2ODQzNTQ1NSwiaWF0IjoxNjM4MTg3MTk5LCJleHAiOjE2Mzg3OTE5OTl9.aKs8K2V8K_rWqQPshae1EzuAEpPMVWBZakfmyBeeq-nJuiEKb1KBSle1F8LNemXLW_3_4KFwDjZrNOx0zA_GNw",
-      },
-    }),
-    await factory.nftList(
+  const res = 
+  // await Promise.all([
+    ( await factory.nftList(
       chain, // The chain of interest
       wallet // The public key of the NFT owner
-    ),
-  ]);
+    ))
+  // ]);
   const unique = {};
   try {
-    const p = res[0].data.ok ? res[0].data.result : [];
-    const allNFTs = [...p, ...res[1]]
+    const allNFTs = res.result
       .filter((n) => n.native)
       .filter((n) => {
         const { tokenId, contract, chainId } = n?.native;
@@ -174,7 +164,7 @@ export const getNFTS = async (wallet, from) => {
         }
       });
 
-    return allNFTs;
+    return allNFTs
   } catch (err) {
     return [];
   }

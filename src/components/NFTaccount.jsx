@@ -17,13 +17,14 @@ import { getFactory, getNFTS, handleChainFactory, parseNFTS } from "../wallet/he
 import Comment from "../components/innercomponents/Comment"
 import{ ChainData, getOldFactory } from '../wallet/oldHelper'
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
-
+import {chainsConfig} from './values'
 
 
 function NFTaccount() {
     const dispatch = useDispatch()
     const [loading, setLoading] = useState()
     const from = useSelector(state => state.general.from.key)
+    const algorandAccount = useSelector(s => s.general.algorandAccount)
     const to = useSelector(state => state.general.to.key)
     const isToEVM = useSelector(state => state.general.to).type === 'EVM'
     const NFTListView = useSelector(state => state.general.NFTListView)
@@ -44,12 +45,8 @@ function NFTaccount() {
 
     
     async function getNFTsList(){
-        debugger
         try {
-            const chain = await handleChainFactory(from)
-            const factory = await getOldFactory()
-            const w = tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
-            const chainId = ChainData[from].nonce
+            const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             const res = await getNFTS(w, from)
             const parsedNFTs = await parseNFTS(res)
             dispatch(setBigLoader(false))
@@ -65,8 +62,11 @@ function NFTaccount() {
     }
     const estimate = async () => {
         try {
+            console.log('hello')
             const fromChain = await handleChainFactory(from)
+            console.log('hello2')
             const toChain = await handleChainFactory(to)
+            console.log(toChain, fromChain)
             const wallet = to ==='Tron' ? 'TCCKoPRcYoCGkxVThCaY9vRPaKiTjE4x1C' :
             from === 'Tron' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
             : from === 'Elrond' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
@@ -83,19 +83,19 @@ function NFTaccount() {
     }
     
     const sendEach = async (nft) => {
-        const toChain = await handleChainFactory(to)
-        const fromChain = await handleChainFactory(from)
+
         const factory = await getFactory()
+        const toChain = await factory.inner(chainsConfig[to].Chain)
+        const fromChain = await factory.inner(chainsConfig[from].Chain)
         const provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : ''
         const signer = 
         from === 'Elrond' ? maiarProvider ? maiarProvider : ExtensionProvider.getInstance() :
         from === 'Tron' ? window.tronLink 
         : provider.getSigner(account)
-        console.log(nft)
+        console.log(toChain, to, fromChain, from)
         try {
             if(from === 'Tron') {
                 const fact = await getOldFactory()
-                console.log(fact, nft)
                 const result = await fact.transferNft(
                     fromChain, // The Source Chain.
                     toChain,   // The Destination Chain.
@@ -105,6 +105,7 @@ function NFTaccount() {
                 )
                 dispatch(setTxnHash({txn: result, nft}))
             } else {
+                console.log(signer, fromChain)
                 const result = await factory.transferNft(
                     fromChain, // The Source Chain.
                     toChain,   // The Destination Chain.

@@ -12,6 +12,7 @@ export const moralisParams = {
     moralisServer: "https://azz9akudh6cf.usemoralis.com:2053/server",
     moralisAppId: "vt2JeuihhzyV9vgYbeAYO5BVSaCOdkAKr608XJOv",
     tronScanUri: 'https://apilist.tronscan.org/api/',
+    nftListUri: 'https://nftindexing.herokuapp.com',
     heartbeatUri: 'https://xpheartbeat.herokuapp.com'
 }
 const axios = require('axios')
@@ -79,6 +80,21 @@ export const getFromParams = async () => {
             tronParams: {
                 ...ChainData.Tron,
                 provider: window.tronWeb
+            }
+        }
+    } else if(from === 'Algorand') {
+        return {
+            algorandParams: {
+                ...ChainData.Algorand,
+                provider: {
+                    algoSigner: window.AlgoSigner,
+                },
+                algodApiKey:
+                "e5b7d342b8a742be5e213540669b611bfd67465b754e7353eca8fd19b1efcffd",
+              algodUri: "https://algorand-node.xp.network/",
+              nonce: 15,
+              sendNftAppId: 457256665,
+              algodPort: 443,
             }
         }
     }

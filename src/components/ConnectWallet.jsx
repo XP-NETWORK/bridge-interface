@@ -201,6 +201,7 @@ function ConnectWallet() {
             ledger: 'MainNet'
           });
           const { address } = algo[0]
+          console.log(address)
           dispatch(setAlgoSigner(true))
           dispatch(setAlgorandAccount(address))
         } catch (e) {
