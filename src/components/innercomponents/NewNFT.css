@@ -1,0 +1,48 @@
+.nft-list__wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 24px;
+}
+
+.nft-box__container{
+    width: 224px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .nft-image__container{
+    background-color: #1E222D;
+    height: 244px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .image__wrapper{
+      display: flex;
+      justify-content: center;
+  }
+  
+  .image__wrapper img{
+    max-width: 90%;
+    max-height: 240px;
+    border-radius: 5px;
+  }
+  
+  .nft-content__container{
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: #292F3F;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+  }
+
+  .nft-name{
+      display: flex;
+      justify-content: space-between;
+  }

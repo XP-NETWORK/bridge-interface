@@ -8,7 +8,6 @@ import { setupURI } from '../../wallet/oldHelper';
 import  "../styles/NFT.css"
 
 export default function NFT({nft, index}) {
-    let [imageLoading, setImageLoading] = useState(true);
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const dispatch = useDispatch()
     const isSelected = selectedNFTs.filter(n => n.native.tokenId === nft.native.tokenId && n.native.contract === nft.native.contract && n.native.chainId === nft.native.chainId)[0]

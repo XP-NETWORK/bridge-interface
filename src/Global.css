@@ -933,7 +933,8 @@ span.NFTInf:hover img {
 .nft_selectBox {
     background: #232833;
     border-radius: 20px;
-    padding: 16px 24px;
+    padding: 16px 0;
+    padding-left: 25px;
     height: 100%;
     position: relative;
     z-index: 1;
