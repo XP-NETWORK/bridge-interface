@@ -42,7 +42,7 @@ function NFTaccount() {
     const [fees, setFees] = useState(0)
     const onMaiar = useSelector(state => state.general.onMaiar)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
-
+    const bigNumberFees = useSelector(state => state.general.bigNumberFees)
     
     async function getNFTsList(){
         try {
@@ -67,17 +67,20 @@ function NFTaccount() {
             console.log('hello2')
             const toChain = await handleChainFactory(to)
             console.log(toChain, fromChain)
-            const wallet = to ==='Tron' ? 'TCCKoPRcYoCGkxVThCaY9vRPaKiTjE4x1C' :
-            from === 'Tron' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
+            const wallet = 
+            to ==='Tron' ? 'TCCKoPRcYoCGkxVThCaY9vRPaKiTjE4x1C' 
+            : from === 'Tron' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
             : from === 'Algorand' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
             : from === 'Elrond' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
             : account 
-            const fact = from === 'Algorand' ? await getFactory() : await getOldFactory()
+            const fact = from === 'Algorand' || from === 'Elrond' ? await getFactory() : await getOldFactory()
+            console.log(fact, 'faaklsdkasldklal1231')
             const fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
             const bigNum = fee.multipliedBy(1.1).decimalPlaces(0).toString();
             dispatch(setBigNumFees(bigNum))
             const fees = await Web3Utils.fromWei(bigNum, "ether")
-            setFees(selectedNFTList.length * fees) 
+            console.log(fees, 'hakladkl1k21l23k129329313kdsa fes')
+            setFees(selectedNFTList.length * fees)
         } catch (err) {
           console.log(err);
         }
@@ -108,17 +111,19 @@ function NFTaccount() {
                     toChain,   // The Destination Chain.
                     nft,       // Or the NFT you have chosen.
                     undefined,    // Or tronlink or maiar.
-                    receiver   // The address who you are transferring the NFT to.
+                    receiver,   // The address who you are transferring the NFT to.
+                    bigNumberFees
                 )
                 dispatch(setTxnHash({txn: result, nft}))
             } else {
-                console.log(signer, fromChain)
+                console.log(signer, fromChain, bigNumberFees, '1231919819')
                  result = await factory.transferNft(
                     fromChain, // The Source Chain.
                     toChain,   // The Destination Chain.
                     nft,       // Or the NFT you have chosen.
                     signer,    // Or tronlink or maiar.
-                    receiver   // The address who you are transferring the NFT to.
+                    receiver,   // The address who you are transferring the NFT to.
+                    bigNumberFees
                 )
                 dispatch(setTxnHash({txn: result, nft}))
             }

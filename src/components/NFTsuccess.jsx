@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Modal, Image  } from "react-bootstrap";
 import Close from '../assets/img/icons/close.svg';
 import Success from '../assets/img/icons/Success.svg';
@@ -12,12 +12,16 @@ import moment from 'moment';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { setupURI } from '../wallet/oldHelper';
 import CopyIcons from './innercomponents/CopyIcons';
-import { getFactory } from '../wallet/helpers';
+import { getFactory, setClaimablesAlgorand } from '../wallet/helpers';
+import { claimAlgorandPopup, connectAlgorandWalletClaim } from '../store/reducers/generalSlice';
+import { useDispatch } from 'react-redux';
+import ConnectAlgorand from './ConnectAlgorand';
+import ClaimAlgorandNFT from './ClaimAlgorandNFT';
 
 // !TODO TX AVALANCHE
 
 function NFTsuccess() {
-
+    const dispatch = useDispatch()
     const from = useSelector(state => state.general.from)
     const to = useSelector(state => state.general.to)
     const account = useSelector(state => state.general.account)
@@ -40,6 +44,14 @@ function NFTsuccess() {
     const [copyHover, setSetCopyHover] = useState()
     const showSuccess = useSelector(state => state.showSuccess)
 
+    useEffect(() => {
+        if(
+            txnHashArr && txnHashArr.length > 0 && 
+            to && to.key === 'Algorand'
+        ) {
+            dispatch(connectAlgorandWalletClaim(true))
+        }
+    },[txnHashArr])
 
     const copy = () => {
       setCopy(true)
@@ -50,7 +62,8 @@ function NFTsuccess() {
     const address = account ? account : algorandAccount ? algorandAccount : elrondAccount ? elrondAccount : tronWallet ? tronWallet : ''
     return (
         <div>
-
+            <ConnectAlgorand />
+            <ClaimAlgorandNFT />
             {/* <a href="#" className="themBtn" onClick={handleShow}>Send</a> */}
             {/* show={txnHashArr?.length} */}
             <Modal animation={false} show={txnHashArr?.length} onHide={handleClose} className="nftSuccessMod">
@@ -120,30 +133,28 @@ export default NFTsuccess
 
 
 function SuccessNFT({nft, from, index}) {
+    const dispatch = useDispatch()
     const {to, algorandAccount} = useSelector(s => s.general)
     const tx = nft.txn ? typeof nft.txn === 'object' ? nft.txn.hash.toString() : nft.txn : ''
 
-    const claim = async () => {
-        const factory = await getFactory()
-        const origin = await factory.inner(chainsConfig[from.key].Chain)
-        const algo = await window.AlgoSigner.accounts({
-            ledger: 'MainNet'
-        });
-        const { address } = algo[0]
-        const signer = {
-        algoSigner: window.AlgoSigner,
-        address: address,
-        ledger: "MainNet"
+    useEffect(async() => {
+        if(to.key === 'Algorand') {
+            const claimables = await setClaimablesAlgorand(algorandAccount, true)
+            if(claimables && claimables.length > 0) {
+
+            }
         }
-        console.log(origin)
-        const clam = await factory.claimAlgorandNft(origin, nft.txn, signer)
+    },[])
+    const claim = () => {
+        dispatch(claimAlgorandPopup(nft))
     }
     return  (
         <li className="nftSelecItem">
             <img src={setupURI(nft.image)} alt="NFT" />
             <span className="nftSelected__name">{nft.name}</span>
-            {/* <span className="bluTextBtn"><a onClick={claim} target="_blank">Claim</a></span> */}
             <span className="bluTextBtn"><a href={`${chainsConfig[from.key].tx + tx}`} target="_blank">View Txn</a></span>
+            {to.key === 'Algorand' ? <span className="bluTextBtn"><a onClick={claim} target="_blank">Claim</a></span> : ''}
+
         </li>
     )
 }

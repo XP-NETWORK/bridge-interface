@@ -49,10 +49,10 @@ function Transactionhistory() {
     )
 }
 
-function Claimable(props) {
-    console.log(props, 'asdkal')
+export function Claimable(props) {
     const {algorandAccount} = useSelector(s => s.general)
-    const { uri, name, nftId } = props.nft
+    const {nft, isSuccess} = props
+    const { uri, name, nftId } = nft
     const [isOptin, setIsOptin] = useState()
     const dispatch = useDispatch()
     const [image,setImage] = useState()

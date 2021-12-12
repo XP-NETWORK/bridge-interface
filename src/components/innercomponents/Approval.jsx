@@ -61,9 +61,9 @@ function Approval(props) {
             }
             else{
                 try {
-                    const factory = await getOldFactory()
+                    const factory = await getFactory()
                     const chain = await factory.inner(Chain.ELROND)
-                
+                    console.log(chain, 'hel1234lo')
                     const signer = maiarProvider ? maiarProvider : ExtensionProvider.getInstance()
                     const swap = await chain.preTransfer(signer, nft, bigNumberFees)
                 
