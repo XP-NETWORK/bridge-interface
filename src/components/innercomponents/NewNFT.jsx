@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setSelectedNFTList, removeFromSelectedNFTList }  from "../../store/reducers/generalSlice"
+import brockenurl from "../../assets/img/brockenurl.png"
 import CheckGreen from '../../assets/img/icons/check_green.svg';
 import NFTdetails from '../NFTdetails';
 import { useSelector } from 'react-redux';
@@ -28,7 +29,7 @@ export default function NFT({nft, index}) {
         <div className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
             <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
                 <div className="image__wrapper">
-                    {nft.image ? <img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} />: '' }
+                    {nft.image ? <img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} /> : <img src={brockenurl} alt='' /> }
                     <span className="selected-radio">{isSelected && <img src={CheckGreen} alt=''/>}</span>
                 </div>
             </div>
