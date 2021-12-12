@@ -125,18 +125,22 @@
   position: absolute;
   top: 16px;
   left: 16px;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   background: #fff;
-  box-shadow: 2px 2px 5px 0px #000000;
-  border-radius: 6.5px;
+  border: 1px solid rgba(0, 0, 0, 0.705);
+  border-radius: 5px;
   align-items: center;
   justify-content: center;
   display: flex;
 }
 
-.selected-radio img{
-    padding-left: 1px;
+.radio__container img{
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.705);
 }
 
 .nft-name {

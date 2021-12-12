@@ -31,7 +31,9 @@ export default function NFT({nft, index}) {
                 <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
                     <div className="image__wrapper">
                         {nft.image ? <img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} /> : <img src={brockenurl} alt='' /> }
-                        <span className="selected-radio">{isSelected && <img src={CheckGreen} alt=''/>}</span>
+                        <div className="radio__container">
+                            { !isSelected ? <span className="selected-radio"></span> : <img src={CheckGreen} alt=''/>}
+                        </div>
                     </div>
                 </div>
                 <div className="nft-content__container">

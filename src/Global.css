@@ -1564,7 +1564,7 @@ span.statComp img {
 }
 
 .nftSelecItem__name{
-    min-width: 230px;
+    min-width: 200px;
     text-overflow: ellipsis;
 }
 
