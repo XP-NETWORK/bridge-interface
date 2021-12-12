@@ -13,7 +13,7 @@ import NFTsuccess from './NFTsuccess';
 import { useSelector } from 'react-redux';
 import { setBigLoader, setBigNumFees, setError, setNFTList, setTxnHash } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
-import { getFactory, getNFTS, handleChainFactory, parseNFTS, setClaimablesAlgorand } from "../wallet/helpers"
+import { getFactory, getNFTS, handleChainFactory, parseNFTS, setClaimablesAlgorand, setNFTS } from "../wallet/helpers"
 import Comment from "../components/innercomponents/Comment"
 import{ ChainData, getOldFactory } from '../wallet/oldHelper'
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
@@ -47,15 +47,7 @@ function NFTaccount() {
     async function getNFTsList(){
         try {
             const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
-            const res = await getNFTS(w, from)
-            const parsedNFTs = await parseNFTS(res)
-            dispatch(setBigLoader(false))
-            if(parsedNFTs.length){
-                dispatch(setNFTList(parsedNFTs))
-            }
-            else{
-                console.log('No NFTs...');
-            }
+            await setNFTS(w, from)
             } catch (error) {  
                 console.log("...",error); 
             }

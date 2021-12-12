@@ -1155,10 +1155,11 @@ ul.nftSelected {
 
 ul.nftList {
     list-style: none;
-    max-height: 220px;
     overflow: auto;
 }
-
+.refreshnfts {
+    margin-left: 6px;
+}
 .nftListed {
     display: flex;
     align-items: center;
