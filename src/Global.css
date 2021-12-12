@@ -531,8 +531,7 @@ opacity: 0.9;
     background: rgba(73, 82, 108, 0.1);
 }
 
-/* width */
-/* .scrollSty */
+
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
