@@ -51,6 +51,10 @@ function Approval(props) {
                 } catch (error) {
                     setFinishedApproving(arr)
                     dispatch(setError(error))
+                    if(error.data){
+                      console.log(error.data.message);
+                    }
+                    else console.log(error); 
                     // dispatch(setApproved(false))
                     console.log(error);
                 }
@@ -72,6 +76,10 @@ function Approval(props) {
                 } catch (error) {
                     setFinishedApproving(arr)
                     dispatch(setError(error))
+                    if(error.data){
+                      console.log(error.data.message);
+                    }
+                    else console.log(error); 
                     console.log(error)
                 }
             }

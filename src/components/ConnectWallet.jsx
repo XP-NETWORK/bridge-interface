@@ -70,7 +70,10 @@ function ConnectWallet() {
           } 
           catch (ex) {
               dispatch(setError(ex))
-              console.log(ex)
+              if(ex.data){
+                console.log(ex.data.message);
+              }
+              else console.log(ex);
           }
           setShow(false)
     }
@@ -86,8 +89,10 @@ function ConnectWallet() {
       } 
       catch (error) {
         dispatch(setError(error))
-        console.log(error)
-        
+        if(error.data){
+          console.log(error.data.message);
+        }
+        else console.log(error);        
       }
       setShow(false)
     }
@@ -129,9 +134,12 @@ function ConnectWallet() {
 
             }
           } 
-          catch(err) {
-              dispatch(setError(err))
-              console.log(err)
+          catch(error) {
+            dispatch(setError(error))
+            if(error.data){
+              console.log(error.data.message);
+            }
+            else console.log(error); 
           }
         }
       }
@@ -168,7 +176,10 @@ function ConnectWallet() {
             setStrQr(qr)
           } catch (error) {
             dispatch(setError(error))
-            console.log(error);
+            if(error.data){
+              console.log(error.data.message);
+            }
+            else console.log(error); 
           }
       }
 
@@ -188,8 +199,11 @@ function ConnectWallet() {
               dispatch(setOnWC(true))
               dispatch(setWC(walletConnect))
         } catch (error) {
-            dispatch(setError(error))
-            console.log(error);
+          dispatch(setError(error))
+          if(error.data){
+            console.log(error.data.message);
+          }
+          else console.log(error); 
         }
     }
 

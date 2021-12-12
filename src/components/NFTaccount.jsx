@@ -84,7 +84,6 @@ function NFTaccount() {
     }
     
     const sendEach = async (nft) => {
-
         const factory = await getFactory()
         const toChain = await factory.inner(chainsConfig[to].Chain)
         const fromChain = await factory.inner(chainsConfig[from].Chain)
@@ -127,9 +126,12 @@ function NFTaccount() {
             }
             
         } catch (error) {
+            
             setLoading(false)
-            dispatch(setError(error))
-            console.log(error);
+            if(error.data){
+                dispatch(setError(error.data.message))
+            }
+            else console.log(error); 
         }
     }
     const sendAllNFTs = () => {
