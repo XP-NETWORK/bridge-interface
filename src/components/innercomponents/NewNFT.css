@@ -19,6 +19,43 @@
     position: relative;
 }
 
+.preload__container{
+    width: 224px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.preload__image{
+    background-color: #1E222D;
+    flex-grow: 4;
+}
+
+.preload__content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #292F3F;
+    flex-grow: 1;
+}
+
+.preload__name{
+    height: 10px;
+    width: 80%;
+    background-color: #62718A;
+    border-radius: 5px;
+}
+
+.preload__number{
+    height: 10px;
+    width: 50%;
+    background-color: #62718A;
+    border-radius: 5px;
+}
+
 .image__wrapper img {
     max-width: 90%;
     max-height: 240px;

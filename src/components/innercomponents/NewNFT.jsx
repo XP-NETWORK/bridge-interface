@@ -26,20 +26,31 @@ export default function NFT({nft, index}) {
 
     useEffect(() => { }, [selectedNFTs])
     return ( 
-        <div className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
-            <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
-                <div className="image__wrapper">
-                    {nft.image ? <img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} /> : <img src={brockenurl} alt='' /> }
-                    <span className="selected-radio">{isSelected && <img src={CheckGreen} alt=''/>}</span>
+        <>
+            <div style={ !imageLoaded && nft.image ? HIDDEN : {}} className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
+                <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
+                    <div className="image__wrapper">
+                        {nft.image ? <img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} /> : <img src={brockenurl} alt='' /> }
+                        <span className="selected-radio">{isSelected && <img src={CheckGreen} alt=''/>}</span>
+                    </div>
+                </div>
+                <div className="nft-content__container">
+                    <span className="nft-name">
+                        <span className="name">{nft.name}</span>
+                        <NFTdetails nftInf={nft} index={index} />
+                    </span>
+                    <span className="nft-number">{nft.native.tokenId}</span>
                 </div>
             </div>
-            <div className="nft-content__container">
-                <span className="nft-name">
-                    <span className="name">{nft.name}</span>
-                    <NFTdetails nftInf={nft} index={index} />
-                </span>
-                <span className="nft-number">{nft.native.tokenId}</span>
-            </div>
-        </div>
+            { !imageLoaded && 
+                <div className="preload__container">
+                    <div className="preload__image"></div>
+                    <div className="preload__content">
+                        <div className="preload__name"></div>
+                        <div className="preload__number"></div>
+                    </div>
+                </div>
+            }
+        </>
     )
 }
