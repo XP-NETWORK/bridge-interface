@@ -25,10 +25,11 @@ export default function NFT({nft, index}) {
 
     useEffect(() => { }, [selectedNFTs])
     return ( 
-        <div className="nft-box__container">
-            <div className="nft-image__container">
+        <div className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
+            <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
                 <div className="image__wrapper">
                     {nft.image ? <img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} />: '' }
+                    <span className="selected-radio">{isSelected && <img src={CheckGreen} alt=''/>}</span>
                 </div>
             </div>
             <div className="nft-content__container">
