@@ -2241,10 +2241,20 @@ span.transPend {
     display: flex;
     justify-content: center;
 }
+
+
+
 .video-responsive iframe {
     width: 100%;
-    height: 400px;
+    height: 640px;
 }
+
+@media screen and (max-width: 600px) {
+    .video-responsive iframe {
+        height: 280px;
+    }
+}
+
 .tron-modal__copyIcon{
     margin: 0 4px;
 }
