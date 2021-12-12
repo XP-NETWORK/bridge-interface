@@ -155,6 +155,9 @@
     width: 148px;
     height: 260px;
   }
+  .preload__container{
+    width: 148px;
+  }
   .nft-box__container--selected{
     width: 148px;
     height: 260px;
@@ -175,6 +178,9 @@
   .nft-box__container {
     width: 120px;
     height: 200px;
+  }
+  .preload__container{
+    width: 120px;
   }
   .nft-box__container--selected{
     width: 120px;
