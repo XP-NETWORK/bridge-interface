@@ -1,5 +1,7 @@
 import { ChainFactory, ChainFactoryConfigs } from "xp.network";
 import { Chain, Config } from "xp.network/dist/consts";
+import { chainsConfig } from "../components/values";
+import { setAlgorandClaimables, setFactory } from "../store/reducers/generalSlice";
 import store from "../store/store";
 import { ChainData, getOldFactory, moralisParams } from "./oldHelper";
 
@@ -42,6 +44,7 @@ export const parseNFTS = async (nfts) => {
     nfts.map(async (n) => {
       return await new Promise(async (resolve) => {
         try {
+          console.log(n, 'parsenfts')
           if (!n.uri) resolve({ ...n });
       
           const res = await axios.get(setupURI(n.uri));
@@ -66,7 +69,7 @@ export const parseNFTS = async (nfts) => {
 
                   resolve({ ...result.data, ...n, cantSend: true });
                 } catch (err) {
-                  resolve(undefined);
+                  resolve({...n});
                 }
               } else {
                 resolve(undefined);
@@ -102,8 +105,13 @@ export const isALLNFTsApproved = () => {
   } else return false;
 };
 export const getFactory = async () => {
+  const f = store.getState().general.factory
+  console.log(f, 'hellosa')
+  if(f) return f
+  
   const mainnetConfig = ChainFactoryConfigs.MainNet();
   const factory = ChainFactory(moralisParams, mainnetConfig);
+  store.dispatch(setFactory(factory))
   return factory;
 };
 
@@ -139,33 +147,51 @@ export const handleChainFactory = async (someChain) => {
 
 export const getNFTS = async (wallet, from) => {
   const {algorandAccount} = store.getState().general
-  const chain = await handleChainFactory(from);
-  const factory = await getOldFactory();
-  const chainId = ChainData[from].nonce;
-  const res = 
-  // await Promise.all([
-    ( await factory.nftList(
-      chain, // The chain of interest
-      wallet // The public key of the NFT owner
-    ))
-  // ]);
-  const unique = {};
+  const factory = await getFactory();
+  const chain = await factory.inner(chainsConfig[from].Chain)
   try {
-    const allNFTs = res.result
-      .filter((n) => n.native)
-      .filter((n) => {
-        const { tokenId, contract, chainId } = n?.native;
-        if (unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`])
-          return false;
-        else {
-          unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`] = true;
-
-          return true;
-        }
-      });
-
-    return allNFTs
-  } catch (err) {
-    return [];
+    console.log('hel342432234342324lo')
+    const res = 
+    algorandAccount 
+    ? (await axios.get(`https://nftindexing.herokuapp.com/15/${wallet}`)).data.result
+    : 
+    await factory.nftList(
+        chain, // The chain of interest
+        wallet // The public key of the NFT owner
+      )
+    const unique = {};
+    try {
+      const allNFTs = res
+        .filter((n) => n.native)
+        .filter((n) => {
+          const { tokenId, contract, chainId } = n?.native;
+          if (unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`])
+            return false;
+          else {
+            unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`] = true;
+  
+            return true;
+          }
+        });
+  
+      return allNFTs
+    } catch (err) {
+      return [];
+    }
+  } catch(err) {
+    console.log(err, 'nft list')
+    return []
   }
+
 };
+
+export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
+  const factory = await getFactory()
+  const claimables = await factory.claimableAlgorandNfts(algorandAccount)
+  console.log('hello claimable', claimables)
+  if(claimables && claimables.length > 0) {
+    if(returnList) return claimables
+    else store.dispatch(setAlgorandClaimables(claimables))
+  }
+  return []
+}

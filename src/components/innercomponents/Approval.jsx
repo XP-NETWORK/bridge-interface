@@ -32,7 +32,8 @@ function Approval(props) {
 
     const approveEach = async (nft, signer, chain, index) => {
         const arr = new Array(index + 1).fill(0)
-            if(from.type !== "Elrond"){
+
+            if(from.type !== "Elrond" && from.type !== 'Algorand'){
                 try {
                     const { tokenId, contract, chainId } = nft.native
                     const isInApprovedNFTs = approvedNFTList.filter(n => n.native.tokenId === tokenId && n.native.contract === contract && chainId === n.native.chainId )[0]
@@ -53,6 +54,10 @@ function Approval(props) {
                     // dispatch(setApproved(false))
                     console.log(error);
                 }
+            }
+            else if(from.type === 'Algorand') {
+                dispatch(updateApprovedNFTs(nft))
+                setFinishedApproving(arr)
             }
             else{
                 try {
@@ -75,7 +80,7 @@ function Approval(props) {
     
     // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
     const approveAllNFTs = async () => {
-        debugger
+        // debugger
         if(!approvedLoading) {
                 dispatch(setApproveLoader(true))
                 setApprovedLoading(true)

@@ -2239,11 +2239,24 @@ span.transPend {
     display: flex;
     justify-content: center;
 }
-
+.video-responsive iframe {
+    width: 100%;
+    height: 400px;
+}
 .tron-modal__copyIcon{
     margin: 0 4px;
 }
-
+.claimsbut div{
+    color: #3763FF !important;
+    width: fit-content;
+    padding: 3px 8px;
+    background: rgba(98, 113, 138, 0.1);
+    border-radius: 6px;
+    cursor: pointer;
+}
+.noimagenft {
+    height: 100px;
+}
 .tron-modal__link {
     margin: 0 auto;
     width: 260px;

@@ -24,15 +24,7 @@ export default function Video() {
             </Modal.Header>
             <Modal.Body>
             <div className="video-responsive">
-                <iframe
-                width="100%"
-                height="280px"
-                src="https://www.youtube.com/embed/o-em_ooWN3g"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                title="Embedded youtube"
-                />
+            <iframe  src="https://www.youtube.com/embed/QZvG6MaEdW4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             </Modal.Body>
         </Modal>

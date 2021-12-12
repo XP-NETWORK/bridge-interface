@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 import { setupURI } from '../../wallet/oldHelper';
 import  "../styles/NFT.css"
 
-
 export default function NFT({nft, index}) {
     let [imageLoading, setImageLoading] = useState(true);
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
@@ -25,15 +24,20 @@ export default function NFT({nft, index}) {
         }
     }
 
-
     useEffect(() => { }, [selectedNFTs])
     return ( 
         <div className="col-lg-4 col-md-4 col-sm-6 col-6">
         {/* // <div className="nft__container"> */}
-            <div  style={ !imageLoaded ? HIDDEN : {}} className={`singleNft ${isSelected ? 'singleNft-selected' : ''}`}>
+            <div  style={ !imageLoaded && nft.image ? HIDDEN : {}} className={`singleNft ${isSelected ? 'singleNft-selected' : ''}`}>
                 <div onClick={() => addRemoveNFT(nft)} className={`nftImageBox ${isSelected ? 'nftSelect': ''}`}>
                     <span className="selectNft">{<img src={CheckGreen} />}</span>
-                    <span className="nftImage"><img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} /></span>
+                    <span className="nftImage">
+                    {nft.image ? <img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} />: '' }
+                        
+                        </span> 
+                        {!nft.image ? <span className="noimagenft">
+
+                        </span> :''}
                 </div>
                 <div className="nftCont">
                     <span className="nftName"><span className="name">{nft.name}</span><NFTdetails nftInf={nft} index={index} /></span>

@@ -13,7 +13,7 @@ import NFTsuccess from './NFTsuccess';
 import { useSelector } from 'react-redux';
 import { setBigLoader, setBigNumFees, setError, setNFTList, setTxnHash } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
-import { getFactory, getNFTS, handleChainFactory, parseNFTS } from "../wallet/helpers"
+import { getFactory, getNFTS, handleChainFactory, parseNFTS, setClaimablesAlgorand } from "../wallet/helpers"
 import Comment from "../components/innercomponents/Comment"
 import{ ChainData, getOldFactory } from '../wallet/oldHelper'
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
@@ -69,9 +69,10 @@ function NFTaccount() {
             console.log(toChain, fromChain)
             const wallet = to ==='Tron' ? 'TCCKoPRcYoCGkxVThCaY9vRPaKiTjE4x1C' :
             from === 'Tron' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
+            : from === 'Algorand' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
             : from === 'Elrond' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
             : account 
-            const fact = await getOldFactory()
+            const fact = from === 'Algorand' ? await getFactory() : await getOldFactory()
             const fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
             const bigNum = fee.multipliedBy(1.1).decimalPlaces(0).toString();
             dispatch(setBigNumFees(bigNum))
@@ -89,14 +90,20 @@ function NFTaccount() {
         const fromChain = await factory.inner(chainsConfig[from].Chain)
         const provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : ''
         const signer = 
+        from === 'Algorand' ? {
+            algoSigner: window.AlgoSigner,
+            address: algorandAccount,
+            ledger: "MainNet"
+            } :
         from === 'Elrond' ? maiarProvider ? maiarProvider : ExtensionProvider.getInstance() :
         from === 'Tron' ? window.tronLink 
         : provider.getSigner(account)
         console.log(toChain, to, fromChain, from)
         try {
+            let result
             if(from === 'Tron') {
                 const fact = await getOldFactory()
-                const result = await fact.transferNft(
+                 result = await fact.transferNft(
                     fromChain, // The Source Chain.
                     toChain,   // The Destination Chain.
                     nft,       // Or the NFT you have chosen.
@@ -106,7 +113,7 @@ function NFTaccount() {
                 dispatch(setTxnHash({txn: result, nft}))
             } else {
                 console.log(signer, fromChain)
-                const result = await factory.transferNft(
+                 result = await factory.transferNft(
                     fromChain, // The Source Chain.
                     toChain,   // The Destination Chain.
                     nft,       // Or the NFT you have chosen.
@@ -115,7 +122,9 @@ function NFTaccount() {
                 )
                 dispatch(setTxnHash({txn: result, nft}))
             }
-
+            if(to === 'Algorand') {
+                await setClaimablesAlgorand(algorandAccount)
+            }
             
         } catch (error) {
             setLoading(false)

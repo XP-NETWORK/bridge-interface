@@ -104,6 +104,9 @@ const generalSlice = createSlice({
     setMaiarProvider(state, action){
       state.maiarProvider = action.payload
     },
+    removeAlgorandClaimable(state, action) {
+      state.algorandClaimables = state.algorandClaimables.filter(n => n.nftId !== action.payload)
+    },
     setOnMaiar(state, action){
       state.onMaiar = action.payload
     },
@@ -149,6 +152,9 @@ const generalSlice = createSlice({
     setTrustWallet(state, action){
       state.trustWallet = action.payload
     },
+    setFactory(state,action) {
+      state.factory = action.payload
+    },
     setAlgoSigner(state, action){
       state.AlgoSigner = action.payload
     },
@@ -160,6 +166,9 @@ const generalSlice = createSlice({
     },
     setShowVideo(state, action){
       state.video = action.payload
+    },
+    setAlgorandClaimables(state, action) {
+      state.algorandClaimables = action.payload
     }
   },
 });
@@ -167,6 +176,7 @@ const generalSlice = createSlice({
 export const { toggleNFTInfo, 
     setReset,
     setTo, 
+    setAlgorandClaimables,
     setFrom,
     setChainModal,
     setDepartureOrDestination,
@@ -175,6 +185,7 @@ export const { toggleNFTInfo,
     setAccount,
     setMetaMask,
     setNFTList,
+    setFactory,
     setSelectedNFTList,
     cleanSelectedNFTList,
     removeFromSelectedNFTList,
@@ -188,6 +199,7 @@ export const { toggleNFTInfo,
     setWrongNetwork,
     setMetaMaskActive,
     setElrondAccount,
+    removeAlgorandClaimable,
     setMaiarProvider,
     setOnMaiar,
     setTronWallet,

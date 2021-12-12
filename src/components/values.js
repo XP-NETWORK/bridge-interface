@@ -77,7 +77,7 @@ export const chains = [
         key: 'Algorand',
         text: 'Algorand',
         value: 'Algorand',
-        order: 9,
+        order: 3,
         
         image: { avatar: true, src: Algorand },
     },
@@ -119,6 +119,10 @@ export const chains = [
 ]
 
 export const chainsConfig = {
+    Algorand: {
+        Chain: 15,
+        tx: 'https://algoexplorer.io/tx/'
+    },
     Heco: {
         type: EVM,
         img: Heco,

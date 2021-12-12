@@ -103,7 +103,7 @@ function ConnectWallet() {
       }
 
     async function connectTronlink() {
-      debugger
+      // debugger
         if(window.innerWidth <= 600 && !window.tronWeb){
           dispatch(setTronPopUp(true))
         }

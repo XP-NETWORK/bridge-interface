@@ -5,7 +5,7 @@ import "./Responsive.css";
 import XpBridge from "./pages/XpBridge";
 import Alert from "./components/Alert";
 import { useDispatch, useSelector } from "react-redux";
-import { setFrom, setTo, setTronPopUp } from "./store/reducers/generalSlice";
+import { setAlgorandClaimables, setFrom, setTo, setTronPopUp } from "./store/reducers/generalSlice";
 import ApproveLoader from "./components/innercomponents/ApproveLoader";
 import { Modal } from "react-bootstrap"
 import Error from "./components/innercomponents/Error";
@@ -13,11 +13,12 @@ import TronPopUp from "./components/innercomponents/TronPopUp";
 import { chains } from "./components/values";
 import About from "./components/innercomponents/About";
 import Video from "./components/innercomponents/Video";
-
+import {getFactory, setClaimablesAlgorand} from './wallet/helpers'
 
 function App() {
   const dispatch = useDispatch()
   const loader = useSelector(state => state.general.approveLoader)
+  const algorandAccount = useSelector(state => state.general.algorandAccount)
   const error = useSelector(state => state.general.error)
   const tronPopUp = useSelector(state => state.general.tronPopUp)
 
@@ -44,7 +45,16 @@ function App() {
     }
     localStorage.clear()
   },[])
+  useEffect(async () => {
+    if(algorandAccount) {
+      try {
+        setClaimablesAlgorand(algorandAccount)
+      } catch(err) {
+        console.log(err, 'algorand claimables error')
+      }
 
+    }
+  },[algorandAccount])
 
 return (
     <div className={"App"}>
