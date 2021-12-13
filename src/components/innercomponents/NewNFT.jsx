@@ -26,7 +26,7 @@ export default function NFT({nft, index}) {
 
     useEffect(() => { }, [selectedNFTs])
     return ( 
-        <>
+        <div className='nft-box__wrapper'>
             <div style={ !imageLoaded && nft.image ? HIDDEN : {}} className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
                 <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
                     <div className="image__wrapper">
@@ -53,6 +53,6 @@ export default function NFT({nft, index}) {
                     </div>
                 </div>
             }
-        </>
+        </div>
     )
 }
