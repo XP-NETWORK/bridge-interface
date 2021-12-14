@@ -100,9 +100,12 @@ export function AlgorandClaimable(props) {
             console.log(props.nft)
             try {
                 const c = await algorand.claimNft(signer, props.nft)
-                setClaimablesAlgorand(algorandAccount)
-                setNFTS(algorandAccount, 'Algorand')
-                dispatch(claimAlgorandPopup(undefined))
+                setTimeout(() => {
+                    setClaimablesAlgorand(algorandAccount)
+                    setNFTS(algorandAccount, 'Algorand')
+                    dispatch(claimAlgorandPopup(undefined))
+                },500)
+
             } catch(err) {
                 console.log(err, 'erlerad')
             }
