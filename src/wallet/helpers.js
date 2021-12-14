@@ -186,6 +186,7 @@ export const getNFTS = async (wallet, from) => {
 };
 
 export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
+
   if(algorandAccount && algorandAccount.length > 50) {
     const factory = await getFactory()
     const claimables = await factory.claimableAlgorandNfts(algorandAccount)
@@ -195,6 +196,7 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
       if(returnList) return claimables
       else store.dispatch(setAlgorandClaimables(claimables))
     }
+
   }
   return []
 }

@@ -24,7 +24,7 @@ export default function About() {
                 </div>
             </Modal.Header>
             <Modal.Body>
-                <div className="about__text">
+                <div style={{color: "white"}}  className="about__text">
                     <p>NFT stands for Non-Fungible Tokens representing unique or scarce, physical or digital assets and collectibles.</p>
                     <p>NFTs emerged as a digital representation of ownership for art, music, 
                     domain names, virtual worlds, trading cards, stamps, admission tickets,

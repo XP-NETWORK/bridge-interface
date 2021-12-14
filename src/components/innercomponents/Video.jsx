@@ -13,7 +13,7 @@ export default function Video() {
     }
 
     return (
-        <Modal show={video} onHide={() => handleClose()}>
+        <Modal size="xl" show={video} onHide={() => handleClose()}>
             <Modal.Header className="border-0">
                 <div className="tron-PopUp__header">
                     <Modal.Title>Learn how to use NFT bridge</Modal.Title>
@@ -24,7 +24,7 @@ export default function Video() {
             </Modal.Header>
             <Modal.Body>
             <div className="video-responsive">
-            <iframe  src="https://www.youtube.com/embed/QZvG6MaEdW4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe  src="https://www.youtube.com/embed/QZvG6MaEdW4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             </Modal.Body>
         </Modal>

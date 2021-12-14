@@ -5,6 +5,7 @@ import NFT from './NFT';
 import Missing from './Missing';
 import { useDispatch } from 'react-redux';
 import BigLoader from "../innercomponents/BigLoader"
+import NewNFT from './NewNFT';
 
 /////`
 function NFTgridView() {
@@ -22,11 +23,11 @@ function NFTgridView() {
                 { loader ? 
                     <BigLoader />
                 :
-                    // <div className="nft__container">
-                    <div className="row">
+                    // <div className="row">
+                    <div className="nft-list__wrapper">
                         { nfts ? nfts
                         .filter(nft => nft?.name?.toLowerCase().includes(search ? search?.toLowerCase() : '') || nft.native.owner?.includes(search ? search : ''))
-                        .map((nft, index) => <NFT nft={nft} index={index} />)
+                        .map((nft, index) => <NewNFT nft={nft} index={index} />)
                         : 
                         <NFTempty /> }
                         { nfts && nfts?.length < nftsPlace ? placeholders.map(n => <Missing />) : ''}
