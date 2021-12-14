@@ -11,11 +11,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'tronweb/node_modules/axios';
 import { getFactory, setClaimablesAlgorand, setNFTS } from '../wallet/helpers';
 import { claimAlgorandPopup, removeAlgorandClaimable, setAlgorandClaimables } from '../store/reducers/generalSlice';
-
+import { algoConnector } from "../wallet/connectors"
 
 // Chain
 
 function Transactionhistory() {
+
     const {algorandClaimables} = useSelector(s => s.general)
     return (
         <div className="Transactionhistory">
@@ -57,9 +58,11 @@ export function AlgorandClaimable(props) {
     const dispatch = useDispatch()
     const [image,setImage] = useState()
     const [originalChain,setOrigin] = useState()
+    const algorandWallet = useSelector(state => state.general.AlgorandWallet)
+    const AlgoSigner = useSelector(state => state.general.AlgoSigner)
     const signer = {
         address: algorandAccount,
-        algoSigner: window.AlgoSigner,
+        algoSigner: algorandWallet ? algoConnector : window.AlgoSigner,
         ledger: "MainNet"
     }
 
@@ -78,6 +81,7 @@ export function AlgorandClaimable(props) {
         load()
     },[])
     const optIn = async () => {
+        debugger
         const factory = await getFactory()
         const algorand = await factory.inner(15)
         const isOpted = await algorand.isOptIn(algorandAccount, nftId)
