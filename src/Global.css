@@ -2333,3 +2333,29 @@ span.transPend {
     justify-content: center;
     margin-bottom: 16px;
 }
+.claimablealgornadnftss {
+    display: flex;
+    justify-content: center;
+}
+.claimablealgornadnftss tr {
+    width: 100%;
+    min-width: 100%;
+}
+.claimablealgornadnftss td {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.claimablealgornadnftss td img {
+    width: 180px;
+
+}
+
+.claimablealgornadnftss .claimsbut div {
+    width: 120px;
+    margin: 8px 0px;
+    background-color: #3763FF !important;
+    color: #fff !important;
+}

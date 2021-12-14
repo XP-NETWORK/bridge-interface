@@ -9,8 +9,8 @@ import Failed from '../assets/img/icons/Failed.svg';
 import Pending from '../assets/img/icons/Pending.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'tronweb/node_modules/axios';
-import { getFactory, setClaimablesAlgorand } from '../wallet/helpers';
-import { removeAlgorandClaimable, setAlgorandClaimables } from '../store/reducers/generalSlice';
+import { getFactory, setClaimablesAlgorand, setNFTS } from '../wallet/helpers';
+import { claimAlgorandPopup, removeAlgorandClaimable, setAlgorandClaimables } from '../store/reducers/generalSlice';
 
 
 // Chain
@@ -37,7 +37,7 @@ function Transactionhistory() {
                             <tbody>
                                 {
                                     algorandClaimables && algorandClaimables.length > 0 
-                                    ? algorandClaimables.map(n => <Claimable nft={n} />) 
+                                    ? algorandClaimables.map(n => <AlgorandClaimable nft={n} />) 
                                     : ''
                                 }
                             </tbody>
@@ -49,7 +49,7 @@ function Transactionhistory() {
     )
 }
 
-export function Claimable(props) {
+export function AlgorandClaimable(props) {
     const {algorandAccount} = useSelector(s => s.general)
     const {nft, isSuccess} = props
     const { uri, name, nftId } = nft
@@ -101,6 +101,8 @@ export function Claimable(props) {
             try {
                 const c = await algorand.claimNft(signer, props.nft)
                 setClaimablesAlgorand(algorandAccount)
+                setNFTS(algorandAccount, 'Algorand')
+                dispatch(claimAlgorandPopup(undefined))
             } catch(err) {
                 console.log(err, 'erlerad')
             }

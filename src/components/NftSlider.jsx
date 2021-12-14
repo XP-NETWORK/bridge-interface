@@ -58,7 +58,7 @@ export default class Collecthead extends Component {
                     <div className="slideItem">
                         <div className="nftSlideBox">
                             <div className="nfgSlidImg">
-                                <img src={Slider2} alt="" />
+                                <img src={Slider1} alt="" />
                             </div>
                             <div className="nftSlidImg">
                                 <p className="nftSlidNumber">Crypto Stamp</p>
