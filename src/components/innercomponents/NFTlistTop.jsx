@@ -10,11 +10,12 @@ import { useSelector } from 'react-redux';
 import SelectDestination from '../SelectDestination';
 import NFTChainListBox from '../NFTChainListBox';
 import Close from '../../assets/img/icons/close.svg';
-
-
+import { setNFTS } from '../../wallet/helpers'
+import Refresh from '../../assets/img/refresh.svg'
 function NFTlistTop() {
     const dispatch = useDispatch()
     const nfts = useSelector(state => state.general.NFTList)
+    const {algorandAccount, tronWallet, elrondAccount, account, bigLoader} = useSelector(state => state.general)
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const NFTListView = useSelector(state => state.general.NFTListView)
     const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -33,7 +34,18 @@ function NFTlistTop() {
     const handleView = () => {
         dispatch(setNFTsListView())
     }
+    const refresh = async () => {
+        if(!bigLoader) {
+            const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
+            await setNFTS(w, from.key)
+        }
 
+    }
+
+    const refreshStyle = { 
+        cursor: bigLoader ? '' : 'pointer', 
+        opacity: bigLoader ? 0.6 : 1 
+    } 
     return (
         <div className="nftListTop">
             <Modal animation={false} show={switchDestination} onHide={() => handleClose()} className="ChainModal">
@@ -48,7 +60,8 @@ function NFTlistTop() {
                 </Modal.Body>
             </Modal>
             <div className="yourNft desktopOnly">
-                Your NFTs on <span><img src={from.image.src} alt="NFT Name" /> {from.key}</span>
+                Your NFTs on <span><img src={from.image.src} alt="NFT Name" /> {from.key}</span> 
+                <span style={refreshStyle} onClick={refresh}><img className="refreshnfts" src={Refresh} /></span>
             </div>
             <div className="mobileOnly seleNftMob">
                 Select NFTs <span>{ nfts?.length }</span>

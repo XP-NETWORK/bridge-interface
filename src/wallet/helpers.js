@@ -1,7 +1,7 @@
 import { ChainFactory, ChainFactoryConfigs } from "xp.network";
 import { Chain, Config } from "xp.network/dist/consts";
 import { chainsConfig } from "../components/values";
-import { setAlgorandClaimables, setFactory } from "../store/reducers/generalSlice";
+import { setAlgorandClaimables, setBigLoader, setFactory, setNFTList } from "../store/reducers/generalSlice";
 import store from "../store/store";
 import { ChainData, getOldFactory, moralisParams } from "./oldHelper";
 
@@ -186,13 +186,27 @@ export const getNFTS = async (wallet, from) => {
 };
 
 export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
-  const factory = await getFactory()
 
-  const claimables = await factory.claimableAlgorandNfts(algorandAccount)
+  if(algorandAccount && algorandAccount.length > 50) {
+    const factory = await getFactory()
+    const claimables = await factory.claimableAlgorandNfts(algorandAccount)
+    
+    console.log(algorandAccount,'123132132')
+    if(claimables && claimables.length > 0) {
+      if(returnList) return claimables
+      else store.dispatch(setAlgorandClaimables(claimables))
+    }
 
-  if(claimables && claimables.length > 0) {
-    if(returnList) return claimables
-    else store.dispatch(setAlgorandClaimables(claimables))
   }
   return []
+}
+
+export const setNFTS = async (w, from) => {
+  store.dispatch(setBigLoader(true))
+  const res = await getNFTS(w, from)
+  const parsedNFTs = await parseNFTS(res)
+    store.dispatch(setBigLoader(false))
+    if(parsedNFTs.length){
+      store.dispatch(setNFTList(parsedNFTs))
+  }
 }

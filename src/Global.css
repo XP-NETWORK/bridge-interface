@@ -69,6 +69,7 @@ h3 {
     /* max-width: fit-content; */
 }
 
+
 .navMenu.navbar-nav .nav-link.active,
 .navMenu.navbar-nav .nav-link:hover {
     color: #F4F3F9;
@@ -1157,10 +1158,11 @@ ul.nftSelected {
 
 ul.nftList {
     list-style: none;
-    max-height: 220px;
     overflow: auto;
 }
-
+.refreshnfts {
+    margin-left: 6px;
+}
 .nftListed {
     display: flex;
     align-items: center;
@@ -2327,6 +2329,7 @@ span.transPend {
     justify-content: center;
 }
 
+
 @media screen and (max-width: 425px) {
     .nft_selectBox {
         padding-left: 15px;
@@ -2337,4 +2340,48 @@ span.transPend {
     .nft_selectBox {
         padding-left: 5px !important;
     }
+
+.walletalgotitle {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 12px;
+    color: #FFFFFF;
+}
+
+.imgcontainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+.claimablealgornadnftss {
+    display: flex;
+    justify-content: center;
+}
+.claimablealgornadnftss tr {
+    width: 100%;
+    min-width: 100%;
+}
+.claimablealgornadnftss td {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.claimablealgornadnftss td img {
+    width: 180px;
+
+}
+
+.claimablealgornadnftss .claimsbut div {
+    width: 120px;
+    margin: 8px 0px;
+    background-color: #3763FF !important;
+    color: #fff !important;
+
 }

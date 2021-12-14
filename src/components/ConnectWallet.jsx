@@ -23,6 +23,7 @@ import { Address, ExtensionProvider, WalletConnectProvider, ProxyProvider } from
 import { CHAIN_INFO } from '../components/values';
 import QRCode from 'qrcode'
 import MaiarModal from './MaiarModal';
+import { isEVM } from '../wallet/oldHelper';
 // import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
 function ConnectWallet() {
@@ -260,7 +261,7 @@ function ConnectWallet() {
                             <ul className="walletList scrollSty">
                                 <li onClick={() => onInjected()} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li>
                                 <li onClick={() => onWalletConnect()} style={ OFF } className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
-                                <li onClick={() => onTrustWallet()} style={(getMobOps() && window.innerWidth <= 600) || (window.ethereum && window.innerWidth <= 600) ? {} : OFF } className="wllListItem"><img src={TrustWallet} alt="WalletConnect Icon" /> Trust Wallet</li>
+                                <li onClick={() => onTrustWallet()} style={(getMobOps() && window.innerWidth <= 600 && isEVM()) || (window.ethereum && window.innerWidth <= 600) ? {} : OFF } className="wllListItem"><img src={TrustWallet} alt="WalletConnect Icon" /> Trust Wallet</li>
                                 <li onClick={onAlgoSigner} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo Signer</li>
                                 
                                 <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>

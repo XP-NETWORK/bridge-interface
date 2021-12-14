@@ -155,6 +155,13 @@ const generalSlice = createSlice({
     setFactory(state,action) {
       state.factory = action.payload
     },
+    connectAlgorandWalletClaim(state, action) {
+      state.connectClaimAlgorand = action.payload
+    },
+    claimAlgorandPopup(state, action) {
+      // claim from success popup
+      state.algorandClaimPopup = action.payload
+    },
     setAlgoSigner(state, action){
       state.AlgoSigner = action.payload
     },
@@ -176,6 +183,7 @@ const generalSlice = createSlice({
 export const { toggleNFTInfo, 
     setReset,
     setTo, 
+    claimAlgorandPopup,
     setAlgorandClaimables,
     setFrom,
     setChainModal,
@@ -202,6 +210,7 @@ export const { toggleNFTInfo,
     removeAlgorandClaimable,
     setMaiarProvider,
     setOnMaiar,
+    connectAlgorandWalletClaim,
     setTronWallet,
     setConfirmMaiarMob,
     setSwitchDestination,

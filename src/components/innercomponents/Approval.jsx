@@ -19,6 +19,7 @@ function Approval(props) {
     const [approvedLoading, setApprovedLoading] = useState()
     const from = useSelector(state => state.general.from)
     const account = useSelector(state => state.general.account)
+    const algorandAccount = useSelector(state => state.general.algorandAccount)
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
     const approvedNFTList = useSelector(state => state.general.approvedNFTList)
     const approved = useSelector(state => state.general.approved)
@@ -32,7 +33,7 @@ function Approval(props) {
 
     const approveEach = async (nft, signer, chain, index) => {
         const arr = new Array(index + 1).fill(0)
-
+        const factory = await getFactory()
             if(from.type !== "Elrond" && from.type !== 'Algorand'){
                 try {
                     const { tokenId, contract, chainId } = nft.native
@@ -60,14 +61,23 @@ function Approval(props) {
                 }
             }
             else if(from.type === 'Algorand') {
+                const c = await factory.inner(15)
+                const signer = {
+                    address: algorandAccount,
+                    algoSigner: window.AlgoSigner,
+                    ledger: "MainNet"
+                }
+                const approv = await c.preTransfer(signer, nft, bigNumberFees)
+                console.log(c,'13223189231dasdasdas9821389', factory)
                 dispatch(updateApprovedNFTs(nft))
                 setFinishedApproving(arr)
             }
             else{
                 try {
-                    const factory = await getOldFactory()
+
+                    const factory = await getFactory()
                     const chain = await factory.inner(Chain.ELROND)
-                
+                    console.log(chain, 'hel1234lo')
                     const signer = maiarProvider ? maiarProvider : ExtensionProvider.getInstance()
                     const swap = await chain.preTransfer(signer, nft, bigNumberFees)
                 
