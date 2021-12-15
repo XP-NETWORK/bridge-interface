@@ -43,7 +43,7 @@ function ConnectWallet() {
     const AlgoSigner = useSelector(state => state.general.AlgoSigner)
     const algorandWallet = useSelector(state => state.general.AlgorandWallet)
     const onWC = useSelector(state => state.general.WalletConnect)
-    const onMaiarWallet = useSelector(state => state.general.onMaiar)
+    const MaiarWallet = useSelector(state => state.general.onMaiar)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const [qrCodeString, setQqrCodeString] = useState()
     const [strQR, setStrQr] = useState()
@@ -269,9 +269,21 @@ function ConnectWallet() {
         if(from){
             dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
         }
-        // debugger
-        if((metaMask && correct)||(tronLink && correct)||(onWC && correct)||(trustWallet && correct)||(onMaiarWallet && elrondAccount)||(algorandWallet)||(AlgoSigner))dispatch(setStep(2))
-    }, [account, metaMask, chainId, tronLink, onWC, trustWallet, AlgoSigner, algorandWallet, onMaiarWallet])
+        debugger
+        if((metaMask && correct)
+        ||
+        (tronLink && correct)
+        ||
+        (onWC && correct)
+        ||
+        (trustWallet && correct)
+        ||
+        (MaiarWallet && correct)
+        ||
+        (algorandWallet)
+        ||
+        (AlgoSigner))dispatch(setStep(2))
+    }, [account, metaMask, chainId, tronLink, onWC, trustWallet, AlgoSigner, algorandWallet, MaiarWallet])
 
     return (
         <div>
@@ -302,7 +314,7 @@ function ConnectWallet() {
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
 
-                                <li onClick={() => onMaiarExtension()} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
+                                {/* <li onClick={() => onMaiarExtension()} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li> */}
                                 <li style={ OFF } className="wllListItem"><img src={Ledger} alt="Ledger Icon" /> Ledger</li>
                                 <li style={ OFF } style={ OFF } className="wllListItem"><img src={Trezor} alt="Trezor Icon" /> Trezor</li>
                             </ul>
