@@ -13,7 +13,7 @@ export default function Video() {
     }
 
     return (
-        <Modal size="xl" show={video} onHide={() => handleClose()}>
+        <Modal animation={false} size="xl" show={video} onHide={() => handleClose()}>
             <Modal.Header className="border-0">
                 <div className="tron-PopUp__header">
                     <Modal.Title>Learn how to use NFT bridge</Modal.Title>

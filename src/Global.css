@@ -367,12 +367,21 @@ span.LineArrow img {
 
 .about__text{
     /* background-color: tomato; */
+
+    width: 100%;
+    height: 300px;
+    margin: 0 auto;
+    overflow: auto;
+}
+.about__text p {
+    padding: 0px 40px;
+
     
     height: 300px;
     padding: 0 60px 0 60px;
     overflow: scroll;
-}
 
+}
 .sliderContainer {
     max-width: 1170px;
     margin: 0 auto;
@@ -2293,11 +2302,24 @@ span.transPend {
 }
 
 @media screen and (max-width: 600px) {
+    .modal-content {
+        margin-top: 20vh;
+    }
     .video-responsive iframe {
         height: 280px;
     }
+
+    .navbar-collapse{
+    }
+    .navMenu.navbar-nav .nav-link:first-child {
+        border-radius: 18px 18px 0px 0px;
+    }
+    .navMenu.navbar-nav .nav-link:last-child {
+        border-radius: 0px 0px 18px 18px;
+
     .desChain{
         justify-content: space-between;
+
     }
 }
 
@@ -2430,8 +2452,21 @@ span.transPend {
 
 }
 
+
+/* widget */
+
+.widget div#root:after {
+    display: none;
+}
+.widget .aleartBox {
+    opacity: 0;
+    pointer-events: none;
+}
+/* widget end */
+
 @media screen and (max-width: 600px) {
     .account__box{
         width: 250px
     }
 }
+

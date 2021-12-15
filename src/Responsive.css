@@ -335,7 +335,10 @@
         position: relative;
         margin-top: 20px;
     }
-
+    .mobSearch img {
+        min-width: 16px;
+        margin-left: -4px;
+    }
     .mobSearch form {
         display: contents;
     }

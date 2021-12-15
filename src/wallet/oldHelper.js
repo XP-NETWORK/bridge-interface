@@ -233,7 +233,7 @@ export const preloadItem = (item, type, setLoaded) => {
         vid.play()
         vid.onloadeddata = function () {
             setLoaded(true)
-            vid.remove()
+            vid?.remove()
         }
     } else {
         var img=new Image();

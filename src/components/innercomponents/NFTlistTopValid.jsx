@@ -44,7 +44,7 @@ function NFTlistTopValid() {
                 <div className="searchNft">
                     <Dropdown className="SearchDrop desktopOnly">
                         <Dropdown.Toggle id="SearchDrop" >
-                            <img src={Search} />
+                            {/* <img src={Search} /> */}
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             <form action="#">

@@ -14,7 +14,7 @@ export default function About() {
     }
 
     return (
-        <Modal show={show} onHide={() => handleClose()}>
+        <Modal show={show} animation={false} onHide={() => handleClose()}>
             <Modal.Header className="border-0">
                 <div className="tron-PopUp__header">
                     <Modal.Title>What is NFT?</Modal.Title>
