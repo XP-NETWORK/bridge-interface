@@ -40,7 +40,9 @@
     background-color: #1E222D;
     flex-grow: 4;
 }
-
+.preload-cont {
+  pointer-events: none;
+}
 .preload__content{
     display: flex;
     flex-direction: column;
@@ -48,8 +50,11 @@
     align-items: center;
     background-color: #292F3F;
     flex-grow: 1;
+    pointer-events: none;
 }
-
+.preload-content-container {
+  pointer-events: none;
+}
 .preload__name{
     height: 10px;
     width: 80%;
@@ -97,10 +102,10 @@
     visibility: hidden;
 }
 
-.nft-image__container:hover::after{
+/* .nft-image__container:hover::after{
     opacity: .8;
     visibility: visible;
-}
+} */
 
 .image__wrapper {
   display: flex;
@@ -130,7 +135,9 @@
     box-sizing: border-box;
     outline: solid 1px #3E64ED;
 }
-
+.nft-box__container:hover {
+  outline: solid 1px #3E64ED;
+}
 .selected-radio {
   position: absolute;
   top: 16px;
