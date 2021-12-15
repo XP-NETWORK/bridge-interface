@@ -53,7 +53,7 @@ export default class Collecthead extends Component {
             ]
         };
         return (
-            <div className="collecSlideCont container">
+            <div id="collecSlideCont" className="collecSlideCont container">
                 <Slider {...settings}>
                     <div className="slideItem">
                         <div className="nftSlideBox">

@@ -108,15 +108,20 @@ function NFTaccount() {
                 dispatch(setTxnHash({txn: result, nft}))
             } else {
                 console.log(signer, fromChain, bigNumberFees, '1231919819')
-                 result = await factory.transferNft(
-                    fromChain, // The Source Chain.
-                    toChain,   // The Destination Chain.
-                    nft,       // Or the NFT you have chosen.
-                    signer,    // Or tronlink or maiar.
-                    receiver,   // The address who you are transferring the NFT to.
-                    bigNumberFees
-                )
-                dispatch(setTxnHash({txn: result, nft}))
+                try {
+                    result = await factory.transferNft(
+                        fromChain, // The Source Chain.
+                        toChain,   // The Destination Chain.
+                        nft,       // Or the NFT you have chosen.
+                        signer,    // Or tronlink or maiar.
+                        receiver,   // The address who you are transferring the NFT to.
+                        bigNumberFees
+                    )
+                    dispatch(setTxnHash({txn: result, nft}))
+                } catch(err) {
+                    dispatch(setError(err.data.message))
+                }
+
             }
             if(to === 'Algorand') {
                 await setClaimablesAlgorand(algorandAccount)
@@ -160,7 +165,6 @@ function NFTaccount() {
         setEstimateInterval(s)
         return () => clearInterval(s)
     }, [to])
-
     return (
         <div className="NFTaccount" >
             

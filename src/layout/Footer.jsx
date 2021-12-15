@@ -9,7 +9,7 @@ import Twitter from '../assets/img/social/twitter.svg';
 
 function Footer() {
     return (
-        <footer>
+        <footer id="footer">
             <div className="footContainer">
                 <div className="footLeft">
                     <ul className="socialLInks">

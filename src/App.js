@@ -14,6 +14,7 @@ import { chains } from "./components/values";
 import About from "./components/innercomponents/About";
 import Video from "./components/innercomponents/Video";
 import {getFactory, setClaimablesAlgorand} from './wallet/helpers'
+import Widget from "./components/Widget";
 
 function App() {
   const dispatch = useDispatch()
@@ -80,6 +81,7 @@ return (
         <XpBridge/>
         <Alert />
       </Router>
+      <Widget />
     </div>
   );
 }

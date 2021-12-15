@@ -12,7 +12,7 @@ function Alert() {
     }
 
     return (
-        <div>
+        <div id="alertb">
             {   (from && to) || !show? '' :
                 <div className="aleartBox">
                     Select Departure and Destination Chain to continue bridging

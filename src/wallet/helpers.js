@@ -27,7 +27,7 @@ export const preloadItem = (item, type, setLoaded) => {
     vid.play();
     vid.onloadeddata = function() {
       setLoaded(true);
-      vid.remove();
+      vid?.remove();
     };
   } else {
     var img = new Image();
@@ -191,7 +191,7 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
       const factory = await getFactory()
       const claimables = await factory.claimableAlgorandNfts(algorandAccount)
       
-      console.log(algorandAccount,'123132132')
+      console.log(algorandAccount,'123132132', claimables)
       if(claimables && claimables.length > 0) {
         if(returnList) return claimables
         else store.dispatch(setAlgorandClaimables(claimables))

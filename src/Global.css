@@ -2385,3 +2385,14 @@ span.transPend {
     color: #fff !important;
 
 }
+
+/* widget */
+
+.widget div#root:after {
+    display: none;
+}
+.widget .aleartBox {
+    opacity: 0;
+    pointer-events: none;
+}
+/* widget end */
