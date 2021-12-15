@@ -18,6 +18,7 @@ export default function AccountModal() {
     const account = useSelector(state => state.general.account)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const MetaMask = useSelector(state => state.general.MetaMask)
+    const algorandWallet = useSelector(state => state.general.AlgorandWallet)
     const trustWallet = useSelector(state => state.general.trustWallet)
     const onMaiar = useSelector(state => state.general.onMaiar)
     const show = useSelector(state => state.general.accountModal)
@@ -25,6 +26,9 @@ export default function AccountModal() {
     const [copied, setCopied] = useState()
     const from = useSelector(state => state.general.from)
     const tronWallet = useSelector(state => state.general.tronWallet)
+    const algorandAccount = useSelector(state => state.general.algorandAccount)
+    const tronAccount = useSelector(state => state.general.tronWallet)
+
     // const step = useSelector(state => state.general.step)
 
     const handleClose = () => {
@@ -83,20 +87,27 @@ export default function AccountModal() {
 
     DetectOutsideClick(accountModal, () => setTimeout(() => handleClose(), 100));
 
-    // useEffect(() => { }, [step])
 
     return ( show ?
         <div ref={accountModal} className="accountBox" show={show} onHide={handleClose} >
             <div className="accountTit">
                 Account <span className="CloseModal" onClick={handleClose}> <img src={Close}/> </span>
             </div>
-            <p className="">{`Connected with ${MetaMask ? 'MetaMask' : onMaiar ? "Maiar Wallet" : trustWallet ? "Trust Wallet" : 'Tron Link'}`}</p>
+            <p className="">{`Connected with ${MetaMask ? 'MetaMask' : onMaiar ? "Maiar Wallet" : trustWallet ? "Trust Wallet" : algorandWallet ? 'Algorand Wallet' : 'Tron Link'}`}</p>
                         { copyIconHover && <img className="copytoltip" src={copyTT} /> }
                         { copied && <img className="copytoltip-tron" src={copiedIcon} /> }
             <CopyToClipboard text={elrondAccount || account || tronWallet}>
                 <div className="nftLink">
                     <img src={NftSelect} />
-                    {account ?`${account.substring(0, 10)}...${account.substring(account.length - 2)}` : elrondAccount ? `${elrondAccount.substring(0, 10)}...${elrondAccount.substring(elrondAccount.length - 2)}`: `${tronWallet.substring(0, 10)}...${tronWallet.substring(tronWallet.length - 2)}`}
+
+                    { account ?
+                    `${account.substring(0, 10)}...${account.substring(account.length - 2)}`
+                     : 
+                     elrondAccount ? `${elrondAccount.substring(0, 10)}...${elrondAccount.substring(elrondAccount.length - 2)}`
+                     :
+                     algorandAccount ? `${algorandAccount.substring(0, 10)}...${algorandAccount.substring(algorandAccount.length - 2)}`
+                     :
+                     `${tronWallet.substring(0, 10)}...${tronWallet.substring(tronWallet.length - 2)}`}
                     <span onClick={() => copy()} onMouseOver={() => setCopyIconHover(true)} onMouseOut={()=> setCopyIconHover(false)} className="copyTokk">
                         <img src={ copyIconHover ? CopyHover : FileCopy} />
                     </span>

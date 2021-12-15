@@ -920,6 +920,10 @@ span.NFTInf:hover img {
     filter: brightness(100);
 }
 
+.info-icon__container{
+    min-width: 24px;
+}
+
 .selectNft img {
     opacity: 0;
     visibility: hidden;
