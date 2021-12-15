@@ -23,6 +23,18 @@
 
 }
 
+.brocken-url{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  color: #62718A;
+}
+
+.brocken-url__msg{
+  text-align: center;
+}
+
 .preload__container{
     width: 224px;
     height: 259px;
@@ -204,14 +216,23 @@
   }
   .nft-box__container--selected{
     width: 120px;
-    height: 200px;
+    /* height: 200px; */
   }
   .nft-list__wrapper {
     gap: 10px;
     justify-content: center;
   }
+  .mage__wrapper{
+    min-height: 120px;
+  }
   .image__wrapper img {
     max-height: 140px;
+  }
+  .brocken-url{
+    padding-top: 20px;
+  }
+  .brocken-url img{
+    width: 30%;
   }
  
 }

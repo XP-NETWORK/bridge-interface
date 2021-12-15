@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 import moment from 'moment';
+import brockenurl from "../assets/img/brockenurl.png"
 
 // Chain
 
@@ -39,7 +40,14 @@ function NFTdetails({ nftInf }){
                 <Modal.Body className="modalBody">
                     <div className="nftDetailBox">
                         <div className="nftDetImg">
-                            <img src={setupURI(image)} alt="NFT" />
+                            { image ? 
+                                <img src={setupURI(image)} alt="NFT" />
+                            :  
+                            <div style={{paddingTop: "10%"}} className="brocken-url">
+                                <img style={{height: "40%"}} src={brockenurl} alt='This NFT image uri is brocken.' />
+                                <span className="brocken-url__msg">NFTs URL<br/> is brocken</span>
+                            </div>
+                            }
                         </div>
                         <div className="nftDetIg">
                             <div className="nftName nftInfBox">

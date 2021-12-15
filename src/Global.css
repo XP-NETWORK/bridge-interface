@@ -42,6 +42,10 @@ h3 {
     margin: 0;
 }
 
+.navBrand:hover{
+    cursor: pointer;
+}
+
 .HeaderArea {
     padding: 8px 45px;
 }
