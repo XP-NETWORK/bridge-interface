@@ -39,9 +39,14 @@ function NavBar() {
                         <Nav.Link className="navMenu__link" target="_blank" href="https://blog.xp.network/">Blog</Nav.Link>
                         { setAddress() ? 
                             <Nav.Link className="nftConnect navMenu__link" onClick={handleShow}>
-                                {setAddress() ?`${setAddress().substring(0, 6)}...${setAddress().substring(setAddress().length - 2)}`:''} 
-                                <img src={NftSelect} />
-                            </Nav.Link> :''}
+                                <div className="account__box">
+                                    {setAddress() ?`${setAddress().substring(0, window.innerWidth <= 600 ? 16 : 10)}...${setAddress().substring(setAddress().length - 2)}`:''} 
+                                    <img src={NftSelect} alt='' />
+                                </div>
+                            </Nav.Link> 
+                            :
+                            ''
+                        }
                     </Nav>
                 </Navbar.Collapse>
                 <AccountModal />
