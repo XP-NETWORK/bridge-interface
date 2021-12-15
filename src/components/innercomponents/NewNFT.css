@@ -270,7 +270,6 @@
   }
   .nft-list__wrapper {
     gap: 10px;
-    justify-content: center;
   }
   .mage__wrapper{
     min-height: 120px;
