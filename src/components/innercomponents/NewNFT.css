@@ -208,8 +208,8 @@
 
 @media screen and (max-width: 375px) {
   .nft-box__container {
-    width: 120px;
-    height: 200px;
+    width: 145px;
+    height: 225px;
   }
   .preload__container{
     width: 120px;
@@ -234,5 +234,12 @@
   .brocken-url img{
     width: 30%;
   }
- 
+}
+
+
+@media screen and (max-width: 320px){
+  .nft-box__container {
+    width: 120px;
+    height: 200px;
+  }
 }

@@ -19,7 +19,7 @@ function NFTgridView() {
     
     useEffect(() => { }, [selectedNFTs])
     return (
-        <div className="nftListBox">
+        <div style={ nfts ? {} : {overflow: "hidden"}} className="nftListBox">
                 { loader ? 
                     <BigLoader />
                 :

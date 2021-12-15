@@ -958,6 +958,19 @@ span.NFTInf:hover img {
     padding: 0px 9px;
 }
 
+.nftEmptyListBox{
+    width: 100%;
+    max-height: 680px;
+    overflow: hidden;
+    margin-right: -24px;
+    margin-top: 26px;
+    padding: 0px 9px;
+}
+
+.nftEmptyListBox> .row> div {
+    margin-bottom: 24px;
+}
+
 .singleNft.nftSelect {
     outline: 1px solid #3E64ED;
 }
@@ -1785,7 +1798,7 @@ span.statComp img {
 .nonftAcc {
     position: absolute;
     left: 49%;
-    top: 160px;
+    top: 200px;
     width: 505px;
     display: flex;
     flex-direction: column;
@@ -2262,6 +2275,9 @@ span.transPend {
 @media screen and (max-width: 600px) {
     .video-responsive iframe {
         height: 280px;
+    }
+    .desChain{
+        justify-content: space-between;
     }
 }
 

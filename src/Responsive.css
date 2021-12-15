@@ -115,6 +115,8 @@
         margin-bottom: 12px;
     }
 
+  
+
     .selectNft {
         left: 12px;
         top: 12px;
@@ -455,7 +457,10 @@
     .collecSlideCont .slick-list {
         overflow: visible;
     }
-
+    
+    .nonftContainer .row{
+        gap: 10px;
+    }
 	
 }
       

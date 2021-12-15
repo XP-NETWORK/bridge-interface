@@ -64,7 +64,7 @@ function NFTlistTop() {
                 <span style={refreshStyle} onClick={refresh}><img className="refreshnfts" src={Refresh} /></span>
             </div>
             <div className="mobileOnly seleNftMob">
-                Select NFTs <span>{ nfts?.length }</span>
+                Select NFTs <span>{`/ ${nfts ? nfts.length : ''} `}</span>
             </div>
             <div className="nftTopRIght">
                 <div className="searchNft desktopOnly">

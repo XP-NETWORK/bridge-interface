@@ -4,7 +4,7 @@ import NoneNFT from './NoneNFT';
 function NFTempty() {
     return (
 
-        <div className="nftListBox">
+        <div className="nftEmptyListBox">
             <NoneNFT />
             <div className="row">
                 <div className="col-lg-4 col-md-4 col-sm-6 col-6">
