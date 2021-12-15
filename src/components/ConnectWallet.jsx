@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 import Close from '../assets/img/icons/close.svg';
-// import Search from '../assets/img/icons/Search.svg';
-// import Wallet from '../assets/img/wallet/wallet.svg';
 import MetaMask from '../assets/img/wallet/MetaMask.svg';
 import AlgorandWallet from "../assets/img/wallet/AlgorandWallet.svg"
 import Tron from '../assets/img/wallet/TronLink.svg';
@@ -25,7 +23,6 @@ import { CHAIN_INFO } from '../components/values';
 import QRCode from 'qrcode'
 import MaiarModal from './MaiarModal';
 import { isEVM } from '../wallet/oldHelper';
-// import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
 function ConnectWallet() {
     const dispatch = useDispatch()
@@ -46,6 +43,8 @@ function ConnectWallet() {
     const AlgoSigner = useSelector(state => state.general.AlgoSigner)
     const algorandWallet = useSelector(state => state.general.AlgorandWallet)
     const onWC = useSelector(state => state.general.WalletConnect)
+    const onMaiarWallet = useSelector(state => state.general.onMaiar)
+    const elrondAccount = useSelector(state => state.general.elrondAccount)
     const [qrCodeString, setQqrCodeString] = useState()
     const [strQR, setStrQr] = useState()
     const { chainId, account, activate } = useWeb3React();
@@ -58,7 +57,23 @@ function ConnectWallet() {
       if (/android/i.test(userAgent)) {
           return true
       }
+  }
 
+  const onMaiarExtension = async () => {
+    debugger
+    const instance = ExtensionProvider.getInstance()
+    try {
+      await instance.init()
+      await instance.login()
+      const { account } = instance
+      dispatch(setOnMaiar(true))
+      dispatch(setElrondAccount(account.address))
+      dispatch(setMaiarProvider(instance))
+    } 
+    catch(err) {
+      window.open('https://getmaiar.com/defi', '_blank');
+      console.log(err)
+    }
   }
 
     //! MetaMask connection.
@@ -154,8 +169,7 @@ function ConnectWallet() {
         }
       }
 
-    const onClientConnect = (maiarProvider) => {
-      console.log(maiarProvider);
+    const onClientConnect = ( maiarProvider ) => {
       return {
         onClientLogin: async () => {
             const add = await maiarProvider.getAddress()
@@ -166,7 +180,6 @@ function ConnectWallet() {
           dispatch(setStep(2))
         },
         onClientLogout: async () => {
-          console.log("Loged Out");
           dispatch(setReset())
         }
       }
@@ -239,7 +252,7 @@ function ConnectWallet() {
 
     useEffect(() => {
       algoConnector.on("connect", (error, payload) => {
-        debugger
+       
         if (error) {
           throw error;
         }
@@ -257,8 +270,8 @@ function ConnectWallet() {
             dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
         }
         // debugger
-        if((metaMask && correct)||(tronLink && correct)||(onWC && correct)||(trustWallet && correct)||(algorandWallet)||(AlgoSigner))dispatch(setStep(2))
-    }, [account, metaMask, chainId, tronLink, onWC, trustWallet, AlgoSigner, algorandWallet])
+        if((metaMask && correct)||(tronLink && correct)||(onWC && correct)||(trustWallet && correct)||(onMaiarWallet && elrondAccount)||(algorandWallet)||(AlgoSigner))dispatch(setStep(2))
+    }, [account, metaMask, chainId, tronLink, onWC, trustWallet, AlgoSigner, algorandWallet, onMaiarWallet])
 
     return (
         <div>
@@ -288,7 +301,8 @@ function ConnectWallet() {
                                 <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
-                                <li style={ OFF }  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
+
+                                <li onClick={() => onMaiarExtension()} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
                                 <li style={ OFF } className="wllListItem"><img src={Ledger} alt="Ledger Icon" /> Ledger</li>
                                 <li style={ OFF } style={ OFF } className="wllListItem"><img src={Trezor} alt="Trezor Icon" /> Trezor</li>
                             </ul>

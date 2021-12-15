@@ -914,6 +914,7 @@ span.NFTInf {
     margin: 0 !important;
     cursor: pointer;
     transition: .1s ease all;
+    background-color: tomato;
 }
 
 span.NFTInf:hover img {

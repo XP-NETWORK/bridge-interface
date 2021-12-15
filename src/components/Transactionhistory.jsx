@@ -62,7 +62,7 @@ export function AlgorandClaimable(props) {
     const AlgoSigner = useSelector(state => state.general.AlgoSigner)
     const signer = {
         address: algorandAccount,
-        algoSigner: algorandWallet ? algoConnector : window.AlgoSigner,
+        algoSigner:  window.AlgoSigner,
         ledger: "MainNet"
     }
 
@@ -80,6 +80,7 @@ export function AlgorandClaimable(props) {
     useEffect(() => {
         load()
     },[])
+    
     const optIn = async () => {
         debugger
         const factory = await getFactory()
