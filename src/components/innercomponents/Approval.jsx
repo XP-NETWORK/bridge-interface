@@ -152,7 +152,7 @@ function Approval(props) {
                 Approval
                 <div className="appInf">
                     <span className="infText">
-                        We'd like to make sure you really want to send the NFT and pay the associated fees.
+                        We'd like to make sure you really want to send the NFTs and pay the associated fees.
                     </span>
                     <img src={InfLith} alt="Inf" />
                 </div>

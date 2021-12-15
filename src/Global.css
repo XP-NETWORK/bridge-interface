@@ -42,6 +42,10 @@ h3 {
     margin: 0;
 }
 
+.navBrand:hover{
+    cursor: pointer;
+}
+
 .HeaderArea {
     padding: 8px 45px;
 }
@@ -55,7 +59,25 @@ h3 {
 
 .navMenu.navbar-nav {
   margin-left: auto;
+  overflow: hidden;
 }
+
+.account__box{
+    width: 190px;
+    height: 40px;
+    background: #232833;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #4532B5;
+}
+
+.account__box:hover{
+    border: 1px solid #3E64ED;
+}
+
+
 
 .navMenu.navbar-nav .nav-link {
     margin-left: 7px;
@@ -341,8 +363,11 @@ span.LineArrow img {
     cursor: pointer;
 }
 
+
+
 .about__text{
     /* background-color: tomato; */
+
     width: 100%;
     height: 300px;
     margin: 0 auto;
@@ -350,6 +375,12 @@ span.LineArrow img {
 }
 .about__text p {
     padding: 0px 40px;
+
+    
+    height: 300px;
+    padding: 0 60px 0 60px;
+    overflow: scroll;
+
 }
 .sliderContainer {
     max-width: 1170px;
@@ -954,6 +985,19 @@ span.NFTInf:hover img {
     margin-right: -24px;
     margin-top: 26px;
     padding: 0px 9px;
+}
+
+.nftEmptyListBox{
+    width: 100%;
+    max-height: 680px;
+    overflow: hidden;
+    margin-right: -24px;
+    margin-top: 26px;
+    padding: 0px 9px;
+}
+
+.nftEmptyListBox> .row> div {
+    margin-bottom: 24px;
 }
 
 .singleNft.nftSelect {
@@ -1783,7 +1827,7 @@ span.statComp img {
 .nonftAcc {
     position: absolute;
     left: 49%;
-    top: 160px;
+    top: 200px;
     width: 505px;
     display: flex;
     flex-direction: column;
@@ -1911,17 +1955,17 @@ span.invalid img {
     max-width: 1227px;
 }
 
-.navMenu.navbar-nav .nftConnect.nav-link {
+/* .navMenu.navbar-nav .nftConnect.nav-link {
     border: 1px solid #4532B5;
     background: #1D212A;
     border-radius: 8px;
     padding: 8px 20px;
-}
+} */
 
-.navMenu.navbar-nav .nftConnect.nav-link:hover{
+/* .navMenu.navbar-nav .nftConnect.nav-link:hover{
     border: 1px solid #297EFF;
     background: none;
-}
+} */
 
 .navMenu.navbar-nav .nftConnect.nav-link img {
     margin-left: 6px;
@@ -2264,6 +2308,7 @@ span.transPend {
     .video-responsive iframe {
         height: 280px;
     }
+
     .navbar-collapse{
     }
     .navMenu.navbar-nav .nav-link:first-child {
@@ -2271,6 +2316,10 @@ span.transPend {
     }
     .navMenu.navbar-nav .nav-link:last-child {
         border-radius: 0px 0px 18px 18px;
+
+    .desChain{
+        justify-content: space-between;
+
     }
 }
 
@@ -2403,6 +2452,7 @@ span.transPend {
 
 }
 
+
 /* widget */
 
 .widget div#root:after {
@@ -2413,3 +2463,10 @@ span.transPend {
     pointer-events: none;
 }
 /* widget end */
+
+@media screen and (max-width: 600px) {
+    .account__box{
+        width: 250px
+    }
+}
+

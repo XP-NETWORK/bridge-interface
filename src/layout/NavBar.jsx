@@ -31,6 +31,7 @@ function NavBar() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="navMenu">
+                    <Nav.Link className="navMenu__link" target="_blank" href="https://xp.network/">About</Nav.Link>
                         <Nav.Link className="navMenu__link" target="_blank" href="https://xp.network/">Home</Nav.Link>
                         <Nav.Link className="navMenu__link" target="_blank" href="https://docs.xp.network/">Docs</Nav.Link>
                         {/* <Nav.Link className="" target="_blank" href="https://xp.network/api/">Bridge API</Nav.Link> */}
@@ -38,9 +39,14 @@ function NavBar() {
                         <Nav.Link className="navMenu__link" target="_blank" href="https://blog.xp.network/">Blog</Nav.Link>
                         { setAddress() ? 
                             <Nav.Link className="nftConnect navMenu__link" onClick={handleShow}>
-                                {setAddress() ?`${setAddress().substring(0, 6)}...${setAddress().substring(setAddress().length - 2)}`:''} 
-                                <img src={NftSelect} />
-                            </Nav.Link> :''}
+                                <div className="account__box">
+                                    {setAddress() ?`${setAddress().substring(0, window.innerWidth <= 600 ? 16 : 10)}...${setAddress().substring(setAddress().length - 2)}`:''} 
+                                    <img src={NftSelect} alt='' />
+                                </div>
+                            </Nav.Link> 
+                            :
+                            ''
+                        }
                     </Nav>
                 </Navbar.Collapse>
                 <AccountModal />

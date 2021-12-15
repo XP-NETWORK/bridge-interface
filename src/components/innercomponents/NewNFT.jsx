@@ -25,12 +25,20 @@ export default function NFT({nft, index}) {
     }
 
     useEffect(() => { }, [selectedNFTs])
+    console.log("nft.uri", nft.uri)
     return ( 
         <div className={`nft-box__wrapper ${!imageLoaded ? 'preload-cont' : ''}`}>
             <div style={ !imageLoaded && nft.image ? HIDDEN : {}} className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
                 <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
                     <div className="image__wrapper">
-                        {nft.image ? <img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} /> : <img src={brockenurl} alt='' /> }
+                        { nft.uri ? 
+                            <img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} /> 
+                            : 
+                            <div className="brocken-url">
+                                <img onLoad={() => setImageLoaded(true)} src={brockenurl} alt='This NFT image uri is brocken.' />
+                                <span className="brocken-url__msg">NFTs URL<br/> is brocken</span>
+                            </div>
+                        }
                         <div className="radio__container">
                             { !isSelected ? <span className="selected-radio"></span> : <img src={CheckGreen} alt=''/>}
                         </div>
