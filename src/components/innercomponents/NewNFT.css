@@ -201,6 +201,15 @@
 }
 
 @media screen and (max-width: 425px) {
+  .nft-box__container {
+    width: 165px;
+    height: 260px;
+  }
+
+  .nft-list__wrapper{
+    gap: 10px;
+  }
+
   .preload__container{
     height: 200px;
   }
