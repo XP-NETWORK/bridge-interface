@@ -147,7 +147,7 @@ export const chainsConfig = {
         tx: 'https://etherscan.io/tx/',
         token: 'ETH',
         // chainData: ChainData.Ethereum,
-        Chain: Chain.ROPSTEN,
+        Chain: Chain.ETHEREUM,
     },
     BSC: {
         type: EVM,
