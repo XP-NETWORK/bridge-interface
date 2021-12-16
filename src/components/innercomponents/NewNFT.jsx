@@ -40,7 +40,10 @@ export default function NFT({nft, index}) {
                             </div>
                         }
                         <div className="radio__container">
-                            { !isSelected ? <span className="selected-radio"></span> : <img src={CheckGreen} alt=''/>}
+                            { !isSelected ? 
+                            <span className="selected-radio"></span> 
+                            : 
+                            <img src={CheckGreen} alt=''/>}
                         </div>
                     </div>
                 </div>

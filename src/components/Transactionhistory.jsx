@@ -12,7 +12,6 @@ import axios from 'tronweb/node_modules/axios';
 import { getFactory, setClaimablesAlgorand, setNFTS } from '../wallet/helpers';
 import { claimAlgorandPopup, removeAlgorandClaimable, setAlgorandClaimables } from '../store/reducers/generalSlice';
 import { algoConnector } from "../wallet/connectors"
-
 // Chain
 
 function Transactionhistory() {
@@ -60,11 +59,35 @@ export function AlgorandClaimable(props) {
     const [originalChain,setOrigin] = useState()
     const algorandWallet = useSelector(state => state.general.AlgorandWallet)
     const AlgoSigner = useSelector(state => state.general.AlgoSigner)
-    const signer = {
-        address: algorandAccount,
-        algoSigner:  window.AlgoSigner,
-        ledger: "MainNet"
+
+    const getAlgorandWalletSigner = async () => {
+        debugger
+        if( algorandWallet ){
+            try {
+                const factory = await getFactory()
+                const inner = await factory.inner(15)
+                console.log(algorandAccount);
+                const signer = await inner.walletConnectSigner(algoConnector, algorandAccount)
+                return signer
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+        else{
+            const signer = {
+                address: algorandAccount,
+                algoSigner: window.AlgoSigner,
+                ledger: "MainNet"
+            }
+            return signer
+        }
     }
+
+    // const signer = {
+    //     address: algorandAccount,
+    //     algoSigner: window.AlgoSigner,
+    //     ledger: "MainNet"
+    // }
 
     const load = async () => {
         const res = await axios.get(uri)
@@ -86,13 +109,16 @@ export function AlgorandClaimable(props) {
         const factory = await getFactory()
         const algorand = await factory.inner(15)
         const isOpted = await algorand.isOptIn(algorandAccount, nftId)
-        console.log(algorand)
         if(!isOpted) {
-            const optin = await algorand.optInNft(signer, props.nft)
+           
+            
+                const optin = await algorand.optInNft(getAlgorandWalletSigner(), props.nft)
+            
             if(optin) setIsOptin(true)
         } else setIsOptin(true)
         
     }
+
     const claim = async () => {
         if(isOptin) {
             const factory = await getFactory()

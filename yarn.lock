@@ -15996,9 +15996,11 @@ xmlhttprequest-ssl@~2.0.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#master-dist":
   version "0.1.0"
-  resolved "git+https://github.com/xp-network/xpjs#efcc9b44a2d0687dc505b855a383727020602dd3"
+  resolved "git+https://github.com/xp-network/xpjs#9ddf1cb14d088afe6c984445bdf58667f72674b5"
   dependencies:
     "@elrondnetwork/erdjs" "^8.0.1-alpha.8"
+    "@json-rpc-tools/utils" "^1.7.6"
+    "@walletconnect/client" "^1.7.0"
     algosdk "^1.12.0"
     axios "^0.21.1"
     bignumber.js "^9.0.1"
