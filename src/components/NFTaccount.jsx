@@ -140,7 +140,7 @@ function NFTaccount() {
                     )
                     dispatch(setTxnHash({txn: result, nft}))
                 } catch(err) {
-                    dispatch(setError(err.data?.message))
+                    dispatch(setError(err.data?.message), 'hello err')
                 }
 
             }
