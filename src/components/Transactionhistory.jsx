@@ -66,7 +66,6 @@ export function AlgorandClaimable(props) {
             try {
                 const factory = await getFactory()
                 const inner = await factory.inner(15)
-                console.log(algorandAccount);
                 const signer = await inner.walletConnectSigner(algoConnector, algorandAccount)
                 return signer
             } catch (error) {
@@ -109,10 +108,10 @@ export function AlgorandClaimable(props) {
         const factory = await getFactory()
         const algorand = await factory.inner(15)
         const isOpted = await algorand.isOptIn(algorandAccount, nftId)
+    
         if(!isOpted) {
-           
-            
-                const optin = await algorand.optInNft(getAlgorandWalletSigner(), props.nft)
+            const signer = await getAlgorandWalletSigner()
+            const optin = await algorand.optInNft(signer, props.nft)
             
             if(optin) setIsOptin(true)
         } else setIsOptin(true)
@@ -123,11 +122,7 @@ export function AlgorandClaimable(props) {
         if(isOptin) {
             const factory = await getFactory()
             const algorand = await factory.inner(15)
-            const signer = {
-                address: algorandAccount,
-                algoSigner: window.AlgoSigner,
-                ledger: "MainNet"
-            }
+            const signer = await getAlgorandWalletSigner()
             console.log(props.nft)
             try {
                 const c = await algorand.claimNft(signer, props.nft)

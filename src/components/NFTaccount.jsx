@@ -18,6 +18,7 @@ import Comment from "../components/innercomponents/Comment"
 import{ ChainData, getOldFactory } from '../wallet/oldHelper'
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import {chainsConfig} from './values'
+import { algoConnector } from "../wallet/connectors"
 
 
 function NFTaccount() {
@@ -43,6 +44,30 @@ function NFTaccount() {
     const onMaiar = useSelector(state => state.general.onMaiar)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const bigNumberFees = useSelector(state => state.general.bigNumberFees)
+    const algorandWallet = useSelector(state => state.general.AlgorandWallet)
+
+
+    const getAlgorandWalletSigner = async () => {
+        debugger
+        if( algorandWallet ){
+            try {
+                const factory = await getFactory()
+                const inner = await factory.inner(15)
+                const signer = await inner.walletConnectSigner(algoConnector, algorandAccount)
+                return signer
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+        else{
+            const signer = {
+                address: algorandAccount,
+                algoSigner: window.AlgoSigner,
+                ledger: "MainNet"
+            }
+            return signer
+        }
+    }
     
     async function getNFTsList(){
         try {
@@ -84,11 +109,7 @@ function NFTaccount() {
         const fromChain = await factory.inner(chainsConfig[from].Chain)
         const provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : ''
         const signer = 
-        from === 'Algorand' ? {
-            algoSigner: window.AlgoSigner,
-            address: algorandAccount,
-            ledger: "MainNet"
-            } :
+        from === 'Algorand' ? await getAlgorandWalletSigner() :
         from === 'Elrond' ? maiarProvider ? maiarProvider : ExtensionProvider.getInstance() :
         from === 'Tron' ? window.tronLink 
         : provider.getSigner(account)
@@ -119,7 +140,7 @@ function NFTaccount() {
                     )
                     dispatch(setTxnHash({txn: result, nft}))
                 } catch(err) {
-                    dispatch(setError(err.data.message))
+                    dispatch(setError(err.data?.message))
                 }
 
             }

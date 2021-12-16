@@ -9,6 +9,7 @@ import { isEqual } from '../helpers';
 import { getFactory, handleChainFactory, isALLNFTsApproved, } from '../../wallet/helpers';
 import { getOldFactory } from '../../wallet/oldHelper';
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
+import { algoConnector } from "../../wallet/connectors"
 
 
 const TronWeb = require('tronweb')
@@ -29,7 +30,31 @@ function Approval(props) {
     const onMaiar = useSelector(state => state.general.onMaiar)
     const maiarProvider = useSelector(state => state.general.maiarProvider)
     const bigNumberFees = useSelector(state => state.general.bigNumberFees)
+    const algorandWallet = useSelector(state => state.general.AlgorandWallet)
+
     
+
+    const getAlgorandWalletSigner = async () => {
+        debugger
+        if( algorandWallet ){
+            try {
+                const factory = await getFactory()
+                const inner = await factory.inner(15)
+                const signer = await inner.walletConnectSigner(algoConnector, algorandAccount)
+                return signer
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+        else{
+            const signer = {
+                address: algorandAccount,
+                algoSigner: window.AlgoSigner,
+                ledger: "MainNet"
+            }
+            return signer
+        }
+    }
 
     const approveEach = async (nft, signer, chain, index) => {
         debugger
@@ -64,13 +89,12 @@ function Approval(props) {
             }
             else if(from.type === 'Algorand') {
                 const c = await factory.inner(15)
-                const signer = {
-                    address: algorandAccount,
-                    algoSigner: window.AlgoSigner,
-                    ledger: "MainNet"
+                const signer = await getAlgorandWalletSigner()
+                try {
+                    const approv = await c.preTransfer(signer, nft, bigNumberFees)
+                } catch (error) {
+                    console.log(error);
                 }
-                const approv = await c.preTransfer(signer, nft, bigNumberFees)
-                console.log(c,'13223189231dasdasdas9821389', factory)
                 dispatch(updateApprovedNFTs(nft))
                 setFinishedApproving(arr)
             }
