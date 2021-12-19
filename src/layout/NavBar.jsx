@@ -24,10 +24,10 @@ function NavBar() {
 
     return (
         <header className="HeaderArea" id="Header"> 
-            <Navbar expand="md">
+            <Navbar expand="lg">
                 <Navbar.Brand 
                 onClick={() => dispatch(setReset())}  
-                className="navBrand"><img src={Logo} alt="Xp Network" /></Navbar.Brand>
+                className="navBrand"><img src={Logo} alt="Xp Network"/></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="navMenu">

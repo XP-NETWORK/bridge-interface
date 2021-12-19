@@ -43,13 +43,13 @@
    
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 860px) {
     .mobileOnly {
         display: none !important;
     }
   
 }
-@media(max-width: 768px) {
+@media(max-width: 766px) {
     .sendNftTit {
         margin-top: -50px;
     }
@@ -83,7 +83,7 @@
         padding-bottom: 24px;
     }
 }
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 860px) {
 
     .mobileOnly.seleNftMob {
         display: flex;

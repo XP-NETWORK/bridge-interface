@@ -47,7 +47,7 @@ export default function NFTSelectBox() {
         { from && to ?
             <span onMouseDown={() => setSwapDown(true)} onMouseUp={()=>setSwapDown(false)} onMouseOut={()=> setSwapHover(false)} onMouseOver={() => setSwapHover(prev =>!prev)} onClick={ e => switchChains(e)} className="chainArrow"><img src={ swapDown ? SwapPressed : swapHover ? SwapHover : ChainArrow } alt="" /></span>
         :
-            <span className="chainArrow"><img src={ ChainArrow } alt="" /></span> 
+            <span className="chainArrow"><img src={ ChainArrow } alt="arrow-swap" /></span> 
         }
         <span className="LineArrow"><img src={ LineArrow } alt="" /></span>
         <div className="selChain seleDesti" onClick={() => handleShow("destination")}>

@@ -98,7 +98,7 @@ function NFTlistTop() {
             </div>
             <div className="mobileOnly mobSearch">
                 <form action="#">
-                    <input onClick={e => console.log(e)} type="search" placeholder="Search NFT" />
+                    <input onClick={e => console.log(e)} type="search" placeholder="Search NFT"  onChange={e => handleSearch(e)}/>
                     <button type="button"><img src={Search} /></button>
                 </form>
             </div>

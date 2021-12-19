@@ -140,10 +140,11 @@
     position: relative;
     box-sizing: border-box;
     outline: solid 1px #3E64ED;
-}
 
-.nft-box__container:hover {
+}
+ .nft-box__wrapper:hover{
   outline: solid 1px #3E64ED;
+  
 }
 
 .selected-radio {

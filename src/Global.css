@@ -46,6 +46,8 @@ h3 {
     cursor: pointer;
 }
 
+
+
 .HeaderArea {
     padding: 8px 45px;
 }
@@ -272,8 +274,10 @@ ul.socialLInks li img:hover {
 
 .selChain> div:hover:after {
     filter: brightness(100);
-    background-color: rgba(29, 33, 42, 0.10);
+    /* background-color: rgba(29, 33, 42, 0.10); */
 }
+
+
 
 span.chainArrow {
     display: block;
@@ -282,6 +286,7 @@ span.chainArrow {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2000;
+    
 }
 
 span.chainArrow:hover{
@@ -779,6 +784,7 @@ span.wallet {
 }
 .nft-box__wrapper {
     border-radius: 20px;
+    margin: 1px 0px;
 }
 .yourNft span img {
     display: block;
@@ -796,12 +802,15 @@ span.wallet {
     border: 1px solid #3E64ED !important;
 }
 
-.singleNft.missing {
+.singleNft.missing{
     background: linear-gradient(335deg, rgba(41, 47, 63, 0.3) -0.71%, rgba(41, 47, 63, 0) 61.32%);
     border: 1px dashed #36405A;
     padding-top: 3px;
     padding-bottom: 138%;
+
 }
+
+
 .singleNft.missing:hover{
     cursor: unset;
 }
@@ -2459,6 +2468,15 @@ span.transPend {
     pointer-events: none;
 }
 /* widget end */
+
+@media (max-width: 931px){
+    .navBrand img {
+        width: 250px !important;
+        max-width: unset;
+        margin-bottom: 2px !important;
+    }
+}
+
 
 @media screen and (max-width: 600px) {
     .account__box{
