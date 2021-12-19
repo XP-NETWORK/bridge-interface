@@ -4,8 +4,8 @@ import Departure from '../assets/img/nftSelect/departure.svg';
 import Destination from '../assets/img/nftSelect/destination.svg';
 import ChainArrow from '../assets/img/nftSelect/ChianArrow.svg';
 import LineArrow from '../assets/img/nftSelect/Line.svg';
-import SwapHover from "../assets/img/icons/SwapHover.png"
-import SwapPressed from "../assets/img/icons/SwapPressed.png"
+import SwapHover from "../assets/img/icons/SwapHover.svg"
+import SwapPressed from "../assets/img/icons/SwapPressed.svg"
 import { useDispatch } from 'react-redux';
 import { setChainModal, setDepartureOrDestination, setTo, setFrom  } from "../store/reducers/generalSlice"
 import { useSelector, } from 'react-redux';
