@@ -123,7 +123,6 @@ export function AlgorandClaimable(props) {
             const factory = await getFactory()
             const algorand = await factory.inner(15)
             const signer = await getAlgorandWalletSigner()
-            console.log(props.nft)
             try {
                 const c = await algorand.claimNft(signer, props.nft)
                 setTimeout(() => {
@@ -133,7 +132,7 @@ export function AlgorandClaimable(props) {
                 },500)
 
             } catch(err) {
-                console.log(err, 'erlerad')
+                console.log(err)
             }
         }
     }

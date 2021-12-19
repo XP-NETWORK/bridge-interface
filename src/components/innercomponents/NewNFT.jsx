@@ -25,7 +25,7 @@ export default function NFT({nft, index}) {
     }
 
     useEffect(() => { }, [selectedNFTs])
-    console.log("nft.uri", nft.uri)
+    
     return ( 
         <div className={`nft-box__wrapper ${!imageLoaded ? 'preload-cont' : ''}`}>
             <div style={ !imageLoaded && nft.image ? HIDDEN : {}} className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
