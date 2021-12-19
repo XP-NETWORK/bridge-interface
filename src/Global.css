@@ -89,7 +89,7 @@ h3 {
     align-items: center;
     text-align: right;
     color: #F4F3F9;
-    opacity: 0.9;
+    /* opacity: 0.9; */
     /* max-width: fit-content; */
 }
 
@@ -2302,7 +2302,13 @@ span.transPend {
     position: relative;
 }
 
-
+.navbar-collapse{
+    position: sticky; 
+    top: 0;
+    z-index: 200;
+    background: #232833;
+    opacity: 1.0 !important;
+}
 
 .video-responsive iframe {
     width: 100%;
@@ -2318,6 +2324,11 @@ span.transPend {
     }
 
     .navbar-collapse{
+        position: sticky; 
+        top: 0;
+        z-index: 200;
+        background: #232833;
+        opacity: 1.0 !important;
     }
     .navMenu.navbar-nav .nav-link:first-child {
         border-radius: 18px 18px 0px 0px;
