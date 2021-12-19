@@ -74,7 +74,7 @@ function NFTlistTop() {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             <form action="#">
-                                <input onClick={e => console.log(e)} onChange={e => handleSearch(e)}  type="text" placeholder="Search NFT" />
+                                <input onChange={e => handleSearch(e)}  type="text" placeholder="Search NFT" />
                                 {/* { search ?  <button type="button"><img src={Close} alt="" /></button> : <button type="button"><img src={Search} alt=""/></button>} */}
                                 <button type="button"><img src={Search} /></button>e
                             </form>
@@ -98,7 +98,7 @@ function NFTlistTop() {
             </div>
             <div className="mobileOnly mobSearch">
                 <form action="#">
-                    <input onClick={e => console.log(e)} type="search" placeholder="Search NFT"  onChange={e => handleSearch(e)}/>
+                    <input type="search" placeholder="Search NFT"  onChange={e => handleSearch(e)}/>
                     <button type="button"><img src={Search} /></button>
                 </form>
             </div>

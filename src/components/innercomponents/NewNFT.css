@@ -144,7 +144,6 @@
 }
  .nft-box__wrapper:hover{
   outline: solid 1px #3E64ED;
-  
 }
 
 .selected-radio {
@@ -203,11 +202,11 @@
 
 @media screen and (max-width: 600px){
   .nft-list__wrapper{
-    gap: 20px;
+    gap: 10px;
   }
 
   .nft-box__wrapper {
-    width: 45%;
+    width: 47%;
   }
   .nft-box__container{
     width: 100%;
@@ -216,6 +215,10 @@
   .nft-box__container--selected{
     width: 100%;
     max-height: 270px;
+  }
+
+  .nft-box__wrapper:hover{
+    outline: unset;
   }
 }
 

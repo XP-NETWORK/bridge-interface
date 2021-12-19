@@ -21,15 +21,14 @@ function Footer() {
                 </div>
                 <div className="footRight">
                     <div className="powerBy">
-                        <a href="" className="PowerLink">
+                        <a href="https://xp.network/" target="_blank" rel="noreferrer" className="PowerLink">
                             Powered by
                             <img src={XpNetwork} alt="Powered by" />
                         </a>
                     </div>
-                    <div className="priPoli">
-                        {/* <a href="#" className="pripolink">Terms</a> */}
+                    {/* <div className="priPoli">
                         <a href="https://xp.network/privacy-policy/" target="_blank" className="pripolink">Privacy Policy</a>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </footer>

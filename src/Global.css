@@ -425,9 +425,10 @@ span.LineArrow img {
     position: fixed;
     display: flex;
     align-items: center;
+    font-size: 14px;
     z-index: 11;
     left: 50%;
-    bottom: 84px;
+    bottom: 240px;
     transform: translate(-50%);
     background: linear-gradient(291.33deg, #181B23 67.06%, #412194 183.04%);
     border-radius: 16px;
@@ -782,10 +783,12 @@ span.wallet {
 .yourNft span {
     margin-left: 8px;
 }
+
 .nft-box__wrapper {
     border-radius: 20px;
     margin: 1px 0px;
 }
+
 .yourNft span img {
     display: block;
     margin-right: 7px;
@@ -807,9 +810,9 @@ span.wallet {
     border: 1px dashed #36405A;
     padding-top: 3px;
     padding-bottom: 138%;
+    width: 224px;
 
 }
-
 
 .singleNft.missing:hover{
     cursor: unset;
@@ -2477,10 +2480,19 @@ span.transPend {
     }
 }
 
-
 @media screen and (max-width: 600px) {
     .account__box{
         width: 250px
     }
 }
 
+
+@media screen and (max-width: 768px) {
+    .singleNft.missing{
+       width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px){
+
+}
