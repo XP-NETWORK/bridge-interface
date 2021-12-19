@@ -1,47 +1,39 @@
 import React from 'react'
 import NoneNFT from './NoneNFT';
+import "../innercomponents/NFTempty.css"
 
 function NFTempty() {
     return (
 
         <div className="nftEmptyListBox">
             <NoneNFT />
-            <div className="row">
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft missing">
-                    </div>
+            <div className="empty__row">
+                <div className="empty__box">
+                    
                 </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft missing">
-                    </div>
+                <div className="empty__box">
+                    
                 </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft missing">
-                    </div>
+                <div className="empty__box">
+                    
                 </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft missing">
-                    </div>
+                <div className="empty__box">
+                    
                 </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft missing">
-                    </div>
+                <div className="empty__box">
+                    
                 </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft missing">
-                    </div>
+                <div className="empty__box">
+                    
                 </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft missing">
-                    </div>
+                <div className="empty__box">
+                   
                 </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft missing">
-                    </div>
+                <div className="empty__box">
+                    
                 </div>
-                <div className="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <div className="singleNft missing">
-                    </div>
+                <div className="empty__box">
+                    
                 </div>
             </div>
         </div>

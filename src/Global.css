@@ -2483,7 +2483,7 @@ span.transPend {
     .account__box{
         width: 250px
     }
-    
+
     .navMenu{
         width:  calc(100% - 30px);
         position: fixed;
