@@ -114,7 +114,6 @@ export const getFactory = async () => {
   store.dispatch(setFactory(factory))
   return factory;
 };
-
 export const handleChainFactory = async (someChain) => {
   // debugger
   const factory = await getFactory();
@@ -141,6 +140,8 @@ export const handleChainFactory = async (someChain) => {
     ? (chain = await factory.inner(Chain.SOLANA))
     : someChain === "Cardano"
     ? (chain = await factory.inner(Chain.CARDANO))
+    : someChain === "Fuse"
+    ? (chain = await factory.inner(Chain.FUSE))
     : (chain = "");
   return chain;
 };
@@ -149,7 +150,9 @@ export const getNFTS = async (wallet, from) => {
   debugger
   const {algorandAccount} = store.getState().general
   const factory = await getFactory();
+  console.log(factory, 'askd31k1d3jk33dkjd23k', chainsConfig[from])
   const chain = await factory.inner(chainsConfig[from].Chain)
+  console.log(chainsConfig, chain, 'dqkjldskj3kjdkjd3jk')
   try {
     console.log('hel342432234342324lo')
     const res = 

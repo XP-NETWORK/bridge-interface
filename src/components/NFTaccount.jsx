@@ -75,7 +75,6 @@ function NFTaccount() {
             const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             await setNFTS(w, from)
             } catch (error) {  
-                console.log("...",error); 
                 dispatch(setError(error.message))
             }
     }
@@ -90,14 +89,15 @@ function NFTaccount() {
             : from === 'Algorand' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
             : from === 'Elrond' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
             : account 
-            const fact = from === 'Algorand' || from === 'Elrond' ? await getFactory() : await getOldFactory()
+            const fact = from === 'Fuse' === from || 'Algorand' || from === 'Elrond' ? await getFactory() : await getOldFactory()
             const fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
             const bigNum = fee.multipliedBy(1.1).decimalPlaces(0).toString();
             dispatch(setBigNumFees(bigNum))
             const fees = await Web3Utils.fromWei(bigNum, "ether")
             setFees(selectedNFTList.length * fees)
-        } catch (err) {
-          console.log(err);
+        } catch (error) {
+          
+          dispatch(setError(error))
         }
     }
     
