@@ -310,14 +310,18 @@ export const isAddress = async address => {
 }
 
 export const getOldFactory = async () => {
+   
     const {from, to} = store.getState().general
-      const fromParams = await getFromParams()
-      const toParams = await getFactoryParams(to.key)
-      console.log(fromParams, toParams,'apramsa')
-      return ChainFactory(moralisParams,{
-        ...toParams,
-        ...fromParams
-      })
+      try {
+        const fromParams = await getFromParams()
+        const toParams = await getFactoryParams(to.key)
+        return ChainFactory(moralisParams,{
+          ...toParams,
+          ...fromParams
+        })
+      } catch (error) {
+          console.log(error.message);
+      }
   }
   const EVM_VALIDATORS = [
     '0xadFF46B0064a490c1258506d91e4325A277B22aE',

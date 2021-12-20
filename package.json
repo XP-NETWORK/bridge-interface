@@ -5,6 +5,7 @@
   "dependencies": {
     "@elrondnetwork/erdjs": "^8.0.1-alpha.13",
     "@json-rpc-tools/utils": "^1.7.6",
+    "@randlabs/myalgo-connect": "^1.1.1",
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
