@@ -90,10 +90,6 @@ function NFTaccount() {
             : from === 'Tron' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
             : from === 'Algorand' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
             : from === 'Elrond' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
-<<<<<<< HEAD
-            : account 
-            const fact = from === 'Fuse' === from || 'Algorand' || from === 'Elrond' ? await getFactory() : await getOldFactory()
-=======
             : account;
             // const fact = from === 'Algorand' || from === 'Elrond' ? await getFactory() : await getOldFactory()
             if(from === 'Algorand' || from === 'Elrond'){
@@ -102,21 +98,14 @@ function NFTaccount() {
             else{
                  fact = await getOldFactory()
             }
->>>>>>> ca206f5f4f93fefdefa455658dc295229b430c7d
             const fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
             const bigNum = fee.multipliedBy(1.1).decimalPlaces(0).toString();
             dispatch(setBigNumFees(bigNum))
             const fees = await Web3Utils.fromWei(bigNum, "ether")
             setFees(selectedNFTList.length * fees)
         } catch (error) {
-<<<<<<< HEAD
           
           dispatch(setError(error))
-=======
-           
-        //   const message = JSON.parse(error.error)
-          console.log(JSON.parse(error.error))
->>>>>>> ca206f5f4f93fefdefa455658dc295229b430c7d
         }
     }
     
