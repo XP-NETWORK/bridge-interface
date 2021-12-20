@@ -1,0 +1,29 @@
+.empty__row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.empty__box{
+    width: calc(90% / 3);
+    height: 299px;
+    border-radius: 20px;
+    border: 1px dashed #36405A;
+}
+
+@media screen and (max-width: 1200px){
+    .empty__box{
+        /* width: 170px; */
+        height: 299px;
+        border-radius: 20px;
+        border: 1px dashed #36405A;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .empty__box{
+        width: calc(90% / 2);
+        height: 250px;
+    }
+
+}

@@ -1832,7 +1832,7 @@ span.statComp img {
 
 .nonftAcc {
     position: absolute;
-    left: 49%;
+    left: 47.3%;
     top: 200px;
     width: 505px;
     display: flex;
@@ -2483,7 +2483,7 @@ span.transPend {
     .account__box{
         width: 250px
     }
-    
+
     .navMenu{
         width:  calc(100% - 30px);
         position: fixed;
