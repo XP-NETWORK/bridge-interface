@@ -147,7 +147,7 @@ export const handleChainFactory = async (someChain) => {
 };
 
 export const getNFTS = async (wallet, from) => {
-  debugger
+  // debugger
   const {algorandAccount} = store.getState().general
   const factory = await getFactory();
   console.log(factory, 'askd31k1d3jk33dkjd23k', chainsConfig[from])
@@ -210,7 +210,7 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 }
 
 export const setNFTS = async (w, from) => {
-  debugger
+  // debugger
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from)
   const parsedNFTs = await parseNFTS(res)
