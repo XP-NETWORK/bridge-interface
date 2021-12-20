@@ -104,12 +104,13 @@ function NFTaccount() {
             const fees = await Web3Utils.fromWei(bigNum, "ether")
             setFees(selectedNFTList.length * fees)
         } catch (error) {
-          
-          dispatch(setError(error))
+          console.log(error);
+        //   dispatch(setError(error))
         }
     }
     
     const sendEach = async (nft) => {
+        debugger
         const factory = await getFactory()
         const toChain = await factory.inner(chainsConfig[to].Chain)
         const fromChain = await factory.inner(chainsConfig[from].Chain)
@@ -136,6 +137,7 @@ function NFTaccount() {
             } 
             else {
                 try {
+                    console.log(factory);
                     result = await factory.transferNft(
                         fromChain, // The Source Chain.
                         toChain,   // The Destination Chain.
@@ -144,8 +146,10 @@ function NFTaccount() {
                         receiver,   // The address who you are transferring the NFT to.
                         bigNumberFees
                     )
+                    console.log(result);
                     dispatch(setTxnHash({txn: result, nft}))
                 } catch(err) {
+                    console.log(err)
                     dispatch(setLoading(false))
                     dispatch(setError(err.data?.message))
                 }

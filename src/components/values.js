@@ -221,7 +221,7 @@ export const chainsConfig = {
         img: Fuse,
         token: "Fuse",
         rpc: "https://rpc.fuse.io/",
-        chainId: 8888,
+        chainId: 122,
         Chain: Chain.FUSE
     }
 
@@ -361,7 +361,7 @@ export const CHAIN_INFO = {
         nonce: 16,
         decimals: 1e18,
         rpc: "https://rpc.fuse.io/",
-        chainId: 8888,
+        chainId: 122,
         blockExplorerUrls: "",
         contract: ""
     }

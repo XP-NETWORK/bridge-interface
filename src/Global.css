@@ -427,7 +427,7 @@ span.LineArrow img {
     font-size: 14px;
     z-index: 11;
     left: 50%;
-    bottom: 240px;
+    bottom: 25vh;
     transform: translate(-50%);
     background: linear-gradient(291.33deg, #181B23 67.06%, #412194 183.04%);
     border-radius: 16px;
