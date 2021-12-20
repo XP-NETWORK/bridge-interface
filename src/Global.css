@@ -768,7 +768,7 @@ span.wallet {
     background: #262a36;
     top: 60px;
     right: 15px;
-    z-index: 100;
+    z-index: 200;
 }
 
 .yourNft, .yourNft span {
