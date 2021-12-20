@@ -97,7 +97,7 @@ export default function AccountModal() {
             <p className="">{`Connected with ${MetaMask ? 'MetaMask' : onMaiar ? "Maiar Wallet" : trustWallet ? "Trust Wallet" : algorandWallet ? 'Algorand Wallet' : MyAlgo ? "MyAlgo" : 'Tron Link'}`}</p>
                         { copyIconHover && <img className="copytoltip" src={copyTT} /> }
                         { copied && <img className="copytoltip-tron" src={copiedIcon} /> }
-            <CopyToClipboard text={elrondAccount || account || tronWallet}>
+            <CopyToClipboard text={elrondAccount || account || tronWallet || algorandAccount}>
                 <div className="nftLink">
                     <img src={NftSelect} />
 

@@ -7,6 +7,7 @@ import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/connectors"
 import { setTronWallet, setAccount, setConfirmMaiarMob, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp, setTrustWallet, setAlgoSigner, setAlgorandAccount, connectAlgorandWalletClaim } from "../store/reducers/generalSlice"
 import QRCode from 'qrcode'
+import MyAlgoConnect from '@randlabs/myalgo-connect';
 import AlgorandIcon from '../assets/img/algorandwallet.svg'
 function ConnectAlgorand() {
     const dispatch = useDispatch()
@@ -29,95 +30,104 @@ function ConnectAlgorand() {
     const { chainId, account, activate } = useWeb3React();
 
 
-    function getMobOps() {
-      // debugger
-      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  //   function getMobOps() {
+  //     // debugger
+  //     var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
-      if (/android/i.test(userAgent)) {
-          return true
-      }
+  //     if (/android/i.test(userAgent)) {
+  //         return true
+  //     }
 
-  }
+  // }
 
     //! MetaMask connection.
-    const onInjected = async () => {
-        try {
-            if(!window.ethereum && window.innerWidth <= 600) {
-                const uri = `https://metamask.app.link/dapp/${window.location.host + `?to=${to.text}&from=${from.text}`}/`
-              window.open(uri)
-            }
-            await activate(injected);
-            dispatch(setMetaMask(true))
-          } 
-          catch (ex) {
-              dispatch(setError(ex))
-              console.log(ex)
-          }
-          setShow(false)
-    }
+    // const onInjected = async () => {
+    //     try {
+    //         if(!window.ethereum && window.innerWidth <= 600) {
+    //             const uri = `https://metamask.app.link/dapp/${window.location.host + `?to=${to.text}&from=${from.text}`}/`
+    //           window.open(uri)
+    //         }
+    //         await activate(injected);
+    //         dispatch(setMetaMask(true))
+    //       } 
+    //       catch (ex) {
+    //           dispatch(setError(ex))
+    //           console.log(ex)
+    //       }
+    //       setShow(false)
+    // }
 
-    const onTrustWallet = async () => {
-      try {
-        if(!window.ethereum && window.innerWidth <= 600){
-          const uri = `https://link.trustwallet.com/open_url?coin_id=60&url=https://${window.location.host + `?to=${to.text}&from=${from.text}`}/`
-          window.open(uri)
-        }
-        await activate(injected);
-        dispatch(setTrustWallet(true))
-      } 
-      catch (error) {
-        dispatch(setError(error))
-        console.log(error)
+    // const onTrustWallet = async () => {
+    //   try {
+    //     if(!window.ethereum && window.innerWidth <= 600){
+    //       const uri = `https://link.trustwallet.com/open_url?coin_id=60&url=https://${window.location.host + `?to=${to.text}&from=${from.text}`}/`
+    //       window.open(uri)
+    //     }
+    //     await activate(injected);
+    //     dispatch(setTrustWallet(true))
+    //   } 
+    //   catch (error) {
+    //     dispatch(setError(error))
+    //     console.log(error)
         
-      }
-      setShow(false)
-    }
+    //   }
+    //   setShow(false)
+    // }
 
 
-    const generateQR = async text => {
-        try {
-          const QR = await QRCode.toDataURL(text)
-          return QR
-        } catch (err) {
-          console.error(err)
-        }
-      }
+    // const generateQR = async text => {
+    //     try {
+    //       const QR = await QRCode.toDataURL(text)
+    //       return QR
+    //     } catch (err) {
+    //       console.error(err)
+    //     }
+    //   }
 
-    async function connectTronlink() {
-      // debugger
-        if(window.innerWidth <= 600 && !window.tronWeb){
-          dispatch(setTronPopUp(true))
-        }
-        else{
-          try{
-            try{
-              const accounts = await window.tronWeb.request({ method: "tron_requestAccounts" });
-              console.log(accounts);
-              if(!accounts){
-                // dispatch(setTronPopUp(true))
-                // dispatch(setTronLoginError(true))
-              }
-            } 
-            catch(err){
+    // async function connectTronlink() {
+    //   // debugger
+    //     if(window.innerWidth <= 600 && !window.tronWeb){
+    //       dispatch(setTronPopUp(true))
+    //     }
+    //     else{
+    //       try{
+    //         try{
+    //           const accounts = await window.tronWeb.request({ method: "tron_requestAccounts" });
+    //           console.log(accounts);
+    //           if(!accounts){
+    //             // dispatch(setTronPopUp(true))
+    //             // dispatch(setTronLoginError(true))
+    //           }
+    //         } 
+    //         catch(err){
               
-              console.log(err);
-            }
+    //           console.log(err);
+    //         }
             
-            if(window.tronLink && window.tronWeb.defaultAddress.base58) {
-              const publicAddress = window.tronWeb.defaultAddress.base58
-              dispatch(setTronWallet(publicAddress))
-              dispatch(setTronLink(true))
+    //         if(window.tronLink && window.tronWeb.defaultAddress.base58) {
+    //           const publicAddress = window.tronWeb.defaultAddress.base58
+    //           dispatch(setTronWallet(publicAddress))
+    //           dispatch(setTronLink(true))
 
-            }
-          } 
-          catch(err) {
-              dispatch(setError(err))
-              console.log(err)
-          }
-        }
-      }
+    //         }
+    //       } 
+    //       catch(err) {
+    //           dispatch(setError(err))
+    //           console.log(err)
+    //       }
+    //     }
+    //   }
 
-
+    // const onMyAlgo = useCallback( async () => {
+    //   const myAlgoConnect = new MyAlgoConnect();
+    //   try {
+    //     const accountsSharedByUser = await myAlgoConnect.connect()
+    //     dispatch(setAlgorandAccount(accountsSharedByUser[0].address))
+    //     dispatch(setMyAlgo(true))
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // })
 
     const onAlgoSigner = useCallback(async () => {
       if (typeof window.AlgoSigner !== undefined) {

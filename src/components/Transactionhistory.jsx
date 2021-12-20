@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 
 import SelectedNFT_1 from '../assets/img/nfts/SelectedNFT_1.png';
 
-
+import MyAlgoConnect from "@randlabs/myalgo-connect";
 import Check from '../assets/img/icons/Check_circle.svg';
 import Failed from '../assets/img/icons/Failed.svg';
 import Pending from '../assets/img/icons/Pending.svg';
@@ -59,6 +59,7 @@ export function AlgorandClaimable(props) {
     const [originalChain,setOrigin] = useState()
     const algorandWallet = useSelector(state => state.general.AlgorandWallet)
     const AlgoSigner = useSelector(state => state.general.AlgoSigner)
+    const MyAlgo = useSelector(state => state.general.MyAlgo)
 
     const getAlgorandWalletSigner = async () => {
         debugger
@@ -71,6 +72,13 @@ export function AlgorandClaimable(props) {
             } catch (error) {
                 console.log(error.message);
             }
+        }
+        else if(MyAlgo){
+            const base = new MyAlgoConnect();
+            const factory = await getFactory()
+            const inner = await factory.inner(15)
+            const signer = inner.myAlgoSigner(base, algorandAccount)
+            return signer
         }
         else{
             const signer = {
