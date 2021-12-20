@@ -180,6 +180,9 @@ const generalSlice = createSlice({
     setAlgorandWallet(state, action){
       state.AlgorandWallet = action.payload
     },
+    setMyAlgo(state, action){
+      state.MyAlgo = action.payload
+    }
   },
 });
 
@@ -232,7 +235,8 @@ export const { toggleNFTInfo,
     setAlgorandAccount,
     setShowAbout,
     setShowVideo,
-    setAlgorandWallet
+    setAlgorandWallet,
+    setMyAlgo
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

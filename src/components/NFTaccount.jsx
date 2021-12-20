@@ -48,7 +48,7 @@ function NFTaccount() {
 
 
     const getAlgorandWalletSigner = async () => {
-        debugger
+        
         if( algorandWallet ){
             try {
                 const factory = await getFactory()
@@ -70,7 +70,7 @@ function NFTaccount() {
     }
     
     async function getNFTsList(){
-        debugger
+       
         try {
             const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             await setNFTS(w, from)
@@ -81,6 +81,8 @@ function NFTaccount() {
     }
     
     const estimate = async () => {
+        let fact
+        
         try {
             const fromChain = await handleChainFactory(from)
             const toChain = await handleChainFactory(to)
@@ -89,15 +91,23 @@ function NFTaccount() {
             : from === 'Tron' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
             : from === 'Algorand' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
             : from === 'Elrond' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
-            : account 
-            const fact = from === 'Algorand' || from === 'Elrond' ? await getFactory() : await getOldFactory()
+            : account;
+            // const fact = from === 'Algorand' || from === 'Elrond' ? await getFactory() : await getOldFactory()
+            if(from === 'Algorand' || from === 'Elrond'){
+                 fact = await getFactory()
+            }
+            else{
+                 fact = await getOldFactory()
+            }
             const fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
             const bigNum = fee.multipliedBy(1.1).decimalPlaces(0).toString();
             dispatch(setBigNumFees(bigNum))
             const fees = await Web3Utils.fromWei(bigNum, "ether")
             setFees(selectedNFTList.length * fees)
-        } catch (err) {
-          console.log(err);
+        } catch (error) {
+           
+        //   const message = JSON.parse(error.error)
+          console.log(JSON.parse(error.error))
         }
     }
     
@@ -111,7 +121,7 @@ function NFTaccount() {
         from === 'Elrond' ? maiarProvider ? maiarProvider : ExtensionProvider.getInstance() :
         from === 'Tron' ? window.tronLink 
         : provider.getSigner(account)
-        console.log(toChain, to, fromChain, from)
+        
         try {
             let result
             if(from === 'Tron') {
@@ -148,12 +158,14 @@ function NFTaccount() {
             }
             
         } catch (error) {
-            
+            // debugger
             setLoading(false)
+            console.log(error);
+            dispatch(setError(error))
             if(error.data){
                 dispatch(setError(error.data.message))
             }
-            else console.log(error); 
+            else dispatch(setError(error))
         }
     }
     const sendAllNFTs = () => {
