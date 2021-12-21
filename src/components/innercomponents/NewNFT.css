@@ -2,12 +2,14 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  align-items: stretch;
   gap: 24px;
 }
 
 .nft-box__wrapper{
   position: relative;
 }
+
 
 .nft-box__container {
     margin-top: 1px;
@@ -146,6 +148,8 @@
   outline: solid 1px #3E64ED;
 }
 
+.nft-box__wrapper
+
 .selected-radio {
   position: absolute;
   top: 16px;
@@ -179,6 +183,10 @@
   text-overflow: ellipsis;
 }
 
+.missing{
+  height: 100%;
+}
+
 @media screen and (max-width: 768px) {
   .nft-list__wrapper{
     gap: 8px;
@@ -189,14 +197,15 @@
   }
   .nft-box__container{
     max-width: 100%;
-    /* max-height: 300px;
-    min-height: 250px; */
+
   }
   .nft-box__container--selected{
     max-width: 100%;
 
-    /* min-height: 250px;
-    max-height: 300px; */
+  }
+  .missing-nft-box__wrapper{
+    margin-left: 2px;
+    width: calc(100% / 3.33);
   }
 }
 
@@ -204,19 +213,18 @@
   .nft-list__wrapper{
     gap: 10px;
   }
-
   .nft-box__wrapper {
     width: 47%;
   }
   .nft-box__container{
     width: 100%;
-    max-height: 270px;
   }
   .nft-box__container--selected{
     width: 100%;
-    max-height: 270px;
   }
-
+  .missing-nft-box__wrapper{
+    width: 47%;
+  }
   .nft-box__wrapper:hover{
     outline: unset;
   }
@@ -234,6 +242,10 @@
     width: 90%;
     max-height: 240px;
   }
+  .missing-nft-box__wrapper{
+    width: 45%;
+
+  }
 }
 
 @media screen and (max-width: 425px) {
@@ -244,6 +256,6 @@
     max-height: 190px;
   }
   .radio__container{
-    /* background-color: tomato; */
+    
   }
 }
