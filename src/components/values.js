@@ -214,7 +214,8 @@ export const chainsConfig = {
         rpc: 'https://avaxnode.xp.network/ext/bc/C/rpc',
         chainId: 43114,
         // chainData: ChainData.Avalanche,
-        Chain: Chain.AVALANCHE
+        Chain: Chain.AVALANCHE,
+        tx: "https://snowtrace.io/"
     },
     Fuse: {
         type: EVM,
@@ -222,7 +223,8 @@ export const chainsConfig = {
         token: "Fuse",
         rpc: "https://rpc.fuse.io/",
         chainId: 122,
-        Chain: Chain.FUSE
+        Chain: Chain.FUSE,
+        tx: "https://explorer.fuse.io/"
     }
 
 }

@@ -138,13 +138,12 @@ function SuccessNFT({nft, from, index}) {
     const tx = nft.txn ? typeof nft.txn === 'object' ? nft.txn.hash.toString() : nft.txn : ''
     const off = { opacity: 0.6, pointerEvents: 'none' }
 
-
     useEffect(async() => {
         if(to.key === 'Algorand') {
             const claimables = await setClaimablesAlgorand(algorandAccount, true)
-            if(claimables && claimables.length > 0) {
+            // if(claimables && claimables.length > 0) {
 
-            }
+            // }
         }
     },[])
     const claim = () => {
@@ -154,7 +153,9 @@ function SuccessNFT({nft, from, index}) {
         <li className="nftSelecItem">
             <img src={setupURI(nft.image)} alt="NFT" />
             <span className="nftSelected__name">{nft.name}</span>
-            <span className="bluTextBtn"><a href={`${chainsConfig[from.key].tx + tx}`} target="_blank">View Txn</a></span>
+            <span className="bluTextBtn">
+                <a href={`${chainsConfig[from.key].tx + tx}`} target="_blank">View Txn</a>
+            </span>
             { to.key === 'Algorand' ? 
             <span className="bluTextBtn">
                 <a style={ algorandAccount ? {} : off} onClick={claim} target="_blank">Claim</a>
