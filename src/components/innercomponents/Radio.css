@@ -1,0 +1,13 @@
+/* .radio__container{
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    background-color: white;
+}
+
+.radio__container::after{
+    content: url("../../assets/img/icons/checkgreenResp.svg");
+
+} */

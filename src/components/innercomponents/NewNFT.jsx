@@ -7,6 +7,7 @@ import NFTdetails from '../NFTdetails';
 import { useSelector } from 'react-redux';
 import { setupURI } from '../../wallet/oldHelper';
 import  "./NewNFT.css"
+import Radio from './Radio';
 
 export default function NFT({nft, index}) {
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
@@ -46,6 +47,7 @@ export default function NFT({nft, index}) {
                                 <img src={CheckGreen} alt=''/>
                             }
                         </div>
+                        {/* <Radio /> */}
                     </div>
                 </div>
                 <div className={`nft-content__container ${!imageLoaded ? 'preload-content-container' : ''}`}>

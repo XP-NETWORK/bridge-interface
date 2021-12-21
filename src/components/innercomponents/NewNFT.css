@@ -21,7 +21,12 @@
     font-weight: 400;
     line-height: 17.64px;
     border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
     overflow: hidden;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 .brocken-url{
@@ -43,10 +48,15 @@
     display: flex;
     flex-direction: column;
     border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-border-radius: 20px;
     overflow: hidden;
     position: absolute;
     left: 0;
     top: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 .preload__image{
@@ -73,6 +83,11 @@
     width: 80%;
     background-color: #62718A;
     border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-border-radius: 5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 .preload__number{
@@ -138,11 +153,15 @@
     font-weight: 400;
     line-height: 17.64px;
     border-radius: 20px;
+    -moz-border-border-radius: 20px;
+    -webkit-border-radius: 20px;
     overflow: hidden;
     position: relative;
     box-sizing: border-box;
     outline: solid 1px #3E64ED;
-
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
  .nft-box__wrapper:hover{
   outline: solid 1px #3E64ED;
