@@ -17,6 +17,7 @@ import { chainsConfig } from './values';
 
 function NFTdetails({ nftInf }){
     const { name, description, image, attributes, uri, native} = nftInf
+    console.log("attributes", attributes)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -62,7 +63,7 @@ function NFTdetails({ nftInf }){
                                 <label>Description</label>
                                 <p>{description}</p>
                             </div>
-                            { attributes && attributes.map((n,i) => <Attribute {...n} key={`attribute-${i}`}/>) }
+                            { (attributes && Array.isArray(attributes)) && attributes.map((n,i) => <Attribute {...n} key={`attribute-${i}`}/>) }
                         </div>
                     </div>
                 </Modal.Body>
@@ -76,15 +77,15 @@ export default NFTdetails
 
 function Attribute(props) {
     const { trait_type, display_type, value } = props
-   console.log(trait_type === 'Original Chain', chainsConfig[value])
     return  <div className="nftToken nftInfBox">
     <label>
         { 
     trait_type ?
     trait_type.split('_').map(n =>  n.charAt(0).toUpperCase() + n.slice(1).toLowerCase()).join(' ')
     : '-'
-    }</label>
-    <p>    {
+    }
+    </label>
+        <p>{
             trait_type === 'Original Chain' ? <img style={{marginRight: '4px'}} src={chainsConfig[value]?.img} /> : ''
         }  {
         display_type === 'date' 
