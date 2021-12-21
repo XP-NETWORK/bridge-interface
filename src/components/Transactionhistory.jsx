@@ -90,11 +90,6 @@ export function AlgorandClaimable(props) {
         }
     }
 
-    // const signer = {
-    //     address: algorandAccount,
-    //     algoSigner: window.AlgoSigner,
-    //     ledger: "MainNet"
-    // }
 
     const load = async () => {
         const res = await axios.get(uri)
@@ -115,6 +110,7 @@ export function AlgorandClaimable(props) {
         debugger
         const factory = await getFactory()
         const algorand = await factory.inner(15)
+        // console.log("optIn", nftId);
         const isOpted = await algorand.isOptIn(algorandAccount, nftId)
     
         if(!isOpted) {

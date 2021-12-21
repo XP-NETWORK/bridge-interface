@@ -10,6 +10,7 @@ import { getFactory, handleChainFactory, isALLNFTsApproved, } from '../../wallet
 import { getOldFactory } from '../../wallet/oldHelper';
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import { algoConnector } from "../../wallet/connectors"
+import MyAlgoConnect from '@randlabs/myalgo-connect';
 
 
 const TronWeb = require('tronweb')
@@ -31,11 +32,12 @@ function Approval(props) {
     const maiarProvider = useSelector(state => state.general.maiarProvider)
     const bigNumberFees = useSelector(state => state.general.bigNumberFees)
     const algorandWallet = useSelector(state => state.general.AlgorandWallet)
-
+    const MyAlgo = useSelector(state => state.general.MyAlgo)
     
 
     const getAlgorandWalletSigner = async () => {
-        debugger
+        
+        const base = new MyAlgoConnect();
         if( algorandWallet ){
             try {
                 const factory = await getFactory()
@@ -45,6 +47,12 @@ function Approval(props) {
             } catch (error) {
                 console.log(error.message);
             }
+        }
+        else if(MyAlgo){
+            const factory = await getFactory()
+            const inner = await factory.inner(15)
+            const signer = inner.myAlgoSigner(base, algorandAccount)
+            return signer
         }
         else{
             const signer = {
@@ -57,7 +65,7 @@ function Approval(props) {
     }
 
     const approveEach = async (nft, signer, chain, index) => {
-        debugger
+        
         const arr = new Array(index + 1).fill(0)
         const factory = await getFactory()
             if(from.type !== "Elrond" && from.type !== 'Algorand'){
@@ -100,10 +108,8 @@ function Approval(props) {
             }
             else{
                 try {
-
                     const factory = await getFactory()
                     const chain = await factory.inner(Chain.ELROND)
-                    console.log(chain, 'hel1234lo')
                     const signer = maiarProvider ? maiarProvider : ExtensionProvider.getInstance()
                     const swap = await chain.preTransfer(signer, nft, bigNumberFees)
                 
@@ -129,7 +135,6 @@ function Approval(props) {
                 dispatch(setApproveLoader(true))
                 setApprovedLoading(true)
                 setFinishedApproving([])
-                console.log("provider: ", window.ethereum || WCProvider);
             if(from.type === "EVM"){
                 const provider = new ethers.providers.Web3Provider(WCProvider || window.ethereum);
                 const signer = provider.getSigner(account)

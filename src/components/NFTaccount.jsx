@@ -19,6 +19,8 @@ import{ ChainData, getOldFactory } from '../wallet/oldHelper'
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import {chainsConfig} from './values'
 import { algoConnector } from "../wallet/connectors"
+import MyAlgoConnect from '@randlabs/myalgo-connect';
+
 
 
 function NFTaccount() {
@@ -45,10 +47,13 @@ function NFTaccount() {
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const bigNumberFees = useSelector(state => state.general.bigNumberFees)
     const algorandWallet = useSelector(state => state.general.AlgorandWallet)
+    const MyAlgo = useSelector(state => state.general.MyAlgo)
+    const modalError = useSelector(state => state.general.error)
 
-
+    
     const getAlgorandWalletSigner = async () => {
-        
+        debugger
+        const base = new MyAlgoConnect();
         if( algorandWallet ){
             try {
                 const factory = await getFactory()
@@ -58,6 +63,12 @@ function NFTaccount() {
             } catch (error) {
                 console.log(error.message);
             }
+        }
+        else if(MyAlgo){
+            const factory = await getFactory()
+            const inner = await factory.inner(15)
+            const signer = inner.myAlgoSigner(base, algorandAccount)
+            return signer
         }
         else{
             const signer = {
@@ -136,38 +147,47 @@ function NFTaccount() {
                 dispatch(setTxnHash({txn: result, nft}))
             } 
             else {
-                try {
-                    console.log(factory);
-                    result = await factory.transferNft(
-                        fromChain, // The Source Chain.
-                        toChain,   // The Destination Chain.
-                        nft,       // Or the NFT you have chosen.
-                        signer,    // Or tronlink or maiar.
-                        receiver,   // The address who you are transferring the NFT to.
-                        bigNumberFees
-                    )
-                    console.log(result);
-                    dispatch(setTxnHash({txn: result, nft}))
-                } catch(err) {
-                    console.log(err)
-                    dispatch(setLoading(false))
-                    dispatch(setError(err.data?.message))
-                }
-
+                result = await factory.transferNft(
+                    fromChain, // The Source Chain.
+                    toChain,   // The Destination Chain.
+                    nft,       // Or the NFT you have chosen.
+                    signer || await getAlgorandWalletSigner(),    // Or tronlink or maiar.
+                    receiver,   // The address who you are transferring the NFT to.
+                    bigNumberFees
+                )
+                console.log(result);
+                dispatch(setTxnHash({txn: result, nft}))
+                // try {
+                //     console.log(factory);
+                //     result = await factory.transferNft(
+                //         fromChain, // The Source Chain.
+                //         toChain,   // The Destination Chain.
+                //         nft,       // Or the NFT you have chosen.
+                //         signer,    // Or tronlink or maiar.
+                //         receiver,   // The address who you are transferring the NFT to.
+                //         bigNumberFees
+                //     )
+                //     console.log(result);
+                //     dispatch(setTxnHash({txn: result, nft}))
+                // } catch(err) {
+                //     console.log(err)
+                //     dispatch(setError(err))
+                //     dispatch(setLoading(false))
+                // }
             }
             if(to === 'Algorand') {
                 await setClaimablesAlgorand(algorandAccount)
             }
-            
         } catch (error) {
-            // debugger
             setLoading(false)
             console.log(error);
-            dispatch(setError(error))
-            if(error.data){
-                dispatch(setError(error.data.message))
-            }
-            else dispatch(setError(error))
+            // if(!modalError){
+            //     dispatch(setError(error))
+            //     if(error.data){
+            //         dispatch(setError(error.data.message))
+            //     }
+            //     else dispatch(setError(error))
+            // } 
         }
     }
     const sendAllNFTs = () => {

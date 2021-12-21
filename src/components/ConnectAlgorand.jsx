@@ -1,14 +1,16 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
+import {  Modal } from "react-bootstrap";
 import Close from '../assets/img/icons/close.svg';
 import AlgoSignerIcon from '../assets/img/wallet/Algo Signer.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { useWeb3React } from "@web3-react/core";
-import { injected } from "../wallet/connectors"
-import { setTronWallet, setAccount, setConfirmMaiarMob, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp, setTrustWallet, setAlgoSigner, setAlgorandAccount, connectAlgorandWalletClaim } from "../store/reducers/generalSlice"
-import QRCode from 'qrcode'
+import { setAlgoSigner, setAlgorandAccount, connectAlgorandWalletClaim, setMyAlgo, setAlgorandWallet } from "../store/reducers/generalSlice"
+import { injected, algoConnector } from "../wallet/connectors"
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import AlgorandIcon from '../assets/img/algorandwallet.svg'
+import MyAlgoBlue from "../assets/img/wallet/MyAlgoBlue.svg"
+import AlgorandWallet from "../assets/img/wallet/AlgorandWallet.svg"
+
 function ConnectAlgorand() {
     const dispatch = useDispatch()
     const from = useSelector(state => state.general.from)
@@ -29,105 +31,37 @@ function ConnectAlgorand() {
     const [strQR, setStrQr] = useState()
     const { chainId, account, activate } = useWeb3React();
 
+    const onAlgoWallet = async () => {
+      if (!algoConnector.connected) {
+          algoConnector.createSession()   
+      }
+      algoConnector.on("connect", (error, payload) => {
+       
+        if (error) {
+          throw error;
+        }
+      
+        // Get provided accounts
+        const { accounts } = payload.params[0];
+        if(accounts){
+          dispatch(setAlgorandWallet(true))
+          dispatch(setAlgorandAccount(accounts[0]))
+          handleClose()
+        }
+      });
+    }
 
-  //   function getMobOps() {
-  //     // debugger
-  //     var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-  //     if (/android/i.test(userAgent)) {
-  //         return true
-  //     }
-
-  // }
-
-    //! MetaMask connection.
-    // const onInjected = async () => {
-    //     try {
-    //         if(!window.ethereum && window.innerWidth <= 600) {
-    //             const uri = `https://metamask.app.link/dapp/${window.location.host + `?to=${to.text}&from=${from.text}`}/`
-    //           window.open(uri)
-    //         }
-    //         await activate(injected);
-    //         dispatch(setMetaMask(true))
-    //       } 
-    //       catch (ex) {
-    //           dispatch(setError(ex))
-    //           console.log(ex)
-    //       }
-    //       setShow(false)
-    // }
-
-    // const onTrustWallet = async () => {
-    //   try {
-    //     if(!window.ethereum && window.innerWidth <= 600){
-    //       const uri = `https://link.trustwallet.com/open_url?coin_id=60&url=https://${window.location.host + `?to=${to.text}&from=${from.text}`}/`
-    //       window.open(uri)
-    //     }
-    //     await activate(injected);
-    //     dispatch(setTrustWallet(true))
-    //   } 
-    //   catch (error) {
-    //     dispatch(setError(error))
-    //     console.log(error)
-        
-    //   }
-    //   setShow(false)
-    // }
-
-
-    // const generateQR = async text => {
-    //     try {
-    //       const QR = await QRCode.toDataURL(text)
-    //       return QR
-    //     } catch (err) {
-    //       console.error(err)
-    //     }
-    //   }
-
-    // async function connectTronlink() {
-    //   // debugger
-    //     if(window.innerWidth <= 600 && !window.tronWeb){
-    //       dispatch(setTronPopUp(true))
-    //     }
-    //     else{
-    //       try{
-    //         try{
-    //           const accounts = await window.tronWeb.request({ method: "tron_requestAccounts" });
-    //           console.log(accounts);
-    //           if(!accounts){
-    //             // dispatch(setTronPopUp(true))
-    //             // dispatch(setTronLoginError(true))
-    //           }
-    //         } 
-    //         catch(err){
-              
-    //           console.log(err);
-    //         }
-            
-    //         if(window.tronLink && window.tronWeb.defaultAddress.base58) {
-    //           const publicAddress = window.tronWeb.defaultAddress.base58
-    //           dispatch(setTronWallet(publicAddress))
-    //           dispatch(setTronLink(true))
-
-    //         }
-    //       } 
-    //       catch(err) {
-    //           dispatch(setError(err))
-    //           console.log(err)
-    //       }
-    //     }
-    //   }
-
-    // const onMyAlgo = useCallback( async () => {
-    //   const myAlgoConnect = new MyAlgoConnect();
-    //   try {
-    //     const accountsSharedByUser = await myAlgoConnect.connect()
-    //     dispatch(setAlgorandAccount(accountsSharedByUser[0].address))
-    //     dispatch(setMyAlgo(true))
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // })
+    const onMyAlgo = useCallback( async () => {
+      const myAlgoConnect = new MyAlgoConnect();
+      try {
+        const accountsSharedByUser = await myAlgoConnect.connect()
+        dispatch(setAlgorandAccount(accountsSharedByUser[0].address))
+        dispatch(setMyAlgo(true))
+        handleClose()
+      } catch (error) {
+        console.log(error);
+      }
+    })
 
     const onAlgoSigner = useCallback(async () => {
       if (typeof window.AlgoSigner !== undefined) {
@@ -169,9 +103,9 @@ function ConnectAlgorand() {
                         Connect an Algorand wallet to claim NFTs 
                     </h3>
                     <ul className="walletList scrollSty">
-                        <li onClick={onAlgoSigner} className="wllListItem algo"><img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo Signer</li>
-                        
-                
+                        <li onClick={onAlgoSigner} className="wllListItem algo"><img src={AlgoSignerIcon} alt="Algor Signer Icon"/> Algo Signer</li>
+                        <li onClick={onMyAlgo} className="wllListItem algo"><img src={MyAlgoBlue} alt="" /> MyAlgo</li>
+                        <li onClick={() => onAlgoWallet()} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li>
                     </ul>
                 </div>
             </Modal.Body>
