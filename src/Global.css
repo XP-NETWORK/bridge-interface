@@ -16,6 +16,13 @@ body {
     line-height: 160%;
 }
 
+.widgetBlack{
+    color: black !important;
+}
+.widgetRed{
+    color: red !important;
+}
+
 .bridgeBody {
     min-height: 100vh;
     background-color: #1D212A;
@@ -752,7 +759,7 @@ span.wallet {
 }
 
 .seleDestiSele{
-    color: white !important;
+    color: white;
 }
 
 .modalSelectOptionsText{
