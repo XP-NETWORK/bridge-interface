@@ -51,19 +51,8 @@ export default function Widget() {
         }
     }
 
-    const changeButtonColor = (element, color) => {
-        element.classList.remove('themBtn')
-
-        switch (color) {
-            case 'green':
-                element.classList.add('green')
-                break;
-            case 'red':
-                element.classList.add('red')
-                break;
-            default:
-                break;
-        }
+    const changeButtonColor = color => {
+        document.body.classList.add(`body-btns-${color}`)
     }
 
     
@@ -74,7 +63,7 @@ export default function Widget() {
         const body = document.querySelector(".bridgeBody")
         const nftContainer = document.querySelector(".nftContainer")
         const nftSelectBox = document.querySelector(".nftSelectBox")
-        const themeButton = document.querySelector(".themBtn")
+        const themeButton = document.body.querySelector(".themBtn")
 
         nftSelectBox.style.background = "unset"
         
@@ -86,7 +75,7 @@ export default function Widget() {
             fontSize && changeFontSize(nftContainer, fontSize) 
             backgroundColor && changeBG(body, backgroundColor)
             fontColor && changeFontColor(nftSelectBox, fontColor)
-            btnColor && changeButtonColor(themeButton, btnColor)
+            btnColor && changeButtonColor(btnColor)
             onlyBridge()
         }
     },[from, to])

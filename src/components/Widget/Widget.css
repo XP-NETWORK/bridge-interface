@@ -1,4 +1,4 @@
-.green{
+.body-btns-green .themBtn{
     background: #11992a;
     border: 1px solid #11992a;
     display: inline-block;
@@ -11,12 +11,13 @@
     font-size: 16px;
     line-height: 56px;
 }
-.green:hover{
+
+.body-btns-green .themBtn:hover{
     background: #349c47;
     color: #fff;
 }
 
-.red{
+.body-btns-red .themBtn{
     background: #c91b1b;
     border: 1px solid #c91b1b;
     display: inline-block;
@@ -29,7 +30,15 @@
     font-size: 16px;
     line-height: 56px;
 }
-.red:hover{
+
+.body-btns-red .themBtn:hover{
     background: #eb3232;;
     color: #fff;
+}
+
+.disabled .themBtn {
+    background: linear-gradient(0deg, rgba(73, 82, 108, 0.1), rgba(73, 82, 108, 0.1));
+    border: 1px solid #37405B;
+    color: #5A6177;
+    pointer-events: none;
 }
