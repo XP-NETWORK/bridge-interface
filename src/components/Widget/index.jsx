@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
+import "./Widget.css"
 export default function Widget() {
     const reg = new RegExp(/^((0x){0,1}|#{0,1})([0-9A-F]{8}|[0-9A-F]{6})$/ig)
-
+    const from = useSelector(state => state.general.from)
+    const to = useSelector(state => state.general.to)
 
 
     const changeFontSize = (element, fontSize) => {
@@ -23,6 +24,7 @@ export default function Widget() {
     }
 
     const changeBG = (element, bgColor) => {
+
         if(reg.test(bgColor)){
             element.style.backgroundColor = `#${bgColor}`
         }
@@ -33,11 +35,10 @@ export default function Widget() {
 
     const changeFontColor = (element, color) => {
         const all = element.getElementsByTagName("*")
-        
         switch (color) {
-            case "red":
+            case "white":
                 Array.prototype.forEach.call(all, (el) => {
-                    el.classList.add("widgetRed")
+                    el.classList.add("widgetWhite")
                 })
                 break;
             case "black":
@@ -48,10 +49,23 @@ export default function Widget() {
             default:
                 break;
         }
-
-        
-        
     }
+
+    const changeButtonColor = (element, color) => {
+        element.classList.remove('themBtn')
+
+        switch (color) {
+            case 'green':
+                element.classList.add('green')
+                break;
+            case 'red':
+                element.classList.add('red')
+                break;
+            default:
+                break;
+        }
+    }
+
     
     useEffect(() => {
         // debugger
@@ -60,18 +74,22 @@ export default function Widget() {
         const body = document.querySelector(".bridgeBody")
         const nftContainer = document.querySelector(".nftContainer")
         const nftSelectBox = document.querySelector(".nftSelectBox")
+        const themeButton = document.querySelector(".themBtn")
+
         nftSelectBox.style.background = "unset"
         
         if(widget) {
             const backgroundColor = p.get('background')
             const fontColor = p.get('color')
             const fontSize = p.get('fontsize')
+            const btnColor = p.get("button")
             fontSize && changeFontSize(nftContainer, fontSize) 
             backgroundColor && changeBG(body, backgroundColor)
             fontColor && changeFontColor(nftSelectBox, fontColor)
+            btnColor && changeButtonColor(themeButton, btnColor)
             onlyBridge()
         }
-    },[])
+    },[from, to])
 
     const onlyBridge = () => {
         document.getElementById('collecSlideCont')?.remove()
