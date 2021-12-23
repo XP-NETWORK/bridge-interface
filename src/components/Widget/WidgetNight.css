@@ -1,0 +1,60 @@
+:root {
+    --fontColorDark: #4C4C6D;
+    --bgColorDark: #FFE194;
+    --cardsBGColorDark: #84DFFF;
+    --cardContentColorLight:  #0a6b66;
+    --buttonColorDark: rgb(0, 255, 98);
+    --buttonColorDarkHover: rgb(49, 206, 109);
+}
+
+
+.dark-palette{
+    background-color: var(--bgColorLight);
+}
+
+.dark-palette .themBtn{
+    background: var(--buttonColorDark);
+    border: 1px solid #4C4C6D;
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+    max-width: 326px;
+    text-align: center;
+    border-radius: 16px;
+    color: #fff;
+    font-size: 16px;
+    line-height: 56px;
+}
+
+.dark-palette .themBtn:hover{
+    background: var(--buttonColorDarkHover);
+    color: #fff;
+}
+
+.dark-palette .nftTitle h2 {
+    color: var(--fontColorDark);
+}
+
+.dark-palette .yourNft span, .desChain span, .selectedNft span, .nftFees span{
+    color: var(--fontColorDark);
+}
+
+.dark-palette .seleDepat, .dark-palette .seleDestiSele, .yourNft, .sendNftTit, .approveBtn{
+    color: var(--fontColorDark);
+}
+
+.dark-palette .nft-image__container{
+    background-color: var(--cardsBGColorDark);
+}
+
+.dark-palette .nft-content__container{
+    background-color: var(--cardContentColorLight);
+}
+
+.disabled .themBtn {
+    background: linear-gradient(0deg, rgba(73, 82, 108, 0.1), rgba(73, 82, 108, 0.1));
+    border: 1px solid #37405B;
+    color: #5A6177;
+    pointer-events: none;
+}
+
