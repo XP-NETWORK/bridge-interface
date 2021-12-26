@@ -155,25 +155,25 @@ function NFTaccount() {
                     receiver,   // The address who you are transferring the NFT to.
                     bigNumberFees
                 )
-                console.log(result);
+
                 dispatch(setTxnHash({txn: result, nft}))
-                // try {
-                //     console.log(factory);
-                //     result = await factory.transferNft(
-                //         fromChain, // The Source Chain.
-                //         toChain,   // The Destination Chain.
-                //         nft,       // Or the NFT you have chosen.
-                //         signer,    // Or tronlink or maiar.
-                //         receiver,   // The address who you are transferring the NFT to.
-                //         bigNumberFees
-                //     )
-                //     console.log(result);
-                //     dispatch(setTxnHash({txn: result, nft}))
-                // } catch(err) {
-                //     console.log(err)
-                //     dispatch(setError(err))
-                //     dispatch(setLoading(false))
-                // }
+                try {
+                    
+                    result = await factory.transferNft(
+                        fromChain, // The Source Chain.
+                        toChain,   // The Destination Chain.
+                        nft,       // Or the NFT you have chosen.
+                        signer,    // Or tronlink or maiar.
+                        receiver,   // The address who you are transferring the NFT to.
+                        bigNumberFees
+                    )
+                    
+                    dispatch(setTxnHash({txn: result, nft}))
+                } catch(err) {
+                    console.log(err)
+                    dispatch(setError(err))
+                    dispatch(setLoading(false))
+                }
             }
             if(to === 'Algorand') {
                 await setClaimablesAlgorand(algorandAccount)
@@ -181,13 +181,12 @@ function NFTaccount() {
         } catch (error) {
             setLoading(false)
             console.log(error);
-            // if(!modalError){
-            //     dispatch(setError(error))
-            //     if(error.data){
-            //         dispatch(setError(error.data.message))
-            //     }
-            //     else dispatch(setError(error))
-            // } 
+            if(error.data){
+                if(error.data.message.includes("not whitelisted")){
+                    
+                }
+            }
+            
         }
     }
     const sendAllNFTs = () => {

@@ -151,7 +151,7 @@ export function AlgorandClaimable(props) {
             <td className="colBlue">{originalChain}</td>
             <td className="claimsbut" style={isOptin ? off : {}} onClick={optIn}>
                 <div>
-                    Opt In
+                    Opt-in
                 </div>
             </td>
             <td className="claimsbut" style={!isOptin ? off : {}} onClick={claim}>

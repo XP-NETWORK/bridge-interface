@@ -15,6 +15,7 @@ import About from "./components/innercomponents/About";
 import Video from "./components/innercomponents/Video";
 import {getFactory, setClaimablesAlgorand} from './wallet/helpers'
 import Widget from "./components/Widget";
+import TechnicalSupport from "./components/innercomponents/TechnicalSupport";
 
 function App() {
   const dispatch = useDispatch()
@@ -61,6 +62,7 @@ return (
     <div className={"App"}>
       <About />
       <Video />
+      <TechnicalSupport />
       <Modal 
       centered
       className="approve-modal"

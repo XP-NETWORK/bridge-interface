@@ -35,11 +35,9 @@ function ClaimAlgorandNFT() {
         if(sameName && sameName.length > 0) {
             const { contract, chainId, tokenId } = algorandClaimPopup.native
             const fetched = (await parseNFTS(sameName))
-            console.log(fetched, 'askjdsakjjk3kj123kj fetched')
             const filtered = fetched.filter(
                 n => n.wrapped.contract === contract && n.wrapped.tokenId === tokenId
             )[0]
-            console.log(fetched,'81329823198231982319823198123')
             if(filtered) {
                 setClaimable(filtered)
                 clearInterval(claimInterval)

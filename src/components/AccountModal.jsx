@@ -10,8 +10,8 @@ import { DetectOutsideClick } from "../components/helpers"
 import {CopyToClipboard } from 'react-copy-to-clipboard';
 import { CHAIN_INFO } from '../components/values';
 import { getAddEthereumChain } from "../wallet/chains"
-import copyTT from "../assets/img/icons/copytt.png"
-import copiedIcon from "../assets/img/icons/Copied.png"
+import copyTT from "../assets/img/icons/copytoclip.svg"
+import copiedIcon from "../assets/img/icons/copiedtoclip.svg"
 
 export default function AccountModal() {
     const dispatch = useDispatch()
