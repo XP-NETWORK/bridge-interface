@@ -3,19 +3,20 @@ import { Modal } from "react-bootstrap"
 import Close from '../../assets/img/icons/close.svg';
 import { useDispatch, useSelector } from 'react-redux'
 import "./TechnicalSupport.css"
-import { setTechModal } from '../../store/reducers/generalSlice';
+import { setNFTsToWhitelist, removeFromNotWhiteListed } from '../../store/reducers/generalSlice';
 
 export default function TechnicalSupport() {
     const dispatch = useDispatch()
-    const info = useSelector(state => state.general.techModal)
-    // const { url, name } = useSelector(state => state.general.techModal)
+    const nftsToWhitelist = useSelector(state => state.general.nftsToWhitelist)
+
 
     function handleClose() {
-        dispatch(setTechModal(undefined))
+        dispatch(removeFromNotWhiteListed())
     }
 
     return (
-        <Modal className="ts-modal" animation={false} size="sm" show={info} onHide={() => handleClose()}>
+        nftsToWhitelist.length ?
+        <Modal className="ts-modal" animation={false} size="sm" show={nftsToWhitelist} onHide={() => handleClose()}>
             <Modal.Header className="border-0">
                 <span className="close-ts-modal" onClick={() => handleClose()}>
                     <img src={Close} alt="" />
@@ -24,12 +25,14 @@ export default function TechnicalSupport() {
             </Modal.Header>
             <Modal.Body className='technical-support__body'>
                 <div className="ts-nft__image">
-                    <img src={info?.url} alt="Not whitelisted NFT" />
+                    <img src={nftsToWhitelist[0].url} alt="Not whitelisted NFT" />
                 </div>
-                <div className="ts-nft__info">{info?.name}</div>
+                <div className="ts-nft__info">{nftsToWhitelist[0].name}</div>
                 <div className="ns-message">This NFT can’t being sent. NFT bridge requers to add this NFT to Whitelist.</div>
                 <a className="ts-button" href="https://t.me/xp_network" target="_blank" rel='noreferrer'>Technical Support &#10143;</a>
             </Modal.Body>
         </Modal>
+        :
+        ''
     )
 }

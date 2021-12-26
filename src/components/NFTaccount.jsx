@@ -11,7 +11,7 @@ import NFTlistTop from './innercomponents/NFTlistTop';
 import { ethers } from "ethers";
 import NFTsuccess from './NFTsuccess';
 import { useSelector } from 'react-redux';
-import { setBigNumFees, setError, setNFTList, setTechModal, setTxnHash } from "../store/reducers/generalSlice"
+import { setBigNumFees, setError, setNFTList, setNFTsToWhitelist, setTxnHash } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
 import { getFactory, getNFTS, handleChainFactory, parseNFTS, setClaimablesAlgorand, setNFTS } from "../wallet/helpers"
 import Comment from "../components/innercomponents/Comment"
@@ -183,7 +183,7 @@ function NFTaccount() {
             console.log(error);
             if(error.data){
                 if(error.data.message.includes("not whitelisted")){
-                    dispatch(setTechModal({
+                    dispatch(setNFTsToWhitelist({
                         url: nft.image,
                         name: nft.name
                     }))

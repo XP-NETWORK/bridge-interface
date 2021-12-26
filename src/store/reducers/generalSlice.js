@@ -5,6 +5,7 @@ const initialState = {
   selectedNFTList: [],
   NFTListView: false,
   approvedNFTList: [],
+  nftsToWhitelist: [],
   txnHashArr: [],
   fees : 0,
   currentTx: 0,
@@ -186,14 +187,19 @@ const generalSlice = createSlice({
     setMyAlgo(state, action){
       state.MyAlgo = action.payload
     },
-    setTechModal(state, action){
-      state.techModal = action.payload
+    setNFTsToWhitelist(state, action){
+      state.nftsToWhitelist = [...state.nftsToWhitelist, action.payload]
+    },
+    removeFromNotWhiteListed(state){
+      state.nftsToWhitelist.shift()
     }
   },
 });
 
-export const { toggleNFTInfo, 
-    setTechModal,
+export const { 
+    toggleNFTInfo,
+    removeFromNotWhiteListed,
+    setNFTsToWhitelist,
     setReset,
     setTo, 
     claimAlgorandPopup,
