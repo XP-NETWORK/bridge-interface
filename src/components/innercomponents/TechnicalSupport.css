@@ -1,0 +1,75 @@
+.ts-modal{
+    background-color: rgba(0, 0, 0, 0.596);
+}
+
+.ts-modal .h4{
+    font-size: 16px;
+}
+
+.ts-modal .modal-content{
+    transform: scale(0.9);
+    font: 16px;
+    line-height: 25.6px;
+}
+
+.close-ts-modal{
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    cursor: pointer;
+}
+
+.close-ts-modal:hover{
+    filter: brightness(2.75);
+}
+
+.technical-support__body{
+    display: flex;
+    padding: 0 10px 55px 10px;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.ts-nft__image{
+    max-width: calc(100% / 3);
+    margin-top: 22px;
+}
+
+.ts-nft__image img{
+    width: 100%;
+    border-radius: 1rem;
+}
+
+.ts-nft__info{
+    margin: 6px 0;
+}
+
+.ns-message{
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.ts-button{
+    color: #3E64ED;
+    width: 187px;
+    height: 40px;
+    border-radius: 8px;
+    filter: brightness(1.3);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ts-button:hover{
+    width: 187px;
+    height: 40px;
+    border-radius: 8px;
+    background: #232833;
+    filter: brightness(1.5);
+}
+
+.ts-button a :hover{
+    color: inherit;
+}

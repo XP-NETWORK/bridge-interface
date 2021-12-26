@@ -185,11 +185,15 @@ const generalSlice = createSlice({
     },
     setMyAlgo(state, action){
       state.MyAlgo = action.payload
+    },
+    setTechModal(state, action){
+      state.techModal = action.payload
     }
   },
 });
 
 export const { toggleNFTInfo, 
+    setTechModal,
     setReset,
     setTo, 
     claimAlgorandPopup,
