@@ -7,8 +7,9 @@ import NFTdetails from '../NFTdetails';
 import { useSelector } from 'react-redux';
 import { setupURI } from '../../wallet/oldHelper';
 import  "./NewNFT.css"
-import Radio from './Radio';
+
 import { isValidHttpUrl } from '../../wallet/helpers';
+import Checkmark from './Checkmark';
 
 export default function NFT({nft, index}) {
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
@@ -34,7 +35,9 @@ export default function NFT({nft, index}) {
                 <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
                     <div className="image__wrapper">
                         { nft.uri && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url)? 
-                            nft.animation_url ? <video onLoadedData={() => setImageLoaded(true)} autoPlay={true} loop={true} src={nft.animation_url} /> :
+                            nft.animation_url ? 
+                            <video onLoadedData={() => setImageLoaded(true)} autoPlay={true} loop={true} src={nft.animation_url} /> 
+                            :
                             <img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} /> 
                             : 
                             <div className="brocken-url">
@@ -42,14 +45,16 @@ export default function NFT({nft, index}) {
                                 <span className="brocken-url__msg">NFTs URL<br/> is broken</span>
                             </div>
                         }
+                                                
                         <div className="radio__container">
                             { !isSelected ? 
                                 <span className="selected-radio"></span> 
                                 : 
                                 <img src={CheckGreen} alt=''/>
                             }
-                        </div>
-                        {/* <Radio /> */}
+                        </div> 
+                     
+                      {/* <Checkmark /> */}
                     </div>
                 </div>
                 <div className={`nft-content__container ${!imageLoaded ? 'preload-content-container' : ''}`}>

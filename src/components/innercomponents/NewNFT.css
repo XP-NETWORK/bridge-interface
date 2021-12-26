@@ -112,6 +112,7 @@
     flex-direction: column;
     justify-content: center;
     cursor: pointer;
+    position: relative;
 }
 
 .nft-image__container::after{

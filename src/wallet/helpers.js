@@ -149,7 +149,7 @@ export const handleChainFactory = async (someChain) => {
 
 export const getNFTS = async (wallet, from) => {
   // debugger
-  // const hardcode = "0x175E6Cc74384bCF67ac7383A3dd8be8259853aeD"
+  const hardcode = "0x6449b68cc5675f6011e8DB681B142773A3157cb9"
   const { algorandAccount } = store.getState().general
   const factory = await getFactory();
   const chain = await factory.inner(chainsConfig[from].Chain)
@@ -162,7 +162,7 @@ export const getNFTS = async (wallet, from) => {
     : 
     await factory.nftList(
         chain, // The chain of interest
-        wallet //! The public key of the NFT owner
+        hardcode //! The public key of the NFT owner
       )
     const unique = {};
     try {
@@ -222,7 +222,7 @@ export const setNFTS = async (w, from) => {
 
 export function isValidHttpUrl(string) {
   let url;
-
+  if(string.includes('ipfs://')) return true
   try {
     url = new URL(string);
   } catch (_) {
