@@ -14,13 +14,13 @@ import ApproveLoader from '../components/innercomponents/ApproveLoader';
 function XpBridge() {
     useEffect(() => {
     }, [])
-    
+    const {widget} = useSelector(s => s.general)
     const step = useSelector(state => state.general.step)
     const algorandClaimables = useSelector(state => state.general.algorandClaimables)
     return (
         <div className="nftContainer">
             {algorandClaimables && algorandClaimables.length > 0 ? <Transactionhistory />  : ''}
-            { step === 1 ? <><NftSelect/><NftSlider/></> : "" }
+            { step === 1 ? <><NftSelect/>{!widget ? <NftSlider/> : ''}</> : "" }
             { step === 2 ? <NFTaccount />  : '' }
             {/* <NFTOnaccount /> */}
             {/* <NFTworng /> */}

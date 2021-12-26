@@ -45,8 +45,8 @@ function NFTdetails({ nftInf }){
                                 <img src={setupURI(image)} alt="NFT" />
                             :  
                             <div style={{paddingTop: "10%"}} className="brocken-url">
-                                <img style={{height: "40%"}} src={brockenurl} alt='This NFT image uri is brocken.' />
-                                <span className="brocken-url__msg">NFTs URL<br/> is brocken</span>
+                                <img style={{height: "40%"}} src={brockenurl} alt='This NFT image uri is broken.' />
+                                <span className="brocken-url__msg">NFTs URL<br/> is broken</span>
                             </div>
                             }
                         </div>

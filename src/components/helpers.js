@@ -12,8 +12,7 @@ export const isEqual = (value, other) => {
         equal = false
       }
     });
-  }
-  else{
+  } else {
     equal = false
   }
 	return equal;

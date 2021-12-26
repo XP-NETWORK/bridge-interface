@@ -36,6 +36,9 @@ const generalSlice = createSlice({
     setMetaMask(state, action){
       state.MetaMask = action.payload
     },
+    setWidget(state, action) {
+      state.widget = action.payload
+    },
     setAccount(state, action){
       state.account = action.payload
     },
@@ -226,6 +229,7 @@ export const { toggleNFTInfo,
     setTronLink,
     setOnWC,
     setWC,
+    setWidget,
     setError,
     setBigNumFees,
     setTronPopUp,

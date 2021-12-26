@@ -75,6 +75,7 @@ export const parseNFTS = async (nfts) => {
                 resolve(undefined);
               }
             } catch (err) {
+              
               resolve(undefined);
             }
           }
@@ -218,4 +219,16 @@ export const setNFTS = async (w, from) => {
     if(parsedNFTs.length){
       store.dispatch(setNFTList(parsedNFTs))
   }
+}
+
+export function isValidHttpUrl(string) {
+  let url;
+  
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;  
+  }
+
+  return url.protocol === "http:" || url.protocol === "https:";
 }

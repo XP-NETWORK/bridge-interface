@@ -4,6 +4,7 @@ import Back from '../../assets/img/icons/Back.svg';
 import { useSelector } from 'react-redux';
 import { cleanSelectedNFTList, removeFromSelectedNFTList } from "../../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
+import brockenurl from "../../assets/img/brockenurl.png"
 
 
 function SelectedNFT() {
@@ -20,7 +21,7 @@ function SelectedNFT() {
     }
 
     useEffect(() => { }, [selectedNFTs])
-
+    console.log(selectedNFTs, 'asdlkdalkk3l112')
     return (
         <div className="nftSelectList">
             <div className="nftSeleTop">
@@ -32,7 +33,7 @@ function SelectedNFT() {
                 </div>
             </div>
             <ul className="nftSelected">
-                { selectedNFTs ? selectedNFTs.map( nft => <li onClick={() => handleRemove(nft)} className="nftSelecItem"><img src={nft.image} alt="NFT" /><span className="nftSelecItem__name">{nft.name}</span><span className="Close"><img  alt="" src={Close} /></span></li> ) : ''}
+                { selectedNFTs ? selectedNFTs.map( nft => <li onClick={() => handleRemove(nft)} className="nftSelecItem"><img src={nft.image ? nft.image : brockenurl} alt="NFT" /><span className="nftSelecItem__name">{nft.name}</span><span className="Close"><img  alt="" src={Close} /></span></li> ) : ''}
             </ul>
         </div>
     )
