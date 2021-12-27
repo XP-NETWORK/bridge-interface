@@ -2082,6 +2082,7 @@ span.invalid img {
 
 }
 
+
 .changeBtn {
     font-size: 14px;
     line-height: 40px;
@@ -2092,6 +2093,7 @@ span.invalid img {
     margin: 0 2px;
     height: 40px;
     display: inherit;
+    cursor: pointer;
 }
 
 a.disconBtn {
@@ -2544,4 +2546,7 @@ span.transPend {
 
 @media screen and (max-width: 600px){
 
+.aleartBox {
+    bottom: 10vh;
+}
 }
