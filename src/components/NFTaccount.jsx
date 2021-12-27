@@ -11,7 +11,7 @@ import NFTlistTop from './innercomponents/NFTlistTop';
 import { ethers } from "ethers";
 import NFTsuccess from './NFTsuccess';
 import { useSelector } from 'react-redux';
-import { setBigNumFees, setError, setNFTList, setNFTsToWhitelist, setTxnHash } from "../store/reducers/generalSlice"
+import { setBigNumFees, setError, setNFTList, setNFTsToWhitelist, setTxnHash, setTransferLoaderModal } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
 import { getFactory, getNFTS, handleChainFactory, parseNFTS, setClaimablesAlgorand, setNFTS } from "../wallet/helpers"
 import Comment from "../components/innercomponents/Comment"
@@ -121,7 +121,7 @@ function NFTaccount() {
     }
     
     const sendEach = async (nft) => {
-        debugger
+        
         const factory = await getFactory()
         const toChain = await factory.inner(chainsConfig[to].Chain)
         const fromChain = await factory.inner(chainsConfig[from].Chain)
@@ -173,6 +173,7 @@ function NFTaccount() {
                     console.log(err)
                     dispatch(setError(err))
                     dispatch(setLoading(false))
+                    dispatch(dispatch(setTransferLoaderModal(false)))
                 }
             }
             if(to === 'Algorand') {
@@ -180,6 +181,7 @@ function NFTaccount() {
             }
         } catch (error) {
             setLoading(false)
+            dispatch(dispatch(setTransferLoaderModal(false)))
             console.log(error);
             if(error.data){
                 if(error.data.message.includes("not whitelisted")){
@@ -195,11 +197,12 @@ function NFTaccount() {
     const sendAllNFTs = () => {
         if(!loading && approved) {
             setLoading(true)
+            dispatch(setTransferLoaderModal(true))
             selectedNFTList.forEach( nft => {
                 sendEach(nft)
             })
         }
-  
+        
     }
 
     useEffect( async () => {

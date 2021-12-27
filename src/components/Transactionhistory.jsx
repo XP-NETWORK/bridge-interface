@@ -62,7 +62,7 @@ export function AlgorandClaimable(props) {
     const MyAlgo = useSelector(state => state.general.MyAlgo)
 
     const getAlgorandWalletSigner = async () => {
-        debugger
+        
         if( algorandWallet ){
             try {
                 const factory = await getFactory()

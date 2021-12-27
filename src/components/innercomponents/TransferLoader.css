@@ -1,0 +1,104 @@
+.transfer-loader-modal{
+    background-color: rgba(0, 0, 0, 0.596);
+}
+
+.transfer-loader-modal .h4{
+    font-size: 16px;
+}
+
+.transfer-loader-modal .modal-content{
+
+
+}
+
+.transfer-loader__animation{
+    padding: 60px 40px 20px 40px;
+}
+
+.transfer-loader__body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 20px 50px 20px;
+}
+
+.transfer-loader__title{
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 21.78px;
+    color: white;
+    padding-bottom: 28px;
+}
+
+.transfer-loader__text{
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+.transfer-loader__sub{
+    padding-bottom: 30px;
+}
+
+/* Animation */
+.center {
+    height: 5vh;
+    transform: scale(0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  .wave {
+    width: 5px;
+    height: 60px;
+    background: linear-gradient(45deg, cyan, #fff);
+    margin: 10px;
+    animation: wave 1s linear infinite;
+    border-radius: 20px;
+  }
+  .wave:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+  .wave:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+  .wave:nth-child(4) {
+    animation-delay: 0.3s;
+  }
+  .wave:nth-child(5) {
+    animation-delay: 0.4s;
+  }
+  .wave:nth-child(6) {
+    animation-delay: 0.5s;
+  }
+  .wave:nth-child(7) {
+    animation-delay: 0.6s;
+  }
+  .wave:nth-child(8) {
+    animation-delay: 0.7s;
+  }
+  .wave:nth-child(9) {
+    animation-delay: 0.8s;
+  }
+  .wave:nth-child(10) {
+    animation-delay: 0.9s;
+  }
+  
+  @keyframes wave {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+  
+  
+  @media screen and (min-width: 576px) {
+    .transfer-loader-modal .modal-sm{
+        max-width:  370px;
+    }
+  }

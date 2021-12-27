@@ -192,11 +192,15 @@ const generalSlice = createSlice({
     },
     removeFromNotWhiteListed(state){
       state.nftsToWhitelist.shift()
+    },
+    setTransferLoaderModal(state, action){
+      state.transferModalLoader = action.payload
     }
   },
 });
 
-export const { 
+export const {
+    setTransferLoaderModal,
     toggleNFTInfo,
     removeFromNotWhiteListed,
     setNFTsToWhitelist,
