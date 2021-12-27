@@ -105,7 +105,7 @@ function ConnectAlgorand() {
                     <ul className="walletList scrollSty">
                         <li onClick={onAlgoSigner} className="wllListItem algo"><img src={AlgoSignerIcon} alt="Algor Signer Icon"/> Algo Signer</li>
                         <li onClick={onMyAlgo} className="wllListItem algo"><img src={MyAlgoBlue} alt="" /> MyAlgo</li>
-                        <li onClick={() => onAlgoWallet()} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li>
+                        {/* <li onClick={() => onAlgoWallet()} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li> */}
                     </ul>
                 </div>
             </Modal.Body>
