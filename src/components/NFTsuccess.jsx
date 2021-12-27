@@ -17,7 +17,7 @@ import { claimAlgorandPopup, connectAlgorandWalletClaim } from '../store/reducer
 import { useDispatch } from 'react-redux';
 import ConnectAlgorand from './ConnectAlgorand';
 import ClaimAlgorandNFT from './ClaimAlgorandNFT';
-
+import "./SuccessNFT.css"
 // !TODO TX AVALANCHE
 
 function NFTsuccess() {
@@ -89,8 +89,8 @@ function NFTsuccess() {
                                 <div className="sucesList">
                                     <label>Txn Hash</label>
                                     <span className="statTok colBlue">{ tx ? `${tx.substring(0, 10)}...${tx.substring(tx.length - 6)}` : '' }
-                                        <CopyIcons />
-                                        {/* <Image onMouseOver={() => setSetCopyHover(true)}  onMouseOut={() => setSetCopyHover(false)} src={copyHover ? CopyHover : FileCopy} className="success__copy" /> */}
+                                        
+                                        <Image onMouseOver={() => setSetCopyHover(true)}  onMouseOut={() => setSetCopyHover(false)} src={copyHover ? CopyHover : FileCopy} className="success__copy" />
                                     </span>
                                 </div>
                                 {/* <span className="copyTokk"><img src={FileCopy} /></span> */}

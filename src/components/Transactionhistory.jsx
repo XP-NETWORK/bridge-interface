@@ -10,7 +10,7 @@ import Pending from '../assets/img/icons/Pending.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'tronweb/node_modules/axios';
 import { getFactory, setClaimablesAlgorand, setNFTS } from '../wallet/helpers';
-import { claimAlgorandPopup, removeAlgorandClaimable, setAlgorandClaimables } from '../store/reducers/generalSlice';
+import { claimAlgorandPopup, removeAlgorandClaimable, setAlgorandClaimables, setTransferLoaderModal } from '../store/reducers/generalSlice';
 import { algoConnector } from "../wallet/connectors"
 // Chain
 
@@ -107,22 +107,30 @@ export function AlgorandClaimable(props) {
     },[])
     
     const optIn = async () => {
-        debugger
+        
+        dispatch(setTransferLoaderModal(true))
         const factory = await getFactory()
         const algorand = await factory.inner(15)
-        // console.log("optIn", nftId);
         const isOpted = await algorand.isOptIn(algorandAccount, nftId)
     
         if(!isOpted) {
             const signer = await getAlgorandWalletSigner()
-            const optin = await algorand.optInNft(signer, props.nft)
+            try {
+                const optin = await algorand.optInNft(signer, props.nft)
+                if(optin) setIsOptin(true)
+            } catch (error) {
+                console.log(error);
+                dispatch(setTransferLoaderModal(false))
+            }
             
-            if(optin) setIsOptin(true)
-        } else setIsOptin(true)
-        
+        } else {
+            setIsOptin(true)
+        }
+        dispatch(setTransferLoaderModal(false))
     }
 
     const claim = async () => {
+        dispatch(setTransferLoaderModal(true))
         if(isOptin) {
             const factory = await getFactory()
             const algorand = await factory.inner(15)
@@ -137,10 +145,13 @@ export function AlgorandClaimable(props) {
                 },500)
 
             } catch(err) {
+                dispatch(setTransferLoaderModal(false))
                 console.log(err)
             }
         }
+        dispatch(setTransferLoaderModal(false))
     }
+    
     const off = { opacity: 0.6, pointerEvents: 'none' }
     return (
         <tr>

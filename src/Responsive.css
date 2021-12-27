@@ -193,9 +193,9 @@
         width: 90vw;
     }
 
-    .modal {
+    /* .modal {
         padding: 0 !important;
-    }
+    } */
 
     .nftWorng .modal-dialog,
     .ChainModal .modal-dialog,
@@ -220,26 +220,26 @@
         margin-bottom: 8px;
     }
 
-    .modal-dialog {
+    /* .modal-dialog {
         margin: 30px auto 0 auto;
-    }
+    } */
    
-    .nftSuccessMod .modal-dialog {
-        width: 375px;
-    }
+    /* .nftSuccessMod .modal-dialog {
+       transform: scale(0.8);
+    } */
 
     .nftSuccessMod .modal-content {
         padding: 0 20px;
-        border-radius: 0;
+        /* border-radius: 0; */
     }
 
     .modal-header {
         min-height: 56px;
     }
 
-    .nftSuccessMod .modal-header {
+    /* .nftSuccessMod .modal-header {
         margin-top: 20px;
-    }
+    } */
 
     .transferTable.table thead th, .transferTable.table tr td {
         padding: 12px !important;

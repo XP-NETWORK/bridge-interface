@@ -102,11 +102,12 @@ function ConnectAlgorand() {
                     <h3 className="walletalgotitle">
                         Connect an Algorand wallet to claim NFTs 
                     </h3>
-                    <ul className="walletList scrollSty">
+                    
+                    {/* <ul className="walletList scrollSty">
                         <li onClick={onAlgoSigner} className="wllListItem algo"><img src={AlgoSignerIcon} alt="Algor Signer Icon"/> Algo Signer</li>
                         <li onClick={onMyAlgo} className="wllListItem algo"><img src={MyAlgoBlue} alt="" /> MyAlgo</li>
-                        {/* <li onClick={() => onAlgoWallet()} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li> */}
-                    </ul>
+                        <li onClick={() => onAlgoWallet()} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li>
+                    </ul> */}
                 </div>
             </Modal.Body>
         </Modal>

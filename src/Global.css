@@ -1631,6 +1631,7 @@ li.nftSelecItem .Close:hover {
 
 .colBlue {
     color: #297EFF !important;
+    cursor: pointer;
 }
 
 .SentFrom img {
@@ -1663,12 +1664,13 @@ span.statComp img {
     padding: 6px 30px;
 }
 
-.nftSelecItem__name{
+/* .nftSelecItem__name{
     min-width: 200px;
     text-overflow: ellipsis;
-}
+} */
 
 .bluTextBtn {
+    white-space: nowrap;
     display: inline-block;
     cursor: pointer;
     margin-left: auto;
@@ -1679,6 +1681,7 @@ span.statComp img {
     background: rgba(98, 113, 138, 0.1);
     border-radius: 6px;
     padding: 2px 6px;
+    min-width: 80px;
 }
 
 .bluTextBtn:hover {
@@ -2423,7 +2426,7 @@ span.transPend {
 
   .copytooltip{
       position: absolute;
-      z-index: 5;
+      z-index: 400;
       bottom: 10px;
       right: -55px;
   }
@@ -2528,7 +2531,7 @@ span.transPend {
     .account__box{
         width: 250px
     }
-
+   
     .navMenu{
         width:  calc(100% - 30px);
         position: fixed;

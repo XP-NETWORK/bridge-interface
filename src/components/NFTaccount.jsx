@@ -121,7 +121,7 @@ function NFTaccount() {
     }
     
     const sendEach = async (nft) => {
-        
+        debugger
         const factory = await getFactory()
         const toChain = await factory.inner(chainsConfig[to].Chain)
         const fromChain = await factory.inner(chainsConfig[from].Chain)
@@ -144,21 +144,11 @@ function NFTaccount() {
                     receiver,   // The address who you are transferring the NFT to.
                     bigNumberFees
                 )
+                dispatch(dispatch(setTransferLoaderModal(false)))
                 dispatch(setTxnHash({txn: result, nft}))
             } 
             else {
-                result = await factory.transferNft(
-                    fromChain, // The Source Chain.
-                    toChain,   // The Destination Chain.
-                    nft,       // Or the NFT you have chosen.
-                    signer || await getAlgorandWalletSigner(),    // Or tronlink or maiar.
-                    receiver,   // The address who you are transferring the NFT to.
-                    bigNumberFees
-                )
-
-                dispatch(setTxnHash({txn: result, nft}))
                 try {
-                    
                     result = await factory.transferNft(
                         fromChain, // The Source Chain.
                         toChain,   // The Destination Chain.
@@ -167,7 +157,7 @@ function NFTaccount() {
                         receiver,   // The address who you are transferring the NFT to.
                         bigNumberFees
                     )
-                    
+                    dispatch(dispatch(setTransferLoaderModal(false)))
                     dispatch(setTxnHash({txn: result, nft}))
                 } catch(err) {
                     console.log(err)
