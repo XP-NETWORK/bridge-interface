@@ -195,7 +195,7 @@ const generalSlice = createSlice({
     },
     setTransferLoaderModal(state, action){
       state.transferModalLoader = action.payload
-    }
+    },
   },
 });
 

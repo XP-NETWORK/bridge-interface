@@ -180,7 +180,7 @@ function NFTaccount() {
                 await setClaimablesAlgorand(algorandAccount)
             }
         } catch (error) {
-            debugger
+            // debugger
             setLoading(false)
             dispatch(dispatch(setTransferLoaderModal(false)))
             console.log(error);

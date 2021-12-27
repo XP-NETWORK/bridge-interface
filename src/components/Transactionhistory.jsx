@@ -133,6 +133,7 @@ export function AlgorandClaimable(props) {
                     setClaimablesAlgorand(algorandAccount)
                     setNFTS(algorandAccount, 'Algorand')
                     dispatch(claimAlgorandPopup(undefined))
+                    dispatch(removeAlgorandClaimable(props.nft.nftId))
                 },500)
 
             } catch(err) {
