@@ -6,11 +6,6 @@
     font-size: 16px;
 }
 
-.transfer-loader-modal .modal-content{
-
-
-}
-
 .transfer-loader__animation{
     padding: 60px 40px 20px 40px;
 }
@@ -101,4 +96,10 @@
     .transfer-loader-modal .modal-sm{
         max-width:  370px;
     }
+  }
+
+  @media screen and (max-width: 576px) {
+      .transfer-loader-modal .modal-content{
+          transform: scale(0.9);
+      }
   }

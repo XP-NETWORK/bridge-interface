@@ -180,6 +180,7 @@ function NFTaccount() {
                 await setClaimablesAlgorand(algorandAccount)
             }
         } catch (error) {
+            debugger
             setLoading(false)
             dispatch(dispatch(setTransferLoaderModal(false)))
             console.log(error);
@@ -191,7 +192,9 @@ function NFTaccount() {
                     }))
                 }
             }
-            
+            else if(error.message?.includes('non-origin chain')){
+                dispatch(setError("Trying to send wrapped nft to non-origin chain!!!"))
+            }
         }
     }
     const sendAllNFTs = () => {
