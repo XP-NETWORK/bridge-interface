@@ -224,7 +224,7 @@ export const chainsConfig = {
         rpc: "https://rpc.fuse.io/",
         chainId: 122,
         Chain: Chain.FUSE,
-        tx: "https://explorer.fuse.io/"
+        tx: "https://explorer.fuse.io/tx/"
     }
 
 }

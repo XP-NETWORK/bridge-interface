@@ -159,11 +159,22 @@ function NFTaccount() {
                     )
                     dispatch(dispatch(setTransferLoaderModal(false)))
                     dispatch(setTxnHash({txn: result, nft}))
-                } catch(err) {
-                    console.log(err)
-                    dispatch(setError(err))
-                    dispatch(setLoading(false))
+                } catch(error) {
+                    // console.log(error)
+                    
+                    // dispatch(setLoading(false))
                     dispatch(dispatch(setTransferLoaderModal(false)))
+                    if(error.data){
+                        if(error.data.message.includes("not whitelisted")){
+                            dispatch(setNFTsToWhitelist({
+                                url: nft.image,
+                                name: nft.name
+                            }))
+                        }
+                    }
+                    else if(error.message?.includes('non-origin chain')){
+                        dispatch(setError("Trying to send wrapped nft to non-origin chain!!!"))
+                    }
                 }
             }
             if(to === 'Algorand') {
