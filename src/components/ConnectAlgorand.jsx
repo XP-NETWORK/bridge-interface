@@ -35,12 +35,11 @@ function ConnectAlgorand() {
       if (!algoConnector.connected) {
           algoConnector.createSession()   
       }
+
       algoConnector.on("connect", (error, payload) => {
-       
         if (error) {
           throw error;
         }
-      
         // Get provided accounts
         const { accounts } = payload.params[0];
         if(accounts){
@@ -87,6 +86,7 @@ function ConnectAlgorand() {
    
 
     return (
+      // connectClaimAlgorand
         <Modal show={connectClaimAlgorand} onHide={handleClose} animation={false} className="ChainModal">
             <Modal.Header>
                 <Modal.Title>Connect Wallet</Modal.Title>
@@ -102,12 +102,12 @@ function ConnectAlgorand() {
                     <h3 className="walletalgotitle">
                         Connect an Algorand wallet to claim NFTs 
                     </h3>
-                    
-                    {/* <ul className="walletList scrollSty">
+                    { window.innerWidth < 600 && <div className="no-wallets">Claiming your nft is currently only available on desktop using MyAlgo or Algosigner</div> }
+                    { window.innerWidth > 600 && <ul className="walletList scrollSty">
                         <li onClick={onAlgoSigner} className="wllListItem algo"><img src={AlgoSignerIcon} alt="Algor Signer Icon"/> Algo Signer</li>
                         <li onClick={onMyAlgo} className="wllListItem algo"><img src={MyAlgoBlue} alt="" /> MyAlgo</li>
-                        <li onClick={() => onAlgoWallet()} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li>
-                    </ul> */}
+                        {/* <li onClick={() => onAlgoWallet()} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li> */}
+                    </ul> }
                 </div>
             </Modal.Body>
         </Modal>

@@ -201,6 +201,7 @@
     .ChainModal .modal-dialog,
     .NftDetails .modal-dialog {
         max-width: 343px;
+        margin: 0 auto;
     }
 
     .nftDetailBox {

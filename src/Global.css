@@ -641,6 +641,10 @@ span.wallet {
     overflow-y: scroll;
 }
 
+.no-wallets {
+  text-align: center;
+}
+
 .maiarModal{
     padding: 20px 30px;
     background: linear-gradient(309.48deg, #282E3C -3.65%, rgba(40, 46, 60, 0) 122.77%);

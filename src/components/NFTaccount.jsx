@@ -90,9 +90,9 @@ function NFTaccount() {
             }
     }
     
-    const estimate = async () => {
+    async function estimate () {
         let fact
-        
+        // debugger
         try {
             const fromChain = await handleChainFactory(from)
             const toChain = await handleChainFactory(to)
@@ -161,8 +161,6 @@ function NFTaccount() {
                     dispatch(setTxnHash({txn: result, nft}))
                 } catch(error) {
                     // console.log(error)
-                    
-                    // dispatch(setLoading(false))
                     dispatch(dispatch(setTransferLoaderModal(false)))
                     if(error.data){
                         if(error.data.message.includes("not whitelisted")){
