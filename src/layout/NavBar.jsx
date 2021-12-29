@@ -13,6 +13,7 @@ function NavBar() {
     const tronAccount = useSelector(state => state.general.tronWallet)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
+    const widget = useSelector(state => state.general.widget)
     const handleShow = () => dispatch(setAccountModal(true));
     const step = useSelector(state => state.general.step)
 
@@ -23,7 +24,7 @@ function NavBar() {
     }
 
     return (
-        <header className="HeaderArea" id="Header"> 
+        !widget?<header className="HeaderArea" id="Header"> 
             <Navbar expand="lg">    
                 <Navbar.Brand 
                 onClick={() => dispatch(setReset())}  
@@ -51,7 +52,7 @@ function NavBar() {
                     </Navbar.Collapse>
                 <AccountModal />
             </Navbar>
-        </header>
+        </header> : ''
     )
 }
 

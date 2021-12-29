@@ -10,6 +10,7 @@ import Avalanche from "../assets/img/chain/Avalanche.svg"
 import Fantom from "../assets/img/chain/Fantom.svg"
 import Xdai from "../assets/img/chain/Xdai.svg"
 import Solana from "../assets/img/chain/Solana.svg"
+import Fuse from "../assets/img/chain/Fuse.svg"
 import { Chain } from "xp.network/dist/consts";
 
 export const EVM = "EVM";
@@ -94,7 +95,7 @@ export const chains = [
         key: 'Solana',
         text: 'Solana',
         value: 'Solana',
-        order: 10,
+        order: 13,
         coming: true,
         image: { avatar: true, src: Solana },
     },
@@ -116,6 +117,14 @@ export const chains = [
         coming: true,
         image: { avatar: true, src: Heco },
     },
+    {
+        type: "EVM",
+        key: 'Fuse',
+        text: 'Fuse',
+        value: 'Fuse',
+        order: 10,
+        image: { avatar: true, src: Fuse },
+    }
 ]
 
 export const chainsConfig = {
@@ -202,11 +211,20 @@ export const chainsConfig = {
         type: EVM,
         img: Avalanche,
         token: 'AVAX',
-        rpc: 'https://avaxnode.xp.network/ext/bc/C/rpc',
+        rpc: 'https://avalanche.xp.network/ext/bc/C/rpc',
         chainId: 43114,
         // chainData: ChainData.Avalanche,
-        Chain: Chain.AVALANCHE
-
+        Chain: Chain.AVALANCHE,
+        tx: "https://snowtrace.io/tx/"
+    },
+    Fuse: {
+        type: EVM,
+        img: Fuse,
+        token: "Fuse",
+        rpc: "https://rpc.fuse.io/",
+        chainId: 122,
+        Chain: Chain.FUSE,
+        tx: "https://explorer.fuse.io/tx/"
     }
 
 }
@@ -223,11 +241,16 @@ export const coins = [
     "CELO", // 8
     "ONE", // 9
     "ONG", // 10
-    "XDAI"
+    "XDAI", //11
+    "FUSE" //12
   ];
 
 export const CHAIN_INFO = {
-    Elrond: { nonce: 2, native: "EGLD", decimals: 1e18 },
+    Elrond: { 
+        nonce: 2, 
+        native: "EGLD", 
+        decimals: 1e18 
+    },
     HECO: {
       nonce: 3,
       native: coins[1],
@@ -334,5 +357,15 @@ export const CHAIN_INFO = {
         chainId: 100,
         blockExplorerUrls: "https://blockscout.com/xdai/mainnet/",
         contract: "0xdceB7a6b2d2cC149aA74E049231c94D072eDF3E8",
+    },
+    Fuse: {
+        native: coins[12],
+        nonce: 16,
+        decimals: 1e18,
+        rpc: "https://rpc.fuse.io/",
+        chainId: 122,
+        blockExplorerUrls: "",
+        contract: ""
     }
+
   };

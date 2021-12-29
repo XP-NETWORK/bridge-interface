@@ -6,19 +6,32 @@
 
 .empty__box{
     width: calc(90% / 3);
-    height: 299px;
+    height: 320px;
     border-radius: 20px;
     border: 1px dashed #36405A;
 }
 
 @media screen and (max-width: 1200px){
     .empty__box{
-        /* width: 170px; */
-        height: 299px;
+        height: 320px;
         border-radius: 20px;
         border: 1px dashed #36405A;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .empty__box{
+        width: calc(90% / 3);
+        height: 320px;
+    }
+}
+
+/* @media screen and (max-width: 600px) {
+    .empty__box{
+        width: calc(90% / 2);
+        height: 250px;
+    }
+} */
 
 @media screen and (max-width: 600px) {
     .empty__box{
@@ -27,3 +40,19 @@
     }
 
 }
+
+@media screen and (max-width: 425px) {
+    .empty__box{
+        width: calc(90% / 2);
+        height: 210px;
+    }
+
+}
+
+/* @media screen and (max-width: 375px) {
+    .empty__box{
+        width: calc(90% / 2);
+        height: 210px;
+    }
+
+} */

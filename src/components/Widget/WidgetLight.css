@@ -1,0 +1,80 @@
+:root {
+    --fontColorLight: #ffffff;
+    --bgColorLight: #ffe760;
+    --cardsBGColorLight: #00ff2a;
+    --cardContentColorLight:  #0b8520;
+    --buttonColorLight: rgb(255, 20, 20);
+    --buttonColorLightHover: rgb(204, 121, 121);
+    --borderColorLight: rgb(204, 24, 24);
+    --modalBGColorLight: #00eeff;
+
+}
+
+
+
+.light-palette{
+    background-color: var(--bgColorLight);
+}
+
+.light-palette .themBtn{
+    background: var(--buttonColorLight);
+    border: 1px solid var(--buttonColorLight);
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+    max-width: 326px;
+    text-align: center;
+    border-radius: 16px;
+    color: #fff;
+    font-size: 16px;
+    line-height: 56px;
+}
+
+.light-palette .modal-content{
+    background: unset;
+    background: var(--modalBGColorLight);
+}
+
+.light-palette .themBtn:hover{
+    background: var(--buttonColorLightHover) ;
+    color: #fff;
+}
+
+.light-palette .nftTitle h2 {
+    color: var(--fontColorLight);
+}
+
+.light-palette .yourNft{
+    color: var(--fontColorLight);
+}
+
+.light-palette .yourNft span, .light-palette .desChain span, .light-palette .selectedNft span, .light-palette .nftFees span{
+    color: var(--fontColorLight);
+}
+
+
+
+.light-palette .seleDepat, .light-palette .modalSelectOptionsText, .light-palette .modal-title, .light-palette .seleDestiSele, .light-palette .yourNft, .light-palette .sendNftTit, .light-palette .approveBtn{
+    color: var(--fontColorLight);
+}
+
+.light-palette .nft-image__container{
+    background-color: var(--cardsBGColorLight);
+}
+
+.light-palette .nft-content__container{
+    background-color: var(--cardContentColorLight);
+}
+
+.light-palette .nftSelectBox {
+    border: 1px solid var(--borderColorLight);
+}
+
+.disabled .themBtn {
+    background: linear-gradient(0deg, rgba(73, 82, 108, 0.1), rgba(73, 82, 108, 0.1));
+    border: 1px solid #37405B;
+    color: #5A6177;
+    pointer-events: none;
+}
+
+

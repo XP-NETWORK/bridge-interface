@@ -5,6 +5,7 @@ const initialState = {
   selectedNFTList: [],
   NFTListView: false,
   approvedNFTList: [],
+  nftsToWhitelist: [],
   txnHashArr: [],
   fees : 0,
   currentTx: 0,
@@ -35,6 +36,9 @@ const generalSlice = createSlice({
     },
     setMetaMask(state, action){
       state.MetaMask = action.payload
+    },
+    setWidget(state, action) {
+      state.widget = action.payload
     },
     setAccount(state, action){
       state.account = action.payload
@@ -180,10 +184,26 @@ const generalSlice = createSlice({
     setAlgorandWallet(state, action){
       state.AlgorandWallet = action.payload
     },
+    setMyAlgo(state, action){
+      state.MyAlgo = action.payload
+    },
+    setNFTsToWhitelist(state, action){
+      state.nftsToWhitelist = [...state.nftsToWhitelist, action.payload]
+    },
+    removeFromNotWhiteListed(state){
+      state.nftsToWhitelist.shift()
+    },
+    setTransferLoaderModal(state, action){
+      state.transferModalLoader = action.payload
+    },
   },
 });
 
-export const { toggleNFTInfo, 
+export const {
+    setTransferLoaderModal,
+    toggleNFTInfo,
+    removeFromNotWhiteListed,
+    setNFTsToWhitelist,
     setReset,
     setTo, 
     claimAlgorandPopup,
@@ -223,6 +243,7 @@ export const { toggleNFTInfo,
     setTronLink,
     setOnWC,
     setWC,
+    setWidget,
     setError,
     setBigNumFees,
     setTronPopUp,
@@ -232,7 +253,8 @@ export const { toggleNFTInfo,
     setAlgorandAccount,
     setShowAbout,
     setShowVideo,
-    setAlgorandWallet
+    setAlgorandWallet,
+    setMyAlgo
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

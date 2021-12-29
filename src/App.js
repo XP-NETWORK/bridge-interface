@@ -15,6 +15,8 @@ import About from "./components/innercomponents/About";
 import Video from "./components/innercomponents/Video";
 import {getFactory, setClaimablesAlgorand} from './wallet/helpers'
 import Widget from "./components/Widget";
+import TechnicalSupport from "./components/innercomponents/TechnicalSupport";
+import TransferLoader from "./components/innercomponents/TransferLoader";
 
 function App() {
   const dispatch = useDispatch()
@@ -22,6 +24,7 @@ function App() {
   const algorandAccount = useSelector(state => state.general.algorandAccount)
   const error = useSelector(state => state.general.error)
   const tronPopUp = useSelector(state => state.general.tronPopUp)
+  const nftsToWhitelist = useSelector(state => state.general.techModal)
 
   function handleClose () {
     dispatch(setTronPopUp(false))
@@ -61,6 +64,8 @@ return (
     <div className={"App"}>
       <About />
       <Video />
+      <TechnicalSupport />
+      <TransferLoader />
       <Modal 
       centered
       className="approve-modal"

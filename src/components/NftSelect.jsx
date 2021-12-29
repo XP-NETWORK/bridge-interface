@@ -4,7 +4,7 @@ import INF from '../assets/img/icons/Inf.svg';
 
 import SelectDestination from './SelectDestination';
 import ConnectWallet from './ConnectWallet';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setShowAbout, setShowVideo } from '../store/reducers/generalSlice';
 
 
@@ -18,12 +18,12 @@ function NftSelect() {
     function handleVideoClick() {
         dispatch(setShowVideo(true))
     }
-
+    const {widget} = useSelector(s => s.general)
     return (
         <div className="NftSelect">
-            <div id="tttt" className="nftTitle">
+            {!widget ? <div id="tttt" className="nftTitle">
                 <h2>Transfer NFTs <br /> between blockchains</h2>
-            </div>
+            </div> : ''}
             <div className="nftSlectArea">
                 
                 <SelectDestination/>

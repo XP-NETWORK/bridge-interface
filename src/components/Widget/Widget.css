@@ -1,0 +1,109 @@
+
+.widget .sendNftBox {
+    background: unset;
+    box-shadow: unset;
+}
+
+.widget .nft_selectBox{
+    background: unset;
+}
+
+.widget .destiAddress{
+    background: unset;
+}
+
+.widget .nftSelectList{
+    background: unset;
+}
+
+.widget .approValBox{
+    background: unset;
+}
+
+.widget .nftFees {
+    background: unset;
+}
+
+.widget .nftSelectBox{
+    background: unset;
+}
+
+.widget .destiAddress input {
+    background: unset;
+}
+
+
+/*!! FONT SIZE */
+/* !! SM */
+.font-size-sm{
+    font-size: 12px !important;
+}
+
+.font-size-sm h3 {
+    font-size: 16px;
+}
+
+.font-size-sm .yourNft, .font-size-sm .yourNft span{
+    font-size: 14px !important;
+}
+
+.font-size-sm .clearNft{
+    font-size: 14px !important;
+}
+
+.font-size-sm .nft-content__container {
+    font-size: 12px !important;
+}
+
+.font-size-sm .themBtn {
+    font-size: 14px !important;
+}
+
+.font-size-sm .modal-title{
+    font-size: 16px !important;
+}
+
+.font-size-sm .nftInfBox label{
+    font-size: 12px !important;
+}
+
+.font-size-sm .nftInfBox p{
+    font-size: 12px !important;
+}
+/* !! XL */
+.font-size-xl{
+    font-size: 18px !important;
+}
+
+.font-size-xl h3 {
+    font-size: 20px !important;
+}
+
+.font-size-xl .yourNft, .font-size-xl .yourNft span{
+    font-size: 20px !important;
+}
+
+.font-size-xl .clearNft{
+    font-size: 18px !important;
+}
+
+.font-size-xl .nft-content__container{
+    font-size: 16px !important;
+}
+
+.font-size-xl .themBtn{
+    font-size: 18px !important;
+}
+
+.font-size-xl .modal-title {
+    font-size: 20px !important;
+}
+
+.font-size-xl .nftInfBox label{
+    font-size: 16px !important;
+}
+
+.font-size-xl .nftInfBox p{
+    font-size: 16px !important;
+}
+

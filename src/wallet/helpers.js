@@ -75,6 +75,7 @@ export const parseNFTS = async (nfts) => {
                 resolve(undefined);
               }
             } catch (err) {
+              
               resolve(undefined);
             }
           }
@@ -114,7 +115,6 @@ export const getFactory = async () => {
   store.dispatch(setFactory(factory))
   return factory;
 };
-
 export const handleChainFactory = async (someChain) => {
   // debugger
   const factory = await getFactory();
@@ -141,24 +141,28 @@ export const handleChainFactory = async (someChain) => {
     ? (chain = await factory.inner(Chain.SOLANA))
     : someChain === "Cardano"
     ? (chain = await factory.inner(Chain.CARDANO))
+    : someChain === "Fuse"
+    ? (chain = await factory.inner(Chain.FUSE))
     : (chain = "");
   return chain;
 };
 
 export const getNFTS = async (wallet, from) => {
-  debugger
-  const {algorandAccount} = store.getState().general
+  // debugger
+  const hardcode = "0x6449b68cc5675f6011e8DB681B142773A3157cb9"
+  const { algorandAccount } = store.getState().general
   const factory = await getFactory();
   const chain = await factory.inner(chainsConfig[from].Chain)
+  
   try {
-    console.log('hel342432234342324lo')
     const res = 
     algorandAccount 
-    ? (await axios.get(`https://nftindexing.herokuapp.com/15/${wallet}`)).data.result
+    ? 
+    (await axios.get(`https://nftindexing.herokuapp.com/15/${hardcode}`)).data.result
     : 
     await factory.nftList(
         chain, // The chain of interest
-        wallet // The public key of the NFT owner
+        wallet //! The public key of the NFT owner
       )
     const unique = {};
     try {
@@ -203,11 +207,10 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
   } catch(err) {
     return []
   }
-
 }
 
 export const setNFTS = async (w, from) => {
-  debugger
+  // debugger
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from)
   const parsedNFTs = await parseNFTS(res)
@@ -215,4 +218,16 @@ export const setNFTS = async (w, from) => {
     if(parsedNFTs.length){
       store.dispatch(setNFTList(parsedNFTs))
   }
+}
+
+export function isValidHttpUrl(string) {
+  let url;
+  if(string.includes('ipfs://')) return true
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;  
+  }
+
+  return url.protocol === "http:" || url.protocol === "https:";
 }

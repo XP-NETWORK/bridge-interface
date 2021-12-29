@@ -17,7 +17,7 @@ import { claimAlgorandPopup, connectAlgorandWalletClaim } from '../store/reducer
 import { useDispatch } from 'react-redux';
 import ConnectAlgorand from './ConnectAlgorand';
 import ClaimAlgorandNFT from './ClaimAlgorandNFT';
-
+import "./SuccessNFT.css"
 // !TODO TX AVALANCHE
 
 function NFTsuccess() {
@@ -89,8 +89,8 @@ function NFTsuccess() {
                                 <div className="sucesList">
                                     <label>Txn Hash</label>
                                     <span className="statTok colBlue">{ tx ? `${tx.substring(0, 10)}...${tx.substring(tx.length - 6)}` : '' }
-                                        <CopyIcons />
-                                        {/* <Image onMouseOver={() => setSetCopyHover(true)}  onMouseOut={() => setSetCopyHover(false)} src={copyHover ? CopyHover : FileCopy} className="success__copy" /> */}
+                                        
+                                        <Image onMouseOver={() => setSetCopyHover(true)}  onMouseOut={() => setSetCopyHover(false)} src={copyHover ? CopyHover : FileCopy} className="success__copy" />
                                     </span>
                                 </div>
                                 {/* <span className="copyTokk"><img src={FileCopy} /></span> */}
@@ -136,13 +136,14 @@ function SuccessNFT({nft, from, index}) {
     const dispatch = useDispatch()
     const {to, algorandAccount} = useSelector(s => s.general)
     const tx = nft.txn ? typeof nft.txn === 'object' ? nft.txn.hash.toString() : nft.txn : ''
+    const off = { opacity: 0.6, pointerEvents: 'none' }
 
     useEffect(async() => {
         if(to.key === 'Algorand') {
             const claimables = await setClaimablesAlgorand(algorandAccount, true)
-            if(claimables && claimables.length > 0) {
+            // if(claimables && claimables.length > 0) {
 
-            }
+            // }
         }
     },[])
     const claim = () => {
@@ -152,8 +153,16 @@ function SuccessNFT({nft, from, index}) {
         <li className="nftSelecItem">
             <img src={setupURI(nft.image)} alt="NFT" />
             <span className="nftSelected__name">{nft.name}</span>
-            <span className="bluTextBtn"><a href={`${chainsConfig[from.key].tx + tx}`} target="_blank">View Txn</a></span>
-            {to.key === 'Algorand' ? <span className="bluTextBtn"><a onClick={claim} target="_blank">Claim</a></span> : ''}
+            <span className="bluTextBtn">
+                <a href={`${chainsConfig[from.key].tx + tx}`} target="_blank">View Txn</a>
+            </span>
+            { to.key === 'Algorand' ? 
+            <span className="bluTextBtn">
+                <a style={ algorandAccount ? {} : off} onClick={claim} target="_blank">Claim</a>
+            </span> 
+            :
+             ''
+             }
 
         </li>
     )

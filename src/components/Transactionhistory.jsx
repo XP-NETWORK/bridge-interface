@@ -3,14 +3,14 @@ import { Container } from "react-bootstrap";
 
 import SelectedNFT_1 from '../assets/img/nfts/SelectedNFT_1.png';
 
-
+import MyAlgoConnect from "@randlabs/myalgo-connect";
 import Check from '../assets/img/icons/Check_circle.svg';
 import Failed from '../assets/img/icons/Failed.svg';
 import Pending from '../assets/img/icons/Pending.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'tronweb/node_modules/axios';
 import { getFactory, setClaimablesAlgorand, setNFTS } from '../wallet/helpers';
-import { claimAlgorandPopup, removeAlgorandClaimable, setAlgorandClaimables } from '../store/reducers/generalSlice';
+import { claimAlgorandPopup, removeAlgorandClaimable, setAlgorandClaimables, setTransferLoaderModal } from '../store/reducers/generalSlice';
 import { algoConnector } from "../wallet/connectors"
 // Chain
 
@@ -59,9 +59,10 @@ export function AlgorandClaimable(props) {
     const [originalChain,setOrigin] = useState()
     const algorandWallet = useSelector(state => state.general.AlgorandWallet)
     const AlgoSigner = useSelector(state => state.general.AlgoSigner)
+    const MyAlgo = useSelector(state => state.general.MyAlgo)
 
     const getAlgorandWalletSigner = async () => {
-        debugger
+        
         if( algorandWallet ){
             try {
                 const factory = await getFactory()
@@ -71,6 +72,13 @@ export function AlgorandClaimable(props) {
             } catch (error) {
                 console.log(error.message);
             }
+        }
+        else if(MyAlgo){
+            const base = new MyAlgoConnect();
+            const factory = await getFactory()
+            const inner = await factory.inner(15)
+            const signer = inner.myAlgoSigner(base, algorandAccount)
+            return signer
         }
         else{
             const signer = {
@@ -82,11 +90,6 @@ export function AlgorandClaimable(props) {
         }
     }
 
-    // const signer = {
-    //     address: algorandAccount,
-    //     algoSigner: window.AlgoSigner,
-    //     ledger: "MainNet"
-    // }
 
     const load = async () => {
         const res = await axios.get(uri)
@@ -104,21 +107,30 @@ export function AlgorandClaimable(props) {
     },[])
     
     const optIn = async () => {
-        debugger
+        
+        dispatch(setTransferLoaderModal(true))
         const factory = await getFactory()
         const algorand = await factory.inner(15)
         const isOpted = await algorand.isOptIn(algorandAccount, nftId)
     
         if(!isOpted) {
             const signer = await getAlgorandWalletSigner()
-            const optin = await algorand.optInNft(signer, props.nft)
+            try {
+                const optin = await algorand.optInNft(signer, props.nft)
+                if(optin) setIsOptin(true)
+            } catch (error) {
+                console.log(error);
+                dispatch(setTransferLoaderModal(false))
+            }
             
-            if(optin) setIsOptin(true)
-        } else setIsOptin(true)
-        
+        } else {
+            setIsOptin(true)
+        }
+        dispatch(setTransferLoaderModal(false))
     }
 
     const claim = async () => {
+        dispatch(setTransferLoaderModal(true))
         if(isOptin) {
             const factory = await getFactory()
             const algorand = await factory.inner(15)
@@ -129,13 +141,17 @@ export function AlgorandClaimable(props) {
                     setClaimablesAlgorand(algorandAccount)
                     setNFTS(algorandAccount, 'Algorand')
                     dispatch(claimAlgorandPopup(undefined))
+                    dispatch(removeAlgorandClaimable(props.nft.nftId))
                 },500)
 
             } catch(err) {
+                dispatch(setTransferLoaderModal(false))
                 console.log(err)
             }
         }
+        dispatch(setTransferLoaderModal(false))
     }
+    
     const off = { opacity: 0.6, pointerEvents: 'none' }
     return (
         <tr>
@@ -147,7 +163,7 @@ export function AlgorandClaimable(props) {
             <td className="colBlue">{originalChain}</td>
             <td className="claimsbut" style={isOptin ? off : {}} onClick={optIn}>
                 <div>
-                    Opt In
+                    Opt-in
                 </div>
             </td>
             <td className="claimsbut" style={!isOptin ? off : {}} onClick={claim}>

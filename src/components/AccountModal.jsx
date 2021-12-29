@@ -10,8 +10,8 @@ import { DetectOutsideClick } from "../components/helpers"
 import {CopyToClipboard } from 'react-copy-to-clipboard';
 import { CHAIN_INFO } from '../components/values';
 import { getAddEthereumChain } from "../wallet/chains"
-import copyTT from "../assets/img/icons/copytt.png"
-import copiedIcon from "../assets/img/icons/Copied.png"
+import copyTT from "../assets/img/icons/copytoclip.svg"
+import copiedIcon from "../assets/img/icons/copiedtoclip.svg"
 
 export default function AccountModal() {
     const dispatch = useDispatch()
@@ -27,6 +27,7 @@ export default function AccountModal() {
     const from = useSelector(state => state.general.from)
     const tronWallet = useSelector(state => state.general.tronWallet)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
+    const MyAlgo = useSelector(state => state.general.MyAlgo)
     const tronAccount = useSelector(state => state.general.tronWallet)
 
     // const step = useSelector(state => state.general.step)
@@ -93,10 +94,10 @@ export default function AccountModal() {
             <div className="accountTit">
                 Account <span className="CloseModal" onClick={handleClose}> <img src={Close}/> </span>
             </div>
-            <p className="">{`Connected with ${MetaMask ? 'MetaMask' : onMaiar ? "Maiar Wallet" : trustWallet ? "Trust Wallet" : algorandWallet ? 'Algorand Wallet' : 'Tron Link'}`}</p>
+            <p className="">{`Connected with ${MetaMask ? 'MetaMask' : onMaiar ? "Maiar Wallet" : trustWallet ? "Trust Wallet" : algorandWallet ? 'Algorand Wallet' : MyAlgo ? "MyAlgo" : 'Tron Link'}`}</p>
                         { copyIconHover && <img className="copytoltip" src={copyTT} /> }
                         { copied && <img className="copytoltip-tron" src={copiedIcon} /> }
-            <CopyToClipboard text={elrondAccount || account || tronWallet}>
+            <CopyToClipboard text={elrondAccount || account || tronWallet || algorandAccount}>
                 <div className="nftLink">
                     <img src={NftSelect} />
 

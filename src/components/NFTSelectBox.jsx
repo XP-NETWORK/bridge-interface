@@ -2,8 +2,8 @@ import React, { useState} from 'react'
 import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 import Departure from '../assets/img/nftSelect/departure.svg';
 import Destination from '../assets/img/nftSelect/destination.svg';
-import ChainArrow from '../assets/img/nftSelect/ChianArrow.svg';
 import LineArrow from '../assets/img/nftSelect/Line.svg';
+import ChainArrow from '../assets/img/nftSelect/ChainArrow.svg';
 import SwapHover from "../assets/img/icons/SwapHover.svg"
 import SwapPressed from "../assets/img/icons/SwapPressed.svg"
 import { useDispatch } from 'react-redux';

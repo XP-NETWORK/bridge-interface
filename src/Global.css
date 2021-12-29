@@ -16,6 +16,13 @@ body {
     line-height: 160%;
 }
 
+.widgetBlack{
+    color: black !important;
+}
+.widgetWhite{
+    color: white !important;
+}
+
 .bridgeBody {
     min-height: 100vh;
     background-color: #1D212A;
@@ -180,7 +187,7 @@ ul.socialLInks li img:hover {
     display: flex;
     align-items: center;
     text-align: right;
-    color: #A3B3CA;
+    color: #a3caa3;
     opacity: 0.5;
     margin-left: 22px;
 }
@@ -303,13 +310,49 @@ span.LineArrow img {
     cursor: pointer;
     max-width: 326px;
     text-align: center;
-    background: #3E64ED;
+    background: #3e64ed;
     border-radius: 16px;
     color: #fff;
     font-size: 16px;
     line-height: 56px;
     border: 1px solid #3E64ED;
 }
+
+/* .green{
+    background: #11992a;
+    border: 1px solid #11992a;
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+    max-width: 326px;
+    text-align: center;
+    border-radius: 16px;
+    color: #fff;
+    font-size: 16px;
+    line-height: 56px;
+}
+.green:hover{
+    background: #349c47;
+    color: #fff;
+}
+
+.red{
+    background: #c91b1b;
+    border: 1px solid #c91b1b;
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+    max-width: 326px;
+    text-align: center;
+    border-radius: 16px;
+    color: #fff;
+    font-size: 16px;
+    line-height: 56px;
+}
+.red:hover{
+    background: #eb3232;;
+    color: #fff;
+} */
 
 .themBtn:hover {
     background: #174AFF;
@@ -427,7 +470,7 @@ span.LineArrow img {
     font-size: 14px;
     z-index: 11;
     left: 50%;
-    bottom: 240px;
+    bottom: 25vh;
     transform: translate(-50%);
     background: linear-gradient(291.33deg, #181B23 67.06%, #412194 183.04%);
     border-radius: 16px;
@@ -598,6 +641,10 @@ span.wallet {
     overflow-y: scroll;
 }
 
+.no-wallets {
+  text-align: center;
+}
+
 .maiarModal{
     padding: 20px 30px;
     background: linear-gradient(309.48deg, #282E3C -3.65%, rgba(40, 46, 60, 0) 122.77%);
@@ -752,7 +799,7 @@ span.wallet {
 }
 
 .seleDestiSele{
-    color: white !important;
+    color: white;
 }
 
 .modalSelectOptionsText{
@@ -785,6 +832,11 @@ span.wallet {
 
 .nft-box__wrapper {
     border-radius: 20px;
+    -moz-border-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     margin: 1px 0px;
 }
 
@@ -1588,6 +1640,7 @@ li.nftSelecItem .Close:hover {
 
 .colBlue {
     color: #297EFF !important;
+    cursor: pointer;
 }
 
 .SentFrom img {
@@ -1620,15 +1673,17 @@ span.statComp img {
     padding: 6px 30px;
 }
 
-.nftSelecItem__name{
+/* .nftSelecItem__name{
     min-width: 200px;
     text-overflow: ellipsis;
-}
+} */
 
 .bluTextBtn {
+    white-space: nowrap;
     display: inline-block;
     cursor: pointer;
     margin-left: auto;
+    margin-right: 2px;
     text-align: center;
     font-size: 14px;
     line-height: 140%;
@@ -1636,6 +1691,7 @@ span.statComp img {
     background: rgba(98, 113, 138, 0.1);
     border-radius: 6px;
     padding: 2px 6px;
+    min-width: 80px;
 }
 
 .bluTextBtn:hover {
@@ -2039,6 +2095,7 @@ span.invalid img {
 
 }
 
+
 .changeBtn {
     font-size: 14px;
     line-height: 40px;
@@ -2049,6 +2106,7 @@ span.invalid img {
     margin: 0 2px;
     height: 40px;
     display: inherit;
+    cursor: pointer;
 }
 
 a.disconBtn {
@@ -2378,7 +2436,7 @@ span.transPend {
 
   .copytooltip{
       position: absolute;
-      z-index: 5;
+      z-index: 400;
       bottom: 10px;
       right: -55px;
   }
@@ -2483,7 +2541,7 @@ span.transPend {
     .account__box{
         width: 250px
     }
-
+   
     .navMenu{
         width:  calc(100% - 30px);
         position: fixed;
@@ -2501,4 +2559,7 @@ span.transPend {
 
 @media screen and (max-width: 600px){
 
+.aleartBox {
+    bottom: 10vh;
+}
 }

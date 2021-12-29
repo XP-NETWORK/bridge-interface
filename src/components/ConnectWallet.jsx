@@ -5,6 +5,7 @@ import MetaMask from '../assets/img/wallet/MetaMask.svg';
 import AlgorandWallet from "../assets/img/wallet/AlgorandWallet.svg"
 import Tron from '../assets/img/wallet/TronLink.svg';
 import Elrond from '../assets/img/wallet/Elrond.svg';
+import MyAlgoBlue from "../assets/img/wallet/MyAlgoBlue.svg"
 import Ledger from '../assets/img/wallet/Ledger.svg';
 import AlgoSignerIcon from '../assets/img/wallet/Algo Signer.png';
 import Maiar from '../assets/img/wallet/Maiar.svg';
@@ -17,12 +18,13 @@ import { useWeb3React } from "@web3-react/core";
 import { injected, algoConnector } from "../wallet/connectors"
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { EVM, ELROND, chainsConfig } from "../components/values"
-import { setTronWallet, setAccount, setConfirmMaiarMob, setAlgorandWallet, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp, setTrustWallet, setAlgoSigner, setAlgorandAccount } from "../store/reducers/generalSlice"
+import { setTronWallet, setAccount, setConfirmMaiarMob, setAlgorandWallet, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp, setTrustWallet, setAlgoSigner, setAlgorandAccount, setMyAlgo } from "../store/reducers/generalSlice"
 import { Address, ExtensionProvider, WalletConnectProvider, ProxyProvider } from "@elrondnetwork/erdjs"
 import { CHAIN_INFO } from '../components/values';
 import QRCode from 'qrcode'
 import MaiarModal from './MaiarModal';
 import { isEVM } from '../wallet/oldHelper';
+import MyAlgoConnect from '@randlabs/myalgo-connect';
 
 function ConnectWallet() {
     const dispatch = useDispatch()
@@ -48,7 +50,8 @@ function ConnectWallet() {
     const [qrCodeString, setQqrCodeString] = useState()
     const [strQR, setStrQr] = useState()
     const { chainId, account, activate } = useWeb3React();
-
+    const MyAlgo = useSelector(state => state.general.MyAlgo)
+    const modalError = useSelector(state => state.generalerror)
 
     function getMobOps() {
       // debugger
@@ -160,11 +163,13 @@ function ConnectWallet() {
             }
           } 
           catch(error) {
-            dispatch(setError(error))
-            if(error.data){
-              console.log(error.data.message);
+            if(!modalError){
+              dispatch(setError(error))
+              if(error.data){
+                console.log(error.data.message);
+              }
+              else console.log(error); 
             }
-            else console.log(error); 
           }
         }
       }
@@ -230,6 +235,17 @@ function ConnectWallet() {
         }
     }
 
+    const onMyAlgo = useCallback( async () => {
+      const myAlgoConnect = new MyAlgoConnect();
+      try {
+        const accountsSharedByUser = await myAlgoConnect.connect()
+        dispatch(setAlgorandAccount(accountsSharedByUser[0].address))
+        dispatch(setMyAlgo(true))
+      } catch (error) {
+        console.log(error);
+      }
+    })
+
     const onAlgoSigner = useCallback(async () => {
       if (typeof window.AlgoSigner !== undefined) {
         try {
@@ -280,10 +296,14 @@ function ConnectWallet() {
         ||
         (MaiarWallet && correct)
         ||
+        (MyAlgo)
+        ||
         (algorandWallet)
         ||
-        (AlgoSigner))dispatch(setStep(2))
-    }, [account, metaMask, chainId, tronLink, onWC, trustWallet, AlgoSigner, algorandWallet, MaiarWallet])
+        (AlgoSigner)) {
+          dispatch(setStep(2))
+        }
+    }, [account, metaMask, chainId, tronLink, onWC, trustWallet, AlgoSigner, algorandWallet, MaiarWallet, MyAlgo])
 
     return (
         <div>
@@ -308,13 +328,14 @@ function ConnectWallet() {
                                 <li onClick={() => onInjected()} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li>
                                 <li onClick={() => onWalletConnect()} style={ OFF } className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
                                 <li onClick={() => onTrustWallet()} style={(getMobOps() && window.innerWidth <= 600 && isEVM()) || (window.ethereum && window.innerWidth <= 600) ? {} : OFF } className="wllListItem"><img src={TrustWallet} alt="WalletConnect Icon" /> Trust Wallet</li>
+                                <li onClick={onMyAlgo} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={MyAlgoBlue} alt="" /> MyAlgo</li>
                                 <li onClick={onAlgoSigner} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo Signer</li>
-                                <li onClick={() => onAlgoWallet()} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Signer Icon" /> Algorand Wallet</li>
+                                {/* <li onClick={() => onAlgoWallet()} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li> */}
                                 <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
 
-                                {/* <li onClick={() => onMaiarExtension()} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li> */}
+                                <li onClick={() => onMaiarExtension()} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
                                 <li style={ OFF } className="wllListItem"><img src={Ledger} alt="Ledger Icon" /> Ledger</li>
                                 <li style={ OFF } style={ OFF } className="wllListItem"><img src={Trezor} alt="Trezor Icon" /> Trezor</li>
                             </ul>
@@ -327,5 +348,5 @@ function ConnectWallet() {
         </div>
     )
 }
-
+// 
 export default ConnectWallet

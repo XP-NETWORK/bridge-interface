@@ -8,6 +8,9 @@ import { useSelector } from 'react-redux';
 import { setupURI } from '../../wallet/oldHelper';
 import  "./NewNFT.css"
 
+import { isValidHttpUrl } from '../../wallet/helpers';
+import Checkmark from './Checkmark';
+
 export default function NFT({nft, index}) {
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const dispatch = useDispatch()
@@ -25,27 +28,32 @@ export default function NFT({nft, index}) {
     }
 
     useEffect(() => { }, [selectedNFTs])
-    
     return ( 
         <div className={`nft-box__wrapper ${!imageLoaded ? 'preload-cont' : ''}`}>
             <div style={ !imageLoaded && nft.image ? HIDDEN : {}} className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
                 <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
                     <div className="image__wrapper">
-                        { nft.uri ? 
+                        { nft.uri && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url)? 
+                            nft.animation_url ? 
+                            <video onLoadedData={() => setImageLoaded(true)} autoPlay={true} loop={true} src={nft.animation_url} /> 
+                            :
                             <img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} /> 
                             : 
                             <div className="brocken-url">
-                                <img onLoad={() => setImageLoaded(true)} src={brockenurl} alt='This NFT image uri is brocken.' />
-                                <span className="brocken-url__msg">NFTs URL<br/> is brocken</span>
+                                <img onLoad={() => setImageLoaded(true)} src={brockenurl} alt='This NFT image uri is broken.' />
+                                <span className="brocken-url__msg">NFTs URL<br/> is broken</span>
                             </div>
                         }
+                                                
                         <div className="radio__container">
                             { !isSelected ? 
                                 <span className="selected-radio"></span> 
                                 : 
                                 <img src={CheckGreen} alt=''/>
                             }
-                        </div>
+                        </div> 
+                     
+                      {/* <Checkmark /> */}
                     </div>
                 </div>
                 <div className={`nft-content__container ${!imageLoaded ? 'preload-content-container' : ''}`}>

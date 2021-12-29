@@ -36,10 +36,10 @@ export default function TronPopUp() {
                 </Modal.Header>
                 <Modal.Body className="modalBody text-center">
                     <div className="tron-PopUp__list">
-                        <div className="list__item">1. Paste link to Tronlink browser</div>
-                        <div className="list__item">2. Enjoy 😉</div>
-                        <div className="list__item">3. Copy link below</div>
-                        <div className="list__item">4. Open Tronlink App</div>
+                        <div className="list__item">1. Copy link below</div>
+                        <div className="list__item">2. Open Tronlink App</div>
+                        <div className="list__item">3. Paste link to Tronlink browser</div>
+                        <div className="list__item">4. Enjoy 😉</div>
                     </div>
                     <div className="tron-modal__link">
                         <div className="link__items">
