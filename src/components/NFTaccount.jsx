@@ -52,7 +52,6 @@ function NFTaccount() {
 
     
     const getAlgorandWalletSigner = async () => {
-        
         const base = new MyAlgoConnect();
         if( algorandWallet ){
             try {
