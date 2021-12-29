@@ -63,7 +63,7 @@ function ConnectWallet() {
   }
 
   const onMaiarExtension = async () => {
-    debugger
+    // debugger
     const instance = ExtensionProvider.getInstance()
     try {
       await instance.init()
@@ -145,15 +145,15 @@ function ConnectWallet() {
           try{
             try{
               const accounts = await window.tronWeb.request({ method: "tron_requestAccounts" });
-              console.log(accounts);
+              
               if(!accounts){
-                dispatch(setTronLoginError("loggedOut"))
+                // dispatch(setTronLoginError("loggedOut"))
               }
             } 
             catch(err){
               console.log(err);
               if(!window.tronWeb){
-                dispatch(setTronLoginError("noTronWeb"))
+                // dispatch(setTronLoginError("noTronWeb"))
               }
             }
             
@@ -202,7 +202,7 @@ function ConnectWallet() {
             const qrCodeString = await maiarProvider.login()
             setQqrCodeString(qrCodeString)
             const qr = await generateQR(qrCodeString)
-            console.log(qr);
+            
             setStrQr(qr)
           } catch (error) {
             dispatch(setError(error))
@@ -256,7 +256,7 @@ function ConnectWallet() {
             ledger: 'MainNet'
           });
           const { address } = algo[0]
-          console.log(address)
+          
           dispatch(setAlgoSigner(true))
           dispatch(setAlgorandAccount(address))
         } catch (e) {

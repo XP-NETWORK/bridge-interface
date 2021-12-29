@@ -90,8 +90,9 @@ function NFTaccount() {
     }
     
     async function estimate () {
+        
         let fact
-        // debugger
+        let fee
         try {
             const fromChain = await handleChainFactory(from)
             const toChain = await handleChainFactory(to)
@@ -108,7 +109,9 @@ function NFTaccount() {
             else{
                  fact = await getOldFactory()
             }
-            const fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
+            if(selectedNFTList.length){
+                fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
+            }
             const bigNum = fee.multipliedBy(1.1).decimalPlaces(0).toString();
             dispatch(setBigNumFees(bigNum))
             const fees = await Web3Utils.fromWei(bigNum, "ether")
@@ -120,7 +123,7 @@ function NFTaccount() {
     }
     
     const sendEach = async (nft) => {
-        debugger
+        // debugger
         const factory = await getFactory()
         const toChain = await factory.inner(chainsConfig[to].Chain)
         const fromChain = await factory.inner(chainsConfig[from].Chain)

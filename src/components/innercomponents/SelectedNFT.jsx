@@ -23,7 +23,7 @@ function SelectedNFT() {
     }
 
     useEffect(() => { }, [selectedNFTs])
-    console.log(selectedNFTs, 'asdlkdalkk3l112')
+    
     return (
         <div className="nftSelectList">
             <div className="nftSeleTop">

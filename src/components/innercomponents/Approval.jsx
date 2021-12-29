@@ -165,7 +165,7 @@ function Approval(props) {
         }
         
         if(selectedNFTList.length > 0) {
-            console.log("BOOM");
+            
             dispatch(setApproved(isALLNFTsApproved()))
             
         }

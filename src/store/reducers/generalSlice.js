@@ -74,7 +74,7 @@ const generalSlice = createSlice({
       state.approvedNFTList = [...state.approvedNFTList, action.payload]
     },
     setApproved(state, action){
-      console.log("setApproved", action);
+      
       state.approved = action.payload
     },
     setReceiver(state, action){
@@ -84,7 +84,7 @@ const generalSlice = createSlice({
       const {nft, txn} = action.payload
       const { tokenId, contract, chainId } = nft.native
       state.txnHashArr = [...state.txnHashArr, action.payload.txn]
-      console.log()
+      
       state.selectedNFTList = state.selectedNFTList.map(n => {
         const {native} = n
         if(native.tokenId === tokenId && native.contract === contract && native.chainId === chainId) {

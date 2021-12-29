@@ -44,7 +44,7 @@ export const parseNFTS = async (nfts) => {
     nfts.map(async (n) => {
       return await new Promise(async (resolve) => {
         try {
-          console.log(n, 'parsenfts')
+          
           if (!n.uri) resolve({ ...n });
       
           const res = await axios.get(setupURI(n.uri));
@@ -107,7 +107,7 @@ export const isALLNFTsApproved = () => {
 };
 export const getFactory = async () => {
   const f = store.getState().general.factory
-  console.log(f, 'hellosa')
+  
   if(f) return f
   
   const mainnetConfig = ChainFactoryConfigs.MainNet();
@@ -191,13 +191,13 @@ export const getNFTS = async (wallet, from) => {
 };
 
 export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
-  debugger
+  // debugger
   try {
     if(algorandAccount && algorandAccount.length > 50) {
       const factory = await getFactory()
       const claimables = await factory.claimableAlgorandNfts(algorandAccount)
       
-      console.log(algorandAccount,'123132132', claimables)
+      
       if(claimables && claimables.length > 0) {
         if(returnList) return claimables
         else store.dispatch(setAlgorandClaimables(claimables))

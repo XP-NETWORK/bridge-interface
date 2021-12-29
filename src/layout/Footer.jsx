@@ -1,7 +1,5 @@
 import React from 'react'
 import XpNetwork from '../assets/img/foot/xp-network.svg';
-
-// Social
 import Linkedin from '../assets/img/social/linkedin.svg';
 import Redit from '../assets/img/social/redit.svg';
 import Telegram from '../assets/img/social/telegram.svg';

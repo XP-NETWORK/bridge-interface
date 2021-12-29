@@ -24,7 +24,7 @@ export const getFromParams = async () => {
         provider = new ethers.providers.Web3Provider(window.ethereum)
     }catch(err) {}
 
-    console.log(from ,'123983298312892')
+    
     if(from === 'Ethereum') {
         return {
             ropstenParams: {
@@ -105,7 +105,7 @@ export const getRPCFactory = async (chain) => {
     const {from, to} = store.getState().general
     const f = await getFactoryParams(from)
     const t = await getFactoryParams(to)
-    console.log(f, t, 'aslsad')
+    
     return ChainFactory(
         moralisParams,
         {
@@ -124,7 +124,7 @@ export const getFullFactory = async () => {
 
         }
     })
-    console.log(o)
+    
     return ChainFactory(moralisParams, o)
 }
 
@@ -252,11 +252,11 @@ export const parseNFTS = async (nfts) => {
     const fromChain = chainsConfig[from]
     const inner = await factory.inner(fromChain.Chain);
     const result = await Promise.all(nfts.map(async n => {
-        console.log(n)
+        
     return await new Promise(async resolve => {
         try {
             // const p = await factory.nftUri(inner, n)
-            console.log(n.uri, 'helloasa')
+            
             if(!n.uri) resolve({ ...n })
             const res = await axios.get(setupURI(n.uri))
             if(res && res.data) {
@@ -266,7 +266,7 @@ export const parseNFTS = async (nfts) => {
                 } else resolve(undefined)
             } catch(err) {
                 if(err) {
-                    console.log(n)
+                    
                     try {
                         const res = await axios.post('https://wnfts.xp.network/get-uri', 
                         { blockchain: from, uri: n.uri, contract: n.native.contract ? n.native.contract: 'alsa' }
@@ -275,7 +275,7 @@ export const parseNFTS = async (nfts) => {
                             try {
                                 const {uri} = res.data
                                 const result = await axios.get(setupURI(uri?.uri))
-                                console.log(result)
+                                
                                 resolve({...result.data, ...n, cantSend: true})
                             } catch(err) {
                                 resolve(undefined)

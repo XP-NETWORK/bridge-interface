@@ -17,7 +17,7 @@ import { chainsConfig } from './values';
 
 function NFTdetails({ nftInf }){
     const { name, description, image, attributes, uri, native} = nftInf
-    console.log("attributes", attributes)
+    
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);

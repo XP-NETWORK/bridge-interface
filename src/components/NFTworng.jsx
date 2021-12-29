@@ -46,7 +46,7 @@ function NFTworng() {
                     return '0x'+num.toString(16)
                 }
                 const chain = getAddEthereumChain()[parseInt(chainId).toString()]
-                console.log(chain, chainId)
+                
                 const params = {
                     chainId: toHex(chain.chainId), // A 0x-prefixed hexadecimal string
                     chainName: chain.name,

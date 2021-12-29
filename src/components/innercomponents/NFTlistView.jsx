@@ -27,7 +27,7 @@ function NFTlistView() {
             dispatch(removeFromSelectedNFTList(nft))
         }
     }
-    console.log(nfts)
+    
     return (
         <div className="nftListBox nftListView">
             
