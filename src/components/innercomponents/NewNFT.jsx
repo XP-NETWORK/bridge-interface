@@ -35,7 +35,7 @@ export default function NFT({nft, index}) {
                     <div className="image__wrapper">
                         { nft.uri && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url)? 
                             nft.animation_url ? 
-                            <video onLoadedData={() => setImageLoaded(true)} autoPlay={true} loop={true} src={nft.animation_url} /> 
+                            <video onLoadedData={() => setImageLoaded(true)} controls={false} playsInline={true} autoPlay={true} loop={true} src={nft.animation_url} /> 
                             :
                             <img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} /> 
                             : 

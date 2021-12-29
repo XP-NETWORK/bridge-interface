@@ -158,8 +158,9 @@
     -moz-appearance: none;
     appearance: none;
 }
- .nft-box__wrapper:hover{
-  outline: solid 1px #3E64ED;
+.nft-box__container:hover{
+  border: 1px solid #3e64ed8f;
+
 }
 
 .nft-box__wrapper

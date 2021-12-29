@@ -130,6 +130,7 @@ export const chains = [
 export const chainsConfig = {
     Algorand: {
         Chain: 15,
+        token: "ALGO",
         tx: 'https://algoexplorer.io/tx/'
     },
     Heco: {
