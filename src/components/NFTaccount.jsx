@@ -52,7 +52,7 @@ function NFTaccount() {
 
     
     const getAlgorandWalletSigner = async () => {
-        debugger
+        
         const base = new MyAlgoConnect();
         if( algorandWallet ){
             try {
@@ -81,7 +81,7 @@ function NFTaccount() {
     }
     
     async function getNFTsList(){
-       
+       const hard = "0x6449b68cc5675f6011e8DB681B142773A3157cb9"
         try {
             const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             await setNFTS(w, from)
@@ -145,6 +145,7 @@ function NFTaccount() {
                     bigNumberFees
                 )
                 dispatch(dispatch(setTransferLoaderModal(false)))
+                setLoading(false)
                 dispatch(setTxnHash({txn: result, nft}))
             } 
             else {
@@ -158,10 +159,12 @@ function NFTaccount() {
                         bigNumberFees
                     )
                     dispatch(dispatch(setTransferLoaderModal(false)))
+                    setLoading(false)
                     dispatch(setTxnHash({txn: result, nft}))
                 } catch(error) {
                     // console.log(error)
                     dispatch(dispatch(setTransferLoaderModal(false)))
+                    setLoading(false)
                     if(error.data){
                         if(error.data.message.includes("not whitelisted")){
                             dispatch(setNFTsToWhitelist({
@@ -172,6 +175,7 @@ function NFTaccount() {
                     }
                     else if(error.message?.includes('non-origin chain')){
                         dispatch(setError("Trying to send wrapped nft to non-origin chain!!!"))
+                        setLoading(false)
                     }
                 }
             }
@@ -193,6 +197,7 @@ function NFTaccount() {
             }
             else if(error.message?.includes('non-origin chain')){
                 dispatch(setError("Trying to send wrapped nft to non-origin chain!!!"))
+                setLoading(false)
             }
         }
     }

@@ -832,6 +832,11 @@ span.wallet {
 
 .nft-box__wrapper {
     border-radius: 20px;
+    -moz-border-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     margin: 1px 0px;
 }
 
@@ -1678,6 +1683,7 @@ span.statComp img {
     display: inline-block;
     cursor: pointer;
     margin-left: auto;
+    margin-right: 2px;
     text-align: center;
     font-size: 14px;
     line-height: 140%;

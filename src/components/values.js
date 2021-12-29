@@ -211,11 +211,11 @@ export const chainsConfig = {
         type: EVM,
         img: Avalanche,
         token: 'AVAX',
-        rpc: 'https://avaxnode.xp/tx/network/ext/bc/C/rpc',
+        rpc: 'https://avalanche.xp.network/ext/bc/C/rpc',
         chainId: 43114,
         // chainData: ChainData.Avalanche,
         Chain: Chain.AVALANCHE,
-        tx: "https://snowtrace.io/"
+        tx: "https://snowtrace.io/tx/"
     },
     Fuse: {
         type: EVM,

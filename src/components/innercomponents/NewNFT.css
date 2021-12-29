@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: stretch;
-  gap: 24px;
+  gap: 20px;
 }
 
 .nft-box__wrapper{
@@ -20,13 +20,14 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 17.64px;
-    border-radius: 20px;
+    /* border-radius: 2pt; */
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     overflow: hidden;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    border: 1px solid transparent;
 }
 
 .brocken-url{
@@ -35,6 +36,13 @@
   align-items: center;
   gap: 15px;
   color: #62718A;
+}
+
+.brocken-url-selected{
+  width: 32px;
+  padding: 1px;
+  border: 1px solid rgba(128, 128, 128, 0.411);
+  border-radius: 5px;
 }
 
 .brocken-url__msg{
@@ -115,21 +123,6 @@
     position: relative;
 }
 
-.nft-image__container::after{
-    content: "";
-    position: absolute;
-    z-index: 1;
-    height: inherit;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: #3E64ED;
-    opacity: 0.8;
-    visibility: hidden;
-}
 
 .image__wrapper {
   display: flex;
@@ -159,7 +152,8 @@
     overflow: hidden;
     position: relative;
     box-sizing: border-box;
-    outline: solid 1px #3E64ED;
+    /* outline: solid 1px #3E64ED; */
+    border: 1px solid #3E64ED;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
