@@ -17,6 +17,7 @@ import {getFactory, setClaimablesAlgorand} from './wallet/helpers'
 import Widget from "./components/Widget";
 import TechnicalSupport from "./components/innercomponents/TechnicalSupport";
 import TransferLoader from "./components/innercomponents/TransferLoader";
+import TronConnectionErrMod from "./components/TronConnectionErrMod";
 
 function App() {
   const dispatch = useDispatch()
@@ -66,6 +67,7 @@ return (
       <Video />
       <TechnicalSupport />
       <TransferLoader />
+      <TronConnectionErrMod />
       <Modal 
       centered
       className="approve-modal"

@@ -149,7 +149,7 @@ export const handleChainFactory = async (someChain) => {
 
 export const getNFTS = async (wallet, from) => {
   // debugger
-  const hardcode = "0x6449b68cc5675f6011e8DB681B142773A3157cb9"
+  const hardcode = "52O2MF3BYGBUX5CI2IW7VBVCGAMJOG3VBSYKTCCD677K2AUFPSFZAATED4"
   const { algorandAccount } = store.getState().general
   const factory = await getFactory();
   const chain = await factory.inner(chainsConfig[from].Chain)
@@ -158,7 +158,7 @@ export const getNFTS = async (wallet, from) => {
     const res = 
     algorandAccount 
     ? 
-    (await axios.get(`https://nftindexing.herokuapp.com/15/${hardcode}`)).data.result
+    (await axios.get(`https://nftindexing.herokuapp.com/15/${wallet}`)).data.result
     : 
     await factory.nftList(
         chain, // The chain of interest
@@ -191,6 +191,7 @@ export const getNFTS = async (wallet, from) => {
 };
 
 export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
+  debugger
   try {
     if(algorandAccount && algorandAccount.length > 50) {
       const factory = await getFactory()
