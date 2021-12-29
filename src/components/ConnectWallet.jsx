@@ -107,6 +107,7 @@ function ConnectWallet() {
     }
 
     const onTrustWallet = async () => {
+      
       try {
         if(!window.ethereum && window.innerWidth <= 600){
           const uri = `https://link.trustwallet.com/open_url?coin_id=60&url=https://${window.location.host + `?to=${to.text}&from=${from.text}`}/`
@@ -146,13 +147,14 @@ function ConnectWallet() {
               const accounts = await window.tronWeb.request({ method: "tron_requestAccounts" });
               console.log(accounts);
               if(!accounts){
-                // dispatch(setTronPopUp(true))
-                // dispatch(setTronLoginError(true))
+                dispatch(setTronLoginError("loggedOut"))
               }
             } 
             catch(err){
-              
               console.log(err);
+              if(!window.tronWeb){
+                dispatch(setTronLoginError("noTronWeb"))
+              }
             }
             
             if(window.tronLink && window.tronWeb.defaultAddress.base58) {
