@@ -6,8 +6,8 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import FileCopy from '../../assets/img/icons/FileCopy.svg'
 import CopyHover from '../../assets/img/icons/CopyHover.svg';
-import copyTT from "../../assets/img/icons/copytt.png"
-import copiedIcon from "../../assets/img/icons/Copied.png"
+import copyTT from "../../assets/img/icons/copytoclip.svg"
+import copiedIcon from "../../assets/img/icons/copiedtoclip.svg"
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setTronPopUp } from '../../store/reducers/generalSlice';
