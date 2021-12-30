@@ -30,8 +30,10 @@ function ClaimAlgorandNFT() {
 
 
     const getClaimable = async () => {
-        // debugger
+        
         const claimables = await setClaimablesAlgorand(algorandAccount, true)
+
+
         const sameName = claimables.filter(n => n?.name === algorandClaimPopup?.name)
         if(sameName && sameName.length > 0) {
             const { contract, chainId, tokenId } = algorandClaimPopup.native

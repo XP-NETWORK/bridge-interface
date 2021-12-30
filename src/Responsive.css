@@ -319,11 +319,11 @@
     }
 
     .seleNftMob {
-        width: 50%;
+        width: 40%;
     }
 
     .nftTopRIght {
-        width: 50%;
+        width: 60%;
         display: flex;
         justify-content: flex-start;
         flex-direction: row-reverse;

@@ -22,7 +22,7 @@ function NFTlistTop() {
     const from = useSelector(state => state.general.from)
     const switchDestination = useSelector(state => state.general.switchDestination)
     const search = useSelector(state => state.general.NFTListSearch)
-
+    const [showSearch, setShowSearch] = useState(false)
     const handleSearch = e => {
         dispatch(setSearchNFTList(e.target.value))
     }
@@ -46,6 +46,7 @@ function NFTlistTop() {
         cursor: bigLoader ? '' : 'pointer', 
         opacity: bigLoader ? 0.6 : 1 
     } 
+    const off = { display: "none"}
     return (
         <div className="nftListTop">
             <Modal animation={false} show={switchDestination} onHide={() => handleClose()} className="ChainModal">
@@ -76,27 +77,28 @@ function NFTlistTop() {
                             <form action="#">
                                 <input onChange={e => handleSearch(e)}  type="text" placeholder="Search NFT" />
                                 {/* { search ?  <button type="button"><img src={Close} alt="" /></button> : <button type="button"><img src={Search} alt=""/></button>} */}
-                                <button type="button"><img src={Search} /></button>e
+                                <button type="button"><img src={Search} /></button>
                             </form>
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
-                <div onClick={() => handleView()} className="nftViewBtn">
+
+                <div onClick={() => handleView()} className="ListView">
                     { NFTListView ? 
-                        <span  className="ListView"><img src={GridView} /></span>
-                    :
-                        <span  className="ListView"><img src={ListView} /></span>
+                        <span><img src={GridView} /></span>
+                        :
+                        <span><img src={ListView} /></span>
                     }
                 </div>
+                <span onClick={() => setShowSearch(prev => prev = !prev)} className="mobileOnly search-btn"><img src={Search} /></span>
                 { nfts?.length === selectedNFTs?.length ? 
                     <div onClick={() => dispatch(cleanSelectedNFTList())} className="selectAll">Clear all</div>
-                :   
-                    <div style={ nfts ? {} : OFF } onClick={() => dispatch(allSelected())} className="selectAll">
-                        Select all
-                    </div>
+                    :   
+                    <div style={ nfts ? {} : OFF } onClick={() => dispatch(allSelected())} className="selectAll">Select all</div>
                 }
             </div>
-            <div className="mobileOnly mobSearch">
+            {/* !!! Show on click */}
+            <div style={!showSearch ? {} : off} className="mobileOnly mobSearch">
                 <form action="#">
                     <input type="search" placeholder="Search NFT"  onChange={e => handleSearch(e)}/>
                     <button type="button"><img src={Search} /></button>
