@@ -255,7 +255,7 @@ function NFTaccount() {
                         <div className="mobileOnly">
                             <Approval getNft={getNFTsList} />
                             <div className="nftSendBtn disenable">
-                            <NFTsuccess/>
+                            {/* <NFTsuccess/> */}
                             <SendFees fees={fees}/>
                             <div onClick={sendAllNFTs} className={approved && receiver && !loading ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
                                             <a  className="themBtn">
