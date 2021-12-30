@@ -106,7 +106,7 @@
 }
 
 .image__wrapper img, .image__wrapper video {
-    max-width: 90%;
+    max-width: 80%;
     max-height: 240px;
     border-radius: 5px;
 }
