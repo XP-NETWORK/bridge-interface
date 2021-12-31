@@ -33,9 +33,9 @@ export default function NFT({nft, index}) {
             <div style={ !imageLoaded && nft.image ? HIDDEN : {}} className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
                 <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
                     <div className="image__wrapper">
-                        { nft.uri && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url)? 
+                        { nft.uri && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url) ? 
                             nft.animation_url ? 
-                            <video onLoadedData={() => setImageLoaded(true)} controls={false} playsInline={true} autoPlay={true} loop={true} src={nft.animation_url} /> 
+                            <video onLoadedData={() => setImageLoaded(true)} controls={false} playsInline={true} autoPlay={true} loop={true} src={setupURI(nft.animation_url)} /> 
                             :
                             <img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} /> 
                             : 

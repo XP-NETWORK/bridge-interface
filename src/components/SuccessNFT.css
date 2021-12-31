@@ -5,3 +5,12 @@
     text-overflow: ellipsis;
 }
 
+.sucesList{
+    position: relative;
+}
+
+.tooltip-icon{
+    position: absolute;
+    right: -56px;
+    top: -45px;
+}

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react'
 import { Modal, Image  } from "react-bootstrap";
 import Close from '../assets/img/icons/close.svg';
@@ -6,6 +5,8 @@ import Success from '../assets/img/icons/Success.svg';
 import Check from '../assets/img/icons/Check_circle.svg';
 import FileCopy from '../assets/img/icons/FileCopy.svg';
 import CopyHover from '../assets/img/icons/CopyHover.svg';
+import copyTT from "../assets/img/icons/copytoclip.svg"
+import copiedIcon from "../assets/img/icons/copiedtoclip.svg"
 import { useSelector } from 'react-redux';
 import { chainsConfig } from './values';
 import moment from 'moment';
@@ -18,7 +19,7 @@ import { useDispatch } from 'react-redux';
 import ConnectAlgorand from './ConnectAlgorand';
 import ClaimAlgorandNFT from './ClaimAlgorandNFT';
 import "./SuccessNFT.css"
-// !TODO TX AVALANCHE
+
 
 function NFTsuccess() {
     const dispatch = useDispatch()
@@ -53,11 +54,12 @@ function NFTsuccess() {
         }
     },[txnHashArr])
 
-    const copy = () => {
+    function copy(){
       setCopy(true)
 
       setTimeout(() => setCopy(false), 2000)
     }
+
     const tx = txnHashArr && txnHashArr.length > 0 ? typeof txnHashArr[currentTX] === 'object' ? txnHashArr[currentTX].hash.toString() : txnHashArr[currentTX] : ''
     const address = account ? account : algorandAccount ? algorandAccount : elrondAccount ? elrondAccount : tronWallet ? tronWallet : ''
     return (
@@ -82,19 +84,14 @@ function NFTsuccess() {
                             <div className="sucesList">
                                 <label>Date</label> <span className="statDate">{moment().format("YYYY-MM-DD hh:mm")}</span>
                             </div>
-                            <CopyToClipboard 
-                              text={tx}
-                              onCopy={copy}
-                            >   
-                                <div className="sucesList">
-                                    <label>Txn Hash</label>
-                                    <span className="statTok colBlue">{ tx ? `${tx.substring(0, 10)}...${tx.substring(tx.length - 6)}` : '' }
-                                        
-                                        <Image onMouseOver={() => setSetCopyHover(true)}  onMouseOut={() => setSetCopyHover(false)} src={copyHover ? CopyHover : FileCopy} className="success__copy" />
-                                    </span>
-                                </div>
-                                {/* <span className="copyTokk"><img src={FileCopy} /></span> */}
-                            </CopyToClipboard>
+                            <div className="sucesList">
+                                <label>Txn Hash</label>
+                                <CopyToClipboard text={tx}>   
+                                    <span className="statTok colBlue">{ tx ? `${tx.substring(0, 10)}...${tx.substring(tx.length - 6)}` : '' }</span>
+                                </CopyToClipboard>
+                                <Image onClick={() => copy()} onMouseOver={() => setSetCopyHover(true)}  onMouseOut={() => setSetCopyHover(false)} src={copyHover ? CopyHover : FileCopy} className="success__copy" />
+                                <div className='tooltip-icon'><img src={ copied ? copiedIcon : ''} alt="" /></div>
+                            </div>
                         </div>
                         <div className="successBox SentFrom">
                             <div className="sucesList">

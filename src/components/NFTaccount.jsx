@@ -80,7 +80,7 @@ function NFTaccount() {
     }
     
     async function getNFTsList(){
-       const hard = "0x6449b68cc5675f6011e8DB681B142773A3157cb9"
+       const hard = "0xF872A2c533683F710b197417cf512edEe8BD26Ef"
         try {
             const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             await setNFTS(w, from)
