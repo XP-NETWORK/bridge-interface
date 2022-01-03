@@ -29,6 +29,9 @@ export default function AccountModal() {
     const algorandAccount = useSelector(state => state.general.algorandAccount)
     const MyAlgo = useSelector(state => state.general.MyAlgo)
     const tronAccount = useSelector(state => state.general.tronWallet)
+    const WalletConnect = useSelector(state => state.general.WalletConnect)
+    const WCProvider = useSelector(state => state.general.WCProvider)
+    const tronLink = useSelector(state => state.general.tronLink)
 
     // const step = useSelector(state => state.general.step)
 
@@ -46,8 +49,6 @@ export default function AccountModal() {
     function handleDisconnect(){
         dispatch(setReset())
     }
-
-
 
     async function switchNetwork (){
         const info = CHAIN_INFO[from?.key]
@@ -86,15 +87,24 @@ export default function AccountModal() {
         }
     }
 
-    DetectOutsideClick(accountModal, () => setTimeout(() => handleClose(), 100));
+    const connectedWith = () => {
+     if(MetaMask) return 'MetaMask'
+     else if(onMaiar) return "Maiar Wallet"
+     else if(trustWallet) return "Trust Wallet"
+     else if(algorandWallet) return 'Algorand Wallet'
+     else if(MyAlgo) return "MyAlgo"
+     else if(tronLink) return 'Tron Link'
+     else if(WalletConnect) return `${WCProvider.walletConnectProvider.signer.connection.wc._peerMeta.name} (WalletConnect)`
+    }
 
+    DetectOutsideClick(accountModal, () => setTimeout(() => handleClose(), 100));
 
     return ( show ?
         <div ref={accountModal} className="accountBox" show={show} onHide={handleClose} >
             <div className="accountTit">
                 Account <span className="CloseModal" onClick={handleClose}> <img src={Close}/> </span>
             </div>
-            <p className="">{`Connected with ${MetaMask ? 'MetaMask' : onMaiar ? "Maiar Wallet" : trustWallet ? "Trust Wallet" : algorandWallet ? 'Algorand Wallet' : MyAlgo ? "MyAlgo" : 'Tron Link'}`}</p>
+            <p className="">{connectedWith()}</p>
                         { copyIconHover && <img className="copytoltip" src={copyTT} /> }
                         { copied && <img className="copytoltip-tron" src={copiedIcon} /> }
             <CopyToClipboard text={elrondAccount || account || tronWallet || algorandAccount}>

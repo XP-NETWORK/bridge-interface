@@ -136,7 +136,7 @@ function Approval(props) {
                 setApprovedLoading(true)
                 setFinishedApproving([])
             if(from.type === "EVM"){
-                const provider = new ethers.providers.Web3Provider(WCProvider || window.ethereum);
+                const provider = new ethers.providers.Web3Provider(WCProvider.walletConnectProvider || window.ethereum);
                 const signer = provider.getSigner(account)
                 const chain = await handleChainFactory(from.key)
                 selectedNFTList.forEach((nft, index) => {

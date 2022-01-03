@@ -123,7 +123,7 @@ function NFTaccount() {
     }
     
     const sendEach = async (nft) => {
-        // debugger
+        debugger
         const factory = await getFactory()
         const toChain = await factory.inner(chainsConfig[to].Chain)
         const fromChain = await factory.inner(chainsConfig[from].Chain)
@@ -211,7 +211,6 @@ function NFTaccount() {
                 sendEach(nft)
             })
         }
-        
     }
 
     useEffect( async () => {
