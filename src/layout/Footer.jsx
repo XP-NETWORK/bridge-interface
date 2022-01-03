@@ -12,10 +12,10 @@ function Footer() {
             <div className="footContainer">
                 <div className="footLeft">
                     <ul className="socialLInks">
-                        <li><a href="https://www.linkedin.com/company/quigon" target="_blank" className="socliLink"><img src={Linkedin} alt="" /></a></li>
-                        <li><a href="https://t.me/quigonnetwork" target="_blank" className="socliLink"><img src={Telegram} alt="" /></a></li>
-                        <li><a href="https://twitter.com/QuigonNetwork" target="_blank" className="socliLink"><img src={Twitter} alt="" /></a></li>
-                        <li><a href="https://www.reddit.com/user/XP_network/" target="_blank" className="socliLink"><img src={Redit} alt="" /></a></li>
+                        <li><a href="https://www.linkedin.com/company/quigon/mycompany" target="_blank" className="socliLink"><img src={Linkedin} alt="" /></a></li>
+                        <li><a href="https://t.me/QuigonNetwork" target="_blank" className="socliLink"><img src={Telegram} alt="" /></a></li>
+                        <li><a href="https://twitter.com/QuigonCOM" target="_blank" className="socliLink"><img src={Twitter} alt="" /></a></li>
+                        <li><a href="https://www.reddit.com/r/XP_network/" target="_blank" className="socliLink"><img src={Redit} alt="" /></a></li>
                     </ul>
                 </div>
                 <div className="footRight">
