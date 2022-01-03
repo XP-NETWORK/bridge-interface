@@ -1341,11 +1341,12 @@ li.nftListed> img {
     cursor: pointer;
 }
 
-li.nftSelecItem> img {
+li.nftSelecItem> img, li.nftSelecItem> video {
     display: block;
     height: 32px;
     margin-right: 13px;
 }
+
 
 li.nftSelecItem .Close {
     margin-left: auto;
