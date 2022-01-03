@@ -36,7 +36,7 @@ function NavBar() {
                             <Nav.Link className="navMenu__link" target="_blank" href="https://quigon.com">Home</Nav.Link>
                             <Nav.Link className="navMenu__link" target="_blank" href="https://docs.quigon.com">Docs</Nav.Link>
                             {/* <Nav.Link className="" target="_blank" href="https://xp.network/api/">Bridge API</Nav.Link> */}
-                            {/* <Nav.Link className="navMenu__link" target="_blank" href="https://stake.xp.network">Staking</Nav.Link> */}
+                            <Nav.Link className="navMenu__link" target="_blank" href="https://stake.xp.network">Staking</Nav.Link>
                             <Nav.Link className="navMenu__link" target="_blank" href="https://blog.quigon.com">Blog</Nav.Link>
                             { setAddress() ? 
                                 <Nav.Link className="nftConnect navMenu__link" onClick={handleShow}>
