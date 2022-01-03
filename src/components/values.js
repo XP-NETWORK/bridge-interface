@@ -165,7 +165,7 @@ export const chainsConfig = {
         img: Binance,
         chainId: 56,
         tx: 'https://bscscan.com/tx/',
-        rpc: 'https://wandering-shy-leaf.bsc.quiknode.pro/8fb0366ce43528907ebf07a02b1f5a1f7df0f1b7/',
+        rpc: 'https://nodes.xp.network/bsc',
         // chainData: ChainData.BSC,
         Chain: Chain.BSC,
     }, 
@@ -185,7 +185,7 @@ export const chainsConfig = {
         img: Xdai,
         tx: 'https://blockscout.com/xdai/mainnet/tx/',
         chainId: 100,
-        rpc: 'https://wandering-wispy-lake.xdai.quiknode.pro/0ba55a1ce5cfbed132c1f91eef80958173559918/',
+        rpc: 'https://elronode.xp.network/xdai',
         Chain: Chain.XDAI,
         // chainData: ChainData.xDai
     },
