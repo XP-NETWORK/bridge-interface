@@ -47,7 +47,9 @@ export default function NFTChainListBox() {
 
     const checkIfLive = chain => {
         const nonce = CHAIN_INFO[chain]?.nonce
-        return validatorsInfo[nonce]?.bridge_alive
+        if(validatorsInfo[nonce]){
+            return validatorsInfo[nonce]?.bridge_alive
+        }
     }
     
     useEffect(() => {
