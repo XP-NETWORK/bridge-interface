@@ -196,7 +196,6 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
     if(algorandAccount && algorandAccount.length > 50) {
       const factory = await getFactory()
       claimables = await factory.claimableAlgorandNfts(algorandAccount)
-      console.log("claimables", claimables); 
       if(claimables && claimables.length > 0) {
         if(returnList) return claimables
         else store.dispatch(setAlgorandClaimables(claimables))
@@ -229,6 +228,7 @@ export function isValidHttpUrl(string) {
   } catch (_) {
     return false;  
   }
-
+  
+  console.log("isValidHttpUrl", string, url.protocol === "http:" || url.protocol === "https:");
   return url.protocol === "http:" || url.protocol === "https:";
 }

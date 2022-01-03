@@ -5,7 +5,7 @@ import "./Responsive.css";
 import XpBridge from "./pages/XpBridge";
 import Alert from "./components/Alert";
 import { useDispatch, useSelector } from "react-redux";
-import { setAlgorandClaimables, setFrom, setTo, setTronPopUp } from "./store/reducers/generalSlice";
+import { setAlgorandClaimables, setFrom, setTo, setTronPopUp, setValidatorsInf } from "./store/reducers/generalSlice";
 import ApproveLoader from "./components/innercomponents/ApproveLoader";
 import { Modal } from "react-bootstrap"
 import Error from "./components/innercomponents/Error";
@@ -26,9 +26,21 @@ function App() {
   const error = useSelector(state => state.general.error)
   const tronPopUp = useSelector(state => state.general.tronPopUp)
   const nftsToWhitelist = useSelector(state => state.general.techModal)
+  const axios = require("axios");
+
 
   function handleClose () {
     dispatch(setTronPopUp(false))
+  }
+
+  const checkValidators = async () => {
+    let res 
+    try {
+      res = await axios.get("https://bridgestatus.herokuapp.com/status")
+    } catch (error) {
+      console.error(error) 
+    }
+    if(res?.data) dispatch(setValidatorsInf(res.data))
   }
 
   useEffect(() => {
@@ -50,6 +62,7 @@ function App() {
     }
     localStorage.clear()
   },[])
+
   useEffect(async () => {
     if(algorandAccount) {
       try {
@@ -60,6 +73,11 @@ function App() {
 
     }
   },[algorandAccount])
+
+  useEffect ( async () => {
+    await checkValidators()
+    
+  }, [])
 
 return (
     <div className={"App"}>

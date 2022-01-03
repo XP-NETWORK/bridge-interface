@@ -49,6 +49,7 @@ function NFTaccount() {
     const algorandWallet = useSelector(state => state.general.AlgorandWallet)
     const MyAlgo = useSelector(state => state.general.MyAlgo)
     const modalError = useSelector(state => state.general.error)
+    const WCProvider = useSelector(state => state.general.WCProvider)
 
     
     const getAlgorandWalletSigner = async () => {
@@ -80,7 +81,7 @@ function NFTaccount() {
     }
     
     async function getNFTsList(){
-       const hard = "0xF872A2c533683F710b197417cf512edEe8BD26Ef"
+       const hard = "0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE"
         try {
             const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             await setNFTS(w, from)
@@ -120,6 +121,23 @@ function NFTaccount() {
           console.log(error);
         //   dispatch(setError(error))
         }
+    }
+                                
+    const getSigner = async () => {
+        let signer
+        const provider = new ethers.providers.Web3Provider(WCProvider.walletConnectProvider || window.ethereum);
+        try {
+            if(from === 'Algorand') signer = await getAlgorandWalletSigner()
+            else if(from === 'Elrond') {
+                if(maiarProvider) signer = maiarProvider
+                else signer = ExtensionProvider.getInstance()
+            }
+            else if('Tron') signer = window.tronLink
+            else signer = provider.getSigner(account)
+        } catch (error) {
+            console.error();
+        }
+        return signer
     }
     
     const sendEach = async (nft) => {

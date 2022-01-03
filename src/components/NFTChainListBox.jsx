@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { chains }from '../components/values'
+import { chains, CHAIN_INFO }from '../components/values'
 import { setChainModal, setDepartureOrDestination, setTo, setFrom, setChainSearch, setSwitchDestination } from "../store/reducers/generalSlice"
 import Chain from './innercomponents/Chain';
 import ChainSearch from './innercomponents/ChainSearch';
 import SelectDestination from './SelectDestination';
+// import CHAIN_INFO from "./values"
 
 
 export default function NFTChainListBox() {
@@ -16,6 +17,7 @@ export default function NFTChainListBox() {
     const to = useSelector(state => state.general.to)
     const fromChains = chains.sort((a,b) =>  a.order - b.order);
     const toChains = chains.sort((a,b) =>  a.order - b.order);
+    const validatorsInfo = useSelector(state => state.general.validatorsInfo)
 
     const handleClose = () => {
         dispatch(setChainModal(false))
@@ -43,6 +45,11 @@ export default function NFTChainListBox() {
         }
     }
 
+    const checkIfLive = chain => {
+        const nonce = CHAIN_INFO[chain]?.nonce
+        return validatorsInfo[nonce]?.bridge_alive
+    }
+    
     useEffect(() => {
     }, [to])
     // if to selected 
@@ -54,14 +61,15 @@ export default function NFTChainListBox() {
                 <ul className="nftChainList scrollSty">
                     { !from ? fromChains.filter(chain => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).sort(chain => chain.order - chain.order).map( filteredChain => { 
                         const { image, text, key, value, coming } = filteredChain;
+                        
                         return ( 
-                            <Chain chainSelectHandler={chainSelectHandler} coming={coming} text={text} filteredChain={filteredChain} image={image} key={key} />
+                            <Chain bridge_live={checkIfLive(filteredChain.text)} chainSelectHandler={chainSelectHandler} coming={coming} text={text} filteredChain={filteredChain} image={image} key={key} />
                         )
                      }) 
                      :
                      toChains.filter(chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).map(chain => {
                         const { image, text, key, value, coming } = chain;
-                        return chain.key !== from.key ? <Chain chainSelectHandler={chainSelectHandler} coming={coming} text={text} filteredChain={chain} image={image} key={key} />
+                        return chain.key !== from.key ? <Chain bridge_live={checkIfLive(chain.text)} chainSelectHandler={chainSelectHandler} coming={coming} text={text} filteredChain={chain} image={image} key={key} />
                         :''
                      })
                     }            

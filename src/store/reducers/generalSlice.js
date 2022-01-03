@@ -196,10 +196,14 @@ const generalSlice = createSlice({
     setTransferLoaderModal(state, action){
       state.transferModalLoader = action.payload
     },
+    setValidatorsInf(state, action){
+      state.validatorsInfo = action.payload
+    }
   },
 });
 
 export const {
+    setValidatorsInf,
     setTransferLoaderModal,
     toggleNFTInfo,
     removeFromNotWhiteListed,

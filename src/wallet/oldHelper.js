@@ -215,9 +215,14 @@ export const getChainId = () => {
     return chainsConfig[from] ? chainsConfig[from].chainId : ''
 }
 
-export const setupURI = (uri) => {
-    if(uri && uri.includes('ipfs://')) return 'https://ipfs.io/' + uri.replace(':/', '')
-    else if(uri) return uri.replace('http://', 'https://')
+export const setupURI = uri => {
+    
+    if(uri && uri.includes('ipfs://')){ 
+        return 'https://ipfs.io/' + uri.replace(':/', '')
+    }
+    else if(uri) {
+        return uri.replace('http://', 'https://')
+    }
     return uri
 }
 

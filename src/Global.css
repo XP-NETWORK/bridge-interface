@@ -2489,6 +2489,18 @@ span.transPend {
     justify-content: center;
 }
 
+.chain__off{
+    width: 50px;
+    height: 20px;
+    background: #2B313E;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #ed3e3e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 @media screen and (max-width: 425px) {
     .nft_selectBox {
