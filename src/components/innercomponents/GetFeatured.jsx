@@ -36,7 +36,7 @@ export default function GetFeatured() {
                         Twitter
                         <img src={twitter} alt=''/>
                     </a>
-                    <a className="follow-us__btn" href="https://t.me/QuigonNetwork" target="_blank">
+                    <a className="follow-us__btn" href="https://www.instagram.com/quigoncom/" target="_blank">
                         Instagram
                         <img src={instagram} alt="" />
                     </a>
