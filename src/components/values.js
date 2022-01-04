@@ -165,7 +165,7 @@ export const chainsConfig = {
         img: Binance,
         chainId: 56,
         tx: 'https://bscscan.com/tx/',
-        rpc: 'https://nodes.xp.network/bsc',
+        rpc: 'https://wandering-shy-leaf.bsc.quiknode.pro/ad8d20d7895c15e9afc03ff011dc3418152b07f7/',
         // chainData: ChainData.BSC,
         Chain: Chain.BSC,
     }, 

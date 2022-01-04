@@ -7,6 +7,7 @@ import Approval from './innercomponents/Approval';
 import NFTgridView from './innercomponents/NFTgridView';
 import NFTlistView from './innercomponents/NFTlistView';
 import SendFees from './innercomponents/SendFees';
+import BigNumber from 'bignumber.js'
 import NFTlistTop from './innercomponents/NFTlistTop';
 import { ethers } from "ethers";
 import NFTsuccess from './NFTsuccess';
@@ -103,15 +104,27 @@ function NFTaccount() {
             : from === 'Algorand' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
             : from === 'Elrond' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
             : account;
+
             // const fact = from === 'Algorand' || from === 'Elrond' ? await getFactory() : await getOldFactory()
-            if(from === 'Algorand' || from === 'Elrond'){
+            if(from === 'Algorand' || from === 'Elrond') {
                  fact = await getFactory()
             }
             else{
-                 fact = await getOldFactory()
+                 fact = await getFactory()
             }
-            if(selectedNFTList.length){
-                fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
+            if(selectedNFTList.length) {
+                fee = to ==='Tron' ? 
+                    from === 'BSC' ? new BigNumber('100000000000000000')
+                    : from === 'Polygon' ? new BigNumber('23200000000000000000') 
+                    : from === 'Ethereum' ? new BigNumber('14952490000000000') 
+                    : from === 'Algorand' ? new BigNumber('32160950300000000000') 
+                    : from === 'Elrond' ? new BigNumber('239344350000000000') 
+                    : from === 'Avalanche' ? new BigNumber('529683610000000000') 
+                    : from === 'xDai' ? new BigNumber('56645012600000000000') 
+                    : from === 'Fuse' ? new BigNumber('95352570490000000000') 
+                    : ''
+                : await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
+                console.log(fact, fee, 'hello', fromChain, toChain, selectedNFTList, wallet)
             }
             const bigNum = fee.multipliedBy(1.1).decimalPlaces(0).toString();
             dispatch(setBigNumFees(bigNum))

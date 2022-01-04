@@ -229,6 +229,5 @@ export function isValidHttpUrl(string) {
     return false;  
   }
   
-  console.log("isValidHttpUrl", string, url.protocol === "http:" || url.protocol === "https:");
   return url.protocol === "http:" || url.protocol === "https:";
 }
