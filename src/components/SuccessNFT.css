@@ -13,4 +13,13 @@
     position: absolute;
     right: -56px;
     top: -45px;
+    cursor: pointer;
+}
+
+.tooltip-icon:hover{
+    cursor: pointer;
+}
+
+.success__copy{
+    cursor: pointer;
 }

@@ -32,7 +32,7 @@ function NFTsuccess() {
     const receiver = useSelector(state => state.general.receiver)
     const txnHashArr = useSelector(state => state.general.txnHashArr)
     const currentTX = useSelector(s => s.general.currrentTx)
-
+    const txt = "rgdjhgkdjhgkdjghdkjfghdkjfghdkjfghkdjfhg"
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
 
 
@@ -61,6 +61,7 @@ function NFTsuccess() {
     }
 
     const tx = txnHashArr && txnHashArr.length > 0 ? typeof txnHashArr[currentTX] === 'object' ? txnHashArr[currentTX].hash.toString() : txnHashArr[currentTX] : ''
+    
     const address = account ? account : algorandAccount ? algorandAccount : elrondAccount ? elrondAccount : tronWallet ? tronWallet : ''
     return (
         <div>
@@ -87,9 +88,11 @@ function NFTsuccess() {
                             <div className="sucesList">
                                 <label>Txn Hash</label>
                                 <CopyToClipboard text={tx}>   
-                                    <span className="statTok colBlue">{ tx ? `${tx.substring(0, 10)}...${tx.substring(tx.length - 6)}` : '' }</span>
+                                    <div>
+                                        { tx ? `${tx.substring(0, 10)}...${tx.substring(tx.length - 6)}` : '' }
+                                        <Image onClick={() => copy()} onMouseOver={() => setSetCopyHover(true)}  onMouseOut={() => setSetCopyHover(false)} src={copyHover ? CopyHover : FileCopy} className="success__copy" />
+                                    </div>
                                 </CopyToClipboard>
-                                <Image onClick={() => copy()} onMouseOver={() => setSetCopyHover(true)}  onMouseOut={() => setSetCopyHover(false)} src={copyHover ? CopyHover : FileCopy} className="success__copy" />
                                 <div className='tooltip-icon'><img src={ copied ? copiedIcon : ''} alt="" /></div>
                             </div>
                         </div>
