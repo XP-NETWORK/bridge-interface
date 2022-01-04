@@ -2559,7 +2559,20 @@ span.transPend {
 
 }
 
+.get-featured{
+    margin: 0 auto 100px auto;
+    cursor: pointer;
+    max-width: 200px;
+}
 
+.get-featured img {
+    margin: 0 8px;
+}
+
+.get-featured:hover{
+  filter: brightness(2.5);
+  color: white;
+}
 /* widget */
 
 .widget div#root:after {

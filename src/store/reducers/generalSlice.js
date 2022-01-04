@@ -198,11 +198,15 @@ const generalSlice = createSlice({
     },
     setValidatorsInf(state, action){
       state.validatorsInfo = action.payload
+    },
+    setGetFeaturedModal(state, action){
+      state.featuredModal = action.payload
     }
   },
 });
 
 export const {
+    setGetFeaturedModal,
     setValidatorsInf,
     setTransferLoaderModal,
     toggleNFTInfo,

@@ -17,6 +17,7 @@ function NavBar() {
     const handleShow = () => dispatch(setAccountModal(true));
     const step = useSelector(state => state.general.step)
 
+
     useEffect(() => {}, [step])
 
     const setAddress = () => {

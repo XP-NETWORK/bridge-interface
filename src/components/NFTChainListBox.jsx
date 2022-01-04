@@ -45,12 +45,12 @@ export default function NFTChainListBox() {
         }
     }
 
-    const checkIfLive = chain => {
-        const nonce = CHAIN_INFO[chain]?.nonce
-        if(validatorsInfo){
-            return validatorsInfo[nonce]?.bridge_alive
-        }
-    }
+    // const checkIfLive = chain => {
+    //     const nonce = CHAIN_INFO[chain]?.nonce
+    //     if(validatorsInfo){
+    //         return validatorsInfo[nonce]?.bridge_alive
+    //     }
+    // }
     
     useEffect(() => {
     }, [to])
@@ -65,13 +65,13 @@ export default function NFTChainListBox() {
                         const { image, text, key, value, coming } = filteredChain;
                         
                         return ( 
-                            <Chain bridge_live={checkIfLive(filteredChain.text)} chainSelectHandler={chainSelectHandler} coming={coming} text={text} filteredChain={filteredChain} image={image} key={key} />
+                            <Chain  chainSelectHandler={chainSelectHandler} coming={coming} text={text} filteredChain={filteredChain} image={image} key={key} />
                         )
                      }) 
                      :
                      toChains.filter(chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).map(chain => {
                         const { image, text, key, value, coming } = chain;
-                        return chain.key !== from.key ? <Chain bridge_live={checkIfLive(chain.text)} chainSelectHandler={chainSelectHandler} coming={coming} text={text} filteredChain={chain} image={image} key={key} />
+                        return chain.key !== from.key ? <Chain  chainSelectHandler={chainSelectHandler} coming={coming} text={text} filteredChain={chain} image={image} key={key} />
                         :''
                      })
                     }            

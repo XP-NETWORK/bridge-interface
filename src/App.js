@@ -5,7 +5,7 @@ import "./Responsive.css";
 import XpBridge from "./pages/XpBridge";
 import Alert from "./components/Alert";
 import { useDispatch, useSelector } from "react-redux";
-import { setAlgorandClaimables, setFrom, setTo, setTronPopUp, setValidatorsInf } from "./store/reducers/generalSlice";
+import { setAlgorandClaimables, setFrom, setGetFeaturedModal, setTo, setTronPopUp, setValidatorsInf } from "./store/reducers/generalSlice";
 import ApproveLoader from "./components/innercomponents/ApproveLoader";
 import { Modal } from "react-bootstrap"
 import Error from "./components/innercomponents/Error";
@@ -18,6 +18,8 @@ import Widget from "./components/Widget";
 import TechnicalSupport from "./components/innercomponents/TechnicalSupport";
 import TransferLoader from "./components/innercomponents/TransferLoader";
 import TronConnectionErrMod from "./components/TronConnectionErrMod";
+import star from "./assets/img/icons/featuredInactive.svg"
+import GetFeatured from "./components/innercomponents/GetFeatured";
 
 function App() {
   const dispatch = useDispatch()
@@ -26,6 +28,7 @@ function App() {
   const error = useSelector(state => state.general.error)
   const tronPopUp = useSelector(state => state.general.tronPopUp)
   const nftsToWhitelist = useSelector(state => state.general.techModal)
+  const state = useSelector(state => state.general)
   const axios = require("axios");
 
 
@@ -41,6 +44,10 @@ function App() {
       console.error(error) 
     }
     if(res?.data) dispatch(setValidatorsInf(res.data))
+  }
+
+  const showGetFeatured = () => {
+    dispatch(setGetFeaturedModal(true))
   }
 
   useEffect(() => {
@@ -70,14 +77,15 @@ function App() {
       } catch(err) {
         console.log(err, 'algorand claimables error')
       }
-
     }
   },[algorandAccount])
 
   useEffect ( async () => {
     await checkValidators()
     
-  }, [])
+  }, [state])
+
+  
 
 return (
     <div className={"App"}>
@@ -107,6 +115,11 @@ return (
         <Alert />
       </Router>
       <Widget />
+      <GetFeatured />
+      <div onClick={showGetFeatured} className="get-featured">
+        <img src={star} alt=""/>
+        Get Featured
+      </div>
     </div>
   );
 }
