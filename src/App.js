@@ -13,7 +13,7 @@ import TronPopUp from "./components/innercomponents/TronPopUp";
 import { chains } from "./components/values";
 import About from "./components/innercomponents/About";
 import Video from "./components/innercomponents/Video";
-import {getFactory, setClaimablesAlgorand} from './wallet/helpers'
+import {getFactory, getTronNFTs, setClaimablesAlgorand} from './wallet/helpers'
 import Widget from "./components/Widget";
 import TechnicalSupport from "./components/innercomponents/TechnicalSupport";
 import TransferLoader from "./components/innercomponents/TransferLoader";
@@ -50,7 +50,7 @@ function App() {
     dispatch(setGetFeaturedModal(true))
   }
 
-  useEffect(() => {
+  useEffect(async() => {
     const from = new URLSearchParams(window.location.search).get('from')
     const to = new URLSearchParams(window.location.search).get('to')
     if(from !== to) {

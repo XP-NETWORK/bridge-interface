@@ -150,13 +150,14 @@ export const handleChainFactory = async (someChain) => {
 export const getNFTS = async (wallet, from) => {
   // debugger
   const hardcode = "52O2MF3BYGBUX5CI2IW7VBVCGAMJOG3VBSYKTCCD677K2AUFPSFZAATED4"
-  const { algorandAccount } = store.getState().general
+  const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
   const chain = await factory.inner(chainsConfig[from].Chain)
   
   try {
     const res = 
-    algorandAccount 
+    tronWallet ? await getTronNFTs(tronWallet)
+    : algorandAccount 
     ? 
     (await axios.get(`https://nftindexing.herokuapp.com/15/${wallet}`)).data.result
     : 
@@ -230,4 +231,43 @@ export function isValidHttpUrl(string) {
   }
   
   return url.protocol === "http:" || url.protocol === "https:";
+}
+
+export const getTronNFTs = async wallet => {
+  const res = await axios.get(`https://apilist.tronscan.org/api/account/tokens?address=${wallet}&start=0&limit=500&hidden=0&show=3&sortType=0&sortBy=0`)
+  const { total, data } = res.data
+
+  if(total > 0) {
+    const tokens = []
+    for await(let nft of data) {
+      const { tokenId, balance,tokenName,tokenAbbr } = nft
+      console.log(nft)
+      const contract = await window.tronWeb.contract().at(tokenId)
+      const array = new Array(parseInt(balance)).fill(0).map((n,i) => i)
+      for await(let index of array) {
+        try {
+          const token = await contract.tokenOfOwnerByIndex(wallet,index).call()
+          const uri = await contract.tokenURI(parseInt(token._hex)).call()
+          const t = {
+            uri,
+            native: {
+              chainId: '9',
+              contract: tokenId,
+              contractType: 'ERC721',
+              name: tokenName,
+              symbol: tokenAbbr,
+              tokenId: parseInt(token._hex),
+              uri
+            }
+          }
+          tokens.push(t)
+        } catch(err) {
+          console.log(err)
+        }
+
+      }
+    }
+    return tokens
+  }
+  return []
 }
