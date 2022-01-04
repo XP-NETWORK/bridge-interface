@@ -81,9 +81,10 @@ function App() {
   },[algorandAccount])
 
   useEffect ( async () => {
+    if(!state.validatorsInfo)
     await checkValidators()
     
-  }, [state])
+  }, [state.validatorsInfo])
 
   
 

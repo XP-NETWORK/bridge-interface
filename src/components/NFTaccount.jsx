@@ -154,7 +154,6 @@ function NFTaccount() {
     }
     
     const sendEach = async (nft) => {
-        debugger
         const factory = await getFactory()
         const toChain = await factory.inner(chainsConfig[to].Chain)
         const fromChain = await factory.inner(chainsConfig[from].Chain)
@@ -162,16 +161,19 @@ function NFTaccount() {
         const signer = 
         from === 'Algorand' ? await getAlgorandWalletSigner() :
         from === 'Elrond' ? maiarProvider ? maiarProvider : ExtensionProvider.getInstance() :
-        from === 'Tron' ? window.tronLink 
+        from === 'Tron' ? window.tronWeb 
         : provider.getSigner(account)
         
         try {
             let result
             if(from === 'Tron') {
                 const fact = await getOldFactory()
+                console.log(fact, '12318919')
+                const toChains = await fact.inner(chainsConfig[to].Chain)
+                const fromChainT = await fact.inner(chainsConfig[from].Chain)
                  result = await fact.transferNft(
-                    fromChain, // The Source Chain.
-                    toChain,   // The Destination Chain.
+                    fromChainT, // The Source Chain.
+                    toChains,   // The Destination Chain.
                     nft,       // Or the NFT you have chosen.
                     undefined,    // Or tronlink or maiar.
                     receiver,   // The address who you are transferring the NFT to.

@@ -77,6 +77,7 @@ export const getFromParams = async () => {
               }
         }
     } else if(from === 'Tron') {
+        console.log(window.tronWeb, 'hellosaklda')
         return {
             tronParams: {
                 ...ChainData.Tron,
