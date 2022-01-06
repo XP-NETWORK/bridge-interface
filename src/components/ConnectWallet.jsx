@@ -329,8 +329,9 @@ function ConnectWallet() {
                     <Modal.Body>
                         <div className="walletListBox">
                             <ul className="walletList scrollSty">
+                              {/* !!! style={ from ? from.type === "EVM" && from.text !== "Fuse" ? {} : OFF : ''} */}
                                 <li onClick={() => onInjected()} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li>
-                                <li onClick={() => onWalletConnect()} style={ from ? from.type === "EVM" && from.text !== "Fuse" ? {} : OFF : ''} className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
+                                <li onClick={() => onWalletConnect()} style={ OFF } className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
                                 <li onClick={() => onTrustWallet()} style={(getMobOps() && window.innerWidth <= 600 && isEVM()) || (window.ethereum && window.innerWidth <= 600) ? {} : OFF } className="wllListItem"><img src={TrustWallet} alt="WalletConnect Icon" /> Trust Wallet</li>
                                 <li onClick={onMyAlgo} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={MyAlgoBlue} alt="" /> MyAlgo</li>
                                 <li onClick={onAlgoSigner} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo Signer</li>

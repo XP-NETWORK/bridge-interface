@@ -5,7 +5,7 @@ import CheckGreen from '../../assets/img/icons/check_green.svg';
 import NFTdetails from '../NFTdetails';
 import { useSelector } from 'react-redux';
 import { setupURI } from '../../wallet/oldHelper';
-import  "../styles/NFT.css"
+// import  "../styles/NFT.css"
 
 export default function NFT({nft, index}) {
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)

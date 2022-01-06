@@ -92,7 +92,7 @@ function NFTaccount() {
     }
     
     async function estimate () {
-        
+        // debugger
         let fact
         let fee
         try {
@@ -124,7 +124,7 @@ function NFTaccount() {
                     : from === 'Fuse' ? new BigNumber('95352570490000000000') 
                     : ''
                 : await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
-                console.log(fact, fee, 'hello', fromChain, toChain, selectedNFTList, wallet)
+                
             }
             const bigNum = fee.multipliedBy(1.1).decimalPlaces(0).toString();
             dispatch(setBigNumFees(bigNum))
@@ -136,17 +136,24 @@ function NFTaccount() {
         }
     }
                                 
-    const getSigner = async () => {
+    const getSign = async () => {
+        debugger
         let signer
         const provider = new ethers.providers.Web3Provider(WCProvider.walletConnectProvider || window.ethereum);
         try {
-            if(from === 'Algorand') signer = await getAlgorandWalletSigner()
+            if(from === 'Algorand') {
+                signer = await getAlgorandWalletSigner()
+            }
             else if(from === 'Elrond') {
                 if(maiarProvider) signer = maiarProvider
                 else signer = ExtensionProvider.getInstance()
             }
-            else if('Tron') signer = window.tronLink
-            else signer = provider.getSigner(account)
+            else if(from === 'Tron') {
+                signer = window.tronLink
+            }
+            else {
+                signer = provider.getSigner(account)
+            }
         } catch (error) {
             console.error();
         }
@@ -154,12 +161,13 @@ function NFTaccount() {
     }
     
     const sendEach = async (nft) => {
+        debugger
         const factory = await getFactory()
         const toChain = await factory.inner(chainsConfig[to].Chain)
         const fromChain = await factory.inner(chainsConfig[from].Chain)
         const provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : ''
-        const signer = 
-        from === 'Algorand' ? await getAlgorandWalletSigner() :
+        // const signer =  await getSign()
+        const signer = from === 'Algorand' ? await getAlgorandWalletSigner() :
         from === 'Elrond' ? maiarProvider ? maiarProvider : ExtensionProvider.getInstance() :
         from === 'Tron' ? window.tronWeb 
         : provider.getSigner(account)
@@ -168,7 +176,6 @@ function NFTaccount() {
             let result
             if(from === 'Tron') {
                 const fact = await getOldFactory()
-                console.log(fact, '12318919')
                 const toChains = await fact.inner(chainsConfig[to].Chain)
                 const fromChainT = await fact.inner(chainsConfig[from].Chain)
                  result = await fact.transferNft(

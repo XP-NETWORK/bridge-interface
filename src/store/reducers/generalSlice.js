@@ -201,12 +201,16 @@ const generalSlice = createSlice({
     },
     setGetFeaturedModal(state, action){
       state.featuredModal = action.payload
+    },
+    setTransactionStep(state, action){
+      state.transactionStep = action.payload
     }
   },
 });
 
 export const {
     setGetFeaturedModal,
+    setTransactionStep,
     setValidatorsInf,
     setTransferLoaderModal,
     toggleNFTInfo,

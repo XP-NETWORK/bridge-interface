@@ -20,6 +20,7 @@ import TransferLoader from "./components/innercomponents/TransferLoader";
 import TronConnectionErrMod from "./components/TronConnectionErrMod";
 import star from "./assets/img/icons/featuredInactive.svg"
 import GetFeatured from "./components/innercomponents/GetFeatured";
+import TnProcess from "./components/innercomponents/processingModals/TnProcess";
 
 function App() {
   const dispatch = useDispatch()
@@ -93,6 +94,7 @@ return (
       <About />
       <Video />
       <TechnicalSupport />
+      <TnProcess />
       <TransferLoader />
       <TronConnectionErrMod />
       <Modal 
