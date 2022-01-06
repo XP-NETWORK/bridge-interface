@@ -261,8 +261,6 @@ export const parseNFTS = async (nfts) => {
         
     return await new Promise(async resolve => {
         try {
-            // const p = await factory.nftUri(inner, n)
-            
             if(!n.uri) resolve({ ...n })
             const res = await axios.get(setupURI(n.uri))
             if(res && res.data) {
@@ -272,11 +270,8 @@ export const parseNFTS = async (nfts) => {
                 } else resolve(undefined)
             } catch(err) {
                 if(err) {
-                    
                     try {
-                        const res = await axios.post('https://wnfts.xp.network/get-uri', 
-                        { blockchain: from, uri: n.uri, contract: n.native.contract ? n.native.contract: 'alsa' }
-                        )
+                        const res = await axios.get(('https://sheltered-crag-76748.herokuapp.com/')+(setupURI(n.uri?.uri ? n.uri?.uri : n.uri)));
                         if(res.data) {
                             try {
                                 const {uri} = res.data

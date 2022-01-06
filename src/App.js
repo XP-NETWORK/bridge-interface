@@ -94,7 +94,7 @@ return (
       <About />
       <Video />
       <TechnicalSupport />
-      <TnProcess />
+      {/* <TnProcess /> */}
       <TransferLoader />
       <TronConnectionErrMod />
       <Modal 

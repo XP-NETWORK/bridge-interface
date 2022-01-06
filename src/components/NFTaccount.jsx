@@ -12,7 +12,7 @@ import NFTlistTop from './innercomponents/NFTlistTop';
 import { ethers } from "ethers";
 import NFTsuccess from './NFTsuccess';
 import { useSelector } from 'react-redux';
-import { setBigNumFees, setError, setNFTList, setNFTsToWhitelist, setTxnHash, setTransferLoaderModal } from "../store/reducers/generalSlice"
+import { setBigNumFees, setError, setNFTList, setNFTsToWhitelist, setTxnHash, setTransferLoaderModal, setTransactionStep } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
 import { getFactory, getNFTS, handleChainFactory, parseNFTS, setClaimablesAlgorand, setNFTS } from "../wallet/helpers"
 import Comment from "../components/innercomponents/Comment"
@@ -160,8 +160,9 @@ function NFTaccount() {
         return signer
     }
     
-    const sendEach = async (nft) => {
-        debugger
+    const sendEach = async (nft, index) => {
+        // debugger
+        if(index === 0) dispatch(setTransactionStep(1))
         const factory = await getFactory()
         const toChain = await factory.inner(chainsConfig[to].Chain)
         const fromChain = await factory.inner(chainsConfig[from].Chain)
@@ -247,8 +248,8 @@ function NFTaccount() {
         if(!loading && approved) {
             setLoading(true)
             dispatch(setTransferLoaderModal(true))
-            selectedNFTList.forEach( nft => {
-                sendEach(nft)
+            selectedNFTList.forEach( (nft, index) => {
+                sendEach(nft, index)
             })
         }
     }

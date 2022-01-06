@@ -9,15 +9,32 @@ import "./TnProcess.css"
 export default function TnProcess() {
     const from = useSelector(state => state.general.from)
     const to = useSelector(state => state.general.to)
-    const [one, setOne] = useState(0)
-    const [two, setTwo] = useState(0)
-    const [three, setThree] = useState(0)
-    const transactionStep = 1
-    // const transactionStep = useSelector(state => state.general.transactionStep)
-
+    const [one, setOne] = useState("")
+    const [two, setTwo] = useState("")
+    const [three, setThree] = useState("")
+    // const transactionStep = 0
+    const transactionStep = useSelector(state => state.general.transactionStep)
     const [body, setBody] = useState({})
 
+    function counter() {
+        debugger
+        if(one === "")setOne(0)
+        if(two === "")setTwo(0)
+        if(three === "")setThree(0)
+        setTimeout(function() {   //  call a 3s setTimeout when the loop is called
+            debugger         //  create a loop function
+            //  your code here
+          setOne(one + 1)                   //  increment the counter
+          if(one < 100)counter()
+          if(one === 100) setTwo(two + 1)
+          if(two < 100) counter()
+          if(two === 100) setThree(three + 1)
+          if(three < 100) counter()
+        }, 500)
+      }
+
     useEffect(() => {
+        
         switch (transactionStep) {
             case 1:
                 setBody({
@@ -51,8 +68,13 @@ export default function TnProcess() {
         }
     }, [transactionStep])
 
+    useEffect(() => {
+        // debugger
+        if(transactionStep) counter()
+    }, [transactionStep])
+
     return (
-        <Modal  show={false} animation={false} className="tn-process__modal">
+        <Modal  show={transactionStep} animation={false} className="tn-process__modal">
             <Modal.Header className='tn-process__header border-0'>
                 <Modal.Title className="tn-process__title">Processing..</Modal.Title>
             </Modal.Header>
