@@ -11,6 +11,7 @@ import Fantom from "../assets/img/chain/Fantom.svg"
 import Xdai from "../assets/img/chain/Xdai.svg"
 import Solana from "../assets/img/chain/Solana.svg"
 import Fuse from "../assets/img/chain/Fuse.svg"
+import Velas from "../assets/img/chain/velas.svg"
 import { Chain } from "xp.network/dist/consts";
 
 export const EVM = "EVM";
@@ -38,7 +39,7 @@ export const chains = [
         key: 'Tron',
         text: 'Tron',
         value: 'Tron',
-        order: 4,
+        order: 6,
         image: { avatar: true, src: Tron },
     },
     {
@@ -46,7 +47,7 @@ export const chains = [
         key: ELROND,
         text: ELROND,
         value: ELROND,
-        order: 5,
+        order: 7,
         image: { avatar: true, src: Elrond },
     },
     {
@@ -62,7 +63,7 @@ export const chains = [
         key: 'Avalanche',
         text: 'Avalanche',
         value: 'Avalanche',
-        order: 6,
+        order: 8,
         image: { avatar: true, src: Avalanche },
     },
     {
@@ -70,7 +71,7 @@ export const chains = [
         key: 'Fantom',
         text: 'Fantom',
         value: 'Fantom',
-        order: 7,
+        order: 9,
         image: { avatar: true, src: Fantom },
     },
     {
@@ -78,8 +79,7 @@ export const chains = [
         key: 'Algorand',
         text: 'Algorand',
         value: 'Algorand',
-        order: 3,
-        
+        order: 5,
         image: { avatar: true, src: Algorand },
     },
     {
@@ -87,7 +87,7 @@ export const chains = [
         key: 'xDai',
         text: 'xDai',
         value: 'xDai',
-        order: 8,
+        order: 10,
         image: { avatar: true, src: Xdai },
     },
     {
@@ -95,7 +95,7 @@ export const chains = [
         key: 'Solana',
         text: 'Solana',
         value: 'Solana',
-        order: 13,
+        order: 14,
         coming: true,
         image: { avatar: true, src: Solana },
     },
@@ -104,7 +104,7 @@ export const chains = [
         key: 'Cardano',
         text: 'Cardano',
         value: 'Cardano',
-        order: 11,
+        order: 12,
         coming: true,
         image: { avatar: true, src: Cardano },
     },
@@ -113,7 +113,7 @@ export const chains = [
         key: 'Heco',
         text: 'Heco',
         value: 'Heco',
-        order: 12,
+        order: 13,
         coming: true,
         image: { avatar: true, src: Heco },
     },
@@ -122,8 +122,16 @@ export const chains = [
         key: 'Fuse',
         text: 'Fuse',
         value: 'Fuse',
-        order: 10,
+        order: 11,
         image: { avatar: true, src: Fuse },
+    },
+    {
+        type: "EVM",
+        key: "Velas",
+        text: "Velas",
+        value: "Velas",
+        order: 4,
+        image: { avatar: true, src: Velas }
     }
 ]
 
@@ -226,6 +234,15 @@ export const chainsConfig = {
         chainId: 122,
         Chain: Chain.FUSE,
         tx: "https://explorer.fuse.io/tx/"
+    },
+    Velas: {
+        type: EVM,
+        img: Velas,
+        token: "VLX",
+        rpc: "https://velasnode.quigon.com/velas",
+        chainId: 106,
+        Chain: Chain.VELAS,
+        tx: "https://evmexplorer.velas.com/"
     }
 
 }
@@ -243,7 +260,8 @@ export const coins = [
     "ONE", // 9
     "ONG", // 10
     "XDAI", //11
-    "FUSE" //12
+    "FUSE", //12
+    "VELAS", //13
   ];
 
 export const CHAIN_INFO = {
@@ -365,6 +383,15 @@ export const CHAIN_INFO = {
         decimals: 1e18,
         rpc: "https://rpc.fuse.io/",
         chainId: 122,
+        blockExplorerUrls: "",
+        contract: ""
+    },
+    Velas: {
+        native: coins[13],
+        nonce: 19,
+        decimals: 1e18,
+        rpc: "https://velasnode.quigon.com/velas",
+        chainId: 106,
         blockExplorerUrls: "",
         contract: ""
     }

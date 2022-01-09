@@ -36,7 +36,7 @@
     "web-vitals": "^1.1.2",
     "web3": "^1.6.1",
     "web3-utils": "^1.6.0",
-    "xp.network": "git+https://github.com/QuigonCOM/xpjs#5ffb3f3c55227216813458340110f1fb9b7d6871",
+    "xp.network": "git+https://github.com/xp-network/xpjs#master-dist",
     "yarn": "^1.22.17"
   },
   "scripts": {

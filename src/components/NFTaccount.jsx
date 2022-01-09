@@ -92,7 +92,7 @@ function NFTaccount() {
     }
     
     async function estimate () {
-        // debugger
+        debugger
         let fact
         let fee
         try {
@@ -137,7 +137,7 @@ function NFTaccount() {
     }
                                 
     const getSign = async () => {
-        debugger
+        // debugger
         let signer
         const provider = new ethers.providers.Web3Provider(WCProvider.walletConnectProvider || window.ethereum);
         try {
@@ -161,7 +161,7 @@ function NFTaccount() {
     }
     
     const sendEach = async (nft, index) => {
-        // debugger
+        debugger
         if(index === 0) dispatch(setTransactionStep(1))
         const factory = await getFactory()
         const toChain = await factory.inner(chainsConfig[to].Chain)

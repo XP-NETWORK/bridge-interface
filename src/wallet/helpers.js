@@ -119,7 +119,8 @@ export const handleChainFactory = async (someChain) => {
   // debugger
   const factory = await getFactory();
   let chain;
-  someChain === "Ethereum"
+  try {
+    someChain === "Ethereum"
     ? (chain = await factory.inner(Chain.ETHEREUM))
     : someChain === "BSC"
     ? (chain = await factory.inner(Chain.BSC))
@@ -143,8 +144,13 @@ export const handleChainFactory = async (someChain) => {
     ? (chain = await factory.inner(Chain.CARDANO))
     : someChain === "Fuse"
     ? (chain = await factory.inner(Chain.FUSE))
+    : someChain === "Velas"
+    ? (chain = await factory.inner(Chain.VELAS))
     : (chain = "");
   return chain;
+  } catch (error) {
+    console.error(error)
+  }
 };
 
 export const getNFTS = async (wallet, from) => {
