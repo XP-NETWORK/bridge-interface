@@ -39,6 +39,7 @@ export const preloadItem = (item, type, setLoaded) => {
 };
 
 export const parseNFTS = async (nfts) => {
+
   const { from, to } = store.getState().general;
   const result = await Promise.all(
     nfts.map(async (n) => {
@@ -57,11 +58,7 @@ export const parseNFTS = async (nfts) => {
         } catch (err) {
           if (err) {
             try {
-              const res = await axios.post("https://wnfts.xp.network/get-uri", {
-                blockchain: from.type,
-                uri: n.uri,
-                contract: n.native.contract ? n.native.contract : "alsa",
-              });
+              const res = await axios.get(('https://sheltered-crag-76748.herokuapp.com/')+(setupURI(n.uri?.uri ? n.uri?.uri : n.uri)));
               if (res.data) {
                 try {
                   const { uri } = res.data;
@@ -106,6 +103,7 @@ export const isALLNFTsApproved = () => {
   } else return false;
 };
 export const getFactory = async () => {
+  // debugger
   const f = store.getState().general.factory
   
   if(f) return f
@@ -165,7 +163,7 @@ export const getNFTS = async (wallet, from) => {
     tronWallet ? await getTronNFTs(tronWallet)
     : algorandAccount 
     ? 
-    (await axios.get(`https://nftindexing.herokuapp.com/15/${wallet}`)).data.result
+    ( await axios.get(`https://nftindexing.herokuapp.com/15/${wallet}`)).data.result
     : 
     await factory.nftList(
         chain, // The chain of interest

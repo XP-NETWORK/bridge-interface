@@ -63,7 +63,7 @@ function NFTdetails({ nftInf }){
                                 <label>Description</label>
                                 <p>{description}</p>
                             </div>
-                            { (attributes && Array.isArray(attributes)) && attributes.map((n,i) => <Attribute {...n} key={`attribute-${i}`}/>) }
+                            { (attributes && Array.isArray(attributes)) && attributes.filter(n => typeof n.value === "string" || typeof n.value === "number").map((n,i) => <Attribute {...n} key={`attribute-${i}`}/>) }
                         </div>
                     </div>
                 </Modal.Body>

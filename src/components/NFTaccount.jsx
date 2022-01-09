@@ -82,7 +82,7 @@ function NFTaccount() {
     }
     
     async function getNFTsList(){
-       const hard = "0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE"
+       const hard = "0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6"
         try {
             const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             await setNFTS(w, from)
@@ -92,7 +92,7 @@ function NFTaccount() {
     }
     
     async function estimate () {
-        debugger
+        debugger 
         let fact
         let fee
         try {
@@ -113,7 +113,9 @@ function NFTaccount() {
                  fact = await getFactory()
             }
             if(selectedNFTList.length) {
-                fee = to ==='Tron' ? 
+                
+                try {
+                    fee = to ==='Tron' ? 
                     from === 'BSC' ? new BigNumber('100000000000000000')
                     : from === 'Polygon' ? new BigNumber('23200000000000000000') 
                     : from === 'Ethereum' ? new BigNumber('14952490000000000') 
@@ -124,6 +126,9 @@ function NFTaccount() {
                     : from === 'Fuse' ? new BigNumber('95352570490000000000') 
                     : ''
                 : await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
+                } catch (error) {
+                    console.error(error)
+                }
                 
             }
 

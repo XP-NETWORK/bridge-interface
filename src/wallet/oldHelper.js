@@ -252,6 +252,7 @@ export const preloadItem = (item, type, setLoaded) => {
 }
 
 export const parseNFTS = async (nfts) => {
+    console.log("oldHelpers");
     const { elrondWallet } = store.getState().general
     const { from, to } = store.getState().general
     const factory = await getRPCFactory()
