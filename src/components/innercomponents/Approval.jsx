@@ -65,7 +65,7 @@ function Approval(props) {
     }
 
     const approveEach = async (nft, signer, chain, index) => {
-        
+        debugger
         const arr = new Array(index + 1).fill(0)
         const factory = await getFactory()
             if(from.type !== "Elrond" && from.type !== 'Algorand'){

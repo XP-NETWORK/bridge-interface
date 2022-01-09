@@ -126,7 +126,9 @@ function NFTaccount() {
                 : await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
                 
             }
-            const bigNum = fee.multipliedBy(1.1).decimalPlaces(0).toString();
+
+            const bigNum = fee.multipliedBy(1.1).integerValue()
+            .toString(10)
             dispatch(setBigNumFees(bigNum))
             const fees = await Web3Utils.fromWei(bigNum, "ether")
             setFees(selectedNFTList.length * fees)

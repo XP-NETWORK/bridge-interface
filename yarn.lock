@@ -5927,9 +5927,15 @@ crypto-browserify@3.12.0, crypto-browserify@^3.11.0:
     randombytes "^2.0.0"
     randomfill "^1.0.3"
 
+"crypto-exchange-rate@git+https://github.com/QuigonCom/exchange-rate#master-dist":
+  version "1.0.0"
+  resolved "git+https://github.com/QuigonCom/exchange-rate#4f82d7992d53b6f5861bb9f3e9ebf89f58123354"
+  dependencies:
+    axios "^0.21.1"
+
 "crypto-exchange-rate@git+https://github.com/xp-network/exchange-rate#master-dist":
   version "1.0.0"
-  resolved "git+https://github.com/xp-network/exchange-rate#6174eb2109d76e16286b12054573b3eacc2f797b"
+  resolved "git+https://github.com/QuigonCom/exchange-rate#4f82d7992d53b6f5861bb9f3e9ebf89f58123354"
   dependencies:
     axios "^0.21.1"
 
@@ -16157,7 +16163,7 @@ xmlhttprequest-ssl@~2.0.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#master-dist":
   version "0.1.0"
-  resolved "git+https://github.com/xp-network/xpjs#043c322f614e9cb38a11f1a25a120a5740aa1650"
+  resolved "git+https://github.com/xp-network/xpjs#75ebace5d85c5f200f0c8d0835f98515cfb803ab"
   dependencies:
     "@elrondnetwork/erdjs" "^8.0.1-alpha.8"
     "@json-rpc-tools/utils" "^1.7.6"
