@@ -32,7 +32,6 @@ function NFTsuccess() {
     const receiver = useSelector(state => state.general.receiver)
     const txnHashArr = useSelector(state => state.general.txnHashArr)
     const currentTX = useSelector(s => s.general.currrentTx)
-    const txt = "rgdjhgkdjhgkdjghdkjfghdkjfghdkjfghkdjfhg"
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
 
 
@@ -60,8 +59,25 @@ function NFTsuccess() {
       setTimeout(() => setCopy(false), 2000)
     }
 
-    const tx = txnHashArr && txnHashArr.length > 0 ? typeof txnHashArr[currentTX] === 'object' ? txnHashArr[currentTX].hash.toString() : txnHashArr[currentTX] : ''
-    
+    const getTX = () => {
+        let ntx
+        debugger
+        // const tx = txnHashArr && txnHashArr.length > 0 ? typeof txnHashArr[currentTX] === 'object' ? txnHashArr[currentTX].hash.toString() : txnHashArr[currentTX] : ''
+        console.log("txnHashArr: ", txnHashArr, "type: ", typeof txnHashArr);
+        if( txnHashArr && txnHashArr.length > 0 ){
+            if(typeof txnHashArr === 'object'){
+                return txnHashArr[0].hash.toString()
+            }
+            else{
+                return txnHashArr
+            }
+        }
+        else{
+            return "wrong tx"
+        }
+
+        // return tx
+    }
     const address = account ? account : algorandAccount ? algorandAccount : elrondAccount ? elrondAccount : tronWallet ? tronWallet : ''
     return (
         <div>
@@ -87,9 +103,9 @@ function NFTsuccess() {
                             </div>
                             <div className="sucesList">
                                 <label>Txn Hash</label>
-                                <CopyToClipboard text={tx}>   
+                                <CopyToClipboard text={getTX() || "No tx"}>   
                                     <div>
-                                        { tx ? `${tx.substring(0, 10)}...${tx.substring(tx.length - 6)}` : '' }
+                                        { getTX() ? `${getTX().substring(0, 10)}...${getTX().substring(getTX().length - 6)}` : '' }
                                         <Image onClick={() => copy()} onMouseOver={() => setSetCopyHover(true)}  onMouseOut={() => setSetCopyHover(false)} src={copyHover ? CopyHover : FileCopy} className="success__copy" />
                                     </div>
                                 </CopyToClipboard>
