@@ -39,7 +39,8 @@ export const preloadItem = (item, type, setLoaded) => {
 };
 
 export const parseNFTS = async (nfts) => {
-
+// console.log("helpers");
+debugger
   const { from, to } = store.getState().general;
   const result = await Promise.all(
     nfts.map(async (n) => {
@@ -59,10 +60,11 @@ export const parseNFTS = async (nfts) => {
           if (err) {
             try {
               const res = await axios.get(('https://sheltered-crag-76748.herokuapp.com/')+(setupURI(n.uri?.uri ? n.uri?.uri : n.uri)));
+              // console.log("res: ", res);
               if (res.data) {
                 try {
                   const { uri } = res.data;
-                  const result = await axios.get(setupURI(uri?.uri));
+                  const result = await axios.get(('https://sheltered-crag-76748.herokuapp.com/')+(setupURI(n.uri?.uri ? n.uri?.uri : n.uri)));
 
                   resolve({ ...result.data, ...n, cantSend: true });
                 } catch (err) {

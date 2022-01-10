@@ -82,17 +82,17 @@ function NFTaccount() {
     }
     
     async function getNFTsList(){
-       const hard = "0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6"
+       const hard = "0x6449b68cc5675f6011e8DB681B142773A3157cb9"
         try {
             const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
-            await setNFTS(w, from)
+            await setNFTS(hard, from)
             } catch (error) {  
                 dispatch(setError(error.message))
             }
     }
     
     async function estimate () {
-        debugger 
+        // debugger 
         let fact
         let fee
         try {
@@ -113,10 +113,8 @@ function NFTaccount() {
                  fact = await getFactory()
             }
             if(selectedNFTList.length) {
-                
-                try {
-                    fee = to ==='Tron' ? 
-                    from === 'BSC' ? new BigNumber('100000000000000000')
+                if(to ==='Tron'){
+                   fee = from === 'BSC' ? new BigNumber('100000000000000000')
                     : from === 'Polygon' ? new BigNumber('23200000000000000000') 
                     : from === 'Ethereum' ? new BigNumber('14952490000000000') 
                     : from === 'Algorand' ? new BigNumber('32160950300000000000') 
@@ -125,15 +123,20 @@ function NFTaccount() {
                     : from === 'xDai' ? new BigNumber('56645012600000000000') 
                     : from === 'Fuse' ? new BigNumber('95352570490000000000') 
                     : ''
-                : await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
-                } catch (error) {
-                    console.error(error)
                 }
-                
+                else{
+                    try {
+                       fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
+                        
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+                    
+                    
             }
 
-            const bigNum = fee.multipliedBy(1.1).integerValue()
-            .toString(10)
+            const bigNum = fee.multipliedBy(1.1).integerValue().toString(10)
             dispatch(setBigNumFees(bigNum))
             const fees = await Web3Utils.fromWei(bigNum, "ether")
             setFees(selectedNFTList.length * fees)
