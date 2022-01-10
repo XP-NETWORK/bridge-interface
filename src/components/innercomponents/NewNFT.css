@@ -163,7 +163,7 @@
 
 }
 
-.nft-box__wrapper
+
 
 .selected-radio {
   position: absolute;
@@ -265,10 +265,10 @@
 
 @media screen and (max-width: 425px) {
   .image__wrapper{
-    max-height: 100%;
+    max-height: calc(100% - 30px);
   }
   .nft-image__container{
-    max-height: 190px;
+    max-height: 170px;
   }
   .radio__container{
     

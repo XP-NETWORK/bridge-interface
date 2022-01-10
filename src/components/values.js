@@ -242,7 +242,7 @@ export const chainsConfig = {
         rpc: "https://velasnode.quigon.com/velas",
         chainId: 106,
         Chain: Chain.VELAS,
-        tx: "https://evmexplorer.velas.com/"
+        tx: "https://evmexplorer.velas.com/tx/"
     }
 
 }

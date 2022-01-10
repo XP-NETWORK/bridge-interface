@@ -59,14 +59,28 @@ function NFTsuccess() {
       setTimeout(() => setCopy(false), 2000)
     }
 
+    const getSubstringValue = () => {
+        if(window.innerWidth <= 320) return 3
+        else if(window.innerWidth <= 375) return 6
+        else return false
+    }
+
     const getTX = () => {
         let ntx
-        debugger
+        // debugger
         // const tx = txnHashArr && txnHashArr.length > 0 ? typeof txnHashArr[currentTX] === 'object' ? txnHashArr[currentTX].hash.toString() : txnHashArr[currentTX] : ''
-        console.log("txnHashArr: ", txnHashArr, "type: ", typeof txnHashArr);
+        
         if( txnHashArr && txnHashArr.length > 0 ){
-            if(typeof txnHashArr === 'object'){
+            if(typeof txnHashArr === 'object' && !Array.isArray(txnHashArr)){
                 return txnHashArr[0].hash.toString()
+            }
+            else if(Array.isArray(txnHashArr)){
+                if( typeof txnHashArr[0] === "object"){
+                    return txnHashArr[0].hash.toString()
+                }
+                else{
+                    return txnHashArr[0].toString()
+                }
             }
             else{
                 return txnHashArr
@@ -104,8 +118,8 @@ function NFTsuccess() {
                             <div className="sucesList">
                                 <label>Txn Hash</label>
                                 <CopyToClipboard text={getTX() || "No tx"}>   
-                                    <div>
-                                        { getTX() ? `${getTX().substring(0, 10)}...${getTX().substring(getTX().length - 6)}` : '' }
+                                    <div className='txn-hash'>
+                                        { getTX() ? `${getTX().substring(0, getSubstringValue() || 10)}...${getTX().substring(getTX().length - 6)}` : '' }
                                         <Image onClick={() => copy()} onMouseOver={() => setSetCopyHover(true)}  onMouseOut={() => setSetCopyHover(false)} src={copyHover ? CopyHover : FileCopy} className="success__copy" />
                                     </div>
                                 </CopyToClipboard>
@@ -152,6 +166,18 @@ function SuccessNFT({nft, from, index}) {
     const dispatch = useDispatch()
     const {to, algorandAccount} = useSelector(s => s.general)
     const tx = nft.txn ? typeof nft.txn === 'object' ? nft.txn.hash.toString() : nft.txn : ''
+
+    const getTX = () => {
+        if(nft.txn){
+            if(typeof nft.txn === 'object'){
+                return nft.txn?.hash?.toString()
+            }
+            else{
+                return nft.txn
+            }
+        }
+        else return ''
+    }
     const off = { opacity: 0.6, pointerEvents: 'none' }
 
     useEffect(async() => {
@@ -170,7 +196,7 @@ function SuccessNFT({nft, from, index}) {
             <img src={setupURI(nft.image)} alt="NFT" />
             <span className="nftSelected__name">{nft.name}</span>
             <span className="bluTextBtn">
-                <a href={`${chainsConfig[from.key].tx + tx}`} target="_blank">View Txn</a>
+                <a href={`${chainsConfig[from.key].tx + getTX()}`} target="_blank">View Txn</a>
             </span>
             { to.key === 'Algorand' ? 
             <span className="bluTextBtn">
