@@ -8,6 +8,7 @@ import { ChainData, getOldFactory, moralisParams } from "./oldHelper";
 const axios = require("axios");
 
 export const setupURI = (uri) => {
+
   // debugger
   if (uri && uri.includes("ipfs://")) {
     return "https://ipfs.io/" + uri.replace(":/", "");
@@ -235,7 +236,9 @@ export const setNFTS = async (w, from) => {
 }
 
 export function isValidHttpUrl(string) {
+  
   let url;
+  if((string.includes("data:image/") || string.includes("data:application/"))) return true
   if(string.includes('ipfs://')) return true
   try {
     url = new URL(string);
