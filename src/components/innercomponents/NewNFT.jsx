@@ -17,6 +17,7 @@ export default function NFT({nft, index}) {
     const isSelected = selectedNFTs.filter(n => n.native.tokenId === nft.native.tokenId && n.native.contract === nft.native.contract && n.native.chainId === nft.native.chainId)[0]
     const [imageLoaded, setImageLoaded]= useState(false);
     const HIDDEN = { visibility: "hidden"};
+    const unclickable = { pointerEvents: "none" }
 
     function addRemoveNFT (chosen){
         if(!isSelected){
@@ -29,7 +30,7 @@ export default function NFT({nft, index}) {
 
     useEffect(() => { }, [selectedNFTs])
     return ( 
-        <div className={`nft-box__wrapper ${!imageLoaded ? 'preload-cont' : ''}`}>
+        <div className={`nft-box__wrapper ${!imageLoaded ? 'preload-cont' : ''}`} style={ !nft.image ? unclickable : {}}>
             <div style={ !imageLoaded && nft.image ? HIDDEN : {}} className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
                 <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
                     <div className="image__wrapper">
@@ -43,17 +44,16 @@ export default function NFT({nft, index}) {
                                 <img onLoad={() => setImageLoaded(true)} src={brockenurl} alt='This NFT image uri is broken.' />
                                 <span className="brocken-url__msg">NFTs URL<br/> is broken</span>
                             </div>
-                        }
-                                                
-                        <div className="radio__container">
+                        }                      
+                        {nft.image && 
+                            <div className="radio__container">
                             { !isSelected ? 
                                 <span className="selected-radio"></span> 
                                 : 
                                 <img src={CheckGreen} alt=''/>
                             }
-                        </div> 
-                     
-                      {/* <Checkmark /> */}
+                            </div>
+                        } 
                     </div>
                 </div>
                 <div className={`nft-content__container ${!imageLoaded ? 'preload-content-container' : ''}`}>

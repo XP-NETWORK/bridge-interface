@@ -92,7 +92,7 @@ function NFTaccount() {
     }
     
     async function estimate () {
-        // debugger 
+        debugger 
         let fact
         let fee
         try {
@@ -106,12 +106,14 @@ function NFTaccount() {
             : account;
 
             // const fact = from === 'Algorand' || from === 'Elrond' ? await getFactory() : await getOldFactory()
-            if(from === 'Algorand' || from === 'Elrond') {
-                 fact = await getFactory()
-            }
-            else{
-                 fact = await getFactory()
-            }
+            // if(from === 'Algorand' || from === 'Elrond') {
+            //      fact = await getFactory()
+            // }
+            // else{
+            //      fact = await getFactory()
+            // }
+            fact = await getFactory()
+
             if(selectedNFTList.length) {
                 if(to ==='Tron'){
                    fee = from === 'BSC' ? new BigNumber('100000000000000000')
@@ -127,48 +129,44 @@ function NFTaccount() {
                 else{
                     try {
                        fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
-                        
                     } catch (error) {
                         console.error(error);
                     }
-                }
-                    
-                    
+                } 
             }
-
             const bigNum = fee.multipliedBy(1.1).integerValue().toString(10)
             dispatch(setBigNumFees(bigNum))
             const fees = await Web3Utils.fromWei(bigNum, "ether")
-            setFees(selectedNFTList.length * fees)
+            setFees(fees)
         } catch (error) {
           console.log(error);
         //   dispatch(setError(error))
         }
     }
                                 
-    const getSign = async () => {
-        // debugger
-        let signer
-        const provider = new ethers.providers.Web3Provider(WCProvider.walletConnectProvider || window.ethereum);
-        try {
-            if(from === 'Algorand') {
-                signer = await getAlgorandWalletSigner()
-            }
-            else if(from === 'Elrond') {
-                if(maiarProvider) signer = maiarProvider
-                else signer = ExtensionProvider.getInstance()
-            }
-            else if(from === 'Tron') {
-                signer = window.tronLink
-            }
-            else {
-                signer = provider.getSigner(account)
-            }
-        } catch (error) {
-            console.error();
-        }
-        return signer
-    }
+    // const getSign = async () => {
+    //     // debugger
+    //     let signer
+    //     const provider = new ethers.providers.Web3Provider(WCProvider.walletConnectProvider || window.ethereum);
+    //     try {
+    //         if(from === 'Algorand') {
+    //             signer = await getAlgorandWalletSigner()
+    //         }
+    //         else if(from === 'Elrond') {
+    //             if(maiarProvider) signer = maiarProvider
+    //             else signer = ExtensionProvider.getInstance()
+    //         }
+    //         else if(from === 'Tron') {
+    //             signer = window.tronLink
+    //         }
+    //         else {
+    //             signer = provider.getSigner(account)
+    //         }
+    //     } catch (error) {
+    //         console.error();
+    //     }
+    //     return signer
+    // }
     
     const sendEach = async (nft, index) => {
         debugger
@@ -283,6 +281,7 @@ function NFTaccount() {
         setEstimateInterval(s)
         return () => clearInterval(s)
     }, [to])
+
     return (
         <div className="NFTaccount" >
             
@@ -306,7 +305,7 @@ function NFTaccount() {
                             <Approval getNft={getNFTsList} />
                             <div className="nftSendBtn disenable">
                             {/* <NFTsuccess/> */}
-                            <SendFees fees={fees}/>
+                            <SendFees fees={fees * selectedNFTList?.length}/>
                             <div onClick={sendAllNFTs} className={approved && receiver && !loading ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
                                             <a  className="themBtn">
                                                 {loading ? 'Processing' : 'Send' }
@@ -326,7 +325,7 @@ function NFTaccount() {
                                     <>
                                         <SelectedNFT />
                                         <Approval />
-                                        <SendFees fees={fees}/>
+                                        <SendFees fees={fees * selectedNFTList?.length}/>
                                         <div onClick={sendAllNFTs} className={approved && receiver && !loading ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
                                             <a  className="themBtn">
                                                 {loading ? 'Processing' : 'Send' }
