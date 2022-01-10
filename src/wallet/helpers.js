@@ -11,7 +11,14 @@ export const setupURI = (uri) => {
   // debugger
   if (uri && uri.includes("ipfs://")) {
     return "https://ipfs.io/" + uri.replace(":/", "");
-  } else if (uri) return uri.replace("http://", "https://");
+  }
+  else if(uri && (uri.includes("data:image/") || uri.includes("data:application/"))){
+    return uri
+  }
+  else 
+    {
+      if (uri) return uri.replace("http://", "https://");
+    }
   return uri;
 };
 
