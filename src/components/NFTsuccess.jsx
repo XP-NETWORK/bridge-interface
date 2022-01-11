@@ -131,13 +131,13 @@ function NFTsuccess() {
                                 <label>Sent From</label> <span className=""><img alt="" src={from ? from.image.src : ''} /> {from ? from.key : ''}</span>
                             </div>
                             <div className="sucesList">
-                                <label>Departure Address</label> <span className="colBlue">{address ?`${address.substring(0, 10)}...${address.substring(address.length - 6)}`:''}</span>
+                                <label>Departure Address</label> <span className="colBlue">{address ?`${address.substring(0, getSubstringValue() || 10)}...${address.substring(address.length - 6)}`:''}</span>
                             </div>
                             <div className="sucesList">
                                 <label>Sent To</label> <span className=""><img  alt="" src={to ? to.image.src : ''} /> {to ? to.key : ''}</span>
                             </div>
                             <div className="sucesList">
-                                <label>Destination address</label> <span className="colBlue">{receiver ?`${receiver.substring(0, 10)}...${receiver.substring(receiver.length - 6)}`:'test'}</span>
+                                <label>Destination address</label> <span className="colBlue">{receiver ?`${receiver.substring(0, getSubstringValue() || 10)}...${receiver.substring(receiver.length - 6)}`:'test'}</span>
                             </div>
                         </div>
                         <div className="nftSelectList">

@@ -24,6 +24,12 @@
     cursor: pointer;
 }
 
+@media screen and (max-width: 375) {
+    .nft--success .nftSelecItem{
+        padding: 6px 20px !important ;
+    }
+}
+
 /* .txn-hash{
     max-width: 130px;
     white-space: nowrap;

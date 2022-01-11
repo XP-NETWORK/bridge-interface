@@ -5,7 +5,7 @@ import { chainsConfig } from '../values';
 function SendFees({ fees }) {
 
     function getNumToFix(fees) {
-        debugger
+        // debugger
         let num = 1
         let str
         if(fees > 0 && fees){

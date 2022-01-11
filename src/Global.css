@@ -2256,6 +2256,8 @@ span.transPend {
     color: white;
 }
 
+
+
 .approve-loader,
 .approve-loader:after {
     /* z-index: 200; */
@@ -2302,8 +2304,8 @@ span.transPend {
 .approve-modal .modal-dialog .modal-content{
     background: none !important;
     border: none !important;
-    position: absolute !important;
-    top: 20% !important;
+    /* position: absolute !important; */
+    /* top: 20% !important; */
 }
 
 .changeNetwork-loader,
@@ -2343,6 +2345,7 @@ span.transPend {
 .changeNetwork-loader:after {
   left: 3.5em;
 }
+
 @-webkit-keyframes load7 {
   0%,
   80%,
@@ -2396,27 +2399,6 @@ span.transPend {
     height: 640px;
 }
 
-@media screen and (max-width: 600px) {
-    .modal-content {
-        margin-top: 20vh;
-    }
-    .video-responsive iframe {
-        height: 280px;
-    }
-
-    .navbar-collapse{
-    }
-    .navMenu.navbar-nav .nav-link:first-child {
-        border-radius: 18px 18px 0px 0px;
-    }
-    .navMenu.navbar-nav .nav-link:last-child {
-        border-radius: 0px 0px 18px 18px;
-    }
-    .desChain{
-        justify-content: space-between;
-
-    }
-}
 
 .tron-modal__copyIcon{
     margin: 0 4px;
@@ -2429,6 +2411,11 @@ span.transPend {
     border-radius: 6px;
     cursor: pointer;
 }
+
+.claimsbut div:hover{
+    filter: brightness(1.5);
+}
+
 .noimagenft {
     height: 100px;
 }
@@ -2592,19 +2579,6 @@ span.transPend {
     }
 }
 
-@media screen and (max-width: 600px) {
-    .account__box{
-        width: 250px
-    }
-   
-    .navMenu{
-        width:  calc(100% - 30px);
-        position: fixed;
-        z-index: 200;
-        opacity: 1.0;
-    }
-}
-
 
 @media screen and (max-width: 768px) {
     .singleNft.missing{
@@ -2614,7 +2588,61 @@ span.transPend {
 
 @media screen and (max-width: 600px){
 
-.aleartBox {
-    bottom: 10vh;
+    .modal-content {
+        margin-top: 20vh;
+    }
+    .video-responsive iframe {
+        height: 280px;
+    }
+
+    .navbar-collapse{
+    }
+    .navMenu.navbar-nav .nav-link:first-child {
+        border-radius: 18px 18px 0px 0px;
+    }
+    .navMenu.navbar-nav .nav-link:last-child {
+        border-radius: 0px 0px 18px 18px;
+    }
+    .desChain{
+        justify-content: space-between;
+
+    }
+
+    .aleartBox {
+        bottom: 10vh;
+    }
+
+    .account__box{
+        width: 250px
+    }
+
+    .navMenu{
+        width:  calc(100% - 30px);
+        position: fixed;
+        z-index: 200;
+        opacity: 1.0;
+    }
 }
+
+@media screen and (max-width: 320) {
+    .approve-loader__container__text{
+        left: 38%;
+    }
+}
+
+@media screen and (max-width: 375) {
+    .successBox {
+        padding: 8px 20px !important;
+    
+    }
+    .approve-loader__container__text{
+        left: 39%;
+    }
+}
+
+
+@media screen and (max-width: 400) {
+    .approve-loader__container__text{
+        left: 39% !important;
+    }
 }

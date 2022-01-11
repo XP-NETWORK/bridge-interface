@@ -32,7 +32,7 @@ export default function GetFeatured() {
             <div className='follow-us'>
                 <div className="follow-us__title">Follow us</div>
                 <div className="follow-us__buttons">
-                    <a href="https://twitter.com/QuigonCOM" target="_blank" className="follow-us__btn">
+                    <a href="https://twitter.com/xpnetwork_" target="_blank" className="follow-us__btn">
                         Twitter
                         <img src={twitter} alt=''/>
                     </a>

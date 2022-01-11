@@ -12,17 +12,21 @@ function Footer() {
             <div className="footContainer">
                 <div className="footLeft">
                     <ul className="socialLInks">
-                        <li><a href="https://www.linkedin.com/company/quigon/mycompany" target="_blank" className="socliLink"><img src={Linkedin} alt="" /></a></li>
+                        {/* <li><a href="https://www.linkedin.com/company/quigon/mycompany" target="_blank" className="socliLink"><img src={Linkedin} alt="" /></a></li>
                         <li><a href="https://t.me/QuigonNetwork" target="_blank" className="socliLink"><img src={Telegram} alt="" /></a></li>
                         <li><a href="https://twitter.com/QuigonCOM" target="_blank" className="socliLink"><img src={Twitter} alt="" /></a></li>
-                        <li><a href="https://www.reddit.com/r/XP_network/" target="_blank" className="socliLink"><img src={Redit} alt="" /></a></li>
+                        <li><a href="https://www.reddit.com/r/XP_network/" target="_blank" className="socliLink"><img src={Redit} alt="" /></a></li> */}
+                        <li><a href="https://www.linkedin.com/company/xp-network/" target="_blank" className="socliLink"><img src={Linkedin} alt="" /></a></li>
+                        <li><a href="https://t.me/xp_network" target="_blank" className="socliLink"><img src={Telegram} alt="" /></a></li>
+                        <li><a href="https://twitter.com/xpnetwork_" target="_blank" className="socliLink"><img src={Twitter} alt="" /></a></li>
+                        <li><a href="https://www.reddit.com/user/XP_network/" target="_blank" className="socliLink"><img src={Redit} alt="" /></a></li>
                     </ul>
                 </div>
                 <div className="footRight">
                     <div className="powerBy">
                         <a href="https://xp.network/" target="_blank" rel="noreferrer" className="PowerLink">
                             Powered by
-                            <img src={Quigon} alt="Powered by" />
+                            <img src={XpNetwork} alt="Powered by" />
                         </a>
                     </div>
                     {/* <div className="priPoli">

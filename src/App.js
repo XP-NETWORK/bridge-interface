@@ -98,7 +98,7 @@ return (
       <TransferLoader />
       <TronConnectionErrMod />
       <Modal 
-      centered
+      // centered
       className="approve-modal"
       style={{
         overflow: "hidden",
