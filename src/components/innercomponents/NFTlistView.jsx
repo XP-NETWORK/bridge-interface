@@ -34,7 +34,16 @@ function NFTlistView() {
             <ul className="nftList">
             { nfts ?  nfts.filter( nft  => nft?.name?.includes(search ? search : '') || nft?.native.owner?.includes(search ? search : '')).map((nft, index) => 
                 <li  className="nftListed nftSelect">
-                    <span onClick={(e) => addRemoveNFT(nft, e)} className="selectNftListed">{ checkIfSelected(nft, selectedNFTs) ? <img onClick={(e) => addRemoveNFT(nft, e)} src={CheckGreen} /> : ''}</span><img onClick={(e) => addRemoveNFT(nft, e)} src={nft.image} alt="NFT" /> <span onClick={(e) => addRemoveNFT(nft, e)}>{nft?.name}</span> <NFTdetails nftInf={nft}/>
+                    <span onClick={(e) => addRemoveNFT(nft, e)} className="selectNftListed">
+                        { checkIfSelected(nft, selectedNFTs) ? 
+                            <img onClick={(e) => addRemoveNFT(nft, e)} src={CheckGreen} alt={`${nft?.name}`} />
+                            : 
+                            ''
+                        }
+                    </span>
+                    <img onClick={(e) => addRemoveNFT(nft, e)} src={nft?.image} alt="NFT" />
+                    <span className="name" onClick={(e) => addRemoveNFT(nft, e)}>{nft?.name}</span>
+                    <NFTdetails nftInf={nft}/>
                 </li>) 
                 : 
                 <NFTempty />

@@ -2489,18 +2489,6 @@ span.transPend {
     justify-content: center;
 }
 
-
-@media screen and (max-width: 425px) {
-    .nft_selectBox {
-        padding-left: 15px;
-    }
-}
-
-@media screen and (max-width: 325px) {
-    .nft_selectBox {
-        padding-left: 5px !important;
-    }
-}
 .walletalgotitle {
     font-weight: 600;
     font-size: 18px;
@@ -2535,7 +2523,6 @@ span.transPend {
 
 .claimablealgornadnftss td img {
     width: 180px;
-
 }
 
 .claimablealgornadnftss .claimsbut div {
@@ -2543,7 +2530,6 @@ span.transPend {
     margin: 8px 0px;
     background-color: #3763FF !important;
     color: #fff !important;
-
 }
 
 .get-featured{
@@ -2569,7 +2555,6 @@ span.transPend {
     opacity: 0;
     pointer-events: none;
 }
-/* widget end */
 
 @media (max-width: 931px){
     .navBrand img {
@@ -2578,7 +2563,6 @@ span.transPend {
         margin-bottom: 2px !important;
     }
 }
-
 
 @media screen and (max-width: 768px) {
     .singleNft.missing{
@@ -2627,6 +2611,10 @@ span.transPend {
 @media screen and (max-width: 320) {
     .approve-loader__container__text{
         left: 38%;
+    }
+
+    .info-icon__container{
+        margin-left: 10px;
     }
 }
 

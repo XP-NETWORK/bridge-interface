@@ -28,7 +28,7 @@ export default function TechnicalSupport() {
                     <img src={nftsToWhitelist[0].url} alt="Not whitelisted NFT" />
                 </div>
                 <div className="ts-nft__info">{nftsToWhitelist[0].name}</div>
-                <div className="ns-message">This NFT can’t being sent. NFT bridge requers to add this NFT to Whitelist.</div>
+                <div className="ns-message">This NFT can't be sent. The NFT Bridge requires whitelisting for NFTs</div>
                 <a className="ts-button" href="https://t.me/xp_network" target="_blank" rel='noreferrer'>Technical Support &#10143;</a>
             </Modal.Body>
         </Modal>
