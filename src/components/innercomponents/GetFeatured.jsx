@@ -25,7 +25,7 @@ export default function GetFeatured() {
         </Modal.Header>
         <Modal.Body className="border-1" className='ger-featured__body'>
             <ol className='get-featured-action-list'>
-                <li>Follow @QuigonCOM in Twitter and Instagram</li>
+                <li>Follow @xpnetwork_ in Twitter and Instagram</li>
                 <li>Tweet or make an Insta post with a link to your NFT and tag @QuigonCom</li>
             </ol>
             <div className="">We’ll review all the posts that tagged us and feature the best NFTs. </div>

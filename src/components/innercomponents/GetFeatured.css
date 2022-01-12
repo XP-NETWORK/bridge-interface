@@ -4,6 +4,7 @@
 
 .get-featured-modal .modal-dialog{
     max-width: 630px !important;
+    margin-top: 25vh;
 }
 
 .ger-featured__body{

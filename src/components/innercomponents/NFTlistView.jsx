@@ -44,7 +44,8 @@ function NFTlistView() {
                     <img onClick={(e) => addRemoveNFT(nft, e)} src={nft?.image} alt="NFT" />
                     <span className="name" onClick={(e) => addRemoveNFT(nft, e)}>{nft?.name}</span>
                     <NFTdetails nftInf={nft}/>
-                </li>) 
+                </li>
+                ) 
                 : 
                 <NFTempty />
             }
