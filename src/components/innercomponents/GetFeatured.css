@@ -56,6 +56,21 @@
     color: white;
 }
 
+.follow-us__btn--disabled{
+    height: 40px;
+    width: 244px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    gap: 13px;
+    cursor: pointer;
+    background: linear-gradient(0deg, rgba(73, 82, 108, 0.1), rgba(73, 82, 108, 0.1));
+    border: 1px solid #37405B;
+    color: #5A6177;
+    pointer-events: none;
+}
+
 .follow-us__btn:hover{
     color: inherit;
 }

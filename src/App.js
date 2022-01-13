@@ -21,6 +21,8 @@ import TronConnectionErrMod from "./components/TronConnectionErrMod";
 import star from "./assets/img/icons/featuredInactive.svg"
 import GetFeatured from "./components/innercomponents/GetFeatured";
 import TnProcess from "./components/innercomponents/processingModals/TnProcess";
+import SuccessCustom from "./components/Widget/customModals/SuccessCustom";
+import SuccessModal from "./components/Modals/SuccessModal";
 
 function App() {
   const dispatch = useDispatch()
@@ -123,6 +125,7 @@ return (
         <img src={star} alt=""/>
         Get Featured
       </div>
+      {/* <SuccessModal /> */}
     </div>
   );
 }

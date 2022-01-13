@@ -19,7 +19,6 @@ function XpBridge() {
             {algorandClaimables && algorandClaimables.length > 0 ? <Transactionhistory />  : ''}
             { step === 1 ? <><NftSelect/>{!widget ? <NftSlider/> : ''}</> : "" }
             { step === 2 ? <NFTaccount />  : '' }
-            {/* <NFTOnaccount /> */}
             {/* <NFTworng /> */}
             <Alert />
             <NFTsuccess/>

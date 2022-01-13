@@ -131,7 +131,8 @@ export const chains = [
         text: "Velas",
         value: "Velas",
         order: 4,
-        image: { avatar: true, src: Velas }
+        image: { avatar: true, src: Velas },
+        newChain: true
     }
 ]
 

@@ -1,0 +1,19 @@
+.new-chain{
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 5%;
+    line-height: 15.12px;
+    background-color: #08D70D;
+    padding: 4px 6px;
+    border-radius: 4px;
+}
+
+.coming-chain{
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 5%;
+    line-height: 15.12px;
+    background-color: #471CF2;
+    padding: 4px 6px;
+    border-radius: 4px; 
+}

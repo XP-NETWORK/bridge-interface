@@ -79,6 +79,7 @@ h3 {
     align-items: center;
     justify-content: center;
     border: 1px solid #4532B5;
+    color: white;
 }
 
 .account__box:hover{
@@ -365,6 +366,7 @@ span.LineArrow img {
     color: #5A6177;
     pointer-events: none;
 }
+
 
 
 .changeBtn.disabled{
@@ -831,6 +833,29 @@ span.wallet {
     top: 60px;
     right: 15px;
     z-index: 200;
+}
+
+.tooltip__wrapper{
+    position: absolute;
+    width: 150px;
+    top: 40px;
+    right: 40px;
+}
+
+.tooltip__container{
+    position: relative;
+}
+
+.tooltip__container img{
+    position: absolute;
+    top: 0;
+}
+
+.tooltip__container div{
+    position: absolute;
+    top: 17px;
+    left: 20px;
+    font-size: 11.5px;
 }
 
 .yourNft, .yourNft span {
@@ -2536,6 +2561,8 @@ span.transPend {
     margin: 0 auto 100px auto;
     cursor: pointer;
     max-width: 200px;
+    display: flex;
+    justify-content: center;
 }
 
 .get-featured img {

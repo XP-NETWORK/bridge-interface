@@ -15,6 +15,8 @@ export default function GetFeatured() {
         dispatch(setGetFeaturedModal(false))
     }
 
+    const off = { pointerEvents: "none" }
+
     return (
         <Modal className="get-featured-modal" animation={false}  show={featuredModal} onHide={handleClose}>
         <Modal.Header className="border-0">
@@ -26,7 +28,7 @@ export default function GetFeatured() {
         <Modal.Body className="border-1" className='ger-featured__body'>
             <ol className='get-featured-action-list'>
                 <li>Follow @xpnetwork_ in Twitter and Instagram</li>
-                <li>Tweet or make an Insta post with a link to your NFT and tag @QuigonCom</li>
+                <li>Tweet or make an Insta post with a link to your NFT and tag @xpnetwork_</li>
             </ol>
             <div className="">We’ll review all the posts that tagged us and feature the best NFTs. </div>
             <div className='follow-us'>
@@ -36,7 +38,7 @@ export default function GetFeatured() {
                         Twitter
                         <img src={twitter} alt=''/>
                     </a>
-                    <a className="follow-us__btn" href="https://www.instagram.com/quigoncom/" target="_blank">
+                    <a style={off} className="follow-us__btn--disabled" href="https://www.instagram.com/quigoncom/" target="_blank">
                         Instagram
                         <img src={instagram} alt="" />
                     </a>

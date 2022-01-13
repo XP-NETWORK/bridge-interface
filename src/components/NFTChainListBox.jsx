@@ -61,17 +61,19 @@ export default function NFTChainListBox() {
             <div className="nftChainListBox">
                 <ChainSearch />
                 <ul className="nftChainList scrollSty">
-                    { !from ? fromChains.filter(chain => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).sort(chain => chain.order - chain.order).map( filteredChain => { 
-                        const { image, text, key, value, coming } = filteredChain;
+                    { !from ? fromChains.filter(chain => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).sort(chain => (
+                        chain.newChain ? -1 : chain.a - chain.b
+                    )).map( filteredChain => { 
+                        const { image, text, key, value, coming, newChain } = filteredChain;
                         
                         return ( 
-                            <Chain  chainSelectHandler={chainSelectHandler} coming={coming} text={text} filteredChain={filteredChain} image={image} key={key} />
+                            <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} coming={coming} text={text} filteredChain={filteredChain} image={image} key={key} />
                         )
                      }) 
                      :
                      toChains.filter(chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).map(chain => {
-                        const { image, text, key, value, coming } = chain;
-                        return chain.key !== from.key ? <Chain  chainSelectHandler={chainSelectHandler} coming={coming} text={text} filteredChain={chain} image={image} key={key} />
+                        const { image, text, key, value, coming , newChain } = chain;
+                        return chain.key !== from.key ? <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} coming={coming} text={text} filteredChain={chain} image={image} key={key} />
                         :''
                      })
                     }            

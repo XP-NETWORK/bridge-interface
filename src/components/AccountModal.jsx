@@ -12,6 +12,8 @@ import { CHAIN_INFO } from '../components/values';
 import { getAddEthereumChain } from "../wallet/chains"
 import copyTT from "../assets/img/icons/copytoclip.svg"
 import copiedIcon from "../assets/img/icons/copiedtoclip.svg"
+import msgCloud from "../assets/img/icons/msg-cloud.svg"
+import Tooltip from './Tooltip';
 
 export default function AccountModal() {
     const dispatch = useDispatch()
@@ -105,8 +107,9 @@ export default function AccountModal() {
                 Account <span className="CloseModal" onClick={handleClose}> <img src={Close}/> </span>
             </div>
             <p className="">{connectedWith()}</p>
-                        { copyIconHover && <img className="copytoltip" src={copyTT} /> }
-                        { copied && <img className="copytoltip-tron" src={copiedIcon} /> }
+                        {/* { copyIconHover && <img className="copytoltip" src={copyTT} /> } */}
+                        {/* { copied && <img className="copytoltip-tron" src={copiedIcon} /> } */}
+                        { copied && <Tooltip /> }
             <CopyToClipboard text={elrondAccount || account || tronWallet || algorandAccount}>
                 <div className="nftLink">
                     <img src={NftSelect} />
