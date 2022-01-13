@@ -163,25 +163,41 @@ export const handleChainFactory = async (someChain) => {
 
 export const getNFTS = async (wallet, from) => {
   // debugger
-  const hardcode = "52O2MF3BYGBUX5CI2IW7VBVCGAMJOG3VBSYKTCCD677K2AUFPSFZAATED4"
+
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
   const chain = await factory.inner(chainsConfig[from].Chain)
   
   try {
-    const res = 
-    tronWallet ? await getTronNFTs(tronWallet)
-    : algorandAccount 
-    ? 
-    ( await axios.get(`https://nftindexing.herokuapp.com/15/${wallet}`)).data.result
-    : 
-    await factory.nftList(
-        chain, // The chain of interest
-        wallet //! The public key of the NFT owner
-      )
+    // debugger
+    let response 
+    if(tronWallet){
+      response = await getTronNFTs(tronWallet)
+    }
+    else if(algorandAccount){
+      response = await axios.get(`https://nftindexing.herokuapp.com/15/${wallet}`).data.result
+    }
+    else{
+      response = await factory.nftList(chain, wallet)
+    }
+
+    // const res = 
+    // tronWallet ? 
+    //   await getTronNFTs(tronWallet)
+    // : 
+    //   algorandAccount 
+    // ? 
+    // ( await axios.get(`https://nftindexing.herokuapp.com/15/${wallet}`)).data.result
+    // : 
+    //   await factory.nftList(
+    //     chain, // The chain of interest
+    //     wallet //! The public key of the NFT owner
+    // )
+
     const unique = {};
     try {
-      const allNFTs = res
+      
+      const allNFTs = response
         .filter((n) => n.native)
         .filter((n) => {
           const { tokenId, contract, chainId } = n?.native;

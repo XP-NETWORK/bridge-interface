@@ -30,22 +30,22 @@ export default function NFT({nft, index}) {
 
     useEffect(() => { }, [selectedNFTs])
     return ( 
-        <div className={`nft-box__wrapper ${!imageLoaded ? 'preload-cont' : ''}`} style={ !nft.image ? unclickable : {}}>
-            <div style={ !imageLoaded && nft.image ? HIDDEN : {}} className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
+        <div className={`nft-box__wrapper ${!imageLoaded ? 'preload-cont' : ''}`}>
+            <div style={ !imageLoaded && (nft.image || nft.image_url) ? HIDDEN : {}} className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
                 <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
                     <div className="image__wrapper">
-                        { nft.uri && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url) ? 
+                        { nft.uri && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url ||nft.image_url) ? 
                             nft.animation_url ? 
                             <video onLoadedData={() => setImageLoaded(true)} controls={false} playsInline={true} autoPlay={true} loop={true} src={setupURI(nft.animation_url)} /> 
                             :
-                            <img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image)} /> 
+                            <img onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image || nft.image_url)} /> 
                             : 
                             <div className="brocken-url">
                                 <img onLoad={() => setImageLoaded(true)} src={brockenurl} alt='This NFT image uri is broken.' />
                                 <span className="brocken-url__msg">NFTs URL<br/> is broken</span>
                             </div>
                         }                      
-                        {nft.image && 
+                        {(nft.image || nft.image_url) && 
                             <div className="radio__container">
                             { !isSelected ? 
                                 <span className="selected-radio"></span> 
