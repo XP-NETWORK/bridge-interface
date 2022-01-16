@@ -50,7 +50,8 @@ function ConnectWallet() {
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const [qrCodeString, setQqrCodeString] = useState()
     const [strQR, setStrQr] = useState()
-    const { chainId, account, activate } = useWeb3React();
+    const { chainId, account, activate, library } = useWeb3React();
+    console.log("library: ", library)
     const MyAlgo = useSelector(state => state.general.MyAlgo)
     const modalError = useSelector(state => state.generalerror)
 

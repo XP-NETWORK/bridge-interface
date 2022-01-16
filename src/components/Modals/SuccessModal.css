@@ -27,6 +27,32 @@
     position: absolute;
     top: 40px;
     right: 73px;
+    cursor: pointer;
+    z-index: 20;
+}
+
+.success-modal-close:hover{
+    filter: brightness(5);
+}
+
+.view-txn-btn{
+    background: #62718A1A;
+    padding: 0 4px;
+    border-radius: 6px;
+    color: #3763FF;
+}
+
+.claim-btn{
+    color: white;
+    background-color: #3763FF;
+    padding: 0 4px;
+    border-radius: 6px;
+}
+
+.success-buttons{
+    display: flex;
+    gap: 4px;
+    font-size: 14px;
 }
 
 .success-info-item{
@@ -71,8 +97,9 @@
 .success-nft-info{
     min-height: 35px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
+    flex-direction: column;
 }
 
 .success-hash{
@@ -86,6 +113,37 @@
 
 .success-hash img{
     margin-left: 12px;
+}
+
+.transferred-nft{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-height: 40px;
+}
+
+.success-nft-info__wrapper{
+    width: 100%;
+    padding: 10px 0;
+}
+
+.nft-image-name{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nft-image-name div{
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.transferred-nft img{
+    height: 32px;
+    border-radius: 8px;
 }
 
 @media screen and (max-width: 500px) {

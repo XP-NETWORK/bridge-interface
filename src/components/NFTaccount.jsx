@@ -21,6 +21,8 @@ import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import {chainsConfig} from './values'
 import { algoConnector } from "../wallet/connectors"
 import MyAlgoConnect from '@randlabs/myalgo-connect';
+import { useWeb3React } from '@web3-react/core';
+
 
 
 
@@ -51,7 +53,8 @@ function NFTaccount() {
     const MyAlgo = useSelector(state => state.general.MyAlgo)
     const modalError = useSelector(state => state.general.error)
     const WCProvider = useSelector(state => state.general.WCProvider)
-
+    const { library } = useWeb3React()
+    
     
     const getAlgorandWalletSigner = async () => {
         const base = new MyAlgoConnect();
@@ -213,7 +216,7 @@ function NFTaccount() {
                     setLoading(false)
                     dispatch(setTxnHash({txn: result, nft}))
                 } catch(error) {
-                    // console.log(error)
+                    dispatch(setTxnHash({txn: "failed", nft}))
                     dispatch(dispatch(setTransferLoaderModal(false)))
                     setLoading(false)
                     if(error.data){
@@ -234,7 +237,7 @@ function NFTaccount() {
                 await setClaimablesAlgorand(algorandAccount)
             }
         } catch (error) {
-            // debugger
+            dispatch(setTxnHash({txn: "failed", nft}))
             setLoading(false)
             dispatch(dispatch(setTransferLoaderModal(false)))
             console.log(error);
