@@ -12,10 +12,12 @@ import Xdai from "../assets/img/chain/Xdai.svg"
 import Solana from "../assets/img/chain/Solana.svg"
 import Fuse from "../assets/img/chain/Fuse.svg"
 import Velas from "../assets/img/chain/velas.svg"
+import Tezos from "../assets/img/chain/Tezos.svg"
 import { Chain } from "xp.network/dist/consts";
 
 export const EVM = "EVM";
 export const ELROND = "Elrond";
+export const TEZOS = "TEZOS"
 
 export const chains = [
     {
@@ -133,6 +135,15 @@ export const chains = [
         order: 4,
         image: { avatar: true, src: Velas },
         newChain: true
+    },
+    {
+        type: "Tezos",
+        key: "Tezos",
+        text: "Tezos",
+        value: "Tezos",
+        order: 13,
+        image: { avatar: true, src: Tezos},
+        newChain: true
     }
 ]
 
@@ -244,6 +255,15 @@ export const chainsConfig = {
         chainId: 106,
         Chain: Chain.VELAS,
         tx: "https://evmexplorer.velas.com/tx/"
+    },
+    Tezos: {
+        type: TEZOS,
+        img: Tezos,
+        token: "XTZ",
+        rpc: "https://mainnet-tezos.giganode.io/",
+        chainId: 0x12,
+        Chain: Chain.TEZOS,
+        tx: "https://tzstats.com/tx/"
     }
 
 }
@@ -263,6 +283,7 @@ export const coins = [
     "XDAI", //11
     "FUSE", //12
     "VELAS", //13
+    "TEZOS" //14
   ];
 
 export const CHAIN_INFO = {
@@ -393,6 +414,15 @@ export const CHAIN_INFO = {
         decimals: 1e18,
         rpc: "https://velasnode.quigon.com/velas",
         chainId: 106,
+        blockExplorerUrls: "",
+        contract: ""
+    },
+    Tezos: {
+        native: coins[14],
+        nonce: 0x12,
+        decimals: 1e6,
+        rpc: "https://mainnet-tezos.giganode.io/",
+        chainId: 0x12,
         blockExplorerUrls: "",
         contract: ""
     }

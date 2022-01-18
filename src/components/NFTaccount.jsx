@@ -37,6 +37,7 @@ function NFTaccount() {
     const nfts = useSelector(state => state.general.NFTList)
     const tronWallet = useSelector(state => state.general.tronWallet)
     const account = useSelector(state => state.general.account)
+    const tezosAccount = useSelector(state => state.general.tezosAccount)
     const maiarProvider = useSelector(state => state.general.maiarProvider)
     const factory = getFactory()
     const approvedNFTList = useSelector(state => state.general.approvedNFTList)
@@ -85,9 +86,11 @@ function NFTaccount() {
     }
     
     async function getNFTsList(){
+        // debugger
        const hard = "0x4E3093E0681F3F0e98eFd7eC1A9a01500Efd6DCa"
         try {
-            const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
+            // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount :  
+            const w = tezosAccount || algorandAccount || tronWallet || elrondAccount || account
             await setNFTS(w, from)
             } catch (error) {  
                 dispatch(setError(error.message))
@@ -95,7 +98,7 @@ function NFTaccount() {
     }
     
     async function estimate () {
-        // debugger 
+        debugger 
         let fact
         let fee
         try {

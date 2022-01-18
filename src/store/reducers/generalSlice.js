@@ -204,11 +204,19 @@ const generalSlice = createSlice({
     },
     setTransactionStep(state, action){
       state.transactionStep = action.payload
+    },
+    setTezosAccount(state, action){
+      state.tezosAccount = action.payload
+    },
+    setKukaiWallet(state, action){
+      state.kukaiWallet = action.payload
     }
   },
 });
 
 export const {
+    setKukaiWallet,
+    setTezosAccount,
     setGetFeaturedModal,
     setTransactionStep,
     setValidatorsInf,

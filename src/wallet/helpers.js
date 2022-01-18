@@ -154,6 +154,8 @@ export const handleChainFactory = async (someChain) => {
     ? (chain = await factory.inner(Chain.FUSE))
     : someChain === "Velas"
     ? (chain = await factory.inner(Chain.VELAS))
+    : someChain === "Tezos"
+    ? (chain = await factory.inner(Chain.TEZOS))
     : (chain = "");
   return chain;
   } catch (error) {

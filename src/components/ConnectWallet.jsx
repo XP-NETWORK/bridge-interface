@@ -11,6 +11,7 @@ import AlgoSignerIcon from '../assets/img/wallet/Algo Signer.png';
 import Maiar from '../assets/img/wallet/Maiar.svg';
 import Trezor from '../assets/img/wallet/Trezor.svg';
 import TrustWallet from "../assets/img/wallet/TWT.svg"
+import Kukai from "../assets/img/wallet/kukai.svg"
 import WalletConnect from "../assets/img/wallet/WalletConnect 3.svg"
 import NFTworng from './NFTworng';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,16 +19,19 @@ import { useWeb3React } from "@web3-react/core";
 import { injected, algoConnector } from "../wallet/connectors"
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { EVM, ELROND, chainsConfig } from "../components/values"
-import { setTronWallet, setAccount, setConfirmMaiarMob, setAlgorandWallet, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp, setTrustWallet, setAlgoSigner, setAlgorandAccount, setMyAlgo } from "../store/reducers/generalSlice"
+import { setTronWallet, setAccount, setConfirmMaiarMob, setAlgorandWallet, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp, setTrustWallet, setAlgoSigner, setAlgorandAccount, setMyAlgo, setTezosAccount, setKukaiWallet } from "../store/reducers/generalSlice"
 import { Address, ExtensionProvider, WalletConnectProvider, ProxyProvider } from "@elrondnetwork/erdjs"
 import { CHAIN_INFO } from '../components/values';
 import QRCode from 'qrcode'
 import MaiarModal from './MaiarModal';
 import { isEVM } from '../wallet/oldHelper';
 import MyAlgoConnect from '@randlabs/myalgo-connect';
-
+import { TezosToolkit } from "@taquito/taquito";
+import { BeaconWallet } from "@taquito/beacon-wallet";
 
 function ConnectWallet() {
+    const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
+    const wallet = new BeaconWallet({ name: "Beacon Docs Taquito" });
     const dispatch = useDispatch()
     const from = useSelector(state => state.general.from)
     const to = useSelector(state => state.general.to)
@@ -40,6 +44,7 @@ function ConnectWallet() {
       }
     }
     const handleShow = () => setShow(true);
+    const kukaiWallet = useSelector(state => state.general.kukaiWallet)
     const metaMask = useSelector(state => state.general.MetaMask)
     const tronLink = useSelector(state => state.general.tronLink)
     const trustWallet = useSelector(state => state.general.trustWallet)
@@ -51,10 +56,11 @@ function ConnectWallet() {
     const [qrCodeString, setQqrCodeString] = useState()
     const [strQR, setStrQr] = useState()
     const { chainId, account, activate, library } = useWeb3React();
-    console.log("library: ", library)
+  
     const MyAlgo = useSelector(state => state.general.MyAlgo)
     const modalError = useSelector(state => state.generalerror)
-
+    
+    Tezos.setWalletProvider(wallet);
     function getMobOps() {
       // debugger
       var userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -271,6 +277,16 @@ function ConnectWallet() {
       }
     })
 
+    const onKukai = async() => {
+      try {
+        const permissions = await wallet.client.requestPermissions();
+        dispatch(setTezosAccount(permissions.address))
+        dispatch(setKukaiWallet(true))
+      } catch (error) {
+        console.log("Got error:", error);
+      }
+    }
+
     useEffect(() => {
       algoConnector.on("connect", (error, payload) => {
        
@@ -305,10 +321,12 @@ function ConnectWallet() {
         ||
         (algorandWallet)
         ||
-        (AlgoSigner)) {
+        (AlgoSigner)
+        ||
+        (kukaiWallet)) {
           dispatch(setStep(2))
         }
-    }, [account, metaMask, chainId, tronLink, onWC, trustWallet, AlgoSigner, algorandWallet, MaiarWallet, MyAlgo])
+    }, [account, metaMask, chainId, tronLink, onWC, trustWallet, AlgoSigner, algorandWallet, MaiarWallet, MyAlgo, kukaiWallet])
 
     return (
         <div>
@@ -340,10 +358,11 @@ function ConnectWallet() {
                                 <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
+                                <li onClick={onKukai} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem"><img src={Kukai} alt="Kukai Icon" /> Kukai Wallet</li>
 
                                 <li onClick={() => onMaiarExtension()} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
                                 <li style={ OFF } className="wllListItem"><img src={Ledger} alt="Ledger Icon" /> Ledger</li>
-                                <li style={ OFF } style={ OFF } className="wllListItem"><img src={Trezor} alt="Trezor Icon" /> Trezor</li>
+                                <li style={ OFF } className="wllListItem"><img style={{marginLift: "-5px"}} src={Trezor} alt="Trezor Icon" /> Trezor</li>
                             </ul>
                         </div>
                     </Modal.Body>
