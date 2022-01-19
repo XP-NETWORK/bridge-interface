@@ -858,6 +858,40 @@ span.wallet {
     font-size: 11.5px;
 }
 
+.yourNft--mobile{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 18px 0 18px 0;
+    padding-right: 2px;
+}
+
+.yourNft__title{
+    font-size: 16px;
+    color: #62718A;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0em;
+}
+
+.yourNft__chain{
+    display: flex;
+    gap: 10px;
+}
+
+.yourNft__chain span:first-child {
+    color: white;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 23px;
+    letter-spacing: 0em;
+}
+
+.yourNft--mobile div {
+    margin-right: 10px;
+
+}
+
 .yourNft, .yourNft span {
     display: flex;
     align-items: center;
@@ -2660,4 +2694,10 @@ span.transPend {
     .approve-loader__container__text{
         left: 39% !important;
     }
+}
+
+@media screen and (min-width: 600px) {
+    .yourNft--mobile{
+        display: none;
+    }     
 }

@@ -14,7 +14,8 @@ export default function TnProcess() {
     const [two, setTwo] = useState(false)
     const [three, setThree] = useState(false)
     // const transactionStep = 0
-    const transactionStep = useSelector(state => state.general.transactionStep)
+    // const transactionStep = useSelector(state => state.general.transactionStep)
+    const transactionStep = 2
     const transferModalLoader = useSelector(state => state.general.transferModalLoader)
     const [body, setBody] = useState({})
 
@@ -56,14 +57,14 @@ export default function TnProcess() {
             case 3:
                 setBody({
                     icon: to?.image.src,
-                    message: `${to.text} Transaction Processing`
+                    message: `${to?.text} Transaction Processing`
                 })
                 setThree(true)
                 // setTwo(100)
                 break;
             case 4:
                 setBody({
-                    icon: "&#127881;",
+                    icon: false,
                     message: "Ready"
                 })
                 break;
@@ -78,20 +79,22 @@ export default function TnProcess() {
     // }, [transactionStep])
 
     return (
-        <Modal  show={transferModalLoader} animation={false} className="tn-process__modal">
+       // <Modal  show={transferModalLoader} animation={false} className="tn-process__modal">
+       
+        <Modal  show={true} animation={false} className="tn-process__modal">
             <Modal.Header className='tn-process__header border-0'>
                 <Modal.Title className="tn-process__title">Processing..</Modal.Title>
             </Modal.Header>
             <Modal.Body className='tn-process__body'>
                 <div className="tn-process__icon">
-                    <img src={body.icon} />
+                    { body.icon ? <img src={body.icon} /> : <div className="txt-icon">&#127881;</div>}
                 </div>
                 <div className="tn-process__message">{body.message}</div>
                 <div className="tn-process__loader">
-                    <Step start={one} />
+                    {/* <Step start={one} /> */}
                     {/* TO DO */}
                     <Step start={two} />
-                    <Step start={three} />
+                    {/* <Step start={three} /> */}
                 </div>
             </Modal.Body>
         </Modal>

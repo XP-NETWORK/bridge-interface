@@ -48,6 +48,18 @@ function NFTlistTop() {
     } 
     const off = { display: "none"}
     return (
+        <>
+        <div className="yourNft--mobile">
+                <span className='yourNft__title'>Your NFTs on </span>
+                <div className='yourNft__chain'>
+                    <span>
+                        <img src={from.image.src} alt="NFT Name" /> {from.key}
+                    </span> 
+                    <span style={refreshStyle} onClick={refresh}>
+                        <img className="refreshnfts" src={Refresh} />
+                    </span>
+                </div>
+        </div> 
         <div className="nftListTop">
             <Modal animation={false} show={switchDestination} onHide={() => handleClose()} className="ChainModal">
                 <Modal.Header className="text-left">
@@ -105,6 +117,7 @@ function NFTlistTop() {
                 </form>
             </div>
         </div>
+        </>
     )
 }
 

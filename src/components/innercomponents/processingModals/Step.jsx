@@ -1,27 +1,38 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useEffect } from 'react'
 
 export default function Step(start) {
 
-    const [width, setWidth] = useState(0)
+    const [elapsedTime, setElapsedTime] = useState(0);
+    const [progress, setProgress] = useState(0);
+    const width = useRef(0)
+    const maxTimeInSeconds = 100
+ 
 
-    const fire = () => {
-        setTimeout(function() {   //  call a 3s setTimeout when the loop is called
-            console.log('hello: ', width);   //  your code here
-            setWidth(width + 1)                    //  increment the counter
-            if (width <= 100) {           //  if the counter < 10, call the loop function
-              fire();             //  ..  again which will trigger another 
-            }                       //  ..  setTimeout()
-          }, 1000)
-    }
 
     useEffect(() => {
-    if(start) fire()
+        let s
+        if(start){
+            s = setInterval(() => {
+                if(progress < 100){
+                    setProgress(prevProgress => prevProgress + 1)
+                }
+                else{
+                    clearInterval(s)
+                }
+            }, 100);
+        }
+        if(progress === 100){
+            console.log();
+            clearInterval(s)
+        }
     }, [start])
+
+
 
     return (
         <div className='process-loader--grey step-one'>
-            <div style={{width: `progress%`}} className='process-loader--green'></div>
+            <div style={{width: `${progress}%`}} className='process-loader--green'></div>
         </div>
     )
 }
