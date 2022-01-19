@@ -1240,6 +1240,8 @@ span.NFTInf:hover img {
 
 .nftSendBtn {
     margin-top: auto;
+    display: flex;
+    justify-content: center;
 }
 
 .destiAddress {

@@ -385,6 +385,11 @@
         height: auto;
     }
 
+    .nftSendBtn {
+        display: flex;
+        justify-content: center;
+    }
+
     .nftSendBtn a.themBtn {
         width: 100%;
         max-width: unset;
