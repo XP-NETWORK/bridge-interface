@@ -230,7 +230,6 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
     }
     return []
   } catch(err) {
-    debugger
     console.error(err);
     return []
   }

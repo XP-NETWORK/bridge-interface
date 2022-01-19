@@ -12,6 +12,9 @@ import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import { algoConnector } from "../../wallet/connectors"
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { TezosToolkit } from "@taquito/taquito";
+import { TempleWallet } from "@temple-wallet/dapp";
+import { InMemorySigner } from '@taquito/signer'
+
 
 
 
@@ -69,7 +72,6 @@ function Approval(props) {
     }
 
     const approveEach = async (nft, signer, chain, index) => {
-        debugger
         const arr = new Array(index + 1).fill(0)
         const factory = await getFactory()
             if(from.type !== "Elrond" && from.type !== 'Algorand' && from.type !== "Tezos"){
@@ -114,8 +116,12 @@ function Approval(props) {
                 try {
                     const factory = await getFactory()
                     const chain = await factory.inner(Chain.TEZOS)
-                    const signer = TezosToolkit.signer
-                    const swap = await chain.preTransfer(signer, nft, bigNumberFees)
+                    const wallet = new TempleWallet("My Super DApp");
+                    await wallet.connect("hangzhounet");
+                    const tezos = wallet.toTezos();
+                    const signer =  tezos._wallet
+                    console.log(chain, '231231414')
+                    const swap = await chain.preTransfer(signer, nft)
                     dispatch(updateApprovedNFTs(nft))
                     setFinishedApproving(arr)
                 } catch (error) {

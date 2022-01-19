@@ -26,6 +26,7 @@ import MaiarModal from './MaiarModal';
 import { isEVM } from '../wallet/oldHelper';
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { TezosToolkit } from "@taquito/taquito";
+
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
 
@@ -298,7 +299,7 @@ function ConnectWallet() {
           const wallet = new TempleWallet("My Super DApp");
           await wallet.connect("hangzhounet");
           const tezos = wallet.toTezos();
-
+          console.log(tezos, 'hello')
           const accountPkh = await tezos.wallet.pkh();
           // console.log(`Tezos address: ${accountPkh}`)
           dispatch(setTezosAccount(accountPkh))
