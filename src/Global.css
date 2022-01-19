@@ -1259,19 +1259,42 @@ span.NFTInf:hover img {
 }
 
 .desChain span {
-    cursor: pointer;
+    /* cursor: pointer; */
     margin-left: 10px;
     color: #ffff;
     height: 100%;
     display: flex;
     align-items: center;
     padding: 0px 12px;
+    gap: 6px;
 }
-.desChain span:hover {
+/* .desChain span:hover {
     background: rgba(98, 113, 138, 0.1);
     border-radius: 8px;
+} */
 
+.triangle{
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    cursor: pointer;
 }
+
+.triangle img{
+    padding: 6px;
+}
+
+.triangle:hover{
+    background-color: rgba(55, 57, 61, 0.63);
+}
+
+.triangle:hover img{
+    filter: brightness(10);
+}
+
 .desChain span img:nth-child(2) {
     margin-left: 4px;
 }
@@ -1300,9 +1323,7 @@ span.NFTInf:hover img {
     outline: none;
 }
 
-.desChain span img {
-    margin-right: 8px;
-}
+
 
 .nftSelectList {
     background: linear-gradient(309.48deg, #232833 -3.65%, rgba(35, 40, 51, 0) 122.77%);

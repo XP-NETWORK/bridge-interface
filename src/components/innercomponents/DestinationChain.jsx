@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import RelWhit from '../../assets/img/icons/RelWhit.svg';
 import RedClose from '../../assets/img/icons/RedClose.svg';
 import { setChainModal, setReceiver, setSwitchDestination } from "../../store/reducers/generalSlice"
-// import web3 from
+import vet from "../../assets/img/Vector.svg"
 
 function DestinationChain() {
 
@@ -27,8 +27,14 @@ function DestinationChain() {
 
     return (
         <div className="destiAddress">
-            <div onClick={() => handleSwitchChain()} className="desChain">
-                Destination<span><img src={to.image.src} alt="" /> {to.key} <img src={RelWhit} /></span>
+            <div className="desChain">
+                Destination
+                <span>
+                    <img src={to.image.src} alt="" /> {to.key} 
+                    <div onClick={() => handleSwitchChain()} className='triangle'>
+                        <img src={vet} />
+                    </div>
+                </span>
             </div>
             <div className="desAddress">
                 <input value={receiver} onChange={ e => handleChange(e)} type="text" placeholder="Paste destination address" />

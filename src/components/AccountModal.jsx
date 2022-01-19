@@ -31,9 +31,11 @@ export default function AccountModal() {
     const algorandAccount = useSelector(state => state.general.algorandAccount)
     const MyAlgo = useSelector(state => state.general.MyAlgo)
     const tronAccount = useSelector(state => state.general.tronWallet)
+    const tezosAccount = useSelector(state => state.general.tezosAccount)
     const WalletConnect = useSelector(state => state.general.WalletConnect)
     const WCProvider = useSelector(state => state.general.WCProvider)
     const tronLink = useSelector(state => state.general.tronLink)
+    const templeWallet = useSelector(state => state.general.templeWallet)
 
     // const step = useSelector(state => state.general.step)
 
@@ -96,6 +98,7 @@ export default function AccountModal() {
      else if(algorandWallet) return 'Algorand Wallet'
      else if(MyAlgo) return "MyAlgo"
      else if(tronLink) return 'Tron Link'
+     else if(templeWallet) return "Temple Wallet"
      else if(WalletConnect) return `${WCProvider.walletConnectProvider.signer.connection.wc._peerMeta.name} (WalletConnect)`
     }
 
@@ -110,7 +113,7 @@ export default function AccountModal() {
                         {/* { copyIconHover && <img className="copytoltip" src={copyTT} /> } */}
                         {/* { copied && <img className="copytoltip-tron" src={copiedIcon} /> } */}
                         { copied && <Tooltip /> }
-            <CopyToClipboard text={elrondAccount || account || tronWallet || algorandAccount}>
+            <CopyToClipboard text={elrondAccount || account || tronWallet || algorandAccount || algorandAccount}>
                 <div className="nftLink">
                     <img src={NftSelect} />
 
@@ -118,6 +121,8 @@ export default function AccountModal() {
                     `${account.substring(0, 10)}...${account.substring(account.length - 2)}`
                      : 
                      elrondAccount ? `${elrondAccount.substring(0, 10)}...${elrondAccount.substring(elrondAccount.length - 2)}`
+                     :
+                     tezosAccount ? `${tezosAccount.substring(0, 10)}...${tezosAccount.substring(tezosAccount.length - 2)}`
                      :
                      algorandAccount ? `${algorandAccount.substring(0, 10)}...${algorandAccount.substring(algorandAccount.length - 2)}`
                      :

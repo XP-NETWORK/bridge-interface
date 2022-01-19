@@ -13,6 +13,8 @@ function NavBar() {
     const tronAccount = useSelector(state => state.general.tronWallet)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
+    const tezosAccount = useSelector(state => state.general.tezosAccount)
+
     const widget = useSelector(state => state.general.widget)
     const handleShow = () => dispatch(setAccountModal(true));
     const step = useSelector(state => state.general.step)
@@ -21,7 +23,7 @@ function NavBar() {
     useEffect(() => {}, [step])
 
     const setAddress = () => {
-        return elrondAccount || tronAccount || account || algorandAccount
+        return elrondAccount || tronAccount || account || algorandAccount || tezosAccount
     }
 
     return (

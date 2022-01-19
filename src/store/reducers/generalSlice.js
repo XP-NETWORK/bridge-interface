@@ -210,11 +210,15 @@ const generalSlice = createSlice({
     },
     setKukaiWallet(state, action){
       state.kukaiWallet = action.payload
+    },
+    setTempleWallet(state, action){
+      state.templeWallet = action.payload
     }
   },
 });
 
 export const {
+    setTempleWallet,
     setKukaiWallet,
     setTezosAccount,
     setGetFeaturedModal,

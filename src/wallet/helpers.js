@@ -164,7 +164,7 @@ export const handleChainFactory = async (someChain) => {
 };
 
 export const getNFTS = async (wallet, from) => {
-  // debugger
+  debugger
 
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
@@ -182,20 +182,6 @@ export const getNFTS = async (wallet, from) => {
     else{
       response = await factory.nftList(chain, wallet)
     }
-
-    // const res = 
-    // tronWallet ? 
-    //   await getTronNFTs(tronWallet)
-    // : 
-    //   algorandAccount 
-    // ? 
-    // ( await axios.get(`https://nftindexing.herokuapp.com/15/${wallet}`)).data.result
-    // : 
-    //   await factory.nftList(
-    //     chain, // The chain of interest
-    //     wallet //! The public key of the NFT owner
-    // )
-
     const unique = {};
     try {
       

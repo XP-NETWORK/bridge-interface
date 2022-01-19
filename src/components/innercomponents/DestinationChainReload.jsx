@@ -5,6 +5,7 @@ import Avalanche from '../../assets/img/chain/Avalanche.svg';
 import RedClose from '../../assets/img/icons/RedClose.svg';
 import RelWhit from '../../assets/img/icons/RelWhit.svg';
 import { setChainModal, setReceiver, setSwitchDestination } from "../../store/reducers/generalSlice"
+import vet from "../../assets/img/Vector.svg"
 
 function DestinationChainReload() {
 
@@ -25,8 +26,14 @@ function DestinationChainReload() {
 
     return (
         <div className="destiAddress">
-            <div onClick={() => handleSwitchChain()} className="desChain">
-                Destination<span className="destiReload"><img src={to.image.src} alt="" /> {to.key} <img src={RelWhit} /></span>
+            <div className="desChain">
+                Destination
+                <span>
+                    <img src={to.image.src} alt="" /> {to.key} 
+                    <div onClick={() => handleSwitchChain()} className='triangle'>
+                        <img src={vet} />
+                    </div>
+                </span>
             </div>
             <div className="desAddress">
                 <input onChange={ e => handleChange(e)} type="text" placeholder="Paste destination address" />
