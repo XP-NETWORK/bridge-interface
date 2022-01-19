@@ -175,7 +175,7 @@ function NFTaccount() {
     // }
     
     const sendEach = async (nft, index) => {
-        // debugger
+        debugger
         if(index === 0) dispatch(setTransactionStep(1))
         const factory = await getFactory()
         const toChain = await factory.inner(chainsConfig[to].Chain)
@@ -206,6 +206,7 @@ function NFTaccount() {
                 dispatch(setTxnHash({txn: result, nft}))
             } 
             else {
+                console.log("from: ", fromChain.getNonce());
                 try {
                     result = await factory.transferNft(
                         fromChain, // The Source Chain.
