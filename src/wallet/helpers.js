@@ -49,7 +49,15 @@ export const preloadItem = (item, type, setLoaded) => {
 export const parseNFTS = async (nfts) => {
 // console.log("helpers");
 // debugger
-  const { from, to } = store.getState().general;
+const { from, to } = store.getState().general;
+if(from.key === "Tezos"){
+ return nfts.filter(n => n.native).map(n => {
+   return {
+     ...n,
+     ...n?.native?.meta?.token?.metadata
+   }
+ })
+}
   const result = await Promise.all(
     nfts.map(async (n) => {
       return await new Promise(async (resolve) => {
@@ -164,7 +172,7 @@ export const handleChainFactory = async (someChain) => {
 };
 
 export const getNFTS = async (wallet, from) => {
-  debugger
+  // debugger
 
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
@@ -236,6 +244,7 @@ export const setNFTS = async (w, from) => {
     store.dispatch(setBigLoader(false))
     if(parsedNFTs.length){
       store.dispatch(setNFTList(parsedNFTs))
+      // console.log(parsedNFTs)
   }
 }
 

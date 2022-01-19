@@ -289,7 +289,7 @@ function ConnectWallet() {
     }
 
     const onTemple = async () => {
-      debugger
+      // debugger
         try {
           const available = await TempleWallet.isAvailable();
           if (!available) {

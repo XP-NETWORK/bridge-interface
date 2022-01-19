@@ -204,7 +204,7 @@ function NFTaccount() {
                 dispatch(dispatch(setTransferLoaderModal(false)))
                 setLoading(false)
                 dispatch(setTxnHash({txn: result, nft}))
-            } 
+            }
             else {
                 console.log("from: ", fromChain.getNonce());
                 try {

@@ -11,6 +11,8 @@ import { getOldFactory } from '../../wallet/oldHelper';
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import { algoConnector } from "../../wallet/connectors"
 import MyAlgoConnect from '@randlabs/myalgo-connect';
+import { TezosToolkit } from "@taquito/taquito";
+
 
 
 const TronWeb = require('tronweb')
@@ -33,6 +35,8 @@ function Approval(props) {
     const bigNumberFees = useSelector(state => state.general.bigNumberFees)
     const algorandWallet = useSelector(state => state.general.AlgorandWallet)
     const MyAlgo = useSelector(state => state.general.MyAlgo)
+    const templeWallet = useSelector(state => state.general.templeWallet)
+    
     
 
     const getAlgorandWalletSigner = async () => {
@@ -65,16 +69,16 @@ function Approval(props) {
     }
 
     const approveEach = async (nft, signer, chain, index) => {
-        // debugger
+        debugger
         const arr = new Array(index + 1).fill(0)
         const factory = await getFactory()
-            if(from.type !== "Elrond" && from.type !== 'Algorand'){
+            if(from.type !== "Elrond" && from.type !== 'Algorand' && from.type !== "Tezos"){
                 try {
                     const { tokenId, contract, chainId } = nft.native
                     const isInApprovedNFTs = approvedNFTList.filter(n => n.native.tokenId === tokenId && n.native.contract === contract && chainId === n.native.chainId )[0]
                     if(!isInApprovedNFTs) {
                         try {
-                            
+                            console.log(chain, 'hello')
                             const ap = await chain.approveForMinter(nft, signer);
                             dispatch(updateApprovedNFTs(nft))
                             setFinishedApproving(arr)
@@ -105,6 +109,24 @@ function Approval(props) {
                 }
                 dispatch(updateApprovedNFTs(nft))
                 setFinishedApproving(arr)
+            }
+            else if(from.text === "Tezos"){
+                try {
+                    const factory = await getFactory()
+                    const chain = await factory.inner(Chain.TEZOS)
+                    const signer = TezosToolkit.signer
+                    const swap = await chain.preTransfer(signer, nft, bigNumberFees)
+                    dispatch(updateApprovedNFTs(nft))
+                    setFinishedApproving(arr)
+                } catch (error) {
+                    setFinishedApproving(arr)
+                    dispatch(setError(error))
+                    if(error.data){
+                      console.log(error.data.message);
+                    }
+                    else console.log(error); 
+                    console.log(error)
+                }
             }
             else{
                 try {
@@ -147,7 +169,15 @@ function Approval(props) {
                 selectedNFTList.forEach((nft, index) => {
                     dispatch(updateApprovedNFTs(nft))
                 })
-            }
+            } 
+            // else if(from.text === 'Tezos') {
+            //     const chain = await handleChainFactory(from.key)
+            //     const signer = provider.getSigner(account)
+
+            //     selectedNFTList.forEach((nft, index) => {
+            //         approveEach(nft, signer, chain, index)
+            //     })
+            // }
             else {
                 selectedNFTList.forEach((nft, index) => {
                     approveEach(nft, undefined, undefined, index)
