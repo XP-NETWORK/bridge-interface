@@ -14,7 +14,7 @@ import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { TezBridgeSigner } from '@taquito/tezbridge-signer'
 import { TezosToolkit } from "@taquito/taquito";
 import { TempleWallet } from "@temple-wallet/dapp";
-import { InMemorySigner } from '@taquito/signer'
+// import { InMemorySigner } from '@taquito/signer'
 
 
 
