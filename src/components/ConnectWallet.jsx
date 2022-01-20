@@ -11,6 +11,7 @@ import Maiar from '../assets/img/wallet/Maiar.svg';
 import Trezor from '../assets/img/wallet/Trezor.svg';
 import TrustWallet from "../assets/img/wallet/TWT.svg"
 import Kukai from "../assets/img/wallet/kukai.svg"
+import Temple from "../assets/img/wallet/Temple.svg"
 import WalletConnect from "../assets/img/wallet/WalletConnect 3.svg"
 import NFTworng from './NFTworng';
 import { useDispatch, useSelector } from 'react-redux';
@@ -296,10 +297,13 @@ function ConnectWallet() {
           if (!available) {
             throw new Error("Temple Wallet not installed");
           }
-          const wallet = new TempleWallet("My Super DApp");
-          await wallet.connect("hangzhounet");
+          const wallet = new TempleWallet("Cross-Chain NFT Bridge");
+          // await wallet.connect("hangzhounet");
+          await wallet.connect('mainnet');
+          const provider = await Tezos.setWalletProvider(wallet);
+          console.log("hello", wallet);
           const tezos = wallet.toTezos();
-          console.log(tezos, 'hello')
+          // console.log(tezos, 'hello')
           const accountPkh = await tezos.wallet.pkh();
           // console.log(`Tezos address: ${accountPkh}`)
           dispatch(setTezosAccount(accountPkh))
@@ -382,7 +386,7 @@ function ConnectWallet() {
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
                                 {/* <li onClick={onKukai} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem"><img src={Kukai} alt="Kukai Icon" /> Kukai Wallet</li> */}
-                                <li onClick={onTemple} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem"><img src="#" alt="Temple Icon" /> Temple Wallet</li>
+                                <li onClick={onTemple} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem"><img style={{width: "29px"}} src={Temple} alt="Temple Icon" /> Temple Wallet</li>
                                 <li onClick={() => onMaiarExtension()} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
                                 <li style={ OFF } className="wllListItem"><img src={Ledger} alt="Ledger Icon" /> Ledger</li>
                                 <li style={ OFF } className="wllListItem"><img style={{marginLift: "-5px"}} src={Trezor} alt="Trezor Icon" /> Trezor</li>

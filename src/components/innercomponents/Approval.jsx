@@ -72,6 +72,7 @@ function Approval(props) {
     }
 
     const approveEach = async (nft, signer, chain, index) => {
+        debugger
         const arr = new Array(index + 1).fill(0)
         const factory = await getFactory()
             if(from.type !== "Elrond" && from.type !== 'Algorand' && from.type !== "Tezos"){
@@ -116,12 +117,12 @@ function Approval(props) {
                 try {
                     const factory = await getFactory()
                     const chain = await factory.inner(Chain.TEZOS)
-                    const wallet = new TempleWallet("My Super DApp");
-                    await wallet.connect("hangzhounet");
+                    const wallet = new TempleWallet("Cross-Chain NFT Bridge")
+                    await wallet.connect('mainnet');
                     const tezos = wallet.toTezos();
                     const signer =  tezos._wallet
-                    console.log(chain, '231231414')
-                    const swap = await chain.preTransfer(signer, nft)
+                    console.log(wallet);
+                    const swap = await chain.preTransfer(wallet, nft, bigNumberFees)
                     dispatch(updateApprovedNFTs(nft))
                     setFinishedApproving(arr)
                 } catch (error) {
@@ -133,6 +134,24 @@ function Approval(props) {
                     else console.log(error); 
                     console.log(error)
                 }
+
+            //     const factory = await getFactory()
+            //     const chain = await factory.inner(Chain.TEZOS)
+            //     const wallet = new TempleWallet("Cross-Chain NFT Bridge")
+            //     await wallet.connect('mainnet');
+            //     const tezos = wallet.toTezos();
+            //     const signer =  tezos.wallet
+            //     const swap = await chain.preTransfer(signer, nft, bigNumberFees)
+            //     dispatch(updateApprovedNFTs(nft))
+            //     setFinishedApproving(arr)
+            // } catch (error) {
+            //     setFinishedApproving(arr)
+            //     dispatch(setError(error))
+            //     if(error.data){
+            //       console.log(error.data.message);
+            //     }
+            //     else console.log(error); 
+            //     console.log(error)
             }
             else{
                 try {
