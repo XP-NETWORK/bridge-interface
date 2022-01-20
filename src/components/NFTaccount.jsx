@@ -22,6 +22,7 @@ import {chainsConfig} from './values'
 import { algoConnector } from "../wallet/connectors"
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { useWeb3React } from '@web3-react/core';
+import { TempleWallet } from "@temple-wallet/dapp";
 
 
 
@@ -102,8 +103,10 @@ function NFTaccount() {
         let fact
         let fee
         try {
+            console.log(from, to)
             const fromChain = await handleChainFactory(from)
             const toChain = await handleChainFactory(to)
+            console.log(fromChain, toChain)
             const wallet = 
             to ==='Tron' ? 'TCCKoPRcYoCGkxVThCaY9vRPaKiTjE4x1C' 
             : from === 'Tron' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
@@ -182,12 +185,18 @@ function NFTaccount() {
         const toChain = await factory.inner(chainsConfig[to].Chain)
         const fromChain = await factory.inner(chainsConfig[from].Chain)
         const provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : ''
-        // const signer =  await getSign()
-        const signer = from === 'Algorand' ? await getAlgorandWalletSigner() :
+        let tezosSigner
+        if(from === 'Tezos') {
+            tezosSigner = new TempleWallet("My Super DApp");
+            await tezosSigner.connect("mainnet");
+        }
+        const signer = from === 'Algorand' 
+        ? await getAlgorandWalletSigner() :
         from === 'Elrond' ? maiarProvider ? maiarProvider : ExtensionProvider.getInstance() :
         from === 'Tron' ? window.tronWeb 
+        : tezosSigner ? tezosSigner
         : provider.getSigner(account)
-        
+        console.log(signer, 'hello signer')
         try {
             let result
             if(from === 'Tron') {

@@ -116,11 +116,8 @@ function Approval(props) {
                 try {
                     const factory = await getFactory()
                     const chain = await factory.inner(Chain.TEZOS)
-                    const wallet = new TempleWallet("My Super DApp");
-                    await wallet.connect("hangzhounet");
-                    const tezos = wallet.toTezos();
-                    const signer =  tezos._wallet
-                    console.log(chain, '231231414')
+                    const signer = new TempleWallet("My Super DApp");
+                    await signer.connect("mainnet");
                     const swap = await chain.preTransfer(signer, nft)
                     dispatch(updateApprovedNFTs(nft))
                     setFinishedApproving(arr)

@@ -16,7 +16,7 @@ export default function Error() {
             <Modal.Header className="border-0">
                 <div style={{display: "flex", flexDirection: "column"}}>
                 <img style={{margin: "30px"}} src={ERR} />
-                    <Modal.Title>An error has accrued</Modal.Title>
+                    <Modal.Title>An error has occured</Modal.Title>
                     <span className="CloseModal" onHide={handleClose} onClick={handleClose}>
                         <img src={Close} alt="" />
                     </span>

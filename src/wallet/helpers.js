@@ -135,6 +135,7 @@ export const handleChainFactory = async (someChain) => {
   // debugger
   const factory = await getFactory();
   let chain;
+  console.log(someChain, 'somechain')
   try {
     someChain === "Ethereum"
     ? (chain = await factory.inner(Chain.ETHEREUM))
@@ -177,7 +178,7 @@ export const getNFTS = async (wallet, from) => {
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
   const chain = await factory.inner(chainsConfig[from].Chain)
-  
+  console.log('helloasdajk')
   try {
     // debugger
     let response 
