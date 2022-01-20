@@ -53,7 +53,7 @@ function NFTlistTop() {
                 <span className='yourNft__title'>Your NFTs on </span>
                 <div className='yourNft__chain'>
                     <span>
-                        <img src={from.image.src} alt="NFT Name" /> {from.key}
+                        <img style={{width: "30px"}} src={from.image.src} alt="NFT Name" /> {from.key}
                     </span> 
                     <span style={refreshStyle} onClick={refresh}>
                         <img className="refreshnfts" src={Refresh} />
@@ -102,7 +102,7 @@ function NFTlistTop() {
                         <span><img src={ListView} /></span>
                     }
                 </div>
-                <span onClick={() => setShowSearch(prev => prev = !prev)} className="mobileOnly search-btn"><img src={Search} /></span>
+                {/* <span onClick={() => setShowSearch(prev => prev = !prev)} className="mobileOnly search-btn"><img src={Search} /></span> */}
                 { nfts?.length === selectedNFTs?.length ? 
                     <div onClick={() => dispatch(cleanSelectedNFTList())} className="selectAll">Clear all</div>
                     :   
