@@ -11,6 +11,7 @@ import { getOldFactory } from '../../wallet/oldHelper';
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import { algoConnector } from "../../wallet/connectors"
 import MyAlgoConnect from '@randlabs/myalgo-connect';
+import { TezBridgeSigner } from '@taquito/tezbridge-signer'
 import { TezosToolkit } from "@taquito/taquito";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { InMemorySigner } from '@taquito/signer'
@@ -115,6 +116,8 @@ function Approval(props) {
             }
             else if(from.text === "Tezos"){
                 try {
+                    const Tezos = new TezosToolkit('https://mainnet.api.tez.ie');
+                    Tezos.setProvider({signer: new TezBridgeSigner()})
                     const factory = await getFactory()
                     const chain = await factory.inner(Chain.TEZOS)
                     const wallet = new TempleWallet("Cross-Chain NFT Bridge")
@@ -134,24 +137,6 @@ function Approval(props) {
                     else console.log(error); 
                     console.log(error)
                 }
-
-            //     const factory = await getFactory()
-            //     const chain = await factory.inner(Chain.TEZOS)
-            //     const wallet = new TempleWallet("Cross-Chain NFT Bridge")
-            //     await wallet.connect('mainnet');
-            //     const tezos = wallet.toTezos();
-            //     const signer =  tezos.wallet
-            //     const swap = await chain.preTransfer(signer, nft, bigNumberFees)
-            //     dispatch(updateApprovedNFTs(nft))
-            //     setFinishedApproving(arr)
-            // } catch (error) {
-            //     setFinishedApproving(arr)
-            //     dispatch(setError(error))
-            //     if(error.data){
-            //       console.log(error.data.message);
-            //     }
-            //     else console.log(error); 
-            //     console.log(error)
             }
             else{
                 try {
