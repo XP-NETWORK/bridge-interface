@@ -99,7 +99,7 @@ function NFTaccount() {
     }
     
     async function estimate () {
-        // debugger 
+        debugger 
         let fact
         let fee
         try {

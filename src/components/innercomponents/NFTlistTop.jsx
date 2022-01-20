@@ -73,7 +73,7 @@ function NFTlistTop() {
                 </Modal.Body>
             </Modal>
             <div className="yourNft desktopOnly">
-                Your NFTs on <span><img src={from.image.src} alt="NFT Name" /> {from.key}</span> 
+                Your NFTs on <span><img style={{width: "29px"}} src={from.image.src} alt="NFT Name" /> {from.key}</span> 
                 <span style={refreshStyle} onClick={refresh}><img className="refreshnfts" src={Refresh} /></span>
             </div>
             <div className="mobileOnly seleNftMob">
