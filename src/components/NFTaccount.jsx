@@ -123,7 +123,7 @@ function NFTaccount() {
             //      fact = await getFactory()
             // }
             fact = await getFactory()
-
+            console.log(fact, 'hlasdkask2', fromChain)
             if(selectedNFTList.length) {
                 if(to ==='Tron'){
                    fee = from === 'BSC' ? new BigNumber('100000000000000000')

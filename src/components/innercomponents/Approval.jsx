@@ -13,7 +13,7 @@ import { algoConnector } from "../../wallet/connectors"
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { TezosToolkit } from "@taquito/taquito";
 import { TempleWallet } from "@temple-wallet/dapp";
-import { InMemorySigner } from '@taquito/signer'
+// import { InMemorySigner } from '@taquito/signer'
 
 
 
@@ -72,6 +72,7 @@ function Approval(props) {
     }
 
     const approveEach = async (nft, signer, chain, index) => {
+        debugger
         const arr = new Array(index + 1).fill(0)
         const factory = await getFactory()
             if(from.type !== "Elrond" && from.type !== 'Algorand' && from.type !== "Tezos"){
@@ -114,6 +115,7 @@ function Approval(props) {
             }
             else if(from.text === "Tezos"){
                 try {
+                    const Tezos = new TezosToolkit('https://mainnet.api.tez.ie');
                     const factory = await getFactory()
                     const chain = await factory.inner(Chain.TEZOS)
                     const signer = new TempleWallet("My Super DApp");
