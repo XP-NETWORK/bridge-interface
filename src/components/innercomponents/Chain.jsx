@@ -23,7 +23,7 @@ export default function Chain({ filteredChain, chainSelectHandler, text, image, 
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     return (
         // style={ coming || !checkIfLive(text) ? OFF : {}}
-        <li  onClick={() => chainSelectHandler(filteredChain)} className="nftChainItem"><img className="modalSelectOptionsImage" src={image.src} alt={key} />
+        <li style={ coming || !checkIfLive(text) ? OFF : {}} onClick={() => chainSelectHandler(filteredChain)} className="nftChainItem"><img className="modalSelectOptionsImage" src={image.src} alt={key} />
             <div className="modalSelectOptionsText">
                 {text}
             { coming ? <div className="coming-chain">Coming soon</div> : ''}

@@ -99,7 +99,6 @@ function NFTaccount() {
     }
     
     async function estimate () {
-        // debugger 
         let fact
         let fee
         try {
@@ -123,7 +122,7 @@ function NFTaccount() {
             //      fact = await getFactory()
             // }
             fact = await getFactory()
-            console.log(fact, 'hlasdkask2', fromChain)
+            console.log(fact, 'hlasdkask2', fromChain, selectedNFTList)
             if(selectedNFTList.length) {
                 if(to ==='Tron'){
                    fee = from === 'BSC' ? new BigNumber('100000000000000000')
@@ -217,6 +216,7 @@ function NFTaccount() {
             }
             else {
                 console.log("from: ", fromChain.getNonce());
+                console.log(typeof bigNumberFees, 'kd3j8d23jd823j8d23')
                 try {
                     result = await factory.transferNft(
                         fromChain, // The Source Chain.
@@ -230,6 +230,7 @@ function NFTaccount() {
                     setLoading(false)
                     dispatch(setTxnHash({txn: result, nft}))
                 } catch(error) {
+                    console.log(error, 'weroerjkerkja')
                     dispatch(setTxnHash({txn: "failed", nft}))
                     dispatch(dispatch(setTransferLoaderModal(false)))
                     setLoading(false)

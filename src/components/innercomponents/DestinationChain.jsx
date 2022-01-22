@@ -30,9 +30,9 @@ function DestinationChain() {
             <div className="desChain">
                 Destination
                 <span>
-                    <img src={to.image.src} alt="" /> {to.key} 
+                    <img style={{width: "30px"}} src={to.image.src} alt="" /> {to.key} 
                     <div onClick={() => handleSwitchChain()} className='triangle'>
-                        <img src={vet} />
+                        <img  src={vet} />
                     </div>
                 </span>
             </div>

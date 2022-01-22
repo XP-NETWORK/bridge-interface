@@ -51,6 +51,7 @@ export const parseNFTS = async (nfts) => {
 // debugger
 const { from, to } = store.getState().general;
 if(from.key === "Tezos"){
+  console.log(nfts)
  return nfts.filter(n => n.native).map(n => {
    return {
      ...n,
@@ -184,9 +185,6 @@ export const getNFTS = async (wallet, from) => {
     let response 
     if(tronWallet){
       response = await getTronNFTs(tronWallet)
-    }
-    else if(algorandAccount){
-      response = await axios.get(`https://nftindexing.herokuapp.com/15/${wallet}`).data.result
     }
     else{
       response = await factory.nftList(chain, wallet)
