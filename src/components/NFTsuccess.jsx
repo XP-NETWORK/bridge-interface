@@ -5,15 +5,15 @@ import Success from '../assets/img/icons/Success.svg';
 import Check from '../assets/img/icons/Check_circle.svg';
 import FileCopy from '../assets/img/icons/FileCopy.svg';
 import CopyHover from '../assets/img/icons/CopyHover.svg';
-import copyTT from "../assets/img/icons/copytoclip.svg"
+// import copyTT from "../assets/img/icons/copytoclip.svg"
 import copiedIcon from "../assets/img/icons/copiedtoclip.svg"
 import { useSelector } from 'react-redux';
 import { chainsConfig } from './values';
 import moment from 'moment';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { setupURI } from '../wallet/oldHelper';
-import CopyIcons from './innercomponents/CopyIcons';
-import { getFactory, setClaimablesAlgorand } from '../wallet/helpers';
+// import CopyIcons from './innercomponents/CopyIcons';
+import { setClaimablesAlgorand } from '../wallet/helpers';
 import { claimAlgorandPopup, connectAlgorandWalletClaim } from '../store/reducers/generalSlice';
 import { useDispatch } from 'react-redux';
 import ConnectAlgorand from './ConnectAlgorand';

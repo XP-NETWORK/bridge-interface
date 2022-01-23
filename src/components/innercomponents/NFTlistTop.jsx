@@ -15,7 +15,7 @@ import Refresh from '../../assets/img/refresh.svg'
 function NFTlistTop() {
     const dispatch = useDispatch()
     const nfts = useSelector(state => state.general.NFTList)
-    const {algorandAccount, tronWallet, elrondAccount, account, bigLoader} = useSelector(state => state.general)
+    const {algorandAccount, tronWallet, elrondAccount, tezosAccount, account, bigLoader} = useSelector(state => state.general)
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const NFTListView = useSelector(state => state.general.NFTListView)
     const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -36,7 +36,8 @@ function NFTlistTop() {
     }
     const refresh = async () => {
         if(!bigLoader) {
-            const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
+            const w = algorandAccount || tronWallet || tezosAccount || account
+            // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             await setNFTS(w, from.key)
         }
 

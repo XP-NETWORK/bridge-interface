@@ -10,13 +10,12 @@ import SendFees from './innercomponents/SendFees';
 import BigNumber from 'bignumber.js'
 import NFTlistTop from './innercomponents/NFTlistTop';
 import { ethers } from "ethers";
-import NFTsuccess from './NFTsuccess';
 import { useSelector } from 'react-redux';
-import { setBigNumFees, setError, setNFTList, setNFTsToWhitelist, setTxnHash, setTransferLoaderModal, setTransactionStep } from "../store/reducers/generalSlice"
+import { setBigNumFees, setError,  setNFTsToWhitelist, setTxnHash, setTransferLoaderModal, setTransactionStep } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
-import { getFactory, getNFTS, handleChainFactory, parseNFTS, setClaimablesAlgorand, setNFTS } from "../wallet/helpers"
+import { getFactory,  handleChainFactory,  setClaimablesAlgorand, setNFTS } from "../wallet/helpers"
 import Comment from "../components/innercomponents/Comment"
-import{ ChainData, getOldFactory } from '../wallet/oldHelper'
+import{  getOldFactory } from '../wallet/oldHelper'
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import {chainsConfig} from './values'
 import { algoConnector } from "../wallet/connectors"
@@ -91,6 +90,7 @@ function NFTaccount() {
        const hard = "0x4E3093E0681F3F0e98eFd7eC1A9a01500Efd6DCa"
         try {
             // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount :  
+            
             const w = tezosAccount || algorandAccount || tronWallet || elrondAccount || account
             await setNFTS(w, from)
             } catch (error) {  
@@ -152,31 +152,7 @@ function NFTaccount() {
         //   dispatch(setError(error))
         }
     }
-                                
-    // const getSign = async () => {
-    //     // debugger
-    //     let signer
-    //     const provider = new ethers.providers.Web3Provider(WCProvider.walletConnectProvider || window.ethereum);
-    //     try {
-    //         if(from === 'Algorand') {
-    //             signer = await getAlgorandWalletSigner()
-    //         }
-    //         else if(from === 'Elrond') {
-    //             if(maiarProvider) signer = maiarProvider
-    //             else signer = ExtensionProvider.getInstance()
-    //         }
-    //         else if(from === 'Tron') {
-    //             signer = window.tronLink
-    //         }
-    //         else {
-    //             signer = provider.getSigner(account)
-    //         }
-    //     } catch (error) {
-    //         console.error();
-    //     }
-    //     return signer
-    // }
-    
+
     const sendEach = async (nft, index) => {
         debugger
         if(index === 0) dispatch(setTransactionStep(1))
@@ -186,7 +162,7 @@ function NFTaccount() {
         const provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : ''
         let tezosSigner
         if(from === 'Tezos') {
-            tezosSigner = new TempleWallet("My Super DApp");
+            tezosSigner = new TempleWallet("Cross-Chain NFT Bridge");
             await tezosSigner.connect("mainnet");
         }
         const signer = from === 'Algorand' 
@@ -195,7 +171,7 @@ function NFTaccount() {
         from === 'Tron' ? window.tronWeb 
         : tezosSigner ? tezosSigner
         : provider.getSigner(account)
-        console.log(signer, 'hello signer')
+       
         try {
             let result
             if(from === 'Tron') {
@@ -215,8 +191,6 @@ function NFTaccount() {
                 dispatch(setTxnHash({txn: result, nft}))
             }
             else {
-                console.log("from: ", fromChain.getNonce());
-                console.log(typeof bigNumberFees, 'kd3j8d23jd823j8d23')
                 try {
                     result = await factory.transferNft(
                         fromChain, // The Source Chain.

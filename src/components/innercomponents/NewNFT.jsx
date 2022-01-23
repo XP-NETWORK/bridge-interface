@@ -30,7 +30,7 @@ export default function NFT({nft, index}) {
     }
 
     useEffect(() => { setTimeout(() => {setImageLoaded(true)}, 5000) }, [selectedNFTs])
-    console.log(imageLoaded, nft.image)
+    // console.log(imageLoaded, nft.image)
     return ( 
         <div className={`nft-box__wrapper ${!imageLoaded ? 'preload-cont' : ''}`}>
             <div style={ !imageLoaded && (nft.image || nft.image_url) ? HIDDEN : {}} className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>

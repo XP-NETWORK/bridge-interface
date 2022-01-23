@@ -296,7 +296,7 @@ function ConnectWallet() {
           if (!available) {
             throw new Error("Temple Wallet not installed");
           }
-          const wallet = new TempleWallet("My Super DApp");
+          const wallet = new TempleWallet("Cross-Chain NFT Bridge");
           await wallet.connect("mainnet");
           const tezos = wallet.toTezos();
           const accountPkh = await tezos.wallet.pkh();
