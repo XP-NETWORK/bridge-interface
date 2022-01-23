@@ -35,7 +35,7 @@ function NFTlistTop() {
         dispatch(setNFTsListView())
     }
     const refresh = async () => {
-        if(!bigLoader) {
+        if(!bigLoader || !nfts) {
             const w = algorandAccount || tronWallet || tezosAccount || account
             // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             await setNFTS(w, from.key)
@@ -47,6 +47,7 @@ function NFTlistTop() {
         cursor: bigLoader ? '' : 'pointer', 
         opacity: bigLoader ? 0.6 : 1 
     } 
+    
     const off = { display: "none"}
     return (
         <>

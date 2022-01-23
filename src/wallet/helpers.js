@@ -236,7 +236,7 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 }
 
 export const setNFTS = async (w, from) => {
-  // debugger
+  debugger
   console.log("setNFTS: ", w);
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from)
