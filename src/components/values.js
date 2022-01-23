@@ -263,7 +263,7 @@ export const chainsConfig = {
         rpc: "https://mainnet-tezos.giganode.io/",
         chainId: 0x12,
         Chain: Chain.TEZOS,
-        tx: "https://tzstats.com/tx/"
+        tx: "https://tzstats.com/"
     }
 
 }

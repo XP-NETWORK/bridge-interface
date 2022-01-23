@@ -1755,6 +1755,7 @@ li.nftSelecItem .Close:hover {
 
 .SentFrom img {
     margin-right: 5px;
+    width: 32px;
 }
 
 span.statComp {color: #10B67A;}
