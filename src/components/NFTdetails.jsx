@@ -41,8 +41,8 @@ function NFTdetails({ nftInf }){
                 <Modal.Body className="modalBody">
                     <div className="nftDetailBox">
                         <div className="nftDetImg">
-                            { image ? 
-                                <img src={setupURI(image)} alt="NFT" />
+                            { image || uri ? 
+                                <img src={setupURI(image || uri)} alt="NFT" />
                             :  
                             <div style={{paddingTop: "10%"}} className="brocken-url">
                                 <img style={{height: "40%"}} src={brockenurl} alt='This NFT image uri is broken.' />

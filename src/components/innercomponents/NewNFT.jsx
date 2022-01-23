@@ -36,13 +36,13 @@ export default function NFT({nft, index}) {
             <div style={ !imageLoaded && (nft.image || nft.image_url) ? HIDDEN : {}} className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
                 <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
                     <div className="image__wrapper">
-                        { nft.uri && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url ||nft.image_url) ? 
+                        { nft.uri && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url ||nft.image_url || nft.uri) ? 
                             nft.animation_url || tryVideo ? 
                             <video onLoadedData={() => setImageLoaded(true)} controls={false} playsInline={true} autoPlay={true} loop={true} 
                             src={tryVideo ? setupURI(nft.image) : setupURI(nft.animation_url)} 
                             /> 
                             :
-                            <img onError={() => setTryVideo(true)} onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image || nft.image_url)} /> 
+                            <img onError={() => setTryVideo(true)} onLoad={() => setImageLoaded(true)} alt="NFT" src={setupURI(nft.image || nft.image_url || nft.uri)} /> 
                             : 
                             <div className="brocken-url">
                                 <img onLoad={() => setImageLoaded(true)} src={brockenurl} alt='This NFT image uri is broken.' />

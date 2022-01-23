@@ -193,7 +193,7 @@ function SuccessNFT({nft, from, index}) {
     }
     return  (
         <li className="nftSelecItem">
-            <img src={setupURI(nft.image)} alt="NFT" />
+            <img src={setupURI(nft.image || nft.uri)} alt="NFT" />
             <span className="nftSelected__name">{nft.name}</span>
             <span className="bluTextBtn">
                 <a href={`${chainsConfig[from.key].tx + getTX()}`} target="_blank">View Txn</a>

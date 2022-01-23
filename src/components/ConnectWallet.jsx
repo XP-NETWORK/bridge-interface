@@ -29,6 +29,7 @@ import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
+import { DAppClient } from "@airgap/beacon-sdk";
 
 function ConnectWallet() {
     const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
