@@ -143,7 +143,8 @@ export const chains = [
         value: "Tezos",
         order: 13,
         image: { avatar: true, src: Tezos},
-        newChain: true
+        newChain: false,
+        coming: true
     }
 ]
 
