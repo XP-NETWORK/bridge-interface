@@ -174,7 +174,7 @@ export const handleChainFactory = async (someChain) => {
 };
 
 export const getNFTS = async (wallet, from) => {
-  // debugger
+  debugger
   console.log("wallet: ", wallet);
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
   const { algorandAccount, tronWallet } = store.getState().general
@@ -236,7 +236,7 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 }
 
 export const setNFTS = async (w, from) => {
-  debugger
+  // debugger
   console.log("setNFTS: ", w);
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from)

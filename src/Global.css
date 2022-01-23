@@ -681,6 +681,15 @@ span.wallet {
     line-height: 160%;
     color: #fff;
     cursor: pointer;
+    display: flex;
+}
+
+.wllListItem .coming-chain{
+    margin-left: auto;
+}
+
+.wllListItem div{
+    display: flex;
 }
 
 .algo img{

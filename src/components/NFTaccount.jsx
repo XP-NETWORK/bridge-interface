@@ -22,7 +22,8 @@ import { algoConnector } from "../wallet/connectors"
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { useWeb3React } from '@web3-react/core';
 import { TempleWallet } from "@temple-wallet/dapp";
-
+import { TezosToolkit } from "@taquito/taquito";
+import { BeaconWallet } from "@taquito/beacon-wallet";
 
 
 
@@ -38,6 +39,7 @@ function NFTaccount() {
     const tronWallet = useSelector(state => state.general.tronWallet)
     const account = useSelector(state => state.general.account)
     const tezosAccount = useSelector(state => state.general.tezosAccount)
+    const kukaiWallet = useSelector(state => state.general.kukaiWallet)
     const maiarProvider = useSelector(state => state.general.maiarProvider)
     const factory = getFactory()
     const approvedNFTList = useSelector(state => state.general.approvedNFTList)
