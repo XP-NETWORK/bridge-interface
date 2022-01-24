@@ -386,7 +386,7 @@ function ConnectWallet() {
                                 <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
-                                {/* <li onClick={onKukai} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem"><img src={Kukai} alt="Kukai Icon" /> Kukai Wallet</li> */}
+                                <li onClick={onKukai} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem"><img src={Kukai} alt="Kukai Icon" /> Kukai Wallet</li>
                                 <li onClick={onTemple} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem"><img style={{width: "28px"}} src={Temple} alt="Temple Icon" /> Temple Wallet</li>
                                 <li onClick={() => onMaiarExtension()} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
                                 <li style={ OFF } className="wllListItem">

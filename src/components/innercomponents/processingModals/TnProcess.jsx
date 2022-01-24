@@ -14,8 +14,8 @@ export default function TnProcess() {
     const [two, setTwo] = useState(false)
     const [three, setThree] = useState(false)
     // const transactionStep = 0
-    // const transactionStep = useSelector(state => state.general.transactionStep)
-    const transactionStep = 2
+    const transactionStep = useSelector(state => state.general.transactionStep)
+    // const transactionStep = 1
     const transferModalLoader = useSelector(state => state.general.transferModalLoader)
     const [body, setBody] = useState({})
 
@@ -91,10 +91,9 @@ export default function TnProcess() {
                 </div>
                 <div className="tn-process__message">{body.message}</div>
                 <div className="tn-process__loader">
-                    {/* <Step start={one} /> */}
-                    {/* TO DO */}
+                    <Step start={one} />
                     <Step start={two} />
-                    {/* <Step start={three} /> */}
+                    <Step start={three} />
                 </div>
             </Modal.Body>
         </Modal>

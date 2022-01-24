@@ -89,7 +89,7 @@ function NFTaccount() {
     
     async function getNFTsList(){
         // debugger
-       const hard = "tz1Znuf7PP53LK999kjZKZLcKrQEYxT6KaH9"
+       const hard = "0x6449b68cc5675f6011e8DB681B142773A3157cb9"
         try {
             // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount :  
             
@@ -101,6 +101,8 @@ function NFTaccount() {
     }
     
     async function estimate () {
+        debugger
+   
         let fact
         let fee
         try {
@@ -206,7 +208,7 @@ function NFTaccount() {
                     setLoading(false)
                     dispatch(setTxnHash({txn: result, nft}))
                 } catch(error) {
-                    console.log(error, 'weroerjkerkja')
+                    
                     dispatch(setTxnHash({txn: "failed", nft}))
                     dispatch(dispatch(setTransferLoaderModal(false)))
                     setLoading(false)

@@ -1,38 +1,32 @@
 import React, { useRef, useState } from 'react'
 import { useEffect } from 'react'
 
-export default function Step(start) {
+export default function Step({start}) {
 
-    const [elapsedTime, setElapsedTime] = useState(0);
-    const [progress, setProgress] = useState(0);
-    const width = useRef(0)
-    const maxTimeInSeconds = 100
- 
-
-
+    const initalState = 0;
+    const [count, setCount] = useState(initalState);
+    const width = useRef(initalState);
+  
     useEffect(() => {
-        let s
-        if(start){
-            s = setInterval(() => {
-                if(progress < 100){
-                    setProgress(prevProgress => prevProgress + 1)
-                }
-                else{
-                    clearInterval(s)
-                }
-            }, 100);
-        }
-        if(progress === 100){
-            console.log();
-            clearInterval(s)
-        }
-    }, [start])
-
-
+        width.current = count;
+    })
+  
+    useEffect(() => {
+      if(start){
+        const s = setInterval(() => {
+            if(width.current < 100){
+                setCount(width.current + 1);
+            }
+            else{
+                clearInterval(s)
+            }
+        }, 100);
+      }
+    }, [start]);
 
     return (
         <div className='process-loader--grey step-one'>
-            <div style={{width: `${progress}%`}} className='process-loader--green'></div>
+            <div style={{width: `${width.current}%`}} className='process-loader--green'></div>
         </div>
     )
 }
