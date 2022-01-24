@@ -86,7 +86,7 @@ function Attribute(props) {
     }
     </label>
         <p>{
-            trait_type === 'Original Chain' ? <img style={{marginRight: '4px'}} src={chainsConfig[value]?.img} /> : ''
+            trait_type === 'Original Chain' ? <img style={{marginRight: '4px', width: "29px"}} src={chainsConfig[value]?.img} /> : ''
         }  {
         display_type === 'date' 
         ? moment(new Date(value * 1000)).format('MM-DD-YYYY') 

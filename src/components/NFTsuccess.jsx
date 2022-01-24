@@ -65,6 +65,10 @@ function NFTsuccess() {
         else return false
     }
 
+    const toShow = () => {
+        return txnHashArr?.length ? true : false
+    }
+
     const getTX = () => {
         let ntx
         // debugger
@@ -99,7 +103,7 @@ function NFTsuccess() {
             <ClaimAlgorandNFT />
             {/* <a href="#" className="themBtn" onClick={handleShow}>Send</a> */}
             {/* show={txnHashArr?.length} */}
-            <Modal animation={false} show={txnHashArr?.length} onHide={handleClose} className="nftSuccessMod">
+            <Modal animation={false} show={toShow()} onHide={handleClose} className="nftSuccessMod">
                 <Modal.Header>
                     <Modal.Title><img src={Success} /> Success</Modal.Title>
                     <span className="CloseModal" onClick={handleClose}>

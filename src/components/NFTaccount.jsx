@@ -101,15 +101,15 @@ function NFTaccount() {
     }
     
     async function estimate () {
-        debugger
+        // debugger
    
         let fact
         let fee
         try {
-            console.log(from, to)
+            // console.log(from, to)
             const fromChain = await handleChainFactory(from)
             const toChain = await handleChainFactory(to)
-            console.log(fromChain, toChain)
+            // console.log(fromChain, toChain)
             const wallet = 
             to ==='Tron' ? 'TCCKoPRcYoCGkxVThCaY9vRPaKiTjE4x1C' 
             : from === 'Tron' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
@@ -126,7 +126,7 @@ function NFTaccount() {
             //      fact = await getFactory()
             // }
             fact = await getFactory()
-            console.log(fact, 'hlasdkask2', fromChain, selectedNFTList)
+            // console.log(fact, 'hlasdkask2', fromChain, selectedNFTList)
             if(selectedNFTList.length) {
                 if(to ==='Tron'){
                    fee = from === 'BSC' ? new BigNumber('100000000000000000')
@@ -158,7 +158,7 @@ function NFTaccount() {
     }
 
     const sendEach = async (nft, index) => {
-        debugger
+        // debugger
         if(index === 0) dispatch(setTransactionStep(1))
         const factory = await getFactory()
         const toChain = await factory.inner(chainsConfig[to].Chain)

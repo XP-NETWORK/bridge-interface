@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useEffect } from 'react'
 
-export default function Step({start}) {
+export default function Step({start, finished}) {
 
     const initalState = 0;
     const [count, setCount] = useState(initalState);
@@ -23,6 +23,12 @@ export default function Step({start}) {
         }, 100);
       }
     }, [start]);
+
+    useEffect(() => { 
+        console.log("finished");
+        width.current = finished ? 100 : null 
+    }, [finished]);
+    
 
     return (
         <div className='process-loader--grey step-one'>

@@ -84,7 +84,7 @@ function Approval(props) {
                     const isInApprovedNFTs = approvedNFTList.filter(n => n.native.tokenId === tokenId && n.native.contract === contract && chainId === n.native.chainId )[0]
                     if(!isInApprovedNFTs) {
                         try {
-                            console.log(chain, 'hello')
+                            // console.log(chain, 'hello')
                             const ap = await chain.approveForMinter(nft, signer);
                             dispatch(updateApprovedNFTs(nft))
                             setFinishedApproving(arr)
@@ -256,7 +256,7 @@ function Approval(props) {
             >
                 Approve all NFTs
                 <div className="approveBtn">
-                    <input checked={approved} type="checkbox" id="approveCheck" />
+                    <input readOnly={true} checked={approved || ''} type="checkbox" id="approveCheck" />
                     <label style={!receiver ? {pointerEvents: "none", opacity: "0.6"} : approved ? {pointerEvents: "none"} : {}} onClick={approveAllNFTs} htmlFor="approveCheck">
                         <span className="checkCircle"></span>
                     </label>

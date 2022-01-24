@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import NftSelect from '../assets/img/nftselect.svg';
 import Close from '../assets/img/icons/close.svg';
 import FileCopy from '../assets/img/icons/FileCopy.svg';
@@ -10,9 +10,9 @@ import { DetectOutsideClick } from "../components/helpers"
 import {CopyToClipboard } from 'react-copy-to-clipboard';
 import { CHAIN_INFO } from '../components/values';
 import { getAddEthereumChain } from "../wallet/chains"
-import copyTT from "../assets/img/icons/copytoclip.svg"
-import copiedIcon from "../assets/img/icons/copiedtoclip.svg"
-import msgCloud from "../assets/img/icons/msg-cloud.svg"
+// import copyTT from "../assets/img/icons/copytoclip.svg"
+// import copiedIcon from "../assets/img/icons/copiedtoclip.svg"
+// import msgCloud from "../assets/img/icons/msg-cloud.svg"
 import Tooltip from './Tooltip';
 
 export default function AccountModal() {
@@ -30,7 +30,7 @@ export default function AccountModal() {
     const tronWallet = useSelector(state => state.general.tronWallet)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
     const MyAlgo = useSelector(state => state.general.MyAlgo)
-    const tronAccount = useSelector(state => state.general.tronWallet)
+    // const tronAccount = useSelector(state => state.general.tronWallet)
     const tezosAccount = useSelector(state => state.general.tezosAccount)
     const WalletConnect = useSelector(state => state.general.WalletConnect)
     const WCProvider = useSelector(state => state.general.WCProvider)
@@ -107,7 +107,7 @@ export default function AccountModal() {
     return ( show ?
         <div ref={accountModal} className="accountBox" show={show} onHide={handleClose} >
             <div className="accountTit">
-                Account <span className="CloseModal" onClick={handleClose}> <img src={Close}/> </span>
+                Account <span className="CloseModal" onClick={handleClose}> <img src={Close} alt="#" /> </span>
             </div>
             <p className="">{connectedWith()}</p>
                         {/* { copyIconHover && <img className="copytoltip" src={copyTT} /> } */}
@@ -115,7 +115,7 @@ export default function AccountModal() {
                         { copied && <Tooltip /> }
             <CopyToClipboard text={elrondAccount || account || tronWallet || algorandAccount || algorandAccount}>
                 <div className="nftLink">
-                    <img src={NftSelect} />
+                    <img src={NftSelect} alt="#"/>
 
                     { account ?
                     `${account.substring(0, 10)}...${account.substring(account.length - 2)}`
@@ -128,13 +128,13 @@ export default function AccountModal() {
                      :
                      `${tronWallet.substring(0, 10)}...${tronWallet.substring(tronWallet.length - 2)}`}
                     <span onClick={() => copy()} onMouseOver={() => setCopyIconHover(true)} onMouseOut={()=> setCopyIconHover(false)} className="copyTokk">
-                        <img src={ copyIconHover ? CopyHover : FileCopy} />
+                        <img src={ copyIconHover ? CopyHover : FileCopy} alt="#"/>
                     </span>
                 </div>
             </CopyToClipboard>
             <div className="accountBtn">
-                <a onClick={() => switchNetwork()} className="changeBtn disabled">Change Network</a>
-                <a onClick={() => handleDisconnect()} className="changeBtn">Disconnect</a>
+                <button onClick={() => switchNetwork()} className="changeBtn disabled">Change Network</button>
+                <button onClick={() => handleDisconnect()} className="changeBtn" >Disconnect</button>
             </div>
         </div>
     :

@@ -21,7 +21,7 @@ import TronConnectionErrMod from "./components/TronConnectionErrMod";
 import star from "./assets/img/icons/featuredInactive.svg"
 import GetFeatured from "./components/innercomponents/GetFeatured";
 import TnProcess from "./components/innercomponents/processingModals/TnProcess";
-import SuccessModal from "./components/Modals/SuccessModal";
+// import SuccessModal from "./components/Modals/SuccessModal";
 
 function App() {
   const dispatch = useDispatch()
@@ -29,7 +29,7 @@ function App() {
   const algorandAccount = useSelector(state => state.general.algorandAccount)
   const error = useSelector(state => state.general.error)
   const tronPopUp = useSelector(state => state.general.tronPopUp)
-  const nftsToWhitelist = useSelector(state => state.general.techModal)
+  // const nftsToWhitelist = useSelector(state => state.general.techModal)
   const state = useSelector(state => state.general)
   const axios = require("axios");
 

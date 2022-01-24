@@ -2229,6 +2229,7 @@ span.invalid img {
     height: 40px;
     display: inherit;
     cursor: pointer;
+    border: none;
 }
 
 a.disconBtn {
