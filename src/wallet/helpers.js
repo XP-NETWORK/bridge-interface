@@ -51,6 +51,7 @@ export const parseNFTS = async (nfts) => {
 // debugger
 const { from, to } = store.getState().general;
 if(from.key === "Tezos"){
+  console.log(nfts)
  return nfts.filter(n => n.native).map(n => {
    return {
      ...n,
@@ -135,6 +136,7 @@ export const handleChainFactory = async (someChain) => {
   // debugger
   const factory = await getFactory();
   let chain;
+  // console.log(someChain, 'somechain')
   try {
     someChain === "Ethereum"
     ? (chain = await factory.inner(Chain.ETHEREUM))
@@ -173,22 +175,20 @@ export const handleChainFactory = async (someChain) => {
 
 export const getNFTS = async (wallet, from) => {
   // debugger
-
+  // console.log("wallet: ", wallet);
+  const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
   const chain = await factory.inner(chainsConfig[from].Chain)
-  
+  // console.log('helloasdajk')
   try {
     // debugger
     let response 
     if(tronWallet){
       response = await getTronNFTs(tronWallet)
     }
-    else if(algorandAccount){
-      response = await axios.get(`https://nftindexing.herokuapp.com/15/${wallet}`).data.result
-    }
     else{
-      response = await factory.nftList(chain, wallet)
+      response = await factory.nftList(chain, hardcoded ? hardcoded : wallet)
     }
     const unique = {};
     try {
@@ -237,6 +237,7 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 
 export const setNFTS = async (w, from) => {
   // debugger
+  // console.log("setNFTS: ", w);
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from)
   const parsedNFTs = await parseNFTS(res)
@@ -269,7 +270,7 @@ export const getTronNFTs = async wallet => {
     const tokens = []
     for await(let nft of data) {
       const { tokenId, balance,tokenName,tokenAbbr } = nft
-      console.log(nft)
+      // console.log(nft)
       const contract = await window.tronWeb.contract().at(tokenId)
       const array = new Array(parseInt(balance)).fill(0).map((n,i) => i)
       for await(let index of array) {

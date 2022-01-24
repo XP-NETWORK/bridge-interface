@@ -27,10 +27,10 @@ function NFTgridView() {
                     <div className="nft-list__wrapper">
                         { nfts ? nfts
                         .filter(nft => nft?.name?.toString().toLowerCase().includes(search ? search?.toLowerCase() : '') || nft.native.owner?.includes(search ? search : ''))
-                        .map((nft, index) => <NewNFT nft={nft} index={index} />)
+                        .map((nft, index) => <NewNFT nft={nft} index={index} key={`nft-${index}`} />)
                         : 
                         <NFTempty /> }
-                        { nfts && nfts?.length < nftsPlace ? placeholders.map(n => <Missing />) : ''}
+                        { nfts && nfts?.length < nftsPlace ? placeholders.map((n, index) => <Missing key={`missing-${index}-component`}/>) : ''}
                     </div>
                 }
         </div>

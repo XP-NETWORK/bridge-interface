@@ -681,6 +681,15 @@ span.wallet {
     line-height: 160%;
     color: #fff;
     cursor: pointer;
+    display: flex;
+}
+
+.wllListItem .coming-chain{
+    margin-left: auto;
+}
+
+.wllListItem div{
+    display: flex;
 }
 
 .algo img{
@@ -1755,6 +1764,7 @@ li.nftSelecItem .Close:hover {
 
 .SentFrom img {
     margin-right: 5px;
+    width: 32px;
 }
 
 span.statComp {color: #10B67A;}
@@ -1994,7 +2004,7 @@ span.statComp img {
     left: 0;
     top: 0;
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     display: flex;
 }
 
@@ -2219,6 +2229,7 @@ span.invalid img {
     height: 40px;
     display: inherit;
     cursor: pointer;
+    border: none;
 }
 
 a.disconBtn {

@@ -27,13 +27,12 @@ import MaiarModal from './MaiarModal';
 import { isEVM } from '../wallet/oldHelper';
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { TezosToolkit } from "@taquito/taquito";
-
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
+import { DAppClient } from "@airgap/beacon-sdk";
 
 function ConnectWallet() {
-    const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
-    const wallet = new BeaconWallet({ name: "Beacon Docs Taquito" });
+
     const dispatch = useDispatch()
     const from = useSelector(state => state.general.from)
     const to = useSelector(state => state.general.to)
@@ -63,7 +62,10 @@ function ConnectWallet() {
     const MyAlgo = useSelector(state => state.general.MyAlgo)
     const modalError = useSelector(state => state.generalerror)
     
+    const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
+    const wallet = new BeaconWallet({ name: "Beacon Docs Taquito" });
     Tezos.setWalletProvider(wallet);
+
     function getMobOps() {
       // debugger
       var userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -280,6 +282,8 @@ function ConnectWallet() {
       }
     })
 
+    
+
     const onKukai = async() => {
       try {
         const permissions = await wallet.client.requestPermissions();
@@ -298,14 +302,9 @@ function ConnectWallet() {
             throw new Error("Temple Wallet not installed");
           }
           const wallet = new TempleWallet("Cross-Chain NFT Bridge");
-          // await wallet.connect("hangzhounet");
-          await wallet.connect('mainnet');
-          const provider = await Tezos.setWalletProvider(wallet);
-          console.log("hello", wallet);
+          await wallet.connect("mainnet");
           const tezos = wallet.toTezos();
-          // console.log(tezos, 'hello')
           const accountPkh = await tezos.wallet.pkh();
-          // console.log(`Tezos address: ${accountPkh}`)
           dispatch(setTezosAccount(accountPkh))
           dispatch(setTempleWallet(true))
 
@@ -350,10 +349,12 @@ function ConnectWallet() {
         ||
         (AlgoSigner)
         ||
+        kukaiWallet
+        ||
         (templeWallet)) {
           dispatch(setStep(2))
         }
-    }, [account, metaMask, chainId, tronLink, onWC, trustWallet, AlgoSigner, algorandWallet, MaiarWallet, MyAlgo, templeWallet])
+    }, [account, metaMask, chainId, tronLink, onWC, trustWallet, AlgoSigner, algorandWallet, MaiarWallet, MyAlgo, templeWallet, kukaiWallet])
 
     return (
         <div>
@@ -385,11 +386,23 @@ function ConnectWallet() {
                                 <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
-                                {/* <li onClick={onKukai} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem"><img src={Kukai} alt="Kukai Icon" /> Kukai Wallet</li> */}
-                                <li onClick={onTemple} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem"><img style={{width: "29px"}} src={Temple} alt="Temple Icon" /> Temple Wallet</li>
+                                <li onClick={onKukai} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem"><img src={Kukai} alt="Kukai Icon" /> Kukai Wallet</li>
+                                <li onClick={onTemple} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem"><img style={{width: "28px"}} src={Temple} alt="Temple Icon" /> Temple Wallet</li>
                                 <li onClick={() => onMaiarExtension()} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
-                                <li style={ OFF } className="wllListItem"><img src={Ledger} alt="Ledger Icon" /> Ledger</li>
-                                <li style={ OFF } className="wllListItem"><img style={{marginLift: "-5px"}} src={Trezor} alt="Trezor Icon" /> Trezor</li>
+                                <li style={ OFF } className="wllListItem">
+                                  <div>
+                                    <img src={Ledger} alt="Ledger Icon" />
+                                    Ledger
+                                  </div>
+                                  <div className="coming-chain">Coming soon</div>
+                                </li>
+                                <li style={ OFF } className="wllListItem">
+                                  <div>
+                                    <img style={{marginLift: "-5px"}} src={Trezor} alt="Trezor Icon" />
+                                    Trezor
+                                  </div>
+                                  <div className="coming-chain">Coming soon</div>
+                                </li>
                             </ul>
                         </div>
                     </Modal.Body>

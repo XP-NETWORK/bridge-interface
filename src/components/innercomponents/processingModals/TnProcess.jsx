@@ -11,30 +11,16 @@ export default function TnProcess() {
     const from = useSelector(state => state.general.from)
     const to = useSelector(state => state.general.to)
     const [one, setOne] = useState(false)
+    const [oneFinished, setOneFinished] = useState(false)
     const [two, setTwo] = useState(false)
+    const [twoFinished, setTwoFinished] = useState(false)
     const [three, setThree] = useState(false)
-    // const transactionStep = 0
+    const [threeFinished, setThreeFinished] = useState(false)
+
     // const transactionStep = useSelector(state => state.general.transactionStep)
-    const transactionStep = 2
+    const transactionStep = 3
     const transferModalLoader = useSelector(state => state.general.transferModalLoader)
     const [body, setBody] = useState({})
-
-    // function counter() {
-    //     debugger
-    //     if(one === "")setOne(0)
-    //     if(two === "")setTwo(0)
-    //     if(three === "")setThree(0)
-    //     setTimeout(function() {   //  call a 3s setTimeout when the loop is called
-    //         debugger         //  create a loop function
-    //         //  your code here
-    //       setOne(one + 1)                   //  increment the counter
-    //       if(one < 100)counter()
-    //       if(one === 100) setTwo(two + 1)
-    //       if(two < 100) counter()
-    //       if(two === 100) setThree(three + 1)
-    //       if(three < 100) counter()
-    //     }, 500)
-    //   }
 
     useEffect(() => {
         
@@ -51,6 +37,7 @@ export default function TnProcess() {
                     icon: eye,
                     message: "Validators Processing"
                 })
+                setOneFinished(true)
                 setTwo(true)
                 // setOne(100)
                 break;
@@ -59,6 +46,8 @@ export default function TnProcess() {
                     icon: to?.image.src,
                     message: `${to?.text} Transaction Processing`
                 })
+                setOneFinished(true)
+                setTwoFinished(true)
                 setThree(true)
                 // setTwo(100)
                 break;
@@ -67,6 +56,9 @@ export default function TnProcess() {
                     icon: false,
                     message: "Ready"
                 })
+                setOneFinished(true)
+                setTwoFinished(true)
+                setThreeFinished(true)
                 break;
             default:
                 break;
@@ -91,10 +83,9 @@ export default function TnProcess() {
                 </div>
                 <div className="tn-process__message">{body.message}</div>
                 <div className="tn-process__loader">
-                    {/* <Step start={one} /> */}
-                    {/* TO DO */}
-                    <Step start={two} />
-                    {/* <Step start={three} /> */}
+                    <Step start={one} finished={oneFinished} />
+                    <Step start={two} finished={twoFinished} />
+                    <Step start={three} finished={threeFinished} />
                 </div>
             </Modal.Body>
         </Modal>

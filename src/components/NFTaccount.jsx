@@ -10,19 +10,20 @@ import SendFees from './innercomponents/SendFees';
 import BigNumber from 'bignumber.js'
 import NFTlistTop from './innercomponents/NFTlistTop';
 import { ethers } from "ethers";
-import NFTsuccess from './NFTsuccess';
 import { useSelector } from 'react-redux';
-import { setBigNumFees, setError, setNFTList, setNFTsToWhitelist, setTxnHash, setTransferLoaderModal, setTransactionStep } from "../store/reducers/generalSlice"
+import { setBigNumFees, setError,  setNFTsToWhitelist, setTxnHash, setTransferLoaderModal, setTransactionStep } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
-import { getFactory, getNFTS, handleChainFactory, parseNFTS, setClaimablesAlgorand, setNFTS } from "../wallet/helpers"
+import { getFactory,  handleChainFactory,  setClaimablesAlgorand, setNFTS } from "../wallet/helpers"
 import Comment from "../components/innercomponents/Comment"
-import{ ChainData, getOldFactory } from '../wallet/oldHelper'
+import{  getOldFactory } from '../wallet/oldHelper'
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import {chainsConfig} from './values'
 import { algoConnector } from "../wallet/connectors"
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { useWeb3React } from '@web3-react/core';
-
+import { TempleWallet } from "@temple-wallet/dapp";
+import { TezosToolkit } from "@taquito/taquito";
+import { BeaconWallet } from "@taquito/beacon-wallet";
 
 
 
@@ -38,6 +39,7 @@ function NFTaccount() {
     const tronWallet = useSelector(state => state.general.tronWallet)
     const account = useSelector(state => state.general.account)
     const tezosAccount = useSelector(state => state.general.tezosAccount)
+    const kukaiWallet = useSelector(state => state.general.kukaiWallet)
     const maiarProvider = useSelector(state => state.general.maiarProvider)
     const factory = getFactory()
     const approvedNFTList = useSelector(state => state.general.approvedNFTList)
@@ -87,9 +89,10 @@ function NFTaccount() {
     
     async function getNFTsList(){
         // debugger
-       const hard = "0x4E3093E0681F3F0e98eFd7eC1A9a01500Efd6DCa"
+       const hard = "0x6449b68cc5675f6011e8DB681B142773A3157cb9"
         try {
             // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount :  
+            
             const w = tezosAccount || algorandAccount || tronWallet || elrondAccount || account
             await setNFTS(w, from)
             } catch (error) {  
@@ -98,12 +101,15 @@ function NFTaccount() {
     }
     
     async function estimate () {
-        // debugger 
+        // debugger
+   
         let fact
         let fee
         try {
+            // console.log(from, to)
             const fromChain = await handleChainFactory(from)
             const toChain = await handleChainFactory(to)
+            // console.log(fromChain, toChain)
             const wallet = 
             to ==='Tron' ? 'TCCKoPRcYoCGkxVThCaY9vRPaKiTjE4x1C' 
             : from === 'Tron' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
@@ -120,7 +126,7 @@ function NFTaccount() {
             //      fact = await getFactory()
             // }
             fact = await getFactory()
-
+            // console.log(fact, 'hlasdkask2', fromChain, selectedNFTList)
             if(selectedNFTList.length) {
                 if(to ==='Tron'){
                    fee = from === 'BSC' ? new BigNumber('100000000000000000')
@@ -150,44 +156,26 @@ function NFTaccount() {
         //   dispatch(setError(error))
         }
     }
-                                
-    // const getSign = async () => {
-    //     // debugger
-    //     let signer
-    //     const provider = new ethers.providers.Web3Provider(WCProvider.walletConnectProvider || window.ethereum);
-    //     try {
-    //         if(from === 'Algorand') {
-    //             signer = await getAlgorandWalletSigner()
-    //         }
-    //         else if(from === 'Elrond') {
-    //             if(maiarProvider) signer = maiarProvider
-    //             else signer = ExtensionProvider.getInstance()
-    //         }
-    //         else if(from === 'Tron') {
-    //             signer = window.tronLink
-    //         }
-    //         else {
-    //             signer = provider.getSigner(account)
-    //         }
-    //     } catch (error) {
-    //         console.error();
-    //     }
-    //     return signer
-    // }
-    
+
     const sendEach = async (nft, index) => {
-        debugger
+        // debugger
         if(index === 0) dispatch(setTransactionStep(1))
         const factory = await getFactory()
         const toChain = await factory.inner(chainsConfig[to].Chain)
         const fromChain = await factory.inner(chainsConfig[from].Chain)
         const provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : ''
-        // const signer =  await getSign()
-        const signer = from === 'Algorand' ? await getAlgorandWalletSigner() :
+        let tezosSigner
+        if(from === 'Tezos') {
+            tezosSigner = new TempleWallet("Cross-Chain NFT Bridge");
+            await tezosSigner.connect("mainnet");
+        }
+        const signer = from === 'Algorand' 
+        ? await getAlgorandWalletSigner() :
         from === 'Elrond' ? maiarProvider ? maiarProvider : ExtensionProvider.getInstance() :
         from === 'Tron' ? window.tronWeb 
+        : tezosSigner ? tezosSigner
         : provider.getSigner(account)
-        
+       
         try {
             let result
             if(from === 'Tron') {
@@ -207,7 +195,6 @@ function NFTaccount() {
                 dispatch(setTxnHash({txn: result, nft}))
             }
             else {
-                console.log("from: ", fromChain.getNonce());
                 try {
                     result = await factory.transferNft(
                         fromChain, // The Source Chain.
@@ -221,6 +208,7 @@ function NFTaccount() {
                     setLoading(false)
                     dispatch(setTxnHash({txn: result, nft}))
                 } catch(error) {
+                    
                     dispatch(setTxnHash({txn: "failed", nft}))
                     dispatch(dispatch(setTransferLoaderModal(false)))
                     setLoading(false)

@@ -141,9 +141,10 @@ export const chains = [
         key: "Tezos",
         text: "Tezos",
         value: "Tezos",
-        order: 13,
+        order: -1,
         image: { avatar: true, src: Tezos},
-        newChain: true
+        newChain: true,
+        coming: false
     }
 ]
 
@@ -263,7 +264,7 @@ export const chainsConfig = {
         rpc: "https://mainnet-tezos.giganode.io/",
         chainId: 0x12,
         Chain: Chain.TEZOS,
-        tx: "https://tzstats.com/tx/"
+        tx: "https://tzstats.com/"
     }
 
 }

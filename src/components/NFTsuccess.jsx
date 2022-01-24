@@ -5,15 +5,15 @@ import Success from '../assets/img/icons/Success.svg';
 import Check from '../assets/img/icons/Check_circle.svg';
 import FileCopy from '../assets/img/icons/FileCopy.svg';
 import CopyHover from '../assets/img/icons/CopyHover.svg';
-import copyTT from "../assets/img/icons/copytoclip.svg"
+// import copyTT from "../assets/img/icons/copytoclip.svg"
 import copiedIcon from "../assets/img/icons/copiedtoclip.svg"
 import { useSelector } from 'react-redux';
 import { chainsConfig } from './values';
 import moment from 'moment';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { setupURI } from '../wallet/oldHelper';
-import CopyIcons from './innercomponents/CopyIcons';
-import { getFactory, setClaimablesAlgorand } from '../wallet/helpers';
+// import CopyIcons from './innercomponents/CopyIcons';
+import { setClaimablesAlgorand } from '../wallet/helpers';
 import { claimAlgorandPopup, connectAlgorandWalletClaim } from '../store/reducers/generalSlice';
 import { useDispatch } from 'react-redux';
 import ConnectAlgorand from './ConnectAlgorand';
@@ -65,6 +65,10 @@ function NFTsuccess() {
         else return false
     }
 
+    const toShow = () => {
+        return txnHashArr?.length ? true : false
+    }
+
     const getTX = () => {
         let ntx
         // debugger
@@ -99,7 +103,7 @@ function NFTsuccess() {
             <ClaimAlgorandNFT />
             {/* <a href="#" className="themBtn" onClick={handleShow}>Send</a> */}
             {/* show={txnHashArr?.length} */}
-            <Modal animation={false} show={txnHashArr?.length} onHide={handleClose} className="nftSuccessMod">
+            <Modal animation={false} show={toShow()} onHide={handleClose} className="nftSuccessMod">
                 <Modal.Header>
                     <Modal.Title><img src={Success} /> Success</Modal.Title>
                     <span className="CloseModal" onClick={handleClose}>
@@ -193,7 +197,7 @@ function SuccessNFT({nft, from, index}) {
     }
     return  (
         <li className="nftSelecItem">
-            <img src={setupURI(nft.image)} alt="NFT" />
+            <img src={setupURI(nft.image || nft.uri)} alt="NFT" />
             <span className="nftSelected__name">{nft.name}</span>
             <span className="bluTextBtn">
                 <a href={`${chainsConfig[from.key].tx + getTX()}`} target="_blank">View Txn</a>

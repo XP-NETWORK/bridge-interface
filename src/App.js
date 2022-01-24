@@ -5,7 +5,7 @@ import "./Responsive.css";
 import XpBridge from "./pages/XpBridge";
 import Alert from "./components/Alert";
 import { useDispatch, useSelector } from "react-redux";
-import { setAlgorandClaimables, setFrom, setGetFeaturedModal, setTo, setTronPopUp, setValidatorsInf } from "./store/reducers/generalSlice";
+import {  setFrom, setGetFeaturedModal, setTo, setTronPopUp, setValidatorsInf } from "./store/reducers/generalSlice";
 import ApproveLoader from "./components/innercomponents/ApproveLoader";
 import { Modal } from "react-bootstrap"
 import Error from "./components/innercomponents/Error";
@@ -13,7 +13,7 @@ import TronPopUp from "./components/innercomponents/TronPopUp";
 import { chains } from "./components/values";
 import About from "./components/innercomponents/About";
 import Video from "./components/innercomponents/Video";
-import {getFactory, getTronNFTs, setClaimablesAlgorand} from './wallet/helpers'
+import {  setClaimablesAlgorand} from './wallet/helpers'
 import Widget from "./components/Widget";
 import TechnicalSupport from "./components/innercomponents/TechnicalSupport";
 import TransferLoader from "./components/innercomponents/TransferLoader";
@@ -21,8 +21,7 @@ import TronConnectionErrMod from "./components/TronConnectionErrMod";
 import star from "./assets/img/icons/featuredInactive.svg"
 import GetFeatured from "./components/innercomponents/GetFeatured";
 import TnProcess from "./components/innercomponents/processingModals/TnProcess";
-import SuccessCustom from "./components/Widget/customModals/SuccessCustom";
-import SuccessModal from "./components/Modals/SuccessModal";
+// import SuccessModal from "./components/Modals/SuccessModal";
 
 function App() {
   const dispatch = useDispatch()
@@ -30,7 +29,7 @@ function App() {
   const algorandAccount = useSelector(state => state.general.algorandAccount)
   const error = useSelector(state => state.general.error)
   const tronPopUp = useSelector(state => state.general.tronPopUp)
-  const nftsToWhitelist = useSelector(state => state.general.techModal)
+  // const nftsToWhitelist = useSelector(state => state.general.techModal)
   const state = useSelector(state => state.general)
   const axios = require("axios");
 

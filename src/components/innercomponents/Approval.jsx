@@ -11,9 +11,10 @@ import { getOldFactory } from '../../wallet/oldHelper';
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import { algoConnector } from "../../wallet/connectors"
 import MyAlgoConnect from '@randlabs/myalgo-connect';
-import { TezBridgeSigner } from '@taquito/tezbridge-signer'
 import { TezosToolkit } from "@taquito/taquito";
 import { TempleWallet } from "@temple-wallet/dapp";
+import { BeaconWallet } from "@taquito/beacon-wallet";
+import { DAppClient, TezosOperationType } from "@airgap/beacon-sdk";
 // import { InMemorySigner } from '@taquito/signer'
 
 
@@ -40,6 +41,7 @@ function Approval(props) {
     const algorandWallet = useSelector(state => state.general.AlgorandWallet)
     const MyAlgo = useSelector(state => state.general.MyAlgo)
     const templeWallet = useSelector(state => state.general.templeWallet)
+    const kukaiWallet = useSelector(state => state.general.kukaiWallet)
     
     
 
@@ -82,7 +84,7 @@ function Approval(props) {
                     const isInApprovedNFTs = approvedNFTList.filter(n => n.native.tokenId === tokenId && n.native.contract === contract && chainId === n.native.chainId )[0]
                     if(!isInApprovedNFTs) {
                         try {
-                            console.log(chain, 'hello')
+                            // console.log(chain, 'hello')
                             const ap = await chain.approveForMinter(nft, signer);
                             dispatch(updateApprovedNFTs(nft))
                             setFinishedApproving(arr)
@@ -116,16 +118,34 @@ function Approval(props) {
             }
             else if(from.text === "Tezos"){
                 try {
-                    const Tezos = new TezosToolkit('https://mainnet.api.tez.ie');
-                    Tezos.setProvider({signer: new TezBridgeSigner()})
+                    // if (kukaiWallet) {
+                    //     const factory = await getFactory()
+                    //     const chain = await factory.inner(Chain.TEZOS)
+                    //     const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
+                    //     const wallet = new BeaconWallet({ name: "Beacon Docs Taquito" });
+                    //     Tezos.setWalletProvider(wallet);
+
+
+                    //     // const activeAccount = await signer.getActiveAccount();
+                    //     const swap = await chain.preTransfer(signer, nft)
+                    //     dispatch(updateApprovedNFTs(nft))
+                    //     setFinishedApproving(arr)
+                    // }
+                    // else{
+                    //     const factory = await getFactory()
+                    //     const chain = await factory.inner(Chain.TEZOS)
+                    //     const signer = new TempleWallet("My Super DApp");
+                    //     await signer.connect("mainnet");
+                    //     const swap = await chain.preTransfer(signer, nft)
+                    //     dispatch(updateApprovedNFTs(nft))
+                    //     setFinishedApproving(arr)
+                    // }
+                    
                     const factory = await getFactory()
                     const chain = await factory.inner(Chain.TEZOS)
-                    const wallet = new TempleWallet("Cross-Chain NFT Bridge")
-                    await wallet.connect('mainnet');
-                    const tezos = wallet.toTezos();
-                    const signer =  tezos._wallet
-                    console.log(wallet);
-                    const swap = await chain.preTransfer(wallet, nft, bigNumberFees)
+                    const signer = new TempleWallet("My Super DApp");
+                    await signer.connect("mainnet");
+                    const swap = await chain.preTransfer(signer, nft)
                     dispatch(updateApprovedNFTs(nft))
                     setFinishedApproving(arr)
                 } catch (error) {
@@ -236,7 +256,7 @@ function Approval(props) {
             >
                 Approve all NFTs
                 <div className="approveBtn">
-                    <input checked={approved} type="checkbox" id="approveCheck" />
+                    <input readOnly={true} checked={approved || ''} type="checkbox" id="approveCheck" />
                     <label style={!receiver ? {pointerEvents: "none", opacity: "0.6"} : approved ? {pointerEvents: "none"} : {}} onClick={approveAllNFTs} htmlFor="approveCheck">
                         <span className="checkCircle"></span>
                     </label>

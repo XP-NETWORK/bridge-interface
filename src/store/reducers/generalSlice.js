@@ -9,7 +9,8 @@ const initialState = {
   txnHashArr: [],
   fees : 0,
   currentTx: 0,
-  bigLoader : true
+  bigLoader : true,
+  // approved: ''
 };
 
 const generalSlice = createSlice({
