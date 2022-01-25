@@ -16295,7 +16295,7 @@ xmlhttprequest-ssl@~2.0.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#master-dist":
   version "0.1.0"
-  resolved "git+https://github.com/xp-network/xpjs#c49364461db79cb972863e7044d537f50472c3c2"
+  resolved "git+https://github.com/xp-network/xpjs#171e1856c69133c8cfe4e653b80fd72a42d3dce7"
   dependencies:
     "@elrondnetwork/erdjs" "^8.0.1-alpha.8"
     "@json-rpc-tools/utils" "^1.7.6"

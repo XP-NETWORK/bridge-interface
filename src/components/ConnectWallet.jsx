@@ -287,9 +287,12 @@ function ConnectWallet() {
 
     const onBeacon = async () => {
       const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
-      const wallet = new BeaconWallet({ name: "Beacon Docs Taquito" });
-      
+      const wallet = new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" });
+      console.log("Tezos: ", Tezos);
+      console.log("wallet: ", wallet);
       Tezos.setWalletProvider(wallet);
+      console.log("Tezos: ", Tezos);
+      console.log("wallet: ", wallet);
       
       try {
         console.log("Requesting permissions...");
@@ -301,15 +304,15 @@ function ConnectWallet() {
       }
     }
 
-    const onKukai = async() => {
-      try {
-        const permissions = await wallet.client.requestPermissions();
-        dispatch(setTezosAccount(permissions.address))
-        dispatch(setKukaiWallet(true))
-      } catch (error) {
-        console.log("Got error:", error);
-      }
-    }
+    // const onKukai = async() => {
+    //   try {
+    //     const permissions = await wallet.client.requestPermissions();
+    //     dispatch(setTezosAccount(permissions.address))
+    //     dispatch(setKukaiWallet(true))
+    //   } catch (error) {
+    //     console.log("Got error:", error);
+    //   }
+    // }
 
     const onTemple = async () => {
       // debugger
@@ -318,7 +321,7 @@ function ConnectWallet() {
           if (!available) {
             throw new Error("Temple Wallet not installed");
           }
-          const wallet = new TempleWallet("Cross-Chain NFT Bridge");
+          const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
           await wallet.connect("mainnet");
           const tezos = wallet.toTezos();
           const accountPkh = await tezos.wallet.pkh();
