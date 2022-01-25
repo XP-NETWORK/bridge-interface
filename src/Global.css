@@ -684,6 +684,10 @@ span.wallet {
     display: flex;
 }
 
+.beacon img{
+    width: 30px
+}
+
 .wllListItem .coming-chain{
     margin-left: auto;
 }

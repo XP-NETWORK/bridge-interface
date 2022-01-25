@@ -11,6 +11,8 @@ import Maiar from '../assets/img/wallet/Maiar.svg';
 import Trezor from '../assets/img/wallet/Trezor.svg';
 import TrustWallet from "../assets/img/wallet/TWT.svg"
 import Kukai from "../assets/img/wallet/kukai.svg"
+import BeaconW from "../assets/img/wallet/BeaconWhite.svg"
+import BeaconB from "../assets/img/wallet/BeaconBlue.svg"
 import Temple from "../assets/img/wallet/Temple.svg"
 import WalletConnect from "../assets/img/wallet/WalletConnect 3.svg"
 import NFTworng from './NFTworng';
@@ -30,6 +32,7 @@ import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { DAppClient } from "@airgap/beacon-sdk";
+
 
 function ConnectWallet() {
 
@@ -282,7 +285,21 @@ function ConnectWallet() {
       }
     })
 
-    
+    const onBeacon = async () => {
+      const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
+      const wallet = new BeaconWallet({ name: "Beacon Docs Taquito" });
+      
+      Tezos.setWalletProvider(wallet);
+      
+      try {
+        console.log("Requesting permissions...");
+        const permissions = await wallet.client.requestPermissions();
+        dispatch(setTezosAccount(permissions.address))
+        dispatch(setKukaiWallet(true))
+      } catch (error) {
+        console.log("Got error:", error);
+      }
+    }
 
     const onKukai = async() => {
       try {
@@ -386,7 +403,7 @@ function ConnectWallet() {
                                 <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
-                                <li onClick={onKukai} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem"><img src={Kukai} alt="Kukai Icon" /> Kukai Wallet</li>
+                                <li onClick={onBeacon} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem beacon"><img src={BeaconW} alt="Kukai Icon" /> Beacon</li>
                                 <li onClick={onTemple} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem"><img style={{width: "28px"}} src={Temple} alt="Temple Icon" /> Temple Wallet</li>
                                 <li onClick={() => onMaiarExtension()} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
                                 <li style={ OFF } className="wllListItem">
