@@ -13,8 +13,8 @@ import moment from 'moment';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { setupURI } from '../wallet/oldHelper';
 // import CopyIcons from './innercomponents/CopyIcons';
-import { setClaimablesAlgorand } from '../wallet/helpers';
-import { claimAlgorandPopup, connectAlgorandWalletClaim } from '../store/reducers/generalSlice';
+import { setClaimablesAlgorand, setNFTS } from '../wallet/helpers';
+import { claimAlgorandPopup, connectAlgorandWalletClaim, setTxnHash } from '../store/reducers/generalSlice';
 import { useDispatch } from 'react-redux';
 import ConnectAlgorand from './ConnectAlgorand';
 import ClaimAlgorandNFT from './ClaimAlgorandNFT';
@@ -27,22 +27,36 @@ function NFTsuccess() {
     const to = useSelector(state => state.general.to)
     const account = useSelector(state => state.general.account)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
+    const tezosAccount = useSelector(state => state.general.tezosAccount)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const tronWallet = useSelector(state => state.general.tronWallet)
     const receiver = useSelector(state => state.general.receiver)
     const txnHashArr = useSelector(state => state.general.txnHashArr)
     const currentTX = useSelector(s => s.general.currrentTx)
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
+    
 
+    const refresh = async () => {
+       
+            const w = algorandAccount || tronWallet || tezosAccount || account
+            // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
+            await setNFTS(w, from.key)
+        
 
-    const [show, setShow] = useState(true);
+    }
+
+    // const [show, setShow] = useState(true);
+
     const handleClose = () => {
         window.location.reload()
+        // dispatch(setTxnHash(''))
+        // refresh()
     };
-    const handleShow = () => setShow(true);
+
+    // const handleShow = () => setShow(true);
     const [copied, setCopy] = useState()
     const [copyHover, setSetCopyHover] = useState()
-    const showSuccess = useSelector(state => state.showSuccess)
+    // const showSuccess = useSelector(state => state.showSuccess)
 
     useEffect(() => {
         if(
