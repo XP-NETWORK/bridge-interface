@@ -118,13 +118,6 @@ function NFTaccount() {
             : from === 'Tezos' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6' 
             : account;
 
-            // const fact = from === 'Algorand' || from === 'Elrond' ? await getFactory() : await getOldFactory()
-            // if(from === 'Algorand' || from === 'Elrond') {
-            //      fact = await getFactory()
-            // }
-            // else{
-            //      fact = await getFactory()
-            // }
             fact = await getFactory()
             // console.log(fact, 'hlasdkask2', fromChain, selectedNFTList)
             if(selectedNFTList.length) {
@@ -147,7 +140,7 @@ function NFTaccount() {
                     }
                 } 
             }
-            const bigNum = fee.multipliedBy(1.1).integerValue().toString(10)
+            const bigNum = fee ? fee.multipliedBy(1.1).integerValue().toString(10) : undefined
             dispatch(setBigNumFees(bigNum))
             const fees = await Web3Utils.fromWei(bigNum, "ether")
             setFees(fees)
@@ -171,6 +164,7 @@ function NFTaccount() {
         }
         const signer = from === 'Algorand' 
         ? await getAlgorandWalletSigner() :
+        from === "Tezos" ? new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" }) :
         from === 'Elrond' ? maiarProvider ? maiarProvider : ExtensionProvider.getInstance() :
         from === 'Tron' ? window.tronWeb 
         : tezosSigner ? tezosSigner
@@ -209,7 +203,7 @@ function NFTaccount() {
                     dispatch(setTxnHash({txn: result, nft}))
                 } catch(error) {
                     
-                    dispatch(setTxnHash({txn: "failed", nft}))
+                    // dispatch(setTxnHash({txn: "failed", nft}))
                     dispatch(dispatch(setTransferLoaderModal(false)))
                     setLoading(false)
                     if(error.data){
@@ -230,7 +224,7 @@ function NFTaccount() {
                 await setClaimablesAlgorand(algorandAccount)
             }
         } catch (error) {
-            dispatch(setTxnHash({txn: "failed", nft}))
+            // dispatch(setTxnHash({txn: "failed", nft}))
             setLoading(false)
             dispatch(dispatch(setTransferLoaderModal(false)))
             console.log(error);

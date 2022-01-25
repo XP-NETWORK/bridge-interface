@@ -36,6 +36,8 @@ export default function AccountModal() {
     const WCProvider = useSelector(state => state.general.WCProvider)
     const tronLink = useSelector(state => state.general.tronLink)
     const templeWallet = useSelector(state => state.general.templeWallet)
+    const kukaiWallet = useSelector(state => state.general.kukaiWallet)
+    
 
     // const step = useSelector(state => state.general.step)
 
@@ -99,6 +101,7 @@ export default function AccountModal() {
      else if(MyAlgo) return "MyAlgo"
      else if(tronLink) return 'Tron Link'
      else if(templeWallet) return "Temple Wallet"
+     else if(kukaiWallet) return "Beacon"
      else if(WalletConnect) return `${WCProvider.walletConnectProvider.signer.connection.wc._peerMeta.name} (WalletConnect)`
     }
 
@@ -110,8 +113,6 @@ export default function AccountModal() {
                 Account <span className="CloseModal" onClick={handleClose}> <img src={Close} alt="#" /> </span>
             </div>
             <p className="">{connectedWith()}</p>
-                        {/* { copyIconHover && <img className="copytoltip" src={copyTT} /> } */}
-                        {/* { copied && <img className="copytoltip-tron" src={copiedIcon} /> } */}
                         { copied && <Tooltip /> }
             <CopyToClipboard text={elrondAccount || account || tronWallet || algorandAccount || algorandAccount}>
                 <div className="nftLink">
