@@ -114,7 +114,7 @@ export default function AccountModal() {
             </div>
             <p className="">{connectedWith()}</p>
                         { copied && <Tooltip /> }
-            <CopyToClipboard text={elrondAccount || account || tronWallet || algorandAccount || algorandAccount}>
+            <CopyToClipboard text={elrondAccount || account || tronWallet || tezosAccount || algorandAccount}>
                 <div className="nftLink">
                     <img src={NftSelect} alt="#"/>
 
