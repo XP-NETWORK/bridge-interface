@@ -209,7 +209,7 @@ function NFTaccount() {
                     dispatch(setTxnHash({txn: result, nft}))
                 } catch(error) {
                     
-                    dispatch(setTxnHash({txn: "failed", nft}))
+                    // dispatch(setTxnHash({txn: "failed", nft}))
                     dispatch(dispatch(setTransferLoaderModal(false)))
                     setLoading(false)
                     if(error.data){
@@ -230,7 +230,7 @@ function NFTaccount() {
                 await setClaimablesAlgorand(algorandAccount)
             }
         } catch (error) {
-            dispatch(setTxnHash({txn: "failed", nft}))
+            // dispatch(setTxnHash({txn: "failed", nft}))
             setLoading(false)
             dispatch(dispatch(setTransferLoaderModal(false)))
             console.log(error);
