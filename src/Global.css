@@ -727,8 +727,15 @@ span.wallet {
   display: flex;
 }
 
-.beacon img{
-  width: 28px
+.beacon img {
+  width: 28px;
+}
+.wllListItem .coming-chain {
+  margin-left: auto;
+}
+
+.wllListItem div {
+  display: flex;
 }
 
 .algo img {
