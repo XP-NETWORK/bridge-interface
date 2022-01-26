@@ -44,7 +44,8 @@ export default function Widget() {
       const iconColor = p.get("iconColor");
 
       const chains = p.get("chains")?.split("-");
-      console.log(chains, "ds");
+      const wallets = p.get("wallets")?.split("-");
+      console.log(wallets, "ds");
 
       setState({
         backgroundColor,
@@ -55,6 +56,7 @@ export default function Widget() {
         btnBackground,
         btnRadius,
         chains,
+        wallets,
         cardBackground,
         cardRadius,
         accentColor,
@@ -82,6 +84,7 @@ export default function Widget() {
     secondaryColor,
     borderColor,
     iconColor,
+    wallets,
   } = state;
 
   useEffect(() => {
@@ -158,12 +161,18 @@ export default function Widget() {
           opacity: 0;
         }
 
-        .nftChainItem {
+        .nftChainItem, .wllListItem {
           display: none;
         }
 
         ${chains
           ?.map((chain) => `.nftChainItem[data-chain="${chain}"]`)
+          .join(", ")} {
+          display: flex;
+        }
+
+        ${wallets
+          ?.map((wallet) => `.wllListItem[data-wallet="${wallet}"]`)
           .join(", ")} {
           display: flex;
         }

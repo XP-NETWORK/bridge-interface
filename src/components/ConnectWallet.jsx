@@ -434,6 +434,7 @@ function ConnectWallet() {
                   onClick={() => onInjected()}
                   style={from ? (from.type === "EVM" ? {} : OFF) : ""}
                   className="wllListItem"
+                  data-wallet="MetaMask"
                 >
                   <img src={MetaMask} alt="MetaMask Icon" /> MetaMask
                 </li>
@@ -441,6 +442,7 @@ function ConnectWallet() {
                   onClick={() => onWalletConnect()}
                   style={OFF}
                   className="wllListItem"
+                  data-wallet="WalletConnect"
                 >
                   <img src={WalletConnect} alt="WalletConnect Icon" />{" "}
                   WalletConnect
@@ -454,6 +456,7 @@ function ConnectWallet() {
                       : OFF
                   }
                   className="wllListItem"
+                  data-wallet="TrustWallet"
                 >
                   <img src={TrustWallet} alt="WalletConnect Icon" /> Trust
                   Wallet
@@ -462,6 +465,7 @@ function ConnectWallet() {
                   onClick={onMyAlgo}
                   style={from ? (from.type === "Algorand" ? {} : OFF) : ""}
                   className="wllListItem algo"
+                  data-wallet="MyAlgo"
                 >
                   <img src={MyAlgoBlue} alt="" /> MyAlgo
                 </li>
@@ -469,6 +473,7 @@ function ConnectWallet() {
                   onClick={onAlgoSigner}
                   style={from ? (from.type === "Algorand" ? {} : OFF) : ""}
                   className="wllListItem algo"
+                  data-wallet="AlgoSigner"
                 >
                   <img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo
                   Signer
@@ -478,6 +483,7 @@ function ConnectWallet() {
                   onClick={() => connectTronlink()}
                   style={from ? (from.type === "Tron" ? {} : OFF) : ""}
                   className="wllListItem"
+                  data-wallet="TronLink"
                 >
                   <img src={Tron} alt="Tron Icon" /> TronLink
                 </li>
@@ -485,6 +491,7 @@ function ConnectWallet() {
                   onClick={() => onMaiar()}
                   style={from ? (from.type === "Elrond" ? {} : OFF) : ""}
                   className="wllListItem"
+                  data-wallet="Maiar"
                 >
                   <img src={Maiar} alt="" /> Maiar
                 </li>
@@ -493,6 +500,7 @@ function ConnectWallet() {
                   onClick={onBeacon}
                   style={from?.text === "Tezos" ? {} : OFF}
                   className="wllListItem beacon"
+                  data-wallet="Beacon"
                 >
                   <img src={BeaconW} alt="Kukai Icon" /> Beacon
                 </li>
@@ -500,6 +508,7 @@ function ConnectWallet() {
                   onClick={onTemple}
                   style={from?.text === "Tezos" ? {} : OFF}
                   className="wllListItem"
+                  data-wallet="TempleWallet"
                 >
                   <img
                     style={{ width: "28px" }}
@@ -512,17 +521,18 @@ function ConnectWallet() {
                   onClick={() => onMaiarExtension()}
                   style={from ? (from.type === "Elrond" ? {} : OFF) : ""}
                   className="wllListItem"
+                  data-wallet="MaiarExtension"
                 >
                   <img src={Elrond} alt="Elrond Icon" /> Maiar Extension
                 </li>
-                <li style={OFF} className="wllListItem">
+                <li style={OFF} className="wllListItem" data-wallet="Ledger">
                   <div>
                     <img src={Ledger} alt="Ledger Icon" />
                     Ledger
                   </div>
                   <div className="coming-chain">Coming soon</div>
                 </li>
-                <li style={OFF} className="wllListItem">
+                <li style={OFF} className="wllListItem" data-wallet="Trezor">
                   <div>
                     <img
                       style={{ marginLift: "-5px" }}

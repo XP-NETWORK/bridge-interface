@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
+import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
+import Close from "../../assets/img/icons/close.svg";
 import Back from "../../assets/img/icons/Back.svg";
 import { useSelector } from "react-redux";
 import {
@@ -24,9 +25,12 @@ function SelectedNFT() {
     dispatch(removeFromSelectedNFTList(nft));
   };
 
+  const { widget } = useSelector(({ general: { widget } }) => ({
+    widget,
+  }));
+
   useEffect(() => {}, [selectedNFTs]);
 
-<<<<<<< HEAD
   return (
     <div className="nftSelectList">
       <div className="nftSeleTop">
@@ -48,41 +52,6 @@ function SelectedNFT() {
           >
             Clear all
           </button>
-=======
-    useEffect(() => { }, [selectedNFTs])
-    
-    return (
-        <div className="nftSelectList">
-            <div className="nftSeleTop">
-                <div className="selectedNft nftselectedtop">
-                    <a  className="backBtn mobileOnly"><img src={Back} alt="Back" /></a>
-                    <span className="mobileOnly">Selected NFTs</span>
-                    <span className="desktopOnly">Selected NFTs <span>{selectedNFTs.length} / {nfts?.length}</span></span>
-                    <button style={selectedNFTs.length ? {} : OFF } onClick={() => handleClear()} className="clearNft">Clear all</button>
-                </div>
-            </div>
-            <ul className="nftSelected">
-                { selectedNFTs ? selectedNFTs.map( (nft, index) => 
-                    <li key={`selected-nft-${index}`} onClick={() => handleRemove(nft)} className="nftSelecItem">
-                        {/* <img src={nft.image ? nft.image : brockenurl} alt="NFT" /> */}
-                        { nft.uri && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url || nft.uri) ? 
-                            nft.animation_url ? 
-                            <video src={nft.animation_url} /> 
-                            :
-                            <img alt="NFT" src={setupURI(nft.image || nft.uri)} /> 
-                            : 
-                            <div className="brocken-url-selected">
-                                <img src={brockenurl} alt='This NFT image uri is broken.' />
-                                
-                            </div>
-                        }
-                        <span className="nftSelecItem__name">{nft.name || nft.native.name}</span>
-                        <span className="Close"><img  alt="" src={Close} /></span>
-                    </li> ) 
-                    :
-                     ''}
-            </ul>
->>>>>>> 1928db95cca5120ce5c0b34b85d403131f16130d
         </div>
       </div>
       <ul className="nftSelected">
@@ -107,9 +76,15 @@ function SelectedNFT() {
                     <img src={brockenurl} alt="This NFT image uri is broken." />
                   </div>
                 )}
-                <span className="nftSelecItem__name">{nft.name}</span>
+                <span className="nftSelecItem__name">
+                  {nft.name || nft.native.name}
+                </span>
                 <span className="Close">
-                  <Close className="svgWidget" />
+                  {widget ? (
+                    <CloseComp className="svgWidget" />
+                  ) : (
+                    <img src={Close} alt="close" />
+                  )}
                 </span>
               </li>
             ))
