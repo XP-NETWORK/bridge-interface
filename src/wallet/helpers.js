@@ -249,7 +249,7 @@ export const setNFTS = async (w, from) => {
 }
 
 export function isValidHttpUrl(string) {
-  console.log("isValidHttpUrl: ", string);
+  // console.log("isValidHttpUrl: ", string);
   let url;
   if((string.includes("data:image/") || string.includes("data:application/"))) return true
   if(string.includes('ipfs://')) return true
