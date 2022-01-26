@@ -11,16 +11,20 @@ import Search from "../assets/img/icons/Search.svg";
 // Wallet
 import nftDetails_1 from "../assets/img/nfts/nftDetails_1.png";
 
-import { ReactComponent as INF } from "../assets/img/icons/Inf.svg";
+import { ReactComponent as INFComp } from "../assets/img/icons/Inf.svg";
+import INF from "../assets/img/icons/Inf.svg";
 import { setupURI } from "../wallet/oldHelper";
 import { chainsConfig } from "./values";
-
+import { useSelector } from "react-redux";
 function NFTdetails({ nftInf }) {
   const { name, description, image, attributes, uri, native } = nftInf;
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const { widget } = useSelector(({ general: { widget } }) => ({
+    widget,
+  }));
 
   return (
     <>
@@ -29,7 +33,11 @@ function NFTdetails({ nftInf }) {
             </Button> */}
       <div className="info-icon__container">
         <span className="NFTInf" onClick={handleShow}>
-          <INF className="svgWidget" />
+          {widget ? (
+            <INFComp className="svgWidget" />
+          ) : (
+            <img src={INF} alt="" />
+          )}
         </span>
       </div>
       <Modal

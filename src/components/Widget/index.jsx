@@ -101,7 +101,7 @@ export default function Widget() {
         
         .modal-title, .modalSelectOptionsText, .selChain, .seleDestiSele, .yourNft, .yourNft span, .sendNftTit, 
         .desChain span, .ComentBox p, .selectedNft span, .approveBtn, .nftFees span, .nftSelecItem, .wllListItem, .nftListed,
-         .desAddress input, .nftWornTop h3, .nftWornTop p, .nftInfBox p, .about__text {
+         .desAddress input, .nftWornTop h3, .nftWornTop p, .nftInfBox p, .about__text, .ComentBox p {
             color: ${color ? "#" + color : ""};
         }
 
@@ -113,7 +113,7 @@ export default function Widget() {
             font-size: ${fontSize ? fontSize + "px" : ""}
         }
 
-        a.themBtn, .nftSelectBox {
+        a.themBtn, .nftSelectBox, .modal-content, .widget .destiAddress input {
             border-radius: ${btnRadius ? btnRadius + "px" : ""};
         }
 
@@ -238,20 +238,32 @@ export default function Widget() {
           fill: ${iconColor ? "#" + iconColor : ""};
         }
 
-        .swpBtn path:nth-child(1) {
-          fill: #fffff;
+        .swpBtn path:first-child {
+          fill: ${btnBackground ? "#" + btnBackground : ""};
+          filter: brightness(95%);
         }
 
         .swpBtn path:nth-child(2) {
-          fill: ${iconColor ? "#" + iconColor : ""};
+          fill: ${btnBackground ? "#" + btnBackground : ""};
+          filter: brightness(95%);
         }
         
         .swpBtn path:nth-child(3)  {
-          fill: #fff8f8;
+          fill: #ffffff;
         }
 
         .svgWidget:hover {
           filter: brightness(125%);
+        }
+
+        .swpBtn:hover path:nth-child(1){
+          fill: ${btnBackground ? "#" + btnBackground : ""};
+        
+        }
+
+        .swpBtn:hover path:nth-child(2){
+          fill: ${btnBackground ? "#" + btnBackground : ""};
+          filter: brightness(100%);
         }
 
         .nft-box__container--selected, .nft-box__container:hover {
@@ -264,13 +276,13 @@ export default function Widget() {
         }
 
 
-        .nftSelectBox, .modal-content, .modal-header, .nftChainList, .singleNft.missing, .nftInfBox  {
+        .nftSelectBox, .modal-content, .modal-header, .nftChainList, .singleNft.missing, .nftInfBox, .wllListItem  {
           border-color: ${borderColor ? "#" + borderColor : ""};
         }
 
         .searchChain input {
           border: 1px solid ${borderColor ? "#" + borderColor : ""};
-          filter: brightness(55%);
+         
         }
 
         .svgWidgetBorder line {
@@ -280,6 +292,11 @@ export default function Widget() {
         .selChain > div:hover:after {
           filter: brightness(5);
          
+        }
+
+        .wllListItem:hover {
+          background: initial;
+          border: 1px solid  ${borderColor ? "#" + borderColor : ""};
         }
 
         `;

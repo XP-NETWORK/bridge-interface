@@ -730,13 +730,6 @@ span.wallet {
 .beacon img {
   width: 28px;
 }
-.wllListItem .coming-chain {
-  margin-left: auto;
-}
-
-.wllListItem div {
-  display: flex;
-}
 
 .algo img {
   width: 28px;

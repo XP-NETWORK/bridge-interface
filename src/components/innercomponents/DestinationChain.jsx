@@ -8,10 +8,15 @@ import {
   setReceiver,
   setSwitchDestination,
 } from "../../store/reducers/generalSlice";
+import vet from "../../assets/img/Vector.svg";
 import { ReactComponent as Vet } from "../../assets/img/Vector.svg";
 
 function DestinationChain() {
   const to = useSelector((state) => state.general.to);
+  const { widget } = useSelector(({ general: { widget } }) => ({
+    widget,
+  }));
+
   const Web3Utils = require("web3-utils");
   const dispatch = useDispatch();
   const receiver = useSelector((state) => state.general.receiver);
@@ -33,9 +38,13 @@ function DestinationChain() {
         <span>
           <img style={{ width: "30px" }} src={to.image.src} alt="" /> {to.key}
           <div onClick={() => handleSwitchChain()} className="triangle">
-            <div>
-              <Vet className="svgWidget trg" />
-            </div>
+            {widget ? (
+              <div>
+                <Vet className="svgWidget trg" />
+              </div>
+            ) : (
+              <img src={vet} alt="" />
+            )}
           </div>
         </span>
       </div>
