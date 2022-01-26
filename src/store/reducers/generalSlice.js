@@ -50,6 +50,9 @@ const generalSlice = createSlice({
     setSelectedNFTList(state, action){
       state.selectedNFTList = [...state.selectedNFTList, action.payload]
     },
+    cleartSelectedNFT(state, action){
+      state.selectedNFTList = []
+    },
     cleanSelectedNFTList(state, action){
       state.selectedNFTList = []
     },
@@ -68,8 +71,11 @@ const generalSlice = createSlice({
     setNFTsListView(state){
       state.NFTListView = !state.NFTListView
     },
+    clearApprovedNFTs(state, action){
+      state.approvedNFTList = []
+    },
     updateApprovedNFTs(state, action) {
-      const {tokenId, contract, chainId} = action.payload.native
+      const {tokenId, contract, chainId} = action.payload?.native
       const isInApprovedNFTs = state.approvedNFTList.filter(n => n.native.tokenId === tokenId && n.native.contract === contract && chainId === n.native.chainId )[0]
       if(!isInApprovedNFTs)
       state.approvedNFTList = [...state.approvedNFTList, action.payload]
@@ -81,6 +87,10 @@ const generalSlice = createSlice({
     setReceiver(state, action){
       state.receiver = action.payload
     },
+    clearTxnHash(state, action){
+      state.txnHashArr = []
+    }
+    ,
     setTxnHash(state, action){
       const {nft, txn} = action.payload
       const { tokenId, contract, chainId } = nft.native
@@ -279,7 +289,10 @@ export const {
     setShowAbout,
     setShowVideo,
     setAlgorandWallet,
-    setMyAlgo
+    setMyAlgo,
+    clearTxnHash,
+    clearApprovedNFTs,
+    cleartSelectedNFT
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
