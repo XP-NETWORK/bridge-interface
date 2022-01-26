@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import Close from "../../assets/img/icons/close.svg";
+import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
 import { setShowAbout } from "../../store/reducers/generalSlice";
 
 export default function About() {
@@ -18,7 +18,7 @@ export default function About() {
         <div className="tron-PopUp__header">
           <Modal.Title>What is NFT?</Modal.Title>
           <span className="CloseModal" onClick={() => handleClose()}>
-            <img src={Close} alt="" />
+            <Close className="svgWidget" />
           </span>
         </div>
       </Modal.Header>
