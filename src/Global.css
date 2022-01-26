@@ -2205,7 +2205,8 @@ span.invalid img {
   padding: 10px;
 }
 
-.ComentBox img {
+.ComentBox img,
+.ComentBox svg {
   display: block;
   width: 27px;
   margin-right: 10px;

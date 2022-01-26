@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 import Departure from "../assets/img/nftSelect/departure.svg";
 import Destination from "../assets/img/nftSelect/destination.svg";
 import { ReactComponent as LineArrow } from "../assets/img/nftSelect/Line.svg";
+import { ReactComponent as ChainArrowComp } from "../assets/img/icons/Swap.svg";
 import ChainArrow from "../assets/img/icons/Swap.svg";
 import SwapHover from "../assets/img/icons/SwapHover.svg";
 import SwapPressed from "../assets/img/icons/SwapPressed.svg";
@@ -20,6 +21,9 @@ export default function NFTSelectBox() {
 
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
+  const { widget } = useSelector(({ general: { widget } }) => ({
+    widget,
+  }));
 
   const handleShow = (str) => {
     dispatch(setChainModal(true));
@@ -64,14 +68,22 @@ export default function NFTSelectBox() {
           onClick={(e) => switchChains(e)}
           className="chainArrow"
         >
-          <img
-            src={swapDown ? SwapPressed : swapHover ? SwapHover : ChainArrow}
-            alt=""
-          />
+          {!widget ? (
+            <img
+              src={swapDown ? SwapPressed : swapHover ? SwapHover : ChainArrow}
+              alt=""
+            />
+          ) : (
+            <ChainArrowComp className="svgWidget swpBtn" />
+          )}
         </span>
       ) : (
         <span className="chainArrow">
-          <img src={ChainArrow} alt="arrow-swap" />
+          {widget ? (
+            <ChainArrowComp className="svgWidget swpBtn" />
+          ) : (
+            <img src={ChainArrow} alt="" />
+          )}
         </span>
       )}
       <span className="LineArrow">
