@@ -14,7 +14,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { setupURI } from '../wallet/oldHelper';
 // import CopyIcons from './innercomponents/CopyIcons';
 import { setClaimablesAlgorand, setNFTS } from '../wallet/helpers';
-import { claimAlgorandPopup, connectAlgorandWalletClaim, setTxnHash } from '../store/reducers/generalSlice';
+import { claimAlgorandPopup, clearApprovedNFTs, cleartSelectedNFT, clearTxnHash, connectAlgorandWalletClaim, setSelectedNFTList, setTxnHash } from '../store/reducers/generalSlice';
 import { useDispatch } from 'react-redux';
 import ConnectAlgorand from './ConnectAlgorand';
 import ClaimAlgorandNFT from './ClaimAlgorandNFT';
@@ -49,7 +49,9 @@ function NFTsuccess() {
 
     const handleClose = () => {
         window.location.reload()
-        // dispatch(setTxnHash(''))
+        // dispatch(clearTxnHash())
+        // dispatch(cleartSelectedNFT())
+        // dispatch(clearApprovedNFTs())
         // refresh()
     };
 

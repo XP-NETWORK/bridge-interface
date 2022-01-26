@@ -49,7 +49,7 @@ function SelectedNFT() {
                                 
                             </div>
                         }
-                        <span className="nftSelecItem__name">{nft.name}</span>
+                        <span className="nftSelecItem__name">{nft.name || nft.native.name}</span>
                         <span className="Close"><img  alt="" src={Close} /></span>
                     </li> ) 
                     :
