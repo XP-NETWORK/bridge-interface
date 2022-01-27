@@ -330,6 +330,8 @@ function NFTaccount() {
                 else dispatch(setError(message))
                 return
             }
+            else dispatch(setError(err))
+            return
         }
     }
 
