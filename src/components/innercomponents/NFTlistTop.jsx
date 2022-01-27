@@ -112,12 +112,12 @@ function NFTlistTop() {
                 }
             </div>
             {/* !!! Show on click */}
-            <div style={!showSearch ? {} : off} className="mobileOnly mobSearch">
+            {/* <div style={!showSearch ? {} : off} className="mobileOnly mobSearch">
                 <form action="#">
                     <input type="search" placeholder="Search NFT"  onChange={e => handleSearch(e)}/>
                     <button type="button"><img src={Search} /></button>
                 </form>
-            </div>
+            </div> */}
         </div>
         </>
     )

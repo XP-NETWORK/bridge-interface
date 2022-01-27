@@ -49,7 +49,7 @@ export default function NFT({nft, index}) {
                                 <span className="brocken-url__msg">NFTs URL<br/> is broken</span>
                             </div>
                         }                      
-                        {(nft.image || nft.image_url) && 
+                        {/* {(nft.image || nft.image_url) &&  */}
                             <div className="radio__container">
                             { !isSelected ? 
                                 <span className="selected-radio"></span> 
@@ -57,7 +57,7 @@ export default function NFT({nft, index}) {
                                 <img src={CheckGreen} alt=''/>
                             }
                             </div>
-                        } 
+                        {/* }  */}
                     </div>
                 </div>
                 <div className={`nft-content__container ${!imageLoaded ? 'preload-content-container' : ''}`}>

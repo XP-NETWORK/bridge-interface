@@ -258,6 +258,7 @@ function ConnectWallet() {
       const myAlgoConnect = new MyAlgoConnect();
       try {
         const accountsSharedByUser = await myAlgoConnect.connect()
+        console.log("MY Algo: ", myAlgoConnect);
         dispatch(setAlgorandAccount(accountsSharedByUser[0].address))
         dispatch(setMyAlgo(true))
       } catch (error) {
@@ -269,6 +270,7 @@ function ConnectWallet() {
       if (typeof window.AlgoSigner !== undefined) {
         try {
           await window.AlgoSigner.connect()
+          console.log("Algo: ", window.AlgoSigner);
           const algo = await window.AlgoSigner.accounts({
             ledger: 'MainNet'
           });
@@ -288,14 +290,9 @@ function ConnectWallet() {
     const onBeacon = async () => {
       const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
       const wallet = new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" });
-      console.log("Tezos: ", Tezos);
-      console.log("wallet: ", wallet);
       Tezos.setWalletProvider(wallet);
       console.log("Tezos: ", Tezos);
-      console.log("wallet: ", wallet);
-      
       try {
-        console.log("Requesting permissions...");
         const permissions = await wallet.client.requestPermissions();
         dispatch(setTezosAccount(permissions.address))
         dispatch(setKukaiWallet(true))
