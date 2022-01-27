@@ -183,6 +183,7 @@ function Approval(props) {
     }
   };
 
+<<<<<<< HEAD
   // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
   const approveAllNFTs = async () => {
     // debugger
@@ -229,6 +230,106 @@ function Approval(props) {
       setApprovedLoading(false);
       dispatch(setApproveLoader(false));
       setFinishedApproving([]);
+=======
+    const approveEach = async (nft, signer, chain, index) => {
+        // debugger
+        const arr = new Array(index + 1).fill(0)
+        const factory = await getFactory()
+            if(from.type !== "Elrond" && from.type !== 'Algorand' && from.type !== "Tezos"){
+                try {
+                    const { tokenId, contract, chainId } = nft.native
+                    const isInApprovedNFTs = approvedNFTList.filter(n => n.native.tokenId === tokenId && n.native.contract === contract && chainId === n.native.chainId )[0]
+                    if(!isInApprovedNFTs) {
+                        try {
+                            // console.log(chain, 'hello')
+                            const ap = await chain.approveForMinter(nft, signer);
+                            dispatch(updateApprovedNFTs(nft))
+                            setFinishedApproving(arr)
+                        } catch(err) {
+                            console.log(arr, err)
+                            setFinishedApproving(arr)
+                            dispatch(setError(err.message))
+                        }
+                    }
+                } catch (error) {
+                    setFinishedApproving(arr)
+                    dispatch(setError(error))
+                    if(error.data){
+                      console.log(error.data.message);
+                    }
+                    else console.log(error); 
+                    // dispatch(setApproved(false))
+                    console.log(error);
+                }
+            }
+            else if(from.type === 'Algorand') {
+                const c = await factory.inner(15)
+                const signer = await getAlgorandWalletSigner()
+                try {
+                    const approv = await c.preTransfer(signer, nft, bigNumberFees)
+                } catch (error) {
+                    console.log(error);
+                }
+                dispatch(updateApprovedNFTs(nft))
+                setFinishedApproving(arr)
+            }
+            else if(from.text === "Tezos"){
+                try {
+                    if (kukaiWallet) {
+                        const factory = await getFactory()
+                        const chain = await factory.inner(Chain.TEZOS)
+                        const wallet = new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" });
+                        const swap = await chain.preTransfer(wallet, nft)
+                        dispatch(updateApprovedNFTs(nft))
+                        setFinishedApproving(arr)
+                    }
+                    else{
+                        const factory = await getFactory()
+                        const chain = await factory.inner(Chain.TEZOS)
+                        const signer = new TempleWallet("My Super DApp");
+                        await signer.connect("mainnet");
+                        const swap = await chain.preTransfer(signer, nft)
+                        dispatch(updateApprovedNFTs(nft))
+                        setFinishedApproving(arr)
+                    }
+                    
+                    // const factory = await getFactory()
+                    // const chain = await factory.inner(Chain.TEZOS)
+                    // const signer = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
+                    // await signer.connect("mainnet");
+                    // const swap = await chain.preTransfer(signer, nft)
+                    // dispatch(updateApprovedNFTs(nft))
+                    // setFinishedApproving(arr)
+                } catch (error) {
+                    setFinishedApproving(arr)
+                    dispatch(setError(error))
+                    if(error.data){
+                      console.log(error.data.message);
+                    }
+                    else console.log(error); 
+                    console.log(error)
+                }
+            }
+            else{
+                try {
+                    const factory = await getFactory()
+                    const chain = await factory.inner(Chain.ELROND)
+                    const signer = maiarProvider ? maiarProvider : ExtensionProvider.getInstance()
+                    const swap = await chain.preTransfer(signer, nft, bigNumberFees)
+                
+                    dispatch(updateApprovedNFTs(nft))
+                    setFinishedApproving(arr)
+                } catch (error) {
+                    setFinishedApproving(arr)
+                    dispatch(setError(error))
+                    if(error.data){
+                      console.log(error.data.message);
+                    }
+                    else console.log(error); 
+                    console.log(error)
+                }
+            }
+>>>>>>> 80647d2ba691b847d38f2fcf70d412b3689f0b5c
     }
 
     if (selectedNFTList.length > 0) {

@@ -336,12 +336,24 @@ function ConnectWallet() {
   //   }
   // }
 
+<<<<<<< HEAD
   const onTemple = async () => {
     // debugger
     try {
       const available = await TempleWallet.isAvailable();
       if (!available) {
         throw new Error("Temple Wallet not installed");
+=======
+    const onMyAlgo = useCallback( async () => {
+      const myAlgoConnect = new MyAlgoConnect();
+      try {
+        const accountsSharedByUser = await myAlgoConnect.connect()
+        console.log("MY Algo: ", myAlgoConnect);
+        dispatch(setAlgorandAccount(accountsSharedByUser[0].address))
+        dispatch(setMyAlgo(true))
+      } catch (error) {
+        console.log(error);
+>>>>>>> 80647d2ba691b847d38f2fcf70d412b3689f0b5c
       }
       const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
       await wallet.connect("mainnet");
@@ -354,17 +366,52 @@ function ConnectWallet() {
     }
   };
 
+<<<<<<< HEAD
   useEffect(() => {
     algoConnector.on("connect", (error, payload) => {
       if (error) {
         throw error;
+=======
+    const onAlgoSigner = useCallback(async () => {
+      if (typeof window.AlgoSigner !== undefined) {
+        try {
+          await window.AlgoSigner.connect()
+          console.log("Algo: ", window.AlgoSigner);
+          const algo = await window.AlgoSigner.accounts({
+            ledger: 'MainNet'
+          });
+          const { address } = algo[0]
+          
+          dispatch(setAlgoSigner(true))
+          dispatch(setAlgorandAccount(address))
+        } catch (e) {
+          console.error(e);
+      return JSON.stringify(e, null, 2);
+        }
+      } else {
+        console.log("Algo Signer not installed.");
+>>>>>>> 80647d2ba691b847d38f2fcf70d412b3689f0b5c
       }
 
+<<<<<<< HEAD
       // Get provided accounts
       const { accounts } = payload.params[0];
       if (accounts) {
         dispatch(setAlgorandWallet(true));
         dispatch(setAlgorandAccount(accounts[0]));
+=======
+    const onBeacon = async () => {
+      const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
+      const wallet = new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" });
+      Tezos.setWalletProvider(wallet);
+      console.log("Tezos: ", Tezos);
+      try {
+        const permissions = await wallet.client.requestPermissions();
+        dispatch(setTezosAccount(permissions.address))
+        dispatch(setKukaiWallet(true))
+      } catch (error) {
+        console.log("Got error:", error);
+>>>>>>> 80647d2ba691b847d38f2fcf70d412b3689f0b5c
       }
     });
     const correct = from ? CHAIN_INFO[from.key].chainId === chainId : false;

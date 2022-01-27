@@ -24,6 +24,7 @@ import { useWeb3React } from '@web3-react/core';
 import { TempleWallet } from "@temple-wallet/dapp";
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
+import { checkTheError } from './helpers';
 
 
 
@@ -150,98 +151,208 @@ function NFTaccount() {
         }
     }
 
+    // const sendEach = async (nft, index) => {
+    //     debugger
+    //     if(index === 0) dispatch(setTransactionStep(1))
+    //     const factory = await getFactory()
+    //     const toChain = await factory.inner(chainsConfig[to].Chain)
+    //     const fromChain = await factory.inner(chainsConfig[from].Chain)
+    //     const provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : ''
+    //     let tezosSigner
+    //     if(from === 'Tezos') {
+    //         tezosSigner = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
+    //         await tezosSigner.connect("mainnet");
+    //     }
+    //     const signer = from === 'Algorand' 
+    //     ? await getAlgorandWalletSigner() :
+    //     (from === "Tezos" && kukaiWallet) ? new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" }) :
+    //     from === 'Elrond' ? maiarProvider ? maiarProvider : ExtensionProvider.getInstance() :
+    //     from === 'Tron' ? window.tronWeb 
+    //     : tezosSigner ? tezosSigner
+    //     : provider.getSigner(account)
+       
+    //     try {
+    //         let result
+    //         if(from === 'Tron') {
+    //             const fact = await getOldFactory()
+    //             const toChains = await fact.inner(chainsConfig[to].Chain)
+    //             const fromChainT = await fact.inner(chainsConfig[from].Chain)
+    //              result = await fact.transferNft(
+    //                 fromChainT, // The Source Chain.
+    //                 toChains,   // The Destination Chain.
+    //                 nft,       // Or the NFT you have chosen.
+    //                 undefined,    // Or tronlink or maiar.
+    //                 receiver,   // The address who you are transferring the NFT to.
+    //                 bigNumberFees
+    //             )
+    //             dispatch(dispatch(setTransferLoaderModal(false)))
+    //             setLoading(false)
+    //             dispatch(setTxnHash({txn: result, nft}))
+    //         }
+    //         else {
+    //             try {
+    //                 result = await factory.transferNft(
+    //                     fromChain, // The Source Chain.
+    //                     toChain,   // The Destination Chain.
+    //                     nft,       // Or the NFT you have chosen.
+    //                     signer,    // Or tronlink or maiar.
+    //                     receiver,   // The address who you are transferring the NFT to.
+    //                     bigNumberFees
+    //                 )
+    //                 dispatch(dispatch(setTransferLoaderModal(false)))
+    //                 setLoading(false)
+    //                 dispatch(setTxnHash({txn: result, nft}))
+    //             } catch(error) {
+                    
+    //                 // dispatch(setTxnHash({txn: "failed", nft}))
+    //                 dispatch(dispatch(setTransferLoaderModal(false)))
+    //                 setLoading(false)
+    //                 if(error.data){
+    //                     if(error.data.message.includes("not whitelisted")){
+    //                         dispatch(setNFTsToWhitelist({
+    //                             url: nft.image,
+    //                             name: nft.name
+    //                         }))
+    //                     }
+    //                 }
+    //                 else if(error.message?.includes('non-origin chain')){
+    //                     dispatch(setError("Trying to send wrapped nft to non-origin chain!!!"))
+    //                     setLoading(false)
+    //                 }
+    //             }
+    //         }
+    //         if(to === 'Algorand') {
+    //             await setClaimablesAlgorand(algorandAccount)
+    //         }
+    //     } catch (error) {
+    //         // dispatch(setTxnHash({txn: "failed", nft}))
+    //         setLoading(false)
+    //         dispatch(dispatch(setTransferLoaderModal(false)))
+    //         console.log(error);
+    //         if(error.data){
+    //             if(error.data.message.includes("not whitelisted")){
+    //                 dispatch(setNFTsToWhitelist({
+    //                     url: nft.image,
+    //                     name: nft.name
+    //                 }))
+    //             }
+    //         }
+    //         else if(error.message?.includes('non-origin chain')){
+    //             dispatch(setError("Trying to send wrapped nft to non-origin chain!!!"))
+    //             setLoading(false)
+    //         }
+    //     }
+    // }
+
+    const getSigner = async () => {
+        // debugger
+        let signer 
+        try {
+            if(from === "Tezos"){
+                if(kukaiWallet){
+                    signer = new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" })
+                    return signer 
+                }
+                else{
+                    signer = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
+                    await signer.connect("mainnet");
+                    return signer
+                }
+            }
+            else if(from === "Algorand"){
+                signer = await getAlgorandWalletSigner()
+                return signer
+            }
+            else if(from === 'Elrond') return maiarProvider || ExtensionProvider.getInstance()
+            else{
+                const provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : ''
+                signer = provider.getSigner(account)
+                return signer
+            }
+        } catch (error) {
+            console.error(error)
+            return
+        }
+    }
+
     const sendEach = async (nft, index) => {
         // debugger
-        if(index === 0) dispatch(setTransactionStep(1))
-        const factory = await getFactory()
-        const toChain = await factory.inner(chainsConfig[to].Chain)
-        const fromChain = await factory.inner(chainsConfig[from].Chain)
-        const provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : ''
-        let tezosSigner
-        if(from === 'Tezos') {
-            tezosSigner = new TempleWallet("Cross-Chain NFT Bridge");
-            await tezosSigner.connect("mainnet");
-        }
-        const signer = from === 'Algorand' 
-        ? await getAlgorandWalletSigner() :
-        from === "Tezos" ? new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" }) :
-        from === 'Elrond' ? maiarProvider ? maiarProvider : ExtensionProvider.getInstance() :
-        from === 'Tron' ? window.tronWeb 
-        : tezosSigner ? tezosSigner
-        : provider.getSigner(account)
-       
-        try {
-            let result
-            if(from === 'Tron') {
-                const fact = await getOldFactory()
-                const toChains = await fact.inner(chainsConfig[to].Chain)
-                const fromChainT = await fact.inner(chainsConfig[from].Chain)
-                 result = await fact.transferNft(
-                    fromChainT, // The Source Chain.
-                    toChains,   // The Destination Chain.
-                    nft,       // Or the NFT you have chosen.
-                    undefined,    // Or tronlink or maiar.
-                    receiver,   // The address who you are transferring the NFT to.
+        const signer = await getSigner()
+        let factory 
+        let toChain 
+        let fromChain
+        let result
+        try {  
+            if(from === "tron"){
+                factory = await getOldFactory()
+                toChain = await factory.inner(chainsConfig[to].Chain)
+                fromChain = await factory.inner(chainsConfig[from].Chain)
+                result = await factory.transferNft(
+                    fromChain, 
+                    toChain,  
+                    nft,   
+                    undefined,   
+                    receiver,  
                     bigNumberFees
                 )
                 dispatch(dispatch(setTransferLoaderModal(false)))
                 setLoading(false)
                 dispatch(setTxnHash({txn: result, nft}))
             }
-            else {
-                try {
-                    result = await factory.transferNft(
-                        fromChain, // The Source Chain.
-                        toChain,   // The Destination Chain.
-                        nft,       // Or the NFT you have chosen.
-                        signer,    // Or tronlink or maiar.
-                        receiver,   // The address who you are transferring the NFT to.
-                        bigNumberFees
-                    )
-                    dispatch(dispatch(setTransferLoaderModal(false)))
-                    setLoading(false)
-                    dispatch(setTxnHash({txn: result, nft}))
-                } catch(error) {
-                    
-                    // dispatch(setTxnHash({txn: "failed", nft}))
-                    dispatch(dispatch(setTransferLoaderModal(false)))
-                    setLoading(false)
-                    if(error.data){
-                        if(error.data.message.includes("not whitelisted")){
-                            dispatch(setNFTsToWhitelist({
-                                url: nft.image,
-                                name: nft.name
-                            }))
-                        }
-                    }
-                    else if(error.message?.includes('non-origin chain')){
-                        dispatch(setError("Trying to send wrapped nft to non-origin chain!!!"))
-                        setLoading(false)
-                    }
-                }
+            else{
+                factory = await getFactory()
+                toChain = await factory.inner(chainsConfig[to].Chain)
+                fromChain = await factory.inner(chainsConfig[from].Chain)
+                result = await factory.transferNft(
+                    fromChain, 
+                    toChain,   
+                    nft,      
+                    signer,   
+                    receiver,  
+                    bigNumberFees
+                )
+                dispatch(dispatch(setTransferLoaderModal(false)))
+                setLoading(false)
+                dispatch(setTxnHash({txn: result, nft}))
             }
-            if(to === 'Algorand') {
-                await setClaimablesAlgorand(algorandAccount)
-            }
+            if(to === "Algorand") await setClaimablesAlgorand(algorandAccount)
         } catch (error) {
-            // dispatch(setTxnHash({txn: "failed", nft}))
+            // console.error(error)
             setLoading(false)
             dispatch(dispatch(setTransferLoaderModal(false)))
-            console.log(error);
-            if(error.data){
-                if(error.data.message.includes("not whitelisted")){
-                    dispatch(setNFTsToWhitelist({
-                        url: nft.image,
-                        name: nft.name
-                    }))
-                }
-            }
-            else if(error.message?.includes('non-origin chain')){
-                dispatch(setError("Trying to send wrapped nft to non-origin chain!!!"))
-                setLoading(false)
-            }
+            dispatch(setError(checkTheError(error)))
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     const sendAllNFTs = () => {
         if(!loading && approved) {
             setLoading(true)

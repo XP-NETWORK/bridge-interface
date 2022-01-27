@@ -63,6 +63,7 @@ function NFTlistTop() {
     opacity: bigLoader ? 0.6 : 1,
   };
 
+<<<<<<< HEAD
   const off = { display: "none" };
   return (
     <>
@@ -123,6 +124,78 @@ function NFTlistTop() {
                 <Search className="svgWidget" />
               </Dropdown.Toggle>
               <Dropdown.Menu>
+=======
+    const refreshStyle = { 
+        cursor: bigLoader ? '' : 'pointer', 
+        opacity: bigLoader ? 0.6 : 1 
+    } 
+    
+    const off = { display: "none"}
+    return (
+        <>
+        <div className="yourNft--mobile">
+                <span className='yourNft__title'>Your NFTs on </span>
+                <div className='yourNft__chain'>
+                    <span>
+                        <img style={{width: "30px"}} src={from.image.src} alt="NFT Name" /> {from.key}
+                    </span> 
+                    <span style={refreshStyle} onClick={refresh}>
+                        <img className="refreshnfts" src={Refresh} />
+                    </span>
+                </div>
+        </div> 
+        <div className="nftListTop">
+            <Modal animation={false} show={switchDestination} onHide={() => handleClose()} className="ChainModal">
+                <Modal.Header className="text-left">
+                    <Modal.Title>Change destination chain</Modal.Title>
+                    <span className="CloseModal" onClick={() => handleClose()}>
+                        <img src={Close} alt="" />
+                    </span>
+                </Modal.Header>
+                <Modal.Body>
+                    <NFTChainListBox />
+                </Modal.Body>
+            </Modal>
+            <div className="yourNft desktopOnly">
+                Your NFTs on <span><img style={{width: "29px"}} src={from.image.src} alt="NFT Name" /> {from.key}</span> 
+                <span style={refreshStyle} onClick={refresh}><img className="refreshnfts" src={Refresh} /></span>
+            </div>
+            <div className="mobileOnly seleNftMob">
+                Selected <span>{`/ ${nfts ? nfts.length : ''} `}</span>
+            </div>
+            <div className="nftTopRIght">
+                <div className="searchNft desktopOnly">
+                    <Dropdown className="SearchDrop">
+                        <Dropdown.Toggle id="SearchDrop" >
+                            <img src={Search} />
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <form action="#">
+                                <input onChange={e => handleSearch(e)}  type="text" placeholder="Search NFT" />
+                                {/* { search ?  <button type="button"><img src={Close} alt="" /></button> : <button type="button"><img src={Search} alt=""/></button>} */}
+                                <button type="button"><img src={Search} /></button>
+                            </form>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </div>
+
+                <div onClick={() => handleView()} className="ListView">
+                    { NFTListView ? 
+                        <span><img src={GridView} /></span>
+                        :
+                        <span><img src={ListView} /></span>
+                    }
+                </div>
+                {/* <span onClick={() => setShowSearch(prev => prev = !prev)} className="mobileOnly search-btn"><img src={Search} /></span> */}
+                { nfts?.length === selectedNFTs?.length ? 
+                    <div onClick={() => dispatch(cleanSelectedNFTList())} className="selectAll">Clear all</div>
+                    :   
+                    <div style={ nfts ? {} : OFF } onClick={() => dispatch(allSelected())} className="selectAll">Select all</div>
+                }
+            </div>
+            {/* !!! Show on click */}
+            {/* <div style={!showSearch ? {} : off} className="mobileOnly mobSearch">
+>>>>>>> 80647d2ba691b847d38f2fcf70d412b3689f0b5c
                 <form action="#">
                   <input
                     onChange={(e) => handleSearch(e)}
@@ -132,6 +205,7 @@ function NFTlistTop() {
                   {/* { search ?  <button type="button"><img src={Close} alt="" /></button> : <button type="button"><img src={Search} alt=""/></button>} */}
                   <button type="button">{false && <img src={Search} />}</button>
                 </form>
+<<<<<<< HEAD
               </Dropdown.Menu>
             </Dropdown>
           </div>
@@ -177,6 +251,9 @@ function NFTlistTop() {
               <img src={Search} />
             </button>
           </form>
+=======
+            </div> */}
+>>>>>>> 80647d2ba691b847d38f2fcf70d412b3689f0b5c
         </div>
       </div>
     </>

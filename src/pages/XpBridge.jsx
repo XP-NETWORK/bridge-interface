@@ -5,7 +5,7 @@ import NftSelect from "../components/NftSelect";
 import NftSlider from "../components/NftSlider";
 import NFTsuccess from "../components/NFTsuccess";
 import Transactionhistory from "../components/Transactionhistory";
-import { Alert } from "react-bootstrap";
+// import { Alert } from 'react-bootstrap';
 
 function XpBridge() {
   useEffect(() => {}, []);
@@ -31,7 +31,7 @@ function XpBridge() {
       )}
       {step === 2 ? <NFTaccount /> : ""}
       {/* <NFTworng /> */}
-
+      {/* <Alert /> */}
       <NFTsuccess />
     </div>
   );

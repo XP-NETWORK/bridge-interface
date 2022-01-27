@@ -49,7 +49,11 @@ export default function NFT({nft, index}) {
                                 <span className="brocken-url__msg">NFTs URL<br/> is broken</span>
                             </div>
                         }                      
+<<<<<<< HEAD
                         {/* {(nft.image || nft.image_url ) &&  */}
+=======
+                        {/* {(nft.image || nft.image_url) &&  */}
+>>>>>>> 80647d2ba691b847d38f2fcf70d412b3689f0b5c
                             <div className="radio__container">
                             { !isSelected ? 
                                 <span className="selected-radio"></span> 
