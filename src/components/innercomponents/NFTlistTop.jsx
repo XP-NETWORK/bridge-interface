@@ -63,68 +63,6 @@ function NFTlistTop() {
     opacity: bigLoader ? 0.6 : 1,
   };
 
-<<<<<<< HEAD
-  const off = { display: "none" };
-  return (
-    <>
-      <div className="yourNft--mobile">
-        <span className="yourNft__title">Your NFTs on </span>
-        <div className="yourNft__chain">
-          <span>
-            <img
-              style={{ width: "30px" }}
-              src={from.image.src}
-              alt="NFT Name"
-            />{" "}
-            {from.key}
-          </span>
-          <span style={refreshStyle} onClick={refresh}>
-            <Refresh className="refreshnfts svgWidget" />
-          </span>
-        </div>
-      </div>
-      <div className="nftListTop">
-        <Modal
-          animation={false}
-          show={switchDestination}
-          onHide={() => handleClose()}
-          className="ChainModal"
-        >
-          <Modal.Header className="text-left">
-            <Modal.Title>Change destination chain</Modal.Title>
-            <span className="CloseModal" onClick={() => handleClose()}>
-              <Close className="svgWidget" />
-            </span>
-          </Modal.Header>
-          <Modal.Body>
-            <NFTChainListBox />
-          </Modal.Body>
-        </Modal>
-        <div className="yourNft desktopOnly">
-          Your NFTs on{" "}
-          <span>
-            <img
-              style={{ width: "29px" }}
-              src={from.image.src}
-              alt="NFT Name"
-            />{" "}
-            {from.key}
-          </span>
-          <span style={refreshStyle} onClick={refresh}>
-            <Refresh className="refreshnfts svgWidget" />
-          </span>
-        </div>
-        <div className="mobileOnly seleNftMob">
-          Selected <span>{`/ ${nfts ? nfts.length : ""} `}</span>
-        </div>
-        <div className="nftTopRIght">
-          <div className="searchNft desktopOnly">
-            <Dropdown className="SearchDrop">
-              <Dropdown.Toggle id="SearchDrop">
-                <Search className="svgWidget" />
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-=======
     const refreshStyle = { 
         cursor: bigLoader ? '' : 'pointer', 
         opacity: bigLoader ? 0.6 : 1 
@@ -195,7 +133,6 @@ function NFTlistTop() {
             </div>
             {/* !!! Show on click */}
             {/* <div style={!showSearch ? {} : off} className="mobileOnly mobSearch">
->>>>>>> 80647d2ba691b847d38f2fcf70d412b3689f0b5c
                 <form action="#">
                   <input
                     onChange={(e) => handleSearch(e)}

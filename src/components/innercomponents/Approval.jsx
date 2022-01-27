@@ -183,54 +183,6 @@ function Approval(props) {
     }
   };
 
-<<<<<<< HEAD
-  // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
-  const approveAllNFTs = async () => {
-    // debugger
-    if (!approvedLoading) {
-      dispatch(setApproveLoader(true));
-      setApprovedLoading(true);
-      setFinishedApproving([]);
-      if (from.type === "EVM") {
-        const provider = new ethers.providers.Web3Provider(
-          WCProvider?.walletConnectProvider || window.ethereum
-        );
-        const signer = provider.getSigner(account);
-        const chain = await handleChainFactory(from.key);
-        selectedNFTList.forEach((nft, index) => {
-          approveEach(nft, signer, chain, index);
-        });
-      } else if (from.type === "Tron") {
-        setFinishedApproving(selectedNFTList);
-        selectedNFTList.forEach((nft, index) => {
-          dispatch(updateApprovedNFTs(nft));
-        });
-      }
-      // else if(from.text === 'Tezos') {
-      //     const chain = await handleChainFactory(from.key)
-      //     const signer = provider.getSigner(account)
-
-      //     selectedNFTList.forEach((nft, index) => {
-      //         approveEach(nft, signer, chain, index)
-      //     })
-      // }
-      else {
-        selectedNFTList.forEach((nft, index) => {
-          approveEach(nft, undefined, undefined, index);
-        });
-      }
-    }
-  };
-  // sdsdfsddsfsdf
-  useEffect(() => {
-    if (
-      finishedApproving.length === selectedNFTList.length &&
-      approvedLoading
-    ) {
-      setApprovedLoading(false);
-      dispatch(setApproveLoader(false));
-      setFinishedApproving([]);
-=======
     const approveEach = async (nft, signer, chain, index) => {
         // debugger
         const arr = new Array(index + 1).fill(0)
@@ -329,7 +281,6 @@ function Approval(props) {
                     console.log(error)
                 }
             }
->>>>>>> 80647d2ba691b847d38f2fcf70d412b3689f0b5c
     }
 
     if (selectedNFTList.length > 0) {
