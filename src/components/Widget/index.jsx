@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Widget.css";
 import "./WidgetNight.css";
 import "./WidgetLight.css";
-import { setWidget } from "../../store/reducers/generalSlice";
+import { setSettings } from "../../store/reducers/settingsSlice";
+import { setWidget, setWSettings } from "../../store/reducers/generalSlice";
 import { keys } from "@airgap/beacon-sdk/dist/cjs/utils/utils";
 
 export default function Widget() {
@@ -11,9 +12,13 @@ export default function Widget() {
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
   const step = useSelector((state) => state.general.step);
-  const { widget } = useSelector(({ general: { widget } }) => ({
-    widget,
-  }));
+  const { widget, wsettings, settings } = useSelector(
+    ({ general: { widget }, settings }) => ({
+      widget,
+      settings,
+    })
+  );
+
   const dispatch = useDispatch();
 
   const [state, setState] = useState({});
@@ -22,11 +27,11 @@ export default function Widget() {
     // debugger
     const p = new URLSearchParams(window.location.search);
     const widget = p.get("widget") === "true";
-    //const body = document.getElementsByTagName("body");
+    const wsettings = p.get("wsettings") === "true";
 
-    // const nftSelectBox = document.querySelector(".nftSelectBox")
+    if (wsettings) dispatch(setWSettings(true));
 
-    if (widget) {
+    if (widget && !wsettings) {
       const backgroundColor = p.get("background");
       const color = p.get("color");
       const secondaryColor = p.get("secondaryColor");
@@ -35,8 +40,6 @@ export default function Widget() {
       const btnColor = p.get("btnColor");
       const btnBackground = p.get("btnBackground");
       const btnRadius = p.get("btnRadius");
-      // const swapBtnBackground = p.get("swapBtnBackground");
-      //const btnHover = p.get("btnHover");
       const cardBackground = p.get("cardBackground");
       const cardRadius = p.get("cardRadius");
       const accentColor = p.get("accentColor");
@@ -45,26 +48,30 @@ export default function Widget() {
 
       const chains = p.get("chains")?.split("-");
       const wallets = p.get("wallets")?.split("-");
-      console.log(wallets, "ds");
 
-      setState({
-        backgroundColor,
-        color,
-        fontFamily,
-        fontSize,
-        btnColor,
-        btnBackground,
-        btnRadius,
-        chains,
-        wallets,
-        cardBackground,
-        cardRadius,
-        accentColor,
-        secondaryColor,
-        borderColor,
-        iconColor,
-      });
+      const bridgeState = p.get("bridgeState");
 
+      dispatch(
+        setSettings({
+          backgroundColor: "#" + backgroundColor,
+          color: "#" + color,
+          fontFamily,
+          fontSize,
+          btnColor: "#" + btnColor,
+          btnBackground: "#" + btnBackground,
+          btnRadius,
+          selectedChains: chains,
+          selectedWallets: wallets,
+          cardBackground: "#" + cardBackground,
+          cardRadius,
+          accentColor: "#" + accentColor,
+          secondaryColor: "#" + secondaryColor,
+          borderColor: "#" + borderColor,
+          iconColor: "#" + iconColor,
+        })
+      );
+    }
+    if (widget) {
       onlyBridge();
     }
   }, []);
@@ -77,7 +84,8 @@ export default function Widget() {
     btnColor,
     btnBackground,
     btnRadius,
-    chains,
+    selectedChains,
+    selectedWallets,
     cardBackground,
     cardRadius,
     accentColor,
@@ -85,31 +93,34 @@ export default function Widget() {
     borderColor,
     iconColor,
     wallets,
-  } = state;
+  } = settings;
 
   useEffect(() => {
     if (widget) {
+      document.getElementById("bridgeSettings")?.remove();
       const $style = document.createElement("style");
+      $style.id = "bridgeSettings";
       document.head.appendChild($style);
       $style.innerHTML = `body.bridgeBody {
-            background: ${backgroundColor ? "#" + backgroundColor : ""};
-            color: ${color ? "#" + color : ""};
+            background: ${backgroundColor ? backgroundColor : ""};
+            color: ${color ? color : ""};
             font-size: ${fontSize ? fontSize + "px" : ""};
             font-family: ${fontFamily ? fontFamily : ""}
         }
 
         .modal-content, .modal-content .walletListBox, .nftInfBox {
-            background: ${backgroundColor ? "#" + backgroundColor : ""};
+            background: ${backgroundColor ? backgroundColor : ""};
         }
         
         .modal-title, .modalSelectOptionsText, .selChain, .seleDestiSele, .yourNft, .yourNft span, .sendNftTit, 
         .desChain span, .ComentBox p, .selectedNft span, .approveBtn, .nftFees span, .nftSelecItem, .wllListItem, .nftListed,
-         .desAddress input, .nftWornTop h3, .nftWornTop p, .nftInfBox p, .about__text, .ComentBox p {
-            color: ${color ? "#" + color : ""};
+         .desAddress input, .nftWornTop h3, .nftWornTop p, .nftInfBox p, .about__text, .ComentBox p, .nonftAcc,
+          .nonftAcc  h2, .nft-box__container--selected, .nft-box__container, .transfer-loader__title {
+            color: ${color ? color : ""};
         }
 
         .desAddress input,  .desAddress input:focus,  .desAddress input:active {
-          border-color: ${borderColor ? "#" + borderColor : ""};
+          border-color: ${borderColor ? borderColor : ""};
         }
 
         .wllListItem, .themBtn {
@@ -120,15 +131,18 @@ export default function Widget() {
             border-radius: ${btnRadius ? btnRadius + "px" : ""};
         }
 
-        a.themBtn:hover {
+        a.themBtn:hover, .switching:hover {
           filter: brightness(115%);
+          background:  ${btnBackground ? btnBackground : ""};
+          color:  ${btnColor ? btnColor : ""};
         }
         
         .connectNft a.themBtn.disabled, .sendNftBox :not(.nftSendBtn.disabled) > a.themBtn, .switching {
-            background: ${btnBackground ? "#" + btnBackground : ""};
-            color:  ${btnColor ? "#" + btnColor : ""};
-            border-color: ${btnBackground ? "#" + btnBackground : ""};   
+            background: ${btnBackground ? btnBackground : ""};
+            color:  ${btnColor ? btnColor : ""};
+            border-color: ${btnBackground ? btnBackground : ""};   
         }
+
 
         a.themBtn.disabled span {
           position: relative;
@@ -136,9 +150,9 @@ export default function Widget() {
         }
 
         .disabled .themBtn.disabled, .sendNftBox .nftSendBtn.disabled > a.themBtn {
-          background: ${btnBackground ? "#" + btnBackground : ""};
-          color:  ${btnColor ? "#" + btnColor : ""};
-          border-color: ${btnBackground ? "#" + btnBackground : ""};
+          background: ${btnBackground ? btnBackground : ""};
+          color:  ${btnColor ? btnColor : ""};
+          border-color: ${btnBackground ? btnBackground : ""};
           opacity: .5;
         }
 
@@ -165,20 +179,20 @@ export default function Widget() {
           display: none;
         }
 
-        ${chains
+        ${selectedChains
           ?.map((chain) => `.nftChainItem[data-chain="${chain}"]`)
           .join(", ")} {
           display: flex;
         }
 
-        ${wallets
+        ${selectedWallets
           ?.map((wallet) => `.wllListItem[data-wallet="${wallet}"]`)
           .join(", ")} {
           display: flex;
         }
 
         .nft-image__container {
-          background: ${cardBackground ? "#" + cardBackground : ""};
+          background: ${cardBackground ? cardBackground : ""};
         }
 
         .singleNft {
@@ -195,47 +209,47 @@ export default function Widget() {
         }
 
         .nft-content__container {
-          background: ${cardBackground ? "#" + cardBackground : ""};
+          background: ${cardBackground ? cardBackground : ""};
           filter: brightness(115%);
         }
 
         .approvTop, .nftFees, .SearchDrop.dropdown input, .yourNft__title,
          .destiAddress input::placeholder, .nftInfBox label, .sucesList label, .switchingAcc p, .transferTable.table thead th,
          .transferTable.table tr td, .accountBox p, .brocken-url {
-          color: ${secondaryColor ? "#" + secondaryColor : ""};
+          color: ${secondaryColor ? secondaryColor : ""};
         }
 
         .preload__name, .preload__number {
-          background: ${secondaryColor ? "#" + secondaryColor : ""};
+          background: ${secondaryColor ? secondaryColor : ""};
         } 
 
         .selectAll, .clearNft, .nftAut a, .loader, .changeNetwork-loader, .coming__chain, .follow-us__btn, .ts-button {
-          color: ${accentColor ? "#" + accentColor : ""};
+          color: ${accentColor ? accentColor : ""};
         }
 
         /*.chainArrow img {
-          background: ${backgroundColor ? "#" + backgroundColor : ""};
+          background: ${backgroundColor ? backgroundColor : ""};
           filter: brightness(130%);
         }
 
         .chainArrow img:hover {
-          background: ${btnBackground ? "#" + btnBackground : ""};
+          background: ${btnBackground ? btnBackground : ""};
           filter: initial;
         }*/
         
 
         .searchChain input {
           background: transparent;
-          color: ${secondaryColor ? "#" + secondaryColor : ""}; 
+          color: ${secondaryColor ? secondaryColor : ""}; 
         
         }
 
         ::-webkit-scrollbar-thumb {
-          background: ${accentColor ? "#" + accentColor : ""};
+          background: ${accentColor ? accentColor : ""};
         }
 
         ::-webkit-scrollbar-thumb:hover {
-          background: ${accentColor ? "#" + accentColor : ""};
+          background: ${accentColor ? accentColor : ""};
           filter: brightness(85%);
         }
 
@@ -244,16 +258,16 @@ export default function Widget() {
         }
 
         .svgWidget path {
-          fill: ${iconColor ? "#" + iconColor : ""};
+          fill: ${iconColor ? iconColor : ""};
         }
 
         .swpBtn path:first-child {
-          fill: ${btnBackground ? "#" + btnBackground : ""};
+          fill: ${btnBackground ? btnBackground : ""};
           filter: brightness(95%);
         }
 
         .swpBtn path:nth-child(2) {
-          fill: ${btnBackground ? "#" + btnBackground : ""};
+          fill: ${btnBackground ? btnBackground : ""};
           filter: brightness(95%);
         }
         
@@ -266,17 +280,17 @@ export default function Widget() {
         }
 
         .swpBtn:hover path:nth-child(1){
-          fill: ${btnBackground ? "#" + btnBackground : ""};
+          fill: ${btnBackground ? btnBackground : ""};
         
         }
 
         .swpBtn:hover path:nth-child(2){
-          fill: ${btnBackground ? "#" + btnBackground : ""};
+          fill: ${btnBackground ? btnBackground : ""};
           filter: brightness(100%);
         }
 
         .nft-box__container--selected, .nft-box__container:hover {
-          border-color: ${accentColor ? "#" + accentColor : ""} !important;
+          border-color: ${accentColor ? accentColor : ""} !important;
         }
 
         .svgWidget.trg {
@@ -286,16 +300,16 @@ export default function Widget() {
 
 
         .nftSelectBox, .modal-content, .modal-header, .nftChainList, .singleNft.missing, .nftInfBox, .wllListItem  {
-          border-color: ${borderColor ? "#" + borderColor : ""};
+          border-color: ${borderColor ? borderColor : ""};
         }
 
         .searchChain input {
-          border: 1px solid ${borderColor ? "#" + borderColor : ""};
+          border: 1px solid ${borderColor ? borderColor : ""};
          
         }
 
         .svgWidgetBorder line {
-            stroke: ${borderColor ? "#" + borderColor : ""};
+            stroke: ${borderColor ? borderColor : ""};
         }
 
         .selChain > div:hover:after {
@@ -305,16 +319,17 @@ export default function Widget() {
 
         .wllListItem:hover {
           background: initial;
-          border: 1px solid  ${borderColor ? "#" + borderColor : ""};
+          border: 1px solid  ${borderColor ? borderColor : ""};
         }
 
         `;
     }
-  }, [widget]);
+  }, [widget, settings]);
 
   const onlyBridge = () => {
     dispatch(setWidget(true));
     document.body.classList.add("widget");
   };
+
   return <></>;
 }
