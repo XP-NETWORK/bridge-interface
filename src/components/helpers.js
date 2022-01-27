@@ -38,10 +38,3 @@ export function DetectOutsideClick(ref, childFunction) {
       };
   }, [ref]);
 }
-
-export const checkTheError = error => {
-  debugger
-  const { message, data } = error
-  console.error(message);
-  return message
-}

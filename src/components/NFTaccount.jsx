@@ -24,7 +24,6 @@ import { useWeb3React } from '@web3-react/core';
 import { TempleWallet } from "@temple-wallet/dapp";
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
-import { checkTheError } from './helpers';
 
 
 
@@ -276,7 +275,7 @@ function NFTaccount() {
     }
 
     const sendEach = async (nft, index) => {
-        // debugger
+        debugger
         const signer = await getSigner()
         let factory 
         let toChain 
@@ -316,11 +315,12 @@ function NFTaccount() {
                 dispatch(setTxnHash({txn: result, nft}))
             }
             if(to === "Algorand") await setClaimablesAlgorand(algorandAccount)
-        } catch (error) {
+        } catch (err) {
             // console.error(error)
             setLoading(false)
             dispatch(dispatch(setTransferLoaderModal(false)))
-            dispatch(setError(checkTheError(error)))
+            const { data, message, error } = err
+            if(message) dispatch(setError(message))
         }
     }
 
