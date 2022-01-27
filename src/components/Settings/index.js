@@ -60,7 +60,7 @@ function WSettings() {
     dispatch(
       setSettings({
         ...settings,
-        showAlert: newSelected.length < 2 ? true : false,
+        showAlert: newSelected.length < 2 ? "chains" : false,
         selectedChains: newSelected.length < 2 ? selectedChains : newSelected,
       })
     );
@@ -68,12 +68,14 @@ function WSettings() {
 
   const walletCheck = (val) => {
     const checked = selectedWallets.includes(val);
+    const newSelected = checked
+      ? selectedWallets.filter((wallet) => wallet !== val)
+      : [...selectedWallets, val];
     dispatch(
       setSettings({
         ...settings,
-        selectedWallets: checked
-          ? selectedWallets.filter((wallet) => wallet !== val)
-          : [...selectedWallets, val],
+        showAlert: newSelected.length < 2 ? "wallets" : false,
+        selectedWallets: newSelected.length < 2 ? selectedWallets : newSelected,
       })
     );
   };
@@ -113,9 +115,10 @@ function WSettings() {
         onClose={() => dispatch(setSettings({ ...settings, showAlert: false }))}
         dismissible
       >
-        <p>You can't show less than two available chains</p>
+        <p style={{ marginTop: "15px" }}>
+          You can't show less than two available {showAlert}
+        </p>
       </Alert>
-
       <div className="site_setting">
         <h2>Settings</h2>
       </div>
