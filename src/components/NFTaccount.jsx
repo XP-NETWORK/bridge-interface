@@ -320,7 +320,16 @@ function NFTaccount() {
             setLoading(false)
             dispatch(dispatch(setTransferLoaderModal(false)))
             const { data, message, error } = err
-            if(message) dispatch(setError(message))
+            if(message){
+                if(message.includes("NFT not whitelisted")){
+                    dispatch(setNFTsToWhitelist({
+                        url: nft.image,
+                        name: nft.name
+                    }))
+                }
+                else dispatch(setError(message))
+                return
+            }
         }
     }
 
