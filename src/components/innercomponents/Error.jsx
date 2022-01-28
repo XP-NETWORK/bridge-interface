@@ -10,7 +10,7 @@ export default function Error() {
     const dispatch = useDispatch()
     const handleClose = () => { dispatch(setError(false)) }
     const error = useSelector(state => state.general.error)
-
+    
     return (
         <>
             <Modal.Header className="border-0">

@@ -91,7 +91,7 @@ function Approval(props) {
                         } catch(err) {
                             console.log(arr, err)
                             setFinishedApproving(arr)
-                            dispatch(setError(err.message))
+                            dispatch(setError(err.data ? err.data.message : err.message))
                         }
                     }
                 } catch (error) {
@@ -145,7 +145,7 @@ function Approval(props) {
                     // setFinishedApproving(arr)
                 } catch (error) {
                     setFinishedApproving(arr)
-                    dispatch(setError(error))
+                    dispatch(setError(error.data ? error.data.message : error.message))
                     if(error.data){
                       console.log(error.data.message);
                     }
@@ -164,7 +164,7 @@ function Approval(props) {
                     setFinishedApproving(arr)
                 } catch (error) {
                     setFinishedApproving(arr)
-                    dispatch(setError(error))
+                    dispatch(setError(error.data ? error.data.message : error.message))
                     if(error.data){
                       console.log(error.data.message);
                     }
