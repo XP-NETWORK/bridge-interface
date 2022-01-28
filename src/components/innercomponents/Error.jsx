@@ -13,7 +13,7 @@ export default function Error() {
     
     return (
         <>
-            <Modal.Header className="border-0">
+            <Modal.Header animation={false} className="border-0">
                 <div style={{display: "flex", flexDirection: "column"}}>
                 <img style={{margin: "30px"}} src={ERR} />
                     <Modal.Title>An error has occured</Modal.Title>

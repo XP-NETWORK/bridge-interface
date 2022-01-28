@@ -14,6 +14,7 @@ import Kukai from "../assets/img/wallet/kukai.svg"
 import BeaconW from "../assets/img/wallet/BeaconWhite.svg"
 import BeaconB from "../assets/img/wallet/BeaconBlue.svg"
 import Temple from "../assets/img/wallet/Temple.svg"
+import AlgorandWallet from "../assets/img/wallet/AlgorandWallet.svg"
 import WalletConnect from "../assets/img/wallet/WalletConnect 3.svg"
 import NFTworng from './NFTworng';
 import { useDispatch, useSelector } from 'react-redux';

@@ -2721,7 +2721,7 @@ span.transPend {
 }
 
 .get-featured {
-  margin: 0 auto 100px auto;
+  margin: 100px auto 100px auto;
   cursor: pointer;
   max-width: 200px;
   display: flex;

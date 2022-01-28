@@ -15,7 +15,7 @@ import CopyHover from '../../assets/img/icons/CopyHover.svg';
 import ConnectAlgorand from '../ConnectAlgorand';
 import ClaimAlgorandNFT from '../ClaimAlgorandNFT';
 import { useEffect } from 'react';
-import { connectAlgorandWalletClaim } from '../../store/reducers/generalSlice';
+import { claimAlgorandPopup, connectAlgorandWalletClaim } from '../../store/reducers/generalSlice';
 
 export default function SuccessModal() {
     const dispatch = useDispatch()
@@ -38,6 +38,7 @@ export default function SuccessModal() {
     const handleClose = () => {
         window.location.reload()
     };
+
 
     function copy(){
         setCopy(true)
@@ -78,8 +79,8 @@ export default function SuccessModal() {
     }
 
     const toShow = () => {
-        return txnHashArr?.length ? true : false
-        // return true
+        // return txnHashArr?.length ? true : false
+        return true
     }
     
     useEffect(() => {

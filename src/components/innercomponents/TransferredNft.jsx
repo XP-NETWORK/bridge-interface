@@ -7,6 +7,10 @@ import { useSelector } from 'react-redux';
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import algosdk from "algosdk";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
+import { useDispatch } from 'react-redux';
+import { claimAlgorandPopup } from '../../store/reducers/generalSlice';
+import { chainsConfig } from '../values';
+
 
 
 
@@ -16,8 +20,37 @@ export default function TransferredNft({ nft }) {
     const [txnStatus, setTxnStatus] = useState()
     const [checkStatusInterval, setCheckStatusInterval] = useState()
     const from = useSelector(state => state.general.from)
+    const to = useSelector(state => state.general.to)
     const myAlgo = useSelector(state => state.general.myAlgo)
     const algoSigner = useSelector(state => state.general.algoSigner)
+    const dispatch = useDispatch()
+
+
+    // const getTX = () => {
+    //     let ntx
+    //     // debugger
+    //     // const tx = txnHashArr && txnHashArr.length > 0 ? typeof txnHashArr[currentTX] === 'object' ? txnHashArr[currentTX].hash.toString() : txnHashArr[currentTX] : ''
+        
+    //     if( txnHashArr && txnHashArr.length > 0 ){
+    //         if(typeof txnHashArr === 'object' && !Array.isArray(txnHashArr)){
+    //             return txnHashArr[0].hash.toString()
+    //         }
+    //         else if(Array.isArray(txnHashArr)){
+    //             if( typeof txnHashArr[0] === "object"){
+    //                 return txnHashArr[0].hash.toString()
+    //             }
+    //             else{
+    //                 return txnHashArr[0].toString()
+    //             }
+    //         }
+    //         else{
+    //             return txnHashArr
+    //         }
+    //     }
+    //     else{
+    //         return "wrong tx"
+    //     }
+    // }
 
     const checkEVMStatus = async (str) => {
         try {
@@ -27,6 +60,9 @@ export default function TransferredNft({ nft }) {
         } catch (error) {
             console.error(error)
         }
+    }
+    const claim = () => {
+        dispatch(claimAlgorandPopup(nft))
     }
 
     const checkTronStatus = async (str) => {
@@ -64,19 +100,19 @@ export default function TransferredNft({ nft }) {
     }
 
     const checkTransactionStatus = async () => {
-        debugger
+        // debugger
         switch (from.type) {
             case "EVM":
-                setTxnStatus(checkEVMStatus(txn.hash))
+                setTxnStatus(checkEVMStatus(txn?.hash))
                 break;
             case "Tron":
-                setTxnStatus(checkTronStatus(txn.hash))
+                setTxnStatus(checkTronStatus(txn?.hash))
                 break;
             case "Elrond":
-                setTxnStatus(checkElrondStatus(txn.hash))
+                setTxnStatus(checkElrondStatus(txn?.hash))
                 break;
             case "Algorand":
-                setTxnStatus(checkAlgoStatus(txn.harsh))
+                setTxnStatus(checkAlgoStatus(txn?.harsh))
                 break;
             default:
                 break;
@@ -93,7 +129,7 @@ export default function TransferredNft({ nft }) {
 
     return (
         <div className='success-nft-info__wrapper'>
-            { typeof txn === "object" ? 
+            {/* { typeof txn === "object" ?  */}
                 <div className="transferred-nft">
                     <div className='nft-image-name'>
                         <img src={image} alt={name} />
@@ -101,24 +137,30 @@ export default function TransferredNft({ nft }) {
                     </div>
                     <div className="txn-status">
                      { !txnStatus ? 
-                        <div>Pending</div> 
+                        <div className='txn-status-pending'>Pending</div> 
                         : 
                         <div className="success-buttons">
-                            <div className="success-button view-txn-btn">View Txn</div>
-                            <div className="success-button claim-btn">Claim</div>
+                            {/* <a href={`${chainsConfig[from.key].tx + getTX()}`} target="_blank" className="success-button view-txn-btn">View Txn</a> */}
+                            <a href={`${chainsConfig[from.key].tx + txn?.hash}`} target="_blank" className="success-button view-txn-btn">View Txn</a>
+                            { to.text === "Algorand" && 
+                                <div onClick={claim} className="success-button claim-btn">Claim</div>
+                            }
                         </div> 
                      }    
                     </div>
                 </div> 
-                : 
+                {/* : 
                 <div className="transferred-nft">
-                    <img src={image} alt={name} />
+                    <div className='transferred-nft-name'>
+                        <img src={image} alt={name} />
+                        <div className='transferred-nft-name__txt'>{nft.name}</div>
+                    </div>
                     <div className="txn-failed">
                         <img src={Failed} alt="" />
                         Failed
                     </div>
-                </div>
-            }
+                </div> */}
+            {/* } */}
         </div>
     )
 }

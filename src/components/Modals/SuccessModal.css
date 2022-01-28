@@ -65,6 +65,8 @@
 .success-info-item span{
     color: white;
     margin-left: 6px;
+    display: flex;
+    align-items: center;
 }
 
 .success-hash img{
@@ -80,12 +82,13 @@
     font-weight: 400;
     line-height: 26px;
     color: white;
-    /* display: flex; */
+    display: flex;
+    align-items: center;
 }
 
 .info-item-chain img{
     margin-right: 6px;
-    width: 30px;
+    width: 28px;
 }
 
 .success-info-box label{
@@ -136,8 +139,16 @@
     gap: 4px;
 }
 
+.txn-status-pending{
+    color: rgb(226, 195, 21);
+}
+
+.txn-status{
+    min-width: 70px;
+}
+
 .nft-image-name div{
-    max-width: 100px;
+    width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -145,7 +156,30 @@
 
 .transferred-nft img{
     height: 32px;
-    border-radius: 8px;
+    border-radius: 4px;
+}
+
+.transferred-nft-name{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.transferred-nft-name__txt{
+    width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.txn-failed{
+    display: flex;
+    align-items: center;
+}
+
+.txn-failed img {
+    width: 20px;
+    margin-right: 5px;
 }
 
 @media screen and (max-width: 500px) {
