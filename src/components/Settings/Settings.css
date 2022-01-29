@@ -1253,7 +1253,7 @@ li.blockChain_item:hover {
 
 .sidebar_content {
   max-height: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
   padding-bottom: 50px;
   flex-grow: 1;
 }
@@ -1311,14 +1311,14 @@ li.blockChain_item:hover {
   outline: none;
   position: absolute;
   right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background-image: url("assets/img/icon/copy-light.svg");
+  top: 5px;
+
+  background-image: url("./assets/img/icon/copy-light.svg");
   background-size: 18px;
 }
 
 .copyCode.icon:hover {
-  background-image: url(assets/img/icon/copy-gray.svg);
+  background-image: url("./assets/img/icon/copy-gray.svg");
 }
 
 .sideFooter {

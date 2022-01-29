@@ -26,6 +26,8 @@ function WSettings() {
     settings,
   }));
 
+  const [copied, setCopied] = useState(false);
+
   const dispatch = useDispatch();
 
   const {
@@ -41,7 +43,6 @@ function WSettings() {
     accentColor,
     secondaryColor,
     selectedChains,
-    copied,
     iconColor,
     borderColor,
     selectedWallets,
@@ -118,6 +119,15 @@ function WSettings() {
         <p style={{ marginTop: "15px" }}>
           You can't show less than two available {showAlert}
         </p>
+      </Alert>
+
+      <Alert
+        show={copied}
+        variant="info"
+        style={{ position: "absolute", zIndex: "999", width: "100%" }}
+        onClose={() => dispatch(setSettings({ ...settings, showAlert: false }))}
+      >
+        <p style={{ marginTop: "15px" }}>Copied!</p>
       </Alert>
       <div className="site_setting">
         <h2>Settings</h2>
@@ -795,10 +805,9 @@ function WSettings() {
                   <div className="typo-sel header_color_select">
                     <h5>Paste this code</h5>
                     <div className="exportCodeCont">
-                      <span>{copied}</span>
                       <p id="iframeSrc">{`<iframe src='${iframeSrc}' frameborder='0' ></iframe>`}</p>
                       <button
-                        className="copyCode icon"
+                        className={`copyCode icon ${copied ? "copied" : ""}`}
                         onClick={() => {
                           var aux = document.createElement("div");
                           aux.setAttribute("contentEditable", true);
@@ -817,19 +826,9 @@ function WSettings() {
                           // navigator.clipboard.writeText(
                           //</div> `<iframe src='${iframeSrc}' frameborder='0' ></iframe>`
                           //);
-                          dispatch(
-                            setSettings({
-                              ...settings,
-                              copied: "Copied!",
-                            })
-                          );
+                          setCopied(true);
 
-                          setTimeout(() =>
-                            dispatch(
-                              setSettings({ ...settings, copied: null }),
-                              500
-                            )
-                          );
+                          setTimeout(() => setCopied(false), 500);
                         }}
                       ></button>
                     </div>
@@ -848,7 +847,7 @@ function WSettings() {
           </a>
         </div>
         <div className="powerBySet">
-          <a href="#" className="power_by">
+          <a href="https://xp.network/" target={"_blank"} className="power_by">
             <img src={power} alt="XP.Network" />
           </a>
         </div>

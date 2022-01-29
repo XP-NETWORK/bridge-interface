@@ -119,7 +119,7 @@ export default function Widget() {
             color: ${color ? color : ""};
         }
 
-        .desAddress input,  .desAddress input:focus,  .desAddress input:active {
+        .desAddress input,  .desAddress input:focus,  .desAddress input:active, .empty__box {
           border-color: ${borderColor ? borderColor : ""};
         }
 
@@ -199,7 +199,7 @@ export default function Widget() {
           border-radius: ${cardRadius ? cardRadius + "px" : ""};
         }
 
-        .nft-box__container, .nft-box__container--selected {
+        .nft-box__container, .nft-box__container--selected,  .empty__box {
           -webkit-border-radius: ${cardRadius ? cardRadius + "px" : ""}
         }
 
