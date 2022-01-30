@@ -129,7 +129,7 @@ export default function TransferredNft({ nft }) {
 
     return (
         <div className='success-nft-info__wrapper'>
-            {/* { typeof txn === "object" ?  */}
+            { txn ? 
                 <div className="transferred-nft">
                     <div className='nft-image-name'>
                         <img src={image} alt={name} />
@@ -149,7 +149,7 @@ export default function TransferredNft({ nft }) {
                      }    
                     </div>
                 </div> 
-                {/* : 
+                : 
                 <div className="transferred-nft">
                     <div className='transferred-nft-name'>
                         <img src={image} alt={name} />
@@ -159,8 +159,8 @@ export default function TransferredNft({ nft }) {
                         <img src={Failed} alt="" />
                         Failed
                     </div>
-                </div> */}
-            {/* } */}
+                </div>
+            }
         </div>
     )
 }

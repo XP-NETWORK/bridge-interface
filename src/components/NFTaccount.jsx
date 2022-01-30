@@ -142,7 +142,8 @@ function NFTaccount() {
             }
             const bigNum = fee ? fee.multipliedBy(1.1).integerValue().toString(10) : undefined
             dispatch(setBigNumFees(bigNum))
-            const fees = await Web3Utils.fromWei(bigNum, "ether")
+            console.log("bigNum: ", bigNum);
+            const fees = bigNum ? await Web3Utils.fromWei(bigNum, "ether") : undefined
             setFees(fees)
         } catch (error) {
           console.log(error.data ? error.data.message : error.message);
@@ -275,7 +276,7 @@ function NFTaccount() {
     }
 
     const sendEach = async (nft, index) => {
-        // debuggerx
+        // debugger
         const signer = await getSigner()
         let factory 
         let toChain 
@@ -308,7 +309,7 @@ function NFTaccount() {
                     nft,      
                     signer,   
                     receiver,  
-                    bigNumberFees
+                    // bigNumberFees
                 )
                 dispatch(dispatch(setTransferLoaderModal(false)))
                 setLoading(false)
