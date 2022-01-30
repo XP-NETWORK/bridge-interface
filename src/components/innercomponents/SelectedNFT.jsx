@@ -38,11 +38,11 @@ function SelectedNFT() {
                 { selectedNFTs ? selectedNFTs.map( (nft, index) => 
                     <li key={`selected-nft-${index}`} onClick={() => handleRemove(nft)} className="nftSelecItem">
                         {/* <img src={nft.image ? nft.image : brockenurl} alt="NFT" /> */}
-                        { nft.uri && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url || nft.uri) ? 
+                        { nft.uri && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url ||nft.image_url || nft.uri) ? 
                             nft.animation_url ? 
                             <video src={nft.animation_url} /> 
                             :
-                            <img alt="NFT" src={setupURI(nft.image || nft.uri)} /> 
+                            <img alt="NFT" src={setupURI(nft.image || nft.image_url || nft.uri)} /> 
                             : 
                             <div className="brocken-url-selected">
                                 <img src={brockenurl} alt='This NFT image uri is broken.' />
