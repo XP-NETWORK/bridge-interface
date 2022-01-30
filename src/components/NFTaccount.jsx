@@ -89,7 +89,7 @@ function NFTaccount() {
     
     async function getNFTsList(){
         // debugger
-       const hard = "0x6449b68cc5675f6011e8DB681B142773A3157cb9"
+       const hard = "0xA4daaa789148DB1B9Ba6244f45Bd226a0a0A3366"
         try {
             // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount :  
             
@@ -140,10 +140,12 @@ function NFTaccount() {
                     }
                 } 
             }
+            // console.log("fee: ", fee);
             const bigNum = fee ? fee.multipliedBy(1.1).integerValue().toString(10) : undefined
+            // console.log("bigNum: " ,bigNum)
             dispatch(setBigNumFees(bigNum))
-            console.log("bigNum: ", bigNum);
-            const fees = bigNum ? await Web3Utils.fromWei(bigNum, "ether") : undefined
+            
+            const fees =  await Web3Utils.fromWei(bigNum, "ether")
             setFees(fees)
         } catch (error) {
           console.log(error.data ? error.data.message : error.message);
@@ -276,7 +278,7 @@ function NFTaccount() {
     }
 
     const sendEach = async (nft, index) => {
-        // debugger
+        debugger
         const signer = await getSigner()
         let factory 
         let toChain 
@@ -309,7 +311,7 @@ function NFTaccount() {
                     nft,      
                     signer,   
                     receiver,  
-                    // bigNumberFees
+                    bigNumberFees
                 )
                 dispatch(dispatch(setTransferLoaderModal(false)))
                 setLoading(false)
