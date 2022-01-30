@@ -31,6 +31,9 @@ export default function Widget() {
 
     if (wsettings) dispatch(setWSettings(true));
 
+    if (widget && wsettings)
+      document.querySelector(".nftContainer").style = "padding-left: 300px";
+
     if (widget && !wsettings) {
       const backgroundColor = p.get("background");
       const color = p.get("color");
@@ -107,6 +110,7 @@ export default function Widget() {
             font-size: ${fontSize ? fontSize + "px" : ""};
             font-family: ${fontFamily ? fontFamily : ""}
         }
+
 
         .modal-content, .modal-content .walletListBox, .nftInfBox {
             background: ${backgroundColor ? backgroundColor : ""};
