@@ -23,6 +23,7 @@ function NFTlistTop() {
     const switchDestination = useSelector(state => state.general.switchDestination)
     const search = useSelector(state => state.general.NFTListSearch)
     const [showSearch, setShowSearch] = useState(false)
+
     const handleSearch = e => {
         dispatch(setSearchNFTList(e.target.value))
     }
@@ -35,12 +36,19 @@ function NFTlistTop() {
         dispatch(setNFTsListView())
     }
     const refresh = async () => {
+        // debugger
         if(!bigLoader || !nfts) {
-            const w = algorandAccount || tronWallet || tezosAccount || account
+            let w
+            if(from.type === "EVM") w = account
+            else if(from.type === "Tezos") w = tezosAccount
+            else if(from.type === "Algorand") w = algorandAccount
+            else if(from.type === "Elrond") w = elrondAccount
+            else if(from.type === "Tron") w = tronWallet
+            console.log(w);
+            // const w = algorandAccount || tronWallet || tezosAccount || account
             // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             await setNFTS(w, from.key)
         }
-
     }
 
     const refreshStyle = { 

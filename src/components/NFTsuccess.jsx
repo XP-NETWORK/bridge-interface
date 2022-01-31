@@ -14,7 +14,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { setupURI } from '../wallet/oldHelper';
 // import CopyIcons from './innercomponents/CopyIcons';
 import { setClaimablesAlgorand, setNFTS } from '../wallet/helpers';
-import { claimAlgorandPopup, connectAlgorandWalletClaim, setTxnHash } from '../store/reducers/generalSlice';
+import { claimAlgorandPopup, connectAlgorandWalletClaim, setTxnHash, cleanTxnHashArr, removeFromSelectedNFTList  } from '../store/reducers/generalSlice';
 import { useDispatch } from 'react-redux';
 import ConnectAlgorand from './ConnectAlgorand';
 import ClaimAlgorandNFT from './ClaimAlgorandNFT';
@@ -37,19 +37,27 @@ function NFTsuccess() {
     
 
     const refresh = async () => {
-       
-            const w = algorandAccount || tronWallet || tezosAccount || account
+        debugger
+            let w
+            if(from.type === "EVM") w = account
+            else if(from.type === "Tezos") w = tezosAccount
+            else if(from.type === "Algorand") w = algorandAccount
+            else if(from.type === "Elrond") w = elrondAccount
+            else if(from.type === "Tron") w = tronWallet
+            // const w = algorandAccount || tronWallet || tezosAccount || account
             // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             await setNFTS(w, from.key)
-        
-
     }
 
     // const [show, setShow] = useState(true);
 
     const handleClose = () => {
         window.location.reload()
-        // dispatch(setTxnHash(''))
+        // selectedNFTList.forEach(nft => {
+        //     const { txn } = nft
+        //     if(txn) dispatch(removeFromSelectedNFTList(nft))
+        // });
+        // dispatch(cleanTxnHashArr())
         // refresh()
     };
 

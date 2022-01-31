@@ -20,10 +20,11 @@ export default function TransferredNft({ nft }) {
     const { image, txn, name, native } = nft
     const { library } = useWeb3React();
     const [txnStatus, setTxnStatus] = useState()
+    console.log("txnStatus: ", txnStatus);
     const [checkStatusInterval, setCheckStatusInterval] = useState()
     const from = useSelector(state => state.general.from)
     const to = useSelector(state => state.general.to)
-    const myAlgo = useSelector(state => state.general.myAlgo)
+    const myAlgo = useSelector(state => state.general.MyAlgo)
     const algoSigner = useSelector(state => state.general.algoSigner)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
     const algorandWallet = useSelector(state => state.general.algorandWallet)
@@ -44,13 +45,21 @@ export default function TransferredNft({ nft }) {
 
     const checkEVMStatus = async (str) => {
         // debugger
-        try {
-            const status = await library.eth.getTransactionReceipt(txn.hash)
-            if(status) return true
+        setCheckStatusInterval('')
+        return true
+        // TODO transaction status
+        // const { hash } = str
+        // try {
+        //     const status = await library.eth.getTransactionReceipt(hash)
+        //     .then(status =>{
+        //         if(status){
+        //             setCheckStatusInterval('')
+        //             return true
+        //         }})
             
-        } catch (error) {
-            console.error(error)
-        }
+        // } catch (error) {
+        //     console.error(error)
+        // }
     }
     const claim = () => {
         dispatch(claimAlgorandPopup(nft))
@@ -58,7 +67,7 @@ export default function TransferredNft({ nft }) {
 
     const checkTronStatus = async (str) => {
         try {
-            const status = await window.tronWeb.trx.getConfirmedTransaction(txn.hash)
+            const status = await window.tronWeb.trx.getConfirmedTransaction(str)
             if(status) return true
         } catch (error) {
             console.error(error)
@@ -77,34 +86,49 @@ export default function TransferredNft({ nft }) {
 
     const checkAlgoStatus = async (str) =>{
         // debugger
-        if(myAlgo){
-            try {
-                const status = await algosdk.waitForConfirmation(myAlgoConnect, str, 4)
-                if(status) return true
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        else{
-
-        }
         const myAlgoConnect = new MyAlgoConnect();
+        // console.log("check algorand txn: ", str);
+        setCheckStatusInterval('')
+        return true
+        // TODO transaction status
+        // if(myAlgo){
+        //     try {
+        //         console.log("myAlgoConnect: ", myAlgoConnect);
+        //         const status = await algosdk.waitForConfirmation(myAlgoConnect, str, 4)
+        //         console.log("algo tx status: ", status);
+        //         if(status){
+        //             setCheckStatusInterval('')
+        //             return true
+        //         }
+        //     } catch (error) {
+        //         console.error(error)
+        //     }
+        // }
+        // else{
+
+        // }
+
     }
 
     const checkTransactionStatus = async () => {
         // debugger
+        let res
         switch (from.type) {
             case "EVM":
-                setTxnStatus(checkEVMStatus(txn?.hash))
+                res = await checkEVMStatus(txn)
+                setTxnStatus(res)
                 break;
             case "Tron":
-                setTxnStatus(checkTronStatus(txn?.hash))
+                res = await checkTronStatus(txn)
+                setTxnStatus(res)
                 break;
             case "Elrond":
-                setTxnStatus(checkElrondStatus(txn?.hash))
+                res = await checkElrondStatus(txn)
+                setTxnStatus(res)
                 break;
             case "Algorand":
-                setTxnStatus(checkAlgoStatus(txn?.harsh))
+                res = await checkAlgoStatus(txn)
+                setTxnStatus(res)
                 break;
             default:
                 break;
@@ -112,8 +136,9 @@ export default function TransferredNft({ nft }) {
     }
 
     useEffect(() => {
-        if(typeof txn === "object") checkTransactionStatus()
-        const s = setInterval(() => checkTransactionStatus(), 1000 * 30);
+        // debugger
+        if(txn) checkTransactionStatus()
+        const s = setInterval(() => checkTransactionStatus(), 1000 * 3);
         setCheckStatusInterval(s)
         if(txnStatus) clearInterval(s);
         return () => clearInterval(s);
@@ -138,8 +163,7 @@ export default function TransferredNft({ nft }) {
                         <div className='txn-status-pending'>Pending</div> 
                         : 
                         <div className="success-buttons">
-                            {/* <a href={`${chainsConfig[from.key].tx + getTX()}`} target="_blank" className="success-button view-txn-btn">View Txn</a> */}
-                            <a href={`${chainsConfig[from.key].tx + txn?.hash}`} target="_blank" className="success-button view-txn-btn">View Txn</a>
+                            <a href={`${chainsConfig[from.key].tx + txn}`} target="_blank" className="success-button view-txn-btn">View Txn</a>
                             { to.text === "Algorand" && 
                                 <div onClick={claim} style={checkIfAlgoOptIn() ? OFF : {}} className="success-button claim-btn">{ checkIfAlgoOptIn() ? 'Claimed' : "Claim"}</div>
                             }

@@ -81,6 +81,9 @@ const generalSlice = createSlice({
     setReceiver(state, action){
       state.receiver = action.payload
     },
+    cleanTxnHashArr(state){
+      state.txnHashArr = state.txnHashArr.initialState
+    },
     setTxnHash(state, action){
       const {nft, txn} = action.payload
       const { tokenId, contract, chainId } = nft.native
@@ -279,7 +282,8 @@ export const {
     setShowAbout,
     setShowVideo,
     setAlgorandWallet,
-    setMyAlgo
+    setMyAlgo,
+    cleanTxnHashArr
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
