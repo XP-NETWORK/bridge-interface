@@ -68,7 +68,7 @@ function NFTaccount() {
                 const signer = await inner.walletConnectSigner(algoConnector, algorandAccount)
                 return signer
             } catch (error) {
-                console.log(error.message);
+                console.log(error.data ? error.data.message : error.data ? error.data.message : error.message);
             }
         }
         else if(MyAlgo){
@@ -96,7 +96,7 @@ function NFTaccount() {
             const w = tezosAccount || algorandAccount || tronWallet || elrondAccount || account
             await setNFTS(w, from)
             } catch (error) {  
-                dispatch(setError(error.message))
+                dispatch(setError(error.data ? error.data.message : error.message))
             }
     }
     
@@ -145,7 +145,7 @@ function NFTaccount() {
             const fees = await Web3Utils.fromWei(bigNum, "ether")
             setFees(fees)
         } catch (error) {
-          console.log(error);
+          console.log(error.data ? error.data.message : error.message);
         //   dispatch(setError(error))
         }
     }
@@ -214,7 +214,7 @@ function NFTaccount() {
     //                         }))
     //                     }
     //                 }
-    //                 else if(error.message?.includes('non-origin chain')){
+    //                 else if(error.data ? error.data.message : error.message?.includes('non-origin chain')){
     //                     dispatch(setError("Trying to send wrapped nft to non-origin chain!!!"))
     //                     setLoading(false)
     //                 }
@@ -236,7 +236,7 @@ function NFTaccount() {
     //                 }))
     //             }
     //         }
-    //         else if(error.message?.includes('non-origin chain')){
+    //         else if(error.data ? error.data.message : error.message?.includes('non-origin chain')){
     //             dispatch(setError("Trying to send wrapped nft to non-origin chain!!!"))
     //             setLoading(false)
     //         }
@@ -275,7 +275,7 @@ function NFTaccount() {
     }
 
     const sendEach = async (nft, index) => {
-        debugger
+        // debuggerx
         const signer = await getSigner()
         let factory 
         let toChain 
@@ -321,16 +321,20 @@ function NFTaccount() {
             dispatch(dispatch(setTransferLoaderModal(false)))
             const { data, message, error } = err
             if(message){
-                if(message.includes("NFT not whitelisted")){
+                if(
+                    message.includes("NFT not whitelisted") 
+                    || message.includes('contract not whitelisted')
+                    || (data ? data.message.includes('contract not whitelisted') : false )
+                ){
                     dispatch(setNFTsToWhitelist({
                         url: nft.image,
                         name: nft.name
                     }))
                 }
-                else dispatch(setError(message))
+                else dispatch(setError(err.data ? err.data.message : err.message))
                 return
             }
-            else dispatch(setError(err))
+            else dispatch(setError(err.data ? err.data.message : err.message))
             return
         }
     }

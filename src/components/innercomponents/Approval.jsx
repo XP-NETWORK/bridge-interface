@@ -78,7 +78,7 @@ function Approval(props) {
   };
 
   const approveEach = async (nft, signer, chain, index) => {
-    debugger;
+    // debugger
     const arr = new Array(index + 1).fill(0);
     const factory = await getFactory();
     if (
@@ -103,7 +103,7 @@ function Approval(props) {
           } catch (err) {
             console.log(arr, err);
             setFinishedApproving(arr);
-            dispatch(setError(err.message));
+            dispatch(setError(err.data ? err.data.message : err.message));
           }
         }
       } catch (error) {
@@ -155,7 +155,7 @@ function Approval(props) {
         // setFinishedApproving(arr)
       } catch (error) {
         setFinishedApproving(arr);
-        dispatch(setError(error));
+        dispatch(setError(error.data ? error.data.message : error.message));
         if (error.data) {
           console.log(error.data.message);
         } else console.log(error);
@@ -174,7 +174,7 @@ function Approval(props) {
         setFinishedApproving(arr);
       } catch (error) {
         setFinishedApproving(arr);
-        dispatch(setError(error));
+        dispatch(setError(error.data ? error.data.message : error.message));
         if (error.data) {
           console.log(error.data.message);
         } else console.log(error);
@@ -248,8 +248,7 @@ function Approval(props) {
             We'd like to make sure you really want to send the NFTs and pay the
             associated fees.
           </span>
-
-          <InfLith className="svgWidget" />
+          <InfLith className="svgWidget" alt="InfLith" />
         </div>
       </div>
       <div
