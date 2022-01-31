@@ -142,10 +142,12 @@ function NFTaccount() {
             }
             // console.log("fee: ", fee);
             const bigNum = fee ? fee.multipliedBy(1.1).integerValue().toString(10) : undefined
+            console.log(bigNum, 'ghklaskldsakl')
             // console.log("bigNum: " ,bigNum)
             dispatch(setBigNumFees(bigNum))
             
             const fees =  await Web3Utils.fromWei(bigNum, "ether")
+            console.log(fees, 'this is fees line 150')
             setFees(fees)
         } catch (error) {
           console.log(error.data ? error.data.message : error.message);
@@ -278,7 +280,7 @@ function NFTaccount() {
     }
 
     const sendEach = async (nft, index) => {
-        debugger
+        console.log('start sendeach')
         const signer = await getSigner()
         let factory 
         let toChain 
@@ -319,7 +321,8 @@ function NFTaccount() {
             }
             if(to === "Algorand") await setClaimablesAlgorand(algorandAccount)
         } catch (err) {
-            // console.error(error)
+            console.error(err)
+            console.log('this is error in sendeach')
             setLoading(false)
             dispatch(dispatch(setTransferLoaderModal(false)))
             const { data, message, error } = err
@@ -334,6 +337,10 @@ function NFTaccount() {
                         name: nft.name
                     }))
                 }
+                else if(
+                    message.includes('User cant pay the bills')
+                    || (data ? data.message.includes('User cant pay the bills') : false )
+                ) dispatch(setError(`You don't have enough funds to pay the fees`))
                 else dispatch(setError(err.data ? err.data.message : err.message))
                 return
             }
@@ -372,6 +379,7 @@ function NFTaccount() {
 
 
     const sendAllNFTs = () => {
+        console.log('hellosasa')
         if(!loading && approved) {
             setLoading(true)
             dispatch(setTransferLoaderModal(true))
@@ -445,7 +453,8 @@ function NFTaccount() {
                                         <SelectedNFT />
                                         <Approval />
                                         <SendFees fees={fees * selectedNFTList?.length}/>
-                                        <div onClick={sendAllNFTs} className={approved && receiver && !loading ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
+                                        <div 
+                                        onClick={sendAllNFTs} className={approved && receiver && !loading ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
                                             <a  className="themBtn">
                                                 {loading ? 'Processing' : 'Send' }
                                             </a>
