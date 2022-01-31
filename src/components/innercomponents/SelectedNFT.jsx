@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
-import Close from "../../assets/img/icons/close.svg";
-import Back from "../../assets/img/icons/Back.svg";
+import { ReactComponent as BackComp } from "../../assets/img/icons/Back.svg";
 import { useSelector } from "react-redux";
 import {
   cleanSelectedNFTList,
@@ -25,10 +24,6 @@ function SelectedNFT() {
     dispatch(removeFromSelectedNFTList(nft));
   };
 
-  const { widget } = useSelector(({ general: { widget } }) => ({
-    widget,
-  }));
-
   useEffect(() => {}, [selectedNFTs]);
 
   return (
@@ -36,7 +31,7 @@ function SelectedNFT() {
       <div className="nftSeleTop">
         <div className="selectedNft nftselectedtop">
           <a className="backBtn mobileOnly">
-            <img src={Back} alt="Back" />
+            <BackComp className="svgWidget" alt="back" />
           </a>
           <span className="mobileOnly">Selected NFTs</span>
           <span className="desktopOnly">
@@ -65,26 +60,23 @@ function SelectedNFT() {
                 {/* <img src={nft.image ? nft.image : brockenurl} alt="NFT" /> */}
                 {nft.uri &&
                 isValidHttpUrl(nft.uri) &&
-                (nft.image || nft.animation_url || nft.uri) ? (
+                (nft.image || nft.animation_url || nft.image_url || nft.uri) ? (
                   nft.animation_url ? (
                     <video src={nft.animation_url} />
                   ) : (
-                    <img alt="NFT" src={setupURI(nft.image || nft.uri)} />
+                    <img
+                      alt="NFT"
+                      src={setupURI(nft.image || nft.image_url || nft.uri)}
+                    />
                   )
                 ) : (
                   <div className="brocken-url-selected">
                     <img src={brockenurl} alt="This NFT image uri is broken." />
                   </div>
                 )}
-                <span className="nftSelecItem__name">
-                  {nft.name || nft.native.name}
-                </span>
+                <span className="nftSelecItem__name">{nft.name}</span>
                 <span className="Close">
-                  {widget ? (
-                    <CloseComp className="svgWidget" />
-                  ) : (
-                    <img src={Close} alt="close" />
-                  )}
+                  <CloseComp className="svgWidget" />
                 </span>
               </li>
             ))

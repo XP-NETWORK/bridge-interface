@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
-import { ReactComponent as Close } from "../assets/img/icons/close.svg";
+import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
 // import Wrong from '../assets/img/Wrong.svg';
 // import { CHAIN_INFO } from "./values";
 import { useSelector } from "react-redux";
@@ -23,6 +23,7 @@ function ClaimAlgorandNFT() {
     (state) => state.general.algorandClaimPopup
   );
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
+  console.log("algorandAccount: ", algorandAccount);
   // const account = useSelector(state => state.general.account)
   const dispatch = useDispatch();
   // const [loader, setLoader] = useState(false)
@@ -47,6 +48,10 @@ function ClaimAlgorandNFT() {
     }
   };
 
+  const toShow = () => {
+    return algorandClaimPopup ? true : false;
+  };
+
   useEffect(async () => {
     // debugger
     if (algorandClaimPopup) {
@@ -65,14 +70,14 @@ function ClaimAlgorandNFT() {
       {/* <li className="wllListItem" onClick={handleShow}><img src={MetaMask} /> MetaMask</li> */}
       <Modal
         animation={false}
-        show={algorandClaimPopup}
+        show={toShow()}
         onHide={handleClose}
         className="nftWorng"
       >
         <Modal.Header className="border-0">
           <Modal.Title>Claim Algorand NFT</Modal.Title>
           <span className="CloseModal" onClick={handleClose}>
-            <Close className="svgWidget" />
+            <CloseComp className="svgWidget" />
           </span>
         </Modal.Header>
         <Modal.Body className="modalBody text-center">

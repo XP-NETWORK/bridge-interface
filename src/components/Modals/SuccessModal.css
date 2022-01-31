@@ -55,6 +55,10 @@
     font-size: 14px;
 }
 
+.success-button.claim-btn{
+    cursor: pointer;
+}
+
 .success-info-item{
     display: flex;
     justify-content: space-between;

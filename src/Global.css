@@ -1495,6 +1495,7 @@ li.nftSelecItem > video {
   display: block;
   height: 32px;
   margin-right: 13px;
+  border-radius: 4px;
 }
 
 li.nftSelecItem .Close {
