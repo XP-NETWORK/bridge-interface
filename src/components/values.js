@@ -13,6 +13,7 @@ import Solana from "../assets/img/chain/Solana.svg"
 import Fuse from "../assets/img/chain/Fuse.svg"
 import Velas from "../assets/img/chain/velas.svg"
 import Tezos from "../assets/img/chain/Tezos.svg"
+import Iotex from "../assets/img/chain/iotx.svg"
 import { Chain } from "xp.network/dist/consts";
 
 export const EVM = "EVM";
@@ -145,6 +146,16 @@ export const chains = [
         image: { avatar: true, src: Tezos},
         newChain: false,
         coming: true
+    },
+    {
+        type: "EVM",
+        key: "Iotex",
+        text: "Iotex",
+        value: "Iotex",
+        order: 15,
+        image: { avatar: true, src: Iotex},
+        newChain: true,
+        coming: true
     }
 ]
 
@@ -261,10 +272,18 @@ export const chainsConfig = {
         type: TEZOS,
         img: Tezos,
         token: "XTZ",
-        rpc: "https://mainnet-tezos.giganode.io/",
+        rpc: "https://mainnet-tezos.giganode.io/tx/",
         chainId: 0x12,
         Chain: Chain.TEZOS,
         tx: "https://tzstats.com/"
+    },
+    Iotex: {
+        type: EVM,
+        token: "IOTX",
+        rpc: "https://babel-api.mainnet.iotex.io",
+        chainId: 4689,
+        Chain: Chain.IOTEX,
+        tx: "https://iotexscan.io/tx/"
     }
 
 }
@@ -284,7 +303,8 @@ export const coins = [
     "XDAI", //11
     "FUSE", //12
     "VELAS", //13
-    "TEZOS" //14
+    "TEZOS", //14
+    "IOTX" //15
   ];
 
 export const CHAIN_INFO = {
@@ -424,6 +444,15 @@ export const CHAIN_INFO = {
         decimals: 1e6,
         rpc: "https://mainnet-tezos.giganode.io/",
         chainId: 0x12,
+        blockExplorerUrls: "",
+        contract: ""
+    },
+    Iotex: {
+        native: coins[15],
+        nonce: 0x14,
+        decimals: 1e18,
+        rpc: "https://babel-api.mainnet.iotex.io",
+        chainId: 4689,
         blockExplorerUrls: "",
         contract: ""
     }
