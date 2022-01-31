@@ -10,49 +10,40 @@ import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { useDispatch } from 'react-redux';
 import { claimAlgorandPopup } from '../../store/reducers/generalSlice';
 import { chainsConfig } from '../values';
+import { setClaimablesAlgorand, getFactory,  setNFTS } from "../../wallet/helpers"
+
 
 
 
 
 export default function TransferredNft({ nft }) {
-    const { image, txn, name } = nft
-    const { chainId, account, activate, library } = useWeb3React();
+    const { image, txn, name, native } = nft
+    const { library } = useWeb3React();
     const [txnStatus, setTxnStatus] = useState()
     const [checkStatusInterval, setCheckStatusInterval] = useState()
     const from = useSelector(state => state.general.from)
     const to = useSelector(state => state.general.to)
     const myAlgo = useSelector(state => state.general.myAlgo)
     const algoSigner = useSelector(state => state.general.algoSigner)
+    const algorandAccount = useSelector(state => state.general.algorandAccount)
+    const algorandWallet = useSelector(state => state.general.algorandWallet)
+    const MyAlgo = useSelector(state => state.general.MyAlgo)
     const dispatch = useDispatch()
+    const OFF = { opacity: 0.6, pointerEvents: 'none' }
 
-
-    // const getTX = () => {
-    //     let ntx
-    //     // debugger
-    //     // const tx = txnHashArr && txnHashArr.length > 0 ? typeof txnHashArr[currentTX] === 'object' ? txnHashArr[currentTX].hash.toString() : txnHashArr[currentTX] : ''
-        
-    //     if( txnHashArr && txnHashArr.length > 0 ){
-    //         if(typeof txnHashArr === 'object' && !Array.isArray(txnHashArr)){
-    //             return txnHashArr[0].hash.toString()
-    //         }
-    //         else if(Array.isArray(txnHashArr)){
-    //             if( typeof txnHashArr[0] === "object"){
-    //                 return txnHashArr[0].hash.toString()
-    //             }
-    //             else{
-    //                 return txnHashArr[0].toString()
-    //             }
-    //         }
-    //         else{
-    //             return txnHashArr
-    //         }
-    //     }
-    //     else{
-    //         return "wrong tx"
-    //     }
-    // }
+    const checkIfAlgoOptIn = async () => {
+        try {
+            const factory = await getFactory()
+            const algorand = await factory.inner(15)
+            const isOpted = await algorand.isOptIn(algorandAccount, native.nftId)
+            return isOpted ? true : false
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     const checkEVMStatus = async (str) => {
+        // debugger
         try {
             const status = await library.eth.getTransactionReceipt(txn.hash)
             if(status) return true
@@ -85,6 +76,7 @@ export default function TransferredNft({ nft }) {
     }
 
     const checkAlgoStatus = async (str) =>{
+        // debugger
         if(myAlgo){
             try {
                 const status = await algosdk.waitForConfirmation(myAlgoConnect, str, 4)
@@ -127,6 +119,12 @@ export default function TransferredNft({ nft }) {
         return () => clearInterval(s);
     }, [])
 
+    useEffect(async() => {
+        if(to.key === 'Algorand') {
+            const claimables = await setClaimablesAlgorand(algorandAccount, true)
+        }
+    },[])
+
     return (
         <div className='success-nft-info__wrapper'>
             { txn ? 
@@ -143,7 +141,7 @@ export default function TransferredNft({ nft }) {
                             {/* <a href={`${chainsConfig[from.key].tx + getTX()}`} target="_blank" className="success-button view-txn-btn">View Txn</a> */}
                             <a href={`${chainsConfig[from.key].tx + txn?.hash}`} target="_blank" className="success-button view-txn-btn">View Txn</a>
                             { to.text === "Algorand" && 
-                                <div onClick={claim} className="success-button claim-btn">Claim</div>
+                                <div onClick={claim} style={checkIfAlgoOptIn() ? OFF : {}} className="success-button claim-btn">{ checkIfAlgoOptIn() ? 'Claimed' : "Claim"}</div>
                             }
                         </div> 
                      }    
