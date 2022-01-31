@@ -36,6 +36,7 @@ function NFTaccount() {
     const isToEVM = useSelector(state => state.general.to).type === 'EVM'
     const NFTListView = useSelector(state => state.general.NFTListView)
     const nfts = useSelector(state => state.general.NFTList)
+    console.log("nfts: ", nfts);
     const tronWallet = useSelector(state => state.general.tronWallet)
     const account = useSelector(state => state.general.account)
     const tezosAccount = useSelector(state => state.general.tezosAccount)
@@ -350,34 +351,6 @@ function NFTaccount() {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     const sendAllNFTs = () => {
         console.log('hellosasa')
         if(!loading && approved) {
@@ -392,6 +365,10 @@ function NFTaccount() {
     useEffect( async () => {
         await getNFTsList()
     }, [])
+
+    useEffect( async () => {
+    }, [nfts])
+
 
     useEffect(() => {
         if(selectedNFTList.length > 0) estimate();
@@ -448,7 +425,7 @@ function NFTaccount() {
                                     <h3>Send NFT</h3>
                                 </div>
                                 <DestinationChain/>
-                                { nfts ? 
+                                { nfts?.length ? 
                                     <>
                                         <SelectedNFT />
                                         <Approval />

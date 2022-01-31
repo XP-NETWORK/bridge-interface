@@ -32,7 +32,7 @@ function NFTlistView() {
         <div className="nftListBox nftListView">
             
             <ul className="nftList">
-            { nfts ?  nfts.filter( nft  => nft?.name?.includes(search ? search : '') || nft?.native.owner?.includes(search ? search : '')).map((nft, index) => 
+            { nfts.length ?  nfts.filter( nft  => nft?.name?.includes(search ? search : '') || nft?.native.owner?.includes(search ? search : '')).map((nft, index) => 
                 <li  className="nftListed nftSelect">
                     <span onClick={(e) => addRemoveNFT(nft, e)} className="selectNftListed">
                         { checkIfSelected(nft, selectedNFTs) ? 

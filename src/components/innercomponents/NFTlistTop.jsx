@@ -36,7 +36,7 @@ function NFTlistTop() {
         dispatch(setNFTsListView())
     }
     const refresh = async () => {
-        // debugger
+        debugger
         if(!bigLoader || !nfts) {
             let w
             if(from.type === "EVM") w = account
