@@ -1,58 +1,206 @@
-.custom-success-modal__wrapper{
-    background-color: rgba(0, 0, 0, 0.8);
-    position: fixed;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 100500;
-    /* filter: blur(8px);
-    -webkit-filter: blur(8px); */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    /* background-attachment: fixed; */
-}
-
-.custom-success-modal__close{
-    position: absolute;
-    top: 50px;
-    right: 70px;
-    cursor: pointer;
-}
-
-.custom-success-modal__close:hover{
-    filter: brightness(10);
-}
-
-.custom-success-modal{
-    width: 570px;
+.success-modal .modal-dialog{
+    max-width: 570px;
     min-height: 500px;
-    border: 1px solid rgba(53, 53, 53, 0.527);
-    background: linear-gradient(308.55deg, #232833 54.09%, rgba(35, 40, 51, 0) 137.15%);
-    border-radius: 20px;
-    opacity: 0.9;
-    backdrop-filter: blur(15px);
 }
 
-.custom-success-modal__header{
-    color: white;
-    font-size: 18px;
-    font-weight: 600;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
+.success-modal .modal-content{
+    padding: 0 70px;
 }
 
-.custom-success-modal__body{
-    padding: 50px 70px;
+.success-modal .modal-header{
+    padding-top: 40px;
+}
+
+.success-info-list{
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-.custom-success-modal__info{
-    border-radius: 6px;
+.success-info-box{
     background: linear-gradient(309.48deg, #282E3C -3.65%, rgba(40, 46, 60, 0) 122.77%);
-    padding: 10px 30px;
+    border-radius: 6px;
+    padding: 20px 30px;
+}
+
+.success-modal-close{
+    position: absolute;
+    top: 40px;
+    right: 73px;
+    cursor: pointer;
+    z-index: 20;
+}
+
+.success-modal-close:hover{
+    filter: brightness(5);
+}
+
+.view-txn-btn{
+    background: #62718A1A;
+    padding: 0 4px;
+    border-radius: 6px;
+    color: #3763FF;
+}
+
+.claim-btn{
+    color: white;
+    background-color: #3763FF;
+    padding: 0 4px;
+    border-radius: 6px;
+}
+
+.success-buttons{
+    display: flex;
+    gap: 4px;
+    font-size: 14px;
+}
+
+.success-button.claim-btn{
+    cursor: pointer;
+}
+
+.success-info-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+}
+
+.success-info-item span{
+    color: white;
+    margin-left: 6px;
+    display: flex;
+    align-items: center;
+}
+
+.success-hash img{
+    cursor: pointer;
+}
+
+.success-hash img:hover{
+    filter: brightness(5);
+}
+
+.info-item-chain{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.info-item-chain img{
+    margin-right: 6px;
+    width: 28px;
+}
+
+.success-info-box label{
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0em;
+}
+
+.success-nft-info{
+    min-height: 35px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.success-hash{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    letter-spacing: 0em;
+    color: #297EFF;
+    display: flex;
+}
+
+.success-hash img{
+    margin-left: 12px;
+}
+
+.transferred-nft{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-height: 40px;
+}
+
+.success-nft-info__wrapper{
+    width: 100%;
+    padding: 10px 0;
+}
+
+.nft-image-name{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.txn-status-pending{
+    color: rgb(226, 195, 21);
+}
+
+.txn-status{
+    min-width: 70px;
+}
+
+.nft-image-name div{
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.transferred-nft img{
+    height: 32px;
+    border-radius: 4px;
+}
+
+.transferred-nft-name{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.transferred-nft-name__txt{
+    width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.txn-failed{
+    display: flex;
+    align-items: center;
+}
+
+.txn-failed img {
+    width: 20px;
+    margin-right: 5px;
+}
+
+@media screen and (max-width: 500px) {
+    .success-modal .modal-content{
+        padding: 0 10px;
+    }
+
+    .success-info-box{
+        padding: 10px 10px;
+    }
+
+    .success-modal .modal-header{
+        padding-top: 30px;
+    }
+
+    .success-modal-close{
+        top: 30px;
+        right: 10px;
+    }
 }
