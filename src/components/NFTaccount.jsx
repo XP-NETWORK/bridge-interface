@@ -90,19 +90,19 @@ function NFTaccount() {
     
     async function getNFTsList(){
         // debugger
-       const hard = "0xA4daaa789148DB1B9Ba6244f45Bd226a0a0A3366"
+       const hard = "tz1Kyfi2VyRewa4eUevmPRDHVzUMnYzYMRT8"
         try {
             // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount :  
             
             const w = tezosAccount || algorandAccount || tronWallet || elrondAccount || account
-            await setNFTS(w, from)
+            await setNFTS(hard, from)
             } catch (error) {  
                 dispatch(setError(error.data ? error.data.message : error.message))
             }
     }
     
     async function estimate () {
-        debugger
+        // debugger
    
         let fact
         let fee

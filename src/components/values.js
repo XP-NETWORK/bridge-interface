@@ -144,8 +144,8 @@ export const chains = [
         value: "Tezos",
         order: 20,
         image: { avatar: true, src: Tezos},
-        newChain: false,
-        coming: true
+        newChain: true,
+        coming: false
     },
     {
         type: "EVM",
