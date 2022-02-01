@@ -5,7 +5,7 @@ import brockenurl from "../../assets/img/brockenurl.png"
 import CheckGreen from '../../assets/img/icons/check_green.svg';
 import NFTdetails from '../NFTdetails';
 import { useSelector } from 'react-redux';
-import { setupURI } from '../../wallet/oldHelper';
+import { setupURI, checkVideoFormat } from '../../wallet/oldHelper';
 import  "./NewNFT.css"
 
 import { isValidHttpUrl } from '../../wallet/helpers';
@@ -37,7 +37,7 @@ export default function NFT({nft, index}) {
                 <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
                     <div className="image__wrapper">
                         { (nft.uri) && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url ||nft.image_url || nft.uri) ? 
-                            nft.animation_url || tryVideo ? 
+                            (nft.animation_url && checkVideoFormat(nft.animation_url)) || tryVideo ? 
                             <video onLoadedData={() => setImageLoaded(true)} controls={false} playsInline={true} autoPlay={true} loop={true} 
                             src={tryVideo ? setupURI(nft.image) : setupURI(nft.animation_url)} 
                             /> 

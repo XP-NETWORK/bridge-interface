@@ -5,6 +5,8 @@ import { ChainFactory } from "xp.network";
 import TronWeb from 'tronweb'
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import { chainsConfig } from '../components/values';
+import { create } from 'ipfs-http-client';
+
 export const moralisParams = {
     exchangeRateUri: "https://testing-bridge.xp.network/exchange/",
     txSocketUri: 'https://sockettx.herokuapp.com',
@@ -17,6 +19,10 @@ export const moralisParams = {
     heartbeatUri: 'https://xpheartbeat.herokuapp.com'
 }
 const axios = require('axios')
+
+
+
+
 export const getFromParams = async () => {
     const from = store.getState().general.from.key
     let provider
@@ -217,7 +223,7 @@ export const getChainId = () => {
 }
 
 export const setupURI = uri => {
-    
+    // debugger
     if(uri && uri.includes('ipfs://')){ 
         return 'https://ipfs.io/' + uri.replace(':/', '')
     }
@@ -226,6 +232,15 @@ export const setupURI = uri => {
     }
     return uri
 }
+
+
+export const checkVideoFormat = uri => {
+    // debugger
+    const str = uri.split(".").pop()
+    console.log("str:", str, str.includes("mpg") || str.includes("mpeg") || str.includes("avi") || str.includes("wmv") || str.includes("mp4") || str.includes("ogg") || str.includes("webm") || false)
+    return str.includes("mpg") || str.includes("mpeg") || str.includes("avi") || str.includes("wmv") || str.includes("mp4") || str.includes("ogg") || str.includes("webm") || false
+}
+
 
 export const preloadItem = (item, type, setLoaded) => {
     if(type === 'video') {
