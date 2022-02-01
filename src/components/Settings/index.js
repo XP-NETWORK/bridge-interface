@@ -1,17 +1,13 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { Image, Dropdown, Accordion, Alert } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
 import power from "./assets/img/power.svg";
 
-import {
-  setSettings,
-  chains,
-  wallets,
-  activeChains,
-} from "../../store/reducers/settingsSlice";
+import settingsHoc from "./settingsHoc";
+
+import { chains, wallets } from "../../store/reducers/settingsSlice";
 import "./Settings.css";
 
-const debounce = (func, delay) => {
+/*const debounce = (func, delay) => {
   let tm;
 
   return (...args) => {
@@ -20,18 +16,21 @@ const debounce = (func, delay) => {
       return func(...args);
     }, delay);
   };
-};
+};*/
 
-function WSettings() {
-  const { settings } = useSelector(({ settings }) => ({
-    settings,
-  }));
-
-  const [copied, setCopied] = useState(false);
-  const [activeChainsNumber, setActiveChains] = useState(activeChains.length);
-
-  const dispatch = useDispatch();
-
+function WSettings({
+  settings,
+  copied,
+  handleAlert,
+  list,
+  deboucedSet,
+  chainCheck,
+  walletCheck,
+  iframeSrc,
+  handleScroll,
+  fixedHeader,
+  setCopied,
+}) {
   const {
     backgroundColor,
     color,
@@ -49,78 +48,15 @@ function WSettings() {
     borderColor,
     selectedWallets,
     showAlert,
-    bridgeState,
   } = settings;
-
-  const deboucedSet = (e, key) =>
-    dispatch(setSettings({ ...settings, [key]: e }));
-
-  const chainCheck = (val) => {
-    const checked = selectedChains.includes(val);
-
-    if (checked) {
-    }
-
-    const newSelected = checked
-      ? selectedChains.filter((chain) => chain !== val)
-      : [...selectedChains, val];
-
-    dispatch(
-      setSettings({
-        ...settings,
-        showAlert: activeChainsNumber < 2 ? "chains" : false,
-        selectedChains: activeChainsNumber < 2 ? selectedChains : newSelected,
-      })
-    );
-  };
-
-  const walletCheck = (val) => {
-    const checked = selectedWallets.includes(val);
-    const newSelected = checked
-      ? selectedWallets.filter((wallet) => wallet !== val)
-      : [...selectedWallets, val];
-    dispatch(
-      setSettings({
-        ...settings,
-        //showAlert: newSelected.length < 2 ? "wallets" : false,
-        selectedWallets: newSelected,
-      })
-    );
-  };
-
-  //const prod = false;
-
-  const iframeSrc = useMemo(() => {
-    console.log(bridgeState, "sa");
-    return `${window.location.href
-      .replace("#", "")
-      .replace("wsettings=true&", "")}&background=${backgroundColor &&
-      backgroundColor.split("#")[1]}&color=${color &&
-      color.split("#")[1]}&fontSize=${fontSize &&
-      fontSize}&btnColor=${btnColor &&
-      btnColor.split("#")[1]}&btnBackground=${btnBackground &&
-      btnBackground.split("#")[1]}&btnRadius=${btnRadius &&
-      btnRadius}&fontFamily=${fontFamily &&
-      fontFamily}&chains=${selectedChains.join(
-      "-"
-    )}&cardBackground=${cardBackground &&
-      cardBackground.split("#")[1]}&cardRadius=${cardRadius &&
-      cardRadius}&secondaryColor=${secondaryColor &&
-      secondaryColor.split("#")[1]}&accentColor=${accentColor &&
-      accentColor.split("#")[1]}&borderColor=${borderColor &&
-      borderColor.split("#")[1]}&iconColor=${iconColor &&
-      iconColor.split("#")[1]}&wallets=${selectedWallets.join(
-      "-"
-    )}&bridgeState=${JSON.stringify(bridgeState)}`;
-  }, [settings]);
 
   return (
     <div className="setting_sidebar">
       <Alert
-        show={showAlert}
+        show={settings.showAlert}
         variant="danger"
-        style={{ position: "absolute", zIndex: "999" }}
-        onClose={() => dispatch(setSettings({ ...settings, showAlert: false }))}
+        style={{ position: "absolute", zIndex: "9999" }}
+        onClose={handleAlert}
         dismissible
       >
         <p style={{ marginTop: "15px" }}>
@@ -131,17 +67,24 @@ function WSettings() {
       <Alert
         show={copied}
         variant="info"
-        style={{ position: "absolute", zIndex: "999", width: "100%" }}
-        onClose={() => dispatch(setSettings({ ...settings, showAlert: false }))}
+        style={{ position: "absolute", zIndex: "9999", width: "100%" }}
+        onClose={handleAlert}
       >
         <p style={{ marginTop: "15px" }}>Copied!</p>
       </Alert>
       <div className="site_setting">
         <h2>Settings</h2>
       </div>
-      <div className="sidebar_content">
-        <div className="genarel_setting">
+      <div
+        className="sidebar_content"
+        ref={list}
+        onScroll={(e) => handleScroll(e)}
+      >
+        <div className={`genarel_setting ${fixedHeader ? "fixed" : ""}`}>
           <h6>WIDGET SETTINGS</h6>
+          <a target="_blank" href={iframeSrc} className="showIframe">
+            Show widget
+          </a>
           <button
             className="expandAll"
             onClick={() => {
@@ -179,7 +122,6 @@ function WSettings() {
                             name=""
                             id=""
                             checked={selectedChains.includes(chain)}
-                            onChange={() => chainCheck(chain)}
                           />
                           <span className="icon selectNfticon"></span>
                         </div>
@@ -239,7 +181,6 @@ function WSettings() {
                             name=""
                             id=""
                             checked={selectedWallets.includes(wallet)}
-                            onChange={() => walletCheck(wallet)}
                           />
                           <span className="icon selectNfticon"></span>
                         </div>
@@ -879,4 +820,4 @@ function WSettings() {
   );
 }
 
-export default WSettings;
+export default settingsHoc(WSettings);

@@ -1408,14 +1408,22 @@ li.blockChain_item .blockChainItem span {
 
 .genarel_setting {
   position: relative;
+  padding-bottom: 10px;
+}
+
+.fixed {
+  position: fixed;
+  width: 300px;
+  background-color: #fff;
+  z-index: 999;
+  border-bottom: 1px solid rgb(240, 236, 236);
 }
 
 .expandAll,
 .collapseAll {
   position: absolute;
   right: 30px;
-  top: 0;
-  bottom: 0;
+  bottom: 10px;
   margin: auto 0;
   width: 20px;
   height: 20px;
@@ -1438,4 +1446,21 @@ li.blockChain_item .blockChainItem span {
 
   transform: translateY(0);
   transform: rotate(180deg);
+}
+
+.showIframe {
+  font-size: 12px;
+  display: inline-block;
+  padding: 5px;
+  background: rgb(202, 198, 198);
+  cursor: pointer;
+  margin-left: 30px;
+  border-radius: 4px;
+  color: rgb(19, 17, 17);
+  transition: all 0.5s ease;
+}
+
+.showIframe:hover {
+  color: rgb(19, 17, 17);
+  filter: brightness(85%);
 }
