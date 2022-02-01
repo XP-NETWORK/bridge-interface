@@ -6,7 +6,8 @@ import { cleanSelectedNFTList, removeFromSelectedNFTList } from "../../store/red
 import { useDispatch } from 'react-redux';
 import brockenurl from "../../assets/img/brockenurl.png"
 import { isValidHttpUrl } from '../../wallet/helpers';
-import { setupURI } from '../../wallet/oldHelper';
+import { setupURI, checkVideoFormat } from '../../wallet/oldHelper';
+
 
 
 function SelectedNFT() {
@@ -39,11 +40,13 @@ function SelectedNFT() {
                     <li key={`selected-nft-${index}`} onClick={() => handleRemove(nft)} className="nftSelecItem">
                         {/* <img src={nft.image ? nft.image : brockenurl} alt="NFT" /> */}
                         { nft.uri && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url ||nft.image_url || nft.uri) ? 
-                            nft.animation_url ? 
+                            (nft.animation_url && checkVideoFormat(nft.animation_url)) ? 
                             <video src={nft.animation_url} /> 
+                            : (nft.animation_url && !checkVideoFormat(nft.animation_url)) ?
+                            <img alt="NFT" src={setupURI(nft.animation_url)} /> 
                             :
-                            <img alt="NFT" src={setupURI(nft.image || nft.image_url || nft.uri)} /> 
-                            : 
+                            <img alt="NFT" src={setupURI(nft.image || nft.image_url || nft.uri)} />
+                            :
                             <div className="brocken-url-selected">
                                 <img src={brockenurl} alt='This NFT image uri is broken.' />
                                 
