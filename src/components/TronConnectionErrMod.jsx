@@ -13,7 +13,7 @@ export default function TronConnectionErrMod() {
         console.log("click")
         dispatch(setTronLoginError(undefined))
     }
-
+// 
     return ( error === "noTronWeb" ?
         <Modal className="tron-connection-error" animation={false} size="sm" show={error} onHide={() => handleClose()}>
             <span className="tron-connection-error-close" onClick={handleClose}>
