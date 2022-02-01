@@ -166,6 +166,8 @@ export const handleChainFactory = async (someChain) => {
     ? (chain = await factory.inner(Chain.VELAS))
     : someChain === "Tezos"
     ? (chain = await factory.inner(Chain.TEZOS))
+    : someChain === "Iotex"
+    ? (chain = await factory.inner(Chain.IOTEX))
     : (chain = "");
   return chain;
   } catch (error) {
@@ -175,12 +177,10 @@ export const handleChainFactory = async (someChain) => {
 
 export const getNFTS = async (wallet, from) => {
   // debugger
-  // console.log("wallet: ", wallet);
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
   const chain = await factory.inner(chainsConfig[from].Chain)
-  // console.log('helloasdajk')
   try {
     // debugger
     let response 
@@ -237,19 +237,20 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 
 export const setNFTS = async (w, from) => {
   // debugger
-  // console.log("setNFTS: ", w);
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from)
   const parsedNFTs = await parseNFTS(res)
     store.dispatch(setBigLoader(false))
     if(parsedNFTs.length){
       store.dispatch(setNFTList(parsedNFTs))
-      // console.log(parsedNFTs)
+  }
+  else {
+    store.dispatch(setNFTList([]))
   }
 }
 
 export function isValidHttpUrl(string) {
-  // console.log("isValidHttpUrl: ", string);
+
   let url;
   if((string.includes("data:image/") || string.includes("data:application/"))) return true
   if(string.includes('ipfs://')) return true
@@ -270,7 +271,6 @@ export const getTronNFTs = async wallet => {
     const tokens = []
     for await(let nft of data) {
       const { tokenId, balance,tokenName,tokenAbbr } = nft
-      // console.log(nft)
       const contract = await window.tronWeb.contract().at(tokenId)
       const array = new Array(parseInt(balance)).fill(0).map((n,i) => i)
       for await(let index of array) {

@@ -36,6 +36,7 @@ function NFTaccount() {
     const isToEVM = useSelector(state => state.general.to).type === 'EVM'
     const NFTListView = useSelector(state => state.general.NFTListView)
     const nfts = useSelector(state => state.general.NFTList)
+    console.log("nfts: ", nfts);
     const tronWallet = useSelector(state => state.general.tronWallet)
     const account = useSelector(state => state.general.account)
     const tezosAccount = useSelector(state => state.general.tezosAccount)
@@ -101,15 +102,13 @@ function NFTaccount() {
     }
     
     async function estimate () {
-        // debugger
+        debugger
    
         let fact
         let fee
         try {
-            // console.log(from, to)
             const fromChain = await handleChainFactory(from)
             const toChain = await handleChainFactory(to)
-            // console.log(fromChain, toChain)
             const wallet = 
             to ==='Tron' ? 'TCCKoPRcYoCGkxVThCaY9vRPaKiTjE4x1C' 
             : from === 'Tron' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
@@ -119,7 +118,6 @@ function NFTaccount() {
             : account;
 
             fact = await getFactory()
-            // console.log(fact, 'hlasdkask2', fromChain, selectedNFTList)
             if(selectedNFTList.length) {
                 if(to ==='Tron'){
                    fee = from === 'BSC' ? new BigNumber('100000000000000000')
@@ -140,14 +138,10 @@ function NFTaccount() {
                     }
                 } 
             }
-            // console.log("fee: ", fee);
+
             const bigNum = fee ? fee.multipliedBy(1.1).integerValue().toString(10) : undefined
-            console.log(bigNum, 'ghklaskldsakl')
-            // console.log("bigNum: " ,bigNum)
             dispatch(setBigNumFees(bigNum))
-            
             const fees =  await Web3Utils.fromWei(bigNum, "ether")
-            console.log(fees, 'this is fees line 150')
             setFees(fees)
         } catch (error) {
           console.log(error.data ? error.data.message : error.message);
@@ -280,7 +274,7 @@ function NFTaccount() {
     }
 
     const sendEach = async (nft, index) => {
-        console.log('start sendeach')
+        debugger
         const signer = await getSigner()
         let factory 
         let toChain 
@@ -350,34 +344,6 @@ function NFTaccount() {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     const sendAllNFTs = () => {
         console.log('hellosasa')
         if(!loading && approved) {
@@ -392,6 +358,10 @@ function NFTaccount() {
     useEffect( async () => {
         await getNFTsList()
     }, [])
+
+    useEffect( async () => {
+    }, [nfts])
+
 
     useEffect(() => {
         if(selectedNFTList.length > 0) estimate();
@@ -448,7 +418,7 @@ function NFTaccount() {
                                     <h3>Send NFT</h3>
                                 </div>
                                 <DestinationChain/>
-                                { nfts ? 
+                                { nfts?.length ? 
                                     <>
                                         <SelectedNFT />
                                         <Approval />

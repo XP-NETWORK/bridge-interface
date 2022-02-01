@@ -155,7 +155,7 @@ export const chains = [
     order: 15,
     image: { avatar: true, src: Iotex },
     newChain: true,
-    coming: true,
+    coming: false,
   },
 ];
 

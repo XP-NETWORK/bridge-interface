@@ -84,7 +84,7 @@ const generalSlice = createSlice({
       state.approvedNFTList = [];
     },
     updateApprovedNFTs(state, action) {
-      const { tokenId, contract, chainId } = action.payload?.native;
+      const { tokenId, contract, chainId } = action.payload.native;
       const isInApprovedNFTs = state.approvedNFTList.filter(
         (n) =>
           n.native.tokenId === tokenId &&
@@ -100,8 +100,8 @@ const generalSlice = createSlice({
     setReceiver(state, action) {
       state.receiver = action.payload;
     },
-    clearTxnHash(state, action) {
-      state.txnHashArr = [];
+    cleanTxnHashArr(state) {
+      state.txnHashArr = state.txnHashArr.initialState;
     },
     setTxnHash(state, action) {
       const { nft, txn } = action.payload;
@@ -301,6 +301,7 @@ export const {
   setOnWC,
   setWC,
   setWidget,
+  setWSettings,
   setError,
   setBigNumFees,
   setTronPopUp,
@@ -312,10 +313,7 @@ export const {
   setShowVideo,
   setAlgorandWallet,
   setMyAlgo,
-  clearTxnHash,
-  clearApprovedNFTs,
-  cleartSelectedNFT,
-  setWSettings,
+  cleanTxnHashArr,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
