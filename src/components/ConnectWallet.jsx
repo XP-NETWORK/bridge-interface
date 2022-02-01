@@ -154,7 +154,7 @@ function ConnectWallet() {
       }
 
     async function connectTronlink() {
-      // debugger
+      debugger
         if(window.innerWidth <= 600 && !window.tronWeb){
           dispatch(setTronPopUp(true))
         }
@@ -164,13 +164,13 @@ function ConnectWallet() {
               const accounts = await window.tronWeb.request({ method: "tron_requestAccounts" });
               
               if(!accounts){
-                // dispatch(setTronLoginError("loggedOut"))
+                dispatch(setTronLoginError("loggedOut"))
               }
             } 
             catch(err){
               console.log(err);
               if(!window.tronWeb){
-                // dispatch(setTronLoginError("noTronWeb"))
+                dispatch(setTronLoginError("noTronWeb"))
               }
             }
             
