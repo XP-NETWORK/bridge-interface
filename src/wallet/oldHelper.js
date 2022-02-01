@@ -236,9 +236,9 @@ export const setupURI = uri => {
 
 export const checkVideoFormat = uri => {
     // debugger
-    const str = uri.split(".").pop()
-    console.log("str:", str, str.includes("mpg") || str.includes("mpeg") || str.includes("avi") || str.includes("wmv") || str.includes("mp4") || str.includes("ogg") || str.includes("webm") || false)
-    return str.includes("mpg") || str.includes("mpeg") || str.includes("avi") || str.includes("wmv") || str.includes("mp4") || str.includes("ogg") || str.includes("webm") || false
+    const str = uri?.split(".").pop()
+     return str ? (str.includes("mpg") || str.includes("mpeg") || str.includes("avi") || str.includes("wmv") || str.includes("mp4") || str.includes("ogg") || str.includes("webm") || false) : false
+     
 }
 
 
