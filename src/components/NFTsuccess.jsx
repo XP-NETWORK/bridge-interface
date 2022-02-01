@@ -52,13 +52,14 @@ function NFTsuccess() {
     // const [show, setShow] = useState(true);
 
     const handleClose = () => {
-        window.location.reload()
-        // selectedNFTList.forEach(nft => {
-        //     const { txn } = nft
-        //     if(txn) dispatch(removeFromSelectedNFTList(nft))
-        // });
-        // dispatch(cleanTxnHashArr())
-        // refresh()
+        // window.location.reload()
+        debugger
+        selectedNFTList.forEach(nft => {
+            const { txn } = nft
+            if(txn) dispatch(removeFromSelectedNFTList(nft))
+        });
+        dispatch(cleanTxnHashArr())
+        refresh()
     };
 
     // const handleShow = () => setShow(true);
