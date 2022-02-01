@@ -13,7 +13,7 @@
 
 .tron-error-title{
     text-align: center;
-    padding: 20px 0;
+    padding: 30px 0 0 0;
 }
 
 .tron-login-error__header{
@@ -26,14 +26,24 @@
     width: 35%;
 }
 
-.technical-support__body{
+.tron-connection-error__body{
     text-align: center;
-    /* padding: 0, 0, 5vh, 0; */
-    color: white;
 }
 
-.install{
-    text-align: center;
-    padding: 0, 0, 5vh, 0;
+.tron-connection-error__body.install{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.tron-connection-error-button{
+    width: 128px;
+    height: 40px;
     color: white;
+    background-color: #3E64ED;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
 }

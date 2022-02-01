@@ -21,11 +21,13 @@ export default function TronConnectionErrMod() {
             </span>
             <Modal.Header className="border-0 tron-login-error__header">
                 <img src={TronLink} alt="" />
-                <Modal.Title className='tron-error-title'></Modal.Title>
+                <Modal.Title className='tron-error-title'>
+                    Install TronLink
+                </Modal.Title>
             </Modal.Header>
-            <Modal.Body className='technical-support__body install'>
-                TronLink extension is not installed on your browser
-                <a className="ts-button" href="https://chrome.google.com/webstore/detail/tronlink%EF%BC%88%E6%B3%A2%E5%AE%9D%E9%92%B1%E5%8C%85%EF%BC%89/ibnejdfjmmkpcnlpebklmnkoeoihofec" target="_blank" rel='noreferrer'>Download Extension &#10143;</a>
+            <Modal.Body className='tron-connection-error__body install'>
+                <div>To continue bridging install TronLink wallet</div>
+                <a className="tron-connection-error-button" href="https://chrome.google.com/webstore/detail/tronlink%EF%BC%88%E6%B3%A2%E5%AE%9D%E9%92%B1%E5%8C%85%EF%BC%89/ibnejdfjmmkpcnlpebklmnkoeoihofec" target="_blank" rel='noreferrer'>Install Wallet</a>
             </Modal.Body>
         </Modal>
         :
@@ -36,9 +38,10 @@ export default function TronConnectionErrMod() {
             <Modal.Header className="border-0 tron-login-error__header">
                 <img src={TronLink} alt="" />
                 <Modal.Title className='tron-error-title'>
+                    Connect TronLink
                 </Modal.Title>
-                <Modal.Body className='technical-support__body'>
-                      TronLink extension is not connected on your browser
+                <Modal.Body className='tron-connection-error__body'>
+                    To continue bridging connect your TronLink wallet
                 </Modal.Body>
             </Modal.Header>
         </Modal>
