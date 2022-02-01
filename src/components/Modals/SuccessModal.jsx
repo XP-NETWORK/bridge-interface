@@ -15,7 +15,7 @@ import CopyHover from '../../assets/img/icons/CopyHover.svg';
 import ConnectAlgorand from '../ConnectAlgorand';
 import ClaimAlgorandNFT from '../ClaimAlgorandNFT';
 import { useEffect } from 'react';
-import { connectAlgorandWalletClaim } from '../../store/reducers/generalSlice';
+import { claimAlgorandPopup, cleanTxnHashArr, connectAlgorandWalletClaim, removeFromSelectedNFTList } from '../../store/reducers/generalSlice';
 
 export default function SuccessModal() {
     const dispatch = useDispatch()
@@ -36,8 +36,15 @@ export default function SuccessModal() {
     const address = account ? account : algorandAccount ? algorandAccount : elrondAccount ? elrondAccount : tronWallet ? tronWallet : ''
 
     const handleClose = () => {
-        window.location.reload()
+        // window.location.reload()
+        debugger
+        selectedNFTList.forEach(nft => {
+            const { txn } = nft
+            if(txn) dispatch(removeFromSelectedNFTList(nft))
+        });
+        dispatch(cleanTxnHashArr())
     };
+
 
     function copy(){
         setCopy(true)
@@ -76,6 +83,11 @@ export default function SuccessModal() {
             return "wrong tx"
         }
     }
+
+    const toShow = () => {
+        return txnHashArr?.length ? true : false
+        // return true
+    }
     
     useEffect(() => {
         if(
@@ -90,7 +102,7 @@ export default function SuccessModal() {
         <>
         <ConnectAlgorand />
         <ClaimAlgorandNFT />
-        <Modal animation={false} className="success-modal" show={txnHashArr.length}>
+        <Modal animation={false} className="success-modal" show={toShow()}>
             <span onClick={handleClose} className="success-modal-close">
                 <img src={Close} alt=''/>
             </span>
@@ -144,7 +156,7 @@ export default function SuccessModal() {
                         <div className="info-item-label">Sent NFT / {selectedNFTList?.length || "8"}</div>
                         <div className="success-nft-info">
                             { selectedNFTList.length  ? 
-                                selectedNFTList.map((nft, index) => <TransferredNft key={`${index}-nft-succeess`} nft={nft} />)
+                                selectedNFTList.map((nft, index) => <TransferredNft key={`index-${index}-nft-succeess`} nft={nft} />)
                                 : 
                                 '' 
                             }

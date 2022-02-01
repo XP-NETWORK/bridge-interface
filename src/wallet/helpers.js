@@ -51,6 +51,7 @@ export const parseNFTS = async (nfts) => {
 // debugger
 const { from, to } = store.getState().general;
 if(from.key === "Tezos"){
+  console.log(nfts)
  return nfts.filter(n => n.native).map(n => {
    return {
      ...n,
@@ -135,6 +136,7 @@ export const handleChainFactory = async (someChain) => {
   // debugger
   const factory = await getFactory();
   let chain;
+  // console.log(someChain, 'somechain')
   try {
     someChain === "Ethereum"
     ? (chain = await factory.inner(Chain.ETHEREUM))
@@ -164,6 +166,8 @@ export const handleChainFactory = async (someChain) => {
     ? (chain = await factory.inner(Chain.VELAS))
     : someChain === "Tezos"
     ? (chain = await factory.inner(Chain.TEZOS))
+    : someChain === "Iotex"
+    ? (chain = await factory.inner(Chain.IOTEX))
     : (chain = "");
   return chain;
   } catch (error) {
@@ -173,22 +177,18 @@ export const handleChainFactory = async (someChain) => {
 
 export const getNFTS = async (wallet, from) => {
   // debugger
-
+  const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
   const chain = await factory.inner(chainsConfig[from].Chain)
-  
   try {
     // debugger
     let response 
     if(tronWallet){
       response = await getTronNFTs(tronWallet)
     }
-    else if(algorandAccount){
-      response = await axios.get(`https://nftindexing.herokuapp.com/15/${wallet}`).data.result
-    }
     else{
-      response = await factory.nftList(chain, wallet)
+      response = await factory.nftList(chain, hardcoded ? hardcoded : wallet)
     }
     const unique = {};
     try {
@@ -243,12 +243,14 @@ export const setNFTS = async (w, from) => {
     store.dispatch(setBigLoader(false))
     if(parsedNFTs.length){
       store.dispatch(setNFTList(parsedNFTs))
-      // console.log(parsedNFTs)
+  }
+  else {
+    store.dispatch(setNFTList([]))
   }
 }
 
 export function isValidHttpUrl(string) {
-  
+
   let url;
   if((string.includes("data:image/") || string.includes("data:application/"))) return true
   if(string.includes('ipfs://')) return true
@@ -257,7 +259,6 @@ export function isValidHttpUrl(string) {
   } catch (_) {
     return false;  
   }
-  
   return url.protocol === "http:" || url.protocol === "https:";
 }
 
@@ -269,7 +270,6 @@ export const getTronNFTs = async wallet => {
     const tokens = []
     for await(let nft of data) {
       const { tokenId, balance,tokenName,tokenAbbr } = nft
-      console.log(nft)
       const contract = await window.tronWeb.contract().at(tokenId)
       const array = new Array(parseInt(balance)).fill(0).map((n,i) => i)
       for await(let index of array) {

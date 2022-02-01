@@ -15,7 +15,7 @@ import Refresh from '../../assets/img/refresh.svg'
 function NFTlistTop() {
     const dispatch = useDispatch()
     const nfts = useSelector(state => state.general.NFTList)
-    const {algorandAccount, tronWallet, elrondAccount, account, bigLoader} = useSelector(state => state.general)
+    const {algorandAccount, tronWallet, elrondAccount, tezosAccount, account, bigLoader} = useSelector(state => state.general)
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const NFTListView = useSelector(state => state.general.NFTListView)
     const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -23,6 +23,7 @@ function NFTlistTop() {
     const switchDestination = useSelector(state => state.general.switchDestination)
     const search = useSelector(state => state.general.NFTListSearch)
     const [showSearch, setShowSearch] = useState(false)
+
     const handleSearch = e => {
         dispatch(setSearchNFTList(e.target.value))
     }
@@ -35,17 +36,26 @@ function NFTlistTop() {
         dispatch(setNFTsListView())
     }
     const refresh = async () => {
-        if(!bigLoader) {
-            const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
+        debugger
+        if(!bigLoader || !nfts) {
+            let w
+            if(from.type === "EVM") w = account
+            else if(from.type === "Tezos") w = tezosAccount
+            else if(from.type === "Algorand") w = algorandAccount
+            else if(from.type === "Elrond") w = elrondAccount
+            else if(from.type === "Tron") w = tronWallet
+            console.log(w);
+            // const w = algorandAccount || tronWallet || tezosAccount || account
+            // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
             await setNFTS(w, from.key)
         }
-
     }
 
     const refreshStyle = { 
         cursor: bigLoader ? '' : 'pointer', 
         opacity: bigLoader ? 0.6 : 1 
     } 
+    
     const off = { display: "none"}
     return (
         <>
@@ -53,7 +63,7 @@ function NFTlistTop() {
                 <span className='yourNft__title'>Your NFTs on </span>
                 <div className='yourNft__chain'>
                     <span>
-                        <img src={from.image.src} alt="NFT Name" /> {from.key}
+                        <img style={{width: "30px"}} src={from.image.src} alt="NFT Name" /> {from.key}
                     </span> 
                     <span style={refreshStyle} onClick={refresh}>
                         <img className="refreshnfts" src={Refresh} />
@@ -73,7 +83,7 @@ function NFTlistTop() {
                 </Modal.Body>
             </Modal>
             <div className="yourNft desktopOnly">
-                Your NFTs on <span><img src={from.image.src} alt="NFT Name" /> {from.key}</span> 
+                Your NFTs on <span><img style={{width: "29px"}} src={from.image.src} alt="NFT Name" /> {from.key}</span> 
                 <span style={refreshStyle} onClick={refresh}><img className="refreshnfts" src={Refresh} /></span>
             </div>
             <div className="mobileOnly seleNftMob">
@@ -102,7 +112,7 @@ function NFTlistTop() {
                         <span><img src={ListView} /></span>
                     }
                 </div>
-                <span onClick={() => setShowSearch(prev => prev = !prev)} className="mobileOnly search-btn"><img src={Search} /></span>
+                {/* <span onClick={() => setShowSearch(prev => prev = !prev)} className="mobileOnly search-btn"><img src={Search} /></span> */}
                 { nfts?.length === selectedNFTs?.length ? 
                     <div onClick={() => dispatch(cleanSelectedNFTList())} className="selectAll">Clear all</div>
                     :   
@@ -110,12 +120,12 @@ function NFTlistTop() {
                 }
             </div>
             {/* !!! Show on click */}
-            <div style={!showSearch ? {} : off} className="mobileOnly mobSearch">
+            {/* <div style={!showSearch ? {} : off} className="mobileOnly mobSearch">
                 <form action="#">
                     <input type="search" placeholder="Search NFT"  onChange={e => handleSearch(e)}/>
                     <button type="button"><img src={Search} /></button>
                 </form>
-            </div>
+            </div> */}
         </div>
         </>
     )

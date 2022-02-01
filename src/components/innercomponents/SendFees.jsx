@@ -1,9 +1,9 @@
+import BigNumber from 'bignumber.js';
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { chainsConfig } from '../values';
 
 function SendFees({ fees }) {
-
     function getNumToFix(fees) {
         // debugger
         let num = 1
@@ -21,7 +21,7 @@ function SendFees({ fees }) {
     const config = chainsConfig[from?.text]
     return (
         <div className="nftFees">
-            Fees <span>{fees && fees > 0 ? fees?.toFixed(getNumToFix(fees)) : '0'} {config?.token}</span>
+            Fees <span>{fees && fees > 0  ? from.key === 'Tezos' ? ( new BigNumber(fees).multipliedBy(1e12).toString()) : fees?.toFixed(getNumToFix(fees)) : '0'} {config?.token}</span>
         </div>
     )
 }

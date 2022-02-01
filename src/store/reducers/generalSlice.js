@@ -9,7 +9,8 @@ const initialState = {
   txnHashArr: [],
   fees : 0,
   currentTx: 0,
-  bigLoader : true
+  bigLoader : true,
+  // approved: ''
 };
 
 const generalSlice = createSlice({
@@ -79,6 +80,9 @@ const generalSlice = createSlice({
     },
     setReceiver(state, action){
       state.receiver = action.payload
+    },
+    cleanTxnHashArr(state){
+      state.txnHashArr = state.txnHashArr.initialState
     },
     setTxnHash(state, action){
       const {nft, txn} = action.payload
@@ -278,7 +282,8 @@ export const {
     setShowAbout,
     setShowVideo,
     setAlgorandWallet,
-    setMyAlgo
+    setMyAlgo,
+    cleanTxnHashArr
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

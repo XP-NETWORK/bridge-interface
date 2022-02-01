@@ -19,18 +19,18 @@ function NFTgridView() {
     
     useEffect(() => { }, [selectedNFTs])
     return (
-        <div style={ nfts ? {} : {overflow: "hidden"}} className="nftListBox">
+        <div style={ nfts?.length ? {} : {overflow: "hidden"}} className="nftListBox">
                 { loader ? 
                     <BigLoader />
                 :
                     // <div className="row">
                     <div className="nft-list__wrapper">
-                        { nfts ? nfts
+                        { nfts?.length ? nfts
                         .filter(nft => nft?.name?.toString().toLowerCase().includes(search ? search?.toLowerCase() : '') || nft.native.owner?.includes(search ? search : ''))
-                        .map((nft, index) => <NewNFT nft={nft} index={index} />)
+                        .map((nft, index) => <NewNFT nft={nft} index={index} key={`nft-${index}`} />)
                         : 
                         <NFTempty /> }
-                        { nfts && nfts?.length < nftsPlace ? placeholders.map(n => <Missing />) : ''}
+                        { nfts && nfts?.length < nftsPlace ? placeholders.map((n, index) => <Missing key={`missing-${index}-component`}/>) : ''}
                     </div>
                 }
         </div>

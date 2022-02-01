@@ -6040,7 +6040,7 @@ crypto-browserify@3.12.0, crypto-browserify@^3.11.0:
 
 "crypto-exchange-rate@git+https://github.com/QuigonCom/exchange-rate#master-dist", "crypto-exchange-rate@git+https://github.com/xp-network/exchange-rate#master-dist":
   version "1.0.0"
-  resolved "git+https://github.com/QuigonCom/exchange-rate#4f82d7992d53b6f5861bb9f3e9ebf89f58123354"
+  resolved "git+https://github.com/QuigonCom/exchange-rate#ccc292d237d584ec4744ac691b83a04f66357b5f"
   dependencies:
     axios "^0.21.1"
 
@@ -8789,6 +8789,11 @@ immer@^9.0.6:
   version "9.0.7"
   resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.7.tgz#b6156bd7db55db7abc73fd2fdadf4e579a701075"
   integrity sha512-KGllzpbamZDvOIxnmJ0jI840g7Oikx58lBPWV0hUh7dtAyZpFqqrBZdKka5GlTwMTZ1Tjc/bKKW4VSFAt6BqMA==
+
+immutable@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.0.0.tgz#b86f78de6adef3608395efb269a91462797e2c23"
+  integrity sha512-zIE9hX70qew5qTUjSS7wi1iwj/l7+m54KWU247nhM3v806UdGj1yDndXj+IOYxxtW9zyLI+xqFNZjTuDaLUqFw==
 
 import-cwd@^2.0.0:
   version "2.1.0"
@@ -16290,7 +16295,7 @@ xmlhttprequest-ssl@~2.0.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#master-dist":
   version "0.1.0"
-  resolved "git+https://github.com/xp-network/xpjs#00ee14973b3c07e76559d3525cdafb57cd44e3a8"
+  resolved "git+https://github.com/xp-network/xpjs#e800ee31f656161770cd9f92640057a000cbd297"
   dependencies:
     "@elrondnetwork/erdjs" "^8.0.1-alpha.8"
     "@json-rpc-tools/utils" "^1.7.6"

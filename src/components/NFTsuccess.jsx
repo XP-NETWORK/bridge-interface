@@ -5,16 +5,16 @@ import Success from '../assets/img/icons/Success.svg';
 import Check from '../assets/img/icons/Check_circle.svg';
 import FileCopy from '../assets/img/icons/FileCopy.svg';
 import CopyHover from '../assets/img/icons/CopyHover.svg';
-import copyTT from "../assets/img/icons/copytoclip.svg"
+// import copyTT from "../assets/img/icons/copytoclip.svg"
 import copiedIcon from "../assets/img/icons/copiedtoclip.svg"
 import { useSelector } from 'react-redux';
 import { chainsConfig } from './values';
 import moment from 'moment';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { setupURI } from '../wallet/oldHelper';
-import CopyIcons from './innercomponents/CopyIcons';
-import { getFactory, setClaimablesAlgorand } from '../wallet/helpers';
-import { claimAlgorandPopup, connectAlgorandWalletClaim } from '../store/reducers/generalSlice';
+// import CopyIcons from './innercomponents/CopyIcons';
+import { setClaimablesAlgorand, setNFTS } from '../wallet/helpers';
+import { claimAlgorandPopup, connectAlgorandWalletClaim, setTxnHash, cleanTxnHashArr, removeFromSelectedNFTList  } from '../store/reducers/generalSlice';
 import { useDispatch } from 'react-redux';
 import ConnectAlgorand from './ConnectAlgorand';
 import ClaimAlgorandNFT from './ClaimAlgorandNFT';
@@ -27,22 +27,45 @@ function NFTsuccess() {
     const to = useSelector(state => state.general.to)
     const account = useSelector(state => state.general.account)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
+    const tezosAccount = useSelector(state => state.general.tezosAccount)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const tronWallet = useSelector(state => state.general.tronWallet)
     const receiver = useSelector(state => state.general.receiver)
     const txnHashArr = useSelector(state => state.general.txnHashArr)
     const currentTX = useSelector(s => s.general.currrentTx)
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
+    
 
+    const refresh = async () => {
+        debugger
+            let w
+            if(from.type === "EVM") w = account
+            else if(from.type === "Tezos") w = tezosAccount
+            else if(from.type === "Algorand") w = algorandAccount
+            else if(from.type === "Elrond") w = elrondAccount
+            else if(from.type === "Tron") w = tronWallet
+            // const w = algorandAccount || tronWallet || tezosAccount || account
+            // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
+            await setNFTS(w, from.key)
+    }
 
-    const [show, setShow] = useState(true);
+    // const [show, setShow] = useState(true);
+
     const handleClose = () => {
-        window.location.reload()
+        // window.location.reload()
+        debugger
+        selectedNFTList.forEach(nft => {
+            const { txn } = nft
+            if(txn) dispatch(removeFromSelectedNFTList(nft))
+        });
+        dispatch(cleanTxnHashArr())
+        refresh()
     };
-    const handleShow = () => setShow(true);
+
+    // const handleShow = () => setShow(true);
     const [copied, setCopy] = useState()
     const [copyHover, setSetCopyHover] = useState()
-    const showSuccess = useSelector(state => state.showSuccess)
+    // const showSuccess = useSelector(state => state.showSuccess)
 
     useEffect(() => {
         if(
@@ -63,6 +86,10 @@ function NFTsuccess() {
         if(window.innerWidth <= 320) return 3
         else if(window.innerWidth <= 375) return 6
         else return false
+    }
+
+    const toShow = () => {
+        return txnHashArr?.length ? true : false
     }
 
     const getTX = () => {
@@ -99,7 +126,7 @@ function NFTsuccess() {
             <ClaimAlgorandNFT />
             {/* <a href="#" className="themBtn" onClick={handleShow}>Send</a> */}
             {/* show={txnHashArr?.length} */}
-            <Modal animation={false} show={txnHashArr?.length} onHide={handleClose} className="nftSuccessMod">
+            <Modal animation={false} show={toShow()} onHide={handleClose} className="nftSuccessMod">
                 <Modal.Header>
                     <Modal.Title><img src={Success} /> Success</Modal.Title>
                     <span className="CloseModal" onClick={handleClose}>
@@ -193,7 +220,7 @@ function SuccessNFT({nft, from, index}) {
     }
     return  (
         <li className="nftSelecItem">
-            <img src={setupURI(nft.image)} alt="NFT" />
+            <img src={setupURI(nft.image || nft.uri)} alt="NFT" />
             <span className="nftSelected__name">{nft.name}</span>
             <span className="bluTextBtn">
                 <a href={`${chainsConfig[from.key].tx + getTX()}`} target="_blank">View Txn</a>

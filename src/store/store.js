@@ -1,7 +1,9 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import generalSlice from "./reducers/generalSlice";
 
-const middleware = [...getDefaultMiddleware()];
+const middleware = [...getDefaultMiddleware({
+  serializableCheck: false
+})];
 
 export default configureStore({
   reducer: {
@@ -9,3 +11,6 @@ export default configureStore({
   },
   middleware,
 });
+
+
+

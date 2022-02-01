@@ -11,7 +11,10 @@ import Maiar from '../assets/img/wallet/Maiar.svg';
 import Trezor from '../assets/img/wallet/Trezor.svg';
 import TrustWallet from "../assets/img/wallet/TWT.svg"
 import Kukai from "../assets/img/wallet/kukai.svg"
+import BeaconW from "../assets/img/wallet/BeaconWhite.svg"
+import BeaconB from "../assets/img/wallet/BeaconBlue.svg"
 import Temple from "../assets/img/wallet/Temple.svg"
+import AlgorandWallet from "../assets/img/wallet/AlgorandWallet.svg"
 import WalletConnect from "../assets/img/wallet/WalletConnect 3.svg"
 import NFTworng from './NFTworng';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,13 +30,13 @@ import MaiarModal from './MaiarModal';
 import { isEVM } from '../wallet/oldHelper';
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { TezosToolkit } from "@taquito/taquito";
-
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
+import { DAppClient } from "@airgap/beacon-sdk";
+
 
 function ConnectWallet() {
-    const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
-    const wallet = new BeaconWallet({ name: "Beacon Docs Taquito" });
+
     const dispatch = useDispatch()
     const from = useSelector(state => state.general.from)
     const to = useSelector(state => state.general.to)
@@ -63,7 +66,10 @@ function ConnectWallet() {
     const MyAlgo = useSelector(state => state.general.MyAlgo)
     const modalError = useSelector(state => state.generalerror)
     
+    const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
+    const wallet = new BeaconWallet({ name: "Beacon Docs Taquito" });
     Tezos.setWalletProvider(wallet);
+
     function getMobOps() {
       // debugger
       var userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -148,7 +154,6 @@ function ConnectWallet() {
       }
 
     async function connectTronlink() {
-      // debugger
         if(window.innerWidth <= 600 && !window.tronWeb){
           dispatch(setTronPopUp(true))
         }
@@ -158,13 +163,13 @@ function ConnectWallet() {
               const accounts = await window.tronWeb.request({ method: "tron_requestAccounts" });
               
               if(!accounts){
-                // dispatch(setTronLoginError("loggedOut"))
+                dispatch(setTronLoginError("loggedOut"))
               }
             } 
             catch(err){
               console.log(err);
               if(!window.tronWeb){
-                // dispatch(setTronLoginError("noTronWeb"))
+                dispatch(setTronLoginError("noTronWeb"))
               }
             }
             
@@ -253,6 +258,7 @@ function ConnectWallet() {
       const myAlgoConnect = new MyAlgoConnect();
       try {
         const accountsSharedByUser = await myAlgoConnect.connect()
+        console.log("MY Algo: ", myAlgoConnect);
         dispatch(setAlgorandAccount(accountsSharedByUser[0].address))
         dispatch(setMyAlgo(true))
       } catch (error) {
@@ -264,6 +270,7 @@ function ConnectWallet() {
       if (typeof window.AlgoSigner !== undefined) {
         try {
           await window.AlgoSigner.connect()
+          console.log("Algo: ", window.AlgoSigner);
           const algo = await window.AlgoSigner.accounts({
             ledger: 'MainNet'
           });
@@ -280,7 +287,11 @@ function ConnectWallet() {
       }
     })
 
-    const onKukai = async() => {
+    const onBeacon = async () => {
+      const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
+      const wallet = new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" });
+      Tezos.setWalletProvider(wallet);
+      console.log("Tezos: ", Tezos);
       try {
         const permissions = await wallet.client.requestPermissions();
         dispatch(setTezosAccount(permissions.address))
@@ -290,6 +301,16 @@ function ConnectWallet() {
       }
     }
 
+    // const onKukai = async() => {
+    //   try {
+    //     const permissions = await wallet.client.requestPermissions();
+    //     dispatch(setTezosAccount(permissions.address))
+    //     dispatch(setKukaiWallet(true))
+    //   } catch (error) {
+    //     console.log("Got error:", error);
+    //   }
+    // }
+
     const onTemple = async () => {
       // debugger
         try {
@@ -297,15 +318,10 @@ function ConnectWallet() {
           if (!available) {
             throw new Error("Temple Wallet not installed");
           }
-          const wallet = new TempleWallet("Cross-Chain NFT Bridge");
-          // await wallet.connect("hangzhounet");
-          await wallet.connect('mainnet');
-          const provider = await Tezos.setWalletProvider(wallet);
-          console.log("hello", wallet);
+          const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
+          await wallet.connect("mainnet");
           const tezos = wallet.toTezos();
-          // console.log(tezos, 'hello')
           const accountPkh = await tezos.wallet.pkh();
-          // console.log(`Tezos address: ${accountPkh}`)
           dispatch(setTezosAccount(accountPkh))
           dispatch(setTempleWallet(true))
 
@@ -350,10 +366,12 @@ function ConnectWallet() {
         ||
         (AlgoSigner)
         ||
+        kukaiWallet
+        ||
         (templeWallet)) {
           dispatch(setStep(2))
         }
-    }, [account, metaMask, chainId, tronLink, onWC, trustWallet, AlgoSigner, algorandWallet, MaiarWallet, MyAlgo, templeWallet])
+    }, [account, metaMask, chainId, tronLink, onWC, trustWallet, AlgoSigner, algorandWallet, MaiarWallet, MyAlgo, templeWallet, kukaiWallet])
 
     return (
         <div>
@@ -385,11 +403,23 @@ function ConnectWallet() {
                                 <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
-                                {/* <li onClick={onKukai} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem"><img src={Kukai} alt="Kukai Icon" /> Kukai Wallet</li> */}
-                                <li onClick={onTemple} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem"><img style={{width: "29px"}} src={Temple} alt="Temple Icon" /> Temple Wallet</li>
+                                <li onClick={onBeacon} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem beacon"><img src={BeaconW} alt="Kukai Icon" /> Beacon</li>
+                                <li onClick={onTemple} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem"><img style={{width: "28px"}} src={Temple} alt="Temple Icon" /> Temple Wallet</li>
                                 <li onClick={() => onMaiarExtension()} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
-                                <li style={ OFF } className="wllListItem"><img src={Ledger} alt="Ledger Icon" /> Ledger</li>
-                                <li style={ OFF } className="wllListItem"><img style={{marginLift: "-5px"}} src={Trezor} alt="Trezor Icon" /> Trezor</li>
+                                <li style={ OFF } className="wllListItem">
+                                  <div>
+                                    <img src={Ledger} alt="Ledger Icon" />
+                                    Ledger
+                                  </div>
+                                  <div className="coming-chain">Coming soon</div>
+                                </li>
+                                <li style={ OFF } className="wllListItem">
+                                  <div>
+                                    <img style={{marginLift: "-5px"}} src={Trezor} alt="Trezor Icon" />
+                                    Trezor
+                                  </div>
+                                  <div className="coming-chain">Coming soon</div>
+                                </li>
                             </ul>
                         </div>
                     </Modal.Body>
