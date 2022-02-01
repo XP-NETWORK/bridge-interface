@@ -7,6 +7,7 @@ import {
   setSettings,
   chains,
   wallets,
+  activeChains,
 } from "../../store/reducers/settingsSlice";
 import "./Settings.css";
 
@@ -27,6 +28,7 @@ function WSettings() {
   }));
 
   const [copied, setCopied] = useState(false);
+  const [activeChainsNumber, setActiveChains] = useState(activeChains.length);
 
   const dispatch = useDispatch();
 
@@ -53,16 +55,21 @@ function WSettings() {
   const deboucedSet = (e, key) =>
     dispatch(setSettings({ ...settings, [key]: e }));
 
-  const debounceCheck = (val) => {
+  const chainCheck = (val) => {
     const checked = selectedChains.includes(val);
+
+    if (checked) {
+    }
+
     const newSelected = checked
       ? selectedChains.filter((chain) => chain !== val)
       : [...selectedChains, val];
+
     dispatch(
       setSettings({
         ...settings,
-        showAlert: newSelected.length < 2 ? "chains" : false,
-        selectedChains: newSelected.length < 2 ? selectedChains : newSelected,
+        showAlert: activeChainsNumber < 2 ? "chains" : false,
+        selectedChains: activeChainsNumber < 2 ? selectedChains : newSelected,
       })
     );
   };
@@ -75,8 +82,8 @@ function WSettings() {
     dispatch(
       setSettings({
         ...settings,
-        showAlert: newSelected.length < 2 ? "wallets" : false,
-        selectedWallets: newSelected.length < 2 ? selectedWallets : newSelected,
+        //showAlert: newSelected.length < 2 ? "wallets" : false,
+        selectedWallets: newSelected,
       })
     );
   };
@@ -135,9 +142,25 @@ function WSettings() {
       <div className="sidebar_content">
         <div className="genarel_setting">
           <h6>WIDGET SETTINGS</h6>
+          <button
+            className="expandAll"
+            onClick={() => {
+              document
+                .querySelectorAll(".accordion-collapse")
+                .forEach((el) => el.classList.add("show"));
+            }}
+          ></button>
+          <button
+            className="collapseAll"
+            onClick={() => {
+              document
+                .querySelectorAll(".accordion-collapse")
+                .forEach((el) => el.classList.remove("show"));
+            }}
+          ></button>
         </div>
         <div className="setting_list">
-          <Accordion defaultActiveKey="10">
+          <Accordion defaultActiveKey="10" className="open">
             <Accordion.Item eventKey="1">
               <Accordion.Header>Integrated Blockchains</Accordion.Header>
 
@@ -148,7 +171,7 @@ function WSettings() {
                       <li
                         key={i}
                         className="blockChain_item"
-                        onClick={() => debounceCheck(chain)}
+                        onClick={() => chainCheck(chain)}
                       >
                         <div className="select_nft">
                           <input
@@ -156,7 +179,7 @@ function WSettings() {
                             name=""
                             id=""
                             checked={selectedChains.includes(chain)}
-                            onChange={() => debounceCheck(chain)}
+                            onChange={() => chainCheck(chain)}
                           />
                           <span className="icon selectNfticon"></span>
                         </div>
@@ -840,7 +863,7 @@ function WSettings() {
         </div>
       </div>
       <div className="sideFooter">
-        <div className="help">
+        <div className="help" style={{ display: "none" }}>
           <h3>Help</h3>
           <a href="#" className="help_icon">
             <span className="icon qustion_icon"></span>

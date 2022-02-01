@@ -17,6 +17,8 @@ function DestinationChain() {
     widget,
   }));
 
+  console.log(widget, "d");
+
   const Web3Utils = require("web3-utils");
   const dispatch = useDispatch();
   const receiver = useSelector((state) => state.general.receiver);

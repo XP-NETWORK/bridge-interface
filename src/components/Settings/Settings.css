@@ -1405,3 +1405,37 @@ li.blockChain_item .blockChainItem span {
 .cornerRadi input {
   width: 95%;
 }
+
+.genarel_setting {
+  position: relative;
+}
+
+.expandAll,
+.collapseAll {
+  position: absolute;
+  right: 30px;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  background-position: center center;
+  border: 1px solid gainsboro;
+
+  padding: 5px;
+  background-image: url("assets/img/icon/arrow_down_small.svg");
+  transition: all 0.5s ease;
+}
+
+.expandAll:hover,
+.collapseAll:hover {
+  filter: brightness(85%);
+}
+
+.collapseAll {
+  right: 5px;
+
+  transform: translateY(0);
+  transform: rotate(180deg);
+}

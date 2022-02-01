@@ -174,7 +174,7 @@ function NFTlistTop() {
               onChange={(e) => handleSearch(e)}
             />
             <button type="button">
-              <img src={Search} />
+              <Search className="svgWidget" />
             </button>
           </form>
         </div>

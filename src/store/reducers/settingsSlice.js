@@ -18,6 +18,25 @@ export const chains = [
   "Solana",
 ];
 
+export const activeChains = [
+  "Velas",
+  "Tezos",
+  "Ethereum",
+  "BSC",
+  "Polygon",
+  "Algorand",
+  "Tron",
+  "Elrond",
+  "Avalanche",
+  "Fantom",
+  "xDai",
+  "Fuse",
+];
+
+export const availability = {
+  Velas: [],
+};
+
 export const wallets = [
   "MetaMask",
   "WalletConnect",

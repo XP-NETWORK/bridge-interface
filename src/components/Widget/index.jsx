@@ -13,9 +13,10 @@ export default function Widget() {
   const to = useSelector((state) => state.general.to);
   const step = useSelector((state) => state.general.step);
   const { widget, wsettings, settings } = useSelector(
-    ({ general: { widget }, settings }) => ({
+    ({ general: { widget, wsettings }, settings }) => ({
       widget,
       settings,
+      wsettings,
     })
   );
 
@@ -29,10 +30,10 @@ export default function Widget() {
     const widget = p.get("widget") === "true";
     const wsettings = p.get("wsettings") === "true";
 
-    if (wsettings) dispatch(setWSettings(true));
-
-    if (widget && wsettings)
+    if (widget && wsettings && window.innerWidth > 600) {
+      dispatch(setWSettings(true));
       document.querySelector(".nftContainer").style = "padding-left: 300px";
+    }
 
     if (widget && !wsettings) {
       const backgroundColor = p.get("background");
@@ -141,7 +142,8 @@ export default function Widget() {
           color:  ${btnColor ? btnColor : ""};
         }
         
-        .connectNft a.themBtn.disabled, .sendNftBox :not(.nftSendBtn.disabled) > a.themBtn, .switching {
+       .connectNft a.themBtn.disabled, .sendNftBox :not(.nftSendBtn.disabled) > a.themBtn, .switching, 
+       .mobileOnly  .nftSendBtn > a.themBtn {
             background: ${btnBackground ? btnBackground : ""};
             color:  ${btnColor ? btnColor : ""};
             border-color: ${btnBackground ? btnBackground : ""};   
@@ -153,7 +155,9 @@ export default function Widget() {
           top: 1px;
         }
 
-        .disabled .themBtn.disabled, .sendNftBox .nftSendBtn.disabled > a.themBtn {
+        .disabled .themBtn.disabled, .sendNftBox .nftSendBtn.disabled > a.themBtn,
+        .mobileOnly  .nftSendBtn.disabled > a.themBtn
+        {
           background: ${btnBackground ? btnBackground : ""};
           color:  ${btnColor ? btnColor : ""};
           border-color: ${btnBackground ? btnBackground : ""};
@@ -326,9 +330,37 @@ export default function Widget() {
           border: 1px solid  ${borderColor ? borderColor : ""};
         }
 
+
+        @media only screen and (max-width: 860px) {
+          .mobSearch input::placeholder, .mobileOnly.seleNftMob {
+            color: ${secondaryColor ? secondaryColor : ""};
+          }
+
+
+        }
+
         `;
     }
   }, [widget, settings]);
+
+  const screenSize = useRef();
+
+  useEffect(() => {
+    const handler = () => {
+      screenSize.current = window.innerWidth;
+      if (screenSize.current < 600) {
+        dispatch(setWSettings(false));
+        document.querySelector(".nftContainer").style = "padding-left: 0px";
+      } else if (wsettings === false) {
+        dispatch(setWSettings(true));
+        document.querySelector(".nftContainer").style = "padding-left: 300px";
+      }
+    };
+    if (new URLSearchParams(window.location.search).get("wsettings")) {
+      window.addEventListener("resize", handler);
+    }
+    return () => window.removeEventListener("resize", handler);
+  }, []);
 
   const onlyBridge = () => {
     dispatch(setWidget(true));

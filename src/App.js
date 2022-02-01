@@ -39,6 +39,7 @@ function App() {
   const tronPopUp = useSelector((state) => state.general.tronPopUp);
   // const nftsToWhitelist = useSelector(state => state.general.techModal)
   const state = useSelector((state) => state.general);
+  console.log(state.wsettings);
 
   const axios = require("axios");
 
