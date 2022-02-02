@@ -6,8 +6,9 @@ import Close from '../assets/img/icons/close.svg';
 import { checkVideoFormat } from "../wallet/oldHelper"
 import INF from '../assets/img/icons/Inf.svg';
 import { setupURI } from '../wallet/oldHelper';
-import { isValidHttpUrl } from '../wallet/helpers';
+import { isValidHttpUrl } from '../wallet/helpers'
 import { chainsConfig } from './values';
+// import { getCorrectURL } from "../components/innercomponents/"
 
 function NFTdetails({ nftInf }){
     const { name, description, image, attributes, uri, native, animation_url, image_url, data } = nftInf

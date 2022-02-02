@@ -6,6 +6,7 @@ import CheckGreen from '../../assets/img/icons/check_green.svg';
 import NFTdetails from '../NFTdetails';
 import { useSelector } from 'react-redux';
 import { setupURI, checkVideoFormat } from '../../wallet/oldHelper';
+import { getCorrectURL } from "./NFTHelper.js"
 import  "./NewNFT.css"
 
 import { isValidHttpUrl } from '../../wallet/helpers';
@@ -19,6 +20,8 @@ export default function NFT({nft, index}) {
     const [imageLoaded, setImageLoaded]= useState(false);
     const HIDDEN = { visibility: "hidden"};
     const unclickable = { pointerEvents: "none" }
+    const {video, url } = getCorrectURL(nft)
+    console.log("video: ", video, "url: ", url)
 
     function addRemoveNFT (chosen){
         if(!isSelected){
@@ -33,18 +36,18 @@ export default function NFT({nft, index}) {
     // console.log(imageLoaded, nft.image)
     return ( 
         <div className={`nft-box__wrapper ${!imageLoaded ? 'preload-cont' : ''}`}>
-            <div style={ !imageLoaded && (nft.image || nft.image_url) ? HIDDEN : {}} className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
+            <div style={ !imageLoaded && url ? HIDDEN : {}} className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
                 <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
                     <div className="image__wrapper">
                         { (nft.uri) && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url ||nft.image_url || nft.uri || nft.data?.image_url) ? 
-                            (nft.animation_url && checkVideoFormat(nft.animation_url)) ? 
+                            (video && url) ? 
                             <video onLoadedData={() => setImageLoaded(true)} controls={false} playsInline={true} autoPlay={true} loop={true} 
-                            src={tryVideo ? setupURI(nft.image) : setupURI(nft.animation_url)} 
+                            src={url} 
                             /> 
-                            : (!checkVideoFormat(nft.animation_url) && nft.animation_url) ?
-                            <img onError={() => setTryVideo(true)} onLoad={() => setImageLoaded(true)} alt="NFTss" src={setupURI(nft.animation_url)} /> 
+                            : !video ?
+                            <img onError={() => setTryVideo(true)} onLoad={() => setImageLoaded(true)} alt="NFTss" src={setupURI(url)} /> 
                             :
-                            <img onLoad={() => setImageLoaded(true)} alt="NFTtt" src={setupURI(nft.data?.image || nft.image || nft.image_url || nft.uri)} /> 
+                            <img onLoad={() => setImageLoaded(true)} alt="NFTtt" src={setupURI(url)} /> 
                             : 
                             <div className="brocken-url">
                                 <img onLoad={() => setImageLoaded(true)} src={brockenurl} alt='This NFT image uri is broken.' />
