@@ -94,7 +94,7 @@ function NFTaccount() {
         try {
             // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount :  
             const w = tezosAccount || algorandAccount || tronWallet || elrondAccount || account
-            await setNFTS(w, from)
+            await setNFTS(hard, from)
             } catch (error) {  
                 dispatch(setError(error.data ? error.data.message : error.message))
             }

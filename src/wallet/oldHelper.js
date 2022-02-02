@@ -236,8 +236,12 @@ export const setupURI = uri => {
 
 export const checkVideoFormat = uri => {
     // debugger
-    const str = uri?.split(".").pop()
-     return str?.length < 5 ? (str.includes("mpg") || str.includes("mpeg") || str.includes("avi") || str.includes("wmv") || str.includes("mp4") || str.includes("ogg") || str.includes("webm") || false) : false
+    const supportedFormats = [".mp4", ".ogg", ".webm"]
+    const format = uri?.slice(uri.lastIndexOf(".")).length < 6 && uri?.slice(uri.lastIndexOf(".")).length > 3 ? uri?.slice(uri.lastIndexOf(".")) : undefined 
+    return format && supportedFormats.some(n => n === format)
+
+    // const str = uri?.split(".").pop()
+    //  return str?.length < 5 ? (str.includes("mpg") || str.includes("mpeg") || str.includes("avi") || str.includes("wmv") || str.includes("mp4") || str.includes("ogg") || str.includes("webm") || false) : false
      
 }
 
