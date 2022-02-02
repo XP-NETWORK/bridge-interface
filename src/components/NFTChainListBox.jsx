@@ -62,9 +62,10 @@ export default function NFTChainListBox() {
                 <ChainSearch />
                 <ul className="nftChainList scrollSty">
                     { !from ? fromChains.filter(chain => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).sort(chain => {
-                        if(chain.text === "Velas" && chain.newChain) return -1
-                        if(chain.newChain) return -1
-                        else return chain.a - chain.b
+                        // if(chain.text === "Velas" && chain.newChain) return -1
+                        // if(chain.newChain) return -1
+                        // else return chain.a - chain.b
+                        return chain.a - chain.b
                     }).map( filteredChain => { 
                         const { image, text, key, value, coming, newChain } = filteredChain;
                         

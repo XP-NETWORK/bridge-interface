@@ -26,7 +26,7 @@ export const chains = [
         key: 'Ethereum',
         text: 'Ethereum',
         value: 'Ethereum',
-        order: 1,
+        order: 4,
         image: { avatar: true, src: Etherium },
     },
     {
@@ -34,7 +34,7 @@ export const chains = [
         key: 'BSC',
         text: 'BSC',
         value: 'BSC',
-        order: 2,
+        order: 5,
         image: { avatar: true, src: Binance },
     },
     {
@@ -58,7 +58,7 @@ export const chains = [
         key: 'Polygon',
         text: 'Polygon',
         value: 'Polygon',
-        order: 3,
+        order: 8,
         image: { avatar: true, src: Polygon },
     },
     {
@@ -133,7 +133,7 @@ export const chains = [
         key: "Velas",
         text: "Velas",
         value: "Velas",
-        order: 4,
+        order: 1,
         image: { avatar: true, src: Velas },
         newChain: true
     },
@@ -142,7 +142,7 @@ export const chains = [
         key: "Tezos",
         text: "Tezos",
         value: "Tezos",
-        order: 20,
+        order: 2,
         image: { avatar: true, src: Tezos},
         newChain: true,
         coming: false
@@ -152,7 +152,7 @@ export const chains = [
         key: "Iotex",
         text: "Iotex",
         value: "Iotex",
-        order: 15,
+        order: 3,
         image: { avatar: true, src: Iotex},
         newChain: true,
         coming: false
