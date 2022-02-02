@@ -23,7 +23,6 @@ function ClaimAlgorandNFT() {
     // const from = useSelector(state => state.general.from)
     const algorandClaimPopup = useSelector(state => state.general.algorandClaimPopup)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
-    console.log("algorandAccount: ", algorandAccount);
     // const account = useSelector(state => state.general.account)
     const dispatch = useDispatch()
     // const [loader, setLoader] = useState(false)

@@ -37,7 +37,6 @@ function NFTaccount() {
     const isToEVM = useSelector(state => state.general.to).type === 'EVM'
     const NFTListView = useSelector(state => state.general.NFTListView)
     const nfts = useSelector(state => state.general.NFTList)
-    console.log("nfts: ", nfts);
     const tronWallet = useSelector(state => state.general.tronWallet)
     const account = useSelector(state => state.general.account)
     const tezosAccount = useSelector(state => state.general.tezosAccount)
