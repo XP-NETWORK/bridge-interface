@@ -60,7 +60,7 @@ function NFTlistView() {
                             : 
                             <div onClick={(e) => addRemoveNFT(nft, e)} className="brocken-url">
                                 <img onLoad={() => setImageLoaded(true)} src={brockenurl} alt='This NFT image uri is broken.' />
-                                <span className="brocken-url__msg">NFTs URL<br/> is broken</span>
+                                <span className="brocken-url__msg">NFTs URL is broken</span>
                             </div>
                         }
                     <span className="name" onClick={(e) => addRemoveNFT(nft, e)}>{nft?.data?.name || nft?.name}</span>

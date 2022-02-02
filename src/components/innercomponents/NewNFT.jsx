@@ -21,7 +21,7 @@ export default function NFT({nft, index}) {
     const HIDDEN = { visibility: "hidden"};
     const unclickable = { pointerEvents: "none" }
     const {video, url } = getCorrectURL(nft)
-    console.log("video: ", video, "url: ", url)
+    console.log("video: ", video, "url: ", url, "index: ", index)
 
     function addRemoveNFT (chosen){
         if(!isSelected){

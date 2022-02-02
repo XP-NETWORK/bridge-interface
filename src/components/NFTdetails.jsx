@@ -44,7 +44,7 @@ function NFTdetails({ nftInf }){
                             src={tryVideo ? setupURI(image) : setupURI(animation_url)} 
                             /> 
                             : (!checkVideoFormat(animation_url) && animation_url) ?
-                            <img onError={() => setTryVideo(true)} onLoad={() => setImageLoaded(true)} alt="NFTss" src={setupURI(animation_url)} /> 
+                            <img onError={() => setTryVideo(true)} onLoad={() => setImageLoaded(true)} alt="NFTss" src={setupURI(checkVideoFormat(animation_url) ? animation_url : data?.image || image || image_url || uri)} /> 
                             :
                             <img onLoad={() => setImageLoaded(true)} alt="NFTtt" src={setupURI(data?.image || image || image_url || uri)} /> 
                             : 

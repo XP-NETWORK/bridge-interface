@@ -38,6 +38,15 @@
   color: #62718A;
 }
 
+.nftListed .brocken-url{
+  flex-direction: row;
+}
+
+.nftListed .brocken-url img{
+  width: 32px;
+  height: 32px;
+}
+
 .brocken-url-selected{
   width: 32px;
   padding: 1px;

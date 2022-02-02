@@ -1880,9 +1880,12 @@ span.statComp img {
   padding: 6px 30px;
 }
 
-/* .nftSelecItem__name{
-  margin-left: ;
-} */
+.nftSelecItem__name{
+  width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .bluTextBtn {
   white-space: nowrap;
