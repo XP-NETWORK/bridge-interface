@@ -31,6 +31,7 @@ function NFTaccount() {
     const dispatch = useDispatch()
     const [loading, setLoading] = useState()
     const from = useSelector(state => state.general.from.key)
+    const type = useSelector(state => state.general.from.type)
     const algorandAccount = useSelector(s => s.general.algorandAccount)
     const to = useSelector(state => state.general.to.key)
     const isToEVM = useSelector(state => state.general.to).type === 'EVM'
@@ -87,14 +88,19 @@ function NFTaccount() {
             return signer
         }
     }
-    
+
     async function getNFTsList(){
         // debugger
-       const hard = "0x6449b68cc5675f6011e8DB681B142773A3157cb9"
+        const useHarscoded = false
+        const hard = "0x6449b68cc5675f6011e8DB681B142773A3157cb9"
         try {
-            // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount :  
-            const w = tezosAccount || algorandAccount || tronWallet || elrondAccount || account
-            await setNFTS(w, from)
+            const w = type === "EVM" ? account 
+            : type === "Tezos" ? tezosAccount 
+            : type === "Algorand" ? algorandAccount 
+            : type === "Elrond" ? elrondAccount 
+            : type === "Tron" ? tronWallet 
+            : undefined
+            await setNFTS(useHarscoded ? hard : w, from)
             } catch (error) {  
                 dispatch(setError(error.data ? error.data.message : error.message))
             }
