@@ -45,14 +45,14 @@ function SelectedNFT() {
                             : (nft.animation_url && !checkVideoFormat(nft.animation_url)) ?
                             <img alt="NFT" src={setupURI(nft.animation_url)} /> 
                             :
-                            <img alt="NFT" src={setupURI(nft.image || nft.image_url || nft.uri)} />
+                            <img alt="NFT" src={setupURI(nft.data?.image || nft.image || nft.image_url || nft.uri)} />
                             :
                             <div className="brocken-url-selected">
                                 <img src={brockenurl} alt='This NFT image uri is broken.' />
                                 
                             </div>
                         }
-                        <span className="nftSelecItem__name">{nft.name}</span>
+                        <span className="nftSelecItem__name">{nft.data?.name || nft.name}</span>
                         <span className="Close"><img  alt="" src={Close} /></span>
                     </li> ) 
                     :

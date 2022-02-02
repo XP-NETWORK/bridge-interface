@@ -56,14 +56,14 @@ function NFTlistView() {
                             : (!checkVideoFormat(nft.animation_url) && nft.animation_url) ?
                             <img onClick={(e) => addRemoveNFT(nft, e)} onError={() => setTryVideo(true)} onLoad={() => setImageLoaded(true)} alt="NFTss" src={setupURI(nft.animation_url)} /> 
                             :
-                            <img onClick={(e) => addRemoveNFT(nft, e)} onLoad={() => setImageLoaded(true)} alt="NFTtt" src={setupURI(nft.image || nft.image_url || nft.uri)} /> 
+                            <img onClick={(e) => addRemoveNFT(nft, e)} onLoad={() => setImageLoaded(true)} alt="NFTtt" src={setupURI(nft.data?. image || nft.image || nft.image_url || nft.uri)} /> 
                             : 
                             <div onClick={(e) => addRemoveNFT(nft, e)} className="brocken-url">
                                 <img onLoad={() => setImageLoaded(true)} src={brockenurl} alt='This NFT image uri is broken.' />
                                 <span className="brocken-url__msg">NFTs URL<br/> is broken</span>
                             </div>
                         }
-                    <span className="name" onClick={(e) => addRemoveNFT(nft, e)}>{nft?.name}</span>
+                    <span className="name" onClick={(e) => addRemoveNFT(nft, e)}>{nft?.data?.name || nft?.name}</span>
                     <NFTdetails nftInf={nft}/>
                 </li>
                 ) 

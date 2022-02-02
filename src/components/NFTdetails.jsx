@@ -10,7 +10,7 @@ import { isValidHttpUrl } from '../wallet/helpers';
 import { chainsConfig } from './values';
 
 function NFTdetails({ nftInf }){
-    const { name, description, image, attributes, uri, native, animation_url, image_url } = nftInf
+    const { name, description, image, attributes, uri, native, animation_url, image_url, data } = nftInf
     
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -45,7 +45,7 @@ function NFTdetails({ nftInf }){
                             : (!checkVideoFormat(animation_url) && animation_url) ?
                             <img onError={() => setTryVideo(true)} onLoad={() => setImageLoaded(true)} alt="NFTss" src={setupURI(animation_url)} /> 
                             :
-                            <img onLoad={() => setImageLoaded(true)} alt="NFTtt" src={setupURI(image || image_url || uri)} /> 
+                            <img onLoad={() => setImageLoaded(true)} alt="NFTtt" src={setupURI(data?.image || image || image_url || uri)} /> 
                             : 
                             <div className="brocken-url">
                                 <img onLoad={() => setImageLoaded(true)} src={brockenurl} alt='This NFT image uri is broken.' />
