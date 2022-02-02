@@ -237,7 +237,7 @@ export const setupURI = uri => {
 export const checkVideoFormat = uri => {
     // debugger
     const str = uri?.split(".").pop()
-     return str ? (str.includes("mpg") || str.includes("mpeg") || str.includes("avi") || str.includes("wmv") || str.includes("mp4") || str.includes("ogg") || str.includes("webm") || false) : false
+     return str?.length < 5 ? (str.includes("mpg") || str.includes("mpeg") || str.includes("avi") || str.includes("wmv") || str.includes("mp4") || str.includes("ogg") || str.includes("webm") || false) : false
      
 }
 

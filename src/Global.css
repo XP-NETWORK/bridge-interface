@@ -1454,7 +1454,7 @@ ul.nftList {
 .nftListed:hover {
   background: rgba(73, 82, 108, 0.1);
 }
-li.nftListed > img {
+li.nftListed > img, video {
   display: block;
   height: 32px;
   width: 32px;
