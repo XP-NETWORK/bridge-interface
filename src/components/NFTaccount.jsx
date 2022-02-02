@@ -93,7 +93,6 @@ function NFTaccount() {
        const hard = "0x6449b68cc5675f6011e8DB681B142773A3157cb9"
         try {
             // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount :  
-            
             const w = tezosAccount || algorandAccount || tronWallet || elrondAccount || account
             await setNFTS(w, from)
             } catch (error) {  
