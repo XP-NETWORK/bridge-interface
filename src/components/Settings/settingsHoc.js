@@ -5,6 +5,7 @@ import {
   chains,
   wallets,
   activeChains,
+  availability,
 } from "../../store/reducers/settingsSlice";
 
 const settingsHoc = (Wrapped) => (props) => {
@@ -15,6 +16,7 @@ const settingsHoc = (Wrapped) => (props) => {
   const [copied, setCopied] = useState(false);
   const [activeChainsNumber, setActiveChains] = useState(activeChains.length);
   const [fixedHeader, setFixedHeader] = useState(false);
+  const [toggleEditor, onToggleEditor] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -39,6 +41,13 @@ const settingsHoc = (Wrapped) => (props) => {
     showAlert,
     bridgeState,
   } = settings;
+
+  const onClickEditor = () => {
+    document.querySelector(".nftContainer").style = `margin-left: ${
+      !toggleEditor ? "35" : "300"
+    }px;`;
+    onToggleEditor(!toggleEditor);
+  };
 
   const deboucedSet = (e, key) =>
     dispatch(setSettings({ ...settings, [key]: e }));
@@ -80,7 +89,7 @@ const settingsHoc = (Wrapped) => (props) => {
     );
   };
 
-  const walletCheck = (val) => {
+  const walletCheck = (val, deleted) => {
     const checked = selectedWallets.includes(val);
     const newSelected = checked
       ? selectedWallets.filter((wallet) => wallet !== val)
@@ -134,6 +143,30 @@ const settingsHoc = (Wrapped) => (props) => {
   const handleAlert = () =>
     dispatch(setSettings({ ...settings, showAlert: false }));
 
+  const removMultiple = (wallets) => {
+    const newSelected = selectedWallets.filter(
+      (wallet) => !wallets.includes(wallet)
+    );
+
+    dispatch(
+      setSettings({
+        ...settings,
+        selectedWallets: newSelected,
+      })
+    );
+  };
+
+  useEffect(() => {
+    for (const chain of chains) {
+      if (!selectedChains.includes(chain)) {
+        const wallets = availability[chain];
+        if (wallets) {
+          removMultiple(wallets);
+        }
+      }
+    }
+  }, [selectedChains]);
+
   return (
     <Wrapped
       list={list}
@@ -147,6 +180,8 @@ const settingsHoc = (Wrapped) => (props) => {
       handleAlert={handleAlert}
       settings={settings}
       setCopied={setCopied}
+      toggleEditor={toggleEditor}
+      onClickEditor={onClickEditor}
     />
   );
 };

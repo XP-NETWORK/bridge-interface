@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const chains = [
   "Velas",
-  "Tezos",
   "Ethereum",
   "BSC",
   "Polygon",
@@ -16,11 +15,11 @@ export const chains = [
   "Cardano",
   "Heco",
   "Solana",
+  "Tezos",
 ];
 
 export const activeChains = [
   "Velas",
-  "Tezos",
   "Ethereum",
   "BSC",
   "Polygon",
@@ -33,8 +32,16 @@ export const activeChains = [
   "Fuse",
 ];
 
+export const newChains = ["Velas"];
+
+export const comingSoonChains = ["Cardano", "Heco", "Solana", "Tezos"];
+
 export const availability = {
-  Velas: [],
+  Algorand: ["MyAlgo", "AlgoSigner"],
+  Elrond: ["Maiar", "MaiarExtension"],
+  Tron: ["TronLink"],
+  Tezos: ["Beacon", "TempleWallet"],
+  //["BSC", "Velas", "Ethereum", "Polygon", ]: ["MetaMask", "WalletConnect", "TrustWallet", "Ledger", "Trezor"],
 };
 
 export const wallets = [

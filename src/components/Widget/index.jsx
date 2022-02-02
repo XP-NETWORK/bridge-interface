@@ -7,6 +7,8 @@ import { setSettings } from "../../store/reducers/settingsSlice";
 import { setWidget, setWSettings } from "../../store/reducers/generalSlice";
 import { keys } from "@airgap/beacon-sdk/dist/cjs/utils/utils";
 
+import { power } from "../Settings/assets/power.js";
+
 export default function Widget() {
   const reg = new RegExp(/^((0x){0,1}|#{0,1})([0-9A-F]{8}|[0-9A-F]{6})$/gi);
   const from = useSelector((state) => state.general.from);
@@ -32,7 +34,7 @@ export default function Widget() {
 
     if (widget && wsettings && window.innerWidth > 600) {
       dispatch(setWSettings(true));
-      document.querySelector(".nftContainer").style = "padding-left: 300px";
+      document.querySelector(".nftContainer").style = "margin-left: 300px";
     }
 
     if (widget && !wsettings) {
@@ -105,7 +107,43 @@ export default function Widget() {
       const $style = document.createElement("style");
       $style.id = "bridgeSettings";
       document.head.appendChild($style);
-      $style.innerHTML = `body.bridgeBody {
+      document.getElementById("poweredId")?.remove();
+      const kssa = document.querySelector(".NftSelect");
+      const $img = document.createElement("svg");
+      $img.innerHTML = power(color);
+
+      //$img.onclick = window.open("https://xp.network/", "_blank").focus();
+
+      kssa.appendChild($img);
+
+      $style.innerHTML = `
+      
+      html, body, #root, .App, .nftContainer {
+        height: 100%;
+      }
+
+
+      .nftContainer {
+        position:relative;
+        margin-top: 0;
+
+      }
+
+      .NftSelect {
+        position: absolute;
+        top: 50%;
+        right:50%;
+        transform: translate(50%,-50%);
+
+
+      }
+
+      #poweredId {
+        margin-top: 15px;
+        width: 150px;
+      }
+      
+      body.bridgeBody {
             background: ${backgroundColor ? backgroundColor : ""};
             color: ${color ? color : ""};
             font-size: ${fontSize ? fontSize + "px" : ""};
@@ -348,12 +386,13 @@ export default function Widget() {
   useEffect(() => {
     const handler = () => {
       screenSize.current = window.innerWidth;
+
       if (screenSize.current < 600) {
         dispatch(setWSettings(false));
-        document.querySelector(".nftContainer").style = "padding-left: 0px";
+        document.querySelector(".nftContainer").style = "margin-left: 0px";
       } else if (wsettings === false) {
         dispatch(setWSettings(true));
-        document.querySelector(".nftContainer").style = "padding-left: 300px";
+        document.querySelector(".nftContainer").style = "margin-left: 300px";
       }
     };
     if (new URLSearchParams(window.location.search).get("wsettings")) {

@@ -4,7 +4,13 @@ import power from "./assets/img/power.svg";
 
 import settingsHoc from "./settingsHoc";
 
-import { chains, wallets } from "../../store/reducers/settingsSlice";
+import {
+  chains,
+  wallets,
+  newChains,
+  comingSoonChains,
+  availability,
+} from "../../store/reducers/settingsSlice";
 import "./Settings.css";
 
 /*const debounce = (func, delay) => {
@@ -30,6 +36,8 @@ function WSettings({
   handleScroll,
   fixedHeader,
   setCopied,
+  onClickEditor,
+  toggleEditor,
 }) {
   const {
     backgroundColor,
@@ -51,7 +59,20 @@ function WSettings({
   } = settings;
 
   return (
-    <div className="setting_sidebar">
+    <div
+      className="setting_sidebar"
+      style={{ width: toggleEditor ? "35px" : "300px" }}
+    >
+      <button
+        className="showIframe"
+        style={{
+          display: toggleEditor ? "inline-block" : "none",
+          margin: "5px",
+        }}
+        onClick={onClickEditor}
+      >
+        {">"}
+      </button>
       <Alert
         show={settings.showAlert}
         variant="danger"
@@ -72,19 +93,28 @@ function WSettings({
       >
         <p style={{ marginTop: "15px" }}>Copied!</p>
       </Alert>
-      <div className="site_setting">
+      <div
+        className="site_setting"
+        style={{ display: toggleEditor ? "none" : "block" }}
+      >
         <h2>Settings</h2>
       </div>
       <div
-        className="sidebar_content"
+        className={`sidebar_content`}
+        style={{ display: toggleEditor ? "none" : "block" }}
         ref={list}
         onScroll={(e) => handleScroll(e)}
       >
         <div className={`genarel_setting ${fixedHeader ? "fixed" : ""}`}>
           <h6>WIDGET SETTINGS</h6>
-          <a target="_blank" href={iframeSrc} className="showIframe">
-            Show widget
-          </a>
+          {false && (
+            <a target="_blank" href={iframeSrc} className="showIframe">
+              Hide editor
+            </a>
+          )}
+          <button className="showIframe" onClick={onClickEditor}>
+            {"< "}Hide editor
+          </button>
           <button
             className="expandAll"
             onClick={() => {
@@ -134,9 +164,7 @@ function WSettings({
                           />
 
                           {chain}
-                          {chain === "Cardano" ||
-                          chain === "Heco" ||
-                          chain === "Solana" ? (
+                          {comingSoonChains.includes(chain) ? (
                             <span
                               style={{
                                 color: "grey",
@@ -149,11 +177,7 @@ function WSettings({
                           ) : (
                             ""
                           )}
-                          {chain === "Velas" || chain === "Tezos" ? (
-                            <span>new</span>
-                          ) : (
-                            ""
-                          )}
+                          {newChains.includes(chain) ? <span>new</span> : ""}
                         </div>
                       </li>
                     ))}
@@ -169,51 +193,60 @@ function WSettings({
               <Accordion.Body>
                 <div className="blockChainCont">
                   <ul className="select_block_chain">
-                    {wallets.map((wallet, i) => (
-                      <li
-                        key={i + "wallet"}
-                        className="blockChain_item"
-                        onClick={() => walletCheck(wallet)}
-                      >
-                        <div className="select_nft">
-                          <input
-                            type="checkbox"
-                            name=""
-                            id=""
-                            checked={selectedWallets.includes(wallet)}
-                          />
-                          <span className="icon selectNfticon"></span>
-                        </div>
-                        <div className="blockChainItem">
-                          <img
-                            src={
-                              wallet === "AlgoSigner"
-                                ? require(`./assets/img/wallets/${wallet}.png`)
-                                    .default
-                                : require(`./assets/img/wallets/${wallet}.svg`)
-                                    .default
-                            }
-                            alt={wallet}
-                          />
+                    {wallets.map((wallet, i) => {
+                      const chain = Object.keys(availability).find((key) =>
+                        availability[key].includes(wallet)
+                      );
+                      //const notSingleCommomChain = !selectedChains.includes()
+                      const li =
+                        !chain || selectedChains.includes(chain) ? (
+                          <li
+                            key={i + "wallet"}
+                            className="blockChain_item"
+                            onClick={() => walletCheck(wallet)}
+                          >
+                            <div className="select_nft">
+                              <input
+                                type="checkbox"
+                                name=""
+                                id=""
+                                checked={selectedWallets.includes(wallet)}
+                              />
+                              <span className="icon selectNfticon"></span>
+                            </div>
+                            <div className="blockChainItem">
+                              <img
+                                src={
+                                  wallet === "AlgoSigner"
+                                    ? require(`./assets/img/wallets/${wallet}.png`)
+                                        .default
+                                    : require(`./assets/img/wallets/${wallet}.svg`)
+                                        .default
+                                }
+                                alt={wallet}
+                              />
 
-                          {wallet}
+                              {wallet}
 
-                          {wallet === "Ledger" || wallet === "Trezor" ? (
-                            <span
-                              style={{
-                                color: "grey",
-                                borderColor: "grey",
-                                fontSize: "10px",
-                              }}
-                            >
-                              coming soon
-                            </span>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </li>
-                    ))}
+                              {wallet === "Ledger" || wallet === "Trezor" ? (
+                                <span
+                                  style={{
+                                    color: "grey",
+                                    borderColor: "grey",
+                                    fontSize: "10px",
+                                  }}
+                                >
+                                  coming soon
+                                </span>
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                          </li>
+                        ) : null;
+
+                      return li;
+                    })}
                   </ul>
                 </div>
               </Accordion.Body>
@@ -769,7 +802,7 @@ function WSettings({
                   <div className="typo-sel header_color_select">
                     <h5>Paste this code</h5>
                     <div className="exportCodeCont">
-                      <p id="iframeSrc">{`<iframe src='${iframeSrc}' frameborder='0' ></iframe>`}</p>
+                      <p id="iframeSrc">{`<iframe src='${iframeSrc}' frameborder='0'  width="100%" height="100%"></iframe>`}</p>
                       <button
                         className={`copyCode icon ${copied ? "copied" : ""}`}
                         onClick={() => {
@@ -803,7 +836,10 @@ function WSettings({
           </Accordion>
         </div>
       </div>
-      <div className="sideFooter">
+      <div
+        className="sideFooter"
+        style={{ display: toggleEditor ? "none" : "block" }}
+      >
         <div className="help" style={{ display: "none" }}>
           <h3>Help</h3>
           <a href="#" className="help_icon">
