@@ -238,7 +238,6 @@ export const checkVideoFormat = uri => {
     // debugger
     const supportedFormats = [".mp4", ".ogg", ".webm"]
     const format = uri?.slice(uri.lastIndexOf(".")).length < 6 && uri?.slice(uri.lastIndexOf(".")).length > 3 ? uri?.slice(uri.lastIndexOf(".")) : undefined 
-    console.log(format && supportedFormats.some(n => n === format))
     return format && supportedFormats.some(n => n === format)
 
     // const str = uri?.split(".").pop()

@@ -124,7 +124,7 @@ export default function AccountModal() {
             </div>
             <p className="">{connectedWith()}</p>
                         { copied && <Tooltip /> }
-            <CopyToClipboard text={getCorrectAccount}>
+            <CopyToClipboard text={getCorrectAccount()}>
                 <div className="nftLink">
                     <img src={NftSelect} alt="#"/>
                     { getCorrectAccount() && `${getCorrectAccount().substring(0, 10)}...${getCorrectAccount().substring(getCorrectAccount().length - 2)}`}
