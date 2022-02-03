@@ -160,7 +160,7 @@ function ConnectWallet() {
         else{
           try{
             try{
-              const accounts = await window.tronWeb.request({ method: "tron_requestAccounts" });
+              const accounts = await window.tronLink.request({ method: 'tron_requestAccounts' });
               
               if(!accounts){
                 dispatch(setTronLoginError("loggedOut"))

@@ -104,12 +104,9 @@ return (
       <TronPopUp/>
       <Widget />
       <GetFeatured />
-
-      <Router>
-        <XpBridge/>
-        <Alert />
-      </Router>
-
+      <XpBridge/>
+      <Alert />
+    
       <div onClick={showGetFeatured} className="get-featured">
         <img src={star} alt=""/>
         Get Featured

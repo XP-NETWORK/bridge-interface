@@ -1880,6 +1880,10 @@ span.statComp img {
   padding: 6px 30px;
 }
 
+.seleDepatSelec img{
+  width: 28px;
+}
+
 .nftSelecItem__name{
   width: 80%;
   white-space: nowrap;
