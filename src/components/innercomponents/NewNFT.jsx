@@ -5,7 +5,7 @@ import brockenurl from "../../assets/img/brockenurl.png"
 import CheckGreen from '../../assets/img/icons/check_green.svg';
 import NFTdetails from '../NFTdetails';
 import { useSelector } from 'react-redux';
-import { setupURI, checkVideoFormat } from '../../wallet/oldHelper';
+import { setupURI, checkVideoFormat, checkImageFormat } from '../../wallet/oldHelper';
 import { getCorrectURL } from "./NFTHelper.js"
 import  "./NewNFT.css"
 

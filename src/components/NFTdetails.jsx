@@ -3,7 +3,7 @@ import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 import moment from 'moment';
 import brockenurl from "../assets/img/brockenurl.png"
 import Close from '../assets/img/icons/close.svg';
-import { checkVideoFormat } from "../wallet/oldHelper"
+import { checkVideoFormat, checkImageFormat } from "../wallet/oldHelper"
 import INF from '../assets/img/icons/Inf.svg';
 import { setupURI } from '../wallet/oldHelper';
 import { isValidHttpUrl } from '../wallet/helpers'
@@ -44,7 +44,7 @@ function NFTdetails({ nftInf }){
                             src={tryVideo ? setupURI(image) : setupURI(animation_url)} 
                             /> 
                             : (!checkVideoFormat(animation_url) && animation_url) ?
-                            <img onError={() => setTryVideo(true)} onLoad={() => setImageLoaded(true)} alt="NFTss" src={setupURI(animation_url)} /> 
+                            <img onError={() => setTryVideo(true)} onLoad={() => setImageLoaded(true)} alt="NFTss" src={setupURI(checkImageFormat(animation_url) ? animation_url : data?.image || image || image_url || uri)} /> 
                             :
                             <img onLoad={() => setImageLoaded(true)} alt="NFTtt" src={setupURI(data?.image || image || image_url || uri)} /> 
                             : 

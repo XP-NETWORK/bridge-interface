@@ -154,6 +154,7 @@ function ConnectWallet() {
       }
 
     async function connectTronlink() {
+      debugger
         if(window.innerWidth <= 600 && !window.tronWeb){
           dispatch(setTronPopUp(true))
         }
@@ -163,7 +164,7 @@ function ConnectWallet() {
               const accounts = await window.tronLink.request({ method: 'tron_requestAccounts' });
               
               if(!accounts){
-                dispatch(setTronLoginError("loggedOut"))
+                dispatch(setTronLoginError("loggedOut"))``
               }
             } 
             catch(err){
@@ -190,6 +191,32 @@ function ConnectWallet() {
             }
           }
         }
+        // if(window.innerWidth <= 600 && !window.tronWeb){
+        //   dispatch(setTronPopUp(true))
+        // }
+        // else{
+        //   try {
+        //     const accounts = await window.tronLink.request({ method: 'tron_requestAccounts' });
+        //     if(!accounts){
+        //       dispatch(setTronLoginError("noTronWeb"))
+        //     }
+        //     if(window.tronLink && window.tronWeb.defaultAddress.base58){
+        //       const publicAddress = window.tronWeb.defaultAddress.base58
+        //       dispatch(setTronWallet(publicAddress))
+        //       dispatch(setTronLink(true))
+
+        //     }
+        //   }
+        //   catch(error) {
+        //     if(!modalError){
+        //       dispatch(setError(error))
+        //       if(error.data){
+        //         console.log(error.data.message);
+        //       }
+        //       else console.log(error); 
+        //     }
+        //   }
+        // }
       }
 
     const onClientConnect = ( maiarProvider ) => {
