@@ -1252,13 +1252,13 @@ span.NFTInf:hover img {
 .ListView {
   display: block;
   cursor: pointer;
+  /* margin-left: 1px; */
 }
 
 .ListView-mob {
   display: block;
   /* background: rgba(98, 113, 138, 0.1); */
   margin-left: 2px;
-
   width: 20px !important;
 }
 
