@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
-import { Image, Dropdown, Accordion, Alert } from "react-bootstrap";
+import {
+  Image,
+  Dropdown,
+  Accordion,
+  Alert,
+  FormCheck,
+  Form,
+} from "react-bootstrap";
 import power from "./assets/img/power.svg";
 
 import settingsHoc from "./settingsHoc";
@@ -38,6 +45,8 @@ function WSettings({
   setCopied,
   onClickEditor,
   toggleEditor,
+  toggleShow,
+  showLink,
 }) {
   const {
     backgroundColor,
@@ -118,17 +127,27 @@ function WSettings({
           <button
             className="expandAll"
             onClick={() => {
-              document
-                .querySelectorAll(".accordion-collapse")
-                .forEach((el) => el.classList.add("show"));
+              document.querySelectorAll(".accordion-button").forEach((el) => {
+                el.setAttribute("aria-expanded", "true");
+                el.classList.remove("collapsed");
+              });
+              document.querySelectorAll(".accordion-collapse").forEach((el) => {
+                el.setAttribute("style", "");
+                el.classList.add("show");
+              });
             }}
           ></button>
           <button
             className="collapseAll"
             onClick={() => {
-              document
-                .querySelectorAll(".accordion-collapse")
-                .forEach((el) => el.classList.remove("show"));
+              document.querySelectorAll(".accordion-button").forEach((el) => {
+                el.setAttribute("aria-expanded", "false");
+                el.classList.add("collapsed");
+              });
+              document.querySelectorAll(".accordion-collapse").forEach((el) => {
+                el.setAttribute("style", "");
+                el.classList.remove("show");
+              });
             }}
           ></button>
         </div>
@@ -198,52 +217,55 @@ function WSettings({
                         availability[key].includes(wallet)
                       );
                       //const notSingleCommomChain = !selectedChains.includes()
-                      const li =
-                        !chain || selectedChains.includes(chain) ? (
-                          <li
-                            key={i + "wallet"}
-                            className="blockChain_item"
-                            onClick={() => walletCheck(wallet)}
-                          >
-                            <div className="select_nft">
-                              <input
-                                type="checkbox"
-                                name=""
-                                id=""
-                                checked={selectedWallets.includes(wallet)}
-                              />
-                              <span className="icon selectNfticon"></span>
-                            </div>
-                            <div className="blockChainItem">
-                              <img
-                                src={
-                                  wallet === "AlgoSigner"
-                                    ? require(`./assets/img/wallets/${wallet}.png`)
-                                        .default
-                                    : require(`./assets/img/wallets/${wallet}.svg`)
-                                        .default
-                                }
-                                alt={wallet}
-                              />
+                      const li = (
+                        <li
+                          key={i + "wallet"}
+                          className={`blockChain_item ${
+                            !chain || selectedChains.includes(chain)
+                              ? ""
+                              : "inactive"
+                          }`}
+                          onClick={() => walletCheck(wallet)}
+                        >
+                          <div className="select_nft">
+                            <input
+                              type="checkbox"
+                              name=""
+                              id=""
+                              checked={selectedWallets.includes(wallet)}
+                            />
+                            <span className="icon selectNfticon"></span>
+                          </div>
+                          <div className="blockChainItem">
+                            <img
+                              src={
+                                wallet === "AlgoSigner"
+                                  ? require(`./assets/img/wallets/${wallet}.png`)
+                                      .default
+                                  : require(`./assets/img/wallets/${wallet}.svg`)
+                                      .default
+                              }
+                              alt={wallet}
+                            />
 
-                              {wallet}
+                            {wallet}
 
-                              {wallet === "Ledger" || wallet === "Trezor" ? (
-                                <span
-                                  style={{
-                                    color: "grey",
-                                    borderColor: "grey",
-                                    fontSize: "10px",
-                                  }}
-                                >
-                                  coming soon
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                          </li>
-                        ) : null;
+                            {wallet === "Ledger" || wallet === "Trezor" ? (
+                              <span
+                                style={{
+                                  color: "grey",
+                                  borderColor: "grey",
+                                  fontSize: "10px",
+                                }}
+                              >
+                                coming soon
+                              </span>
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                        </li>
+                      );
 
                       return li;
                     })}
@@ -834,6 +856,10 @@ function WSettings({
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
+          <div className="referalSwitch" onClick={toggleShow}>
+            <input type="checkbox" checked={showLink} />
+            <span>Powered by XP Network</span>
+          </div>
         </div>
       </div>
       <div

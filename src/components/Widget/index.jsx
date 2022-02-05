@@ -5,15 +5,10 @@ import "./WidgetNight.css";
 import "./WidgetLight.css";
 import { setSettings } from "../../store/reducers/settingsSlice";
 import { setWidget, setWSettings } from "../../store/reducers/generalSlice";
-import { keys } from "@airgap/beacon-sdk/dist/cjs/utils/utils";
 
 import { power } from "../Settings/assets/power.js";
 
 export default function Widget() {
-  const reg = new RegExp(/^((0x){0,1}|#{0,1})([0-9A-F]{8}|[0-9A-F]{6})$/gi);
-  const from = useSelector((state) => state.general.from);
-  const to = useSelector((state) => state.general.to);
-  const step = useSelector((state) => state.general.step);
   const { widget, wsettings, settings } = useSelector(
     ({ general: { widget, wsettings }, settings }) => ({
       widget,
@@ -51,11 +46,10 @@ export default function Widget() {
       const accentColor = p.get("accentColor");
       const borderColor = p.get("borderColor");
       const iconColor = p.get("iconColor");
-
+      const showLink = p.get("showLink");
       const chains = p.get("chains")?.split("-");
       const wallets = p.get("wallets")?.split("-");
-
-      const bridgeState = p.get("bridgeState");
+      console.log(showLink);
 
       dispatch(
         setSettings({
@@ -74,6 +68,7 @@ export default function Widget() {
           secondaryColor: "#" + secondaryColor,
           borderColor: "#" + borderColor,
           iconColor: "#" + iconColor,
+          showLink: showLink === "true" ? true : false,
         })
       );
     }
@@ -99,7 +94,16 @@ export default function Widget() {
     borderColor,
     iconColor,
     wallets,
+    showLink,
   } = settings;
+
+  useEffect(() => {
+    document.getElementById("poweredId")?.remove();
+    const kssa = document.querySelector(".NftSelect");
+    const $img = document.createElement("svg");
+    $img.innerHTML = power(color);
+    kssa?.appendChild($img);
+  }, [widget, color]);
 
   useEffect(() => {
     if (widget) {
@@ -107,14 +111,8 @@ export default function Widget() {
       const $style = document.createElement("style");
       $style.id = "bridgeSettings";
       document.head.appendChild($style);
-      document.getElementById("poweredId")?.remove();
-      const kssa = document.querySelector(".NftSelect");
-      const $img = document.createElement("svg");
-      $img.innerHTML = power(color);
 
       //$img.onclick = window.open("https://xp.network/", "_blank").focus();
-
-      kssa.appendChild($img);
 
       $style.innerHTML = `
       
@@ -139,6 +137,7 @@ export default function Widget() {
       }
 
       #poweredId {
+        visibility: ${showLink ? "visible" : "hidden"};
         margin-top: 15px;
         width: 150px;
       }

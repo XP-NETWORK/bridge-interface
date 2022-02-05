@@ -77,6 +77,7 @@ const initialState = {
   borderColor: "#37405b",
   iconColor: "#3e64ed",
   showAlert: false,
+  showLink: true,
 };
 
 const settingSlice = createSlice({

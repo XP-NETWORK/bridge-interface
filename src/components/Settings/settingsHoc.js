@@ -8,6 +8,8 @@ import {
   availability,
 } from "../../store/reducers/settingsSlice";
 
+import { usePrevious } from "./hooks";
+
 const settingsHoc = (Wrapped) => (props) => {
   const { settings } = useSelector(({ settings }) => ({
     settings,
@@ -17,6 +19,7 @@ const settingsHoc = (Wrapped) => (props) => {
   const [activeChainsNumber, setActiveChains] = useState(activeChains.length);
   const [fixedHeader, setFixedHeader] = useState(false);
   const [toggleEditor, onToggleEditor] = useState(false);
+  //const [showLink, onToggleShow] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -40,7 +43,11 @@ const settingsHoc = (Wrapped) => (props) => {
     selectedWallets,
     showAlert,
     bridgeState,
+    showLink,
   } = settings;
+  console.log(showLink);
+
+  const prevSelected = usePrevious(selectedChains);
 
   const onClickEditor = () => {
     document.querySelector(".nftContainer").style = `margin-left: ${
@@ -124,7 +131,7 @@ const settingsHoc = (Wrapped) => (props) => {
         borderColor.split("#")[1]}&iconColor=${iconColor &&
         iconColor.split("#")[1]}&wallets=${selectedWallets.join(
         "-"
-      )}&bridgeState=${JSON.stringify(bridgeState)}`,
+      )}&bridgeState=${JSON.stringify(bridgeState)}&showLink=${showLink}`,
     [settings]
   );
 
@@ -156,16 +163,42 @@ const settingsHoc = (Wrapped) => (props) => {
     );
   };
 
+  const addMultiple = (wallets) => {
+    dispatch(
+      setSettings({
+        ...settings,
+        selectedWallets: [...selectedWallets, ...wallets],
+      })
+    );
+  };
+
   useEffect(() => {
-    for (const chain of chains) {
-      if (!selectedChains.includes(chain)) {
-        const wallets = availability[chain];
+    if (prevSelected) {
+      const difference = prevSelected.filter(
+        (x) => !selectedChains.includes(x)
+      );
+
+      if (difference.length > 0) {
+        const wallets = availability[difference[0]];
         if (wallets) {
           removMultiple(wallets);
+        }
+      } else {
+        const wallets = availability[selectedChains[selectedChains.length - 1]];
+        if (wallets) {
+          addMultiple(wallets);
         }
       }
     }
   }, [selectedChains]);
+
+  const toggleShow = () =>
+    dispatch(
+      setSettings({
+        ...settings,
+        showLink: !showLink,
+      })
+    );
 
   return (
     <Wrapped
@@ -182,6 +215,8 @@ const settingsHoc = (Wrapped) => (props) => {
       setCopied={setCopied}
       toggleEditor={toggleEditor}
       onClickEditor={onClickEditor}
+      toggleShow={toggleShow}
+      showLink={showLink}
     />
   );
 };

@@ -1347,7 +1347,7 @@ a.help_icon:hover .qustion_icon {
 }
 
 .powerBySet {
-  padding: 24px 30px;
+  padding: 10px 30px;
   background: #4a515c;
 }
 .searchNft .btn-primary {
@@ -1463,4 +1463,23 @@ li.blockChain_item .blockChainItem span {
 .showIframe:hover {
   color: rgb(19, 17, 17);
   filter: brightness(85%);
+}
+
+.inactive {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.referalSwitch {
+  display: flex;
+  align-items: center;
+  padding-left: 28px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.referalSwitch input {
+  height: 18px;
+  width: 18px;
+  margin-right: 10px;
 }
