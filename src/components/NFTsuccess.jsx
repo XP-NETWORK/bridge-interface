@@ -38,7 +38,7 @@ function NFTsuccess() {
     
 
     const refresh = async () => {
-        debugger
+        // debugger
             let w
             if(from.type === "EVM") w = account
             else if(from.type === "Tezos") w = tezosAccount
@@ -54,7 +54,7 @@ function NFTsuccess() {
 
     const handleClose = () => {
         // window.location.reload()
-        debugger
+        // debugger
         selectedNFTList.forEach(nft => {
             const { txn } = nft
             if(txn) dispatch(removeFromSelectedNFTList(nft))

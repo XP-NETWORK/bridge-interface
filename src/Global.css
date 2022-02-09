@@ -26,8 +26,24 @@ body {
 .bridgeBody {
   min-height: 100vh;
   background-color: #1d212a;
+  background-image: 
+    url("./assets/img/bg/Ellipse\ 235.svg"),
+    url("./assets/img/bg/Ellipse\ 236.svg"),
+    url("./assets/img/bg/l-figure.svg"),
+    url("./assets/img/bg/r-figure.svg"),
+    url("./assets/img/bg/l-sphere.svg"),
+    url("./assets/img/bg/r-sphere.svg"),
+    url("./assets/img/bg/r-triangle.svg");
+  background-repeat: no-repeat;
+  background-position: left 50% top 80px, left 50% top 177.15px, left 25% top 29%, right 41% top 22%, left 40% top 25%, right 27% top 18%, right 33% top 29%;
   position: relative;
   z-index: 1;
+}
+
+.bridgeBody::-webkit-scrollbar {
+  display: none;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 ul {
@@ -114,9 +130,10 @@ div#root {
 
 div#root:after {
   content: "";
-  background-image: url("./assets/img/body_art.svg");
+  /* background-image: url("./assets/img/body_art.svg"); */
   background-size: contain;
   background-repeat: no-repeat;
+  background-position: left 10px;
   display: block;
   width: 886px;
   height: 518px;
@@ -134,6 +151,7 @@ footer {
 .footContainer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   padding: 8px 45px 25px 45px;
   border: 1px solid #292f3f;
@@ -2761,9 +2779,32 @@ span.transPend {
   }
 }
 
+@media screen and (max-width: 425px) {
+  .bridgeBody {
+    background-position: 
+    left 50% top 80px,     /*Ellipse\ 235*/
+    left 50% top 177.15px, /*Ellipse\ 236*/
+    left 1% top 9%,      /*l-figure*/
+    right 3% top 20%,     /*r-figure*/
+    left 23% top 22%,      /*l-sphere*/
+    right 5% top 10%,     /*r-sphere*/
+    right 10% top 39%;     /*r-triangle*/
+  }
+}
+
 @media screen and (max-width: 768px) {
   .singleNft.missing {
     width: 100%;
+  }
+  .bridgeBody {
+    background-position: 
+    left 50% top 80px,     /*Ellipse\ 235*/
+    left 50% top 177.15px, /*Ellipse\ 236*/
+    left 2% top 27%,      /*l-figure*/
+    right 26% top 18%,     /*r-figure*/
+    left 22% top 22%,      /*l-sphere*/
+    right 1% top 12%,        /*r-sphere*/
+    right 5% top 29%;     /*r-triangle*/
   }
 }
 
@@ -2813,12 +2854,22 @@ span.transPend {
   }
 }
 
-@media screen and (max-width: 375) {
-  .successBox {
+@media screen and (max-width: 375px) {
+  /* .successBox {
     padding: 8px 20px !important;
   }
   .approve-loader__container__text {
     left: 39%;
+  } */
+  .bridgeBody {
+    background-position: 
+    left 50% top 80px,     /*Ellipse\ 235*/
+    left 50% top 177.15px, /*Ellipse\ 236*/
+    left 2% top 5%,      /*l-figure*/
+    right -5% top 20%,     /*r-figure*/
+    left -10% top 25%,      /*l-sphere*/
+    right 5% top 5%,     /*r-sphere*/
+    right -55% top 39%;     /*r-triangle*/
   }
 }
 
@@ -2827,6 +2878,8 @@ span.transPend {
     left: 39% !important;
   }
 }
+
+
 
 @media screen and (min-width: 600px) {
   .yourNft--mobile {

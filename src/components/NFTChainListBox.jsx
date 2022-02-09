@@ -65,7 +65,7 @@ export default function NFTChainListBox() {
                         // if(chain.text === "Velas" && chain.newChain) return -1
                         // if(chain.newChain) return -1
                         // else return chain.a - chain.b
-                        return chain.a - chain.b
+                       
                     }).map( filteredChain => { 
                         const { image, text, key, value, coming, newChain } = filteredChain;
                         
@@ -75,7 +75,7 @@ export default function NFTChainListBox() {
                      }) 
                      :
                      toChains.filter(chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).sort(chain => (
-                        chain.newChain ? -1 : chain.a - chain.b 
+                        chain.newChain ? -1 : ''
                     )).map(chain => {
                         const { image, text, key, value, coming , newChain } = chain;
                         return chain.key !== from.key ? <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} chainKey={key} coming={coming} text={text} filteredChain={chain} image={image} key={`chain-${key}`}  />

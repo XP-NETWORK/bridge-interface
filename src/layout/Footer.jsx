@@ -1,6 +1,8 @@
 import React from 'react'
 import XpNetwork from '../assets/img/foot/xp-network.svg';
 import Quigon from '../assets/img/foot/Quigon.svg';
+import newLogo from "../assets/img/icons/newLogoWhite.svg"
+import powered from "../assets/img/icons/poweredByXp.svg"
 import Linkedin from '../assets/img/social/linkedin.svg';
 import Redit from '../assets/img/social/redit.svg';
 import Telegram from '../assets/img/social/telegram.svg';
@@ -25,8 +27,7 @@ function Footer() {
                 <div className="footRight">
                     <div className="powerBy">
                         <a href="https://xp.network/" target="_blank" rel="noreferrer" className="PowerLink">
-                            Powered by
-                            <img src={XpNetwork} alt="Powered by" />
+                            <img style={{height: "40px"}} src={powered} alt="Powered by" />
                         </a>
                     </div>
                     {/* <div className="priPoli">
