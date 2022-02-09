@@ -36,7 +36,7 @@ export default function NFTSelectBox() {
         <div className="selChain seleDepat" onClick={() => handleShow("departure")}>
             { from ? 
                 <div className="seleDepatSelec">
-                    <img src={ from.image.src } alt="" />{from.text}
+                    <img src={ from.image.src } alt="" />{from.text === "xDai" ? "Gnosis Chain" : from.text}
                 </div>
                 :
                 <div className="seleDepatSelec">
@@ -53,7 +53,7 @@ export default function NFTSelectBox() {
         <div className="selChain seleDesti" onClick={() => handleShow("destination")}>
             { to ?
                 <div className="seleDestiSele">
-                    <img  style={{width: "28px"}} src={ to.image.src } alt="" />{to.text}
+                    <img  style={{width: "28px"}} src={ to.image.src } alt="" />{to.text === "xDai" ? "Gnosis Chain" : to.text}
                 </div>
                 :
                 <div className="seleDestiSele">

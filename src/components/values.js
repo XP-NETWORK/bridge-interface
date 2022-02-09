@@ -88,7 +88,7 @@ export const chains = [
     {
         type: "EVM",
         key: 'xDai',
-        text: 'Gnosis Chain',
+        text: 'xDai',
         value: 'xDai',
         order: 10,
         image: { avatar: true, src: Gnosis },

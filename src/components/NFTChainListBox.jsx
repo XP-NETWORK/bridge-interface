@@ -70,7 +70,7 @@ export default function NFTChainListBox() {
                         const { image, text, key, value, coming, newChain } = filteredChain;
                         
                         return ( 
-                            <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} coming={coming} text={text} filteredChain={filteredChain} image={image} key={`chain-${key}`} />
+                            <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`} />
                         )
                      }) 
                      :
@@ -78,7 +78,7 @@ export default function NFTChainListBox() {
                         chain.newChain ? -1 : chain.a - chain.b 
                     )).map(chain => {
                         const { image, text, key, value, coming , newChain } = chain;
-                        return chain.key !== from.key ? <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} coming={coming} text={text} filteredChain={chain} image={image} key={`chain-${key}`}  />
+                        return chain.key !== from.key ? <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} chainKey={key} coming={coming} text={text} filteredChain={chain} image={image} key={`chain-${key}`}  />
                         :''
                      })
                     }            

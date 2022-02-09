@@ -3,9 +3,29 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   step: 1,
   selectedNFTList: [],
+  // selectedNFTList: [{
+  //   name: "",
+  //   description: "",
+  //   image: "",
+  //   wrapper: {},
+  //   attributes:[],
+  //   uri: "https://wnfts.xp.network/w/61dc4a5c4298fe05d76f92f4",
+  //   native: {
+  //     chainId: 19,
+  //     tokenId: 9,
+  //     owner: "0xb6C8748115d23Eb1c6d59Cb83eAe051b56ef75c7",
+  //     contract: "0xFC2b3dB912fcD8891483eD79BA31b8E5707676C9",
+  //     symbol: "XPNFT",
+  //     name: "XpWrappedNft",
+  //     uri: "https://wnfts.xp.network/w/61dc4a5c4298fe05d76f92f4",
+  //     contractType: "ERC721"
+  //   },
+  //   txn: "0x2446f1fd773fbb9f080e674b60c6a033c7ed7427b8b9413cf28a2a4a6da9b56c"
+  // }],
   NFTListView: false,
   approvedNFTList: [],
   nftsToWhitelist: [],
+  // txnHashArr: [{hash: "0x2446f1fd773fbb9f080e674b60c6a033c7ed7427b8b9413cf28a2a4a6da9b56c"}],
   txnHashArr: [],
   fees : 0,
   currentTx: 0,
