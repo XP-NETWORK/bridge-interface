@@ -16,6 +16,7 @@ export default function NFT({nft, index}) {
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const dispatch = useDispatch()
     const [tryVideo , setTryVideo] = useState() // incase img url error try vid
+    const [brokenURI , setbrokenURI] = useState() // incase img url error try vid
     const isSelected = selectedNFTs.filter(n => n.native.tokenId === nft.native.tokenId && n.native.contract === nft.native.contract && n.native.chainId === nft.native.chainId)[0]
     const [imageLoaded, setImageLoaded]= useState(false);
     const HIDDEN = { visibility: "hidden"};
@@ -33,21 +34,20 @@ export default function NFT({nft, index}) {
     }
 
     useEffect(() => { setTimeout(() => {setImageLoaded(true)}, 5000) }, [selectedNFTs])
-    // console.log(imageLoaded, nft.image)
     return ( 
         <div className={`nft-box__wrapper ${!imageLoaded ? 'preload-cont' : ''}`}>
             <div style={ !imageLoaded && url ? HIDDEN : {}} className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
                 <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
                     <div className="image__wrapper">
-                        { (nft.uri) && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url ||nft.image_url || nft.uri || nft.data?.image_url) ? 
+                        { !brokenURI && (nft.uri) && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url ||nft.image_url || nft.uri || nft.data?.image_url) ? 
                             (video && url) ? 
                             <video onLoadedData={() => setImageLoaded(true)} controls={false} playsInline={true} autoPlay={true} loop={true} 
                             src={url} 
                             /> 
                             : !video ?
-                            <img onError={() => setTryVideo(true)} onLoad={() => setImageLoaded(true)} alt="NFTss" src={setupURI(url)} /> 
+                            <img onError={() => tryVideo ? setbrokenURI(true) : setTryVideo(true)} onLoad={() => setImageLoaded(true)} alt="NFT image" src={setupURI(url)} /> 
                             :
-                            <img onLoad={() => setImageLoaded(true)} alt="NFTtt" src={setupURI(url)} /> 
+                            <img onLoad={() => setImageLoaded(true)} alt="NFT image" src={setupURI(url)} /> 
                             : 
                             <div className="brocken-url">
                                 <img onLoad={() => setImageLoaded(true)} src={brockenurl} alt='This NFT image uri is broken.' />

@@ -49,9 +49,10 @@ export const preloadItem = (item, type, setLoaded) => {
 export const parseNFTS = async (nfts) => {
 // console.log("helpers");
 // debugger
+console.log(nfts)
+
 const { from, to } = store.getState().general;
 if(from.key === "Tezos"){
-  console.log(nfts)
  return nfts.filter(n => n.native).map(n => {
    return {
      ...n,
@@ -71,13 +72,18 @@ if(from.key === "Tezos"){
             if (res.data.animation_url)
               preloadItem(res.data.animation_url, "video", () => {});
             else preloadItem(res.data.image, "image", () => {});
-            resolve({ ...res.data, ...n });
+            const isImageIPFS = setupURI(res.data.image).includes('ipfs.io')
+            let result = { ...res.data, ...n }
+            if(isImageIPFS) {
+              const ipfsNFT = await axios.get(setupURI(res.data.image))
+              if(ipfsNFT.data && ipfsNFT.data.displayUri) result.image = ipfsNFT.data.displayUri
+            }
+            resolve(result);
           } else resolve(undefined);
         } catch (err) {
           if (err) {
             try {
               const res = await axios.get(('https://sheltered-crag-76748.herokuapp.com/')+(setupURI(n.uri?.uri ? n.uri?.uri : n.uri)));
-              // console.log("res: ", res);
               if (res.data) {
                 try {
                   const { uri } = res.data;

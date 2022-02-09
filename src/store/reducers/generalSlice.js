@@ -82,7 +82,7 @@ const generalSlice = createSlice({
       state.receiver = action.payload
     },
     cleanTxnHashArr(state){
-      state.txnHashArr = state.txnHashArr.initialState
+      state.txnHashArr = state.txnHashArr?.initialState ? state.txnHashArr?.initialState : []
     },
     setTxnHash(state, action){
       const {nft, txn} = action.payload

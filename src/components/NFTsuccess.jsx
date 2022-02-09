@@ -19,6 +19,7 @@ import { useDispatch } from 'react-redux';
 import ConnectAlgorand from './ConnectAlgorand';
 import ClaimAlgorandNFT from './ClaimAlgorandNFT';
 import "./SuccessNFT.css"
+import { getCorrectURL } from './innercomponents/NFTHelper';
 
 
 function NFTsuccess() {
@@ -193,7 +194,7 @@ function SuccessNFT({nft, from, index}) {
     const dispatch = useDispatch()
     const {to, algorandAccount} = useSelector(s => s.general)
     const tx = nft.txn ? typeof nft.txn === 'object' ? nft.txn.hash.toString() : nft.txn : ''
-
+    const {video, url } = getCorrectURL(nft)
     const getTX = () => {
         if(nft.txn){
             if(typeof nft.txn === 'object'){
@@ -220,7 +221,7 @@ function SuccessNFT({nft, from, index}) {
     }
     return  (
         <li className="nftSelecItem">
-            <img src={setupURI(nft.image || nft.uri)} alt="NFT" />
+            {video ? <video autoPlay={true} muted={true} src={setupURI(url)} loop={true} /> : <img src={setupURI(url)} alt="NFT" />}
             <span className="nftSelected__name">{nft.name}</span>
             <span className="bluTextBtn">
                 <a href={`${chainsConfig[from.key].tx + getTX()}`} target="_blank">View Txn</a>
