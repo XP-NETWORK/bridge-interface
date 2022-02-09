@@ -49,7 +49,7 @@ export const preloadItem = (item, type, setLoaded) => {
 export const parseNFTS = async (nfts) => {
 // console.log("helpers");
 // debugger
-console.log(nfts)
+// console.log(nfts)
 
 const { from, to } = store.getState().general;
 if(from.key === "Tezos"){

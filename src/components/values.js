@@ -8,7 +8,7 @@ import Tron from "../assets/img/chain/Tron.svg"
 import Polygon from "../assets/img/chain/Polygon.svg"
 import Avalanche from "../assets/img/chain/Avalanche.svg"
 import Fantom from "../assets/img/chain/Fantom.svg"
-import Xdai from "../assets/img/chain/Xdai.svg"
+import Gnosis from "../assets/img/chain/Gnosis.png"
 import Solana from "../assets/img/chain/Solana.svg"
 import Fuse from "../assets/img/chain/Fuse.svg"
 import Velas from "../assets/img/chain/velas.svg"
@@ -88,10 +88,10 @@ export const chains = [
     {
         type: "EVM",
         key: 'xDai',
-        text: 'xDai',
+        text: 'Gnosis Chain',
         value: 'xDai',
         order: 10,
-        image: { avatar: true, src: Xdai },
+        image: { avatar: true, src: Gnosis },
     },
     {
         type: 'Solana',
@@ -152,10 +152,10 @@ export const chains = [
         key: "Iotex",
         text: "Iotex",
         value: "Iotex",
-        order: 3,
+        order: 20,
         image: { avatar: true, src: Iotex},
-        newChain: true,
-        coming: false
+        newChain: false,
+        coming: true
     }
 ]
 
@@ -214,7 +214,7 @@ export const chainsConfig = {
     xDai: {
         type: EVM,
         token: 'XDAI',
-        img: Xdai,
+        img: Gnosis,
         tx: 'https://blockscout.com/xdai/mainnet/tx/',
         chainId: 100,
         rpc: 'https://elronode.xp.network/xdai',
