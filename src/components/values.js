@@ -152,10 +152,10 @@ export const chains = [
         key: "Iotex",
         text: "Iotex",
         value: "Iotex",
-        order: 20,
+        order: 3,
         image: { avatar: true, src: Iotex},
-        newChain: false,
-        coming: true
+        newChain: true,
+        coming: false
     }
 ]
 
@@ -208,6 +208,7 @@ export const chainsConfig = {
         tx: 'https://polygonscan.com/tx/',
         chainId: 137,
         rpc: 'https://red-black-water.matic.quiknode.pro/a1bec0e749c6fed57405002677902b7046c59689/',
+        // rpc: 'https://matic-mainnet-full-rpc.bwarelabs.com',
         Chain: Chain.POLYGON,
         // chainData: ChainData.Polygon
     },
