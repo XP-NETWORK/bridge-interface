@@ -22,6 +22,7 @@ export default function NFT({nft, index}) {
     const HIDDEN = { visibility: "hidden"};
     const unclickable = { pointerEvents: "none" }
     const {video, url } = getCorrectURL(nft)
+
     // console.log("video: ", video, "url: ", url, "index: ", index)
 
     function addRemoveNFT (chosen){
@@ -32,7 +33,8 @@ export default function NFT({nft, index}) {
             dispatch(removeFromSelectedNFTList(nft))
         }
     }
-
+    useEffect(() => { if(!checkImageFormat(url) && !url.includes("ipfs"))setbrokenURI(true)}, [])
+    
     useEffect(() => { setTimeout(() => {setImageLoaded(true)}, 5000) }, [selectedNFTs])
     return ( 
         <div className={`nft-box__wrapper ${!imageLoaded ? 'preload-cont' : ''}`}>
@@ -47,7 +49,7 @@ export default function NFT({nft, index}) {
                             : !video ?
                             <img onError={() => tryVideo ? setbrokenURI(true) : setTryVideo(true)} onLoad={() => setImageLoaded(true)} alt="NFT image" src={setupURI(url)} /> 
                             :
-                            <img onLoad={() => setImageLoaded(true)} alt="NFT image" src={setupURI(url)} /> 
+                            <img onError={() => tryVideo ? setbrokenURI(true) : setTryVideo(true)} onLoad={() => setImageLoaded(true)} alt="NFT image" src={setupURI(url)} /> 
                             : 
                             <div className="brocken-url">
                                 <img onLoad={() => setImageLoaded(true)} src={brockenurl} alt='This NFT image uri is broken.' />

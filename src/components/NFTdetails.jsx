@@ -38,7 +38,7 @@ function NFTdetails({ nftInf }){
                 <Modal.Body className="modalBody">
                     <div className="nftDetailBox">
                         <div className="nftDetImg">
-                        { (uri) && isValidHttpUrl(uri) && (image || animation_url || image_url || uri) ? 
+                        { (uri) && isValidHttpUrl(uri) && ((image && checkImageFormat(image)) || (animation_url && checkImageFormat(animation_url))|| (image_url && checkImageFormat(image_url)) || (uri && checkImageFormat(uri))) ? 
                             (animation_url && checkVideoFormat(animation_url)) ? 
                             <video onLoadedData={() => setImageLoaded(true)} controls={false} playsInline={true} autoPlay={true} loop={true} 
                             src={tryVideo ? setupURI(image) : setupURI(animation_url)} 
