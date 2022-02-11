@@ -11,6 +11,7 @@ import { setupURI, checkVideoFormat } from '../../wallet/oldHelper';
 import { useState } from "react";
 import brockenurl from "../../assets/img/brockenurl.png"
 import { getCorrectURL } from "./NFTHelper.js"
+import ListedView from "../nftImageViews/ListedView";
 
 function NFTlistView() {
     const nfts = useSelector(state => state.general.NFTList)
@@ -48,7 +49,7 @@ function NFTlistView() {
                         }
                     </span>
                     {/* <img onClick={(e) => addRemoveNFT(nft, e)} src={nft?.image} alt="NFT" /> */}
-                    { (nft.uri) && isValidHttpUrl(nft.uri) && (getCorrectURL(nft)?.url) ? 
+                    {/* { (nft.uri) && isValidHttpUrl(nft.uri) && (getCorrectURL(nft)?.url) ? 
                             (getCorrectURL(nft)?.url && getCorrectURL(nft)?.video) ? 
                             <video onClick={(e) => addRemoveNFT(nft, e)} onLoadedData={() => setImageLoaded(true)} controls={false} playsInline={true} autoPlay={true} loop={true} 
                             src={getCorrectURL(nft)?.url} 
@@ -62,7 +63,8 @@ function NFTlistView() {
                                 <img onLoad={() => setImageLoaded(true)} src={brockenurl} alt='This NFT image uri is broken.' />
                                 <span className="brocken-url__msg">NFTs URL is broken</span>
                             </div>
-                        }
+                        } */}
+                    <ListedView nft={nft} key={`nft-n-${index}`} />
                     <span className="name" onClick={(e) => addRemoveNFT(nft, e)}>{nft?.data?.name || nft?.name}</span>
                     <NFTdetails nftInf={nft}/>
                 </li>
