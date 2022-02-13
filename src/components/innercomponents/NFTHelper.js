@@ -1,7 +1,9 @@
 
 import { checkVideoFormat, checkImageFormat } from "../../wallet/oldHelper"
-import { isValidHttpUrl } from '../../wallet/helpers'
-
+// import { isValidHttpUrl } from '../../wallet/helpers'
+// import {fileTypeFromStream} from 'file-type';
+// import { fileTypeFromFile } from 'file-type';
+import got from 'got';
 
 export const getCorrectURL = nft => {
     // debugger
@@ -14,6 +16,12 @@ export const getCorrectURL = nft => {
 }
 
 
+const checkStream = async stream => {
+    debugger
+    // console.log("checkStream: ", await fileTypeFromStream(stream))
+}
+
+
 export const getUrl = nft => {
 
     let video
@@ -21,8 +29,9 @@ export const getUrl = nft => {
     const values = Object.values(nft)
     let valuesForCheck = []
     const supportedVideoFormats = [".mp4", ".ogg", ".webm"]
-    const supportedImageFormats = [".apng", ".avif", ".gif", ".jpeg", ".png", ".svg", ".webp"]
+    const supportedImageFormats = [".apng", ".avi", ".gif", ".jpeg", ".png", ".svg", ".webp"]
     let format
+    let stream
     values.forEach(item => {
         if(typeof item === "object"){
             const objValues = Object.values(item)
@@ -30,27 +39,37 @@ export const getUrl = nft => {
         }
         else valuesForCheck.push(item)
     });
+
     console.log("nft: ", nft)
     valuesForCheck.forEach((item, index) => {
         console.log("forEach: ", item, "index: ", index)
 
+        if(typeof item === 'string'){
+            stream = got.stream(item);
+            // checkStream(stream)
+        }
+
+
         if(item && typeof item === 'string'){
             format = item.slice(item.lastIndexOf(".")).length < 6 && item.slice(item.lastIndexOf(".")).length > 3 ? item.slice(item.lastIndexOf(".")) : undefined
+            console.log(`format: ${format}`)
         }
         if(typeof item === 'string' && item.includes('ipfs') && !item.includes('.json')){
+            console.log(index === 5 ? "five" : "")
             video = false
             url = item
-            // return { video: false, url: item }
         }
-        else if(format && supportedVideoFormats.some(n => n === format)){
+        else if(format && supportedVideoFormats.some(item => item === format)){
+            console.log(`${item} - supportedVideoFormats ${format}`)
+
             video = true
             url = item
-            // return { video: true, url: item }
         }
-        else if(format && supportedImageFormats.some(n => n === format && format.includes('http'))){
+        else if(format && supportedImageFormats.some(item => item === format)){
+            console.log(`${item} - supportedImageFormats ${format}`)
+
             video = false
             url = item
-            // return { video: false, url: item}
         }
     });
     return { video, url }
