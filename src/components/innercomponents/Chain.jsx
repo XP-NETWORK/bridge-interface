@@ -20,7 +20,7 @@ export default function Chain({
   const checkIfLive = (chain) => {
     // let c = chain === "GnosisChain" ? "xDai" : chain
     const nonce = CHAIN_INFO[chain]?.nonce;
-    console.log("nonce: ", nonce)
+    // console.log("nonce: ", nonce)
     if (validatorsInfo) {
       return validatorsInfo[nonce]?.bridge_alive;
     }
