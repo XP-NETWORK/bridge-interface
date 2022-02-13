@@ -11,22 +11,41 @@ import  "./NewNFT.css"
 
 import { isValidHttpUrl } from '../../wallet/helpers';
 import Checkmark from './Checkmark';
+import VideoOrImage from './VideoOrImage';
 
 export default function NFT({nft, index}) {
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const dispatch = useDispatch()
-    const [tryVideo , setTryVideo] = useState() // incase img url error try vid
+    const [tryVideo , setTryVideo] = useState()
+    // const [tryNexrUrl, setTryNextUrl] = useState() // incase img url error try vid
     const [brokenURI , setbrokenURI] = useState() // incase img url error try vid
     const isSelected = selectedNFTs.filter(n => n.native.tokenId === nft.native.tokenId && n.native.contract === nft.native.contract && n.native.chainId === nft.native.chainId)[0]
     const [imageLoaded, setImageLoaded]= useState(false);
     const HIDDEN = { visibility: "hidden"};
     const unclickable = { pointerEvents: "none" }
-    const {video, url } = getUrl(nft)
-    console.log(`NewNFT index: ${index} video: ${video}, url: ${url}`)
+    const { video, url, ipfsArr } = getUrl(nft)
+    const [urlIndex, setUrlIndex] = useState(1)
+    console.log("urlIndex: ", urlIndex)
+    // console.log(`NewNFT index: ${index} video: ${video}, url: ${url}, ipfsArr: ${ipfsArr}`)
+
 
     // console.log("video: ", video, "url: ", url, "index: ", index)
 
+    const handleError = e =>{
+        console.log("handleError", e.target.alt)
+        if(e.target.alt === "image"){
+            setTryVideo(true)
+        }
+        // if(urlIndex < ipfsArr.length){
+        //     setUrlIndex(urlIndex + 1)
+        //     setTryVideo('')
+        // }
+        // setUrlIndex(urlIndex + 1)
+        // setTryVideo('')
+    }
+
     function addRemoveNFT (chosen){
+
         if(!isSelected){
             dispatch(setSelectedNFTList(chosen))
         }
@@ -44,11 +63,11 @@ export default function NFT({nft, index}) {
                     <div className="image__wrapper">
                         { url && nft.uri && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url ||nft.image_url || nft.uri || nft.data?.image_url) ? 
                             (video && url) ? 
-                            <video onLoadedData={() => setImageLoaded(true)} controls={false} playsInline={true} autoPlay={true} loop={true} 
-                            src={url} 
-                            /> 
+                            <video onLoadedData={() => setImageLoaded(true)} controls={false} playsInline={true} autoPlay={true} loop={true} src={setupURI(url)} /> 
                             :
-                            <img onError={() => tryVideo ? setbrokenURI(true) : setTryVideo(true)} onLoad={() => setImageLoaded(true)} alt="NFT image" src={setupURI(url)} /> 
+                            <img onLoad={() => setImageLoaded(true)} alt="NFT image" src={setupURI(url)} /> 
+                            :ipfsArr.length ? 
+                            <VideoOrImage urls={ipfsArr} />
                             :
                             <div className="brocken-url">
                                 <img onLoad={() => setImageLoaded(true)} src={brockenurl} alt='This NFT image uri is broken.' />
