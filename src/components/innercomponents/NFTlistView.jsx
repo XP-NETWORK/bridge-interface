@@ -64,7 +64,7 @@ function NFTlistView() {
                                 <span className="brocken-url__msg">NFTs URL is broken</span>
                             </div>
                         } */}
-                    <ListedView nft={nft} key={`nft-n-${index}`} />
+                    <ListedView addRemoveNFT={addRemoveNFT} nft={nft} key={`nft-n-${index}`} />
                     <span className="name" onClick={(e) => addRemoveNFT(nft, e)}>{nft?.data?.name || nft?.name}</span>
                     <NFTdetails nftInf={nft}/>
                 </li>
