@@ -10,6 +10,11 @@
   position: relative;
 }
 
+.listed__view img, .listed__view video{
+  width: 30px;
+  margin-right: 5px;
+  border-radius: 4px;
+}
 
 .nft-box__container {
     margin-top: 1px;
