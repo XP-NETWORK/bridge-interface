@@ -1,7 +1,6 @@
 import React, { useState} from 'react'
 import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 import Departure from '../assets/img/nftSelect/departure.svg';
-import departure from '../assets/img/nftSelect/binance.png';
 import Destination from '../assets/img/nftSelect/destination.svg';
 import LineArrow from '../assets/img/nftSelect/Line.svg';
 import ChainArrow from "../assets/img/icons/Swap.svg";
