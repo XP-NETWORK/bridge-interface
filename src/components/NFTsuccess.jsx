@@ -98,7 +98,7 @@ function NFTsuccess() {
 
     const getTX = () => {
         let ntx
-        // debugger
+       
         // const tx = txnHashArr && txnHashArr.length > 0 ? typeof txnHashArr[currentTX] === 'object' ? txnHashArr[currentTX].hash.toString() : txnHashArr[currentTX] : ''
         
         if( txnHashArr && txnHashArr.length > 0 ){
