@@ -25,24 +25,12 @@ export default function NFT({nft, index}) {
     const unclickable = { pointerEvents: "none" }
     const { video, url, ipfsArr } = getUrl(nft)
     const [urlIndex, setUrlIndex] = useState(1)
-    console.log("urlIndex: ", urlIndex)
+    // console.log("urlIndex: ", urlIndex)
     // console.log(`NewNFT index: ${index} video: ${video}, url: ${url}, ipfsArr: ${ipfsArr}`)
 
 
     // console.log("video: ", video, "url: ", url, "index: ", index)
 
-    const handleError = e =>{
-        console.log("handleError", e.target.alt)
-        if(e.target.alt === "image"){
-            setTryVideo(true)
-        }
-        // if(urlIndex < ipfsArr.length){
-        //     setUrlIndex(urlIndex + 1)
-        //     setTryVideo('')
-        // }
-        // setUrlIndex(urlIndex + 1)
-        // setTryVideo('')
-    }
 
     function addRemoveNFT (chosen){
 
@@ -61,7 +49,7 @@ export default function NFT({nft, index}) {
             <div style={ !imageLoaded && url ? HIDDEN : {}} className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
                 <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
                     <div className="image__wrapper">
-                        { url && nft.uri && isValidHttpUrl(nft.uri) && (nft.image || nft.animation_url ||nft.image_url || nft.uri || nft.data?.image_url) ? 
+                        { url && nft.uri && isValidHttpUrl(nft.uri) ? 
                             (video && url) ? 
                             <video onLoadedData={() => setImageLoaded(true)} controls={false} playsInline={true} autoPlay={true} loop={true} src={setupURI(url)} /> 
                             :

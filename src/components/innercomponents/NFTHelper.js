@@ -38,10 +38,9 @@ export const getUrl = nft => {
     let valuesForCheck = []
     let strings = []
     let urls = []
-    let format
     let ipfsArr = []
 
-    console.log(values);
+    // console.log(values);
     values.forEach(item => {
         if(item && typeof item === "object"){
             // debugger
@@ -60,7 +59,7 @@ export const getUrl = nft => {
         else valuesForCheck.push(item)
     });
 
-    console.log("valuesForCheck: ", valuesForCheck)
+    // console.log("valuesForCheck: ", valuesForCheck)
     valuesForCheck.forEach(item => {
         if(typeof item === 'string' && item.length > 1){
             strings.push(item)
@@ -100,52 +99,7 @@ export const getUrl = nft => {
     else{
         ipfsArr = [...urls]
     }
-
-    // urls.forEach(item => {
-    //     debugger
-    //     const f = item.slice(item.lastIndexOf(".")).length < 6 && item.slice(item.lastIndexOf(".")).length > 3 ? item.slice(item.lastIndexOf(".")) : undefined
-    //     if(f && supportedVideoFormats.some(item => item === f)){
-    //         video = true
-    //         url = item
-    //         ipfsArr = undefined
-    //     }
-    //     else if(f && supportedImageFormats.some(item => item === f)){
-    //         video = false
-    //         url = item
-    //         ipfsArr = undefined
-    //     }
-    //     else if(item.includes("ipfs") && !item.includes(".json")){
-    //         ipfsArr.push(item)
-    //     }
-    //     return { video, url, ipfsArr }
-    // });
-
-    // console.log("nft: ", nft)
-    // urls.forEach((item, index) => {
-    // // console.log("forEach: ", item, "index: ", index)
-
-    //     if(item && typeof item === 'string'){
-    //         format = item.slice(item.lastIndexOf(".")).length < 6 && item.slice(item.lastIndexOf(".")).length > 3 ? item.slice(item.lastIndexOf(".")) : undefined
-    //         // console.log(`format: ${format}`)
-    //     }
-    //     if(typeof item === 'string' && item.includes('ipfs') && !item.includes('.json')){
-    //         // console.log(index === 5 ? "five" : "")
-    //         video = false
-    //         url = item
-    //     }
-    //     else if(format && supportedVideoFormats.some(item => item === format)){
-    //         // console.log(`${item} - supportedVideoFormats ${format}`)
-
-    //         video = true
-    //         url = item
-    //     }
-    //     else if(format && supportedImageFormats.some(item => item === format)){
-    //         // console.log(`${item} - supportedImageFormats ${format}`)
-
-    //         video = false
-    //         url = item
-    //     }
-    // });
+    
     return { video, url, ipfsArr }
 }
 

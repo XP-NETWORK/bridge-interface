@@ -8,11 +8,15 @@ import INF from '../assets/img/icons/Inf.svg';
 import { setupURI } from '../wallet/oldHelper';
 import { isValidHttpUrl } from '../wallet/helpers'
 import { chainsConfig } from './values';
+import { getUrl } from './innercomponents/NFTHelper';
+import VideoOrImage from './innercomponents/VideoOrImage';
 // import { getCorrectURL } from "../components/innercomponents/"
 
 function NFTdetails({ nftInf }){
     const { name, description, image, attributes, uri, native, animation_url, image_url, data } = nftInf
-    
+    const { video, url, ipfsArr } = getUrl(nftInf)
+    // console.log(`NFTdetails video: ${video} url: ${url}`)
+    console.log(ipfsArr)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -38,16 +42,14 @@ function NFTdetails({ nftInf }){
                 <Modal.Body className="modalBody">
                     <div className="nftDetailBox">
                         <div className="nftDetImg">
-                        { (uri) && isValidHttpUrl(uri) && ((image && checkImageFormat(image)) || (animation_url && checkImageFormat(animation_url))|| (image_url && checkImageFormat(image_url)) || (uri && checkImageFormat(uri))) ? 
-                            (animation_url && checkVideoFormat(animation_url)) ? 
-                            <video onLoadedData={() => setImageLoaded(true)} controls={false} playsInline={true} autoPlay={true} loop={true} 
-                            src={tryVideo ? setupURI(image) : setupURI(animation_url)} 
-                            /> 
-                            : (!checkVideoFormat(animation_url) && animation_url) ?
-                            <img onError={() => setTryVideo(true)} onLoad={() => setImageLoaded(true)} alt="NFTss" src={setupURI(checkImageFormat(animation_url) ? animation_url : data?.image || image || image_url || uri)} /> 
+                        { url && uri && isValidHttpUrl(uri) ? 
+                            (video && url) ? 
+                            <video onLoadedData={() => setImageLoaded(true)} controls={false} playsInline={true} autoPlay={true} loop={true} src={setupURI(url)} /> 
                             :
-                            <img onLoad={() => setImageLoaded(true)} alt="NFTtt" src={setupURI(data?.image || image || image_url || uri)} /> 
-                            : 
+                            <img onLoad={() => setImageLoaded(true)} alt="NFTss" src={setupURI(url)} /> 
+                            :ipfsArr.length ? 
+                            <VideoOrImage urls={ipfsArr}/>
+                            :
                             <div className="brocken-url">
                                 <img onLoad={() => setImageLoaded(true)} src={brockenurl} alt='This NFT image uri is broken.' />
                                 <span className="brocken-url__msg">NFTs URL<br/> is broken</span>
