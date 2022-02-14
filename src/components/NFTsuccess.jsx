@@ -13,13 +13,15 @@ import moment from 'moment';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { setupURI } from '../wallet/oldHelper';
 // import CopyIcons from './innercomponents/CopyIcons';
-import { setClaimablesAlgorand, setNFTS } from '../wallet/helpers';
+import { isValidHttpUrl, setClaimablesAlgorand, setNFTS } from '../wallet/helpers';
 import { claimAlgorandPopup, connectAlgorandWalletClaim, setTxnHash, cleanTxnHashArr, removeFromSelectedNFTList  } from '../store/reducers/generalSlice';
 import { useDispatch } from 'react-redux';
 import ConnectAlgorand from './ConnectAlgorand';
 import ClaimAlgorandNFT from './ClaimAlgorandNFT';
 import "./SuccessNFT.css"
-import { getCorrectURL } from './innercomponents/NFTHelper';
+import { getCorrectURL, getUrl } from './innercomponents/NFTHelper';
+import VideoOrImage from './innercomponents/VideoOrImage';
+import brockenurl from "../assets/img/brockenurl.png"
 
 
 function NFTsuccess() {
@@ -91,6 +93,7 @@ function NFTsuccess() {
 
     const toShow = () => {
         return txnHashArr?.length ? true : false
+        // return true
     }
 
     const getTX = () => {
@@ -194,7 +197,7 @@ function SuccessNFT({nft, from, index}) {
     const dispatch = useDispatch()
     const {to, algorandAccount} = useSelector(s => s.general)
     const tx = nft.txn ? typeof nft.txn === 'object' ? nft.txn.hash.toString() : nft.txn : ''
-    const {video, url } = getCorrectURL(nft)
+    const {video, url, ipfsArr } = getUrl(nft)
     const getTX = () => {
         if(nft.txn){
             if(typeof nft.txn === 'object'){
@@ -221,7 +224,19 @@ function SuccessNFT({nft, from, index}) {
     }
     return  (
         <li className="nftSelecItem">
-            {video ? <video autoPlay={true} muted={true} src={setupURI(url)} loop={true} /> : <img src={setupURI(url)} alt="NFT" />}
+            { url && nft.uri && isValidHttpUrl(nft.uri) ? 
+                (video && url) ? 
+                <video  controls={false} playsInline={true} autoPlay={true} loop={true} src={setupURI(url)} /> 
+                :
+                <img  alt="NFTss" src={setupURI(url)} /> 
+                :ipfsArr.length ? 
+                <VideoOrImage urls={ipfsArr}/>
+                :
+                <div className="brocken-url">
+                    <img  src={brockenurl} alt='This NFT image uri is broken.' />
+                    <span className="brocken-url__msg">NFTs URL<br/> is broken</span>
+                </div>
+            }
             <span className="nftSelected__name">{nft.name}</span>
             <span className="bluTextBtn">
                 <a href={`${chainsConfig[from.key].tx + getTX()}`} target="_blank">View Txn</a>
