@@ -12,7 +12,7 @@ export default function ListedView({ nft, addRemoveNFT }) {
     console.log(`ListedView video: ${video} url: ${url}`)
 
   return (
-    <div onClick={e => addRemoveNFT(nft, e)} className="listed__view">
+    <div onClick={e => addRemoveNFT ? addRemoveNFT(nft, e) : ''} className="listed__view">
         { url && nft.uri && isValidHttpUrl(nft.uri) ? 
               (video && url) ? 
               <video  controls={false} playsInline={true} autoPlay={true} loop={true} src={setupURI(url)} /> 
