@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import brockenurl from "../../assets/img/brockenurl.png"
 import { isValidHttpUrl } from '../../wallet/helpers';
 import { setupURI, checkVideoFormat, checkImageFormat } from '../../wallet/oldHelper';
-import { getCorrectURL } from "./NFTHelper.js"
+
 import ListedView from '../nftImageViews/ListedView';
 
 
@@ -42,19 +42,6 @@ function SelectedNFT() {
                     
                     <li key={`selected-nft-${index}`} onClick={() => handleRemove(nft)} className="nftSelecItem">
                         {/* <img src={nft.image ? nft.image : brockenurl} alt="NFT" /> */}
-                        {/* { nft.uri && isValidHttpUrl(nft.uri) && ((nft.image && checkImageFormat(nft.image)) || (nft.animation_url && checkImageFormat(nft.animation_url)) || (nft.image_url && checkImageFormat(nft.image_url)) || (nft.uri && checkImageFormat(nft.uri))) ? 
-                            (getCorrectURL(nft)?.url && getCorrectURL(nft)?.video) ? 
-                            <video src={getCorrectURL(nft)?.url} /> 
-                            : (getCorrectURL(nft)?.url && !getCorrectURL(nft)?.video) ?
-                            <img alt="NFT" src={setupURI(getCorrectURL(nft)?.url)} /> 
-                            :
-                            <img alt="NFT" src={setupURI(getCorrectURL(nft)?.url)} />
-                            :
-                            <div className="brocken-url-selected">
-                                <img src={brockenurl} alt='This NFT image uri is broken.' />
-                                
-                            </div>
-                        } */}
                         <ListedView nft={nft} key={`nft-n-${index}`} />
                         <span className="nftSelecItem__name">{nft.data?.name || nft.name}</span>
                         <span className="Close"><img  alt="" src={Close} /></span>

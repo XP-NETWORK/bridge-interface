@@ -1,25 +1,6 @@
 
-import axios from 'axios';
-// import fs from "fs'"
-import { checkVideoFormat, checkImageFormat } from "../../wallet/oldHelper"
-// import { isValidHttpUrl } from '../../wallet/helpers'
-// import {fileTypeFromStream} from 'file-type';
-// import { fileTypeFromFile } from 'file-type';
-// import got from 'got';
-// const bt = require('buffer-type');
-// const fs = require('fs');
 const supportedVideoFormats = [".mp4", ".ogg", ".webm", ".avi"]
 const supportedImageFormats = [".apng", ".gif", ".jpg", ".jpeg", ".png", ".svg", ".webp"]
-
-export const getCorrectURL = nft => {
-    // debugger
-    const { image, uri, animation_url, image_url, data } = nft
-
-    if(animation_url && checkVideoFormat(animation_url)) return {video: true, url: animation_url}
-    else if(animation_url && !checkVideoFormat(animation_url) && !checkImageFormat(animation_url)) return {video: false, url: data?.image || image || image_url || uri}
-    else if(animation_url && !checkVideoFormat(animation_url)) return {video: false, url: animation_url}
-    else return {video: false, url: data?.image || image || image_url || uri }
-}
 
 const ifVideo = item => {
     const f = item.slice(item.lastIndexOf(".")).length < 6 && item.slice(item.lastIndexOf(".")).length > 3 ? item.slice(item.lastIndexOf(".")) : undefined
@@ -61,10 +42,10 @@ export const getUrl = nft => {
 
     // console.log("valuesForCheck: ", valuesForCheck)
     valuesForCheck.forEach(item => {
-        if(typeof item === 'string' && item.length > 1){
+        if(item && typeof item === 'string' && item.length > 1){
             strings.push(item)
         }
-        else if(typeof item === "object"){
+        else if(item && typeof item === "object"){
             // debugger
             const vals = Object.values(item)
             vals.forEach(item => {

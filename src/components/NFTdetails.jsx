@@ -10,13 +10,12 @@ import { isValidHttpUrl } from '../wallet/helpers'
 import { chainsConfig } from './values';
 import { getUrl } from './innercomponents/NFTHelper';
 import VideoOrImage from './innercomponents/VideoOrImage';
-// import { getCorrectURL } from "../components/innercomponents/"
 
 function NFTdetails({ nftInf }){
     const { name, description, image, attributes, uri, native, animation_url, image_url, data } = nftInf
     const { video, url, ipfsArr } = getUrl(nftInf)
     // console.log(`NFTdetails video: ${video} url: ${url}`)
-    console.log(ipfsArr)
+
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);

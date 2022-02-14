@@ -19,7 +19,7 @@ import { useDispatch } from 'react-redux';
 import ConnectAlgorand from './ConnectAlgorand';
 import ClaimAlgorandNFT from './ClaimAlgorandNFT';
 import "./SuccessNFT.css"
-import { getCorrectURL, getUrl } from './innercomponents/NFTHelper';
+import { getUrl } from './innercomponents/NFTHelper';
 import VideoOrImage from './innercomponents/VideoOrImage';
 import brockenurl from "../assets/img/brockenurl.png"
 

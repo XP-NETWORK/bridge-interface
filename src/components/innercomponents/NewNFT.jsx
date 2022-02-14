@@ -6,7 +6,7 @@ import CheckGreen from '../../assets/img/icons/check_green.svg';
 import NFTdetails from '../NFTdetails';
 import { useSelector } from 'react-redux';
 import { setupURI, checkVideoFormat, checkImageFormat } from '../../wallet/oldHelper';
-import { getCorrectURL, getUrl } from "./NFTHelper.js"
+import { getUrl } from "./NFTHelper.js"
 import  "./NewNFT.css"
 
 import { isValidHttpUrl } from '../../wallet/helpers';

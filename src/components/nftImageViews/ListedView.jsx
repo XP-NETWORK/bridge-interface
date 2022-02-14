@@ -9,7 +9,6 @@ import VideoOrImage from "../innercomponents/VideoOrImage"
 export default function ListedView({ nft, addRemoveNFT }) {
 
     const { video, url, ipfsArr } = getUrl(nft)
-    console.log(`ListedView video: ${video} url: ${url}`)
 
   return (
     <div onClick={e => addRemoveNFT ? addRemoveNFT(nft, e) : ''} className="listed__view">

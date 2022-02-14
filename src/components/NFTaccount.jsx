@@ -186,7 +186,7 @@ function NFTaccount() {
     }
 
     const sendEach = async (nft, index) => {
-        // debugger
+        debugger
         const signer = await getSigner()
         let factory 
         let toChain 

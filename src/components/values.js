@@ -328,6 +328,7 @@ export const CHAIN_INFO = {
       native: coins[2],
       chainId: 56,
       rpcUrl: "https://data-seed-prebsc-1-s1.binance.org:8545",
+    //   rpcUrl: "https://bsc-dataseed.binance.org",
       decimals: 1e18,
       contract: "0x12889E870A48Be2A04564e74f66fC91D439Da03e",
       blockExplorerUrls: "https://testnet.bscscan.com/tx",
