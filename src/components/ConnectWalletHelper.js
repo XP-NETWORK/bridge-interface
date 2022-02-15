@@ -29,9 +29,23 @@ export const connectMetaMask = async activate => {
       }
 }
 
-export const connectAlgoWallet = async () => {
-      
-    if (!algoConnector.connected) {
-        algoConnector.createSession()   
-    }
+  export const connectAlgoSigner =async () => {
+    if (typeof window.AlgoSigner !== undefined) {
+        try {
+          await window.AlgoSigner.connect()
+          console.log("Algo: ", window.AlgoSigner);
+          const algo = await window.AlgoSigner.accounts({
+            ledger: 'MainNet'
+          });
+          const { address } = algo[0]
+          
+          store.dispatch(setAlgoSigner(true))
+          store.dispatch(setAlgorandAccount(address))
+        } catch (e) {
+          console.error(e);
+      return JSON.stringify(e, null, 2);
+        }
+      } else {
+        console.log("Algo Signer not installed.");
+      }
   }
