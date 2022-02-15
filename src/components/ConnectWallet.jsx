@@ -34,6 +34,7 @@ import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { DAppClient } from "@airgap/beacon-sdk";
 import { connectMetaMask, connectAlgoSigner } from "./ConnectWalletHelper"
+import Wallet from './Wallet/Wallet';
 
 
 
@@ -296,6 +297,7 @@ function ConnectWallet() {
       }
     })
 
+    //! onAlgoSigner connection  < Removed to ConnectWalletHelper >.
     // const onAlgoSigner = useCallback(async () => {
     //   if (typeof window.AlgoSigner !== undefined) {
     //     try {
@@ -426,13 +428,15 @@ function ConnectWallet() {
                         <div className="walletListBox">
                             <ul className="walletList scrollSty">
                               {/* !!! style={ from ? from.type === "EVM" && from.text !== "Fuse" ? {} : OFF : ''} */}
-                                <li onClick={() => connectMetaMask(activate)} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li>
+                                {/* <li onClick={() => connectMetaMask(activate)} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li> */}
+                                <Wallet active={from?.type === "EVM"} icon={MetaMask} connection={() => connectMetaMask(activate)}/>
                                 <li onClick={() => onWalletConnect()} style={  OFF } className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
                                 <li onClick={() => onTrustWallet()} style={(getMobOps() && window.innerWidth <= 600 && isEVM()) || (window.ethereum && window.innerWidth <= 600) ? {} : OFF } className="wllListItem"><img src={TrustWallet} alt="WalletConnect Icon" /> Trust Wallet</li>
                                 <li onClick={onMyAlgo} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={MyAlgoBlue} alt="" /> MyAlgo</li>
                                 <li onClick={connectAlgoSigner} style={ from ? (from.type === "Algorand" && window.innerWidth > 600 ) ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo Signer</li>
                                 <li onClick={() => onAlgoWallet()} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li>
-                                <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
+                                {/* <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li> */}
+                                <Wallet active={from?.type === 'Tron'} icon={Tron} connection={connectTronlink} name={"TronKink"} />
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
                                 <li onClick={onBeacon} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem beacon"><img src={BeaconW} alt="Kukai Icon" /> Beacon</li>
