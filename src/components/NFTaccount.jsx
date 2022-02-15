@@ -15,15 +15,14 @@ import { setBigNumFees, setError,  setNFTsToWhitelist, setTxnHash, setTransferLo
 import { useDispatch } from 'react-redux';
 import { getFactory,  handleChainFactory,  setClaimablesAlgorand, setNFTS } from "../wallet/helpers"
 import Comment from "../components/innercomponents/Comment"
-import{  getOldFactory } from '../wallet/oldHelper'
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
-import {chainsConfig} from './values'
+import {chainsConfig, CHAIN_INFO} from './values'
 import { algoConnector } from "../wallet/connectors"
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { useWeb3React } from '@web3-react/core';
 import { TempleWallet } from "@temple-wallet/dapp";
-import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
+
 
 
 
@@ -188,6 +187,9 @@ function NFTaccount() {
     const sendEach = async (nft, index) => {
         debugger
         const signer = await getSigner()
+        const nonce = CHAIN_INFO[to].nonce
+        const nftSmartContract = nft.native.contract
+        // let mintWidth 
         let factory 
         let toChain 
         let fromChain
@@ -195,6 +197,8 @@ function NFTaccount() {
         try {  
             if(from === "Tron"){
                 factory = await getFactory()
+                const contract = nftSmartContract.toLowerCase()
+                const mintWidth = await factory.getVerifiedContracts(contract, nonce)
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
                 result = await factory.transferNft(
@@ -203,7 +207,8 @@ function NFTaccount() {
                     nft,   
                     undefined,   
                     receiver,  
-                    bigNumberFees
+                    bigNumberFees,
+                    mintWidth?.length ? mintWidth[0] : undefined
                 )
                 dispatch(dispatch(setTransferLoaderModal(false)))
                 setLoading(false)
@@ -211,6 +216,9 @@ function NFTaccount() {
             }
             else{
                 factory = await getFactory()
+                const contract = nftSmartContract.toLowerCase()
+                const mintWidth = await factory.getVerifiedContracts(contract, nonce)
+                console.log("mintWidth: ", mintWidth, )
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
                 result = await factory.transferNft(
@@ -219,7 +227,8 @@ function NFTaccount() {
                     nft,      
                     signer,   
                     receiver,  
-                    bigNumberFees
+                    bigNumberFees,
+                    mintWidth?.length ? mintWidth[0] : undefined
                 )
                 dispatch(dispatch(setTransferLoaderModal(false)))
                 setLoading(false)

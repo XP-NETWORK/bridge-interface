@@ -16428,9 +16428,9 @@ xmlhttprequest-ssl@~2.0.0:
   resolved "https://registry.yarnpkg.com/xmlhttprequest-ssl/-/xmlhttprequest-ssl-2.0.0.tgz#91360c86b914e67f44dce769180027c0da618c67"
   integrity sha512-QKxVRxiRACQcVuQEYFsI1hhkrMlrXHPegbbd1yn9UHOmRxY+si12nQYzri3vbzt8VdTTRviqcKxcyllFas5z2A==
 
-"xp.network@git+https://github.com/XP-NETWORK/xpjs#bleeding-edge":
+"xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "0.1.0"
-  resolved "git+https://github.com/XP-NETWORK/xpjs#d78d76fb3d52edd8c6d0273a3e3097c035192933"
+  resolved "git+https://github.com/xp-network/xpjs#a5b5ddcc54d2461467befc052ec08b07b8bcf7c7"
   dependencies:
     "@elrondnetwork/erdjs" "^8.0.1-alpha.8"
     "@json-rpc-tools/utils" "^1.7.6"
@@ -16448,11 +16448,12 @@ xmlhttprequest-ssl@~2.0.0:
     socket.io-client "^4.1.3"
     tronstation "^1.0.1"
     tronweb "^4.0.0"
-    xpnet-web3-contracts "git+https://github.com/xp-network/XP.network-HECO-Migration#dist-erc1155"
+    xpnet-web3-contracts "git+https://github.com/xp-network/XP.network-HECO-Migration#c351870fb44fede7c98f6fae00e408b86a39f5a3"
 
-"xpnet-web3-contracts@git+https://github.com/xp-network/XP.network-HECO-Migration#dist-erc1155":
+"xpnet-web3-contracts@git+https://github.com/xp-network/XP.network-HECO-Migration#c351870fb44fede7c98f6fae00e408b86a39f5a3", "xpnet-web3-contracts@git+https://github.com/xp-network/XP.network-HECO-Migration#dist-erc1155":
   version "0.1.0"
-  resolved "git+https://github.com/xp-network/XP.network-HECO-Migration#c96891f1f007f0b6dfa87f262073bab37838fce2"
+  uid c351870fb44fede7c98f6fae00e408b86a39f5a3
+  resolved "git+https://github.com/xp-network/XP.network-HECO-Migration#c351870fb44fede7c98f6fae00e408b86a39f5a3"
   dependencies:
     ethers "^5.5.4"
 

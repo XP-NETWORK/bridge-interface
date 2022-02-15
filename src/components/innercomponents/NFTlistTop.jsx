@@ -59,7 +59,7 @@ function NFTlistTop() {
                 <span className='yourNft__title'>Your NFTs on </span>
                 <div className='yourNft__chain'>
                     <span>
-                        <img style={{width: "30px"}} src={from.image.src} alt="NFT Name" /> {from.key}
+                        <img style={{width: "30px"}} src={from.image.src} alt="NFT Name" /> {from.key === 'xDai' ? 'Gnosis Chain' : from.key}
                     </span> 
                     <span style={refreshStyle} onClick={refresh}>
                         <img className="refreshnfts" src={Refresh} />
@@ -79,7 +79,7 @@ function NFTlistTop() {
                 </Modal.Body>
             </Modal>
             <div className="yourNft desktopOnly">
-                Your NFTs on <span><img style={{width: "29px"}} src={from.image.src} alt="NFT Name" /> {from.key}</span> 
+                Your NFTs on <span><img style={{width: "29px"}} src={from.image.src} alt="NFT Name" /> {from.key === 'xDai' ? 'Gnosis Chain' : from.key}</span> 
                 <span style={refreshStyle} onClick={refresh}><img className="refreshnfts" src={Refresh} /></span>
             </div>
             <div className="mobileOnly seleNftMob">
