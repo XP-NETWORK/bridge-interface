@@ -16,6 +16,10 @@
   border-radius: 4px;
 }
 
+.listed__view{
+  display: flex;
+}
+
 .nft-box__container {
     margin-top: 1px;
     width: 224px;

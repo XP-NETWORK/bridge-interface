@@ -110,7 +110,6 @@ h3 {
   text-align: right;
   color: #f4f3f9;
   opacity: 0.9;
-  /* max-width: fit-content; */
 }
 
 .navMenu.navbar-nav .nav-link.active,
@@ -130,7 +129,6 @@ div#root {
 
 div#root:after {
   content: "";
-  /* background-image: url("./assets/img/body_art.svg"); */
   background-size: contain;
   background-repeat: no-repeat;
   background-position: left 10px;
@@ -155,7 +153,6 @@ footer {
   flex-wrap: wrap;
   padding: 8px 45px 25px 45px;
   border: 1px solid #292f3f;
-  /* margin-top: 250px; */
 }
 
 ul.socialLInks {

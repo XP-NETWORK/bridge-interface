@@ -41,7 +41,6 @@ function SelectedNFT() {
                 { selectedNFTs ? selectedNFTs.map( (nft, index) => 
                     
                     <li key={`selected-nft-${index}`} onClick={() => handleRemove(nft)} className="nftSelecItem">
-                        {/* <img src={nft.image ? nft.image : brockenurl} alt="NFT" /> */}
                         <ListedView nft={nft} key={`nft-n-${index}`} />
                         <span className="nftSelecItem__name">{nft.data?.name || nft.name}</span>
                         <span className="Close"><img  alt="" src={Close} /></span>

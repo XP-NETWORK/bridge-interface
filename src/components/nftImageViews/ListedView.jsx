@@ -5,6 +5,8 @@ import {  getUrl, NFTHelper } from "../../components/innercomponents/NFTHelper"
 import { isValidHttpUrl } from "../../wallet/helpers"
 import { setupURI } from "../../wallet/oldHelper"
 import VideoOrImage from "../innercomponents/VideoOrImage"
+import brockenurl from "../../assets/img/brockenurl.png"
+
 
 export default function ListedView({ nft, addRemoveNFT }) {
 
@@ -21,7 +23,7 @@ export default function ListedView({ nft, addRemoveNFT }) {
               <VideoOrImage urls={ipfsArr} />
               :
               <div className="brocken-url">
-                  <img alt='This NFT image uri is broken.' />
+                  <img src={brockenurl} alt='This NFT image uri is broken.' />
                   <span className="brocken-url__msg">NFTs URL<br/> is broken</span>
               </div>
         }  
