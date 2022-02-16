@@ -150,7 +150,7 @@ export const chains = [
         order: 1,
         image: { avatar: true, src: Velas },
         newChain: true,
-        maintenance: true
+        maintenance: false
     },
     {
         type: "Tezos",
