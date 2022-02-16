@@ -383,7 +383,6 @@ function ConnectWallet() {
         if(from){
             dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
         }
-        // debugger
         if((metaMask && correct)
         ||
         (tronLink && correct)

@@ -201,7 +201,6 @@ export const chainsConfig = {
     Heco: {
         type: EVM,
         img: Heco,
-        // chainData: ChainData.Heco,
         Chain: Chain.HECO,
     },
     Tron: {
@@ -211,7 +210,6 @@ export const chainsConfig = {
         img: Tron,
         rpc: 'https://api.trongrid.io/',
         tx: 'https://tronscan.org/#/transaction/',
-        // chainData: ChainData.Tron,
         Chain: Chain.TRON
     },
     Ethereum: {
@@ -221,7 +219,6 @@ export const chainsConfig = {
         rpc: 'https://rough-dawn-meadow.quiknode.pro/2629bf63052353892b121c240f57f6b19a74ac8c/',
         tx: 'https://etherscan.io/tx/',
         token: 'ETH',
-        // chainData: ChainData.Ethereum,
         Chain: Chain.ETHEREUM,
     },
     BSC: {
@@ -231,7 +228,6 @@ export const chainsConfig = {
         chainId: 56,
         tx: 'https://bscscan.com/tx/',
         rpc: 'https://wandering-shy-leaf.bsc.quiknode.pro/ad8d20d7895c15e9afc03ff011dc3418152b07f7/',
-        // chainData: ChainData.BSC,
         Chain: Chain.BSC,
     }, 
     Polygon: {
@@ -340,6 +336,10 @@ export const coins = [
     "TEZOS", //14
     "IOTX" //15
   ];
+
+  export const TESTNET_CHAIN_INFO = {
+      
+  }
 
 export const CHAIN_INFO = {
     Elrond: { 
