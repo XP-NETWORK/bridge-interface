@@ -28,6 +28,7 @@ export const chains = [
         value: 'Ethereum',
         order: 4,
         image: { avatar: true, src: Etherium },
+        maintenance: false
     },
     {
         type: "EVM",
@@ -36,6 +37,7 @@ export const chains = [
         value: 'BSC',
         order: 5,
         image: { avatar: true, src: Binance },
+        maintenance: false
     },
     {
         type: "Tron",
@@ -44,6 +46,7 @@ export const chains = [
         value: 'Tron',
         order: 6,
         image: { avatar: true, src: Tron },
+        maintenance: true
     },
     {
         type: "Elrond",
@@ -52,6 +55,8 @@ export const chains = [
         value: ELROND,
         order: 7,
         image: { avatar: true, src: Elrond },
+        maintenance: false
+
     },
     {
         type: "EVM",
@@ -60,6 +65,7 @@ export const chains = [
         value: 'Polygon',
         order: 8,
         image: { avatar: true, src: Polygon },
+        maintenance: false
     },
     {
         type: "EVM",
@@ -68,6 +74,7 @@ export const chains = [
         value: 'Avalanche',
         order: 8,
         image: { avatar: true, src: Avalanche },
+        maintenance: false
     },
     {
         type: "EVM",
@@ -76,6 +83,7 @@ export const chains = [
         value: 'Fantom',
         order: 9,
         image: { avatar: true, src: Fantom },
+        maintenance: false
     },
     {
         type: "Algorand",
@@ -84,6 +92,7 @@ export const chains = [
         value: 'Algorand',
         order: 5,
         image: { avatar: true, src: Algorand },
+        maintenance: false
     },
     {
         type: "EVM",
@@ -92,6 +101,7 @@ export const chains = [
         value: 'xDai',
         order: 10,
         image: { avatar: true, src: Gnosis },
+        maintenance: false
     },
     {
         type: 'Solana',
@@ -101,6 +111,7 @@ export const chains = [
         order: 14,
         coming: true,
         image: { avatar: true, src: Solana },
+        maintenance: true
     },
     {
         type: 'Cardano',
@@ -110,6 +121,7 @@ export const chains = [
         order: 12,
         coming: true,
         image: { avatar: true, src: Cardano },
+        maintenance: true
     },
     {
         type: "EVM",
@@ -119,6 +131,7 @@ export const chains = [
         order: 13,
         coming: true,
         image: { avatar: true, src: Heco },
+        maintenance: true
     },
     {
         type: "EVM",
@@ -127,6 +140,7 @@ export const chains = [
         value: 'Fuse',
         order: 11,
         image: { avatar: true, src: Fuse },
+        maintenance: true
     },
     {
         type: "EVM",
@@ -135,7 +149,8 @@ export const chains = [
         value: "Velas",
         order: 1,
         image: { avatar: true, src: Velas },
-        newChain: true
+        newChain: true,
+        maintenance: true
     },
     {
         type: "Tezos",
@@ -145,7 +160,8 @@ export const chains = [
         order: 2,
         image: { avatar: true, src: Tezos},
         newChain: true,
-        coming: false
+        coming: false,
+        maintenance: true
     },
     {
         type: "EVM",
@@ -155,7 +171,8 @@ export const chains = [
         order: 3,
         image: { avatar: true, src: Iotex},
         newChain: true,
-        coming: false
+        coming: false,
+        maintenance: false
     }
 ]
 

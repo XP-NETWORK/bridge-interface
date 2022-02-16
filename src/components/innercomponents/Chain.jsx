@@ -13,7 +13,8 @@ export default function Chain({
   coming,
   bridge_live,
   newChain,
-  chainKey
+  chainKey,
+  maintenance
 }) {
   const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
   // console.log("key: ", chainKey)
@@ -32,7 +33,7 @@ export default function Chain({
   return (
     // style={ coming || !checkIfLive(text) ? OFF : {}}
     <li
-      style={coming || !checkIfLive(chainKey) ? OFF : {}}
+      style={maintenance || !checkIfLive(chainKey) ? OFF : {}}
       onClick={() => chainSelectHandler(filteredChain)}
       className="nftChainItem"
       data-chain={text}
@@ -40,11 +41,11 @@ export default function Chain({
       <img className="modalSelectOptionsImage" src={image.src} alt={text} />
       <div className="modalSelectOptionsText">
         {text === "xDai" ? "Gnosis Chain" : text}
-        {coming ? <div className="coming-chain">Coming soon</div> : ""}
+        {maintenance ? <div className="coming-chain">Maintenance</div> : ""}
         {!checkIfLive(chainKey) && !coming && (
           <div className="chain__off">Offline</div>
         )}
-        {newChain && <div className="new-chain">New</div>}
+        {/* {newChain && <div className="new-chain">New</div>} */}
       </div>
     </li>
   );
