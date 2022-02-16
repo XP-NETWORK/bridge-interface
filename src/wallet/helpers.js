@@ -140,6 +140,7 @@ export const getFactory = async () => {
   store.dispatch(setFactory(factory))
   return factory;
 };
+
 export const handleChainFactory = async (someChain) => {
   // debugger
   const factory = await getFactory();
@@ -248,8 +249,8 @@ export const setNFTS = async (w, from) => {
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from)
   const parsedNFTs = await parseNFTS(res)
-    store.dispatch(setBigLoader(false))
-    if(parsedNFTs.length){
+  store.dispatch(setBigLoader(false))
+  if(parsedNFTs.length){
       store.dispatch(setNFTList(parsedNFTs))
   }
   else {

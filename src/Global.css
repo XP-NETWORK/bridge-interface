@@ -180,12 +180,12 @@ ul.socialLInks li img:hover {
 }
 
 .powerBy {
-  margin-right: 98px;
+  /* margin-right: 98px; */
 }
 
 .powerBy img {
   display: block;
-  margin-left: 15px;
+  /* margin-left: 15px; */
 }
 
 .priPoli {
@@ -505,7 +505,7 @@ span.LineArrow img {
   font-size: 14px;
   z-index: 11;
   left: 50%;
-  bottom: 25vh;
+  bottom: 5vh;
   transform: translate(-50%);
   background: linear-gradient(291.33deg, #181b23 67.06%, #412194 183.04%);
   border-radius: 16px;
@@ -2253,7 +2253,7 @@ span.invalid img {
   /* max-height: 18px; */
   background: linear-gradient(103.87deg, rgba(8, 78, 215, 0.66) -74.95%, rgba(143, 55, 255, 0.66) 122.06%);
   padding:  4px;
-  left: 0;
+  right: 0;
   top: 32px;
   font-size: 12px;
   line-height: 10px;
@@ -2855,7 +2855,7 @@ span.transPend {
   }
 
   .aleartBox {
-    bottom: 10vh;
+    bottom: 2vh;
   }
 
   .account__box {

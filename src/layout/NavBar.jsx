@@ -42,7 +42,7 @@ function NavBar() {
                 onClick={() => dispatch(setReset())}  
                 className="navBrand">
                     <img src={Logo} alt="Xp Network"/>
-                    <span className={testnet ? "testnet" : "mainnet"}>{ testnet ? "TestNet" : "MeinNet"}</span>
+                    { testnet && <span className="testnet">TestNet</span>}
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
