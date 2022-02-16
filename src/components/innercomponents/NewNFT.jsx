@@ -8,16 +8,24 @@ import brockenurl from "../../assets/img/brockenurl.png";
 import CheckGreen from "../../assets/img/icons/check_green.svg";
 import NFTdetails from "../NFTdetails";
 import { useSelector } from "react-redux";
-import { setupURI } from "../../wallet/oldHelper";
+import {
+  setupURI,
+  checkVideoFormat,
+  checkImageFormat,
+} from "../../wallet/oldHelper";
+import { getUrl } from "./NFTHelper.js";
 import "./NewNFT.css";
 
 import { isValidHttpUrl } from "../../wallet/helpers";
 import Checkmark from "./Checkmark";
+import VideoOrImage from "./VideoOrImage";
 
 export default function NFT({ nft, index }) {
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
   const dispatch = useDispatch();
-  const [tryVideo, setTryVideo] = useState(); // incase img url error try vid
+  const [tryVideo, setTryVideo] = useState();
+  // const [tryNexrUrl, setTryNextUrl] = useState() // incase img url error try vid
+  const [brokenURI, setbrokenURI] = useState(); // incase img url error try vid
   const isSelected = selectedNFTs.filter(
     (n) =>
       n.native.tokenId === nft.native.tokenId &&
@@ -27,6 +35,12 @@ export default function NFT({ nft, index }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const HIDDEN = { visibility: "hidden" };
   const unclickable = { pointerEvents: "none" };
+  const { video, url, ipfsArr } = getUrl(nft);
+  const [urlIndex, setUrlIndex] = useState(1);
+  // console.log("urlIndex: ", urlIndex)
+  // console.log(`NewNFT index: ${index} video: ${video}, url: ${url}, ipfsArr: ${ipfsArr}`)
+
+  // console.log("video: ", video, "url: ", url, "index: ", index)
 
   function addRemoveNFT(chosen) {
     if (!isSelected) {
@@ -35,45 +49,42 @@ export default function NFT({ nft, index }) {
       dispatch(removeFromSelectedNFTList(nft));
     }
   }
+  // useEffect(() => { if(!checkImageFormat(url) && !url.includes("ipfs"))setbrokenURI(true)}, [])
 
   useEffect(() => {
     setTimeout(() => {
       setImageLoaded(true);
     }, 5000);
   }, [selectedNFTs]);
-  // console.log(imageLoaded, nft.image)
   return (
     <div className={`nft-box__wrapper ${!imageLoaded ? "preload-cont" : ""}`}>
       <div
-        style={!imageLoaded && (nft.image || nft.image_url) ? HIDDEN : {}}
+        style={!imageLoaded && url ? HIDDEN : {}}
         className={
           isSelected ? "nft-box__container--selected" : "nft-box__container"
         }
       >
         <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
           <div className="image__wrapper">
-            {nft.uri &&
-            isValidHttpUrl(nft.uri) &&
-            (nft.image || nft.animation_url || nft.image_url || nft.uri) ? (
-              nft.animation_url || tryVideo ? (
+            {url && nft.uri && isValidHttpUrl(nft.uri) ? (
+              video && url ? (
                 <video
                   onLoadedData={() => setImageLoaded(true)}
                   controls={false}
                   playsInline={true}
                   autoPlay={true}
                   loop={true}
-                  src={
-                    tryVideo ? setupURI(nft.image) : setupURI(nft.animation_url)
-                  }
+                  src={setupURI(url)}
                 />
               ) : (
                 <img
-                  onError={() => setTryVideo(true)}
                   onLoad={() => setImageLoaded(true)}
-                  alt="NFT"
-                  src={setupURI(nft.image || nft.image_url || nft.uri)}
+                  alt="NFT image"
+                  src={setupURI(url)}
                 />
               )
+            ) : ipfsArr.length ? (
+              <VideoOrImage urls={ipfsArr} />
             ) : (
               <div className="brocken-url">
                 <img
@@ -110,15 +121,7 @@ export default function NFT({ nft, index }) {
           <span className="nft-number">{nft.native.tokenId}</span>
         </div>
       </div>
-      {!imageLoaded && (
-        <div className="preload__container">
-          <div className="preload__image"></div>
-          <div className="preload__content">
-            <div className="preload__name"></div>
-            <div className="preload__number"></div>
-          </div>
-        </div>
-      )}
+      {/* }  */}
     </div>
   );
 }

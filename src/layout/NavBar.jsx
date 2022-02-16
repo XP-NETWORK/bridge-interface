@@ -14,6 +14,7 @@ function NavBar() {
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
     const tezosAccount = useSelector(state => state.general.tezosAccount)
+    const from = useSelector(state => state.general.from)
 
     const widget = useSelector(state => state.general.widget)
     const handleShow = () => dispatch(setAccountModal(true));
@@ -23,7 +24,12 @@ function NavBar() {
     useEffect(() => {}, [step])
 
     const setAddress = () => {
-        return elrondAccount || tronAccount || account || algorandAccount || tezosAccount
+            return  from?.type === "EVM" ? account 
+                : from?.type === "Tezos" ? tezosAccount 
+                : from?.type === "Algorand" ? algorandAccount 
+                : from?.type === "Elrond" ? elrondAccount 
+                : from?.type === "Tron" ? tronAccount 
+                : undefined
     }
 
     return (
@@ -35,12 +41,9 @@ function NavBar() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="navMenu">
-                            {/* <Nav.Link className="navMenu__link" target="_blank" href="https://xp.network/">About</Nav.Link> */}
                             <Nav.Link className="navMenu__link" target="_blank" href="https://xp.network/">Home</Nav.Link>
                             <Nav.Link className="navMenu__link" target="_blank" href="https://docs.xp.network/">Docs</Nav.Link>
-                            {/* <Nav.Link className="" target="_blank" href="https://xp.network/api/">Bridge API</Nav.Link> */}
                             <Nav.Link className="navMenu__link" target="_blank" href="https://stake.xp.network">Staking</Nav.Link>
-                            {/* <Nav.Link className="navMenu__link" target="_blank" href="https://blog.quigon.com">Blog</Nav.Link> */}
                             { setAddress() ? 
                                 <Nav.Link className="nftConnect navMenu__link" onClick={handleShow}>
                                     <div className="account__box">

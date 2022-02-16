@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown, Modal } from "react-bootstrap";
 import BSC from "../../assets/img/chain/Binance.svg";
-import { ReactComponent as Search } from "../../assets/img/icons/Search.svg";
-import { ReactComponent as ListView } from "../../assets/img/icons/ListView.svg";
+import Search from "../../assets/img/icons/Search.svg";
+import ListView from "../../assets/img/icons/ListView.svg";
 import GridView from "../../assets/img/icons/GridView.svg";
 import { useDispatch } from "react-redux";
 import {
@@ -16,9 +16,9 @@ import {
 import { useSelector } from "react-redux";
 import SelectDestination from "../SelectDestination";
 import NFTChainListBox from "../NFTChainListBox";
-import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
+import Close from "../../assets/img/icons/close.svg";
 import { setNFTS } from "../../wallet/helpers";
-import { ReactComponent as Refresh } from "../../assets/img/refresh.svg";
+import Refresh from "../../assets/img/refresh.svg";
 function NFTlistTop() {
   const dispatch = useDispatch();
   const nfts = useSelector((state) => state.general.NFTList);
@@ -51,7 +51,6 @@ function NFTlistTop() {
   const handleView = () => {
     dispatch(setNFTsListView());
   };
-
   const refresh = async () => {
     if (!bigLoader || !nfts) {
       let w;
@@ -60,9 +59,6 @@ function NFTlistTop() {
       else if (from.type === "Algorand") w = algorandAccount;
       else if (from.type === "Elrond") w = elrondAccount;
       else if (from.type === "Tron") w = tronWallet;
-      console.log(w);
-      // const w = algorandAccount || tronWallet || tezosAccount || account
-      // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
       await setNFTS(w, from.key);
     }
   };
@@ -84,10 +80,10 @@ function NFTlistTop() {
               src={from.image.src}
               alt="NFT Name"
             />{" "}
-            {from.key}
+            {from.key === "xDai" ? "Gnosis Chain" : from.key}
           </span>
           <span style={refreshStyle} onClick={refresh}>
-            <Refresh className="refreshnfts svgWidget" />
+            <img className="refreshnfts" src={Refresh} />
           </span>
         </div>
       </div>
@@ -101,7 +97,7 @@ function NFTlistTop() {
           <Modal.Header className="text-left">
             <Modal.Title>Change destination chain</Modal.Title>
             <span className="CloseModal" onClick={() => handleClose()}>
-              <Close className="svgWidget" />
+              <img src={Close} alt="" />
             </span>
           </Modal.Header>
           <Modal.Body>
@@ -116,10 +112,10 @@ function NFTlistTop() {
               src={from.image.src}
               alt="NFT Name"
             />{" "}
-            {from.key}
+            {from.key === "xDai" ? "Gnosis Chain" : from.key}
           </span>
           <span style={refreshStyle} onClick={refresh}>
-            <Refresh className="refreshnfts svgWidget" />
+            <img className="refreshnfts" src={Refresh} />
           </span>
         </div>
         <div className="mobileOnly seleNftMob">
@@ -129,7 +125,7 @@ function NFTlistTop() {
           <div className="searchNft desktopOnly">
             <Dropdown className="SearchDrop">
               <Dropdown.Toggle id="SearchDrop">
-                <Search className="svgWidget" />
+                <img src={Search} />
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <form action="#">
@@ -139,7 +135,9 @@ function NFTlistTop() {
                     placeholder="Search NFT"
                   />
                   {/* { search ?  <button type="button"><img src={Close} alt="" /></button> : <button type="button"><img src={Search} alt=""/></button>} */}
-                  <button type="button">{false && <img src={Search} />}</button>
+                  <button type="button">
+                    <img src={Search} />
+                  </button>
                 </form>
               </Dropdown.Menu>
             </Dropdown>
@@ -152,7 +150,7 @@ function NFTlistTop() {
               </span>
             ) : (
               <span>
-                <ListView className="svgWidget" />
+                <img src={ListView} />
               </span>
             )}
           </div>
@@ -183,7 +181,7 @@ function NFTlistTop() {
               onChange={(e) => handleSearch(e)}
             />
             <button type="button">
-              <Search className="svgWidget" />
+              <img src={Search} />
             </button>
           </form>
         </div>

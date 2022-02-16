@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
-import { ReactComponent as Close } from "../assets/img/icons/close.svg";
+import Close from "../assets/img/icons/close.svg";
 import MetaMask from "../assets/img/wallet/MetaMask.svg";
 import Tron from "../assets/img/wallet/TronLink.svg";
 import Elrond from "../assets/img/wallet/Elrond.svg";
@@ -14,6 +14,7 @@ import Kukai from "../assets/img/wallet/kukai.svg";
 import BeaconW from "../assets/img/wallet/BeaconWhite.svg";
 import BeaconB from "../assets/img/wallet/BeaconBlue.svg";
 import Temple from "../assets/img/wallet/Temple.svg";
+import AlgorandWallet from "../assets/img/wallet/AlgorandWallet.svg";
 import WalletConnect from "../assets/img/wallet/WalletConnect 3.svg";
 import NFTworng from "./NFTworng";
 import { useDispatch, useSelector } from "react-redux";
@@ -62,6 +63,8 @@ import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { DAppClient } from "@airgap/beacon-sdk";
+import { connectMetaMask, connectAlgoSigner } from "./ConnectWalletHelper";
+import Wallet from "./Wallet/Wallet";
 
 function ConnectWallet() {
   const dispatch = useDispatch();
@@ -88,7 +91,7 @@ function ConnectWallet() {
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
   const [qrCodeString, setQqrCodeString] = useState();
   const [strQR, setStrQr] = useState();
-  const { chainId, account, activate, library } = useWeb3React();
+  const { chainId, account, activate } = useWeb3React();
 
   const MyAlgo = useSelector((state) => state.general.MyAlgo);
   const modalError = useSelector((state) => state.generalerror);
@@ -122,24 +125,26 @@ function ConnectWallet() {
     }
   };
 
-  //! MetaMask connection.
-  const onInjected = async () => {
-    try {
-      if (!window.ethereum && window.innerWidth <= 600) {
-        const uri = `https://metamask.app.link/dapp/${window.location.host +
-          `?to=${to.text}&from=${from.text}`}/`;
-        window.open(uri);
-      }
-      await activate(injected);
-      dispatch(setMetaMask(true));
-    } catch (ex) {
-      dispatch(setError(ex));
-      if (ex.data) {
-        console.log(ex.data.message);
-      } else console.log(ex);
-    }
-    setShow(false);
-  };
+  //! MetaMask connection  < Removed to ConnectWalletHelper >.
+  // const onInjected = async () => {
+
+  //     try {
+  //         if(!window.ethereum && window.innerWidth <= 600) {
+  //             const uri = `https://metamask.app.link/dapp/${window.location.host + `?to=${to.text}&from=${from.text}`}/`
+  //           window.open(uri)
+  //         }
+  //         await activate(injected);
+  //         dispatch(setMetaMask(true))
+  //       }
+  //       catch (ex) {
+  //           dispatch(setError(ex))
+  //           if(ex.data){
+  //             console.log(ex.data.message);
+  //           }
+  //           else console.log(ex);
+  //       }
+  //       setShow(false)
+  // }
 
   const onAlgoWallet = async () => {
     if (!algoConnector.connected) {
@@ -181,17 +186,17 @@ function ConnectWallet() {
     } else {
       try {
         try {
-          const accounts = await window.tronWeb.request({
+          const accounts = await window.tronLink.request({
             method: "tron_requestAccounts",
           });
 
           if (!accounts) {
-            // dispatch(setTronLoginError("loggedOut"))
+            dispatch(setTronLoginError("loggedOut"))``;
           }
         } catch (err) {
           console.log(err);
           if (!window.tronWeb) {
-            // dispatch(setTronLoginError("noTronWeb"))
+            dispatch(setTronLoginError("noTronWeb"));
           }
         }
 
@@ -209,6 +214,32 @@ function ConnectWallet() {
         }
       }
     }
+    // if(window.innerWidth <= 600 && !window.tronWeb){
+    //   dispatch(setTronPopUp(true))
+    // }
+    // else{
+    //   try {
+    //     const accounts = await window.tronLink.request({ method: 'tron_requestAccounts' });
+    //     if(!accounts){
+    //       dispatch(setTronLoginError("noTronWeb"))
+    //     }
+    //     if(window.tronLink && window.tronWeb.defaultAddress.base58){
+    //       const publicAddress = window.tronWeb.defaultAddress.base58
+    //       dispatch(setTronWallet(publicAddress))
+    //       dispatch(setTronLink(true))
+
+    //     }
+    //   }
+    //   catch(error) {
+    //     if(!modalError){
+    //       dispatch(setError(error))
+    //       if(error.data){
+    //         console.log(error.data.message);
+    //       }
+    //       else console.log(error);
+    //     }
+    //   }
+    // }
   }
 
   const onClientConnect = (maiarProvider) => {
@@ -278,6 +309,7 @@ function ConnectWallet() {
     const myAlgoConnect = new MyAlgoConnect();
     try {
       const accountsSharedByUser = await myAlgoConnect.connect();
+      console.log("MY Algo: ", myAlgoConnect);
       dispatch(setAlgorandAccount(accountsSharedByUser[0].address));
       dispatch(setMyAlgo(true));
     } catch (error) {
@@ -285,39 +317,36 @@ function ConnectWallet() {
     }
   });
 
-  const onAlgoSigner = useCallback(async () => {
-    if (typeof window.AlgoSigner !== undefined) {
-      try {
-        await window.AlgoSigner.connect();
-        const algo = await window.AlgoSigner.accounts({
-          ledger: "MainNet",
-        });
-        const { address } = algo[0];
+  //! onAlgoSigner connection  < Removed to ConnectWalletHelper >.
+  // const onAlgoSigner = useCallback(async () => {
+  //   if (typeof window.AlgoSigner !== undefined) {
+  //     try {
+  //       await window.AlgoSigner.connect()
+  //       console.log("Algo: ", window.AlgoSigner);
+  //       const algo = await window.AlgoSigner.accounts({
+  //         ledger: 'MainNet'
+  //       });
+  //       const { address } = algo[0]
 
-        dispatch(setAlgoSigner(true));
-        dispatch(setAlgorandAccount(address));
-      } catch (e) {
-        console.error(e);
-        return JSON.stringify(e, null, 2);
-      }
-    } else {
-      console.log("Algo Signer not installed.");
-    }
-  });
+  //       dispatch(setAlgoSigner(true))
+  //       dispatch(setAlgorandAccount(address))
+  //     } catch (e) {
+  //       console.error(e);
+  //   return JSON.stringify(e, null, 2);
+  //     }
+  //   } else {
+  //     console.log("Algo Signer not installed.");
+  //   }
+  // })
 
   const onBeacon = async () => {
     const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
     const wallet = new BeaconWallet({
       name: "XP.NETWORK Cross-Chain NFT Bridge",
     });
-    console.log("Tezos: ", Tezos);
-    console.log("wallet: ", wallet);
     Tezos.setWalletProvider(wallet);
     console.log("Tezos: ", Tezos);
-    console.log("wallet: ", wallet);
-
     try {
-      console.log("Requesting permissions...");
       const permissions = await wallet.client.requestPermissions();
       dispatch(setTezosAccount(permissions.address));
       dispatch(setKukaiWallet(true));
@@ -368,7 +397,9 @@ function ConnectWallet() {
       }
     });
     const correct = from ? CHAIN_INFO[from.key].chainId === chainId : false;
-    dispatch(setAccount(account));
+    if (from?.type === "EVM") {
+      dispatch(setAccount(account));
+    }
     if (from) {
       dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId));
     }
@@ -423,28 +454,31 @@ function ConnectWallet() {
           <Modal.Header>
             <Modal.Title>Connect Wallet</Modal.Title>
             <span className="CloseModal" onClick={handleClose}>
-              <Close className="svgWidget" />
+              <img src={Close} alt="" />
             </span>
           </Modal.Header>
           <Modal.Body>
             <div className="walletListBox">
               <ul className="walletList scrollSty">
                 {/* !!! style={ from ? from.type === "EVM" && from.text !== "Fuse" ? {} : OFF : ''} */}
-                <li
-                  onClick={() => onInjected()}
-                  style={from ? (from.type === "EVM" ? {} : OFF) : ""}
-                  className="wllListItem"
+                {/* <li onClick={() => connectMetaMask(activate)} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li> */}
+                <Wallet
+                  active={from?.type === "EVM"}
+                  icon={MetaMask}
+                  connection={() => connectMetaMask(activate)}
+                  name={"MetaMask"}
                   data-wallet="MetaMask"
-                >
-                  <img src={MetaMask} alt="MetaMask Icon" /> MetaMask
-                </li>
+                />
                 <li
                   onClick={() => onWalletConnect()}
                   style={OFF}
                   className="wllListItem"
-                  data-wallet="WalletConnect"
                 >
-                  <img src={WalletConnect} alt="WalletConnect Icon" />{" "}
+                  <img
+                    src={WalletConnect}
+                    alt="WalletConnect Icon"
+                    data-wallet="WalletConnect"
+                  />{" "}
                   WalletConnect
                 </li>
                 <li
@@ -456,64 +490,87 @@ function ConnectWallet() {
                       : OFF
                   }
                   className="wllListItem"
-                  data-wallet="TrustWallet"
                 >
-                  <img src={TrustWallet} alt="WalletConnect Icon" /> Trust
-                  Wallet
+                  <img
+                    src={TrustWallet}
+                    alt="WalletConnect Icon"
+                    data-wallet="Trust Wallet"
+                  />{" "}
+                  Trust Wallet
                 </li>
                 <li
                   onClick={onMyAlgo}
                   style={from ? (from.type === "Algorand" ? {} : OFF) : ""}
                   className="wllListItem algo"
-                  data-wallet="MyAlgo"
                 >
-                  <img src={MyAlgoBlue} alt="" /> MyAlgo
+                  <img src={MyAlgoBlue} alt="" data-wallet="MyAlgo" /> MyAlgo
                 </li>
                 <li
-                  onClick={onAlgoSigner}
+                  onClick={connectAlgoSigner}
+                  style={
+                    from
+                      ? from.type === "Algorand" && window.innerWidth > 600
+                        ? {}
+                        : OFF
+                      : ""
+                  }
+                  className="wllListItem algo"
+                >
+                  <img
+                    src={AlgoSignerIcon}
+                    alt="Algor Signer Icon"
+                    data-wallet="Algo Signer"
+                  />{" "}
+                  Algo Signer
+                </li>
+                <li
+                  onClick={() => onAlgoWallet()}
                   style={from ? (from.type === "Algorand" ? {} : OFF) : ""}
                   className="wllListItem algo"
-                  data-wallet="AlgoSigner"
                 >
-                  <img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo
-                  Signer
+                  <img
+                    src={AlgorandWallet}
+                    alt="Algor Wallet Icon"
+                    data-wallet="Algorand Wallet"
+                  />{" "}
+                  Algorand Wallet
                 </li>
-                {/* <li onClick={() => onAlgoWallet()} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li> */}
-                <li
-                  onClick={() => connectTronlink()}
-                  style={from ? (from.type === "Tron" ? {} : OFF) : ""}
-                  className="wllListItem"
+                {/* <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li> */}
+                <Wallet
+                  active={from?.type === "Tron"}
+                  icon={Tron}
+                  connection={connectTronlink}
+                  name={"TronKink"}
                   data-wallet="TronLink"
-                >
-                  <img src={Tron} alt="Tron Icon" /> TronLink
-                </li>
+                />
                 <li
                   onClick={() => onMaiar()}
                   style={from ? (from.type === "Elrond" ? {} : OFF) : ""}
                   className="wllListItem"
-                  data-wallet="Maiar"
                 >
-                  <img src={Maiar} alt="" /> Maiar
+                  <img src={Maiar} alt="" data-wallet="Maiar" /> Maiar
                 </li>
                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
                 <li
                   onClick={onBeacon}
                   style={from?.text === "Tezos" ? {} : OFF}
                   className="wllListItem beacon"
-                  data-wallet="Beacon"
                 >
-                  <img src={BeaconW} alt="Kukai Icon" /> Beacon
+                  <img src={BeaconW} alt="Kukai Icon" data-wallet="Beacon" />{" "}
+                  Beacon
                 </li>
                 <li
                   onClick={onTemple}
-                  style={from?.text === "Tezos" ? {} : OFF}
+                  style={
+                    from?.text === "Tezos" && window.innerWidth > 600 ? {} : OFF
+                  }
                   className="wllListItem"
-                  data-wallet="TempleWallet"
                 >
                   <img
                     style={{ width: "28px" }}
                     src={Temple}
                     alt="Temple Icon"
+                    data-wallet="Temple Wallet"
                   />{" "}
                   Temple Wallet
                 </li>
@@ -521,9 +578,13 @@ function ConnectWallet() {
                   onClick={() => onMaiarExtension()}
                   style={from ? (from.type === "Elrond" ? {} : OFF) : ""}
                   className="wllListItem"
-                  data-wallet="MaiarExtension"
                 >
-                  <img src={Elrond} alt="Elrond Icon" /> Maiar Extension
+                  <img
+                    src={Elrond}
+                    alt="Elrond Icon"
+                    data-wallet="Maiar Extension"
+                  />{" "}
+                  Maiar Extension
                 </li>
                 <li style={OFF} className="wllListItem" data-wallet="Ledger">
                   <div>

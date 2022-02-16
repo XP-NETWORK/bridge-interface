@@ -22,8 +22,22 @@ export default function TronPopUp() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const [onHover, setOnHover] = useState();
+  const [copied, setCopied] = useState();
+  // const tronLoginError = useSelector(state => state.general.tronLoginError)
+  const tronPopUp = useSelector((state) => state.general.tronPopUp);
+  const dispatch = useDispatch();
+  const copy = () => {
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  function handleClose() {
+    dispatch(setTronPopUp(false));
+  }
+
   return (
-    <div>
+    <Modal show={tronPopUp} onHide={() => handleClose()}>
       <Modal.Header className="border-0">
         <div className="tron-PopUp__header">
           <img className="tron-PopUp__icon" src={tronPopUp} alt="" />
@@ -64,6 +78,6 @@ export default function TronPopUp() {
           </div>
         </div>
       </Modal.Body>
-    </div>
+    </Modal>
   );
 }

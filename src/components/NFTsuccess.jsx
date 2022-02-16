@@ -13,7 +13,11 @@ import moment from "moment";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { setupURI } from "../wallet/oldHelper";
 // import CopyIcons from './innercomponents/CopyIcons';
-import { setClaimablesAlgorand, setNFTS } from "../wallet/helpers";
+import {
+  isValidHttpUrl,
+  setClaimablesAlgorand,
+  setNFTS,
+} from "../wallet/helpers";
 import {
   claimAlgorandPopup,
   connectAlgorandWalletClaim,
@@ -25,6 +29,9 @@ import { useDispatch } from "react-redux";
 import ConnectAlgorand from "./ConnectAlgorand";
 import ClaimAlgorandNFT from "./ClaimAlgorandNFT";
 import "./SuccessNFT.css";
+import { getUrl } from "./innercomponents/NFTHelper";
+import VideoOrImage from "./innercomponents/VideoOrImage";
+import brockenurl from "../assets/img/brockenurl.png";
 
 function NFTsuccess() {
   const dispatch = useDispatch();
@@ -41,6 +48,7 @@ function NFTsuccess() {
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
 
   const refresh = async () => {
+    // debugger
     let w;
     if (from.type === "EVM") w = account;
     else if (from.type === "Tezos") w = tezosAccount;
@@ -56,7 +64,7 @@ function NFTsuccess() {
 
   const handleClose = () => {
     // window.location.reload()
-
+    // debugger
     selectedNFTList.forEach((nft) => {
       const { txn } = nft;
       if (txn) dispatch(removeFromSelectedNFTList(nft));
@@ -90,11 +98,12 @@ function NFTsuccess() {
 
   const toShow = () => {
     return txnHashArr?.length ? true : false;
+    // return true
   };
 
   const getTX = () => {
     let ntx;
-    // debugger
+
     // const tx = txnHashArr && txnHashArr.length > 0 ? typeof txnHashArr[currentTX] === 'object' ? txnHashArr[currentTX].hash.toString() : txnHashArr[currentTX] : ''
 
     if (txnHashArr && txnHashArr.length > 0) {
@@ -256,7 +265,7 @@ function SuccessNFT({ nft, from, index }) {
       ? nft.txn.hash.toString()
       : nft.txn
     : "";
-
+  const { video, url, ipfsArr } = getUrl(nft);
   const getTX = () => {
     if (nft.txn) {
       if (typeof nft.txn === "object") {
@@ -281,7 +290,29 @@ function SuccessNFT({ nft, from, index }) {
   };
   return (
     <li className="nftSelecItem">
-      <img src={setupURI(nft.image || nft.uri)} alt="NFT" />
+      {url && nft.uri && isValidHttpUrl(nft.uri) ? (
+        video && url ? (
+          <video
+            controls={false}
+            playsInline={true}
+            autoPlay={true}
+            loop={true}
+            src={setupURI(url)}
+          />
+        ) : (
+          <img alt="NFTss" src={setupURI(url)} />
+        )
+      ) : ipfsArr.length ? (
+        <VideoOrImage urls={ipfsArr} />
+      ) : (
+        <div className="brocken-url">
+          <img src={brockenurl} alt="This NFT image uri is broken." />
+          <span className="brocken-url__msg">
+            NFTs URL
+            <br /> is broken
+          </span>
+        </div>
+      )}
       <span className="nftSelected__name">{nft.name}</span>
       <span className="bluTextBtn">
         <a href={`${chainsConfig[from.key].tx + getTX()}`} target="_blank">

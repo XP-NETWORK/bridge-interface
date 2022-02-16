@@ -5,6 +5,8 @@ import { ChainFactory } from "xp.network";
 import TronWeb from 'tronweb'
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import { chainsConfig } from '../components/values';
+import { create } from 'ipfs-http-client';
+
 export const moralisParams = {
     exchangeRateUri: "https://testing-bridge.xp.network/exchange/",
     txSocketUri: 'https://sockettx.herokuapp.com',
@@ -17,6 +19,10 @@ export const moralisParams = {
     heartbeatUri: 'https://xpheartbeat.herokuapp.com'
 }
 const axios = require('axios')
+
+
+
+
 export const getFromParams = async () => {
     const from = store.getState().general.from.key
     let provider
@@ -217,7 +223,7 @@ export const getChainId = () => {
 }
 
 export const setupURI = uri => {
-    
+    // debugger
     if(uri && uri.includes('ipfs://')){ 
         return 'https://ipfs.io/' + uri.replace(':/', '')
     }
@@ -226,6 +232,23 @@ export const setupURI = uri => {
     }
     return uri
 }
+
+export const checkImageFormat = uri => {
+    // debugger
+    const supportedFormats = [".apng", ".avif", ".gif", ".jpeg", ".png", ".svg", ".webp"]
+    const format = uri?.slice(uri.lastIndexOf(".")).length < 6 && uri?.slice(uri.lastIndexOf(".")).length > 3 ? uri?.slice(uri.lastIndexOf(".")) : undefined
+    if(uri.includes("ipfs://")) return true
+    return format && supportedFormats.some(n => n === format)
+}
+
+
+export const checkVideoFormat = uri => {
+    // debugger
+    const supportedFormats = [".mp4", ".ogg", ".webm"]
+    const format = uri?.slice(uri.lastIndexOf(".")).length < 6 && uri?.slice(uri.lastIndexOf(".")).length > 3 ? uri?.slice(uri.lastIndexOf(".")) : undefined 
+    return format && supportedFormats.some(n => n === format)   
+}
+
 
 export const preloadItem = (item, type, setLoaded) => {
     if(type === 'video') {
@@ -312,7 +335,7 @@ export const isAddress = async address => {
 }
 
 export const getOldFactory = async () => {
-   
+//    debugger
     const {from, to} = store.getState().general
       try {
         const fromParams = await getFromParams()

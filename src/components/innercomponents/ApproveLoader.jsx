@@ -7,25 +7,21 @@ import { setNFTsToWhitelist, removeFromNotWhiteListed } from '../../store/reduce
 
 export default function ApproveLoader() {
     const dispatch = useDispatch()
+    const loader = useSelector(state => state.general.approveLoader)
 
 
     return (
-        <div className="approve-loader__container">
-            <div className="approve-loader__container__text">Approving...</div>
-            <div className="approve-loader"></div>
-        </div>
-        // <Modal >
-        //     <Modal.Header className="border-0">
-        //         <Modal.Title>Submit NFT for approval</Modal.Title>
-        //     </Modal.Header>
-        //     <Modal.Body className='approval-mod__body'>
-        //         <div className="ts-nft__image">
-        //             <img src={nftsToWhitelist[0].url} alt="Not whitelisted NFT" />
-        //         </div>
-        //         <div className="ts-nft__info">{nftsToWhitelist[0].name}</div>
-        //         <div className="ns-message">This NFT can’t being sent. NFT bridge requers to add this NFT to Whitelist.</div>
-        //         <a className="ts-button" href="https://t.me/xp_network" target="_blank" rel='noreferrer'>Technical Support &#10143;</a>
-        //     </Modal.Body>
-        // </Modal>
+        <Modal       
+        className="approve-modal"
+        style={{
+          overflow: "hidden",
+          backgroundColor: "#00000090",
+        }} 
+        show={loader}>
+            <div className="approve-loader__container">
+                <div className="approve-loader__container__text">Approving...</div>
+                <div className="approve-loader"></div>
+            </div>
+        </Modal>
     )
 }

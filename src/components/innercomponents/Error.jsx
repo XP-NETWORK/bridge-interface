@@ -13,7 +13,7 @@ export default function Error() {
   const error = useSelector((state) => state.general.error);
 
   return (
-    <>
+    <Modal show={error}>
       <Modal.Header animation={false} className="border-0">
         <div style={{ display: "flex", flexDirection: "column" }}>
           <img style={{ margin: "30px" }} src={ERR} />
@@ -32,6 +32,6 @@ export default function Error() {
           {typeof error === "object" ? error?.message : error}
         </div>
       </Modal.Body>
-    </>
+    </Modal>
   );
 }

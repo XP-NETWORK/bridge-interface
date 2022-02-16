@@ -5,6 +5,15 @@
     text-overflow: ellipsis;
 }
 
+/* .nftSelected .brocken-url{
+    display: flex;
+    height: 20px;
+} */
+
+/* .nftSelected .listed__view{
+    width: 100%;
+} */
+
 .sucesList{
     position: relative;
 }

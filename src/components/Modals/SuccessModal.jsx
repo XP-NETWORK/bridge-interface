@@ -50,6 +50,7 @@ export default function SuccessModal() {
 
   const handleClose = () => {
     // window.location.reload()
+    // debugger
     selectedNFTList.forEach((nft) => {
       const { txn } = nft;
       if (txn) dispatch(removeFromSelectedNFTList(nft));

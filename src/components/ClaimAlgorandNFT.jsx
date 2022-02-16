@@ -29,6 +29,21 @@ function ClaimAlgorandNFT() {
   // const [loader, setLoader] = useState(false)
   // const { chainId } = useWeb3React()
 
+  const handleClose = () => {
+    dispatch(claimAlgorandPopup(undefined));
+  };
+  const [claimable, setClaimable] = useState();
+  const [claimInterval, setClaimInterval] = useState();
+  // const from = useSelector(state => state.general.from)
+  const algorandClaimPopup = useSelector(
+    (state) => state.general.algorandClaimPopup
+  );
+  const algorandAccount = useSelector((state) => state.general.algorandAccount);
+  // const account = useSelector(state => state.general.account)
+  const dispatch = useDispatch();
+  // const [loader, setLoader] = useState(false)
+  // const { chainId } = useWeb3React()
+
   const getClaimable = async () => {
     const claimables = await setClaimablesAlgorand(algorandAccount, true);
 

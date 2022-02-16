@@ -3,7 +3,7 @@
     font-weight: 500;
     letter-spacing: 5%;
     line-height: 15.12px;
-    background-color: #08D70D;
+    background: linear-gradient(100.8deg, rgba(21, 255, 27, 0.66) -59.7%, rgba(46, 139, 196, 0.66) 75.86%, rgba(55, 99, 255, 0.66) 123.09%);
     padding: 4px 6px;
     border-radius: 4px;
 }
@@ -13,7 +13,7 @@
     font-weight: 500;
     letter-spacing: 5%;
     line-height: 15.12px;
-    background-color: #471CF2;
+    background: linear-gradient(103.87deg, rgba(8, 78, 215, 0.66) -74.95%, rgba(143, 55, 255, 0.66) 122.06%);
     padding: 4px 6px;
     border-radius: 4px; 
 }

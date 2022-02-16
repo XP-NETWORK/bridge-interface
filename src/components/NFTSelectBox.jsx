@@ -39,6 +39,13 @@ export default function NFTSelectBox() {
     dispatch(setFrom(temp));
   };
 
+  const switchChains = (e) => {
+    e.preventDefault();
+    const temp = to;
+    dispatch(setTo(from));
+    dispatch(setFrom(temp));
+  };
+
   const [swapHover, setSwapHover] = useState();
   const [swapDown, setSwapDown] = useState();
   return (
@@ -49,12 +56,12 @@ export default function NFTSelectBox() {
       >
         {from ? (
           <div className="seleDepatSelec">
-            <img style={{ width: "28px" }} src={from.image.src} alt="" />
-            {from.text}
+            <img src={from.image.src} alt="" />
+            {from.text === "xDai" ? "Gnosis Chain" : from.text}
           </div>
         ) : (
           <div className="seleDepatSelec">
-            <img style={{ width: "28px" }} src={Departure} alt="" />
+            <img src={Departure} alt="" />
             Select departure chain
           </div>
         )}
@@ -68,26 +75,18 @@ export default function NFTSelectBox() {
           onClick={(e) => switchChains(e)}
           className="chainArrow"
         >
-          {!widget ? (
-            <img
-              src={swapDown ? SwapPressed : swapHover ? SwapHover : ChainArrow}
-              alt=""
-            />
-          ) : (
-            <ChainArrowComp className="svgWidget swpBtn" />
-          )}
+          <img
+            src={swapDown ? SwapPressed : swapHover ? SwapHover : ChainArrow}
+            alt=""
+          />
         </span>
       ) : (
         <span className="chainArrow">
-          {widget ? (
-            <ChainArrowComp className="svgWidget swpBtn" />
-          ) : (
-            <img src={ChainArrow} alt="" />
-          )}
+          <img src={ChainArrow} alt="arrow-swap" />
         </span>
       )}
       <span className="LineArrow">
-        <LineArrow className="svgWidgetBorder" />
+        <img src={LineArrow} alt="" />
       </span>
       <div
         className="selChain seleDesti"
@@ -96,7 +95,7 @@ export default function NFTSelectBox() {
         {to ? (
           <div className="seleDestiSele">
             <img style={{ width: "28px" }} src={to.image.src} alt="" />
-            {to.text}
+            {to.text === "xDai" ? "Gnosis Chain" : to.text}
           </div>
         ) : (
           <div className="seleDestiSele">

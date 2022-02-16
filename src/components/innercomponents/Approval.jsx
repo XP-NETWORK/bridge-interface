@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ReactComponent as InfLith } from "../../assets/img/icons/infoLifht.svg";
+import InfLith from "../../assets/img/icons/infoLifht.svg";
 import { ChainFactoryConfigs, ChainFactory } from "xp.network/dist";
 import { Chain, Config } from "xp.network/dist/consts";
 import { ethers } from "ethers";
@@ -78,7 +78,7 @@ function Approval(props) {
   };
 
   const approveEach = async (nft, signer, chain, index) => {
-    // debugger
+    debugger;
     const arr = new Array(index + 1).fill(0);
     const factory = await getFactory();
     if (
@@ -248,7 +248,7 @@ function Approval(props) {
             We'd like to make sure you really want to send the NFTs and pay the
             associated fees.
           </span>
-          <InfLith className="svgWidget" alt="InfLith" />
+          <img src={InfLith} alt="Inf" />
         </div>
       </div>
       <div

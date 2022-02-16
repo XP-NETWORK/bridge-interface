@@ -104,36 +104,21 @@ function App() {
       <Video />
       <TechnicalSupport />
       {/* <TnProcess /> */}
+      <SuccessModal />
       <TransferLoader />
       <TronConnectionErrMod />
-      <Modal
-        // centered
-        className="approve-modal"
-        style={{
-          overflow: "hidden",
-          backgroundColor: "#00000090",
-        }}
-        show={loader}
-      >
-        <ApproveLoader />
-      </Modal>
-      <Modal show={error}>
-        <Error />
-      </Modal>
-      <Modal show={tronPopUp} onHide={() => handleClose()}>
-        <TronPopUp />
-      </Modal>
-      <Router>
-        <XpBridge />
-        <Alert />
-      </Router>
+      <ApproveLoader />
+      <Error />
+      <TronPopUp />
       <Widget />
       <GetFeatured />
+      <XpBridge />
+      <Alert />
+
       <div onClick={showGetFeatured} className="get-featured">
         <img src={star} alt="" />
         Get Featured
       </div>
-      {/* <SuccessModal /> */}
     </div>
   );
 }

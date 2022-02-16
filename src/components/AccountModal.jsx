@@ -27,6 +27,7 @@ export default function AccountModal() {
     const [copyIconHover, setCopyIconHover] = useState()
     const [copied, setCopied] = useState()
     const from = useSelector(state => state.general.from)
+
     const tronWallet = useSelector(state => state.general.tronWallet)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
     const MyAlgo = useSelector(state => state.general.MyAlgo)
@@ -93,6 +94,15 @@ export default function AccountModal() {
         }
     }
 
+    const getCorrectAccount = () => {
+        return  from.type === "EVM" ? account 
+            : from.type === "Tezos" ? tezosAccount 
+            : from.type === "Algorand" ? algorandAccount 
+            : from.type === "Elrond" ? elrondAccount 
+            : from.type === "Tron" ? tronWallet 
+            : undefined
+    }
+
     const connectedWith = () => {
      if(MetaMask) return 'MetaMask'
      else if(onMaiar) return "Maiar Wallet"
@@ -114,20 +124,10 @@ export default function AccountModal() {
             </div>
             <p className="">{connectedWith()}</p>
                         { copied && <Tooltip /> }
-            <CopyToClipboard text={elrondAccount || account || tronWallet || tezosAccount || algorandAccount}>
+            <CopyToClipboard text={getCorrectAccount()}>
                 <div className="nftLink">
                     <img src={NftSelect} alt="#"/>
-
-                    { account ?
-                    `${account.substring(0, 10)}...${account.substring(account.length - 2)}`
-                     : 
-                     elrondAccount ? `${elrondAccount.substring(0, 10)}...${elrondAccount.substring(elrondAccount.length - 2)}`
-                     :
-                     tezosAccount ? `${tezosAccount.substring(0, 10)}...${tezosAccount.substring(tezosAccount.length - 2)}`
-                     :
-                     algorandAccount ? `${algorandAccount.substring(0, 10)}...${algorandAccount.substring(algorandAccount.length - 2)}`
-                     :
-                     `${tronWallet.substring(0, 10)}...${tronWallet.substring(tronWallet.length - 2)}`}
+                    { getCorrectAccount() && `${getCorrectAccount().substring(0, 10)}...${getCorrectAccount().substring(getCorrectAccount().length - 2)}`}
                     <span onClick={() => copy()} onMouseOver={() => setCopyIconHover(true)} onMouseOut={()=> setCopyIconHover(false)} className="copyTokk">
                         <img src={ copyIconHover ? CopyHover : FileCopy} alt="#"/>
                     </span>

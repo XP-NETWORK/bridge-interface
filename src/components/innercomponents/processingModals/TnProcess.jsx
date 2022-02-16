@@ -22,8 +22,10 @@ export default function TnProcess() {
     const transferModalLoader = useSelector(state => state.general.transferModalLoader)
     const [body, setBody] = useState({})
 
+
+
+    
     useEffect(() => {
-        
         switch (transactionStep) {
             case 1:
                 setBody({
