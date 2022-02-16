@@ -461,14 +461,14 @@ function ConnectWallet() {
             <div className="walletListBox">
               <ul className="walletList scrollSty">
                 {/* !!! style={ from ? from.type === "EVM" && from.text !== "Fuse" ? {} : OFF : ''} */}
-                {/* <li onClick={() => connectMetaMask(activate)} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li> */}
-                <Wallet
+                <li onClick={() => connectMetaMask(activate)} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li>
+                {/* <Wallet
                   active={from?.type === "EVM"}
                   icon={MetaMask}
                   connection={() => connectMetaMask(activate)}
                   name={"MetaMask"}
                   data-wallet="MetaMask"
-                />
+                /> */}
                 <li
                   onClick={() => onWalletConnect()}
                   style={OFF}
@@ -523,13 +523,13 @@ function ConnectWallet() {
                   <img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand
                   Wallet
                 </li>
-                {/* <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li> */}
-                <Wallet
+                <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li>
+                {/* <Wallet
                   active={from?.type === "Tron"}
                   icon={Tron}
                   connection={connectTronlink}
                   name={"TronLink"}
-                />
+                /> */}
                 <li
                   onClick={() => onMaiar()}
                   style={from ? (from.type === "Elrond" ? {} : OFF) : ""}
