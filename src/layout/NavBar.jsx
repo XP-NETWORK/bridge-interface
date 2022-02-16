@@ -27,12 +27,12 @@ function NavBar() {
     
 
     const setAddress = () => {
-            return  from?.type === "EVM" ? account 
-                : from?.type === "Tezos" ? tezosAccount 
-                : from?.type === "Algorand" ? algorandAccount 
-                : from?.type === "Elrond" ? elrondAccount 
-                : from?.type === "Tron" ? tronAccount 
-                : undefined
+        return  from?.type === "EVM" ? account 
+            : from?.type === "Tezos" ? tezosAccount 
+            : from?.type === "Algorand" ? algorandAccount 
+            : from?.type === "Elrond" ? elrondAccount 
+            : from?.type === "Tron" ? tronAccount 
+            : undefined
     }
 
     return (

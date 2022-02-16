@@ -31,12 +31,6 @@ function NFTworng() {
                 method: "wallet_switchEthereumChain",
                 params: [{ chainId }],
               })
-            //   .catch(result => {
-            //     dispatch(setWrongNetwork(true))
-            //         // dispatch(setMetaMask(false))
-            //     })
-            //   dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
-            //   setLoader(false)
         } 
         catch (error) {
             setLoader(false)
