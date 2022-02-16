@@ -33,7 +33,7 @@ import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
 // import { DAppClient } from "@airgap/beacon-sdk";
-import { connectMetaMask, connectAlgoSigner } from "./ConnectWalletHelper"
+import { connectMetaMask, connectAlgoSigner, connectTempleWallet, connectBeacon } from "./ConnectWalletHelper"
 import Wallet from './Wallet/Wallet';
 
 
@@ -342,7 +342,7 @@ function ConnectWallet() {
     //     console.log("Got error:", error);
     //   }
     // }
-
+    //! onTemple connection  < Removed to ConnectWalletHelper >.
     const onTemple = async () => {
       // debugger
         try {
@@ -445,8 +445,8 @@ function ConnectWallet() {
                                 <Wallet active={from?.type === 'Tron'} icon={Tron} connection={connectTronlink} name={"TronLink"} />
                                 <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
-                                <li onClick={onBeacon} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem beacon"><img src={BeaconW} alt="Kukai Icon" /> Beacon</li>
-                                <li onClick={onTemple} style={ (from?.text === "Tezos" && window.innerWidth > 600 ) ? {} : OFF} className="wllListItem"><img style={{width: "28px"}} src={Temple} alt="Temple Icon" /> Temple Wallet</li>
+                                <li onClick={connectBeacon} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem beacon"><img src={BeaconW} alt="Kukai Icon" /> Beacon</li>
+                                <li onClick={connectTempleWallet} style={ (from?.text === "Tezos" && window.innerWidth > 600 ) ? {} : OFF} className="wllListItem"><img style={{width: "28px"}} src={Temple} alt="Temple Icon" /> Temple Wallet</li>
                                 <li onClick={() => onMaiarExtension()} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
                                 <li style={ OFF } className="wllListItem">
                                   <div>

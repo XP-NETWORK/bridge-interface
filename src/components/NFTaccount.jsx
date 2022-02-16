@@ -57,6 +57,7 @@ function NFTaccount() {
     const modalError = useSelector(state => state.general.error)
     const WCProvider = useSelector(state => state.general.WCProvider)
     const { library } = useWeb3React()
+    const testnet = useSelector(state => state.general.testNet)
     
     
     const getAlgorandWalletSigner = async () => {
@@ -99,7 +100,7 @@ function NFTaccount() {
             : type === "Elrond" ? elrondAccount 
             : type === "Tron" ? tronWallet 
             : undefined
-            await setNFTS( w, from)
+            await setNFTS(w, from, testnet)
             } catch (error) {  
                 dispatch(setError(error.data ? error.data.message : error.message))
             }

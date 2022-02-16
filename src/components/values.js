@@ -175,7 +175,7 @@ export const chains = [
         image: { avatar: true, src: Tezos},
         newChain: true,
         coming: false,
-        maintenance: true,
+        maintenance: false,
         testNet: false
     },
     {
@@ -189,6 +189,16 @@ export const chains = [
         coming: false,
         maintenance: true,
         testNet: false
+    },
+    {
+        type: "EVM",
+        key: 'Harmony',
+        text: 'Harmony',
+        value: 'Harmony',
+        order: 5,
+        image: { avatar: true, src: Avalanche },
+        maintenance: false,
+        testNet: true
     }
 ]
 
@@ -314,6 +324,14 @@ export const chainsConfig = {
         chainId: 4689,
         Chain: Chain.IOTEX,
         tx: "https://iotexscan.io/tx/"
+    },
+    Harmony: {
+        type: EVM,
+        token: "ONE",
+        rpc: "https://api.harmony.one",
+        chainId: 1666600000,
+        Chain: Chain.HARMONY,
+        tx: "https://explorer.harmony.one/tx"
     }
 
 }
@@ -334,7 +352,8 @@ export const coins = [
     "FUSE", //12
     "VELAS", //13
     "TEZOS", //14
-    "IOTX" //15
+    "IOTX", //15
+    "ONE" //16
   ];
 
   export const TESTNET_CHAIN_INFO = {
@@ -348,6 +367,10 @@ export const coins = [
         },
         Elrond: {
             nonce: 2, 
+        },
+        Harmony: {
+            nonce: 12,
+            chainId: 1666700000
         }
   }
 
@@ -499,6 +522,14 @@ export const CHAIN_INFO = {
         chainId: 4689,
         blockExplorerUrls: "",
         contract: ""
+    },
+    Harmony: {
+        native: coins[16],
+        nonce: 12,
+        decimals: 1e18,
+        rpc: "",
+        chainId: 1666600000,
+        blockExplorerUrls: "",
+        contract: ""
     }
-
   };

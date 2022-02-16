@@ -1,10 +1,11 @@
 
-
+import { TempleWallet } from "@temple-wallet/dapp";
 import { injected, algoConnector } from "../wallet/connectors"
 import { useWeb3React } from "@web3-react/core";
 import store  from "../store/store"
 import { setTronWallet, setAccount, setConfirmMaiarMob, setAlgorandWallet, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp, setTrustWallet, setAlgoSigner, setAlgorandAccount, setMyAlgo, setTezosAccount, setKukaiWallet, setTempleWallet } from "../store/reducers/generalSlice"
-
+import { TezosToolkit } from "@taquito/taquito";
+import { BeaconWallet } from "@taquito/beacon-wallet";
 // const { chainId, account, activate  } = useWeb3React();
 
 const { to, from } = store.getState()
@@ -49,4 +50,37 @@ export const connectAlgoSigner =async () => {
     } else {
       console.log("Algo Signer not installed.");
     }
+}
+
+export const connectTempleWallet = async () => {
+  // debugger
+    try {
+      const available = await TempleWallet.isAvailable();
+      if (!available) {
+        throw new Error("Temple Wallet not installed");
+      }
+      const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
+      await wallet.connect("mainnet");
+      const tezos = wallet.toTezos();
+      const accountPkh = await tezos.wallet.pkh();
+      store.dispatch(setTezosAccount(accountPkh))
+      store.dispatch(setTempleWallet(true))
+
+    } catch (error) {
+      console.error(error);
+    }
+}
+
+export const connectBeacon = async () => {
+  const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
+  const wallet = new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" });
+  Tezos.setWalletProvider(wallet);
+  console.log("Tezos: ", Tezos);
+  try {
+    const permissions = await wallet.client.requestPermissions();
+    store.dispatch(setTezosAccount(permissions.address))
+    store.dispatch(setKukaiWallet(true))
+  } catch (error) {
+    console.log("Got error:", error);
+  }
 }

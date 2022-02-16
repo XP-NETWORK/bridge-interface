@@ -19,13 +19,17 @@ export default function Chain({
   const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
   // console.log("key: ", chainKey)
   const checkIfLive = (chain) => {
+    console.log(chain)
     // let c = chain === "GnosisChain" ? "xDai" : chain
     const nonce = CHAIN_INFO[chain]?.nonce;
+    console.log(CHAIN_INFO[chain])
     // console.log("nonce: ", nonce)
     if (validatorsInfo) {
       return validatorsInfo[nonce]?.bridge_alive;
     }
   };
+  console.log("key: ", key)
+  console.log("chainKey: ", chainKey)
 
   useEffect(() => {}, [validatorsInfo]);
 
@@ -33,7 +37,7 @@ export default function Chain({
   return (
     // style={ coming || !checkIfLive(text) ? OFF : {}}
     <li
-      style={maintenance || !checkIfLive(chainKey) ? OFF : {}}
+      // style={maintenance || !checkIfLive(chainKey) ? OFF : {}}
       onClick={() => chainSelectHandler(filteredChain)}
       className="nftChainItem"
       data-chain={text}

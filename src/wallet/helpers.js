@@ -177,6 +177,8 @@ export const handleChainFactory = async (someChain) => {
     ? (chain = await factory.inner(Chain.TEZOS))
     : someChain === "Iotex"
     ? (chain = await factory.inner(Chain.IOTEX))
+    : someChain = "Harmony"
+    ?(chain = await factory.inner(Chain.HARMONY))
     : (chain = "");
   return chain;
   } catch (error) {
@@ -184,8 +186,7 @@ export const handleChainFactory = async (someChain) => {
   }
 };
 
-export const getNFTS = async (wallet, from) => {
-  // debugger
+export const getNFTS = async (wallet, from, testnet) => {
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
@@ -195,6 +196,14 @@ export const getNFTS = async (wallet, from) => {
     let response 
     if(tronWallet){
       response = await getTronNFTs(tronWallet)
+    }
+    else if(testnet){
+      console.log("chain.getNonce()", chain.getNonce())
+      response = (await axios.get(`https://testing-nft-index.herokuapp.com/nfts/${chain.getNonce()}/${wallet}`, {
+        headers: {
+          Authorization: 'Bearer eyJhbGciOiJFUzI1NiJ9.eyJhdXRob3JpdHkiOjEsImlhdCI6MTY0NDIzMDE0NiwiZXhwIjoxNjUyMDA2MTQ2fQ.gX6Auj4hFLdpem5Pk2kAnH71I19iGXfBYjmQrXylMFX_R1yzDEbylVAOLW6kABH9VjnLbAnCRdQvLaQIFmMUpw'
+        }
+      })).data?.data
     }
     else{
       response = await factory.nftList(chain, hardcoded ? hardcoded : wallet)
@@ -244,10 +253,10 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
   }
 }
 
-export const setNFTS = async (w, from) => {
+export const setNFTS = async (w, from, testnet) => {
   // debugger
   store.dispatch(setBigLoader(true))
-  const res = await getNFTS(w, from)
+  const res = await getNFTS(w, from, testnet)
   const parsedNFTs = await parseNFTS(res)
   store.dispatch(setBigLoader(false))
   if(parsedNFTs.length){
