@@ -28,7 +28,8 @@ export const chains = [
         value: 'Ethereum',
         order: 4,
         image: { avatar: true, src: Etherium },
-        maintenance: false
+        maintenance: false,
+        testNet: false
     },
     {
         type: "EVM",
@@ -47,7 +48,8 @@ export const chains = [
         value: 'Tron',
         order: 6,
         image: { avatar: true, src: Tron },
-        maintenance: true
+        maintenance: true,
+        testNet: false
     },
     {
         type: "Elrond",
@@ -77,7 +79,8 @@ export const chains = [
         value: 'Avalanche',
         order: 8,
         image: { avatar: true, src: Avalanche },
-        maintenance: false
+        maintenance: false,
+        testNet: false
     },
     {
         type: "EVM",
@@ -86,7 +89,8 @@ export const chains = [
         value: 'Fantom',
         order: 9,
         image: { avatar: true, src: Fantom },
-        maintenance: false
+        maintenance: false,
+        testNet: false
     },
     {
         type: "Algorand",
@@ -95,7 +99,8 @@ export const chains = [
         value: 'Algorand',
         order: 5,
         image: { avatar: true, src: Algorand },
-        maintenance: true
+        maintenance: true,
+        testNet: false
     },
     {
         type: "EVM",
@@ -104,7 +109,8 @@ export const chains = [
         value: 'xDai',
         order: 10,
         image: { avatar: true, src: Gnosis },
-        maintenance: false
+        maintenance: false,
+        testNet: false
     },
     {
         type: 'Solana',
@@ -114,7 +120,8 @@ export const chains = [
         order: 14,
         coming: true,
         image: { avatar: true, src: Solana },
-        maintenance: true
+        maintenance: true,
+        testNet: false
     },
     {
         type: 'Cardano',
@@ -124,7 +131,8 @@ export const chains = [
         order: 12,
         coming: true,
         image: { avatar: true, src: Cardano },
-        maintenance: true
+        maintenance: true,
+        testNet: false
     },
     {
         type: "EVM",
@@ -134,7 +142,8 @@ export const chains = [
         order: 13,
         coming: true,
         image: { avatar: true, src: Heco },
-        maintenance: true
+        maintenance: true,
+        testNet: false
     },
     {
         type: "EVM",
@@ -143,7 +152,8 @@ export const chains = [
         value: 'Fuse',
         order: 11,
         image: { avatar: true, src: Fuse },
-        maintenance: true
+        maintenance: true,
+        testNet: false
     },
     {
         type: "EVM",
@@ -153,7 +163,8 @@ export const chains = [
         order: 1,
         image: { avatar: true, src: Velas },
         newChain: true,
-        maintenance: false
+        maintenance: false,
+        testNet: false
     },
     {
         type: "Tezos",
@@ -164,7 +175,8 @@ export const chains = [
         image: { avatar: true, src: Tezos},
         newChain: true,
         coming: false,
-        maintenance: true
+        maintenance: true,
+        testNet: false
     },
     {
         type: "EVM",
@@ -175,7 +187,8 @@ export const chains = [
         image: { avatar: true, src: Iotex},
         newChain: true,
         coming: false,
-        maintenance: true
+        maintenance: true,
+        testNet: false
     }
 ]
 

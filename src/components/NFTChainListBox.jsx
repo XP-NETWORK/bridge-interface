@@ -17,7 +17,7 @@ export default function NFTChainListBox() {
     const to = useSelector(state => state.general.to)
     const fromChains = chains.sort((a,b) =>  a.order - b.order);
     const toChains = chains.sort((a,b) =>  a.order - b.order);
-    const validatorsInfo = useSelector(state => state.general.validatorsInfo)
+    const testnet = useSelector(state => state.general.testNet)
 
     const handleClose = () => {
         dispatch(setChainModal(false))
@@ -29,13 +29,11 @@ export default function NFTChainListBox() {
             if(to && chain.key !== to.key){
                 dispatch(setFrom(chain))
                 handleClose()
-                // dispatch(setSwitchDestination(false))
             }
             else{
                 dispatch(setTo(''))
                 dispatch(setFrom(chain))
                 handleClose()
-                // dispatch(setSwitchDestination(false))
             }
         }
         else{
@@ -44,39 +42,27 @@ export default function NFTChainListBox() {
                 handleClose()
         }
     }
-
-    // const checkIfLive = chain => {
-    //     const nonce = CHAIN_INFO[chain]?.nonce
-    //     if(validatorsInfo){
-    //         return validatorsInfo[nonce]?.bridge_alive
-    //     }
-    // }
     
     useEffect(() => {
     }, [to])
-    // if to selected 
+
     return (
         <>
             {/* <SelectDestination /> */}
             <div className="nftChainListBox">
                 <ChainSearch />
                 <ul className="nftChainList scrollSty">
-                    { !from ? fromChains.filter(chain => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).sort(chain => {
-                        // if(chain.text === "Velas" && chain.newChain) return -1
-                        // if(chain.newChain) return -1
-                        // else return chain.a - chain.b
-                       
-                    }).map( filteredChain => { 
-                        const { image, text, key, value, coming, newChain, maintenance } = filteredChain;
-                        
-                        return ( 
-                            <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`} />
-                        )
+                    { !from ? fromChains.filter(chain => testnet && chain.testNet).filter(chain => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '')).map( filteredChain => { 
+                        const { image, text, key, value, coming, newChain, maintenance, testNet } = filteredChain;
+                        // if(testnet){
+                        //     return testNet ? <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`} /> : ''
+                        // }
+                        // else return ( 
+                           return <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`} />
+                        // )
                      }) 
                      :
-                     toChains.filter(chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).sort(chain => (
-                        chain.newChain ? -1 : ''
-                    )).map(chain => {
+                     toChains.filter(chain => testnet && chain.testNet).filter(chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).map(chain => {
                         const { image, text, key, value, coming , newChain, maintenance } = chain;
                         return chain.key !== from.key ? <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} chainKey={key} coming={coming} text={text} filteredChain={chain} image={image} key={`chain-${key}`}  maintenance={maintenance} />
                         :''
