@@ -237,6 +237,9 @@ const generalSlice = createSlice({
     },
     setTempleWallet(state, action){
       state.templeWallet = action.payload
+    },
+    setTestNet(state, action){
+      state.testNet = action.payload
     }
   },
 });
@@ -245,6 +248,7 @@ export const {
     setTempleWallet,
     setKukaiWallet,
     setTezosAccount,
+    setTestNet,
     setGetFeaturedModal,
     setTransactionStep,
     setValidatorsInf,

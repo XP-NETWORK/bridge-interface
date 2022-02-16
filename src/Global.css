@@ -2243,6 +2243,35 @@ span.invalid img {
 .navbar-light .navbar-toggler span.navbar-toggler-icon {
   display: none;
 }
+.navBrand{
+  position: relative;
+}
+
+.testnet{
+  color: #fff;
+  position: absolute;
+  /* max-height: 18px; */
+  background: linear-gradient(103.87deg, rgba(8, 78, 215, 0.66) -74.95%, rgba(143, 55, 255, 0.66) 122.06%);
+  padding:  4px;
+  right: 0;
+  top: 32px;
+  font-size: 12px;
+  line-height: 10px;
+  border-radius: 4px;
+}
+
+.mainnet{
+  color: #fff;
+  position: absolute;
+  /* max-height: 18px; */
+  background: linear-gradient(103.87deg, rgba(215, 32, 8, 0.66) -74.95%, rgb(212, 72, 7) 122.06%);
+  padding:  4px;
+  right: 0;
+  top: 32px;
+  font-size: 12px;
+  line-height: 10px;
+  border-radius: 4px;
+}
 
 .navbar-light .navbar-toggler:after {
   content: url("./assets/img/icons/Hambar.svg");

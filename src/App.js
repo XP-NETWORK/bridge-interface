@@ -5,7 +5,7 @@ import "./Responsive.css";
 import XpBridge from "./pages/XpBridge";
 import Alert from "./components/Alert";
 import { useDispatch, useSelector } from "react-redux";
-import {  setFrom, setGetFeaturedModal, setTo, setTronPopUp, setValidatorsInf } from "./store/reducers/generalSlice";
+import {  setFrom, setGetFeaturedModal, setTestNet, setTo, setTronPopUp, setValidatorsInf } from "./store/reducers/generalSlice";
 import ApproveLoader from "./components/innercomponents/ApproveLoader";
 import { Modal } from "react-bootstrap"
 import Error from "./components/innercomponents/Error";
@@ -25,10 +25,10 @@ import SuccessModal from "./components/Modals/SuccessModal";
 
 function App() {
   const dispatch = useDispatch()
-  const loader = useSelector(state => state.general.approveLoader)
+  // const loader = useSelector(state => state.general.approveLoader)
   const algorandAccount = useSelector(state => state.general.algorandAccount)
-  const error = useSelector(state => state.general.error)
-  const tronPopUp = useSelector(state => state.general.tronPopUp)
+  // const error = useSelector(state => state.general.error)
+  // const tronPopUp = useSelector(state => state.general.tronPopUp)
   // const nftsToWhitelist = useSelector(state => state.general.techModal)
   const state = useSelector(state => state.general)
   const axios = require("axios");
@@ -51,6 +51,11 @@ function App() {
   const showGetFeatured = () => {
     dispatch(setGetFeaturedModal(true))
   }
+
+  useEffect(() => {
+    dispatch(setTestNet(window.location.href.indexOf("testnet") > 0))
+  }, [])
+  
 
   useEffect(async() => {
     const from = new URLSearchParams(window.location.search).get('from')

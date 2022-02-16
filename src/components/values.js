@@ -95,7 +95,7 @@ export const chains = [
         value: 'Algorand',
         order: 5,
         image: { avatar: true, src: Algorand },
-        maintenance: false
+        maintenance: true
     },
     {
         type: "EVM",
@@ -175,7 +175,7 @@ export const chains = [
         image: { avatar: true, src: Iotex},
         newChain: true,
         coming: false,
-        maintenance: false
+        maintenance: true
     }
 ]
 
