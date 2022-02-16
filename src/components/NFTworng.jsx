@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Modal } from "react-bootstrap";
 import Close from '../assets/img/icons/close.svg';
 import Wrong from '../assets/img/Wrong.svg';
-import { CHAIN_INFO } from "../components/values";
+import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../components/values";
 import { useSelector } from 'react-redux';
 import { getAddEthereumChain } from "../wallet/chains"
 import { useDispatch } from 'react-redux';
@@ -20,11 +20,12 @@ function NFTworng() {
     const dispatch = useDispatch()
     const [loader, setLoader] = useState(false)
     const { chainId } = useWeb3React()
+    const testnet = useSelector(state => state.general.testNet)
 
 
     async function switchNetwork (){
         setLoader(true)
-        const info = CHAIN_INFO[from?.key]
+        const info = testnet ? TESTNET_CHAIN_INFO[from?.key] : CHAIN_INFO[from?.key]
         const chainId = `0x${info.chainId.toString(16)}`;
         try {
             const success = await window.ethereum.request({

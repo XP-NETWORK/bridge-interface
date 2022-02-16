@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import Close from '../assets/img/icons/close.svg';
 import MetaMask from '../assets/img/wallet/MetaMask.svg';
 import Tron from '../assets/img/wallet/TronLink.svg';
@@ -10,9 +10,9 @@ import AlgoSignerIcon from '../assets/img/wallet/Algo Signer.png';
 import Maiar from '../assets/img/wallet/Maiar.svg';
 import Trezor from '../assets/img/wallet/Trezor.svg';
 import TrustWallet from "../assets/img/wallet/TWT.svg"
-import Kukai from "../assets/img/wallet/kukai.svg"
+// import Kukai from "../assets/img/wallet/kukai.svg"
 import BeaconW from "../assets/img/wallet/BeaconWhite.svg"
-import BeaconB from "../assets/img/wallet/BeaconBlue.svg"
+// import BeaconB from "../assets/img/wallet/BeaconBlue.svg"
 import Temple from "../assets/img/wallet/Temple.svg"
 import AlgorandWallet from "../assets/img/wallet/AlgorandWallet.svg"
 import WalletConnect from "../assets/img/wallet/WalletConnect 3.svg"
@@ -24,7 +24,7 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { EVM, ELROND, chainsConfig } from "../components/values"
 import { setTronWallet, setAccount, setConfirmMaiarMob, setAlgorandWallet, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp, setTrustWallet, setAlgoSigner, setAlgorandAccount, setMyAlgo, setTezosAccount, setKukaiWallet, setTempleWallet } from "../store/reducers/generalSlice"
 import { Address, ExtensionProvider, WalletConnectProvider, ProxyProvider } from "@elrondnetwork/erdjs"
-import { CHAIN_INFO } from '../components/values';
+import { CHAIN_INFO, TESTNET_CHAIN_INFO } from '../components/values';
 import QRCode from 'qrcode'
 import MaiarModal from './MaiarModal';
 import { isEVM } from '../wallet/oldHelper';
@@ -32,7 +32,7 @@ import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
-import { DAppClient } from "@airgap/beacon-sdk";
+// import { DAppClient } from "@airgap/beacon-sdk";
 import { connectMetaMask, connectAlgoSigner } from "./ConnectWalletHelper"
 import Wallet from './Wallet/Wallet';
 
@@ -65,7 +65,7 @@ function ConnectWallet() {
     const [qrCodeString, setQqrCodeString] = useState()
     const [strQR, setStrQr] = useState()
     const { chainId, account, activate  } = useWeb3React();
-  
+    const testnet = useSelector(state => state.general.testNet)
     const MyAlgo = useSelector(state => state.general.MyAlgo)
     const modalError = useSelector(state => state.generalerror)
     
@@ -376,12 +376,19 @@ function ConnectWallet() {
           dispatch(setAlgorandAccount(accounts[0]))
         }
       });
-        const correct = from ? CHAIN_INFO[from.key].chainId === chainId : false
+        let correct
+        if(testnet){
+          correct = from ? TESTNET_CHAIN_INFO[from?.key].chainId === chainId : ''
+        }
+        else{
+          correct = from ? CHAIN_INFO[from?.key].chainId === chainId : ''
+        }
+        console.log(`correct: ${correct}`)
         if(from?.type === "EVM"){
           dispatch(setAccount(account))
         }
         if(from){
-            dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
+            dispatch(setWrongNetwork(testnet ? TESTNET_CHAIN_INFO[from.key].chainId !== chainId : CHAIN_INFO[from.key].chainId !== chainId))
         }
         if((metaMask && correct)
         ||

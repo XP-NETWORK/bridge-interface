@@ -338,7 +338,17 @@ export const coins = [
   ];
 
   export const TESTNET_CHAIN_INFO = {
-      
+        BSC: {
+            nonce: 4,
+            chainId: 97,
+        },
+        Polygon: {
+            nonce: 0x7,
+            chainId: 80001
+        },
+        Elrond: {
+            nonce: 2, 
+        }
   }
 
 export const CHAIN_INFO = {
