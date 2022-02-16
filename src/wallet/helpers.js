@@ -136,7 +136,7 @@ export const getFactory = async () => {
   if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
     mainnetConfig.tronParams.provider = window.tronWeb
   } 
-  const factory = ChainFactory(moralisParams, mainnetConfig);
+  const factory = ChainFactory(Config, mainnetConfig);
   store.dispatch(setFactory(factory))
   return factory;
 };

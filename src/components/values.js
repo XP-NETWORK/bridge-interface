@@ -37,7 +37,8 @@ export const chains = [
         value: 'BSC',
         order: 5,
         image: { avatar: true, src: Binance },
-        maintenance: false
+        maintenance: false,
+        testNet: true
     },
     {
         type: "Tron",
@@ -55,7 +56,8 @@ export const chains = [
         value: ELROND,
         order: 7,
         image: { avatar: true, src: Elrond },
-        maintenance: false
+        maintenance: false,
+        testNet: true
 
     },
     {
@@ -65,7 +67,8 @@ export const chains = [
         value: 'Polygon',
         order: 8,
         image: { avatar: true, src: Polygon },
-        maintenance: false
+        maintenance: false,
+        testNet: true
     },
     {
         type: "EVM",
