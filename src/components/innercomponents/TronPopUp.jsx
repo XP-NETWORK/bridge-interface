@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
+import Close from "../../assets/img/icons/close.svg";
 import { Modal } from "react-bootstrap";
 import tronPopUp from "../../assets/img/icons/tronPopUp.png";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -13,15 +13,6 @@ import { useDispatch } from "react-redux";
 import { setTronPopUp } from "../../store/reducers/generalSlice";
 
 export default function TronPopUp() {
-  const [onHover, setOnHover] = useState();
-  const [copied, setCopied] = useState();
-  const tronLoginError = useSelector((state) => state.general.tronLoginError);
-  const dispatch = useDispatch();
-  const copy = () => {
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   const [onHover, setOnHover] = useState();
   const [copied, setCopied] = useState();
   // const tronLoginError = useSelector(state => state.general.tronLoginError)
@@ -47,7 +38,7 @@ export default function TronPopUp() {
             onHide={() => dispatch(setTronPopUp(false))}
             onClick={() => dispatch(setTronPopUp(false))}
           >
-            <Close className="svgWidget" />
+            <img src={Close} alt="" />
           </span>
         </div>
       </Modal.Header>

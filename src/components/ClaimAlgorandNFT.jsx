@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
-import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
+import Close from "../assets/img/icons/close.svg";
 // import Wrong from '../assets/img/Wrong.svg';
 // import { CHAIN_INFO } from "./values";
 import { useSelector } from "react-redux";
@@ -13,22 +13,6 @@ import { parseNFTS, setClaimablesAlgorand } from "../wallet/helpers";
 import { AlgorandClaimable } from "./Transactionhistory";
 
 function ClaimAlgorandNFT() {
-  const handleClose = () => {
-    dispatch(claimAlgorandPopup(undefined));
-  };
-  const [claimable, setClaimable] = useState();
-  const [claimInterval, setClaimInterval] = useState();
-  // const from = useSelector(state => state.general.from)
-  const algorandClaimPopup = useSelector(
-    (state) => state.general.algorandClaimPopup
-  );
-  const algorandAccount = useSelector((state) => state.general.algorandAccount);
-  console.log("algorandAccount: ", algorandAccount);
-  // const account = useSelector(state => state.general.account)
-  const dispatch = useDispatch();
-  // const [loader, setLoader] = useState(false)
-  // const { chainId } = useWeb3React()
-
   const handleClose = () => {
     dispatch(claimAlgorandPopup(undefined));
   };
@@ -92,7 +76,7 @@ function ClaimAlgorandNFT() {
         <Modal.Header className="border-0">
           <Modal.Title>Claim Algorand NFT</Modal.Title>
           <span className="CloseModal" onClick={handleClose}>
-            <CloseComp className="svgWidget" />
+            <img src={Close} alt="" />
           </span>
         </Modal.Header>
         <Modal.Body className="modalBody text-center">

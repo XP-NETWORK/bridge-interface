@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 import Departure from "../assets/img/nftSelect/departure.svg";
 import Destination from "../assets/img/nftSelect/destination.svg";
-import { ReactComponent as LineArrow } from "../assets/img/nftSelect/Line.svg";
-import { ReactComponent as ChainArrowComp } from "../assets/img/icons/Swap.svg";
+import LineArrow from "../assets/img/nftSelect/Line.svg";
 import ChainArrow from "../assets/img/icons/Swap.svg";
 import SwapHover from "../assets/img/icons/SwapHover.svg";
 import SwapPressed from "../assets/img/icons/SwapPressed.svg";
@@ -21,22 +20,12 @@ export default function NFTSelectBox() {
 
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
-  const { widget } = useSelector(({ general: { widget } }) => ({
-    widget,
-  }));
 
   const handleShow = (str) => {
     dispatch(setChainModal(true));
     str === "departure"
       ? dispatch(setDepartureOrDestination("departure"))
       : dispatch(setDepartureOrDestination("destination"));
-  };
-
-  const switchChains = (e) => {
-    e.preventDefault();
-    const temp = to;
-    dispatch(setTo(from));
-    dispatch(setFrom(temp));
   };
 
   const switchChains = (e) => {

@@ -14,6 +14,7 @@ import Fuse from "../assets/img/chain/Fuse.svg";
 import Velas from "../assets/img/chain/Velas.svg";
 import Tezos from "../assets/img/chain/Tezos.svg";
 import Iotex from "../assets/img/chain/iotx.svg";
+import Gnosis from "../assets/img/chain/Gnosis.png";
 import { Chain } from "xp.network/dist/consts";
 
 export const EVM = "EVM";

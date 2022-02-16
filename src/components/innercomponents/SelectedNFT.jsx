@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
-import { ReactComponent as Back } from "../../assets/img/icons/Back.svg";
+import Close from "../../assets/img/icons/close.svg";
+import Back from "../../assets/img/icons/Back.svg";
 import { useSelector } from "react-redux";
 import {
   cleanSelectedNFTList,
@@ -9,7 +9,13 @@ import {
 import { useDispatch } from "react-redux";
 import brockenurl from "../../assets/img/brockenurl.png";
 import { isValidHttpUrl } from "../../wallet/helpers";
-import { setupURI } from "../../wallet/oldHelper";
+import {
+  setupURI,
+  checkVideoFormat,
+  checkImageFormat,
+} from "../../wallet/oldHelper";
+
+import ListedView from "../nftImageViews/ListedView";
 
 function SelectedNFT() {
   const dispatch = useDispatch();
@@ -31,7 +37,7 @@ function SelectedNFT() {
       <div className="nftSeleTop">
         <div className="selectedNft nftselectedtop">
           <a className="backBtn mobileOnly">
-            <Back className="svgWidget" />
+            <img src={Back} alt="Back" />
           </a>
           <span className="mobileOnly">Selected NFTs</span>
           <span className="desktopOnly">
@@ -62,7 +68,7 @@ function SelectedNFT() {
                   {nft.data?.name || nft.name}
                 </span>
                 <span className="Close">
-                  <Close className="svgWidget" />
+                  <img alt="" src={Close} />
                 </span>
               </li>
             ))

@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import Close from "../assets/img/icons/close.svg";
-import { CloseComp } from "../assets/img/icons/close.svg";
+import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
 import { useDispatch, useSelector } from "react-redux";
 import "./TronConnectionErrMod.css";
 import { setTronLoginError } from "../store/reducers/generalSlice";
