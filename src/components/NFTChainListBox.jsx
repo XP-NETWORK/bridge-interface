@@ -52,14 +52,14 @@ export default function NFTChainListBox() {
             <div className="nftChainListBox">
                 <ChainSearch />
                 <ul className="nftChainList scrollSty">
-                    { !from ? fromChains.filter(chain => testnet && chain.testNet).filter(chain => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '')).map( filteredChain => { 
+                    { !from ? fromChains.filter(chain => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '')).map( filteredChain => { 
                         const { image, text, key, value, coming, newChain, maintenance, testNet } = filteredChain;
-                        // if(testnet){
-                        //     return testNet ? <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`} /> : ''
-                        // }
-                        // else return ( 
-                           return <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`} />
-                        // )
+                        if(testnet){
+                            return testNet ? <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`} /> : ''
+                        }
+                        else return ( 
+                            <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`} />
+                        )
                      }) 
                      :
                      toChains.filter(chain => testnet && chain.testNet).filter(chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).map(chain => {
