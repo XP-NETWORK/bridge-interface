@@ -59,7 +59,9 @@ const settingsHoc = (Wrapped) => (props) => {
   const deboucedSet = (e, key) =>
     dispatch(setSettings({ ...settings, [key]: e }));
 
+  console.log(activeChainsNumber);
   const chainCheck = (val) => {
+    console.log(val);
     const checked = selectedChains.includes(val);
 
     if (checked) {

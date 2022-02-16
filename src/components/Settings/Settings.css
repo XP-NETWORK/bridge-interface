@@ -1476,6 +1476,7 @@ li.blockChain_item .blockChainItem span {
   padding-left: 28px;
   margin-top: 10px;
   cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .referalSwitch input {

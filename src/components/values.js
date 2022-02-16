@@ -8,13 +8,12 @@ import Tron from "../assets/img/chain/Tron.svg";
 import Polygon from "../assets/img/chain/Polygon.svg";
 import Avalanche from "../assets/img/chain/Avalanche.svg";
 import Fantom from "../assets/img/chain/Fantom.svg";
-import Xdai from "../assets/img/chain/xDai.svg";
+import Gnosis from "../assets/img/chain/Gnosis.png";
 import Solana from "../assets/img/chain/Solana.svg";
 import Fuse from "../assets/img/chain/Fuse.svg";
-import Velas from "../assets/img/chain/Velas.svg";
+import Velas from "../assets/img/chain/velas.svg";
 import Tezos from "../assets/img/chain/Tezos.svg";
 import Iotex from "../assets/img/chain/iotx.svg";
-import Gnosis from "../assets/img/chain/Gnosis.png";
 import { Chain } from "xp.network/dist/consts";
 
 export const EVM = "EVM";

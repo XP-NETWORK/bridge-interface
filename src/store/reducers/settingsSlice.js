@@ -1,35 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { chains as valuesChains } from "../../components/values";
 
-export const chains = [
-  "Velas",
-  "Ethereum",
-  "BSC",
-  "Polygon",
-  "Algorand",
-  "Tron",
-  "Elrond",
-  "Avalanche",
-  "Fantom",
-  "xDai",
-  "Fuse",
-  "Cardano",
-  "Heco",
-  "Solana",
-  "Tezos",
-];
+export const chains = [...valuesChains];
 
 export const activeChains = [
-  "Velas",
-  "Ethereum",
-  "BSC",
-  "Polygon",
-  "Algorand",
-  "Tron",
-  "Elrond",
-  "Avalanche",
-  "Fantom",
-  "xDai",
-  "Fuse",
+  ...chains.filter((chain) => !chain.maintenance).map((c) => c.value),
 ];
 
 export const newChains = ["Velas"];
@@ -71,7 +46,7 @@ const initialState = {
   cardRadius: 25,
   accentColor: "#3e64ed",
   secondaryColor: "#62718a",
-  selectedChains: [...chains],
+  selectedChains: [...chains.map((c) => c.value)],
   selectedWallets: [...wallets],
   copied: null,
   borderColor: "#37405b",

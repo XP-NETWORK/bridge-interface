@@ -163,27 +163,37 @@ function WSettings({
                       <li
                         key={i}
                         className="blockChain_item"
-                        onClick={() => chainCheck(chain)}
+                        onClick={() => chainCheck(chain.value)}
                       >
                         <div className="select_nft">
                           <input
                             type="checkbox"
                             name=""
                             id=""
-                            checked={selectedChains.includes(chain)}
+                            checked={selectedChains.includes(chain.value)}
                           />
                           <span className="icon selectNfticon"></span>
                         </div>
                         <div className="blockChainItem">
-                          <img
-                            src={
-                              require(`./assets/img/nft/${chain}.svg`).default
-                            }
-                            alt={chain}
-                          />
+                          <img src={chain.image.src} alt={chain.value} />
 
-                          {chain}
-                          {comingSoonChains.includes(chain) ? (
+                          {chain.value}
+
+                          {chain.maintenance ? (
+                            <span
+                              style={{
+                                color: "grey",
+                                borderColor: "grey",
+                                fontSize: "11px",
+                              }}
+                            >
+                              Maintenance
+                            </span>
+                          ) : (
+                            ""
+                          )}
+
+                          {false && chain.coming ? (
                             <span
                               style={{
                                 color: "grey",
@@ -196,7 +206,11 @@ function WSettings({
                           ) : (
                             ""
                           )}
-                          {newChains.includes(chain) ? <span>new</span> : ""}
+                          {false && newChains.includes(chain.value) ? (
+                            <span>new</span>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </li>
                     ))}
@@ -816,6 +830,12 @@ function WSettings({
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
+
+          <div className="referalSwitch" onClick={toggleShow}>
+            <input type="checkbox" checked={showLink} />
+            <span>Powered by XP Network</span>
+          </div>
+
           <Accordion defaultActiveKey="18">
             <Accordion.Item eventKey="5">
               <Accordion.Header>Export Code</Accordion.Header>
@@ -856,10 +876,6 @@ function WSettings({
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
-          <div className="referalSwitch" onClick={toggleShow}>
-            <input type="checkbox" checked={showLink} />
-            <span>Powered by XP Network</span>
-          </div>
         </div>
       </div>
       <div

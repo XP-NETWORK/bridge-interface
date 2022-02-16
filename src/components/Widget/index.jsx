@@ -102,7 +102,7 @@ export default function Widget() {
     const kssa = document.querySelector(".NftSelect");
     const $img = document.createElement("svg");
     $img.innerHTML = power(color);
-    kssa?.appendChild($img);
+    if (widget) kssa?.appendChild($img);
   }, [widget, color]);
 
   useEffect(() => {
@@ -231,7 +231,7 @@ export default function Widget() {
         }
 
         ${selectedWallets
-          ?.map((wallet) => `.wllListItem[data-wallet="${wallet}"]`)
+          ?.map((wallet) => `li[data-wallet="${wallet}"]`)
           .join(", ")} {
           display: flex;
         }
