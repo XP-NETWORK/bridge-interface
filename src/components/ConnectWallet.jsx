@@ -473,12 +473,9 @@ function ConnectWallet() {
                   onClick={() => onWalletConnect()}
                   style={OFF}
                   className="wllListItem"
+                  data-wallet="WalletConnect"
                 >
-                  <img
-                    src={WalletConnect}
-                    alt="WalletConnect Icon"
-                    data-wallet="WalletConnect"
-                  />{" "}
+                  <img src={WalletConnect} alt="WalletConnect Icon" />{" "}
                   WalletConnect
                 </li>
                 <li
@@ -490,20 +487,18 @@ function ConnectWallet() {
                       : OFF
                   }
                   className="wllListItem"
+                  data-wallet="TrustWallet"
                 >
-                  <img
-                    src={TrustWallet}
-                    alt="WalletConnect Icon"
-                    data-wallet="Trust Wallet"
-                  />{" "}
-                  Trust Wallet
+                  <img src={TrustWallet} alt="WalletConnect Icon" /> Trust
+                  Wallet
                 </li>
                 <li
                   onClick={onMyAlgo}
                   style={from ? (from.type === "Algorand" ? {} : OFF) : ""}
                   className="wllListItem algo"
+                  data-wallet="MyAlgo"
                 >
-                  <img src={MyAlgoBlue} alt="" data-wallet="MyAlgo" /> MyAlgo
+                  <img src={MyAlgoBlue} alt="" /> MyAlgo
                 </li>
                 <li
                   onClick={connectAlgoSigner}
@@ -514,50 +509,43 @@ function ConnectWallet() {
                         : OFF
                       : ""
                   }
+                  data-wallet="AlgoSigner"
                   className="wllListItem algo"
                 >
-                  <img
-                    src={AlgoSignerIcon}
-                    alt="Algor Signer Icon"
-                    data-wallet="Algo Signer"
-                  />{" "}
-                  Algo Signer
+                  <img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo
+                  Signer
                 </li>
                 <li
                   onClick={() => onAlgoWallet()}
                   style={from ? (from.type === "Algorand" ? {} : OFF) : ""}
                   className="wllListItem algo"
                 >
-                  <img
-                    src={AlgorandWallet}
-                    alt="Algor Wallet Icon"
-                    data-wallet="Algorand Wallet"
-                  />{" "}
-                  Algorand Wallet
+                  <img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand
+                  Wallet
                 </li>
                 {/* <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li> */}
                 <Wallet
                   active={from?.type === "Tron"}
                   icon={Tron}
                   connection={connectTronlink}
-                  name={"TronKink"}
-                  data-wallet="TronLink"
+                  name={"TronLink"}
                 />
                 <li
                   onClick={() => onMaiar()}
                   style={from ? (from.type === "Elrond" ? {} : OFF) : ""}
                   className="wllListItem"
+                  data-wallet="Maiar"
                 >
-                  <img src={Maiar} alt="" data-wallet="Maiar" /> Maiar
+                  <img src={Maiar} alt="" /> Maiar
                 </li>
                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
                 <li
                   onClick={onBeacon}
                   style={from?.text === "Tezos" ? {} : OFF}
                   className="wllListItem beacon"
+                  data-wallet="Beacon"
                 >
-                  <img src={BeaconW} alt="Kukai Icon" data-wallet="Beacon" />{" "}
-                  Beacon
+                  <img src={BeaconW} alt="Kukai Icon" /> Beacon
                 </li>
                 <li
                   onClick={onTemple}
@@ -565,12 +553,12 @@ function ConnectWallet() {
                     from?.text === "Tezos" && window.innerWidth > 600 ? {} : OFF
                   }
                   className="wllListItem"
+                  data-wallet="TempleWallet"
                 >
                   <img
                     style={{ width: "28px" }}
                     src={Temple}
                     alt="Temple Icon"
-                    data-wallet="Temple Wallet"
                   />{" "}
                   Temple Wallet
                 </li>
@@ -578,13 +566,9 @@ function ConnectWallet() {
                   onClick={() => onMaiarExtension()}
                   style={from ? (from.type === "Elrond" ? {} : OFF) : ""}
                   className="wllListItem"
+                  data-wallet="MaiarExtension"
                 >
-                  <img
-                    src={Elrond}
-                    alt="Elrond Icon"
-                    data-wallet="Maiar Extension"
-                  />{" "}
-                  Maiar Extension
+                  <img src={Elrond} alt="Elrond Icon" /> Maiar Extension
                 </li>
                 <li style={OFF} className="wllListItem" data-wallet="Ledger">
                   <div>
