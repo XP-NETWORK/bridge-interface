@@ -57,7 +57,7 @@ function SendFees() {
             const bigNum = fee ? fee.multipliedBy(1.1).integerValue().toString(10) : undefined
             dispatch(setBigNumFees(bigNum))
             const fees =  await Web3Utils.fromWei(bigNum, "ether")
-            setFees(+fees)
+            setFees(+(fees*selectedNFTList.length))
         } catch (error) {
           console.log(error.data ? error.data.message : error.message);
         //   dispatch(setError(error))

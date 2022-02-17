@@ -7,7 +7,7 @@ import Approval from './innercomponents/Approval';
 import NFTgridView from './innercomponents/NFTgridView';
 import NFTlistView from './innercomponents/NFTlistView';
 import SendFees from './innercomponents/SendFees';
-import BigNumber from 'bignumber.js'
+// import BigNumber from 'bignumber.js'
 import NFTlistTop from './innercomponents/NFTlistTop';
 import { ethers } from "ethers";
 import { useSelector } from 'react-redux';
@@ -19,12 +19,9 @@ import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import {chainsConfig, CHAIN_INFO} from './values'
 import { algoConnector } from "../wallet/connectors"
 import MyAlgoConnect from '@randlabs/myalgo-connect';
-import { useWeb3React } from '@web3-react/core';
+// import { useWeb3React } from '@web3-react/core';
 import { TempleWallet } from "@temple-wallet/dapp";
 import { BeaconWallet } from "@taquito/beacon-wallet";
-
-
-
 
 function NFTaccount() {
     const dispatch = useDispatch()
@@ -33,7 +30,6 @@ function NFTaccount() {
     const type = useSelector(state => state.general.from.type)
     const algorandAccount = useSelector(s => s.general.algorandAccount)
     const to = useSelector(state => state.general.to.key)
-    const isToEVM = useSelector(state => state.general.to).type === 'EVM'
     const NFTListView = useSelector(state => state.general.NFTListView)
     const nfts = useSelector(state => state.general.NFTList)
     const tronWallet = useSelector(state => state.general.tronWallet)
@@ -41,23 +37,25 @@ function NFTaccount() {
     const tezosAccount = useSelector(state => state.general.tezosAccount)
     const kukaiWallet = useSelector(state => state.general.kukaiWallet)
     const maiarProvider = useSelector(state => state.general.maiarProvider)
-    const factory = getFactory()
-    const approvedNFTList = useSelector(state => state.general.approvedNFTList)
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
     const receiver = useSelector(state => state.general.receiver)
-    const Web3Utils = require("web3-utils");
     const approved = useSelector(state => state.general.approved)
-    const [estimateInterval, setEstimateInterval] = useState()
-    const [fees, setFees] = useState(0)
-    const onMaiar = useSelector(state => state.general.onMaiar)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const bigNumberFees = useSelector(state => state.general.bigNumberFees)
     const algorandWallet = useSelector(state => state.general.AlgorandWallet)
     const MyAlgo = useSelector(state => state.general.MyAlgo)
-    const modalError = useSelector(state => state.general.error)
-    const WCProvider = useSelector(state => state.general.WCProvider)
-    const { library } = useWeb3React()
     const testnet = useSelector(state => state.general.testNet)
+    
+    // const [fees, setFees] = useState(0)
+    // const factory = getFactory()
+    // const isToEVM = useSelector(state => state.general.to).type === 'EVM'
+    // const approvedNFTList = useSelector(state => state.general.approvedNFTList)
+    // const Web3Utils = require("web3-utils");
+    // const [estimateInterval, setEstimateInterval] = useState()
+    // const onMaiar = useSelector(state => state.general.onMaiar)
+    // const modalError = useSelector(state => state.general.error)
+    // const WCProvider = useSelector(state => state.general.WCProvider)
+    // const { library } = useWeb3React()
     
     
     const getAlgorandWalletSigner = async () => {
@@ -190,7 +188,6 @@ function NFTaccount() {
         const signer = await getSigner()
         const nonce = CHAIN_INFO[to].nonce
         const nftSmartContract = nft.native.contract
-        // let mintWidth 
         let factory 
         let toChain 
         let fromChain
@@ -264,9 +261,7 @@ function NFTaccount() {
         }
     }
 
-
     const sendAllNFTs = () => {
-       
         if(!loading && approved) {
             setLoading(true)
             dispatch(setTransferLoaderModal(true))
@@ -283,7 +278,7 @@ function NFTaccount() {
     useEffect( async () => {
     }, [nfts])
 
-
+// ! Estimate moved to SendFees component
     // useEffect(() => {
     //     if(selectedNFTList.length > 0) estimate();
     //     else setFees("0")
@@ -322,8 +317,7 @@ function NFTaccount() {
                         <div className="mobileOnly">
                             <Approval getNft={getNFTsList} />
                             <div className="nftSendBtn disenable">
-                            {/* <NFTsuccess/> */}
-                            <SendFees fees={fees * selectedNFTList?.length}/>
+                            <SendFees />
                             <div onClick={sendAllNFTs} className={approved && receiver && !loading ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
                                 <a  className="themBtn">
                                     {loading ? 'Processing' : 'Send' }
@@ -343,7 +337,7 @@ function NFTaccount() {
                                     <>
                                         <SelectedNFT />
                                         <Approval />
-                                        <SendFees fees={fees * selectedNFTList?.length}/>
+                                        <SendFees />
                                         <div 
                                         onClick={sendAllNFTs} className={approved && receiver && !loading ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
                                             <a  className="themBtn">
