@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 import Close from "../assets/img/icons/close.svg";
+import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
 import MetaMask from "../assets/img/wallet/MetaMask.svg";
 import Tron from "../assets/img/wallet/TronLink.svg";
 import Elrond from "../assets/img/wallet/Elrond.svg";
@@ -67,6 +68,7 @@ import { connectMetaMask, connectAlgoSigner } from "./ConnectWalletHelper";
 import Wallet from "./Wallet/Wallet";
 
 function ConnectWallet() {
+  const widget = new URLSearchParams(window.location.search).get("widget");
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
@@ -454,28 +456,25 @@ function ConnectWallet() {
           <Modal.Header>
             <Modal.Title>Connect Wallet</Modal.Title>
             <span className="CloseModal" onClick={handleClose}>
-              <img src={Close} alt="" />
+              {widget ? (
+                <CloseComp className="svgWidget" />
+              ) : (
+                <img src={Close} alt="" />
+              )}
             </span>
           </Modal.Header>
           <Modal.Body>
             <div className="walletListBox">
               <ul className="walletList scrollSty">
                 {/* !!! style={ from ? from.type === "EVM" && from.text !== "Fuse" ? {} : OFF : ''} */}
-                <li
-                  onClick={() => connectMetaMask(activate)}
-                  style={from ? (from.type === "EVM" ? {} : OFF) : ""}
-                  className="wllListItem"
-                  data-wallet="MetaMask"
-                >
-                  <img src={MetaMask} alt="MetaMask Icon" /> MetaMask
-                </li>
-                {/* <Wallet
+                {/* <li onClick={() => connectMetaMask(activate)} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li> */}
+                <Wallet
                   active={from?.type === "EVM"}
                   icon={MetaMask}
                   connection={() => connectMetaMask(activate)}
                   name={"MetaMask"}
                   data-wallet="MetaMask"
-                /> */}
+                />
                 <li
                   onClick={() => onWalletConnect()}
                   style={OFF}
@@ -530,20 +529,13 @@ function ConnectWallet() {
                   <img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand
                   Wallet
                 </li>
-                <li
-                  onClick={() => connectTronlink()}
-                  style={from ? (from.type === "Tron" ? {} : OFF) : ""}
-                  className="wllListItem"
-                  data-wallet="TronLink"
-                >
-                  <img src={Tron} alt="Tron Icon" /> TronLink
-                </li>
-                {/* <Wallet
+                {/* <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li> */}
+                <Wallet
                   active={from?.type === "Tron"}
                   icon={Tron}
                   connection={connectTronlink}
                   name={"TronLink"}
-                /> */}
+                />
                 <li
                   onClick={() => onMaiar()}
                   style={from ? (from.type === "Elrond" ? {} : OFF) : ""}
