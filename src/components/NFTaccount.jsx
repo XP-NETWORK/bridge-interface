@@ -11,11 +11,11 @@ import NFTlistTop from './innercomponents/NFTlistTop';
 import { useSelector } from 'react-redux';
 import {  setError } from "../store/reducers/generalSlice"
 import { useDispatch } from 'react-redux';
-import { algoConnector } from "../wallet/connectors"
 import ButtonToTransfer from './innercomponents/ButtonToTransfer';
-import MyAlgoConnect from '@randlabs/myalgo-connect';
-import { getFactory, setNFTS } from "../wallet/helpers"
+import { setNFTS } from "../wallet/helpers"
 import Comment from "../components/innercomponents/Comment"
+// import MyAlgoConnect from '@randlabs/myalgo-connect';
+// import { algoConnector } from "../wallet/connectors"
 // import BigNumber from 'bignumber.js'
 // import { ethers } from "ethers";
 // import {chainsConfig, CHAIN_INFO} from './values'
@@ -38,7 +38,7 @@ function NFTaccount() {
     const tezosAccount = useSelector(state => state.general.tezosAccount)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const testnet = useSelector(state => state.general.testNet)
-    
+
     // const [loading, setLoading] = useState()
     // const to = useSelector(state => state.general.to.key)
     // const kukaiWallet = useSelector(state => state.general.kukaiWallet)

@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { chains, CHAIN_INFO }from '../components/values'
+import { useDispatch, useSelector } from 'react-redux';
+import { chains }from '../components/values'
 import { setChainModal, setDepartureOrDestination, setTo, setFrom, setChainSearch, setSwitchDestination } from "../store/reducers/generalSlice"
 import Chain from './innercomponents/Chain';
 import ChainSearch from './innercomponents/ChainSearch';
-import SelectDestination from './SelectDestination';
-// import CHAIN_INFO from "./values"
+import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
+import Close from '../assets/img/icons/close.svg';
+
 
 
 export default function NFTChainListBox() {
@@ -18,6 +18,7 @@ export default function NFTChainListBox() {
     const fromChains = chains.sort((a,b) =>  a.order - b.order);
     const toChains = chains.sort((a,b) =>  a.order - b.order);
     const testnet = useSelector(state => state.general.testNet)
+    const show = useSelector(state => state.general.showChainModal)
 
     const handleClose = () => {
         dispatch(setChainModal(false))
@@ -47,32 +48,39 @@ export default function NFTChainListBox() {
     }, [to])
 
     return (
-        <>
-            {/* <SelectDestination /> */}
+        <Modal animation={false} show={show} onHide={() => handleClose()} className="ChainModal">
+            <Modal.Header className="text-left">
+             <Modal.Title>{`Select ${departureOrDestination === 'destination' ? 'destination' : 'departure'} chain`}</Modal.Title>
+                <span className="CloseModal" onClick={() => handleClose()}>
+                <img src={Close} alt="" />
+                </span>
+            </Modal.Header>
+            <Modal.Body>
             <div className="nftChainListBox">
                 <ChainSearch />
                 <ul className="nftChainList scrollSty">
                     { !from ? fromChains.filter(chain => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '')).map( filteredChain => { 
-                        const { image, text, key, value, coming, newChain, maintenance, testNet } = filteredChain;
+                        const { image, text, key, coming, newChain, maintenance, testNet } = filteredChain;
                         if(testnet){
                             return testNet ? <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`} /> : ''
                         }
                         else return ( 
                             <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`} />
                         )
-                     }) 
+                     })
                      :
                      toChains.filter(chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).map(chain => {
-                        const { image, text, key, value, coming , newChain, maintenance, testNet } = chain;
+                        const { image, text, key, coming , newChain, maintenance, testNet } = chain;
                         if(testnet){
                             return testNet && chain.key !== from.key ? <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`} /> : ''
                         }
                         else return chain.key !== from.key ? <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} chainKey={key} coming={coming} text={text} filteredChain={chain} image={image} key={`chain-${key}`}  maintenance={maintenance} />
                         :''
                      })
-                    }            
+                    }
                 </ul> 
             </div>
-        </>
+    </Modal.Body>
+</Modal>
     )
 }
