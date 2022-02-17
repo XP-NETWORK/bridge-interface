@@ -199,3 +199,9 @@ export const connectMaiar = async () => {
         }
       }
     }
+
+    export const connectAlgoWallet = async () => {
+      if (!algoConnector.connected) {
+          algoConnector.createSession()   
+      }
+    }

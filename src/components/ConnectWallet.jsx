@@ -14,8 +14,8 @@ import TrustWallet from "../assets/img/wallet/TWT.svg"
 import BeaconW from "../assets/img/wallet/BeaconWhite.svg"
 // import BeaconB from "../assets/img/wallet/BeaconBlue.svg"
 import Temple from "../assets/img/wallet/Temple.svg"
-import AlgorandWallet from "../assets/img/wallet/AlgorandWallet.svg"
-import WalletConnect from "../assets/img/wallet/WalletConnect 3.svg"
+// import AlgorandWallet from "../assets/img/wallet/AlgorandWallet.svg"
+// import WalletConnect from "../assets/img/wallet/WalletConnect 3.svg"
 import NFTworng from './NFTworng';
 import { useDispatch, useSelector } from 'react-redux';
 import { useWeb3React } from "@web3-react/core";
@@ -33,10 +33,11 @@ import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
 // import { DAppClient } from "@airgap/beacon-sdk";
-import { connectMetaMask, connectAlgoSigner, connectTempleWallet, connectBeacon, connectMaiar, connectMyAlgo, connectMaiarExtension, connectTronlink } from "./ConnectWalletHelper"
+import { connectMetaMask, connectAlgoSigner, connectTempleWallet, connectBeacon, connectMaiar, connectMyAlgo, connectMaiarExtension, connectTronlink, connectAlgoWallet } from "./ConnectWalletHelper"
 import Wallet from './Wallet/Wallet';
 import EVMWallet from './Wallet/EVMWallet';
 import TezosWallet from './Wallet/TezosWallet';
+import AlgorandWallet from './Wallet/AlgorandWallet';
 
 
 
@@ -76,13 +77,13 @@ function ConnectWallet() {
     Tezos.setWalletProvider(wallet);
 
   //   function getMobOps() {
-  //     // debugger
   //     var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
   //     if (/android/i.test(userAgent)) {
   //         return true
   //     }
   // }
+
     //! onMaiarExtension connection  < Removed to ConnectWalletHelper >.
   // const onMaiarExtension = async () => {
   //   // debugger
@@ -122,12 +123,12 @@ function ConnectWallet() {
     //       setShow(false)
     // }
 
-    const onAlgoWallet = async () => {
-      
-      if (!algoConnector.connected) {
-          algoConnector.createSession()   
-      }
-    }
+    //! onAlgoWallet connection  < Removed to ConnectWalletHelper >.
+    // const onAlgoWallet = async () => {
+    //   if (!algoConnector.connected) {
+    //       algoConnector.createSession()   
+    //   }
+    // }
 
     //! onTrustWallet connection  < Removed to ConnectWalletHelper >.
     // const onTrustWallet = async () => {
@@ -408,21 +409,24 @@ function ConnectWallet() {
                               {/* !!! style={ from ? from.type === "EVM" && from.text !== "Fuse" ? {} : OFF : ''} */}
                                 {/* <li onClick={() => connectMetaMask(activate)} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li> */}
                                 {/* <Wallet active={from?.type === "EVM"} icon={MetaMask} connection={() => connectMetaMask(activate)} name={"MetaMask"}/> */}
-                                <EVMWallet wallet={"MetaMask"} />
                                 {/* <li onClick={() => onWalletConnect()} style={  OFF } className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li> */}
-                                <EVMWallet wallet={undefined} /> {/* Wallet Connect */}
-                                <EVMWallet wallet={"TrustWallet"} />
                                 {/* <li onClick={() => onTrustWallet()} style={(getMobOps() && window.innerWidth <= 600 && isEVM()) || (window.ethereum && window.innerWidth <= 600) ? {} : OFF } className="wllListItem"><img src={TrustWallet} alt="WalletConnect Icon" /> Trust Wallet</li> */}
-                                <li onClick={connectMyAlgo} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={MyAlgoBlue} alt="" /> MyAlgo</li>
-                                <li onClick={connectAlgoSigner} style={ from ? (from.type === "Algorand" && window.innerWidth > 600 ) ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo Signer</li>
-                                <li onClick={onAlgoWallet} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li>
+                                {/* <li onClick={connectMyAlgo} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={MyAlgoBlue} alt="" /> MyAlgo</li> */}
+                                {/* <li onClick={connectAlgoSigner} style={ from ? (from.type === "Algorand" && window.innerWidth > 600 ) ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo Signer</li> */}
+                                {/* <li onClick={connectAlgoWallet} style={ OFF } className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li> */}
                                 {/* <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li> */}
-                                <Wallet active={from?.type === 'Tron'} icon={Tron} connection={connectTronlink} name={"TronLink"} />
-                                <li onClick={connectMaiar} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
                                 {/* <li onClick={connectBeacon} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem beacon"><img src={BeaconW} alt="Kukai Icon" /> Beacon</li> */}
-                                <TezosWallet wallet={"TempleWallet"} />
                                 {/* <li onClick={connectTempleWallet} style={ (from?.text === "Tezos" && window.innerWidth > 600 ) ? {} : OFF} className="wllListItem"><img style={{width: "28px"}} src={Temple} alt="Temple Icon" /> Temple Wallet</li> */}
+                                <EVMWallet wallet={"MetaMask"} />
+                                <EVMWallet wallet={undefined} /> {/* Wallet Connect */}
+                                <EVMWallet wallet={"TrustWallet"} />
+                                <AlgorandWallet wallet={"MyAlgo"} />
+                                <AlgorandWallet wallet={"AlgoSigner"} />
+                                <AlgorandWallet wallet={undefined} /> {/* Algorand Wallet */}
+                                <Wallet active={from?.type === 'Tron'} icon={Tron} connection={connectTronlink} name={"TronLink"} />
+                                <li onClick={connectMaiar} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
+                                <TezosWallet wallet={"TempleWallet"} />
                                 <TezosWallet wallet={undefined} /> {/* Beacon */}
                                 <li onClick={connectMaiarExtension} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
                                 <li style={ OFF } className="wllListItem">
