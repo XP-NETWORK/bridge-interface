@@ -31,6 +31,7 @@ const initialState = {
   currentTx: 0,
   bigLoader: true,
   wsettings: false,
+
   // approved: ''
 };
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import InfLith from "../../assets/img/icons/infoLifht.svg";
+import { ReactComponent as InfLithComp } from "../../assets/img/icons/infoLifht.svg";
 import { ChainFactoryConfigs, ChainFactory } from "xp.network/dist";
 import { Chain, Config } from "xp.network/dist/consts";
 import { ethers } from "ethers";
@@ -47,6 +48,7 @@ function Approval(props) {
   const MyAlgo = useSelector((state) => state.general.MyAlgo);
   const templeWallet = useSelector((state) => state.general.templeWallet);
   const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
+  const widget = useSelector((state) => state.general.widget);
 
   const getAlgorandWalletSigner = async () => {
     const base = new MyAlgoConnect();
@@ -248,7 +250,11 @@ function Approval(props) {
             We'd like to make sure you really want to send the NFTs and pay the
             associated fees.
           </span>
-          <img src={InfLith} alt="Inf" />
+          {widget ? (
+            <InfLithComp className="svgWidget" />
+          ) : (
+            <img src={InfLith} alt="Inf" />
+          )}
         </div>
       </div>
       <div

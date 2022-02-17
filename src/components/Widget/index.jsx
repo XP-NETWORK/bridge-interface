@@ -15,9 +15,7 @@ const mobileOnlyBanner = `
 <div class="mobileOnlyBanner"><img src=${mobileBanner} alt="mobileOnlyXP"/><div class="testComp">
     <h2>Widget</h2>
     <p>Mobile is not yet supported, please use widget on desktop.</p>
-
 </div></div>  
-
 `;
 
 const overlay = document.createElement("div");
@@ -137,9 +135,31 @@ export default function Widget() {
       //$img.onclick = window.open("https://xp.network/", "_blank").focus();
 
       $style.innerHTML = `
+
+      ${
+        wsettings
+          ? `
+          .modal-backdrop.show, .modal {
+              width: calc(100% - 300px);
+              left: initial;
+              right: 0;
+          }
+      
+      `
+          : ""
+      }
+
+      .setting_sidebar {
+        font-size: 16px !important;
+      
+      }
       
       html, body, #root, .App, .nftContainer {
         height: 100%;
+      }
+
+      div#root {
+        overflow-y: auto;
       }
 
 
@@ -343,7 +363,7 @@ export default function Widget() {
         }
 
         .svgWidget:hover {
-          filter: brightness(125%);
+          filter: brightness(135%);
         }
 
         .swpBtn:hover path:nth-child(1){
@@ -389,6 +409,14 @@ export default function Widget() {
           border: 1px solid  ${borderColor ? borderColor : ""};
         }
 
+        .approve-loader__container__text {
+
+          color: ${color ? color : ""};
+        }
+
+        .approve-loader {
+            border-left: ${color ? "0.5em solid " + color : ""}
+        }
 
         @media only screen and (max-width: 860px) {
           .mobSearch input::placeholder, .mobileOnly.seleNftMob {

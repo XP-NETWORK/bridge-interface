@@ -178,7 +178,9 @@ function WSettings({
                         <div className="blockChainItem">
                           <img src={chain.image.src} alt={chain.value} />
 
-                          {chain.value}
+                          {chain.value === "xDai"
+                            ? "Gnosis Chain"
+                            : chain.value}
 
                           {chain.maintenance ? (
                             <span

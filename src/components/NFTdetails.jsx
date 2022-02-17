@@ -3,8 +3,10 @@ import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 import moment from "moment";
 import brockenurl from "../assets/img/brockenurl.png";
 import Close from "../assets/img/icons/close.svg";
+import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
 import { checkVideoFormat, checkImageFormat } from "../wallet/oldHelper";
 import INF from "../assets/img/icons/Inf.svg";
+import { ReactComponent as INFComp } from "../assets/img/icons/Inf.svg";
 import { setupURI } from "../wallet/oldHelper";
 import { isValidHttpUrl } from "../wallet/helpers";
 import { chainsConfig } from "./values";
@@ -12,6 +14,7 @@ import { getUrl } from "./innercomponents/NFTHelper";
 import VideoOrImage from "./innercomponents/VideoOrImage";
 
 function NFTdetails({ nftInf }) {
+  const widget = new URLSearchParams(window.location.search).get("widget");
   const {
     name,
     description,
@@ -39,7 +42,7 @@ function NFTdetails({ nftInf }) {
             </Button> */}
       <div className="info-icon__container">
         <span className="NFTInf" onClick={handleShow}>
-          <img src={INF} />
+          {widget ? <INFComp className="svgWidget" /> : <img src={INF} />}
         </span>
       </div>
       <Modal
@@ -51,7 +54,11 @@ function NFTdetails({ nftInf }) {
         <Modal.Header>
           <Modal.Title>NFT Details</Modal.Title>
           <span className="CloseModal" onClick={handleClose}>
-            <img src={Close} alt="" />
+            {widget ? (
+              <CloseComp className="svgWidget" />
+            ) : (
+              <img src={Close} alt="" />
+            )}
           </span>
         </Modal.Header>
         <Modal.Body className="modalBody">
