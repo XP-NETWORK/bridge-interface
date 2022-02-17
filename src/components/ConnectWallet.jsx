@@ -1,57 +1,33 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Modal } from "react-bootstrap";
 import Close from '../assets/img/icons/close.svg';
-import MetaMask from '../assets/img/wallet/MetaMask.svg';
-import Tron from '../assets/img/wallet/TronLink.svg';
-import Elrond from '../assets/img/wallet/Elrond.svg';
-import MyAlgoBlue from "../assets/img/wallet/MyAlgoBlue.svg"
 import Ledger from '../assets/img/wallet/Ledger.svg';
-import AlgoSignerIcon from '../assets/img/wallet/Algo Signer.png';
-import Maiar from '../assets/img/wallet/Maiar.svg';
 import Trezor from '../assets/img/wallet/Trezor.svg';
-import TrustWallet from "../assets/img/wallet/TWT.svg"
-// import Kukai from "../assets/img/wallet/kukai.svg"
-import BeaconW from "../assets/img/wallet/BeaconWhite.svg"
-// import BeaconB from "../assets/img/wallet/BeaconBlue.svg"
-import Temple from "../assets/img/wallet/Temple.svg"
-// import AlgorandWallet from "../assets/img/wallet/AlgorandWallet.svg"
-// import WalletConnect from "../assets/img/wallet/WalletConnect 3.svg"
 import NFTworng from './NFTworng';
 import { useDispatch, useSelector } from 'react-redux';
 import { useWeb3React } from "@web3-react/core";
-import { injected, algoConnector } from "../wallet/connectors"
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
-import { EVM, ELROND, chainsConfig } from "../components/values"
-import { setTronWallet, setAccount, setConfirmMaiarMob, setAlgorandWallet, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp, setTrustWallet, setAlgoSigner, setAlgorandAccount, setMyAlgo, setTezosAccount, setKukaiWallet, setTempleWallet } from "../store/reducers/generalSlice"
-import { Address, ExtensionProvider, WalletConnectProvider, ProxyProvider } from "@elrondnetwork/erdjs"
+import { algoConnector } from "../wallet/connectors"
+import { setAccount, setAlgorandWallet,setStep, setWrongNetwork,  setAlgorandAccount, setQrCodeString } from "../store/reducers/generalSlice"
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from '../components/values';
-import QRCode from 'qrcode'
 import MaiarModal from './MaiarModal';
-import { isEVM } from '../wallet/oldHelper';
-import MyAlgoConnect from '@randlabs/myalgo-connect';
-import { TezosToolkit } from "@taquito/taquito";
-import { BeaconWallet } from "@taquito/beacon-wallet";
-import { TempleWallet } from "@temple-wallet/dapp";
-// import { DAppClient } from "@airgap/beacon-sdk";
-import { connectMetaMask, connectAlgoSigner, connectTempleWallet, connectBeacon, connectMaiar, connectMyAlgo, connectMaiarExtension, connectTronlink, connectAlgoWallet } from "./ConnectWalletHelper"
-import Wallet from './Wallet/Wallet';
 import EVMWallet from './Wallet/EVMWallet';
 import TezosWallet from './Wallet/TezosWallet';
 import AlgorandWallet from './Wallet/AlgorandWallet';
-
-
+import TronWallet from './Wallet/TronWallet';
+import ElrondWallet from './Wallet/ElrondWallet';
 
 function ConnectWallet() {
-
     const dispatch = useDispatch()
     const from = useSelector(state => state.general.from)
     const to = useSelector(state => state.general.to)
     const [show, setShow] = useState();
     const OFF = { opacity: 0.6, pointerEvents: "none" };
+    const qrCodeString = useSelector(state => state.general.qrCodeString)
+    const qrCodeImage = useSelector(state => state.general.qrCodeImage)
     const handleClose = () => { 
       setShow(false)
-      if(strQR){
-        setStrQr('')
+      if(qrCodeImage){
+        dispatch(setQrCodeString(''))
       }
     }
     const handleShow = () => setShow(true);
@@ -64,17 +40,16 @@ function ConnectWallet() {
     const algorandWallet = useSelector(state => state.general.AlgorandWallet)
     const onWC = useSelector(state => state.general.WalletConnect)
     const MaiarWallet = useSelector(state => state.general.onMaiar)
-    const elrondAccount = useSelector(state => state.general.elrondAccount)
-    const [qrCodeString, setQqrCodeString] = useState()
-    const [strQR, setStrQr] = useState()
-    const { chainId, account, activate  } = useWeb3React();
+    const { chainId, account } = useWeb3React();
     const testnet = useSelector(state => state.general.testNet)
     const MyAlgo = useSelector(state => state.general.MyAlgo)
-    const modalError = useSelector(state => state.generalerror)
-    
-    const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
-    const wallet = new BeaconWallet({ name: "Beacon Docs Taquito" });
-    Tezos.setWalletProvider(wallet);
+
+    // const modalError = useSelector(state => state.generalerror)
+    // const [strQR, setStrQr] = useState()
+    // const [qrCodeString, setQqrCodeString] = useState()
+    // const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
+    // const wallet = new BeaconWallet({ name: "Beacon Docs Taquito" });
+    // Tezos.setWalletProvider(wallet);
 
   //   function getMobOps() {
   //     var userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -389,13 +364,10 @@ function ConnectWallet() {
     return (
         <div>
             <NFTworng />
-            {/* <Button variant="primary" onClick={handleShow}>
-                Wallet
-            </Button> */}
             <div className={from && to ? "connectNft" : "disabled"}>
                     <a href="#" className="themBtn disabled" onClick={handleShow}>Continue bridging -<span>{'>'}</span> </a>
             </div>
-            { !strQR ?
+            { !qrCodeString ?
                 <Modal show={show} onHide={handleClose} animation={false} className="ChainModal">
                     <Modal.Header>
                         <Modal.Title>Connect Wallet</Modal.Title>
@@ -406,7 +378,7 @@ function ConnectWallet() {
                     <Modal.Body>
                         <div className="walletListBox">
                             <ul className="walletList scrollSty">
-                              {/* !!! style={ from ? from.type === "EVM" && from.text !== "Fuse" ? {} : OFF : ''} */}
+                                {/* !!! style={ from ? from.type === "EVM" && from.text !== "Fuse" ? {} : OFF : ''} */}
                                 {/* <li onClick={() => connectMetaMask(activate)} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li> */}
                                 {/* <Wallet active={from?.type === "EVM"} icon={MetaMask} connection={() => connectMetaMask(activate)} name={"MetaMask"}/> */}
                                 {/* <li onClick={() => onWalletConnect()} style={  OFF } className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li> */}
@@ -418,37 +390,28 @@ function ConnectWallet() {
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
                                 {/* <li onClick={connectBeacon} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem beacon"><img src={BeaconW} alt="Kukai Icon" /> Beacon</li> */}
                                 {/* <li onClick={connectTempleWallet} style={ (from?.text === "Tezos" && window.innerWidth > 600 ) ? {} : OFF} className="wllListItem"><img style={{width: "28px"}} src={Temple} alt="Temple Icon" /> Temple Wallet</li> */}
+                                {/* <Wallet active={from?.type === 'Tron'} icon={Tron} connection={connectTronlink} name={"TronLink"} /> */}
+                                {/* <li onClick={connectMaiar} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li> */}
+                                {/* <li onClick={connectMaiarExtension} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li> */}
                                 <EVMWallet wallet={"MetaMask"} />
                                 <EVMWallet wallet={undefined} /> {/* Wallet Connect */}
                                 <EVMWallet wallet={"TrustWallet"} />
                                 <AlgorandWallet wallet={"MyAlgo"} />
                                 <AlgorandWallet wallet={"AlgoSigner"} />
                                 <AlgorandWallet wallet={undefined} /> {/* Algorand Wallet */}
-                                <Wallet active={from?.type === 'Tron'} icon={Tron} connection={connectTronlink} name={"TronLink"} />
-                                <li onClick={connectMaiar} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
+                                <TronWallet />
+                                <ElrondWallet wallet={"Maiar"} />
                                 <TezosWallet wallet={"TempleWallet"} />
                                 <TezosWallet wallet={undefined} /> {/* Beacon */}
-                                <li onClick={connectMaiarExtension} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
-                                <li style={ OFF } className="wllListItem">
-                                  <div>
-                                    <img src={Ledger} alt="Ledger Icon" />
-                                    Ledger
-                                  </div>
-                                  <div className="coming-chain">Coming soon</div>
-                                </li>
-                                <li style={ OFF } className="wllListItem">
-                                  <div>
-                                    <img style={{marginLift: "-5px"}} src={Trezor} alt="Trezor Icon" />
-                                    Trezor
-                                  </div>
-                                  <div className="coming-chain">Coming soon</div>
-                                </li>
+                                <ElrondWallet wallet={undefined} /> {/** Maiar Extension*/}
+                                <li style={ OFF } className="wllListItem"><div><img src={Ledger} alt="Ledger Icon" />Ledger</div><div className="coming-chain">Coming soon</div></li>
+                                <li style={ OFF } className="wllListItem"><div><img style={{marginLift: "-5px"}} src={Trezor} alt="Trezor Icon" />Trezor</div><div className="coming-chain">Coming soon</div></li>
                             </ul>
                         </div>
                     </Modal.Body>
                 </Modal>
                 :
-                <MaiarModal handleClose={handleClose} strQR={strQR} qrCodeString={qrCodeString} show={show} />
+                <MaiarModal handleClose={handleClose} strQR={qrCodeImage} qrCodeString={qrCodeString} show={show} />
             }
         </div>
     )

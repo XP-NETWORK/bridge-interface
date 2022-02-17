@@ -1,17 +1,35 @@
 
 import { TempleWallet } from "@temple-wallet/dapp";
 import { injected, algoConnector } from "../wallet/connectors"
-import { useWeb3React } from "@web3-react/core";
 import store  from "../store/store"
-import { setTronWallet, setAccount, setConfirmMaiarMob, setAlgorandWallet, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp, setTrustWallet, setAlgoSigner, setAlgorandAccount, setMyAlgo, setTezosAccount, setKukaiWallet, setTempleWallet, setQrCode, setQrImage, setQrCodeString } from "../store/reducers/generalSlice"
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { WalletConnectProvider, ProxyProvider, ExtensionProvider } from "@elrondnetwork/erdjs"
 import QRCode from 'qrcode'
+import { setTronWallet, 
+  setConfirmMaiarMob, 
+  setTronLink, 
+  setMetaMask, 
+  setTronLoginError, 
+  setStep, 
+  setOnMaiar, 
+  setElrondAccount, 
+  setMaiarProvider, 
+  setReset, 
+  setError, 
+  setTronPopUp, 
+  setAlgoSigner, 
+  setAlgorandAccount,
+  setMyAlgo, 
+  setTezosAccount, 
+  setKukaiWallet, 
+  setTempleWallet, 
+  setQrImage, 
+  setQrCodeString } from "../store/reducers/generalSlice"
+
 
 const { to, from, modalError } = store.getState()
-
 
 // EVM blockchain connection ( MetaMask )
 export const connectMetaMask = async activate => {
@@ -105,7 +123,7 @@ const onClientConnect = ( maiarProvider ) => {
     onClientLogin: async () => {
         const add = await maiarProvider.getAddress()
       store.dispatch(setConfirmMaiarMob(true))
-      store.sdispatch(setElrondAccount(add))
+      store.dispatch(setElrondAccount(add))
       store.dispatch(setMaiarProvider(maiarProvider))
       store.dispatch(setOnMaiar(true))
       store.dispatch(setStep(2))
@@ -123,7 +141,10 @@ const generateQR = async text => {
     console.error(err)
   }
 }
+// Elrond blockchain connection ( Maiar )
 export const connectMaiar = async () => {
+  console.log("dsfsdfsdfsdfdf")
+  // debugger
     const provider = new ProxyProvider( "https://gateway.elrond.com")
     const maiarProvider = new WalletConnectProvider(provider, 'https://bridge.walletconnect.org/', onClientConnect);
       try {
@@ -132,7 +153,6 @@ export const connectMaiar = async () => {
         const qrCodeString = await maiarProvider.login()
         store.dispatch(setQrCodeString(qrCodeString))
         const qr = await generateQR(qrCodeString)
-        
         store.dispatch(setQrImage(qr))
       } catch (error) {
         store.dispatch(setError(error))
@@ -143,8 +163,8 @@ export const connectMaiar = async () => {
       }
   }
 
+// Elrond blockchain connection ( Maiar Extension )
   export const connectMaiarExtension = async () => {
-    // debugger
     const instance = ExtensionProvider.getInstance()
     try {
       await instance.init()
@@ -160,8 +180,8 @@ export const connectMaiar = async () => {
     }
   }
 
+// Tron blockchain connection ( TronLink )
   export const connectTronlink = async () => {
-    // debugger
       if(window.innerWidth <= 600 && !window.tronWeb){
         store.dispatch(setTronPopUp(true))
       }
@@ -200,6 +220,7 @@ export const connectMaiar = async () => {
       }
     }
 
+// Algorand blockchain connection ( Algo Wallet )
     export const connectAlgoWallet = async () => {
       if (!algoConnector.connected) {
           algoConnector.createSession()   

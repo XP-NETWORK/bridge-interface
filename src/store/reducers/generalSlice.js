@@ -17,7 +17,7 @@ const generalSlice = createSlice({
   initialState,
   reducers: {
     setQrCodeString(state, action){
-      state.qeCodeString = action.payload
+      state.qrCodeString = action.payload
     },
     setQrImage(state, action){
       state.qrCodeImage = action.payload
