@@ -187,7 +187,8 @@ function NFTaccount() {
     const sendEach = async (nft, index) => {
         debugger
         const signer = await getSigner()
-        const nonce = CHAIN_INFO[to].nonce
+        const toNonce = CHAIN_INFO[to].nonce
+        const fromNonce = CHAIN_INFO[from].nonce
         const nftSmartContract = nft.native.contract
         // let mintWidth 
         let factory 
@@ -198,7 +199,7 @@ function NFTaccount() {
             if(from === "Tron"){
                 factory = await getFactory()
                 const contract = nftSmartContract.toLowerCase()
-                const mintWidth = await factory.getVerifiedContracts(contract, nonce)
+                const mintWidth = await factory.getVerifiedContracts(contract, toNonce, fromNonce)
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
                 result = await factory.transferNft(
@@ -217,7 +218,7 @@ function NFTaccount() {
             else{
                 factory = await getFactory()
                 const contract = nftSmartContract.toLowerCase()
-                const mintWidth = await factory.getVerifiedContracts(contract, nonce)
+                const mintWidth = await factory.getVerifiedContracts(contract, toNonce, fromNonce)
                 console.log("mintWidth: ", mintWidth, )
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
