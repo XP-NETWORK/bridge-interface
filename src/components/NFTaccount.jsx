@@ -219,7 +219,6 @@ function NFTaccount() {
                 factory = await getFactory()
                 const contract = nftSmartContract.toLowerCase()
                 const mintWidth = await factory.getVerifiedContracts(contract, nonce)
-                // console.log("mintWidth: ", mintWidth, )
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
                 result = await factory.transferNft(

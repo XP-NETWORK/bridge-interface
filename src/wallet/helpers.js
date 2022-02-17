@@ -192,7 +192,7 @@ export const getNFTS = async (wallet, from, testnet) => {
   const factory = await getFactory();
   const chain = await factory.inner(chainsConfig[from].Chain)
   try {
-    // debugger
+    debugger
     let response 
     if(tronWallet){
       response = await getTronNFTs(tronWallet)

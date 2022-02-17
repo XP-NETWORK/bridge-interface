@@ -319,6 +319,9 @@ function ConnectWallet() {
     //   }
     // })
 
+    
+    //! onTemple connection  < Removed to ConnectWalletHelper >.
+
     const onBeacon = async () => {
       const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
       const wallet = new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" });
@@ -333,15 +336,6 @@ function ConnectWallet() {
       }
     }
 
-    // const onKukai = async() => {
-    //   try {
-    //     const permissions = await wallet.client.requestPermissions();
-    //     dispatch(setTezosAccount(permissions.address))
-    //     dispatch(setKukaiWallet(true))
-    //   } catch (error) {
-    //     console.log("Got error:", error);
-    //   }
-    // }
     //! onTemple connection  < Removed to ConnectWalletHelper >.
     const onTemple = async () => {
       // debugger

@@ -333,7 +333,6 @@ export const chainsConfig = {
         Chain: Chain.HARMONY,
         tx: "https://explorer.harmony.one/tx"
     }
-
 }
 
 export const coins = [
