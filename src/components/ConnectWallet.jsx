@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 import Close from "../assets/img/icons/close.svg";
+import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
 import MetaMask from "../assets/img/wallet/MetaMask.svg";
 import Tron from "../assets/img/wallet/TronLink.svg";
 import Elrond from "../assets/img/wallet/Elrond.svg";
@@ -67,6 +68,7 @@ import { connectMetaMask, connectAlgoSigner } from "./ConnectWalletHelper";
 import Wallet from "./Wallet/Wallet";
 
 function ConnectWallet() {
+  const widget = new URLSearchParams(window.location.search).get("widget");
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
@@ -454,7 +456,11 @@ function ConnectWallet() {
           <Modal.Header>
             <Modal.Title>Connect Wallet</Modal.Title>
             <span className="CloseModal" onClick={handleClose}>
-              <img src={Close} alt="" />
+              {widget ? (
+                <CloseComp className="svgWidget" />
+              ) : (
+                <img src={Close} alt="" />
+              )}
             </span>
           </Modal.Header>
           <Modal.Body>
