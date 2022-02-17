@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Modal } from "react-bootstrap";
 import Close from '../assets/img/icons/close.svg';
-import Ledger from '../assets/img/wallet/Ledger.svg';
-import Trezor from '../assets/img/wallet/Trezor.svg';
 import NFTworng from './NFTworng';
 import { useDispatch, useSelector } from 'react-redux';
 import { useWeb3React } from "@web3-react/core";
@@ -15,13 +13,13 @@ import TezosWallet from './Wallet/TezosWallet';
 import AlgorandWallet from './Wallet/AlgorandWallet';
 import TronWallet from './Wallet/TronWallet';
 import ElrondWallet from './Wallet/ElrondWallet';
+import USBWallet from './Wallet/USBWallet';
 
 function ConnectWallet() {
     const dispatch = useDispatch()
     const from = useSelector(state => state.general.from)
     const to = useSelector(state => state.general.to)
     const [show, setShow] = useState();
-    const OFF = { opacity: 0.6, pointerEvents: "none" };
     const qrCodeString = useSelector(state => state.general.qrCodeString)
     const qrCodeImage = useSelector(state => state.general.qrCodeImage)
     const handleClose = () => { 
@@ -312,11 +310,9 @@ function ConnectWallet() {
 
     useEffect(() => {
       algoConnector.on("connect", (error, payload) => {
-       
         if (error) {
           throw error;
         }
-      
         // Get provided accounts
         const { accounts } = payload.params[0];
         if(accounts){
@@ -324,41 +320,25 @@ function ConnectWallet() {
           dispatch(setAlgorandAccount(accounts[0]))
         }
       });
-        let correct
-        if(testnet){
-          correct = from ? TESTNET_CHAIN_INFO[from?.key].chainId === chainId : ''
-        }
-        else{
-          correct = from ? CHAIN_INFO[from?.key].chainId === chainId : ''
-        }
-        console.log(`correct: ${correct}`)
-        if(from?.type === "EVM"){
-          dispatch(setAccount(account))
-        }
-        if(from){
-            dispatch(setWrongNetwork(testnet ? TESTNET_CHAIN_INFO[from.key].chainId !== chainId : CHAIN_INFO[from.key].chainId !== chainId))
-        }
-        if((metaMask && correct)
-        ||
-        (tronLink && correct)
-        ||
-        (onWC && correct)
-        ||
-        (trustWallet && correct)
-        ||
-        (MaiarWallet && correct)
-        ||
-        (MyAlgo)
-        ||
-        (algorandWallet)
-        ||
-        (AlgoSigner)
-        ||
-        kukaiWallet
-        ||
-        (templeWallet)) {
-          dispatch(setStep(2))
-        }
+
+      let correct
+      if(testnet){
+        correct = from ? TESTNET_CHAIN_INFO[from?.key].chainId === chainId : ''
+      }
+      else{
+        correct = from ? CHAIN_INFO[from?.key].chainId === chainId : ''
+      }
+
+      if(from?.type === "EVM"){
+        dispatch(setAccount(account))
+      }
+      if(from){
+          dispatch(setWrongNetwork(testnet ? TESTNET_CHAIN_INFO[from.key].chainId !== chainId : CHAIN_INFO[from.key].chainId !== chainId))
+      }
+      if(((metaMask || tronLink || onWC || trustWallet || MaiarWallet) && correct)
+      || MyAlgo || algorandWallet || AlgoSigner || kukaiWallet || templeWallet) {
+        dispatch(setStep(2))
+      }
     }, [account, metaMask, chainId, tronLink, onWC, trustWallet, AlgoSigner, algorandWallet, MaiarWallet, MyAlgo, templeWallet, kukaiWallet])
 
     return (
@@ -393,6 +373,8 @@ function ConnectWallet() {
                                 {/* <Wallet active={from?.type === 'Tron'} icon={Tron} connection={connectTronlink} name={"TronLink"} /> */}
                                 {/* <li onClick={connectMaiar} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li> */}
                                 {/* <li onClick={connectMaiarExtension} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li> */}
+                                {/* <li style={ OFF } className="wllListItem"><div><img src={Ledger} alt="Ledger Icon" />Ledger</div><div className="coming-chain">Coming soon</div></li> */}
+                                {/* <li style={ OFF } className="wllListItem"><div><img style={{marginLift: "-5px"}} src={Trezor} alt="Trezor Icon" />Trezor</div><div className="coming-chain">Coming soon</div></li> */}
                                 <EVMWallet wallet={"MetaMask"} />
                                 <EVMWallet wallet={undefined} /> {/* Wallet Connect */}
                                 <EVMWallet wallet={"TrustWallet"} />
@@ -404,8 +386,8 @@ function ConnectWallet() {
                                 <TezosWallet wallet={"TempleWallet"} />
                                 <TezosWallet wallet={undefined} /> {/* Beacon */}
                                 <ElrondWallet wallet={undefined} /> {/** Maiar Extension*/}
-                                <li style={ OFF } className="wllListItem"><div><img src={Ledger} alt="Ledger Icon" />Ledger</div><div className="coming-chain">Coming soon</div></li>
-                                <li style={ OFF } className="wllListItem"><div><img style={{marginLift: "-5px"}} src={Trezor} alt="Trezor Icon" />Trezor</div><div className="coming-chain">Coming soon</div></li>
+                                <USBWallet wallet={"Ledger"} />
+                                <USBWallet /> {/** Trezor */}
                             </ul>
                         </div>
                     </Modal.Body>
