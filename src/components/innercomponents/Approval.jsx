@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import InfLith from "../../assets/img/icons/infoLifht.svg";
 import { ReactComponent as InfLithComp } from "../../assets/img/icons/infoLifht.svg";
-import { ChainFactoryConfigs, ChainFactory } from "xp.network/dist";
+// import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import { Chain, Config } from "xp.network/dist/consts";
 import { ethers } from "ethers";
 import {
@@ -11,20 +11,20 @@ import {
   setApproveLoader,
   setError,
 } from "../../store/reducers/generalSlice";
-import { isEqual } from "../helpers";
+// import { isEqual } from '../helpers';
 import {
   getFactory,
   handleChainFactory,
   isALLNFTsApproved,
 } from "../../wallet/helpers";
-import { getOldFactory } from "../../wallet/oldHelper";
+// import { getOldFactory } from '../../wallet/oldHelper';
 import { ExtensionProvider } from "@elrondnetwork/erdjs/out";
 import { algoConnector } from "../../wallet/connectors";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
-import { TezosToolkit } from "@taquito/taquito";
+// import { TezosToolkit } from "@taquito/taquito";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { BeaconWallet } from "@taquito/beacon-wallet";
-import { DAppClient, TezosOperationType } from "@airgap/beacon-sdk";
+// import { DAppClient, TezosOperationType } from "@airgap/beacon-sdk";
 // import { InMemorySigner } from '@taquito/signer'
 
 const TronWeb = require("tronweb");

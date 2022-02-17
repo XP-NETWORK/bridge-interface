@@ -19,17 +19,20 @@ function NavBar() {
     const widget = useSelector(state => state.general.widget)
     const handleShow = () => dispatch(setAccountModal(true));
     const step = useSelector(state => state.general.step)
-
+    const testnet = useSelector(state => state.general.testNet)
+    console.log(`testnet: ${testnet}`)
 
     useEffect(() => {}, [step])
 
+    
+
     const setAddress = () => {
-            return  from?.type === "EVM" ? account 
-                : from?.type === "Tezos" ? tezosAccount 
-                : from?.type === "Algorand" ? algorandAccount 
-                : from?.type === "Elrond" ? elrondAccount 
-                : from?.type === "Tron" ? tronAccount 
-                : undefined
+        return  from?.type === "EVM" ? account 
+            : from?.type === "Tezos" ? tezosAccount 
+            : from?.type === "Algorand" ? algorandAccount 
+            : from?.type === "Elrond" ? elrondAccount 
+            : from?.type === "Tron" ? tronAccount 
+            : undefined
     }
 
     return (
@@ -37,7 +40,10 @@ function NavBar() {
             <Navbar expand="lg">    
                 <Navbar.Brand 
                 onClick={() => dispatch(setReset())}  
-                className="navBrand"><img src={Logo} alt="Xp Network"/></Navbar.Brand>
+                className="navBrand">
+                    <img src={Logo} alt="Xp Network"/>
+                    { testnet && <span className="testnet">TestNet</span>}
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="navMenu">

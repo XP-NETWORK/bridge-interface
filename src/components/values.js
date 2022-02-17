@@ -14,6 +14,7 @@ import Fuse from "../assets/img/chain/Fuse.svg";
 import Velas from "../assets/img/chain/velas.svg";
 import Tezos from "../assets/img/chain/Tezos.svg";
 import Iotex from "../assets/img/chain/iotx.svg";
+import One from "../assets/img/chain/One.svg";
 import { Chain } from "xp.network/dist/consts";
 
 export const EVM = "EVM";
@@ -29,6 +30,7 @@ export const chains = [
     order: 4,
     image: { avatar: true, src: Etherium },
     maintenance: false,
+    testNet: false,
   },
   {
     type: "EVM",
@@ -38,6 +40,7 @@ export const chains = [
     order: 5,
     image: { avatar: true, src: Binance },
     maintenance: false,
+    testNet: true,
   },
   {
     type: "Tron",
@@ -47,6 +50,7 @@ export const chains = [
     order: 6,
     image: { avatar: true, src: Tron },
     maintenance: true,
+    testNet: false,
   },
   {
     type: "Elrond",
@@ -56,6 +60,7 @@ export const chains = [
     order: 7,
     image: { avatar: true, src: Elrond },
     maintenance: false,
+    testNet: false,
   },
   {
     type: "EVM",
@@ -65,6 +70,7 @@ export const chains = [
     order: 8,
     image: { avatar: true, src: Polygon },
     maintenance: false,
+    testNet: true,
   },
   {
     type: "EVM",
@@ -74,6 +80,7 @@ export const chains = [
     order: 8,
     image: { avatar: true, src: Avalanche },
     maintenance: false,
+    testNet: false,
   },
   {
     type: "EVM",
@@ -83,6 +90,7 @@ export const chains = [
     order: 9,
     image: { avatar: true, src: Fantom },
     maintenance: false,
+    testNet: false,
   },
   {
     type: "Algorand",
@@ -91,7 +99,8 @@ export const chains = [
     value: "Algorand",
     order: 5,
     image: { avatar: true, src: Algorand },
-    maintenance: false,
+    maintenance: true,
+    testNet: false,
   },
   {
     type: "EVM",
@@ -101,6 +110,7 @@ export const chains = [
     order: 10,
     image: { avatar: true, src: Gnosis },
     maintenance: false,
+    testNet: false,
   },
   {
     type: "Solana",
@@ -111,6 +121,7 @@ export const chains = [
     coming: true,
     image: { avatar: true, src: Solana },
     maintenance: true,
+    testNet: false,
   },
   {
     type: "Cardano",
@@ -121,6 +132,7 @@ export const chains = [
     coming: true,
     image: { avatar: true, src: Cardano },
     maintenance: true,
+    testNet: false,
   },
   {
     type: "EVM",
@@ -131,6 +143,7 @@ export const chains = [
     coming: true,
     image: { avatar: true, src: Heco },
     maintenance: true,
+    testNet: false,
   },
   {
     type: "EVM",
@@ -140,6 +153,7 @@ export const chains = [
     order: 11,
     image: { avatar: true, src: Fuse },
     maintenance: true,
+    testNet: false,
   },
   {
     type: "EVM",
@@ -150,6 +164,7 @@ export const chains = [
     image: { avatar: true, src: Velas },
     newChain: true,
     maintenance: false,
+    testNet: false,
   },
   {
     type: "Tezos",
@@ -160,7 +175,8 @@ export const chains = [
     image: { avatar: true, src: Tezos },
     newChain: true,
     coming: false,
-    maintenance: true,
+    maintenance: false,
+    testNet: false,
   },
   {
     type: "EVM",
@@ -171,7 +187,18 @@ export const chains = [
     image: { avatar: true, src: Iotex },
     newChain: true,
     coming: false,
+    maintenance: true,
+    testNet: false,
+  },
+  {
+    type: "EVM",
+    key: "Harmony",
+    text: "Harmony",
+    value: "Harmony",
+    order: 5,
+    image: { avatar: true, src: One },
     maintenance: false,
+    testNet: true,
   },
 ];
 
@@ -184,7 +211,6 @@ export const chainsConfig = {
   Heco: {
     type: EVM,
     img: Heco,
-    // chainData: ChainData.Heco,
     Chain: Chain.HECO,
   },
   Tron: {
@@ -194,7 +220,6 @@ export const chainsConfig = {
     img: Tron,
     rpc: "https://api.trongrid.io/",
     tx: "https://tronscan.org/#/transaction/",
-    // chainData: ChainData.Tron,
     Chain: Chain.TRON,
   },
   Ethereum: {
@@ -205,7 +230,6 @@ export const chainsConfig = {
       "https://rough-dawn-meadow.quiknode.pro/2629bf63052353892b121c240f57f6b19a74ac8c/",
     tx: "https://etherscan.io/tx/",
     token: "ETH",
-    // chainData: ChainData.Ethereum,
     Chain: Chain.ETHEREUM,
   },
   BSC: {
@@ -216,7 +240,6 @@ export const chainsConfig = {
     tx: "https://bscscan.com/tx/",
     rpc:
       "https://wandering-shy-leaf.bsc.quiknode.pro/ad8d20d7895c15e9afc03ff011dc3418152b07f7/",
-    // chainData: ChainData.BSC,
     Chain: Chain.BSC,
   },
   Polygon: {
@@ -305,6 +328,14 @@ export const chainsConfig = {
     Chain: Chain.IOTEX,
     tx: "https://iotexscan.io/tx/",
   },
+  Harmony: {
+    type: EVM,
+    token: "ONE",
+    rpc: "https://api.harmony.one",
+    chainId: 1666600000,
+    Chain: Chain.HARMONY,
+    tx: "https://explorer.harmony.one/tx",
+  },
 };
 
 export const coins = [
@@ -324,7 +355,26 @@ export const coins = [
   "VELAS", //13
   "TEZOS", //14
   "IOTX", //15
+  "ONE", //16
 ];
+
+export const TESTNET_CHAIN_INFO = {
+  BSC: {
+    nonce: 4,
+    chainId: 97,
+  },
+  Polygon: {
+    nonce: 0x7,
+    chainId: 80001,
+  },
+  Elrond: {
+    nonce: 2,
+  },
+  Harmony: {
+    nonce: 12,
+    chainId: 1666700000,
+  },
+};
 
 export const CHAIN_INFO = {
   Elrond: {
@@ -346,7 +396,6 @@ export const CHAIN_INFO = {
     native: coins[2],
     chainId: 56,
     rpcUrl: "https://data-seed-prebsc-1-s1.binance.org:8545",
-    //   rpcUrl: "https://bsc-dataseed.binance.org",
     decimals: 1e18,
     contract: "0x12889E870A48Be2A04564e74f66fC91D439Da03e",
     blockExplorerUrls: "https://testnet.bscscan.com/tx",
@@ -473,6 +522,15 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpc: "https://babel-api.mainnet.iotex.io",
     chainId: 4689,
+    blockExplorerUrls: "",
+    contract: "",
+  },
+  Harmony: {
+    native: coins[16],
+    nonce: 12,
+    decimals: 1e18,
+    rpc: "",
+    chainId: 1666600000,
     blockExplorerUrls: "",
     contract: "",
   },

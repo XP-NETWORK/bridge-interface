@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setFrom,
   setGetFeaturedModal,
+  setTestNet,
   setTo,
   setTronPopUp,
   setValidatorsInf,
@@ -33,13 +34,12 @@ import WSettings from "./components/Settings";
 
 function App() {
   const dispatch = useDispatch();
-  const loader = useSelector((state) => state.general.approveLoader);
+  // const loader = useSelector(state => state.general.approveLoader)
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
-  const error = useSelector((state) => state.general.error);
-  const tronPopUp = useSelector((state) => state.general.tronPopUp);
+  // const error = useSelector(state => state.general.error)
+  // const tronPopUp = useSelector(state => state.general.tronPopUp)
   // const nftsToWhitelist = useSelector(state => state.general.techModal)
   const state = useSelector((state) => state.general);
-  console.log(state.wsettings);
 
   const axios = require("axios");
 
@@ -60,6 +60,10 @@ function App() {
   const showGetFeatured = () => {
     dispatch(setGetFeaturedModal(true));
   };
+
+  useEffect(() => {
+    dispatch(setTestNet(window.location.href.indexOf("testnet") > 0));
+  }, []);
 
   useEffect(async () => {
     const from = new URLSearchParams(window.location.search).get("from");

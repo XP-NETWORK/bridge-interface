@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
-import { ReactComponent as Close } from "../assets/img/icons/close.svg";
+import Close from "../assets/img/icons/close.svg";
+import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
 import Wrong from "../assets/img/Wrong.svg";
-import { CHAIN_INFO } from "../components/values";
+import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../components/values";
 import { useSelector } from "react-redux";
 import { getAddEthereumChain } from "../wallet/chains";
 import { useDispatch } from "react-redux";
@@ -18,22 +19,20 @@ function NFTworng() {
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(false);
   const { chainId } = useWeb3React();
+  const testnet = useSelector((state) => state.general.testNet);
+  const widget = useSelector((state) => state.general.widget);
 
   async function switchNetwork() {
     setLoader(true);
-    const info = CHAIN_INFO[from?.key];
+    const info = testnet
+      ? TESTNET_CHAIN_INFO[from?.key]
+      : CHAIN_INFO[from?.key];
     const chainId = `0x${info.chainId.toString(16)}`;
     try {
       const success = await window.ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId }],
       });
-      //   .catch(result => {
-      //     dispatch(setWrongNetwork(true))
-      //         // dispatch(setMetaMask(false))
-      //     })
-      //   dispatch(setWrongNetwork(CHAIN_INFO[from.key].chainId !== chainId))
-      //   setLoader(false)
     } catch (error) {
       setLoader(false);
       console.log(error);
@@ -87,7 +86,11 @@ function NFTworng() {
         <Modal.Header className="border-0">
           <Modal.Title>Wrong Network</Modal.Title>
           <span className="CloseModal" onClick={handleClose}>
-            <Close className="svgWidget" />
+            {widget ? (
+              <CloseComp className="svgWidget" />
+            ) : (
+              <img src={Close} alt="" />
+            )}
           </span>
         </Modal.Header>
         <Modal.Body className="modalBody text-center">
