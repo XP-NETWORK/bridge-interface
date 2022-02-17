@@ -14,6 +14,7 @@ import Fuse from "../assets/img/chain/Fuse.svg"
 import Velas from "../assets/img/chain/velas.svg"
 import Tezos from "../assets/img/chain/Tezos.svg"
 import Iotex from "../assets/img/chain/iotx.svg"
+import One from "../assets/img/chain/One.svg"
 import { Chain } from "xp.network/dist/consts";
 
 export const EVM = "EVM";
@@ -196,7 +197,7 @@ export const chains = [
         text: 'Harmony',
         value: 'Harmony',
         order: 5,
-        image: { avatar: true, src: Avalanche },
+        image: { avatar: true, src: One },
         maintenance: false,
         testNet: true
     }
