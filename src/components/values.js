@@ -60,7 +60,7 @@ export const chains = [
         order: 7,
         image: { avatar: true, src: Elrond },
         maintenance: false,
-        testNet: true
+        testNet: false
 
     },
     {

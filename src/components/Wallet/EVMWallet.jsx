@@ -15,7 +15,7 @@ export default function EVMWallet({ wallet }) {
     const getMobOps = () => /android/i.test( navigator.userAgent || navigator.vendor || window.opera ) ? true : false 
 
   return wallet === "MetaMask" ? /* METAMASK */
-    <li onClick={() => connectMetaMask(activate)} style={ from.type === "EVM" ? {} : OFF } className="wllListItem">
+    <li onClick={() => connectMetaMask(activate)} style={ from?.type === "EVM" ? {} : OFF } className="wllListItem">
       <img src={MetaMask} alt="MetaMask Icon" /> MetaMask
     </li> 
   : wallet === "TrustWallet" ? /* TRUST WALLET */

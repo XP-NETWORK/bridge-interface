@@ -1,4 +1,4 @@
-import { ChainFactory, ChainFactoryConfigs } from "xp.network";
+import { AppConfigs, ChainFactory, ChainFactoryConfigs } from "xp.network";
 import { Chain, Config } from "xp.network/dist/consts";
 import { chainsConfig } from "../components/values";
 import { setAlgorandClaimables, setBigLoader, setFactory, setNFTList } from "../store/reducers/generalSlice";
@@ -6,9 +6,10 @@ import store from "../store/store";
 import { ChainData, getOldFactory, moralisParams } from "./oldHelper";
 
 const axios = require("axios");
+// const testnet  = store.getState().general.testNet
+// console.log("testnet: ", testnet)
 
 export const setupURI = (uri) => {
-
   // debugger
   if (uri && uri.includes("ipfs://")) {
     return "https://ipfs.io/" + uri.replace(":/", "");
@@ -47,9 +48,6 @@ export const preloadItem = (item, type, setLoaded) => {
 };
 
 export const parseNFTS = async (nfts) => {
-// console.log("helpers");
-// debugger
-// console.log(nfts)
 
 const { from, to } = store.getState().general;
 if(from.key === "Tezos"){
@@ -127,19 +125,45 @@ export const isALLNFTsApproved = () => {
     return approvedNFTs.length === selectedNFTList.length;
   } else return false;
 };
+
+
+
+// export const getFactory = async () => {
+//   debugger
+//   const f = store.getState().general.factory
+  
+//   if(f) return f
+//   const testnetConfig = ChainFactoryConfigs.TestNet();
+//   console.log("testnetConfig: ", testnetConfig)
+//   const mainnetConfig = ChainFactoryConfigs.MainNet();
+//   if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
+//     mainnetConfig.tronParams.provider = window.tronWeb
+//   } 
+//   const factory = ChainFactory(testnet ? testnetConfig : mainnetConfig);
+//   store.dispatch(setFactory(factory))
+//   return factory;
+// };
+
 export const getFactory = async () => {
   // debugger
-  const f = store.getState().general.factory
-  
-  if(f) return f
+  const f = store.getState().general.factory;
+  const testnet  = store.getState().general.testNet
+
+  if (f) return f;
+  const testnetConfig = ChainFactoryConfigs.TestNet();
   const mainnetConfig = ChainFactoryConfigs.MainNet();
   if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
-    mainnetConfig.tronParams.provider = window.tronWeb
-  } 
-  const factory = ChainFactory(Config, mainnetConfig);
-  store.dispatch(setFactory(factory))
+    mainnetConfig.tronParams.provider = window.tronWeb;
+  }
+  const factory = ChainFactory(
+    testnet ? AppConfigs.TestNet() : AppConfigs.MainNet(),
+    testnet ? testnetConfig : mainnetConfig
+  );
+  store.dispatch(setFactory(factory));
   return factory;
 };
+
+
 
 export const handleChainFactory = async (someChain) => {
   // debugger
@@ -190,20 +214,13 @@ export const getNFTS = async (wallet, from, testnet) => {
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
+  console.log("getNFTS: ", factory)
   const chain = await factory.inner(chainsConfig[from].Chain)
   try {
-    debugger
+    // debugger
     let response 
     if(tronWallet){
       response = await getTronNFTs(tronWallet)
-    }
-    else if(testnet){
-      console.log("chain.getNonce()", chain.getNonce())
-      response = (await axios.get(`https://testing-nft-index.herokuapp.com/nfts/${chain.getNonce()}/${wallet}`, {
-        headers: {
-          Authorization: 'Bearer eyJhbGciOiJFUzI1NiJ9.eyJhdXRob3JpdHkiOjEsImlhdCI6MTY0NDIzMDE0NiwiZXhwIjoxNjUyMDA2MTQ2fQ.gX6Auj4hFLdpem5Pk2kAnH71I19iGXfBYjmQrXylMFX_R1yzDEbylVAOLW6kABH9VjnLbAnCRdQvLaQIFmMUpw'
-        }
-      })).data?.data
     }
     else{
       response = await factory.nftList(chain, hardcoded ? hardcoded : wallet)

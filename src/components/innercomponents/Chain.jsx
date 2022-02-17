@@ -18,6 +18,7 @@ export default function Chain({
 }) {
   const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
   // console.log("key: ", chainKey)
+
   const checkIfLive = (chain) => {
     console.log(chain)
     // let c = chain === "GnosisChain" ? "xDai" : chain
@@ -35,9 +36,8 @@ export default function Chain({
 
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   return (
-    // style={ coming || !checkIfLive(text) ? OFF : {}}
     <li
-      // style={maintenance || !checkIfLive(chainKey) ? OFF : {}}
+      style={maintenance || !checkIfLive(chainKey) ? OFF : {}}
       onClick={() => chainSelectHandler(filteredChain)}
       className="nftChainItem"
       data-chain={text}
