@@ -1,6 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { chains as valuesChains } from "../../components/values";
 
+export const fonts = [
+  "Open Sans",
+  "Roboto",
+  "Inter",
+  "Josefin Sans",
+  "Lato",
+  "Montserrat",
+  "Mukta",
+  "Playfair Display",
+  "Poppins",
+  "Quicksand",
+  "Raleway",
+  "Ubuntu",
+];
+
 export const chains = [...valuesChains];
 
 export const activeChains = [
