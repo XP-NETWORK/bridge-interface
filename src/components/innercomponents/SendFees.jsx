@@ -65,7 +65,7 @@ function SendFees() {
     }
 
     function getNumToFix() {
-        debugger
+        // debugger
         let num = 1
         let str
         if(fees > 0 && fees){
