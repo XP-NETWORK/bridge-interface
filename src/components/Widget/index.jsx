@@ -324,7 +324,7 @@ export default function Widget() {
           background: initial;
         }
 
-        .svgWidget path {
+        .svgWidget path, .svgWidget rect {
           fill: ${iconColor ? iconColor : ""};
         }
 
