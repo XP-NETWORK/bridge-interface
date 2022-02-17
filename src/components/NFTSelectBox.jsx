@@ -6,6 +6,10 @@ import LineArrow from "../assets/img/nftSelect/Line.svg";
 import ChainArrow from "../assets/img/icons/Swap.svg";
 import SwapHover from "../assets/img/icons/SwapHover.svg";
 import SwapPressed from "../assets/img/icons/SwapPressed.svg";
+import { ReactComponent as LineArrowComp } from "../assets/img/nftSelect/Line.svg";
+import { ReactComponent as ChainArrowComp } from "../assets/img/icons/Swap.svg";
+import { ReactComponent as SwapHoverComp } from "../assets/img/icons/SwapHover.svg";
+import { ReactComponent as SwapPressedComp } from "../assets/img/icons/SwapPressed.svg";
 import { useDispatch } from "react-redux";
 import {
   setChainModal,
@@ -16,6 +20,7 @@ import {
 import { useSelector } from "react-redux";
 
 export default function NFTSelectBox() {
+  const widget = new URLSearchParams(window.location.search).get("widget");
   const dispatch = useDispatch();
 
   const from = useSelector((state) => state.general.from);
@@ -64,18 +69,30 @@ export default function NFTSelectBox() {
           onClick={(e) => switchChains(e)}
           className="chainArrow"
         >
-          <img
-            src={swapDown ? SwapPressed : swapHover ? SwapHover : ChainArrow}
-            alt=""
-          />
+          {widget ? (
+            <ChainArrowComp className="svgWidget swpBtn" />
+          ) : (
+            <img
+              src={swapDown ? SwapPressed : swapHover ? SwapHover : ChainArrow}
+              alt=""
+            />
+          )}
         </span>
       ) : (
         <span className="chainArrow">
-          <img src={ChainArrow} alt="arrow-swap" />
+          {widget ? (
+            <ChainArrowComp className="svgWidget  swpBtn" />
+          ) : (
+            <img src={ChainArrow} alt="arrow-swap" />
+          )}
         </span>
       )}
       <span className="LineArrow">
-        <img src={LineArrow} alt="" />
+        {widget ? (
+          <LineArrowComp className="svgWidget" />
+        ) : (
+          <img src={LineArrow} alt="arrow-swapLine" />
+        )}
       </span>
       <div
         className="selChain seleDesti"
