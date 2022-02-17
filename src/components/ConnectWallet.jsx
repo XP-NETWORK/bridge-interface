@@ -36,6 +36,7 @@ import { TempleWallet } from "@temple-wallet/dapp";
 import { connectMetaMask, connectAlgoSigner, connectTempleWallet, connectBeacon } from "./ConnectWalletHelper"
 import Wallet from './Wallet/Wallet';
 import EVMWallet from './Wallet/EVMWallet';
+import TezosWallet from './Wallet/TezosWallet';
 
 
 
@@ -128,25 +129,26 @@ function ConnectWallet() {
       }
     }
 
-    const onTrustWallet = async () => {
+    //! onTrustWallet connection  < Removed to ConnectWalletHelper >.
+    // const onTrustWallet = async () => {
       
-      try {
-        if(!window.ethereum && window.innerWidth <= 600){
-          const uri = `https://link.trustwallet.com/open_url?coin_id=60&url=https://${window.location.host + `?to=${to.text}&from=${from.text}`}/`
-          window.open(uri)
-        }
-        await activate(injected);
-        dispatch(setTrustWallet(true))
-      } 
-      catch (error) {
-        dispatch(setError(error))
-        if(error.data){
-          console.log(error.data.message);
-        }
-        else console.log(error);        
-      }
-      setShow(false)
-    }
+    //   try {
+    //     if(!window.ethereum && window.innerWidth <= 600){
+    //       const uri = `https://link.trustwallet.com/open_url?coin_id=60&url=https://${window.location.host + `?to=${to.text}&from=${from.text}`}/`
+    //       window.open(uri)
+    //     }
+    //     await activate(injected);
+    //     dispatch(setTrustWallet(true))
+    //   } 
+    //   catch (error) {
+    //     dispatch(setError(error))
+    //     if(error.data){
+    //       console.log(error.data.message);
+    //     }
+    //     else console.log(error);        
+    //   }
+    //   setShow(false)
+    // }
 
 
     const generateQR = async text => {
@@ -196,32 +198,6 @@ function ConnectWallet() {
             }
           }
         }
-        // if(window.innerWidth <= 600 && !window.tronWeb){
-        //   dispatch(setTronPopUp(true))
-        // }
-        // else{
-        //   try {
-        //     const accounts = await window.tronLink.request({ method: 'tron_requestAccounts' });
-        //     if(!accounts){
-        //       dispatch(setTronLoginError("noTronWeb"))
-        //     }
-        //     if(window.tronLink && window.tronWeb.defaultAddress.base58){
-        //       const publicAddress = window.tronWeb.defaultAddress.base58
-        //       dispatch(setTronWallet(publicAddress))
-        //       dispatch(setTronLink(true))
-
-        //     }
-        //   }
-        //   catch(error) {
-        //     if(!modalError){
-        //       dispatch(setError(error))
-        //       if(error.data){
-        //         console.log(error.data.message);
-        //       }
-        //       else console.log(error); 
-        //     }
-        //   }
-        // }
       }
 
     const onClientConnect = ( maiarProvider ) => {
@@ -321,41 +297,40 @@ function ConnectWallet() {
     // })
 
     
+    //! onBeacon connection  < Removed to ConnectWalletHelper >.
+    // const onBeacon = async () => {
+    //   const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
+    //   const wallet = new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" });
+    //   Tezos.setWalletProvider(wallet);
+    //   console.log("Tezos: ", Tezos);
+    //   try {
+    //     const permissions = await wallet.client.requestPermissions();
+    //     dispatch(setTezosAccount(permissions.address))
+    //     dispatch(setKukaiWallet(true))
+    //   } catch (error) {
+    //     console.log("Got error:", error);
+    //   }
+    // }
+
     //! onTemple connection  < Removed to ConnectWalletHelper >.
+    // const onTemple = async () => {
+    //   // debugger
+    //     try {
+    //       const available = await TempleWallet.isAvailable();
+    //       if (!available) {
+    //         throw new Error("Temple Wallet not installed");
+    //       }
+    //       const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
+    //       await wallet.connect("mainnet");
+    //       const tezos = wallet.toTezos();
+    //       const accountPkh = await tezos.wallet.pkh();
+    //       dispatch(setTezosAccount(accountPkh))
+    //       dispatch(setTempleWallet(true))
 
-    const onBeacon = async () => {
-      const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
-      const wallet = new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" });
-      Tezos.setWalletProvider(wallet);
-      console.log("Tezos: ", Tezos);
-      try {
-        const permissions = await wallet.client.requestPermissions();
-        dispatch(setTezosAccount(permissions.address))
-        dispatch(setKukaiWallet(true))
-      } catch (error) {
-        console.log("Got error:", error);
-      }
-    }
-
-    //! onTemple connection  < Removed to ConnectWalletHelper >.
-    const onTemple = async () => {
-      // debugger
-        try {
-          const available = await TempleWallet.isAvailable();
-          if (!available) {
-            throw new Error("Temple Wallet not installed");
-          }
-          const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
-          await wallet.connect("mainnet");
-          const tezos = wallet.toTezos();
-          const accountPkh = await tezos.wallet.pkh();
-          dispatch(setTezosAccount(accountPkh))
-          dispatch(setTempleWallet(true))
-
-        } catch (error) {
-          console.error(error);
-        }
-    }
+    //     } catch (error) {
+    //       console.error(error);
+    //     }
+    // }
 
     useEffect(() => {
       algoConnector.on("connect", (error, payload) => {
@@ -433,19 +408,21 @@ function ConnectWallet() {
                                 {/* <Wallet active={from?.type === "EVM"} icon={MetaMask} connection={() => connectMetaMask(activate)} name={"MetaMask"}/> */}
                                 <EVMWallet wallet={"MetaMask"} />
                                 {/* <li onClick={() => onWalletConnect()} style={  OFF } className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li> */}
-                                <EVMWallet wallet={undefined} />
+                                <EVMWallet wallet={undefined} /> {/* Wallet Connect */}
                                 <EVMWallet wallet={"TrustWallet"} />
                                 {/* <li onClick={() => onTrustWallet()} style={(getMobOps() && window.innerWidth <= 600 && isEVM()) || (window.ethereum && window.innerWidth <= 600) ? {} : OFF } className="wllListItem"><img src={TrustWallet} alt="WalletConnect Icon" /> Trust Wallet</li> */}
                                 <li onClick={onMyAlgo} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={MyAlgoBlue} alt="" /> MyAlgo</li>
                                 <li onClick={connectAlgoSigner} style={ from ? (from.type === "Algorand" && window.innerWidth > 600 ) ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo Signer</li>
-                                <li onClick={() => onAlgoWallet()} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li>
+                                <li onClick={onAlgoWallet} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li>
                                 {/* <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li> */}
                                 <Wallet active={from?.type === 'Tron'} icon={Tron} connection={connectTronlink} name={"TronLink"} />
-                                <li onClick={() => onMaiar()} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
+                                <li onClick={onMaiar} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
-                                <li onClick={connectBeacon} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem beacon"><img src={BeaconW} alt="Kukai Icon" /> Beacon</li>
-                                <li onClick={connectTempleWallet} style={ (from?.text === "Tezos" && window.innerWidth > 600 ) ? {} : OFF} className="wllListItem"><img style={{width: "28px"}} src={Temple} alt="Temple Icon" /> Temple Wallet</li>
-                                <li onClick={() => onMaiarExtension()} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
+                                {/* <li onClick={connectBeacon} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem beacon"><img src={BeaconW} alt="Kukai Icon" /> Beacon</li> */}
+                                <TezosWallet wallet={"TempleWallet"} />
+                                {/* <li onClick={connectTempleWallet} style={ (from?.text === "Tezos" && window.innerWidth > 600 ) ? {} : OFF} className="wllListItem"><img style={{width: "28px"}} src={Temple} alt="Temple Icon" /> Temple Wallet</li> */}
+                                <TezosWallet wallet={undefined} /> {/* Beacon */}
+                                <li onClick={onMaiarExtension} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
                                 <li style={ OFF } className="wllListItem">
                                   <div>
                                     <img src={Ledger} alt="Ledger Icon" />

@@ -6,7 +6,7 @@ import store  from "../store/store"
 import { setTronWallet, setAccount, setConfirmMaiarMob, setAlgorandWallet, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp, setTrustWallet, setAlgoSigner, setAlgorandAccount, setMyAlgo, setTezosAccount, setKukaiWallet, setTempleWallet } from "../store/reducers/generalSlice"
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
-// const { chainId, account, activate  } = useWeb3React();
+import MyAlgoConnect from '@randlabs/myalgo-connect';
 
 const { to, from } = store.getState()
 
@@ -52,6 +52,7 @@ export const connectAlgoSigner =async () => {
     }
 }
 
+// Tezos blockchain connection ( Temple Wallet )
 export const connectTempleWallet = async () => {
   // debugger
     try {
@@ -70,7 +71,7 @@ export const connectTempleWallet = async () => {
       console.error(error);
     }
 }
-
+// Tezos blockchain connection ( Beacon )
 export const connectBeacon = async () => {
   const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
   const wallet = new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" });
@@ -82,5 +83,17 @@ export const connectBeacon = async () => {
     store.dispatch(setKukaiWallet(true))
   } catch (error) {
     console.log("Got error:", error);
+  }
+}
+
+ export const connectMyAlgo = async () => {
+  const myAlgoConnect = new MyAlgoConnect();
+  try {
+    const accountsSharedByUser = await myAlgoConnect.connect()
+    console.log("MY Algo: ", myAlgoConnect);
+    store.dispatch(setAlgorandAccount(accountsSharedByUser[0].address))
+    store.dispatch(setMyAlgo(true))
+  } catch (error) {
+    console.log(error);
   }
 }

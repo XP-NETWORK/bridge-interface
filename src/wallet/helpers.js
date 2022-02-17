@@ -210,7 +210,7 @@ export const getNFTS = async (wallet, from, testnet) => {
     }
     const unique = {};
     try {
-      
+      console.log("getNFTS: ", response)
       const allNFTs = response
         .filter((n) => n.native)
         .filter((n) => {
