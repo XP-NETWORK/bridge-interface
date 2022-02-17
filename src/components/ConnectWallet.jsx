@@ -35,6 +35,7 @@ import { TempleWallet } from "@temple-wallet/dapp";
 // import { DAppClient } from "@airgap/beacon-sdk";
 import { connectMetaMask, connectAlgoSigner, connectTempleWallet, connectBeacon } from "./ConnectWalletHelper"
 import Wallet from './Wallet/Wallet';
+import EVMWallet from './Wallet/EVMWallet';
 
 
 
@@ -429,9 +430,12 @@ function ConnectWallet() {
                             <ul className="walletList scrollSty">
                               {/* !!! style={ from ? from.type === "EVM" && from.text !== "Fuse" ? {} : OFF : ''} */}
                                 {/* <li onClick={() => connectMetaMask(activate)} style={ from ? from.type === "EVM" ? {} : OFF : ''} className="wllListItem"><img src={MetaMask} alt="MetaMask Icon" /> MetaMask</li> */}
-                                <Wallet active={from?.type === "EVM"} icon={MetaMask} connection={() => connectMetaMask(activate)} name={"MetaMask"}/>
-                                <li onClick={() => onWalletConnect()} style={  OFF } className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li>
-                                <li onClick={() => onTrustWallet()} style={(getMobOps() && window.innerWidth <= 600 && isEVM()) || (window.ethereum && window.innerWidth <= 600) ? {} : OFF } className="wllListItem"><img src={TrustWallet} alt="WalletConnect Icon" /> Trust Wallet</li>
+                                {/* <Wallet active={from?.type === "EVM"} icon={MetaMask} connection={() => connectMetaMask(activate)} name={"MetaMask"}/> */}
+                                <EVMWallet wallet={"MetaMask"} />
+                                {/* <li onClick={() => onWalletConnect()} style={  OFF } className="wllListItem"><img src={WalletConnect} alt="WalletConnect Icon" /> WalletConnect</li> */}
+                                <EVMWallet wallet={undefined} />
+                                <EVMWallet wallet={"TrustWallet"} />
+                                {/* <li onClick={() => onTrustWallet()} style={(getMobOps() && window.innerWidth <= 600 && isEVM()) || (window.ethereum && window.innerWidth <= 600) ? {} : OFF } className="wllListItem"><img src={TrustWallet} alt="WalletConnect Icon" /> Trust Wallet</li> */}
                                 <li onClick={onMyAlgo} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={MyAlgoBlue} alt="" /> MyAlgo</li>
                                 <li onClick={connectAlgoSigner} style={ from ? (from.type === "Algorand" && window.innerWidth > 600 ) ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo Signer</li>
                                 <li onClick={() => onAlgoWallet()} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li>
