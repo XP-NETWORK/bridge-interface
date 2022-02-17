@@ -17,6 +17,7 @@ import {
   newChains,
   comingSoonChains,
   availability,
+  fonts,
 } from "../../store/reducers/settingsSlice";
 import "./Settings.css";
 
@@ -422,39 +423,20 @@ function WSettings({
                           </Dropdown.Toggle>
                           <Dropdown.Menu>
                             <ul>
-                              <li>
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  onClick={(e) =>
-                                    deboucedSet("Roboto", "fontFamily")
-                                  }
-                                >
-                                  Roboto
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  onClick={(e) =>
-                                    deboucedSet("Open Sans", "fontFamily")
-                                  }
-                                >
-                                  Open Sance
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  onClick={(e) =>
-                                    deboucedSet("Inter", "fontFamily")
-                                  }
-                                >
-                                  Inter
-                                </a>
-                              </li>
+                              {fonts.map((font, i) => (
+                                <li key={i + "font"}>
+                                  <a
+                                    className="dropdown-item"
+                                    href="#"
+                                    style={{ fontFamily: font }}
+                                    onClick={(e) =>
+                                      deboucedSet(font, "fontFamily")
+                                    }
+                                  >
+                                    {font}
+                                  </a>
+                                </li>
+                              ))}
                             </ul>
                           </Dropdown.Menu>
                         </Dropdown>
@@ -505,125 +487,6 @@ function WSettings({
                                   href="#"
                                   onClick={(e) => deboucedSet("16", "fontSize")}
                                 >
-                                  Normal (16px)
-                                </a>
-                              </li>
-                            </ul>
-                          </Dropdown.Menu>
-                        </Dropdown>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="typographyBox " style={{ display: "none" }}>
-                    <h3>Body Text</h3>
-                    <div className="typo-sel header_color_select">
-                      <h5>Color</h5>
-                      <div className="select_color">
-                        <div className="colorInp">
-                          <input type="color" id="" />
-                        </div>
-                        <div className="colorCode">
-                          <input
-                            type="text"
-                            placeholder="# 000000"
-                            id="color_of_head"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="typo-sel header_color_select">
-                      <h5>Seconday Font Color</h5>
-                      <div className="select_color">
-                        <div className="colorInp">
-                          <input type="color" id="" />
-                        </div>
-                        <div className="colorCode">
-                          <input
-                            type="text"
-                            placeholder="# 000000"
-                            id="color_of_head"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="typo-sel header_color_select">
-                      <h5>Accent</h5>
-                      <div className="select_color">
-                        <div className="colorInp">
-                          <input type="color" id="" />
-                        </div>
-                        <div className="colorCode">
-                          <input
-                            type="text"
-                            placeholder="# 000000"
-                            id="color_of_head"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="typo-sel font-select">
-                      <h5>Font family</h5>
-                      <div className="select_font">
-                        <Dropdown>
-                          <Dropdown.Toggle id="dropdown-basic">
-                            {fontFamily}
-                          </Dropdown.Toggle>
-                          <Dropdown.Menu>
-                            <ul>
-                              <li>
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  onChange={(e) =>
-                                    deboucedSet("Roboto", "fontFamily")
-                                  }
-                                >
-                                  Roboto
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  onChange={(e) =>
-                                    deboucedSet("Open Sans", "fontFamily")
-                                  }
-                                >
-                                  Open Sance
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  onChange={(e) =>
-                                    deboucedSet("Inter", "fontFamily")
-                                  }
-                                >
-                                  Inter
-                                </a>
-                              </li>
-                            </ul>
-                          </Dropdown.Menu>
-                        </Dropdown>
-                      </div>
-                    </div>
-                    <div className="typo-sel font-size-sel">
-                      <h5>Font size</h5>
-                      <div className="select_font">
-                        <Dropdown>
-                          <Dropdown.Toggle id="dropdown-basic">
-                            Large (28px)
-                          </Dropdown.Toggle>
-                          <Dropdown.Menu>
-                            <ul>
-                              <li>
-                                <a className="dropdown-item" href="#">
-                                  Medium (22px)
-                                </a>
-                              </li>
-                              <li>
-                                <a className="dropdown-item" href="#">
                                   Normal (16px)
                                 </a>
                               </li>

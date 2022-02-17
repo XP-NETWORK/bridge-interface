@@ -929,6 +929,7 @@ h6 {
   color: #000;
   display: flex;
   flex-direction: column;
+  font-family: "Inter", sans-serif !important;
 }
 
 .bodyWrap {
@@ -1474,13 +1475,67 @@ li.blockChain_item .blockChainItem span {
   display: flex;
   align-items: center;
   padding-left: 28px;
-  margin-top: 10px;
+  margin-top: 15px;
   cursor: pointer;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  font-size: 14px;
 }
 
 .referalSwitch input {
-  height: 18px;
-  width: 18px;
+  cursor: pointer;
+  height: 16px;
+  width: 16px;
   margin-right: 10px;
+}
+
+.bannerOverlay {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(34, 36, 47, 0.94);
+  z-index: 99999999999;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.mobileOnlyBanner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  pointer-events: none;
+}
+
+.mobileOnlyBanner img {
+  margin-top: 28px;
+  margin-left: 33px;
+  pointer-events: none;
+}
+
+.testComp {
+  margin-top: 30%;
+  text-align: center;
+  font-weight: 500;
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.testComp h2 {
+  font-size: 24px;
+  margin-bottom: 16px;
+  pointer-events: none;
+}
+
+.testComp p {
+  display: inline-block;
+  width: 264px;
+  text-align: center;
+  line-height: 28px;
+  letter-spacing: 0.5px;
+  pointer-events: none;
 }

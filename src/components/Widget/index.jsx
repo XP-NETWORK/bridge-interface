@@ -7,6 +7,24 @@ import { setSettings } from "../../store/reducers/settingsSlice";
 import { setWidget, setWSettings } from "../../store/reducers/generalSlice";
 
 import { power } from "../Settings/assets/power.js";
+import mobileBanner from "../Settings/assets/img/mobileOnlyBanner.svg";
+
+const setBanner = () => {};
+
+const mobileOnlyBanner = `
+<div class="mobileOnlyBanner"><img src=${mobileBanner} alt="mobileOnlyXP"/><div class="testComp">
+    <h2>Widget</h2>
+    <p>Mobile is not yet supported, please use widget on desktop.</p>
+
+</div></div>  
+
+`;
+
+const overlay = document.createElement("div");
+
+overlay.classList.add("bannerOverlay");
+
+overlay.innerHTML = mobileOnlyBanner;
 
 export default function Widget() {
   const { widget, wsettings, settings } = useSelector(
@@ -26,6 +44,11 @@ export default function Widget() {
     const p = new URLSearchParams(window.location.search);
     const widget = p.get("widget") === "true";
     const wsettings = p.get("wsettings") === "true";
+
+    if (widget && wsettings && window.innerWidth <= 600) {
+      document.body.appendChild(overlay);
+      document.body.style.pointerEvents = "none";
+    }
 
     if (widget && wsettings && window.innerWidth > 600) {
       dispatch(setWSettings(true));
@@ -49,7 +72,6 @@ export default function Widget() {
       const showLink = p.get("showLink");
       const chains = p.get("chains")?.split("-");
       const wallets = p.get("wallets")?.split("-");
-      console.log(showLink);
 
       dispatch(
         setSettings({
