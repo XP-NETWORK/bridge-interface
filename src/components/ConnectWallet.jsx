@@ -33,7 +33,7 @@ import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
 // import { DAppClient } from "@airgap/beacon-sdk";
-import { connectMetaMask, connectAlgoSigner, connectTempleWallet, connectBeacon } from "./ConnectWalletHelper"
+import { connectMetaMask, connectAlgoSigner, connectTempleWallet, connectBeacon, connectMaiar, connectMyAlgo, connectMaiarExtension, connectTronlink } from "./ConnectWalletHelper"
 import Wallet from './Wallet/Wallet';
 import EVMWallet from './Wallet/EVMWallet';
 import TezosWallet from './Wallet/TezosWallet';
@@ -75,31 +75,31 @@ function ConnectWallet() {
     const wallet = new BeaconWallet({ name: "Beacon Docs Taquito" });
     Tezos.setWalletProvider(wallet);
 
-    function getMobOps() {
-      // debugger
-      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  //   function getMobOps() {
+  //     // debugger
+  //     var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
-      if (/android/i.test(userAgent)) {
-          return true
-      }
-  }
-
-  const onMaiarExtension = async () => {
-    // debugger
-    const instance = ExtensionProvider.getInstance()
-    try {
-      await instance.init()
-      await instance.login()
-      const { account } = instance
-      dispatch(setOnMaiar(true))
-      dispatch(setElrondAccount(account.address))
-      dispatch(setMaiarProvider(instance))
-    } 
-    catch(err) {
-      window.open('https://getmaiar.com/defi', '_blank');
-      console.log(err)
-    }
-  }
+  //     if (/android/i.test(userAgent)) {
+  //         return true
+  //     }
+  // }
+    //! onMaiarExtension connection  < Removed to ConnectWalletHelper >.
+  // const onMaiarExtension = async () => {
+  //   // debugger
+  //   const instance = ExtensionProvider.getInstance()
+  //   try {
+  //     await instance.init()
+  //     await instance.login()
+  //     const { account } = instance
+  //     dispatch(setOnMaiar(true))
+  //     dispatch(setElrondAccount(account.address))
+  //     dispatch(setMaiarProvider(instance))
+  //   } 
+  //   catch(err) {
+  //     window.open('https://getmaiar.com/defi', '_blank');
+  //     console.log(err)
+  //   }
+  // }
 
     //! MetaMask connection  < Removed to ConnectWalletHelper >.
     // const onInjected = async () => {
@@ -151,128 +151,130 @@ function ConnectWallet() {
     // }
 
 
-    const generateQR = async text => {
-        try {
-          const QR = await QRCode.toDataURL(text)
-          return QR
-        } catch (err) {
-          console.error(err)
-        }
-      }
+    // const generateQR = async text => {
+    //     try {
+    //       const QR = await QRCode.toDataURL(text)
+    //       return QR
+    //     } catch (err) {
+    //       console.error(err)
+    //     }
+    //   }
 
-    async function connectTronlink() {
-      // debugger
-        if(window.innerWidth <= 600 && !window.tronWeb){
-          dispatch(setTronPopUp(true))
-        }
-        else{
-          try{
-            try{
-              const accounts = await window.tronLink.request({ method: 'tron_requestAccounts' });
+
+    //! connectTronlink connection  < Removed to ConnectWalletHelper >.
+    // async function connectTronlink() {
+    //   // debugger
+    //     if(window.innerWidth <= 600 && !window.tronWeb){
+    //       dispatch(setTronPopUp(true))
+    //     }
+    //     else{
+    //       try{
+    //         try{
+    //           const accounts = await window.tronLink.request({ method: 'tron_requestAccounts' });
               
-              if(!accounts){
-                dispatch(setTronLoginError("loggedOut"))``
-              }
-            } 
-            catch(err){
-              console.log(err);
-              if(!window.tronWeb){
-                dispatch(setTronLoginError("noTronWeb"))
-              }
-            }
+    //           if(!accounts){
+    //             dispatch(setTronLoginError("loggedOut"))``
+    //           }
+    //         } 
+    //         catch(err){
+    //           console.log(err);
+    //           if(!window.tronWeb){
+    //             dispatch(setTronLoginError("noTronWeb"))
+    //           }
+    //         }
             
-            if(window.tronLink && window.tronWeb.defaultAddress.base58) {
-              const publicAddress = window.tronWeb.defaultAddress.base58
-              dispatch(setTronWallet(publicAddress))
-              dispatch(setTronLink(true))
+    //         if(window.tronLink && window.tronWeb.defaultAddress.base58) {
+    //           const publicAddress = window.tronWeb.defaultAddress.base58
+    //           dispatch(setTronWallet(publicAddress))
+    //           dispatch(setTronLink(true))
 
-            }
-          } 
-          catch(error) {
-            if(!modalError){
-              dispatch(setError(error))
-              if(error.data){
-                console.log(error.data.message);
-              }
-              else console.log(error); 
-            }
-          }
-        }
-      }
+    //         }
+    //       } 
+    //       catch(error) {
+    //         if(!modalError){
+    //           dispatch(setError(error))
+    //           if(error.data){
+    //             console.log(error.data.message);
+    //           }
+    //           else console.log(error); 
+    //         }
+    //       }
+    //     }
+    //   }
 
-    const onClientConnect = ( maiarProvider ) => {
-      return {
-        onClientLogin: async () => {
-            const add = await maiarProvider.getAddress()
-          dispatch(setConfirmMaiarMob(true))
-          dispatch(setElrondAccount(add))
-          dispatch(setMaiarProvider(maiarProvider))
-          dispatch(setOnMaiar(true))
-          dispatch(setStep(2))
-        },
-        onClientLogout: async () => {
-          dispatch(setReset())
-        }
-      }
-    }
-
-    const onMaiar = async () => {
-        // setOnMaiarConnect(true)
-        const provider = new ProxyProvider( "https://gateway.elrond.com")
-        const maiarProvider = new WalletConnectProvider(provider, 'https://bridge.walletconnect.org/', onClientConnect);
-          try {
-            await maiarProvider.init()
-            maiarProvider.onClientConnect = onClientConnect(maiarProvider)
-            const qrCodeString = await maiarProvider.login()
-            setQqrCodeString(qrCodeString)
-            const qr = await generateQR(qrCodeString)
+    // const onClientConnect = ( maiarProvider ) => {
+    //   return {
+    //     onClientLogin: async () => {
+    //         const add = await maiarProvider.getAddress()
+    //       dispatch(setConfirmMaiarMob(true))
+    //       dispatch(setElrondAccount(add))
+    //       dispatch(setMaiarProvider(maiarProvider))
+    //       dispatch(setOnMaiar(true))
+    //       dispatch(setStep(2))
+    //     },
+    //     onClientLogout: async () => {
+    //       dispatch(setReset())
+    //     }
+    //   }
+    // }
+    //! onMaiar connection  < Removed to ConnectWalletHelper >.
+    // const onMaiar = async () => {
+    //     // setOnMaiarConnect(true)
+    //     const provider = new ProxyProvider( "https://gateway.elrond.com")
+    //     const maiarProvider = new WalletConnectProvider(provider, 'https://bridge.walletconnect.org/', onClientConnect);
+    //       try {
+    //         await maiarProvider.init()
+    //         maiarProvider.onClientConnect = onClientConnect(maiarProvider)
+    //         const qrCodeString = await maiarProvider.login()
+    //         setQqrCodeString(qrCodeString)
+    //         const qr = await generateQR(qrCodeString)
             
-            setStrQr(qr)
-          } catch (error) {
-            dispatch(setError(error))
-            if(error.data){
-              console.log(error.data.message);
-            }
-            else console.log(error); 
-          }
-      }
+    //         setStrQr(qr)
+    //       } catch (error) {
+    //         dispatch(setError(error))
+    //         if(error.data){
+    //           console.log(error.data.message);
+    //         }
+    //         else console.log(error); 
+    //       }
+    //   }
 
         //! WalletConnect connection.
-    const onWalletConnect = async () => {
-        const { rpc, chainId } = chainsConfig[from.key]
-        try {
-            const walletConnect = new WalletConnectConnector({ 
-                rpc: {
-                  [chainId]: rpc
-                },
-                  chainId,
-                  qrcode: true,
-              })
-              walletConnect.networkId = chainId
-              await activate(walletConnect, undefined, true)
-              dispatch(setOnWC(true))
-              dispatch(setWC(walletConnect))
-        } catch (error) {
-          dispatch(setError(error))
-          if(error.data){
-            console.log(error.data.message);
-          }
-          else console.log(error); 
-        }
-    }
+    // const onWalletConnect = async () => {
+    //     const { rpc, chainId } = chainsConfig[from.key]
+    //     try {
+    //         const walletConnect = new WalletConnectConnector({ 
+    //             rpc: {
+    //               [chainId]: rpc
+    //             },
+    //               chainId,
+    //               qrcode: true,
+    //           })
+    //           walletConnect.networkId = chainId
+    //           await activate(walletConnect, undefined, true)
+    //           dispatch(setOnWC(true))
+    //           dispatch(setWC(walletConnect))
+    //     } catch (error) {
+    //       dispatch(setError(error))
+    //       if(error.data){
+    //         console.log(error.data.message);
+    //       }
+    //       else console.log(error); 
+    //     }
+    // }
 
-
-    const onMyAlgo = useCallback( async () => {
-      const myAlgoConnect = new MyAlgoConnect();
-      try {
-        const accountsSharedByUser = await myAlgoConnect.connect()
-        console.log("MY Algo: ", myAlgoConnect);
-        dispatch(setAlgorandAccount(accountsSharedByUser[0].address))
-        dispatch(setMyAlgo(true))
-      } catch (error) {
-        console.log(error);
-      }
-    })
+    //! onMyAlgo connection  < Removed to ConnectWalletHelper >.
+    // const onMyAlgo = useCallback( async () => {
+    //   const myAlgoConnect = new MyAlgoConnect();
+    //   try {
+    //     const accountsSharedByUser = await myAlgoConnect.connect()
+    //     console.log("MY Algo: ", myAlgoConnect);
+    //     dispatch(setAlgorandAccount(accountsSharedByUser[0].address))
+    //     dispatch(setMyAlgo(true))
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // })
 
     //! onAlgoSigner connection  < Removed to ConnectWalletHelper >.
     // const onAlgoSigner = useCallback(async () => {
@@ -411,18 +413,18 @@ function ConnectWallet() {
                                 <EVMWallet wallet={undefined} /> {/* Wallet Connect */}
                                 <EVMWallet wallet={"TrustWallet"} />
                                 {/* <li onClick={() => onTrustWallet()} style={(getMobOps() && window.innerWidth <= 600 && isEVM()) || (window.ethereum && window.innerWidth <= 600) ? {} : OFF } className="wllListItem"><img src={TrustWallet} alt="WalletConnect Icon" /> Trust Wallet</li> */}
-                                <li onClick={onMyAlgo} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={MyAlgoBlue} alt="" /> MyAlgo</li>
+                                <li onClick={connectMyAlgo} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={MyAlgoBlue} alt="" /> MyAlgo</li>
                                 <li onClick={connectAlgoSigner} style={ from ? (from.type === "Algorand" && window.innerWidth > 600 ) ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo Signer</li>
                                 <li onClick={onAlgoWallet} style={ from ? from.type === "Algorand" ?  {} : OFF : ''} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li>
                                 {/* <li onClick={() => connectTronlink()} style={ from ? from.type === "Tron" ? {} : OFF : ""} className="wllListItem"><img src={Tron} alt="Tron Icon" /> TronLink</li> */}
                                 <Wallet active={from?.type === 'Tron'} icon={Tron} connection={connectTronlink} name={"TronLink"} />
-                                <li onClick={onMaiar} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
+                                <li onClick={connectMaiar} style={ from ? from.type === "Elrond" ? {} : OFF : ''} className="wllListItem"><img src={Maiar} alt="" /> Maiar</li>
                                 {/* style={ from ? from.type === "Elrond" ? {} : OFF : ''} */}
                                 {/* <li onClick={connectBeacon} style={ from?.text === "Tezos" ? {} : OFF} className="wllListItem beacon"><img src={BeaconW} alt="Kukai Icon" /> Beacon</li> */}
                                 <TezosWallet wallet={"TempleWallet"} />
                                 {/* <li onClick={connectTempleWallet} style={ (from?.text === "Tezos" && window.innerWidth > 600 ) ? {} : OFF} className="wllListItem"><img style={{width: "28px"}} src={Temple} alt="Temple Icon" /> Temple Wallet</li> */}
                                 <TezosWallet wallet={undefined} /> {/* Beacon */}
-                                <li onClick={onMaiarExtension} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
+                                <li onClick={connectMaiarExtension} style={ from ? from.type === "Elrond" ? {} : OFF : ''}  className="wllListItem"><img src={Elrond} alt="Elrond Icon" /> Maiar Extension</li>
                                 <li style={ OFF } className="wllListItem">
                                   <div>
                                     <img src={Ledger} alt="Ledger Icon" />

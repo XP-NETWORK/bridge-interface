@@ -3,12 +3,14 @@ import { TempleWallet } from "@temple-wallet/dapp";
 import { injected, algoConnector } from "../wallet/connectors"
 import { useWeb3React } from "@web3-react/core";
 import store  from "../store/store"
-import { setTronWallet, setAccount, setConfirmMaiarMob, setAlgorandWallet, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp, setTrustWallet, setAlgoSigner, setAlgorandAccount, setMyAlgo, setTezosAccount, setKukaiWallet, setTempleWallet } from "../store/reducers/generalSlice"
+import { setTronWallet, setAccount, setConfirmMaiarMob, setAlgorandWallet, setTronLink, setMetaMask, setTronLoginError, setStep, setOnMaiar, setWrongNetwork, setElrondAccount, setMaiarProvider, setReset, setOnWC, setWC, setError, setTronPopUp, setTrustWallet, setAlgoSigner, setAlgorandAccount, setMyAlgo, setTezosAccount, setKukaiWallet, setTempleWallet, setQrCode, setQrImage, setQrCodeString } from "../store/reducers/generalSlice"
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
+import { WalletConnectProvider, ProxyProvider, ExtensionProvider } from "@elrondnetwork/erdjs"
+import QRCode from 'qrcode'
 
-const { to, from } = store.getState()
+const { to, from, modalError } = store.getState()
 
 
 // EVM blockchain connection ( MetaMask )
@@ -97,3 +99,103 @@ export const connectBeacon = async () => {
     console.log(error);
   }
 }
+
+const onClientConnect = ( maiarProvider ) => {
+  return {
+    onClientLogin: async () => {
+        const add = await maiarProvider.getAddress()
+      store.dispatch(setConfirmMaiarMob(true))
+      store.sdispatch(setElrondAccount(add))
+      store.dispatch(setMaiarProvider(maiarProvider))
+      store.dispatch(setOnMaiar(true))
+      store.dispatch(setStep(2))
+    },
+    onClientLogout: async () => {
+      store.dispatch(setReset())
+    }
+  }
+}
+const generateQR = async text => {
+  try {
+    const QR = await QRCode.toDataURL(text)
+    return QR
+  } catch (err) {
+    console.error(err)
+  }
+}
+export const connectMaiar = async () => {
+    const provider = new ProxyProvider( "https://gateway.elrond.com")
+    const maiarProvider = new WalletConnectProvider(provider, 'https://bridge.walletconnect.org/', onClientConnect);
+      try {
+        await maiarProvider.init()
+        maiarProvider.onClientConnect = onClientConnect(maiarProvider)
+        const qrCodeString = await maiarProvider.login()
+        store.dispatch(setQrCodeString(qrCodeString))
+        const qr = await generateQR(qrCodeString)
+        
+        store.dispatch(setQrImage(qr))
+      } catch (error) {
+        store.dispatch(setError(error))
+        if(error.data){
+          console.log(error.data.message);
+        }
+        else console.log(error); 
+      }
+  }
+
+  export const connectMaiarExtension = async () => {
+    // debugger
+    const instance = ExtensionProvider.getInstance()
+    try {
+      await instance.init()
+      await instance.login()
+      const { account } = instance
+      store.dispatch(setOnMaiar(true))
+      store.dispatch(setElrondAccount(account.address))
+      store.dispatch(setMaiarProvider(instance))
+    } 
+    catch(err) {
+      window.open('https://getmaiar.com/defi', '_blank');
+      console.log(err)
+    }
+  }
+
+  export const connectTronlink = async () => {
+    // debugger
+      if(window.innerWidth <= 600 && !window.tronWeb){
+        store.dispatch(setTronPopUp(true))
+      }
+      else{
+        try{
+          try{
+            const accounts = await window.tronLink.request({ method: 'tron_requestAccounts' });
+            
+            if(!accounts){
+              store.dispatch(setTronLoginError("loggedOut"))``
+            }
+          } 
+          catch(err){
+            console.log(err);
+            if(!window.tronWeb){
+              store.dispatch(setTronLoginError("noTronWeb"))
+            }
+          }
+          
+          if(window.tronLink && window.tronWeb.defaultAddress.base58) {
+            const publicAddress = window.tronWeb.defaultAddress.base58
+            store.dispatch(setTronWallet(publicAddress))
+            store.dispatch(setTronLink(true))
+
+          }
+        } 
+        catch(error) {
+          if(!modalError){
+            store.dispatch(setError(error))
+            if(error.data){
+              console.log(error.data.message);
+            }
+            else console.log(error); 
+          }
+        }
+      }
+    }
