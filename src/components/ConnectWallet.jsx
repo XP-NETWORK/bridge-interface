@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import Close from "../assets/img/icons/close.svg";
+import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
 import NFTworng from "./NFTworng";
 import { useDispatch, useSelector } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
@@ -48,6 +49,7 @@ function ConnectWallet() {
   const { chainId, account } = useWeb3React();
   const testnet = useSelector((state) => state.general.testNet);
   const MyAlgo = useSelector((state) => state.general.MyAlgo);
+  const widget = useSelector((state) => state.general.widget);
 
   // const modalError = useSelector(state => state.generalerror)
   // const [strQR, setStrQr] = useState()
@@ -324,7 +326,7 @@ function ConnectWallet() {
         dispatch(setAlgorandAccount(accounts[0]));
       }
     });
-
+    debugger;
     let correct;
     if (testnet) {
       correct = from ? TESTNET_CHAIN_INFO[from?.key].chainId === chainId : "";
@@ -336,6 +338,7 @@ function ConnectWallet() {
       dispatch(setAccount(account));
     }
     if (from) {
+      debugger;
       dispatch(
         setWrongNetwork(
           testnet
@@ -388,7 +391,11 @@ function ConnectWallet() {
           <Modal.Header>
             <Modal.Title>Connect Wallet</Modal.Title>
             <span className="CloseModal" onClick={handleClose}>
-              <img src={Close} alt="" />
+              {widget ? (
+                <CloseComp className="svgWidget" />
+              ) : (
+                <img src={Close} alt="" />
+              )}
             </span>
           </Modal.Header>
           <Modal.Body>

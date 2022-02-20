@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { chains, CHAIN_INFO } from "../../components/values";
 import "./Chain.css";
 
+
 export default function Chain({
   filteredChain,
   chainSelectHandler,
@@ -17,14 +18,10 @@ export default function Chain({
   maintenance
 }) {
   const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
-  // console.log("key: ", chainKey)
-
   const checkIfLive = (chain) => {
     console.log(chain)
-    // let c = chain === "GnosisChain" ? "xDai" : chain
     const nonce = CHAIN_INFO[chain]?.nonce;
     console.log(CHAIN_INFO[chain])
-    // console.log("nonce: ", nonce)
     if (validatorsInfo) {
       return validatorsInfo[nonce]?.bridge_alive;
     }
@@ -33,8 +30,10 @@ export default function Chain({
   console.log("chainKey: ", chainKey)
 
   useEffect(() => {}, [validatorsInfo]);
-
+  useEffect(() => {console.log("rendered!!!")},)
+  
   const OFF = { opacity: 0.6, pointerEvents: "none" };
+
   return (
     <li
       style={maintenance || !checkIfLive(chainKey) ? OFF : {}}
@@ -49,7 +48,7 @@ export default function Chain({
         {!checkIfLive(chainKey) && !coming && (
           <div className="chain__off">Offline</div>
         )}
-        {/* {newChain && <div className="new-chain">New</div>} */}
+        {newChain && <div className="new-chain">New</div>}
       </div>
     </li>
   );

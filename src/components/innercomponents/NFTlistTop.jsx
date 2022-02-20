@@ -4,10 +4,6 @@ import BSC from "../../assets/img/chain/Binance.svg";
 import Search from "../../assets/img/icons/Search.svg";
 import ListView from "../../assets/img/icons/ListView.svg";
 import GridView from "../../assets/img/icons/GridView.svg";
-import { ReactComponent as SearchComp } from "../../assets/img/icons/Search.svg";
-import { ReactComponent as ListViewComp } from "../../assets/img/icons/ListView.svg";
-import { ReactComponent as GridViewComp } from "../../assets/img/icons/GridView.svg";
-
 import { useDispatch } from "react-redux";
 import {
   setSearchNFTList,
@@ -21,12 +17,17 @@ import { useSelector } from "react-redux";
 import SelectDestination from "../SelectDestination";
 import NFTChainListBox from "../NFTChainListBox";
 import Close from "../../assets/img/icons/close.svg";
-import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 import { setNFTS } from "../../wallet/helpers";
 import Refresh from "../../assets/img/refresh.svg";
+
+import { ReactComponent as SearchComp } from "../../assets/img/icons/Search.svg";
+import { ReactComponent as ListViewComp } from "../../assets/img/icons/ListView.svg";
+import { ReactComponent as GridViewComp } from "../../assets/img/icons/GridView.svg";
 import { ReactComponent as RefreshComp } from "../../assets/img/refresh.svg";
+
+import { Ref } from "@fluentui/react-component-ref";
+
 function NFTlistTop() {
-  const widget = new URLSearchParams(window.location.search).get("widget");
   const dispatch = useDispatch();
   const nfts = useSelector((state) => state.general.NFTList);
   const {
@@ -45,6 +46,7 @@ function NFTlistTop() {
     (state) => state.general.switchDestination
   );
   const search = useSelector((state) => state.general.NFTListSearch);
+  const widget = useSelector((state) => state.general.widget);
   const [showSearch, setShowSearch] = useState(false);
 
   const handleSearch = (e) => {
@@ -99,26 +101,7 @@ function NFTlistTop() {
         </div>
       </div>
       <div className="nftListTop">
-        <Modal
-          animation={false}
-          show={switchDestination}
-          onHide={() => handleClose()}
-          className="ChainModal"
-        >
-          <Modal.Header className="text-left">
-            <Modal.Title>Change destination chain</Modal.Title>
-            <span className="CloseModal" onClick={() => handleClose()}>
-              {widget ? (
-                <CloseComp className="svgWidget" />
-              ) : (
-                <img src={Close} alt="" />
-              )}
-            </span>
-          </Modal.Header>
-          <Modal.Body>
-            <NFTChainListBox />
-          </Modal.Body>
-        </Modal>
+        <NFTChainListBox />
         <div className="yourNft desktopOnly">
           Your NFTs on{" "}
           <span>
@@ -133,7 +116,7 @@ function NFTlistTop() {
             {widget ? (
               <RefreshComp className="svgWidget" />
             ) : (
-              <img className="refreshnfts" src={Refresh} />
+              <img className="refreshnfts" src={Refresh} alt="#" />
             )}
           </span>
         </div>
@@ -147,7 +130,7 @@ function NFTlistTop() {
                 {widget ? (
                   <SearchComp className="svgWidget" />
                 ) : (
-                  <img src={Search} />
+                  <img src={Search} alt="#" />
                 )}
               </Dropdown.Toggle>
               <Dropdown.Menu>
@@ -162,7 +145,7 @@ function NFTlistTop() {
                     {widget ? (
                       <SearchComp className="svgWidget" />
                     ) : (
-                      <img src={Search} />
+                      <img src={Search} alt="#" />
                     )}
                   </button>
                 </form>
@@ -176,7 +159,7 @@ function NFTlistTop() {
                 {widget ? (
                   <GridViewComp className="svgWidget" />
                 ) : (
-                  <img src={GridView} />
+                  <img src={GridView} alt="#" />
                 )}
               </span>
             ) : (
@@ -184,7 +167,7 @@ function NFTlistTop() {
                 {widget ? (
                   <ListViewComp className="svgWidget" />
                 ) : (
-                  <img src={ListView} />
+                  <img src={ListView} alt="#" />
                 )}
               </span>
             )}
@@ -216,11 +199,7 @@ function NFTlistTop() {
               onChange={(e) => handleSearch(e)}
             />
             <button type="button">
-              {widget ? (
-                <SearchComp className="svgWidget" />
-              ) : (
-                <img src={Search} />
-              )}
+              <img src={Search} />
             </button>
           </form>
         </div>

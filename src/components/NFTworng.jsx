@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import Close from "../assets/img/icons/close.svg";
-import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
 import Wrong from "../assets/img/Wrong.svg";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../components/values";
 import { useSelector } from "react-redux";
@@ -11,8 +10,12 @@ import { setReset, setWrongNetwork } from "../store/reducers/generalSlice";
 import ChangeNetworkLoader from "./innercomponents/ChangeNetworkLoader";
 import { useWeb3React } from "@web3-react/core";
 
+import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
+
 function NFTworng() {
-  const handleClose = () => dispatch(setReset());
+  const handleClose = () => {
+    window.location.reload();
+  };
   const from = useSelector((state) => state.general.from);
   const showWrong = useSelector((state) => state.general.wrongNetwork);
   const account = useSelector((state) => state.general.account);
