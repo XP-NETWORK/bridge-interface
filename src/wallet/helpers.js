@@ -166,45 +166,44 @@ export const getFactory = async () => {
 
 
 export const handleChainFactory = async (someChain) => {
-  // debugger
+
   const factory = await getFactory();
-  let chain;
-  // console.log(someChain, 'somechain')
   try {
-    someChain === "Ethereum"
-    ? (chain = await factory.inner(Chain.ETHEREUM))
-    : someChain === "BSC"
-    ? (chain = await factory.inner(Chain.BSC))
-    : someChain === "Tron"
-    ? (chain = await factory.inner(Chain.TRON))
-    : someChain === "Elrond"
-    ? (chain = await factory.inner(Chain.ELROND))
-    : someChain === "Polygon"
-    ? (chain = await factory.inner(Chain.POLYGON))
-    : someChain === "Avalanche"
-    ? (chain = await factory.inner(Chain.AVALANCHE))
-    : someChain === "Fantom"
-    ? (chain = await factory.inner(Chain.FANTOM))
-    : someChain === "Algorand"
-    ? (chain = await factory.inner(Chain.ALGORAND))
-    : someChain === "xDai"
-    ? (chain = await factory.inner(Chain.XDAI))
-    : someChain === "Solana"
-    ? (chain = await factory.inner(Chain.SOLANA))
-    : someChain === "Cardano"
-    ? (chain = await factory.inner(Chain.CARDANO))
-    : someChain === "Fuse"
-    ? (chain = await factory.inner(Chain.FUSE))
-    : someChain === "Velas"
-    ? (chain = await factory.inner(Chain.VELAS))
-    : someChain === "Tezos"
-    ? (chain = await factory.inner(Chain.TEZOS))
-    : someChain === "Iotex"
-    ? (chain = await factory.inner(Chain.IOTEX))
-    : someChain = "Harmony"
-    ?(chain = await factory.inner(Chain.HARMONY))
-    : (chain = "");
-  return chain;
+    switch (someChain) {
+      case "Ethereum":
+        return await factory.inner(Chain.ETHEREUM)
+      case "BSC":
+        return await factory.inner(Chain.BSC)
+      case "Tron":
+        return await factory.inner(Chain.TRON)
+      case "Elrond":
+        return await factory.inner(Chain.ELROND)
+      case "Polygon":
+        return await factory.inner(Chain.POLYGON)
+      case  "Avalanche":
+        return await factory.inner(Chain.AVALANCHE)
+      case "Fantom": 
+        return await factory.inner(Chain.FANTOM)
+      case "Algorand":
+        return await factory.inner(Chain.ALGORAND)
+      case "xDai":
+        return await factory.inner(Chain.XDAI)
+      case "Solana":
+        return await factory.inner(Chain.SOLANA)
+      case "Cardano":
+        return await factory.inner(Chain.CARDANO)
+      case "Fuse":
+        return await factory.inner(Chain.FUSE)
+      case "Velas":
+        return await factory.inner(Chain.VELAS)
+      case "Tezos":
+        return await factory.inner(Chain.TEZOS)
+      case "Iotex":
+        return await factory.inner(Chain.IOTEX)
+      case "Harmony":
+        return await factory.inner(Chain.HARMONY)
+      default: return ''
+    }
   } catch (error) {
     console.error(error)
   }

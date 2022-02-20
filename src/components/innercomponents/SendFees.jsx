@@ -10,6 +10,7 @@ const Web3Utils = require("web3-utils");
 function SendFees() {
     const dispatch = useDispatch()
     const to = useSelector(state => state.general.to)
+    const from = useSelector(state => state.general.from)
     const account = useSelector(state => state.general.account)
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
     const isToEVM = useSelector(state => state.general.to).type === 'EVM'
@@ -22,8 +23,8 @@ function SendFees() {
         let fact
         let fee
         try {
-            const fromChain = await handleChainFactory(from)
-            const toChain = await handleChainFactory(to)
+            const fromChain = await handleChainFactory(from.text)
+            const toChain = await handleChainFactory(to.text)
             const wallet = 
             to ==='Tron' ? 'TCCKoPRcYoCGkxVThCaY9vRPaKiTjE4x1C' 
             : from === 'Tron' && isToEVM ? '0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6'
@@ -47,6 +48,7 @@ function SendFees() {
                 }
                 else{
                     try {
+                        console.log()
                        fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
                     } catch (error) {
                         console.error(error);
@@ -77,7 +79,7 @@ function SendFees() {
         return num
     }
     // getNumToFix(fees)
-    const from = useSelector(state => state.general.from)
+
     const config = chainsConfig[from?.text]
 
     useEffect(() => {
