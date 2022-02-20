@@ -84,7 +84,7 @@ function App() {
         }
       }
     }
-    localStorage.clear();
+    //!state.wsettings && localStorage.clear();
   }, []);
 
   useEffect(async () => {
