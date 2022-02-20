@@ -18,10 +18,14 @@ import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
 import SetDeparture from "./SetDeparture";
 import SetDestination from "./SetDestination";
 
+import { ReactComponent as LineArrowComp } from "../assets/img/nftSelect/Line.svg";
+import { ReactComponent as ChainArrowComp } from "../assets/img/icons/Swap.svg";
+
 export default function NFTSelectBox() {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
+  const widget = useSelector((state) => state.general.widget);
   const [swapHover, setSwapHover] = useState();
   const [swapDown, setSwapDown] = useState();
 
@@ -60,18 +64,30 @@ export default function NFTSelectBox() {
           onClick={(e) => switchChains(e)}
           className="chainArrow"
         >
-          <img
-            src={swapDown ? SwapPressed : swapHover ? SwapHover : ChainArrow}
-            alt=""
-          />
+          {widget ? (
+            <ChainArrowComp className="svgWidget swpBtn" />
+          ) : (
+            <img
+              src={swapDown ? SwapPressed : swapHover ? SwapHover : ChainArrow}
+              alt=""
+            />
+          )}
         </span>
       ) : (
         <span className="chainArrow">
-          <img src={ChainArrow} alt="arrow-swap" />
+          {widget ? (
+            <ChainArrowComp className="svgWidget swpBtn" />
+          ) : (
+            <img src={ChainArrow} alt="arrow-swap" />
+          )}
         </span>
       )}
       <span className="LineArrow">
-        <img src={LineArrow} alt="" />
+        {widget ? (
+          <LineArrowComp className="svgWidget lineArrow" />
+        ) : (
+          <img src={LineArrow} alt="" />
+        )}
       </span>
       <SetDestination />
       {/* <div className="selChain seleDesti" onClick={() => handleShow("destination")}>

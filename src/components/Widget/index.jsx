@@ -362,6 +362,10 @@ export default function Widget() {
           fill: #ffffff;
         }
 
+        .svgWidget.lineArrow line{
+            stroke: ${borderColor ? borderColor : ""}
+        }
+
         .svgWidget:hover {
           filter: brightness(135%);
         }
