@@ -238,8 +238,8 @@ export const chainsConfig = {
     img: Binance,
     chainId: 56,
     tx: "https://bscscan.com/tx/",
-    rpc:
-      "https://wandering-shy-leaf.bsc.quiknode.pro/ad8d20d7895c15e9afc03ff011dc3418152b07f7/",
+    testTx: "https://testnet.bscscan.com//tx/",
+    rpc: "https://wandering-shy-leaf.bsc.quiknode.pro/ad8d20d7895c15e9afc03ff011dc3418152b07f7/",
     Chain: Chain.BSC,
   },
   Polygon: {
@@ -247,6 +247,7 @@ export const chainsConfig = {
     token: "MATIC",
     img: Polygon,
     tx: "https://polygonscan.com/tx/",
+    testTx: "https://mumbai.polygonscan.com/tx/",
     chainId: 137,
     rpc:
       "https://red-black-water.matic.quiknode.pro/a1bec0e749c6fed57405002677902b7046c59689/",
@@ -292,6 +293,7 @@ export const chainsConfig = {
     // chainData: ChainData.Avalanche,
     Chain: Chain.AVALANCHE,
     tx: "https://snowtrace.io/tx/",
+    testTx: "https://testnet.snowtrace.io/tx/"
   },
   Fuse: {
     type: EVM,
@@ -334,7 +336,8 @@ export const chainsConfig = {
     rpc: "https://api.harmony.one",
     chainId: 1666600000,
     Chain: Chain.HARMONY,
-    tx: "https://explorer.harmony.one/tx",
+    tx: "https://explorer.harmony.one/tx/",
+    testTx: "https://explorer.testnet.harmony.one/tx",
   },
 };
 
@@ -374,6 +377,10 @@ export const TESTNET_CHAIN_INFO = {
     nonce: 12,
     chainId: 1666700000,
   },
+  Avalanche: {
+      nonce: 6,
+      chainId: 43113
+  }
 };
 
 export const CHAIN_INFO = {

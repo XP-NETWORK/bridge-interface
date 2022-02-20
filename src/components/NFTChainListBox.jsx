@@ -24,6 +24,7 @@ export default function NFTChainListBox(props) {
     const handleClose = () => {
         dispatch(setChainModal(false))
         dispatch(setDepartureOrDestination(""))
+        dispatch(setSwitchDestination(false))
         dispatch(setChainSearch(''))
     }
     const chainSelectHandler = chain => {
@@ -41,7 +42,6 @@ export default function NFTChainListBox(props) {
         }
         else if(switchChain){
             dispatch(setTo(chain))
-            dispatch(setSwitchDestination(false))
             handleClose()
         }
         else{
@@ -79,12 +79,10 @@ export default function NFTChainListBox(props) {
                      toChains.filter(chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).map(chain => {
                         const { image, text, key, coming , newChain, maintenance, testNet } = chain;
                         if((globalTestnet && testNet) && chain.key !== from.key){
-                            console.log('Returning testnet chain', chain.key)
                             return <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`} /> 
                         } else if(!globalTestnet) {
-                            console.log('Returning mainnet chain', chain.key)
                             return chain.key !== from.key ? <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} chainKey={key} coming={coming} text={text} filteredChain={chain} image={image} key={`chain-${key}`}  maintenance={maintenance} />
-                        :console.log("else: ", chain.key !== from.key)}
+                        :''}
                      })
                     }
                 </ul> 

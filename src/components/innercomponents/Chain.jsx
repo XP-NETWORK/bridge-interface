@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { chains, CHAIN_INFO } from "../../components/values";
+import { CHAIN_INFO } from "../../components/values";
 import "./Chain.css";
 
 
@@ -19,15 +19,11 @@ export default function Chain({
 }) {
   const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
   const checkIfLive = (chain) => {
-    console.log(chain)
     const nonce = CHAIN_INFO[chain]?.nonce;
-    console.log(CHAIN_INFO[chain])
     if (validatorsInfo) {
       return validatorsInfo[nonce]?.bridge_alive;
     }
   };
-  console.log("key: ", key)
-  console.log("chainKey: ", chainKey)
 
   useEffect(() => {}, [validatorsInfo]);
   useEffect(() => {console.log("rendered!!!")},)

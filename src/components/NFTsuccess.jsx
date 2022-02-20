@@ -260,6 +260,7 @@ export default NFTsuccess;
 function SuccessNFT({ nft, from, index }) {
   const dispatch = useDispatch();
   const { to, algorandAccount } = useSelector((s) => s.general);
+  const testnet = useSelector(state => state.general.testNet)
   const tx = nft.txn
     ? typeof nft.txn === "object"
       ? nft.txn.hash.toString()
@@ -315,13 +316,13 @@ function SuccessNFT({ nft, from, index }) {
       )}
       <span className="nftSelected__name">{nft.name}</span>
       <span className="bluTextBtn">
-        <a href={`${chainsConfig[from.key].tx + getTX()}`} target="_blank">
+        <a href={testnet ? `${chainsConfig[from.key].testTx + getTX()}` : `${chainsConfig[from.key].tx + getTX()}`} target="_blank" rel="noreferrer">
           View Txn
         </a>
       </span>
       {to.key === "Algorand" ? (
         <span className="bluTextBtn">
-          <a style={algorandAccount ? {} : off} onClick={claim} target="_blank">
+          <a style={algorandAccount ? {} : off} onClick={claim} target="_blank" >
             Claim
           </a>
         </span>

@@ -326,7 +326,7 @@ function ConnectWallet() {
         dispatch(setAlgorandAccount(accounts[0]));
       }
     });
-    debugger;
+    // debugger;
     let correct;
     if (testnet) {
       correct = from ? TESTNET_CHAIN_INFO[from?.key].chainId === chainId : "";
@@ -338,7 +338,7 @@ function ConnectWallet() {
       dispatch(setAccount(account));
     }
     if (from) {
-      debugger;
+      // debugger;
       dispatch(
         setWrongNetwork(
           testnet
