@@ -51,6 +51,7 @@ function WSettings({
   toggleShow,
   showLink,
   onSaveSettings,
+  onResetSettings,
 }) {
   const {
     backgroundColor,
@@ -727,6 +728,15 @@ function WSettings({
           <div className="referalSwitch">
             <Button size="sm" onClick={onSaveSettings}>
               Save settings
+            </Button>
+            <Button
+              size="sm"
+              onClick={onResetSettings}
+              type="reset"
+              className="resetBtn"
+              variant="outline-primary"
+            >
+              Rest settings
             </Button>
           </div>
 

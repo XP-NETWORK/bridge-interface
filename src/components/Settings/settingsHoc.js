@@ -2,10 +2,9 @@ import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setSettings,
-  chains,
-  wallets,
   activeChains,
   availability,
+  initialState as initSettings,
 } from "../../store/reducers/settingsSlice";
 
 import { usePrevious } from "./hooks";
@@ -218,6 +217,11 @@ const settingsHoc = (Wrapped) => (props) => {
     }, 700);
   };
 
+  const onResetSettings = () => {
+    dispatch(setSettings(initSettings));
+    localStorage.removeItem("widgetSettings");
+  };
+
   return (
     <Wrapped
       list={list}
@@ -236,6 +240,7 @@ const settingsHoc = (Wrapped) => (props) => {
       toggleShow={toggleShow}
       showLink={showLink}
       onSaveSettings={onSaveSettings}
+      onResetSettings={onResetSettings}
     />
   );
 };

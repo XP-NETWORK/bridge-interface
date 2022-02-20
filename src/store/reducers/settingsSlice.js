@@ -49,7 +49,7 @@ export const wallets = [
   "Trezor",
 ];
 
-const initialState = {
+export const initialState = {
   btnRadius: 9,
   fontSize: 16,
   backgroundColor: "#1D212A",

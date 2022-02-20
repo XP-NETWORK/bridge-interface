@@ -1539,3 +1539,7 @@ li.blockChain_item .blockChainItem span {
   letter-spacing: 0.5px;
   pointer-events: none;
 }
+
+.resetBtn {
+  margin-left: 16px;
+}
