@@ -53,8 +53,8 @@ function App() {
   }
 
   useEffect(() => {
-    dispatch(setTestNet(window.location.href.indexOf("testnet") > 0))
-  }, [])
+    dispatch(setTestNet(window.location.href.indexOf("testnet.") > 0))
+  })
   
 
   useEffect(async() => {
