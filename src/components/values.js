@@ -81,7 +81,7 @@ export const chains = [
         order: 8,
         image: { avatar: true, src: Avalanche },
         maintenance: false,
-        testNet: false
+        testNet: true
     },
     {
         type: "EVM",

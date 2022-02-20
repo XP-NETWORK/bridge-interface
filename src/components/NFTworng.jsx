@@ -13,7 +13,7 @@ import { useWeb3React } from '@web3-react/core';
 
 function NFTworng() {
 
-    const handleClose = () => dispatch(setReset())
+    const handleClose = () => {window.location.reload()}
     const from = useSelector(state => state.general.from)
     const showWrong = useSelector(state => state.general.wrongNetwork)
     const account = useSelector(state => state.general.account)

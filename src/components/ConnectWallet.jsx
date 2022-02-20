@@ -320,7 +320,7 @@ function ConnectWallet() {
           dispatch(setAlgorandAccount(accounts[0]))
         }
       });
-
+      debugger
       let correct
       if(testnet){
         correct = from ? TESTNET_CHAIN_INFO[from?.key].chainId === chainId : ''
@@ -333,6 +333,7 @@ function ConnectWallet() {
         dispatch(setAccount(account))
       }
       if(from){
+          debugger
           dispatch(setWrongNetwork(testnet ? TESTNET_CHAIN_INFO[from.key].chainId !== chainId : CHAIN_INFO[from.key].chainId !== chainId))
       }
       if(((metaMask || tronLink || onWC || trustWallet || MaiarWallet) && correct)

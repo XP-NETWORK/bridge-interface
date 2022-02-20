@@ -9,7 +9,7 @@ import Close from '../assets/img/icons/close.svg';
 
 
 
-export default function NFTChainListBox() {
+export default function NFTChainListBox(props) {
     const dispatch = useDispatch()
     const departureOrDestination = useSelector(state => state.general.departureOrDestination)
     const chainSearch = useSelector(state => state.general.chainSearch)
@@ -17,8 +17,9 @@ export default function NFTChainListBox() {
     const to = useSelector(state => state.general.to)
     const fromChains = chains.sort((a,b) =>  a.order - b.order);
     const toChains = chains.sort((a,b) =>  a.order - b.order);
-    const testnet = useSelector(state => state.general.testNet)
+    const globalTestnet = useSelector(state => state.general.testNet)
     const show = useSelector(state => state.general.showChainModal)
+    const switchChain = useSelector(state => state.general.switchDestination)
 
     const handleClose = () => {
         dispatch(setChainModal(false))
@@ -26,6 +27,7 @@ export default function NFTChainListBox() {
         dispatch(setChainSearch(''))
     }
     const chainSelectHandler = chain => {
+        // debugger
         if(departureOrDestination === "departure"){
             if(to && chain.key !== to.key){
                 dispatch(setFrom(chain))
@@ -36,6 +38,11 @@ export default function NFTChainListBox() {
                 dispatch(setFrom(chain))
                 handleClose()
             }
+        }
+        else if(switchChain){
+            dispatch(setTo(chain))
+            dispatch(setSwitchDestination(false))
+            handleClose()
         }
         else{
             dispatch(setTo(chain))
@@ -48,7 +55,7 @@ export default function NFTChainListBox() {
     }, [to])
 
     return (
-        <Modal animation={false} show={show} onHide={() => handleClose()} className="ChainModal">
+        <Modal animation={false} show={show || switchChain} onHide={() => handleClose()} className="ChainModal">
             <Modal.Header className="text-left">
              <Modal.Title>{`Select ${departureOrDestination === 'destination' ? 'destination' : 'departure'} chain`}</Modal.Title>
                 <span className="CloseModal" onClick={() => handleClose()}>
@@ -61,7 +68,7 @@ export default function NFTChainListBox() {
                 <ul className="nftChainList scrollSty">
                     { !from ? fromChains.filter(chain => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '')).map( filteredChain => { 
                         const { image, text, key, coming, newChain, maintenance, testNet } = filteredChain;
-                        if(testnet){
+                        if(globalTestnet){
                             return testNet ? <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`} /> : ''
                         }
                         else return ( 
@@ -71,11 +78,13 @@ export default function NFTChainListBox() {
                      :
                      toChains.filter(chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : '' )).map(chain => {
                         const { image, text, key, coming , newChain, maintenance, testNet } = chain;
-                        if(testnet){
-                            return testNet && chain.key !== from.key ? <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`} /> : ''
-                        }
-                        else return chain.key !== from.key ? <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} chainKey={key} coming={coming} text={text} filteredChain={chain} image={image} key={`chain-${key}`}  maintenance={maintenance} />
-                        :''
+                        if((globalTestnet && testNet) && chain.key !== from.key){
+                            console.log('Returning testnet chain', chain.key)
+                            return <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`} /> 
+                        } else if(!globalTestnet) {
+                            console.log('Returning mainnet chain', chain.key)
+                            return chain.key !== from.key ? <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} chainKey={key} coming={coming} text={text} filteredChain={chain} image={image} key={`chain-${key}`}  maintenance={maintenance} />
+                        :console.log("else: ", chain.key !== from.key)}
                      })
                     }
                 </ul> 
