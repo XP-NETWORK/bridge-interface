@@ -62,8 +62,8 @@ function App() {
   };
 
   useEffect(() => {
-    dispatch(setTestNet(window.location.href.indexOf("testnet") > 0));
-  }, []);
+    dispatch(setTestNet(window.location.href.indexOf("testnet.") > 0));
+  });
 
   useEffect(async () => {
     const from = new URLSearchParams(window.location.search).get("from");
