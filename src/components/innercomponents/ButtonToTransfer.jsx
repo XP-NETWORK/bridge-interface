@@ -89,9 +89,8 @@ export default function ButtonToTransfer() {
     }
 
     const sendEach = async (nft, index) => {
-        debugger
+        // debugger
         const signer = await getSigner()
-        console.log("CHAIN_INFO: ", CHAIN_INFO, "to: ", to)
         const nonce = CHAIN_INFO[to].nonce
         const nftSmartContract = nft.native.contract
         let factory 

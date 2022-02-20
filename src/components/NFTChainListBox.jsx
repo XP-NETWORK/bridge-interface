@@ -98,12 +98,14 @@ export default function NFTChainListBox(props) {
                       newChain,
                       maintenance,
                       testNet,
+                      off
                     } = filteredChain;
                     if (globalTestnet) {
-                      return testNet ? (
+                      return testNet && !off ? (
                         <Chain
                           chainSelectHandler={chainSelectHandler}
                           newChain={newChain}
+                          off={off}
                           maintenance={maintenance}
                           coming={coming}
                           text={text}
@@ -116,12 +118,13 @@ export default function NFTChainListBox(props) {
                         ""
                       );
                     } else
-                      return (
+                      return !off && (
                         <Chain
                           chainSelectHandler={chainSelectHandler}
                           newChain={newChain}
                           maintenance={maintenance}
                           coming={coming}
+                          off={off}
                           text={text}
                           chainKey={key}
                           filteredChain={filteredChain}
@@ -145,8 +148,9 @@ export default function NFTChainListBox(props) {
                       newChain,
                       maintenance,
                       testNet,
+                      off
                     } = chain;
-                    if (globalTestnet && testNet && chain.key !== from.key) {
+                    if (globalTestnet && testNet && chain.key !== from.key && !off) {
                       return (
                         <Chain
                           chainSelectHandler={chainSelectHandler}
@@ -154,6 +158,7 @@ export default function NFTChainListBox(props) {
                           maintenance={maintenance}
                           coming={coming}
                           text={text}
+                          off={off}
                           chainKey={key}
                           filteredChain={chain}
                           image={image}
@@ -161,7 +166,7 @@ export default function NFTChainListBox(props) {
                         />
                       );
                     } else if (!globalTestnet) {
-                      return chain.key !== from.key ? (
+                      return (chain.key !== from.key && !off) ? (
                         <Chain
                           chainSelectHandler={chainSelectHandler}
                           newChain={newChain}
@@ -170,6 +175,7 @@ export default function NFTChainListBox(props) {
                           text={text}
                           filteredChain={chain}
                           image={image}
+                          off={off}
                           key={`chain-${key}`}
                           maintenance={maintenance}
                         />

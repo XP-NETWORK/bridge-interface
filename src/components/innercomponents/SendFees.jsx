@@ -19,7 +19,7 @@ function SendFees() {
     const [estimateInterval, setEstimateInterval] = useState()
 
     async function estimate () {
-        // debugger
+
         let fact
         let fee
         try {
@@ -48,7 +48,6 @@ function SendFees() {
                 }
                 else{
                     try {
-                        console.log()
                        fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
                     } catch (error) {
                         console.error(error);

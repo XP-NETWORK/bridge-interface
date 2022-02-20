@@ -5,18 +5,8 @@ import { CHAIN_INFO } from "../../components/values";
 import "./Chain.css";
 
 
-export default function Chain({
-  filteredChain,
-  chainSelectHandler,
-  text,
-  image,
-  key,
-  coming,
-  bridge_live,
-  newChain,
-  chainKey,
-  maintenance
-}) {
+export default function Chain(props) {
+  const { filteredChain, chainSelectHandler, text, image, coming, newChain, chainKey, maintenance, off } = props
   const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
   const checkIfLive = (chain) => {
     const nonce = CHAIN_INFO[chain]?.nonce;
@@ -26,8 +16,7 @@ export default function Chain({
   };
 
   useEffect(() => {}, [validatorsInfo]);
-  useEffect(() => {console.log("rendered!!!")},)
-  
+
   const OFF = { opacity: 0.6, pointerEvents: "none" };
 
   return (
@@ -41,6 +30,7 @@ export default function Chain({
       <div className="modalSelectOptionsText">
         {text === "xDai" ? "Gnosis Chain" : text}
         {maintenance ? <div className="coming-chain">Maintenance</div> : ""}
+        {/* {coming && <div className="coming-chain">Coming</div>} */}
         {!checkIfLive(chainKey) && !coming && (
           <div className="chain__off">Offline</div>
         )}

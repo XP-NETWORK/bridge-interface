@@ -166,7 +166,6 @@ export const getFactory = async () => {
 
 
 export const handleChainFactory = async (someChain) => {
-
   const factory = await getFactory();
   try {
     switch (someChain) {
@@ -226,7 +225,6 @@ export const getNFTS = async (wallet, from, testnet) => {
     }
     const unique = {};
     try {
-      console.log("getNFTS: ", response)
       const allNFTs = response
         .filter((n) => n.native)
         .filter((n) => {

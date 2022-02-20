@@ -20,7 +20,6 @@ function NavBar() {
     const handleShow = () => dispatch(setAccountModal(true));
     const step = useSelector(state => state.general.step)
     const testnet = useSelector(state => state.general.testNet)
-    console.log(`testnet: ${testnet}`)
 
     useEffect(() => {}, [step])
 
