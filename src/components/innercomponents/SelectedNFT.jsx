@@ -17,10 +17,14 @@ import {
 
 import ListedView from "../nftImageViews/ListedView";
 
+import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
+import { ReactComponent as BackComp } from "../../assets/img/icons/Back.svg";
+
 function SelectedNFT() {
   const dispatch = useDispatch();
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
   const nfts = useSelector((state) => state.general.NFTList);
+  const widget = useSelector((state) => state.general.widget);
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const handleClear = () => {
     dispatch(cleanSelectedNFTList());
@@ -37,7 +41,11 @@ function SelectedNFT() {
       <div className="nftSeleTop">
         <div className="selectedNft nftselectedtop">
           <a className="backBtn mobileOnly">
-            <img src={Back} alt="Back" />
+            {widget ? (
+              <BackComp className="svgWidget" />
+            ) : (
+              <img src={Back} alt="Back" />
+            )}
           </a>
           <span className="mobileOnly">Selected NFTs</span>
           <span className="desktopOnly">
@@ -68,7 +76,11 @@ function SelectedNFT() {
                   {nft.data?.name || nft.name}
                 </span>
                 <span className="Close">
-                  <img alt="" src={Close} />
+                  {widget ? (
+                    <CloseComp className="svgWidget" />
+                  ) : (
+                    <img alt="" src={Close} />
+                  )}
                 </span>
               </li>
             ))

@@ -736,7 +736,7 @@ function WSettings({
               className="resetBtn"
               variant="outline-primary"
             >
-              Rest settings
+              Reset settings
             </Button>
           </div>
 

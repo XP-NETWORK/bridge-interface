@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import ButtonToTransfer from "./innercomponents/ButtonToTransfer";
 import { setNFTS } from "../wallet/helpers";
 import Comment from "../components/innercomponents/Comment";
+import { ReturnBtn } from "./Settings/returnBtn";
 // import MyAlgoConnect from '@randlabs/myalgo-connect';
 // import { algoConnector } from "../wallet/connectors"
 // import BigNumber from 'bignumber.js'
@@ -37,6 +38,7 @@ function NFTaccount() {
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
   const testnet = useSelector((state) => state.general.testNet);
+  const widget = useSelector((state) => state.general.widget);
 
   // const [loading, setLoading] = useState()
   // const to = useSelector(state => state.general.to.key)
@@ -304,6 +306,7 @@ function NFTaccount() {
   return (
     <div className="NFTaccount">
       <Container className="nftSlectContaine">
+        <ReturnBtn />
         <div className="row">
           <div className="nftListCol col-lg-8">
             <div className="mobileOnly">

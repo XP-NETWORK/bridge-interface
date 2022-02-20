@@ -162,6 +162,10 @@ export default function Widget() {
         overflow-y: auto;
       }
 
+     .nftSlectContaine.container {
+        position: relative;
+      }
+
 
       .nftContainer {
         position:relative;
@@ -426,6 +430,11 @@ export default function Widget() {
 
         .nftInfBox {
           filter: brightness(95%);
+        }
+
+        .returnBtn button {
+          border-color: ${secondaryColor ? secondaryColor : ""};
+          color:  ${secondaryColor ? secondaryColor : ""};
         }
 
         @media only screen and (max-width: 860px) {
