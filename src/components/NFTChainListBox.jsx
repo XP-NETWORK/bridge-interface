@@ -36,6 +36,7 @@ export default function NFTChainListBox(props) {
     dispatch(setSwitchDestination(false));
     dispatch(setChainSearch(""));
   };
+
   const chainSelectHandler = (chain) => {
     // debugger
     if (departureOrDestination === "departure") {
@@ -89,7 +90,7 @@ export default function NFTChainListBox(props) {
                       .toLowerCase()
                       .includes(chainSearch ? chainSearch.toLowerCase() : "")
                   )
-                  .map((filteredChain) => {
+                  .map((filteredChain, index) => {
                     const {
                       image,
                       text,
@@ -100,38 +101,9 @@ export default function NFTChainListBox(props) {
                       testNet,
                       off
                     } = filteredChain;
-                    if (globalTestnet) {
-                      return testNet && !off ? (
-                        <Chain
-                          chainSelectHandler={chainSelectHandler}
-                          newChain={newChain}
-                          off={off}
-                          maintenance={maintenance}
-                          coming={coming}
-                          text={text}
-                          chainKey={key}
-                          filteredChain={filteredChain}
-                          image={image}
-                          key={`chain-${key}`}
-                        />
-                      ) : (
-                        ""
-                      );
-                    } else
-                      return !off && (
-                        <Chain
-                          chainSelectHandler={chainSelectHandler}
-                          newChain={newChain}
-                          maintenance={maintenance}
-                          coming={coming}
-                          off={off}
-                          text={text}
-                          chainKey={key}
-                          filteredChain={filteredChain}
-                          image={image}
-                          key={`chain-${key}`}
-                        />
-                      );
+                    return globalTestnet ? testNet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} off={off} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`}/>
+                   :
+                    !off && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} off={off} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`} />
                   })
               : toChains
                   .filter((chain) =>
@@ -150,7 +122,7 @@ export default function NFTChainListBox(props) {
                       testNet,
                       off
                     } = chain;
-                    if (globalTestnet && testNet && chain.key !== from.key && !off) {
+                    if (globalTestnet && testNet && chain.key !== from.key) {
                       return (
                         <Chain
                           chainSelectHandler={chainSelectHandler}

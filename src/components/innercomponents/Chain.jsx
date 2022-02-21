@@ -6,7 +6,7 @@ import "./Chain.css";
 
 
 export default function Chain(props) {
-  const { filteredChain, chainSelectHandler, text, image, coming, newChain, chainKey, maintenance, off } = props
+  const { filteredChain, chainSelectHandler, text, image, coming, newChain, chainKey, maintenance} = props
   const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
   const checkIfLive = (chain) => {
     const nonce = CHAIN_INFO[chain]?.nonce;
@@ -21,7 +21,7 @@ export default function Chain(props) {
 
   return (
     <li
-      style={maintenance || !checkIfLive(chainKey) ? OFF : {}}
+      style={maintenance || !checkIfLive(chainKey) || coming ? OFF : {}}
       onClick={() => chainSelectHandler(filteredChain)}
       className="nftChainItem"
       data-chain={text}
@@ -30,7 +30,7 @@ export default function Chain(props) {
       <div className="modalSelectOptionsText">
         {text === "xDai" ? "Gnosis Chain" : text}
         {maintenance ? <div className="coming-chain">Maintenance</div> : ""}
-        {/* {coming && <div className="coming-chain">Coming</div>} */}
+        {coming && <div className="coming-chain">Coming</div>}
         {!checkIfLive(chainKey) && !coming && (
           <div className="chain__off">Offline</div>
         )}

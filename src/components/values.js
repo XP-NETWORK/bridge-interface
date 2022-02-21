@@ -199,7 +199,7 @@ export const chains = [
     image: { avatar: true, src: One },
     maintenance: false,
     testNet: true,
-    // off: true
+    off: true
   },
 ];
 
