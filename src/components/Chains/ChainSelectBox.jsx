@@ -1,20 +1,20 @@
 import React, { useState } from "react";
-import LineArrow from "../assets/img/nftSelect/Line.svg";
-import ChainArrow from "../assets/img/icons/Swap.svg";
-import SwapHover from "../assets/img/icons/SwapHover.svg";
-import SwapPressed from "../assets/img/icons/SwapPressed.svg";
+import LineArrow from "../../assets/img/nftSelect/Line.svg";
+import ChainArrow from "../../assets/img/icons/Swap.svg";
+import SwapHover from "../../assets/img/icons/SwapHover.svg";
+import SwapPressed from "../../assets/img/icons/SwapPressed.svg";
 import { useDispatch } from "react-redux";
 import {
   setTo,
   setFrom,
-} from "../store/reducers/generalSlice";
+} from "../../store/reducers/generalSlice";
 import { useSelector } from "react-redux";
-import SetDeparture from "../components/Chains/SetDeparture"
-import SetDestination from "../components/Chains/SetDestination";
-import { ReactComponent as LineArrowComp } from "../assets/img/nftSelect/Line.svg";
-import { ReactComponent as ChainArrowComp } from "../assets/img/icons/Swap.svg";
+import SetDeparture from "./SetDeparture"
+import SetDestination from "./SetDestination";
+import { ReactComponent as LineArrowComp } from "../../assets/img/nftSelect/Line.svg";
+import { ReactComponent as ChainArrowComp } from "../../assets/img/icons/Swap.svg";
 
-export default function NFTSelectBox() {
+export default function ChainSelectBox() {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);

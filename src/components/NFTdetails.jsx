@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
+import { useState } from "react";
+import { Modal} from "react-bootstrap";
 import moment from "moment";
 import brockenurl from "../assets/img/brockenurl.png";
 import Close from "../assets/img/icons/close.svg";
 import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
-import { checkVideoFormat, checkImageFormat } from "../wallet/oldHelper";
 import INF from "../assets/img/icons/Inf.svg";
 import { ReactComponent as INFComp } from "../assets/img/icons/Inf.svg";
 import { setupURI } from "../wallet/oldHelper";
@@ -18,16 +17,12 @@ function NFTdetails({ nftInf }) {
   const {
     name,
     description,
-    image,
     attributes,
     uri,
     native,
-    animation_url,
-    image_url,
-    data,
   } = nftInf;
   const { video, url, ipfsArr } = getUrl(nftInf);
-  // console.log(`NFTdetails video: ${video} url: ${url}`)
+
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -37,9 +32,6 @@ function NFTdetails({ nftInf }) {
 
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow}>
-                NFT Details
-            </Button> */}
       <div className="info-icon__container">
         <span className="NFTInf" onClick={handleShow}>
           {widget ? <INFComp className="svgWidget" /> : <img src={INF} />}
@@ -142,7 +134,7 @@ function Attribute(props) {
       </label>
       <p>
         {trait_type === "Original Chain" ? (
-          <img
+          <img alt="#"
             style={{ marginRight: "4px", width: "29px" }}
             src={chainsConfig[value]?.img}
           />

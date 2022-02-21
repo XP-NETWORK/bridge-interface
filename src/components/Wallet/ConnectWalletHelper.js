@@ -1,7 +1,7 @@
 
 import { TempleWallet } from "@temple-wallet/dapp";
-import { injected, algoConnector } from "../wallet/connectors"
-import store  from "../store/store"
+import { injected, algoConnector } from "../../wallet/connectors"
+import store  from "../../store/store"
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
@@ -26,12 +26,11 @@ import { setTronWallet,
   setKukaiWallet, 
   setTempleWallet, 
   setQrImage, 
-  setQrCodeString } from "../store/reducers/generalSlice"
+  setQrCodeString } from "../../store/reducers/generalSlice"
 
 
 const { to, from, modalError } = store.getState()
 
-// EVM blockchain connection ( MetaMask )
 export const connectMetaMask = async activate => {
     try {
         if(!window.ethereum && window.innerWidth <= 600) {
