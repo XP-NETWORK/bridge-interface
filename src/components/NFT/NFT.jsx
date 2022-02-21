@@ -41,6 +41,7 @@ export default function NFT({ nft, index }) {
       setImageLoaded(true);
     }, 5000);
   }, [selectedNFTs]);
+
   return (
     <div className={`nft-box__wrapper ${!imageLoaded ? "preload-cont" : ""}`}>
       <div
@@ -92,15 +93,8 @@ export default function NFT({ nft, index }) {
             </div>
           </div>
         </div>
-        <div
-          className={`nft-content__container ${
-            !imageLoaded ? "preload-content-container" : ""
-          }`}
-        >
-          <span className="nft-name">
-            <span className="name">{nft.name}</span>
-            <NFTdetails nftInf={nft} index={index} />
-          </span>
+        <div className={`nft-content__container ${!imageLoaded ? "preload-content-container" : ""}`}>
+          <span className="nft-name"><span className="name">{nft.name}</span><NFTdetails nftInf={nft} index={index} /></span>
           <span className="nft-number">{nft.native.tokenId}</span>
         </div>
       </div>

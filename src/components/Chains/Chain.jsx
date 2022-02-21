@@ -24,7 +24,7 @@ export default function Chain(props) {
         {text === "xDai" ? "Gnosis Chain" : text}
         <div className="chain--identifier"> 
           {!checkIfLive(chainKey, validatorsInfo) && !coming && <div className="chain__off">Offline</div>}
-          {/* {coming && <div className="coming-chain">Coming</div>} */}
+          {coming && <div className="coming-chain">Coming</div>}
           {maintenance && <div className="coming-chain">Maintenance</div>}
           {/* {newChain && <div className="new-chain">New</div>} */}
         </div>

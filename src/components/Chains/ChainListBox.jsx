@@ -15,7 +15,7 @@ import { Modal } from "react-bootstrap";
 import Close from "../../assets/img/icons/close.svg";
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 
-export default function NFTChainListBox(props) {
+export default function ChainListBox(props) {
   const dispatch = useDispatch();
   const departureOrDestination = useSelector(
     (state) => state.general.departureOrDestination
@@ -78,21 +78,28 @@ export default function NFTChainListBox(props) {
         <div className="nftChainListBox">
           <ChainSearch />
           <ul className="nftChainList scrollSty">
-            {!from ? fromChains.filter((chain) => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : "")).sort(chain => chain.maintenance || chain.coming ? 0 : -1).map((filteredChain, index) => {
+            {!from ? 
+            fromChains.filter((chain, index) => chain.text.toLowerCase().includes(chainSearch?.toLowerCase())).sort(chain => chain.maintenance ? 0 : -1).map((filteredChain, index) => {
+
+            })
+            :
+            <></>
+            }
+            {/* {!from ? fromChains.filter((chain) => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : "")).sort(chain => chain.maintenance ? 0 : -1).map((filteredChain, index) => {
                     const { image, text, key, coming, newChain, maintenance, testNet, off } = filteredChain;
                     
                     return globalTestnet ? testNet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`}/>
                    :
                     !off && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`} />
                   })
-                : toChains.filter( chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : "")).sort(chain => chain.maintenance || chain.coming ? 0 : -1).map((chain) => {
+                : toChains.filter( chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : "")).sort(chain => chain.maintenance ? 0 : -1).map((chain) => {
                     const {image, text, key, coming, newChain, maintenance, testNet, off } = chain;
                     console.log("sjfkghdjkghdfjkhg",globalTestnet , testNet , chain.key !== from.key , off, text)
                     if (globalTestnet && testNet && chain.key !== from.key) {
                       return (
                         <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming}  text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`} /> );
                     } else if (!globalTestnet) { return (chain.key !== from.key && !off) ? ( <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} chainKey={key} coming={coming} text={text} filteredChain={chain} image={image} key={`chain-${key}`} maintenance={maintenance} />) : ("")}})
-            }
+            } */}
           </ul>
         </div>
       </Modal.Body>

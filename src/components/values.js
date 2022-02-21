@@ -120,7 +120,7 @@ export const chains = [
     order: 14,
     coming: true,
     image: { avatar: true, src: Solana },
-    maintenance: true,
+    maintenance: false,
     testNet: false,
   },
   {
@@ -131,7 +131,7 @@ export const chains = [
     order: 12,
     coming: true,
     image: { avatar: true, src: Cardano },
-    maintenance: true,
+    maintenance: false,
     testNet: false,
   },
   {
@@ -142,7 +142,7 @@ export const chains = [
     order: 13,
     coming: true,
     image: { avatar: true, src: Heco },
-    maintenance: true,
+    maintenance: false,
     testNet: false,
   },
   {
