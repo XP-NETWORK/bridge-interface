@@ -86,7 +86,7 @@ function App() {
         }
       }
     }
-    //!state.wsettings && localStorage.clear();
+    localStorage.removeItem("walletconnect")
   }, []);
 
   useEffect(async () => {

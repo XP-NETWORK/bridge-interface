@@ -146,9 +146,9 @@ function ConnectWallet() {
                 <AlgorandWallet wallet={"AlgoSigner"} />
                 <AlgorandWallet wallet={undefined} /> {/* Algorand Wallet */}
                 <TronWallet />
-                <ElrondWallet wallet={"Maiar"} />
                 <TezosWallet wallet={"TempleWallet"} />
                 <TezosWallet wallet={undefined} /> {/* Beacon */}
+                <ElrondWallet wallet={"Maiar"} />
                 <ElrondWallet wallet={undefined} /> {/** Maiar Extension*/}
                 <USBWallet wallet={"Ledger"} />
                 <USBWallet /> {/** Trezor */}

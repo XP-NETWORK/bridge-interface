@@ -6,9 +6,8 @@ import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../components/values";
 import { useSelector } from "react-redux";
 import { getAddEthereumChain } from "../wallet/chains";
 import { useDispatch } from "react-redux";
-import { setReset, setWrongNetwork } from "../store/reducers/generalSlice";
+import { setWrongNetwork } from "../store/reducers/generalSlice";
 import ChangeNetworkLoader from "./innercomponents/ChangeNetworkLoader";
-import { useWeb3React } from "@web3-react/core";
 
 import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
 
