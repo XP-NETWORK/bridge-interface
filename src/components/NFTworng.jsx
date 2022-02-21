@@ -21,7 +21,6 @@ function NFTworng() {
   const account = useSelector((state) => state.general.account);
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(false);
-  const { chainId } = useWeb3React();
   const testnet = useSelector((state) => state.general.testNet);
   const widget = useSelector((state) => state.general.widget);
 
@@ -102,16 +101,16 @@ function NFTworng() {
               <span className="worngImg">
                 <img src={Wrong} alt="Worng" />
               </span>
-              <h3>Switch to {from?.key} Mainnet</h3>
+              <h3>Switch to {from?.key} {testnet ? "TestNet" : "Mainnet"}</h3>
               <p className="">
                 XP.network Bridge requires you to <br /> connect to the{" "}
-                {from?.key} Mainnet
+                {from?.key} {testnet ? "TestNet" : "Mainnet"}
               </p>
             </div>
             {loader && (
               <div className="switchingAcc">
                 <ChangeNetworkLoader />
-                <p className="">Switching to Mainnet</p>
+                <p className="">"Switching to" {testnet ? "TestNet" : "Mainnet"}</p>
                 <p className="">Follow instructions in MetaMask</p>
               </div>
             )}
