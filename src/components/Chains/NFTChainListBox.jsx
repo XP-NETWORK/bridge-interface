@@ -80,22 +80,13 @@ export default function NFTChainListBox(props) {
         <div className="nftChainListBox">
           <ChainSearch />
           <ul className="nftChainList scrollSty">
-            {!from ? fromChains.filter((chain) => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : "")).map((filteredChain, index) => {
-                    const {
-                      image,
-                      text,
-                      key,
-                      coming,
-                      newChain,
-                      maintenance,
-                      testNet,
-                      off
-                    } = filteredChain;
+            {!from ? fromChains.filter((chain) => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : "")).sort(chain => chain.maintenance ? 0 : -1).map((filteredChain, index) => {
+                    const { image, text, key, coming, newChain, maintenance, testNet, off } = filteredChain;
                     return globalTestnet ? testNet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} off={off} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`}/>
                    :
                     !off && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} off={off} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`} />
                   })
-                : toChains.filter( chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : "")).map((chain) => {
+                : toChains.filter( chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : "")).sort(chain => chain.maintenance ? 0 : -1).map((chain) => {
                     const {
                       image,
                       text,
