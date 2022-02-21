@@ -878,7 +878,7 @@ span.wallet {
 .seleDestiSele {
   color: white;
 }
-.chain--status{
+.chain--identifier{
   display: flex;
   gap: 2px;
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setChainModal, setDepartureOrDestination } from '../store/reducers/generalSlice';
-import Departure from '../assets/img/nftSelect/departure.svg';
+import { setChainModal, setDepartureOrDestination } from '../../store/reducers/generalSlice';
+import Departure from '../../assets/img/nftSelect/departure.svg';
 
 export default function SetDeparture() {
     const dispatch = useDispatch()

@@ -28,13 +28,13 @@ export default function Chain(props) {
     >
       <img className="modalSelectOptionsImage" src={image.src} alt={text} />
       <div className="modalSelectOptionsText">
-          {text === "xDai" ? "Gnosis Chain" : text}
-          <div className="chain--status">
-            {maintenance && <div className="coming-chain">Maintenance</div>}
-            {!checkIfLive(chainKey) && !coming && <div className="chain__off">Offline</div>}
-            {coming && <div className="coming-chain">Coming</div>}
-            {newChain && <div className="new-chain">New</div>}
-          </div>
+        {text === "xDai" ? "Gnosis Chain" : text}
+        <div className="chain--identifier"> 
+          {!checkIfLive(chainKey) && !coming && <div className="chain__off">Offline</div>}
+          {coming && <div className="coming-chain">Coming</div>}
+          {maintenance && <div className="coming-chain">Maintenance</div>}
+          {newChain && <div className="new-chain">New</div>}
+        </div>
       </div>
     </li>
   );

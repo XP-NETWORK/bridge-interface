@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { chains } from "../components/values";
+import { chains } from "../../components/values";
 import {
   setChainModal,
   setDepartureOrDestination,
@@ -8,12 +8,13 @@ import {
   setFrom,
   setChainSearch,
   setSwitchDestination,
-} from "../store/reducers/generalSlice";
-import Chain from "./innercomponents/Chain";
-import ChainSearch from "./innercomponents/ChainSearch";
-import { Image, Modal, Button, Header, Title, Body } from "react-bootstrap";
-import Close from "../assets/img/icons/close.svg";
-import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
+} from "../../store/reducers/generalSlice";
+import Chain from "./Chain"
+// import ChainSearch from "../../components/innercomponents/ChainSearch";
+import ChainSearch from "../Chains/ChainSearch"
+import { Modal } from "react-bootstrap";
+import Close from "../../assets/img/icons/close.svg";
+import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 
 export default function NFTChainListBox(props) {
   const dispatch = useDispatch();
@@ -72,25 +73,14 @@ export default function NFTChainListBox(props) {
           departureOrDestination === "destination" ? "destination" : "departure"
         } chain`}</Modal.Title>
         <span className="CloseModal" onClick={() => handleClose()}>
-          {widget ? (
-            <CloseComp className="svgWidget" />
-          ) : (
-            <img src={Close} alt="" />
-          )}
+          {widget ? <CloseComp className="svgWidget" /> : <img src={Close} alt="" />}
         </span>
       </Modal.Header>
       <Modal.Body>
         <div className="nftChainListBox">
           <ChainSearch />
           <ul className="nftChainList scrollSty">
-            {!from
-              ? fromChains
-                  .filter((chain) =>
-                    chain.text
-                      .toLowerCase()
-                      .includes(chainSearch ? chainSearch.toLowerCase() : "")
-                  )
-                  .map((filteredChain, index) => {
+            {!from ? fromChains.filter((chain) => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : "")).map((filteredChain, index) => {
                     const {
                       image,
                       text,
@@ -105,13 +95,7 @@ export default function NFTChainListBox(props) {
                    :
                     !off && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} off={off} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`} />
                   })
-              : toChains
-                  .filter((chain) =>
-                    chain.key
-                      .toLowerCase()
-                      .includes(chainSearch ? chainSearch.toLowerCase() : "")
-                  )
-                  .map((chain) => {
+                : toChains.filter( chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : "")).map((chain) => {
                     const {
                       image,
                       text,
@@ -124,38 +108,9 @@ export default function NFTChainListBox(props) {
                     } = chain;
                     if (globalTestnet && testNet && chain.key !== from.key) {
                       return (
-                        <Chain
-                          chainSelectHandler={chainSelectHandler}
-                          newChain={newChain}
-                          maintenance={maintenance}
-                          coming={coming}
-                          text={text}
-                          off={off}
-                          chainKey={key}
-                          filteredChain={chain}
-                          image={image}
-                          key={`chain-${key}`}
-                        />
-                      );
-                    } else if (!globalTestnet) {
-                      return (chain.key !== from.key && !off) ? (
-                        <Chain
-                          chainSelectHandler={chainSelectHandler}
-                          newChain={newChain}
-                          chainKey={key}
-                          coming={coming}
-                          text={text}
-                          filteredChain={chain}
-                          image={image}
-                          off={off}
-                          key={`chain-${key}`}
-                          maintenance={maintenance}
-                        />
-                      ) : (
-                        ""
-                      );
-                    }
-                  })}
+                        <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming}  text={text} off={off}  chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`} /> );
+                    } else if (!globalTestnet) { return (chain.key !== from.key && !off) ? ( <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} chainKey={key} coming={coming} text={text} filteredChain={chain} image={image} off={off} key={`chain-${key}`} maintenance={maintenance} />) : ("")}})
+            }
           </ul>
         </div>
       </Modal.Body>
