@@ -105,8 +105,7 @@ export default function NFTChainListBox(props) {
                    :
                     !off && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} off={off} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`} />
                   })
-              : toChains
-                  .filter((chain) =>
+                : toChains.filter((chain) =>
                     chain.key
                       .toLowerCase()
                       .includes(chainSearch ? chainSearch.toLowerCase() : "")
@@ -124,38 +123,8 @@ export default function NFTChainListBox(props) {
                     } = chain;
                     if (globalTestnet && testNet && chain.key !== from.key) {
                       return (
-                        <Chain
-                          chainSelectHandler={chainSelectHandler}
-                          newChain={newChain}
-                          maintenance={maintenance}
-                          coming={coming}
-                          text={text}
-                          off={off}
-                          chainKey={key}
-                          filteredChain={chain}
-                          image={image}
-                          key={`chain-${key}`}
-                        />
-                      );
-                    } else if (!globalTestnet) {
-                      return (chain.key !== from.key && !off) ? (
-                        <Chain
-                          chainSelectHandler={chainSelectHandler}
-                          newChain={newChain}
-                          chainKey={key}
-                          coming={coming}
-                          text={text}
-                          filteredChain={chain}
-                          image={image}
-                          off={off}
-                          key={`chain-${key}`}
-                          maintenance={maintenance}
-                        />
-                      ) : (
-                        ""
-                      );
-                    }
-                  })}
+                        <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming}  text={text} off={off}  chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`} /> );
+                    } else if (!globalTestnet) { return (chain.key !== from.key && !off) ? ( <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} chainKey={key} coming={coming} text={text} filteredChain={chain} image={image} off={off} key={`chain-${key}`} maintenance={maintenance} />) : ("")}})}
           </ul>
         </div>
       </Modal.Body>
