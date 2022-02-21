@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Widget.css";
-import "./WidgetNight.css";
-import "./WidgetLight.css";
 import { setSettings } from "../../store/reducers/settingsSlice";
 import { setWidget, setWSettings } from "../../store/reducers/generalSlice";
 
@@ -115,6 +113,7 @@ export default function Widget() {
     iconColor,
     wallets,
     showLink,
+    collapsed,
   } = settings;
 
   useEffect(() => {
@@ -140,7 +139,7 @@ export default function Widget() {
         wsettings
           ? `
           .modal-backdrop.show, .modal {
-              width: calc(100% - 300px);
+              width: calc(100% - ${collapsed ? "35" : "300"}px);
               left: initial;
               right: 0;
           }
@@ -192,12 +191,19 @@ export default function Widget() {
             background: ${backgroundColor ? backgroundColor : ""};
             color: ${color ? color : ""};
             font-size: ${fontSize ? fontSize + "px" : ""};
-            font-family: ${fontFamily ? fontFamily : ""}
+            font-family: ${fontFamily ? fontFamily : ""};
         }
 
 
-        .modal-content, .modal-content .walletListBox, .nftInfBox {
+       .modal-content, .modal-content .walletListBox, .nftInfBox {
             background: ${backgroundColor ? backgroundColor : ""};
+            filter: brightness(94%);
+        }
+
+        .infText, .infText:after {
+          background: ${backgroundColor ? backgroundColor : ""};
+          border: 1px solid ${backgroundColor ? backgroundColor : ""};
+          filter: brightness(94%);
         }
         
         .modal-title, .modalSelectOptionsText, .selChain, .seleDestiSele, .yourNft, .yourNft span, .sendNftTit, 
@@ -217,7 +223,7 @@ export default function Widget() {
             font-size: ${fontSize ? fontSize + "px" : ""}
         }
 
-        a.themBtn, .nftSelectBox, .modal-content, .widget .destiAddress input {
+        a.themBtn, .nftSelectBox, .modal-content, .widget .destiAddress input, .returnBtn button, .SearchDrop.dropdown .dropdown-menu  {
             border-radius: ${btnRadius ? btnRadius + "px" : ""};
         }
 
@@ -316,7 +322,7 @@ export default function Widget() {
           background: ${secondaryColor ? secondaryColor : ""};
         } 
 
-        .selectAll, .clearNft, .nftAut a, .loader, .changeNetwork-loader, .coming__chain, .follow-us__btn, .ts-button {
+        .selectAll, .clearNft, .nftAut a, .loader, .changeNetwork-loader, .coming__chain, .follow-us__btn, .ts-button, .sucesList .colBlue, .success-button.view-txn-btn, .bluTextBtn {
           color: ${accentColor ? accentColor : ""};
         }
 
@@ -437,12 +443,20 @@ export default function Widget() {
           color:  ${secondaryColor ? secondaryColor : ""};
         }
 
+       
+
         @media only screen and (max-width: 860px) {
           .mobSearch input::placeholder, .mobileOnly.seleNftMob {
             color: ${secondaryColor ? secondaryColor : ""};
           }
 
 
+        }
+
+        @media only screen and (max-height: 633px) {
+          .modal-dialog {
+            margin-top: 6vh;
+          }
         }
 
         `;

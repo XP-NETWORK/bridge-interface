@@ -33,6 +33,9 @@ import { getUrl } from "./innercomponents/NFTHelper";
 import VideoOrImage from "./innercomponents/VideoOrImage";
 import brockenurl from "../assets/img/brockenurl.png";
 
+import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
+import { ReactComponent as FileCopyComp } from "../assets/img/icons/FileCopy.svg";
+
 function NFTsuccess() {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
@@ -46,6 +49,7 @@ function NFTsuccess() {
   const txnHashArr = useSelector((state) => state.general.txnHashArr);
   const currentTX = useSelector((s) => s.general.currrentTx);
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
+  const widget = useSelector((state) => state.general.widget);
 
   const refresh = async () => {
     // debugger
@@ -150,7 +154,7 @@ function NFTsuccess() {
             <img src={Success} /> Success
           </Modal.Title>
           <span className="CloseModal" onClick={handleClose}>
-            <img src={Close} />
+            {widget ? <CloseComp className="svgWidget" /> : <img src={Close} />}
           </span>
         </Modal.Header>
         <Modal.Body>
@@ -178,13 +182,22 @@ function NFTsuccess() {
                           getSubstringValue() || 10
                         )}...${getTX().substring(getTX().length - 6)}`
                       : ""}
-                    <Image
-                      onClick={() => copy()}
-                      onMouseOver={() => setSetCopyHover(true)}
-                      onMouseOut={() => setSetCopyHover(false)}
-                      src={copyHover ? CopyHover : FileCopy}
-                      className="success__copy"
-                    />
+                    {widget ? (
+                      <FileCopyComp
+                        onClick={() => copy()}
+                        onMouseOver={() => setSetCopyHover(true)}
+                        onMouseOut={() => setSetCopyHover(false)}
+                        className="success__copy svgWidget"
+                      />
+                    ) : (
+                      <Image
+                        onClick={() => copy()}
+                        onMouseOver={() => setSetCopyHover(true)}
+                        onMouseOut={() => setSetCopyHover(false)}
+                        src={copyHover ? CopyHover : FileCopy}
+                        className="success__copy"
+                      />
+                    )}
                   </div>
                 </CopyToClipboard>
                 <div className="tooltip-icon">
@@ -260,7 +273,7 @@ export default NFTsuccess;
 function SuccessNFT({ nft, from, index }) {
   const dispatch = useDispatch();
   const { to, algorandAccount } = useSelector((s) => s.general);
-  const testnet = useSelector(state => state.general.testNet)
+  const testnet = useSelector((state) => state.general.testNet);
   const tx = nft.txn
     ? typeof nft.txn === "object"
       ? nft.txn.hash.toString()
@@ -316,13 +329,21 @@ function SuccessNFT({ nft, from, index }) {
       )}
       <span className="nftSelected__name">{nft.name}</span>
       <span className="bluTextBtn">
-        <a href={testnet ? `${chainsConfig[from.key].testTx + getTX()}` : `${chainsConfig[from.key].tx + getTX()}`} target="_blank" rel="noreferrer">
+        <a
+          href={
+            testnet
+              ? `${chainsConfig[from.key].testTx + getTX()}`
+              : `${chainsConfig[from.key].tx + getTX()}`
+          }
+          target="_blank"
+          rel="noreferrer"
+        >
           View Txn
         </a>
       </span>
       {to.key === "Algorand" ? (
         <span className="bluTextBtn">
-          <a style={algorandAccount ? {} : off} onClick={claim} target="_blank" >
+          <a style={algorandAccount ? {} : off} onClick={claim} target="_blank">
             Claim
           </a>
         </span>

@@ -5,6 +5,7 @@ import {
   activeChains,
   availability,
   initialState as initSettings,
+  initialState,
 } from "../../store/reducers/settingsSlice";
 
 import { usePrevious } from "./hooks";
@@ -50,9 +51,17 @@ const settingsHoc = (Wrapped) => (props) => {
 
   const onClickEditor = () => {
     document.querySelector(".nftContainer").style = `margin-left: ${
-      !toggleEditor ? "35" : "300"
+      !settings.collapsed ? "35" : "300"
     }px;`;
-    onToggleEditor(!toggleEditor);
+    //document.body.classList.toggle("editorCollapsed");
+    //onToggleEditor(!toggleEditor);
+
+    dispatch(
+      setSettings({
+        ...settings,
+        collapsed: !settings.collapsed,
+      })
+    );
   };
 
   const deboucedSet = (e, key) =>
@@ -222,6 +231,16 @@ const settingsHoc = (Wrapped) => (props) => {
     localStorage.removeItem("widgetSettings");
   };
 
+  const onSelectAll = () => {
+    dispatch(
+      setSettings({
+        ...settings,
+        selectedChains: initialState.selectedChains,
+      })
+    );
+    setActiveChains(activeChains.length);
+  };
+
   return (
     <Wrapped
       list={list}
@@ -241,6 +260,7 @@ const settingsHoc = (Wrapped) => (props) => {
       showLink={showLink}
       onSaveSettings={onSaveSettings}
       onResetSettings={onResetSettings}
+      onSelectAll={onSelectAll}
     />
   );
 };
