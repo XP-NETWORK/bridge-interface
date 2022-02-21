@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import Close from "../../assets/img/icons/close.svg";
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
-import NFTworng from "../../components/NFTworng";
+// import NFTworng from "../../components/NFTworng";
+import ChangeNetworkModal from "../Modals/ChangeNetwork/ChangeNetworkModal"
 import { useDispatch, useSelector } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
 import { algoConnector } from "../../wallet/connectors";
@@ -112,7 +113,7 @@ function ConnectWallet() {
 
   return (
     <div>
-      <NFTworng />
+      <ChangeNetworkModal />
       <div className={from && to ? "connectNft" : "disabled"}>
         <a href="#" className="themBtn disabled" onClick={handleShow}>
           Continue bridging -<span>{">"}</span>{" "}

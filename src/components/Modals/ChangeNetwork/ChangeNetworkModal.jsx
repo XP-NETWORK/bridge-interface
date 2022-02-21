@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
-import Close from "../assets/img/icons/close.svg";
-import Wrong from "../assets/img/Wrong.svg";
-import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../components/values";
+import Close from "../../../assets/img/icons/close.svg";
+import Wrong from "../../../assets/img/Wrong.svg";
+import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../../values";
 import { useSelector } from "react-redux";
-import { getAddEthereumChain } from "../wallet/chains";
+import { getAddEthereumChain } from "../../../wallet/chains";
 import { useDispatch } from "react-redux";
-import { setReset, setWrongNetwork } from "../store/reducers/generalSlice";
-import ChangeNetworkLoader from "./innercomponents/ChangeNetworkLoader";
-import { useWeb3React } from "@web3-react/core";
+import { setWrongNetwork } from "../../../store/reducers/generalSlice";
+import ChangeNetworkLoader from "../../innercomponents/ChangeNetworkLoader";
+import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg";
 
-import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
-
-function NFTworng() {
+function ChangeNetworkModal() {
   const handleClose = () => {
     window.location.reload();
   };
@@ -125,4 +123,4 @@ function NFTworng() {
   );
 }
 
-export default NFTworng;
+export default ChangeNetworkModal;

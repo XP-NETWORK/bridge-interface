@@ -1,6 +1,6 @@
 
 import { setSelectedNFTList, removeFromSelectedNFTList }  from "../../store/reducers/generalSlice"
-import NFTdetails from '../NFTdetails';
+import NFTdetails from "../NFT/NFTdetails"
 import { useDispatch, useSelector } from 'react-redux';
 import NFTempty from '../innercomponents/NFTempty';
 import CheckGreen from '../../assets/img/icons/check_green.svg';
