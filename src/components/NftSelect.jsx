@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import Video from '../assets/img/icons/Video_icon.svg';
 import INF from '../assets/img/icons/Inf.svg';
-import ConnectWallet from './ConnectWallet';
-// import ConnectWallet from "./Wallet/ConnectWallet"
+// import ConnectWallet from './ConnectWallet';
+import ConnectWallet from "./Wallet/ConnectWallet"
 import { useDispatch, useSelector } from 'react-redux';
 import { setShowAbout, setShowVideo } from '../store/reducers/generalSlice';
 import NFTSelectBox from './NFTSelectBox';
@@ -11,11 +11,9 @@ import NFTChainListBox from './Chains/NFTChainListBox';
 
 function NftSelect() {
     const dispatch = useDispatch()
-    
     function handleAboutClick() {
         dispatch(setShowAbout(true))
     }
-
     function handleVideoClick() {
         dispatch(setShowVideo(true))
     }

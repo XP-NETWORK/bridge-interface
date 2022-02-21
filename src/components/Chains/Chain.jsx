@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-// import { CHAIN_INFO } from "../../components/values";
 import { checkIfLive } from "./ChainHelper";
 import "./Chain.css";
 
