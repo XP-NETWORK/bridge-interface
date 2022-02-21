@@ -15,9 +15,7 @@ const mobileOnlyBanner = `
 <div class="mobileOnlyBanner"><img src=${mobileBanner} alt="mobileOnlyXP"/><div class="testComp">
     <h2>Widget</h2>
     <p>Mobile is not yet supported, please use widget on desktop.</p>
-
 </div></div>  
-
 `;
 
 const overlay = document.createElement("div");
@@ -137,9 +135,35 @@ export default function Widget() {
       //$img.onclick = window.open("https://xp.network/", "_blank").focus();
 
       $style.innerHTML = `
+
+      ${
+        wsettings
+          ? `
+          .modal-backdrop.show, .modal {
+              width: calc(100% - 300px);
+              left: initial;
+              right: 0;
+          }
+      
+      `
+          : ""
+      }
+
+      .setting_sidebar {
+        font-size: 16px !important;
+      
+      }
       
       html, body, #root, .App, .nftContainer {
         height: 100%;
+      }
+
+      div#root {
+        overflow-y: auto;
+      }
+
+     .nftSlectContaine.container {
+        position: relative;
       }
 
 
@@ -179,13 +203,15 @@ export default function Widget() {
         .modal-title, .modalSelectOptionsText, .selChain, .seleDestiSele, .yourNft, .yourNft span, .sendNftTit, 
         .desChain span, .ComentBox p, .selectedNft span, .approveBtn, .nftFees span, .nftSelecItem, .wllListItem, .nftListed,
          .desAddress input, .nftWornTop h3, .nftWornTop p, .nftInfBox p, .about__text, .ComentBox p, .nonftAcc,
-          .nonftAcc  h2, .nft-box__container--selected, .nft-box__container, .transfer-loader__title {
+          .nonftAcc  h2, .nft-box__container--selected, .nft-box__container, .transfer-loader__title, .txn-hash, .sucesList span {
             color: ${color ? color : ""};
         }
 
         .desAddress input,  .desAddress input:focus,  .desAddress input:active, .empty__box {
           border-color: ${borderColor ? borderColor : ""};
         }
+
+
 
         .wllListItem, .themBtn {
             font-size: ${fontSize ? fontSize + "px" : ""}
@@ -342,8 +368,12 @@ export default function Widget() {
           fill: #ffffff;
         }
 
+        .svgWidget.lineArrow line{
+            stroke: ${borderColor ? borderColor : ""}
+        }
+
         .svgWidget:hover {
-          filter: brightness(125%);
+          filter: brightness(135%);
         }
 
         .swpBtn:hover path:nth-child(1){
@@ -389,6 +419,23 @@ export default function Widget() {
           border: 1px solid  ${borderColor ? borderColor : ""};
         }
 
+        .approve-loader__container__text {
+
+          color: ${color ? color : ""};
+        }
+
+        .approve-loader {
+            border-left: ${color ? "0.5em solid " + color : ""}
+        }
+
+        .nftInfBox {
+          filter: brightness(95%);
+        }
+
+        .returnBtn button {
+          border-color: ${secondaryColor ? secondaryColor : ""};
+          color:  ${secondaryColor ? secondaryColor : ""};
+        }
 
         @media only screen and (max-width: 860px) {
           .mobSearch input::placeholder, .mobileOnly.seleNftMob {

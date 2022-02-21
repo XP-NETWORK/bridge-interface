@@ -26,24 +26,22 @@ body {
 .bridgeBody {
   min-height: 100vh;
   background-color: #1d212a;
-  background-image: 
-    url("./assets/img/bg/Ellipse\ 235.svg"),
-    url("./assets/img/bg/Ellipse\ 236.svg"),
-    url("./assets/img/bg/l-figure.svg"),
-    url("./assets/img/bg/r-figure.svg"),
-    url("./assets/img/bg/l-sphere.svg"),
-    url("./assets/img/bg/r-sphere.svg"),
-    url("./assets/img/bg/r-triangle.svg");
+  background-image: url("./assets/img/bg/Ellipse\ 235.svg"),
+    url("./assets/img/bg/Ellipse\ 236.svg"), url("./assets/img/bg/l-figure.svg"),
+    url("./assets/img/bg/r-figure.svg"), url("./assets/img/bg/l-sphere.svg"),
+    url("./assets/img/bg/r-sphere.svg"), url("./assets/img/bg/r-triangle.svg");
   background-repeat: no-repeat;
-  background-position: left 50% top 80px, left 50% top 177.15px, left 25% top 29%, right 41% top 22%, left 40% top 25%, right 27% top 18%, right 33% top 29%;
+  background-position: left 50% top 80px, left 50% top 177.15px,
+    left 25% top 29%, right 41% top 22%, left 40% top 25%, right 27% top 18%,
+    right 33% top 29%;
   position: relative;
   z-index: 1;
 }
 
 .bridgeBody::-webkit-scrollbar {
   display: none;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 ul {
@@ -180,12 +178,12 @@ ul.socialLInks li img:hover {
 }
 
 .powerBy {
-  margin-right: 98px;
+  /* margin-right: 98px; */
 }
 
 .powerBy img {
   display: block;
-  margin-left: 15px;
+  /* margin-left: 15px; */
 }
 
 .priPoli {
@@ -505,7 +503,7 @@ span.LineArrow img {
   font-size: 14px;
   z-index: 11;
   left: 50%;
-  bottom: 25vh;
+  bottom: 5vh;
   transform: translate(-50%);
   background: linear-gradient(291.33deg, #181b23 67.06%, #412194 183.04%);
   border-radius: 16px;
@@ -742,8 +740,8 @@ span.wallet {
   display: flex;
 }
 
-.beacon img{
-  width: 28px
+.beacon img {
+  width: 28px;
 }
 
 .algo img {
@@ -879,6 +877,10 @@ span.wallet {
 
 .seleDestiSele {
   color: white;
+}
+.chain--status{
+  display: flex;
+  gap: 2px;
 }
 
 .modalSelectOptionsText {
@@ -1469,7 +1471,8 @@ ul.nftList {
 .nftListed:hover {
   background: rgba(73, 82, 108, 0.1);
 }
-li.nftListed > img, li.nftListed > video {
+li.nftListed > img,
+li.nftListed > video {
   display: block;
   height: 32px;
   width: 32px;
@@ -1709,7 +1712,8 @@ li.nftSelecItem .Close:hover {
   padding: 0 15px 0 30px;
 }
 
-.nftDetImg img, .nftDetImg video {
+.nftDetImg img,
+.nftDetImg video {
   height: 60%;
   border-radius: 16px;
 }
@@ -1895,11 +1899,11 @@ span.statComp img {
   padding: 6px 30px;
 }
 
-.seleDepatSelec img{
+.seleDepatSelec img {
   width: 28px;
 }
 
-.nftSelecItem__name{
+.nftSelecItem__name {
   width: 80%;
   white-space: nowrap;
   overflow: hidden;
@@ -2242,6 +2246,35 @@ span.invalid img {
 
 .navbar-light .navbar-toggler span.navbar-toggler-icon {
   display: none;
+}
+.navBrand{
+  position: relative;
+}
+
+.testnet{
+  color: #fff;
+  position: absolute;
+  /* max-height: 18px; */
+  background: linear-gradient(103.87deg, rgba(8, 78, 215, 0.66) -74.95%, rgba(143, 55, 255, 0.66) 122.06%);
+  padding:  4px;
+  right: 0;
+  top: 32px;
+  font-size: 12px;
+  line-height: 10px;
+  border-radius: 4px;
+}
+
+.mainnet{
+  color: #fff;
+  position: absolute;
+  /* max-height: 18px; */
+  background: linear-gradient(103.87deg, rgba(215, 32, 8, 0.66) -74.95%, rgb(212, 72, 7) 122.06%);
+  padding:  4px;
+  left: 0;
+  top: 32px;
+  font-size: 12px;
+  line-height: 10px;
+  border-radius: 4px;
 }
 
 .navbar-light .navbar-toggler:after {
@@ -2778,14 +2811,10 @@ span.transPend {
 
 @media screen and (max-width: 425px) {
   .bridgeBody {
-    background-position: 
-    left 50% top 80px,     /*Ellipse\ 235*/
-    left 50% top 177.15px, /*Ellipse\ 236*/
-    left 1% top 9%,      /*l-figure*/
-    right 3% top 20%,     /*r-figure*/
-    left 23% top 22%,      /*l-sphere*/
-    right 5% top 10%,     /*r-sphere*/
-    right 10% top 39%;     /*r-triangle*/
+    background-position: left 50% top 80px,
+      /*Ellipse\ 235*/left 50% top 177.15px, /*Ellipse\ 236*/left 1% top 9%,
+      /*l-figure*/ right 3% top 20%, /*r-figure*/ left 23% top 22%,
+      /*l-sphere*/ right 5% top 10%, /*r-sphere*/ right 10% top 39%; /*r-triangle*/
   }
 }
 
@@ -2794,14 +2823,10 @@ span.transPend {
     width: 100%;
   }
   .bridgeBody {
-    background-position: 
-    left 50% top 80px,     /*Ellipse\ 235*/
-    left 50% top 177.15px, /*Ellipse\ 236*/
-    left 2% top 27%,      /*l-figure*/
-    right 26% top 18%,     /*r-figure*/
-    left 22% top 22%,      /*l-sphere*/
-    right 1% top 12%,        /*r-sphere*/
-    right 5% top 29%;     /*r-triangle*/
+    background-position: left 50% top 80px,
+      /*Ellipse\ 235*/left 50% top 177.15px, /*Ellipse\ 236*/left 2% top 27%,
+      /*l-figure*/ right 26% top 18%, /*r-figure*/ left 22% top 22%,
+      /*l-sphere*/ right 1% top 12%, /*r-sphere*/ right 5% top 29%; /*r-triangle*/
   }
 }
 
@@ -2826,7 +2851,7 @@ span.transPend {
   }
 
   .aleartBox {
-    bottom: 10vh;
+    bottom: 2vh;
   }
 
   .account__box {
@@ -2859,14 +2884,10 @@ span.transPend {
     left: 39%;
   } */
   .bridgeBody {
-    background-position: 
-    left 50% top 80px,     /*Ellipse\ 235*/
-    left 50% top 177.15px, /*Ellipse\ 236*/
-    left 2% top 5%,      /*l-figure*/
-    right -5% top 20%,     /*r-figure*/
-    left -10% top 25%,      /*l-sphere*/
-    right 5% top 5%,     /*r-sphere*/
-    right -55% top 39%;     /*r-triangle*/
+    background-position: left 50% top 80px,
+      /*Ellipse\ 235*/left 50% top 177.15px, /*Ellipse\ 236*/left 2% top 5%,
+      /*l-figure*/ right -5% top 20%, /*r-figure*/ left -10% top 25%,
+      /*l-sphere*/ right 5% top 5%, /*r-sphere*/ right -55% top 39%; /*r-triangle*/
   }
 }
 
@@ -2875,8 +2896,6 @@ span.transPend {
     left: 39% !important;
   }
 }
-
-
 
 @media screen and (min-width: 600px) {
   .yourNft--mobile {

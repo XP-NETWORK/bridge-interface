@@ -1,4 +1,4 @@
-import { ChainFactory, ChainFactoryConfigs } from "xp.network";
+import { AppConfigs, ChainFactory, ChainFactoryConfigs } from "xp.network";
 import { Chain, Config } from "xp.network/dist/consts";
 import { chainsConfig } from "../components/values";
 import { setAlgorandClaimables, setBigLoader, setFactory, setNFTList } from "../store/reducers/generalSlice";
@@ -6,9 +6,10 @@ import store from "../store/store";
 import { ChainData, getOldFactory, moralisParams } from "./oldHelper";
 
 const axios = require("axios");
+// const testnet  = store.getState().general.testNet
+// console.log("testnet: ", testnet)
 
 export const setupURI = (uri) => {
-
   // debugger
   if (uri && uri.includes("ipfs://")) {
     return "https://ipfs.io/" + uri.replace(":/", "");
@@ -47,9 +48,6 @@ export const preloadItem = (item, type, setLoaded) => {
 };
 
 export const parseNFTS = async (nfts) => {
-// console.log("helpers");
-// debugger
-// console.log(nfts)
 
 const { from, to } = store.getState().general;
 if(from.key === "Tezos"){
@@ -127,67 +125,94 @@ export const isALLNFTsApproved = () => {
     return approvedNFTs.length === selectedNFTList.length;
   } else return false;
 };
+
+
+
+// export const getFactory = async () => {
+//   debugger
+//   const f = store.getState().general.factory
+  
+//   if(f) return f
+//   const testnetConfig = ChainFactoryConfigs.TestNet();
+//   console.log("testnetConfig: ", testnetConfig)
+//   const mainnetConfig = ChainFactoryConfigs.MainNet();
+//   if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
+//     mainnetConfig.tronParams.provider = window.tronWeb
+//   } 
+//   const factory = ChainFactory(testnet ? testnetConfig : mainnetConfig);
+//   store.dispatch(setFactory(factory))
+//   return factory;
+// };
+
 export const getFactory = async () => {
   // debugger
-  const f = store.getState().general.factory
-  
-  if(f) return f
+  const f = store.getState().general.factory;
+  const testnet  = store.getState().general.testNet
+
+  if (f) return f;
+  const testnetConfig = ChainFactoryConfigs.TestNet();
   const mainnetConfig = ChainFactoryConfigs.MainNet();
   if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
-    mainnetConfig.tronParams.provider = window.tronWeb
-  } 
-  const factory = ChainFactory(moralisParams, mainnetConfig);
-  store.dispatch(setFactory(factory))
+    mainnetConfig.tronParams.provider = window.tronWeb;
+  }
+  const factory = ChainFactory(
+    testnet ? AppConfigs.TestNet() : AppConfigs.MainNet(),
+    testnet ? testnetConfig : mainnetConfig
+  );
+  store.dispatch(setFactory(factory));
   return factory;
 };
+
+
+
 export const handleChainFactory = async (someChain) => {
-  // debugger
   const factory = await getFactory();
-  let chain;
-  // console.log(someChain, 'somechain')
   try {
-    someChain === "Ethereum"
-    ? (chain = await factory.inner(Chain.ETHEREUM))
-    : someChain === "BSC"
-    ? (chain = await factory.inner(Chain.BSC))
-    : someChain === "Tron"
-    ? (chain = await factory.inner(Chain.TRON))
-    : someChain === "Elrond"
-    ? (chain = await factory.inner(Chain.ELROND))
-    : someChain === "Polygon"
-    ? (chain = await factory.inner(Chain.POLYGON))
-    : someChain === "Avalanche"
-    ? (chain = await factory.inner(Chain.AVALANCHE))
-    : someChain === "Fantom"
-    ? (chain = await factory.inner(Chain.FANTOM))
-    : someChain === "Algorand"
-    ? (chain = await factory.inner(Chain.ALGORAND))
-    : someChain === "xDai"
-    ? (chain = await factory.inner(Chain.XDAI))
-    : someChain === "Solana"
-    ? (chain = await factory.inner(Chain.SOLANA))
-    : someChain === "Cardano"
-    ? (chain = await factory.inner(Chain.CARDANO))
-    : someChain === "Fuse"
-    ? (chain = await factory.inner(Chain.FUSE))
-    : someChain === "Velas"
-    ? (chain = await factory.inner(Chain.VELAS))
-    : someChain === "Tezos"
-    ? (chain = await factory.inner(Chain.TEZOS))
-    : someChain === "Iotex"
-    ? (chain = await factory.inner(Chain.IOTEX))
-    : (chain = "");
-  return chain;
+    switch (someChain) {
+      case "Ethereum":
+        return await factory.inner(Chain.ETHEREUM)
+      case "BSC":
+        return await factory.inner(Chain.BSC)
+      case "Tron":
+        return await factory.inner(Chain.TRON)
+      case "Elrond":
+        return await factory.inner(Chain.ELROND)
+      case "Polygon":
+        return await factory.inner(Chain.POLYGON)
+      case  "Avalanche":
+        return await factory.inner(Chain.AVALANCHE)
+      case "Fantom": 
+        return await factory.inner(Chain.FANTOM)
+      case "Algorand":
+        return await factory.inner(Chain.ALGORAND)
+      case "xDai":
+        return await factory.inner(Chain.XDAI)
+      case "Solana":
+        return await factory.inner(Chain.SOLANA)
+      case "Cardano":
+        return await factory.inner(Chain.CARDANO)
+      case "Fuse":
+        return await factory.inner(Chain.FUSE)
+      case "Velas":
+        return await factory.inner(Chain.VELAS)
+      case "Tezos":
+        return await factory.inner(Chain.TEZOS)
+      case "Iotex":
+        return await factory.inner(Chain.IOTEX)
+      case "Harmony":
+        return await factory.inner(Chain.HARMONY)
+      default: return ''
+    }
   } catch (error) {
     console.error(error)
   }
 };
 
-export const getNFTS = async (wallet, from) => {
-  // debugger
+export const getNFTS = async (wallet, from, testnet) => {
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
+  console.log("getNFTS: ", factory)
   const chain = await factory.inner(chainsConfig[from].Chain)
   try {
     // debugger
@@ -200,7 +225,6 @@ export const getNFTS = async (wallet, from) => {
     }
     const unique = {};
     try {
-      
       const allNFTs = response
         .filter((n) => n.native)
         .filter((n) => {
@@ -243,13 +267,13 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
   }
 }
 
-export const setNFTS = async (w, from) => {
+export const setNFTS = async (w, from, testnet) => {
   // debugger
   store.dispatch(setBigLoader(true))
-  const res = await getNFTS(w, from)
+  const res = await getNFTS(w, from, testnet)
   const parsedNFTs = await parseNFTS(res)
-    store.dispatch(setBigLoader(false))
-    if(parsedNFTs.length){
+  store.dispatch(setBigLoader(false))
+  if(parsedNFTs.length){
       store.dispatch(setNFTList(parsedNFTs))
   }
   else {

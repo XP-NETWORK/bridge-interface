@@ -1,27 +1,15 @@
 import React from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { chains, CHAIN_INFO } from "../../components/values";
+import { CHAIN_INFO } from "../../components/values";
 import "./Chain.css";
 
-export default function Chain({
-  filteredChain,
-  chainSelectHandler,
-  text,
-  image,
-  key,
-  coming,
-  bridge_live,
-  newChain,
-  chainKey,
-  maintenance
-}) {
+
+export default function Chain(props) {
+  const { filteredChain, chainSelectHandler, text, image, coming, newChain, chainKey, maintenance} = props
   const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
-  // console.log("key: ", chainKey)
   const checkIfLive = (chain) => {
-    // let c = chain === "GnosisChain" ? "xDai" : chain
     const nonce = CHAIN_INFO[chain]?.nonce;
-    // console.log("nonce: ", nonce)
     if (validatorsInfo) {
       return validatorsInfo[nonce]?.bridge_alive;
     }
@@ -30,22 +18,23 @@ export default function Chain({
   useEffect(() => {}, [validatorsInfo]);
 
   const OFF = { opacity: 0.6, pointerEvents: "none" };
+
   return (
-    // style={ coming || !checkIfLive(text) ? OFF : {}}
     <li
-      style={maintenance || !checkIfLive(chainKey) ? OFF : {}}
+      style={maintenance || !checkIfLive(chainKey) || coming ? OFF : {}}
       onClick={() => chainSelectHandler(filteredChain)}
       className="nftChainItem"
       data-chain={text}
     >
       <img className="modalSelectOptionsImage" src={image.src} alt={text} />
       <div className="modalSelectOptionsText">
-        {text === "xDai" ? "Gnosis Chain" : text}
-        {maintenance ? <div className="coming-chain">Maintenance</div> : ""}
-        {!checkIfLive(chainKey) && !coming && (
-          <div className="chain__off">Offline</div>
-        )}
-        {/* {newChain && <div className="new-chain">New</div>} */}
+          {text === "xDai" ? "Gnosis Chain" : text}
+          <div className="chain--status">
+            {maintenance && <div className="coming-chain">Maintenance</div>}
+            {!checkIfLive(chainKey) && !coming && <div className="chain__off">Offline</div>}
+            {coming && <div className="coming-chain">Coming</div>}
+            {newChain && <div className="new-chain">New</div>}
+          </div>
       </div>
     </li>
   );

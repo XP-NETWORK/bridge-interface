@@ -2,10 +2,9 @@ import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setSettings,
-  chains,
-  wallets,
   activeChains,
   availability,
+  initialState as initSettings,
 } from "../../store/reducers/settingsSlice";
 
 import { usePrevious } from "./hooks";
@@ -175,6 +174,13 @@ const settingsHoc = (Wrapped) => (props) => {
   };
 
   useEffect(() => {
+    const settings = localStorage.getItem("widgetSettings");
+    if (settings) {
+      dispatch(setSettings(JSON.parse(settings)));
+    }
+  }, []);
+
+  useEffect(() => {
     if (prevSelected) {
       const difference = prevSelected.filter(
         (x) => !selectedChains.includes(x)
@@ -202,6 +208,20 @@ const settingsHoc = (Wrapped) => (props) => {
       })
     );
 
+  const onSaveSettings = () => {
+    localStorage.setItem("widgetSettings", JSON.stringify(settings));
+    setCopied("saved");
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 700);
+  };
+
+  const onResetSettings = () => {
+    dispatch(setSettings(initSettings));
+    localStorage.removeItem("widgetSettings");
+  };
+
   return (
     <Wrapped
       list={list}
@@ -219,6 +239,8 @@ const settingsHoc = (Wrapped) => (props) => {
       onClickEditor={onClickEditor}
       toggleShow={toggleShow}
       showLink={showLink}
+      onSaveSettings={onSaveSettings}
+      onResetSettings={onResetSettings}
     />
   );
 };
