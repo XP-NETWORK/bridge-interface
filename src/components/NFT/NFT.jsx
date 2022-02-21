@@ -6,26 +6,17 @@ import {
 } from "../../store/reducers/generalSlice";
 import brockenurl from "../../assets/img/brockenurl.png";
 import CheckGreen from "../../assets/img/icons/check_green.svg";
-import NFTdetails from "../NFTdetails";
+import NFTdetails from './NFTdetails'
 import { useSelector } from "react-redux";
-import {
-  setupURI,
-  checkVideoFormat,
-  checkImageFormat,
-} from "../../wallet/oldHelper";
+import { setupURI } from "../../wallet/oldHelper";
 import { getUrl } from "./NFTHelper.js";
 import "./NewNFT.css";
-
 import { isValidHttpUrl } from "../../wallet/helpers";
-import Checkmark from "./Checkmark";
 import VideoOrImage from "./VideoOrImage";
 
 export default function NFT({ nft, index }) {
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
   const dispatch = useDispatch();
-  const [tryVideo, setTryVideo] = useState();
-  // const [tryNexrUrl, setTryNextUrl] = useState() // incase img url error try vid
-  const [brokenURI, setbrokenURI] = useState(); // incase img url error try vid
   const isSelected = selectedNFTs.filter(
     (n) =>
       n.native.tokenId === nft.native.tokenId &&
@@ -34,13 +25,7 @@ export default function NFT({ nft, index }) {
   )[0];
   const [imageLoaded, setImageLoaded] = useState(false);
   const HIDDEN = { visibility: "hidden" };
-  const unclickable = { pointerEvents: "none" };
   const { video, url, ipfsArr } = getUrl(nft);
-  const [urlIndex, setUrlIndex] = useState(1);
-  // console.log("urlIndex: ", urlIndex)
-  // console.log(`NewNFT index: ${index} video: ${video}, url: ${url}, ipfsArr: ${ipfsArr}`)
-
-  // console.log("video: ", video, "url: ", url, "index: ", index)
 
   function addRemoveNFT(chosen) {
     if (!isSelected) {
@@ -49,7 +34,7 @@ export default function NFT({ nft, index }) {
       dispatch(removeFromSelectedNFTList(nft));
     }
   }
-  // useEffect(() => { if(!checkImageFormat(url) && !url.includes("ipfs"))setbrokenURI(true)}, [])
+
 
   useEffect(() => {
     setTimeout(() => {
@@ -77,7 +62,7 @@ export default function NFT({ nft, index }) {
                   src={setupURI(url)}
                 />
               ) : (
-                <img
+                <img alt="#"
                   onLoad={() => setImageLoaded(true)}
                   alt="NFT image"
                   src={setupURI(url)}
@@ -87,10 +72,10 @@ export default function NFT({ nft, index }) {
               <VideoOrImage urls={ipfsArr} />
             ) : (
               <div className="brocken-url">
-                <img
+                <img 
                   onLoad={() => setImageLoaded(true)}
                   src={brockenurl}
-                  alt="This NFT image uri is broken."
+                  alt="uri is broken"
                 />
                 <span className="brocken-url__msg">
                   NFTs URL
@@ -98,7 +83,6 @@ export default function NFT({ nft, index }) {
                 </span>
               </div>
             )}
-            {/* {(nft.image || nft.image_url) &&  */}
             <div className="radio__container">
               {!isSelected ? (
                 <span className="selected-radio"></span>
@@ -106,7 +90,6 @@ export default function NFT({ nft, index }) {
                 <img src={CheckGreen} alt="" />
               )}
             </div>
-            {/* }  */}
           </div>
         </div>
         <div
@@ -121,7 +104,6 @@ export default function NFT({ nft, index }) {
           <span className="nft-number">{nft.native.tokenId}</span>
         </div>
       </div>
-      {/* }  */}
     </div>
   );
 }

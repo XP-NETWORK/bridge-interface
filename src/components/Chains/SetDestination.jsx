@@ -1,8 +1,8 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux'
-import Destination from '../assets/img/nftSelect/destination.svg';
-import { setChainModal, setDepartureOrDestination } from '../store/reducers/generalSlice';
+import Destination from '../../assets/img/nftSelect/destination.svg';
+import { setChainModal, setDepartureOrDestination } from '../../store/reducers/generalSlice';
 
 export default function SetDestination() {
     const to = useSelector(state => state.general.to)

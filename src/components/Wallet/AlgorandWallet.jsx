@@ -3,7 +3,7 @@ import {
   connectAlgoSigner,
   connectMyAlgo,
   connectAlgoWallet,
-} from "../ConnectWalletHelper";
+} from "./ConnectWalletHelper";
 import AlgorandWalletIcon from "../../assets/img/wallet/AlgorandWallet.svg";
 import MyAlgoBlue from "../../assets/img/wallet/MyAlgoBlue.svg";
 import AlgoSignerIcon from "../../assets/img/wallet/Algo Signer.png";

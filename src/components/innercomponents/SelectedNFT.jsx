@@ -7,16 +7,7 @@ import {
   removeFromSelectedNFTList,
 } from "../../store/reducers/generalSlice";
 import { useDispatch } from "react-redux";
-import brockenurl from "../../assets/img/brockenurl.png";
-import { isValidHttpUrl } from "../../wallet/helpers";
-import {
-  setupURI,
-  checkVideoFormat,
-  checkImageFormat,
-} from "../../wallet/oldHelper";
-
-import ListedView from "../nftImageViews/ListedView";
-
+import ListedView from "../NFT/ListedView"
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 import { ReactComponent as BackComp } from "../../assets/img/icons/Back.svg";
 

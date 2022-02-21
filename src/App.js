@@ -29,6 +29,7 @@ import star from "./assets/img/icons/featuredInactive.svg";
 import GetFeatured from "./components/innercomponents/GetFeatured";
 import TnProcess from "./components/innercomponents/processingModals/TnProcess";
 import SuccessModal from "./components/Modals/SuccessModal";
+import Settings from "./components/Settings";
 
 import WSettings from "./components/Settings";
 
@@ -42,6 +43,7 @@ function App() {
   const state = useSelector((state) => state.general);
 
   const axios = require("axios");
+  const widget = new URLSearchParams(window.location.search).get("widget");
 
   function handleClose() {
     dispatch(setTronPopUp(false));
@@ -84,7 +86,7 @@ function App() {
         }
       }
     }
-    //!state.wsettings && localStorage.clear();
+    localStorage.removeItem("walletconnect")
   }, []);
 
   useEffect(async () => {

@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import RelWhit from "../../assets/img/icons/RelWhit.svg";
 import RedClose from "../../assets/img/icons/RedClose.svg";
 import {
-  setChainModal,
   setReceiver,
   setSwitchDestination,
 } from "../../store/reducers/generalSlice";
@@ -17,7 +15,6 @@ function DestinationChain() {
     widget,
   }));
 
-  const Web3Utils = require("web3-utils");
   const dispatch = useDispatch();
   const receiver = useSelector((state) => state.general.receiver);
 
@@ -36,7 +33,7 @@ function DestinationChain() {
       <div className="desChain">
         Destination
         <span>
-          <img style={{ width: "30px" }} src={to.image.src} alt="" /> {to.key}
+          <img style={{ width: "30px" }} src={to.image.src} alt="" /> {to.key === "xDai" ? "Gnosis Chain" : to.key}
           <div onClick={() => handleSwitchChain()} className="triangle">
             {widget ? (
               <div>

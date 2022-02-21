@@ -127,23 +127,6 @@ export const isALLNFTsApproved = () => {
 };
 
 
-
-// export const getFactory = async () => {
-//   debugger
-//   const f = store.getState().general.factory
-  
-//   if(f) return f
-//   const testnetConfig = ChainFactoryConfigs.TestNet();
-//   console.log("testnetConfig: ", testnetConfig)
-//   const mainnetConfig = ChainFactoryConfigs.MainNet();
-//   if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
-//     mainnetConfig.tronParams.provider = window.tronWeb
-//   } 
-//   const factory = ChainFactory(testnet ? testnetConfig : mainnetConfig);
-//   store.dispatch(setFactory(factory))
-//   return factory;
-// };
-
 export const getFactory = async () => {
   // debugger
   const f = store.getState().general.factory;
@@ -166,7 +149,6 @@ export const getFactory = async () => {
 
 
 export const handleChainFactory = async (someChain) => {
-
   const factory = await getFactory();
   try {
     switch (someChain) {
@@ -226,7 +208,6 @@ export const getNFTS = async (wallet, from, testnet) => {
     }
     const unique = {};
     try {
-      console.log("getNFTS: ", response)
       const allNFTs = response
         .filter((n) => n.native)
         .filter((n) => {

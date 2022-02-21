@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Elrond from "../../assets/img/wallet/Elrond.svg";
 import Maiar from "../../assets/img/wallet/Maiar.svg";
-import { connectMaiar, connectMaiarExtension } from "../ConnectWalletHelper";
+import { connectMaiar, connectMaiarExtension } from "./ConnectWalletHelper";
 
 export default function ElrondWallet({ wallet }) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };

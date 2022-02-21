@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { connectTempleWallet, connectBeacon } from "../ConnectWalletHelper";
+import { connectTempleWallet, connectBeacon } from "./ConnectWalletHelper";
 import BeaconW from "../../assets/img/wallet/BeaconWhite.svg";
 import Temple from "../../assets/img/wallet/Temple.svg";
 

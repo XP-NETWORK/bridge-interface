@@ -1,10 +1,8 @@
 
-import { useEffect } from "react"
-import { useState } from "react"
-import {  getUrl, NFTHelper } from "../../components/innercomponents/NFTHelper"
+import { getUrl } from "./NFTHelper"
 import { isValidHttpUrl } from "../../wallet/helpers"
 import { setupURI } from "../../wallet/oldHelper"
-import VideoOrImage from "../innercomponents/VideoOrImage"
+import VideoOrImage from "./VideoOrImage"
 import brockenurl from "../../assets/img/brockenurl.png"
 
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { useWeb3React } from "@web3-react/core";
-import { connectMetaMask } from "../ConnectWalletHelper";
+import { connectMetaMask } from "./ConnectWalletHelper";
 import { useSelector } from "react-redux";
 import MetaMask from "../../assets/img/wallet/MetaMask.svg";
 import WalletConnect from "../../assets/img/wallet/WalletConnect 3.svg";

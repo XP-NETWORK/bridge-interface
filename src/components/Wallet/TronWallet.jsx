@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { connectTronlink } from "../ConnectWalletHelper";
+import { connectTronlink } from "./ConnectWalletHelper";
 import Tron from "../../assets/img/wallet/TronLink.svg";
 
 export default function TronWallet() {

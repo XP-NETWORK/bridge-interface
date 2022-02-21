@@ -35,7 +35,7 @@ function DestinationChainReload() {
       <div className="desChain">
         Destination
         <span>
-          <img style={{ width: "30px" }} src={to.image.src} alt="" /> {to.key}
+          <img style={{ width: "30px" }} src={to.image.src} alt="" /> {to.key === "xDai" ? "Gnosis Chain" : to.key}
           <div onClick={() => handleSwitchChain()} className="triangle">
             {widget ? (
               <div>

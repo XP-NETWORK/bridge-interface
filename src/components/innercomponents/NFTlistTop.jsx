@@ -14,8 +14,7 @@ import {
   cleanSelectedNFTList,
 } from "../../store/reducers/generalSlice";
 import { useSelector } from "react-redux";
-import SelectDestination from "../SelectDestination";
-import NFTChainListBox from "../NFTChainListBox";
+import NFTChainListBox from "../Chains/NFTChainListBox"
 import Close from "../../assets/img/icons/close.svg";
 import { setNFTS } from "../../wallet/helpers";
 import Refresh from "../../assets/img/refresh.svg";

@@ -5,7 +5,7 @@ import { CHAIN_INFO } from '../values'
 import { chainsConfig } from '../values'
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { algoConnector } from "../../wallet/connectors"
-import { getFactory,  handleChainFactory,  setClaimablesAlgorand, setNFTS } from "../../wallet/helpers"
+import { getFactory,  setClaimablesAlgorand } from "../../wallet/helpers"
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
@@ -91,8 +91,8 @@ export default function ButtonToTransfer() {
     const sendEach = async (nft, index) => {
         debugger
         const signer = await getSigner()
-        console.log("CHAIN_INFO: ", CHAIN_INFO, "to: ", to)
-        const nonce = CHAIN_INFO[to].nonce
+        const toNonce = CHAIN_INFO[to].nonce
+        const fromNonce = CHAIN_INFO[from].nonce
         const nftSmartContract = nft.native.contract
         let factory 
         let toChain 
@@ -102,7 +102,7 @@ export default function ButtonToTransfer() {
             if(from === "Tron"){
                 factory = await getFactory()
                 const contract = nftSmartContract.toLowerCase()
-                const mintWidth = await factory.getVerifiedContracts(contract, nonce)
+                const mintWidth = await factory.getVerifiedContracts(contract, toNonce, fromNonce)
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
                 result = await factory.transferNft(
@@ -121,7 +121,7 @@ export default function ButtonToTransfer() {
             else{
                 factory = await getFactory()
                 const contract = nftSmartContract.toLowerCase()
-                const mintWidth = await factory.getVerifiedContracts(contract, nonce)
+                const mintWidth = await factory.getVerifiedContracts(contract, toNonce, fromNonce)
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
                 result = await factory.transferNft(

@@ -878,6 +878,10 @@ span.wallet {
 .seleDestiSele {
   color: white;
 }
+.chain--identifier{
+  display: flex;
+  gap: 2px;
+}
 
 .modalSelectOptionsText {
   width: 100%;
