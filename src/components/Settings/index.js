@@ -84,7 +84,7 @@ function WSettings({
       <>
         <div
           className="setting_sidebar"
-          style={{ width: toggleEditor ? "35px" : "300px" }}
+          style={{ width: settings.collapsed ? "35px" : "300px" }}
         >
           <img
             src={collapse}
@@ -92,7 +92,7 @@ function WSettings({
             className="collapseImg collapsed"
             onClick={onClickEditor}
             style={{
-              display: toggleEditor ? "inline-block" : "none",
+              display: settings.collapsed ? "inline-block" : "none",
             }}
           />
 
@@ -138,7 +138,7 @@ function WSettings({
 
           <div
             className="site_setting"
-            style={{ display: toggleEditor ? "none" : "block" }}
+            style={{ display: settings.collapsed ? "none" : "block" }}
           >
             <h2>Settings</h2>
             <img
@@ -150,7 +150,7 @@ function WSettings({
           </div>
           <div
             className={`sidebar_content`}
-            style={{ display: toggleEditor ? "none" : "block" }}
+            style={{ display: settings.collapsed ? "none" : "block" }}
             ref={list}
             onScroll={(e) => handleScroll(e)}
           >
@@ -672,7 +672,8 @@ function WSettings({
                           <input
                             type="text"
                             placeholder="25px"
-                            onClick={(e) => console.log(e)}
+                            id="dsa"
+                            //onClick={(e) => e.target.focus()}
                             onChange={(e) =>
                               deboucedSet(e.target.value, "cardRadius")
                             }

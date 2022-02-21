@@ -68,6 +68,7 @@ export const initialState = {
   iconColor: "#3e64ed",
   showAlert: false,
   showLink: true,
+  collapsed: false,
 };
 
 const settingSlice = createSlice({

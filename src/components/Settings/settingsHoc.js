@@ -51,9 +51,17 @@ const settingsHoc = (Wrapped) => (props) => {
 
   const onClickEditor = () => {
     document.querySelector(".nftContainer").style = `margin-left: ${
-      !toggleEditor ? "35" : "300"
+      !settings.collapsed ? "35" : "300"
     }px;`;
-    onToggleEditor(!toggleEditor);
+    //document.body.classList.toggle("editorCollapsed");
+    //onToggleEditor(!toggleEditor);
+
+    dispatch(
+      setSettings({
+        ...settings,
+        collapsed: !settings.collapsed,
+      })
+    );
   };
 
   const deboucedSet = (e, key) =>
