@@ -1475,7 +1475,7 @@ li.blockChain_item .blockChainItem span {
   display: flex;
   align-items: center;
   padding-left: 28px;
-  margin-top: 15px;
+  margin-top: 22px;
   cursor: pointer;
   margin-bottom: 15px;
   font-size: 14px;
@@ -1538,4 +1538,32 @@ li.blockChain_item .blockChainItem span {
   line-height: 28px;
   letter-spacing: 0.5px;
   pointer-events: none;
+}
+
+.resetBtn {
+  margin-left: 16px;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:active,
+.btn-outline-primary:focus {
+  background-color: #fff !important;
+  color: #007bff !important;
+  box-shadow: 0 !important;
+  outline: none !important;
+}
+
+.returnBtn {
+  position: absolute;
+  top: -30px;
+  left: 30px;
+  z-index: 9000;
+}
+
+.returnBtn button {
+  border-radius: 16px;
+  border: 1px solid #62718a;
+  background: transparent;
+  color: #62718a;
+  padding: 10px 20px;
 }

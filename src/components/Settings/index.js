@@ -6,6 +6,8 @@ import {
   Alert,
   FormCheck,
   Form,
+  Button,
+  Modal,
 } from "react-bootstrap";
 import power from "./assets/img/power.svg";
 
@@ -48,6 +50,8 @@ function WSettings({
   toggleEditor,
   toggleShow,
   showLink,
+  onSaveSettings,
+  onResetSettings,
 }) {
   const {
     backgroundColor,
@@ -101,8 +105,28 @@ function WSettings({
         style={{ position: "absolute", zIndex: "9999", width: "100%" }}
         onClose={handleAlert}
       >
-        <p style={{ marginTop: "15px" }}>Copied!</p>
+        <p style={{ marginTop: "15px" }}>
+          {copied === "saved" ? "Saved" : "Copied"}!
+        </p>
       </Alert>
+
+      {/*   <Modal show={showModal} onHide={closeModal}>
+        <Modal.Body>
+          <textarea
+            name=""
+            id=""
+            cols="30"
+            rows="10"
+            className="exportCodeCont"
+          ></textarea>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={importSettings}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal> */}
+
       <div
         className="site_setting"
         style={{ display: toggleEditor ? "none" : "block" }}
@@ -614,7 +638,7 @@ function WSettings({
                       <input
                         type="text"
                         placeholder="25px"
-                        //value={state.btnRadius}
+                        onFocus={(e) => console.log(e)}
                         onChange={(e) =>
                           deboucedSet(e.target.value, "cardRadius")
                         }
@@ -699,6 +723,21 @@ function WSettings({
           <div className="referalSwitch" onClick={toggleShow}>
             <input type="checkbox" checked={showLink} />
             <span>Powered by XP Network</span>
+          </div>
+
+          <div className="referalSwitch">
+            <Button size="sm" onClick={onSaveSettings}>
+              Save settings
+            </Button>
+            <Button
+              size="sm"
+              onClick={onResetSettings}
+              type="reset"
+              className="resetBtn"
+              variant="outline-primary"
+            >
+              Reset settings
+            </Button>
           </div>
 
           <Accordion defaultActiveKey="18">

@@ -162,6 +162,10 @@ export default function Widget() {
         overflow-y: auto;
       }
 
+     .nftSlectContaine.container {
+        position: relative;
+      }
+
 
       .nftContainer {
         position:relative;
@@ -199,13 +203,15 @@ export default function Widget() {
         .modal-title, .modalSelectOptionsText, .selChain, .seleDestiSele, .yourNft, .yourNft span, .sendNftTit, 
         .desChain span, .ComentBox p, .selectedNft span, .approveBtn, .nftFees span, .nftSelecItem, .wllListItem, .nftListed,
          .desAddress input, .nftWornTop h3, .nftWornTop p, .nftInfBox p, .about__text, .ComentBox p, .nonftAcc,
-          .nonftAcc  h2, .nft-box__container--selected, .nft-box__container, .transfer-loader__title {
+          .nonftAcc  h2, .nft-box__container--selected, .nft-box__container, .transfer-loader__title, .txn-hash, .sucesList span {
             color: ${color ? color : ""};
         }
 
         .desAddress input,  .desAddress input:focus,  .desAddress input:active, .empty__box {
           border-color: ${borderColor ? borderColor : ""};
         }
+
+
 
         .wllListItem, .themBtn {
             font-size: ${fontSize ? fontSize + "px" : ""}
@@ -420,6 +426,15 @@ export default function Widget() {
 
         .approve-loader {
             border-left: ${color ? "0.5em solid " + color : ""}
+        }
+
+        .nftInfBox {
+          filter: brightness(95%);
+        }
+
+        .returnBtn button {
+          border-color: ${secondaryColor ? secondaryColor : ""};
+          color:  ${secondaryColor ? secondaryColor : ""};
         }
 
         @media only screen and (max-width: 860px) {
