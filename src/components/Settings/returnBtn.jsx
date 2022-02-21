@@ -9,7 +9,7 @@ export const ReturnBtn = () => {
 
   return widget ? (
     <div className="returnBtn">
-      <button onClick={() => dispatch(setReset())}>&#129060;{" Back"}</button>
+      <button onClick={() => dispatch(setReset())}>{"< Back"}</button>
     </div>
   ) : null;
 };

@@ -217,7 +217,7 @@ export default function Widget() {
             font-size: ${fontSize ? fontSize + "px" : ""}
         }
 
-        a.themBtn, .nftSelectBox, .modal-content, .widget .destiAddress input {
+        a.themBtn, .nftSelectBox, .modal-content, .widget .destiAddress input, .returnBtn button, .SearchDrop.dropdown .dropdown-menu  {
             border-radius: ${btnRadius ? btnRadius + "px" : ""};
         }
 
@@ -316,7 +316,7 @@ export default function Widget() {
           background: ${secondaryColor ? secondaryColor : ""};
         } 
 
-        .selectAll, .clearNft, .nftAut a, .loader, .changeNetwork-loader, .coming__chain, .follow-us__btn, .ts-button {
+        .selectAll, .clearNft, .nftAut a, .loader, .changeNetwork-loader, .coming__chain, .follow-us__btn, .ts-button, .sucesList .colBlue, .success-button.view-txn-btn, .bluTextBtn {
           color: ${accentColor ? accentColor : ""};
         }
 
@@ -436,6 +436,8 @@ export default function Widget() {
           border-color: ${secondaryColor ? secondaryColor : ""};
           color:  ${secondaryColor ? secondaryColor : ""};
         }
+
+       
 
         @media only screen and (max-width: 860px) {
           .mobSearch input::placeholder, .mobileOnly.seleNftMob {

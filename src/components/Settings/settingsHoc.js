@@ -5,6 +5,7 @@ import {
   activeChains,
   availability,
   initialState as initSettings,
+  initialState,
 } from "../../store/reducers/settingsSlice";
 
 import { usePrevious } from "./hooks";
@@ -222,6 +223,16 @@ const settingsHoc = (Wrapped) => (props) => {
     localStorage.removeItem("widgetSettings");
   };
 
+  const onSelectAll = () => {
+    dispatch(
+      setSettings({
+        ...settings,
+        selectedChains: initialState.selectedChains,
+      })
+    );
+    setActiveChains(activeChains.length);
+  };
+
   return (
     <Wrapped
       list={list}
@@ -241,6 +252,7 @@ const settingsHoc = (Wrapped) => (props) => {
       showLink={showLink}
       onSaveSettings={onSaveSettings}
       onResetSettings={onResetSettings}
+      onSelectAll={onSelectAll}
     />
   );
 };
