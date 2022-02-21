@@ -4,7 +4,7 @@ import NFTdetails from '../NFTdetails';
 import { useDispatch, useSelector } from 'react-redux';
 import NFTempty from '../innercomponents/NFTempty';
 import CheckGreen from '../../assets/img/icons/check_green.svg';
-import ListedView from "../nftImageViews/ListedView";
+import ListedView from "../NFT/ListedView"
 
 function NFTlistView() {
     const nfts = useSelector(state => state.general.NFTList)

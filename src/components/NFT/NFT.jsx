@@ -6,7 +6,8 @@ import {
 } from "../../store/reducers/generalSlice";
 import brockenurl from "../../assets/img/brockenurl.png";
 import CheckGreen from "../../assets/img/icons/check_green.svg";
-import NFTdetails from "../NFTdetails";
+// import NFTdetails from "../NFTdetails";
+import NFTdetails from './NFTdetails'
 import { useSelector } from "react-redux";
 import { setupURI } from "../../wallet/oldHelper";
 import { getUrl } from "./NFTHelper.js";
