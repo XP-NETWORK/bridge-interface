@@ -32,8 +32,8 @@ import { setTronWallet,
 const { to, modalError } = store.getState()
 
 
-export const connectMetaMask = async (activate, from) => {
-  debugger
+export const connectMetaMask = async (activate, from, to) => {
+debugger
     try {
         if(!window.ethereum && window.innerWidth <= 600) {
             const uri = `https://metamask.app.link/dapp/${window.location.host + `?to=${to.text}&from=${from.text}`}/`

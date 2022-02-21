@@ -10,7 +10,8 @@ import { isEVM } from "../../wallet/oldHelper";
 export default function EVMWallet({ wallet }) {
   const { activate } = useWeb3React();
   const OFF = { opacity: 0.6, pointerEvents: "none" };
-  const from = useSelector((state) => state.general.from);
+  const to = useSelector(state => state.general.to)
+  const from = useSelector(state => state.general.from);
   const getMobOps = () =>
     /android/i.test(navigator.userAgent || navigator.vendor || window.opera)
       ? true
@@ -18,7 +19,7 @@ export default function EVMWallet({ wallet }) {
 
   return wallet === "MetaMask" /* METAMASK */ ? (
     <li
-      onClick={() => connectMetaMask(activate, from.text)}
+      onClick={() => connectMetaMask(activate, from.text, to.text)}
       style={from?.type === "EVM" ? {} : OFF}
       className="wllListItem"
       data-wallet="MetaMask"

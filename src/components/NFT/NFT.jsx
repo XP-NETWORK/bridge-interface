@@ -49,7 +49,7 @@ export default function NFT({ nft, index }) {
           isSelected ? "nft-box__container--selected" : "nft-box__container"
         }
       >
-        <div onClick={() => addRemoveNFT(nft)} className="nft-image__container">
+        <div onClick={() => addRemoveNFT(nft, index)} className="nft-image__container">
           <div className="image__wrapper">
             {url && nft.uri && isValidHttpUrl(nft.uri) ? (
               video && url ? (
@@ -69,7 +69,7 @@ export default function NFT({ nft, index }) {
                 />
               )
             ) : ipfsArr.length ? (
-              <VideoOrImage urls={ipfsArr} />
+              <VideoOrImage urls={ipfsArr} i={index} />
             ) : (
               <div className="brocken-url">
                 <img 

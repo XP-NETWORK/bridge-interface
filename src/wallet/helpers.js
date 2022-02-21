@@ -6,9 +6,6 @@ import store from "../store/store";
 import { ChainData, getOldFactory, moralisParams } from "./oldHelper";
 
 const axios = require("axios");
-// const testnet  = store.getState().general.testNet
-// console.log("testnet: ", testnet)
-
 export const setupURI = (uri) => {
   // debugger
   if (uri && uri.includes("ipfs://")) {
