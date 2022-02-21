@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
-import Close from "../assets/img/icons/close.svg";
-import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
-import NFTworng from "./NFTworng";
+import Close from "../../assets/img/icons/close.svg";
+import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
+import NFTworng from "../../components/NFTworng";
 import { useDispatch, useSelector } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
-import { algoConnector } from "../wallet/connectors";
+import { algoConnector } from "../../wallet/connectors";
 import {
   setAccount,
   setAlgorandWallet,
@@ -13,15 +13,15 @@ import {
   setWrongNetwork,
   setAlgorandAccount,
   setQrCodeString,
-} from "../store/reducers/generalSlice";
-import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../components/values";
-import MaiarModal from "./MaiarModal";
-import EVMWallet from "./Wallet/EVMWallet";
-import TezosWallet from "./Wallet/TezosWallet";
-import AlgorandWallet from "./Wallet/AlgorandWallet";
-import TronWallet from "./Wallet/TronWallet";
-import ElrondWallet from "./Wallet/ElrondWallet";
-import USBWallet from "./Wallet/USBWallet";
+} from "../../store/reducers/generalSlice";
+import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
+import MaiarModal from "../MaiarModal";
+import EVMWallet from "./EVMWallet";
+import TezosWallet from "./TezosWallet";
+import AlgorandWallet from "./AlgorandWallet";
+import TronWallet from "./TronWallet";
+import ElrondWallet from "./ElrondWallet";
+import USBWallet from "./USBWallet";
 
 function ConnectWallet() {
   const dispatch = useDispatch();
