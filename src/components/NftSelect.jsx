@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setShowAbout, setShowVideo } from '../store/reducers/generalSlice';
 import ChainSelectBox from "./Chains/ChainSelectBox"
 import NFTChainListBox from './Chains/NFTChainListBox';
+import ChainListBox from './Chains/ChainListBox';
 
 
 function NftSelect() {
@@ -23,8 +24,9 @@ function NftSelect() {
             </div> : ''}
             <div className="nftSlectArea">
                 {/* <NFTSelectBox /> */}
-                <NFTChainListBox />
+                {/* <NFTChainListBox /> */}
                 <ChainSelectBox />
+                <ChainListBox />
                 <ConnectWallet/>
                 <div id="aboutnft" className="aboutNft">
                     <a onClick={() => handleVideoClick()} target="_blank" className="videoLink"><img src={Video} />   Learn how to use NFT bridge</a>

@@ -31,6 +31,7 @@ export const chains = [
     image: { avatar: true, src: Etherium },
     maintenance: false,
     testNet: false,
+    mainnet: true
   },
   {
     type: "EVM",
@@ -41,6 +42,8 @@ export const chains = [
     image: { avatar: true, src: Binance },
     maintenance: false,
     testNet: true,
+    mainnet: true
+
   },
   {
     type: "Tron",
@@ -51,6 +54,8 @@ export const chains = [
     image: { avatar: true, src: Tron },
     maintenance: true,
     testNet: false,
+    mainnet: true
+
   },
   {
     type: "Elrond",
@@ -61,6 +66,7 @@ export const chains = [
     image: { avatar: true, src: Elrond },
     maintenance: false,
     testNet: false,
+    mainnet: true
   },
   {
     type: "EVM",
@@ -81,6 +87,7 @@ export const chains = [
     image: { avatar: true, src: Avalanche },
     maintenance: false,
     testNet: true,
+    mainnet: true
   },
   {
     type: "EVM",
@@ -91,6 +98,7 @@ export const chains = [
     image: { avatar: true, src: Fantom },
     maintenance: false,
     testNet: false,
+    mainnet: true
   },
   {
     type: "Algorand",
@@ -101,6 +109,7 @@ export const chains = [
     image: { avatar: true, src: Algorand },
     maintenance: true,
     testNet: false,
+    mainnet: true
   },
   {
     type: "EVM",
@@ -111,6 +120,7 @@ export const chains = [
     image: { avatar: true, src: Gnosis },
     maintenance: false,
     testNet: false,
+    mainnet: true
   },
   {
     type: "Solana",
@@ -122,6 +132,7 @@ export const chains = [
     image: { avatar: true, src: Solana },
     maintenance: false,
     testNet: false,
+    mainnet: false
   },
   {
     type: "Cardano",
@@ -133,6 +144,7 @@ export const chains = [
     image: { avatar: true, src: Cardano },
     maintenance: false,
     testNet: false,
+    mainnet: false
   },
   {
     type: "EVM",
@@ -144,6 +156,7 @@ export const chains = [
     image: { avatar: true, src: Heco },
     maintenance: false,
     testNet: false,
+    mainnet: false
   },
   {
     type: "EVM",
@@ -154,6 +167,7 @@ export const chains = [
     image: { avatar: true, src: Fuse },
     maintenance: true,
     testNet: false,
+    mainnet: true
   },
   {
     type: "EVM",
@@ -165,6 +179,7 @@ export const chains = [
     newChain: true,
     maintenance: false,
     testNet: false,
+    mainnet: true
   },
   {
     type: "Tezos",
@@ -177,6 +192,7 @@ export const chains = [
     coming: false,
     maintenance: false,
     testNet: false,
+    mainnet: true
   },
   {
     type: "EVM",
@@ -189,6 +205,7 @@ export const chains = [
     coming: false,
     maintenance: true,
     testNet: false,
+    mainnet: true,
     off: true
   },
   {
@@ -200,7 +217,8 @@ export const chains = [
     image: { avatar: true, src: One },
     maintenance: false,
     testNet: true,
-    off: true
+    mainnet: false
+    // off: true
   },
 ];
 
