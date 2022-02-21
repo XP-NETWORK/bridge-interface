@@ -27,7 +27,7 @@ export const chains = [
     key: "Ethereum",
     text: "Ethereum",
     value: "Ethereum",
-    order: 4,
+    order: 2,
     image: { avatar: true, src: Etherium },
     maintenance: false,
     testNet: false,
@@ -37,7 +37,7 @@ export const chains = [
     key: "BSC",
     text: "BSC",
     value: "BSC",
-    order: 5,
+    order: 3,
     image: { avatar: true, src: Binance },
     maintenance: false,
     testNet: true,
@@ -189,6 +189,7 @@ export const chains = [
     coming: false,
     maintenance: true,
     testNet: false,
+    off: true
   },
   {
     type: "EVM",

@@ -10,7 +10,6 @@ import {
   setSwitchDestination,
 } from "../../store/reducers/generalSlice";
 import Chain from "./Chain"
-// import ChainSearch from "../../components/innercomponents/ChainSearch";
 import ChainSearch from "../Chains/ChainSearch"
 import { Modal } from "react-bootstrap";
 import Close from "../../assets/img/icons/close.svg";
@@ -24,7 +23,7 @@ export default function NFTChainListBox(props) {
   const chainSearch = useSelector((state) => state.general.chainSearch);
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
-  const fromChains = chains.sort((a, b) => a.order - b.order);
+  const fromChains = chains.sort((a, b) => a.order - b.order)
   const toChains = chains.sort((a, b) => a.order - b.order);
   const globalTestnet = useSelector((state) => state.general.testNet);
   const show = useSelector((state) => state.general.showChainModal);
@@ -39,7 +38,6 @@ export default function NFTChainListBox(props) {
   };
 
   const chainSelectHandler = (chain) => {
-    // debugger
     if (departureOrDestination === "departure") {
       if (to && chain.key !== to.key) {
         dispatch(setFrom(chain));

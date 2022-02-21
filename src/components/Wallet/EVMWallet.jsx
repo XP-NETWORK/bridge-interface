@@ -18,7 +18,7 @@ export default function EVMWallet({ wallet }) {
 
   return wallet === "MetaMask" /* METAMASK */ ? (
     <li
-      onClick={() => connectMetaMask(activate)}
+      onClick={() => connectMetaMask(activate, from.text)}
       style={from?.type === "EVM" ? {} : OFF}
       className="wllListItem"
       data-wallet="MetaMask"
@@ -27,7 +27,7 @@ export default function EVMWallet({ wallet }) {
     </li>
   ) : wallet === "TrustWallet" /* TRUST WALLET */ ? (
     <li
-      onClick={() => connectMetaMask(activate)}
+      onClick={() => connectMetaMask(activate, from.text)}
       style={
         (getMobOps() && window.innerWidth <= 600 && isEVM()) ||
         (window.ethereum && window.innerWidth <= 600)
