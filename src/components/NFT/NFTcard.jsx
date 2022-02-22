@@ -47,7 +47,7 @@ export default function NFTcard({ nft, index }) {
     // console.log("index: ", index, "video: ", video, videoUrl, "image: ", image, imageUrl, "ipfsArr: ", ipfsArr)
     // console.log("nft.uri: ", nft.uri, "valid: ", isValidHttpUrl(nft.uri))
     // console.log("whiteListed: ", whiteListed)
-    console.log("onHover: ", onHover)
+    // console.log("onHover: ", onHover)
 
     useEffect(() => {
         setTimeout(() => {
@@ -66,7 +66,7 @@ export default function NFTcard({ nft, index }) {
               <div onClick={() => addRemoveNFT(nft, index)} className="nft-image__container">
                 <div className="image__wrapper">
                   { nft.uri && isValidHttpUrl(nft.uri) && !brokenURL ? 
-                    video && image ? <VideoAndImage />
+                    video && image ? <VideoAndImage videoUrl={videoUrl} imageUrl={imageUrl} />
                   : image && !video ? <img alt="#" src={imageUrl} /> 
                   : (!image && video) ? <div>Only video</div> 
                   : (!image && !video) && <dic>Try Links</dic>

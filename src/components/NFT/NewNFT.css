@@ -263,6 +263,11 @@
   height: 100%;
 }
 
+.video__wrapper, .img__wrapper{
+  position: relative;
+}
+
+
 @media screen and (max-width: 768px) {
   .nft-list__wrapper{
     gap: 8px;
