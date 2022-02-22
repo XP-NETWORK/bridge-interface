@@ -23,6 +23,7 @@ function ChangeNetworkModal() {
   const widget = useSelector((state) => state.general.widget);
 
   async function switchNetwork() {
+    debugger
     setLoader(true);
     const info = testnet
       ? TESTNET_CHAIN_INFO[from?.key]
@@ -43,7 +44,7 @@ function ChangeNetworkModal() {
         const chain = getAddEthereumChain()[parseInt(chainId).toString()];
 
         const params = {
-          chainId: toHex(chain.chainId), // A 0x-prefixed hexadecimal string
+          chainId: chainId, // A 0x-prefixed hexadecimal string
           chainName: chain.name,
           nativeCurrency: {
             name: chain.nativeCurrency.name,
