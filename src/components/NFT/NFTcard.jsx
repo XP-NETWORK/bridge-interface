@@ -14,6 +14,8 @@ import "./NewNFT.css";
 import { isValidHttpUrl } from "../../wallet/helpers";
 import VideoOrImage from "./VideoOrImage";
 import { CHAIN_INFO } from "../../components/values"
+import VideoAndImage from "./VideoAndImage"
+import NotWhiteListed from "./NotWhiteListed"
 
 export default function NFTcard({ nft, index }) {
 
@@ -64,7 +66,7 @@ export default function NFTcard({ nft, index }) {
               <div onClick={() => addRemoveNFT(nft, index)} className="nft-image__container">
                 <div className="image__wrapper">
                   { nft.uri && isValidHttpUrl(nft.uri) && !brokenURL ? 
-                    video && image ? <div>video and image available</div>
+                    video && image ? <VideoAndImage />
                   : image && !video ? <img alt="#" src={imageUrl} /> 
                   : (!image && video) ? <div>Only video</div> 
                   : (!image && !video) && <dic>Try Links</dic>
@@ -95,7 +97,7 @@ export default function NFTcard({ nft, index }) {
                 <span className="nft-number">{nft.native.tokenId}</span>
               </div>
             </div>
-            { (!nft.whitelisted && onHover) && <div className="nft-box__container not-whitelisted"></div> }
+            { (!nft.whitelisted && onHover) && <NotWhiteListed /> }
         </div>
       );
 }

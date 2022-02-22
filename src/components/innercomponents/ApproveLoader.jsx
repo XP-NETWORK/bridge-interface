@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap"
 import Close from '../../assets/img/icons/close.svg';
 import { useDispatch, useSelector } from 'react-redux'
 import "./TechnicalSupport.css"
-import { setNFTsToWhitelist, removeFromNotWhiteListed } from '../../store/reducers/generalSlice';
+
 
 export default function ApproveLoader() {
     const dispatch = useDispatch()
