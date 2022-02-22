@@ -9,10 +9,11 @@ import CheckGreen from "../../assets/img/icons/check_green.svg";
 import NFTdetails from './NFTdetails'
 import { useSelector } from "react-redux";
 import { setupURI } from "../../wallet/oldHelper";
-import { getUrl } from "./NFTHelper.js";
+import { getUrl, isWhiteListed } from "./NFTHelper.js";
 import "./NewNFT.css";
 import { isValidHttpUrl } from "../../wallet/helpers";
 import VideoOrImage from "./VideoOrImage";
+import { CHAIN_INFO } from "../../components/values"
 
 export default function NFT({ nft, index }) {
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
@@ -26,6 +27,8 @@ export default function NFT({ nft, index }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const HIDDEN = { visibility: "hidden" };
   const { video, url, ipfsArr } = getUrl(nft);
+  const from = useSelector(state => state.general.from)
+  const [whiteListed, setWhiteListed] = useState(false)
 
   function addRemoveNFT(chosen) {
     if (!isSelected) {
@@ -35,12 +38,21 @@ export default function NFT({ nft, index }) {
     }
   }
 
+  const whiteListCheck = async () => {
+    const whitelisted = await isWhiteListed(CHAIN_INFO[from.text].nonce, nft)
+    setWhiteListed(whitelisted)
+  }
 
   useEffect(() => {
     setTimeout(() => {
       setImageLoaded(true);
     }, 5000);
   }, [selectedNFTs]);
+
+  useEffect(() => {
+    whiteListCheck()
+  },[])
+  
 
   return (
     <div className={`nft-box__wrapper ${!imageLoaded ? "preload-cont" : ""}`}>

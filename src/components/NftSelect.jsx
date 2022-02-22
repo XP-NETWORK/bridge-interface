@@ -4,7 +4,6 @@ import ConnectWallet from "./Wallet/ConnectWallet"
 import { useDispatch, useSelector } from 'react-redux';
 import { setShowAbout, setShowVideo } from '../store/reducers/generalSlice';
 import ChainSelectBox from "./Chains/ChainSelectBox"
-import NFTChainListBox from './Chains/NFTChainListBox';
 import ChainListBox from './Chains/ChainListBox';
 
 
@@ -23,8 +22,6 @@ function NftSelect() {
                 <h2>Transfer NFTs <br /> between blockchains</h2>
             </div> : ''}
             <div className="nftSlectArea">
-                {/* <NFTSelectBox /> */}
-                {/* <NFTChainListBox /> */}
                 <ChainSelectBox />
                 <ChainListBox />
                 <ConnectWallet/>

@@ -20,7 +20,7 @@ export const getUrl = nft => {
     let urls = []
     let ipfsArr = []
 
-    // console.log(values);
+
     values.forEach(item => {
         if(item && typeof item === "object"){
             // debugger
@@ -39,7 +39,7 @@ export const getUrl = nft => {
         else valuesForCheck.push(item)
     });
 
-    // console.log("valuesForCheck: ", valuesForCheck)
+
     valuesForCheck.forEach(item => {
         if(item && typeof item === 'string' && item.length > 1){
             strings.push(item)
@@ -84,7 +84,16 @@ export const getUrl = nft => {
 }
 
 export const isWhiteListed = async (chainNonce, nft) => {
-    const factory = getFactory()
-    const inner = factory.inner(chainNonce)
-    return await factory.checkWhitelist(inner, nft)
+    // debugger
+    let whitelisted
+    const factory = await getFactory()
+    const inner = await factory.inner(chainNonce)
+    if(inner){
+        try {
+            whitelisted = await factory.checkWhitelist(inner, nft)
+        } catch (error) {
+            console.error("isWhiteListed: ", error)
+        }
+    }
+    return whitelisted
 }

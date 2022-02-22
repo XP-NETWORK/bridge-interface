@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Dropdown, Modal } from "react-bootstrap";
-import BSC from "../../assets/img/chain/Binance.svg";
+import { useState } from "react";
+import { Dropdown } from "react-bootstrap";
 import Search from "../../assets/img/icons/Search.svg";
 import ListView from "../../assets/img/icons/ListView.svg";
 import GridView from "../../assets/img/icons/GridView.svg";
@@ -9,22 +8,17 @@ import {
   setSearchNFTList,
   allSelected,
   setNFTsListView,
-  setTo,
   setSwitchDestination,
   cleanSelectedNFTList,
 } from "../../store/reducers/generalSlice";
 import { useSelector } from "react-redux";
-import NFTChainListBox from "../Chains/NFTChainListBox"
-import Close from "../../assets/img/icons/close.svg";
 import { setNFTS } from "../../wallet/helpers";
 import Refresh from "../../assets/img/refresh.svg";
-
 import { ReactComponent as SearchComp } from "../../assets/img/icons/Search.svg";
 import { ReactComponent as ListViewComp } from "../../assets/img/icons/ListView.svg";
 import { ReactComponent as GridViewComp } from "../../assets/img/icons/GridView.svg";
 import { ReactComponent as RefreshComp } from "../../assets/img/refresh.svg";
-
-import { Ref } from "@fluentui/react-component-ref";
+import ChainListBox from "../Chains/ChainListBox";
 
 function NFTlistTop() {
   const dispatch = useDispatch();
@@ -41,10 +35,6 @@ function NFTlistTop() {
   const NFTListView = useSelector((state) => state.general.NFTListView);
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
-  const switchDestination = useSelector(
-    (state) => state.general.switchDestination
-  );
-  const search = useSelector((state) => state.general.NFTListSearch);
   const widget = useSelector((state) => state.general.widget);
   const [showSearch, setShowSearch] = useState(false);
 
@@ -100,7 +90,8 @@ function NFTlistTop() {
         </div>
       </div>
       <div className="nftListTop">
-        <NFTChainListBox />
+        {/* <NFTChainListBox /> */}
+        <ChainListBox />
         <div className="yourNft desktopOnly">
           Your NFTs on{" "}
           <span>
