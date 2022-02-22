@@ -13,17 +13,19 @@ const ifImage = item => {
 
 export const getUrl = nft => {
     let video
-    let url
+    let videoUrl
+    let image
+    let imageUrl
     const values = Object.values(nft)
     let valuesForCheck = []
     let strings = []
     let urls = []
     let ipfsArr = []
+    let url
 
-
+    debugger
     values.forEach(item => {
         if(item && typeof item === "object"){
-            // debugger
             const objValues = Object.values(item)
             if(objValues.some(e => e && typeof e === "object")){
                 objValues.forEach(e => {
@@ -59,32 +61,32 @@ export const getUrl = nft => {
             urls.push(item)
         }
     });
-
     if(urls.some(item => ifVideo(item))){
         urls.forEach(e => {
             if(ifVideo(e)){
                 video = true
-                url = e
+                videoUrl = e
             }
         });
     }
-    else if(urls.some(item => ifImage(item))){
+    if(urls.some(item => ifImage(item))){
         urls.forEach(e => {
             if(ifImage(e)){
-                video = false
-                url = e
+                image = true
+                imageUrl = e
             }
         });
     }
     else{
         ipfsArr = [...urls]
     }
+    return { video, videoUrl, image ,imageUrl, ipfsArr }
     
-    return { video, url, ipfsArr }
+    // return { video, url, ipfsArr }
 }
 
 export const isWhiteListed = async (chainNonce, nft) => {
-    // debugger
+
     let whitelisted
     const factory = await getFactory()
     const inner = await factory.inner(chainNonce)
