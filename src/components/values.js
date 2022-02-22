@@ -77,6 +77,7 @@ export const chains = [
     image: { avatar: true, src: Polygon },
     maintenance: false,
     testNet: true,
+    mainnet: true
   },
   {
     type: "EVM",
@@ -357,7 +358,7 @@ export const chainsConfig = {
     chainId: 1666600000,
     Chain: Chain.HARMONY,
     tx: "https://explorer.harmony.one/tx/",
-    testTx: "https://explorer.testnet.harmony.one/tx",
+    testTx: "https://explorer.testnet.harmony.one/tx/",
   },
 };
 

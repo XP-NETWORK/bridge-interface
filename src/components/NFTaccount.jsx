@@ -34,7 +34,7 @@ function NFTaccount() {
   const testnet = useSelector((state) => state.general.testNet);
 
   async function getNFTsList() {
-    const useHardcoded = false;
+    const useHardcoded = true;
     const hard = "0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6";
     try {
       const w = useHardcoded
@@ -50,7 +50,7 @@ function NFTaccount() {
         : type === "Tron"
         ? tronWallet
         : undefined;
-      await setNFTS(w, from, testnet);
+      await setNFTS(w, from);
     } catch (error) {
       dispatch(setError(error.data ? error.data.message : error.message));
     }

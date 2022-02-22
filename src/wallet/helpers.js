@@ -1,6 +1,6 @@
 import { AppConfigs, ChainFactory, ChainFactoryConfigs } from "xp.network";
 import { Chain, Config } from "xp.network/dist/consts";
-import { chainsConfig } from "../components/values";
+import { chainsConfig, CHAIN_INFO } from "../components/values";
 import { setAlgorandClaimables, setBigLoader, setFactory, setNFTList } from "../store/reducers/generalSlice";
 import store from "../store/store";
 import { ChainData, getOldFactory, moralisParams } from "./oldHelper";
@@ -188,11 +188,10 @@ export const handleChainFactory = async (someChain) => {
   }
 };
 
-export const getNFTS = async (wallet, from, testnet) => {
+export const getNFTS = async (wallet, from) => {
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
-  console.log("getNFTS: ", factory)
   const chain = await factory.inner(chainsConfig[from].Chain)
   try {
     // debugger
@@ -216,8 +215,7 @@ export const getNFTS = async (wallet, from, testnet) => {
   
             return true;
           }
-        });
-  
+        })
       return allNFTs
     } catch (err) {
       return [];
@@ -247,13 +245,35 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
   }
 }
 
+const foreachWhiteListed = async (nft, inner) => {
+  try {
+    debugger
+    const factory = await getFactory()
+    const wl = await factory.checkWhitelist(inner, nft)
+    return wl
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const setNFTS = async (w, from, testnet) => {
   // debugger
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from, testnet)
   const parsedNFTs = await parseNFTS(res)
+  let nfts
+  try {
+    const factory = await getFactory()
+    const inner = await factory.inner(CHAIN_INFO[from].nonce)
+    parsedNFTs.forEach(async nft => {
+      const wl = await foreachWhiteListed(nft, inner)
+      nft.whitelisted = wl
+    })
+  } catch (error) {
+    console.log(error)
+  }
   store.dispatch(setBigLoader(false))
-  if(parsedNFTs.length){
+  if(nfts.length){
       store.dispatch(setNFTList(parsedNFTs))
   }
   else {
