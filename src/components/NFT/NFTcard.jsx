@@ -97,6 +97,15 @@ export default function NFTcard({ nft, index }) {
                 <span className="nft-number">{nft.native.tokenId}</span>
               </div>
             </div>
+            { !imageLoaded && 
+                <div className="preload__container">
+                    <div className="preload__image"></div>
+                    <div className="preload__content">
+                        <div className="preload__name"></div>
+                        <div className="preload__number"></div>
+                    </div>
+                </div>
+            }
             { (!nft.whitelisted && onHover) && <NotWhiteListed /> }
         </div>
       );

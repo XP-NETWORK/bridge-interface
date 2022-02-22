@@ -8,6 +8,7 @@
 
 .nft-box__wrapper{
   position: relative;
+  background-color: tomato;
 }
 
 .not-whitelisted{
