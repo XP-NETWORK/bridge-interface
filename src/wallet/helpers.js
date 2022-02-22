@@ -263,7 +263,6 @@ export const setNFTS = async (w, from, testnet) => {
   const inner = await factory.inner(CHAIN_INFO[from].nonce)
   const res = await getNFTS(w, from, testnet)
   const parsedNFTs = await parseNFTS(res)
-
   for (const nft of parsedNFTs) {
     try {
       nft.whitelisted = await factory.checkWhitelist(inner, nft)
@@ -271,10 +270,10 @@ export const setNFTS = async (w, from, testnet) => {
       
     }
   }
-
+  const sorted = parsedNFTs.sort(n => n.whitelisted ? -1 : 0)
   store.dispatch(setBigLoader(false))
   if(parsedNFTs.length){
-      store.dispatch(setNFTList(parsedNFTs))
+      store.dispatch(setNFTList(sorted))
   }
   else {
     store.dispatch(setNFTList([]))

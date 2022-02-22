@@ -31,8 +31,8 @@ export default function NFTcard({ nft, index }) {
     const HIDDEN = { visibility: "hidden" };
     const [brokenURL, setBrokenURL] = useState(false)
     const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
-    const from = useSelector(state => state.general.from)
-    const [whiteListed, setWhiteListed] = useState(false)
+
+
     function addRemoveNFT(chosen) {
         if (!isSelected) {
             dispatch(setSelectedNFTList(chosen));
@@ -40,10 +40,7 @@ export default function NFTcard({ nft, index }) {
             dispatch(removeFromSelectedNFTList(nft));
         }
     }
-    const whiteListCheck = async () => {
-        const whitelisted = await isWhiteListed(CHAIN_INFO[from.text].nonce, nft)
-        setWhiteListed(whitelisted)
-    }
+
 
     // console.log("index: ", index, "video: ", video, videoUrl, "image: ", image, imageUrl, "ipfsArr: ", ipfsArr)
     // console.log("nft.uri: ", nft.uri, "valid: ", isValidHttpUrl(nft.uri))
@@ -55,9 +52,7 @@ export default function NFTcard({ nft, index }) {
             setImageLoaded(true);
         }, 5000);
     }, [selectedNFTs]);
-    useEffect(() => {
-        whiteListCheck()
-    },[])
+
     
     return (
         // <div className={`nft-box__wrapper ${!imageLoaded ? "preload-cont" : ""}`}>
@@ -100,7 +95,7 @@ export default function NFTcard({ nft, index }) {
                 <span className="nft-number">{nft.native.tokenId}</span>
               </div>
             </div>
-            { (!whiteListed && onHover) && <div className="nft-box__container not-whitelisted"></div> }
+            { (!nft.whitelisted && onHover) && <div className="nft-box__container not-whitelisted"></div> }
         </div>
       );
 }

@@ -62,23 +62,6 @@ function NFTaccount() {
 
   useEffect(async () => {}, [nfts]);
 
-  // ! Estimate moved to SendFees component
-  // useEffect(() => {
-  //     if(selectedNFTList.length > 0) estimate();
-  //     else setFees("0")
-  //     const s = setInterval(() => estimate(), 1000 * 30);
-  //     setEstimateInterval(s)
-  //     return () => clearInterval(s);
-  // }, [selectedNFTList])
-
-  // useEffect(() => {
-  //     clearInterval(estimateInterval)
-  //     estimate()
-  //     const s = setInterval(() => estimate(), 1000 * 30);
-  //     setEstimateInterval(s)
-  //     return () => clearInterval(s)
-  // }, [to])
-
   return (
     <div className="NFTaccount">
       <Container className="nftSlectContaine">
@@ -100,11 +83,6 @@ function NFTaccount() {
               <div className="nftSendBtn disenable">
                 <SendFees />
                 <ButtonToTransfer />
-                {/* <div onClick={sendAllNFTs} className={approved && receiver && !loading ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
-                                <a  className="themBtn">
-                                    {loading ? 'Processing' : 'Send' }
-                                </a>
-                            </div> */}
               </div>
             </div>
           </div>
@@ -121,12 +99,6 @@ function NFTaccount() {
                     <Approval />
                     <SendFees />
                     <ButtonToTransfer />
-                    {/* <div 
-                                        onClick={sendAllNFTs} className={approved && receiver && !loading ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
-                                            <a  className="themBtn">
-                                                {loading ? 'Processing' : 'Send' }
-                                            </a>
-                                        </div> */}
                   </>
                 ) : (
                   <Comment />
