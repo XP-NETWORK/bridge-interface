@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { setupURI } from "../../wallet/helpers";
 import brockenurl from "../../assets/img/brockenurl.png";
 
-export default function VideoOrImage({ urls, i }) {
+export default function VideoOrImage({ urls, i, imageLoadedHandler }) {
     const [tryVideo, setTryVideo] = useState(false)
     const [urlIndex, setUrlIndex] = useState(0)
     const [noURL, setNoURL] = useState(false)
@@ -28,9 +28,9 @@ export default function VideoOrImage({ urls, i }) {
   return (
     //   noURL ?
       tryVideo ? 
-      <video onError={e => videoError(e)} controls={false} playsInline={true} autoPlay={true} loop={true} alt="video" src={setupURI(urls[urlIndex])} />
+      <video onError={e => videoError(e)}  onLoadedData={imageLoadedHandler} controls={false} playsInline={true} autoPlay={true} loop={true} alt="video" src={setupURI(urls[urlIndex])} />
       : 
-      <img onError={e => imgError(e)} alt="image" src={setupURI(urls[urlIndex])} />
+      <img onError={e => imgError(e)} onLoad={imageLoadedHandler} alt="image" src={setupURI(urls[urlIndex])} />
     //   :
     //   <div className="brocken-url"><img src={brockenurl} alt="uri is broken" /><span className="brocken-url__msg">NFTs URL<br /> is broken</span></div>
   );

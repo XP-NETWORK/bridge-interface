@@ -89,7 +89,7 @@ export default function ButtonToTransfer() {
     }
 
     const sendEach = async (nft, index) => {
-        debugger
+        // debugger
         const signer = await getSigner()
         const toNonce = CHAIN_INFO[to].nonce
         const fromNonce = CHAIN_INFO[from].nonce

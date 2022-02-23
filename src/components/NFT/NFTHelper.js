@@ -23,7 +23,7 @@ export const getUrl = nft => {
     let ipfsArr = []
     let url
 
-    debugger
+    // debugger
     values.forEach(item => {
         if(item && typeof item === "object"){
             const objValues = Object.values(item)

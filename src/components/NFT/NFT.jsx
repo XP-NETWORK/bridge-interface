@@ -52,6 +52,10 @@ export default function NFT({ nft, index }) {
   useEffect(() => {
     whiteListCheck()
   },[])
+
+  const imageLoadedHandler = () => {
+    setImageLoaded(true)
+  }
   
 
   return (
@@ -60,10 +64,10 @@ export default function NFT({ nft, index }) {
         <div onClick={() => addRemoveNFT(nft, index)} className="nft-image__container">
           <div className="image__wrapper">
             {(imageUrl || videoUrl) && nft.uri && isValidHttpUrl(nft.uri) ? 
-              video ? <video onLoadedData={() => setImageLoaded(true)} controls={false}  playsInline={true} autoPlay={true} loop={true} src={setupURI(videoUrl)} />
-            : <img alt="#" onLoad={() => setImageLoaded(true)} alt="NFT image" src={setupURI(imageUrl)} />
-            : ipfsArr.length ? <VideoOrImage urls={ipfsArr} i={index} />
-            : (<div className="brocken-url"><img onLoad={() => setImageLoaded(true)} src={brockenurl} alt="uri is broken" />
+              video ? <video onLoadedData={imageLoadedHandler} controls={false}  playsInline={true} autoPlay={true} loop={true} src={setupURI(videoUrl)} />
+            : <img alt="#" onLoad={imageLoadedHandler} alt="NFT image" src={setupURI(imageUrl)} />
+            : ipfsArr.length ? <VideoOrImage imageLoadedHandler={() => imageLoadedHandler} urls={ipfsArr} i={index} />
+            : (<div className="brocken-url"><img onLoad={imageLoadedHandler} src={brockenurl} alt="uri is broken" />
                 <span className="brocken-url__msg">
                   NFTs URL
                   <br /> is broken
@@ -84,6 +88,15 @@ export default function NFT({ nft, index }) {
           <span className="nft-number">{nft.native.tokenId}</span>
         </div>
       </div>
+        { !imageLoaded && 
+                <div className="preload__container">
+                    <div className="preload__image"></div>
+                    <div className="preload__content">
+                        <div className="preload__name"></div>
+                        <div className="preload__number"></div>
+                    </div>
+                </div>
+            }
     </div>
   );
 }

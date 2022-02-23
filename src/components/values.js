@@ -77,6 +77,7 @@ export const chains = [
     image: { avatar: true, src: Polygon },
     maintenance: false,
     testNet: true,
+    mainnet: true
   },
   {
     type: "EVM",
