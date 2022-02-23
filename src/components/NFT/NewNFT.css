@@ -265,7 +265,6 @@
 }
 
 .video__wrapper, .img__wrapper{
-  /* text-align: center; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -275,7 +274,6 @@
 
 .video--toggle, .image--toggle{
   position: absolute;
-  max-height: 178px;
   bottom: 35px;
   right: 25px;
 }

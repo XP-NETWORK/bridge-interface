@@ -7,13 +7,8 @@ import { ReactComponent as PlayHover } from "../../../src/assets/img/icons/PlayH
 export default function VideoAndImage({ videoUrl, imageUrl, imageLoadedHandler }) {
 
   const [play, setPlay] = useState(false)
-  const [videoLoaded, setVideoLoaded] = useState(false)
-  console.log("🚀 ~ file: VideoAndImage.jsx ~ line 10 ~ VideoAndImage ~ play", play)
   const [playHover, setPlayHover] = useState(null)
-  console.log("🚀 ~ file: VideoAndImage.jsx ~ line 11 ~ VideoAndImage ~ playHover", playHover)
   const [pauseHover, setPauseHover] = useState(null)
-
-
 
   const playHolder = (e, str) => {
     e.stopPropagation();
@@ -29,13 +24,11 @@ export default function VideoAndImage({ videoUrl, imageUrl, imageLoadedHandler }
     }
   }
 
-
-
   return ( 
     <div className="play__container">
       {play ? 
          <div className='video__wrapper'>
-           <video onLoadedData={() => setVideoLoaded(true)} src={videoUrl} autoPlay muted loop  poster={imageUrl}/>
+           <video src={videoUrl} autoPlay muted loop  poster={imageUrl}/>
          </div> 
          : 
          <div className='img__wrapper'>

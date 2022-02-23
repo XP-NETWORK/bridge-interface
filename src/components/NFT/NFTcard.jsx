@@ -34,7 +34,6 @@ export default function NFTcard({ nft, index }) {
     const [brokenURL, setBrokenURL] = useState(false)
     const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
 
-
     function addRemoveNFT(chosen) {
         if (!isSelected) {
             dispatch(setSelectedNFTList(chosen));
@@ -47,12 +46,6 @@ export default function NFTcard({ nft, index }) {
       setImageLoaded(true)
     }
 
-
-    // console.log("index: ", index, "video: ", video, videoUrl, "image: ", image, imageUrl, "ipfsArr: ", ipfsArr)
-    // console.log("nft.uri: ", nft.uri, "valid: ", isValidHttpUrl(nft.uri))
-    // console.log("whiteListed: ", whiteListed)
-    // console.log("onHover: ", onHover)
-
     useEffect(() => {
         setTimeout(() => {
             setImageLoaded(true);
@@ -61,8 +54,6 @@ export default function NFTcard({ nft, index }) {
 
     
     return (
-        // <div className={`nft-box__wrapper ${!imageLoaded ? "preload-cont" : ""}`}>
-        // <div className={`nft-box__wrapper ${!whiteListed ? "not-whitelisted" : ""}`}>
         <div className={`nft-box__wrapper`}
         onMouseEnter={() => setOnHover(true)}
         onMouseLeave={() => setOnHover(false)}>
@@ -73,7 +64,7 @@ export default function NFTcard({ nft, index }) {
                     video && image ? <VideoAndImage imageLoaded={imageLoadedHandler} videoUrl={videoUrl} imageUrl={imageUrl} />
                   : image && !video ? <img onLoad={() => imageLoadedHandler} alt="#" src={imageUrl} /> 
                   : (!image && video) ? <div>Only video</div> 
-                  : (!image && !video) && <dic>Try Links</dic>
+                  : (!image && !video) && <VideoOrImage imageLoadedHandler={imageLoadedHandler}  urls={ipfsArr} i={index} />
                   : <div>Brocken</div> 
                   }
                   {/* {(imageUrl || videoUrl) && nft.uri && isValidHttpUrl(nft.uri) ? 
