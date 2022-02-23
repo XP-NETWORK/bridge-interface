@@ -204,7 +204,7 @@ export const chains = [
     image: { avatar: true, src: Iotex },
     newChain: true,
     coming: false,
-    maintenance: true,
+    maintenance: false,
     testNet: false,
     mainnet: true,
     off: true
