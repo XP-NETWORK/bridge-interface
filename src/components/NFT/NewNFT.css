@@ -8,7 +8,7 @@
 
 .nft-box__wrapper{
   position: relative;
-  background-color: tomato;
+  /* background-color: tomato; */
 }
 
 .not-whitelisted{
@@ -265,9 +265,23 @@
 }
 
 .video__wrapper, .img__wrapper{
-  position: relative;
+  text-align: center;
 }
 
+.video--toggle, .image--toggle{
+  position: absolute;
+  bottom: 35px;
+  right: 25px;
+}
+
+.image--toggle{
+  /* background: rgb(255, 255, 255); */
+  border-radius: 50%;
+}
+
+.triangle--toggle{
+  position: absolute;
+}
 
 @media screen and (max-width: 768px) {
   .nft-list__wrapper{
