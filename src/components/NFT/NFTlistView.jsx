@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import NFTempty from '../innercomponents/NFTempty';
 import CheckGreen from '../../assets/img/icons/check_green.svg';
 import ListedView from "../NFT/ListedView"
+import NFTcardListed from "./NFTcardListed";
 
 function NFTlistView() {
     const nfts = useSelector(state => state.general.NFTList)
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const search = useSelector(state => state.general.NFTListSearch)
     const dispatch = useDispatch()
+
     const checkIfSelected = ( nft ) => {
         return selectedNFTs.filter(n => n.native.tokenId === nft.native.tokenId && n.native.contract === nft.native.contract && n.native.chainId === nft.native.chainId)[0]
     }
@@ -27,7 +29,7 @@ function NFTlistView() {
     return (
         <div className="nftListBox nftListView"> 
             <ul className="nftList">
-            { nfts?.length ?  nfts.filter( (nft, index) => nft?.name?.includes(search ? search : '') || nft?.native.owner?.includes(search ? search : '')).map((nft, index) => 
+            { nfts?.length ?  nfts.filter( (nft, index) => nft?.name?.includes(search ? search : '') || nft?.native.owner?.includes(search ? search : '')).map((nft, index) =>
                 <li className="nftListed nftSelect">
                     <span onClick={(e) => addRemoveNFT(nft, e)} className="selectNftListed">
                         { checkIfSelected(nft, selectedNFTs) ? 

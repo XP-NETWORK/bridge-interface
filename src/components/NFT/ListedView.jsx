@@ -3,27 +3,29 @@ import { getUrl } from "./NFTHelper"
 import { isValidHttpUrl } from "../../wallet/helpers"
 import { setupURI } from "../../wallet/oldHelper"
 import VideoOrImage from "./VideoOrImage"
-import brockenurl from "../../assets/img/brockenurl.png"
+import brokenUrl from "../../assets/img/brockenurl.png"
+import BrokenUrlListedView from "./BrokenUrlListedView"
+import VideoOrImageListed from "./VideoOrImageListed"
+import { useState } from "react"
+import VideoAndImage from "./VideoAndImage"
 
+export default function ListedView({ nft, addRemoveNFT, index }) {
 
-export default function ListedView({ nft, addRemoveNFT }) {
-
-    const { video, url, ipfsArr } = getUrl(nft)
+  const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nft)
+  const [brokenURL, setBrokenURL] = useState()
+  const [imageLoaded, setImageLoaded] = useState(false)
+  const imageLoadedHandler = () => {
+    setImageLoaded(true)
+  }
 
   return (
     <div onClick={e => addRemoveNFT ? addRemoveNFT(nft, e) : ''} className="listed__view">
-        { url && nft.uri && isValidHttpUrl(nft.uri) ? 
-              (video && url) ? 
-              <video  controls={false} playsInline={true} autoPlay={true} loop={true} src={setupURI(url)} /> 
-              :
-              <img  alt="NFT image" src={setupURI(url)} /> 
-              :ipfsArr.length ? 
-              <VideoOrImage urls={ipfsArr} />
-              :
-              <div className="brocken-url">
-                  <img src={brockenurl} alt='This NFT image uri is broken.' />
-                  <span className="brocken-url__msg">NFTs URL<br/> is broken</span>
-              </div>
+        { nft.uri && isValidHttpUrl(nft.uri) && !brokenURL  ? 
+          video && image ? <VideoAndImage imageLoaded={() => imageLoadedHandler} videoUrl={videoUrl} imageUrl={imageUrl} />
+          :image && !video ? <img onLoad={() => imageLoadedHandler } alt="#" src={setupURI(imageUrl)} />
+          : (!image && video) ? <div>Only video</div>
+          : ipfsArr?.length && <VideoOrImageListed urls={ipfsArr} i={index} />
+          : <BrokenUrlListedView />
         }  
     </div>
   )

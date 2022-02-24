@@ -51,10 +51,6 @@ export default function NFTcard({ nft, index }) {
       setImageLoaded(true)
     }
 
-    const brokenImageHandler = () => {
-      setBrokenURL(true)
-    }
-
     useEffect(() => {
         setTimeout(() => {
             setImageLoaded(true);
