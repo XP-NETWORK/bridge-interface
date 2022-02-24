@@ -4,7 +4,7 @@ import {
   setSelectedNFTList,
   removeFromSelectedNFTList,
 } from "../../store/reducers/generalSlice";
-import brockenurl from "../../assets/img/brockenurl.png";
+import brockenUrl from "../../assets/img/brockenurl.png";
 import CheckGreen from "../../assets/img/icons/check_green.svg";
 import NFTdetails from './NFTdetails'
 import { useSelector } from "react-redux";
@@ -16,8 +16,11 @@ import VideoOrImage from "./VideoOrImage";
 import { CHAIN_INFO } from "../../components/values"
 import VideoAndImage from "./VideoAndImage"
 import NotWhiteListed from "./NotWhiteListed"
+import BrockenUtlGridView from "./BrockenUtlGridView";
+
 
 export default function NFTcard({ nft, index }) {
+
 
     const off = { pointerEvents: "none" }
     const dispatch = useDispatch();
@@ -34,6 +37,8 @@ export default function NFTcard({ nft, index }) {
     const [brokenURL, setBrokenURL] = useState(false)
     const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
 
+    
+
     function addRemoveNFT(chosen) {
         if (!isSelected) {
             dispatch(setSelectedNFTList(chosen));
@@ -44,6 +49,10 @@ export default function NFTcard({ nft, index }) {
 
     const imageLoadedHandler = () => {
       setImageLoaded(true)
+    }
+
+    const brokenImageHandler = () => {
+      setBrokenURL(true)
     }
 
     useEffect(() => {
@@ -61,11 +70,11 @@ export default function NFTcard({ nft, index }) {
               <div onClick={() => addRemoveNFT(nft, index)} className="nft-image__container">
                 <div className="image__wrapper">
                   { nft.uri && isValidHttpUrl(nft.uri) && !brokenURL ? 
-                    video && image ? <VideoAndImage imageLoaded={imageLoadedHandler} videoUrl={videoUrl} imageUrl={imageUrl} />
-                  : image && !video ? <img onLoad={() => imageLoadedHandler} alt="#" src={imageUrl} /> 
+                    video && image ? <VideoAndImage imageLoaded={() => imageLoadedHandler} videoUrl={videoUrl} imageUrl={imageUrl} />
+                  : image && !video ? <img onLoad={() => imageLoadedHandler} alt="#" src={setupURI(imageUrl)} /> 
                   : (!image && video) ? <div>Only video</div> 
-                  : (!image && !video) && <VideoOrImage imageLoadedHandler={imageLoadedHandler}  urls={ipfsArr} i={index} />
-                  : <div>Brocken</div> 
+                  : ipfsArr?.length && <VideoOrImage urls={ipfsArr} i={index} />
+                  : <BrockenUtlGridView />
                   }
                   {/* {(imageUrl || videoUrl) && nft.uri && isValidHttpUrl(nft.uri) ? 
                     video ? <video onLoadedData={() => setImageLoaded(true)} controls={false}  playsInline={true} autoPlay={true} loop={true} src={setupURI(videoUrl)} />

@@ -4,6 +4,7 @@ import { ReactComponent as Play } from '../../../src/assets/img/icons/Play.svg'
 import { ReactComponent as Pause } from '../../../src/assets/img/icons/Pause.svg'
 import { ReactComponent as PauseHover } from '../../../src/assets/img/icons/PauseHover.svg'
 import { ReactComponent as PlayHover } from "../../../src/assets/img/icons/PlayHover.svg"
+import { setupURI } from '../../wallet/oldHelper'
 export default function VideoAndImage({ videoUrl, imageUrl, imageLoadedHandler }) {
 
   const [play, setPlay] = useState(false)
@@ -28,11 +29,11 @@ export default function VideoAndImage({ videoUrl, imageUrl, imageLoadedHandler }
     <div className="play__container">
       {play ? 
          <div className='video__wrapper'>
-           <video src={videoUrl} autoPlay muted loop  poster={imageUrl}/>
+           <video src={setupURI(videoUrl)} autoPlay muted loop  poster={imageUrl}/>
          </div> 
          : 
          <div className='img__wrapper'>
-           <img onLoad={imageLoadedHandler} src={imageUrl} alt="nft" />
+           <img onLoad={imageLoadedHandler} src={setupURI(imageUrl)} alt="nft" />
          </div>
       }
       {play ?
