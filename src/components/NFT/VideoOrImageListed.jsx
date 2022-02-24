@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { setupURI } from "../../wallet/helpers";
-import brokenUrl from "../../assets/img/brockenurl.png";
-import BrockenUtlGridView from "./BrockenUtlGridView";
 import BrokenUrlListedView from "./BrokenUrlListedView";
-
 
 export default function VideoOrImage({ urls, i}) {
     const [tryVideo, setTryVideo] = useState(false)
@@ -23,7 +20,7 @@ export default function VideoOrImage({ urls, i}) {
 
   return (
       tryVideo ? 
-      <video onError={e => videoError(e)} controls={false} playsInline={true} autoPlay={true} loop={true} alt="video" src={noURL ? brokenUrl : setupURI(urls[urlIndex])} />
+      <video onError={e => videoError(e)} controls={false} playsInline={true} autoPlay={true} loop={true} alt="video" src={setupURI(urls[urlIndex])} />
       :setupURI(urls[urlIndex]) === undefined ?
       <BrokenUrlListedView />
       :<img onError={e => imgError(e)} alt="nft" src={setupURI(urls[urlIndex])} />

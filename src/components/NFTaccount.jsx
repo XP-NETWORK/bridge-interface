@@ -34,8 +34,8 @@ function NFTaccount() {
   const testnet = useSelector((state) => state.general.testNet);
 
   async function getNFTsList() {
-    const useHardcoded = true;
-    const hard = "0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6";
+    const useHardcoded = false;
+    const hard = "0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE";
     try {
       const w = useHardcoded
         ? hard

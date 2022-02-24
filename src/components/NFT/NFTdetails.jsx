@@ -21,7 +21,9 @@ function NFTdetails({ nftInf }) {
     uri,
     native,
   } = nftInf;
-  const { video, url, ipfsArr } = getUrl(nftInf);
+  // const { video, url, ipfsArr } = getUrl(nftInf);
+  const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nftInf);
+
 
 
   const [show, setShow] = useState(false);
@@ -56,21 +58,21 @@ function NFTdetails({ nftInf }) {
         <Modal.Body className="modalBody">
           <div className="nftDetailBox">
             <div className="nftDetImg">
-              {url && uri && isValidHttpUrl(uri) ? (
-                video && url ? (
+              {(imageUrl || videoUrl )&& uri && isValidHttpUrl(uri) ? (
+                video && videoUrl ? (
                   <video
                     onLoadedData={() => setImageLoaded(true)}
                     controls={false}
                     playsInline={true}
                     autoPlay={true}
                     loop={true}
-                    src={setupURI(url)}
+                    src={setupURI(videoUrl)}
                   />
                 ) : (
                   <img
                     onLoad={() => setImageLoaded(true)}
                     alt="NFTss"
-                    src={setupURI(url)}
+                    src={setupURI(imageUrl)}
                   />
                 )
               ) : ipfsArr.length ? (
