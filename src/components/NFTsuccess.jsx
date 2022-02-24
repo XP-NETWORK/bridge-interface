@@ -59,16 +59,11 @@ function NFTsuccess() {
     else if (from.type === "Algorand") w = algorandAccount;
     else if (from.type === "Elrond") w = elrondAccount;
     else if (from.type === "Tron") w = tronWallet;
-    // const w = algorandAccount || tronWallet || tezosAccount || account
-    // const w = algorandAccount ? algorandAccount : tronWallet ? tronWallet : elrondAccount ? elrondAccount : account
     await setNFTS(w, from.key);
   };
 
-  // const [show, setShow] = useState(true);
 
   const handleClose = () => {
-    // window.location.reload()
-    // debugger
     selectedNFTList.forEach((nft) => {
       const { txn } = nft;
       if (txn) dispatch(removeFromSelectedNFTList(nft));
@@ -77,10 +72,8 @@ function NFTsuccess() {
     refresh();
   };
 
-  // const handleShow = () => setShow(true);
   const [copied, setCopy] = useState();
   const [copyHover, setSetCopyHover] = useState();
-  // const showSuccess = useSelector(state => state.showSuccess)
 
   useEffect(() => {
     if (txnHashArr && txnHashArr.length > 0 && to && to.key === "Algorand") {
@@ -108,8 +101,6 @@ function NFTsuccess() {
   const getTX = () => {
     let ntx;
 
-    // const tx = txnHashArr && txnHashArr.length > 0 ? typeof txnHashArr[currentTX] === 'object' ? txnHashArr[currentTX].hash.toString() : txnHashArr[currentTX] : ''
-
     if (txnHashArr && txnHashArr.length > 0) {
       if (typeof txnHashArr === "object" && !Array.isArray(txnHashArr)) {
         return txnHashArr[0].hash.toString();
@@ -125,9 +116,8 @@ function NFTsuccess() {
     } else {
       return "wrong tx";
     }
-
-    // return tx
   };
+
   const address = account
     ? account
     : algorandAccount

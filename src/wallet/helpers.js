@@ -1,13 +1,12 @@
 import { AppConfigs, ChainFactory, ChainFactoryConfigs } from "xp.network";
 import { Chain, Config } from "xp.network/dist/consts";
-import { chainsConfig } from "../components/values";
+import { chainsConfig, CHAIN_INFO } from "../components/values";
 import { setAlgorandClaimables, setBigLoader, setFactory, setNFTList } from "../store/reducers/generalSlice";
 import store from "../store/store";
 import { ChainData, getOldFactory, moralisParams } from "./oldHelper";
 
 const axios = require("axios");
 export const setupURI = (uri) => {
-  // debugger
   if (uri && uri.includes("ipfs://")) {
     return "https://ipfs.io/" + uri.replace(":/", "");
   }
@@ -188,11 +187,10 @@ export const handleChainFactory = async (someChain) => {
   }
 };
 
-export const getNFTS = async (wallet, from, testnet) => {
+export const getNFTS = async (wallet, from) => {
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
-  console.log("getNFTS: ", factory)
   const chain = await factory.inner(chainsConfig[from].Chain)
   try {
     // debugger
@@ -216,8 +214,7 @@ export const getNFTS = async (wallet, from, testnet) => {
   
             return true;
           }
-        });
-  
+        })
       return allNFTs
     } catch (err) {
       return [];
@@ -247,14 +244,26 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
   }
 }
 
+
 export const setNFTS = async (w, from, testnet) => {
-  // debugger
+  debugger
   store.dispatch(setBigLoader(true))
+  const factory = await getFactory()
+  const inner = await factory.inner(CHAIN_INFO[from].nonce)
   const res = await getNFTS(w, from, testnet)
   const parsedNFTs = await parseNFTS(res)
+  for (const nft of parsedNFTs) {
+    try {
+      console.log("check: ", await factory.checkWhitelist(inner, nft))
+      nft.whitelisted = await factory.checkWhitelist(inner, nft)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const sorted = parsedNFTs.sort(n => n.whitelisted ? -1 : 0)
   store.dispatch(setBigLoader(false))
   if(parsedNFTs.length){
-      store.dispatch(setNFTList(parsedNFTs))
+      store.dispatch(setNFTList(sorted))
   }
   else {
     store.dispatch(setNFTList([]))

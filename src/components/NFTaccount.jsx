@@ -34,8 +34,8 @@ function NFTaccount() {
   const testnet = useSelector((state) => state.general.testNet);
 
   async function getNFTsList() {
-    const useHardcoded = false;
-    const hard = "0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6";
+    const useHardcoded = true;
+    const hard = "0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE";
     try {
       const w = useHardcoded
         ? hard
@@ -50,7 +50,7 @@ function NFTaccount() {
         : type === "Tron"
         ? tronWallet
         : undefined;
-      await setNFTS(w, from, testnet);
+      await setNFTS(w, from);
     } catch (error) {
       dispatch(setError(error.data ? error.data.message : error.message));
     }
@@ -61,23 +61,6 @@ function NFTaccount() {
   }, []);
 
   useEffect(async () => {}, [nfts]);
-
-  // ! Estimate moved to SendFees component
-  // useEffect(() => {
-  //     if(selectedNFTList.length > 0) estimate();
-  //     else setFees("0")
-  //     const s = setInterval(() => estimate(), 1000 * 30);
-  //     setEstimateInterval(s)
-  //     return () => clearInterval(s);
-  // }, [selectedNFTList])
-
-  // useEffect(() => {
-  //     clearInterval(estimateInterval)
-  //     estimate()
-  //     const s = setInterval(() => estimate(), 1000 * 30);
-  //     setEstimateInterval(s)
-  //     return () => clearInterval(s)
-  // }, [to])
 
   return (
     <div className="NFTaccount">
@@ -100,11 +83,6 @@ function NFTaccount() {
               <div className="nftSendBtn disenable">
                 <SendFees />
                 <ButtonToTransfer />
-                {/* <div onClick={sendAllNFTs} className={approved && receiver && !loading ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
-                                <a  className="themBtn">
-                                    {loading ? 'Processing' : 'Send' }
-                                </a>
-                            </div> */}
               </div>
             </div>
           </div>
@@ -121,12 +99,6 @@ function NFTaccount() {
                     <Approval />
                     <SendFees />
                     <ButtonToTransfer />
-                    {/* <div 
-                                        onClick={sendAllNFTs} className={approved && receiver && !loading ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
-                                            <a  className="themBtn">
-                                                {loading ? 'Processing' : 'Send' }
-                                            </a>
-                                        </div> */}
                   </>
                 ) : (
                   <Comment />

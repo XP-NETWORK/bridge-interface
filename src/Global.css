@@ -1464,6 +1464,7 @@ ul.nftList {
 .nftListed {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 6px 16px 6px 30px;
   color: #fff;
   position: relative;
