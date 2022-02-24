@@ -7,7 +7,6 @@ import { ChainData, getOldFactory, moralisParams } from "./oldHelper";
 
 const axios = require("axios");
 export const setupURI = (uri) => {
-  // debugger
   if (uri && uri.includes("ipfs://")) {
     return "https://ipfs.io/" + uri.replace(":/", "");
   }
@@ -245,19 +244,9 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
   }
 }
 
-const foreachWhiteListed = async (nft, inner) => {
-  try {
-    debugger
-    const factory = await getFactory()
-    const wl = await factory.checkWhitelist(inner, nft)
-    return wl
-  } catch (error) {
-    console.log(error)
-  }
-}
 
 export const setNFTS = async (w, from, testnet) => {
-  // debugger
+  debugger
   store.dispatch(setBigLoader(true))
   const factory = await getFactory()
   const inner = await factory.inner(CHAIN_INFO[from].nonce)
@@ -265,9 +254,10 @@ export const setNFTS = async (w, from, testnet) => {
   const parsedNFTs = await parseNFTS(res)
   for (const nft of parsedNFTs) {
     try {
+      console.log("check: ", await factory.checkWhitelist(inner, nft))
       nft.whitelisted = await factory.checkWhitelist(inner, nft)
     } catch (error) {
-      
+      console.log(error)
     }
   }
   const sorted = parsedNFTs.sort(n => n.whitelisted ? -1 : 0)

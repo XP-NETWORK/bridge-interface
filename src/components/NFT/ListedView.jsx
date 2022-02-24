@@ -9,9 +9,10 @@ import VideoAndImage from "./VideoAndImage"
 export default function ListedView({ nft, addRemoveNFT, index }) {
 
   const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nft)
+  const OFF = {pointerEvents: "none"}
 
   return (
-    <div onClick={e => addRemoveNFT ? addRemoveNFT(nft, e) : ''} className="listed__view">
+    <div style={!nft.whitelisted ? OFF : {}} onClick={e => addRemoveNFT ? addRemoveNFT(nft, e) : ''} className="listed__view">
         { nft.uri && isValidHttpUrl(nft.uri) ? 
           video && image ? <VideoAndImage videoUrl={videoUrl} imageUrl={imageUrl} />
           :image && !video ? <img alt="#" src={setupURI(imageUrl)} />

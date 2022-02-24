@@ -35,6 +35,10 @@
   gap: 20px;
 }
 
+.nftListed .image--toggle{
+  display: none;
+}
+
 .listed-view__not-whitelisted__button{
   background: #3E64ED;
   border-radius: 11px;
@@ -43,7 +47,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
+
+.listed-view__not-whitelisted__button a{
+  color: white;
+}
+
+.listed-view__not-whitelisted__button:hover, .listed-view__not-whitelisted__button:visited, .listed-view__not-whitelisted__button:active{
+  color: white;
+}
+
 
 .listed-view__not-whitelisted__text{
   font-size: 16px;
