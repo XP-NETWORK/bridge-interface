@@ -829,7 +829,10 @@ function WSettings({
                 <span className="icon qustion_icon"></span>
               </a>
             </div>
-            <div className="powerBySet">
+            <div
+              className="powerBySet"
+              style={{ display: settings.collapsed ? "none" : "block" }}
+            >
               <a
                 href="https://xp.network/"
                 target={"_blank"}

@@ -323,7 +323,7 @@ export default function Widget() {
         } 
 
         .selectAll, .clearNft, .nftAut a, .loader, .changeNetwork-loader, .coming__chain, .follow-us__btn, .ts-button, .sucesList .colBlue, .success-button.view-txn-btn, .bluTextBtn {
-          color: ${accentColor ? accentColor : ""};
+          color: ${accentColor ? accentColor : ""} !important; 
         }
 
         /*.chainArrow img {
