@@ -204,7 +204,7 @@ export const getNFTS = async (wallet, from) => {
     const unique = {};
     try {
       const allNFTs = response
-        .filter((n) => n.native)
+        .filter((n) => n.native).filter(n => n.uri)
         .filter((n) => {
           const { tokenId, contract, chainId } = n?.native;
           if (unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`])
@@ -246,7 +246,6 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 
 
 export const setNFTS = async (w, from, testnet) => {
-  debugger
   store.dispatch(setBigLoader(true))
   const factory = await getFactory()
   const inner = await factory.inner(CHAIN_INFO[from].nonce)
@@ -254,8 +253,8 @@ export const setNFTS = async (w, from, testnet) => {
   const parsedNFTs = await parseNFTS(res)
   for (const nft of parsedNFTs) {
     try {
-      console.log("check: ", await factory.checkWhitelist(inner, nft))
-      nft.whitelisted = await factory.checkWhitelist(inner, nft)
+      nft.whitelisted = true
+      // await factory.checkWhitelist(inner, nft)
     } catch (error) {
       console.log(error)
     }

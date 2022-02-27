@@ -31,14 +31,14 @@ export default function VideoAndImage({ videoUrl, imageUrl, imageLoadedHandler }
     <div className="play__container">
       {play ? 
          <div className='video__wrapper'>
-           <video src={setupURI(videoUrl)} autoPlay muted loop  poster={imageUrl}/>
+           <video src={setupURI(videoUrl)} autoPlay muted loop autoPlay poster={imageUrl}/>
          </div> 
          : 
          <div className='img__wrapper'>
            <img onLoad={imageLoadedHandler} src={setupURI(imageUrl)} alt="nft" />
          </div>
       }
-      {play ?
+      {/* {play ?
        pauseHover? 
        <PauseHover onMouseEnter={() => setPauseHover(true)} onMouseLeave={() => setPauseHover(false)} className='video--toggle' onClick={(e) => playHolder(e, "pause")} video />
        : 
@@ -49,7 +49,7 @@ export default function VideoAndImage({ videoUrl, imageUrl, imageLoadedHandler }
        :
        <img style={{width: "30px"}} src={Play} alt="#" className='image--toggle' />
       //  <Play onMouseEnter={() => setPlayHover(true)} onMouseLeave={() => setPlayHover(false)} className='image--toggle' onClick={(e) => playHolder(e, "play")} />
-      }
+      } */}
     </div>
   )
 }

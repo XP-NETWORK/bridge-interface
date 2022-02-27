@@ -23,7 +23,6 @@ function ChangeNetworkModal() {
   const widget = useSelector((state) => state.general.widget);
 
   async function switchNetwork() {
-    debugger
     setLoader(true);
     const info = testnet
       ? TESTNET_CHAIN_INFO[from?.key]

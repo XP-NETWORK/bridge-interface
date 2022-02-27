@@ -51,7 +51,7 @@ export default function NFT({ nft, index }) {
 
   useEffect(() => {
     whiteListCheck()
-  },[])
+  },[setImageLoaded])
 
   const imageLoadedHandler = () => {
     setImageLoaded(true)

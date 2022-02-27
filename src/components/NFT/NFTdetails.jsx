@@ -82,7 +82,7 @@ function NFTdetails({ nftInf }) {
                   <img
                     onLoad={() => setImageLoaded(true)}
                     src={brockenurl}
-                    alt="This NFT image uri is broken."
+                    alt=" Broken Token URI"
                   />
                   <span className="brocken-url__msg">
                     NFTs URL

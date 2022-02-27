@@ -310,7 +310,7 @@ function SuccessNFT({ nft, from, index }) {
         <VideoOrImage urls={ipfsArr} />
       ) : (
         <div className="brocken-url">
-          <img src={brockenurl} alt="This NFT image uri is broken." />
+          <img src={brockenurl} alt="Broken Token URI" />
           <span className="brocken-url__msg">
             NFTs URL
             <br /> is broken

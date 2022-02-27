@@ -87,15 +87,15 @@ export const getUrl = nft => {
 
 export const isWhiteListed = async (chainNonce, nft) => {
 
-    let whitelisted
-    const factory = await getFactory()
-    const inner = await factory.inner(chainNonce)
-    if(inner){
-        try {
-            whitelisted = await factory.checkWhitelist(inner, nft)
-        } catch (error) {
-            console.error("isWhiteListed: ", error)
-        }
-    }
-    return whitelisted
+    // let whitelisted
+    // const factory = await getFactory()
+    // const inner = await factory.inner(chainNonce)
+    // if(inner){
+    //     try {
+    //         whitelisted = await factory.checkWhitelist(inner, nft)
+    //     } catch (error) {
+    //         console.error("isWhiteListed: ", error)
+    //     }
+    // }
+    return true
 }

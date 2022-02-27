@@ -27,7 +27,7 @@ export const chains = [
     key: "Ethereum",
     text: "Ethereum",
     value: "Ethereum",
-    order: 2,
+    order: 1,
     image: { avatar: true, src: Etherium },
     maintenance: false,
     testNet: false,
