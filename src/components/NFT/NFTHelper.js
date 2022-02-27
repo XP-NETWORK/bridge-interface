@@ -1,4 +1,5 @@
 import { getFactory } from '../../wallet/helpers'
+import { CHAIN_INFO } from '../values'
 const supportedVideoFormats = [".mp4", ".ogg", ".webm", ".avi"]
 const supportedImageFormats = [".apng", ".gif", ".jpg", ".jpeg", ".png", ".svg", ".webp"]
 
@@ -85,17 +86,18 @@ export const getUrl = nft => {
     // return { video, url, ipfsArr }
 }
 
-export const isWhiteListed = async (chainNonce, nft) => {
-
-    // let whitelisted
-    // const factory = await getFactory()
-    // const inner = await factory.inner(chainNonce)
-    // if(inner){
-    //     try {
-    //         whitelisted = await factory.checkWhitelist(inner, nft)
-    //     } catch (error) {
-    //         console.error("isWhiteListed: ", error)
-    //     }
-    // }
-    return true
+export const isWhiteListed = async (from, nft) => {
+    debugger
+    let whitelisted
+    const chainNonce = CHAIN_INFO[from].nonce
+    const factory = await getFactory()
+    const inner = await factory.inner(chainNonce)
+    if(inner){
+        try {
+            whitelisted = await factory.checkWhitelist(inner, nft)
+        } catch (error) {
+            console.error("isWhiteListed: ", error)
+        }
+    }
+    return whitelisted
 }

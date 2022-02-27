@@ -8,7 +8,7 @@ import CheckGreen from "../../assets/img/icons/check_green.svg";
 import NFTdetails from './NFTdetails'
 import { useSelector } from "react-redux";
 import { setupURI } from "../../wallet/oldHelper";
-import { getUrl } from "./NFTHelper.js";
+import { getUrl, isWhiteListed } from "./NFTHelper.js";
 import "./NewNFT.css";
 import { isValidHttpUrl } from "../../wallet/helpers";
 import VideoOrImage from "./VideoOrImage";
@@ -20,7 +20,7 @@ import BrockenUtlGridView from "./BrockenUtlGridView";
 export default function NFTcard({ nft, index }) {
 
 
-
+    const from = useSelector(state => state.general.from)
     const dispatch = useDispatch();
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
     const isSelected = selectedNFTs.filter(
@@ -31,9 +31,13 @@ export default function NFTcard({ nft, index }) {
     )[0];
     const [onHover, setOnHover] = useState(false)
     const [imageLoaded, setImageLoaded] = useState(false);
-
+    const [whiteListed, setWhitelisted] = useState(true)
     const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
 
+    useEffect(async() => {
+      const whitelisted = await isWhiteListed(from.text, nft)
+      setWhitelisted(whitelisted)
+    }, [])
     
 
     function addRemoveNFT(chosen) {
@@ -92,7 +96,7 @@ export default function NFTcard({ nft, index }) {
                     </div>
                 </div>
             }
-            { (!nft.whitelisted && onHover) && <NotWhiteListed /> }
+            { (!whiteListed && onHover) && <NotWhiteListed /> }
         </div>
       );
 }
