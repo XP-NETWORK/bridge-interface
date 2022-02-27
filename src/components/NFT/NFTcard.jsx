@@ -69,7 +69,7 @@ export default function NFTcard({ nft, index }) {
                   { nft.uri && isValidHttpUrl(nft.uri) ? 
                     video && image ? <VideoAndImage imageLoaded={() => imageLoadedHandler} videoUrl={videoUrl} imageUrl={imageUrl} />
                   : image && !video ? <img onLoad={() => imageLoadedHandler} alt="#" src={setupURI(imageUrl)} /> 
-                  : (!image && video) ? <div>Only video</div> 
+                  : (!image && video) ? <video onLoadedData={imageLoadedHandler} src={setupURI(videoUrl)} />
                   : ipfsArr?.length && <VideoOrImage urls={ipfsArr} i={index} />
                   : <BrockenUtlGridView />
                   }

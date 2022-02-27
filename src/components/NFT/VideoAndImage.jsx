@@ -31,7 +31,7 @@ export default function VideoAndImage({ videoUrl, imageUrl, imageLoadedHandler }
     <div className="play__container">
       {play ? 
          <div className='video__wrapper'>
-           <video src={setupURI(videoUrl)} autoPlay muted loop autoPlay poster={imageUrl}/>
+           <video src={setupURI(videoUrl)} autoPlay muted loop poster={imageUrl}/>
          </div> 
          : 
          <div className='img__wrapper'>
