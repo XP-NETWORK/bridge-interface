@@ -19,7 +19,7 @@ export default function Chain(props) {
 
   return (
     <li
-      style={maintenance || !checkIfLive(chainKey, validatorsInfo) || coming ? OFF : {}}
+      // style={maintenance || !checkIfLive(chainKey, validatorsInfo) || coming ? OFF : {}}
       onClick={() => chainSelectHandler(filteredChain)}
       className="nftChainItem"
       data-chain={text}

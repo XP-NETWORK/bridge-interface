@@ -218,7 +218,7 @@ export const chains = [
     image: { avatar: true, src: One },
     maintenance: false,
     testNet: true,
-    mainnet: false
+    mainnet: true
     // off: true
   },
 ];
@@ -557,7 +557,7 @@ export const CHAIN_INFO = {
     native: coins[16],
     nonce: 12,
     decimals: 1e18,
-    rpc: "",
+    rpc: "https://rpc.s0.t.hmny.io",
     chainId: 1666600000,
     blockExplorerUrls: "",
     contract: "",

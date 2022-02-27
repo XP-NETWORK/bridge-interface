@@ -11,13 +11,19 @@
   /* background-color: tomato; */
 }
 
-.not-whitelisted{
+.listed-view__not-whitelisted{
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   height: 100%;
   background: #292F3F99;
-  backdrop-filter: blur(0.2rem) grayscale(30%);
+  backdrop-filter: blur(0.1rem) grayscale(30%);
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
 }
 
 /* .nftListed{
@@ -29,11 +35,11 @@
   align-items: center;
 }
 
-.listed-view__not-whitelisted{
+/* .listed-view__not-whitelisted{
   display: flex;
   align-items: center;
   gap: 20px;
-}
+} */
 
 .nftListed .image--toggle{
   display: none;

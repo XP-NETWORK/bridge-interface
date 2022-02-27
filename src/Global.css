@@ -1468,6 +1468,7 @@ ul.nftList {
   padding: 6px 16px 6px 30px;
   color: #fff;
   position: relative;
+  
 }
 .nftListed:hover {
   background: rgba(73, 82, 108, 0.1);
@@ -1497,6 +1498,7 @@ li.nftListed > video {
   align-items: center;
   justify-content: center;
   display: flex;
+  margin-left: 6px;
 }
 
 .nftSelecItem {

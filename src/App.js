@@ -45,10 +45,6 @@ function App() {
   const axios = require("axios");
   const widget = new URLSearchParams(window.location.search).get("widget");
 
-  function handleClose() {
-    dispatch(setTronPopUp(false));
-  }
-
   const checkValidators = async () => {
     let res;
     try {
