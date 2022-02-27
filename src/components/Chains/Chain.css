@@ -17,3 +17,13 @@
     padding: 4px 6px;
     border-radius: 4px; 
 }
+
+.chain-connecting{
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15px;
+    letter-spacing: 0.05em;
+    background: #2B313F;
+    border-radius: 4px;
+    padding: 0px 6px;
+}
