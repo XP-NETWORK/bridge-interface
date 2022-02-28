@@ -66,6 +66,10 @@ function NFTlistTop() {
     opacity: bigLoader ? 0.6 : 1,
   };
 
+  const dropdownHeandler = e => {
+  console.log("🚀 ~ file: NFTlistTop.jsx ~ line 70 ~ NFTlistTop ~ e", e)
+  }
+
   const off = { display: "none" };
   return (
     <>

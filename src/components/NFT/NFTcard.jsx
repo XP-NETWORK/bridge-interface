@@ -30,6 +30,7 @@ export default function NFTcard({ nft, index }) {
         n.native.chainId === nft.native.chainId
     )[0];
     const [onHover, setOnHover] = useState(false)
+    console.log("🚀 ~ file: NFTcard.jsx ~ line 33 ~ NFTcard ~ onHover", onHover)
     const [imageLoaded, setImageLoaded] = useState(false);
     const [whiteListed, setWhitelisted] = useState(true)
     const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
@@ -66,7 +67,7 @@ export default function NFTcard({ nft, index }) {
             <div className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
               <div onClick={() => addRemoveNFT(nft, index)} className="nft-image__container">
                 <div className="image__wrapper">
-                  { nft.uri && isValidHttpUrl(nft.uri) ? 
+                  { nft.uri && isValidHttpUrl(nft.uri, index) ? 
                     video && image ? <VideoAndImage imageLoaded={() => imageLoadedHandler} videoUrl={videoUrl} imageUrl={imageUrl} />
                   : image && !video ? <img onLoad={() => imageLoadedHandler} alt="#" src={setupURI(imageUrl)} /> 
                   : (!image && video) ? <video onLoadedData={imageLoadedHandler} src={setupURI(videoUrl)} />
@@ -83,7 +84,7 @@ export default function NFTcard({ nft, index }) {
                 </div>
               </div>
               <div className={`nft-content__container ${!imageLoaded ? "preload-content-container" : ""}`}>
-                <span className="nft-name"><span className="name">{nft.name}</span><NFTdetails nftInf={nft} index={index} /></span>
+                <span className="nft-name"><span className="name">{nft.name || nft.native.name}</span><NFTdetails nftInf={nft} index={index} /></span>
                 <span className="nft-number">{nft.native.tokenId}</span>
               </div>
             </div>

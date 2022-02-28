@@ -29,8 +29,8 @@ export default function ChainListBox(props) {
   const show = useSelector((state) => state.general.showChainModal);
   const switchChain = useSelector((state) => state.general.switchDestination);
   const widget = useSelector((state) => state.general.widget);
-  const [fromChains, setFromChains] = useState(chains.sort((a, b) => a.order - b.order))
-  const [toChains, searchToChains] = useState(chains.sort((a, b) => a.order - b.order))
+  const [fromChains, setFromChains] = useState(chains.sort((a, b) => b.order - a.order))
+  const [toChains, searchToChains] = useState(chains.sort((a, b) => b.order - a.order))
   // console.log("toChains: ", toChains)
 
 
@@ -89,7 +89,7 @@ export default function ChainListBox(props) {
           <ul className="nftChainList scrollSty">
             {!from ? fromChains
             .filter((chain) => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : ""))
-            .sort(chain => chain.coming || chain.maintenance ? 0 : -1)
+            .sort((chain) => chain.maintenance ? 0 : -1)
             .map((filteredChain, index) => {
             const { image, text, key, coming, newChain, maintenance, testNet, mainnet } = filteredChain;
             return globalTestnet ? testNet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`}/>
@@ -97,7 +97,7 @@ export default function ChainListBox(props) {
             
             : toChains
             .filter( chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : ""))
-            .sort(chain => chain.coming || chain.maintenance ? 0 : -1)
+            // .sort((chain) => !chain.maintenance  ? 0 : -1)
             .map((chain) => {
               const {image, text, key, coming, newChain, maintenance, testNet, mainnet } = chain;
               return globalTestnet ? ((testNet && chain.key !== from.key)) && <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming}  text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`} /> 

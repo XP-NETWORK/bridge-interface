@@ -6,7 +6,9 @@ import store from "../store/store";
 
 const axios = require("axios");
 export const setupURI = (uri) => {
-  if (uri && uri.includes("ipfs://")) {
+  // debugger
+  if (uri && (uri.includes("ipfs://"))) {
+    console.log("https://ipfs.io/" + uri.replace(":/", ""))
     return "https://ipfs.io/" + uri.replace(":/", "");
   }
   else if(uri && (uri.includes("data:image/") || uri.includes("data:application/"))){
@@ -19,31 +21,7 @@ export const setupURI = (uri) => {
   return uri;
 };
 
-export const preloadItem = (item, type, setLoaded) => {
-  if (type === "video") {
-    const vid = document.createElement("video");
-    vid.src = item;
-    vid.style.opacity = "0";
-    vid.style.position = "absolute";
-    vid.style.height = "0px";
-    vid.style.width = "0px";
-    document.body.appendChild(vid);
-    vid.play();
-    vid.onloadeddata = function() {
-      setLoaded(true);
-      vid?.remove();
-    };
-  } else {
-    var img = new Image();
-    img.src = item;
-    img.onload = function() {
-      setLoaded(true);
-    };
-  }
-};
-
 export const parseNFTS = async (nfts) => {
-
 const { from, to } = store.getState().general;
 if(from.key === "Tezos"){
  return nfts.filter(n => n.native).map(n => {
@@ -54,35 +32,33 @@ if(from.key === "Tezos"){
  })
 }
   const result = await Promise.all(
-    nfts.map(async (n) => {
+    nfts.map(async (n, index) => {
       return await new Promise(async (resolve) => {
         try {
-          
-          if (!n.uri) resolve({ ...n });
-      
+          if (!n.uri) resolve({ ...n })
           const res = await axios.get(setupURI(n.uri));
           if (res && res.data) {
-            if (res.data.animation_url)
-              preloadItem(res.data.animation_url, "video", () => {});
-            else preloadItem(res.data.image, "image", () => {});
-            const isImageIPFS = setupURI(res.data.image).includes('ipfs.io')
-            let result = { ...res.data, ...n }
-            if(isImageIPFS) {
+            const isImageIPFS = setupURI(res.data.image)?.includes('ipfs.io')
+            
+            let result = typeof res.data != "string" ? { ...res.data, ...n } : {...n}
+            if(isImageIPFS) {              
               const ipfsNFT = await axios.get(setupURI(res.data.image))
               if(ipfsNFT.data && ipfsNFT.data.displayUri) result.image = ipfsNFT.data.displayUri
             }
             resolve(result);
-          } else resolve(undefined);
+          } 
+          else resolve(undefined);
         } catch (err) {
+        console.log("🚀 ~ file: helpers.js ~ line 51 ~ returnawaitnewPromise ~ err", err, "index: ", index)
           if (err) {
             try {
               const res = await axios.get(('https://sheltered-crag-76748.herokuapp.com/')+(setupURI(n.uri?.uri ? n.uri?.uri : n.uri)));
+              console.log("🚀 ~ file: helpers.js ~ line 55 ~ returnawaitnewPromise ~ res", res)
               if (res.data) {
                 try {
                   const { uri } = res.data;
                   const result = await axios.get(('https://sheltered-crag-76748.herokuapp.com/')+(setupURI(n.uri?.uri ? n.uri?.uri : n.uri)));
-
-                  resolve({ ...result.data, ...n, cantSend: true });
+                  resolve({ data: result.data, ...n, cantSend: true });
                 } catch (err) {
                   resolve({...n});
                 }
@@ -98,6 +74,7 @@ if(from.key === "Tezos"){
       });
     })
   );
+  console.log("result: ", result)
   return result.filter((n) => n);
 };
 
@@ -268,11 +245,13 @@ export const setNFTS = async (w, from, testnet) => {
   }
 }
 
-export function isValidHttpUrl(string) {
+export function isValidHttpUrl(string, index) {
+  // debugger
 
   let url;
   if((string.includes("data:image/") || string.includes("data:application/"))) return true
   if(string.includes('ipfs://')) return true
+  if(string.includes("ipfs")) return true
   try {
     url = new URL(string);
   } catch (_) {

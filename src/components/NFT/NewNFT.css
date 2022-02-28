@@ -45,6 +45,15 @@
   display: none;
 }
 
+.not-whitelisted{
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background: #292F3F99;
+  backdrop-filter: blur(0.1rem) grayscale(30%);
+}
+
 .listed-view__not-whitelisted__button{
   background: #3E64ED;
   border-radius: 11px;

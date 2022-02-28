@@ -31,11 +31,11 @@ function NFTaccount() {
   const account = useSelector((state) => state.general.account);
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
-  const testnet = useSelector((state) => state.general.testNet);
+
 
   async function getNFTsList() {
     const useHardcoded = false;
-    const hard = "0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE";
+    const hard = "erd1s89aq3s0z6mjfpx8s85zntlfywsvj5r8nzcdujw7mx53f9et9ezq9fnrws";
     try {
       const w = useHardcoded
         ? hard

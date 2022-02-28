@@ -200,7 +200,7 @@ function NFTsuccess() {
                 <label>Sent From</label>{" "}
                 <span className="">
                   <img alt="" src={from ? from.image.src : ""} />{" "}
-                  {from ? from.key : ""}
+                  {from?.text === "xDai" ? "Gnosis Chain" : from?.text}
                 </span>
               </div>
               <div className="sucesList">
@@ -317,7 +317,7 @@ function SuccessNFT({ nft, from, index }) {
           </span>
         </div>
       )}
-      <span className="nftSelected__name">{nft.name}</span>
+      <span className="nftSelected__name">{nft.name || nft.native.name}</span>
       <span className="bluTextBtn">
         <a
           href={

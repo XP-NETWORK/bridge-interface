@@ -39,30 +39,13 @@ function NFTlistView() {
     return (
         <div  className="nftListBox nftListView"> 
             <ul className="nftList">
-            { nfts?.length ?  nfts.filter( (nft, index) => nft?.name?.includes(search ? search : '') || nft?.native.owner?.includes(search ? search : '')).map((nft, index) =>
-                    <NFTlistedCard nft={nft} index={index} />
-                // <li className="nftListed nftSelect">
-                //     <span /*style={!nft.whitelisted ? OFF : {}}*/ onClick={(e) => addRemoveNFT(nft, e)} className="selectNftListed">
-                //         { checkIfSelected(nft, selectedNFTs) ? 
-                //             <img onClick={(e) => addRemoveNFT(nft, e)} src={CheckGreen} alt={`${nft?.name}`} />
-                //             : 
-                //             ''
-                //         }
-                //     </span>
-                //     <div className="nftListed__info">
-                //         <ListedView  addRemoveNFT={addRemoveNFT} nft={nft} key={`nft-n-${index}`} />
-                //         <span /*style={!nft.whitelisted ? OFF : {}}*/ className="name" onClick={(e) => addRemoveNFT(nft, e)}>{nft?.data?.name || nft?.name}</span>
-                //     </div>
-                //     {/* { nft.whitelisted ?<NFTdetails nftInf={nft}/> 
-                //     : 
-                //     <div className="listed-view__not-whitelisted">
-                //         <div className="listed-view__not-whitelisted__text">Not Whitelisted</div>
-                //         <a href='https://t.me/xp_network' className="listed-view__not-whitelisted__button" target="_blank">Tech support</a>
-                //     </div> } */}
-                // </li>
-                ) 
-                : 
-                <NFTempty />
+            { nfts?.length ?  
+            !search ? 
+            nfts.map((nft, index) => <NFTlistedCard nft={nft} index={index} />)
+            :
+            nfts.filter( (nft, index) => nft?.name?.includes(search ? search : '') || nft?.native.owner?.includes(search ? search : '')).map((nft, index) => <NFTlistedCard nft={nft} index={index} />)
+            : 
+            <NFTempty />
             }
             </ul>
         </div>

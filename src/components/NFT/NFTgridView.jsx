@@ -9,6 +9,8 @@ import NFTcard from './NFTcard';
 /////`
 function NFTgridView() {
     const nfts = useSelector(state => state.general.NFTList)
+    console.log("🚀 ~ file: NFTgridView.jsx ~ line 12 ~ NFTgridView ~ nfts", nfts ? nfts[0]:'')
+
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const search = useSelector(state => state.general.NFTListSearch)
     const nftsPlace = window.innerWidth <= 600 ? 2 : 9
@@ -22,9 +24,9 @@ function NFTgridView() {
                     <BigLoader />
                 :
                     <div className="nft-list__wrapper">
-                        { nfts?.length ? nfts
-                        .filter(nft => nft?.description?.toString().toLowerCase().includes(search ? search?.toLowerCase() : '') || nft.native.owner?.includes(search ? search : ''))
-                        .map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} />)
+                        { nfts?.length ? 
+                        search ? nfts.filter(nft => nft?.description?.toString().toLowerCase().includes(search.toLowerCase()) || nft.native.owner?.includes(search)).map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} />)
+                        :nfts.map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} />)
                         : 
                         <NFTempty /> }
                         { nfts && nfts?.length < nftsPlace ? placeholders.map((n, index) => <Missing key={`missing-${index}-component`}/>) : ''}

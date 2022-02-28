@@ -48,10 +48,10 @@ export default function NFTlistedCard({nft, index}) {
     </span>
     <div className="nftListed__info">
         <ListedView  addRemoveNFT={addRemoveNFT} nft={nft} key={`nft-n-${index}`} />
-        <span className="name" onClick={(e) => addRemoveNFT(nft, e)}>{nft?.data?.name || nft?.name}</span>
+        <span className="name" onClick={(e) => addRemoveNFT(nft, e)}>{nft?.data?.name || nft?.name || nft?.native.name}</span>
     </div>
     <NFTdetails nftInf={nft}/>
-    { (whitelisted && onHover) && <div className='listed-view__not-whitelisted'>
+    { (!whitelisted && onHover) && <div className='listed-view__not-whitelisted'>
       <div className="listed-view__not-whitelisted__text">Not Whitelisted</div>
       <a href='https://t.me/xp_network' className="listed-view__not-whitelisted__button" target="_blank">Tech support</a>
     </div>}
