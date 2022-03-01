@@ -5,7 +5,6 @@ import AlgorandWallet from "./AlgorandWallet";
 import TronWallet from "./TronWallet";
 import ElrondWallet from "./ElrondWallet";
 import USBWallet from "./USBWallet";
-import { Component } from "react";
 import { useSelector } from "react-redux";
 
 export default function WalletList({search}) {
@@ -27,8 +26,6 @@ export default function WalletList({search}) {
         { Component: <USBWallet wallet={"Ledger"} />, name: "Ledger", type: '' },
         { Component: <USBWallet />, name: "Trezor", type: '' }
      ]
-
-
 
   return (
     <ul className="walletList scrollSty">

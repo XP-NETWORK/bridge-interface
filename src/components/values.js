@@ -128,7 +128,7 @@ export const chains = [
     key: "Solana",
     text: "Solana",
     value: "Solana",
-    order: 14,
+    order: 21,
     coming: true,
     image: { avatar: true, src: Solana },
     maintenance: false,
@@ -140,7 +140,7 @@ export const chains = [
     key: "Cardano",
     text: "Cardano",
     value: "Cardano",
-    order: 12,
+    order: 20,
     coming: true,
     image: { avatar: true, src: Cardano },
     maintenance: false,
@@ -152,7 +152,7 @@ export const chains = [
     key: "Heco",
     text: "Heco",
     value: "Heco",
-    order: 13,
+    order: 22,
     coming: true,
     image: { avatar: true, src: Heco },
     maintenance: false,
@@ -218,7 +218,8 @@ export const chains = [
     image: { avatar: true, src: One },
     maintenance: false,
     testNet: true,
-    mainnet: true
+    mainnet: false,
+    newChain: true,
     // off: true
   },
 ];

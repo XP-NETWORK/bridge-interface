@@ -8,5 +8,5 @@ export const checkIfLive = (chain, validatorsInfo) => {
 };
 
 export const filterChains = (arr, extraChain) => {
-  return arr.filter(chain => chain.text !== extraChain).sort(chain => chain.maintenance ? 0 :-1)
+  return arr.filter(chain => chain.text !== extraChain)
 }
