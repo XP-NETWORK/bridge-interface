@@ -403,7 +403,17 @@
   right: 25px;
 }
 
-.image--toggle{
+.video--toggle:hover{
+  -webkit-box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.5); 
+  box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.5);
+}
+
+.image--toggle:hover{
+  -webkit-box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.5); 
+  box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.5);
+}
+
+.image--toggle, .video--toggle{
   /* background: rgb(255, 255, 255); */
   border-radius: 50%;
 }
