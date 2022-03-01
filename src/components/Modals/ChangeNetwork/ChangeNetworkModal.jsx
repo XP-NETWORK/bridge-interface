@@ -100,7 +100,7 @@ function ChangeNetworkModal() {
               </span>
               <h3>Switch to {from?.key === "xDai" ? "Gnosis Chain" : from?.key} {testnet ? "TestNet" : "Mainnet"}</h3>
               <p className="">
-                XP.network Bridge requires you to <br /> connect to the{" "}
+                XP.NETWORK Bridge requires you to <br /> connect to the{" "}
                 {from?.key === "xDai" ? "Gnosis Chain" : from?.key} {testnet ? "TestNet" : "Mainnet"}
               </p>
             </div>
