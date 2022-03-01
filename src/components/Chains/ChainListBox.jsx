@@ -62,6 +62,15 @@ export default function ChainListBox(props) {
   };
 
   useEffect(() => {
+    const withNew = chains.filter(chain => chain.newChain)
+    const withComing = chains.filter( chain => chain.coming && !chain.newChain )
+    const withMaintenance = chains.filter( chain => chain.maintenance && !chain.newChain )
+    const noComingNoMaintenance = chains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain)
+    const sorted = [...withNew, ...noComingNoMaintenance, ...withMaintenance, ...withComing]
+    setFromChains(sorted)
+  })
+
+  useEffect(() => {
     if(from)searchToChains(filterChains(chains, from.text))
   }, [from])
   
@@ -89,11 +98,6 @@ export default function ChainListBox(props) {
           <ul className="nftChainList scrollSty">
             {!from ? fromChains
             .filter((chain) => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : ""))
-            .sort((chain) => {
-              if(chain.coming) return 1
-              else if(chain.maintenance) return 0
-              else if(!chain.coming) return -1
-            })
             .map((filteredChain, index) => {
             const { image, text, key, coming, newChain, maintenance, testNet, mainnet } = filteredChain;
             return globalTestnet ? testNet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`}/>

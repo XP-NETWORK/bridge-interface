@@ -189,7 +189,7 @@ export const chains = [
     value: "Tezos",
     order: 2,
     image: { avatar: true, src: Tezos },
-    newChain: true,
+    newChain: false,
     coming: false,
     maintenance: true,
     testNet: false,
