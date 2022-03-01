@@ -5,6 +5,7 @@ import { setAlgorandClaimables, setBigLoader, setFactory, setNFTList } from "../
 import store from "../store/store";
 
 const axios = require("axios");
+
 export const setupURI = (uri) => {
   // debugger
   if (uri && (uri.includes("ipfs://"))) {
@@ -19,6 +20,16 @@ export const setupURI = (uri) => {
     }
   return uri;
 };
+
+export const checkIfJSON = jsonStr => {
+  let obj
+  try {
+    obj = JSON.parse(jsonStr)
+  } catch (error) {
+    return false
+  }
+  return obj
+}
 
 export const parseNFTS = async (nfts) => {
 const { from, to } = store.getState().general;
@@ -35,7 +46,12 @@ if(from.key === "Tezos"){
       return await new Promise(async (resolve) => {
         try {
           if (!n.uri) resolve({ ...n })
+
+          const jsonURI = checkIfJSON(n.uri) || undefined
+          const uri = jsonURI?.image
+          if (jsonURI) resolve({...n, ...jsonURI, uri })
           const res = await axios.get(setupURI(n.uri));
+          
           if (res && res.data) {
             const isImageIPFS = setupURI(res.data.image)?.includes('ipfs.io')
             
@@ -48,11 +64,9 @@ if(from.key === "Tezos"){
           } 
           else resolve(undefined);
         } catch (err) {
-        console.log("🚀 ~ file: helpers.js ~ line 51 ~ returnawaitnewPromise ~ err", err, "index: ", index)
           if (err) {
             try {
               const res = await axios.get(('https://sheltered-crag-76748.herokuapp.com/')+(setupURI(n.uri?.uri ? n.uri?.uri : n.uri)));
-              console.log("🚀 ~ file: helpers.js ~ line 55 ~ returnawaitnewPromise ~ res", res)
               if (res.data) {
                 try {
                   const { uri } = res.data;

@@ -19,7 +19,6 @@ import BrockenUtlGridView from "./BrockenUtlGridView";
 
 export default function NFTcard({ nft, index }) {
 
-
     const from = useSelector(state => state.general.from)
     const dispatch = useDispatch();
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
@@ -33,6 +32,8 @@ export default function NFTcard({ nft, index }) {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [whiteListed, setWhitelisted] = useState(true)
     const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
+    if(index === 1)console.log(ipfsArr?.length, ipfsArr)
+    
 
     useEffect(async() => {
       const whitelisted = await isWhiteListed(from.text, nft)
@@ -58,6 +59,13 @@ export default function NFTcard({ nft, index }) {
         }, 5000);
     }, [selectedNFTs]);
 
+    if(index === 3){
+      if(video && image)console.log("video image")
+      else if(!video && image) console.log("image")
+      else if(!image && video) console.log("video")
+      else if(ipfsArr?.length) console.log("arr")
+    }
+    console.log(isValidHttpUrl(nft.uri, index))
     
     return (
         <div className={`nft-box__wrapper`}
@@ -68,8 +76,8 @@ export default function NFTcard({ nft, index }) {
                 <div className="image__wrapper">
                   { nft.uri && isValidHttpUrl(nft.uri, index) ? 
                     video && image ? <VideoAndImage imageLoaded={() => imageLoadedHandler} videoUrl={videoUrl} imageUrl={imageUrl} />
-                  : image && !video ? <img onLoad={() => imageLoadedHandler} alt="#" src={setupURI(imageUrl)} /> 
-                  : (!image && video) ? <video onLoadedData={imageLoadedHandler} src={setupURI(videoUrl)} />
+                  : image && !video ? <img onLoad={() => imageLoadedHandler} alt="only image" src={setupURI(imageUrl)} /> 
+                  : !image && video ? <video onLoadedData={imageLoadedHandler} src={setupURI(videoUrl)} />
                   : ipfsArr?.length && <VideoOrImage urls={ipfsArr} i={index} />
                   : <BrockenUtlGridView />
                   }

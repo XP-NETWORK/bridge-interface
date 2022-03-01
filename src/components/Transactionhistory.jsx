@@ -8,10 +8,11 @@ import Check from '../assets/img/icons/Check_circle.svg';
 import Failed from '../assets/img/icons/Failed.svg';
 import Pending from '../assets/img/icons/Pending.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'tronweb/node_modules/axios';
+// import axios from 'tronweb/node_modules/axios';
 import { getFactory, setClaimablesAlgorand, setNFTS } from '../wallet/helpers';
 import { claimAlgorandPopup, removeAlgorandClaimable, setAlgorandClaimables, setTransferLoaderModal } from '../store/reducers/generalSlice';
 import { algoConnector } from "../wallet/connectors"
+import { axios } from 'axios';
 // Chain
 
 function Transactionhistory() {
@@ -90,7 +91,7 @@ export function AlgorandClaimable(props) {
         }
     }
 
-
+    
     const load = async () => {
         const res = await axios.get(uri)
         if(res.data) {

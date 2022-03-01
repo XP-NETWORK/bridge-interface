@@ -1,4 +1,4 @@
-import { getFactory } from '../../wallet/helpers'
+import { checkIfJSON, getFactory } from '../../wallet/helpers'
 import { CHAIN_INFO } from '../values'
 const supportedVideoFormats = [".mp4", ".ogg", ".webm", ".avi"]
 const supportedImageFormats = [".apng", ".gif", ".jpg", ".jpeg", ".png", ".svg", ".webp"]
@@ -13,10 +13,10 @@ const ifImage = item => {
 }
 
 export const getUrl = nft => {
-    let video
-    let videoUrl
-    let image
-    let imageUrl
+    let video = false
+    let videoUrl = false
+    let image = false
+    let imageUrl = false
     const values = Object.values(nft)
     let valuesForCheck = []
     let strings = []
@@ -58,7 +58,7 @@ export const getUrl = nft => {
         }
     });
     strings.forEach(item => {
-        if((item.includes("https:") || item.includes("ipfs") || item.includes("base64")) && !item.includes('.json')){
+        if((item.includes("https:") || item.includes("ipfs") || item.includes("base64")) && !item.includes('.json') && !checkIfJSON(item)){
             urls.push(item)
         }
     });
@@ -82,8 +82,6 @@ export const getUrl = nft => {
         ipfsArr = [...urls]
     }
     return { video, videoUrl, image ,imageUrl, ipfsArr }
-    
-    // return { video, url, ipfsArr }
 }
 
 export const isWhiteListed = async (from, nft) => {
