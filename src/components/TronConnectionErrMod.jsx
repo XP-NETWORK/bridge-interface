@@ -11,7 +11,7 @@ export default function TronConnectionErrMod() {
   const dispatch = useDispatch();
   const error = useSelector((state) => state.general.tronLoginError);
   const handleClose = () => {
-    console.log("click");
+    // console.log("click");
     dispatch(setTronLoginError(undefined));
   };
   //

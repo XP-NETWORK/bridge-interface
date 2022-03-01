@@ -106,7 +106,7 @@ function App() {
       <Video />
       <TechnicalSupport />
       {/* <TnProcess /> */}
-      <SuccessModal />
+      {/* <SuccessModal /> */}
       <TransferLoader />
       <TronConnectionErrMod />
       <ApproveLoader />

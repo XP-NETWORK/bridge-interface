@@ -30,7 +30,6 @@ export default function NFTcard({ nft, index }) {
         n.native.chainId === nft.native.chainId
     )[0];
     const [onHover, setOnHover] = useState(false)
-    console.log("🚀 ~ file: NFTcard.jsx ~ line 33 ~ NFTcard ~ onHover", onHover)
     const [imageLoaded, setImageLoaded] = useState(false);
     const [whiteListed, setWhitelisted] = useState(true)
     const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);

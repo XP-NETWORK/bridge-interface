@@ -9,8 +9,6 @@ import NFTcard from './NFTcard';
 /////`
 function NFTgridView() {
     const nfts = useSelector(state => state.general.NFTList)
-    console.log("🚀 ~ file: NFTgridView.jsx ~ line 12 ~ NFTgridView ~ nfts", nfts ? nfts[0]:'')
-
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const search = useSelector(state => state.general.NFTListSearch)
     const nftsPlace = window.innerWidth <= 600 ? 2 : 9

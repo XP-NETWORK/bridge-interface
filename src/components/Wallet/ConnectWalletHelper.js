@@ -28,7 +28,7 @@ import { setTronWallet,
   setQrImage, 
   setQrCodeString } from "../../store/reducers/generalSlice"
 
-
+export const wallets = ["MetaMask", "WalletConnect", "Trust Wallet", "MyAlgo", "AlgoSigner", "Algorand Wallet", "TronLink", "Temple Wallet", "Beacon", "Maiar", "Maiar Extension", "Ledger", "Trezor"]
 const { to, modalError } = store.getState()
 
 

@@ -37,7 +37,7 @@ function NFTlistTop() {
   const from = useSelector((state) => state.general.from);
   const widget = useSelector((state) => state.general.widget);
   const [showSearch, setShowSearch] = useState(false);
-
+  const [icon, setIcon] = useState(true)
   const handleSearch = (e) => {
     dispatch(setSearchNFTList(e.target.value));
   };
@@ -66,9 +66,6 @@ function NFTlistTop() {
     opacity: bigLoader ? 0.6 : 1,
   };
 
-  const dropdownHeandler = e => {
-  console.log("🚀 ~ file: NFTlistTop.jsx ~ line 70 ~ NFTlistTop ~ e", e)
-  }
 
   const off = { display: "none" };
   return (
@@ -119,13 +116,10 @@ function NFTlistTop() {
         </div>
         <div className="nftTopRIght">
           <div className="searchNft desktopOnly">
-            <Dropdown className="SearchDrop">
+            <Dropdown className="SearchDrop" autoClose="outside">
               <Dropdown.Toggle id="SearchDrop">
-                {widget ? (
-                  <SearchComp className="svgWidget" />
-                ) : (
-                  <img src={Search} alt="#" />
-                )}
+                
+                {widget ? icon && <SearchComp  onClick={() => setIcon(false)} className="svgWidget" /> : icon && <img onClick={() => setIcon(false)} src={Search} alt="#" />}
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <form action="#">

@@ -8,7 +8,6 @@ const axios = require("axios");
 export const setupURI = (uri) => {
   // debugger
   if (uri && (uri.includes("ipfs://"))) {
-    console.log("https://ipfs.io/" + uri.replace(":/", ""))
     return "https://ipfs.io/" + uri.replace(":/", "");
   }
   else if(uri && (uri.includes("data:image/") || uri.includes("data:application/"))){
@@ -74,7 +73,6 @@ if(from.key === "Tezos"){
       });
     })
   );
-  console.log("result: ", result)
   return result.filter((n) => n);
 };
 

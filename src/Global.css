@@ -820,8 +820,12 @@ span.wallet {
   border-radius: 9px;
 }
 
+.SearchDrop.dropdown input {
+  border: 1px solid  transparent;
+}
+
 .SearchDrop.dropdown input:focus {
-  outline: 1px solid #174aff;
+  border: 1px solid #297EFF;
 }
 
 .SearchDrop.dropdown input::placeholder {
