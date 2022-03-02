@@ -5,7 +5,7 @@ import { ReactComponent as PlayHover } from "../../../src/assets/img/icons/hover
 import { ReactComponent as Pause } from '../../../src/assets/img/icons/_pause.svg'
 import { ReactComponent as PauseHover } from '../../../src/assets/img/icons/hover_pause.svg'
 import { setupURI } from '../../wallet/oldHelper'
-export default function VideoAndImage({ videoUrl, imageUrl, imageLoadedHandler }) {
+export default function VideoAndImage({ videoUrl, imageUrl, imageLoadedHandler, index }) {
 
   const [play, setPlay] = useState(false)
   const [playHover, setPlayHover] = useState(null)

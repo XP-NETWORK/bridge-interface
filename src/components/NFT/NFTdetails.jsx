@@ -32,6 +32,8 @@ function NFTdetails({ nftInf }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [tryVideo, setTryVideo] = useState();
 
+  
+
   return (
     <>
       <div className="info-icon__container">
@@ -124,6 +126,7 @@ export default NFTdetails;
 
 function Attribute(props) {
   const { trait_type, display_type, value } = props;
+  console.log("Attribute: ", chainsConfig[value])
   return (
     <div className="nftToken nftInfBox">
       <label>

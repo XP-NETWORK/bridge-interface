@@ -7,7 +7,8 @@ import BrockenUtlGridView from "./BrockenUtlGridView";
 
 export default function VideoOrImage({ urls, i}) {
 
-console.log(i, 'idx')
+// console.log(i, urls)
+
     const [tryVideo, setTryVideo] = useState(false)
     const [urlIndex, setUrlIndex] = useState(0)
     const [noURL, setNoURL] = useState(false)

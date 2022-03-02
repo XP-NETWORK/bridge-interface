@@ -346,6 +346,7 @@ export const chainsConfig = {
   },
   Iotex: {
     type: EVM,
+    img: Iotex,
     token: "IOTX",
     rpc: "https://babel-api.mainnet.iotex.io",
     chainId: 4689,
@@ -355,6 +356,7 @@ export const chainsConfig = {
   Harmony: {
     type: EVM,
     token: "ONE",
+    img: One,
     rpc: "https://api.harmony.one",
     chainId: 1666600000,
     Chain: Chain.HARMONY,
