@@ -111,7 +111,7 @@ export default function ButtonToTransfer() {
                     toChain,  
                     nft,   
                     undefined,   
-                    receiverAddress,  
+                    receiverAddress || receiver,  
                     bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
                 )
@@ -130,7 +130,7 @@ export default function ButtonToTransfer() {
                     toChain,   
                     nft,      
                     signer,   
-                    receiverAddress,  
+                    receiverAddress || receiver,  
                     bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
                 )
