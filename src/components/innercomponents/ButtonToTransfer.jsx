@@ -5,7 +5,7 @@ import { CHAIN_INFO } from '../values'
 import { chainsConfig } from '../values'
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { algoConnector } from "../../wallet/connectors"
-import { getFactory,  setClaimablesAlgorand } from "../../wallet/helpers"
+import { getFactory,  setClaimablesAlgorand, checkIfOne1,  convertOne1, convert } from "../../wallet/helpers"
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
@@ -15,6 +15,8 @@ import { setError, setNFTsToWhitelist, setTransferLoaderModal, setTxnHash } from
 export default function ButtonToTransfer() {
     const kukaiWallet = useSelector(state => state.general.kukaiWallet)
     const receiver = useSelector(state => state.general.receiver)
+    const receiverAddress = convert(receiver)
+    console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 19 ~ ButtonToTransfer ~ receiverAddress", receiverAddress)
     const approved = useSelector(state => state.general.approved)
     const to = useSelector(state => state.general.to.key)
     const from = useSelector(state => state.general.from.key)
@@ -27,7 +29,6 @@ export default function ButtonToTransfer() {
     const maiarProvider = useSelector(state => state.general.maiarProvider)
     const account = useSelector(state => state.general.account)
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
-
 
     const getAlgorandWalletSigner = async () => {
         const base = new MyAlgoConnect();
@@ -110,7 +111,7 @@ export default function ButtonToTransfer() {
                     toChain,  
                     nft,   
                     undefined,   
-                    receiver,  
+                    receiverAddress,  
                     bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
                 )
@@ -129,7 +130,7 @@ export default function ButtonToTransfer() {
                     toChain,   
                     nft,      
                     signer,   
-                    receiver,  
+                    receiverAddress,  
                     bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
                 )

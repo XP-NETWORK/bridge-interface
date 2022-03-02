@@ -3,7 +3,8 @@ import { Chain, Config } from "xp.network/dist/consts";
 import { chainsConfig, CHAIN_INFO } from "../components/values";
 import { setAlgorandClaimables, setBigLoader, setFactory, setNFTList } from "../store/reducers/generalSlice";
 import store from "../store/store";
-
+// import { from } from "@iotexproject/iotex-address-ts";
+const { Harmony } = require('@harmony-js/core')
 const axios = require("axios");
 
 export const setupURI = (uri) => {
@@ -308,4 +309,33 @@ export const getTronNFTs = async wallet => {
     return tokens
   }
   return []
+}
+
+
+export const checkIfOne1 = (address) => {
+  return address?.slice(0,4) === "one1" ? true : false
+}
+
+export const checkIfIo1 = (address) => {
+  return address?.slice(0, 3) === "io1" ? true : false
+}
+
+export const convertOne1 = (address) => {
+  const hmySDK = new Harmony()
+  const ethAddr = hmySDK.crypto.fromBech32(address)
+  return ethAddr
+}
+
+// export const convertIo1 = (address) => {
+//   const addr = from(address)
+//   return addr.stringEth()
+// }
+
+export const convert = (address) => {
+  // debugger
+  if(checkIfOne1(address)){
+    console.log(convertOne1(address))
+    return convertOne1(address)
+  }
+  // else if(checkIfIo1(address)) return convertIo1(address)
 }

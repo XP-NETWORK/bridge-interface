@@ -21,6 +21,21 @@ import { ReactComponent as RefreshComp } from "../../assets/img/refresh.svg";
 import ChainListBox from "../Chains/ChainListBox";
 
 function NFTlistTop() {
+//   const { Harmony } = require('@harmony-js/core')
+//   const { ChainID, ChainType } = require('@harmony-js/utils')
+//   const shardID = 0
+//   const hmySDK = new Harmony(
+//     'https://api.s0.b.hmny.io',
+//     {
+//       chainType: ChainType.Harmony,
+//       chainId:ChainID.HmyMainnet,
+//       shardID,
+//     }
+//   )
+//   console.log("hmySDK.crypto: ", hmySDK.crypto);
+//   const arr = hmySDK.crypto.toBech32("0xb6C8748115d23Eb1c6d59Cb83eAe051b56ef75c7")
+//  console.log("toBech32: ", arr);
+ 
   const dispatch = useDispatch();
   const nfts = useSelector((state) => state.general.NFTList);
   const {

@@ -2234,7 +2234,8 @@ span.invalid img {
 
 .ComentBox {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   padding: 10px;
 }
 
