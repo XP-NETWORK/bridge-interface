@@ -169,6 +169,8 @@ export const handleChainFactory = async (someChain) => {
         return await factory.inner(Chain.IOTEX)
       case "Harmony":
         return await factory.inner(Chain.HARMONY)
+      case "Aurora":
+        return await factory.inner(Chain.AURORA)
       default: return ''
     }
   } catch (error) {

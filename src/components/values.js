@@ -222,6 +222,18 @@ export const chains = [
     newChain: true,
     // off: true
   },
+  {
+    type: "EVM",
+    key: "Aurora",
+    text: "Aurora",
+    value: "Aurora",
+    order: 4,
+    image: { avatar: true, src: One },
+    maintenance: false,
+    testnet: false,
+    mainnet: true,
+    newChain: true
+  }
 ];
 
 export const chainsConfig = {
@@ -363,6 +375,15 @@ export const chainsConfig = {
     tx: "https://explorer.harmony.one/tx/",
     testTx: "https://explorer.testnet.harmony.one/tx/",
   },
+  Aurora: {
+    type: EVM,
+    token: "AETH",
+    image: One,
+    rpc: "https://mainnet.aurora.dev",
+    chainId: 1313161554,
+    Chain: Chain.AURORA,
+    tx: "https://explorer.mainnet.aurora.dev/tx/"
+  }
 };
 
 export const coins = [
@@ -383,6 +404,7 @@ export const coins = [
   "TEZOS", //14
   "IOTX", //15
   "ONE", //16
+  "AETH", //17
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -565,4 +587,13 @@ export const CHAIN_INFO = {
     blockExplorerUrls: "",
     contract: "",
   },
+  Aurora: {
+    native: coins[17],
+    nonce: 0x15,
+    decimals: 1e18,
+    rpc: "https://mainnet.aurora.dev",
+    chainId: 1313161554,
+    blockExplorerUrls: "",
+    contract: "",
+  }
 };
