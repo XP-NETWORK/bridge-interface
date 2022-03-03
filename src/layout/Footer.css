@@ -1,0 +1,47 @@
+
+footer {
+    margin-top: auto;
+  }
+  
+  .footContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 8px 45px 25px 45px;
+    border: 1px solid #292f3f;
+  }
+  
+  ul.socialLInks {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+  }
+  
+  ul.socialLInks li {
+    margin-right: 6px;
+  }
+  
+  a.socliLink img {
+    width: 24px;
+  }
+  
+  ul.socialLInks li img:hover {
+    filter: brightness(100);
+  }
+  
+  .footRight {
+    display: flex;
+  }
+  
+  .powerBy {
+    /* margin-right: 98px; */
+  }
+  
+  .powerBy img {
+    display: block;
+    /* margin-left: 15px; */
+  }
+  

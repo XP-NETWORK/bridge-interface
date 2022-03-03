@@ -63,59 +63,6 @@ h3 {
   margin: 0;
 }
 
-.navBrand:hover {
-  cursor: pointer;
-}
-
-.HeaderArea {
-  padding: 8px 45px;
-}
-
-.navContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 44px;
-}
-
-.navMenu.navbar-nav {
-  margin-left: auto;
-  overflow: hidden;
-}
-
-.account__box {
-  width: 190px;
-  height: 40px;
-  background: #232833;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #4532b5;
-  color: white;
-}
-
-.account__box:hover {
-  border: 1px solid #3e64ed;
-}
-
-.navMenu.navbar-nav .nav-link {
-  margin-left: 7px;
-  font-size: 15px;
-  line-height: 126%;
-  display: inline-flex;
-  align-items: center;
-  text-align: right;
-  color: #f4f3f9;
-  opacity: 0.9;
-}
-
-.navMenu.navbar-nav .nav-link.active,
-.navMenu.navbar-nav .nav-link:hover {
-  color: #f4f3f9;
-  opacity: 1;
-}
-
 div#root {
   min-height: 100vh;
   display: flex;
@@ -138,52 +85,6 @@ div#root:after {
   top: 110px;
   position: absolute;
   z-index: -1;
-}
-
-footer {
-  margin-top: auto;
-}
-
-.footContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 8px 45px 25px 45px;
-  border: 1px solid #292f3f;
-}
-
-ul.socialLInks {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  align-items: center;
-}
-
-ul.socialLInks li {
-  margin-right: 6px;
-}
-
-a.socliLink img {
-  width: 24px;
-}
-
-ul.socialLInks li img:hover {
-  filter: brightness(100);
-}
-
-.footRight {
-  display: flex;
-}
-
-.powerBy {
-  /* margin-right: 98px; */
-}
-
-.powerBy img {
-  display: block;
-  /* margin-left: 15px; */
 }
 
 .priPoli {
@@ -2253,38 +2154,8 @@ span.invalid img {
   color: #fff;
 }
 
-.navbar-light .navbar-toggler span.navbar-toggler-icon {
-  display: none;
-}
-.navBrand{
-  position: relative;
-}
 
-.testnet{
-  color: #fff;
-  position: absolute;
-  /* max-height: 18px; */
-  background: linear-gradient(103.87deg, rgba(8, 78, 215, 0.66) -74.95%, rgba(143, 55, 255, 0.66) 122.06%);
-  padding:  4px;
-  right: 0;
-  top: 32px;
-  font-size: 12px;
-  line-height: 10px;
-  border-radius: 4px;
-}
 
-.mainnet{
-  color: #fff;
-  position: absolute;
-  /* max-height: 18px; */
-  background: linear-gradient(103.87deg, rgba(215, 32, 8, 0.66) -74.95%, rgb(212, 72, 7) 122.06%);
-  padding:  4px;
-  left: 0;
-  top: 32px;
-  font-size: 12px;
-  line-height: 10px;
-  border-radius: 4px;
-}
 
 .navbar-light .navbar-toggler:after {
   content: url("./assets/img/icons/Hambar.svg");
@@ -2314,10 +2185,6 @@ span.invalid img {
     background: none;
 } */
 
-.navMenu.navbar-nav .nftConnect.nav-link img {
-  margin-left: 6px;
-  margin-top: -2px;
-}
 
 .accountBox {
   /* position: absolute; */
@@ -2810,13 +2677,7 @@ span.transPend {
   pointer-events: none;
 }
 
-@media (max-width: 931px) {
-  .navBrand img {
-    width: 250px !important;
-    max-width: unset;
-    margin-bottom: 2px !important;
-  }
-}
+
 
 @media screen and (max-width: 425px) {
   .bridgeBody {
