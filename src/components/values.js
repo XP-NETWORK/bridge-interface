@@ -15,6 +15,7 @@ import Velas from "../assets/img/chain/velas.svg";
 import Tezos from "../assets/img/chain/Tezos.svg";
 import Iotex from "../assets/img/chain/iotx.svg";
 import One from "../assets/img/chain/One.svg";
+import Aurora from "../assets/img/chain/aurora.svg"
 import { Chain } from "xp.network/dist/consts";
 
 export const EVM = "EVM";
@@ -228,7 +229,7 @@ export const chains = [
     text: "Aurora",
     value: "Aurora",
     order: 4,
-    image: { avatar: true, src: One },
+    image: { avatar: true, src: Aurora },
     maintenance: false,
     testnet: false,
     mainnet: true,
@@ -378,7 +379,7 @@ export const chainsConfig = {
   Aurora: {
     type: EVM,
     token: "AETH",
-    image: One,
+    image: Aurora,
     rpc: "https://mainnet.aurora.dev",
     chainId: 1313161554,
     Chain: Chain.AURORA,

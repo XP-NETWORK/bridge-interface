@@ -16,7 +16,7 @@ export default function ButtonToTransfer() {
     const kukaiWallet = useSelector(state => state.general.kukaiWallet)
     const receiver = useSelector(state => state.general.receiver)
     const receiverAddress = convert(receiver)
-    console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 19 ~ ButtonToTransfer ~ receiverAddress", receiverAddress)
+    // console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 19 ~ ButtonToTransfer ~ receiverAddress", receiverAddress)
     const approved = useSelector(state => state.general.approved)
     const to = useSelector(state => state.general.to.key)
     const from = useSelector(state => state.general.from.key)

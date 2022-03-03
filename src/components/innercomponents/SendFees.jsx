@@ -19,7 +19,7 @@ function SendFees() {
     const [estimateInterval, setEstimateInterval] = useState()
 
     async function estimate () {
-
+        // debugger
         let fact
         let fee
         try {

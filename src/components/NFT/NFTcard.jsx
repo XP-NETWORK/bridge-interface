@@ -32,7 +32,7 @@ export default function NFTcard({ nft, index }) {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [whiteListed, setWhitelisted] = useState(true)
     const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
-    if(index === 1)console.log(video, videoUrl, imageUrl, image, ipfsArr.length, isValidHttpUrl(nft.uri, index))
+    // if(index === 1)console.log(video, videoUrl, imageUrl, image, ipfsArr.length, isValidHttpUrl(nft.uri, index))
     
 
     useEffect(async() => {
@@ -68,8 +68,8 @@ export default function NFTcard({ nft, index }) {
                 <div className="image__wrapper">
                   { nft.uri && isValidHttpUrl(nft.uri, index) ? 
                     video && image ? <VideoAndImage index={index} imageLoaded={() => imageLoadedHandler} videoUrl={videoUrl} imageUrl={imageUrl} />
-                  : image && !video ? <img onLoad={() => imageLoadedHandler} alt="only image" src={setupURI(imageUrl)} /> 
-                  : !image && video ? <video onLoadedData={imageLoadedHandler} src={setupURI(videoUrl)} />
+                  : image && !video ? <img onLoad={() => imageLoadedHandler} alt="only image"  src={setupURI(imageUrl)} /> 
+                  : !image && video ? <video onLoadedData={imageLoadedHandler} controls={false}  playsInline={true} autoPlay={true} loop={true}  muted={true} src={setupURI(videoUrl)} />
                   : ipfsArr?.length && <VideoOrImage urls={ipfsArr} i={index} />
                   : <BrockenUtlGridView />
                   }

@@ -1685,6 +1685,7 @@ li.nftSelecItem .Close:hover {
   border-radius: 20px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   color: #62718a;
   height: 62px;
   padding: 16px;
@@ -2886,17 +2887,14 @@ span.transPend {
 }
 
 @media screen and (max-width: 375px) {
-  /* .successBox {
-    padding: 8px 20px !important;
-  }
-  .approve-loader__container__text {
-    left: 39%;
-  } */
   .bridgeBody {
     background-position: left 50% top 80px,
       /*Ellipse\ 235*/left 50% top 177.15px, /*Ellipse\ 236*/left 2% top 5%,
       /*l-figure*/ right -5% top 20%, /*r-figure*/ left -10% top 25%,
       /*l-sphere*/ right 5% top 5%, /*r-sphere*/ right -55% top 39%; /*r-triangle*/
+  }
+  .approve-loader__container__text {
+    left: 37% !important;
   }
 }
 
