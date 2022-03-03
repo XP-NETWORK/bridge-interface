@@ -16771,7 +16771,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "0.1.0"
-  resolved "git+https://github.com/xp-network/xpjs#58913d921e7fa8b45b2cbfec1ea090cc5c93e053"
+  resolved "git+https://github.com/xp-network/xpjs#e4ca3f86f8e522b10880b035efa6c0da4c034347"
   dependencies:
     "@elrondnetwork/erdjs" "^8.0.1-alpha.8"
     "@json-rpc-tools/utils" "^1.7.6"
