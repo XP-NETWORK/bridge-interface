@@ -16,6 +16,12 @@ body {
   line-height: 160%;
 }
 
+.multibackground{
+  position: absolute;
+  background-color: #E5E5E5;
+  background-image: url("../src/assets//img//slider//slider_3.png");
+}
+
 .widgetBlack {
   color: black !important;
 }

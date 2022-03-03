@@ -122,7 +122,7 @@ function App() {
         <img src={star} alt="" />
         Get Featured
       </div>
-      <Slider />
+      {/* <Slider /> */}
     </div>
   );
 }
