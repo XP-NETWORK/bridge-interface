@@ -98,7 +98,7 @@ export const chains = [
     value: "Fantom",
     order: 9,
     image: { avatar: true, src: Fantom },
-    maintenance: false,
+    maintenance: true,
     testNet: false,
     mainnet: true
   },
@@ -167,7 +167,7 @@ export const chains = [
     value: "Fuse",
     order: 11,
     image: { avatar: true, src: Fuse },
-    maintenance: false,
+    maintenance: true,
     testNet: false,
     mainnet: true
   },
