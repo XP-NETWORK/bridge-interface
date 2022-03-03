@@ -16,6 +16,17 @@ body {
   line-height: 160%;
 }
 
+.App{
+  position: relative;
+}
+
+.try__container{
+  position: absolute;
+  height: 100%;
+  width: 100vw;
+  background-color: white;
+}
+
 .widgetBlack {
   color: black !important;
 }

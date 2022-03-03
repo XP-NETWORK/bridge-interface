@@ -35,16 +35,10 @@ import WSettings from "./components/Settings";
 
 function App() {
   const dispatch = useDispatch();
-  // const loader = useSelector(state => state.general.approveLoader)
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
-  // const error = useSelector(state => state.general.error)
-  // const tronPopUp = useSelector(state => state.general.tronPopUp)
-  // const nftsToWhitelist = useSelector(state => state.general.techModal)
   const state = useSelector((state) => state.general);
-
   const axios = require("axios");
   const widget = new URLSearchParams(window.location.search).get("widget");
-
   const checkValidators = async () => {
     let res;
     try {
@@ -101,7 +95,6 @@ function App() {
 
   return (
     <div className={"App"}>
-      {/* <div className="try__container"></div> */}
       {state.wsettings && <WSettings />}
       <About />
       <Video />
