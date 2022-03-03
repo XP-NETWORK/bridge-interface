@@ -1,5 +1,8 @@
 .HeaderArea {
     padding: 8px 45px;
+    /* width: 1024px;
+    margin: 0 auto; */
+    background-color: tomato;
   }
 
   .navBrand{
