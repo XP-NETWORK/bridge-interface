@@ -5,6 +5,7 @@ import AccountModal from "../components/AccountModal"
 import { Navbar, Nav, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { setAccountModal, setReset } from '../store/reducers/generalSlice';
+import "./NavBar.css"
 
 function NavBar() {
 

@@ -1,0 +1,93 @@
+.HeaderArea {
+    padding: 8px 45px;
+  }
+
+  .navBrand{
+    position: relative;
+  }
+
+.navBrand:hover {
+    cursor: pointer;
+  }
+
+
+.navContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 44px;
+}
+  
+.navMenu.navbar-nav {
+    margin-left: auto;
+    overflow: hidden;
+}
+  
+  .navMenu.navbar-nav .nav-link {
+    margin-left: 7px;
+    font-size: 15px;
+    line-height: 126%;
+    display: inline-flex;
+    align-items: center;
+    text-align: right;
+    color: #f4f3f9;
+    opacity: 0.9;
+  }
+  
+  .navMenu.navbar-nav .nav-link.active,
+  .navMenu.navbar-nav .nav-link:hover {
+    color: #f4f3f9;
+    opacity: 1;
+  }
+  
+
+  .account__box {
+    width: 190px;
+    height: 40px;
+    background: #232833;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #4532b5;
+    color: white;
+  }
+  
+  .account__box:hover {
+    border: 1px solid #3e64ed;
+  }
+
+  .navbar-light .navbar-toggler span.navbar-toggler-icon {
+    display: none;
+  }
+  .navBrand{
+    position: relative;
+  }
+
+  .navMenu.navbar-nav .nftConnect.nav-link img {
+    margin-left: 6px;
+    margin-top: -2px;
+  }
+  
+
+  .testnet{
+    color: #fff;
+    position: absolute;
+    /* max-height: 18px; */
+    background: linear-gradient(103.87deg, rgba(8, 78, 215, 0.66) -74.95%, rgba(143, 55, 255, 0.66) 122.06%);
+    padding:  4px;
+    right: 0;
+    top: 32px;
+    font-size: 12px;
+    line-height: 10px;
+    border-radius: 4px;
+  }
+  
+
+  @media (max-width: 931px) {
+    .navBrand img {
+      width: 250px !important;
+      max-width: unset;
+      margin-bottom: 2px !important;
+    }
+  }
