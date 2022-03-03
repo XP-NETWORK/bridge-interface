@@ -32,6 +32,7 @@ import SuccessModal from "./components/Modals/SuccessModal";
 import Settings from "./components/Settings";
 
 import WSettings from "./components/Settings";
+import Slider from "./components/Slider/Slider";
 
 function App() {
   const dispatch = useDispatch();
@@ -121,6 +122,7 @@ function App() {
         <img src={star} alt="" />
         Get Featured
       </div>
+      <Slider />
     </div>
   );
 }

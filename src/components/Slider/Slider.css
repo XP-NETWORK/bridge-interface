@@ -1,0 +1,7 @@
+.slider__wrapper{
+    /* background-color: tomato; */
+    width: 500px;
+    max-height: 525;
+    border-radius: 20px;
+    overflow: hidden;
+}
