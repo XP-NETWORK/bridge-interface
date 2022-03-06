@@ -85,9 +85,11 @@ export default function ChainListBox(props) {
       className="ChainModal"
     >
       <Modal.Header className="text-left">
-        <Modal.Title>{`Select ${
+        <Modal.Title>
+          <div className="chain-list__header">{`Select ${
           departureOrDestination === "destination" ? "destination" : "departure"
-        } chain`}</Modal.Title>
+        } chain`}</div>
+        </Modal.Title>
         <span className="CloseModal" onClick={() => handleClose()}>
           {widget ? <CloseComp className="svgWidget" /> : <img src={Close} alt="" />}
         </span>
