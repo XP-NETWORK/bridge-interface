@@ -418,6 +418,8 @@
 .image--toggle, .video--toggle{
   /* background: rgb(255, 255, 255); */
   border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
 }
 
 .triangle--toggle{
