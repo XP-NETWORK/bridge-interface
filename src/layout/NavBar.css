@@ -56,7 +56,9 @@
 .navbar-light .navbar-toggler{
   border-color:transparent;
 }
-
+.navbar-light .navbar-toggler:after {
+  content: url("../assets/img//nav/burger.svg");
+}
 
 /* .navBrand{
   position: relative;
@@ -132,5 +134,8 @@
     .HeaderArea {
       width: 768px;
       margin: 0 auto;
-  }
+    }
+    .navbar{
+      padding: 0;
+    }
   }

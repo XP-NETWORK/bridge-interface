@@ -2170,10 +2170,6 @@ span.invalid img {
 
 
 
-.navbar-light .navbar-toggler:after {
-  content: url("./assets/img/icons/Hambar.svg");
-}
-
 .collecSlideCont .slideItem {
   padding: 0 15px;
 }
