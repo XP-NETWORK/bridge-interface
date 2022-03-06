@@ -15,7 +15,7 @@ export default function NFTlistedCard({nft, index}) {
   const [whitelisted, setWhitelisted] = useState(false)
   const OFF = {pointerEvents: "none"}
   const [onHover, setOnHover] = useState(false)
-
+  const [preloadListed, setPreloadListed] = useState(false)
 
   const checkIfSelected = ( nft ) => {
     return selectedNFTs.filter(n => n.native.tokenId === nft.native.tokenId && n.native.contract === nft.native.contract && n.native.chainId === nft.native.chainId)[0]
@@ -51,10 +51,12 @@ export default function NFTlistedCard({nft, index}) {
         <span className="name" onClick={(e) => addRemoveNFT(nft, e)}>{nft?.data?.name || nft?.name || nft?.native.name}</span>
     </div>
     <NFTdetails nftInf={nft}/>
-    { (!whitelisted && onHover) && <div className='listed-view__not-whitelisted'>
+    {(!whitelisted && onHover) && <div className='listed-view__not-whitelisted'>
       <div className="listed-view__not-whitelisted__text">Not Whitelisted</div>
-      <a href='https://t.me/XP_NETWORK_Technical_Support' className="listed-view__not-whitelisted__button" target="_blank">Tech support</a>
-    </div>}
+      <a href='https://t.me/XP_NETWORK_Technical_Support' className="listed-view__not-whitelisted__button" rel="noreferrer" target="_blank">Tech support</a>
+    </div>
+    }
+    {/* { !preloadListed && <div className='preload__nftListed'></div> } */}
   </li>
   )
 }

@@ -26,9 +26,11 @@
   gap: 20px;
 }
 
-/* .nftListed{
-  display: flex;
-} */
+.preload__nftListed{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
 
 .nftListed__info{
   display: flex;

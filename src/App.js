@@ -57,9 +57,9 @@ function App() {
     console.log("accountsChanged: ", accounts[0])
   })
 
-  // useEffect(() => {
-  //   dispatch(setTestNet(window.location.href.indexOf("testnet.") > 0));
-  // });
+  useEffect(() => {
+    dispatch(setTestNet(window.location.href.indexOf("testnet.") > 0));
+  });
 
   useEffect(async () => {
     const from = new URLSearchParams(window.location.search).get("from");
