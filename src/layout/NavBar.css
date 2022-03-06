@@ -1,47 +1,87 @@
 .HeaderArea {
-    padding: 8px 45px;
-  }
-
-  .navBrand{
-    position: relative;
-  }
-
+    /* padding: 8px 45px; */
+    width: 1024px;
+    margin: 0 auto;
+}
+.navbar{
+  padding: 0;
+}
+.navbar-brand {
+  padding: 0;
+  display: flex;
+  gap: 7.67px;
+}
+.logo__text{
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.04em;
+  padding-top: 32px;
+}
+.navbar-collapse{
+  justify-content: flex-end;
+  margin-top: 19px;
+}
+.navMenu{
+  gap: 2px;
+}
+.navMenu__link{
+  padding: 10px 16px;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: center;
+  border-radius: 76px;
+  color: #14161A;
+}
+.navMenu__link:hover{
+  background: rgba(255, 255, 255, 0.4);
+}
 .navBrand:hover {
     cursor: pointer;
-  }
-
-
-.navContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 44px;
 }
-  
 .navMenu.navbar-nav {
     margin-left: auto;
     overflow: hidden;
 }
+.navbar-light .navbar-toggler span.navbar-toggler-icon {
+  display: none;
+  padding: 0;
+}
+.navbar-light .navbar-toggler{
+  border-color:transparent;
+}
+
+
+/* .navBrand{
+  position: relative;
+} */
+
   
-  .navMenu.navbar-nav .nav-link {
-    margin-left: 7px;
-    font-size: 15px;
-    line-height: 126%;
-    display: inline-flex;
-    align-items: center;
-    text-align: right;
-    color: #f4f3f9;
-    opacity: 0.9;
-  }
   
-  .navMenu.navbar-nav .nav-link.active,
+ /* .navMenu.navbar-nav .nav-link {
+  font-size: 15px;
+  line-height: 126%;
+  display: inline-flex;
+  align-items: center;
+  text-align: right;
+  color: #14161A;
+  opacity: 0.9;
+}  */
+  
+  /* .navMenu.navbar-nav .nav-link.active,
   .navMenu.navbar-nav .nav-link:hover {
     color: #f4f3f9;
     opacity: 1;
   }
-  
+   */
 
-  .account__box {
+  /* .account__box {
     width: 190px;
     height: 40px;
     background: #232833;
@@ -52,28 +92,24 @@
     border: 1px solid #4532b5;
     color: white;
   }
-  
-  .account__box:hover {
+   */
+  /* .account__box:hover {
     border: 1px solid #3e64ed;
-  }
+  } */
 
-  .navbar-light .navbar-toggler span.navbar-toggler-icon {
-    display: none;
-  }
-  .navBrand{
+  /* .navBrand{
     position: relative;
-  }
+  } */
 
-  .navMenu.navbar-nav .nftConnect.nav-link img {
+  /* .navMenu.navbar-nav .nftConnect.nav-link img {
     margin-left: 6px;
     margin-top: -2px;
   }
-  
+   */
 
-  .testnet{
+   /* .testnet{
     color: #fff;
     position: absolute;
-    /* max-height: 18px; */
     background: linear-gradient(103.87deg, rgba(8, 78, 215, 0.66) -74.95%, rgba(143, 55, 255, 0.66) 122.06%);
     padding:  4px;
     right: 0;
@@ -81,13 +117,20 @@
     font-size: 12px;
     line-height: 10px;
     border-radius: 4px;
-  }
+  }  */
   
 
-  @media (max-width: 931px) {
+  /* @media (max-width: 931px) {
     .navBrand img {
       width: 250px !important;
       max-width: unset;
       margin-bottom: 2px !important;
     }
+  } */
+
+  @media screen and (max-width: 1024px) {
+    .HeaderArea {
+      width: 768px;
+      margin: 0 auto;
+  }
   }

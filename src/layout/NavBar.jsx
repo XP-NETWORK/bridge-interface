@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Logo from '../assets/img/nav/Logo.svg';
+// import Logo from '../assets/img/nav/Logo.svg';
+import Logo from "../assets/img/nav/newXpLogo.svg"
 import NftSelect from '../assets/img/nftselect.svg';
 import AccountModal from "../components/AccountModal"
 import { Navbar, Nav, Modal } from "react-bootstrap";
@@ -36,12 +37,13 @@ function NavBar() {
     }
 
     return (
-        !widget?<header className="HeaderArea" id="Header"> 
+        !widget && <header className="HeaderArea" id="Header"> 
             <Navbar expand="lg">    
                 <Navbar.Brand 
                 onClick={() => dispatch(setReset())}  
                 className="navBrand">
                     <img src={Logo} alt="Xp Network"/>
+                    <div className="logo__text">MULTICHAIN NFT BRIDGE</div>
                     { testnet && <span className="testnet">TestNet</span>}
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -50,21 +52,19 @@ function NavBar() {
                             <Nav.Link className="navMenu__link" target="_blank" href="https://xp.network/">Home</Nav.Link>
                             <Nav.Link className="navMenu__link" target="_blank" href="https://docs.xp.network/">Docs</Nav.Link>
                             <Nav.Link className="navMenu__link" target="_blank" href="https://stake.xp.network">Staking</Nav.Link>
-                            { setAddress() ? 
-                                <Nav.Link className="nftConnect navMenu__link" onClick={handleShow}>
-                                    <div className="account__box">
-                                        {setAddress() ?`${setAddress().substring(0, window.innerWidth <= 600 ? 16 : 10)}...${setAddress().substring(setAddress().length - 2)}`:''} 
-                                        <img src={NftSelect} alt='' />
-                                    </div>
-                                </Nav.Link> 
-                                :
-                                ''
+                            { setAddress() && 
+                            <Nav.Link className="nftConnect navMenu__link" onClick={handleShow}>
+                                <div className="account__box">
+                                    {setAddress() ?`${setAddress().substring(0, window.innerWidth <= 600 ? 16 : 10)}...${setAddress().substring(setAddress().length - 2)}`:''} 
+                                    <img src={NftSelect} alt='' />
+                                </div>
+                            </Nav.Link>
                             }
                         </Nav>
                     </Navbar.Collapse>
                 <AccountModal />
             </Navbar>
-        </header> : ''
+        </header>
     )
 }
 

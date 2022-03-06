@@ -1,9 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
 
-/* 
-font-family: 'Inconsolata', monospace;
-font-family: 'Inter', sans-serif;
-*/
+:root{
+  --mobileS: "320px";
+  --mobileM: "375px";
+  --tablet: "768px";
+  --laptop: "1024px";
+  --laptopL: "1440px"
+}
+
 
 html,
 body {
@@ -19,7 +23,9 @@ body {
 .multibackground{
   position: absolute;
   background-color: #E5E5E5;
-  background-image: url("../src/assets//img//slider//slider_3.png");
+  width: 100vw;
+  height: 100%;
+  /* background-image: url("../src/assets//img//slider//slider_3.png"); */
 }
 
 .widgetBlack {
