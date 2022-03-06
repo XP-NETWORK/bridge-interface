@@ -118,10 +118,10 @@ function App() {
       <XpBridge />
       <Alert />
 
-      <div onClick={showGetFeatured} className="get-featured">
+      {/* <div onClick={showGetFeatured} className="get-featured">
         <img src={star} alt="" />
         Get Featured
-      </div>
+      </div> */}
       {/* <Slider /> */}
     </div>
   );
