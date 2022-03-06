@@ -33,12 +33,19 @@ import Settings from "./components/Settings";
 
 import WSettings from "./components/Settings";
 
+
 function App() {
   const dispatch = useDispatch();
+  // const loader = useSelector(state => state.general.approveLoader)
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
+  // const error = useSelector(state => state.general.error)
+  // const tronPopUp = useSelector(state => state.general.tronPopUp)
+  // const nftsToWhitelist = useSelector(state => state.general.techModal)
   const state = useSelector((state) => state.general);
+
   const axios = require("axios");
   const widget = new URLSearchParams(window.location.search).get("widget");
+
   const checkValidators = async () => {
     let res;
     try {
@@ -52,10 +59,6 @@ function App() {
   const showGetFeatured = () => {
     dispatch(setGetFeaturedModal(true));
   };
-
-  // window.ethereum?.on('accountsChanged', accounts => {
-  //   console.log("accountsChanged: ", accounts[0])
-  // })
 
   useEffect(() => {
     dispatch(setTestNet(window.location.href.indexOf("testnet.") > 0));
@@ -100,8 +103,8 @@ function App() {
   return (
     <div className={"App"}>
       {state.wsettings && <WSettings />}
-      <About />
-      <Video />
+      {/* <About /> */}
+      {/* <Video /> */}
       <TechnicalSupport />
       {/* <TnProcess /> */}
       {/* <SuccessModal /> */}
@@ -115,10 +118,11 @@ function App() {
       <XpBridge />
       <Alert />
 
-      <div onClick={showGetFeatured} className="get-featured">
+      {/* <div onClick={showGetFeatured} className="get-featured">
         <img src={star} alt="" />
         Get Featured
-      </div>
+      </div> */}
+      {/* <Slider /> */}
     </div>
   );
 }
