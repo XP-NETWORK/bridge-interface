@@ -76,7 +76,7 @@ export const chains = [
     value: "Polygon",
     order: 8,
     image: { avatar: true, src: Polygon },
-    maintenance: false,
+    maintenance: true,
     testNet: true,
     mainnet: true
   },
@@ -98,7 +98,7 @@ export const chains = [
     value: "Fantom",
     order: 9,
     image: { avatar: true, src: Fantom },
-    maintenance: false,
+    maintenance: true,
     testNet: false,
     mainnet: true
   },
