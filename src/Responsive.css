@@ -30,19 +30,6 @@
 
 }
 
-
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-
-}
-
-@media only screen and (max-width: 991px) {
-
-}
-    
-@media only screen and (min-width: 426px) and (max-width: 767px) {
-   
-}
-
 @media only screen and (min-width: 860px) {
     .mobileOnly {
         display: none !important;
@@ -53,27 +40,12 @@
     .sendNftTit {
         margin-top: -50px;
     }
-    /* .navMenu{
-        border-radius: 20px;
-        border: 1px solid #2D3342;
-    } */
-
-    /* .navMenu .navMenu__link{
-        width: 100%;
-        background-color: #232833;
-        padding: 23px;
-        margin: 0 !important;
-    } */
 
     .nftConnect{
         
         display: flex;
         justify-content: center;
     }
-
-    /* .navMenu__link:hover{
-        background-color: #292E3B;
-    } */
 
     .nftConnect{
         padding-bottom: 24px;
@@ -157,7 +129,6 @@
     }
 
     .desChain span {
-        /* margin-left: 20px; */
         padding: 0px 20px;
         justify-content: space-between;
     }
@@ -189,10 +160,6 @@
         width: 90vw;
     }
 
-    /* .modal {
-        padding: 0 !important;
-    } */
-
     .nftWorng .modal-dialog,
     .ChainModal .modal-dialog,
     .NftDetails .modal-dialog {
@@ -217,14 +184,6 @@
         margin-bottom: 8px;
     }
 
-    /* .modal-dialog {
-        margin: 30px auto 0 auto;
-    } */
-   
-    /* .nftSuccessMod .modal-dialog {
-       transform: scale(0.8);
-    } */
-
     .nftSuccessMod .modal-content {
         padding: 0 20px;
         /* border-radius: 0; */
@@ -233,10 +192,6 @@
     .modal-header {
         min-height: 56px;
     }
-
-    /* .nftSuccessMod .modal-header {
-        margin-top: 20px;
-    } */
 
     .transferTable.table thead th, .transferTable.table tr td {
         padding: 12px !important;
@@ -292,20 +247,11 @@
         margin-top: 60px;
     }
 
-    .HeaderArea {
-        padding: 8px 16px;
-    }
-
-    .navbar {
+    /* .navbar {
         padding: 0 !important;
         align-items: center;
-    }
-    .navbar-light .navbar-toggler:after{
-        margin-top: 21px;
-        top: -13px;
-        right: 0px;
-        position: absolute;
-    }
+    } */
+
     .nftTopRIght {
         position: relative;
     }
@@ -424,11 +370,6 @@
         height: auto;
     }
 
-    .navMenu.navbar-nav .nav-link {
-        /* margin-left: 0;
-        max-width: fit-content; */
-    }
-
     .infText {
         right: -15px;
     }
@@ -438,7 +379,7 @@
     }
 
 
-} /* max-width: 767px */
+} 
        
 @media only screen and (max-width: 775px) {
     .accountBox {
@@ -449,10 +390,6 @@
             /* max-height: 160px !important; */
     }
 }
-    
-@media only screen and (min-width: 320px) and (max-width: 425px) {
-	
-}    
 
 @media only screen and (max-width: 480px) {
 
@@ -469,8 +406,3 @@
     }
 	
 }
-      
-@media only screen and (max-width: 375px) {
-
-}
-   

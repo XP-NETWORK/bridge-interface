@@ -1,5 +1,5 @@
 .HeaderArea {
-    /* padding: 8px 45px; */
+    padding: 0 16px;
     width: 1024px;
     margin: 0 auto;
 }
@@ -12,6 +12,7 @@
   gap: 7.67px;
 }
 .logo__text{
+  position: relative;
   font-family: Montserrat;
   font-size: 16px;
   font-style: normal;
@@ -23,6 +24,7 @@
 .navbar-collapse{
   justify-content: flex-end;
   margin-top: 19px;
+  height: 0px;
 }
 .navMenu{
   gap: 2px;
@@ -43,7 +45,7 @@
   background: rgba(255, 255, 255, 0.4);
 }
 .navBrand:hover {
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 .navMenu.navbar-nav {
     margin-left: auto;
@@ -58,11 +60,28 @@
 }
 .navbar-light .navbar-toggler:after {
   content: url("../assets/img//nav/burger.svg");
+  margin-top: 21px;
+  top: -13px;
+  right: 0px;
+  position: absolute;
+}
+.navBrand{
+  position: relative;
+  cursor: pointer;
 }
 
-/* .navBrand{
-  position: relative;
-} */
+
+.testnet{
+ color: #fff;
+ position: absolute;
+ background: linear-gradient(103.87deg, rgba(8, 78, 215, 0.66) -74.95%, rgba(143, 55, 255, 0.66) 122.06%);
+ padding:  4px;
+ right: 0;
+ top: 14px;
+ font-size: 12px;
+ line-height: 10px;
+ border-radius: 4px;
+} 
 
   
   
@@ -99,27 +118,13 @@
     border: 1px solid #3e64ed;
   } */
 
-  /* .navBrand{
-    position: relative;
-  } */
+
 
   /* .navMenu.navbar-nav .nftConnect.nav-link img {
     margin-left: 6px;
     margin-top: -2px;
   }
    */
-
-   /* .testnet{
-    color: #fff;
-    position: absolute;
-    background: linear-gradient(103.87deg, rgba(8, 78, 215, 0.66) -74.95%, rgba(143, 55, 255, 0.66) 122.06%);
-    padding:  4px;
-    right: 0;
-    top: 32px;
-    font-size: 12px;
-    line-height: 10px;
-    border-radius: 4px;
-  }  */
   
 
   /* @media (max-width: 931px) {
@@ -134,8 +139,25 @@
     .HeaderArea {
       width: 768px;
       margin: 0 auto;
+      padding-top: 0;
     }
     .navbar{
       padding: 0;
     }
+  }
+  @media screen and (max-width: 425px) {
+    .HeaderArea {
+      width: 375px;
+      margin: 0 auto;
+      padding-top: 0;
+    }
+    .logo__text{display: none;}
+  }
+  @media screen and (max-width: 320px) {
+    .HeaderArea {
+      width: 320px;
+      margin: 0 auto;
+      padding-top: 0;
+    }
+    .logo__text{display: none;}
   }

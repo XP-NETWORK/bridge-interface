@@ -46,8 +46,8 @@ function NavBar() {
                     <div className="logo__text">MULTICHAIN NFT BRIDGE</div>
                     { testnet && <span className="testnet">TestNet</span>}
                 </Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="navMenu">
                             <Nav.Link className="navMenu__link" target="_blank" href="https://xp.network/">Home</Nav.Link>
                             <Nav.Link className="navMenu__link" target="_blank" href="https://docs.xp.network/">Docs</Nav.Link>
