@@ -210,19 +210,19 @@
         max-width: 100%;
     }
 
-    .footLeft {
+    /* .footLeft {
         margin-bottom: 30px;
-    }
+    } */
 
-    .footRight {
+    /* .footRight {
         flex-direction: column;
         text-align: left;
         justify-content: flex-start;
-    }
-
+    } */
+/* 
     .footContainer {
         flex-direction: column;
-    }
+    } */
 
     .priPoli a {
         margin: 0 22px 0 0;

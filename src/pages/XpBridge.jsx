@@ -22,15 +22,12 @@ function XpBridge() {
         ""
       )}
       {/* <Transactionhistory /> */}
-      {step === 1 ? (
-        <>
+      {step === 1 && (
+      <>
           <NftSelect />
-          {!widget ? <NftSlider /> : ""}
-        </>
-      ) : (
-        ""
-      )}
-      {step === 2 ? <NFTaccount /> : ""}
+          {/* {!widget && <NftSlider />} */}
+      </>)}
+      {step === 2 && <NFTaccount />}
       <NFTsuccess />
     </div>
   );
