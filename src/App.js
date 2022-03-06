@@ -53,9 +53,13 @@ function App() {
     dispatch(setGetFeaturedModal(true));
   };
 
-  useEffect(() => {
-    dispatch(setTestNet(window.location.href.indexOf("testnet.") > 0));
-  });
+  window.ethereum.on('accountsChanged', accounts => {
+    console.log("accountsChanged: ", accounts[0])
+  })
+
+  // useEffect(() => {
+  //   dispatch(setTestNet(window.location.href.indexOf("testnet.") > 0));
+  // });
 
   useEffect(async () => {
     const from = new URLSearchParams(window.location.search).get("from");
