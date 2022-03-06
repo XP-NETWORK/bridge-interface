@@ -53,9 +53,9 @@ function App() {
     dispatch(setGetFeaturedModal(true));
   };
 
-  window.ethereum.on('accountsChanged', accounts => {
-    console.log("accountsChanged: ", accounts[0])
-  })
+  // window.ethereum?.on('accountsChanged', accounts => {
+  //   console.log("accountsChanged: ", accounts[0])
+  // })
 
   useEffect(() => {
     dispatch(setTestNet(window.location.href.indexOf("testnet.") > 0));
