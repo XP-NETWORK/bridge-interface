@@ -25,6 +25,7 @@ body {
   background-color: #E5E5E5;
   width: 100vw;
   height: 100%;
+  z-index: -1;
 }
 
 .widgetBlack {
@@ -128,8 +129,21 @@ div#root:after {
 }
 
 .NftSelect {
-  max-width: 533px;
+  max-width: 500px;
+  height: 525px;
   margin: 0 auto;
+  background: #F7F7F9;
+  z-index: 1;
+  border-radius: 20px;
+  padding: 40px 25px;
+}
+
+.nftSlectArea {
+  max-width: 380px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .nftContainer {
@@ -148,22 +162,21 @@ div#root:after {
   margin-bottom: 27px;
 }
 
-.nftSlectArea {
-  max-width: 326px;
-  margin: 0 auto;
-}
+
 
 .nftSelectBox {
   position: relative;
   z-index: 1;
-  background: linear-gradient(
+  /* background: linear-gradient(
     105.45deg,
     rgba(37, 42, 54, 0.72) 5.13%,
     rgba(37, 42, 54, 0) 138.1%
-  );
+  ); */
+  background: #ECECF14D;
+
   backdrop-filter: blur(42px);
   border-radius: 16px;
-  border: 1px solid #37405b;
+  border: 1px solid #ffffff;
   margin-bottom: 26px;
 }
 
@@ -415,9 +428,11 @@ span.LineArrow img {
   font-size: 14px;
   z-index: 11;
   left: 50%;
-  bottom: 5vh;
+  bottom: 15vh;
   transform: translate(-50%);
-  background: linear-gradient(291.33deg, #181b23 67.06%, #412194 183.04%);
+  /* background: linear-gradient(291.33deg, #181b23 67.06%, #412194 183.04%); */
+  background: linear-gradient(266.84deg, #272930 46.71%, #395FEB 148.31%);
+
   border-radius: 16px;
   padding: 14px 54px 14px 16px;
   color: #fff;

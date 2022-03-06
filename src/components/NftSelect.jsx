@@ -18,12 +18,9 @@ function NftSelect() {
     const {widget} = useSelector(s => s.general)
     return (
         <div className="NftSelect">
-            {!widget ? <div id="tttt" className="nftTitle">
-                <h2>Transfer NFTs <br /> between blockchains</h2>
-            </div> : ''}
+            {/* {!widget && <div id="tttt" className="nftTitle"><h2>Transfer NFTs <br /> between blockchains</h2></div>} */}
             <div className="nftSlectArea">
                 <ChainSelectBox />
-                <ChainListBox />
                 <ConnectWallet/>
                 {/* <div id="aboutnft" className="aboutNft">
                     <a onClick={() => handleVideoClick()} target="_blank" className="videoLink"><img src={Video} />   Learn how to use NFT bridge</a>

@@ -13,6 +13,7 @@ import SetDeparture from "./SetDeparture"
 import SetDestination from "./SetDestination";
 import { ReactComponent as LineArrowComp } from "../../assets/img/nftSelect/Line.svg";
 import { ReactComponent as ChainArrowComp } from "../../assets/img/icons/Swap.svg";
+import ChainListBox from "./ChainListBox";
 
 export default function ChainSelectBox() {
   const dispatch = useDispatch();
@@ -30,6 +31,8 @@ export default function ChainSelectBox() {
   };
 
   return (
+    <>
+    <ChainListBox />
     <div className="nftSelectBox">
       <SetDeparture />
       {from && to ? (
@@ -68,5 +71,6 @@ export default function ChainSelectBox() {
       </span>
       <SetDestination />
     </div>
+    </>
   );
 }

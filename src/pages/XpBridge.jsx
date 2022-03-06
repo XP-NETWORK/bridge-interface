@@ -16,18 +16,10 @@ function XpBridge() {
   );
   return (
     <div className="nftContainer">
-      {algorandClaimables && algorandClaimables.length > 0 ? (
-        <Transactionhistory />
-      ) : (
-        ""
-      )}
-      {/* <Transactionhistory /> */}
-      {step === 1 && (
-      <>
-          <NftSelect />
-          {/* {!widget && <NftSlider />} */}
-      </>)}
-      {step === 2 && <NFTaccount />}
+      { algorandClaimables && algorandClaimables.length > 0 && <Transactionhistory /> }
+
+      { step === 1 && <NftSelect /> }
+      { step === 2 && <NFTaccount /> }
       <NFTsuccess />
     </div>
   );
