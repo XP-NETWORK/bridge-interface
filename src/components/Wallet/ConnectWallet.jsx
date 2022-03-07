@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import Close from "../../assets/img/icons/close.svg";
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
-// import NFTworng from "../../components/NFTworng";
 import ChangeNetworkModal from "../Modals/ChangeNetwork/ChangeNetworkModal"
 import { useDispatch, useSelector } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
@@ -14,16 +13,14 @@ import {
   setWrongNetwork,
   setAlgorandAccount,
   setQrCodeString,
+  setShowAbout,
+  setShowVideo,
 } from "../../store/reducers/generalSlice";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 import MaiarModal from "../MaiarModal";
-import EVMWallet from "./EVMWallet";
-import TezosWallet from "./TezosWallet";
-import AlgorandWallet from "./AlgorandWallet";
-import TronWallet from "./TronWallet";
-import ElrondWallet from "./ElrondWallet";
-import USBWallet from "./USBWallet";
 import WalletList from "./WalletList";
+import Video from '../../assets/img/icons/Video_icon.svg';
+import INF from '../../assets/img/icons/Inf.svg';
 
 
 function ConnectWallet() {
@@ -39,7 +36,6 @@ function ConnectWallet() {
       dispatch(setQrCodeString(""));
     }
   };
-  const handleShow = () => setShow(true);
   const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
   const templeWallet = useSelector((state) => state.general.templeWallet);
   const metaMask = useSelector((state) => state.general.MetaMask);
@@ -53,6 +49,18 @@ function ConnectWallet() {
   const testnet = useSelector((state) => state.general.testNet);
   const MyAlgo = useSelector((state) => state.general.MyAlgo);
   const widget = useSelector((state) => state.general.widget);
+  const handleShow = () => {
+    if(from && to){
+      setShow(true)
+    }
+  };
+
+  function handleAboutClick() {
+    dispatch(setShowAbout(true))
+}
+function handleVideoClick() {
+    dispatch(setShowVideo(true))
+}
 
   useEffect(() => {
     algoConnector.on("connect", (error, payload) => {
@@ -116,10 +124,12 @@ function ConnectWallet() {
   return (
     <div>
       <ChangeNetworkModal />
-      <div className={from && to ? "connectNft" : "disabled"}>
-        <a href="#" className="themBtn disabled" onClick={handleShow}>
-          Continue bridging -<span>{">"}</span>{" "}
-        </a>
+      <div onClick={handleShow} className={from && to ? "connect-wallet__button" : "connect-wallet__button--disabled"}>
+        Continue bridging -<span>{">"}</span>{" "}
+      </div>
+      <div id="aboutnft" className="aboutNft">
+          <a onClick={() => handleVideoClick()} target="_blank" className="videoLink"><img src={Video} />   Learn how to use NFT bridge</a>
+          <a onClick={() => handleAboutClick()} target="_blank" className="about_Nft"><img src={INF} alt=""/> What is NFT</a>
       </div>
       {!qrCodeString ? (
         <Modal

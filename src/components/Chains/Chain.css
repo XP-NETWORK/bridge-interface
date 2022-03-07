@@ -7,6 +7,14 @@
     padding: 4px 6px;
     border-radius: 4px;
 }
+.nftSlectArea {
+    max-width: 380px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    /* gap: 32px; */
+  }
 
 .coming-chain{
     font-size: 12px;
@@ -27,3 +35,149 @@
     border-radius: 4px;
     padding: 0px 6px;
 }
+
+.chain-select__box{
+    font-family: Poppins;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 38px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #14161A;
+    margin-bottom: 32px;
+}
+
+.connect-wallet__button{
+    background-color: #395FEB;
+    width: 100%;
+    height: 56px;
+    border-radius: 62px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 24px;
+}
+.connect-wallet__button:hover{
+    background: #2D51D0;
+}
+.connect-wallet__button--disabled{
+    border-radius: 62px;
+    border: 1px solid #395FEB;
+    color: #395FEB;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.01em;
+    width: 100%;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    margin-bottom: 24px;
+}
+.chain-sep__line{
+    height: 1px;
+    background-color: rgb(255, 255, 255);
+    display: block;
+}
+.swap-chain__btn{
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2000;
+    cursor: pointer;
+    user-select: none;
+}
+.swap-chain__btn:hover:before{
+    position: absolute;
+    content: url("../../assets/img/icons/swapChain_hover.svg");
+    z-index: 2001;
+    user-select: none;
+}
+
+
+.selChain {
+    padding: 22px 25px;
+    position: relative;
+    z-index: 1;
+    color: #fff;
+  }
+  
+  .selChain img {
+    display: block;
+    margin-right: 16px;
+  }
+  
+  .selChain > div {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .selChain > div:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(../../assets/img/icons/arrow_down.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 6px;
+  }
+  
+  .selChain > div:hover:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(../../assets/img/icons/arrow_down_hover.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 6px;
+  }
+  
+  span.chainArrow {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2000;
+  }
+  
+  span.chainArrow:hover {
+    cursor: pointer;
+  }
+  
+
+.selChain, .seleDestiSele{
+    color: #14161A;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    user-select: none;
+}
+
+

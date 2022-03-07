@@ -138,13 +138,7 @@ div#root:after {
   padding: 40px 25px;
 }
 
-.nftSlectArea {
-  max-width: 380px;
-  height: 100%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-}
+
 
 .nftContainer {
   margin-top: 68px;
@@ -180,61 +174,6 @@ div#root:after {
   margin-bottom: 26px;
 }
 
-.selChain {
-  padding: 22px 25px;
-  position: relative;
-  z-index: 1;
-  color: #fff;
-}
-
-.selChain img {
-  display: block;
-  margin-right: 16px;
-}
-
-.selChain > div {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  position: relative;
-  z-index: 1;
-}
-
-.selChain > div:after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-image: url(./assets/img/icons/arrow_down.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 6px;
-}
-
-.selChain > div:hover:after {
-  filter: brightness(100);
-  /* background-color: rgba(29, 33, 42, 0.10); */
-}
-
-span.chainArrow {
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2000;
-}
-
-span.chainArrow:hover {
-  cursor: pointer;
-}
-
 /*.chainArrow img {
   height: 28px;
   width: 28px;
@@ -250,10 +189,7 @@ span.chainArrow:hover {
   background-color: #297efe;
 }*/
 
-span.LineArrow img {
-  display: block;
-  width: 100%;
-}
+
 
 .themBtn {
   display: inline-block;
@@ -311,12 +247,13 @@ span.LineArrow img {
 }
 
 .disabled .themBtn {
-  background: linear-gradient(
+  /* background: linear-gradient(
     0deg,
     rgba(73, 82, 108, 0.1),
     rgba(73, 82, 108, 0.1)
-  );
-  border: 1px solid #37405b;
+  ); */
+  border: 1px solid #395FEB;
+  border-radius: 62px;
   color: #5a6177;
   pointer-events: none;
 }
