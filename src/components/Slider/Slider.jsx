@@ -1,14 +1,21 @@
 import "./Slider.css"
-import Carousel from 'react-bootstrap/Carousel'
-import Slider1 from '../../assets/img/slider/s1.png';
-import Slider2 from '../../assets/img/slider/s2.png';
-import Slider3 from '../../assets/img/slider/s3.png';
-import Slider4 from '../../assets/img/slider/s4.png';
+import image from '../../assets/img/slider/s3.png';
+import { useSelector } from "react-redux";
 
 export default function Slider() {
+  const nft = useSelector(state => state.slider.nft)
+  console.log("🚀 ~ file: Slider.jsx ~ line 7 ~ Slider ~ nft", nft.image)
+  const bgStyle = {
+    backgroundImage: `url(${nft.image})`,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+  }
+
   return (
-    <div className="slider__wrapper">
-      slider
+    <div style={bgStyle} className="slider__wrapper">
+      <div className="pagination">pagination</div>
+
     </div>
   )
 }
