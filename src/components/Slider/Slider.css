@@ -13,14 +13,33 @@
 }
 
 .slider__wrapper{
+    position: relative;
     width: 500px;
-    max-height: 525;
     border-radius: 20px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 16px 40px 18px 40px;
+}
+.slider__img{
+    position: absolute;
+    display: flex;
+    top: 0;
+    width: 500px;
+}
+.slider__img img{
+    height: 120%;
+}
+.slider__wrapper::before{
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "";
+    background: linear-gradient(356.79deg, rgba(0, 0, 0, 0.3) 2.79%, rgba(0, 0, 0, 0) 31.21%),
+    linear-gradient(3.45deg, rgba(0, 0, 0, 0.1) 2.7%, rgba(0, 0, 0, 0) 103.44%);
+    width: 100%;
+    height: 100%;
 }
 .slider-nft__name{
     font-size: 22px;
@@ -55,6 +74,9 @@
     height: 100%;
     background-color: white;
     border-radius: 40px;
+}
+.slider-nft__info{
+    z-index: 1;
 }
 
 @media screen and (max-width: 1024px) {

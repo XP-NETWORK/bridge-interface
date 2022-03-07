@@ -16,10 +16,13 @@ export default function Slider() {
 
   const bgStyle = {
     backgroundImage: `url(${nfts[step].image})`,
-    backgroundPosition: 'center',
+    backgroundPosition: 'top',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
+    transition: "2s",
   }
+
+  // const bgStyle = {left: 0}
 
   useEffect(() => {
     switch (step) {
