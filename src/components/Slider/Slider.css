@@ -17,6 +17,24 @@
     max-height: 525;
     border-radius: 20px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px 40px 18px 40px;
+}
+.slider-nft__name{
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 31px;
+}
+.slider-nft__id{
+    margin-left: 10px;
+}
+.slider-nft__description{
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    overflow-wrap: anywhere;
 }
 
 @media screen and (max-width: 1024px) {

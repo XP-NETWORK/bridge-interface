@@ -15,10 +15,12 @@ export default function Slider() {
   return (
     <div style={bgStyle} className="slider__wrapper">
       <div className="slider__pagination">pagination</div>
-      <div className="slider__info">
-        <div className="slider__title">
-          .slider
+      <div className="slider-nft__info">
+        <div className="slider-nft__name">
+          {nft?.name}
+          <span className="slider-nft__id">#{nft?.id}</span>
         </div>
+        <div className="slider-nft__description">{nft?.description}</div>
       </div>
     </div>
   )
