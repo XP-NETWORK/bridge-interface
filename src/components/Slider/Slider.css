@@ -1,7 +1,27 @@
+.multi-background{
+    position: absolute;
+    width: 100vw;
+    height: 100%;
+    z-index: -1;
+}
+.multi-background__color{
+    background-color: #e5e5e5e8;;
+    position: absolute;
+    width: 100vw;
+    height: 100%;
+    z-index: -1;
+}
+
 .slider__wrapper{
-    /* background-color: tomato; */
+    background-color: tomato;
     width: 500px;
     max-height: 525;
     border-radius: 20px;
     overflow: hidden;
+}
+
+@media screen and (max-width: 1024px) {
+    .slider__wrapper {
+        width: 360px;
+    }
 }

@@ -1,3 +1,11 @@
+.NftSelect {
+    width: 500px;
+    height: 525px;
+    background: #F7F7F9;
+    z-index: 1;
+    border-radius: 20px;
+    padding: 40px 25px 20px 25px;
+  }
 .new-chain{
     font-size: 12px;
     font-weight: 500;
@@ -13,9 +21,7 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    /* gap: 32px; */
   }
-
 .coming-chain{
     font-size: 12px;
     font-weight: 500;
@@ -25,7 +31,6 @@
     padding: 4px 6px;
     border-radius: 4px; 
 }
-
 .chain-connecting{
     font-size: 12px;
     font-weight: 500;
@@ -35,7 +40,6 @@
     border-radius: 4px;
     padding: 0px 6px;
 }
-
 .chain-select__box{
     font-family: Poppins;
     font-size: 32px;
@@ -47,7 +51,6 @@
     color: #14161A;
     margin-bottom: 32px;
 }
-
 .connect-wallet__button{
     background-color: #395FEB;
     width: 100%;
@@ -102,20 +105,16 @@
     z-index: 2001;
     user-select: none;
 }
-
-
 .selChain {
     padding: 22px 25px;
     position: relative;
     z-index: 1;
     color: #fff;
   }
-  
   .selChain img {
     display: block;
     margin-right: 16px;
   }
-  
   .selChain > div {
     display: flex;
     align-items: center;
@@ -123,7 +122,6 @@
     position: relative;
     z-index: 1;
   }
-  
   .selChain > div:after {
     content: "";
     position: absolute;
@@ -140,7 +138,6 @@
     background-position: center;
     border-radius: 6px;
   }
-  
   .selChain > div:hover:after {
     content: "";
     position: absolute;
@@ -157,7 +154,6 @@
     background-position: center;
     border-radius: 6px;
   }
-  
   span.chainArrow {
     display: block;
     position: absolute;
@@ -165,12 +161,9 @@
     left: 50%;
     z-index: 2000;
   }
-  
   span.chainArrow:hover {
     cursor: pointer;
   }
-  
-
 .selChain, .seleDestiSele{
     color: #14161A;
     font-size: 16px;
@@ -178,6 +171,12 @@
     line-height: 20px;
     letter-spacing: 0em;
     user-select: none;
+}
+
+@media screen and (max-width: 1024px) {
+    .NftSelect {
+        width: 360px;
+      }
 }
 
 
