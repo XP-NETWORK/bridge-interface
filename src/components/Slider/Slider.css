@@ -36,6 +36,26 @@
     line-height: 20px;
     overflow-wrap: anywhere;
 }
+.slider__pagination{
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    
+}
+.pagination__bg{
+    width: 72px;
+    height: 3px;
+    border-radius: 40px;
+    background-color:#d3d3d4e8;
+    overflow: hidden;
+    position: relative;
+}
+.pagination__progress{
+    position: absolute;
+    height: 100%;
+    background-color: white;
+    border-radius: 40px;
+}
 
 @media screen and (max-width: 1024px) {
     .slider__wrapper {

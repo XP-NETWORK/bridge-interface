@@ -5,7 +5,7 @@ const initialState = {
         image:  firstNftImage,
         name: "Lorem Ipsum",
         id: "666",
-        description: "Lorem Ipsum"
+        description: "Lorem Ipsum "
     }
 };
 
