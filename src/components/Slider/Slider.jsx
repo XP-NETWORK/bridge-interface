@@ -3,10 +3,10 @@ import "./Slider.css"
 import { useSelector } from "react-redux";
 
 export default function Slider() {
-  const image = useSelector(state => state.slider.nft.image)
+  const nft = useSelector(state => state.slider.nft)
 
   const bgStyle = {
-    backgroundImage: `url(${image})`,
+    backgroundImage: `url(${nft.image})`,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
@@ -14,8 +14,12 @@ export default function Slider() {
 
   return (
     <div style={bgStyle} className="slider__wrapper">
-      <div className="pagination">pagination</div>
-
+      <div className="slider__pagination">pagination</div>
+      <div className="slider__info">
+        <div className="slider__title">
+          .slider
+        </div>
+      </div>
     </div>
   )
 }
