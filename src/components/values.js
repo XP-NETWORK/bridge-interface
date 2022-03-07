@@ -167,7 +167,7 @@ export const chains = [
     value: "Fuse",
     order: 11,
     image: { avatar: true, src: Fuse },
-    maintenance: true,
+    maintenance: false,
     testNet: false,
     mainnet: true
   },
