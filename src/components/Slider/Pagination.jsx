@@ -22,11 +22,11 @@ export default function Pagination({start}) {
                 }
                 else{
                     if(width.current === 100){
-                        if(step === 1){
-                            dispatch(setStep(2))
+                        if(step === 0){
+                            dispatch(setStep(1))
                         }
                         else{
-                            dispatch(setStep(3))
+                            dispatch(setStep(2))
                         }
                     }
                     clearInterval(s)

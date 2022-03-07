@@ -5,9 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import Pagination from "./Pagination";
 
 export default function Slider() {
-  const nft = useSelector(state => state.slider.nft)
+  const nfts = useSelector(state => state.slider.nfts)
   const step = useSelector(state => state.slider.step)
-  console.log("🚀 ~ file: Slider.jsx ~ line 10 ~ Slider ~ step", step)
   const [one, setOne] = useState(false)
   const [oneFinished, setOneFinished] = useState(false)
   const [two, setTwo] = useState(false)
@@ -16,7 +15,7 @@ export default function Slider() {
   const [threeFinished, setThreeFinished] = useState(false)
 
   const bgStyle = {
-    backgroundImage: `url(${nft.image})`,
+    backgroundImage: `url(${nfts[step].image})`,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
@@ -24,13 +23,13 @@ export default function Slider() {
 
   useEffect(() => {
     switch (step) {
-        case 1:
+        case 0:
         setOne(true)
             break;
-        case 2:
+        case 1:
         setTwo(true)
             break;
-        case 3:
+        case 2:
         setThree(true)
             break;
         default:
@@ -47,10 +46,10 @@ export default function Slider() {
       </div>
       <div className="slider-nft__info">
         <div className="slider-nft__name">
-          {nft?.name}
-          <span className="slider-nft__id">#{nft?.id}</span>
+          {nfts[step]?.name}
+          <span className="slider-nft__id">#{nfts[step]?.id}</span>
         </div>
-        <div className="slider-nft__description">{nft?.description}</div>
+        <div className="slider-nft__description">{nfts[step]?.description}</div>
       </div>
     </div>
   )

@@ -1,13 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 import firstNftImage from '../../assets/img/slider/s3.png'
+import secondNftImage from '../../assets/img/slider/s2.png'
+import thirdImage from '../../assets/img/slider/s4.png'
+
 const initialState = {
-    nft:{
+    nfts:[{
         image:  firstNftImage,
         name: "Lorem Ipsum",
         id: "666",
         description: "Lorem Ipsum "
     },
-    step: 1,
+    {
+      image:  secondNftImage,
+      name: "Lorem Ipsum",
+      id: "667",
+      description: "Lorem Ipsum "
+    },
+    {
+      image:  thirdImage,
+      name: "Lorem Ipsum",
+      id: "667",
+      description: "Lorem Ipsum "
+    }],
+    step: 0,
 };
 
 const sliderSlice = createSlice({
