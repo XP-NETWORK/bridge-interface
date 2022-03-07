@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import firstNftImage from '../../assets/img/slider/s3.png'
 const initialState = {
     nft:{
-        image:  '../../assets/img/slider/s3.png',
+        image:  firstNftImage,
         name: "Lorem Ipsum",
         id: "666"
     }
