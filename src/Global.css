@@ -147,21 +147,7 @@ div#root:after {
 
 
 
-.nftSelectBox {
-  position: relative;
-  z-index: 1;
-  /* background: linear-gradient(
-    105.45deg,
-    rgba(37, 42, 54, 0.72) 5.13%,
-    rgba(37, 42, 54, 0) 138.1%
-  ); */
-  background: #ECECF14D;
 
-  backdrop-filter: blur(42px);
-  border-radius: 16px;
-  border: 1px solid #ffffff;
-  margin-bottom: 26px;
-}
 
 /*.chainArrow img {
   height: 28px;

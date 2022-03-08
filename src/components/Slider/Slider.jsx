@@ -8,11 +8,8 @@ export default function Slider() {
   const nfts = useSelector(state => state.slider.nfts)
   const step = useSelector(state => state.slider.step)
   const [one, setOne] = useState(false)
-  const [oneFinished, setOneFinished] = useState(false)
   const [two, setTwo] = useState(false)
-  const [twoFinished, setTwoFinished] = useState(false)
   const [three, setThree] = useState(false)
-  const [threeFinished, setThreeFinished] = useState(false)
 
   const bgStyle = {
     backgroundImage: `url(${nfts[step].image})`,
@@ -20,9 +17,8 @@ export default function Slider() {
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     transition: "2s",
+    transitionTimingFunction: "ease-in-out"
   }
-
-  // const bgStyle = {left: 0}
 
   useEffect(() => {
     switch (step) {

@@ -78,7 +78,9 @@
 .slider-nft__info{
     z-index: 1;
 }
-
+.pagination__bg{
+    cursor: pointer;
+}
 @media screen and (max-width: 1024px) {
     .slider__wrapper {
         width: 360px;

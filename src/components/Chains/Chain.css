@@ -5,7 +5,16 @@
     z-index: 1;
     border-radius: 20px;
     padding: 40px 25px 20px 25px;
-  }
+}
+.nftSelectBox {
+    position: relative;
+    z-index: 1;
+    background: #ECECF14D;
+    backdrop-filter: blur(42px);
+    border-radius: 16px;
+    border: 1px solid #ffffff;
+    margin-bottom: 26px;
+}
 .new-chain{
     font-size: 12px;
     font-weight: 500;
