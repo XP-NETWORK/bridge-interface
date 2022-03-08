@@ -1,163 +1,87 @@
-.HeaderArea {
-    padding: 0 16px;
-    width: 1024px;
-    margin: 0 auto;
-}
 .navbar{
   padding: 0;
+  width: 1024px;
+  margin: 0 auto;
 }
-.navbar-brand {
+.navbar-brand{
   padding: 0;
+  margin: 0;
   display: flex;
-  gap: 7.67px;
+  gap: 7.61px;
+  
 }
-.logo__text{
-  position: relative;
+.navbar-brand div{
+  margin-top: 29px;
   font-family: Montserrat;
   font-size: 16px;
-  font-style: normal;
   font-weight: 600;
   line-height: 20px;
   letter-spacing: 0.04em;
-  padding-top: 32px;
 }
-.navbar-collapse{
-  justify-content: flex-end;
-  margin-top: 19px;
-  height: 0px;
-}
-.navMenu{
-  gap: 2px;
-}
-.navMenu__link{
-  padding: 10px 16px;
-  font-family: Inter;
+.navbar-nav{
+  margin-left: auto;
+  margin-top: 14px;
   font-size: 15px;
-  font-style: normal;
   font-weight: 500;
   line-height: 19px;
   letter-spacing: 0em;
-  text-align: center;
-  border-radius: 76px;
-  color: #14161A;
 }
-.navMenu__link:hover{
+.nav-link{
+  border-radius: 76px;
+  margin: 0 2px;
+  display: flex;
+  align-items: center;
+}
+.nav-link:hover{
   background: rgba(255, 255, 255, 0.4);
 }
-.navBrand:hover {
-    /* cursor: pointer; */
-}
-.navMenu.navbar-nav {
-    margin-left: auto;
-    overflow: hidden;
-}
-.navbar-light .navbar-toggler span.navbar-toggler-icon {
-  display: none;
-  padding: 0;
-}
-.navbar-light .navbar-toggler{
-  border-color:transparent;
-}
-.navbar-light .navbar-toggler:after {
-  content: url("../assets/img//nav/burger.svg");
-  margin-top: 21px;
-  top: -13px;
-  right: 0px;
-  position: absolute;
-}
-.navBrand{
-  position: relative;
-  cursor: pointer;
-}
-
-
-.testnet{
- color: #fff;
- position: absolute;
- background: linear-gradient(103.87deg, rgba(8, 78, 215, 0.66) -74.95%, rgba(143, 55, 255, 0.66) 122.06%);
- padding:  4px;
- right: 0;
- top: 14px;
- font-size: 12px;
- line-height: 10px;
- border-radius: 4px;
-} 
-
-  
-  
- /* .navMenu.navbar-nav .nav-link {
-  font-size: 15px;
-  line-height: 126%;
-  display: inline-flex;
+.navbar-connect{
+  display: flex;
+  justify-content: center;
   align-items: center;
-  text-align: right;
-  color: #14161A;
-  opacity: 0.9;
-}  */
-  
-  /* .navMenu.navbar-nav .nav-link.active,
-  .navMenu.navbar-nav .nav-link:hover {
-    color: #f4f3f9;
-    opacity: 1;
-  }
-   */
-
-  /* .account__box {
-    width: 190px;
-    height: 40px;
-    background: #232833;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #4532b5;
-    color: white;
-  }
-   */
-  /* .account__box:hover {
-    border: 1px solid #3e64ed;
-  } */
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0em;
+  color: #62718A;
+  padding: 10px 16px;
+  background: rgba(207, 207, 217, 0.2);
+  border: 1px solid rgba(207, 207, 217, 0.9);
+  box-sizing: border-box;
+  border-radius: 52px;
+  cursor: pointer;
+  margin-left: 2px;
+}
+.navbar-connect:hover{
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid #8994A8;
+}
+.navbar-light .navbar-toggler-icon {
+  background-image: url("../assets/img/nav/burger.svg");
+}
+.navbar-toggler {
+  margin-top: 10px;
+  border: none;
+}
 
 
-
-  /* .navMenu.navbar-nav .nftConnect.nav-link img {
-    margin-left: 6px;
-    margin-top: -2px;
+ @media screen and (max-width: 1024px) {
+  .navbar{
+    width: 768px;
+    padding: 0 10px;
   }
-   */
-  
-
-  /* @media (max-width: 931px) {
-    .navBrand img {
-      width: 250px !important;
-      max-width: unset;
-      margin-bottom: 2px !important;
-    }
-  } */
-
-  @media screen and (max-width: 1024px) {
-    .HeaderArea {
-      width: 768px;
-      margin: 0 auto;
-      padding-top: 0;
-    }
-    .navbar{
-      padding: 0;
-    }
+}
+@media screen and (max-width: 768px) {
+  .navbar{
+    width: calc(100% - 10px);
   }
-  @media screen and (max-width: 425px) {
-    .HeaderArea {
-      width: 375px;
-      margin: 0 auto;
-      padding-top: 0;
-    }
-    .logo__text{display: none;}
+}
+@media screen and (max-width: 325px) {
+  .navbar{
+    width: calc(100% - 5px);
   }
-  @media screen and (max-width: 320px) {
-    .HeaderArea {
-      width: 320px;
-      margin: 0 auto;
-      padding-top: 0;
-    }
-    .logo__text{display: none;}
+  .navbar-brand div{
+    font-size: 14px;
+    letter-spacing: 0em;
   }
+} 

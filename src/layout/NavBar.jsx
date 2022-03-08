@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-// import Logo from '../assets/img/nav/Logo.svg';
+import { useEffect } from 'react';
 import Logo from "../assets/img/nav/newXpLogo.svg"
-import NftSelect from '../assets/img/nftselect.svg';
+import burger from "../assets/img/nav/burger.svg"
 import AccountModal from "../components/AccountModal"
 import { Navbar, Nav, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
@@ -37,29 +36,28 @@ function NavBar() {
     }
 
     return (
-        !widget && <header className="HeaderArea" id="Header"> 
+        !widget && <header id="Header"> 
             <Navbar expand="lg">    
-                <Navbar.Brand 
-                onClick={() => dispatch(setReset())}  
-                className="navBrand">
+                <Navbar.Brand onClick={() => dispatch(setReset())}  >
                     <img src={Logo} alt="Xp Network"/>
-                    <div className="logo__text">MULTICHAIN NFT BRIDGE</div>
+                    <div >MULTICHAIN NFT BRIDGE</div>
                     { testnet && <span className="testnet">TestNet</span>}
                 </Navbar.Brand>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="navMenu">
-                            <Nav.Link className="navMenu__link" target="_blank" href="https://xp.network/">Home</Nav.Link>
-                            <Nav.Link className="navMenu__link" target="_blank" href="https://docs.xp.network/">Docs</Nav.Link>
-                            <Nav.Link className="navMenu__link" target="_blank" href="https://stake.xp.network">Staking</Nav.Link>
-                            { setAddress() && 
-                            <Nav.Link className="nftConnect navMenu__link" onClick={handleShow}>
+                <Navbar.Toggle aria-controls="" />
+                    <Navbar.Collapse id="">
+                        <Nav>
+                            <Nav.Link  target="_blank" href="https://xp.network/">Home</Nav.Link>
+                            <Nav.Link  target="_blank" href="https://docs.xp.network/">Docs</Nav.Link>
+                            <Nav.Link  target="_blank" href="https://stake.xp.network">Staking</Nav.Link>
+                            {/* <div className='navbar-connect'>Connect Wallet</div> */}
+                            {/* { setAddress() && 
+                            <Nav.Link onClick={handleShow}>
                                 <div className="account__box">
                                     {setAddress() ?`${setAddress().substring(0, window.innerWidth <= 600 ? 16 : 10)}...${setAddress().substring(setAddress().length - 2)}`:''} 
                                     <img src={NftSelect} alt='' />
                                 </div>
                             </Nav.Link>
-                            }
+                            } */}
                         </Nav>
                     </Navbar.Collapse>
                 <AccountModal />
