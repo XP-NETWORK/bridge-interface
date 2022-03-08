@@ -6,7 +6,7 @@ import MetaMask from "../../assets/img/wallet/MetaMask.svg";
 import WalletConnect from "../../assets/img/wallet/WalletConnect 3.svg";
 import TrustWallet from "../../assets/img/wallet/TWT.svg";
 import { isEVM } from "../../wallet/oldHelper";
-import { setAccount, setWrongNetwork } from "../../store/reducers/generalSlice";
+import { setAccount, setMetaMask, setWrongNetwork } from "../../store/reducers/generalSlice";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 
 export default function EVMWallet({ wallet }) {
@@ -20,12 +20,14 @@ export default function EVMWallet({ wallet }) {
   
   const connectHandler = async () => {
      const connected = await connectMetaMask(activate, from?.text)
+     if(connected){
+       dispatch(setMetaMask(true))
+     }
   }
 
   return wallet === "MetaMask" /* METAMASK */ ? (
     <li
       onClick={connectHandler}
-      // style={from?.type === "EVM" ? {} : OFF}
       className="wllListItem"
       data-wallet="MetaMask"
     >

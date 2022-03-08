@@ -146,7 +146,6 @@ const generateQR = async text => {
 }
 // Elrond blockchain connection ( Maiar )
 export const connectMaiar = async () => {
-  console.log("dsfsdfsdfsdfdf")
   // debugger
     const provider = new ProxyProvider( "https://gateway.elrond.com")
     const maiarProvider = new WalletConnectProvider(provider, 'https://bridge.walletconnect.org/', onClientConnect);

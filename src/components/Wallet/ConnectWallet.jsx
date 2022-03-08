@@ -19,8 +19,10 @@ function ConnectWallet() {
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
   const [show, setShow] = useState();
+  console.log("🚀 ~ file: ConnectWallet.jsx ~ line 22 ~ ConnectWallet ~ show", show)
   const qrCodeString = useSelector((state) => state.general.qrCodeString);
   const qrCodeImage = useSelector((state) => state.general.qrCodeImage);
+
   const handleClose = () => {
     setShow(false);
     dispatch(setWalletsModal(false))

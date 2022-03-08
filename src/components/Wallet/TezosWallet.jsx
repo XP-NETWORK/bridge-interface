@@ -7,9 +7,23 @@ import Temple from "../../assets/img/wallet/Temple.svg";
 export default function TezosWallet({ wallet }) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
+
+  const handleConnect = wallet => {
+    switch (wallet) {
+      case "TempleWallet":
+        connectTempleWallet()
+        break;
+      case "Beacon":
+        connectBeacon()
+        break;
+      default:
+        break;
+    }
+  }
+
   return wallet === "TempleWallet" ? (
     <li
-      onClick={connectTempleWallet}
+      onClick={() => handleConnect("TempleWallet")}
       data-wallet="TempleWallet"
       style={window.innerWidth > 600 ? {} : OFF}
       className="wllListItem"
@@ -20,8 +34,7 @@ export default function TezosWallet({ wallet }) {
   ) : (
     <li
       data-wallet="Beacon"
-      onClick={connectBeacon}
-      // style={from?.text === "Tezos" ? {} : OFF}
+      onClick={() => handleConnect("Beacon")}
       className="wllListItem beacon"
     >
       <img src={BeaconW} alt="Kukai Icon" /> Beacon

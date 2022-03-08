@@ -2,12 +2,9 @@ import { useWeb3React } from '@web3-react/core';
 import { useEffect, useState } from 'react';
 import Blockies from 'react-blockies';
 
-export default function Identicon() {
-  const { account } = useWeb3React();
-  const [color, setColor] = useState('#000')
-  const [bgColor, setBgColor] = useState('#000')
+export default function Identicon({ account }) {
 
-  const getRgb = () => Math.floor(Math.random.apply() * 256 )
+  const getRgb = () => Math.floor(Math.random() * 256 )
 
   const rgbToHex = (r, g, b) => 
   "#" + 
@@ -32,7 +29,7 @@ export default function Identicon() {
       size={10}
       scale={3}
       color={generate()} 
-      bgColor={generate()} 
+      bgColor="#fff" 
       spotColor={generate()} 
       className="identicon" 
   />

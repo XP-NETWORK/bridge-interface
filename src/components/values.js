@@ -53,7 +53,7 @@ export const chains = [
     value: "Tron",
     order: 6,
     image: { avatar: true, src: Tron },
-    maintenance: true,
+    maintenance: false,
     testNet: false,
     mainnet: true
 
@@ -109,7 +109,7 @@ export const chains = [
     value: "Algorand",
     order: 5,
     image: { avatar: true, src: Algorand },
-    maintenance: true,
+    maintenance: false,
     testNet: false,
     mainnet: true
   },
@@ -192,7 +192,7 @@ export const chains = [
     image: { avatar: true, src: Tezos },
     newChain: false,
     coming: false,
-    maintenance: true,
+    maintenance: false,
     testNet: false,
     mainnet: true
   },

@@ -15,18 +15,11 @@ function NavBar() {
     const handleShow = () => dispatch(setAccountModal(true));
     const step = useSelector(state => state.general.step)
     const testnet = useSelector(state => state.general.testNet)
+    const elrondAccount = useSelector(state => state.general.elrondAccount)
+    const tezosAccount = useSelector(state => state.general.tezosAccount)
     const { chainId, account } = useWeb3React();
 
-    useEffect(() => {}, [step])
-
-    // const setAddress = () => {
-    //     return  from?.type === "EVM" ? account 
-    //         : from?.type === "Tezos" ? tezosAccount 
-    //         : from?.type === "Algorand" ? algorandAccount 
-    //         : from?.type === "Elrond" ? elrondAccount 
-    //         : from?.type === "Tron" ? tronAccount 
-    //         : undefined
-    // }
+    const walletAccount = account || elrondAccount || tezosAccount
 
     const handleConnect = () => {
         dispatch(setWalletsModal(true))
@@ -47,17 +40,9 @@ function NavBar() {
                             <Nav.Link  target="_blank" href="https://docs.xp.network/">Docs</Nav.Link>
                             <Nav.Link  target="_blank" href="https://stake.xp.network">Staking</Nav.Link>
                             <div onClick={handleConnect} className='navbar-connect'>
-                                {account ? `${account.substring(0, window.innerWidth <= 600 ? 16 : 10)}...${account.substring(account.length - 2)}` : "Connect Wallet"}
-                                {account && <Identicon />}
+                                {walletAccount ? `${walletAccount.substring(0, window.innerWidth <= 600 ? 16 : 10)}...${walletAccount.substring(walletAccount.length - 2)}` : "Connect Wallet"}
+                                {walletAccount && <Identicon account={walletAccount} />}
                             </div>
-                            {/* { setAddress() && 
-                            <Nav.Link onClick={handleShow}>
-                                <div className="account__box">
-                                    {setAddress() ?`${setAddress().substring(0, window.innerWidth <= 600 ? 16 : 10)}...${setAddress().substring(setAddress().length - 2)}`:''} 
-                                    <img src={NftSelect} alt='' />
-                                </div>
-                            </Nav.Link>
-                            } */}
                         </Nav>
                     </Navbar.Collapse>
                 <AccountModal />
