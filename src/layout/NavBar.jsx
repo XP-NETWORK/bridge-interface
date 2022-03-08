@@ -8,7 +8,6 @@ import { setAccountModal, setReset } from '../store/reducers/generalSlice';
 import "./NavBar.css"
 
 function NavBar() {
-
     const dispatch = useDispatch()
     const account = useSelector(state => state.general.account)
     const tronAccount = useSelector(state => state.general.tronWallet)
@@ -16,15 +15,12 @@ function NavBar() {
     const algorandAccount = useSelector(state => state.general.algorandAccount)
     const tezosAccount = useSelector(state => state.general.tezosAccount)
     const from = useSelector(state => state.general.from)
-
     const widget = useSelector(state => state.general.widget)
     const handleShow = () => dispatch(setAccountModal(true));
     const step = useSelector(state => state.general.step)
     const testnet = useSelector(state => state.general.testNet)
 
     useEffect(() => {}, [step])
-
-    
 
     const setAddress = () => {
         return  from?.type === "EVM" ? account 

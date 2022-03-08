@@ -2612,7 +2612,11 @@ span.transPend {
   pointer-events: none;
 }
 
-
+@media screen and (max-height: 735px) {
+  .first-step__container{
+    margin: 39px 0;
+  }
+}
 
 @media screen and (max-width: 425px) {
   .bridgeBody {
