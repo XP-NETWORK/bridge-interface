@@ -11,7 +11,7 @@ export default function ElrondWallet({ wallet }) {
   return wallet === "Maiar" ? (
     <li
       onClick={connectMaiar}
-      style={from ? (from.type === "Elrond" ? {} : OFF) : ""}
+      // style={from ? (from?.type === "Elrond" ? {} : OFF) : ""}
       className="wllListItem"
       data-wallet="Maiar"
     >
@@ -20,7 +20,7 @@ export default function ElrondWallet({ wallet }) {
   ) : (
     <li
       onClick={connectMaiarExtension}
-      style={from ? (from.type === "Elrond" ? {} : OFF) : ""}
+      // style={from ? (from?.type === "Elrond" ? {} : OFF) : ""}
       className="wllListItem"
       data-wallet="Maiar Extension"
     >

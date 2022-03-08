@@ -46,15 +46,6 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("sfjghdsjhgf")
-    if(location.pathname === "/account"){
-      if(!from){
-        navigate('/connect')
-      }
-    }
-  },[])
-
-  useEffect(() => {
     dispatch(setTestNet(window.location.href.indexOf("testnet.") > 0));
   });
 

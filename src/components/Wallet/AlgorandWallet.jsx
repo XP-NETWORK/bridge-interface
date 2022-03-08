@@ -16,7 +16,7 @@ export default function AlgorandWallet({ wallet }) {
   return wallet === "MyAlgo" ? (
     <li
       onClick={connectMyAlgo}
-      style={from ? (from.type === "Algorand" ? {} : OFF) : ""}
+      // style={from ? (from?.type === "Algorand" ? {} : OFF) : ""}
       className="wllListItem algo"
       data-wallet="MyAlgo"
     >
@@ -26,13 +26,13 @@ export default function AlgorandWallet({ wallet }) {
     <li
       onClick={connectAlgoSigner}
       data-wallet="AlgoSigner"
-      style={
-        from
-          ? from.type === "Algorand" && window.innerWidth > 600
-            ? {}
-            : OFF
-          : ""
-      }
+      // style={
+      //   from
+      //     ? from?.type === "Algorand" && window.innerWidth > 600
+      //       ? {}
+      //       : OFF
+      //     : ""
+      // }
       className="wllListItem algo"
     >
       <img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo Signer

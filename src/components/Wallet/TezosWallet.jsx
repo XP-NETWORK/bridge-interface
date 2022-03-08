@@ -11,7 +11,7 @@ export default function TezosWallet({ wallet }) {
     <li
       onClick={connectTempleWallet}
       data-wallet="TempleWallet"
-      style={from?.text === "Tezos" && window.innerWidth > 600 ? {} : OFF}
+      style={window.innerWidth > 600 ? {} : OFF}
       className="wllListItem"
     >
       <img style={{ width: "28px" }} src={Temple} alt="Temple Icon" /> Temple
@@ -21,7 +21,7 @@ export default function TezosWallet({ wallet }) {
     <li
       data-wallet="Beacon"
       onClick={connectBeacon}
-      style={from?.text === "Tezos" ? {} : OFF}
+      // style={from?.text === "Tezos" ? {} : OFF}
       className="wllListItem beacon"
     >
       <img src={BeaconW} alt="Kukai Icon" /> Beacon

@@ -27,13 +27,13 @@ import { setTronWallet,
   setTempleWallet, 
   setQrImage, 
   setQrCodeString } from "../../store/reducers/generalSlice"
+import { useNavigate } from 'react-router';
 
 export const wallets = ["MetaMask", "WalletConnect", "Trust Wallet", "MyAlgo", "AlgoSigner", "Algorand Wallet", "TronLink", "Temple Wallet", "Beacon", "Maiar", "Maiar Extension", "Ledger", "Trezor"]
 const { to, modalError } = store.getState()
 
 
 export const connectMetaMask = async (activate, from, to) => {
-// debugger
     try {
         if(!window.ethereum && window.innerWidth <= 600) {
             const uri = `https://metamask.app.link/dapp/${window.location.host + `?to=${to.text}&from=${from.text}`}/`
@@ -41,6 +41,7 @@ export const connectMetaMask = async (activate, from, to) => {
         }
         await activate(injected);
         store.dispatch(setMetaMask(true))
+        return true
       } 
       catch (ex) {
           store.dispatch(setError(ex))
@@ -48,6 +49,7 @@ export const connectMetaMask = async (activate, from, to) => {
             console.log(ex.data.message);
           }
           else console.log(ex);
+          return false
       }
 }
 

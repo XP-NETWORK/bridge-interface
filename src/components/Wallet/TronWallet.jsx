@@ -10,7 +10,7 @@ export default function TronWallet() {
   return (
     <li
       onClick={connectTronlink}
-      style={from ? (from.type === "Tron" ? {} : OFF) : ""}
+      // style={from ? (from?.type === "Tron" ? {} : OFF) : ""}
       data-wallet="TronLink"
       className="wllListItem"
     >

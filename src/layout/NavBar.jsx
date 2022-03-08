@@ -4,7 +4,7 @@ import burger from "../assets/img/nav/burger.svg"
 import AccountModal from "../components/AccountModal"
 import { Navbar, Nav, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
-import { setAccountModal, setReset } from '../store/reducers/generalSlice';
+import { setAccountModal, setReset, setWalletsModal } from '../store/reducers/generalSlice';
 import "./NavBar.css"
 
 function NavBar() {
@@ -31,6 +31,10 @@ function NavBar() {
             : undefined
     }
 
+    const handleConnect = () => {
+        dispatch(setWalletsModal(true))
+    }
+
     return (
         !widget && <header id="Header"> 
             <Navbar expand="lg">    
@@ -45,7 +49,7 @@ function NavBar() {
                             <Nav.Link  target="_blank" href="https://xp.network/">Home</Nav.Link>
                             <Nav.Link  target="_blank" href="https://docs.xp.network/">Docs</Nav.Link>
                             <Nav.Link  target="_blank" href="https://stake.xp.network">Staking</Nav.Link>
-                            <div className='navbar-connect'>Connect Wallet</div>
+                            <div onClick={handleConnect} className='navbar-connect'>Connect Wallet</div>
                             {/* { setAddress() && 
                             <Nav.Link onClick={handleShow}>
                                 <div className="account__box">

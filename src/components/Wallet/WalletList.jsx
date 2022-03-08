@@ -29,8 +29,16 @@ export default function WalletList({search}) {
 
   return (
     <ul className="walletList scrollSty">
-        { !search ? walletComponents.sort( wallet => wallet.name.includes(from.text) ? -1 : 0 ).map( wallet => wallet.Component)
-        : walletComponents.sort( wallet => wallet.name.includes(from.text) ? -1 : 0 ).filter( wallet => wallet.name.toLowerCase().includes(search.toLocaleLowerCase())).map( wallet => wallet.Component)}
+        {walletComponents.map( wallet => wallet.Component)}
+        {/* {!search && from && walletComponents.sort( wallet => wallet.name.includes(from?.text) ? -1 : 0 ).map( wallet => wallet.Component)}
+        {search && !from && walletComponents.filter( wallet => wallet.name.toLowerCase().includes(search.toLocaleLowerCase())).map( wallet => wallet.Component)}
+        {search && from && walletComponents.sort( wallet => wallet.name.includes(from?.text) ? -1 : 0 ).filter( wallet => wallet.name.toLowerCase().includes(search.toLocaleLowerCase())).map( wallet => wallet.Component)} */}
+        {/* { 
+        !search ? 
+        walletComponents.sort( wallet => wallet.name.includes(from?.text) ? -1 : 0 ).map( wallet => wallet.Component)
+        : 
+        walletComponents.sort( wallet => wallet.name.includes(from?.text) ? -1 : 0 ).filter( wallet => wallet.name.toLowerCase().includes(search.toLocaleLowerCase())).map( wallet => wallet.Component)
+        } */}
     </ul>
   )
 }
