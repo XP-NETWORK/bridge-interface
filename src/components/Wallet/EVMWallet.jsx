@@ -10,9 +10,8 @@ import { setAccount, setWrongNetwork } from "../../store/reducers/generalSlice";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 
 export default function EVMWallet({ wallet }) {
-  const { activate, chainId, account  } = useWeb3React();
+  const { activate } = useWeb3React();
   const OFF = { opacity: 0.6, pointerEvents: "none" };
-  const to = useSelector(state => state.general.to)
   const from = useSelector(state => state.general.from);
   const dispatch = useDispatch()
   const getMobOps = () =>  /android/i.test(navigator.userAgent || navigator.vendor || window.opera) ? true : false;

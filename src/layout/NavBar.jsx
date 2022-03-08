@@ -6,30 +6,26 @@ import { Navbar, Nav, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { setAccountModal, setReset, setWalletsModal } from '../store/reducers/generalSlice';
 import "./NavBar.css"
+import { useWeb3React } from '@web3-react/core';
 
 function NavBar() {
     const dispatch = useDispatch()
-    const account = useSelector(state => state.general.account)
-    const tronAccount = useSelector(state => state.general.tronWallet)
-    const elrondAccount = useSelector(state => state.general.elrondAccount)
-    const algorandAccount = useSelector(state => state.general.algorandAccount)
-    const tezosAccount = useSelector(state => state.general.tezosAccount)
-    const from = useSelector(state => state.general.from)
     const widget = useSelector(state => state.general.widget)
     const handleShow = () => dispatch(setAccountModal(true));
     const step = useSelector(state => state.general.step)
     const testnet = useSelector(state => state.general.testNet)
+    const { chainId, account } = useWeb3React();
 
     useEffect(() => {}, [step])
 
-    const setAddress = () => {
-        return  from?.type === "EVM" ? account 
-            : from?.type === "Tezos" ? tezosAccount 
-            : from?.type === "Algorand" ? algorandAccount 
-            : from?.type === "Elrond" ? elrondAccount 
-            : from?.type === "Tron" ? tronAccount 
-            : undefined
-    }
+    // const setAddress = () => {
+    //     return  from?.type === "EVM" ? account 
+    //         : from?.type === "Tezos" ? tezosAccount 
+    //         : from?.type === "Algorand" ? algorandAccount 
+    //         : from?.type === "Elrond" ? elrondAccount 
+    //         : from?.type === "Tron" ? tronAccount 
+    //         : undefined
+    // }
 
     const handleConnect = () => {
         dispatch(setWalletsModal(true))
@@ -49,7 +45,7 @@ function NavBar() {
                             <Nav.Link  target="_blank" href="https://xp.network/">Home</Nav.Link>
                             <Nav.Link  target="_blank" href="https://docs.xp.network/">Docs</Nav.Link>
                             <Nav.Link  target="_blank" href="https://stake.xp.network">Staking</Nav.Link>
-                            <div onClick={handleConnect} className='navbar-connect'>Connect Wallet</div>
+                            <div onClick={handleConnect} className='navbar-connect'>{account ? `${account.substring(0, window.innerWidth <= 600 ? 16 : 10)}...${account.substring(account.length - 2)}` : "Connect Wallet"}</div>
                             {/* { setAddress() && 
                             <Nav.Link onClick={handleShow}>
                                 <div className="account__box">
