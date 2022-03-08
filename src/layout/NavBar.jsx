@@ -49,7 +49,7 @@ function NavBar() {
                             <Nav.Link  target="_blank" href="https://xp.network/">Home</Nav.Link>
                             <Nav.Link  target="_blank" href="https://docs.xp.network/">Docs</Nav.Link>
                             <Nav.Link  target="_blank" href="https://stake.xp.network">Staking</Nav.Link>
-                            {/* <div className='navbar-connect'>Connect Wallet</div> */}
+                            <div className='navbar-connect'>Connect Wallet</div>
                             {/* { setAddress() && 
                             <Nav.Link onClick={handleShow}>
                                 <div className="account__box">

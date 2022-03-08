@@ -18,6 +18,7 @@
   line-height: 20px;
   letter-spacing: 0.04em;
 }
+
 .navbar-nav{
   margin-left: auto;
   margin-top: 14px;
@@ -25,6 +26,7 @@
   font-weight: 500;
   line-height: 19px;
   letter-spacing: 0em;
+  
 }
 .nav-link{
   border-radius: 76px;
@@ -69,6 +71,24 @@
   .navbar{
     width: 768px;
     padding: 0 10px;
+  }
+}
+@media screen and (max-width: 990px) {
+  .navbar-nav{
+    background: rgb(247,247,249);
+    background: linear-gradient(180deg, rgba(247,247,249,0) 0%, rgba(247,247,249,1) 20%, rgba(247,247,249,1) 100%);
+    border-radius: 0px 0px 20px 20px;
+    border-bottom: 1px solid white;
+  }
+  .navbar-nav:first-child{
+    padding-top: 20px;
+  }
+  .nav-link{
+    justify-content: flex-end;
+    padding-right: 18px !important;
+  }
+  .navbar-connect{
+    margin: 2px;
   }
 }
 @media screen and (max-width: 768px) {
