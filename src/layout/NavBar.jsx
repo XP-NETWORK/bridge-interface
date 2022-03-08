@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAccountModal, setReset, setWalletsModal } from '../store/reducers/generalSlice';
 import "./NavBar.css"
 import { useWeb3React } from '@web3-react/core';
+import Identicon from '../components/Identicon';
 
 function NavBar() {
     const dispatch = useDispatch()
@@ -45,7 +46,10 @@ function NavBar() {
                             <Nav.Link  target="_blank" href="https://xp.network/">Home</Nav.Link>
                             <Nav.Link  target="_blank" href="https://docs.xp.network/">Docs</Nav.Link>
                             <Nav.Link  target="_blank" href="https://stake.xp.network">Staking</Nav.Link>
-                            <div onClick={handleConnect} className='navbar-connect'>{account ? `${account.substring(0, window.innerWidth <= 600 ? 16 : 10)}...${account.substring(account.length - 2)}` : "Connect Wallet"}</div>
+                            <div onClick={handleConnect} className='navbar-connect'>
+                                {account ? `${account.substring(0, window.innerWidth <= 600 ? 16 : 10)}...${account.substring(account.length - 2)}` : "Connect Wallet"}
+                                {account && <Identicon />}
+                            </div>
                             {/* { setAddress() && 
                             <Nav.Link onClick={handleShow}>
                                 <div className="account__box">
