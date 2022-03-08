@@ -5,8 +5,13 @@ import NftSelect from "../components/NftSelect";
 import NftSlider from "../components/NftSlider";
 import NFTsuccess from "../components/NFTsuccess";
 import Transactionhistory from "../components/Transactionhistory";
-import { Routes, Route } from "react-router";
 import Slider from "../components/Slider/Slider";
+import {
+  Routes,
+  Route,
+} from "react-router-dom";
+import ConnectWallet from "./ConnectWallet";
+import ProtectedRoute from "../pages/ProtectedRoute"
 
 function XpBridge() {
   useEffect(() => {}, []);
@@ -17,15 +22,21 @@ function XpBridge() {
   );
   return (
     <div className="nftContainer">
-      { algorandClaimables && algorandClaimables.length > 0 && <Transactionhistory /> }
-
-      { step === 1 && 
+      {/* { algorandClaimables && algorandClaimables.length > 0 && <Transactionhistory /> } */}
+      <Routes>
+        <Route path="/" element={<ConnectWallet />} />
+        <Route path="/connect" element={<ConnectWallet />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/account" components={ <NFTaccount  />} />
+        </Route>
+      </Routes>
+      {/* { step === 1 && 
       <div className="first-step__container">
         <Slider />
         <NftSelect />
       </div>
       }
-      { step === 2 && <NFTaccount /> }
+      { step === 2 && <NFTaccount /> } */}
       <NFTsuccess />
     </div>
   );

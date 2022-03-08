@@ -4,8 +4,8 @@ import { Container } from "react-bootstrap";
 
 import DestinationChain from "./innercomponents/DestinationChain";
 import DestinationChainReload from "./innercomponents/DestinationChainReload";
-
-
+import { useLocation } from 'react-router'
+import { useNavigate } from 'react-router-dom';
 import SelectedNFT from "./innercomponents/SelectedNFT";
 import Approval from "./innercomponents/Approval";
 import NFTgridView from "../components/NFT/NFTgridView";
@@ -18,10 +18,11 @@ import ButtonToTransfer from "./innercomponents/ButtonToTransfer";
 import { setNFTS } from "../wallet/helpers";
 import Comment from "../components/innercomponents/Comment";
 import { ReturnBtn } from "./Settings/returnBtn";
-
+import { Navigate } from 'react-router-dom'
 
 function NFTaccount() {
   const dispatch = useDispatch();
+  const fromParam = useSelector((state) => state.general.from)
   const from = useSelector((state) => state.general.from.key);
   const type = useSelector((state) => state.general.from.type);
   const algorandAccount = useSelector((s) => s.general.algorandAccount);
@@ -56,10 +57,7 @@ function NFTaccount() {
     }
   }
 
-  useEffect(async () => {
-    await getNFTsList();
-  }, []);
-
+  
   useEffect(async () => {}, [nfts]);
 
   return (

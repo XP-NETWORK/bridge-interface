@@ -1,20 +1,11 @@
 import { useEffect } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
 import "./Global.css";
 import "./Responsive.css";
 import XpBridge from "./pages/XpBridge";
 import Alert from "./components/Alert";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setFrom,
-  setGetFeaturedModal,
-  setTestNet,
-  setTo,
-  setTronPopUp,
-  setValidatorsInf,
-} from "./store/reducers/generalSlice";
+import { setFrom, setGetFeaturedModal, setTestNet, setTo, setValidatorsInf } from "./store/reducers/generalSlice";
 import ApproveLoader from "./components/innercomponents/ApproveLoader";
-import { Modal } from "react-bootstrap";
 import Error from "./components/innercomponents/Error";
 import TronPopUp from "./components/innercomponents/TronPopUp";
 import { chains } from "./components/values";
@@ -25,24 +16,18 @@ import Widget from "./components/Widget";
 import TechnicalSupport from "./components/innercomponents/TechnicalSupport";
 import TransferLoader from "./components/innercomponents/TransferLoader";
 import TronConnectionErrMod from "./components/TronConnectionErrMod";
-import star from "./assets/img/icons/featuredInactive.svg";
 import GetFeatured from "./components/innercomponents/GetFeatured";
-import TnProcess from "./components/innercomponents/processingModals/TnProcess";
-import SuccessModal from "./components/Modals/SuccessModal";
-import Settings from "./components/Settings";
-
 import WSettings from "./components/Settings";
-import Slider from "./components/Slider/Slider";
+import { useLocation } from 'react-router'
+import { useNavigate } from 'react-router-dom';
 
 function App() {
   const dispatch = useDispatch();
-  // const loader = useSelector(state => state.general.approveLoader)
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
-  // const error = useSelector(state => state.general.error)
-  // const tronPopUp = useSelector(state => state.general.tronPopUp)
-  // const nftsToWhitelist = useSelector(state => state.general.techModal)
+  const from = useSelector((state) => state.general.from);
   const state = useSelector((state) => state.general);
-
+  const location = useLocation()
+  const navigate = useNavigate()
   const axios = require("axios");
   const widget = new URLSearchParams(window.location.search).get("widget");
 
@@ -59,6 +44,15 @@ function App() {
   const showGetFeatured = () => {
     dispatch(setGetFeaturedModal(true));
   };
+
+  useEffect(() => {
+    console.log("sfjghdsjhgf")
+    if(location.pathname === "/account"){
+      if(!from){
+        navigate('/connect')
+      }
+    }
+  },[])
 
   useEffect(() => {
     dispatch(setTestNet(window.location.href.indexOf("testnet.") > 0));
@@ -99,6 +93,9 @@ function App() {
   useEffect(async () => {
     if (!state.validatorsInfo) await checkValidators();
   }, [state.validatorsInfo]);
+
+
+  
 
   return (
     <div className={"App"}>
