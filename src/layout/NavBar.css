@@ -37,6 +37,9 @@
 .nav-link:hover{
   background: rgba(255, 255, 255, 0.4);
 }
+.nav-link--selected{
+  background: rgba(255, 255, 255, 0.4);
+}
 .navbar-connect{
   display: flex;
   justify-content: center;

@@ -132,6 +132,14 @@ div#root:after {
 .slider{
   width: 500px;
 }
+.stickers{
+  width: 1024px;
+  margin: 24px auto;
+  display: flex;
+  justify-content: flex-end;
+  gap: 6.5px;
+  padding-right: 15px;
+}
 
 .nftTitle h2 {
   font-weight: bold;
@@ -2616,14 +2624,27 @@ span.transPend {
   .first-step__container{
     margin: 39px 0;
   }
+  .stickers{
+    padding-right: 0;
+  }
+  .aleartBox {
+    bottom: 12.5vh;
+  }
 }
 
 @media screen and (max-width: 425px) {
-  .bridgeBody {
-    background-position: left 50% top 80px,
-      /*Ellipse\ 235*/left 50% top 177.15px, /*Ellipse\ 236*/left 1% top 9%,
-      /*l-figure*/ right 3% top 20%, /*r-figure*/ left 23% top 22%,
-      /*l-sphere*/ right 5% top 10%, /*r-sphere*/ right 10% top 39%; /*r-triangle*/
+  .nftContainer{
+    margin-top: 30px !important;
+  }
+  .first-step__container{
+    margin-top: 0;
+    flex-wrap: wrap;
+  }
+  .slider__wrapper{
+    order: 1;
+    width: 288px;
+    height: 360px;
+    padding: 0;
   }
 }
 
