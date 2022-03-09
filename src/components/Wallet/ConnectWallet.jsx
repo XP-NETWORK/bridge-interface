@@ -12,15 +12,24 @@ import MaiarModal from "../MaiarModal";
 import WalletList from "./WalletList";
 import Video from '../../assets/img/icons/Video_icon.svg';
 import INF from '../../assets/img/icons/Inf.svg';
+import { useNavigate } from "react-router-dom";
 
 
 function ConnectWallet() {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
   const [show, setShow] = useState();
   const qrCodeString = useSelector((state) => state.general.qrCodeString);
   const qrCodeImage = useSelector((state) => state.general.qrCodeImage);
+  const elrondAccount = useSelector(state => state.general.elrondAccount)
+  const tezosAccount = useSelector(state => state.general.tezosAccount)
+  const algorandAccount = useSelector(state => state.general.algorandAccount)
+  const evmAccount = useSelector(state => state.general.account)
+  const tronAccount = useSelector(state => state.general.tronWallet)
+
+  const connected = (elrondAccount || tezosAccount || algorandAccount || evmAccount || tronAccount) ? true : false
 
   const handleClose = () => {
     setShow(false);
@@ -33,8 +42,11 @@ function ConnectWallet() {
   const widget = useSelector((state) => state.general.widget);
 
   const handleShow = () => {
-    if(from && to){
+    if(from && to && !connected){
       setShow(true)
+    }
+    else if(connected){
+      navigate("/account")
     }
   };
 
