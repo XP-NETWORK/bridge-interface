@@ -13,7 +13,7 @@ export default function BackGround() {
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
-    transition: "2s"
+    transition: "2s",
   }
 
   return (

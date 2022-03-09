@@ -27,13 +27,13 @@ import { setTronWallet,
   setTempleWallet, 
   setQrImage, 
   setQrCodeString } from "../../store/reducers/generalSlice"
+import { useNavigate } from 'react-router';
 
 export const wallets = ["MetaMask", "WalletConnect", "Trust Wallet", "MyAlgo", "AlgoSigner", "Algorand Wallet", "TronLink", "Temple Wallet", "Beacon", "Maiar", "Maiar Extension", "Ledger", "Trezor"]
 const { to, modalError } = store.getState()
 
 
 export const connectMetaMask = async (activate, from, to) => {
-// debugger
     try {
         if(!window.ethereum && window.innerWidth <= 600) {
             const uri = `https://metamask.app.link/dapp/${window.location.host + `?to=${to.text}&from=${from.text}`}/`
@@ -41,6 +41,7 @@ export const connectMetaMask = async (activate, from, to) => {
         }
         await activate(injected);
         store.dispatch(setMetaMask(true))
+        return true
       } 
       catch (ex) {
           store.dispatch(setError(ex))
@@ -48,6 +49,7 @@ export const connectMetaMask = async (activate, from, to) => {
             console.log(ex.data.message);
           }
           else console.log(ex);
+          return false
       }
 }
 
@@ -102,8 +104,10 @@ export const connectBeacon = async () => {
     const permissions = await wallet.client.requestPermissions();
     store.dispatch(setTezosAccount(permissions.address))
     store.dispatch(setKukaiWallet(true))
+    return true
   } catch (error) {
     console.log("Got error:", error);
+    return false
   }
 }
 
@@ -144,7 +148,6 @@ const generateQR = async text => {
 }
 // Elrond blockchain connection ( Maiar )
 export const connectMaiar = async () => {
-  console.log("dsfsdfsdfsdfdf")
   // debugger
     const provider = new ProxyProvider( "https://gateway.elrond.com")
     const maiarProvider = new WalletConnectProvider(provider, 'https://bridge.walletconnect.org/', onClientConnect);

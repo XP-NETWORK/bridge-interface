@@ -5,13 +5,15 @@ import { ReactComponent as Close } from "../assets/img/icons/close.svg";
 
 export default function MaiarModal({ strQR, qrCodeString, show, handleClose }) {
   const confirmMaiarMob = useSelector((state) => state.general.confirmMaiarMob);
+  const walletsModal = useSelector(state => state.general.walletsModal)
+
   const walletConnectDeepLink =
     "https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet.dev&link=";
 
   return (
     <>
       <Modal
-        show={show}
+        show={show || walletsModal}
         animation={false}
         onHide={handleClose}
         className="ChainModal"

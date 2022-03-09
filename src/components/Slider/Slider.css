@@ -5,7 +5,8 @@
     z-index: -1;
 }
 .multi-background__color{
-    background-color: #e5e5e5e8;;
+    background-color: #e5e5e5e8;
+    backdrop-filter: blur(10px);
     position: absolute;
     width: 100vw;
     height: 100%;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import Close from "../../assets/img/icons/close.svg";
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
@@ -6,52 +6,47 @@ import ChangeNetworkModal from "../Modals/ChangeNetwork/ChangeNetworkModal"
 import { useDispatch, useSelector } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
 import { algoConnector } from "../../wallet/connectors";
-import {
-  setAccount,
-  setAlgorandWallet,
-  setStep,
-  setWrongNetwork,
-  setAlgorandAccount,
-  setQrCodeString,
-  setShowAbout,
-  setShowVideo,
-} from "../../store/reducers/generalSlice";
+import { setAccount, setAlgorandWallet, setStep, setWrongNetwork, setAlgorandAccount, setQrCodeString, setShowAbout, setShowVideo, setWalletsModal } from "../../store/reducers/generalSlice";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 import MaiarModal from "../MaiarModal";
 import WalletList from "./WalletList";
 import Video from '../../assets/img/icons/Video_icon.svg';
 import INF from '../../assets/img/icons/Inf.svg';
+import { useNavigate } from "react-router-dom";
 
 
 function ConnectWallet() {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
   const [show, setShow] = useState();
   const qrCodeString = useSelector((state) => state.general.qrCodeString);
   const qrCodeImage = useSelector((state) => state.general.qrCodeImage);
+  const elrondAccount = useSelector(state => state.general.elrondAccount)
+  const tezosAccount = useSelector(state => state.general.tezosAccount)
+  const algorandAccount = useSelector(state => state.general.algorandAccount)
+  const evmAccount = useSelector(state => state.general.account)
+  const tronAccount = useSelector(state => state.general.tronWallet)
+
+  const connected = (elrondAccount || tezosAccount || algorandAccount || evmAccount || tronAccount) ? true : false
+
   const handleClose = () => {
     setShow(false);
+    dispatch(setWalletsModal(false))
     if (qrCodeImage) {
       dispatch(setQrCodeString(""));
     }
   };
-  const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
-  const templeWallet = useSelector((state) => state.general.templeWallet);
-  const metaMask = useSelector((state) => state.general.MetaMask);
-  const tronLink = useSelector((state) => state.general.tronLink);
-  const trustWallet = useSelector((state) => state.general.trustWallet);
-  const AlgoSigner = useSelector((state) => state.general.AlgoSigner);
-  const algorandWallet = useSelector((state) => state.general.AlgorandWallet);
-  const onWC = useSelector((state) => state.general.WalletConnect);
-  const MaiarWallet = useSelector((state) => state.general.onMaiar);
-  const { chainId, account } = useWeb3React();
-  const testnet = useSelector((state) => state.general.testNet);
-  const MyAlgo = useSelector((state) => state.general.MyAlgo);
+  const walletsModal = useSelector(state => state.general.walletsModal)
   const widget = useSelector((state) => state.general.widget);
+
   const handleShow = () => {
-    if(from && to){
+    if(from && to && !connected){
       setShow(true)
+    }
+    else if(connected){
+      navigate("/account")
     }
   };
 
@@ -62,64 +57,63 @@ function handleVideoClick() {
     dispatch(setShowVideo(true))
 }
 
-  useEffect(() => {
-    algoConnector.on("connect", (error, payload) => {
-      if (error) {
-        throw error;
-      }
-      // Get provided accounts
-      const { accounts } = payload.params[0];
-      if (accounts) {
-        dispatch(setAlgorandWallet(true));
-        dispatch(setAlgorandAccount(accounts[0]));
-      }
-    });
-    // debugger;
-    let correct;
-    if (testnet) {
-      correct = from ? TESTNET_CHAIN_INFO[from?.key].chainId === chainId : "";
-    } else {
-      correct = from ? CHAIN_INFO[from?.key].chainId === chainId : "";
-    }
+  // useEffect(() => {
+  //   algoConnector.on("connect", (error, payload) => {
+  //     if (error) {
+  //       throw error;
+  //     }
+  //     // Get provided accounts
+  //     const { accounts } = payload.params[0];
+  //     if (accounts) {
+  //       dispatch(setAlgorandWallet(true));
+  //       dispatch(setAlgorandAccount(accounts[0]));
+  //     }
+  //   });
+  //   // debugger;
+  //   let correct;
+  //   if (testnet) {
+  //     correct = from ? TESTNET_CHAIN_INFO[from?.key].chainId === chainId : "";
+  //   } else {
+  //     correct = from ? CHAIN_INFO[from?.key].chainId === chainId : "";
+  //   }
 
-    if (from?.type === "EVM") {
-      dispatch(setAccount(account));
-    }
-    if (from) {
-      // debugger;
-      dispatch(
-        setWrongNetwork(
-          testnet
-            ? TESTNET_CHAIN_INFO[from.key].chainId !== chainId
-            : CHAIN_INFO[from.key].chainId !== chainId
-        )
-      );
-    }
-    if (
-      ((metaMask || tronLink || onWC || trustWallet || MaiarWallet) &&
-        correct) ||
-      MyAlgo ||
-      algorandWallet ||
-      AlgoSigner ||
-      kukaiWallet ||
-      templeWallet
-    ) {
-      dispatch(setStep(2));
-    }
-  }, [
-    account,
-    metaMask,
-    chainId,
-    tronLink,
-    onWC,
-    trustWallet,
-    AlgoSigner,
-    algorandWallet,
-    MaiarWallet,
-    MyAlgo,
-    templeWallet,
-    kukaiWallet,
-  ]);
+  //   if (from?.type === "EVM") {
+  //     dispatch(setAccount(account));
+  //   }
+  //   if (from) {
+  //     // debugger;
+  //     dispatch(
+  //       setWrongNetwork(
+  //         testnet
+  //           ? TESTNET_CHAIN_INFO[from.key].chainId !== chainId
+  //           : CHAIN_INFO[from.key].chainId !== chainId
+  //       )
+  //     );
+  //   }
+  //   if (
+  //     ((metaMask || tronLink || onWC || trustWallet || MaiarWallet) &&
+  //       correct) ||
+  //     MyAlgo ||
+  //     algorandWallet ||
+  //     AlgoSigner ||
+  //     kukaiWallet ||
+  //     templeWallet
+  //   ) {
+  //   }
+  // }, [
+  //   account,
+  //   metaMask,
+  //   chainId,
+  //   tronLink,
+  //   onWC,
+  //   trustWallet,
+  //   AlgoSigner,
+  //   algorandWallet,
+  //   MaiarWallet,
+  //   MyAlgo,
+  //   templeWallet,
+  //   kukaiWallet,
+  // ]);
 
   return (
     <div>
@@ -133,7 +127,7 @@ function handleVideoClick() {
       </div>
       {!qrCodeString ? (
         <Modal
-          show={show}
+          show={show || walletsModal}
           onHide={handleClose}
           animation={false}
           className="ChainModal"
@@ -150,7 +144,7 @@ function handleVideoClick() {
           </Modal.Header>
           <Modal.Body>
             <div className="walletListBox">
-              <WalletList />
+              <WalletList connected={handleClose} />
             </div>
           </Modal.Body>
         </Modal>

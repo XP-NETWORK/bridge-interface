@@ -4,31 +4,27 @@ import burger from "../assets/img/nav/burger.svg"
 import AccountModal from "../components/AccountModal"
 import { Navbar, Nav, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
-import { setAccountModal, setReset } from '../store/reducers/generalSlice';
+import { setAccountModal, setReset, setWalletsModal } from '../store/reducers/generalSlice';
 import "./NavBar.css"
+import { useWeb3React } from '@web3-react/core';
+import Identicon from '../components/Identicon';
 
 function NavBar() {
     const dispatch = useDispatch()
-    const account = useSelector(state => state.general.account)
-    const tronAccount = useSelector(state => state.general.tronWallet)
-    const elrondAccount = useSelector(state => state.general.elrondAccount)
-    const algorandAccount = useSelector(state => state.general.algorandAccount)
-    const tezosAccount = useSelector(state => state.general.tezosAccount)
-    const from = useSelector(state => state.general.from)
     const widget = useSelector(state => state.general.widget)
     const handleShow = () => dispatch(setAccountModal(true));
     const step = useSelector(state => state.general.step)
     const testnet = useSelector(state => state.general.testNet)
+    const elrondAccount = useSelector(state => state.general.elrondAccount)
+    const tezosAccount = useSelector(state => state.general.tezosAccount)
+    const algorandAccount = useSelector(state => state.general.algorandAccount)
+    const tronWallet = useSelector(state => state.general.tronWallet)
+    const { chainId, account } = useWeb3React();
 
-    useEffect(() => {}, [step])
+    const walletAccount = account || elrondAccount || tezosAccount || algorandAccount || tronWallet
 
-    const setAddress = () => {
-        return  from?.type === "EVM" ? account 
-            : from?.type === "Tezos" ? tezosAccount 
-            : from?.type === "Algorand" ? algorandAccount 
-            : from?.type === "Elrond" ? elrondAccount 
-            : from?.type === "Tron" ? tronAccount 
-            : undefined
+    const handleConnect = () => {
+        dispatch(setWalletsModal(true))
     }
 
     return (
@@ -45,15 +41,10 @@ function NavBar() {
                             <Nav.Link  target="_blank" href="https://xp.network/">Home</Nav.Link>
                             <Nav.Link  target="_blank" href="https://docs.xp.network/">Docs</Nav.Link>
                             <Nav.Link  target="_blank" href="https://stake.xp.network">Staking</Nav.Link>
-                            <div className='navbar-connect'>Connect Wallet</div>
-                            {/* { setAddress() && 
-                            <Nav.Link onClick={handleShow}>
-                                <div className="account__box">
-                                    {setAddress() ?`${setAddress().substring(0, window.innerWidth <= 600 ? 16 : 10)}...${setAddress().substring(setAddress().length - 2)}`:''} 
-                                    <img src={NftSelect} alt='' />
-                                </div>
-                            </Nav.Link>
-                            } */}
+                            <div onClick={handleConnect} className='navbar-connect'>
+                                {walletAccount ? `${walletAccount.substring(0, window.innerWidth <= 600 ? 16 : 10)}...${walletAccount.substring(walletAccount.length - 2)}` : "Connect Wallet"}
+                                {walletAccount && <Identicon account={walletAccount} />}
+                            </div>
                         </Nav>
                     </Navbar.Collapse>
                 <AccountModal />

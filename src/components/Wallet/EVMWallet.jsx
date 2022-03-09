@@ -1,26 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { connectMetaMask } from "./ConnectWalletHelper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MetaMask from "../../assets/img/wallet/MetaMask.svg";
 import WalletConnect from "../../assets/img/wallet/WalletConnect 3.svg";
 import TrustWallet from "../../assets/img/wallet/TWT.svg";
 import { isEVM } from "../../wallet/oldHelper";
+import { setAccount, setMetaMask, setWrongNetwork } from "../../store/reducers/generalSlice";
+import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 
-export default function EVMWallet({ wallet }) {
-  const { activate } = useWeb3React();
+export default function EVMWallet({ wallet, close }) {
+  const { activate, account } = useWeb3React();
   const OFF = { opacity: 0.6, pointerEvents: "none" };
-  const to = useSelector(state => state.general.to)
   const from = useSelector(state => state.general.from);
-  const getMobOps = () =>
-    /android/i.test(navigator.userAgent || navigator.vendor || window.opera)
-      ? true
-      : false;
+  const dispatch = useDispatch()
+  const getMobOps = () =>  /android/i.test(navigator.userAgent || navigator.vendor || window.opera) ? true : false;
+  const testnet = useSelector((state) => state.general.testNet);
+
+  
+  const connectHandler = async () => {
+     const connected = await connectMetaMask(activate, from?.text)
+     if(connected){
+       dispatch(setMetaMask(true))
+       close()
+     }
+  }
+
+  useEffect(() => {
+    if(account)
+    dispatch(setAccount(account))
+  }, [account])
+  
 
   return wallet === "MetaMask" /* METAMASK */ ? (
     <li
-      onClick={() => connectMetaMask(activate, from.text, to.text)}
-      style={from?.type === "EVM" ? {} : OFF}
+      onClick={connectHandler}
       className="wllListItem"
       data-wallet="MetaMask"
     >
@@ -28,7 +42,7 @@ export default function EVMWallet({ wallet }) {
     </li>
   ) : wallet === "TrustWallet" /* TRUST WALLET */ ? (
     <li
-      onClick={() => connectMetaMask(activate, from.text)}
+      onClick={connectHandler}
       style={
         (getMobOps() && window.innerWidth <= 600 && isEVM()) ||
         (window.ethereum && window.innerWidth <= 600)

@@ -16,12 +16,11 @@ import Close from "../../assets/img/icons/close.svg";
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 import { useState } from "react";
 import { filterChains } from "./ChainHelper";
+import { useWeb3React } from "@web3-react/core";
 
 export default function ChainListBox(props) {
   const dispatch = useDispatch();
-  const departureOrDestination = useSelector(
-    (state) => state.general.departureOrDestination
-  );
+  const departureOrDestination = useSelector((state) => state.general.departureOrDestination);
   const chainSearch = useSelector((state) => state.general.chainSearch);
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
@@ -31,6 +30,12 @@ export default function ChainListBox(props) {
   const widget = useSelector((state) => state.general.widget);
   const [fromChains, setFromChains] = useState(chains.sort((a, b) => b.order - a.order))
   const [toChains, searchToChains] = useState(chains.sort((a, b) => b.order - a.order))
+  const elrondAccount = useSelector(state => state.general.elrondAccount)
+  const tezosAccount = useSelector(state => state.general.tezosAccount)
+  const algorandAccount = useSelector(state => state.general.algorandAccount)
+  const evmAccount = useSelector(state => state.general.account)
+  const tronAccount = useSelector(state => state.general.tronWallet)
+
 
   const handleClose = () => {
     dispatch(setChainModal(false));
@@ -59,14 +64,26 @@ export default function ChainListBox(props) {
     }
   };
 
+  const showSearch = () => {
+    if(tezosAccount || tronAccount || algorandAccount || elrondAccount) return ""
+    else return <ChainSearch />
+  }
+
   useEffect(() => {
     const withNew = chains.filter(chain => chain.newChain)
     const withComing = chains.filter( chain => chain.coming && !chain.newChain )
     const withMaintenance = chains.filter( chain => chain.maintenance && !chain.newChain )
     const noComingNoMaintenance = chains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain)
     const sorted = [...withNew, ...noComingNoMaintenance, ...withMaintenance, ...withComing]
-    setFromChains(sorted)
-  }, [])
+
+    const onlyElrond = elrondAccount ? sorted.filter( chain => chain.type === "Elrond") : undefined
+    const onlyEVM = evmAccount ? sorted.filter( chain => chain.type === "EVM") : undefined
+    const onlyTron = tronAccount ? sorted.filter( chain => chain.type === "Tron") : undefined
+    const onlyAlgo = algorandAccount ? sorted.filter( chain => chain.type === "Algorand") : undefined
+    const onlyTezos = tezosAccount ? sorted.filter( chain => chain.type === "Tezos") : undefined
+
+    setFromChains(onlyElrond || onlyEVM || onlyTron || onlyAlgo || onlyTezos || sorted)
+  }, [elrondAccount, tezosAccount, algorandAccount, tronAccount, evmAccount])
 
   useEffect(() => {
     if(from)searchToChains(filterChains(chains, from.text))
@@ -92,7 +109,7 @@ export default function ChainListBox(props) {
       </Modal.Header>
       <Modal.Body>
         <div className="nftChainListBox">
-          <ChainSearch />
+          { showSearch() }
           <ul className="nftChainList scrollSty">
             {!from ? fromChains
             .filter((chain) => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : ""))

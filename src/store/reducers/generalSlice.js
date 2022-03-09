@@ -16,6 +16,9 @@ const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
+    setWalletsModal(state, action){
+      state.walletsModal = action.payload
+    },
     setQrCodeString(state, action) {
       state.qrCodeString = action.payload;
     },
@@ -329,6 +332,7 @@ export const {
   setQrCodeString,
   setQrImage,
   setWSettings,
+  setWalletsModal
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

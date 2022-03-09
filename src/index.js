@@ -11,7 +11,7 @@ import NavBar from "./layout/NavBar";
 import Footer from "./layout/Footer";
 import { Web3ReactProvider } from "@web3-react/core";
 import Web3 from "web3";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import BackGround from "./components/MultiBG/BackGround";
 
 function getLibrary(provider) {
@@ -22,12 +22,12 @@ ReactDOM.render(
   <React.StrictMode>
     <Web3ReactProvider getLibrary={getLibrary}>
       <Provider store={store}>
-        <Router>
+        <BrowserRouter>
           <BackGround />
           <NavBar />
           <App />
           <Footer />
-        </Router>
+        </BrowserRouter>
       </Provider>
     </Web3ReactProvider>
   </React.StrictMode>,
