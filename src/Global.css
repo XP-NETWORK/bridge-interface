@@ -9,6 +9,7 @@
 }
 
 
+
 html,
 body {
   font-family: "Inter", sans-serif;
@@ -377,13 +378,7 @@ span.closeBox {
 }
 
 .modal-content {
-  background: #232833;
-  border: 1px solid #2d3342;
-  background: linear-gradient(
-    309.48deg,
-    #232833 -3.65%,
-    rgba(40, 46, 60, 1) 122.77%
-  );
+  background: #F7F8F9;
   box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.13);
   border-radius: 20px;
 }
@@ -392,7 +387,7 @@ span.closeBox {
   opacity: 0.9;
 }
 .modal-header {
-  border-bottom: 1px solid #2d3342;
+  border-bottom: 1px solid transparent;
   position: relative;
   z-index: 1;
   min-height: 70px;
