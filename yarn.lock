@@ -16771,7 +16771,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "0.1.0"
-  resolved "git+https://github.com/xp-network/xpjs#5976e21d90813c0ff24a57085a11ec15068b9889"
+  resolved "git+https://github.com/xp-network/xpjs#b74d03f48cbf36e6026a6297365dbf31294b1573"
   dependencies:
     "@elrondnetwork/erdjs" "^8.0.1-alpha.8"
     "@json-rpc-tools/utils" "^1.7.6"
@@ -16791,12 +16791,6 @@ xmlhttprequest@1.8.0:
     tronstation "^1.0.1"
     tronweb "^4.1.0"
     xpnet-web3-contracts "git+https://github.com/xp-network/XP.network-HECO-Migration#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
-
-"xpnet-web3-contracts@git+https://github.com/xp-network/XP.network-HECO-Migration#4875dd73dd3f1884c0129caa4638135b9c10eb05":
-  version "0.1.0"
-  resolved "git+https://github.com/xp-network/XP.network-HECO-Migration#4875dd73dd3f1884c0129caa4638135b9c10eb05"
-  dependencies:
-    ethers "^5.5.4"
 
 "xpnet-web3-contracts@git+https://github.com/xp-network/XP.network-HECO-Migration#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f":
   version "0.1.0"
