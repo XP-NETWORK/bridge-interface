@@ -7,13 +7,9 @@ export default function TronWallet() {
   const from = useSelector((state) => state.general.from);
   const OFF = { opacity: 0.6, pointerEvents: "none" };
 
+
   return (
-    <li
-      onClick={connectTronlink}
-      // style={from ? (from?.type === "Tron" ? {} : OFF) : ""}
-      data-wallet="TronLink"
-      className="wllListItem"
-    >
+    <li onClick={connectTronlink} data-wallet="TronLink" className="wllListItem" >
       <img src={Tron} alt="Tron Icon" /> TronLink
     </li>
   );

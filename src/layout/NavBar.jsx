@@ -18,9 +18,10 @@ function NavBar() {
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const tezosAccount = useSelector(state => state.general.tezosAccount)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
+    const tronWallet = useSelector(state => state.general.tronWallet)
     const { chainId, account } = useWeb3React();
 
-    const walletAccount = account || elrondAccount || tezosAccount || algorandAccount 
+    const walletAccount = account || elrondAccount || tezosAccount || algorandAccount || tronWallet
 
     const handleConnect = () => {
         dispatch(setWalletsModal(true))
