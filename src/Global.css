@@ -2612,7 +2612,7 @@ span.transPend {
   pointer-events: none;
 }
 
-@media screen and (max-height: 735px) {
+@media screen and (max-height: 750px) {
   .first-step__container{
     margin: 39px 0;
   }
