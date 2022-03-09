@@ -19,9 +19,7 @@ import { filterChains } from "./ChainHelper";
 
 export default function ChainListBox(props) {
   const dispatch = useDispatch();
-  const departureOrDestination = useSelector(
-    (state) => state.general.departureOrDestination
-  );
+  const departureOrDestination = useSelector((state) => state.general.departureOrDestination);
   const chainSearch = useSelector((state) => state.general.chainSearch);
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
@@ -31,6 +29,11 @@ export default function ChainListBox(props) {
   const widget = useSelector((state) => state.general.widget);
   const [fromChains, setFromChains] = useState(chains.sort((a, b) => b.order - a.order))
   const [toChains, searchToChains] = useState(chains.sort((a, b) => b.order - a.order))
+  const elrondAccount = useSelector(state => state.general.elrondAccount)
+  const tezosAccount = useSelector(state => state.general.tezosAccount)
+  const algorandAccount = useSelector(state => state.general.algorandAccount)
+  const evmAccount = useSelector(state => state.general.account)
+  const tronAccount = useSelector(state => state.general.tronWallet)
 
   const handleClose = () => {
     dispatch(setChainModal(false));
@@ -60,13 +63,18 @@ export default function ChainListBox(props) {
   };
 
   useEffect(() => {
+    const onlyElrond = elrondAccount ? chains.filter( chain => chain.type === "Elrond") : undefined
+    const onlyEVM = evmAccount ? chains.filter( chain => chain.type === "EVM") : undefined
+    const onlyTron = tronAccount ? chains.filter( chain => chain.type === "Tron") : undefined
+    const onlyAlgo = algorandAccount ? chains.filter( chain => chain.type === "Algorand") : undefined
+
     const withNew = chains.filter(chain => chain.newChain)
     const withComing = chains.filter( chain => chain.coming && !chain.newChain )
     const withMaintenance = chains.filter( chain => chain.maintenance && !chain.newChain )
     const noComingNoMaintenance = chains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain)
     const sorted = [...withNew, ...noComingNoMaintenance, ...withMaintenance, ...withComing]
     setFromChains(sorted)
-  }, [])
+  }, [elrondAccount, tezosAccount, algorandAccount, tronAccount, evmAccount])
 
   useEffect(() => {
     if(from)searchToChains(filterChains(chains, from.text))

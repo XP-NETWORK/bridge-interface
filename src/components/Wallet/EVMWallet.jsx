@@ -10,7 +10,7 @@ import { setAccount, setMetaMask, setWrongNetwork } from "../../store/reducers/g
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 
 export default function EVMWallet({ wallet }) {
-  const { activate } = useWeb3React();
+  const { activate, account } = useWeb3React();
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector(state => state.general.from);
   const dispatch = useDispatch()
@@ -22,6 +22,7 @@ export default function EVMWallet({ wallet }) {
      const connected = await connectMetaMask(activate, from?.text)
      if(connected){
        dispatch(setMetaMask(true))
+       dispatch(setAccount(account))
      }
   }
 
