@@ -65,7 +65,8 @@ export default function ChainListBox(props) {
   };
 
   const showSearch = () => {
-    if(!tezosAccount)return <ChainSearch />
+    if(tezosAccount || tronAccount || algorandAccount || elrondAccount) return ""
+    else return <ChainSearch />
   }
 
   useEffect(() => {
@@ -108,7 +109,6 @@ export default function ChainListBox(props) {
       </Modal.Header>
       <Modal.Body>
         <div className="nftChainListBox">
-          {/* <ChainSearch /> */}
           { showSearch() }
           <ul className="nftChainList scrollSty">
             {!from ? fromChains
