@@ -132,7 +132,7 @@ function handleVideoClick() {
           </Modal.Header>
           <Modal.Body>
             <div className="walletListBox">
-              <WalletList />
+              <WalletList connected={handleClose} />
             </div>
           </Modal.Body>
         </Modal>

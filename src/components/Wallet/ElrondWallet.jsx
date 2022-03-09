@@ -6,7 +6,7 @@ import { connectMaiar, connectMaiarExtension } from "./ConnectWalletHelper";
 import { algoConnector } from "../../wallet/connectors";
 import { setAlgorandAccount, setAlgorandWallet } from "../../store/reducers/generalSlice";
 
-export default function ElrondWallet({ wallet }) {
+export default function ElrondWallet({ wallet, close }) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
   const dispatch = useDispatch()
@@ -15,9 +15,11 @@ export default function ElrondWallet({ wallet }) {
     switch (wallet) {
       case "Maiar": 
         connectMaiar()
+        close()
         break;
       case "Maiar Extension":
         connectMaiarExtension()
+        close()
         break;
       default:
         break;

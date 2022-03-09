@@ -9,7 +9,7 @@ import MyAlgoBlue from "../../assets/img/wallet/MyAlgoBlue.svg";
 import AlgoSignerIcon from "../../assets/img/wallet/Algo Signer.png";
 import { useSelector } from "react-redux";
 
-export default function AlgorandWallet({ wallet }) {
+export default function AlgorandWallet({ wallet, close }) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
 
@@ -18,12 +18,15 @@ export default function AlgorandWallet({ wallet }) {
     switch (wallet) {
       case "MyAlgo":
         connectMyAlgo()
+        close()
         break;
       case "AlgoSigner":
         connectAlgoSigner()
+        close()
         break;
       case "Algorand Wallet":
         connectAlgoWallet()
+        close()
         break;
       default:
         break;

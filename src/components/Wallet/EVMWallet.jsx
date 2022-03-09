@@ -9,7 +9,7 @@ import { isEVM } from "../../wallet/oldHelper";
 import { setAccount, setMetaMask, setWrongNetwork } from "../../store/reducers/generalSlice";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 
-export default function EVMWallet({ wallet }) {
+export default function EVMWallet({ wallet, close }) {
   const { activate, account } = useWeb3React();
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector(state => state.general.from);
@@ -22,7 +22,7 @@ export default function EVMWallet({ wallet }) {
      const connected = await connectMetaMask(activate, from?.text)
      if(connected){
        dispatch(setMetaMask(true))
-      
+       close()
      }
   }
 

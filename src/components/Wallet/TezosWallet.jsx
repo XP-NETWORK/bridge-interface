@@ -6,7 +6,7 @@ import Temple from "../../assets/img/wallet/Temple.svg";
 import { chains } from "../../components/values";
 import { setFrom } from "../../store/reducers/generalSlice";
 
-export default function TezosWallet({ wallet }) {
+export default function TezosWallet({ wallet, close }) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
 
   const handleConnect = async wallet => {
@@ -14,9 +14,11 @@ export default function TezosWallet({ wallet }) {
     switch (wallet) {
       case "TempleWallet":
         connectTempleWallet()
+        close()
         break;
       case "Beacon":
           await connectBeacon()
+          close()
         break;
       default:
         break;
