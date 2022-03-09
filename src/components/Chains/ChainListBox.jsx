@@ -67,7 +67,8 @@ export default function ChainListBox(props) {
     const onlyEVM = evmAccount ? chains.filter( chain => chain.type === "EVM") : undefined
     const onlyTron = tronAccount ? chains.filter( chain => chain.type === "Tron") : undefined
     const onlyAlgo = algorandAccount ? chains.filter( chain => chain.type === "Algorand") : undefined
-
+    const onlyTezos = tezosAccount ? chains.filter( chain => chain.type === "Tezos") : undefined
+    console.log("🚀 ~ file: ChainListBox.jsx ~ line 71 ~ useEffect ~ onlyTezos", onlyTezos )
     const withNew = chains.filter(chain => chain.newChain)
     const withComing = chains.filter( chain => chain.coming && !chain.newChain )
     const withMaintenance = chains.filter( chain => chain.maintenance && !chain.newChain )
