@@ -12,7 +12,7 @@ import MaiarModal from "../MaiarModal";
 import WalletList from "./WalletList";
 import Video from '../../assets/img/icons/Video_icon.svg';
 import INF from '../../assets/img/icons/Inf.svg';
-import { useNavigate } from 'react-router';
+
 
 function ConnectWallet() {
   const dispatch = useDispatch();

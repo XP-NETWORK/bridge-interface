@@ -104,8 +104,10 @@ export const connectBeacon = async () => {
     const permissions = await wallet.client.requestPermissions();
     store.dispatch(setTezosAccount(permissions.address))
     store.dispatch(setKukaiWallet(true))
+    return true
   } catch (error) {
     console.log("Got error:", error);
+    return false
   }
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { connectMetaMask } from "./ConnectWalletHelper";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,9 +22,15 @@ export default function EVMWallet({ wallet }) {
      const connected = await connectMetaMask(activate, from?.text)
      if(connected){
        dispatch(setMetaMask(true))
-       dispatch(setAccount(account))
+      
      }
   }
+
+  useEffect(() => {
+    if(account)
+    dispatch(setAccount(account))
+  }, [account])
+  
 
   return wallet === "MetaMask" /* METAMASK */ ? (
     <li

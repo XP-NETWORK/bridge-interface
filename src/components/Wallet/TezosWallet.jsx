@@ -1,20 +1,22 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { connectTempleWallet, connectBeacon } from "./ConnectWalletHelper";
 import BeaconW from "../../assets/img/wallet/BeaconWhite.svg";
 import Temple from "../../assets/img/wallet/Temple.svg";
+import { chains } from "../../components/values";
+import { setFrom } from "../../store/reducers/generalSlice";
 
 export default function TezosWallet({ wallet }) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
-  const from = useSelector((state) => state.general.from);
 
-  const handleConnect = wallet => {
+  const handleConnect = async wallet => {
+    let connected
     switch (wallet) {
       case "TempleWallet":
         connectTempleWallet()
         break;
       case "Beacon":
-        connectBeacon()
+          await connectBeacon()
         break;
       default:
         break;
