@@ -247,7 +247,7 @@ function WSettings({
                                 ""
                               )}
 
-                              {false && chain.coming ? (
+                              {chain.coming ? (
                                 <span
                                   style={{
                                     color: "grey",
