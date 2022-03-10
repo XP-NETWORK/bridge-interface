@@ -301,6 +301,7 @@ function SuccessNFT({ nft, from, index }) {
             playsInline={true}
             autoPlay={true}
             loop={true}
+            muted={true}
             src={setupURI(url)}
           />
         ) : (

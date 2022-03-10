@@ -27,3 +27,7 @@
     border-radius: 4px;
     padding: 0px 6px;
 }
+
+.chain-list__header{
+    padding-left: 40px;
+}

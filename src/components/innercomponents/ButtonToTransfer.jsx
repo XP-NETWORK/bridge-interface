@@ -124,7 +124,7 @@ export default function ButtonToTransfer() {
                 factory = await getFactory()
                 const contract = nftSmartContract.toLowerCase()
                 const mintWidth = await factory.getVerifiedContracts(contract, toNonce, fromNonce)
-                console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 127 ~ sendEach ~ mintWidth", mintWidth)
+                // console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 127 ~ sendEach ~ mintWidth", mintWidth)
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
                 result = await factory.transferNft(

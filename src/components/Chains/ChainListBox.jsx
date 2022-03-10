@@ -62,19 +62,28 @@ export default function ChainListBox(props) {
   };
 
   useEffect(() => {
-    const withNew = chains.filter(chain => chain.newChain)
+    const withNew = chains.filter(chain => chain.newChain).sort((a,b) => a.order - b.order);
     const withComing = chains.filter( chain => chain.coming && !chain.newChain )
     const withMaintenance = chains.filter( chain => chain.maintenance && !chain.newChain )
-    const noComingNoMaintenance = chains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain)
+    const noComingNoMaintenance = chains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain).sort((a,b) => a.order - b.order);
     const sorted = [...withNew, ...noComingNoMaintenance, ...withMaintenance, ...withComing]
+    
+    //const orderSorted = sorted.sort((a,b) => a.order - b.order)
     setFromChains(sorted)
   }, [])
 
   useEffect(() => {
-    if(from)searchToChains(filterChains(chains, from.text))
+    //if(from)searchToChains(filterChains(chains, from.text))
+    const withNew = chains.filter(chain => chain.newChain).sort((a,b) => a.order - b.order);
+    const withComing = chains.filter( chain => chain.coming && !chain.newChain )
+    const withMaintenance = chains.filter( chain => chain.maintenance && !chain.newChain )
+    const noComingNoMaintenance = chains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain).sort((a,b) => a.order - b.order);
+    const sorted = [...withNew, ...noComingNoMaintenance, ...withMaintenance, ...withComing]
+    if(from) searchToChains(filterChains(sorted, from.text))
   }, [from])
   
   useEffect(() => {
+    if(to) searchToChains(filterChains(toChains, to.text))
   }, [to]);
 
   return (
@@ -85,9 +94,11 @@ export default function ChainListBox(props) {
       className="ChainModal"
     >
       <Modal.Header className="text-left">
-        <Modal.Title>{`Select ${
+        <Modal.Title>
+          <div className="chain-list__header">{`Select ${
           departureOrDestination === "destination" ? "destination" : "departure"
-        } chain`}</Modal.Title>
+        } chain`}</div>
+        </Modal.Title>
         <span className="CloseModal" onClick={() => handleClose()}>
           {widget ? <CloseComp className="svgWidget" /> : <img src={Close} alt="" />}
         </span>
@@ -105,11 +116,11 @@ export default function ChainListBox(props) {
             
             : toChains
             .filter( chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : ""))
-            .sort((chain) => {
+            /*.sort((chain) => {
               if(chain.coming) return 1
               else if(chain.maintenance) return 0
               else if(!chain.coming) return -1
-            })
+            })*/
             .map((chain) => {
               const {image, text, key, coming, newChain, maintenance, testNet, mainnet } = chain;
               return globalTestnet ? ((testNet && chain.key !== from.key)) && <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming}  text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`} /> 
