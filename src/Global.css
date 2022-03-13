@@ -360,7 +360,7 @@ span.closeBox {
   justify-content: space-between;
 }
 
-
+/* 
 .SearchDrop.dropdown .btn {
   background: transparent;
   border: 0;
@@ -437,7 +437,7 @@ span.closeBox {
 
 .SearchDrop.dropdown .dropdown-toggle::after {
   display: none;
-}
+} */
 
 .selectAll {
   display: flex;

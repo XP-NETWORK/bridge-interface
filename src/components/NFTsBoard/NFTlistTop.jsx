@@ -13,6 +13,7 @@ import { ReactComponent as ListViewComp } from "../../assets/img/icons/ListView.
 import { ReactComponent as GridViewComp } from "../../assets/img/icons/GridView.svg";
 import { ReactComponent as RefreshComp } from "../../assets/img/refresh.svg";
 import ChainListBox from "../Chains/ChainListBox";
+import NFTSearch from "./NFTSearch";
 
 
 function NFTlistTop() { 
@@ -26,6 +27,7 @@ function NFTlistTop() {
   const widget = useSelector((state) => state.general.widget);
   const [showSearch, setShowSearch] = useState(false);
   const [icon, setIcon] = useState(true)
+
   const handleSearch = (e) => {
     dispatch(setSearchNFTList(e.target.value));
   };
@@ -102,48 +104,9 @@ function NFTlistTop() {
           Selected <span>{`/ ${nfts ? nfts.length : ""} `}</span>
         </div>
         <div className="nftTopRIght">
-          <div className="searchNft desktopOnly">
-            <Dropdown className="SearchDrop" autoClose="outside">
-              <Dropdown.Toggle id="SearchDrop">
-                
-                {widget ? icon && <SearchComp  onClick={() => setIcon(false)} className="svgWidget" /> : icon && <img onClick={() => setIcon(false)} src={Search} alt="#" />}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <form action="#">
-                  <input
-                    onChange={(e) => handleSearch(e)}
-                    type="text"
-                    placeholder="Search NFT"
-                  />
-                  {/* { search ?  <button type="button"><img src={Close} alt="" /></button> : <button type="button"><img src={Search} alt=""/></button>} */}
-                  <button type="button">
-                    {widget ? (
-                      <SearchComp className="svgWidget" />
-                    ) : (
-                      <img src={Search} alt="#" />
-                    )}
-                  </button>
-                </form>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-
+          <NFTSearch />
           <div onClick={() => handleView()} className="change-view__button">
-            { NFTListView ? <div className="grid-icon"></div>:<div className="list-icon"></div> }
-            {/* { NFTListView ? (
-              <span>
-                {widget ? <GridViewComp className="svgWidget" />
-                :<img src={GridView} alt="#" />}
-              </span>
-            ) : (
-              <span>
-                {widget ? (
-                  <ListViewComp className="svgWidget" />
-                ) : (
-                  <img src={ListView} alt="#" />
-                )}
-              </span>
-            )} */}
+          { NFTListView ? <div className="grid-icon"></div>:<div className="list-icon"></div> }
           </div>
           {/* <span onClick={() => setShowSearch(prev => prev = !prev)} className="mobileOnly search-btn"><img src={Search} /></span> */}
           {nfts?.length === selectedNFTs?.length ? <div className="delete-all" onClick={() => dispatch(cleanSelectedNFTList())}></div>
