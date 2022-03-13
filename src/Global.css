@@ -360,10 +360,6 @@ span.closeBox {
   justify-content: space-between;
 }
 
-.nftTopRIght {
-  display: flex;
-  align-items: center;
-}
 
 .SearchDrop.dropdown .btn {
   background: transparent;

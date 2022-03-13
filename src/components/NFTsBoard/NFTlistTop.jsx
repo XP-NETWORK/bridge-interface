@@ -128,14 +128,12 @@ function NFTlistTop() {
             </Dropdown>
           </div>
 
-          <div onClick={() => handleView()} className="ListView">
-            {NFTListView ? (
+          <div onClick={() => handleView()} className="change-view__button">
+            { NFTListView ? <div className="grid-icon"></div>:<div className="list-icon"></div> }
+            {/* { NFTListView ? (
               <span>
-                {widget ? (
-                  <GridViewComp className="svgWidget" />
-                ) : (
-                  <img src={GridView} alt="#" />
-                )}
+                {widget ? <GridViewComp className="svgWidget" />
+                :<img src={GridView} alt="#" />}
               </span>
             ) : (
               <span>
@@ -145,7 +143,7 @@ function NFTlistTop() {
                   <img src={ListView} alt="#" />
                 )}
               </span>
-            )}
+            )} */}
           </div>
           {/* <span onClick={() => setShowSearch(prev => prev = !prev)} className="mobileOnly search-btn"><img src={Search} /></span> */}
           {nfts?.length === selectedNFTs?.length ? <div className="delete-all" onClick={() => dispatch(cleanSelectedNFTList())}></div>
