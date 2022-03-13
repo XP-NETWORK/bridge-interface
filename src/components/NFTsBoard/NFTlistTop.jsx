@@ -4,13 +4,7 @@ import Search from "../../assets/img/icons/Search.svg";
 import ListView from "../../assets/img/icons/ListView.svg";
 import GridView from "../../assets/img/icons/GridView.svg";
 import { useDispatch } from "react-redux";
-import {
-  setSearchNFTList,
-  allSelected,
-  setNFTsListView,
-  setSwitchDestination,
-  cleanSelectedNFTList,
-} from "../../store/reducers/generalSlice";
+import {setSearchNFTList, allSelected, setNFTsListView, setSwitchDestination, cleanSelectedNFTList } from "../../store/reducers/generalSlice";
 import { useSelector } from "react-redux";
 import { setNFTS } from "../../wallet/helpers";
 import Refresh from "../../assets/img/refresh.svg";
@@ -20,32 +14,11 @@ import { ReactComponent as GridViewComp } from "../../assets/img/icons/GridView.
 import { ReactComponent as RefreshComp } from "../../assets/img/refresh.svg";
 import ChainListBox from "../Chains/ChainListBox";
 
-function NFTlistTop() {
-//   const { Harmony } = require('@harmony-js/core')
-//   const { ChainID, ChainType } = require('@harmony-js/utils')
-//   const shardID = 0
-//   const hmySDK = new Harmony(
-//     'https://api.s0.b.hmny.io',
-//     {
-//       chainType: ChainType.Harmony,
-//       chainId:ChainID.HmyMainnet,
-//       shardID,
-//     }
-//   )
-//   console.log("hmySDK.crypto: ", hmySDK.crypto);
-//   const arr = hmySDK.crypto.toBech32("0xb6C8748115d23Eb1c6d59Cb83eAe051b56ef75c7")
-//  console.log("toBech32: ", arr);
- 
+
+function NFTlistTop() { 
   const dispatch = useDispatch();
   const nfts = useSelector((state) => state.general.NFTList);
-  const {
-    algorandAccount,
-    tronWallet,
-    elrondAccount,
-    tezosAccount,
-    account,
-    bigLoader,
-  } = useSelector((state) => state.general);
+  const { algorandAccount, tronWallet, elrondAccount, tezosAccount, account, bigLoader } = useSelector((state) => state.general);
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
   const NFTListView = useSelector((state) => state.general.NFTListView);
   const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -106,7 +79,6 @@ function NFTlistTop() {
         </div>
       </div>
       <div className="nftListTop">
-        {/* <NFTChainListBox /> */}
         <ChainListBox />
         <div className="yourNft desktopOnly">
           Your NFTs on{" "}
@@ -176,22 +148,9 @@ function NFTlistTop() {
             )}
           </div>
           {/* <span onClick={() => setShowSearch(prev => prev = !prev)} className="mobileOnly search-btn"><img src={Search} /></span> */}
-          {nfts?.length === selectedNFTs?.length ? (
-            <div
-              onClick={() => dispatch(cleanSelectedNFTList())}
-              className="selectAll"
-            >
-              Clear all
-            </div>
-          ) : (
-            <div
-              style={nfts ? {} : OFF}
-              onClick={() => dispatch(allSelected())}
-              className="selectAll"
-            >
-              Select all
-            </div>
-          )}
+          {nfts?.length === selectedNFTs?.length ? <div onClick={() => dispatch(cleanSelectedNFTList())}>Clear all</div>
+          :<div style={nfts ? {} : OFF} onClick={() => dispatch(allSelected())} className="select-all"></div>
+          }
         </div>
         {/* !!! Show on click */}
         <div style={!showSearch ? {} : off} className="mobileOnly mobSearch">

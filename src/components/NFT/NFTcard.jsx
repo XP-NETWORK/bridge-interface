@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  setSelectedNFTList,
-  removeFromSelectedNFTList,
-} from "../../store/reducers/generalSlice";
+import { setSelectedNFTList,removeFromSelectedNFTList } from "../../store/reducers/generalSlice";
 import CheckGreen from "../../assets/img/icons/check_green.svg";
 import NFTdetails from './NFTdetails'
 import { useSelector } from "react-redux";
 import { setupURI } from "../../wallet/oldHelper";
 import { getUrl, isWhiteListed } from "./NFTHelper.js";
-import "./NewNFT.css";
 import { isValidHttpUrl } from "../../wallet/helpers";
 import VideoOrImage from "./VideoOrImage";
 import VideoAndImage from "./VideoAndImage"
 import NotWhiteListed from "./NotWhiteListed"
 import BrockenUtlGridView from "./BrockenUtlGridView";
+import "./NewNFT.css";
 
 
 export default function NFTcard({ nft, index }) {

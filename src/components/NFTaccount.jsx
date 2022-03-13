@@ -1,28 +1,18 @@
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
-// import DestinationChain from "./innercomponents/DestinationChain";
 import DestinationChainReload from "./innercomponents/DestinationChainReload";
-// import { useLocation } from 'react-router'
-// import { useNavigate } from 'react-router-dom';
-// import SelectedNFT from "./innercomponents/SelectedNFT";
-// import Approval from "./innercomponents/Approval";
 import NFTgridView from "../components/NFT/NFTgridView";
 import NFTlistView from "../components/NFT/NFTlistView";
-// import SendFees from "./innercomponents/SendFees";
-import NFTlistTop from "./innercomponents/NFTlistTop";
+import NFTlistTop from "./NFTsBoard/NFTlistTop";
 import { setError } from "../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
-// import ButtonToTransfer from "./innercomponents/ButtonToTransfer";
 import { setNFTS } from "../wallet/helpers";
-// import Comment from "../components/innercomponents/Comment";
 import { ReturnBtn } from "./Settings/returnBtn";
-// import { Navigate } from 'react-router-dom'
 import DesktopTransferBoard from "./TransferBoard/DesktopTransferBoard";
 import MobileTransferBoard from "./TransferBoard/MobileTransferBoard";
 
 function NFTaccount() {
   const dispatch = useDispatch();
-  // const fromParam = useSelector((state) => state.general.from)
   const from = useSelector((state) => state.general.from.key);
   const type = useSelector((state) => state.general.from.type);
   const algorandAccount = useSelector((s) => s.general.algorandAccount);

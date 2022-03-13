@@ -543,12 +543,11 @@ span.closeBox {
   margin-right: 10px;
 }
 
-.yourNft,
-.yourNft span {
+.yourNft, .yourNft span {
   display: flex;
   align-items: center;
   font-size: 18px;
-  color: #fff;
+  color: rgb(0, 0, 0);
   height: 40px;
 }
 
@@ -750,7 +749,8 @@ span.NFTInf:hover img {
 }
 
 .nft_selectBox {
-  background: #232833;
+  background: #F7F8F9;
+  border: 1px solid white;
   border-radius: 20px;
   padding: 16px 0;
   padding-left: 25px;
@@ -884,12 +884,6 @@ span.NFTInf:hover img {
   min-height: 58px;
   margin-bottom: 2px;
 }
-
-
-
-
-
-
 
 .destiReload {
   display: flex;
@@ -1368,12 +1362,6 @@ span.statComp img {
   margin-right: 0px !important;
   margin-right: -25px !important;
 }
-/* 
- .nft_selectBox.nftListView {
-    padding: 16px 0px;
-    display: flex;
-    flex-direction: column;
-} */
 
 .nftListView .nftListTop {
   padding: 0 24px;
