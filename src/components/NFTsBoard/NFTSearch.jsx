@@ -18,7 +18,6 @@ export default function NFTSearch() {
     
     <Dropdown className="search-dropdown" autoClose="outside">
       <Dropdown.Toggle id="SearchDrop">
-        {widget ? icon && <SearchComp  onClick={() => setIcon(false)} className="svgWidget" /> : icon && <img onClick={() => setIcon(false)} src={Search} alt="#" />}
       </Dropdown.Toggle>
       <Dropdown.Menu>
         

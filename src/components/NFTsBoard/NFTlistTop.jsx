@@ -26,7 +26,6 @@ function NFTlistTop() {
   const from = useSelector((state) => state.general.from);
   const widget = useSelector((state) => state.general.widget);
   const [showSearch, setShowSearch] = useState(false);
-  const [icon, setIcon] = useState(true)
 
   const handleSearch = (e) => {
     dispatch(setSearchNFTList(e.target.value));

@@ -70,13 +70,14 @@ export default function NFTcard({ nft, index }) {
                   : ipfsArr?.length && <VideoOrImage urls={ipfsArr} i={index} />
                   : <BrockenUtlGridView />
                   }
-                  <div className="radio__container">
+                  { !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> }
+                  {/* <div className="radio__container">
                     {!isSelected ? (
                       <span className="selected-radio"></span>
                     ) : (
                       <img src={CheckGreen} alt="" />
                     )}
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className={`nft-content__container ${!imageLoaded ? "preload-content-container" : ""}`}>

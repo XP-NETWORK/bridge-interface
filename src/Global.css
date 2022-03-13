@@ -761,8 +761,12 @@ span.NFTInf:hover img {
   margin-right: -24px;
   margin-top: 26px;
   padding: 0px 9px;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
-
+.nftListBox::-webkit-scrollbar {
+  display: none;
+}
 .nftEmptyListBox {
   width: 100%;
   max-height: 680px;
