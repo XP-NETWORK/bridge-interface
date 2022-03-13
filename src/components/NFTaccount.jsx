@@ -1,28 +1,28 @@
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
-
-
-import DestinationChain from "./innercomponents/DestinationChain";
+// import DestinationChain from "./innercomponents/DestinationChain";
 import DestinationChainReload from "./innercomponents/DestinationChainReload";
-import { useLocation } from 'react-router'
-import { useNavigate } from 'react-router-dom';
-import SelectedNFT from "./innercomponents/SelectedNFT";
-import Approval from "./innercomponents/Approval";
+// import { useLocation } from 'react-router'
+// import { useNavigate } from 'react-router-dom';
+// import SelectedNFT from "./innercomponents/SelectedNFT";
+// import Approval from "./innercomponents/Approval";
 import NFTgridView from "../components/NFT/NFTgridView";
 import NFTlistView from "../components/NFT/NFTlistView";
-import SendFees from "./innercomponents/SendFees";
+// import SendFees from "./innercomponents/SendFees";
 import NFTlistTop from "./innercomponents/NFTlistTop";
 import { setError } from "../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
-import ButtonToTransfer from "./innercomponents/ButtonToTransfer";
+// import ButtonToTransfer from "./innercomponents/ButtonToTransfer";
 import { setNFTS } from "../wallet/helpers";
-import Comment from "../components/innercomponents/Comment";
+// import Comment from "../components/innercomponents/Comment";
 import { ReturnBtn } from "./Settings/returnBtn";
-import { Navigate } from 'react-router-dom'
+// import { Navigate } from 'react-router-dom'
+import DesktopTransferBoard from "./TransferBoard/DesktopTransferBoard";
+import MobileTransferBoard from "./TransferBoard/MobileTransferBoard";
 
 function NFTaccount() {
   const dispatch = useDispatch();
-  const fromParam = useSelector((state) => state.general.from)
+  // const fromParam = useSelector((state) => state.general.from)
   const from = useSelector((state) => state.general.from.key);
   const type = useSelector((state) => state.general.from.type);
   const algorandAccount = useSelector((s) => s.general.algorandAccount);
@@ -79,34 +79,9 @@ function NFTaccount() {
               <NFTlistTop />
               {NFTListView ? <NFTlistView /> : <NFTgridView />}
             </div>
-            <div className="mobileOnly">
-              <Approval getNft={getNFTsList} />
-              <div className="nftSendBtn disenable">
-                <SendFees />
-                <ButtonToTransfer />
-              </div>
-            </div>
+            <MobileTransferBoard />
           </div>
-          <div className="sendNftCol col-lg-4 desktopOnly">
-            <div className="sendNftBox">
-              <form action="#">
-                <div className="sendNftTit">
-                  <h3>Send NFT</h3>
-                </div>
-                <DestinationChain />
-                {nfts?.length ? (
-                  <>
-                    <SelectedNFT />
-                    <Approval />
-                    <SendFees />
-                    <ButtonToTransfer />
-                  </>
-                ) : (
-                  <Comment />
-                )}
-              </form>
-            </div>
-          </div>
+          <DesktopTransferBoard />
         </div>
       </Container>
     </div>

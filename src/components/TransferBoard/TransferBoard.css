@@ -1,0 +1,102 @@
+.transfer-board {
+    color: #14161A;
+    background: #F7F8F9;
+    border: 1px solid #FFFFFF;
+    box-shadow: 0px 4px 14px rgba(47, 61, 84, 0.05);
+    border-radius: 20px;
+    padding: 24px 20px;
+    height: 100%;
+    min-height: 778px;
+    display: flex;
+    flex-direction: column;
+}
+.transfer-board > form {
+    display: contents;
+}
+.destination-props {
+    padding: 12px 15px 16px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #ECEEF4;
+}
+.destination-props input::placeholder {
+    color: #62718a;
+} 
+.destination-props input:focus {
+    border: 1px solid #fff;
+}
+
+
+.destination__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    margin-bottom: 12px;
+}
+.destination__title{
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 18px;
+}
+.destination__chain{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 6px 11px 6px 6px;
+    box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.25);
+    background: #F7F8F9;
+    border: 1px solid white;
+    border-radius: 38px;
+}
+.destination__address input{
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    height: 44px;
+    border-radius: 40px;
+    outline: none;
+    border: 1px solid #E0E4EB;
+    padding-left: 16px;
+}
+.destination__address input::placeholder{
+    color: #62718A;
+}
+
+.desChain span img:nth-child(2) {
+    margin-left: 4px;
+}
+.arrow-down {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    background-image: url("../../assets/img/icons/arrow-down.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+.arrow-down:hover::before{
+    position: absolute;
+    top: 0; 
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-image: url("../../assets/img/icons/arrow-down-hovered.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+/* .triangle {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    cursor: pointer;
+}
+.triangle img {
+    padding: 6px;
+}
+/* .triangle:hover {
+    background-color: rgba(55, 57, 61, 0.63);
+} */
+

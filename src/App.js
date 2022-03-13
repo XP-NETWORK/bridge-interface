@@ -20,14 +20,12 @@ import GetFeatured from "./components/innercomponents/GetFeatured";
 import WSettings from "./components/Settings";
 import { useLocation } from 'react-router'
 import { useNavigate } from 'react-router-dom';
+import "./components/Modals/Modal.css"
 
 function App() {
   const dispatch = useDispatch();
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
-  const from = useSelector((state) => state.general.from);
   const state = useSelector((state) => state.general);
-  const location = useLocation()
-  const navigate = useNavigate()
   const axios = require("axios");
   const widget = new URLSearchParams(window.location.search).get("widget");
 
@@ -102,7 +100,7 @@ function App() {
       <Error />
       <TronPopUp />
       <Widget />
-      <GetFeatured />
+      {/* <GetFeatured /> */}
       <XpBridge />
       <Alert />
 

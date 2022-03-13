@@ -8,19 +8,19 @@ import { ModalActions } from "semantic-ui-react";
 import moment from "moment";
 import "./SuccessModal.css";
 import { useWeb3React } from "@web3-react/core";
-import TransferredNft from "../innercomponents/TransferredNft";
+import TransferredNft from "../../innercomponents/TransferredNft";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import FileCopy from "../../assets/img/icons/FileCopy.svg";
 import CopyHover from "../../assets/img/icons/CopyHover.svg";
-import ConnectAlgorand from "../ConnectAlgorand";
-import ClaimAlgorandNFT from "../ClaimAlgorandNFT";
+import ConnectAlgorand from "../../ConnectAlgorand";
+import ClaimAlgorandNFT from "../../ClaimAlgorandNFT";
 import { useEffect } from "react";
 import {
   claimAlgorandPopup,
   cleanTxnHashArr,
   connectAlgorandWalletClaim,
   removeFromSelectedNFTList,
-} from "../../store/reducers/generalSlice";
+} from "../../../store/reducers/generalSlice";
 
 export default function SuccessModal() {
   const dispatch = useDispatch();

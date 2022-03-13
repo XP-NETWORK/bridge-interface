@@ -16,7 +16,7 @@ import ProtectedRoute from "../pages/ProtectedRoute"
 function XpBridge() {
   useEffect(() => {}, []);
   const { widget } = useSelector((s) => s.general);
-  const step = useSelector((state) => state.general.step);
+  // const step = useSelector((state) => state.general.step);
   const algorandClaimables = useSelector(
     (state) => state.general.algorandClaimables
   );
@@ -30,13 +30,6 @@ function XpBridge() {
           <Route path="/account" components={ <NFTaccount  />} />
         </Route>
       </Routes>
-      {/* { step === 1 && 
-      <div className="first-step__container">
-        <Slider />
-        <NftSelect />
-      </div>
-      }
-      { step === 2 && <NFTaccount /> } */}
       <NFTsuccess />
     </div>
   );

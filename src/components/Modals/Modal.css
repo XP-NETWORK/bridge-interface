@@ -1,0 +1,137 @@
+
+.ChainModal .modal-dialog {
+    max-width: 370px;
+}
+.modal-content {
+    background: #F7F8F9;
+    box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.13);
+    border-radius: 20px;
+}
+
+.modal-backdrop {
+    background: #1d212a;
+    opacity: 0.9;
+}
+
+.modal-header {
+    border-bottom: 1px solid transparent;
+    position: relative;
+    z-index: 1;
+    min-height: 70px;
+    align-items: center;
+    padding-right: 30px;
+    padding-left: 30px;
+    justify-content: center;
+}
+  
+  .modal-title {
+    color: #14161A;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 27px;
+  }
+  
+  .CloseModal {
+    position: absolute;
+    z-index: 1;
+    left: auto;
+    right: 28px;
+    cursor: pointer;
+  }
+  
+  .CloseModal:hover img {
+    /* filter: brightness(100); */
+  }
+
+  .walletListBox {
+    padding: 19px 30px 19px 30px;
+    background: #F9F9FB;
+    overflow-y: scroll;
+  }
+  .wllListItem {
+    margin-bottom: 12px;
+    height: 56px;
+    border: 1px solid rgba(111, 123, 165, 0.1);
+    box-sizing: border-box;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 160%;
+    color: #14161A;
+
+    cursor: pointer;
+    display: flex;
+  }
+  .wllListItem img {
+    display: block;
+    margin-right: 13px;
+  }
+  
+  .wllListItem:hover {
+    background: rgba(73, 82, 108, 0.1);
+    border: 1px solid #6f7ba5;
+  }
+  
+  .wllListItem:last-child {
+    margin: 0;
+  }
+
+  .walletList {
+    list-style: none;
+    max-height: 336px;
+  }
+
+  .wllListItem .coming-chain {
+    margin-left: auto;
+  }
+  
+  .wllListItem div {
+    display: flex;
+  }
+  
+  .beacon img {
+    width: 28px;
+  }
+  
+  .algo img {
+    width: 28px;
+    border-radius: 5px;
+  }
+  .nftChainList {
+    list-style: none;
+    max-height: 364px;
+    overflow: auto;
+    /* border-bottom: 1px solid #2d3342; */
+  }
+
+  .nftChainItem {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    padding: 0 30px;
+    cursor: pointer;
+  }
+
+  .nftChainItem img {
+    display: block;
+    width: 28px;
+    margin-right: 13px;
+  }
+
+
+.nftChainItem:hover {
+  background: rgba(73, 82, 108, 0.1);
+}
+
+.modalSelectOptionsText {
+  width: 100%;
+  color: #14161A;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
