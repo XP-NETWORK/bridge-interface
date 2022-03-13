@@ -30,7 +30,6 @@ function DestinationChain() {
 
   return (
     <div className="destination-props">
-
       <div className="destination__header">
         <span className="destination__title">Destination</span>
         <span className="destination__chain">

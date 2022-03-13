@@ -5,6 +5,7 @@ import { setError } from '../../store/reducers/generalSlice'
 import { setNFTS } from '../../wallet/helpers'
 import Approval from '../innercomponents/Approval'
 import ButtonToTransfer from '../innercomponents/ButtonToTransfer'
+import SelectedNFT from '../innercomponents/SelectedNFT'
 import SendFees from '../innercomponents/SendFees'
 
 export default function MobileTransferBoard() {
@@ -43,6 +44,7 @@ export default function MobileTransferBoard() {
 
   return (
     <div className="mobileOnly">
+    <SelectedNFT />
     <Approval getNft={getNFTsList} />
     <div className="nftSendBtn disenable">
       <SendFees />

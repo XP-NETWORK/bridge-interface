@@ -24,8 +24,6 @@
 .destination-props input:focus {
     border: 1px solid #fff;
 }
-
-
 .destination__header {
     display: flex;
     align-items: center;
@@ -84,19 +82,65 @@
     background-repeat: no-repeat;
     background-position: center;
 }
-/* .triangle {
-    width: 24px;
-    height: 24px;
-    border-radius: 6px;
+.selectedNft {
     display: flex;
-    justify-content: center;
-    align-content: center;
+    align-items: center;
+    height: 56px;
+    padding: 16px 16px 12px;
+}
+.selected-nfts__header{
+    color: #14161A;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.desktop__header span{
+    color: #3e64ed;
+}
+.clear-selected{
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 19px;
+    color: #3e64ed;
+    padding: 4px 10px;
+    background: #E4E7F3;
+    border-radius: 40px;
     cursor: pointer;
 }
-.triangle img {
-    padding: 6px;
+.selected-nfts__body{
+    color: black;
+    background: #F3F3F6;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 15.5px;
 }
-/* .triangle:hover {
-    background-color: rgba(55, 57, 61, 0.63);
-} */
-
+.selected-nfts-item{
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    gap: 12px;
+    padding: 6px 17.5px 6px 8px;
+    cursor: pointer;
+}
+.selected-nfts-item:hover{
+    background: #ECECF1;
+}
+.selected-nfts__delete{
+    margin-left: auto;
+    max-width: 18px;
+    visibility: hidden;
+}
+.selected-nfts-item:hover .selected-nfts__delete{
+    visibility: visible;
+}
+.clearNft {
+    margin-left: auto;
+    border: 0;
+    outline: none;
+    background: transparent;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 160%;
+    color: #3e64ed;
+    padding: 0;
+}

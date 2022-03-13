@@ -28,45 +28,44 @@ function SelectedNFT() {
   useEffect(() => {}, [selectedNFTs]);
 
   return (
-    <div className="nftSelectList">
-      <div className="nftSeleTop">
-        <div className="selectedNft nftselectedtop">
-          <a className="backBtn mobileOnly">
+    <div className="selected-nfts-list">
+      <div className="selected-nfts__header">
+          {/* <a className="backBtn mobileOnly">
             {widget ? (
               <BackComp className="svgWidget" />
             ) : (
               <img src={Back} alt="Back" />
             )}
-          </a>
-          <span className="mobileOnly">Selected NFTs</span>
-          <span className="desktopOnly">
+          </a> */}
+          {/* <span className="mobileOnly">Selected NFTs</span> */}
+          <span className="desktop__header">
             Selected NFTs{" "}
             <span>
               {selectedNFTs.length} / {nfts?.length}
             </span>
           </span>
-          <button
+          <div
             style={selectedNFTs.length ? {} : OFF}
             onClick={() => handleClear()}
-            className="clearNft"
+            className="clear-selected"
           >
             Clear all
-          </button>
-        </div>
+          </div>
+
       </div>
-      <ul className="nftSelected">
+      <ul className="selected-nfts__body">
         {selectedNFTs
           ? selectedNFTs.map((nft, index) => (
               <li
                 key={`selected-nft-${index}`}
                 onClick={() => handleRemove(nft)}
-                className="nftSelecItem"
+                className="selected-nfts-item"
               >
                 <ListedView nft={nft} key={`nft-n-${index}`} />
-                <span className="nftSelecItem__name">
+                <span className="nfts-item__name">
                   {nft.data?.name || nft.name || nft.native.name}
                 </span>
-                <span className="Close">
+                <span className="selected-nfts__delete">
                   {widget ? (
                     <CloseComp className="svgWidget" />
                   ) : (

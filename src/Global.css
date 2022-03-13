@@ -1008,54 +1008,15 @@ span.NFTInf:hover img {
   outline: none;
 }
 
-.nftSelectList {
-  background: linear-gradient(
-    309.48deg,
-    #232833 -3.65%,
-    rgba(35, 40, 51, 0) 122.77%
-  );
-  border-radius: 20px;
-}
 
-
-
-.selectedNft {
-  display: flex;
-  align-items: center;
-  height: 56px;
-  padding: 16px 16px 12px;
-}
-
-.clearNft {
-  margin-left: auto;
-  border: 0;
-  outline: none;
-  background: transparent;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 160%;
-  color: #3e64ed;
-  padding: 0;
-}
-
-.selectedNft span {
-  color: #fff;
-  margin-left: 3px;
-}
-
-ul.nftSelected {
-  list-style: none;
-  max-height: 220px;
-  overflow: auto;
-}
-
-ul.nftList {
-  list-style: none;
-  overflow: auto;
-}
+/* 
 .refreshnfts {
   margin-left: 6px;
 }
+ */
+
+
+
 .nftListed {
   display: flex;
   align-items: center;
