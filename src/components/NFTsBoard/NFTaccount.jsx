@@ -1,15 +1,16 @@
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
-import DestinationChainReload from "./innercomponents/DestinationChainReload";
-import NFTgridView from "../components/NFT/NFTgridView";
-import NFTlistView from "../components/NFT/NFTlistView";
-import NFTlistTop from "./NFTsBoard/NFTlistTop";
-import { setError } from "../store/reducers/generalSlice";
+import DestinationChainReload from "../../components/innercomponents/DestinationChainReload";
+import NFTgridView from "../NFT/NFTgridView";
+import NFTlistView from "../NFT/NFTlistView";
+import NFTlistTop from "./NFTlistTop";
+import { setError } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { setNFTS } from "../wallet/helpers";
-import { ReturnBtn } from "./Settings/returnBtn";
-import DesktopTransferBoard from "./TransferBoard/DesktopTransferBoard";
-import MobileTransferBoard from "./TransferBoard/MobileTransferBoard";
+import { setNFTS } from "../../wallet/helpers";
+import { ReturnBtn } from "../Settings/returnBtn";
+import DesktopTransferBoard from "../TransferBoard/DesktopTransferBoard";
+import MobileTransferBoard from "../TransferBoard/MobileTransferBoard";
+import "./NFTsBoard.css"
 
 function NFTaccount() {
   const dispatch = useDispatch();

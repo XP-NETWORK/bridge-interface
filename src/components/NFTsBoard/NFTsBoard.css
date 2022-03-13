@@ -1,0 +1,60 @@
+.nftListTop{
+    padding-right: 15px;
+}
+.select-all{
+    width: 40px;
+    height: 40px;
+    background: #F6F6F8;
+    border: 1px solid white;
+    border-radius: 50%;
+    box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
+    position: relative;
+    cursor: pointer;
+}
+.select-all::after{
+    content: "\2713";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    border-radius: 50%;
+    top: 7px;
+    left: 7px;
+    width: 24px;
+    height: 24px;
+    background: #9b9b9b;
+    transition: all 0.2s;
+
+}
+.select-all:hover::after{
+    background: #395FEB;
+}
+.delete-all{
+    width: 40px;
+    height: 40px;
+    background: #F6F6F8;
+    border: 1px solid white;
+    border-radius: 50%;
+    box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+.delete-all::after{
+    content: "x";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    border-radius: 50%;
+    top: 7px;
+    left: 7px;
+    width: 24px;
+    height: 24px;
+    background: #9b9b9b;
+    transition: all 0.2s;
+}
+.delete-all:hover::after{
+    background: #ca4646;
+    
+}
