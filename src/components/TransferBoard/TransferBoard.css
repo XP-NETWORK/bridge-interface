@@ -101,11 +101,16 @@
     font-size: 12px;
     font-weight: 500;
     line-height: 19px;
-    color: #3e64ed;
+    color: #62718A;
     padding: 4px 10px;
-    background: #E4E7F3;
+    background: #ECEEF4;
     border-radius: 40px;
     cursor: pointer;
+}
+.clear-selected:hover{
+    background: #E4E7F3;
+    color: #395FEB;
+
 }
 .selected-nfts__body{
     color: black;
@@ -132,17 +137,6 @@
 }
 .selected-nfts-item:hover .selected-nfts__delete{
     visibility: visible;
-}
-.clearNft {
-    margin-left: auto;
-    border: 0;
-    outline: none;
-    background: transparent;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 160%;
-    color: #3e64ed;
-    padding: 0;
 }
 .approval{
     margin-top: 5px;
@@ -231,4 +225,34 @@
 }
 .approveBtn input:checked + label .checkCircle:after {
     background-image: url(../../assets/img/icons/CheckGreen.svg);
-  }
+}
+.fees {
+    margin: 5px 0;
+    background: #F3F3F6;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #14161A;
+    height: 62px;
+    padding: 16px;
+}
+.transfer-button--disabled, .transfer-button{
+    border: 1px solid #395FEB;
+    width: 100%;
+    height: 54px;
+    border-radius: 66px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #395FEB;
+    margin-top: 16px;
+}
+.transfer-button:hover{
+    background-color: #395FEB;
+    cursor: pointer;
+    color: white;
+}
+.transfer-button:active{
+    background: #2D51D0;
+}

@@ -1,11 +1,11 @@
 import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import Approval from '../TransferBoard/Approval.jsx';
-import ButtonToTransfer from '../innercomponents/ButtonToTransfer';
+import ButtonToTransfer from './ButtonToTransfer';
 import Comment from '../innercomponents/Comment';
 import DestinationChain from '../innercomponents/DestinationChain';
 import SelectedNFT from '../innercomponents/SelectedNFT';
-import SendFees from '../innercomponents/SendFees';
+import SendFees from './SendFees';
 import "./TransferBoard.css"
 
 export default function DesktopTransferBoard() {

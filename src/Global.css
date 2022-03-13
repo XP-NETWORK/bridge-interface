@@ -122,94 +122,6 @@ div#root:after {
   margin-bottom: 27px;
 }
 
-
-
-
-
-/*.chainArrow img {
-  height: 28px;
-  width: 28px;
-  background-color: #2c3240;
-  border-radius: 6px;
-  padding: 7px 5px 5px 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.chainArrow img:hover {
-  background-color: #297efe;
-}*/
-
-
-
-.themBtn {
-  display: inline-block;
-  width: 100%;
-  cursor: pointer;
-  max-width: 326px;
-  text-align: center;
-  background: #3e64ed;
-  border-radius: 16px;
-  color: #fff;
-  font-size: 16px;
-  line-height: 56px;
-  border: 1px solid #3e64ed;
-}
-
-/* .green{
-    background: #11992a;
-    border: 1px solid #11992a;
-    display: inline-block;
-    width: 100%;
-    cursor: pointer;
-    max-width: 326px;
-    text-align: center;
-    border-radius: 16px;
-    color: #fff;
-    font-size: 16px;
-    line-height: 56px;
-}
-.green:hover{
-    background: #349c47;
-    color: #fff;
-}
-
-.red{
-    background: #c91b1b;
-    border: 1px solid #c91b1b;
-    display: inline-block;
-    width: 100%;
-    cursor: pointer;
-    max-width: 326px;
-    text-align: center;
-    border-radius: 16px;
-    color: #fff;
-    font-size: 16px;
-    line-height: 56px;
-}
-.red:hover{
-    background: #eb3232;;
-    color: #fff;
-} */
-
-.themBtn:hover {
-  background: #174aff;
-  color: #fff;
-}
-
-.disabled .themBtn {
-  /* background: linear-gradient(
-    0deg,
-    rgba(73, 82, 108, 0.1),
-    rgba(73, 82, 108, 0.1)
-  ); */
-  border: 1px solid #395FEB;
-  border-radius: 62px;
-  color: #5a6177;
-  pointer-events: none;
-}
-
 .changeBtn.disabled {
   background: linear-gradient(
     0deg,
@@ -975,11 +887,7 @@ span.NFTInf:hover img {
 
 
 
-.nftSendBtn {
-  margin-top: auto;
-  display: flex;
-  justify-content: center;
-}
+
 
 
 
@@ -1122,30 +1030,6 @@ li.nftSelecItem .Close:hover {
   background-position: center;
   background-repeat: no-repeat;
   transition: 0.3s ease all;
-}
-
-/* .approveBtn input:checked + label .checkCircle:after {
-  background-image: url(./assets/img/icons/CheckGreen.svg);
-} */
-
-.nftFees {
-  margin: 12px 0;
-  background: linear-gradient(
-    309.48deg,
-    #232833 -3.65%,
-    rgba(35, 40, 51, 0) 122.77%
-  );
-  border-radius: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #62718a;
-  height: 62px;
-  padding: 16px;
-}
-
-.nftFees span {
-  color: #fff;
 }
 
 .modal-dialog {

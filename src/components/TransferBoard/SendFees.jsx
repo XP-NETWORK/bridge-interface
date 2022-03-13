@@ -77,7 +77,6 @@ function SendFees() {
         }
         return num
     }
-    // getNumToFix(fees)
 
     const config = chainsConfig[from?.text]
 
@@ -98,8 +97,9 @@ function SendFees() {
     }, [to])
 
     return (
-        <div className="nftFees">
-            Fees <span>{fees && fees > 0  ? from.key === 'Tezos' ? ( new BigNumber(fees).multipliedBy(1e12).toString()) : fees?.toFixed(getNumToFix(fees)) : '0'} {config?.token}</span>
+        <div className="fees">
+            <div className="fees__title">Fees</div>
+            <span>{fees && fees > 0  ? from.key === 'Tezos' ? ( new BigNumber(fees).multipliedBy(1e12).toString()) : fees?.toFixed(getNumToFix(fees)) : '0'} {config?.token}</span>
         </div>
     )
 }

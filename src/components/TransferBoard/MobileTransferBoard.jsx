@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setError } from '../../store/reducers/generalSlice'
 import { setNFTS } from '../../wallet/helpers'
 import Approval from '../TransferBoard/Approval'
-import ButtonToTransfer from '../innercomponents/ButtonToTransfer'
+import ButtonToTransfer from './ButtonToTransfer'
 import SelectedNFT from '../innercomponents/SelectedNFT'
-import SendFees from '../innercomponents/SendFees'
+import SendFees from './SendFees'
 
 export default function MobileTransferBoard() {
 

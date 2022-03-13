@@ -16,7 +16,6 @@ export default function ButtonToTransfer() {
     const kukaiWallet = useSelector(state => state.general.kukaiWallet)
     const receiver = useSelector(state => state.general.receiver)
     const receiverAddress = convert(receiver)
-    // console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 19 ~ ButtonToTransfer ~ receiverAddress", receiverAddress)
     const approved = useSelector(state => state.general.approved)
     const to = useSelector(state => state.general.to.key)
     const from = useSelector(state => state.general.from.key)
@@ -178,12 +177,9 @@ export default function ButtonToTransfer() {
         }
     }
 
-
   return (
-    <div onClick={sendAllNFTs} className={approved && receiver && !loading ? 'nftSendBtn' : 'nftSendBtn disabled'}  >
-        <a  className="themBtn">
+    <div onClick={sendAllNFTs} className={approved && receiver && !loading ? 'transfer-button' : 'transfer-button--disabled'}  >
             {loading ? 'Processing' : 'Send' }
-        </a>
     </div>
   )
 }
