@@ -227,16 +227,9 @@ function Approval(props) {
       <div className="approval__header">
         <div className="approval__title">Approval</div>
         <div className="approval__inf">
-          {/* <span className="inf-text">
-            We'd like to make sure you really want to send the NFTs and pay the
-            associated fees.
-          </span> */}
+            {/* before */}
           <div className="info-icon"></div>
-          {/* {widget ? (
-            <InfLithComp className="svgWidget" />
-          ) : (
-            <img src={InfLith} alt="Inf" />
-          )} */}
+            {/* after */}
         </div>
       </div>
       <div

@@ -1091,33 +1091,6 @@ li.nftSelecItem .Close:hover {
   cursor: pointer;
 }
 
-.appInf {
-  position: relative;
-  z-index: 1;
-}
-
-.approveBtn {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: #fff;
-}
-
-.approveBtn input {
-  display: none;
-}
-
-.approveBtn label {
-  margin: 0;
-  width: 56px;
-  height: 31px;
-  background: #49526c;
-  border-radius: 56px;
-  position: relative;
-  z-index: 1;
-  cursor: pointer;
-  transition: 0.3s ease all;
-}
 
 .checkCircle {
   position: absolute;
@@ -1135,13 +1108,7 @@ li.nftSelecItem .Close:hover {
   transition: 0.3s ease all;
 }
 
-.approveBtn input:checked + label {
-  background: #08d70d;
-}
 
-.approveBtn input:checked + label .checkCircle {
-  left: 27px;
-}
 
 .checkCircle:after {
   content: "";
@@ -1157,9 +1124,9 @@ li.nftSelecItem .Close:hover {
   transition: 0.3s ease all;
 }
 
-.approveBtn input:checked + label .checkCircle:after {
+/* .approveBtn input:checked + label .checkCircle:after {
   background-image: url(./assets/img/icons/CheckGreen.svg);
-}
+} */
 
 .nftFees {
   margin: 12px 0;

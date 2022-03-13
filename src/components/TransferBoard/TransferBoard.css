@@ -202,4 +202,33 @@
     background-position: center;
     position: absolute;
 }
-
+.approveBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #14161A;
+}
+.approveBtn input {
+  display: none;
+}
+.approveBtn label {
+    margin: 0;
+    width: 56px;
+    height: 31px;
+    background: #EBEFF4;
+    border-radius: 56px;
+    border: 1px solid #D4D7DD;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    transition: 0.3s ease all;
+}
+.approveBtn input:checked + label {
+    background: #395FEB;
+}
+.approveBtn input:checked + label .checkCircle {
+  left: 27px;
+}
+.approveBtn input:checked + label .checkCircle:after {
+    background-image: url(../../assets/img/icons/CheckGreen.svg);
+  }
