@@ -11,21 +11,18 @@ import {
   setApproveLoader,
   setError,
 } from "../../store/reducers/generalSlice";
-// import { isEqual } from '../helpers';
 import {
   getFactory,
   handleChainFactory,
   isALLNFTsApproved,
 } from "../../wallet/helpers";
-// import { getOldFactory } from '../../wallet/oldHelper';
 import { ExtensionProvider } from "@elrondnetwork/erdjs/out";
 import { algoConnector } from "../../wallet/connectors";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
-// import { TezosToolkit } from "@taquito/taquito";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { BeaconWallet } from "@taquito/beacon-wallet";
-// import { DAppClient, TezosOperationType } from "@airgap/beacon-sdk";
-// import { InMemorySigner } from '@taquito/signer'
+
+
 
 const TronWeb = require("tronweb");
 function Approval(props) {
@@ -41,12 +38,12 @@ function Approval(props) {
   const receiver = useSelector((state) => state.general.receiver);
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const WCProvider = useSelector((state) => state.general.WCProvider);
-  const onMaiar = useSelector((state) => state.general.onMaiar);
+  // const onMaiar = useSelector((state) => state.general.onMaiar);
   const maiarProvider = useSelector((state) => state.general.maiarProvider);
   const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
   const algorandWallet = useSelector((state) => state.general.AlgorandWallet);
   const MyAlgo = useSelector((state) => state.general.MyAlgo);
-  const templeWallet = useSelector((state) => state.general.templeWallet);
+  // const templeWallet = useSelector((state) => state.general.templeWallet);
   const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
   const widget = useSelector((state) => state.general.widget);
 
@@ -147,14 +144,6 @@ function Approval(props) {
           dispatch(updateApprovedNFTs(nft));
           setFinishedApproving(arr);
         }
-
-        // const factory = await getFactory()
-        // const chain = await factory.inner(Chain.TEZOS)
-        // const signer = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
-        // await signer.connect("mainnet");
-        // const swap = await chain.preTransfer(signer, nft)
-        // dispatch(updateApprovedNFTs(nft))
-        // setFinishedApproving(arr)
       } catch (error) {
         setFinishedApproving(arr);
         dispatch(setError(error.data ? error.data.message : error.message));
@@ -207,14 +196,6 @@ function Approval(props) {
           dispatch(updateApprovedNFTs(nft));
         });
       }
-      // else if(from.text === 'Tezos') {
-      //     const chain = await handleChainFactory(from.key)
-      //     const signer = provider.getSigner(account)
-
-      //     selectedNFTList.forEach((nft, index) => {
-      //         approveEach(nft, signer, chain, index)
-      //     })
-      // }
       else {
         selectedNFTList.forEach((nft, index) => {
           approveEach(nft, undefined, undefined, index);
@@ -242,19 +223,20 @@ function Approval(props) {
   }, [selectedNFTList, approvedNFTList, finishedApproving]);
 
   return (
-    <div className="approValBox">
-      <div className="approvTop">
-        Approval
-        <div className="appInf">
-          <span className="infText">
+    <div className="approval">
+      <div className="approval__header">
+        <div className="approval__title">Approval</div>
+        <div className="approval__inf">
+          {/* <span className="inf-text">
             We'd like to make sure you really want to send the NFTs and pay the
             associated fees.
-          </span>
-          {widget ? (
+          </span> */}
+          <div className="info-icon"></div>
+          {/* {widget ? (
             <InfLithComp className="svgWidget" />
           ) : (
             <img src={InfLith} alt="Inf" />
-          )}
+          )} */}
         </div>
       </div>
       <div
@@ -267,7 +249,7 @@ function Approval(props) {
         }
         className="approveBtn"
       >
-        Approve all NFTs
+        Approve selected NFTs
         <div className="approveBtn">
           <input
             readOnly={true}

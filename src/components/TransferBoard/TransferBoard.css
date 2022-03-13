@@ -144,3 +144,62 @@
     color: #3e64ed;
     padding: 0;
 }
+.approval{
+    margin-top: 5px;
+    padding:15px 11px 10px 8px;
+    background: #F3F3F6;
+    border-radius: 8px;
+}
+.approval__header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.approval__inf{
+    position: relative;
+}
+.approval__inf:hover::before{
+    content: "We'd like to make sure you really want to send the NFTs and pay the associated fees.";
+    position: absolute;
+    font-size: 12px;
+    width: 220px;
+    bottom: 30px;
+    left: -100px;
+    padding: 8px;
+    background: #F3F3F6;
+    border-radius: 10px;
+    box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.50);
+}
+.approval__inf:hover::after {
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    content: "";
+    width: 15px;
+    height: 15px;
+    box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.50);
+    background: #F3F3F6;
+    border-left: 0;
+    border-top: 0;
+    transform: translate(-50%) rotate(45deg);
+    margin-top: -40px;
+}
+.info-icon{
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background-image: url("../../assets/img/icons/info.svg");
+    background-position: center;
+    cursor: help;
+}
+.info-icon:hover::after{
+    content: "";
+    width: 20px;
+    height: 20px;
+    background: #F3F3F6;
+    background-image: url("../../assets/img/icons/info_hover.svg");
+    background-position: center;
+    position: absolute;
+}
+

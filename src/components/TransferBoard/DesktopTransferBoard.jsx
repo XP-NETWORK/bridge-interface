@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import Approval from '../innercomponents/Approval';
+import Approval from '../TransferBoard/Approval.jsx';
 import ButtonToTransfer from '../innercomponents/ButtonToTransfer';
 import Comment from '../innercomponents/Comment';
 import DestinationChain from '../innercomponents/DestinationChain';

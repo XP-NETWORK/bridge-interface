@@ -1091,75 +1091,9 @@ li.nftSelecItem .Close:hover {
   cursor: pointer;
 }
 
-.approValBox {
-  margin-top: 12px;
-  background: linear-gradient(
-    309.48deg,
-    #232833 -3.65%,
-    rgba(35, 40, 51, 0) 122.77%
-  );
-  border-radius: 20px;
-  margin-top: 12px;
-  padding: 16px 16px 24px 16px;
-}
-
 .appInf {
   position: relative;
   z-index: 1;
-}
-
-.infText {
-  display: block;
-  position: absolute;
-  opacity: 0;
-  visibility: hidden;
-  width: 211px;
-  left: 50%;
-  bottom: 100%;
-  transform: translate(-50%);
-  border: #2d3342 1px solid;
-  border-radius: 6px;
-  background: #262a36;
-  font-size: 12px;
-  line-height: 140%;
-  padding: 12px 12px 20px;
-  margin-bottom: 10px;
-  color: #fff;
-  font-style: normal;
-  font-weight: normal;
-}
-
-.approvTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-weight: 600;
-  height: 28px;
-  margin-bottom: 12px;
-  color: #62718a;
-}
-
-.infText:after {
-  position: absolute;
-  z-index: 1;
-  left: 50%;
-  top: 100%;
-  display: block;
-  content: "";
-  width: 15px;
-  height: 15px;
-  content: "";
-  border: #2d3342 1px solid;
-  background: #262a36;
-  border-left: 0;
-  border-top: 0;
-  transform: translate(-50%) rotate(45deg);
-  margin-top: -6px;
-}
-
-.appInf:hover .infText {
-  opacity: 1;
-  visibility: visible;
 }
 
 .approveBtn {
