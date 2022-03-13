@@ -1,3 +1,7 @@
+.container{
+    width: 1024px !important;
+}
+
 .nftListTop{
     padding-right: 15px;
 }

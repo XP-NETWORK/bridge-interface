@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: stretch;
-  gap: 20px;
+  gap: 12px;
   padding-top: 5px;
 }
 
@@ -196,7 +196,7 @@
 
 .nft-box__container {
     margin-top: 1px;
-    width: 224px;
+    width: 190px;
     display: flex;
     flex-direction: column;
     color: rgb(0, 0, 0);
@@ -349,7 +349,7 @@
 
 .nft-box__container--selected {
     margin-top: 1px;
-    width: 224px;
+    width: 190px;
     display: flex;
     flex-direction: column;
     color: rgb(0, 0, 0);
