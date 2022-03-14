@@ -15,6 +15,19 @@
     border: 1px solid #ffffff;
     margin-bottom: 26px;
 }
+
+.seleDepat:hover{
+  background: #ECECF1;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  cursor: pointer;
+}
+.seleDesti:hover{
+  background: #ECECF1;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  cursor: pointer;
+}
 .new-chain{
     font-size: 12px;
     font-weight: 500;
