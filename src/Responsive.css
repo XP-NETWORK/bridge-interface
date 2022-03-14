@@ -1,18 +1,3 @@
-@media (min-width: 1200px) {
-
-    .container {
-        max-width: 1200px;
-    }
-   
-}
-
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-    
-}
-
-@media only screen and (max-width: 1199px) {
-    
-}
 
 @media only screen and (max-width: 1024px) {
     
@@ -40,25 +25,20 @@
     .sendNftTit {
         margin-top: -50px;
     }
-
     .nftConnect{
-        
         display: flex;
         justify-content: center;
     }
-
     .nftConnect{
         padding-bottom: 24px;
     }
 }
 @media only screen and (max-width: 860px) {
-
     .mobileOnly.seleNftMob {
         display: flex;
         align-items: center;
         color: #62718A;
     }
-
     .mobileOnly.seleNftMob span {
         color: #297EFF;
         display: inline-block;
@@ -402,3 +382,4 @@
     }
 	
 }
+

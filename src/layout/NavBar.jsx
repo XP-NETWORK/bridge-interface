@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Logo from "../assets/img/nav/newXpLogo.svg"
 import burger from "../assets/img/nav/burger.svg"
-import AccountModal from "../components/AccountModal"
+import AccountModal from "..//components/Modals/AccountModal/AccountModal"
 import { Navbar, Nav, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { setAccountModal, setReset, setWalletsModal } from '../store/reducers/generalSlice';
@@ -16,9 +16,8 @@ import { useLocation } from 'react-router-dom';
 function NavBar() {
     const dispatch = useDispatch()
     const location = useLocation().pathname
-    console.log("🚀 ~ file: NavBar.jsx ~ line 19 ~ NavBar ~ location", location)
     const widget = useSelector(state => state.general.widget)
-    const handleShow = () => dispatch(setAccountModal(true));
+   
     const step = useSelector(state => state.general.step)
     const testnet = useSelector(state => state.general.testNet)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
@@ -26,11 +25,17 @@ function NavBar() {
     const algorandAccount = useSelector(state => state.general.algorandAccount)
     const tronWallet = useSelector(state => state.general.tronWallet)
     const { chainId, account } = useWeb3React();
-    const style = { background: " rgba(255, 255, 255, 0.4)" }
     const walletAccount = account || elrondAccount || tezosAccount || algorandAccount || tronWallet
 
     const handleConnect = () => {
+        if(!walletAccount){
         dispatch(setWalletsModal(true))
+        }
+        else if(walletAccount)dispatch(setAccountModal(true))
+    }
+
+    const handleShow = () => {
+        if(walletAccount)dispatch(setAccountModal(true))
     }
 
     return (

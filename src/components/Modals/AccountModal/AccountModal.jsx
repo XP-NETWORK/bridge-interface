@@ -1,19 +1,15 @@
 import React, { useRef, useState } from "react";
-import NftSelect from "../assets/img/nftselect.svg";
-import Close from "../assets/img/icons/close.svg";
-import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
-import FileCopy from "../assets/img/icons/FileCopy.svg";
-import CopyHover from "../assets/img/icons/CopyHover.svg";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { setAccountModal, setReset } from "../store/reducers/generalSlice";
-import { DetectOutsideClick } from "../components/helpers";
+import NftSelect from "../../../assets/img/nftselect.svg";
+import Close from "../../../assets/img/icons/close.svg";
+import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg";
+import FileCopy from "../../../assets/img/icons/FileCopy.svg";
+import CopyHover from "../../../assets/img/icons/CopyHover.svg";
+import { useSelector, useDispatch } from "react-redux";
+import { setAccountModal, setReset } from "../../../store/reducers/generalSlice";
+import { DetectOutsideClick } from "../../../components/helpers";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { CHAIN_INFO } from "../components/values";
-import { getAddEthereumChain } from "../wallet/chains";
-// import copyTT from "../assets/img/icons/copytoclip.svg"
-// import copiedIcon from "../assets/img/icons/copiedtoclip.svg"
-// import msgCloud from "../assets/img/icons/msg-cloud.svg"
+import { CHAIN_INFO } from "../../../components/values";
+import { getAddEthereumChain } from "../../../wallet/chains";
 import Tooltip from "./Tooltip";
 
 export default function AccountModal() {
@@ -33,15 +29,14 @@ export default function AccountModal() {
   const tronWallet = useSelector((state) => state.general.tronWallet);
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
   const MyAlgo = useSelector((state) => state.general.MyAlgo);
-  // const tronAccount = useSelector(state => state.general.tronWallet)
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
   const WalletConnect = useSelector((state) => state.general.WalletConnect);
   const WCProvider = useSelector((state) => state.general.WCProvider);
   const tronLink = useSelector((state) => state.general.tronLink);
   const templeWallet = useSelector((state) => state.general.templeWallet);
   const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
-
-  // const step = useSelector(state => state.general.step)
+  const currentAccount = account || elrondAccount || algorandAccount || tezosAccount || tronWallet || undefined
+  
 
   const handleClose = () => {
     dispatch(setAccountModal(false));
@@ -148,15 +143,15 @@ export default function AccountModal() {
       </div>
       <p className="">{connectedWith()}</p>
       {copied && <Tooltip />}
-      <CopyToClipboard text={getCorrectAccount()}>
+      <CopyToClipboard text={currentAccount}>
         <div className="nftLink">
           <img src={NftSelect} alt="#" />
-          {getCorrectAccount() &&
-            `${getCorrectAccount().substring(
+          {currentAccount &&
+            `${currentAccount.substring(
               0,
               10
-            )}...${getCorrectAccount().substring(
-              getCorrectAccount().length - 2
+            )}...${currentAccount.substring(
+              currentAccount.length - 2
             )}`}
           <span
             onClick={() => copy()}

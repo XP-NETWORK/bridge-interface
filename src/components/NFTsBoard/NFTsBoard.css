@@ -139,3 +139,12 @@
     padding-top: 10px;
     outline: unset;
 }
+
+@media screen and (min-width: 1024px) {
+    /* .container{
+        width: 768px;
+    } */
+    .col-lg-8{
+        padding-left: 0;
+    }
+}

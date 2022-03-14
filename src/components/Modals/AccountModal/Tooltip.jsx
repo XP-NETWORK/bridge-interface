@@ -1,5 +1,5 @@
-import React from 'react'
-import msgCloud from "../assets/img/icons/msg-cloud.svg"
+
+import msgCloud from "../../../assets/img/icons/msg-cloud.svg"
 
 
 export default function Tooltip() {
