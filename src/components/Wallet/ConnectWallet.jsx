@@ -122,8 +122,8 @@ function handleVideoClick() {
         Continue bridging -<span>{">"}</span>{" "}
       </div>
       <div id="aboutnft" className="aboutNft">
-          <a onClick={() => handleVideoClick()} target="_blank" className="videoLink"><img src={Video} />   Learn how to use NFT bridge</a>
-          <a onClick={() => handleAboutClick()} target="_blank" className="about_Nft"><img src={INF} alt=""/> What is NFT</a>
+          <div onClick={() => handleVideoClick()} className="about-btn about-video">Learn how to use NFT bridge</div>
+          <div onClick={() => handleAboutClick()} className="about-btn about-text">What is NFT</div>
       </div>
       {!qrCodeString ? (
         <Modal

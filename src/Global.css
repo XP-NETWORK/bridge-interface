@@ -134,42 +134,61 @@ div#root:after {
 }
 
 .aboutNft {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
   padding-top: 22px;
 }
 
-.videoLink,
-.about_Nft {
+.about-btn {
   letter-spacing: 0.03em;
-  color: #95a4bf;
+  color: #62718A;
   opacity: 0.8;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 14px;
   line-height: 126%;
-}
-
-.videoLink:hover,
-.about_Nft:hover {
-  color: #95a4bf;
-  opacity: 1;
-}
-
-.about_Nft img,
-.videoLink img {
-  display: block;
-  margin-right: 5px;
-}
-
-.aboutNft a {
-  margin-bottom: 9px;
-}
-
-.aboutNft a:hover {
   cursor: pointer;
+  display: inline-block;
+  position: relative;
+}
+.about-btn:hover{
+  color: #395FEB;
+
 }
 
+.about-text::before{
+  position: absolute;
+  content: "";
+  width: 14px;
+  height: 14px;
+  bottom: 2px;
+  left: -20px;
+  background-image: url('./assets/img/icons/text.svg');
+}
+.about-text:hover::before{
+
+  background-image: url('./assets/img/icons/inf_hovered.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
+.about-video::before{
+  position: absolute;
+  content: "";
+  width: 16px;
+  height:100%;
+  bottom: -2px;
+  left: -20px;
+  background-image: url('./assets/img/icons/vid.svg');
+  background-repeat: no-repeat;
+}
+.about-video:hover::before{
+  background-image: url('./assets/img/icons/vid_hovered.svg');
+  background-repeat: no-repeat;
+}
 .about__text {
   width: 100%;
   height: 300px;
