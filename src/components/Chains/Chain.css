@@ -20,9 +20,21 @@
     font-weight: 500;
     letter-spacing: 5%;
     line-height: 15.12px;
-    background: linear-gradient(100.8deg, rgba(21, 255, 27, 0.66) -59.7%, rgba(46, 139, 196, 0.66) 75.86%, rgba(55, 99, 255, 0.66) 123.09%);
+    color: white;
+    background: linear-gradient(100.8deg, #29FFCC -59.7%, #3763FF 123.09%);
     padding: 4px 6px;
     border-radius: 4px;
+}
+.chain__off {
+  width: 50px;
+  height: 20px;
+  /* background: #2b313e; */
+  border-radius: 4px;
+  font-size: 12px;
+  color: #ed3e3e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .nftSlectArea {
     max-width: 380px;
@@ -36,10 +48,50 @@
     font-weight: 500;
     letter-spacing: 5%;
     line-height: 15.12px;
-    background: linear-gradient(103.87deg, rgba(8, 78, 215, 0.66) -74.95%, rgba(143, 55, 255, 0.66) 122.06%);
+    color: white;
+    background: linear-gradient(283.28deg, #3763FF 0%, #8F37FF 111.38%);
     padding: 4px 6px;
     border-radius: 4px; 
 }
+
+.beacon img {
+  width: 28px;
+}
+
+.algo img {
+  width: 28px;
+  border-radius: 5px;
+}
+.nftChainList {
+  list-style: none;
+  max-height: 364px;
+  overflow: auto;
+}
+.nftChainList::-webkit-scrollbar {
+  display: none;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.nftChainItem {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 30px;
+  cursor: pointer;
+  transition: all .5s;
+}
+
+.nftChainItem img {
+  display: block;
+  width: 28px;
+  margin-right: 13px;
+}
+
+
+.nftChainItem:hover {
+background: rgba(73, 82, 108, 0.1);
+}
+
 .chain-connecting{
     font-size: 12px;
     font-weight: 500;

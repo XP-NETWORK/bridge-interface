@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSelectedNFTList,removeFromSelectedNFTList } from "../../store/reducers/generalSlice";
-import CheckGreen from "../../assets/img/icons/check_green.svg";
 import NFTdetails from './NFTdetails'
 import { useSelector } from "react-redux";
 import { setupURI } from "../../wallet/oldHelper";
@@ -71,13 +70,6 @@ export default function NFTcard({ nft, index }) {
                   : <BrockenUtlGridView />
                   }
                   { !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> }
-                  {/* <div className="radio__container">
-                    {!isSelected ? (
-                      <span className="selected-radio"></span>
-                    ) : (
-                      <img src={CheckGreen} alt="" />
-                    )}
-                  </div> */}
                 </div>
               </div>
               <div className={`nft-content__container ${!imageLoaded ? "preload-content-container" : ""}`}>

@@ -20,6 +20,8 @@ footer {
     list-style: none;
     display: flex;
     align-items: center;
+    cursor: pointer;
+    transition: all 1s;
   }
   ul.socialLInks li {
     margin-right: 6px;
@@ -50,7 +52,42 @@ footer {
   .powerBy img {
     display: block;
   }
-  
+  .twitter{
+    width: 48px;
+    height: 48px;
+    background-image: url('../assets/img/footer/twitter.svg');
+
+  }
+  .twitter:hover{
+    background-image: url('../assets/img/icons/twitter_hovered.svg');
+  }
+  .reddit{
+    width: 48px;
+    height: 48px;
+    background-image: url('../assets/img/footer/redit.svg');
+  }
+  .reddit:hover{
+    background-image: url('../assets/img/icons/reddit_hovered.svg');
+
+  }
+  .linkedin{
+    width: 48px;
+    height: 48px;
+    background-image: url('../assets/img/footer/linkedin.svg');
+  }
+  .linkedin:hover{
+    background-image: url('../assets/img/icons/linkedin_hovered.svg');
+
+  }
+  .telegram{
+    width: 48px;
+    height: 48px;
+    background-image: url('../assets/img/footer/telegram.svg');
+  }
+  .telegram:hover{
+    background-image: url('../assets/img/icons/telegram_hovered.svg');
+
+  }
   @media screen and (max-width: 1024px) {
     footer {
       width: 768px;

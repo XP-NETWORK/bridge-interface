@@ -9,7 +9,7 @@ export default function BackGround() {
             
   const bgStyle = {
     backgroundColor: `#E5E5E5`,
-    backgroundImage: `url(${step === 1 ? nfts[step].image : ''})`,
+    backgroundImage: `url(${nfts[step].image})`,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',

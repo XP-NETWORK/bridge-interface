@@ -93,40 +93,6 @@
     display: flex;
   }
   
-  .beacon img {
-    width: 28px;
-  }
-  
-  .algo img {
-    width: 28px;
-    border-radius: 5px;
-  }
-  .nftChainList {
-    list-style: none;
-    max-height: 364px;
-    overflow: auto;
-    /* border-bottom: 1px solid #2d3342; */
-  }
-
-  .nftChainItem {
-    display: flex;
-    align-items: center;
-    height: 56px;
-    padding: 0 30px;
-    cursor: pointer;
-  }
-
-  .nftChainItem img {
-    display: block;
-    width: 28px;
-    margin-right: 13px;
-  }
-
-
-.nftChainItem:hover {
-  background: rgba(73, 82, 108, 0.1);
-}
-
 .modalSelectOptionsText {
   width: 100%;
   color: #14161A;

@@ -577,21 +577,6 @@ span.closeBox {
   border: 1px solid #3e64ed !important;
 }
 
-.singleNft.missing {
-  background: linear-gradient(
-    335deg,
-    rgba(41, 47, 63, 0.3) -0.71%,
-    rgba(41, 47, 63, 0) 61.32%
-  );
-  border: 1px dashed #36405a;
-  padding-top: 3px;
-  padding-bottom: 138%;
-  width: 224px;
-}
-
-.singleNft.missing:hover {
-  cursor: unset;
-}
 .nftListBox {
   width: 100%;
 }
@@ -1576,7 +1561,7 @@ span.invalid img {
   margin: 0;
   font-size: 14px;
   line-height: 140%;
-  color: #fff;
+  color: rgb(0, 0, 0);
 }
 
 
@@ -2005,29 +1990,9 @@ span.transPend {
   right: -65px;
 }
 
-.coming__chain {
-  width: 96px;
-  height: 20px;
-  background: #2b313e;
-  border-radius: 4px;
-  font-size: 12px;
-  color: #3e64ed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.chain__off {
-  width: 50px;
-  height: 20px;
-  background: #2b313e;
-  border-radius: 4px;
-  font-size: 12px;
-  color: #ed3e3e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
+
 
 .walletalgotitle {
   font-weight: 600;
