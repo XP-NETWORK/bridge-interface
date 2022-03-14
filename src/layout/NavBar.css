@@ -8,7 +8,7 @@
   margin: 0;
   display: flex;
   gap: 7.61px;
-  
+  cursor: pointer;
 }
 .navbar-brand div{
   margin-top: 29px;

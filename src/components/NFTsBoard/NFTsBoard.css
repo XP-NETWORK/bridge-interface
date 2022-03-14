@@ -139,12 +139,60 @@
     padding-top: 10px;
     outline: unset;
 }
+.mobileOnly{
+    background: #F7F7F9;
+    padding-bottom: 16px;
+    margin-bottom: 12px;
+}
+.mobileOnly .desChain{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    font-weight: 500;
+    color: #14161A;
+    line-height: 126%;
+}
+.mobileOnly .desChain span{
+    display: flex;
+    color: #14161A;
+    background: #F7F8F9;
+    border-radius: 38px;
+    justify-content: center;
+    align-items: center;
+    width: 140px;
+    height: 40px;
+    gap: 6px;
+    border: 1px solid white;
+}
+.mobileOnly .desChain span > div{
+    margin-left: 2px;
+}
+.mobileOnly .desAddress{
+    /* margin-bottom: 16px; */
+}
+.mobileOnly .desAddress input{
+ background-color: white;
+ border-radius: 40px;
+ border: 1px solid #E0E4EB;
+ height: 44px;
+}
 
-@media screen and (min-width: 1024px) {
-    /* .container{
-        width: 768px;
-    } */
+@media screen and (min-width: 768px) {
     .col-lg-8{
-        padding-left: 0;
+        padding: 0;
     }
+    .nft_selectBox {
+        border: 1px solid white;
+        /* border-radius: 0; */
+      }
+}
+@media screen and (min-width: 425px) {
+    .col-lg-8{
+        padding: 0;
+    }
+    .nft_selectBox {
+        border: 1px solid white;
+        /* border-radius: 0; */
+      }
 }

@@ -34,7 +34,7 @@ export default function NFTcard({ nft, index }) {
     useEffect(async() => {
       const whitelisted = await isWhiteListed(from.text, nft)
       setWhitelisted(whitelisted)
-    }, [])
+    },)
     
 
     function addRemoveNFT(chosen) {

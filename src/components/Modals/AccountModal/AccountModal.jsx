@@ -95,19 +95,6 @@ export default function AccountModal() {
     }
   }
 
-  const getCorrectAccount = () => {
-    return from.type === "EVM"
-      ? account
-      : from.type === "Tezos"
-      ? tezosAccount
-      : from.type === "Algorand"
-      ? algorandAccount
-      : from.type === "Elrond"
-      ? elrondAccount
-      : from.type === "Tron"
-      ? tronWallet
-      : undefined;
-  };
 
   const connectedWith = () => {
     if (MetaMask) return "MetaMask";
@@ -144,7 +131,7 @@ export default function AccountModal() {
       <p className="">{connectedWith()}</p>
       {copied && <Tooltip />}
       <CopyToClipboard text={currentAccount}>
-        <div className="nftLink">
+        <div className="account-modal__account">
           <img src={NftSelect} alt="#" />
           {currentAccount &&
             `${currentAccount.substring(

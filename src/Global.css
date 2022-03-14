@@ -1,15 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
 
-:root{
-  --mobileS: "320px";
-  --mobileM: "375px";
-  --tablet: "768px";
-  --laptop: "1024px";
-  --laptopL: "1440px"
-}
-
-
-
 html,
 body {
   font-family: "Inter", sans-serif;
@@ -26,21 +16,6 @@ body {
 }
 .widgetWhite {
   color: white !important;
-}
-
-.bridgeBody {
-  min-height: 100vh;
-  background-color: #1d212a;
-  background-image: url("./assets/img/bg/Ellipse\ 235.svg"),
-    url("./assets/img/bg/Ellipse\ 236.svg"), url("./assets/img/bg/l-figure.svg"),
-    url("./assets/img/bg/r-figure.svg"), url("./assets/img/bg/l-sphere.svg"),
-    url("./assets/img/bg/r-sphere.svg"), url("./assets/img/bg/r-triangle.svg");
-  background-repeat: no-repeat;
-  background-position: left 50% top 80px, left 50% top 177.15px,
-    left 25% top 29%, right 41% top 22%, left 40% top 25%, right 27% top 18%,
-    right 33% top 29%;
-  position: relative;
-  z-index: 1;
 }
 
 .bridgeBody::-webkit-scrollbar {
@@ -494,13 +469,7 @@ span.closeBox {
 }
 
 
-.accountBox {
-  position: absolute;
-  background: #262a36;
-  top: 60px;
-  right: 15px;
-  z-index: 200;
-}
+
 
 .tooltip__wrapper {
   position: absolute;
@@ -1612,15 +1581,17 @@ span.invalid img {
 
 
 .accountBox {
-  /* position: absolute; */
-  /* right: 0; */
-  /* top: 60px; */
-  /* background: #262A36; */
-  border: 1px solid #2d3342;
+  position: absolute;
+  background: #F7F8F9;
+  top: 70px;
+  right: 15px;
+  z-index: 1;
+  border: 1px solid #ffffff;
   box-sizing: border-box;
   border-radius: 20px;
   padding: 16px 24px 24px;
-  width: 310px;
+  width: 312px;
+  filter: drop-shadow(0px 4px 24px rgba(0, 0, 0, 0.24));
 }
 
 .accountTit {
@@ -1631,7 +1602,7 @@ span.invalid img {
   font-weight: 600;
   font-size: 16px;
   line-height: 126%;
-  color: #fff;
+  color: rgb(0, 0, 0);
   height: 28px;
 }
 
@@ -1643,14 +1614,14 @@ span.invalid img {
 .accountBox p {
   font-size: 16px;
   line-height: 28px;
-  color: #62718a;
+  color: #14161A;
   margin: 12px 0;
 }
 
-.nftLink {
+.account-modal__account {
   display: flex;
   align-items: center;
-  color: #fff;
+  color: #14161A;
   margin-bottom: 25px;
   width: 100%;
 }
@@ -1667,7 +1638,6 @@ span.invalid img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* flex-wrap: wrap; */
 }
 
 .changeBtn {
@@ -2009,10 +1979,6 @@ span.transPend {
   right: -65px;
 }
 
-
-
-
-
 .walletalgotitle {
   font-weight: 600;
   font-size: 18px;
@@ -2114,6 +2080,9 @@ span.transPend {
   .singleNft.missing {
     width: 100%;
   }
+  .stickers{
+    width: calc(100% - 10px);
+  }
   .bridgeBody {
     background-position: left 50% top 80px,
       /*Ellipse\ 235*/left 50% top 177.15px, /*Ellipse\ 236*/left 2% top 27%,
@@ -2165,6 +2134,12 @@ span.transPend {
 
   .info-icon__container {
     margin-left: 10px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .stickers{
+    width: 768px;
   }
 }
 
