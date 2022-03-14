@@ -28,7 +28,7 @@ export default function NFTcard({ nft, index }) {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [whiteListed, setWhitelisted] = useState(true)
     const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
-    // if(index === 1)console.log(video, videoUrl, imageUrl, image, ipfsArr.length, isValidHttpUrl(nft.uri, index))
+
     
 
     useEffect(async() => {
@@ -66,7 +66,7 @@ export default function NFTcard({ nft, index }) {
                     video && image ? <VideoAndImage index={index} imageLoaded={() => imageLoadedHandler} videoUrl={videoUrl} imageUrl={imageUrl} />
                   : image && !video ? <img onLoad={() => imageLoadedHandler} alt="only image"  src={setupURI(imageUrl)} /> 
                   : !image && video ? <video onLoadedData={imageLoadedHandler} controls={false}  playsInline={true} autoPlay={true} loop={true}  muted={true} src={setupURI(videoUrl)} />
-                  : ipfsArr?.length && <VideoOrImage urls={ipfsArr} i={index} />
+                  : ipfsArr?.length > 0 && <VideoOrImage urls={ipfsArr} i={index} />
                   : <BrockenUtlGridView />
                   }
                   { !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> }

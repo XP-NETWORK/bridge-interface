@@ -28,6 +28,7 @@ export default function ButtonToTransfer() {
     const maiarProvider = useSelector(state => state.general.maiarProvider)
     const account = useSelector(state => state.general.account)
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
+    const nfts = useSelector(state => state.general.NFTList)
 
     const getAlgorandWalletSigner = async () => {
         const base = new MyAlgoConnect();
