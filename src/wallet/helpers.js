@@ -3,12 +3,10 @@ import { Chain, Config } from "xp.network/dist/consts";
 import { chainsConfig, CHAIN_INFO } from "../components/values";
 import { setAlgorandClaimables, setBigLoader, setFactory, setNFTList } from "../store/reducers/generalSlice";
 import store from "../store/store";
-// import { from } from "@iotexproject/iotex-address-ts";
 const { Harmony } = require('@harmony-js/core')
 const axios = require("axios");
 
 export const setupURI = (uri) => {
-  // debugger
   if (uri && (uri.includes("ipfs://"))) {
     return "https://ipfs.io/" + uri.replace(":/", "");
   }
@@ -131,6 +129,12 @@ export const getFactory = async () => {
   return factory;
 };
 
+export const getFac = async () => {
+  const mainnetConfig = ChainFactoryConfigs.MainNet()
+  const factory = ChainFactory(AppConfigs.MainNet(), mainnetConfig)
+  return factory
+}
+
 
 
 export const handleChainFactory = async (someChain) => {
@@ -238,22 +242,11 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 
 export const setNFTS = async (w, from, testnet) => {
   store.dispatch(setBigLoader(true))
-  const factory = await getFactory()
-  const inner = await factory.inner(CHAIN_INFO[from].nonce)
   const res = await getNFTS(w, from, testnet)
   const parsedNFTs = await parseNFTS(res)
-  // for (const nft of parsedNFTs) {
-  //   try {
-  //     nft.whitelisted = true
-  //     // await factory.checkWhitelist(inner, nft)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-  // const sorted = parsedNFTs.sort(n => n.whitelisted ? -1 : 0)
   store.dispatch(setBigLoader(false))
   if(parsedNFTs.length){
-      store.dispatch(setNFTList(parsedNFTs))
+      store.dispatch(setNFTList({parsedNFTs, from}))
   }
   else {
     store.dispatch(setNFTList([]))

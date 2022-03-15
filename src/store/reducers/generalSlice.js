@@ -55,8 +55,10 @@ const generalSlice = createSlice({
     setAccount(state, action) {
       state.account = action.payload;
     },
+    //!!!!!!!
     setNFTList(state, action) {
-      state.NFTList = action.payload;
+      const { parsedNFTs, from } = action.payload
+      state.NFTList = parsedNFTs;
     },
     setSelectedNFTList(state, action) {
       state.selectedNFTList = [...state.selectedNFTList, action.payload];
@@ -82,7 +84,9 @@ const generalSlice = createSlice({
       state.NFTListSearch = action.payload;
     },
     allSelected(state) {
-      state.selectedNFTList = state.NFTList;
+      const nfts = JSON.parse(JSON.stringify(state.NFTList))
+      const onlyWhiteListed = nfts.filter(n => n.whitelisted)
+      state.selectedNFTList = onlyWhiteListed;
     },
     setNFTsListView(state) {
       state.NFTListView = !state.NFTListView;
@@ -256,16 +260,27 @@ const generalSlice = createSlice({
     setTempleWallet(state, action) {
       state.templeWallet = action.payload;
     },
-    setTempleWallet(state, action) {
-      state.templeWallet = action.payload;
-    },
     setTestNet(state, action) {
       state.testNet = action.payload;
     },
+    updateNFTs(state, action){
+      const {whitelisted, nft} = action.payload
+      const actionContract = nft.native.contract
+      const actionOwner = nft.native.owner
+      const actionTokenId = nft.native.tokenId
+      const nfts = JSON.parse(JSON.stringify(state.NFTList))
+      nfts.forEach((n, index)=> {
+        const { contract, owner, tokenId } = n.native
+        if(contract === actionContract && owner === actionOwner  && tokenId === actionTokenId){
+          state.NFTList[index].whitelisted = whitelisted
+        }
+      });
+    }
   },
 });
 
 export const {
+  updateNFTs,
   setTempleWallet,
   setKukaiWallet,
   setTezosAccount,

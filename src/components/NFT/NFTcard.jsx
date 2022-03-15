@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setSelectedNFTList,removeFromSelectedNFTList } from "../../store/reducers/generalSlice";
+import { setSelectedNFTList,removeFromSelectedNFTList, updateNFTs } from "../../store/reducers/generalSlice";
 import NFTdetails from './NFTdetails'
 import { useSelector } from "react-redux";
 import { setupURI } from "../../wallet/oldHelper";
@@ -35,6 +35,11 @@ export default function NFTcard({ nft, index }) {
       const whitelisted = await isWhiteListed(from.text, nft)
       setWhitelisted(whitelisted)
     },)
+
+    useEffect(async() => {
+      const whitelisted = await isWhiteListed(from.text, nft)
+      dispatch(updateNFTs({whitelisted, nft}))
+    },[])
     
 
     function addRemoveNFT(chosen) {
