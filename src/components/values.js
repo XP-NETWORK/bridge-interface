@@ -219,7 +219,7 @@ export const chains = [
     image: { avatar: true, src: One },
     maintenance: false,
     testNet: true,
-    mainnet: false,
+    mainnet: true,
     newChain: true,
   },
   {
@@ -231,7 +231,7 @@ export const chains = [
     image: { avatar: true, src: Aurora },
     maintenance: false,
     testnet: false,
-    mainnet: false,
+    mainnet: true,
     newChain: true
   }
 ];
