@@ -28,7 +28,7 @@ export const chains = [
     key: "Ethereum",
     text: "Ethereum",
     value: "Ethereum",
-    order: 1,
+    order: 4,
     image: { avatar: true, src: Etherium },
     maintenance: false,
     testNet: false,
@@ -100,7 +100,7 @@ export const chains = [
     image: { avatar: true, src: Fantom },
     maintenance: false,
     testNet: false,
-    mainnet: true
+    mainnet: false
   },
   {
     type: "Algorand",
@@ -219,7 +219,7 @@ export const chains = [
     image: { avatar: true, src: One },
     maintenance: false,
     testNet: true,
-    mainnet: true,
+    mainnet: false,
     newChain: true,
   },
   {
@@ -231,7 +231,7 @@ export const chains = [
     image: { avatar: true, src: Aurora },
     maintenance: false,
     testnet: false,
-    mainnet: true,
+    mainnet: false,
     newChain: true
   }
 ];

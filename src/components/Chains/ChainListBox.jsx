@@ -72,10 +72,10 @@ export default function ChainListBox(props) {
 
   useEffect(() => {
     if(from)setToChains(filterChains(chains, from.text))
-  }, [from])
+  }, [from,to])
   
-  useEffect(() => {
-  }, [to]);
+  // useEffect(() => {
+  // }, [to]);
 
   return (
     <Modal
@@ -107,11 +107,6 @@ export default function ChainListBox(props) {
             
             : toChains
             .filter( chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : ""))
-            .sort((chain) => {
-              if(chain.coming) return 1
-              else if(chain.maintenance) return 0
-              else if(!chain.coming) return -1
-            })
             .map((chain) => {
               const {image, text, key, coming, newChain, maintenance, testNet, mainnet } = chain;
               return globalTestnet ? ((testNet && chain.key !== from.key)) && <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming}  text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`} /> 
