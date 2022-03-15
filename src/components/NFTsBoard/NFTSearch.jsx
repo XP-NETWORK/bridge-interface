@@ -18,23 +18,14 @@ export default function NFTSearch() {
     
     <Dropdown className="search-dropdown" autoClose="outside">
       <Dropdown.Toggle id="SearchDrop">
+        <img src={Search} alt="" />
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        
           <input
             onChange={(e) => handleSearch(e)}
             type="text"
             placeholder="Search NFT"
           />
-          {/* { search ?  <button type="button"><img src={Close} alt="" /></button> : <button type="button"><img src={Search} alt=""/></button>} */}
-          {/* <button type="button">
-            {widget ? (
-              <SearchComp className="svgWidget" />
-            ) : (
-              <img src={Search} alt="#" />
-            )}
-          </button> */}
-        
       </Dropdown.Menu>
     </Dropdown>
   

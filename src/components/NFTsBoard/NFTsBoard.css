@@ -5,6 +5,7 @@
     padding-top: 20px;
     display: flex;
     justify-content: space-between;
+    padding-right: 10px;
   }
   
 .nftTopRIght{
@@ -93,9 +94,7 @@
 .change-view__button:hover .list-icon{
     background-image: url("../../assets/img/icons/list-view_hovered.svg");
 }
-.search-dropdown{
 
-}
 .search-dropdown .dropdown-toggle{
     width: 40px;
     height: 40px;
@@ -111,22 +110,10 @@
     background-color: transparent;
     border-color: transparent;
 }
-.dropdown-toggle::after{
-    position: absolute;
-    content: "";
-    background: #F6F6F8;
-    width: 18px;
-    height: 18px;
-    background-image: url("../../assets/img/icons/Search.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-    display: inline-block;
-    vertical-align: 0.255em;
-    border: 0;
-    top: 10px;
-    left: 10px;
+.search-dropdown .dropdown-toggle::after{
+    display: none !important;
 }
-.dropdown-menu{
+.search-dropdown .dropdown-menu{
     inset: -45px auto auto -210px !important;
     height: 44px;
     padding: 0;
@@ -135,7 +122,7 @@
     /* display: flex !important; */
     overflow: hidden;
 }
-.dropdown-menu input{
+.search-dropdown .dropdown-menu input{
     border: 0;
     padding-left: 10px;
     padding-top: 10px;
