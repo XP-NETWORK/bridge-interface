@@ -1,9 +1,12 @@
 .container{
     width: 1024px !important;
 }
-.nftListTop{
-    padding-right: 15px;
-}
+.nftListTop {
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
 .nftTopRIght{
     display: flex;
     align-items: center;
@@ -157,19 +160,17 @@
     color: #14161A;
     background: #F7F8F9;
     border-radius: 38px;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    width: 140px;
     height: 40px;
     gap: 6px;
+    padding: 0 6px;
     border: 1px solid white;
 }
 .mobileOnly .desChain span > div{
     margin-left: 2px;
 }
-.mobileOnly .desAddress{
-    /* margin-bottom: 16px; */
-}
+
 .mobileOnly .desAddress input{
  background-color: white;
  border-radius: 40px;
@@ -178,19 +179,28 @@
 }
 
 @media screen and (min-width: 768px) {
-    .col-lg-8{
-        padding: 0;
-    }
+
     .nft_selectBox {
         border: 1px solid white;
-        /* border-radius: 0; */
       }
 }
 @media screen and (min-width: 425px) {
-    .col-lg-8{
-        padding: 0;
-    }
     .nft_selectBox {
         border: 1px solid white;
       }
+}
+
+@media screen and (min-width: 320px) {
+    .nftListCol{
+        padding: 0;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .nft_selectBox {
+        border-radius: unset;
+    }
+    .mobileOnly .destiAddress{
+        padding: 0 16px;
+    }
 }

@@ -24,6 +24,7 @@
 @media(max-width: 768px) {
     .sendNftTit {
         margin-top: -50px;
+        color: black;
     }
     .nftConnect{
         display: flex;

@@ -26,15 +26,6 @@ function NFTlistTop() {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
   const widget = useSelector((state) => state.general.widget);
-  const [showSearch, setShowSearch] = useState(false);
-
-  const handleSearch = (e) => {
-    dispatch(setSearchNFTList(e.target.value));
-  };
-
-  const handleClose = () => {
-    dispatch(setSwitchDestination(false));
-  };
 
   const handleView = () => {
     dispatch(setNFTsListView());
@@ -57,7 +48,6 @@ function NFTlistTop() {
   };
 
 
-  const off = { display: "none" };
   return (
     <>
       <div className="yourNft--mobile">
@@ -71,13 +61,7 @@ function NFTlistTop() {
             />{" "}
             {from.key === "xDai" ? "Gnosis Chain" : from.key}
           </span>
-          <span style={refreshStyle} onClick={refresh}>
-            {widget ? (
-              <RefreshComp className="svgWidget" />
-            ) : (
-              <img className="refreshnfts" src={Refresh} />
-            )}
-          </span>
+          <div className="arrow-down"></div>
         </div>
       </div>
       <div className="nftListTop">
@@ -89,7 +73,7 @@ function NFTlistTop() {
               style={{ width: "29px" }}
               src={from.image.src}
               alt="NFT Name"
-            />{" "}
+            />
             {from.key === "xDai" ? "Gnosis Chain" : from.key}
           </span>
           <span style={refreshStyle} onClick={refresh}>
@@ -112,19 +96,6 @@ function NFTlistTop() {
           {onlyWhiteListedNFTs?.length === selectedNFTs?.length && selectedNFTs?.length  ? <div className="delete-all" onClick={() => dispatch(cleanSelectedNFTList())}></div>
           :<div style={nfts ? {} : OFF} onClick={() => dispatch(allSelected())} className="select-all"></div>
           }
-        </div>
-        {/* !!! Show on click */}
-        <div style={!showSearch ? {} : off} className="mobileOnly mobSearch">
-          <form action="#">
-            <input
-              type="search"
-              placeholder="Search NFT"
-              onChange={(e) => handleSearch(e)}
-            />
-            <button type="button">
-              <img src={Search} />
-            </button>
-          </form>
         </div>
       </div>
     </>
