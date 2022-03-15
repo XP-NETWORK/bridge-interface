@@ -201,7 +201,7 @@ export const chains = [
     key: "Iotex",
     text: "Iotex",
     value: "Iotex",
-    order: 2,
+    order: 3,
     image: { avatar: true, src: Iotex },
     newChain: true,
     coming: false,
@@ -219,7 +219,7 @@ export const chains = [
     image: { avatar: true, src: One },
     maintenance: false,
     testNet: true,
-    mainnet: true,
+    mainnet: false,
     newChain: true,
   },
   {
@@ -231,7 +231,7 @@ export const chains = [
     image: { avatar: true, src: Aurora },
     maintenance: false,
     testnet: false,
-    mainnet: true,
+    mainnet: false,
     newChain: true
   }
 ];

@@ -29,8 +29,8 @@ export default function ChainListBox(props) {
   const show = useSelector((state) => state.general.showChainModal);
   const switchChain = useSelector((state) => state.general.switchDestination);
   const widget = useSelector((state) => state.general.widget);
-  const [fromChains, setFromChains] = useState(chains.sort((a, b) => b.order - a.order))
-  const [toChains, searchToChains] = useState(chains.sort((a, b) => b.order - a.order))
+  const [fromChains, setFromChains] = useState(chains)
+  const [toChains, setToChains] = useState(chains)
   // console.log("toChains: ", toChains)
 
 
@@ -62,7 +62,7 @@ export default function ChainListBox(props) {
   };
 
   useEffect(() => {
-    const withNew = chains.filter(chain => chain.newChain)
+    const withNew = chains.filter(chain => chain.newChain).sort((a,b) => a.order - b.order)
     const withComing = chains.filter( chain => chain.coming && !chain.newChain )
     const withMaintenance = chains.filter( chain => chain.maintenance && !chain.newChain )
     const noComingNoMaintenance = chains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain).sort((a,b) => a.order - b.order)
@@ -71,7 +71,7 @@ export default function ChainListBox(props) {
   },)
 
   useEffect(() => {
-    if(from)searchToChains(filterChains(chains, from.text))
+    if(from)setToChains(filterChains(chains, from.text))
   }, [from])
   
   useEffect(() => {
