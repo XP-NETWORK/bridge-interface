@@ -15,7 +15,7 @@ import { setClaimablesAlgorand } from "./wallet/helpers";
 import Widget from "./components/Widget";
 import TechnicalSupport from "./components/innercomponents/TechnicalSupport";
 import TransferLoader from "./components/innercomponents/TransferLoader";
-import TronConnectionErrMod from "./components/TronConnectionErrMod";
+import TronConnectionErrMod from "./components/Modals/TronModals/TronConnectionErrMod.jsx";
 import GetFeatured from "./components/innercomponents/GetFeatured";
 import WSettings from "./components/Settings";
 import { useLocation } from 'react-router'

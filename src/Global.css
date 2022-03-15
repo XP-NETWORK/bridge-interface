@@ -1053,20 +1053,25 @@ li.nftSelecItem .Close:hover {
   margin: 0 0 6px 0;
 }
 
-.nftInfBox p {
-  font-size: 14px;
-  line-height: 140%;
-  color: #fff;
-  margin: 0;
-  word-break: break-all;
-}
-
 .nftInfBox:last-child {
   margin-bottom: 0;
 }
 
 .nftInfDesc.nftInfBox {
   padding-right: 5px;
+}
+
+
+.nftInfBox p {
+  font-size: 14px;
+  line-height: 140%;
+  color: #fff;
+  margin: 0;
+  word-break: break-word;
+}
+
+.nftInfBox:last-child {
+  margin-bottom: 0;
 }
 
 .nftDetailBox {
@@ -1089,36 +1094,7 @@ li.nftSelecItem .Close:hover {
   overflow: auto;
 }
 
-.nftInfBox {
-  background: #272c39;
-  border: 1px solid #2d3342;
-  padding: 8px 12px;
-  border-radius: 6px;
-  margin-bottom: 9px;
-}
 
-.nftInfBox label {
-  color: #62718a;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 24px;
-  margin: 0 0 6px 0;
-}
-
-.nftInfBox p {
-  font-size: 14px;
-  line-height: 140%;
-  color: #fff;
-  margin: 0;
-}
-
-.nftInfBox:last-child {
-  margin-bottom: 0;
-}
-
-.nftInfDesc.nftInfBox {
-  padding-right: 5px;
-}
 
 .nftSuccessMod .modal-dialog {
   max-width: 570px;

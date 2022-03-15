@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Close from "../../assets/img/icons/close.svg";
-import Back from "../../assets/img/icons/Back.svg";
 import { useSelector } from "react-redux";
 import {
   cleanSelectedNFTList,
@@ -9,7 +8,7 @@ import {
 import { useDispatch } from "react-redux";
 import ListedView from "../NFT/ListedView"
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
-import { ReactComponent as BackComp } from "../../assets/img/icons/Back.svg";
+
 
 function SelectedNFT() {
   const dispatch = useDispatch();
@@ -30,14 +29,6 @@ function SelectedNFT() {
   return (
     <div className="selected-nfts-list">
       <div className="selected-nfts__header">
-          {/* <a className="backBtn mobileOnly">
-            {widget ? (
-              <BackComp className="svgWidget" />
-            ) : (
-              <img src={Back} alt="Back" />
-            )}
-          </a> */}
-          {/* <span className="mobileOnly">Selected NFTs</span> */}
           <span className="desktop__header">
             Selected NFTs{" "}
             <span>

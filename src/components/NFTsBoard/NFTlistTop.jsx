@@ -19,6 +19,7 @@ import NFTSearch from "./NFTSearch";
 function NFTlistTop() { 
   const dispatch = useDispatch();
   const nfts = useSelector((state) => state.general.NFTList);
+  const onlyWhiteListedNFTs = nfts?.filter(n => n.whitelisted)
   const { algorandAccount, tronWallet, elrondAccount, tezosAccount, account, bigLoader } = useSelector((state) => state.general);
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
   const NFTListView = useSelector((state) => state.general.NFTListView);
@@ -108,7 +109,7 @@ function NFTlistTop() {
           { NFTListView ? <div className="grid-icon"></div>:<div className="list-icon"></div> }
           </div>
           {/* <span onClick={() => setShowSearch(prev => prev = !prev)} className="mobileOnly search-btn"><img src={Search} /></span> */}
-          {nfts?.length === selectedNFTs?.length ? <div className="delete-all" onClick={() => dispatch(cleanSelectedNFTList())}></div>
+          {onlyWhiteListedNFTs?.length === selectedNFTs?.length ? <div className="delete-all" onClick={() => dispatch(cleanSelectedNFTList())}></div>
           :<div style={nfts ? {} : OFF} onClick={() => dispatch(allSelected())} className="select-all"></div>
           }
         </div>

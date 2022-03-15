@@ -1,7 +1,6 @@
 .container{
     width: 1024px !important;
 }
-
 .nftListTop{
     padding-right: 15px;
 }
@@ -193,6 +192,5 @@
     }
     .nft_selectBox {
         border: 1px solid white;
-        /* border-radius: 0; */
       }
 }

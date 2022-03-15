@@ -1,17 +1,15 @@
-import React from "react";
 import { Modal } from "react-bootstrap";
-import Close from "../assets/img/icons/close.svg";
-import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
+import Close from "../../../assets/img/icons/close.svg";
+import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg";
 import { useDispatch, useSelector } from "react-redux";
 import "./TronConnectionErrMod.css";
-import { setTronLoginError } from "../store/reducers/generalSlice";
-import TronLink from "../assets/img/icons/TronLink.svg";
+import { setTronLoginError } from "../../../store/reducers/generalSlice";
+import TronLink from "../../../assets/img/icons/TronLink.svg";
 
 export default function TronConnectionErrMod() {
   const dispatch = useDispatch();
   const error = useSelector((state) => state.general.tronLoginError);
   const handleClose = () => {
-    // console.log("click");
     dispatch(setTronLoginError(undefined));
   };
   //
