@@ -12,6 +12,6 @@ export const filterChains = (arr, extraChain) => {
   const onlyNew = allChains.filter(chain => chain.new)
   const onlyComing = allChains.filter(chain => chain.coming)
   const onlyMaintenance = allChains.filter( chain => chain.maintenance)
-  const regular = allChains.filter(chain => !chain.maintenance && !chain.new && !chain.coming)
+  const regular = allChains.filter(chain => !chain.maintenance && !chain.new && !chain.coming).sort((a,b) => b.order - a.order)
   return [...onlyNew, ...regular, ...onlyMaintenance, ...onlyComing]
 }
