@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import NFTaccount from "../components/NFTsBoard/NFTaccount";
-import NFTsuccess from "../components/NFTsuccess";
+import NFTsuccess from "../components/Modals/Success/NFTsuccess";
 import {
   Routes,
   Route,

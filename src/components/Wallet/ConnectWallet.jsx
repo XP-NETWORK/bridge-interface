@@ -1,17 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Modal } from "react-bootstrap";
 import Close from "../../assets/img/icons/close.svg";
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 import ChangeNetworkModal from "../Modals/ChangeNetwork/ChangeNetworkModal"
 import { useDispatch, useSelector } from "react-redux";
-import { useWeb3React } from "@web3-react/core";
-import { algoConnector } from "../../wallet/connectors";
-import { setAccount, setAlgorandWallet, setStep, setWrongNetwork, setAlgorandAccount, setQrCodeString, setShowAbout, setShowVideo, setWalletsModal } from "../../store/reducers/generalSlice";
-import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
+import { setQrCodeString, setShowAbout, setShowVideo, setWalletsModal } from "../../store/reducers/generalSlice";
 import MaiarModal from "../MaiarModal";
 import WalletList from "./WalletList";
-import Video from '../../assets/img/icons/Video_icon.svg';
-import INF from '../../assets/img/icons/Inf.svg';
 import { useNavigate } from "react-router-dom";
 
 
@@ -45,7 +40,7 @@ function ConnectWallet() {
     if(from && to && !connected){
       setShow(true)
     }
-    else if(connected){
+    else if(connected && to){
       navigate("/account")
     }
   };

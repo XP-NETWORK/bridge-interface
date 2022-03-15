@@ -109,7 +109,7 @@ function NFTlistTop() {
           { NFTListView ? <div className="grid-icon"></div>:<div className="list-icon"></div> }
           </div>
           {/* <span onClick={() => setShowSearch(prev => prev = !prev)} className="mobileOnly search-btn"><img src={Search} /></span> */}
-          {onlyWhiteListedNFTs?.length === selectedNFTs?.length ? <div className="delete-all" onClick={() => dispatch(cleanSelectedNFTList())}></div>
+          {onlyWhiteListedNFTs?.length === selectedNFTs?.length && selectedNFTs?.length  ? <div className="delete-all" onClick={() => dispatch(cleanSelectedNFTList())}></div>
           :<div style={nfts ? {} : OFF} onClick={() => dispatch(allSelected())} className="select-all"></div>
           }
         </div>

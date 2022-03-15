@@ -1,40 +1,26 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal, Image } from "react-bootstrap";
-import Close from "../assets/img/icons/close.svg";
-import Success from "../assets/img/icons/Success.svg";
-import Check from "../assets/img/icons/Check_circle.svg";
-import FileCopy from "../assets/img/icons/FileCopy.svg";
-import CopyHover from "../assets/img/icons/CopyHover.svg";
-// import copyTT from "../assets/img/icons/copytoclip.svg"
-import copiedIcon from "../assets/img/icons/copiedtoclip.svg";
-import { useSelector } from "react-redux";
-import { chainsConfig } from "./values";
+import Close from "../../../assets/img/icons/close.svg";
+import Success from "../../../assets/img/icons/Success.svg";
+import Check from "../../../assets/img/icons/Check_circle.svg";
+import FileCopy from "../../../assets/img/icons/FileCopy.svg";
+import CopyHover from "../../../assets/img/icons/CopyHover.svg";
+import copiedIcon from "../../../assets/img/icons/copiedtoclip.svg";
+import { useSelector, useDispatch } from "react-redux";
+import { chainsConfig } from "./../../values";
 import moment from "moment";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { setupURI } from "../wallet/oldHelper";
-// import CopyIcons from './innercomponents/CopyIcons';
-import {
-  isValidHttpUrl,
-  setClaimablesAlgorand,
-  setNFTS,
-} from "../wallet/helpers";
-import {
-  claimAlgorandPopup,
-  connectAlgorandWalletClaim,
-  setTxnHash,
-  cleanTxnHashArr,
-  removeFromSelectedNFTList,
-} from "../store/reducers/generalSlice";
-import { useDispatch } from "react-redux";
-import ConnectAlgorand from "./ConnectAlgorand";
-import ClaimAlgorandNFT from "./ClaimAlgorandNFT";
+import { setupURI } from "../../../wallet/oldHelper";
+import { isValidHttpUrl, setClaimablesAlgorand, setNFTS } from "../../../wallet/helpers";
+import { claimAlgorandPopup, connectAlgorandWalletClaim, cleanTxnHashArr, removeFromSelectedNFTList } from "../../../store/reducers/generalSlice";
+import ConnectAlgorand from "../../ConnectAlgorand";
+import ClaimAlgorandNFT from "../../ClaimAlgorandNFT";
 import "./SuccessNFT.css";
-import { getUrl } from "./innercomponents/NFTHelper";
-import VideoOrImage from "./innercomponents/VideoOrImage";
-import brockenurl from "../assets/img/brockenurl.png";
-
-import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
-import { ReactComponent as FileCopyComp } from "../assets/img/icons/FileCopy.svg";
+import { getUrl } from "../../innercomponents/NFTHelper";
+import VideoOrImage from "../../innercomponents/VideoOrImage";
+import brockenurl from "../../../assets/img/brockenurl.png";
+import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg";
+import { ReactComponent as FileCopyComp } from "../../../assets/img/icons/FileCopy.svg";
 
 function NFTsuccess() {
   const dispatch = useDispatch();
