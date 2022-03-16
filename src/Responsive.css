@@ -55,11 +55,6 @@
         padding-left: 8px;
     }
 
-    .nft_selectBox {
-        padding-right: 16px;
-        padding-left: 16px;
-    }
-
     .nftListBox> .row> div {
         margin-bottom: 12px;
     }
@@ -284,10 +279,6 @@
     .selectAll {
         background: rgba(98, 113, 138, 0.1);
         border-radius: 8px;
-    }
-
-    .nft_selectBox {
-        height: auto;
     }
 
     .nftSendBtn {

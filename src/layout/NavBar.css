@@ -155,12 +155,14 @@ transition: all 0.3s;
     width: calc(100% - 10px);
   }
 }
+@media screen and (max-width: 475px) {
+
+  .navbar-brand div{
+    display: none;
+  }
+} 
 @media screen and (max-width: 325px) {
   .navbar{
     width: calc(100% - 5px);
-  }
-  .navbar-brand div{
-    font-size: 14px;
-    letter-spacing: 0em;
   }
 } 
