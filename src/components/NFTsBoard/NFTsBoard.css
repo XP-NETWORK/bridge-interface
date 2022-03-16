@@ -170,6 +170,9 @@
   }
 
 @media screen and (min-width: 768px) {
+    .mobile-col{
+        display: none;
+    }
 
     .nft_selectBox {
         border: 1px solid white;
@@ -182,8 +185,6 @@
     .yourNft--mobile {
         display: none;
     }
-
-      
 }
 
 @media screen and (min-width: 320px) {
@@ -191,7 +192,11 @@
         padding: 0;
     }
 }
-
+@media screen and (max-width: 769px){
+    .row{
+        display: none;
+    }
+}
 
 @media screen and (max-width: 426px) {
     .nftListTop{
@@ -210,4 +215,5 @@
     .NFTaccount {
         margin: 0;
     }
+
 }

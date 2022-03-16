@@ -23,6 +23,7 @@ function ConnectWallet() {
   const algorandAccount = useSelector(state => state.general.algorandAccount)
   const evmAccount = useSelector(state => state.general.account)
   const tronAccount = useSelector(state => state.general.tronWallet)
+  const testnet = useSelector(state => state.general.testNet)
 
   const connected = (elrondAccount || tezosAccount || algorandAccount || evmAccount || tronAccount) ? true : false
 
@@ -41,7 +42,8 @@ function ConnectWallet() {
       setShow(true)
     }
     else if(connected && to){
-      navigate("/account")
+      console.log("🚀 ~ file: ConnectWallet.jsx ~ line 46 ~ handleShow ~ testnet", testnet)
+      navigate(testnet ? "/testnet/account" : "/account")
     }
   };
 

@@ -28,6 +28,7 @@ function NFTlistTop() {
     <>
       <div className="yourNft--mobile">
         <span className="yourNft__title">Your NFTs on </span>
+          {/* <Refresh /> */}
           <ChainSwitch assignment={'from'} />
       </div>
       <div className="nftListTop">

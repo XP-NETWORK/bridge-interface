@@ -16,10 +16,7 @@ import Widget from "./components/Widget";
 import TechnicalSupport from "./components/innercomponents/TechnicalSupport";
 import TransferLoader from "./components/innercomponents/TransferLoader";
 import TronConnectionErrMod from "./components/Modals/TronModals/TronConnectionErrMod.jsx";
-import GetFeatured from "./components/innercomponents/GetFeatured";
 import WSettings from "./components/Settings";
-import { useLocation } from 'react-router'
-import { useNavigate } from 'react-router-dom';
 import "./components/Modals/Modal.css"
 
 function App() {
@@ -27,7 +24,7 @@ function App() {
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
   const state = useSelector((state) => state.general);
   const axios = require("axios");
-  const widget = new URLSearchParams(window.location.search).get("widget");
+
 
   const checkValidators = async () => {
     let res;
@@ -39,12 +36,10 @@ function App() {
     if (res?.data) dispatch(setValidatorsInf(res.data));
   };
 
-  const showGetFeatured = () => {
-    dispatch(setGetFeaturedModal(true));
-  };
+
 
   useEffect(() => {
-    dispatch(setTestNet(window.location.href.indexOf("testnet.") > 0));
+    dispatch(setTestNet(window.location.href.indexOf("/testnet") > 0));
   });
 
   useEffect(async () => {
@@ -103,12 +98,6 @@ function App() {
       {/* <GetFeatured /> */}
       <XpBridge />
       {/* <Alert /> */}
-
-      {/* <div onClick={showGetFeatured} className="get-featured">
-        <img src={star} alt="" />
-        Get Featured
-      </div> */}
-      {/* <Slider /> */}
     </div>
   );
 }
