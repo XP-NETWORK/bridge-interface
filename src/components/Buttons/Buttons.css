@@ -2,7 +2,13 @@
     display: flex;
     align-items: center;
     background: #F7F8F9;
+    color: #14161A;
     border: 1px solid white;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0em;
     gap: 6px;
     padding: 6px;
     border-radius: 38px;
@@ -57,4 +63,7 @@
     background-image: url(../../assets/img/refresh.svg);
     background-position: center;
     background-repeat: no-repeat;
+}
+.selected-nfts__button{
+    
 }

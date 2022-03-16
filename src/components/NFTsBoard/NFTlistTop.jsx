@@ -6,6 +6,7 @@ import ChainListBox from "../Chains/ChainListBox";
 import NFTSearch from "./NFTSearch";
 import ChainSwitch from "../Buttons/ChainSwitch";
 import Refresh from "../Buttons/Refresh";
+import SelectedNFTs from "../Buttons/SelectedNFTs";
 
 
 function NFTlistTop() { 
@@ -27,17 +28,7 @@ function NFTlistTop() {
     <>
       <div className="yourNft--mobile">
         <span className="yourNft__title">Your NFTs on </span>
-        <div className="yourNft__chain">
-          <span>
-            <img
-              style={{ width: "30px" }}
-              src={from.image.src}
-              alt="NFT Name"
-            />{" "}
-            {from.key === "xDai" ? "Gnosis Chain" : from.key}
-          </span>
-          <div className="arrow-down"></div>
-        </div>
+          <ChainSwitch assignment={'from'} />
       </div>
       <div className="nftListTop">
         <ChainListBox />
@@ -46,9 +37,7 @@ function NFTlistTop() {
           <ChainSwitch assignment={"from"} func={undefined} />
           <Refresh />
         </div>
-        <div className="mobileOnly seleNftMob">
-          Selected <span>{`/ ${nfts ? nfts.length : ""} `}</span>
-        </div>
+        <SelectedNFTs />
         <div className="nftTopRIght">
           <NFTSearch />
           <div onClick={() => handleView()} className="change-view__button">

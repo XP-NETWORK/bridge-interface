@@ -744,11 +744,6 @@ span.NFTInf:hover img {
   border-radius: 10px;
 }
 
-.NFTaccount {
-  margin-top: 80px;
-  margin-bottom: 80px;
-}
-
 .sendNftTit {
   text-align: center;
   color: #fff;
@@ -783,15 +778,6 @@ span.NFTInf:hover img {
   color: #fff;
   outline: none;
 }
-
-
-/* 
-.refreshnfts {
-  margin-left: 6px;
-}
- */
-
-
 
 .nftListed {
   display: flex;
