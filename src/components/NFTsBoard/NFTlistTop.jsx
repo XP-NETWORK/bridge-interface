@@ -1,19 +1,11 @@
-import { useState } from "react";
-import { Dropdown } from "react-bootstrap";
-import Search from "../../assets/img/icons/Search.svg";
-import ListView from "../../assets/img/icons/ListView.svg";
-import GridView from "../../assets/img/icons/GridView.svg";
 import { useDispatch } from "react-redux";
-import {setSearchNFTList, allSelected, setNFTsListView, setSwitchDestination, cleanSelectedNFTList } from "../../store/reducers/generalSlice";
+import { allSelected, setNFTsListView, cleanSelectedNFTList } from "../../store/reducers/generalSlice";
 import { useSelector } from "react-redux";
 import { setNFTS } from "../../wallet/helpers";
-import Refresh from "../../assets/img/refresh.svg";
-import { ReactComponent as SearchComp } from "../../assets/img/icons/Search.svg";
-import { ReactComponent as ListViewComp } from "../../assets/img/icons/ListView.svg";
-import { ReactComponent as GridViewComp } from "../../assets/img/icons/GridView.svg";
-import { ReactComponent as RefreshComp } from "../../assets/img/refresh.svg";
 import ChainListBox from "../Chains/ChainListBox";
 import NFTSearch from "./NFTSearch";
+import ChainSwitch from "../Buttons/ChainSwitch";
+import Refresh from "../Buttons/Refresh";
 
 
 function NFTlistTop() { 
@@ -25,28 +17,11 @@ function NFTlistTop() {
   const NFTListView = useSelector((state) => state.general.NFTListView);
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
-  const widget = useSelector((state) => state.general.widget);
+
 
   const handleView = () => {
     dispatch(setNFTsListView());
   };
-  const refresh = async () => {
-    if (!bigLoader || !nfts) {
-      let w;
-      if (from.type === "EVM") w = account;
-      else if (from.type === "Tezos") w = tezosAccount;
-      else if (from.type === "Algorand") w = algorandAccount;
-      else if (from.type === "Elrond") w = elrondAccount;
-      else if (from.type === "Tron") w = tronWallet;
-      await setNFTS(w, from.key);
-    }
-  };
-
-  const refreshStyle = {
-    cursor: bigLoader ? "" : "pointer",
-    opacity: bigLoader ? 0.6 : 1,
-  };
-
 
   return (
     <>
@@ -67,22 +42,9 @@ function NFTlistTop() {
       <div className="nftListTop">
         <ChainListBox />
         <div className="yourNft desktopOnly">
-          Your NFTs on{" "}
-          <span>
-            <img
-              style={{ width: "29px" }}
-              src={from.image.src}
-              alt="NFT Name"
-            />
-            {from.key === "xDai" ? "Gnosis Chain" : from.key}
-          </span>
-          <span style={refreshStyle} onClick={refresh}>
-            {widget ? (
-              <RefreshComp className="svgWidget" />
-            ) : (
-              <img className="refreshnfts" src={Refresh} alt="#" />
-            )}
-          </span>
+          Your NFTs on
+          <ChainSwitch assignment={"from"} func={undefined} />
+          <Refresh />
         </div>
         <div className="mobileOnly seleNftMob">
           Selected <span>{`/ ${nfts ? nfts.length : ""} `}</span>

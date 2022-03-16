@@ -6,6 +6,7 @@ import {
   setReceiver,
   setSwitchDestination,
 } from "../../store/reducers/generalSlice";
+import ChainSwitch from "../Buttons/ChainSwitch";
 // import vet from "../../assets/img/Vector.svg";
 // import { ReactComponent as Vet } from "../../assets/img/Vector.svg";
 
@@ -32,11 +33,7 @@ function DestinationChain() {
     <div className="destination-props">
       <div className="destination__header">
         <span className="destination__title">Destination</span>
-        <span className="destination__chain">
-          <img style={{ width: "30px" }} src={to.image.src} alt="" /> {to.key === "xDai" ? "Gnosis Chain" : to.key}
-          <div onClick={() => handleSwitchChain()} className="arrow-down">
-          </div>
-        </span>
+        <ChainSwitch assignment={"to"} func={handleSwitchChain} />
       </div>
 
       <div className="destination__address">

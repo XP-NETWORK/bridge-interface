@@ -41,6 +41,7 @@
   background: rgba(255, 255, 255, 0.4);
 }
 .navbar-connect{
+  height: 44px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,7 +49,7 @@
   font-weight: 500;
   line-height: 19px;
   letter-spacing: 0em;
-  color: #62718A;
+  color: #14161A;
   padding: 10px 16px;
   background: rgba(207, 207, 217, 0.2);
   border: 1px solid rgba(207, 207, 217, 0.9);

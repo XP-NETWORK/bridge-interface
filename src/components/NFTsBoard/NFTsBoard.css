@@ -142,7 +142,7 @@
     color: #14161A;
     line-height: 126%;
 }
-.mobileOnly .desChain span{
+/* .mobileOnly .desChain span{
     display: flex;
     color: #14161A;
     background: #F7F8F9;
@@ -156,7 +156,7 @@
 }
 .mobileOnly .desChain span > div{
     margin-left: 2px;
-}
+} */
 
 .mobileOnly .desAddress input{
  background-color: white;

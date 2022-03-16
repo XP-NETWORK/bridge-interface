@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
-import DestinationChainReload from "../../components/innercomponents/DestinationChainReload";
 import NFTgridView from "../NFT/NFTgridView";
 import NFTlistView from "../NFT/NFTlistView";
 import NFTlistTop from "./NFTlistTop";
@@ -10,6 +9,7 @@ import { setNFTS } from "../../wallet/helpers";
 import { ReturnBtn } from "../Settings/returnBtn";
 import DesktopTransferBoard from "../TransferBoard/DesktopTransferBoard";
 import MobileTransferBoard from "../TransferBoard/MobileTransferBoard";
+import MobileDestinationAddressBar from "../MobileOnly/MobileDestinationAddressBar";
 import "./NFTsBoard.css"
 
 function NFTaccount() {
@@ -56,16 +56,11 @@ function NFTaccount() {
 
   return (
     <div className="NFTaccount">
+      <MobileDestinationAddressBar />
       <Container className="nftSlectContaine">
         <ReturnBtn />
         <div className="row">
           <div className="nftListCol col-lg-8">
-            <div className="mobileOnly">
-              <div className="sendNftTit">
-                <h3>Send NFT</h3>
-              </div>
-              <DestinationChainReload />
-            </div>
             <div className="nft_selectBox">
               <NFTlistTop />
               {NFTListView ? <NFTlistView /> : <NFTgridView />}

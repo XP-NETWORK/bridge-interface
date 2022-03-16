@@ -102,7 +102,7 @@ function App() {
       <Widget />
       {/* <GetFeatured /> */}
       <XpBridge />
-      <Alert />
+      {/* <Alert /> */}
 
       {/* <div onClick={showGetFeatured} className="get-featured">
         <img src={star} alt="" />
