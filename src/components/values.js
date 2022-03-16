@@ -192,8 +192,8 @@ export const chains = [
     image: { avatar: true, src: Tezos },
     newChain: false,
     coming: false,
-    maintenance: true,
-    testNet: false,
+    maintenance: false,
+    testNet: true,
     mainnet: true
   },
   {
@@ -426,6 +426,9 @@ export const TESTNET_CHAIN_INFO = {
   Avalanche: {
       nonce: 6,
       chainId: 43113
+  },
+  Tezos: {
+    nonce: 0x12,
   }
 };
 

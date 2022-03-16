@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { connectTempleWallet, connectBeacon } from "./ConnectWalletHelper";
 import BeaconW from "../../assets/img/wallet/BeaconWhite.svg";
 import Temple from "../../assets/img/wallet/Temple.svg";
+import { TempleWallet } from "@temple-wallet/dapp";
 
 export default function TezosWallet({ wallet }) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
+  const testnet = useSelector(state => state.general.testNet)
+  const [ available, setAvailable ] = useState()
+
+
+  const handleTempleConnect = () => {
+      connectTempleWallet(testnet)
+  }
+
+  useEffect(() => {
+    return TempleWallet.onAvailabilityChange(async (available) =>{
+    console.log("🚀 ~ file: TezosWallet.jsx ~ line 23 ~ returnTempleWallet.onAvailabilityChange ~ available", available)
+     })
+  }, [])
+
   return wallet === "TempleWallet" ? (
     <li
-      onClick={connectTempleWallet}
+      onClick={handleTempleConnect}
       data-wallet="TempleWallet"
       style={from?.text === "Tezos" && window.innerWidth > 600 ? {} : OFF}
       className="wllListItem"
@@ -20,7 +35,7 @@ export default function TezosWallet({ wallet }) {
   ) : (
     <li
       data-wallet="Beacon"
-      onClick={connectBeacon}
+      onClick={() => connectBeacon(testnet)}
       style={from?.text === "Tezos" ? {} : OFF}
       className="wllListItem beacon"
     >
