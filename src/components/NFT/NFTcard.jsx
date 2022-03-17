@@ -32,9 +32,7 @@ export default function NFTcard({ nft, index }) {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [whiteListed, setWhitelisted] = useState(true)
     const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
-    // if(index === 1)console.log(video, videoUrl, imageUrl, image, ipfsArr.length, isValidHttpUrl(nft.uri, index))
-    
-
+  
     useEffect(async() => {
       const whitelisted = await isWhiteListed(from.text, nft)
       setWhitelisted(whitelisted)
