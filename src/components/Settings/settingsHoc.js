@@ -241,6 +241,16 @@ const settingsHoc = (Wrapped) => (props) => {
     setActiveChains(activeChains.length);
   };
 
+  const onUnSelectAll = () => {
+    dispatch(
+      setSettings({
+        ...settings,
+        selectedChains: [selectedChains[0], selectedChains[1]]
+      })
+    );
+    setActiveChains(2);
+  }
+
   return (
     <Wrapped
       list={list}
@@ -261,6 +271,7 @@ const settingsHoc = (Wrapped) => (props) => {
       onSaveSettings={onSaveSettings}
       onResetSettings={onResetSettings}
       onSelectAll={onSelectAll}
+      onUnSelectAll={onUnSelectAll}
     />
   );
 };

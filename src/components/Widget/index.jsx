@@ -290,8 +290,13 @@ export default function Widget() {
           display: flex;
         }
 
-        .nft-image__container {
+        .nft-image__container, .preload__image {
           background: ${cardBackground ? cardBackground : ""};
+        }
+
+        .preload__name, .preload__number {
+          background: ${cardBackground ? cardBackground : ""};
+          filter: brightness(85%);
         }
 
         .singleNft {
@@ -307,7 +312,7 @@ export default function Widget() {
           border-top-right-radius:  ${cardRadius ? cardRadius + "px" : ""};
         }
 
-        .nft-content__container {
+        .nft-content__container, .preload__content {
           background: ${cardBackground ? cardBackground : ""};
           filter: brightness(115%);
         }
@@ -319,7 +324,7 @@ export default function Widget() {
         }
 
         .preload__name, .preload__number {
-          background: ${secondaryColor ? secondaryColor : ""};
+          /*background: ${secondaryColor ? secondaryColor : ""};*/
         } 
 
         .selectAll, .clearNft, .nftAut a, .loader, .changeNetwork-loader, .coming__chain, .follow-us__btn, .ts-button, .sucesList .colBlue, .success-button.view-txn-btn, .bluTextBtn {

@@ -56,6 +56,7 @@ function WSettings({
   onSaveSettings,
   onResetSettings,
   onSelectAll,
+  onUnSelectAll
 }) {
   const {
     backgroundColor,
@@ -210,6 +211,14 @@ function WSettings({
                           onClick={onSelectAll}
                         >
                           Select all
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline-primary"
+                          className="selectAllBtn"
+                          onClick={onUnSelectAll}
+                        >
+                          Unselect all
                         </Button>
                         {chains.map((chain, i) => (
                           <li
