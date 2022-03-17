@@ -31,7 +31,8 @@ export default function ChainListBox(props) {
   const widget = useSelector((state) => state.general.widget);
   const [fromChains, setFromChains] = useState(chains)
   const [toChains, setToChains] = useState(chains)
-  // console.log("toChains: ", toChains)
+
+
 
 
   const handleClose = () => {

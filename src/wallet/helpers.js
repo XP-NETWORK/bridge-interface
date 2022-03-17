@@ -47,10 +47,10 @@ if(from.key === "Tezos"){
     nfts.map(async (n, index) => {
       return await new Promise(async (resolve) => {
         try {
-          if(n?.native?.meta?.token?.metadata.url){
-            const baseURL = n?.native?.meta?.token?.metadata.url
+          if(n?.native?.meta?.token?.metadata.url || n?.native?.meta?.token?.metadata.image){
+            const baseURL = n?.native?.meta?.token?.metadata.url || n?.native?.meta?.token?.metadata.image
             const res = await axios.get(baseURL)
-            resolve({...res.data, ...n, ...n.native, uri:n?.native?.meta?.token?.metadata.url})
+            resolve({...res.data, ...n, ...n.native, uri:n?.native?.meta?.token?.metadata.url || n?.native?.meta?.token?.metadata.image})
           }
         } catch (error) {
           
@@ -217,7 +217,7 @@ export const getNFTS = async (wallet, from) => {
     const unique = {};
     try {
       const allNFTs = response
-        .filter((n) => n.native).filter(n => n.uri || n.native.meta.token.metadata.url)
+        .filter((n) => n.native).filter(n => n.uri || n.native.meta.token.metadata.url || n.native.meta.token.metadata.image)
         .filter((n) => {
           const { tokenId, contract, chainId } = n?.native;
           if (unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`])
