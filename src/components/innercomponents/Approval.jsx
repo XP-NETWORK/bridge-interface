@@ -148,14 +148,6 @@ function Approval(props) {
           dispatch(updateApprovedNFTs(nft));
           setFinishedApproving(arr);
         }
-
-        // const factory = await getFactory()
-        // const chain = await factory.inner(Chain.TEZOS)
-        // const signer = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
-        // await signer.connect("mainnet");
-        // const swap = await chain.preTransfer(signer, nft)
-        // dispatch(updateApprovedNFTs(nft))
-        // setFinishedApproving(arr)
       } catch (error) {
         setFinishedApproving(arr);
         dispatch(setError(error.data ? error.data.message : error.message));
@@ -268,7 +260,7 @@ function Approval(props) {
         }
         className="approveBtn"
       >
-        Approve all NFTs
+        Approve all selected NFTs
         <div className="approveBtn">
           <input
             readOnly={true}

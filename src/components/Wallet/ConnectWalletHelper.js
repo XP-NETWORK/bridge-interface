@@ -1,6 +1,7 @@
 
 import { TempleWallet } from "@temple-wallet/dapp";
 import { injected, algoConnector } from "../../wallet/connectors"
+import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import store  from "../../store/store"
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
@@ -26,10 +27,12 @@ import { setTronWallet,
   setKukaiWallet, 
   setTempleWallet, 
   setQrImage, 
-  setQrCodeString } from "../../store/reducers/generalSlice"
+  setQrCodeString,
+setOnWC,  setWC } from "../../store/reducers/generalSlice"
+  import { chainsConfig } from "../values";
 
 export const wallets = ["MetaMask", "WalletConnect", "Trust Wallet", "MyAlgo", "AlgoSigner", "Algorand Wallet", "TronLink", "Temple Wallet", "Beacon", "Maiar", "Maiar Extension", "Ledger", "Trezor"]
-const { to, modalError } = store.getState()
+const { to, modalError} = store.getState()
 
 
 export const connectMetaMask = async (activate, from, to) => {
@@ -72,6 +75,29 @@ export const connectAlgoSigner =async () => {
       console.log("Algo Signer not installed.");
     }
 }
+
+export const onWalletConnect = async (activate, from) => {
+  console.log(from);
+  const { rpc, chainId } = chainsConfig[from];
+  try {
+    const walletConnect = new WalletConnectConnector({
+      rpc: {
+        [chainId]: rpc,
+      },
+      chainId,
+      qrcode: true,
+    });
+    walletConnect.networkId = chainId;
+    await activate(walletConnect, undefined, true);
+    store.dispatch(setOnWC(true));
+    store.dispatch(setWC(walletConnect));
+  } catch (error) {
+    store.dispatch(setError(error));
+    if (error.data) {
+      console.log(error.data.message);
+    } else console.log(error);
+  }
+};
 
 export const connectTempleWallet = async (testnet) => {
 
@@ -223,9 +249,15 @@ export const connectMaiar = async () => {
       }
     }
 
+  
+  
+
 // Algorand blockchain connection ( Algo Wallet )
     export const connectAlgoWallet = async () => {
       if (!algoConnector.connected) {
           algoConnector.createSession()   
       }
     }
+
+
+    

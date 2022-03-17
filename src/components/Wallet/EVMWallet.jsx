@@ -1,6 +1,6 @@
 import React from "react";
 import { useWeb3React } from "@web3-react/core";
-import { connectMetaMask } from "./ConnectWalletHelper";
+import { connectMetaMask, onWalletConnect } from "./ConnectWalletHelper";
 import { useSelector } from "react-redux";
 import MetaMask from "../../assets/img/wallet/MetaMask.svg";
 import WalletConnect from "../../assets/img/wallet/WalletConnect 3.svg";
@@ -43,9 +43,10 @@ export default function EVMWallet({ wallet }) {
     </li>
   ) : (
     /* WALLET CONNECT */
-    <li style={OFF} className="wllListItem" data-wallet="WalletConnect">
+    <li  className="wllListItem" style={OFF} data-wallet="WalletConnect" /*onClick={() => onWalletConnect(activate,from.text)}*/>
       <img src={WalletConnect} alt="WalletConnect Icon" />
       WalletConnect
+      <div className="coming-chain">Coming soon</div>
     </li>
   );
 }

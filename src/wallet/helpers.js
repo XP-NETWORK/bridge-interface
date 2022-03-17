@@ -199,6 +199,7 @@ export const handleChainFactory = async (someChain) => {
 
 export const getNFTS = async (wallet, from) => {
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
+
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
   const chain = await factory.inner(chainsConfig[from].Chain)
@@ -209,7 +210,9 @@ export const getNFTS = async (wallet, from) => {
       response = await getTronNFTs(tronWallet)
     }
     else{
+
       response = await factory.nftList(chain, hardcoded ? hardcoded : wallet)
+    
     }
     const unique = {};
     try {

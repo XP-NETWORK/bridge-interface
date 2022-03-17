@@ -67,6 +67,8 @@ export default function ChainListBox(props) {
     const withMaintenance = chains.filter( chain => chain.maintenance && !chain.newChain )
     const noComingNoMaintenance = chains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain).sort((a,b) => a.order - b.order)
     const sorted = [...withNew, ...noComingNoMaintenance, ...withMaintenance, ...withComing]
+    
+    //const orderSorted = sorted.sort((a,b) => a.order - b.order)
     setFromChains(sorted)
   },[])
 

@@ -15,7 +15,7 @@ import Velas from "../assets/img/chain/velas.svg";
 import Tezos from "../assets/img/chain/Tezos.svg";
 import Iotex from "../assets/img/chain/iotx.svg";
 import One from "../assets/img/chain/One.svg";
-import Aurora from "../assets/img/chain/aurora.svg"
+import Aurora from "../assets/img/chain/aurora.svg";
 import { Chain } from "xp.network/dist/consts";
 
 export const EVM = "EVM";
@@ -32,7 +32,7 @@ export const chains = [
     image: { avatar: true, src: Etherium },
     maintenance: false,
     testNet: false,
-    mainnet: true
+    mainnet: true,
   },
   {
     type: "EVM",
@@ -43,8 +43,7 @@ export const chains = [
     image: { avatar: true, src: Binance },
     maintenance: false,
     testNet: true,
-    mainnet: true
-
+    mainnet: true,
   },
   {
     type: "Tron",
@@ -55,19 +54,18 @@ export const chains = [
     image: { avatar: true, src: Tron },
     maintenance: true,
     testNet: false,
-    mainnet: true
-
+    mainnet: true,
   },
   {
     type: "Elrond",
     key: ELROND,
     text: ELROND,
     value: ELROND,
-    order: 6,
+    order: 10,
     image: { avatar: true, src: Elrond },
     maintenance: false,
     testNet: false,
-    mainnet: true
+    mainnet: true,
   },
   {
     type: "EVM",
@@ -78,7 +76,7 @@ export const chains = [
     image: { avatar: true, src: Polygon },
     maintenance: false,
     testNet: true,
-    mainnet: true
+    mainnet: true,
   },
   {
     type: "EVM",
@@ -89,7 +87,7 @@ export const chains = [
     image: { avatar: true, src: Avalanche },
     maintenance: false,
     testNet: true,
-    mainnet: true
+    mainnet: true,
   },
   {
     type: "EVM",
@@ -111,18 +109,18 @@ export const chains = [
     image: { avatar: true, src: Algorand },
     maintenance: true,
     testNet: false,
-    mainnet: true
+    mainnet: true,
   },
   {
     type: "EVM",
     key: "xDai",
     text: "xDai",
     value: "xDai",
-    order: 10,
+    order: 14,
     image: { avatar: true, src: Gnosis },
     maintenance: false,
     testNet: false,
-    mainnet: true
+    mainnet: true,
   },
   {
     type: "Solana",
@@ -134,7 +132,7 @@ export const chains = [
     image: { avatar: true, src: Solana },
     maintenance: false,
     testNet: false,
-    mainnet: false
+    mainnet: false,
   },
   {
     type: "Cardano",
@@ -146,7 +144,7 @@ export const chains = [
     image: { avatar: true, src: Cardano },
     maintenance: false,
     testNet: false,
-    mainnet: false
+    mainnet: false,
   },
   {
     type: "EVM",
@@ -158,7 +156,7 @@ export const chains = [
     image: { avatar: true, src: Heco },
     maintenance: false,
     testNet: false,
-    mainnet: false
+    mainnet: false,
   },
   {
     type: "EVM",
@@ -169,7 +167,7 @@ export const chains = [
     image: { avatar: true, src: Fuse },
     maintenance: false,
     testNet: false,
-    mainnet: true
+    mainnet: true,
   },
   {
     type: "EVM",
@@ -181,7 +179,7 @@ export const chains = [
     newChain: true,
     maintenance: false,
     testNet: false,
-    mainnet: true
+    mainnet: true,
   },
   {
     type: "Tezos",
@@ -208,7 +206,7 @@ export const chains = [
     maintenance: false,
     testNet: false,
     mainnet: true,
-    off: true
+    off: true,
   },
   {
     type: "EVM",
@@ -231,7 +229,7 @@ export const chains = [
     image: { avatar: true, src: Aurora },
     maintenance: false,
     testnet: false,
-    mainnet: false,
+    mainnet: true,
     newChain: true
   }
 ];
@@ -273,7 +271,8 @@ export const chainsConfig = {
     chainId: 56,
     tx: "https://bscscan.com/tx/",
     testTx: "https://testnet.bscscan.com/tx/",
-    rpc: "https://wandering-shy-leaf.bsc.quiknode.pro/ad8d20d7895c15e9afc03ff011dc3418152b07f7/",
+    rpc:
+      "https://wandering-shy-leaf.bsc.quiknode.pro/ad8d20d7895c15e9afc03ff011dc3418152b07f7/",
     Chain: Chain.BSC,
   },
   Polygon: {
@@ -327,7 +326,7 @@ export const chainsConfig = {
     // chainData: ChainData.Avalanche,
     Chain: Chain.AVALANCHE,
     tx: "https://snowtrace.io/tx/",
-    testTx: "https://testnet.snowtrace.io/tx/"
+    testTx: "https://testnet.snowtrace.io/tx/",
   },
   Fuse: {
     type: EVM,
@@ -382,8 +381,8 @@ export const chainsConfig = {
     rpc: "https://mainnet.aurora.dev",
     chainId: 1313161554,
     Chain: Chain.AURORA,
-    tx: "https://explorer.mainnet.aurora.dev/tx/"
-  }
+    tx: "https://explorer.mainnet.aurora.dev/tx/",
+  },
 };
 
 export const coins = [
@@ -598,5 +597,5 @@ export const CHAIN_INFO = {
     chainId: 1313161554,
     blockExplorerUrls: "",
     contract: "",
-  }
+  },
 };

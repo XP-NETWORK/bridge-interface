@@ -16,11 +16,11 @@ body {
   line-height: 160%;
 }
 
-.App{
+.App {
   position: relative;
 }
 
-.try__container{
+.try__container {
   position: absolute;
   height: 100%;
   width: 100vw;
@@ -733,11 +733,11 @@ span.wallet {
 }
 
 .SearchDrop.dropdown input {
-  border: 1px solid  transparent;
+  border: 1px solid transparent;
 }
 
 .SearchDrop.dropdown input:focus {
-  border: 1px solid #297EFF;
+  border: 1px solid #297eff;
 }
 
 .SearchDrop.dropdown input::placeholder {
@@ -794,7 +794,7 @@ span.wallet {
 .seleDestiSele {
   color: white;
 }
-.chain--identifier{
+.chain--identifier {
   display: flex;
   gap: 2px;
 }
@@ -1384,7 +1384,6 @@ ul.nftList {
   padding: 6px 16px 6px 30px;
   color: #fff;
   position: relative;
-  
 }
 .nftListed:hover {
   background: rgba(73, 82, 108, 0.1);
@@ -2166,9 +2165,6 @@ span.invalid img {
   color: #fff;
 }
 
-
-
-
 .navbar-light .navbar-toggler:after {
   content: url("./assets/img/icons/Hambar.svg");
 }
@@ -2196,7 +2192,6 @@ span.invalid img {
     border: 1px solid #297EFF;
     background: none;
 } */
-
 
 .accountBox {
   /* position: absolute; */
@@ -2689,8 +2684,6 @@ span.transPend {
   pointer-events: none;
 }
 
-
-
 @media screen and (max-width: 425px) {
   .bridgeBody {
     background-position: left 50% top 80px,
@@ -2746,6 +2739,11 @@ span.transPend {
     z-index: 200;
     opacity: 1;
   }
+}
+
+li[data-chain="Aurora"],
+li[data-chain="Harmony"] {
+  display: none;
 }
 
 @media screen and (max-width: 320) {
