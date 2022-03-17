@@ -16,12 +16,6 @@ export default function TezosWallet({ wallet }) {
       connectTempleWallet(testnet)
   }
 
-  useEffect(() => {
-    return TempleWallet.onAvailabilityChange(async (available) =>{
-    console.log("🚀 ~ file: TezosWallet.jsx ~ line 23 ~ returnTempleWallet.onAvailabilityChange ~ available", available)
-     })
-  }, [])
-
   return wallet === "TempleWallet" ? (
     <li
       onClick={handleTempleConnect}
