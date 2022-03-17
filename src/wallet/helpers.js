@@ -32,15 +32,34 @@ export const checkIfJSON = jsonStr => {
   return obj
 }
 
+const getURL = async (url) => {
+  let res
+  return await new Promise(async (resolve) => {
+    const res = await axios.get(url)
+    resolve(res)
+  }).then(e => res = e)
+}
+
 export const parseNFTS = async (nfts) => {
-const { from, to } = store.getState().general;
+const { from } = store.getState().general;
 if(from.key === "Tezos"){
- return nfts.filter(n => n.native).map(n => {
-   return {
-     ...n,
-     ...n?.native?.meta?.token?.metadata
-   }
- })
+  const result = await Promise.all(
+    nfts.map(async (n, index) => {
+      return await new Promise(async (resolve) => {
+        try {
+          if(n?.native?.meta?.token?.metadata.url){
+            const baseURL = n?.native?.meta?.token?.metadata.url
+            const res = await axios.get(baseURL)
+            resolve({...res.data, ...n, ...n.native, uri:n?.native?.meta?.token?.metadata.url})
+          }
+        } catch (error) {
+          
+        }
+      })
+    })
+  )
+  console.log("🚀 ~ file: helpers.js ~ line 63 ~ parseNFTS ~ result", result)
+  return result
 }
   const result = await Promise.all(
     nfts.map(async (n, index) => {
@@ -195,7 +214,7 @@ export const getNFTS = async (wallet, from) => {
     const unique = {};
     try {
       const allNFTs = response
-        .filter((n) => n.native).filter(n => n.uri)
+        .filter((n) => n.native).filter(n => n.uri || n.native.meta.token.metadata.url)
         .filter((n) => {
           const { tokenId, contract, chainId } = n?.native;
           if (unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`])
@@ -242,15 +261,7 @@ export const setNFTS = async (w, from, testnet) => {
   const inner = await factory.inner(CHAIN_INFO[from].nonce)
   const res = await getNFTS(w, from, testnet)
   const parsedNFTs = await parseNFTS(res)
-  // for (const nft of parsedNFTs) {
-  //   try {
-  //     nft.whitelisted = true
-  //     // await factory.checkWhitelist(inner, nft)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-  // const sorted = parsedNFTs.sort(n => n.whitelisted ? -1 : 0)
+
   store.dispatch(setBigLoader(false))
   if(parsedNFTs.length){
       store.dispatch(setNFTList(parsedNFTs))
