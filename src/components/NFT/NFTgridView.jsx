@@ -4,6 +4,7 @@ import NFTempty from '../innercomponents/NFTempty';
 import Missing from '../innercomponents/Missing';
 import BigLoader from "../../components/innercomponents/BigLoader"
 import NFT from "./NFT"
+import NFTcard from './NFTcard';
 
 /////`
 function NFTgridView() {
@@ -21,9 +22,9 @@ function NFTgridView() {
                     <BigLoader />
                 :
                     <div className="nft-list__wrapper">
-                        { nfts?.length ? nfts
-                        .filter(nft => nft?.description?.toString().toLowerCase().includes(search ? search?.toLowerCase() : '') || nft.native.owner?.includes(search ? search : ''))
-                        .map((nft, index) => <NFT nft={nft} index={index} key={`nft-${index}`} />)
+                        { nfts?.length ? 
+                        search ? nfts.filter(nft => nft?.description?.toString().toLowerCase().includes(search.toLowerCase()) || nft.native.owner?.includes(search)).map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} />)
+                        :nfts.map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} />)
                         : 
                         <NFTempty /> }
                         { nfts && nfts?.length < nftsPlace ? placeholders.map((n, index) => <Missing key={`missing-${index}-component`}/>) : ''}

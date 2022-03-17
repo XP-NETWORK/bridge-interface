@@ -21,7 +21,9 @@ function NFTdetails({ nftInf }) {
     uri,
     native,
   } = nftInf;
-  const { video, url, ipfsArr } = getUrl(nftInf);
+  // const { video, url, ipfsArr } = getUrl(nftInf);
+  const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nftInf);
+
 
 
   const [show, setShow] = useState(false);
@@ -29,6 +31,8 @@ function NFTdetails({ nftInf }) {
   const handleShow = () => setShow(true);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [tryVideo, setTryVideo] = useState();
+
+  
 
   return (
     <>
@@ -56,21 +60,21 @@ function NFTdetails({ nftInf }) {
         <Modal.Body className="modalBody">
           <div className="nftDetailBox">
             <div className="nftDetImg">
-              {url && uri && isValidHttpUrl(uri) ? (
-                video && url ? (
+              {(imageUrl || videoUrl )&& uri && isValidHttpUrl(uri) ? (
+                video && videoUrl ? (
                   <video
                     onLoadedData={() => setImageLoaded(true)}
                     controls={false}
                     playsInline={true}
                     autoPlay={true}
                     loop={true}
-                    src={setupURI(url)}
+                    src={setupURI(videoUrl)}
                   />
                 ) : (
                   <img
                     onLoad={() => setImageLoaded(true)}
                     alt="NFTss"
-                    src={setupURI(url)}
+                    src={setupURI(imageUrl)}
                   />
                 )
               ) : ipfsArr.length ? (
@@ -80,7 +84,7 @@ function NFTdetails({ nftInf }) {
                   <img
                     onLoad={() => setImageLoaded(true)}
                     src={brockenurl}
-                    alt="This NFT image uri is broken."
+                    alt=" Broken Token URI"
                   />
                   <span className="brocken-url__msg">
                     NFTs URL
@@ -122,6 +126,7 @@ export default NFTdetails;
 
 function Attribute(props) {
   const { trait_type, display_type, value } = props;
+  console.log("Attribute: ", chainsConfig[value])
   return (
     <div className="nftToken nftInfBox">
       <label>

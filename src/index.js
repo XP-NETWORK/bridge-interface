@@ -22,6 +22,7 @@ ReactDOM.render(
     <Web3ReactProvider getLibrary={getLibrary}>
       <Provider store={store}>
         <Router>
+          {/* <div className="try__container"></div> */}
           <NavBar />
           <App />
           <Footer />

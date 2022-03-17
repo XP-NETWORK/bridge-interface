@@ -23,6 +23,8 @@ import AlgorandWallet from "./AlgorandWallet";
 import TronWallet from "./TronWallet";
 import ElrondWallet from "./ElrondWallet";
 import USBWallet from "./USBWallet";
+import WalletList from "./WalletList";
+
 
 function ConnectWallet() {
   const dispatch = useDispatch();
@@ -138,21 +140,7 @@ function ConnectWallet() {
           </Modal.Header>
           <Modal.Body>
             <div className="walletListBox">
-              <ul className="walletList scrollSty">
-                <EVMWallet wallet={"MetaMask"} />
-                <EVMWallet wallet={undefined} /> {/* Wallet Connect */}
-                <EVMWallet wallet={"TrustWallet"} />
-                <AlgorandWallet wallet={"MyAlgo"} />
-                <AlgorandWallet wallet={"AlgoSigner"} />
-                <AlgorandWallet wallet={undefined} /> {/* Algorand Wallet */}
-                <TronWallet />
-                <TezosWallet wallet={"TempleWallet"} />
-                <TezosWallet wallet={undefined} /> {/* Beacon */}
-                <ElrondWallet wallet={"Maiar"} />
-                <ElrondWallet wallet={undefined} /> {/** Maiar Extension*/}
-                <USBWallet wallet={"Ledger"} />
-                <USBWallet /> {/** Trezor */}
-              </ul>
+              <WalletList />
             </div>
           </Modal.Body>
         </Modal>

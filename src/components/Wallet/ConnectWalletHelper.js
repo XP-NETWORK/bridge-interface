@@ -28,12 +28,12 @@ import { setTronWallet,
   setQrImage, 
   setQrCodeString } from "../../store/reducers/generalSlice"
 
-
+export const wallets = ["MetaMask", "WalletConnect", "Trust Wallet", "MyAlgo", "AlgoSigner", "Algorand Wallet", "TronLink", "Temple Wallet", "Beacon", "Maiar", "Maiar Extension", "Ledger", "Trezor"]
 const { to, modalError } = store.getState()
 
 
 export const connectMetaMask = async (activate, from, to) => {
-debugger
+// debugger
     try {
         if(!window.ethereum && window.innerWidth <= 600) {
             const uri = `https://metamask.app.link/dapp/${window.location.host + `?to=${to.text}&from=${from.text}`}/`
@@ -73,16 +73,16 @@ export const connectAlgoSigner =async () => {
     }
 }
 
-// Tezos blockchain connection ( Temple Wallet )
-export const connectTempleWallet = async () => {
-  // debugger
+export const connectTempleWallet = async (testnet) => {
+
     try {
+      debugger
       const available = await TempleWallet.isAvailable();
       if (!available) {
         throw new Error("Temple Wallet not installed");
       }
       const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
-      await wallet.connect("mainnet");
+      testnet ? await wallet.connect("hangzhounet") : await wallet.connect("mainnet");
       const tezos = wallet.toTezos();
       const accountPkh = await tezos.wallet.pkh();
       store.dispatch(setTezosAccount(accountPkh))
@@ -93,11 +93,11 @@ export const connectTempleWallet = async () => {
     }
 }
 // Tezos blockchain connection ( Beacon )
-export const connectBeacon = async () => {
-  const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
+export const connectBeacon = async (testnet) => {
+  debugger
+  const Tezos = new TezosToolkit(testnet ? "https://hangzhounet.smartpy.io/" : "https://mainnet-tezos.giganode.io");
   const wallet = new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" });
   Tezos.setWalletProvider(wallet);
-  console.log("Tezos: ", Tezos);
   try {
     const permissions = await wallet.client.requestPermissions();
     store.dispatch(setTezosAccount(permissions.address))

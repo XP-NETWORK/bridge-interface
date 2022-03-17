@@ -64,7 +64,7 @@ function SelectedNFT() {
               >
                 <ListedView nft={nft} key={`nft-n-${index}`} />
                 <span className="nftSelecItem__name">
-                  {nft.data?.name || nft.name}
+                  {nft.data?.name || nft.name || nft.native.name}
                 </span>
                 <span className="Close">
                   {widget ? (

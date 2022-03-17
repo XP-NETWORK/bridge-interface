@@ -43,7 +43,7 @@ function ChangeNetworkModal() {
         const chain = getAddEthereumChain()[parseInt(chainId).toString()];
 
         const params = {
-          chainId: toHex(chain.chainId), // A 0x-prefixed hexadecimal string
+          chainId: chainId, // A 0x-prefixed hexadecimal string
           chainName: chain.name,
           nativeCurrency: {
             name: chain.nativeCurrency.name,
@@ -98,10 +98,10 @@ function ChangeNetworkModal() {
               <span className="worngImg">
                 <img src={Wrong} alt="Worng" />
               </span>
-              <h3>Switch to {from?.key} {testnet ? "TestNet" : "Mainnet"}</h3>
+              <h3>Switch to {from?.key === "xDai" ? "Gnosis Chain" : from?.key} {testnet ? "TestNet" : "Mainnet"}</h3>
               <p className="">
-                XP.network Bridge requires you to <br /> connect to the{" "}
-                {from?.key} {testnet ? "TestNet" : "Mainnet"}
+                XP.NETWORK Bridge requires you to <br /> connect to the{" "}
+                {from?.key === "xDai" ? "Gnosis Chain" : from?.key} {testnet ? "TestNet" : "Mainnet"}
               </p>
             </div>
             {loader && (

@@ -9,10 +9,11 @@ import CheckGreen from "../../assets/img/icons/check_green.svg";
 import NFTdetails from './NFTdetails'
 import { useSelector } from "react-redux";
 import { setupURI } from "../../wallet/oldHelper";
-import { getUrl } from "./NFTHelper.js";
+import { getUrl, isWhiteListed } from "./NFTHelper.js";
 import "./NewNFT.css";
 import { isValidHttpUrl } from "../../wallet/helpers";
 import VideoOrImage from "./VideoOrImage";
+import { CHAIN_INFO } from "../../components/values"
 
 export default function NFT({ nft, index }) {
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
@@ -25,7 +26,9 @@ export default function NFT({ nft, index }) {
   )[0];
   const [imageLoaded, setImageLoaded] = useState(false);
   const HIDDEN = { visibility: "hidden" };
-  const { video, url, ipfsArr } = getUrl(nft);
+  const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
+  const from = useSelector(state => state.general.from)
+  const [whiteListed, setWhiteListed] = useState(false)
 
   function addRemoveNFT(chosen) {
     if (!isSelected) {
@@ -35,6 +38,10 @@ export default function NFT({ nft, index }) {
     }
   }
 
+  const whiteListCheck = async () => {
+    const whitelisted = await isWhiteListed(CHAIN_INFO[from.text].nonce, nft)
+    setWhiteListed(whitelisted)
+  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -42,55 +49,38 @@ export default function NFT({ nft, index }) {
     }, 5000);
   }, [selectedNFTs]);
 
+  useEffect(() => {
+    whiteListCheck()
+  },[setImageLoaded])
+
+  const imageLoadedHandler = () => {
+    setImageLoaded(true)
+  }
+  
+
   return (
     <div className={`nft-box__wrapper ${!imageLoaded ? "preload-cont" : ""}`}>
-      <div
-        style={!imageLoaded && url ? HIDDEN : {}}
-        className={
-          isSelected ? "nft-box__container--selected" : "nft-box__container"
-        }
-      >
+      <div style={!imageLoaded && (imageUrl || videoUrl) ? HIDDEN : {}} className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
         <div onClick={() => addRemoveNFT(nft, index)} className="nft-image__container">
           <div className="image__wrapper">
-            {url && nft.uri && isValidHttpUrl(nft.uri) ? (
-              video && url ? (
-                <video
-                  onLoadedData={() => setImageLoaded(true)}
-                  controls={false}
-                  playsInline={true}
-                  autoPlay={true}
-                  loop={true}
-                  src={setupURI(url)}
-                />
-              ) : (
-                <img alt="#"
-                  onLoad={() => setImageLoaded(true)}
-                  alt="NFT image"
-                  src={setupURI(url)}
-                />
-              )
-            ) : ipfsArr.length ? (
-              <VideoOrImage urls={ipfsArr} i={index} />
-            ) : (
-              <div className="brocken-url">
-                <img 
-                  onLoad={() => setImageLoaded(true)}
-                  src={brockenurl}
-                  alt="uri is broken"
-                />
+            {(imageUrl || videoUrl) && nft.uri && isValidHttpUrl(nft.uri) ? 
+              video ? <video onLoadedData={imageLoadedHandler} controls={false}  playsInline={true} autoPlay={true} loop={true} src={setupURI(videoUrl)} />
+            : <img alt="#" onLoad={imageLoadedHandler} alt="NFT image" src={setupURI(imageUrl)} />
+            : ipfsArr.length ? <VideoOrImage imageLoadedHandler={() => imageLoadedHandler} urls={ipfsArr} i={index} />
+            : (<div className="brocken-url"><img onLoad={imageLoadedHandler} src={brockenurl} alt="uri is broken" />
                 <span className="brocken-url__msg">
                   NFTs URL
                   <br /> is broken
                 </span>
               </div>
-            )}
-            <div className="radio__container">
-              {!isSelected ? (
-                <span className="selected-radio"></span>
-              ) : (
-                <img src={CheckGreen} alt="" />
               )}
-            </div>
+              <div className="radio__container">
+                {!isSelected ? (
+                  <span className="selected-radio"></span>
+                ) : (
+                  <img src={CheckGreen} alt="" />
+                )}
+              </div>
           </div>
         </div>
         <div className={`nft-content__container ${!imageLoaded ? "preload-content-container" : ""}`}>
@@ -98,6 +88,15 @@ export default function NFT({ nft, index }) {
           <span className="nft-number">{nft.native.tokenId}</span>
         </div>
       </div>
+        { !imageLoaded && 
+                <div className="preload__container">
+                    <div className="preload__image"></div>
+                    <div className="preload__content">
+                        <div className="preload__name"></div>
+                        <div className="preload__number"></div>
+                    </div>
+                </div>
+            }
     </div>
   );
 }

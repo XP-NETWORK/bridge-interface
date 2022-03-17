@@ -1,4 +1,5 @@
-import { getFactory } from '../../wallet/helpers'
+import { checkIfJSON, getFactory } from '../../wallet/helpers'
+import { CHAIN_INFO } from '../values'
 const supportedVideoFormats = [".mp4", ".ogg", ".webm", ".avi"]
 const supportedImageFormats = [".apng", ".gif", ".jpg", ".jpeg", ".png", ".svg", ".webp"]
 
@@ -12,18 +13,20 @@ const ifImage = item => {
 }
 
 export const getUrl = nft => {
-    let video
-    let url
+    let video = false
+    let videoUrl = false
+    let image = false
+    let imageUrl = false
     const values = Object.values(nft)
     let valuesForCheck = []
     let strings = []
     let urls = []
     let ipfsArr = []
+    let url
 
-    // console.log(values);
+    // debugger
     values.forEach(item => {
         if(item && typeof item === "object"){
-            // debugger
             const objValues = Object.values(item)
             if(objValues.some(e => e && typeof e === "object")){
                 objValues.forEach(e => {
@@ -39,7 +42,7 @@ export const getUrl = nft => {
         else valuesForCheck.push(item)
     });
 
-    // console.log("valuesForCheck: ", valuesForCheck)
+
     valuesForCheck.forEach(item => {
         if(item && typeof item === 'string' && item.length > 1){
             strings.push(item)
@@ -55,36 +58,44 @@ export const getUrl = nft => {
         }
     });
     strings.forEach(item => {
-        if((item.includes("https:") || item.includes("ipfs") || item.includes("base64")) && !item.includes('.json')){
+        if((item.includes("https:") || item.includes("ipfs") || item.includes("base64")) && !item.includes('.json') && !checkIfJSON(item)){
             urls.push(item)
         }
     });
-
     if(urls.some(item => ifVideo(item))){
         urls.forEach(e => {
             if(ifVideo(e)){
                 video = true
-                url = e
+                videoUrl = e
             }
         });
     }
-    else if(urls.some(item => ifImage(item))){
+    if(urls.some(item => ifImage(item))){
         urls.forEach(e => {
             if(ifImage(e)){
-                video = false
-                url = e
+                image = true
+                imageUrl = e
             }
         });
     }
     else{
         ipfsArr = [...urls]
     }
-    
-    return { video, url, ipfsArr }
+    return { video, videoUrl, image ,imageUrl, ipfsArr }
 }
 
-export const isWhiteListed = async (chainNonce, nft) => {
-    const factory = getFactory()
-    const inner = factory.inner(chainNonce)
-    return await factory.checkWhitelist(inner, nft)
+export const isWhiteListed = async (from, nft) => {
+    // debugger
+    let whitelisted
+    const chainNonce = CHAIN_INFO[from].nonce
+    const factory = await getFactory()
+    const inner = await factory.inner(chainNonce)
+    if(inner){
+        try {
+            whitelisted = await factory.checkWhitelist(inner, nft)
+        } catch (error) {
+            console.error("isWhiteListed: ", error)
+        }
+    }
+    return whitelisted
 }

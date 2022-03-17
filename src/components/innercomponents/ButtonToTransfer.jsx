@@ -5,7 +5,7 @@ import { CHAIN_INFO } from '../values'
 import { chainsConfig } from '../values'
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { algoConnector } from "../../wallet/connectors"
-import { getFactory,  setClaimablesAlgorand } from "../../wallet/helpers"
+import { getFactory,  setClaimablesAlgorand, checkIfOne1,  convertOne1, convert } from "../../wallet/helpers"
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
@@ -15,6 +15,8 @@ import { setError, setNFTsToWhitelist, setTransferLoaderModal, setTxnHash } from
 export default function ButtonToTransfer() {
     const kukaiWallet = useSelector(state => state.general.kukaiWallet)
     const receiver = useSelector(state => state.general.receiver)
+    const receiverAddress = convert(receiver)
+    // console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 19 ~ ButtonToTransfer ~ receiverAddress", receiverAddress)
     const approved = useSelector(state => state.general.approved)
     const to = useSelector(state => state.general.to.key)
     const from = useSelector(state => state.general.from.key)
@@ -27,7 +29,6 @@ export default function ButtonToTransfer() {
     const maiarProvider = useSelector(state => state.general.maiarProvider)
     const account = useSelector(state => state.general.account)
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
-
 
     const getAlgorandWalletSigner = async () => {
         const base = new MyAlgoConnect();
@@ -89,7 +90,7 @@ export default function ButtonToTransfer() {
     }
 
     const sendEach = async (nft, index) => {
-        debugger
+        // debugger
         const signer = await getSigner()
         const toNonce = CHAIN_INFO[to].nonce
         const fromNonce = CHAIN_INFO[from].nonce
@@ -103,6 +104,7 @@ export default function ButtonToTransfer() {
                 factory = await getFactory()
                 const contract = nftSmartContract.toLowerCase()
                 const mintWidth = await factory.getVerifiedContracts(contract, toNonce, fromNonce)
+                // console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 107 ~ sendEach ~ mintWidth", mintWidth)
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
                 result = await factory.transferNft(
@@ -110,7 +112,7 @@ export default function ButtonToTransfer() {
                     toChain,  
                     nft,   
                     undefined,   
-                    receiver,  
+                    receiverAddress || receiver,  
                     bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
                 )
@@ -122,6 +124,7 @@ export default function ButtonToTransfer() {
                 factory = await getFactory()
                 const contract = nftSmartContract.toLowerCase()
                 const mintWidth = await factory.getVerifiedContracts(contract, toNonce, fromNonce)
+                // console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 127 ~ sendEach ~ mintWidth", mintWidth)
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
                 result = await factory.transferNft(
@@ -129,7 +132,7 @@ export default function ButtonToTransfer() {
                     toChain,   
                     nft,      
                     signer,   
-                    receiver,  
+                    receiverAddress || receiver,  
                     bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
                 )

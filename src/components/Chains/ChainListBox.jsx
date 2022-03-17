@@ -29,9 +29,9 @@ export default function ChainListBox(props) {
   const show = useSelector((state) => state.general.showChainModal);
   const switchChain = useSelector((state) => state.general.switchDestination);
   const widget = useSelector((state) => state.general.widget);
-  const [fromChains, setFromChains] = useState(chains.sort((a, b) => a.order - b.order))
-  const [toChains, searchToChains] = useState(chains.sort((a, b) => a.order - b.order))
-  console.log("toChains: ", toChains)
+  const [fromChains, setFromChains] = useState(chains)
+  const [toChains, setToChains] = useState(chains)
+  // console.log("toChains: ", toChains)
 
 
   const handleClose = () => {
@@ -62,11 +62,22 @@ export default function ChainListBox(props) {
   };
 
   useEffect(() => {
-    if(from)searchToChains(filterChains(chains, from.text))
-  }, [from])
-  
+    const withNew = chains.filter(chain => chain.newChain).sort((a,b) => a.order - b.order)
+    const withComing = chains.filter( chain => chain.coming && !chain.newChain )
+    const withMaintenance = chains.filter( chain => chain.maintenance && !chain.newChain )
+    const noComingNoMaintenance = chains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain).sort((a,b) => a.order - b.order)
+    const sorted = [...withNew, ...noComingNoMaintenance, ...withMaintenance, ...withComing]
+    
+    //const orderSorted = sorted.sort((a,b) => a.order - b.order)
+    setFromChains(sorted)
+  },[])
+
   useEffect(() => {
-  }, [to]);
+    if(from)setToChains(filterChains(chains, from.text))
+  }, [from,to])
+  
+  // useEffect(() => {
+  // }, [to]);
 
   return (
     <Modal
@@ -76,9 +87,11 @@ export default function ChainListBox(props) {
       className="ChainModal"
     >
       <Modal.Header className="text-left">
-        <Modal.Title>{`Select ${
+        <Modal.Title>
+          <div className="chain-list__header">{`Select ${
           departureOrDestination === "destination" ? "destination" : "departure"
-        } chain`}</Modal.Title>
+        } chain`}</div>
+        </Modal.Title>
         <span className="CloseModal" onClick={() => handleClose()}>
           {widget ? <CloseComp className="svgWidget" /> : <img src={Close} alt="" />}
         </span>
@@ -89,7 +102,6 @@ export default function ChainListBox(props) {
           <ul className="nftChainList scrollSty">
             {!from ? fromChains
             .filter((chain) => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : ""))
-            .sort(chain => chain.coming || chain.maintenance ? 0 : -1)
             .map((filteredChain, index) => {
             const { image, text, key, coming, newChain, maintenance, testNet, mainnet } = filteredChain;
             return globalTestnet ? testNet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`}/>
@@ -97,7 +109,6 @@ export default function ChainListBox(props) {
             
             : toChains
             .filter( chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : ""))
-            .sort(chain => chain.coming || chain.maintenance ? 0 : -1)
             .map((chain) => {
               const {image, text, key, coming, newChain, maintenance, testNet, mainnet } = chain;
               return globalTestnet ? ((testNet && chain.key !== from.key)) && <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming}  text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`} /> 

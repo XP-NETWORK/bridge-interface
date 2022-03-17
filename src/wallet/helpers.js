@@ -1,14 +1,15 @@
 import { AppConfigs, ChainFactory, ChainFactoryConfigs } from "xp.network";
 import { Chain, Config } from "xp.network/dist/consts";
-import { chainsConfig } from "../components/values";
+import { chainsConfig, CHAIN_INFO } from "../components/values";
 import { setAlgorandClaimables, setBigLoader, setFactory, setNFTList } from "../store/reducers/generalSlice";
 import store from "../store/store";
-import { ChainData, getOldFactory, moralisParams } from "./oldHelper";
-
+// import { from } from "@iotexproject/iotex-address-ts";
+const { Harmony } = require('@harmony-js/core')
 const axios = require("axios");
+
 export const setupURI = (uri) => {
   // debugger
-  if (uri && uri.includes("ipfs://")) {
+  if (uri && (uri.includes("ipfs://"))) {
     return "https://ipfs.io/" + uri.replace(":/", "");
   }
   else if(uri && (uri.includes("data:image/") || uri.includes("data:application/"))){
@@ -21,31 +22,17 @@ export const setupURI = (uri) => {
   return uri;
 };
 
-export const preloadItem = (item, type, setLoaded) => {
-  if (type === "video") {
-    const vid = document.createElement("video");
-    vid.src = item;
-    vid.style.opacity = "0";
-    vid.style.position = "absolute";
-    vid.style.height = "0px";
-    vid.style.width = "0px";
-    document.body.appendChild(vid);
-    vid.play();
-    vid.onloadeddata = function() {
-      setLoaded(true);
-      vid?.remove();
-    };
-  } else {
-    var img = new Image();
-    img.src = item;
-    img.onload = function() {
-      setLoaded(true);
-    };
+export const checkIfJSON = jsonStr => {
+  let obj
+  try {
+    obj = JSON.parse(jsonStr)
+  } catch (error) {
+    return false
   }
-};
+  return obj
+}
 
 export const parseNFTS = async (nfts) => {
-
 const { from, to } = store.getState().general;
 if(from.key === "Tezos"){
  return nfts.filter(n => n.native).map(n => {
@@ -56,25 +43,27 @@ if(from.key === "Tezos"){
  })
 }
   const result = await Promise.all(
-    nfts.map(async (n) => {
+    nfts.map(async (n, index) => {
       return await new Promise(async (resolve) => {
         try {
-          
-          if (!n.uri) resolve({ ...n });
-      
+          if (!n.uri) resolve({ ...n })
+
+          const jsonURI = checkIfJSON(n.uri) || undefined
+          const uri = jsonURI?.image
+          if (jsonURI) resolve({...n, ...jsonURI, uri })
           const res = await axios.get(setupURI(n.uri));
+          
           if (res && res.data) {
-            if (res.data.animation_url)
-              preloadItem(res.data.animation_url, "video", () => {});
-            else preloadItem(res.data.image, "image", () => {});
-            const isImageIPFS = setupURI(res.data.image).includes('ipfs.io')
-            let result = { ...res.data, ...n }
-            if(isImageIPFS) {
+            const isImageIPFS = setupURI(res.data.image)?.includes('ipfs.io')
+            
+            let result = typeof res.data != "string" ? { ...res.data, ...n } : {...n}
+            if(isImageIPFS) {              
               const ipfsNFT = await axios.get(setupURI(res.data.image))
               if(ipfsNFT.data && ipfsNFT.data.displayUri) result.image = ipfsNFT.data.displayUri
             }
             resolve(result);
-          } else resolve(undefined);
+          } 
+          else resolve(undefined);
         } catch (err) {
           if (err) {
             try {
@@ -83,8 +72,7 @@ if(from.key === "Tezos"){
                 try {
                   const { uri } = res.data;
                   const result = await axios.get(('https://sheltered-crag-76748.herokuapp.com/')+(setupURI(n.uri?.uri ? n.uri?.uri : n.uri)));
-
-                  resolve({ ...result.data, ...n, cantSend: true });
+                  resolve({ data: result.data, ...n, cantSend: true });
                 } catch (err) {
                   resolve({...n});
                 }
@@ -181,6 +169,8 @@ export const handleChainFactory = async (someChain) => {
         return await factory.inner(Chain.IOTEX)
       case "Harmony":
         return await factory.inner(Chain.HARMONY)
+      case "Aurora":
+        return await factory.inner(Chain.AURORA)
       default: return ''
     }
   } catch (error) {
@@ -188,11 +178,10 @@ export const handleChainFactory = async (someChain) => {
   }
 };
 
-export const getNFTS = async (wallet, from, testnet) => {
+export const getNFTS = async (wallet, from) => {
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
-  console.log("getNFTS: ", factory)
   const chain = await factory.inner(chainsConfig[from].Chain)
   try {
     // debugger
@@ -206,7 +195,7 @@ export const getNFTS = async (wallet, from, testnet) => {
     const unique = {};
     try {
       const allNFTs = response
-        .filter((n) => n.native)
+        .filter((n) => n.native).filter(n => n.uri)
         .filter((n) => {
           const { tokenId, contract, chainId } = n?.native;
           if (unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`])
@@ -216,8 +205,7 @@ export const getNFTS = async (wallet, from, testnet) => {
   
             return true;
           }
-        });
-  
+        })
       return allNFTs
     } catch (err) {
       return [];
@@ -247,11 +235,22 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
   }
 }
 
+
 export const setNFTS = async (w, from, testnet) => {
-  // debugger
   store.dispatch(setBigLoader(true))
+  const factory = await getFactory()
+  const inner = await factory.inner(CHAIN_INFO[from].nonce)
   const res = await getNFTS(w, from, testnet)
   const parsedNFTs = await parseNFTS(res)
+  // for (const nft of parsedNFTs) {
+  //   try {
+  //     nft.whitelisted = true
+  //     // await factory.checkWhitelist(inner, nft)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+  // const sorted = parsedNFTs.sort(n => n.whitelisted ? -1 : 0)
   store.dispatch(setBigLoader(false))
   if(parsedNFTs.length){
       store.dispatch(setNFTList(parsedNFTs))
@@ -261,11 +260,13 @@ export const setNFTS = async (w, from, testnet) => {
   }
 }
 
-export function isValidHttpUrl(string) {
+export function isValidHttpUrl(string, index) {
+  // debugger
 
   let url;
   if((string.includes("data:image/") || string.includes("data:application/"))) return true
   if(string.includes('ipfs://')) return true
+  if(string.includes("ipfs")) return true
   try {
     url = new URL(string);
   } catch (_) {
@@ -310,4 +311,33 @@ export const getTronNFTs = async wallet => {
     return tokens
   }
   return []
+}
+
+
+export const checkIfOne1 = (address) => {
+  return address?.slice(0,4) === "one1" ? true : false
+}
+
+export const checkIfIo1 = (address) => {
+  return address?.slice(0, 3) === "io1" ? true : false
+}
+
+export const convertOne1 = (address) => {
+  const hmySDK = new Harmony()
+  const ethAddr = hmySDK.crypto.fromBech32(address)
+  return ethAddr
+}
+
+// export const convertIo1 = (address) => {
+//   const addr = from(address)
+//   return addr.stringEth()
+// }
+
+export const convert = (address) => {
+  // debugger
+  if(checkIfOne1(address)){
+    console.log(convertOne1(address))
+    return convertOne1(address)
+  }
+  // else if(checkIfIo1(address)) return convertIo1(address)
 }

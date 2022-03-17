@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Dropdown, Modal } from "react-bootstrap";
-import BSC from "../../assets/img/chain/Binance.svg";
+import { useState } from "react";
+import { Dropdown } from "react-bootstrap";
 import Search from "../../assets/img/icons/Search.svg";
 import ListView from "../../assets/img/icons/ListView.svg";
 import GridView from "../../assets/img/icons/GridView.svg";
@@ -9,24 +8,34 @@ import {
   setSearchNFTList,
   allSelected,
   setNFTsListView,
-  setTo,
   setSwitchDestination,
   cleanSelectedNFTList,
 } from "../../store/reducers/generalSlice";
 import { useSelector } from "react-redux";
-import NFTChainListBox from "../Chains/NFTChainListBox"
-import Close from "../../assets/img/icons/close.svg";
 import { setNFTS } from "../../wallet/helpers";
 import Refresh from "../../assets/img/refresh.svg";
-
 import { ReactComponent as SearchComp } from "../../assets/img/icons/Search.svg";
 import { ReactComponent as ListViewComp } from "../../assets/img/icons/ListView.svg";
 import { ReactComponent as GridViewComp } from "../../assets/img/icons/GridView.svg";
 import { ReactComponent as RefreshComp } from "../../assets/img/refresh.svg";
-
-import { Ref } from "@fluentui/react-component-ref";
+import ChainListBox from "../Chains/ChainListBox";
 
 function NFTlistTop() {
+//   const { Harmony } = require('@harmony-js/core')
+//   const { ChainID, ChainType } = require('@harmony-js/utils')
+//   const shardID = 0
+//   const hmySDK = new Harmony(
+//     'https://api.s0.b.hmny.io',
+//     {
+//       chainType: ChainType.Harmony,
+//       chainId:ChainID.HmyMainnet,
+//       shardID,
+//     }
+//   )
+//   console.log("hmySDK.crypto: ", hmySDK.crypto);
+//   const arr = hmySDK.crypto.toBech32("0xb6C8748115d23Eb1c6d59Cb83eAe051b56ef75c7")
+//  console.log("toBech32: ", arr);
+ 
   const dispatch = useDispatch();
   const nfts = useSelector((state) => state.general.NFTList);
   const {
@@ -41,13 +50,9 @@ function NFTlistTop() {
   const NFTListView = useSelector((state) => state.general.NFTListView);
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
-  const switchDestination = useSelector(
-    (state) => state.general.switchDestination
-  );
-  const search = useSelector((state) => state.general.NFTListSearch);
   const widget = useSelector((state) => state.general.widget);
   const [showSearch, setShowSearch] = useState(false);
-
+  const [icon, setIcon] = useState(true)
   const handleSearch = (e) => {
     dispatch(setSearchNFTList(e.target.value));
   };
@@ -76,6 +81,7 @@ function NFTlistTop() {
     opacity: bigLoader ? 0.6 : 1,
   };
 
+
   const off = { display: "none" };
   return (
     <>
@@ -100,7 +106,8 @@ function NFTlistTop() {
         </div>
       </div>
       <div className="nftListTop">
-        <NFTChainListBox />
+        {/* <NFTChainListBox /> */}
+        <ChainListBox />
         <div className="yourNft desktopOnly">
           Your NFTs on{" "}
           <span>
@@ -124,13 +131,10 @@ function NFTlistTop() {
         </div>
         <div className="nftTopRIght">
           <div className="searchNft desktopOnly">
-            <Dropdown className="SearchDrop">
+            <Dropdown className="SearchDrop" autoClose="outside">
               <Dropdown.Toggle id="SearchDrop">
-                {widget ? (
-                  <SearchComp className="svgWidget" />
-                ) : (
-                  <img src={Search} alt="#" />
-                )}
+                
+                {widget ? icon && <SearchComp  onClick={() => setIcon(false)} className="svgWidget" /> : icon && <img onClick={() => setIcon(false)} src={Search} alt="#" />}
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <form action="#">
