@@ -303,6 +303,7 @@ export default function Widget() {
           border-radius: ${cardRadius ? cardRadius + "px" : ""};
         }
 
+
         .nft-box__container, .nft-box__container--selected,  .empty__box {
           -webkit-border-radius: ${cardRadius ? cardRadius + "px" : ""}
         }
@@ -319,7 +320,7 @@ export default function Widget() {
 
         .approvTop, .nftFees, .SearchDrop.dropdown input, .yourNft__title,
          .destiAddress input::placeholder, .nftInfBox label, .sucesList label, .switchingAcc p, .transferTable.table thead th,
-         .transferTable.table tr td, .accountBox p, .brocken-url {
+         .transferTable.table tr td, .accountBox p, .brocken-url, .clearNft {
           color: ${secondaryColor ? secondaryColor : ""};
         }
 
@@ -327,7 +328,7 @@ export default function Widget() {
           /*background: ${secondaryColor ? secondaryColor : ""};*/
         } 
 
-        .selectAll, .clearNft, .nftAut a, .loader, .changeNetwork-loader, .coming__chain, .follow-us__btn, .ts-button, .sucesList .colBlue, .success-button.view-txn-btn, .bluTextBtn {
+        .selectAll, .nftAut a, .loader, .changeNetwork-loader, .coming__chain, .follow-us__btn, .ts-button, .sucesList .colBlue, .success-button.view-txn-btn, .bluTextBtn {
           color: ${accentColor ? accentColor : ""} !important; 
         }
 
@@ -342,7 +343,7 @@ export default function Widget() {
         }*/
         
 
-        .searchChain input {
+        .searchChain input, .searchChain input::placeholder {
           background: transparent;
           color: ${secondaryColor ? secondaryColor : ""}; 
         
