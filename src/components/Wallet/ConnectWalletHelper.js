@@ -1,6 +1,7 @@
 
 import { TempleWallet } from "@temple-wallet/dapp";
 import { injected, algoConnector } from "../../wallet/connectors"
+import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import store  from "../../store/store"
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
@@ -26,10 +27,12 @@ import { setTronWallet,
   setKukaiWallet, 
   setTempleWallet, 
   setQrImage, 
-  setQrCodeString } from "../../store/reducers/generalSlice"
+  setQrCodeString,
+setOnWC,  setWC } from "../../store/reducers/generalSlice"
+  import { chainsConfig } from "../values";
 
 export const wallets = ["MetaMask", "WalletConnect", "Trust Wallet", "MyAlgo", "AlgoSigner", "Algorand Wallet", "TronLink", "Temple Wallet", "Beacon", "Maiar", "Maiar Extension", "Ledger", "Trezor"]
-const { to, modalError } = store.getState()
+const { to, modalError} = store.getState()
 
 
 export const connectMetaMask = async (activate, from, to) => {
@@ -73,6 +76,29 @@ export const connectAlgoSigner =async () => {
     }
 }
 
+export const onWalletConnect = async (activate, from) => {
+  console.log(from);
+  const { rpc, chainId } = chainsConfig[from];
+  try {
+    const walletConnect = new WalletConnectConnector({
+      rpc: {
+        [chainId]: rpc,
+      },
+      chainId,
+      qrcode: true,
+    });
+    walletConnect.networkId = chainId;
+    await activate(walletConnect, undefined, true);
+    store.dispatch(setOnWC(true));
+    store.dispatch(setWC(walletConnect));
+  } catch (error) {
+    store.dispatch(setError(error));
+    if (error.data) {
+      console.log(error.data.message);
+    } else console.log(error);
+  }
+};
+
 export const connectTempleWallet = async (testnet) => {
 
     try {
@@ -83,6 +109,7 @@ export const connectTempleWallet = async (testnet) => {
       }
       const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
       testnet ? await wallet.connect("hangzhounet") : await wallet.connect("mainnet");
+      console.log("🚀 ~ file: ConnectWalletHelper.js ~ line 86 ~ connectTempleWal ~ wallet", wallet)
       const tezos = wallet.toTezos();
       const accountPkh = await tezos.wallet.pkh();
       store.dispatch(setTezosAccount(accountPkh))
@@ -96,6 +123,7 @@ export const connectTempleWallet = async (testnet) => {
 export const connectBeacon = async (testnet) => {
   debugger
   const Tezos = new TezosToolkit(testnet ? "https://hangzhounet.smartpy.io/" : "https://mainnet-tezos.giganode.io");
+  console.log("🚀 ~ file: ConnectWalletHelper.js ~ line 99 ~ connectBeacon ~ Tezos", Tezos)
   const wallet = new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" });
   Tezos.setWalletProvider(wallet);
   try {
@@ -221,9 +249,15 @@ export const connectMaiar = async () => {
       }
     }
 
+  
+  
+
 // Algorand blockchain connection ( Algo Wallet )
     export const connectAlgoWallet = async () => {
       if (!algoConnector.connected) {
           algoConnector.createSession()   
       }
     }
+
+
+    
