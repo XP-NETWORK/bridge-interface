@@ -6,6 +6,8 @@ import { setWidget, setWSettings, setFrom, setTo } from "../../store/reducers/ge
 import {chains} from '../values'
 import { power } from "../Settings/assets/power.js";
 import mobileBanner from "../Settings/assets/img/mobileOnlyBanner.svg";
+import { usePrevious } from "../Settings/hooks";
+
 
 const setBanner = () => {};
 
@@ -33,19 +35,19 @@ export default function Widget() {
   );
 
 
-   /*useEffect(() => {
-     if (widget && settings.selectedChains.length < 3) {
+   useEffect(() => {
+     if (widget && settings.selectedChains.length === 2) {
           //setFrom(from.text === settings.selectedChains[0] ? chains.find(c => c.text === settings.selectedChains[0]):chains.find(c => c.text === settings.selectedChains[1]))
-            console.log(from.text, settings.selectedChains[0]);
-          if (from && from.text === settings.selectedChains[0]) {
+           // console.log(dependencies.from);
+          /*if (from && from.text === settings.selectedChains[0]) {
                 return dispatch(setTo(chains.find(c => c.text === settings.selectedChains[1])))
           }
 
           if (to && to.text === settings.selectedChains[0]) {
             return dispatch(setFrom(chains.find(c => c.text === settings.selectedChains[0])))
+          }*/
       }
-      }
-  }, [from, to])*/
+  }, [from, to])
 
   const dispatch = useDispatch();
 
