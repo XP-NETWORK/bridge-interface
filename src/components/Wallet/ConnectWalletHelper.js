@@ -73,16 +73,16 @@ export const connectAlgoSigner =async () => {
     }
 }
 
-// Tezos blockchain connection ( Temple Wallet )
-export const connectTempleWallet = async () => {
-  // debugger
+export const connectTempleWallet = async (testnet) => {
+
     try {
+      debugger
       const available = await TempleWallet.isAvailable();
       if (!available) {
         throw new Error("Temple Wallet not installed");
       }
       const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
-      await wallet.connect("mainnet");
+      testnet ? await wallet.connect("hangzhounet") : await wallet.connect("mainnet");
       const tezos = wallet.toTezos();
       const accountPkh = await tezos.wallet.pkh();
       store.dispatch(setTezosAccount(accountPkh))
@@ -93,11 +93,11 @@ export const connectTempleWallet = async () => {
     }
 }
 // Tezos blockchain connection ( Beacon )
-export const connectBeacon = async () => {
-  const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
+export const connectBeacon = async (testnet) => {
+  debugger
+  const Tezos = new TezosToolkit(testnet ? "https://hangzhounet.smartpy.io/" : "https://mainnet-tezos.giganode.io");
   const wallet = new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" });
   Tezos.setWalletProvider(wallet);
-  console.log("Tezos: ", Tezos);
   try {
     const permissions = await wallet.client.requestPermissions();
     store.dispatch(setTezosAccount(permissions.address))

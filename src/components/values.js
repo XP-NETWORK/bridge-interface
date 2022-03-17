@@ -98,7 +98,7 @@ export const chains = [
     image: { avatar: true, src: Fantom },
     maintenance: false,
     testNet: false,
-    mainnet: true,
+    mainnet: false
   },
   {
     type: "Algorand",
@@ -190,16 +190,16 @@ export const chains = [
     image: { avatar: true, src: Tezos },
     newChain: false,
     coming: false,
-    maintenance: true,
-    testNet: false,
-    mainnet: true,
+    maintenance: false,
+    testNet: true,
+    mainnet: true
   },
   {
     type: "EVM",
     key: "Iotex",
     text: "Iotex",
     value: "Iotex",
-    order: 2,
+    order: 3,
     image: { avatar: true, src: Iotex },
     newChain: true,
     coming: false,
@@ -217,9 +217,8 @@ export const chains = [
     image: { avatar: true, src: One },
     maintenance: false,
     testNet: true,
-    mainnet: true,
+    mainnet: false,
     newChain: true,
-    // off: true
   },
   {
     type: "EVM",
@@ -230,9 +229,9 @@ export const chains = [
     image: { avatar: true, src: Aurora },
     maintenance: false,
     testnet: false,
-    mainnet: true,
-    newChain: true,
-  },
+    mainnet: false,
+    newChain: true
+  }
 ];
 
 export const chainsConfig = {
@@ -424,9 +423,12 @@ export const TESTNET_CHAIN_INFO = {
     chainId: 1666700000,
   },
   Avalanche: {
-    nonce: 6,
-    chainId: 43113,
+      nonce: 6,
+      chainId: 43113
   },
+  Tezos: {
+    nonce: 0x12,
+  }
 };
 
 export const CHAIN_INFO = {
