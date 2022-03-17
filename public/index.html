@@ -36,6 +36,13 @@
     />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
+    <script>
+
+      if (new URLSearchParams(window.location.search).get("widget")) {
+        document.body.style.display = 'none';
+      }
+    </script>
+
     <title>XP.NETWORK Cross-Chain NFT Bridge</title>
   </head>
   <body class="bridgeBody">

@@ -24,6 +24,7 @@ function App() {
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
   const state = useSelector((state) => state.general);
   const axios = require("axios");
+ 
 
   const checkValidators = async () => {
     let res;
@@ -45,6 +46,7 @@ function App() {
   useEffect(async () => {
     const from = new URLSearchParams(window.location.search).get("from");
     const to = new URLSearchParams(window.location.search).get("to");
+
     if (from !== to) {
       if (from) {
         const fromChain = chains.filter(
@@ -79,7 +81,7 @@ function App() {
   }, [state.validatorsInfo]);
 
   return (
-    <div className={"App"}>
+    <div className={"App"} >
       {state.wsettings && <WSettings />}
       {/* <About /> */}
       {/* <Video /> */}

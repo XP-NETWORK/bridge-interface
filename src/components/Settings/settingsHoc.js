@@ -11,9 +11,11 @@ import {
 import { usePrevious } from "./hooks";
 
 const settingsHoc = (Wrapped) => (props) => {
-  const { settings } = useSelector(({ settings }) => ({
+  const { settings, from, to } = useSelector(({ settings}) => ({
     settings,
   }));
+
+
 
   const [copied, setCopied] = useState(false);
   const [activeChainsNumber, setActiveChains] = useState(activeChains.length);
@@ -48,6 +50,10 @@ const settingsHoc = (Wrapped) => (props) => {
   console.log(showLink);
 
   const prevSelected = usePrevious(selectedChains);
+
+  useEffect(() => {
+
+  },[])
 
   const onClickEditor = () => {
     document.querySelector(".nftContainer").style = `margin-left: ${

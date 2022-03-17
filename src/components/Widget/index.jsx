@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Widget.css";
 import { setSettings } from "../../store/reducers/settingsSlice";
-import { setWidget, setWSettings } from "../../store/reducers/generalSlice";
-
+import { setWidget, setWSettings, setFrom, setTo } from "../../store/reducers/generalSlice";
+import {chains} from '../values'
 import { power } from "../Settings/assets/power.js";
 import mobileBanner from "../Settings/assets/img/mobileOnlyBanner.svg";
 
@@ -23,13 +23,29 @@ overlay.classList.add("bannerOverlay");
 overlay.innerHTML = mobileOnlyBanner;
 
 export default function Widget() {
-  const { widget, wsettings, settings } = useSelector(
-    ({ general: { widget, wsettings }, settings }) => ({
+  const { widget, wsettings, settings, from, to } = useSelector(
+    ({ general: { widget, wsettings, from, to }, settings }) => ({
       widget,
       settings,
       wsettings,
+      from, to
     })
   );
+
+
+   /*useEffect(() => {
+     if (widget && settings.selectedChains.length < 3) {
+          //setFrom(from.text === settings.selectedChains[0] ? chains.find(c => c.text === settings.selectedChains[0]):chains.find(c => c.text === settings.selectedChains[1]))
+            console.log(from.text, settings.selectedChains[0]);
+          if (from && from.text === settings.selectedChains[0]) {
+                return dispatch(setTo(chains.find(c => c.text === settings.selectedChains[1])))
+          }
+
+          if (to && to.text === settings.selectedChains[0]) {
+            return dispatch(setFrom(chains.find(c => c.text === settings.selectedChains[0])))
+      }
+      }
+  }, [from, to])*/
 
   const dispatch = useDispatch();
 
@@ -188,6 +204,7 @@ export default function Widget() {
       }
       
       body.bridgeBody {
+            display: block;
             background: ${backgroundColor ? backgroundColor : ""};
             color: ${color ? color : ""};
             font-size: ${fontSize ? fontSize + "px" : ""};
@@ -204,6 +221,11 @@ export default function Widget() {
           background: ${backgroundColor ? backgroundColor : ""};
           border: 1px solid ${backgroundColor ? backgroundColor : ""};
           filter: brightness(94%);
+        }
+
+        .nft_selectBox {
+          background: ${backgroundColor ? backgroundColor : ""};
+          filter: brightness(105%);
         }
         
         .modal-title, .modalSelectOptionsText, .selChain, .seleDestiSele, .yourNft, .yourNft span, .sendNftTit, 
@@ -392,6 +414,7 @@ export default function Widget() {
           fill: ${btnBackground ? btnBackground : ""};
         
         }
+
 
         .swpBtn:hover path:nth-child(2){
           fill: ${btnBackground ? btnBackground : ""};

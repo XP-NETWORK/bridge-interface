@@ -268,7 +268,7 @@ function Approval(props) {
         }
         className="approveBtn"
       >
-        Approve all NFTs
+        Approve all selected NFTs
         <div className="approveBtn">
           <input
             readOnly={true}

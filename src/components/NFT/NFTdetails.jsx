@@ -102,6 +102,10 @@ function NFTdetails({ nftInf }) {
                 <label>Token ID</label>
                 <p>{native.tokenId}</p>
               </div>
+          {  nftInf.collectionIdent &&  <div className="nftToken nftInfBox">
+                <label>Collection ID</label>
+                <p>{nftInf.collectionIdent}</p>
+              </div>}
               <div className="nftInfDesc nftInfBox">
                 <label>Description</label>
                 <p>{description}</p>
