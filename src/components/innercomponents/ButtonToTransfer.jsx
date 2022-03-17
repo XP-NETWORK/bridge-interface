@@ -29,6 +29,7 @@ export default function ButtonToTransfer() {
     const maiarProvider = useSelector(state => state.general.maiarProvider)
     const account = useSelector(state => state.general.account)
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
+    const testnet = useSelector(state => state.general.testNet)
 
     const getAlgorandWalletSigner = async () => {
         const base = new MyAlgoConnect();
@@ -69,7 +70,7 @@ export default function ButtonToTransfer() {
                 }
                 else{
                     signer = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
-                    await signer.connect("mainnet");
+                    await signer.connect(testnet ? "hangzhounet" : "mainnet");
                     return signer
                 }
             }

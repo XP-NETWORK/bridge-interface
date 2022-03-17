@@ -49,6 +49,7 @@ function Approval(props) {
   const templeWallet = useSelector((state) => state.general.templeWallet);
   const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
   const widget = useSelector((state) => state.general.widget);
+  const testnet = useSelector(state => state.general.testNet)
 
   const getAlgorandWalletSigner = async () => {
     const base = new MyAlgoConnect();
@@ -141,8 +142,8 @@ function Approval(props) {
         } else {
           const factory = await getFactory();
           const chain = await factory.inner(Chain.TEZOS);
-          const signer = new TempleWallet("My Super DApp");
-          await signer.connect("mainnet");
+          const signer = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
+          await signer.connect(testnet ? "hangzhounet" : "mainnet");
           const swap = await chain.preTransfer(signer, nft);
           dispatch(updateApprovedNFTs(nft));
           setFinishedApproving(arr);
