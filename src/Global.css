@@ -2741,10 +2741,7 @@ span.transPend {
   }
 }
 
-li[data-chain="Aurora"],
-li[data-chain="Harmony"] {
-  display: none;
-}
+
 
 @media screen and (max-width: 320) {
   .approve-loader__container__text {

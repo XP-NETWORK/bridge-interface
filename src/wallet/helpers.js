@@ -58,7 +58,6 @@ if(from.key === "Tezos"){
       })
     })
   )
-  console.log("🚀 ~ file: helpers.js ~ line 63 ~ parseNFTS ~ result", result)
   return result
 }
   const result = await Promise.all(
