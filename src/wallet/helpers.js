@@ -46,12 +46,12 @@ if(from.key === "Tezos"){
   const result = await Promise.all(
     nfts.map(async (n, index) => {
       return await new Promise(async (resolve) => {
+        console.log(n)
+        const native = n?.native
+        const data = n?.native?.meta?.token?.metadata
         try {
-          if(n?.native?.meta?.token?.metadata.url || n?.native?.meta?.token?.metadata.image){
-            const baseURL = n?.native?.meta?.token?.metadata.url || n?.native?.meta?.token?.metadata.image
-            const res = await axios.get(baseURL)
-            resolve({...res.data, ...n, ...n.native, uri:n?.native?.meta?.token?.metadata.url || n?.native?.meta?.token?.metadata.image})
-          }
+          let object = { ...n, native: {...n, ...native, image: data.displayUri, meta: {...native.meta, wrapped: native.wrapped}}, ...data, image: data.displayUri, uri: data.displayUri }
+          resolve(object)
         } catch (error) {
           
         }
@@ -263,7 +263,7 @@ export const setNFTS = async (w, from, testnet) => {
   const inner = await factory.inner(CHAIN_INFO[from].nonce)
   const res = await getNFTS(w, from, testnet)
   const parsedNFTs = await parseNFTS(res)
-
+  console.log(parsedNFTs)
   store.dispatch(setBigLoader(false))
   if(parsedNFTs.length){
       store.dispatch(setNFTList(parsedNFTs))

@@ -23,7 +23,6 @@ export default function VideoOrImage({ urls, i}) {
           setTryVideo(false)
       }
   }
-
   return (
       tryVideo ? 
 

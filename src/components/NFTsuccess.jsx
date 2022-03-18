@@ -292,6 +292,7 @@ function SuccessNFT({ nft, from, index }) {
   const claim = () => {
     dispatch(claimAlgorandPopup(nft));
   };
+  console.log(url, '1231')
   return (
     <li className="nftSelecItem">
       {url && nft.uri && isValidHttpUrl(nft.uri) ? (
