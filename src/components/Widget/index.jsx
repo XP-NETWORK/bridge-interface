@@ -146,6 +146,7 @@ export default function Widget() {
       const $style = document.createElement("style");
       $style.id = "bridgeSettings";
       document.head.appendChild($style);
+      document.body.style.display = 'block';
 
       //$img.onclick = window.open("https://xp.network/", "_blank").focus();
 
