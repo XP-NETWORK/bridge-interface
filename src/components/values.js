@@ -229,7 +229,7 @@ export const chains = [
     image: { avatar: true, src: Aurora },
     maintenance: false,
     testnet: false,
-    mainnet: true,
+    mainnet: false,
     newChain: true
   }
 ];
