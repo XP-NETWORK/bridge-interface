@@ -25,6 +25,26 @@
   align-items: center;
   gap: 20px;
 }
+.listed-nft-radio, .listed-nft-radio--selected{
+  width: 24px;
+  height: 24px;
+  background: #F6F6F8;
+  border: 1px solid white;
+  border-radius: 50%;
+  box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.212);
+  position: relative;
+}
+.listed-nft-radio::after{
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    content: "";
+    width: 16px;
+    height: 16px;
+    background: #62718A;
+    opacity: 0.2;
+    border-radius: 50%;
+}
 .nft-radio , .nft-radio--selected{
   position: absolute;
   width: 24px;
@@ -35,6 +55,15 @@
   top: 12px;
   border-radius: 50%;
   box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.212);
+}
+.listed-nft-radio--selected::after{
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  content: "";
+  width: 18px;
+  height: 18px;
+  background-image: url("../../assets/img/icons/checked.svg");
 }
 .nft-radio::after{
   position: absolute;
@@ -65,6 +94,9 @@
 .nftListed__info{
   display: flex;
   align-items: center;
+  gap: 16px;
+  color: #222222;
+
 }
 .nftListed .image--toggle{
   display: none;

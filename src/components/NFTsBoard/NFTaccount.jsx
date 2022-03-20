@@ -33,6 +33,7 @@ function NFTaccount() {
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
   const [showSelected, setShowSelected] = useState(false)
   const [showNFTsSearch, setNFTsSearch] = useState(false)
+  const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
 
 
 
@@ -60,7 +61,10 @@ function NFTaccount() {
   }
 
   const handleShowSelected = () => {
+    if(selectedNFTs.length > 0){
     setShowSelected(!showSelected)
+    }
+    else return
   }
 
   const handleSearchTop = () => {
@@ -111,8 +115,6 @@ function NFTaccount() {
             <div className="mobile-nfts__body">
               { !showSelected ? NFTListView ? <NFTlistView /> : <NFTgridView /> :
               showSelected && <SelectedNFT /> }
-              {/* { NFTListView ? <NFTlistView /> : <NFTgridView /> }
-              { showSelected && <SelectedNFT />} */}
             </div>
           </div>
           <MobileDestinationAddressBar />

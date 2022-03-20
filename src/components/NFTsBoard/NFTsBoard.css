@@ -100,12 +100,25 @@
     left: 7px;
     width: 24px;
     height: 24px;
-    background-image: url("../../assets/img/icons/list-view.svg");
+    background-image: url("../../assets/img/icons/listView.svg");
     background-position: center;
     background-repeat: no-repeat;
 }
+.grid-icon{
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    width: 24px;
+    height: 24px;
+    background-image: url("../../assets/img/icons/Gridview.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.change-view__button:hover .grid-icon{
+    background-image: url("../../assets/img/icons/Gridview_hovered.svg");
+}
 .change-view__button:hover .list-icon{
-    background-image: url("../../assets/img/icons/list-view_hovered.svg");
+    background-image: url("../../assets/img/icons/listView_hovered.svg");
 }
 
 .search-dropdown .dropdown-toggle{
@@ -208,9 +221,7 @@
     display: flex;
     gap: 6px;
 }
-.mobile-nfts__body{
-    padding: 0 10px;
-}
+
 
 
 @media screen and (min-width: 768px) {

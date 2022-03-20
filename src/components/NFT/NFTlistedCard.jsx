@@ -39,14 +39,15 @@ export default function NFTlistedCard({nft, index}) {
 
   return (
   <li onMouseEnter={() => setOnHover(true)} onMouseLeave={()=> setOnHover(false)} className="nftListed nftSelect">
-    <span onClick={(e) => addRemoveNFT(nft, e)} className="selectNftListed">
+    {/* <span onClick={(e) => addRemoveNFT(nft, e)} className="selectNftListed">
         {checkIfSelected(nft, selectedNFTs) ? 
             <img onClick={(e) => addRemoveNFT(nft, e)} src={CheckGreen} alt={`${nft?.name}`} />
             : 
             ''
         }
-    </span>
+    </span> */}
     <div className="nftListed__info">
+        {!checkIfSelected(nft, selectedNFTs) ? <div onClick={(e) => addRemoveNFT(nft, e)} className="listed-nft-radio"></div> : <div onClick={(e) => addRemoveNFT(nft, e)} className="listed-nft-radio--selected"></div> }
         <ListedView  addRemoveNFT={addRemoveNFT} nft={nft} key={`nft-n-${index}`} />
         <span className="name" onClick={(e) => addRemoveNFT(nft, e)}>{nft?.data?.name || nft?.name || nft?.native.name}</span>
     </div>
