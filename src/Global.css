@@ -348,11 +348,11 @@ span.LineArrow img {
   margin-right: 5px;
 }
 
-.aboutNft a {
+.aboutNft div {
   margin-bottom: 9px;
 }
 
-.aboutNft a:hover {
+.aboutNft div:hover {
   cursor: pointer;
 }
 

@@ -198,7 +198,7 @@ export const handleChainFactory = async (someChain) => {
 
 export const getNFTS = async (wallet, from) => {
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
-
+  // const { from } = store.getState().general;
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
   const chain = await factory.inner(chainsConfig[from].Chain)
@@ -209,14 +209,19 @@ export const getNFTS = async (wallet, from) => {
       response = await getTronNFTs(tronWallet)
     }
     else{
-
       response = await factory.nftList(chain, hardcoded ? hardcoded : wallet)
-    
     }
     const unique = {};
     try {
       const allNFTs = response
-        .filter((n) => n.native).filter(n => n.uri || n.native.meta.token.metadata.url || n.native.meta.token.metadata.image)
+        .filter((n) => n.native).filter((n) => {
+          if(from.key === "Tezos"){
+            return n.native.meta.token.metadata.image || n.native.meta.token.metadata.url ? true : false
+          }
+          else{
+            return n.uri ? true : false
+          }
+        })
         .filter((n) => {
           const { tokenId, contract, chainId } = n?.native;
           if (unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`])
@@ -227,6 +232,7 @@ export const getNFTS = async (wallet, from) => {
             return true;
           }
         })
+
       return allNFTs
     } catch (err) {
       return [];
