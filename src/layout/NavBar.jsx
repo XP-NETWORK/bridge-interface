@@ -25,6 +25,7 @@ function NavBar() {
     const { account } = useWeb3React();
     const walletAccount = account || elrondAccount || tezosAccount || algorandAccount || tronWallet
     const location = useLocation()
+    
     const handleConnect = () => {
         if(!walletAccount){
         dispatch(setWalletsModal(true))
@@ -35,11 +36,13 @@ function NavBar() {
     return (
         !widget && <header id="Header"> 
             <Navbar expand="lg">    
+            <LinkContainer to="/connect">
                 <Navbar.Brand onClick={() => dispatch(setReset())}  >
                     <img src={Logo} alt="Xp Network"/>
                     <div >MULTICHAIN NFT BRIDGE</div>
                     { testnet && <span className="testnet">TestNet</span>}
                 </Navbar.Brand>
+            </LinkContainer>
                 <Navbar.Toggle aria-controls="" />
                     <Navbar.Collapse id="">
                         <Nav>
@@ -71,8 +74,3 @@ function NavBar() {
 }
 
 export default NavBar
-
-
-//<Nav.Link  target="_blank" href="https://docs.xp.network/">Docs</Nav.Link>
-//<Nav.Link  target="_blank" href="https://xp.network/">Home</Nav.Link>
-//<Nav.Link  target="_blank" href="https://stake.xp.network">Staking</Nav.Link>

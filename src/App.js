@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import "./Global.css";
 import "./Responsive.css";
 import XpBridge from "./pages/XpBridge";
-import Alert from "./components/Alert";
 import { useDispatch, useSelector } from "react-redux";
 import { setFrom, setGetFeaturedModal, setTestNet, setTo, setValidatorsInf } from "./store/reducers/generalSlice";
 import ApproveLoader from "./components/innercomponents/ApproveLoader";
