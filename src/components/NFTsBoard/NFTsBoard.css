@@ -100,7 +100,7 @@
     left: 7px;
     width: 24px;
     height: 24px;
-    background-image: url("../../assets/img/icons/listView.svg");
+    background-image: url("../../assets/img/icons/ListView.svg");
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -110,7 +110,7 @@
     left: 7px;
     width: 24px;
     height: 24px;
-    background-image: url("../../assets/img/icons/Gridview.svg");
+    background-image: url("../../assets/img/icons/GridView.svg");
     background-position: center;
     background-repeat: no-repeat;
 }

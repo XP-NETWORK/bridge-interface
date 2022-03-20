@@ -42,10 +42,8 @@ function NFTlistTop() {
         <SelectedNFTs />
         <div className="nftTopRIght">
           <NFTSearch />
-          <div onClick={() => handleView()} className="change-view__button">
-            <ViewButton />
+          <ViewButton />
           {/* { NFTListView ? <div className="grid-icon"></div>:<div className="list-icon"></div> } */}
-          </div>
           {/* <span onClick={() => setShowSearch(prev => prev = !prev)} className="mobileOnly search-btn"><img src={Search} /></span> */}
           {onlyWhiteListedNFTs?.length === selectedNFTs?.length && selectedNFTs?.length  ? <div className="delete-all" onClick={() => dispatch(cleanSelectedNFTList())}></div>
           :<div style={nfts ? {} : OFF} onClick={() => dispatch(allSelected())} className="select-all"></div>
