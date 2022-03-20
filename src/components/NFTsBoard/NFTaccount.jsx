@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import NFTgridView from "../NFT/NFTgridView";
 import NFTlistView from "../NFT/NFTlistView";
 import NFTlistTop from "./NFTlistTop";
-import { setError } from "../../store/reducers/generalSlice";
+import { setError, setSearchNFTList } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setNFTS } from "../../wallet/helpers";
 import { ReturnBtn } from "../Settings/returnBtn";
@@ -14,9 +14,11 @@ import "./NFTsBoard.css"
 import Refresh from "../Buttons/Refresh";
 import ChainSwitch from "../Buttons/ChainSwitch";
 import SelectedNFTs from "../Buttons/SelectedNFTs";
-import NFTSearch from "./NFTSearch";
 import ViewButton from "../Buttons/ViewButton";
 import SelectClearAll from "../Buttons/SelectClearAll";
+import SelectedNFT from "../innercomponents/SelectedNFT";
+import SearchButton from "../Buttons/SearchButton";
+import MobileNFTsSearch from "../MobileOnly/MobileNFTsSearch";
 
 function NFTaccount() {
   const dispatch = useDispatch();
@@ -29,6 +31,9 @@ function NFTaccount() {
   const account = useSelector((state) => state.general.account);
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
+  const [showSelected, setShowSelected] = useState(false)
+  const [showNFTsSearch, setNFTsSearch] = useState(false)
+
 
 
   async function getNFTsList() {
@@ -52,6 +57,15 @@ function NFTaccount() {
     } catch (error) {
       dispatch(setError(error.data ? error.data.message : error.message));
     }
+  }
+
+  const handleShowSelected = () => {
+    setShowSelected(!showSelected)
+  }
+
+  const handleSearchTop = () => {
+    setNFTsSearch(!showNFTsSearch)
+    dispatch(setSearchNFTList(''));
   }
 
   useEffect(async () => {
@@ -85,13 +99,20 @@ function NFTaccount() {
             <ChainSwitch assignment={"from"} />
           </div>
           <div className="mobile-nfts__list">
-            <div className="mobile-nfts__header">
-              <SelectedNFTs />
+            { !showNFTsSearch ? <div className="mobile-nfts__header">
+              <SelectedNFTs show={handleShowSelected} showSelected={showSelected} />
               <div className="mobile-nfts__buttons">
-                <NFTSearch />
+                <SearchButton handleSearchTop={handleSearchTop} />
                 <ViewButton />
                 <SelectClearAll />
               </div>
+            </div>
+            :<MobileNFTsSearch handleSearchTop={handleSearchTop} />}
+            <div className="mobile-nfts__body">
+              { !showSelected ? NFTListView ? <NFTlistView /> : <NFTgridView /> :
+              showSelected && <SelectedNFT /> }
+              {/* { NFTListView ? <NFTlistView /> : <NFTgridView /> }
+              { showSelected && <SelectedNFT />} */}
             </div>
           </div>
           <MobileDestinationAddressBar />

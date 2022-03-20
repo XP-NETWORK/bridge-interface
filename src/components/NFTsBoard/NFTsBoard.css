@@ -132,7 +132,6 @@
     padding: 0;
     margin: 0;
     border-radius: 40px;
-    /* display: flex !important; */
     overflow: hidden;
 }
 .search-dropdown .dropdown-menu input{
@@ -195,19 +194,24 @@
     border: 1px solid white;
 }
 .mobile-nfts__header{
-    padding: 10px;
+    padding: 20px 10px 0px 10px;
     width: 100%;
     display: flex;
     align-items: center;
 }
 .mobile-nfts__list{
     display: flex;
+    flex-direction: column;
 }
 .mobile-nfts__buttons{
     margin-left: auto;
     display: flex;
     gap: 6px;
 }
+.mobile-nfts__body{
+    padding: 0 10px;
+}
+
 
 @media screen and (min-width: 768px) {
     .mobile-col{
@@ -238,6 +242,9 @@
     }
     .container{
         padding: 0;
+    }
+    .mobile-nfts__body .selected-nfts__header{
+        display: none;
     }
 }
 
