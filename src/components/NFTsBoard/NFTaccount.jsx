@@ -15,6 +15,8 @@ import Refresh from "../Buttons/Refresh";
 import ChainSwitch from "../Buttons/ChainSwitch";
 import SelectedNFTs from "../Buttons/SelectedNFTs";
 import NFTSearch from "./NFTSearch";
+import ViewButton from "../Buttons/ViewButton";
+import SelectClearAll from "../Buttons/SelectClearAll";
 
 function NFTaccount() {
   const dispatch = useDispatch();
@@ -60,7 +62,7 @@ function NFTaccount() {
 
   return (
     <div className="NFTaccount">
-      <MobileDestinationAddressBar />
+      
       <Container className="nftSlectContaine">
         <ReturnBtn />
         <div className="row">
@@ -74,23 +76,25 @@ function NFTaccount() {
           <DesktopTransferBoard />
         </div>
         <div className="mobile-col">
+          <div className="mobile-col__tittle">
+            <div>Send NFT</div>
+          </div>
           <div className="mobile-col__header">
-            Header----->
             <div>Your NFTs on</div>
-            <div>refresh</div>
+            <Refresh />
             <ChainSwitch assignment={"from"} />
           </div>
           <div className="mobile-nfts__list">
-            NFTs list ---->
             <div className="mobile-nfts__header">
               <SelectedNFTs />
               <div className="mobile-nfts__buttons">
                 <NFTSearch />
-                <div>Listed</div>
-                <div>select all</div>
+                <ViewButton />
+                <SelectClearAll />
               </div>
             </div>
           </div>
+          <MobileDestinationAddressBar />
         </div>
       </Container>
     </div>

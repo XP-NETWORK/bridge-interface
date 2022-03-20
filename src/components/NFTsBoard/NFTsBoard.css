@@ -161,13 +161,53 @@
  border: 1px solid #E0E4EB;
  height: 44px;
 }
+.mobile-col{
+    background: #F3F3F6;
+}
+.mobile-col__tittle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Poppins;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 26px;
+    color: #14161A;
+    padding: 22px 16px 16px 16px;
+    border-bottom: 1px solid white;
+}
+.mobile-col__header{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 22px 10px 16px 10px;
+    color: #14161A;
+    border-bottom: 1px solid white;
+}
+.mobile-col__header .chain-switch{
+    margin-left: auto;
+}
 .yourNft--mobile {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 18px 10px;
     border: 1px solid white;
-  }
+}
+.mobile-nfts__header{
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.mobile-nfts__list{
+    display: flex;
+}
+.mobile-nfts__buttons{
+    margin-left: auto;
+    display: flex;
+    gap: 6px;
+}
 
 @media screen and (min-width: 768px) {
     .mobile-col{
@@ -195,6 +235,9 @@
 @media screen and (max-width: 769px){
     .row{
         display: none;
+    }
+    .container{
+        padding: 0;
     }
 }
 

@@ -20,9 +20,6 @@ export default function MobileDestinationAddressBar() {
 
   return (
     <div className="mobile-destination__container">
-        <div className="mobile-destination__tittle">
-          <div>Send NFT</div>
-        </div>
         <div className="mobile-destination__header">
           <div className="mobile-destination__subtitle">
             <div>Destination Chain</div>
