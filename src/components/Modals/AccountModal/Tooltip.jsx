@@ -13,7 +13,7 @@ export default function Tooltip() {
     return (
         <div onClick={copy} className="copy-tooltip">
             <span className="copy-tooltip__text">Copy address</span>
-            <span className="copy-tooltip__icon"><img src={FileCopy} alt="" /></span>
+            <span className="copy-tooltip__icon"></span>
         </div>
     )
 }

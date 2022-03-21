@@ -118,6 +118,16 @@
   position: absolute;
   visibility: hidden;
 }
+.copy-tooltip__icon{
+  background-image: url("../../assets/img/copy_regular.svg");
+  background-repeat: no-repeat;
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+.copy-tooltip__icon:hover{
+  background-image: url("../../assets/img/copy_hovered.svg");
+}
 .copy-tooltip:hover .copy-tooltip__text{
   position: absolute;
   visibility: visible;
