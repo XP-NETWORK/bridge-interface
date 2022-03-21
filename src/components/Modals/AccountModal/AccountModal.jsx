@@ -129,7 +129,7 @@ export default function AccountModal() {
         </span>
       </div>
       <p className="">{connectedWith()}</p>
-      {copied && <Tooltip />}
+
       <CopyToClipboard text={currentAccount}>
         <div className="account-modal__account">
           <img src={NftSelect} alt="#" />
@@ -140,14 +140,7 @@ export default function AccountModal() {
             )}...${currentAccount.substring(
               currentAccount.length - 2
             )}`}
-          <span
-            onClick={() => copy()}
-            onMouseOver={() => setCopyIconHover(true)}
-            onMouseOut={() => setCopyIconHover(false)}
-            className="copyTokk"
-          >
-            <img src={copyIconHover ? CopyHover : FileCopy} alt="#" />
-          </span>
+          <Tooltip />
         </div>
       </CopyToClipboard>
       <div className="accountBtn">

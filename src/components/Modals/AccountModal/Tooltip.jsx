@@ -1,14 +1,19 @@
-
-import msgCloud from "../../../assets/img/icons/msg-cloud.svg"
-
-
+import { useState } from "react";
+import FileCopy from "../../../assets/img/copy_regular.svg";
+import CopyHover from "../../../assets/img/copy_hovered.svg";
 export default function Tooltip() {
+
+    const [copied, setCopied] = useState();
+
+    const copy = () => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 3000);
+      };
+
     return (
-        <div className="tooltip__wrapper">
-            <div className="tooltip__container">
-                <img src={msgCloud} alt="" />
-                <div className="tooltip__txt">Copied to clipboard</div>
-            </div>
+        <div onClick={copy} className="copy-tooltip">
+            <span className="copy-tooltip__text">Copy address</span>
+            <span className="copy-tooltip__icon"><img src={FileCopy} alt="" /></span>
         </div>
     )
 }

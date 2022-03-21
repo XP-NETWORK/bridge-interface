@@ -38,11 +38,6 @@
     right: 28px;
     cursor: pointer;
   }
-  
-  .CloseModal:hover img {
-    /* filter: brightness(100); */
-  }
-
   .walletListBox {
     padding: 19px 30px 19px 30px;
     background: #F9F9FB;
@@ -62,7 +57,6 @@
     font-size: 16px;
     line-height: 160%;
     color: #14161A;
-
     cursor: pointer;
     display: flex;
   }
@@ -100,6 +94,54 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.accountBox p {
+  font-size: 16px;
+  line-height: 28px;
+  color: #14161A;
+  margin: 12px 0;
+}
+
+.account-modal__account {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #14161A;
+  margin-bottom: 25px;
+  width: 100%;
+}
+.copy-tooltip{
+  position: relative;
+  cursor: pointer;
+}
+.copy-tooltip__text{
+  position: absolute;
+  visibility: hidden;
+}
+.copy-tooltip:hover .copy-tooltip__text{
+  position: absolute;
+  visibility: visible;
+  top: -40px;
+  left: -40px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+  min-width: 100px;
+  padding: 6px;
+  background: #242020;
+  border-radius: 6px;
+  text-align: center;
+  color: white;
+}
+.copy-tooltip__text::after{
+  content: " ";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #242020 transparent transparent transparent;
 }
 
 @media screen and (max-width: 425px) {
