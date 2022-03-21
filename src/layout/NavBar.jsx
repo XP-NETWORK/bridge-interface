@@ -10,6 +10,13 @@ import Identicon from '../components/Identicon';
 import {LinkContainer} from 'react-router-bootstrap'
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import { useLocation } from "react-router-dom";
+import about from "../assets/img/nav/about.svg"
+import chains from "../assets/img/nav/chains.svg"
+import faq from "../assets/img/nav/faq.svg"
+import docs from "../assets/img/nav/docs.svg"
+import github from "../assets/img/nav/github.svg"
+import video from "../assets/img/nav/vid.svg"
+import xpnet from "../assets/img/nav/xpnet.svg"
 
 
 
@@ -43,14 +50,50 @@ function NavBar() {
                     { testnet && <span className="testnet">TestNet</span>}
                 </Navbar.Brand>
             </LinkContainer>
+            <div onClick={handleConnect} className='navbar-connect navbar-connect-mob'>
+                    {walletAccount ? `${walletAccount.substring(0, window.innerWidth <= 600 ? 16 : 10)}...${walletAccount.substring(walletAccount.length - 2)}` : "Connect Wallet"}
+                    {walletAccount && <Identicon account={walletAccount} />}
+            </div>
                 <Navbar.Toggle aria-controls="" />
                     <Navbar.Collapse id="">
                         <Nav>
                             <LinkContainer to='/connect'>
-                                <Nav.Link  target="_blank" href="#">Bridge</Nav.Link>
+                                <Nav.Link className="desc-link" target="_blank" href="#">Bridge</Nav.Link>
                             </LinkContainer>
-                            <Nav.Link  target="_blank" href="#">Explorer</Nav.Link>
-                            <Nav.Link  target="_blank" href="#">FAQ</Nav.Link>
+                            <Nav.Link target="_blank" href="#">
+                                <div className="nav-link__icon"><img src={about} alt="" /></div>
+                                <div className="nav-link__txt">About</div>
+                            </Nav.Link>
+                            <Nav.Link target="_blank" href="#">
+                                <div className="nav-link__icon"><img src={chains} alt="" /></div>
+                                <div className="nav-link__txt">Explorer</div>
+                            </Nav.Link>
+                            <Nav.Link  target="_blank" href="#">
+                                <div className="nav-link__icon"><img src={faq} alt="" /></div>
+                                <div className="nav-link__txt">FAQ</div>
+                            </Nav.Link>
+                            <Nav.Link className="mob-link" target="_blank" href="#">
+                                <div className="nav-link__icon"><img src={docs} alt="" /></div>
+                                <div className="nav-link__txt">DOCS</div>
+                            </Nav.Link>
+                            <Nav.Link className="mob-link" target="_blank" href="#">
+                                <div className="nav-link__icon"><img src={github} alt="" /></div>
+                                <div className="nav-link__txt">
+                                    GitHub
+                                </div>
+                            </Nav.Link>
+                            <Nav.Link className="mob-link" target="_blank" href="#">
+                                <div className="nav-link__icon"><img src={video} alt="" /></div>
+                                <div className="nav-link__txt">
+                                    Video Tutorial
+                                </div>
+                            </Nav.Link>
+                            <Nav.Link className="mob-link" target="_blank" href="#">
+                                <div className="nav-link__icon"><img src={xpnet} alt="" /></div>
+                                <div className="nav-link__txt">
+                                    XP.NETWORK
+                                </div>
+                            </Nav.Link>
                             <div onClick={handleConnect} className='navbar-connect'>
                                 {walletAccount ? `${walletAccount.substring(0, window.innerWidth <= 600 ? 16 : 10)}...${walletAccount.substring(walletAccount.length - 2)}` : "Connect Wallet"}
                                 {walletAccount && <Identicon account={walletAccount} />}
