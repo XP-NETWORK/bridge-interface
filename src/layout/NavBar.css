@@ -29,22 +29,28 @@
   font-weight: 500;
   line-height: 19px;
   letter-spacing: 0em;
-  align-items: center
+  align-items: center;
+  overflow: hidden;
+}
+.navbar-connect-mob{
+  margin-left: auto !important;
 }
 .nav-link{
-  border-radius: 76px;
   margin: 0 2px;
   display: flex;
   align-items: center;
 }
+.show .nav-link{
+  color: #040D27;
+}
 .nav-link:hover{
-  background: rgba(255, 255, 255, 0.4);
+  background: #ECECF1;
 }
 .nav-link--selected{
-  background: rgba(255, 255, 255, 0.4);
+  background: #ECECF1;
 }
 .nav-link .active{
-  background: rgba(255, 255, 255, 0.4);
+  background: #ECECF1;
 }
 .navbar-connect{
   height: 44px;
@@ -70,9 +76,12 @@
 }
 .navbar-light .navbar-toggler-icon {
   background-image: url("../assets/img/nav/burger.svg");
+  background-position: center;
+  width: 2.5em;
+  height: 2.5em;
 }
 .navbar-toggler {
-  margin-top: 10px;
+  /* margin-top: 10px; */
   border: none;
 }
 .identicon{
@@ -80,9 +89,9 @@
   border-radius: 50%;
 }
 .navbar-dropdown .btn-primary{
-  color: none;
-  background: unset;
-  border: unset;
+  color: none !important; 
+  background: unset !important;
+  border: unset !important;
 }
 .navbar-dropdown .dropdown-toggle::after{
   display: none;
@@ -91,7 +100,7 @@
   padding: 0 !important;
 }
 .navbar-dropdown__btn{
-  padding-top: 2px;
+  margin-top: 5px;
   width: 47px;
   height: 47px;
   background-image: url("../assets/img/nav/burger.svg");
@@ -101,11 +110,7 @@
   background-image: url("../assets/img/nav/burger_hovered.svg");
 }
 .show .navbar-dropdown__btn{
-  padding-top: 2px;
-  width: 47px;
-  height: 47px;
   background-image: url("../assets/img/nav/burger_close.svg");
-  background-position: center;
 }
 .dropdown-menu{
   left: -115px;
@@ -124,7 +129,7 @@
 }
 .dropdown-item{
   padding: 15px 24px;
-transition: all 0.3s;
+  transition: all 0.3s;
 }
 .dropdown-item:hover{
   background: #F7F7F9;

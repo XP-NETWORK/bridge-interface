@@ -174,7 +174,7 @@
  height: 44px;
 }
 .mobile-col{
-    background: #F3F3F6;
+    background: #E5E5E5;
 }
 .mobile-col__tittle{
     display: flex;
@@ -221,8 +221,6 @@
     display: flex;
     gap: 6px;
 }
-
-
 
 @media screen and (min-width: 768px) {
     .mobile-col{

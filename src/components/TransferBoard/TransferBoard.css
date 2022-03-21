@@ -115,7 +115,17 @@
     background: #F3F3F6;
     border-radius: 8px;
 }
+.mobile-col .approval{
+    border: 1px solid white;
+    border-radius: 0;
+}
+.mobile-col .fees{
+    border: 1px solid white;
+    border-radius: 0;
+    margin: 12px 0;
+}
 .approval__header{
+    color: #14161A;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -226,4 +236,8 @@
 }
 .transfer-button:active{
     background: #2D51D0;
+}
+.mobile-col .transfer-button--disabled, .transfer-button{
+    width: calc(100% - 10px);
+    margin: 10px auto 56px auto;
 }

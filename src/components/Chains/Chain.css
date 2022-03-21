@@ -36,12 +36,11 @@
     color: white;
     background: linear-gradient(100.8deg, #29FFCC -59.7%, #3763FF 123.09%);
     padding: 4px 6px;
-    border-radius: 4px;
+    border-radius: 14px;
 }
 .chain__off {
   width: 50px;
   height: 20px;
-  /* background: #2b313e; */
   border-radius: 4px;
   font-size: 12px;
   color: #ed3e3e;
@@ -64,7 +63,7 @@
     color: white;
     background: linear-gradient(283.28deg, #3763FF 0%, #8F37FF 111.38%);
     padding: 4px 6px;
-    border-radius: 4px; 
+    border-radius: 14px; 
 }
 
 .beacon img {
@@ -111,7 +110,7 @@ background: rgba(73, 82, 108, 0.1);
     line-height: 15px;
     letter-spacing: 0.05em;
     background: #2B313F;
-    border-radius: 4px;
+    border-radius: 14px;
     padding: 0px 6px;
 }
 .chain-select__box{

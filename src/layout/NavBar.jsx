@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAccountModal, setReset, setWalletsModal } from '../store/reducers/generalSlice';
 import "./NavBar.css"
 import { useWeb3React } from '@web3-react/core';
-import Identicon from '../components/Identicon';
+// import Identicon from '../components/User/Identicon';
 import {LinkContainer} from 'react-router-bootstrap'
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import { useLocation } from "react-router-dom";
@@ -17,6 +17,7 @@ import docs from "../assets/img/nav/docs.svg"
 import github from "../assets/img/nav/github.svg"
 import video from "../assets/img/nav/vid.svg"
 import xpnet from "../assets/img/nav/xpnet.svg"
+import UserConnect from "../components/User/UserConnect";
 
 
 
@@ -50,10 +51,7 @@ function NavBar() {
                     { testnet && <span className="testnet">TestNet</span>}
                 </Navbar.Brand>
             </LinkContainer>
-            <div onClick={handleConnect} className='navbar-connect navbar-connect-mob'>
-                    {walletAccount ? `${walletAccount.substring(0, window.innerWidth <= 600 ? 16 : 10)}...${walletAccount.substring(walletAccount.length - 2)}` : "Connect Wallet"}
-                    {walletAccount && <Identicon account={walletAccount} />}
-            </div>
+            <UserConnect desktop={false} />
                 <Navbar.Toggle aria-controls="" />
                     <Navbar.Collapse id="">
                         <Nav>
@@ -94,10 +92,7 @@ function NavBar() {
                                     XP.NETWORK
                                 </div>
                             </Nav.Link>
-                            <div onClick={handleConnect} className='navbar-connect'>
-                                {walletAccount ? `${walletAccount.substring(0, window.innerWidth <= 600 ? 16 : 10)}...${walletAccount.substring(walletAccount.length - 2)}` : "Connect Wallet"}
-                                {walletAccount && <Identicon account={walletAccount} />}
-                            </div>
+                            <UserConnect desktop={true} />
                             <Dropdown className='navbar-dropdown'>
                                 <DropdownToggle><div className='navbar-dropdown__btn'></div></DropdownToggle>
                                 <Dropdown.Menu>

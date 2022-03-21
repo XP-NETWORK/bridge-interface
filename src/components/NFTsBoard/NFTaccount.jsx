@@ -19,6 +19,9 @@ import SelectClearAll from "../Buttons/SelectClearAll";
 import SelectedNFT from "../innercomponents/SelectedNFT";
 import SearchButton from "../Buttons/SearchButton";
 import MobileNFTsSearch from "../MobileOnly/MobileNFTsSearch";
+import Approval from "../TransferBoard/Approval";
+import SendFees from "../TransferBoard/SendFees";
+import ButtonToTransfer from "../TransferBoard/ButtonToTransfer";
 
 function NFTaccount() {
   const dispatch = useDispatch();
@@ -118,6 +121,9 @@ function NFTaccount() {
             </div>
           </div>
           <MobileDestinationAddressBar />
+          <Approval />
+          <SendFees />
+          <ButtonToTransfer />
         </div>
       </Container>
     </div>
