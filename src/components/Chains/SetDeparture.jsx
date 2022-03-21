@@ -6,7 +6,7 @@ import Departure from '../../assets/img/nftSelect/departure.svg';
 export default function SetDeparture() {
     const dispatch = useDispatch()
     const from = useSelector(state => state.general.from)
-
+    const deisplayWidth = window.innerWidth
     const handleShow = (str) => {
         dispatch(setChainModal(true));
         str === "departure" ? dispatch(setDepartureOrDestination("departure")) : dispatch(setDepartureOrDestination("destination"))
@@ -20,7 +20,7 @@ export default function SetDeparture() {
                 </div>
                 :
                 <div className="seleDepatSelec">
-                    <img src={ Departure } alt="" />Select departure chain
+                    <img src={ Departure } alt="" />{deisplayWidth > 350 ? "Select departure chain" : "Departure chain"}
                 </div>
             }
         </div>

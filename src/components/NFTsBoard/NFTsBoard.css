@@ -274,5 +274,7 @@
     .NFTaccount {
         margin: 0;
     }
-
+    .aboutNft{
+        padding-top: 0;
+    }
 }

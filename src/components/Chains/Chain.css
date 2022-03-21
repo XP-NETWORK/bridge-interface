@@ -15,7 +15,14 @@
     border: 1px solid #ffffff;
     margin-bottom: 26px;
 }
-
+.aboutNft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-gap: 12px;
+  gap: 12px;
+  padding-top: 22px;
+}
 .seleDepat:hover{
   background: #ECECF1;
   border-top-left-radius: 16px;

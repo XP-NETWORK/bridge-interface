@@ -20,7 +20,6 @@ export default function Identicon({ account }) {
       b: getRgb(),
     }
     return rgbToHex(color.r, color.g, color.b)
-
   }
   
   return (
@@ -28,9 +27,9 @@ export default function Identicon({ account }) {
       seed={account} 
       size={10}
       scale={3}
-      color={generate()} 
+      color="#fff000" 
       bgColor="#fff" 
-      spotColor={generate()} 
+      spotColor="#fb1000" 
       className="identicon" 
   />
   )

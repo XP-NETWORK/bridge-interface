@@ -107,15 +107,6 @@ div#root:after {
   color: #5a6177;
   pointer-events: none;
 }
-
-.aboutNft {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding-top: 22px;
-}
-
 .about-btn {
   letter-spacing: 0.03em;
   color: #62718A;

@@ -30,7 +30,6 @@
   line-height: 19px;
   letter-spacing: 0em;
   align-items: center;
-  overflow: hidden;
 }
 .navbar-connect-mob{
   margin-left: auto !important;
@@ -81,7 +80,6 @@
   height: 2.5em;
 }
 .navbar-toggler {
-  /* margin-top: 10px; */
   border: none;
 }
 .identicon{
@@ -98,6 +96,7 @@
 }
 .btn{
   padding: 0 !important;
+  border: unset !important;
 }
 .navbar-dropdown__btn{
   margin-top: 5px;
@@ -133,6 +132,10 @@
 }
 .dropdown-item:hover{
   background: #F7F7F9;
+}
+.drop-item{
+  display: flex;
+  gap: 22px;
 }
 .navbar-connect-mob{
   display: none;

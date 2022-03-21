@@ -6,6 +6,7 @@ import { setChainModal, setDepartureOrDestination } from '../../store/reducers/g
 
 export default function SetDestination() {
     const to = useSelector(state => state.general.to)
+    const deisplayWidth = window.innerWidth
     const dispatch = useDispatch()
     const handleShow = (str) => {
         dispatch(setChainModal(true));
@@ -19,7 +20,7 @@ export default function SetDestination() {
         </div>
         :
         <div className="seleDestiSele">
-            <img  style={{width: "28px"}} src={ Destination } alt="" />Select destination chain
+            <img  style={{width: "28px"}} src={ Destination } alt="" />{deisplayWidth > 350 ? "Select destination chain" : "Destination chain"}
         </div>
     }
 </div>

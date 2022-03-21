@@ -26,20 +26,6 @@ function NavBar() {
     const dispatch = useDispatch()
     const widget = useSelector(state => state.general.widget)
     const testnet = useSelector(state => state.general.testNet)
-    const elrondAccount = useSelector(state => state.general.elrondAccount)
-    const tezosAccount = useSelector(state => state.general.tezosAccount)
-    const algorandAccount = useSelector(state => state.general.algorandAccount)
-    const tronWallet = useSelector(state => state.general.tronWallet)
-    const { account } = useWeb3React();
-    const walletAccount = account || elrondAccount || tezosAccount || algorandAccount || tronWallet
-    const location = useLocation()
-    
-    const handleConnect = () => {
-        if(!walletAccount){
-        dispatch(setWalletsModal(true))
-        }
-        else if(walletAccount && location.pathname === "/account")dispatch(setAccountModal(true))
-    }
 
     return (
         !widget && <header id="Header"> 
@@ -96,11 +82,31 @@ function NavBar() {
                             <Dropdown className='navbar-dropdown'>
                                 <DropdownToggle><div className='navbar-dropdown__btn'></div></DropdownToggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item><div className="nav-about">About</div></Dropdown.Item>
-                                    <Dropdown.Item><div className="nav-faqs">FAQs</div></Dropdown.Item>
-                                    <Dropdown.Item><div className="nav-docs">DOCs</div></Dropdown.Item>
-                                    <Dropdown.Item><div className="nav-vid">Video Tutorial</div></Dropdown.Item>
-                                    <Dropdown.Item><div className="nav-xpnet">XP.NETWORK</div></Dropdown.Item>
+                                    <Dropdown.Item>
+                                        <div className="drop-item">
+                                            <img src={about} alt="" />
+                                            <div className="drop-icon">About</div>
+                                        </div></Dropdown.Item>
+                                    <Dropdown.Item>
+                                        <div className="drop-item">
+                                            <img src={faq} alt="" />
+                                            <div className="drop-icon">FAQs</div>
+                                        </div></Dropdown.Item>
+                                    <Dropdown.Item>
+                                        <div className="drop-item">
+                                            <img src={docs} alt="" />
+                                            <div className="drop-icon">DOCs</div>
+                                        </div></Dropdown.Item>
+                                    <Dropdown.Item>
+                                        <div className="drop-item">
+                                            <img src={video} alt="" />
+                                            <div className="drop-icon">Video Tutorial</div>
+                                        </div></Dropdown.Item>
+                                    <Dropdown.Item>
+                                        <div className="drop-item">
+                                            <img src={xpnet} alt="" />
+                                            <div className="drop-icon">XP.NETWORK</div>
+                                        </div></Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </Nav>
