@@ -54,10 +54,10 @@ export default function TronConnectionErrMod() {
       <Modal.Header className="border-0 tron-login-error__header">
         <img src={TronLink} alt="" />
         <Modal.Title className="tron-error-title">Connect TronLink</Modal.Title>
-        <Modal.Body className="tron-connection-error__body">
-          To continue bridging connect your TronLink wallet
-        </Modal.Body>
       </Modal.Header>
+      <Modal.Body className="tron-connection-error__body">
+        To continue bridging connect your TronLink wallet
+      </Modal.Body>
     </Modal>
   );
 }

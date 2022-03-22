@@ -17,6 +17,7 @@ import TransferLoader from "./components/innercomponents/TransferLoader";
 import TronConnectionErrMod from "./components/Modals/TronModals/TronConnectionErrMod.jsx";
 import WSettings from "./components/Settings";
 import "./components/Modals/Modal.css"
+import Alert from "./components/Alert"
 
 function App() {
   const dispatch = useDispatch();
@@ -97,7 +98,7 @@ function App() {
       <Widget />
       {/* <GetFeatured /> */}
       <XpBridge />
-      {/* <Alert /> */}
+      <Alert />
     </div>
   );
 }

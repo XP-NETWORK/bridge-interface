@@ -4,8 +4,8 @@
 
 .tron-connection-error-close{
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 16px;
+    right: 16px;
     cursor: pointer;
     z-index: 10;
 }
@@ -19,6 +19,7 @@
 .tron-login-error__header{
     display: flex;
     flex-direction: column;
+    gap: 20px;
     padding-top: 5vh;
 }
 
@@ -27,6 +28,10 @@
 }
 
 .tron-connection-error__body{
+    color: #14161A;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
     text-align: center;
 }
 
@@ -38,12 +43,16 @@
 }
 
 .tron-connection-error-button{
-    width: 128px;
+    min-width: 230px;
     height: 40px;
     color: white;
     background-color: #3E64ED;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
+    border-radius: 66px;
+}
+.tron-connection-error-button:hover{
+    color: white;
+
 }
