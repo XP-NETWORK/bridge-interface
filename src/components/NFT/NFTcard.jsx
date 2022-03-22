@@ -91,7 +91,7 @@ export default function NFTcard({ nft, index }) {
                     </div>
                 </div>
             }
-            { (whiteListed && onHover) && <NotWhiteListed /> }
+            { (!whiteListed && onHover) && <NotWhiteListed /> }
         </div>
       );
 }

@@ -10,6 +10,7 @@ const initialState = {
   fees: 0,
   currentTx: 0,
   bigLoader: true,
+  innerWidth: 0,
 };
 
 const generalSlice = createSlice({
@@ -275,11 +276,15 @@ const generalSlice = createSlice({
           state.NFTList[index].whitelisted = whitelisted
         }
       });
+    },
+    setInnerWidth(state, action){
+      state.innerWidth = action.payload
     }
   },
 });
 
 export const {
+  setInnerWidth,
   updateNFTs,
   setTempleWallet,
   setKukaiWallet,

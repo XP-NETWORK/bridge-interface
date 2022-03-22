@@ -3,7 +3,7 @@ import "./Global.css";
 import "./Responsive.css";
 import XpBridge from "./pages/XpBridge";
 import { useDispatch, useSelector } from "react-redux";
-import { setFrom, setTestNet, setTo, setValidatorsInf } from "./store/reducers/generalSlice";
+import { setFrom, setTestNet, setTo, setValidatorsInf, setInnerWidth } from "./store/reducers/generalSlice";
 import ApproveLoader from "./components/innercomponents/ApproveLoader";
 import Error from "./components/innercomponents/Error";
 import TronPopUp from "./components/innercomponents/TronPopUp";
@@ -42,6 +42,7 @@ function App() {
   });
 
   useEffect(async () => {
+    dispatch(setInnerWidth(window.innerWidth))
     const from = new URLSearchParams(window.location.search).get("from");
     const to = new URLSearchParams(window.location.search).get("to");
     if (from !== to) {

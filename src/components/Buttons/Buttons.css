@@ -1,3 +1,55 @@
+
+.select-all{
+    width: 40px;
+    height: 40px;
+    background: #F6F6F8;
+    border: 1px solid white;
+    border-radius: 50%;
+    box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
+    position: relative;
+    cursor: pointer;
+}
+.select-all::after{
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    width: 24px;
+    height: 24px;
+    background-image: url("../../assets//img//icons/gray_check.svg");
+}
+
+.delete-all{
+    width: 40px;
+    height: 40px;
+    background: #F6F6F8;
+    border: 1px solid white;
+    border-radius: 50%;
+    box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+.delete-all::after{
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    width: 24px;
+    height: 24px;
+    background-image: url("../../assets//img//icons/blue_check.svg");
+}
+.change-view__button{
+    width: 40px;
+    height: 40px;
+    background: #F6F6F8;
+    border: 1px solid white;
+    border-radius: 50%;
+    box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.5s;
+}
 .chain-switch{
     display: flex;
     align-items: center;
@@ -44,6 +96,8 @@
     box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
     border-radius: 168px;
     cursor: pointer;
+    position: relative;
+
 }
 .refresh-button--disabled{
     width: 40px;
@@ -55,13 +109,26 @@
     border-radius: 168px;
     pointer-events: none;
     opacity: 0.6;
+    position: relative;
 }
 .refresh-button::after, .refresh-button--disabled::after{
+    position: absolute;
     content: "";
-    width: 40px;
-    height: 40px;
+    top: 8px;
+    left: 10px;
+    width: 22px;
+    height: 22px;
     background-image: url(../../assets/img/refresh.svg);
-    background-position: center;
+    background-repeat: no-repeat;
+}
+.refresh-button:hover::after, .refresh-button--disabled:hover:after{
+    position: absolute;
+    content: "";
+    top: 8px;
+    left: 10px;
+    width: 22px;
+    height: 22px;
+    background-image: url("../../assets/img/icons/blue_refresh.svg");
     background-repeat: no-repeat;
 }
 .search-button{
@@ -120,11 +187,12 @@
 .close__btn::after{
     position: absolute;
     content: "";
-    width: 40px;
-    height: 40px;
+    width: 24px;
+    height: 24px;
+    top: 8px;
+    left: 7px;
     background-image: url("../../assets/img/icons/close.svg");
-    background-position: center;
-    background-repeat: no-repeat;
+
 }
 @media screen and (min-width: 426px) {
     .selected-nfts__button{

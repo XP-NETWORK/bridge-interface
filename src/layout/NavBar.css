@@ -44,12 +44,14 @@
 }
 .nav-link:hover{
   background: #ECECF1;
+  border-radius: 76px;
 }
 .nav-link--selected{
   background: #ECECF1;
 }
-.nav-link .active{
+.navbar-nav .active{
   background: #ECECF1;
+  border-radius: 76px;
 }
 .navbar-connect{
   height: 44px;
@@ -166,6 +168,8 @@
     display: flex !important;
     gap: 22px;
     padding: 18px 24px !important;
+    border-radius: unset !important;
+    
   }
   .nav-link__icon{
     display: block;

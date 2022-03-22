@@ -17,13 +17,14 @@
   right: 0;
   height: 100%;
   background: #292F3F99;
-  backdrop-filter: blur(0.1rem) grayscale(30%);
+  backdrop-filter: blur(0.2rem) grayscale(40%);
   width: 100%;
   z-index: 100;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   gap: 20px;
+  /* padding-right: 10px; */
 }
 .listed-nft-radio, .listed-nft-radio--selected{
   width: 24px;
@@ -81,14 +82,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  content: "\2713";
+  content: "";
   color: white;
-  width: 16px;
-  height: 16px;
-  background: #297EFF;
+  width: 18px;
+  height: 18px;
+  background-image: url("../../assets/img/icons/blue_check-small.svg");
   border-radius: 50%;
-  top: 3px;
-  left: 3px;
+  top: 2px;
+  left: 2px;
 }
 
 .nftListed__info{

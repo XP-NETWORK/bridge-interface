@@ -16,7 +16,7 @@
     border: 1px solid white;
     border-radius: 20px;
     padding: 16px 0;
-    padding-left: 25px;
+    padding: 10px;
     height: 100%;
     position: relative;
     z-index: 1;
@@ -25,74 +25,6 @@
     display: flex;
     align-items: center;
     gap: 8px;
-}
-.select-all{
-    width: 40px;
-    height: 40px;
-    background: #F6F6F8;
-    border: 1px solid white;
-    border-radius: 50%;
-    box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
-    position: relative;
-    cursor: pointer;
-}
-.select-all::after{
-    content: "\2713";
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    border-radius: 50%;
-    top: 7px;
-    left: 7px;
-    width: 24px;
-    height: 24px;
-    background: #9b9b9b;
-    transition: all 0.2s;
-
-}
-.select-all:hover::after{
-    background: #395FEB;
-}
-.delete-all{
-    width: 40px;
-    height: 40px;
-    background: #F6F6F8;
-    border: 1px solid white;
-    border-radius: 50%;
-    box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
-    position: relative;
-    cursor: pointer;
-    transition: all 0.5s;
-}
-.delete-all::after{
-    content: "x";
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    border-radius: 50%;
-    top: 7px;
-    left: 7px;
-    width: 24px;
-    height: 24px;
-    background: #9b9b9b;
-    transition: all 0.2s;
-}
-.delete-all:hover::after{
-    background: #ca4646;
-    
-}
-.change-view__button{
-    width: 40px;
-    height: 40px;
-    background: #F6F6F8;
-    border: 1px solid white;
-    border-radius: 50%;
-    box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
-    position: relative;
-    cursor: pointer;
-    transition: all 0.5s;
 }
 .list-icon{
     position: absolute;
@@ -175,6 +107,7 @@
 }
 .mobile-col{
     background: #E5E5E5;
+    
 }
 .mobile-col__tittle{
     display: flex;
@@ -187,6 +120,8 @@
     color: #14161A;
     padding: 22px 16px 16px 16px;
     border-bottom: 1px solid white;
+    background: #F7F7F9;
+
 }
 .mobile-col__header{
     display: flex;
@@ -195,6 +130,7 @@
     padding: 22px 10px 16px 10px;
     color: #14161A;
     border-bottom: 1px solid white;
+    background: #F7F7F9;
 }
 .mobile-col__header .chain-switch{
     margin-left: auto;
@@ -207,10 +143,12 @@
     border: 1px solid white;
 }
 .mobile-nfts__header{
-    padding: 20px 10px 0px 10px;
+    padding: 20px 10px 16px 10px;
     width: 100%;
     display: flex;
     align-items: center;
+    background: #F7F7F9;
+    border-bottom: 1px solid white;
 }
 .mobile-nfts__list{
     display: flex;
@@ -222,6 +160,60 @@
     gap: 6px;
 }
 
+.nftListBox {
+    width: 100%;
+    background: #F3F3F6;
+    max-height: 680px;
+    overflow: hidden auto;
+    margin-right: -24px;
+    padding-top: 10px;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    border-radius: 8px;
+  }
+  .nftListBox::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-search__top{
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    padding: 20px 10px 16px 10px;
+    background: #F3F3F6;
+    border-bottom: 1px solid transparent;
+}
+.mobile-search-input__box input{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #ECECF1;
+    border: 1px solid #D4D9E1;
+    box-shadow: 0px 1px 5px rgba(180, 185, 199, 0.25);
+    border-radius: 38px;
+    padding-left: 36px;
+}
+.mobile-search-input__box{
+    position: relative;
+    width: 100%;
+    
+}
+.mobile-search-input__icon{
+    position: absolute;
+    z-index: 1;
+    top: 13px;
+    left: 14px;
+    width: 16px;
+    height: 16px;
+    background-image: url("../../assets/img/icons/lupa.svg");
+    background-size: 16px;
+    background-position: center;
+}
+.mobile-search-input__box input::placeholder{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18px;
+}
 @media screen and (min-width: 768px) {
     .mobile-col{
         display: none;
@@ -276,5 +268,8 @@
     }
     .aboutNft{
         padding-top: 0;
+    }
+    .nftListBox{
+border-radius: unset;
     }
 }

@@ -10,6 +10,7 @@ export default function UserConnect({desktop}) {
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const tezosAccount = useSelector(state => state.general.tezosAccount)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
+    const innerWidth = useSelector(state => state.general.innerWidth)
     const tronWallet = useSelector(state => state.general.tronWallet)
     const { account } = useWeb3React();
     const walletAccount = account || elrondAccount || tezosAccount || algorandAccount || tronWallet
@@ -22,9 +23,22 @@ export default function UserConnect({desktop}) {
         else if(walletAccount && location.pathname === "/account")dispatch(setAccountModal(true))
     }
 
+    const getAccountString = () => {
+      // debugger
+      if(innerWidth >= 425){
+        return `${walletAccount.substring(0, 18)}...${walletAccount.substring(walletAccount.length - 2)}`
+      }
+      else if(innerWidth >= 375){
+        return `${walletAccount.substring(0, 12)}...${walletAccount.substring(walletAccount.length - 2)}`
+      }
+      else if(innerWidth >= 320){
+        return `${walletAccount.substring(0, 6)}...${walletAccount.substring(walletAccount.length - 2)}`
+      }
+    }
+
   return (
     <div onClick={handleConnect} className={desktop ? 'navbar-connect' : 'navbar-connect navbar-connect-mob'}>
-    {walletAccount ? `${walletAccount.substring(0, window.innerWidth <= 600 ? 6 : 16)}...${walletAccount.substring(walletAccount.length - 2)}` : "Connect Wallet"}
+    {walletAccount ? getAccountString() : "Connect Wallet"}
     {walletAccount && <Identicon account={walletAccount} />}
     </div>
   )
