@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { setNFTS } from "../../wallet/helpers";
-// import Refresh from "../../assets/img/refresh.svg";
 
 export default function Refresh() {
 

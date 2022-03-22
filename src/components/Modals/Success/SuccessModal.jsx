@@ -1,26 +1,29 @@
 import React, { useState } from "react";
 import { Modal, Image } from "react-bootstrap";
-import Close from "../../assets/img/icons/close.svg";
-import Copy from "../../assets/img/icons/FileCopy.svg";
-import Check from "../../assets/img/icons/Check_circle.svg";
+import Close from "../../../assets/img/icons/close.svg";
+import Copy from "../../../assets/img/icons/FileCopy.svg";
+import Check from "../../../assets/img/icons/Check_circle.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { ModalActions } from "semantic-ui-react";
 import moment from "moment";
-import "./SuccessModal.css";
 import { useWeb3React } from "@web3-react/core";
-import TransferredNft from "../../innercomponents/TransferredNft";
+import TransferredNft from "./TransferredNft";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import FileCopy from "../../assets/img/icons/FileCopy.svg";
-import CopyHover from "../../assets/img/icons/CopyHover.svg";
+import FileCopy from "../../../assets/img/icons/FileCopy.svg";
+import CopyHover from "../../../assets/img/icons/CopyHover.svg";
 import ConnectAlgorand from "../../ConnectAlgorand";
 import ClaimAlgorandNFT from "../../ClaimAlgorandNFT";
 import { useEffect } from "react";
+import { setNFTS, socket } from "../../../wallet/helpers";
+
 import {
   claimAlgorandPopup,
   cleanTxnHashArr,
   connectAlgorandWalletClaim,
   removeFromSelectedNFTList,
+  setTxnStatus,
 } from "../../../store/reducers/generalSlice";
+import "./SuccessModal.css";
 
 export default function SuccessModal() {
   const dispatch = useDispatch();
@@ -48,14 +51,16 @@ export default function SuccessModal() {
     ? tronWallet
     : "";
 
+    const socketUrl = "wss://dev-explorer-api.herokuapp.com";
+    
+
   const handleClose = () => {
-    // window.location.reload()
-    // debugger
     selectedNFTList.forEach((nft) => {
       const { txn } = nft;
       if (txn) dispatch(removeFromSelectedNFTList(nft));
     });
     dispatch(cleanTxnHashArr());
+    setNFTS(address, from.key)
   };
 
   function copy() {
@@ -72,9 +77,6 @@ export default function SuccessModal() {
 
   const getTX = () => {
     let ntx;
-    // debugger
-    // const tx = txnHashArr && txnHashArr.length > 0 ? typeof txnHashArr[currentTX] === 'object' ? txnHashArr[currentTX].hash.toString() : txnHashArr[currentTX] : ''
-
     if (txnHashArr && txnHashArr.length > 0) {
       if (typeof txnHashArr === "object" && !Array.isArray(txnHashArr)) {
         return txnHashArr[0].hash.toString();
@@ -94,8 +96,24 @@ export default function SuccessModal() {
 
   const toShow = () => {
     return txnHashArr?.length ? true : false;
-    // return true
+    return true
   };
+
+  useEffect(() => {
+    socket.on("incomingEvent", async e => {
+      dispatch(setTxnStatus(e))
+    });
+    socket.on("updateEvent", async e => {
+      dispatch(setTxnStatus(e))
+    })
+    return () => {
+      if (socket) {
+      socket.off("incomingEvent");
+      socket.off("updateEvent");
+      }
+    }
+  }, [])
+  
 
   useEffect(() => {
     if (txnHashArr && txnHashArr.length > 0 && to && to.key === "Algorand") {
@@ -118,13 +136,6 @@ export default function SuccessModal() {
         </Modal.Header>
         <Modal.Body className="success-info-list">
           <div className="success-info-box">
-            <div className="success-info-item">
-              <div className="info-item-label">Status</div>
-              <span>
-                <img src={Check} />
-                <span>Completed</span>
-              </span>
-            </div>
             <div className="success-info-item">
               <div className="info-item-label">Date</div>
               <span>{moment().format("YYYY-MM-DD hh:mm")}</span>

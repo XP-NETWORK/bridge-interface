@@ -1,32 +1,33 @@
 .success-modal .modal-dialog{
     max-width: 570px;
     min-height: 500px;
+    color: #14161A;
 }
 
 .success-modal .modal-content{
-    padding: 0 70px;
+    padding: 0 30px;
 }
 
 .success-modal .modal-header{
-    padding-top: 40px;
+    padding: 20px 0;
 }
 
 .success-info-list{
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 4px;
 }
 
 .success-info-box{
-    background: linear-gradient(309.48deg, #282E3C -3.65%, rgba(40, 46, 60, 0) 122.77%);
+    background: #F3F3F6;
     border-radius: 6px;
-    padding: 20px 30px;
+    padding: 10px 18px;
 }
 
 .success-modal-close{
     position: absolute;
-    top: 40px;
-    right: 73px;
+    top: 30px;
+    right: 30px;
     cursor: pointer;
     z-index: 20;
 }
@@ -67,7 +68,7 @@
 }
 
 .success-info-item span{
-    color: white;
+    color: #14161A;
     margin-left: 6px;
     display: flex;
     align-items: center;
@@ -80,12 +81,17 @@
 .success-hash img:hover{
     filter: brightness(5);
 }
-
+.info-item-label{
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+}
 .info-item-chain{
     font-size: 16px;
     font-weight: 400;
     line-height: 26px;
-    color: white;
+    color: #14161A;
+
     display: flex;
     align-items: center;
 }
@@ -103,12 +109,13 @@
     letter-spacing: 0em;
 }
 
-.success-nft-info{
+.success-nft-info {
     min-height: 35px;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     flex-direction: column;
+    padding: 18px 0;
 }
 
 .success-hash{

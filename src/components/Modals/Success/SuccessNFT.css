@@ -5,15 +5,6 @@
     text-overflow: ellipsis;
 }
 
-/* .nftSelected .brocken-url{
-    display: flex;
-    height: 20px;
-} */
-
-/* .nftSelected .listed__view{
-    width: 100%;
-} */
-
 .sucesList{
     position: relative;
 }
@@ -33,21 +24,33 @@
     cursor: pointer;
 }
 
+.tx-status{
+    height: 16px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.tx-txt{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 17px;
+    width: 60px;
+}
+.tx-icon img{
+    width: 16px;
+}
+.pending{
+    color: #C058FF;
+}
+.completed{
+    color: #10B67A;
+}
+.failed{
+    color: #C23165;
+}
+
 @media screen and (max-width: 375) {
     .nft--success .nftSelecItem{
         padding: 6px 20px !important ;
     }
 }
-
-/* .txn-hash{
-    max-width: 130px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-@media screen and (max-width: 320px) {
-    .txn-hash{
-        max-width: 100px;
-    }
-} */

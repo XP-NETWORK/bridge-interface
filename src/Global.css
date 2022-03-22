@@ -967,7 +967,7 @@ li.nftSelecItem .Close:hover {
 }
 
 .nftSuccessMod .modal-content {
-  padding: 0 60px;
+  padding: 0 30px;
 }
 
 .nftSuccessMod .CloseModal {
@@ -975,22 +975,14 @@ li.nftSelecItem .Close:hover {
 }
 
 .successBox {
-  background: linear-gradient(
-    309.48deg,
-    #282e3c -3.65%,
-    rgba(40, 46, 60, 0) 122.77%
-  );
+  background: #F3F3F6;
   border-radius: 6px;
   padding: 8px 30px;
   margin-bottom: 12px;
 }
 
 .nftSuccessMod .nftSelectList {
-  background: linear-gradient(
-    309.48deg,
-    #282e3c -3.65%,
-    rgba(40, 46, 60, 0) 122.77%
-  );
+  background: #F3F3F6;
   border-radius: 6px;
 }
 
@@ -999,7 +991,8 @@ li.nftSelecItem .Close:hover {
   font-weight: 600;
   font-size: 16px;
   line-height: 126%;
-  color: #62718a;
+  color: #14161A;
+
 }
 
 .sucesList {
@@ -1007,7 +1000,7 @@ li.nftSelecItem .Close:hover {
   align-items: center;
   justify-content: space-between;
   height: 40px;
-  color: #fff;
+  color: #14161A;
 }
 
 .colBlue {
@@ -1540,7 +1533,7 @@ span.transPend {
   animation: load7 1.8s infinite ease-in-out;
 }
 .loader {
-  top: 50px;
+  top: 200px;
   transition: calc(0.5);
   color: #3e64ed;
   font-size: 10px;

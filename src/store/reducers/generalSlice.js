@@ -17,6 +17,18 @@ const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
+    setTxnStatus(state, action){
+      const { status, fromHash, tokenId, toHash, initialTokenId } = action.payload
+      state.txnHashArr = state.txnHashArr.map((e) => {
+        if(e.hash === fromHash){
+          e.status = status
+          e.tokenId = tokenId
+          e.toHash = toHash
+          e.initialTokenId = initialTokenId
+        }
+        return e
+      })
+    },
     setWalletsModal(state, action){
       state.walletsModal = action.payload
     },
@@ -63,9 +75,6 @@ const generalSlice = createSlice({
     },
     setSelectedNFTList(state, action) {
       state.selectedNFTList = [...state.selectedNFTList, action.payload];
-    },
-    cleartSelectedNFT(state, action) {
-      state.selectedNFTList = [];
     },
     cleanSelectedNFTList(state, action) {
       state.selectedNFTList = [];
@@ -284,6 +293,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+  setTxnStatus,
   setInnerWidth,
   updateNFTs,
   setTempleWallet,

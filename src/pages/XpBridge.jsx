@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import ConnectWallet from "./ConnectWallet";
 import ProtectedRoute from "../pages/ProtectedRoute"
+// import SuccessModal from "../components/Modals/Success/SuccessModal"
 
 function XpBridge() {
   useEffect(() => {}, []);
@@ -28,7 +29,7 @@ function XpBridge() {
           <Route path={testnet ? "/testnet/account" : "/account"} components={ <NFTaccount  />} />
         </Route>
       </Routes>
-      <NFTsuccess />
+      {/* <NFTsuccess /> */}
     </div>
   );
 }

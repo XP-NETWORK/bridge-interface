@@ -43,7 +43,7 @@
     border-radius: 40px;
     outline: none;
     border: 1px solid #E0E4EB;
-    padding-left: 16px;
+    padding: 0 16px;
 }
 .destination__address input::placeholder{
     color: #62718A;

@@ -3,6 +3,12 @@ import { Chain, Config } from "xp.network/dist/consts";
 import { chainsConfig, CHAIN_INFO } from "../components/values";
 import { setAlgorandClaimables, setBigLoader, setFactory, setNFTList } from "../store/reducers/generalSlice";
 import store from "../store/store";
+import io from "socket.io-client";
+
+const socketUrl = "wss://dev-explorer-api.herokuapp.com";
+export const socket = io(socketUrl, {
+  path: "/socket.io",
+});
 const { Harmony } = require('@harmony-js/core')
 const axios = require("axios");
 

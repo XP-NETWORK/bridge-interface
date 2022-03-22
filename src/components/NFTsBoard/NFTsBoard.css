@@ -230,6 +230,10 @@
     .yourNft--mobile {
         display: none;
     }
+    .nftListBox{
+        /* max-height: unset; */
+        height: 680px !important;
+    }
 }
 
 @media screen and (min-width: 320px) {
@@ -270,6 +274,6 @@
         padding-top: 0;
     }
     .nftListBox{
-border-radius: unset;
+        border-radius: unset;
     }
 }

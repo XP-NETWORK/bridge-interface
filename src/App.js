@@ -18,12 +18,15 @@ import TronConnectionErrMod from "./components/Modals/TronModals/TronConnectionE
 import WSettings from "./components/Settings";
 import "./components/Modals/Modal.css"
 import Alert from "./components/Alert"
+import SuccessModal from "./components/Modals/Success/SuccessModal.jsx"
+
 
 function App() {
   const dispatch = useDispatch();
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
   const state = useSelector((state) => state.general);
   const axios = require("axios");
+
 
 
   const checkValidators = async () => {
@@ -88,15 +91,13 @@ function App() {
       <About />
       <Video />
       <TechnicalSupport />
-      {/* <TnProcess /> */}
-      {/* <SuccessModal /> */}
+      <SuccessModal />
       <TransferLoader />
       <TronConnectionErrMod />
       <ApproveLoader />
       <Error />
       <TronPopUp />
       <Widget />
-      {/* <GetFeatured /> */}
       <XpBridge />
       <Alert />
     </div>
