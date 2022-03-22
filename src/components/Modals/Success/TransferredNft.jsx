@@ -31,7 +31,7 @@ export default function TransferredNft({ nft }) {
     }
 
     const checkStatus = () => {
-        debugger
+        // debugger
         for (const tx of txnHashArr) {
             if(nft.native.tokenId === tx.tokenId || nft.native.tokenId === tx.initialTokenId ){
                 if(txnStatus !== "Completed")

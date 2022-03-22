@@ -115,7 +115,7 @@
     align-items: flex-start;
     justify-content: space-between;
     flex-direction: column;
-    padding: 18px 0;
+    padding: 18px 0 0 0;
 }
 
 .success-hash{
@@ -147,7 +147,7 @@
 .nft-image-name{
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 14px;
 }
 
 .txn-status-pending{
