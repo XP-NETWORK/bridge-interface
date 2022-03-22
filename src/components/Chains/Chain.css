@@ -42,7 +42,7 @@
     line-height: 15.12px;
     color: white;
     background: linear-gradient(100.8deg, #29FFCC -59.7%, #3763FF 123.09%);
-    padding: 4px 6px;
+    padding: 2px 8px;
     border-radius: 14px;
 }
 .chain__off {
@@ -112,13 +112,15 @@ background: rgba(73, 82, 108, 0.1);
 }
 
 .chain-connecting{
+    display: flex;
+    min-width: 102px;
     font-size: 12px;
     font-weight: 500;
     line-height: 15px;
     letter-spacing: 0.05em;
-    background: #2B313F;
+    background: #ECECF1;
     border-radius: 14px;
-    padding: 0px 6px;
+    padding: 2px 8px;
 }
 .chain-select__box{
     font-family: Poppins;

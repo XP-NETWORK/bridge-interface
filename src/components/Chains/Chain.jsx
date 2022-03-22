@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { checkIfLive } from "./ChainHelper";
 import "./Chain.css";
 import { useState } from "react";
+import Status from "./Status";
 
 
 export default function Chain(props) {
@@ -28,12 +29,11 @@ export default function Chain(props) {
       <div className="modalSelectOptionsText">
         {text === "xDai" ? "Gnosis Chain" : text}
         <div className="chain--identifier"> 
-          {(chainStatus === undefined && !coming && !maintenance) ? <div className="chain-connecting">Connecting...</div>
-          :(!chainStatus && !coming && !maintenance) && <div className="chain__off">Offline</div>}
-          {/* {!checkIfLive(chainKey, validatorsInfo) && !coming && <div className="chain__off">Offline</div>} */}
-          {coming && <div className="coming-chain">Coming</div>}
-          {maintenance && <div className="coming-chain">Maintenance</div>}
-          {!maintenance && newChain && <div className="new-chain">New</div>}
+          {(chainStatus === undefined && !coming && !maintenance) ? <Status status={"connecting"} />
+          :(!chainStatus && !coming && !maintenance) && <Status status={"off-line"} /> }
+          {coming && <Status status={"coming"} />}
+          {maintenance && <Status status={"maintenance"} />}
+          {!maintenance && newChain && <Status status={"new"} />}
         </div>
       </div>
     </li>
