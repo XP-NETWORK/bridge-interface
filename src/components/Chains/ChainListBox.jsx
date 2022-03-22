@@ -50,6 +50,7 @@ export default function ChainListBox(props) {
         dispatch(setFrom(chain));
         handleClose();
       } else {
+        // ! check if chainId from bew3react is equal to from.chainId
         dispatch(setTo(""));
         dispatch(setFrom(chain));
         handleClose();
