@@ -35,9 +35,10 @@
   margin-left: auto !important;
 }
 .nav-link{
-  margin: 0 2px;
+  margin: 0 1px;
   display: flex;
   align-items: center;
+  padding: 10px 16px !important;
 }
 .show .nav-link{
   color: #14161A;

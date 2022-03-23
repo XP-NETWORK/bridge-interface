@@ -39,9 +39,9 @@ export default function Slider() {
   return (
     <div style={bgStyle} className="slider__wrapper">
       <div className="slider__pagination">
-        <Pagination start={one}></Pagination>
-        <Pagination start={two}></Pagination>
-        <Pagination start={three}></Pagination>
+        <Pagination start={one} index={0}></Pagination>
+        <Pagination start={two} index={1}></Pagination>
+        <Pagination start={three} index={2}></Pagination>
       </div>
       <div className="slider-nft__info">
         <div className="slider-nft__name">

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  step: 1,
+  step: 0,
   selectedNFTList: [],
   NFTListView: false,
   approvedNFTList: [],

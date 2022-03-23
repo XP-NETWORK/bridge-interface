@@ -48,19 +48,19 @@ function NavBar() {
                                 <div className="nav-link__icon"><img src={about} alt="" /></div>
                                 <div className="nav-link__txt">About</div>
                             </Nav.Link>
-                            <Nav.Link target="_blank" href="#">
+                            <Nav.Link target="_blank" href="##">
                                 <div className="nav-link__icon"><img src={chains} alt="" /></div>
                                 <div className="nav-link__txt">Explorer</div>
                             </Nav.Link>
-                            <Nav.Link  target="_blank" href="#">
+                            <Nav.Link  target="_blank" href="###">
                                 <div className="nav-link__icon"><img src={faq} alt="" /></div>
                                 <div className="nav-link__txt">FAQ</div>
                             </Nav.Link>
-                            <Nav.Link className="mob-link" target="_blank" href="#">
+                            <Nav.Link className="mob-link" target="_blank" href="####">
                                 <div className="nav-link__icon"><img src={docs} alt="" /></div>
                                 <div className="nav-link__txt">DOCS</div>
                             </Nav.Link>
-                            <Nav.Link className="mob-link" target="_blank" href="#">
+                            <Nav.Link className="mob-link" target="_blank" href="#####">
                                 <div className="nav-link__icon"><img src={github} alt="" /></div>
                                 <div className="nav-link__txt">
                                     GitHub
