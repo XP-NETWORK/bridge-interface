@@ -368,7 +368,7 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
 .preload__number{
     height: 10px;
     width: 50%;
-    background: #ececf1;
+    background: #c2c6cc;
     border-radius: 5px;
 }
 
@@ -379,7 +379,7 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
 }
 
 .nft-image__container {
-    background: #9e9e9e;
+    background:  #e2e3e6;
     height: 244px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;

@@ -23,13 +23,13 @@ export default function Pagination({ start, index, click }) {
                 else{
                     if(width.current === 100){
                         if(step === 0){
-                            dispatch(setStep(1))
+                            setTimeout(() => dispatch(setStep(1)), 100)
                         }
                         else if(step === 1){
-                            dispatch(setStep(2))
+                            setTimeout(() => dispatch(setStep(2)), 100)
                         }
                         else if(step === 2){
-                            dispatch(setStep(0))
+                            setTimeout(() => dispatch(setStep(0)), 100)
                         }
                     }
                     clearInterval(s)

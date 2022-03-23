@@ -33,6 +33,8 @@
 }
 .navbar-connect-mob{
   margin-left: auto !important;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .nav-link{
   margin: 0 1px;

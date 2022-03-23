@@ -1923,22 +1923,29 @@ span.transPend {
   .aleartBox {
     bottom: 12.5vh;
   }
+
 }
 
-@media screen and (max-width: 425px) {
-  .nftContainer{
-    margin-top: 30px !important;
-  }
+@media screen and (max-width:700px) {
   .first-step__container{
     margin-top: 0;
     flex-wrap: wrap;
   }
+
   .slider__wrapper{
     order: 1;
     width: 288px;
     height: 360px;
     padding: 0;
   }
+}
+
+@media screen and (max-width: 425px) {
+  .nftContainer{
+    margin-top: 30px !important;
+  }
+
+  
 }
 
 @media screen and (max-width: 768px) {
