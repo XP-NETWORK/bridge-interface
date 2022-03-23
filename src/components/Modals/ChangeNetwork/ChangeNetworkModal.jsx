@@ -36,6 +36,7 @@ function ChangeNetworkModal() {
         params: [{ chainId }],
       });
       navigate(testnet ? "/testnet/account" : "/account")
+      dispatch(setWrongNetwork(false));
     } catch (error) {
       setLoader(false);
       console.log(error);
