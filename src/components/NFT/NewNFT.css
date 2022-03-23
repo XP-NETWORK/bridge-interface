@@ -561,7 +561,7 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
   }
   .nft-box__container{
     width: 100%;
-    max-height: 240px;
+   /*max-height: 240px;*/
   }
   .nft-box__container--selected{
     width: 90%;
@@ -581,7 +581,7 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
     max-height: calc(100% - 30px);
   }
   .nft-image__container{
-    max-height: 170px;
+    /*max-height: 170px;*/
   }
   .radio__container{
     

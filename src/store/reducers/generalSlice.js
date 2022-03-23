@@ -12,6 +12,7 @@ const initialState = {
   bigLoader: true,
   innerWidth: 0,
 
+
 };
 
 const generalSlice = createSlice({

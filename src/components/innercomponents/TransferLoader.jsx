@@ -15,7 +15,7 @@ export default function TransferLoader() {
             <Modal.Body className='transfer-loader__body'>
                 <div className="transfer-loader__title">Transaction Processing</div>
                 <div className="transfer-loader__text">The transaction time is unpredictably long due to the congestion on the blockchain.</div>
-                <div className="transfer-loader__sub">💚 Please be patient</div>
+                <div className="transfer-loader__sub">💙 Please be patient</div>
             </Modal.Body>
         </Modal>
     )

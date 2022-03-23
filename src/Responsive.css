@@ -343,6 +343,11 @@
 
 @media only screen and (max-width: 480px) {
 
+
+    .loader {
+        top: 0;
+    }
+
     .collecSlideCont.container {
         width: 250px;
     }
