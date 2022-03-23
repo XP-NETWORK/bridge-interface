@@ -1,6 +1,5 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-// import image from "../../assets/img/slider/s3.png"
 
 export default function BackGround() {
 

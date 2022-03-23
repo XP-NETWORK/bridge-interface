@@ -48,12 +48,15 @@ export default function ChainListBox(props) {
   };
 
   const checkChainId = chain => {
-    // debugger
+    debugger
     if(chain.type !== "EVM"){
       return true
     }
     else if(chainId && chainId === chainsConfig[chain.key].chainId){
       console.log("false")
+      return true
+    }
+    else if(!chainId){
       return true
     }
     else return false

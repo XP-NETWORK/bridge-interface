@@ -8,6 +8,7 @@ export default function Pagination({start}) {
     const initalState = 0;
     const [count, setCount] = useState(initalState);
     const width = useRef(initalState);
+    console.log("🚀 ~ file: Pagination.jsx ~ line 11 ~ Pagination ~ width", width)
     const step = useSelector(state => state.slider.step)
 
     useEffect(() => {
