@@ -348,11 +348,11 @@ span.LineArrow img {
   margin-right: 5px;
 }
 
-.aboutNft a {
+.aboutNft div {
   margin-bottom: 9px;
 }
 
-.aboutNft a:hover {
+.aboutNft div:hover {
   cursor: pointer;
 }
 
@@ -2741,10 +2741,7 @@ span.transPend {
   }
 }
 
-li[data-chain="Aurora"],
-li[data-chain="Harmony"] {
-  display: none;
-}
+
 
 @media screen and (max-width: 320) {
   .approve-loader__container__text {

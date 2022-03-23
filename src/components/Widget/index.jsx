@@ -432,9 +432,20 @@ export default function Widget() {
           height:10px;
         }
 
+        span.not-whitelisted__text {
+          color: ${secondaryColor ? secondaryColor : ""};
+          filter: brightness(200%);
+        }
+
+        a.not-whitelisted__button {
+          background: ${secondaryColor ? secondaryColor : ""};
+    
+        }
+
 
         .nftSelectBox, .modal-content, .modal-header, .nftChainList, .singleNft.missing, .nftInfBox, .wllListItem  {
           border-color: ${borderColor ? borderColor : ""};
+          box-shadow: none;
         }
 
         .searchChain input {

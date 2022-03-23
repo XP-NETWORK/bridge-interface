@@ -46,19 +46,18 @@ if(from.key === "Tezos"){
   const result = await Promise.all(
     nfts.map(async (n, index) => {
       return await new Promise(async (resolve) => {
+        console.log(n)
+        const native = n?.native
+        const data = n?.native?.meta?.token?.metadata
         try {
-          if(n?.native?.meta?.token?.metadata.url){
-            const baseURL = n?.native?.meta?.token?.metadata.url
-            const res = await axios.get(baseURL)
-            resolve({...res.data, ...n, ...n.native, uri:n?.native?.meta?.token?.metadata.url})
-          }
+          let object = { ...n, native: {...n, ...native, image: data.displayUri, meta: {...native.meta, wrapped: native.wrapped}}, ...data, image: data.displayUri, uri: data.displayUri }
+          resolve(object)
         } catch (error) {
           
         }
       })
     })
   )
-  console.log("🚀 ~ file: helpers.js ~ line 63 ~ parseNFTS ~ result", result)
   return result
 }
   const result = await Promise.all(
@@ -199,7 +198,7 @@ export const handleChainFactory = async (someChain) => {
 
 export const getNFTS = async (wallet, from) => {
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
-
+  // const { from } = store.getState().general;
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();
   const chain = await factory.inner(chainsConfig[from].Chain)
@@ -215,7 +214,14 @@ export const getNFTS = async (wallet, from) => {
     const unique = {};
     try {
       const allNFTs = response
-        .filter((n) => n.native).filter(n => n.uri || n.native.meta.token.metadata.url)
+        .filter((n) => n.native).filter((n) => {
+          if(from.key === "Tezos"){
+            return n.native.meta.token.metadata.image || n.native.meta.token.metadata.url ? true : false
+          }
+          else{
+            return n.uri ? true : false
+          }
+        })
         .filter((n) => {
           const { tokenId, contract, chainId } = n?.native;
           if (unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`])
@@ -226,6 +232,7 @@ export const getNFTS = async (wallet, from) => {
             return true;
           }
         })
+
       return allNFTs
     } catch (err) {
       return [];
@@ -262,7 +269,7 @@ export const setNFTS = async (w, from, testnet) => {
   const inner = await factory.inner(CHAIN_INFO[from].nonce)
   const res = await getNFTS(w, from, testnet)
   const parsedNFTs = await parseNFTS(res)
-
+  console.log(parsedNFTs)
   store.dispatch(setBigLoader(false))
   if(parsedNFTs.length){
       store.dispatch(setNFTList(parsedNFTs))

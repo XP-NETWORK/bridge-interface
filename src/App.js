@@ -17,7 +17,8 @@ import TransferLoader from "./components/innercomponents/TransferLoader";
 import TronConnectionErrMod from "./components/TronConnectionErrMod";
 import GetFeatured from "./components/innercomponents/GetFeatured";
 import WSettings from "./components/Settings";
-
+import Video from "./components/innercomponents/Video";
+import About from "./components/innercomponents/About"
 
 function App() {
   const dispatch = useDispatch();
@@ -36,12 +37,9 @@ function App() {
     if (res?.data) dispatch(setValidatorsInf(res.data));
   };
 
-  // useEffect(() => {
-  //   dispatch(setTestNet(window.location.href.indexOf("testnet.") > 0));
-  // });
   useEffect(() => {
     dispatch(setTestNet(window.location.href.indexOf("/testnet") > 0));
-  });
+  },[]);
 
   useEffect(async () => {
     const from = new URLSearchParams(window.location.search).get("from");
@@ -83,8 +81,8 @@ function App() {
   return (
     <div className={"App"} >
       {state.wsettings && <WSettings />}
-      {/* <About /> */}
-      {/* <Video /> */}
+      <About />
+      <Video />
       <TechnicalSupport />
       {/* <TnProcess /> */}
       {/* <SuccessModal /> */}
