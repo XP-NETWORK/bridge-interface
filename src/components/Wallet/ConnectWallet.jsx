@@ -41,13 +41,14 @@ function ConnectWallet() {
  
 
   const handleShow = () => {
+    // debugger
     if(from && to && !connected){
       setShow(true)
     }
-    else if(connected && to && from && from.chainId === chainId){
+    else if(connected && to && from && chainsConfig[from.key].chainId === chainId){
       navigate(testnet ? "/testnet/account" : "/account")
     }
-    else if(connected && to && from && from.chainId !== chainId){
+    else if(connected && to && from && chainsConfig[from.key].chainId !== chainId){
       dispatch(setWrongNetwork(true))
     }
   };
