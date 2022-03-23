@@ -1580,7 +1580,7 @@ span.transPend {
   position: absolute;
   top: 46%;
   left: 42%;
-  color: white;
+  color: #62718A;
 }
 
 .approve-loader,
@@ -1595,10 +1595,10 @@ span.transPend {
   font-size: 10px;
   position: relative;
   text-indent: -9999em;
-  border-top: 0.5em solid rgba(255, 255, 255, 0.2);
-  border-right: 0.5em solid rgba(255, 255, 255, 0.2);
-  border-bottom: 0.5em solid rgba(255, 255, 255, 0.2);
-  border-left: 0.5em solid #ffffff;
+  border-top: 0.8em solid #fff;
+  border-right: 0.8em solid  #fff;
+  border-bottom: 0.8em solid#fff;
+  border-left: 0.8em solid #395FEB;
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);
   transform: translateZ(0);
@@ -1626,9 +1626,45 @@ span.transPend {
   }
 }
 
+.modal-backdrop.show {
+  opacity: 0 !important;
+
+}
+
+
+
+#Header {
+  position: relative;
+    z-index: 10;
+}
+
+.modal-open #Header::before, .modal-open .App::before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backdrop-filter: blur(15px);
+  z-index: -1;
+}
+
+.modal-open .App::before {
+  z-index: 12;
+}
+
+
+.modal-open .modal {
+  /*height: calc(100% - 66px) !important;
+  bottom: 0 !important;
+  top: initial !important;
+  backdrop-filter: blur(20px);*/
+
+}
+
+
 .approve-modal .modal-dialog .modal-content {
   background: none !important;
   border: none !important;
+  box-shadow: none;
   /* position: absolute !important; */
   /* top: 20% !important; */
 }

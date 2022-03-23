@@ -48,7 +48,7 @@ export default function ChainListBox(props) {
   };
 
   const checkChainId = chain => {
-    debugger
+   // debugger
     if(chain.type !== "EVM"){
       return true
     }
