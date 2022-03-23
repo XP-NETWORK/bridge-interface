@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import failedIcon from "../../../assets/img/icons/failed.svg"
-import pending from "../../../assets/img/icons/pending.svg"
+import failedIcon from "../../../assets/img/icons/Failed.svg"
+import pending from "../../../assets/img/icons/Pending.svg"
 import complete from "../../../assets/img/icons/completed.svg"
 
 export default function TxStatus({status}) {

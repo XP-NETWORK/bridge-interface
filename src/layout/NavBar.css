@@ -110,6 +110,16 @@
 .navbar-dropdown__btn:hover{
   background-image: url("../assets/img/nav/burger_hovered.svg");
 }
+
+.dropdown .navbar-dropdown__btn:active, .navbar-dropdown__btn:focus,.dropdown .btn-primary:focus, .btn-primary:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  border-color: transparent !important;
+}
+
+
+
 .show .navbar-dropdown__btn{
   background-image: url("../assets/img/nav/burger_close.svg");
 }
