@@ -32,10 +32,6 @@
     z-index: 20;
 }
 
-.success-modal-close:hover{
-    filter: brightness(5);
-}
-
 .view-txn-btn{
     background: #62718A1A;
     padding: 0 4px;
@@ -125,6 +121,7 @@
     letter-spacing: 0em;
     color: #297EFF;
     display: flex;
+    align-items: center;
 }
 
 .success-hash img{

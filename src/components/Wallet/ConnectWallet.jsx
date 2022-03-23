@@ -4,11 +4,12 @@ import Close from "../../assets/img/icons/close.svg";
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 import ChangeNetworkModal from "../Modals/ChangeNetwork/ChangeNetworkModal"
 import { useDispatch, useSelector } from "react-redux";
-import { setQrCodeString, setShowAbout, setShowVideo, setWalletsModal } from "../../store/reducers/generalSlice";
+import { setQrCodeString, setShowAbout, setShowVideo, setWalletsModal, setWrongNetwork } from "../../store/reducers/generalSlice";
 import MaiarModal from "../MaiarModal";
 import WalletList from "./WalletList";
 import { useNavigate } from "react-router-dom";
-
+import { chainsConfig } from "../values";
+import { useWeb3React } from "@web3-react/core";
 
 function ConnectWallet() {
   const navigate = useNavigate()
@@ -24,12 +25,8 @@ function ConnectWallet() {
   const evmAccount = useSelector(state => state.general.account)
   const tronAccount = useSelector(state => state.general.tronWallet)
   const testnet = useSelector(state => state.general.testNet)
-
+  const { chainId } = useWeb3React()
   const connected = (elrondAccount || tezosAccount || algorandAccount || evmAccount || tronAccount) ? true : false
-
-  //if (connected && from && to) {
-    //navigate(testnet ? "/testnet/account" : "/account")
-  //}
 
   const handleClose = () => {
     setShow(false);
@@ -47,9 +44,11 @@ function ConnectWallet() {
     if(from && to && !connected){
       setShow(true)
     }
-    else if(connected && to){
-      console.log("🚀 ~ file: ConnectWallet.jsx ~ line 46 ~ handleShow ~ testnet", testnet)
+    else if(connected && to && from && from.chainId === chainId){
       navigate(testnet ? "/testnet/account" : "/account")
+    }
+    else if(connected && to && from && from.chainId !== chainId){
+      dispatch(setWrongNetwork(true))
     }
   };
 
@@ -60,69 +59,11 @@ function handleVideoClick() {
     dispatch(setShowVideo(true))
 }
 
-  // useEffect(() => {
-  //   algoConnector.on("connect", (error, payload) => {
-  //     if (error) {
-  //       throw error;
-  //     }
-  //     // Get provided accounts
-  //     const { accounts } = payload.params[0];
-  //     if (accounts) {
-  //       dispatch(setAlgorandWallet(true));
-  //       dispatch(setAlgorandAccount(accounts[0]));
-  //     }
-  //   });
-  //   // debugger;
-  //   let correct;
-  //   if (testnet) {
-  //     correct = from ? TESTNET_CHAIN_INFO[from?.key].chainId === chainId : "";
-  //   } else {
-  //     correct = from ? CHAIN_INFO[from?.key].chainId === chainId : "";
-  //   }
-
-  //   if (from?.type === "EVM") {
-  //     dispatch(setAccount(account));
-  //   }
-  //   if (from) {
-  //     // debugger;
-  //     dispatch(
-  //       setWrongNetwork(
-  //         testnet
-  //           ? TESTNET_CHAIN_INFO[from.key].chainId !== chainId
-  //           : CHAIN_INFO[from.key].chainId !== chainId
-  //       )
-  //     );
-  //   }
-  //   if (
-  //     ((metaMask || tronLink || onWC || trustWallet || MaiarWallet) &&
-  //       correct) ||
-  //     MyAlgo ||
-  //     algorandWallet ||
-  //     AlgoSigner ||
-  //     kukaiWallet ||
-  //     templeWallet
-  //   ) {
-  //   }
-  // }, [
-  //   account,
-  //   metaMask,
-  //   chainId,
-  //   tronLink,
-  //   onWC,
-  //   trustWallet,
-  //   AlgoSigner,
-  //   algorandWallet,
-  //   MaiarWallet,
-  //   MyAlgo,
-  //   templeWallet,
-  //   kukaiWallet,
-  // ]);
-
   return (
     <div>
       <ChangeNetworkModal />
       <div onClick={handleShow} className={from && to ? "connect-wallet__button" : "connect-wallet__button--disabled"}>
-        Continue bridging -<span>{">"}</span>{" "}
+        Continue bridging -&gt;
       </div>
       <div id="aboutnft" className="aboutNft">
           <div onClick={() => handleVideoClick()} className="about-btn about-video">Learn how to use NFT bridge</div>
