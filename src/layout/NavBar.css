@@ -40,7 +40,8 @@
   align-items: center;
 }
 .show .nav-link{
-  color: #040D27;
+  color: #14161A;
+
 }
 .nav-link:hover{
   background: #ECECF1;
@@ -62,7 +63,8 @@
   font-weight: 500;
   line-height: 19px;
   letter-spacing: 0em;
-  color: #14161A;
+  color: #62718A;
+
   padding: 10px 16px;
   background: rgba(207, 207, 217, 0.2);
   border: 1px solid rgba(207, 207, 217, 0.9);
