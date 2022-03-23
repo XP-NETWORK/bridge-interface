@@ -72,18 +72,20 @@
     display: none !important;
 }
 .search-dropdown .dropdown-menu{
-    inset: -45px auto auto -210px !important;
+    inset: -45px auto auto -170px !important;
     height: 44px;
     padding: 0;
     margin: 0;
     border-radius: 40px;
     overflow: hidden;
+    width: 200px;
 }
 .search-dropdown .dropdown-menu input{
     border: 0;
     padding-left: 10px;
     padding-top: 10px;
     outline: unset;
+  
 }
 .mobileOnly{
     background: #F7F7F9;

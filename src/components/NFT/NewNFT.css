@@ -137,7 +137,7 @@
   font-weight: 400;
   line-height: 26px;
   text-align: left;
-  color: white !important;
+  color: rgb(43, 41, 41) !important;
 }
 
 .try{
@@ -221,6 +221,7 @@
 
 .listed__view img, .listed__view video{
   width: 30px;
+
   margin-right: 5px;
   border-radius: 4px;
 }

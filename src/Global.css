@@ -265,7 +265,7 @@ span.closeBox {
   border-radius: 10px;
   height: 48px;
   padding: 0 36px 0 16px;
-  color: #fff;
+  color:rgb(39, 38, 38);
 }
 
 .searchChain button {
@@ -297,12 +297,12 @@ span.closeBox {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background:  #CBCBCF;
   border-radius: 10px;
   background: radial-gradient(
     96.34% 96.34% at 59.82% 3.66%,
-    #4532b5 0%,
-    #36405a 100%
+    #CBCBCF 0%,
+    #d7d8da 100%
   );
 }
 
@@ -598,7 +598,7 @@ span.NFTInf {
 }
 
 span.NFTInf:hover img {
-  filter: brightness(100);
+  /*filter: brightness(100);*/
 }
 
 .info-icon__container {
@@ -898,15 +898,15 @@ li.nftSelecItem .Close:hover {
 }
 
 .nftInfBox {
-  background: #272c39;
-  border: 1px solid #2d3342;
+  background: #F3F3F6;
+  border: 1px solid #F3F3F6;
   padding: 8px 12px;
   border-radius: 6px;
   margin-bottom: 9px;
 }
 
 .nftInfBox label {
-  color: #62718a;
+  color: #14161A;
   font-weight: 600;
   font-size: 14px;
   line-height: 24px;
@@ -925,7 +925,7 @@ li.nftSelecItem .Close:hover {
 .nftInfBox p {
   font-size: 14px;
   line-height: 140%;
-  color: #fff;
+  color: #14161A;
   margin: 0;
   word-break: break-word;
 }
@@ -1854,6 +1854,27 @@ span.transPend {
 .widget .aleartBox {
   opacity: 0;
   pointer-events: none;
+}
+
+.approval__title {
+  font-weight: 500;
+}
+
+.search-dropdown.show.dropdown #SearchDrop {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.dropdown-menu.show input {
+    padding: 10px !important;
+}
+
+.dropdown-menu.show input::placeholder {
+  font-size: 14px;
+}
+
+.nftInfIcon:hover path {
+  fill: #395FEB;
 }
 
 @media screen and (max-height: 750px) {
