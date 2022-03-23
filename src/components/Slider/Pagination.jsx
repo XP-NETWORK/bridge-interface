@@ -30,6 +30,7 @@ export default function Pagination({ start, index, click }) {
                         }
                         else if(step === 2){
                             setTimeout(() => dispatch(setStep(0)), 100)
+                            setCount(0)
                         }
                     }
                     clearInterval(s)
