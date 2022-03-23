@@ -24,6 +24,7 @@ import {
   setTxnStatus,
 } from "../../../store/reducers/generalSlice";
 import "./SuccessModal.css";
+import Tooltip from "../AccountModal/Tooltip";
 
 export default function SuccessModal() {
   const dispatch = useDispatch();
@@ -96,7 +97,7 @@ export default function SuccessModal() {
 
   const toShow = () => {
     return txnHashArr?.length ? true : false;
-    //return true
+    // return true
   };
 
   useEffect(() => {
@@ -150,10 +151,7 @@ export default function SuccessModal() {
                         getSubstringValue() || 10
                       )}...${getTX().substring(getTX().length - 6)}`
                     : ""}
-                  <Image
-                    src={copyHover ? CopyHover : FileCopy}
-                    className="success__copy"
-                  />
+                  <Tooltip />
                 </div>
               </CopyToClipboard>
             </div>

@@ -12,7 +12,7 @@ import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 export default function EVMWallet({ wallet, close }) {
   const { chainId, account, activate } = useWeb3React();
   const OFF = { opacity: 0.6, pointerEvents: "none" };
-  console.log("🚀 ~ file: EVMWallet.jsx ~ line 15 ~ EVMWallet ~ chainId", chainId)
+  // console.log("🚀 ~ file: EVMWallet.jsx ~ line 15 ~ EVMWallet ~ chainId", chainId)
   const from = useSelector(state => state.general.from);
   const dispatch = useDispatch()
   const getMobOps = () =>  /android/i.test(navigator.userAgent || navigator.vendor || window.opera) ? true : false;

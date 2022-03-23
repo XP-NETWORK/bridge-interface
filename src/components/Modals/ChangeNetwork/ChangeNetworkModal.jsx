@@ -9,10 +9,11 @@ import { useDispatch } from "react-redux";
 import { setWrongNetwork } from "../../../store/reducers/generalSlice";
 import ChangeNetworkLoader from "../../innercomponents/ChangeNetworkLoader";
 import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg";
+import { useNavigate } from "react-router-dom";
 
 function ChangeNetworkModal() {
   const handleClose = () => {
-    window.location.reload();
+    dispatch(setWrongNetwork(false))
   };
   const from = useSelector((state) => state.general.from);
   const showWrong = useSelector((state) => state.general.wrongNetwork);
@@ -21,6 +22,7 @@ function ChangeNetworkModal() {
   const [loader, setLoader] = useState(false);
   const testnet = useSelector((state) => state.general.testNet);
   const widget = useSelector((state) => state.general.widget);
+  const navigate = useNavigate()
 
   async function switchNetwork() {
     setLoader(true);
@@ -33,6 +35,7 @@ function ChangeNetworkModal() {
         method: "wallet_switchEthereumChain",
         params: [{ chainId }],
       });
+      navigate(testnet ? "/testnet/account" : "/account")
     } catch (error) {
       setLoader(false);
       console.log(error);
@@ -65,6 +68,7 @@ function ChangeNetworkModal() {
         });
         dispatch(setWrongNetwork(false));
         setLoader(false);
+        navigate(testnet ? "/testnet/account" : "/account")
       } catch (error) {
         setLoader(false);
         console.log(error);

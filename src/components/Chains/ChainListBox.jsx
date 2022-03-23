@@ -63,7 +63,6 @@ export default function ChainListBox(props) {
   }
 
   const chainSelectHandler = (chain) => {
-      if(checkChainId(chain)){
         if (departureOrDestination === "departure") {
           if (to && chain.key !== to.key) {
             dispatch(setFrom(chain));
@@ -81,10 +80,6 @@ export default function ChainListBox(props) {
           dispatch(setSwitchDestination(false));
           handleClose();
         }
-    }
-    else{
-      dispatch(setWrongNetwork(true))
-    }
   };
 
   const showSearch = () => {
