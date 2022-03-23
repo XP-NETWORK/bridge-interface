@@ -55,14 +55,14 @@ if(from.key === "Tezos"){
           const jsonURI = checkIfJSON(n.uri) || undefined
           const uri = jsonURI?.image
           if (jsonURI) resolve({...n, ...jsonURI, uri })
-          const res = await axios.get(setupURI(n.uri));
+          const res =  await axios({url: setupURI(n.uri), timeout: 5000});
           
           if (res && res.data) {
             const isImageIPFS = setupURI(res.data.image)?.includes('ipfs.io')
             
             let result = typeof res.data != "string" ? { ...res.data, ...n } : {...n}
             if(isImageIPFS) {              
-              const ipfsNFT = await axios.get(setupURI(res.data.image))
+              const ipfsNFT = await axios({url: setupURI(res.data.image), timeout: 5000});
               if(ipfsNFT.data && ipfsNFT.data.displayUri) result.image = ipfsNFT.data.displayUri
             }
             resolve(result);
@@ -71,11 +71,11 @@ if(from.key === "Tezos"){
         } catch (err) {
           if (err) {
             try {
-              const res = await axios.get(('https://sheltered-crag-76748.herokuapp.com/')+(setupURI(n.uri?.uri ? n.uri?.uri : n.uri)));
+              const res = await axios({url: `https://sheltered-crag-76748.herokuapp.com/${setupURI(n.uri?.uri ? n.uri?.uri : n.uri)}`, timeout: 5000});
               if (res.data) {
                 try {
                   const { uri } = res.data;
-                  const result = await axios.get(('https://sheltered-crag-76748.herokuapp.com/')+(setupURI(n.uri?.uri ? n.uri?.uri : n.uri)));
+                  const result = await axios({url: `https://sheltered-crag-76748.herokuapp.com/${setupURI(n.uri?.uri ? n.uri?.uri : n.uri)}`, timeout: 5000});
                   resolve({ data: result.data, ...n, cantSend: true });
                 } catch (err) {
                   resolve({...n});
