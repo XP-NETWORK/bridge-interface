@@ -11,6 +11,8 @@ const initialState = {
   currentTx: 0,
   bigLoader: true,
   innerWidth: 0,
+
+
 };
 
 const generalSlice = createSlice({

@@ -32,7 +32,7 @@
     margin-bottom: 12px;
 }
 .destination__title{
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 500;
     line-height: 18px;
 }
@@ -47,6 +47,8 @@
 }
 .destination__address input::placeholder{
     color: #62718A;
+    font-size: 14px;
+    opacity: .7;
 }
 
 .desChain span img:nth-child(2) {
@@ -65,8 +67,16 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.desktop__header {
+    font-size: 14px;
+    font-weight: 500;
+}
+
 .desktop__header span{
     color: #3e64ed;
+    font-weight: 400;
+
 }
 .clear-selected{
     font-size: 12px;
@@ -97,6 +107,7 @@
     gap: 12px;
     padding: 6px 17.5px 6px 8px;
     cursor: pointer;
+    font-size: 14px;
 }
 .selected-nfts-item:hover{
     background: #ECECF1;
@@ -114,6 +125,7 @@
     padding:15px 11px 10px 8px;
     background: #F3F3F6;
     border-radius: 8px;
+    font-size: 14px;
 }
 .mobile-col .approval{
     border: 1px solid white;
@@ -217,6 +229,7 @@
     color: #14161A;
     height: 62px;
     padding: 16px;
+    font-size: 14px;
 }
 .transfer-button--disabled, .transfer-button{
     border: 1px solid #395FEB;

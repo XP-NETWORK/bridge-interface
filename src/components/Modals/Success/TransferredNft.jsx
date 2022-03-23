@@ -13,7 +13,7 @@ export default function TransferredNft({ nft }) {
     const algorandAccount = useSelector(state => state.general.algorandAccount)
     const dispatch = useDispatch()
     const txnHashArr = useSelector(state => state.general.txnHashArr)
-    const [txnStatus, setTxnStatus] = useState()
+    const [txnStatus, setTxnStatus] = useState("pending")
 
     const checkIfAlgoOptIn = async () => {
         try {
@@ -53,15 +53,13 @@ export default function TransferredNft({ nft }) {
 
     return (
         <div className='success-nft-info__wrapper'>
-            { txn && 
-                <div className="transferred-nft">
-                    <div className='nft-image-name'>
-                        <img src={image} alt={name} />
-                        <div>{name}</div>
-                    </div>
-                    <TxStatus status={txnStatus} />
-                </div> 
-            }
+            <div className="transferred-nft">
+                <div className='nft-image-name'>
+                    <img src={image} alt={name} />
+                    <div>{name}</div>
+                </div>
+                <TxStatus status={txn ? txnStatus : "failed"} />
+            </div> 
         </div>
     )
 }

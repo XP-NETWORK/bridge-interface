@@ -207,7 +207,7 @@ div#root {
   line-height: 126%;
 }
 
-/* ! ALERT NO FROm NO TO */
+
 .aleartBox {
   position: fixed;
   display: flex;
@@ -215,7 +215,7 @@ div#root {
   font-size: 14px;
   z-index: 11;
   left: 50%;
-  bottom: 15vh;
+  bottom: 13vh;
   transform: translate(-50%);
   background: linear-gradient(266.84deg, #272930 46.71%, #395FEB 148.31%);
   border-radius: 16px;
@@ -265,7 +265,7 @@ span.closeBox {
   border-radius: 10px;
   height: 48px;
   padding: 0 36px 0 16px;
-  color: #fff;
+  color:rgb(39, 38, 38);
 }
 
 .searchChain button {
@@ -297,12 +297,12 @@ span.closeBox {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background:  #CBCBCF;
   border-radius: 10px;
   background: radial-gradient(
     96.34% 96.34% at 59.82% 3.66%,
-    #4532b5 0%,
-    #36405a 100%
+    #CBCBCF 0%,
+    #d7d8da 100%
   );
 }
 
@@ -598,7 +598,7 @@ span.NFTInf {
 }
 
 span.NFTInf:hover img {
-  filter: brightness(100);
+  /*filter: brightness(100);*/
 }
 
 .info-icon__container {
@@ -898,15 +898,15 @@ li.nftSelecItem .Close:hover {
 }
 
 .nftInfBox {
-  background: #272c39;
-  border: 1px solid #2d3342;
+  background: #F3F3F6;
+  border: 1px solid #F3F3F6;
   padding: 8px 12px;
   border-radius: 6px;
   margin-bottom: 9px;
 }
 
 .nftInfBox label {
-  color: #62718a;
+  color: #14161A;
   font-weight: 600;
   font-size: 14px;
   line-height: 24px;
@@ -925,7 +925,7 @@ li.nftSelecItem .Close:hover {
 .nftInfBox p {
   font-size: 14px;
   line-height: 140%;
-  color: #fff;
+  color: #14161A;
   margin: 0;
   word-break: break-word;
 }
@@ -1580,7 +1580,7 @@ span.transPend {
   position: absolute;
   top: 46%;
   left: 42%;
-  color: white;
+  color: #62718A;
 }
 
 .approve-loader,
@@ -1595,10 +1595,10 @@ span.transPend {
   font-size: 10px;
   position: relative;
   text-indent: -9999em;
-  border-top: 0.5em solid rgba(255, 255, 255, 0.2);
-  border-right: 0.5em solid rgba(255, 255, 255, 0.2);
-  border-bottom: 0.5em solid rgba(255, 255, 255, 0.2);
-  border-left: 0.5em solid #ffffff;
+  border-top: 0.8em solid #fff;
+  border-right: 0.8em solid  #fff;
+  border-bottom: 0.8em solid#fff;
+  border-left: 0.8em solid #395FEB;
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);
   transform: translateZ(0);
@@ -1626,9 +1626,45 @@ span.transPend {
   }
 }
 
+.modal-backdrop.show {
+  opacity: 0 !important;
+
+}
+
+
+
+#Header {
+  position: relative;
+    z-index: 10;
+}
+
+.modal-open #Header::before, .modal-open .App::before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backdrop-filter: blur(15px);
+  z-index: -1;
+}
+
+.modal-open .App::before {
+  z-index: 12;
+}
+
+
+.modal-open .modal {
+  /*height: calc(100% - 66px) !important;
+  bottom: 0 !important;
+  top: initial !important;
+  backdrop-filter: blur(20px);*/
+
+}
+
+
 .approve-modal .modal-dialog .modal-content {
   background: none !important;
   border: none !important;
+  box-shadow: none;
   /* position: absolute !important; */
   /* top: 20% !important; */
 }
@@ -1856,6 +1892,27 @@ span.transPend {
   pointer-events: none;
 }
 
+.approval__title {
+  font-weight: 500;
+}
+
+.search-dropdown.show.dropdown #SearchDrop {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.dropdown-menu.show input {
+    padding: 10px !important;
+}
+
+.dropdown-menu.show input::placeholder {
+  font-size: 14px;
+}
+
+.nftInfIcon:hover path {
+  fill: #395FEB;
+}
+
 @media screen and (max-height: 750px) {
   .first-step__container{
     margin: 39px 0;
@@ -1906,9 +1963,10 @@ span.transPend {
   .video-responsive iframe {
     height: 280px;
   }
-
-  .navbar-collapse {
+  .loader {
+    top: -20px;
   }
+
   .navMenu.navbar-nav .nav-link:first-child {
     border-radius: 18px 18px 0px 0px;
   }

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setStep } from '../../store/reducers/sliderSlice';
 
 
-export default function Pagination({ start, index }) {
+export default function Pagination({ start, index, click }) {
     const dispatch = useDispatch()
     const initialState = 0;
     const [count, setCount] = useState(initialState);
@@ -11,7 +11,6 @@ export default function Pagination({ start, index }) {
     const step = useSelector(state => state.slider.step)
     
     useEffect(() => {
-        console.log("🚀 ~ file: Pagination.jsx ~ line 12 ~ Pagination ~ step", step)
         width.current = count;
     })
   
@@ -35,13 +34,16 @@ export default function Pagination({ start, index }) {
                     }
                     clearInterval(s)
                 }
-            }, 50);
+            }, 35);
+        }
+        else{
+            setCount(0)
         }
     }, [start]);
 
 
   return (
-    <span onClick={() => console.log("click", index)} className='pagination__bg'>
+    <span className='pagination__bg'>
         <span style={{width: `${width.current}%`}} className='pagination__progress'></span>
     </span>
   )

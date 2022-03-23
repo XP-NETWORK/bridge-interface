@@ -80,7 +80,7 @@
     z-index: 1;
 }
 .pagination__bg{
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 @media screen and (max-width: 1024px) {
     .slider__wrapper {

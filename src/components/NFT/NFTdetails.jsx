@@ -48,7 +48,7 @@ function NFTdetails({ nftInf }) {
     <>
       <div className="info-icon__container">
         <span className="NFTInf" onClick={handleShow}>
-          {widget ? <INFComp className="svgWidget" /> : <img src={INF} />}
+          <INFComp className="svgWidget nftInfIcon" alt="inf"/>
         </span>
       </div>
       <Modal

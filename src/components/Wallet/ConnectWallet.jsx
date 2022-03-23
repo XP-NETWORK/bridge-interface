@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import Close from "../../assets/img/icons/close.svg";
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
@@ -27,6 +27,10 @@ function ConnectWallet() {
 
   const connected = (elrondAccount || tezosAccount || algorandAccount || evmAccount || tronAccount) ? true : false
 
+  //if (connected && from && to) {
+    //navigate(testnet ? "/testnet/account" : "/account")
+  //}
+
   const handleClose = () => {
     setShow(false);
     dispatch(setWalletsModal(false))
@@ -36,6 +40,8 @@ function ConnectWallet() {
   };
   const walletsModal = useSelector(state => state.general.walletsModal)
   const widget = useSelector((state) => state.general.widget);
+
+ 
 
   const handleShow = () => {
     if(from && to && !connected){

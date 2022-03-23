@@ -67,12 +67,12 @@ ul ol {
 }
 
 /* Track */
-::-webkit-scrollbar-track {
+/*::-webkit-scrollbar-track {
   background: transparent;
 }
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+/*::-webkit-scrollbar-thumb {
   background: radial-gradient(
     96.34% 96.34% at 59.82% 3.66%,
     #4532b5 0%,
@@ -82,7 +82,7 @@ ul ol {
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+/*::-webkit-scrollbar-thumb:hover {
   background: radial-gradient(
     96.34% 96.34% at 59.82% 3.66%,
     #4532b5 0%,

@@ -15,7 +15,7 @@ export default function ApproveLoader() {
         className="approve-modal"
         style={{
           overflow: "hidden",
-          backgroundColor: "#00000090",
+          //backgroundColor: "#00000090",
         }} 
         show={loader}>
             <div className="approve-loader__container">
