@@ -98,7 +98,7 @@ export const chains = [
     image: { avatar: true, src: Fantom },
     maintenance: false,
     testNet: false,
-    mainnet: false
+    mainnet: true
   },
   {
     type: "Algorand",

@@ -16,7 +16,7 @@ export const fonts = [
   "Ubuntu",
 ];
 
-export const chains = [...valuesChains].filter(c => c.text !== 'Fantom');
+export const chains = [...valuesChains]//.filter(c => c.text !== 'Fantom');
 
 export const activeChains = [
   ...chains.filter((chain) => !chain.maintenance).map((c) => c.value),
