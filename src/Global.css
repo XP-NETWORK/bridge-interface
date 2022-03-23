@@ -52,7 +52,7 @@ div#root {
   overflow: hidden;
 }
 
-div#root:after {
+/* div#root:after {
   content: "";
   background-size: contain;
   background-repeat: no-repeat;
@@ -65,7 +65,7 @@ div#root:after {
   top: 110px;
   position: absolute;
   z-index: -1;
-}
+} */
 
 .first-step__container{
   display: flex;
@@ -85,13 +85,13 @@ div#root:after {
   padding-right: 15px;
 }
 
-.nftTitle h2 {
+/* .nftTitle h2 {
   font-weight: bold;
   font-size: 38px;
   line-height: 116%;
   text-align: center;
   color: #ffffff;
-}
+} */
 
 .nftTitle {
   margin-bottom: 27px;
@@ -1078,13 +1078,13 @@ span.statComp img {
 }
 
 .nftWornTop h3 {
-  color: #fff;
+  color: #14161A;
   margin: 22px 0 14px;
 }
 
 .nftWornTop p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.7);
+  color: #14161A;
 }
 
 .nftWornTop {
@@ -1116,11 +1116,6 @@ span.statComp img {
   margin-bottom: 10px;
 }
 
-/*     background: #272C39;
-    border: 1px solid #2D3342;
-    padding: 8px 12px;
-    border-radius: 6px;
-    margin-bottom: 9px; */
 
 .details {
   border-radius: 6px;

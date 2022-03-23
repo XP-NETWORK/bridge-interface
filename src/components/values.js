@@ -15,7 +15,7 @@ import Velas from "../assets/img/chain/velas.svg";
 import Tezos from "../assets/img/chain/Tezos.svg";
 import Iotex from "../assets/img/chain/iotx.svg";
 import One from "../assets/img/chain/One.svg";
-import Aurora from "../assets/img/chain/Aurora.svg";
+import Aurora from "../assets/img/chain/aurora.svg";
 import { Chain } from "xp.network/dist/consts";
 
 export const EVM = "EVM";

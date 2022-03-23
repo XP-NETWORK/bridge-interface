@@ -8,6 +8,7 @@ import {
   setFrom,
   setChainSearch,
   setSwitchDestination,
+  setWrongNetwork,
 } from "../../store/reducers/generalSlice";
 import Chain from "./Chain"
 import ChainSearch from "../Chains/ChainSearch"
@@ -17,6 +18,7 @@ import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 import { useState } from "react";
 import { filterChains } from "./ChainHelper";
 import { useWeb3React } from "@web3-react/core";
+import { chainsConfig } from "..//values"
 
 export default function ChainListBox(props) {
   const dispatch = useDispatch();
@@ -35,7 +37,8 @@ export default function ChainListBox(props) {
   const algorandAccount = useSelector(state => state.general.algorandAccount)
   const evmAccount = useSelector(state => state.general.account)
   const tronAccount = useSelector(state => state.general.tronWallet)
-
+  const { chainId } = useWeb3React()
+  
 
   const handleClose = () => {
     dispatch(setChainModal(false));
@@ -44,24 +47,40 @@ export default function ChainListBox(props) {
     dispatch(setChainSearch(""));
   };
 
+  const checkChainId = chain => {
+    // debugger
+    if(chain.type !== "EVM"){
+      return true
+    }
+    else if(chainId && chainId === chainsConfig[chain.key].chainId){
+      console.log("false")
+      return true
+    }
+    else return false
+  }
+
   const chainSelectHandler = (chain) => {
-    if (departureOrDestination === "departure") {
-      if (to && chain.key !== to.key) {
-        dispatch(setFrom(chain));
-        handleClose();
-      } else {
-        // ! check if chainId from bew3react is equal to from.chainId
-        dispatch(setTo(""));
-        dispatch(setFrom(chain));
-        handleClose();
-      }
-    } else if (switchChain) {
-      dispatch(setTo(chain));
-      handleClose();
-    } else {
-      dispatch(setTo(chain));
-      dispatch(setSwitchDestination(false));
-      handleClose();
+      if(checkChainId(chain)){
+        if (departureOrDestination === "departure") {
+          if (to && chain.key !== to.key) {
+            dispatch(setFrom(chain));
+            handleClose();
+          } else {
+            dispatch(setTo(""));
+            dispatch(setFrom(chain));
+            handleClose();
+          }
+        } else if (switchChain) {
+          dispatch(setTo(chain));
+          handleClose();
+        } else {
+          dispatch(setTo(chain));
+          dispatch(setSwitchDestination(false));
+          handleClose();
+        }
+    }
+    else{
+      dispatch(setWrongNetwork(true))
     }
   };
 
