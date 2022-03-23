@@ -31,7 +31,7 @@ function NavBar() {
         !widget && <header id="Header"> 
             <Navbar expand="lg">    
             <LinkContainer to="/connect">
-                <Navbar.Brand onClick={() => dispatch(setReset())}  >
+                <Navbar.Brand>
                     <img src={Logo} alt="Xp Network"/>
                     <div >MULTICHAIN NFT BRIDGE</div>
                     { testnet && <span className="testnet">TestNet</span>}

@@ -24,7 +24,6 @@ export default function UserConnect({desktop}) {
     }
 
     const getAccountString = () => {
-      // debugger
       if(innerWidth >= 425){
         return `${walletAccount.substring(0, 18)}...${walletAccount.substring(walletAccount.length - 2)}`
       }
@@ -35,6 +34,7 @@ export default function UserConnect({desktop}) {
         return `${walletAccount.substring(0, 6)}...${walletAccount.substring(walletAccount.length - 2)}`
       }
     }
+
 
   return (
     <div onClick={handleConnect} className={desktop ? 'navbar-connect' : 'navbar-connect navbar-connect-mob'}>
