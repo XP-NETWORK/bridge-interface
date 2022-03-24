@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { chains } from "../../components/values";
+import { chains, CHAIN_INFO, TESTNET_CHAIN_INFO } from "../../components/values";
 import {
   setChainModal,
   setDepartureOrDestination,
@@ -8,7 +8,6 @@ import {
   setFrom,
   setChainSearch,
   setSwitchDestination,
-  setWrongNetwork,
 } from "../../store/reducers/generalSlice";
 import Chain from "./Chain"
 import ChainSearch from "../Chains/ChainSearch"
@@ -19,6 +18,7 @@ import { useState } from "react";
 import { filterChains } from "./ChainHelper";
 import { useWeb3React } from "@web3-react/core";
 import { chainsConfig } from "..//values"
+import { getAddEthereumChain } from "../../wallet/chains";
 
 export default function ChainListBox(props) {
   const dispatch = useDispatch();
@@ -37,8 +37,56 @@ export default function ChainListBox(props) {
   const algorandAccount = useSelector(state => state.general.algorandAccount)
   const evmAccount = useSelector(state => state.general.account)
   const tronAccount = useSelector(state => state.general.tronWallet)
-  const { chainId } = useWeb3React()
+  const { chainId, account } = useWeb3React()
+  const testnet = useSelector(state => state.general.testNet)
   
+  async function switchNetwork() {
+// debugger
+
+    const info = testnet
+      ? TESTNET_CHAIN_INFO[from?.key]
+      : CHAIN_INFO[from?.key];
+    const chainId = `0x${info.chainId.toString(16)}`;
+    console.log("🚀 ~ file: ChainListBox.jsx ~ line 46 ~ switchNetwork ~ info", info)
+    try {
+      const success = await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId }],
+      });
+    } catch (error) {
+      console.log(error);
+      try {
+        const toHex = (num) => {
+          return "0x" + num.toString(16);
+        };
+        const chain = getAddEthereumChain()[parseInt(chainId).toString()];
+
+        const params = {
+          chainId: chainId, // A 0x-prefixed hexadecimal string
+          chainName: chain.name,
+          nativeCurrency: {
+            name: chain.nativeCurrency.name,
+            symbol: chain.nativeCurrency.symbol, // 2-6 characters long
+            decimals: chain.nativeCurrency.decimals,
+          },
+          rpcUrls: chain.rpc,
+          blockExplorerUrls: [
+            chain.explorers &&
+            chain.explorers.length > 0 &&
+            chain.explorers[0].url
+              ? chain.explorers[0].url
+              : chain.infoURL,
+          ],
+        };
+        await window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [params, account],
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
 
   const handleClose = () => {
     dispatch(setChainModal(false));
@@ -63,11 +111,19 @@ export default function ChainListBox(props) {
   }
 
   const chainSelectHandler = (chain) => {
+    // debugger
         if (departureOrDestination === "departure") {
-          if (to && chain.key !== to.key) {
+
+          if(from && account){
+            dispatch(setFrom(chain));
+            switchNetwork()
+            handleClose();
+          } 
+          else if (to && chain.key !== to.key) {
             dispatch(setFrom(chain));
             handleClose();
-          } else {
+          }
+          else {
             dispatch(setTo(""));
             dispatch(setFrom(chain));
             handleClose();

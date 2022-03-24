@@ -50,10 +50,9 @@ export default function AccountModal() {
   const accountModal = useRef(null);
 
   function handleDisconnect() {
-    window.ethereum.request({
-      method: "disconnect"
-    })
-    // dispatch(setReset());
+    // window.ethereum.request({
+    //   method: "disconnect"
+    // })
   }
 
   async function switchNetwork() {

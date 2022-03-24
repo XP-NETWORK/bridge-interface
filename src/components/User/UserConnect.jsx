@@ -3,7 +3,9 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { setAccountModal, setWalletsModal } from '../../store/reducers/generalSlice';
+import { getAddEthereumChain } from '../../wallet/chains';
 import { setNFTS } from '../../wallet/helpers';
+import { CHAIN_INFO, TESTNET_CHAIN_INFO } from '../values';
 import Identicon from './Identicon';
 
 export default function UserConnect({desktop}) {
@@ -14,7 +16,8 @@ export default function UserConnect({desktop}) {
     const algorandAccount = useSelector(state => state.general.algorandAccount)
     const innerWidth = useSelector(state => state.general.innerWidth)
     const tronWallet = useSelector(state => state.general.tronWallet)
-    const { account } = useWeb3React();
+    const { account, chainId } = useWeb3React();
+    const testnet = useSelector(state => state.general.testNet)
     const walletAccount = account || elrondAccount || tezosAccount || algorandAccount || tronWallet
     const location = useLocation()
 
@@ -37,11 +40,15 @@ export default function UserConnect({desktop}) {
       }
     }
 
+    
+
     useEffect(() => {
       if(account && from){
         setNFTS(account, from.key)
       }
-    }, [account])
+    }, [account, chainId])
+
+
     
 
   return (

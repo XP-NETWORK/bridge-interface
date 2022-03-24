@@ -78,6 +78,10 @@ function NFTaccount() {
   useEffect(async () => {
     await getNFTsList();
   }, []);
+
+  const handleFromChainSwitch = () => {
+    console.log("click")
+  }
   
   useEffect(async () => {}, [nfts]);
 
@@ -91,6 +95,9 @@ function NFTaccount() {
             <div className="nft_selectBox">
               <NFTlistTop />
               {NFTListView ? <NFTlistView /> : <NFTgridView />}
+              {/* <div className="algo-claimable">
+                // TODO Algorand Claimable
+              </div> */}
             </div>
             <MobileTransferBoard />
           </div>
@@ -103,7 +110,7 @@ function NFTaccount() {
           <div className="mobile-col__header">
             <div>Your NFTs on</div>
             <Refresh />
-            <ChainSwitch assignment={"from"} />
+            <ChainSwitch assignment={"from"} func={handleFromChainSwitch} />
           </div>
           <div className="mobile-nfts__list">
             { !showNFTsSearch ? <div className="mobile-nfts__header">

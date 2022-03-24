@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { allSelected, setNFTsListView, cleanSelectedNFTList } from "../../store/reducers/generalSlice";
+import { allSelected, setNFTsListView, cleanSelectedNFTList, setChainModal, setDepartureOrDestination } from "../../store/reducers/generalSlice";
 import { useSelector } from "react-redux";
 import { setNFTS } from "../../wallet/helpers";
 import ChainListBox from "../Chains/ChainListBox";
@@ -21,9 +21,11 @@ function NFTlistTop() {
   const from = useSelector((state) => state.general.from);
 
 
-  const handleView = () => {
-    dispatch(setNFTsListView());
-  };
+
+  const handleFromChainSwitch = () => {
+    dispatch(setDepartureOrDestination('departure'))
+    dispatch(setChainModal(true))
+  }
 
   return (
     <>
@@ -36,15 +38,13 @@ function NFTlistTop() {
         <ChainListBox />
         <div className="yourNft desktopOnly">
           Your NFTs on
-          <ChainSwitch assignment={"from"} func={undefined} />
+          <ChainSwitch assignment={"from"} func={handleFromChainSwitch} />
           <Refresh />
         </div>
         <SelectedNFTs />
         <div className="nftTopRIght">
           <NFTSearch />
           <ViewButton />
-          {/* { NFTListView ? <div className="grid-icon"></div>:<div className="list-icon"></div> } */}
-          {/* <span onClick={() => setShowSearch(prev => prev = !prev)} className="mobileOnly search-btn"><img src={Search} /></span> */}
           {onlyWhiteListedNFTs?.length === selectedNFTs?.length && selectedNFTs?.length  ? <div className="delete-all" onClick={() => dispatch(cleanSelectedNFTList())}></div>
           :<div style={nfts ? {} : OFF} onClick={() => dispatch(allSelected())} className="select-all"></div>
           }
