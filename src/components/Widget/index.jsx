@@ -79,10 +79,14 @@ export default function Widget() {
       const btnBackground = p.get("btnBackground");
       const btnRadius = p.get("btnRadius");
       const cardBackground = p.get("cardBackground");
+      const cardBackgroundBot = p.get("cardBackgroundBot")
+      const cardColor = p.get("cardColor")
       const cardRadius = p.get("cardRadius");
       const accentColor = p.get("accentColor");
       const borderColor = p.get("borderColor");
       const iconColor = p.get("iconColor");
+      const tooltipColor =  p.get("tooltipColor");
+      const tooltipBg =  p.get("tooltipBg");
       const showLink = p.get("showLink");
       const chains = p.get("chains")?.split("-");
       const wallets = p.get("wallets")?.split("-");
@@ -99,10 +103,14 @@ export default function Widget() {
           selectedChains: chains,
           selectedWallets: wallets,
           cardBackground: "#" + cardBackground,
+          cardBackgroundBot: "#" + cardBackgroundBot,
+          cardColor: "#" + cardColor,
           cardRadius,
           accentColor: "#" + accentColor,
           secondaryColor: "#" + secondaryColor,
           borderColor: "#" + borderColor,
+          tooltipColor: "#" + tooltipColor,
+          tooltipBg: "#" + tooltipBg,
           iconColor: "#" + iconColor,
           showLink: showLink === "true" ? true : false,
         })
@@ -201,6 +209,11 @@ export default function Widget() {
         transform: translate(50%,-50%);
 
 
+      }
+
+      .NFTaccount {
+        margin-top: 0;
+        padding-top: 80px;
       }
 
       #poweredId {
