@@ -51,8 +51,8 @@ export default function UserConnect({desktop}) {
       if(account && from){
         if(chainId && !testnet && chains.some(chain => chain.chainId === chainId)){
           dispatch(setWrongNetwork(false))
-          setNFTS(account, from.key)
           const chain = getChain()
+          setNFTS(account, chain.key)
           dispatch(setFrom(chain))
         }
         else{
