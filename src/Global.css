@@ -619,8 +619,8 @@ span.NFTInf:hover img {
   width: 100%;
   max-height: 680px;
   overflow: hidden;
-  margin-right: -24px;
-  margin-top: 26px;
+  /* margin-right: -24px; */
+  margin-top: 5px;
   padding: 0px 9px;
 }
 
@@ -1088,7 +1088,7 @@ span.statComp img {
 }
 
 .nftWornTop {
-  margin-bottom: 65px;
+  margin-bottom: auto;
 }
 
 .switchingAcc img {
@@ -1257,7 +1257,6 @@ span.statComp img {
   left: 0;
   top: 0;
   width: 100%;
-  /* height: 100%; */
   display: flex;
 }
 
@@ -1276,7 +1275,8 @@ span.statComp img {
   height: 415px;
   font-size: 16px;
   line-height: 160%;
-  color: rgb(255 255 255 / 80%);
+  color: #14161A;
+
   background-image: url("./assets/img/noNftBG.png");
   background-size: cover;
   background-position: center;
@@ -1292,16 +1292,17 @@ span.statComp img {
   font-weight: 800;
   font-size: 38px;
   line-height: 49px;
-  color: #fff;
+  color: #14161A;
+
 }
 
 .switching {
   background: #3e64ed;
-  border-radius: 16px;
   color: #fff;
   font-size: 16px;
   line-height: 126%;
   padding: 18px 45px;
+  border-radius: 66px;
 }
 
 .maiarConnectBtn {
@@ -1327,6 +1328,7 @@ span.statComp img {
 .switching:hover {
   background: #174aff;
   color: #fff;
+
 }
 
 .nonftAcc .switching {

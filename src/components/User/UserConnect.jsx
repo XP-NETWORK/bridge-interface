@@ -2,7 +2,7 @@ import { useWeb3React } from '@web3-react/core';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { setAccountModal, setFrom, setWalletsModal } from '../../store/reducers/generalSlice';
+import { setAccountModal, setFrom, setWalletsModal, setWrongNetwork } from '../../store/reducers/generalSlice';
 import { getAddEthereumChain } from '../../wallet/chains';
 import { setNFTS } from '../../wallet/helpers';
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from '../values';
@@ -47,10 +47,17 @@ export default function UserConnect({desktop}) {
     }
 
     useEffect(() => {
+      // debugger
       if(account && from){
-        setNFTS(account, from.key)
-        const chain = getChain()
-        dispatch(setFrom(chain))
+        if(chainId && !testnet && chains.some(chain => chain.chainId === chainId)){
+          dispatch(setWrongNetwork(false))
+          setNFTS(account, from.key)
+          const chain = getChain()
+          dispatch(setFrom(chain))
+        }
+        else{
+          dispatch(setWrongNetwork(true))
+        }
       }
     }, [account, chainId])
 

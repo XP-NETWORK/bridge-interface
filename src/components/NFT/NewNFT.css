@@ -349,7 +349,9 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
   display: none;
 }
 
-
+.listed__view .image--toggle{
+  display: none ;
+}
 
 .preload__name{
     height: 10px;

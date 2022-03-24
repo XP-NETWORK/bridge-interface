@@ -22,6 +22,7 @@ import MobileNFTsSearch from "../MobileOnly/MobileNFTsSearch";
 import Approval from "../TransferBoard/Approval";
 import SendFees from "../TransferBoard/SendFees";
 import ButtonToTransfer from "../TransferBoard/ButtonToTransfer";
+import ChangeNetworkModal from "../Modals/ChangeNetwork/ChangeNetworkModal";
 
 function NFTaccount() {
   const dispatch = useDispatch();
@@ -133,6 +134,7 @@ function NFTaccount() {
           <ButtonToTransfer />
         </div>
       </Container>
+      <ChangeNetworkModal />
     </div>
   );
 }

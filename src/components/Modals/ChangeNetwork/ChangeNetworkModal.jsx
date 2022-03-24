@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import Close from "../../../assets/img/icons/close.svg";
 import Wrong from "../../../assets/img/Wrong.svg";
-import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../../values";
+import { CHAIN_INFO, TESTNET_CHAIN_INFO, chains } from "../../values";
 import { useSelector } from "react-redux";
 import { getAddEthereumChain } from "../../../wallet/chains";
 import { useDispatch } from "react-redux";
@@ -10,6 +10,7 @@ import { setWrongNetwork } from "../../../store/reducers/generalSlice";
 import ChangeNetworkLoader from "../../innercomponents/ChangeNetworkLoader";
 import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg";
 import { useNavigate } from "react-router-dom";
+import { useWeb3React } from "@web3-react/core";
 
 function ChangeNetworkModal() {
   const handleClose = () => {
@@ -23,6 +24,8 @@ function ChangeNetworkModal() {
   const testnet = useSelector((state) => state.general.testNet);
   const widget = useSelector((state) => state.general.widget);
   const navigate = useNavigate()
+  const { chainId } = useWeb3React()
+  const isSupported = chains.some(chain => chain.chainId === chainId)
 
   async function switchNetwork() {
     setLoader(true);
@@ -84,18 +87,18 @@ function ChangeNetworkModal() {
       <Modal
         animation={false}
         show={showWrong}
-        onHide={handleClose}
+        onHide={isSupported ? handleClose : undefined}
         className="nftWorng"
       >
         <Modal.Header className="border-0">
           <Modal.Title>Wrong Network</Modal.Title>
-          <span className="CloseModal" onClick={handleClose}>
+          {isSupported && <span className="CloseModal" onClick={handleClose}>
             {widget ? (
               <CloseComp className="svgWidget" />
             ) : (
               <img src={Close} alt="" />
             )}
-          </span>
+          </span>}
         </Modal.Header>
         <Modal.Body className="modalBody text-center">
           <div className="wrongNFT">
@@ -103,20 +106,24 @@ function ChangeNetworkModal() {
               <span className="worngImg">
                 <img src={Wrong} alt="Worng" />
               </span>
-              <h3>Switch to {from?.key === "xDai" ? "Gnosis Chain" : from?.key} {testnet ? "TestNet" : "Mainnet"}</h3>
-              <p className="">
+              {isSupported ? <h3>Switch to {from?.key === "xDai" ? "Gnosis Chain" : from?.key} {testnet ? "TestNet" : "Mainnet"}</h3>
+              : <h3>Please switch to supported Network</h3>
+              }
+              {isSupported ? <p>
                 XP.NETWORK Bridge requires you to <br /> connect to the{" "}
                 {from?.key === "xDai" ? "Gnosis Chain" : from?.key} {testnet ? "TestNet" : "Mainnet"}
               </p>
+              :<p>In order to continue bridging XP.NETWORK Bridge <br />  requires you to connect to supported Network.</p>
+              }
             </div>
-            {loader && (
+            {loader && isSupported && (
               <div className="switchingAcc">
                 <ChangeNetworkLoader />
                 <p className="">"Switching to" {testnet ? "TestNet" : "Mainnet"}</p>
                 <p className="">Follow instructions in MetaMask</p>
               </div>
             )}
-            {!loader && (
+            {!loader && isSupported && (
               <a onClick={() => switchNetwork()} className="switching">
                 Switch Network
               </a>
