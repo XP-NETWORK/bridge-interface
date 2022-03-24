@@ -67,11 +67,15 @@ function WSettings({
     btnRadius,
     fontFamily,
     cardBackground,
+    cardBackgroundBot,
+    cardColor,
     cardRadius,
     accentColor,
     secondaryColor,
     selectedChains,
     iconColor,
+    tooltipBg,
+    tooltipColor,
     borderColor,
     selectedWallets,
     showAlert,
@@ -676,6 +680,62 @@ function WSettings({
                       </div>
 
                       <div className="typo-sel header_color_select">
+                        <h5>Background Bottom</h5>
+                        <div className="select_color">
+                          <div className="colorInp">
+                            <input
+                              type="color"
+                              id="check_txt_fl3"
+                              value={cardBackgroundBot}
+                              onChange={(e) =>
+                                deboucedSet(e.target.value, "cardBackgroundBot")
+                              }
+                            />
+                          </div>
+                          <div className="colorCode">
+                            <input
+                              type="text"
+                              placeholder="# 000000"
+                              id="color_of_head"
+                              value={cardBackgroundBot}
+                              onChange={(e) =>
+                                deboucedSet(e.target.value, "cardBackgroundBot")
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="typo-sel header_color_select">
+                        <h5>Color</h5>
+                        <div className="select_color">
+                          <div className="colorInp">
+                            <input
+                              type="color"
+                              id="check_txt_fl3"
+                              value={cardColor}
+                              onChange={(e) =>
+                                deboucedSet(e.target.value, "cardColor")
+                              }
+                            />
+                          </div>
+                          <div className="colorCode">
+                            <input
+                              type="text"
+                              placeholder="# 000000"
+                              id="color_of_head"
+                              value={cardColor}
+                              onChange={(e) =>
+                                deboucedSet(e.target.value, "cardColor")
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+
+
+                      <div className="typo-sel header_color_select">
                         <h5>Card corner radius</h5>
                         <div className="cornerRadi">
                           <input
@@ -754,6 +814,68 @@ function WSettings({
                               value={iconColor}
                               onChange={(e) =>
                                 deboucedSet(e.target.value, "iconColor")
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+
+              <Accordion defaultActiveKey="18">
+                <Accordion.Item eventKey="9">
+                  <Accordion.Header>Tooltips</Accordion.Header>
+                  <Accordion.Body>
+                    <div className="button_settCont">
+                      <div className="typo-sel header_color_select">
+                        <h5>Color</h5>
+                        <div className="select_color">
+                          <div className="colorInp">
+                            <input
+                              type="color"
+                              id="check_txt_fl3"
+                              value={tooltipColor}
+                              onChange={(e) =>
+                                deboucedSet(e.target.value, "tooltipColor")
+                              }
+                            />
+                          </div>
+                          <div className="colorCode">
+                            <input
+                              type="text"
+                              placeholder="# 000000"
+                              id="color_of_head"
+                              value={tooltipColor}
+                              onChange={(e) =>
+                                deboucedSet(e.target.value, "tooltipColor")
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="typo-sel header_color_select">
+                        <h5>Background</h5>
+                        <div className="select_color">
+                          <div className="colorInp">
+                            <input
+                              type="color"
+                              id="check_txt_fl3"
+                              value={tooltipBg}
+                              onChange={(e) =>
+                                deboucedSet(e.target.value, "tooltipBg")
+                              }
+                            />
+                          </div>
+                          <div className="colorCode">
+                            <input
+                              type="text"
+                              placeholder="# 000000"
+                              id="color_of_head"
+                              value={tooltipBg}
+                              onChange={(e) =>
+                                deboucedSet(e.target.value, "tooltipBg")
                               }
                             />
                           </div>

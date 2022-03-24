@@ -124,11 +124,15 @@ export default function Widget() {
     selectedChains,
     selectedWallets,
     cardBackground,
+    cardBackgroundBot,
+    cardColor,
     cardRadius,
     accentColor,
     secondaryColor,
     borderColor,
     iconColor,
+    tooltipColor,
+    tooltipBg,
     wallets,
     showLink,
     collapsed,
@@ -148,7 +152,7 @@ export default function Widget() {
       const $style = document.createElement("style");
       $style.id = "bridgeSettings";
       document.head.appendChild($style);
-      document.body.style.display = 'block';
+      
       //$img.onclick = window.open("https://xp.network/", "_blank").focus();
 
       $style.innerHTML = `
@@ -220,9 +224,9 @@ export default function Widget() {
         }
 
         .infText, .infText:after {
-          background: ${backgroundColor ? backgroundColor : ""};
-          border: 1px solid ${backgroundColor ? backgroundColor : ""};
-          filter: brightness(94%);
+          background: ${tooltipBg ? tooltipBg : ""};
+          border: 1px solid ${tooltipBg ? tooltipBg : ""};
+          color: ${tooltipColor ? tooltipColor : ""};
         }
 
         .nft_selectBox {
@@ -233,8 +237,13 @@ export default function Widget() {
         .modal-title, .modalSelectOptionsText, .selChain, .seleDestiSele, .yourNft, .yourNft span, .sendNftTit, 
         .desChain span, .ComentBox p, .selectedNft span, .approveBtn, .nftFees span, .nftSelecItem, .wllListItem, .nftListed,
          .desAddress input, .nftWornTop h3, .nftWornTop p, .nftInfBox p, .about__text, .ComentBox p, .nonftAcc,
-          .nonftAcc  h2, .nft-box__container--selected, .nft-box__container, .transfer-loader__title, .txn-hash, .sucesList span {
+          .nonftAcc  h2,  .transfer-loader__title, .txn-hash, .sucesList span {
             color: ${color ? color : ""};
+        }
+
+        .nft-box__container--selected, .nft-box__container {
+          color: ${cardColor ? cardColor : ""};
+
         }
 
         .desAddress input,  .desAddress input:focus,  .desAddress input:active, .empty__box {
@@ -338,8 +347,8 @@ export default function Widget() {
         }
 
         .nft-content__container, .preload__content {
-          background: ${cardBackground ? cardBackground : ""};
-          filter: brightness(115%);
+          background: ${cardBackgroundBot ? cardBackgroundBot : ""};
+          
         }
 
         .approvTop, .nftFees, .SearchDrop.dropdown input, .yourNft__title,
@@ -502,6 +511,7 @@ export default function Widget() {
         }
 
         `;
+        document.body.style.display = 'block';
     }
   }, [widget, settings]);
 
