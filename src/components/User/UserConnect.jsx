@@ -1,12 +1,14 @@
 import { useWeb3React } from '@web3-react/core';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { setAccountModal, setWalletsModal } from '../../store/reducers/generalSlice';
+import { setNFTS } from '../../wallet/helpers';
 import Identicon from './Identicon';
 
 export default function UserConnect({desktop}) {
     const dispatch = useDispatch()
+    const from = useSelector(state => state.general.from)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const tezosAccount = useSelector(state => state.general.tezosAccount)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
@@ -35,6 +37,12 @@ export default function UserConnect({desktop}) {
       }
     }
 
+    useEffect(() => {
+      if(account && from){
+        setNFTS(account, from.key)
+      }
+    }, [account])
+    
 
   return (
     <div onClick={handleConnect} className={desktop ? 'navbar-connect' : 'navbar-connect navbar-connect-mob'}>

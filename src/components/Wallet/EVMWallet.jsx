@@ -8,6 +8,7 @@ import TrustWallet from "../../assets/img/wallet/TWT.svg";
 import { isEVM } from "../../wallet/oldHelper";
 import { setAccount, setMetaMask, setWrongNetwork } from "../../store/reducers/generalSlice";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
+import { setNFTS } from "../../wallet/helpers";
 
 export default function EVMWallet({ wallet, close }) {
   const { chainId, account, activate } = useWeb3React();
@@ -26,6 +27,8 @@ export default function EVMWallet({ wallet, close }) {
        close()
      }
   }
+
+
 
   useEffect(() => {
     if(account)
