@@ -2,10 +2,11 @@ import { useWeb3React } from '@web3-react/core';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { setAccountModal, setWalletsModal } from '../../store/reducers/generalSlice';
+import { setAccountModal, setFrom, setWalletsModal } from '../../store/reducers/generalSlice';
 import { getAddEthereumChain } from '../../wallet/chains';
 import { setNFTS } from '../../wallet/helpers';
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from '../values';
+import { chains, chainsConfig } from '../values';
 import Identicon from './Identicon';
 
 export default function UserConnect({desktop}) {
@@ -20,6 +21,7 @@ export default function UserConnect({desktop}) {
     const testnet = useSelector(state => state.general.testNet)
     const walletAccount = account || elrondAccount || tezosAccount || algorandAccount || tronWallet
     const location = useLocation()
+
 
     const handleConnect = () => {
         if(!walletAccount){
@@ -40,11 +42,15 @@ export default function UserConnect({desktop}) {
       }
     }
 
-    
+    const getChain = () => {
+      return chains.find( chain => chain.chainId === chainId)
+    }
 
     useEffect(() => {
       if(account && from){
         setNFTS(account, from.key)
+        const chain = getChain()
+        dispatch(setFrom(chain))
       }
     }, [account, chainId])
 

@@ -40,14 +40,14 @@ export default function ChainListBox(props) {
   const { chainId, account } = useWeb3React()
   const testnet = useSelector(state => state.general.testNet)
   
-  async function switchNetwork() {
+  async function switchNetwork(chain) {
 // debugger
 
     const info = testnet
-      ? TESTNET_CHAIN_INFO[from?.key]
-      : CHAIN_INFO[from?.key];
+      ? TESTNET_CHAIN_INFO[chain?.key]
+      : CHAIN_INFO[chain?.key];
     const chainId = `0x${info.chainId.toString(16)}`;
-    console.log("🚀 ~ file: ChainListBox.jsx ~ line 46 ~ switchNetwork ~ info", info)
+
     try {
       const success = await window.ethereum.request({
         method: "wallet_switchEthereumChain",
@@ -115,7 +115,7 @@ export default function ChainListBox(props) {
         if (departureOrDestination === "departure") {
           if(from && account){
             dispatch(setFrom(chain));
-            switchNetwork()
+            switchNetwork(chain)
             handleClose();
           } 
           else if (to && chain.key !== to.key) {
