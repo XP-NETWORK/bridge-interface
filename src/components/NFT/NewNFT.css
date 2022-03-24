@@ -308,13 +308,13 @@
   content: "";
   position: absolute;
   top: -110%;
-  left: -210%;
+  left: -200%;
   width: 200%;
   height: 300%;
   transform: rotate(227deg);
   opacity: 0.3;
 background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 60%);
-  animation: shine 5s infinite;
+  animation: shine 2.5s infinite;
 }
 
 @keyframes shine {

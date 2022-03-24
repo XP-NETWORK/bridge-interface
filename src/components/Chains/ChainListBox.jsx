@@ -113,7 +113,6 @@ export default function ChainListBox(props) {
   const chainSelectHandler = (chain) => {
     // debugger
         if (departureOrDestination === "departure") {
-
           if(from && account){
             dispatch(setFrom(chain));
             switchNetwork()
@@ -193,6 +192,7 @@ export default function ChainListBox(props) {
             : (mainnet || coming) && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`}/>})
             
             : toChains
+            .filter(chain => from && from.type === "EVM" && chain.type === "EVM")
             .filter( chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : ""))
             .sort((chain) => {
               if(chain.coming) return 1
