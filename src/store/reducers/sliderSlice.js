@@ -83,7 +83,80 @@ const initialState = {
       description: "Lorem Ipsum ",
       progWidth: 0,
       action: false
-    }
+    },
+    {
+      image:  image1,
+      name: "Lorem Ipsum",
+      id: "666",
+      description: "Lorem Ipsum ",
+      progWidth: 0,
+      action: false
+  },
+  {
+    image:  image2,
+    name: "Lorem Ipsum",
+    id: "667",
+    description: "Lorem Ipsum ",
+    progWidth: 0,
+    action: false
+
+  },
+  {
+    image:  image3,
+    name: "Lorem Ipsum",
+    id: "668",
+    description: "Lorem Ipsum ",
+    progWidth: 0,
+    action: false
+  },
+  {
+    image:  image4,
+    name: "Lorem Ipsum",
+    id: "669",
+    description: "Lorem Ipsum ",
+    progWidth: 0,
+    action: false
+  },
+  {
+    image:  image5,
+    name: "Lorem Ipsum",
+    id: "669",
+    description: "Lorem Ipsum ",
+    progWidth: 0,
+    action: false
+  },
+  {
+    image:  image6,
+    name: "Lorem Ipsum",
+    id: "669",
+    description: "Lorem Ipsum ",
+    progWidth: 0,
+    action: false
+  },
+  {
+    image:  image7,
+    name: "Lorem Ipsum",
+    id: "669",
+    description: "Lorem Ipsum ",
+    progWidth: 0,
+    action: false
+  },
+  {
+    image:  image8,
+    name: "Lorem Ipsum",
+    id: "669",
+    description: "Lorem Ipsum ",
+    progWidth: 0,
+    action: false
+  },
+  {
+    image:  image9,
+    name: "Lorem Ipsum",
+    id: "669",
+    description: "Lorem Ipsum ",
+    progWidth: 0,
+    action: false
+  }
   ],
     step: 0,
     position: 0
@@ -111,7 +184,18 @@ const sliderSlice = createSlice({
     moveForward(state, action){
      state.position = state.position - (action.payload * 78)
     },
-    filBefore(state, action){
+    moveBack(state, action){
+      state.position = state.position - (action.payload * 78)
+    },
+    fillBefore(state, action){
+      state.nfts = state.nfts.map((nft, index) => {
+        if(index < action.payload){
+          nft.progWidth = 0
+        }
+        return nft
+      })
+    },
+    fillAfter(state, action){
 
     }
   },
@@ -123,7 +207,10 @@ export const {
  setActionOff,
  setStep,
  setPosition,
- moveForward
+ moveForward,
+ moveBack,
+ fillBefore,
+ fillAfter
 } = sliderSlice.actions;
 
 export default sliderSlice.reducer;

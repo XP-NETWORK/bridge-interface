@@ -1,13 +1,8 @@
 import "./Slider.css"
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
-import Pagination from "./Pagination";
+import { useSelector } from "react-redux";
 import SliderPagination from "./SliderPagination"
-import { setStep } from "../../store/reducers/sliderSlice";
-
 
 export default function Slider() {
-  const dispatch = useDispatch()
   const nfts = useSelector(state => state.slider.nfts)
   const step = useSelector(state => state.slider.step)
   const x = useSelector(state => state.slider.position)

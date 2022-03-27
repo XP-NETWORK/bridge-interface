@@ -11,7 +11,7 @@ export default function BackGround() {
             
   const bgStyle = {
     backgroundColor: `#E5E5E5`,
-    backgroundImage: `url(${pathname === "/connect" && nfts[step].image})`,
+    backgroundImage: `url(${(pathname === "/connect" || pathname === "/") && nfts[step].image})`,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
