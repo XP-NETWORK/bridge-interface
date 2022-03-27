@@ -16,7 +16,6 @@
 .slider__wrapper{
     position: relative;
     width: 500px;
-    border-radius: 20px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -56,11 +55,22 @@
     line-height: 20px;
     overflow-wrap: anywhere;
 }
+.pagination__wrapper{
+    width: 230px;
+    height: 5px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
 .slider__pagination{
+    position: absolute;
+    top: 0;
+    left: 0;
     display: flex;
     justify-content: center;
     gap: 6px;
-    
+    z-index: 1;
+    transition: all .5s;
 }
 .pagination__bg{
     width: 72px;
