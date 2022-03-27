@@ -107,6 +107,12 @@ const sliderSlice = createSlice({
     },
     setPosition(state){
       state.position = state.position - 78
+    },
+    moveForward(state, action){
+     state.position = state.position - (action.payload * 78)
+    },
+    filBefore(state, action){
+
     }
   },
 });
@@ -116,7 +122,8 @@ export const {
  setActionOn,
  setActionOff,
  setStep,
- setPosition
+ setPosition,
+ moveForward
 } = sliderSlice.actions;
 
 export default sliderSlice.reducer;

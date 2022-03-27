@@ -11,7 +11,6 @@ export default function Slider() {
   const nfts = useSelector(state => state.slider.nfts)
   const step = useSelector(state => state.slider.step)
   const x = useSelector(state => state.slider.position)
-  console.log("🚀 ~ file: Slider.jsx ~ line 14 ~ Slider ~ x", x)
 
   const bgStyle = {
     backgroundImage: `url(${nfts[step].image})`,

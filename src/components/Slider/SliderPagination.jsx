@@ -1,7 +1,7 @@
 import { set } from 'immutable';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setProgWidth, setStep, setActionOn, setActionOff, setPosition } from '../../store/reducers/sliderSlice';
+import { setProgWidth, setStep, setActionOn, setActionOff, setPosition, moveForward } from '../../store/reducers/sliderSlice';
 
 export default function SliderPagination({start, force, index}) {
     
@@ -10,6 +10,15 @@ export default function SliderPagination({start, force, index}) {
     const action = useSelector(state => state.slider.nfts[index].action)
     const dispatch = useDispatch()
     const step = useSelector(state => state.slider.step)
+
+    const handleClick = () => {
+      if(index > step && (index !== length - 1 && index !== length - 2 && index !== length - 3 )){
+        dispatch(moveForward(+(index - step)))
+      }
+      else if(index < step){
+        // dispatch(())
+      }
+    }
   
     useEffect(() => {
         let s
@@ -26,7 +35,7 @@ export default function SliderPagination({start, force, index}) {
                         dispatch(setPosition())
                     }
                 }
-            }, 35)}
+            }, 40)}
         return () => {
             clearInterval(s)
         }
@@ -41,7 +50,7 @@ export default function SliderPagination({start, force, index}) {
       
 
   return (
-    <span className='pagination__bg'>
+    <span onClick={handleClick} className='pagination__bg'>
         <span style={{width: `${width}%`}} className='pagination__progress'></span>
     </span> 
   )

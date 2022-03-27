@@ -79,6 +79,7 @@
     background-color:#d3d3d4e8;
     overflow: hidden;
     position: relative;
+    cursor: pointer;
 }
 .pagination__progress{
     position: absolute;
