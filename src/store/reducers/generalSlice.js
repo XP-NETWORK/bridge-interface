@@ -10,6 +10,8 @@ const initialState = {
   fees: 0,
   currentTx: 0,
   bigLoader: true,
+
+
 };
 
 const generalSlice = createSlice({

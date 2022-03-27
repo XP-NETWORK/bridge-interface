@@ -13,7 +13,7 @@ export default function WalletList({search}) {
 
     const walletComponents = [
         { Component: <EVMWallet wallet={"MetaMask"} key="wallet-index-0" />, name: "MetaMask", type: "EVM"},
-        { Component: <EVMWallet wallet={undefined} key="wallet-index-1" />, name: "WalletConnect", type: "EVM" },
+       
         { Component: <EVMWallet wallet={"TrustWallet"} key="wallet-index-2" />, name: "Trust Wallet", type: "EVM" },
         { Component: <AlgorandWallet wallet={"MyAlgo"} key="wallet-index-3" />, name: "MyAlgo", type: "Algorand" },
         { Component: <AlgorandWallet wallet={"AlgoSigner"} key="wallet-index-4" />, name: "AlgoSigner", type: "Algorand" },
@@ -23,6 +23,7 @@ export default function WalletList({search}) {
         { Component: <TezosWallet wallet={undefined} key="wallet-index-8" />, name: "Beacon Tezos", type: "Tezos" },
         { Component: <ElrondWallet wallet={"Maiar"} key="wallet-index-9" />, name: "Maiar Elrond", type: "Elrond" },
         { Component: <ElrondWallet wallet={undefined} key="wallet-index-10" />, name: "Maiar Extension Elrond", type: "Elrond" },
+        { Component: <EVMWallet wallet={undefined} key="wallet-index-1" />, name: "WalletConnect", type: "EVM" },
         { Component: <USBWallet wallet={"Ledger"} key="wallet-index-11" />, name: "Ledger", type: '' },
         { Component: <USBWallet key="wallet-index12" />, name: "Trezor", type: '' }
      ]

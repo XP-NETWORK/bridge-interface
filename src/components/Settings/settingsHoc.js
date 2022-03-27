@@ -36,6 +36,8 @@ const settingsHoc = (Wrapped) => (props) => {
     btnRadius,
     fontFamily,
     cardBackground,
+    cardBackgroundBot,
+    cardColor,
     cardRadius,
     accentColor,
     secondaryColor,
@@ -43,6 +45,8 @@ const settingsHoc = (Wrapped) => (props) => {
     iconColor,
     borderColor,
     selectedWallets,
+    tooltipBg,
+    tooltipColor,
     showAlert,
     bridgeState,
     showLink,
@@ -140,12 +144,16 @@ const settingsHoc = (Wrapped) => (props) => {
         fontFamily}&chains=${selectedChains.join(
         "-"
       )}&cardBackground=${cardBackground &&
-        cardBackground.split("#")[1]}&cardRadius=${cardRadius &&
+        cardBackground.split("#")[1]}&cardBackgroundBot=${cardBackgroundBot &&
+          cardBackgroundBot.split("#")[1]}&cardColor=${cardColor &&
+            cardColor.split("#")[1]}&cardRadius=${cardRadius &&
         cardRadius}&secondaryColor=${secondaryColor &&
         secondaryColor.split("#")[1]}&accentColor=${accentColor &&
         accentColor.split("#")[1]}&borderColor=${borderColor &&
         borderColor.split("#")[1]}&iconColor=${iconColor &&
-        iconColor.split("#")[1]}&wallets=${selectedWallets.join(
+        iconColor.split("#")[1]}&tooltipBg=${tooltipBg &&
+          tooltipBg.split("#")[1]}&tooltipColor=${tooltipColor &&
+            tooltipColor.split("#")[1]}&wallets=${selectedWallets.join(
         "-"
       )}&bridgeState=${JSON.stringify(bridgeState)}&showLink=${showLink}`,
     [settings]

@@ -6,6 +6,8 @@ import { setWidget, setWSettings, setFrom, setTo } from "../../store/reducers/ge
 import {chains} from '../values'
 import { power } from "../Settings/assets/power.js";
 import mobileBanner from "../Settings/assets/img/mobileOnlyBanner.svg";
+import { usePrevious } from "../Settings/hooks";
+
 
 const setBanner = () => {};
 
@@ -33,19 +35,19 @@ export default function Widget() {
   );
 
 
-   /*useEffect(() => {
-     if (widget && settings.selectedChains.length < 3) {
+   useEffect(() => {
+     if (widget && settings.selectedChains.length === 2) {
           //setFrom(from.text === settings.selectedChains[0] ? chains.find(c => c.text === settings.selectedChains[0]):chains.find(c => c.text === settings.selectedChains[1]))
-            console.log(from.text, settings.selectedChains[0]);
-          if (from && from.text === settings.selectedChains[0]) {
+           // console.log(dependencies.from);
+          /*if (from && from.text === settings.selectedChains[0]) {
                 return dispatch(setTo(chains.find(c => c.text === settings.selectedChains[1])))
           }
 
           if (to && to.text === settings.selectedChains[0]) {
             return dispatch(setFrom(chains.find(c => c.text === settings.selectedChains[0])))
+          }*/
       }
-      }
-  }, [from, to])*/
+  }, [from, to])
 
   const dispatch = useDispatch();
 
@@ -77,10 +79,14 @@ export default function Widget() {
       const btnBackground = p.get("btnBackground");
       const btnRadius = p.get("btnRadius");
       const cardBackground = p.get("cardBackground");
+      const cardBackgroundBot = p.get("cardBackgroundBot")
+      const cardColor = p.get("cardColor")
       const cardRadius = p.get("cardRadius");
       const accentColor = p.get("accentColor");
       const borderColor = p.get("borderColor");
       const iconColor = p.get("iconColor");
+      const tooltipColor =  p.get("tooltipColor");
+      const tooltipBg =  p.get("tooltipBg");
       const showLink = p.get("showLink");
       const chains = p.get("chains")?.split("-");
       const wallets = p.get("wallets")?.split("-");
@@ -97,10 +103,14 @@ export default function Widget() {
           selectedChains: chains,
           selectedWallets: wallets,
           cardBackground: "#" + cardBackground,
+          cardBackgroundBot: "#" + cardBackgroundBot,
+          cardColor: "#" + cardColor,
           cardRadius,
           accentColor: "#" + accentColor,
           secondaryColor: "#" + secondaryColor,
           borderColor: "#" + borderColor,
+          tooltipColor: "#" + tooltipColor,
+          tooltipBg: "#" + tooltipBg,
           iconColor: "#" + iconColor,
           showLink: showLink === "true" ? true : false,
         })
@@ -122,11 +132,15 @@ export default function Widget() {
     selectedChains,
     selectedWallets,
     cardBackground,
+    cardBackgroundBot,
+    cardColor,
     cardRadius,
     accentColor,
     secondaryColor,
     borderColor,
     iconColor,
+    tooltipColor,
+    tooltipBg,
     wallets,
     showLink,
     collapsed,
@@ -146,8 +160,7 @@ export default function Widget() {
       const $style = document.createElement("style");
       $style.id = "bridgeSettings";
       document.head.appendChild($style);
-      document.body.style.display = 'block';
-
+      
       //$img.onclick = window.open("https://xp.network/", "_blank").focus();
 
       $style.innerHTML = `
@@ -198,6 +211,11 @@ export default function Widget() {
 
       }
 
+      .NFTaccount {
+        margin-top: 0;
+        padding-top: 80px;
+      }
+
       #poweredId {
         visibility: ${showLink ? "visible" : "hidden"};
         margin-top: 15px;
@@ -219,9 +237,9 @@ export default function Widget() {
         }
 
         .infText, .infText:after {
-          background: ${backgroundColor ? backgroundColor : ""};
-          border: 1px solid ${backgroundColor ? backgroundColor : ""};
-          filter: brightness(94%);
+          background: ${tooltipBg ? tooltipBg : ""};
+          border: 1px solid ${tooltipBg ? tooltipBg : ""};
+          color: ${tooltipColor ? tooltipColor : ""};
         }
 
         .nft_selectBox {
@@ -232,8 +250,13 @@ export default function Widget() {
         .modal-title, .modalSelectOptionsText, .selChain, .seleDestiSele, .yourNft, .yourNft span, .sendNftTit, 
         .desChain span, .ComentBox p, .selectedNft span, .approveBtn, .nftFees span, .nftSelecItem, .wllListItem, .nftListed,
          .desAddress input, .nftWornTop h3, .nftWornTop p, .nftInfBox p, .about__text, .ComentBox p, .nonftAcc,
-          .nonftAcc  h2, .nft-box__container--selected, .nft-box__container, .transfer-loader__title, .txn-hash, .sucesList span {
+          .nonftAcc  h2,  .transfer-loader__title, .txn-hash, .sucesList span {
             color: ${color ? color : ""};
+        }
+
+        .nft-box__container--selected, .nft-box__container {
+          color: ${cardColor ? cardColor : ""};
+
         }
 
         .desAddress input,  .desAddress input:focus,  .desAddress input:active, .empty__box {
@@ -337,8 +360,8 @@ export default function Widget() {
         }
 
         .nft-content__container, .preload__content {
-          background: ${cardBackground ? cardBackground : ""};
-          filter: brightness(115%);
+          background: ${cardBackgroundBot ? cardBackgroundBot : ""};
+          
         }
 
         .approvTop, .nftFees, .SearchDrop.dropdown input, .yourNft__title,
@@ -431,9 +454,20 @@ export default function Widget() {
           height:10px;
         }
 
+        span.not-whitelisted__text {
+          color: ${secondaryColor ? secondaryColor : ""};
+          filter: brightness(200%);
+        }
+
+        a.not-whitelisted__button {
+          background: ${secondaryColor ? secondaryColor : ""};
+    
+        }
+
 
         .nftSelectBox, .modal-content, .modal-header, .nftChainList, .singleNft.missing, .nftInfBox, .wllListItem  {
           border-color: ${borderColor ? borderColor : ""};
+          box-shadow: none;
         }
 
         .searchChain input {
@@ -490,6 +524,7 @@ export default function Widget() {
         }
 
         `;
+        document.body.style.display = 'block';
     }
   }, [widget, settings]);
 
