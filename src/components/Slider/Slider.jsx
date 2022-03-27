@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import Pagination from "./Pagination";
 import { setStep } from "../../store/reducers/sliderSlice";
+import SliderPagination from "./SliderPagination";
 
 export default function Slider() {
   const dispatch = useDispatch()
@@ -53,6 +54,9 @@ export default function Slider() {
         <Pagination start={one} click={clickHandler} index={0}></Pagination>
         <Pagination start={two} click={clickHandler} index={1}></Pagination>
         <Pagination start={three} click={clickHandler} index={2}></Pagination>
+        {/* <SliderPagination start={one} />
+        <SliderPagination start={two} />
+        <SliderPagination start={three} /> */}
       </div>
       <div className="slider-nft__info">
         <div className="slider-nft__name">

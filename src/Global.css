@@ -1134,7 +1134,7 @@ span.statComp img {
 }
 
 .wrongNFT {
-  padding-bottom: 24px;
+  padding: 24px;
   color: #14161A;
 }
 
@@ -1255,7 +1255,7 @@ span.statComp img {
   position: absolute;
   z-index: 1;
   left: 0;
-  top: 0;
+  top: 25%;
   width: 100%;
   display: flex;
 }
@@ -1263,7 +1263,7 @@ span.statComp img {
 .nonftAcc {
   position: absolute;
   left: 47.3%;
-  top: 200px;
+  top: 50%;
   width: 505px;
   display: flex;
   flex-direction: column;
@@ -1303,6 +1303,8 @@ span.statComp img {
   line-height: 126%;
   padding: 18px 45px;
   border-radius: 66px;
+  margin: 32px auto 18px;
+  max-width: 300px;
 }
 
 .maiarConnectBtn {

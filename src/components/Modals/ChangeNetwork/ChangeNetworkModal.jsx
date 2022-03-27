@@ -124,9 +124,9 @@ function ChangeNetworkModal() {
               </div>
             )}
             {!loader && isSupported && (
-              <a onClick={() => switchNetwork()} className="switching">
+              <div onClick={() => switchNetwork()} className="switching">
                 Switch Network
-              </a>
+              </div>
             )}
           </div>
         </Modal.Body>

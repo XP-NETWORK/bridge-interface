@@ -343,6 +343,9 @@
 
 @media only screen and (max-width: 480px) {
 
+    .nonftContainer{
+        top: 30%
+    }
 
     .loader {
         top: 0;
