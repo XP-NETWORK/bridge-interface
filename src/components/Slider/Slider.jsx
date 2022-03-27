@@ -1,10 +1,10 @@
 import "./Slider.css"
 // import image from '../../assets/img/slider/s3.png';
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Pagination from "./Pagination";
 import { setStep } from "../../store/reducers/sliderSlice";
-import SliderPagination from "./SliderPagination";
+
 
 export default function Slider() {
   const dispatch = useDispatch()

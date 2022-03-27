@@ -4,23 +4,27 @@ import secondNftImage from '../../assets/img/slider/s2.png'
 import thirdImage from '../../assets/img/slider/s4.png'
 
 const initialState = {
-    nfts:[{
+    nfts:[
+    {
         image:  firstNftImage,
         name: "Lorem Ipsum",
         id: "666",
-        description: "Lorem Ipsum "
+        description: "Lorem Ipsum ",
+        progWidth: 0,
     },
     {
       image:  secondNftImage,
       name: "Lorem Ipsum",
       id: "667",
-      description: "Lorem Ipsum "
+      description: "Lorem Ipsum ",
+      progWidth: 0,
     },
     {
       image:  thirdImage,
       name: "Lorem Ipsum",
       id: "667",
-      description: "Lorem Ipsum "
+      description: "Lorem Ipsum ",
+      progWidth: 0,
     }],
     step: 0,
 };
