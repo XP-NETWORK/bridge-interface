@@ -17,10 +17,10 @@ export default function SliderPagination({start, force, index}) {
         dispatch(setStep(index))
         dispatch(fill(index))
       }
-      else if(index < step && index !== 0){
-        dispatch(moveBack(+(index - step)))
-        dispatch(setStep(index))
-      }
+      // else if(index < step && index !== 0){
+      //   dispatch(moveBack(+(index - step)))
+      //   dispatch(setStep(index))
+      // }
     }
   
     useEffect(() => {
