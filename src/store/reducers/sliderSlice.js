@@ -1,4 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import image01 from '../../assets/img/slider/s1.png'
+import image02 from '../../assets/img/slider/s2.png'
+import image03 from '../../assets/img/slider/s3.png'
+import image04 from '../../assets/img/slider/s4.png'
 import image1 from '../../assets/img/nfts/nft_1.png'
 import image2 from '../../assets/img/nfts/nft_2.png'
 import image3 from '../../assets/img/nfts/nft_3.png'
@@ -12,7 +16,7 @@ import image9 from '../../assets/img/nfts/nft_9.png'
 const initialState = {
     nfts:[
     {
-        image:  image1,
+        image:  image01,
         name: "Lorem Ipsum",
         id: "666",
         description: "Lorem Ipsum ",
@@ -20,7 +24,7 @@ const initialState = {
         action: false
     },
     {
-      image:  image2,
+      image:  image02,
       name: "Lorem Ipsum",
       id: "667",
       description: "Lorem Ipsum ",
@@ -29,7 +33,7 @@ const initialState = {
 
     },
     {
-      image:  image3,
+      image:  image03,
       name: "Lorem Ipsum",
       id: "668",
       description: "Lorem Ipsum ",
@@ -37,7 +41,7 @@ const initialState = {
       action: false
     },
     {
-      image:  image4,
+      image:  image04,
       name: "Lorem Ipsum",
       id: "669",
       description: "Lorem Ipsum ",

@@ -115,7 +115,7 @@ function NFTaccount() {
           </div>
           <div className="mobile-nfts__list">
             { !showNFTsSearch ? <div className="mobile-nfts__header">
-              <SelectedNFTs show={handleShowSelected} showSelected={showSelected} />
+              <SelectedNFTs show={handleShowSelected} showSelected={showSelected} setOff={setShowSelected} />
               <div className="mobile-nfts__buttons">
                 <SearchButton handleSearchTop={handleSearchTop} />
                 <ViewButton />
