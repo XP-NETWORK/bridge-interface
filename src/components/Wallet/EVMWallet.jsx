@@ -43,10 +43,10 @@ export default function EVMWallet({ wallet }) {
     </li>
   ) : (
     /* WALLET CONNECT */
-    <li  className="wllListItem" style={OFF} data-wallet="WalletConnect" /*onClick={() => onWalletConnect(activate,from.text)}*/>
+    <li onClick={() => onWalletConnect(activate, from.text)}  className="wllListItem" data-wallet="WalletConnect" /*onClick={() => onWalletConnect(activate,from.text)}*/>
       <img src={WalletConnect} alt="WalletConnect Icon" />
       WalletConnect
-      <div className="coming-chain">Coming soon</div>
+      {/* <div className="coming-chain">Coming soon</div> */}
     </li>
   );
 }
