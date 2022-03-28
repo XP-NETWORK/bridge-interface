@@ -13,7 +13,6 @@ export default function WalletList({search}) {
 
     const walletComponents = [
         { Component: <EVMWallet wallet={"MetaMask"} key="wallet-index-0" />, name: "MetaMask", type: "EVM"},
-       
         { Component: <EVMWallet wallet={"TrustWallet"} key="wallet-index-2" />, name: "Trust Wallet", type: "EVM" },
         { Component: <EVMWallet wallet={undefined} key="wallet-index-1" />, name: "WalletConnect", type: "EVM" },
         { Component: <AlgorandWallet wallet={"MyAlgo"} key="wallet-index-3" />, name: "MyAlgo", type: "Algorand" },

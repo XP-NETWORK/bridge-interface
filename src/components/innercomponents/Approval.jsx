@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import InfLith from "../../assets/img/icons/infoLifht.svg";
 import { ReactComponent as InfLithComp } from "../../assets/img/icons/infoLifht.svg";
-// import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import { Chain, Config } from "xp.network/dist/consts";
 import { ethers } from "ethers";
 import {
@@ -11,21 +10,17 @@ import {
   setApproveLoader,
   setError,
 } from "../../store/reducers/generalSlice";
-// import { isEqual } from '../helpers';
 import {
   getFactory,
   handleChainFactory,
   isALLNFTsApproved,
 } from "../../wallet/helpers";
-// import { getOldFactory } from '../../wallet/oldHelper';
 import { ExtensionProvider } from "@elrondnetwork/erdjs/out";
 import { algoConnector } from "../../wallet/connectors";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
-// import { TezosToolkit } from "@taquito/taquito";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { BeaconWallet } from "@taquito/beacon-wallet";
-// import { DAppClient, TezosOperationType } from "@airgap/beacon-sdk";
-// import { InMemorySigner } from '@taquito/signer'
+
 
 const TronWeb = require("tronweb");
 function Approval(props) {
@@ -81,7 +76,7 @@ function Approval(props) {
   };
 
   const approveEach = async (nft, signer, chain, index) => {
-    debugger;
+    // debugger;
     const arr = new Array(index + 1).fill(0);
     const factory = await getFactory();
     if (
@@ -99,7 +94,6 @@ function Approval(props) {
         )[0];
         if (!isInApprovedNFTs) {
           try {
-            // console.log(chain, 'hello')
             const ap = await chain.approveForMinter(nft, signer);
             dispatch(updateApprovedNFTs(nft));
             setFinishedApproving(arr);
@@ -115,7 +109,6 @@ function Approval(props) {
         if (error.data) {
           console.log(error.data.message);
         } else console.log(error);
-        // dispatch(setApproved(false))
         console.log(error);
       }
     } else if (from.type === "Algorand") {

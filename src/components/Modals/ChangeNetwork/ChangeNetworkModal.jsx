@@ -21,6 +21,12 @@ function ChangeNetworkModal() {
   const [loader, setLoader] = useState(false);
   const testnet = useSelector((state) => state.general.testNet);
   const widget = useSelector((state) => state.general.widget);
+  const WCProvider = useSelector(state => state.general.WCProvider)
+
+
+  const switchTrustWalletNetwork = async () => {
+
+  }
 
   async function switchNetwork() {
     setLoader(true);
@@ -112,9 +118,9 @@ function ChangeNetworkModal() {
               </div>
             )}
             {!loader && (
-              <a onClick={() => switchNetwork()} className="switching">
+              <div onClick={switchNetwork} className="switching">
                 Switch Network
-              </a>
+              </div>
             )}
           </div>
         </Modal.Body>
