@@ -42,7 +42,8 @@ export default function EVMWallet({ wallet, close }) {
       className="wllListItem"
       data-wallet="MetaMask"
     >
-      <img src={MetaMask} alt="MetaMask Icon" /> MetaMask
+      <img src={MetaMask} alt="MetaMask Icon" />
+      <p>MetaMask</p>
     </li>
   ) : wallet === "TrustWallet" /* TRUST WALLET */ ? (
     <li
@@ -57,13 +58,13 @@ export default function EVMWallet({ wallet, close }) {
       className="wllListItem"
     >
       <img src={TrustWallet} alt="WalletConnect Icon" />
-      Trust Wallet
+      <p>Trust Wallet</p>
     </li>
   ) : (
     /* WALLET CONNECT */
     <li style={OFF} className="wllListItem" data-wallet="WalletConnect">
       <img src={WalletConnect} alt="WalletConnect Icon" />
-      WalletConnect
+      <p>WalletConnect</p>
     </li>
   );
 }

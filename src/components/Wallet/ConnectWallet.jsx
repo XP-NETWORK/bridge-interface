@@ -4,7 +4,7 @@ import Close from "../../assets/img/icons/close.svg";
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 import ChangeNetworkModal from "../Modals/ChangeNetwork/ChangeNetworkModal"
 import { useDispatch, useSelector } from "react-redux";
-import { setQrCodeString, setShowAbout, setShowVideo, setWalletsModal, setWrongNetwork } from "../../store/reducers/generalSlice";
+import { setAlert, setQrCodeString, setShowAbout, setShowVideo, setWalletsModal, setWrongNetwork } from "../../store/reducers/generalSlice";
 import MaiarModal from "../MaiarModal";
 import WalletList from "./WalletList";
 import { useNavigate } from "react-router-dom";
@@ -51,6 +51,9 @@ function ConnectWallet() {
     }
     else if(connected && to && from && chainsConfig[from.key].chainId !== chainId){
       dispatch(setWrongNetwork(true))
+    }
+    else{
+      dispatch(setAlert(true))
     }
   };
 

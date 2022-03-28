@@ -46,7 +46,7 @@ export default function ElrondWallet({ wallet, close }) {
       className="wllListItem"
       data-wallet="Maiar"
     >
-      <img src={Maiar} alt="" /> Maiar
+      <img src={Maiar} alt="" /><p>Maiar</p>
     </li>
   ) : (
     <li
@@ -54,7 +54,7 @@ export default function ElrondWallet({ wallet, close }) {
       className="wllListItem"
       data-wallet="Maiar Extension"
     >
-      <img src={Elrond} alt="Elrond Icon" /> Maiar Extension
+      <img src={Elrond} alt="Elrond Icon" /><p>Maiar Extension</p>
     </li>
   );
 }

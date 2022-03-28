@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Close } from "../assets/img/icons/close.svg";
+import { setAlert } from "../store/reducers/generalSlice";
 
 function Alert() {
-  const [show, setShow] = useState(true);
+  const dispatch = useDispatch()
   const to = useSelector((state) => state.general.to);
   const from = useSelector((state) => state.general.from);
+  const alert = useSelector((state) => state.general.alert);
+  console.log("🚀 ~ file: Alert.jsx ~ line 11 ~ Alert ~ alert", alert)
 
   const handleClose = () => {
-    setShow(false);
+    dispatch(setAlert(false))
   };
 
   return (
     <div id="alertb">
-      {(from && to) || !show ? (
+      {(from && to) || !alert ? (
         ""
       ) : (
         <div className="aleartBox">

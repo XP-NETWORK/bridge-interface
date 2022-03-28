@@ -11,14 +11,16 @@ const initialState = {
   currentTx: 0,
   bigLoader: true,
   innerWidth: 0,
-
-
+  alert: true
 };
 
 const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
+    setAlert(state, action){
+      state.alert = action.payload
+    },
     setTxnStatus(state, action){
       const { status, fromHash, tokenId, toHash, initialTokenId } = action.payload
       state.txnHashArr = state.txnHashArr.map((e) => {
@@ -295,6 +297,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+  setAlert,
   setTxnStatus,
   setInnerWidth,
   updateNFTs,

@@ -39,7 +39,7 @@ export default function AlgorandWallet({ wallet, close }) {
       className="wllListItem algo"
       data-wallet="MyAlgo"
     >
-      <img src={MyAlgoBlue} alt="" /> MyAlgo
+      <img src={MyAlgoBlue} alt="" /><p>MyAlgo</p>
     </li>
   ) : wallet === "AlgoSigner" ? (
     <li
@@ -47,7 +47,7 @@ export default function AlgorandWallet({ wallet, close }) {
       data-wallet="AlgoSigner"
       className="wllListItem algo"
     >
-      <img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo Signer
+      <img src={AlgoSignerIcon} alt="Algor Signer Icon" /><p>Algo Signer</p>
     </li>
   ) : (
     <li
@@ -56,7 +56,7 @@ export default function AlgorandWallet({ wallet, close }) {
       data-wallet="Algorand Wallet"
       className="wllListItem algo"
     >
-      <img src={AlgorandWalletIcon} alt="Algor Wallet Icon" /> Algorand Wallet
+      <img src={AlgorandWalletIcon} alt="Algor Wallet Icon" /><p>Algorand Wallet</p>
     </li>
   );
 }

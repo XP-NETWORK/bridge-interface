@@ -32,8 +32,8 @@ export default function TezosWallet({ wallet, close }) {
       style={window.innerWidth > 600 ? {} : OFF}
       className="wllListItem"
     >
-      <img style={{ width: "28px" }} src={Temple} alt="Temple Icon" /> Temple
-      Wallet
+      <img style={{ width: "28px" }} src={Temple} alt="Temple Icon" /> <p>Temple
+      Wallet</p>
     </li>
   ) : (
     <li
@@ -41,7 +41,7 @@ export default function TezosWallet({ wallet, close }) {
       onClick={() => handleConnect("Beacon")}
       className="wllListItem beacon"
     >
-      <img src={BeaconW} alt="Kukai Icon" /> Beacon
+      <img src={BeaconW} alt="Kukai Icon" /><p>Beacon</p>
     </li>
   );
 }
