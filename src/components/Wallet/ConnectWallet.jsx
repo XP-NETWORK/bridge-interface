@@ -14,6 +14,8 @@ import { useWeb3React } from "@web3-react/core";
 function ConnectWallet() {
   const navigate = useNavigate()
   const dispatch = useDispatch();
+  const [walletSearch, setWalletSearch] = useState()
+
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
   const [show, setShow] = useState();
@@ -38,7 +40,6 @@ function ConnectWallet() {
   const walletsModal = useSelector(state => state.general.walletsModal)
   const widget = useSelector((state) => state.general.widget);
 
- 
 
   const handleShow = () => {
     // debugger
@@ -59,6 +60,13 @@ function ConnectWallet() {
 function handleVideoClick() {
     dispatch(setShowVideo(true))
 }
+
+useEffect(() => {
+  if(chainId && from && chainId !== from.chainId){
+    dispatch(setWrongNetwork(true))
+  }
+}, [chainId])
+
 
   return (
     <div>
@@ -86,10 +94,14 @@ function handleVideoClick() {
                 <img src={Close} alt="" />
               )}
             </span>
+          <div className="wallet-search__container">
+            <input onChange={e => setWalletSearch(e.target.value)} value={walletSearch} className="wallet-search" type="search" placeholder="Search" />
+            <div className="magnify"></div>
+          </div>
           </Modal.Header>
           <Modal.Body>
             <div className="walletListBox">
-              <WalletList connected={handleClose} />
+              <WalletList input={walletSearch} connected={handleClose} />
             </div>
           </Modal.Body>
         </Modal>

@@ -4,10 +4,10 @@ import { useSelector } from "react-redux"
 export default function SelectedNFTs({show, showSelected, setOff}) {
     const selected = useSelector(state => state.general.selectedNFTList)
 
-    useEffect(() => {
-      if(selected.length === 0){
-        setOff(false)}
-    }, [selected])
+    // useEffect(() => {
+    //   if(selected.length === 0){
+    //     setOff(false)}
+    // }, [selected])
     
 
   return (

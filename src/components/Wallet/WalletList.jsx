@@ -7,7 +7,7 @@ import ElrondWallet from "./ElrondWallet";
 import USBWallet from "./USBWallet";
 import { useSelector } from "react-redux";
 
-export default function WalletList({search, connected}) {
+export default function WalletList({search, connected, input}) {
 
     const from = useSelector(state => state.general.from)
 
@@ -27,9 +27,12 @@ export default function WalletList({search, connected}) {
         { Component: <USBWallet key="wallet-index12" connected={connected} />, name: "Trezor", type: '' }
      ]
 
+     const filteredWallets = input ? walletComponents.filter( wallet => wallet.name.toLowerCase().includes(input.toLowerCase())) : walletComponents
+
   return (
     <ul className="walletList scrollSty">
-        { window.innerWidth < 600 ? walletComponents.filter( wallet => wallet.mobile).map( wallet => wallet.Component) : walletComponents.filter( wallet => wallet.desktop).map( wallet => wallet.Component)}
+        { window.innerWidth < 600 ? filteredWallets.filter(wallet => wallet.mobile).map( wallet => wallet.Component) 
+        :filteredWallets.filter(wallet => wallet.desktop).map( wallet => wallet.Component)}
     </ul>
   )
 }

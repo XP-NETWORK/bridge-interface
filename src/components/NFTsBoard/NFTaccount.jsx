@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import NFTgridView from "../NFT/NFTgridView";
 import NFTlistView from "../NFT/NFTlistView";
 import NFTlistTop from "./NFTlistTop";
-import { setError, setSearchNFTList } from "../../store/reducers/generalSlice";
+import { setChainModal, setDepartureOrDestination, setError, setSearchNFTList } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setNFTS } from "../../wallet/helpers";
 import { ReturnBtn } from "../Settings/returnBtn";
@@ -81,8 +81,10 @@ function NFTaccount() {
   }, []);
 
   const handleFromChainSwitch = () => {
-    console.log("click")
+    dispatch(setDepartureOrDestination('departure'))
+    dispatch(setChainModal(true))
   }
+
   
   useEffect(async () => {}, [nfts]);
 

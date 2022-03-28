@@ -28,15 +28,17 @@ function ChangeNetworkModal() {
   const isSupported = chains.some(chain => chain.chainId === chainId)
 
   async function switchNetwork() {
+    console.log(from)
     setLoader(true);
     const info = testnet
       ? TESTNET_CHAIN_INFO[from?.key]
       : CHAIN_INFO[from?.key];
-    const chainId = `0x${info.chainId.toString(16)}`;
+    const _chainId = `0x${info.chainId.toString(16)}`;
+    console.log("🚀 ~ file: ChangeNetworkModal.jsx ~ line 36 ~ switchNetwork ~ _chainId", _chainId)
     try {
       const success = await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId }],
+        params: [{ _chainId }],
       });
       navigate(testnet ? "/testnet/account" : "/account")
       dispatch(setWrongNetwork(false));
@@ -47,10 +49,10 @@ function ChangeNetworkModal() {
         const toHex = (num) => {
           return "0x" + num.toString(16);
         };
-        const chain = getAddEthereumChain()[parseInt(chainId).toString()];
+        const chain = getAddEthereumChain()[parseInt(_chainId).toString()];
 
         const params = {
-          chainId: chainId, // A 0x-prefixed hexadecimal string
+          chainId: _chainId, // A 0x-prefixed hexadecimal string
           chainName: chain.name,
           nativeCurrency: {
             name: chain.nativeCurrency.name,
