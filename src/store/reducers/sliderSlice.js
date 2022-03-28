@@ -191,16 +191,24 @@ const sliderSlice = createSlice({
     moveBack(state, action){
       state.position = state.position - (action.payload * 78)
     },
-    fillBefore(state, action){
+    fill(state, action){
       state.nfts = state.nfts.map((nft, index) => {
         if(index < action.payload){
+          nft.progWidth = 100
+          nft.action = false
+        }
+        else if(index > action.payload){
           nft.progWidth = 0
+          nft.action = false
         }
         return nft
       })
     },
     fillAfter(state, action){
+      state.nfts = state.nfts.map((nft, index) => {
 
+        return nft
+      })
     }
   },
 });
@@ -213,7 +221,7 @@ export const {
  setPosition,
  moveForward,
  moveBack,
- fillBefore,
+ fill,
  fillAfter
 } = sliderSlice.actions;
 
