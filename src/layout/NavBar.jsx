@@ -14,11 +14,12 @@ import github from "../assets/img/nav/github.svg"
 import video from "../assets/img/nav/vid.svg"
 import xpnet from "../assets/img/nav/xpnet.svg"
 import UserConnect from "../components/User/UserConnect";
+import { setShowVideo } from "../store/reducers/generalSlice";
 
 function NavBar() {
     const widget = useSelector(state => state.general.widget)
     const testnet = useSelector(state => state.general.testNet)
-
+    const dispatch = useDispatch()
     return (
         !widget && <header id="Header"> 
             <Navbar expand="lg">    
@@ -48,7 +49,7 @@ function NavBar() {
                                 <div className="nav-link__icon"><img src={faq} alt="" /></div>
                                 <div className="nav-link__txt">FAQ</div>
                             </Nav.Link>
-                            <Nav.Link className="mob-link" target="_blank" href="####">
+                            <Nav.Link className="mob-link" target="_blank" href="https://docs.xp.network/">
                                 <div className="nav-link__icon"><img src={docs} alt="" /></div>
                                 <div className="nav-link__txt">DOCS</div>
                             </Nav.Link>
@@ -79,22 +80,22 @@ function NavBar() {
                                             <img src={about} alt="" />
                                             <div className="drop-icon">About</div>
                                         </div></Dropdown.Item>
-                                    <Dropdown.Item>
+                                    <Dropdown.Item href="https://docs.xp.network/docs/Multibridge2.0/faq/#how-to-whitelist-a-smart-contract-for-the-bridge-to-accept-it" target="_blank">
                                         <div className="drop-item">
                                             <img src={faq} alt="" />
                                             <div className="drop-icon">FAQs</div>
                                         </div></Dropdown.Item>
-                                    <Dropdown.Item>
+                                    <Dropdown.Item href="https://docs.xp.network/" target="_blank">
                                         <div className="drop-item">
                                             <img src={docs} alt="" />
                                             <div className="drop-icon">DOCs</div>
                                         </div></Dropdown.Item>
                                     <Dropdown.Item>
-                                        <div className="drop-item">
+                                        <div onClick={() => dispatch(setShowVideo(true))} className="drop-item">
                                             <img src={video} alt="" />
                                             <div className="drop-icon">Video Tutorial</div>
                                         </div></Dropdown.Item>
-                                    <Dropdown.Item>
+                                    <Dropdown.Item href="https://xp.network/" target="_blank">
                                         <div className="drop-item">
                                             <img src={xpnet} alt="" />
                                             <div className="drop-icon">XP.NETWORK</div>

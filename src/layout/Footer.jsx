@@ -12,10 +12,26 @@ function Footer() {
             <div className="footContainer">
                 <div className="footLeft">
                     <ul className="socialLInks">
-                        <li className="socliLink linkedin"xs><a href="https://www.linkedin.com/company/xp-network/" target="_blank" ></a></li>
-                        <li className="socliLink telegram"><a href="https://t.me/xp_network" target="_blank" ></a></li>
-                        <li className="socliLink twitter"><a href="https://twitter.com/xpnetwork_" target="_blank" ></a></li>
-                        <li className="socliLink reddit"><a href="https://www.reddit.com/user/XP_network/" target="_blank" ></a></li>
+                        <li className="socliLink">
+                            <a rel="noreferrer" href="https://www.linkedin.com/company/xpnetwork/mycompany/" target="_blank" >
+                                <div className="linkedin"></div>
+                            </a>
+                        </li>
+                        <li className="socliLink">
+                            <a rel="noreferrer" href="https://t.me/xp_network" target="_blank" >
+                                <div className="telegram"></div>
+                            </a>
+                        </li>
+                        <li className="socliLink">
+                            <a href="https://twitter.com/xpnetwork_" target="_blank" rel="noreferrer">
+                                <div className="twitter"></div>
+                            </a>
+                        </li>
+                        <li className="socliLink">
+                            <a href="https://www.reddit.com/user/XP_network/" target="_blank" rel="noreferrer">
+                                <div className="reddit"></div>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div className="footRight">
