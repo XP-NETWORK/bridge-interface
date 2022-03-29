@@ -2094,6 +2094,8 @@ span.statComp img {
   font-size: 16px;
   line-height: 126%;
   padding: 18px 45px;
+  width: 215px;
+  margin: 0 auto;
 }
 
 .maiarConnectBtn {

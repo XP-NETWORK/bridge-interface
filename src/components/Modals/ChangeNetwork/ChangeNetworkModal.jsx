@@ -24,9 +24,6 @@ function ChangeNetworkModal() {
   const WCProvider = useSelector(state => state.general.WCProvider)
 
 
-  const switchTrustWalletNetwork = async () => {
-
-  }
 
   async function switchNetwork() {
     setLoader(true);
