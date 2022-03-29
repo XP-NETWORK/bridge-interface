@@ -1,5 +1,5 @@
 .success-modal .modal-dialog{
-    max-width: 570px;
+    max-width: 530px;
     min-height: 500px;
     color: #14161A;
 }
@@ -68,6 +68,8 @@
     margin-left: 6px;
     display: flex;
     align-items: center;
+    font-size: 14px;
+
 }
 
 .success-hash img{
@@ -83,7 +85,7 @@
     line-height: 18px;
 }
 .info-item-chain{
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 26px;
     color: #14161A;
@@ -115,11 +117,11 @@
 }
 
 .success-hash{
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 26px;
     letter-spacing: 0em;
-    color: #297EFF;
+    color: #395FEB;
     display: flex;
     align-items: center;
 }

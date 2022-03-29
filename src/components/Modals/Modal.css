@@ -186,6 +186,8 @@
 .copy-tooltip__text{
   position: absolute;
   visibility: hidden;
+  display: flex;
+  justify-content: center;
 }
 .copy-tooltip__icon{
   background-image: url("../../assets/img/copy_regular.svg");
@@ -201,11 +203,11 @@
   position: absolute;
   visibility: visible;
   top: -40px;
-  left: -40px;
+  left: -55px;
   font-size: 12px;
   font-weight: 500;
   line-height: 17px;
-  min-width: 100px;
+  min-width: 120px;
   padding: 6px;
   background: #242020;
   border-radius: 6px;
@@ -220,11 +222,21 @@
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
+  
   border-color: #242020 transparent transparent transparent;
 }
 
 .video__modal .modal-dialog{
   max-width: 1024px !important;
+}
+
+@media screen and (max-width: 501px) {
+  .copy-tooltip:hover .copy-tooltip__text{
+    font-size: 10px;
+    min-width: 70px;
+    left: -30px;
+    top: -55px;
+  }
 }
 
 @media screen and (max-width: 425px) {

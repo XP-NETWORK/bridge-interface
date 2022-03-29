@@ -6,16 +6,14 @@ import "./TechnicalSupport.css"
 
 
 export default function ApproveLoader() {
-    const dispatch = useDispatch()
+
     const loader = useSelector(state => state.general.approveLoader)
-
-
+    
     return (
         <Modal       
         className="approve-modal"
         style={{
           overflow: "hidden",
-          //backgroundColor: "#00000090",
         }} 
         show={loader}>
             <div className="approve-loader__container">
