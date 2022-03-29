@@ -4,6 +4,7 @@ import Linkedin from '../assets/img/footer/linkedin.svg';
 import Reddit from '../assets/img/footer/redit.svg';
 import Telegram from '../assets/img/footer/telegram.svg';
 import Twitter from '../assets/img/footer/twitter.svg';
+import xpsince from "../assets/img/xpsince.svg"
 import "./Footer.css"
 
 function Footer() {
@@ -35,8 +36,7 @@ function Footer() {
                     </ul>
                 </div>
                 <div className="footRight">
-                    <a href="#">Terms</a>
-                    <a href="#">Privacy Policy</a>
+                    <img src={xpsince} />
                 </div>
             </div>
         </footer>

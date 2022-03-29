@@ -17,7 +17,7 @@
   right: 0;
   height: 100%;
   background: #ececf19a;
-  backdrop-filter: blur(0.2rem) grayscale(40%);
+  /* backdrop-filter: blur(0.2rem) grayscale(40%);  */
   width: 100%;
   z-index: 100;
   display: flex;
@@ -107,14 +107,16 @@
   position: absolute;
   top: 0;
   right: 0;
+  width: 100%;
   height: 100%;
-  background: #292F3F99;
+  background: rgba(239, 241, 247, 0.8);
   backdrop-filter: blur(0.1rem) grayscale(30%);
+  pointer-events: none;
 }
 
 .listed-view__not-whitelisted__button{
   background: #3E64ED;
-  border-radius: 11px;
+  border-radius: 66px;
   width: 115px;
   height: 32px;
   display: flex;
@@ -197,10 +199,10 @@
 .not-whitelisted__button{
   background-color: #3E64ED;
   font-size: 12px;
-  padding: 12px 8px;
-  border-radius: 11px;
-  font-weight: 400;
-  line-height: 18px;
+  padding: 6px 12px;
+  border-radius: 66px;
+  font-weight: 500;
+  line-height: 19.3px;
   color: white;
 }
 .not-whitelisted__button:hover, .not-whitelisted__button:active{
@@ -208,11 +210,12 @@
 }
 
 .not-whitelisted__text{
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 27px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
   text-align: center;
-  color: white;
+  color: #14161A;
+
 }
 
 .not-whitelisted:hover{
@@ -239,6 +242,7 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 17.64px;
+    border-top-left-radius: 20px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     overflow: hidden;
@@ -350,7 +354,7 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
 }
 
 .listed__view .image--toggle{
-  display: none ;
+  display: none;
 }
 
 .preload__name{
@@ -428,6 +432,7 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
     -moz-appearance: none;
     appearance: none;
     transition: all 0.5s;
+    border: 1px solid white;
 }
 .nft-box__container:hover, .nft-box__container--selected:hover{
   border: 1px solid transparent;

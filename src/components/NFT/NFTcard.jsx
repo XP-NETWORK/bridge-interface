@@ -65,7 +65,7 @@ export default function NFTcard({ nft, index }) {
         onMouseEnter={() => setOnHover(true)}
         onMouseLeave={() => setOnHover(false)}>
             <div className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
-              <div onClick={() => addRemoveNFT(nft, index)} className="nft-image__container">
+              <div onClick={() => whiteListed ? addRemoveNFT(nft, index): undefined} className="nft-image__container">
                 <div className="image__wrapper">
                   { nft.uri && isValidHttpUrl(nft.uri, index) ? 
                     video && image ? <VideoAndImage index={index} imageLoaded={() => imageLoadedHandler} videoUrl={videoUrl} imageUrl={imageUrl} />
@@ -76,6 +76,8 @@ export default function NFTcard({ nft, index }) {
                   }
                   { !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> }
                 </div>
+            { !whiteListed && <NotWhiteListed /> }
+
               </div>
               <div className={`nft-content__container ${!imageLoaded ? "preload-content-container" : ""}`}>
                 <span className="nft-name"><span className="name">{nft.name || nft.native.name}</span><NFTdetails nftInf={nft} index={index} /></span>
@@ -91,7 +93,7 @@ export default function NFTcard({ nft, index }) {
                     </div>
                 </div>
             }
-            { (!whiteListed && onHover) && <NotWhiteListed /> }
+            {/* { !whiteListed && <NotWhiteListed /> } */}
         </div>
       );
 }

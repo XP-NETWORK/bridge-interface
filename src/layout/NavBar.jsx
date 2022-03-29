@@ -37,15 +37,15 @@ function NavBar() {
                             <LinkContainer to='/connect'>
                                 <Nav.Link className="desc-link" target="_blank" href="#">Bridge</Nav.Link>
                             </LinkContainer>
-                            <Nav.Link target="_blank" href="#">
+                            {/* <Nav.Link target="_blank" href="#">
                                 <div className="nav-link__icon"><img src={about} alt="" /></div>
                                 <div className="nav-link__txt">About</div>
-                            </Nav.Link>
+                            </Nav.Link> */}
                             {/* <Nav.Link target="_blank" href="##">
                                 <div className="nav-link__icon"><img src={chains} alt="" /></div>
                                 <div className="nav-link__txt">Explorer</div>
                             </Nav.Link> */}
-                            <Nav.Link  target="_blank" href="###">
+                            <Nav.Link  target="_blank" href="https://docs.xp.network/docs/Multibridge2.0/faq/#how-to-whitelist-a-smart-contract-for-the-bridge-to-accept-it">
                                 <div className="nav-link__icon"><img src={faq} alt="" /></div>
                                 <div className="nav-link__txt">FAQ</div>
                             </Nav.Link>
