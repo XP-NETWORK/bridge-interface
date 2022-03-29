@@ -286,7 +286,7 @@ span.closeBox {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background:  #ffffff;
+  background:  #C8CCD6;
   border-radius: 10px;
   /* background: radial-gradient(
     96.34% 96.34% at 59.82% 3.66%,
