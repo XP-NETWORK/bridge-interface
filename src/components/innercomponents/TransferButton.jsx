@@ -90,7 +90,8 @@ export default function TransferButton() {
     }
 
     const sendEach = async (nft, index) => {
-        // debugger
+        //debugger
+        console.log(bigNumberFees, 'bigNumberFees');
         const signer = await getSigner()
         const nonce = CHAIN_INFO[to].nonce
         const nftSmartContract = nft.native.contract

@@ -78,6 +78,7 @@ export default function Widget() {
       const showLink = p.get("showLink");
       const chains = p.get("chains")?.split("-");
       const wallets = p.get("wallets")?.split("-");
+      const affiliationFees = p.get("affiliationFees");
 
 
      
@@ -104,6 +105,7 @@ export default function Widget() {
           tooltipBg: "#" + tooltipBg,
           iconColor: "#" + iconColor,
           showLink: showLink === "true" ? true : false,
+          affiliationFees
         })
       );
     }

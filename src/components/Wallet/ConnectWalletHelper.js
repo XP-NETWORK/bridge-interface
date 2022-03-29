@@ -5,6 +5,8 @@ import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import store  from "../../store/store"
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
+import WalletConnect from "@walletconnect/client";
+import QRCodeModal from "@walletconnect/qrcode-modal";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { WalletConnectProvider, ProxyProvider, ExtensionProvider } from "@elrondnetwork/erdjs"
 import QRCode from 'qrcode'
@@ -33,7 +35,9 @@ setOnWC,  setWC } from "../../store/reducers/generalSlice"
 
 export const wallets = ["MetaMask", "WalletConnect", "Trust Wallet", "MyAlgo", "AlgoSigner", "Algorand Wallet", "TronLink", "Temple Wallet", "Beacon", "Maiar", "Maiar Extension", "Ledger", "Trezor"]
 const { to, modalError} = store.getState()
-
+const connector = new WalletConnect({
+  bridge: "https://bridge.walletconnect.org", // Required
+});
 
 export const connectMetaMask = async (activate, from, to) => {
  const { general: {widget}} = store.getState()
@@ -41,7 +45,7 @@ export const connectMetaMask = async (activate, from, to) => {
 // debugger
     try {
         if(!window.ethereum && window.innerWidth <= 600) {
-            const uri = `https://metamask.app.link/dapp/${window.location.host + `?to=${to.text}&from=${from.text}`}${widget &&  window.location.search.replace('?', '&')}/`
+            const uri = `https://metamask.app.link/dapp/${window.location.host + `?to=${to.text}&from=${from.text}`}${widget &&  window.location.search.replace('?', '&')}/`;
             console.log(uri);
           window.open(uri)
         }
@@ -56,6 +60,29 @@ export const connectMetaMask = async (activate, from, to) => {
           else console.log(ex);
       }
 }
+
+export const connectTrustWallet = async (activate, from) => {
+  debugger
+  const { rpc, chainId } = chainsConfig[from];
+  try {
+    const walletConnect = new WalletConnectConnector({
+      rpc: {
+        [chainId]: rpc,
+      },
+      chainId,
+      qrcode: true,
+    });
+    walletConnect.networkId = chainId;
+    await activate(walletConnect, undefined, true);
+    store.dispatch(setOnWC(true));
+    store.dispatch(setWC(walletConnect));
+  } catch (error) {
+    store.dispatch(setError(error));
+    if (error.data) {
+      console.log(error.data.message);
+    } else console.log(error);
+  }
+};
 
 // Algorand blockchain connection ( AlgoSigner )
 export const connectAlgoSigner =async () => {
@@ -80,6 +107,7 @@ export const connectAlgoSigner =async () => {
 }
 
 export const onWalletConnect = async (activate, from) => {
+  debugger
   console.log(from);
   const { rpc, chainId } = chainsConfig[from];
   try {

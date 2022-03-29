@@ -12,6 +12,8 @@ function SendFees() {
     const to = useSelector(state => state.general.to)
     const from = useSelector(state => state.general.from)
     const account = useSelector(state => state.general.account)
+    const widget = useSelector(state => state.general.widget)
+    const affiliationFees = useSelector(state => state.settings.affiliationFees)
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
     const isToEVM = useSelector(state => state.general.to).type === 'EVM'
     const [fees, setFees ] = useState('')
@@ -49,15 +51,21 @@ function SendFees() {
                 else{
                     try {
                        fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
-                       console.log(fee, typeof fee);
                     } catch (error) {
                         console.error(error);
                     }
                 } 
             }
+            let bigNum = fee ? fee.multipliedBy(1.1).integerValue().toString(10) : undefined; //undefined;//.integerValue().toString(10) : undefined;
+            /*console.log(bigNum.integerValue().toString(10), 'before');
 
-            const bigNum = fee ? fee.multipliedBy(1.1).integerValue().toString(10) : undefined
-            console.log(bigNum,'bigNum');
+            if (bigNum && widget && affiliationFees) {
+                bigNum = Number(affiliationFees) > 1 ? bigNum.multipliedBy(Number(affiliationFees)) : bigNum;
+            }
+           
+            bigNum = bigNum? bigNum.integerValue().toString(10): undefined;
+            console.log(bigNum);*/
+
             dispatch(setBigNumFees(bigNum))
             const fees =  await Web3Utils.fromWei(bigNum, "ether")
             setFees(+(fees*selectedNFTList.length))

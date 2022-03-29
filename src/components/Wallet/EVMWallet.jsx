@@ -1,6 +1,6 @@
 import React from "react";
 import { useWeb3React } from "@web3-react/core";
-import { connectMetaMask, onWalletConnect } from "./ConnectWalletHelper";
+import { connectMetaMask, onWalletConnect, connectTrustWallet } from "./ConnectWalletHelper";
 import { useSelector } from "react-redux";
 import MetaMask from "../../assets/img/wallet/MetaMask.svg";
 import WalletConnect from "../../assets/img/wallet/WalletConnect 3.svg";
@@ -28,7 +28,7 @@ export default function EVMWallet({ wallet }) {
     </li>
   ) : wallet === "TrustWallet" /* TRUST WALLET */ ? (
     <li
-      onClick={() => connectMetaMask(activate, from.text)}
+      onClick={() => connectTrustWallet(activate, from.text)}
       style={
         (getMobOps() && window.innerWidth <= 600 && isEVM()) ||
         (window.ethereum && window.innerWidth <= 600)
@@ -43,10 +43,9 @@ export default function EVMWallet({ wallet }) {
     </li>
   ) : (
     /* WALLET CONNECT */
-    <li  className="wllListItem" style={OFF} data-wallet="WalletConnect" /*onClick={() => onWalletConnect(activate,from.text)}*/>
+    <li style={from.type === "EVM" && from.text !== 'Iotex' && from.text !== "Velas" && from.text !== "Fuse" ? {} : OFF} onClick={() => onWalletConnect(activate, from.text)}  className="wllListItem" data-wallet="WalletConnect" /*onClick={() => onWalletConnect(activate,from.text)}*/>
       <img src={WalletConnect} alt="WalletConnect Icon" />
       WalletConnect
-      <div className="coming-chain">Coming soon</div>
     </li>
   );
 }

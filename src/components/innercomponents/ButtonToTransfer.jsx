@@ -30,6 +30,8 @@ export default function ButtonToTransfer() {
     const account = useSelector(state => state.general.account)
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
     const testnet = useSelector(state => state.general.testNet)
+  const WCProvider = useSelector((state) => state.general.WCProvider);
+
 
     const getAlgorandWalletSigner = async () => {
         const base = new MyAlgoConnect();
@@ -60,7 +62,7 @@ export default function ButtonToTransfer() {
     }
 
     const getSigner = async () => {
-        // debugger
+        debugger
         let signer 
         try {
             if(from === "Tezos"){
@@ -80,7 +82,9 @@ export default function ButtonToTransfer() {
             }
             else if(from === 'Elrond') return maiarProvider || ExtensionProvider.getInstance()
             else{
-                const provider = window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : ''
+                const provider = new ethers.providers.Web3Provider(
+                    WCProvider?.walletConnectProvider || window.ethereum
+                  );
                 signer = provider.getSigner(account)
                 return signer
             }
@@ -91,7 +95,7 @@ export default function ButtonToTransfer() {
     }
 
     const sendEach = async (nft, index) => {
-        // debugger
+        debugger
         const signer = await getSigner()
         const toNonce = CHAIN_INFO[to].nonce
         const fromNonce = CHAIN_INFO[from].nonce
