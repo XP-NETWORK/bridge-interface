@@ -886,10 +886,10 @@ function WSettings({
                 </Accordion.Item>
               </Accordion>
 
-              <div className="referalSwitch" onClick={toggleShow}>
+             {false &&  <div className="referalSwitch" onClick={toggleShow} >
                 <input type="checkbox" checked={showLink} />
                 <span>Powered by XP Network</span>
-              </div>
+              </div>}
 
               <div className="referalSwitch">
                 <Button size="sm" onClick={onSaveSettings}>

@@ -49,6 +49,7 @@ function SendFees() {
                 else{
                     try {
                        fee = await fact.estimateFees(fromChain, toChain, selectedNFTList[0], wallet)
+                       console.log(fee, typeof fee);
                     } catch (error) {
                         console.error(error);
                     }
@@ -56,6 +57,7 @@ function SendFees() {
             }
 
             const bigNum = fee ? fee.multipliedBy(1.1).integerValue().toString(10) : undefined
+            console.log(bigNum,'bigNum');
             dispatch(setBigNumFees(bigNum))
             const fees =  await Web3Utils.fromWei(bigNum, "ether")
             setFees(+(fees*selectedNFTList.length))

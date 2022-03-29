@@ -35,19 +35,7 @@ export default function Widget() {
   );
 
 
-   useEffect(() => {
-     if (widget && settings.selectedChains.length === 2) {
-          //setFrom(from.text === settings.selectedChains[0] ? chains.find(c => c.text === settings.selectedChains[0]):chains.find(c => c.text === settings.selectedChains[1]))
-           // console.log(dependencies.from);
-          /*if (from && from.text === settings.selectedChains[0]) {
-                return dispatch(setTo(chains.find(c => c.text === settings.selectedChains[1])))
-          }
 
-          if (to && to.text === settings.selectedChains[0]) {
-            return dispatch(setFrom(chains.find(c => c.text === settings.selectedChains[0])))
-          }*/
-      }
-  }, [from, to])
 
   const dispatch = useDispatch();
 
@@ -90,6 +78,9 @@ export default function Widget() {
       const showLink = p.get("showLink");
       const chains = p.get("chains")?.split("-");
       const wallets = p.get("wallets")?.split("-");
+
+
+     
 
       dispatch(
         setSettings({
@@ -153,6 +144,14 @@ export default function Widget() {
     $img.innerHTML = power(color);
     if (widget) kssa?.appendChild($img);
   }, [widget, color]);
+
+
+  useEffect(() => {
+      if (widget && !wsettings && settings.selectedChains.length === 2) {
+        dispatch(setFrom(chains.find(c => c.text === settings.selectedChains[0])))
+        dispatch(setTo(chains.find(c => c.text === settings.selectedChains[1])))
+     }
+  }, [widget])
 
   useEffect(() => {
     if (widget) {
@@ -524,7 +523,7 @@ export default function Widget() {
         }
 
         `;
-        document.body.style.display = 'block';
+        document.body.classList.remove('widgetBlur');
     }
   }, [widget, settings]);
 

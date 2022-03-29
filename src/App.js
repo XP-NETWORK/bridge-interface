@@ -79,7 +79,7 @@ function App() {
   }, [state.validatorsInfo]);
 
   return (
-    <div className={"App"} >
+    <div className={"App"}>
       {state.wsettings && <WSettings />}
       <About />
       <Video />
