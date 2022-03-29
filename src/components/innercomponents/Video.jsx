@@ -15,9 +15,9 @@ export default function Video() {
   return (
     <Modal
       animation={false}
-      size="xl"
       show={video}
       onHide={() => handleClose()}
+      className="video__modal"
     >
       <Modal.Header className="border-0">
         <div className="tron-PopUp__header">

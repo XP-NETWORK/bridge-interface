@@ -155,17 +155,6 @@ div#root {
   background-image: url('./assets/img/icons/vid_hovered.svg');
   background-repeat: no-repeat;
 }
-.about__text {
-  width: 100%;
-  height: 300px;
-  margin: 0 auto;
-  overflow: auto;
-  color: #fff;
-}
-.about__text p {
-  padding: 0px 40px;
-  padding: 0 60px 0 60px;
-}
 .sliderContainer {
   max-width: 1170px;
   margin: 0 auto;
@@ -843,7 +832,9 @@ li.nftSelecItem .Close:hover {
   transition: 0.3s ease all;
 }
 
-
+.modal-content{
+  border: none !important;
+}
 
 .checkCircle:after {
   content: "";
@@ -860,7 +851,7 @@ li.nftSelecItem .Close:hover {
 }
 
 .modal-dialog {
-  margin-top: 15vh;
+  margin-top: 10vh;
 }
 
 .NftDetails .modal-dialog {

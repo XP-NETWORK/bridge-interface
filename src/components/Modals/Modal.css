@@ -55,11 +55,28 @@
     z-index: 1;
     min-height: 70px;
     align-items: center;
-    padding-right: 30px;
-    padding-left: 30px;
+    padding: 8px 30px;
     justify-content: center;
 }
-  
+.about__text {
+  width: calc(100% - 82px);
+  height: 236px;
+  margin: 0 auto;
+  overflow: auto;
+  color: #14161A;
+  background: #F3F3F6;
+  border-radius: 6px;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  padding: 8px 0;
+  overflow: auto;
+}
+.about__text p {
+  margin-bottom: 30px;
+  padding: 0 12px;
+}
   .modal-title {
     color: #14161A;
     font-size: 18px;
@@ -72,7 +89,7 @@
     z-index: 1;
     left: auto;
     right: 28px;
-    top: 20px;
+    top: 22px;
     cursor: pointer;
   }
   .walletListBox {
@@ -197,8 +214,18 @@
   border-color: #242020 transparent transparent transparent;
 }
 
+.video__modal .modal-dialog{
+  max-width: 1024px !important;
+}
+
 @media screen and (max-width: 425px) {
   .ChainModal .modal-dialog {
     max-width: 100% !important;
   }
+}
+
+@media screen and (min-width: 576px) {
+  .about-nft__modal .modal-dialog{
+    max-width: 660px !important;
+  }  
 }
