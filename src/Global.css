@@ -286,23 +286,23 @@ span.closeBox {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background:  #CBCBCF;
+  background:  #ffffff;
   border-radius: 10px;
-  background: radial-gradient(
+  /* background: radial-gradient(
     96.34% 96.34% at 59.82% 3.66%,
     #CBCBCF 0%,
     #d7d8da 100%
-  );
+  ); */
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+/* ::-webkit-scrollbar-thumb:hover {
   background: radial-gradient(
     96.34% 96.34% at 59.82% 3.66%,
     #4532b5 0%,
     #36405a 100%
   );
-}
+} */
 
 /* ? */
 /* span.wallet {

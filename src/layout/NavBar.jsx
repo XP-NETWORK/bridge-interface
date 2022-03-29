@@ -1,15 +1,11 @@
 import Logo from "../assets/img/nav/newXpLogo.svg"
-import burger from "../assets/img/nav/burger.svg"
 import AccountModal from "..//components/Modals/AccountModal/AccountModal"
-import { Navbar, Nav, Modal, Dropdown } from "react-bootstrap";
+import { Navbar, Nav, Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
-import { setAccountModal, setReset, setWalletsModal } from '../store/reducers/generalSlice';
 import "./NavBar.css"
-import { useWeb3React } from '@web3-react/core';
 // import Identicon from '../components/User/Identicon';
 import {LinkContainer} from 'react-router-bootstrap'
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
-import { useLocation } from "react-router-dom";
 import about from "../assets/img/nav/about.svg"
 import chains from "../assets/img/nav/chains.svg"
 import faq from "../assets/img/nav/faq.svg"
@@ -19,11 +15,7 @@ import video from "../assets/img/nav/vid.svg"
 import xpnet from "../assets/img/nav/xpnet.svg"
 import UserConnect from "../components/User/UserConnect";
 
-
-
-
 function NavBar() {
-    const dispatch = useDispatch()
     const widget = useSelector(state => state.general.widget)
     const testnet = useSelector(state => state.general.testNet)
 
@@ -48,10 +40,10 @@ function NavBar() {
                                 <div className="nav-link__icon"><img src={about} alt="" /></div>
                                 <div className="nav-link__txt">About</div>
                             </Nav.Link>
-                            <Nav.Link target="_blank" href="##">
+                            {/* <Nav.Link target="_blank" href="##">
                                 <div className="nav-link__icon"><img src={chains} alt="" /></div>
                                 <div className="nav-link__txt">Explorer</div>
-                            </Nav.Link>
+                            </Nav.Link> */}
                             <Nav.Link  target="_blank" href="###">
                                 <div className="nav-link__icon"><img src={faq} alt="" /></div>
                                 <div className="nav-link__txt">FAQ</div>

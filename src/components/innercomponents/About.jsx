@@ -18,7 +18,7 @@ export default function About() {
         <div className="tron-PopUp__header">
           <Modal.Title>What is NFT?</Modal.Title>
           <span className="CloseModal" onClick={() => handleClose()}>
-            <Close className="svgWidget" />
+          <div className="close-modal"></div>
           </span>
         </div>
       </Modal.Header>

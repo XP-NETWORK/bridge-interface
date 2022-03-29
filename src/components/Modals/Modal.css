@@ -44,6 +44,15 @@
   margin-top: 30px;
 }
 
+.close-modal{
+  width: 14px;
+  height: 14px;
+  background-image: url("../../assets/img/icons/close.svg");
+}
+.close-modal:hover{
+  background-image: url("../../assets/img/icons/close_hovered.svg");
+}
+
 .modal-backdrop {
     background: #1d212a;
     opacity: 0.9;
@@ -89,7 +98,7 @@
     z-index: 1;
     left: auto;
     right: 28px;
-    top: 22px;
+    top: 28px;
     cursor: pointer;
   }
   .walletListBox {
