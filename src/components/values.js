@@ -174,7 +174,7 @@ export const chains = [
     key: "Velas",
     text: "Velas",
     value: "Velas",
-    order: 1,
+    order: 2,
     image: { avatar: true, src: Velas },
     newChain: true,
     maintenance: false,
@@ -186,7 +186,7 @@ export const chains = [
     key: "Tezos",
     text: "Tezos",
     value: "Tezos",
-    order: 2,
+    order: 4,
     image: { avatar: true, src: Tezos },
     newChain: false,
     coming: false,
@@ -225,11 +225,11 @@ export const chains = [
     key: "Aurora",
     text: "Aurora",
     value: "Aurora",
-    order: 4,
+    order: 1,
     image: { avatar: true, src: Aurora },
     maintenance: false,
     testNet: false,
-    mainnet: false,
+    mainnet: true,
     newChain: true
   },
   {
@@ -401,6 +401,7 @@ export const chainsConfig = {
     image: Aurora,
     rpc: "",
     chainId: 868455272153094,
+    Chain : Chain.GODWOKEN,
     tx: ""
   }
 
