@@ -11,6 +11,7 @@ import ChangeNetworkLoader from "../../innercomponents/ChangeNetworkLoader";
 import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg";
 import { useNavigate } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
+import icon from "../../../assets/img/icons/book.svg"
 
 function ChangeNetworkModal() {
   const handleClose = () => {
@@ -28,7 +29,6 @@ function ChangeNetworkModal() {
   const isSupported = chains.some(chain => chain.chainId === chainId)
 
   async function switchNetwork() {
-    console.log(from)
     setLoader(true);
     const info = testnet
       ? TESTNET_CHAIN_INFO[from?.key]
@@ -106,7 +106,13 @@ function ChangeNetworkModal() {
           <div className="wrongNFT">
             <div className="nftWornTop">
               <span className="worngImg">
-                <img src={Wrong} alt="Worng" />
+                <div className="wrong-icon">
+                  <div className="first-wrong__bg">
+                    <div className="second-wrong__bg">
+                      <img src={icon} alt="" />
+                    </div>
+                  </div>
+                </div>
               </span>
               {isSupported ? <h3>Switch to {from?.key === "xDai" ? "Gnosis Chain" : from?.key} {testnet ? "TestNet" : "Mainnet"}</h3>
               : <h3>Please switch to supported Network</h3>
