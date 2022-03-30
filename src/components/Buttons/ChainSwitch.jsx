@@ -9,16 +9,16 @@ export default function ChainSwitch({ assignment, func }) {
         switch (assignment) {
             case "from":
             return(
-            <span className='chain-switch'>
+            <span onClick={func} className='chain-switch'>
                 <img style={{ width: "30px" }} src={from.image.src} alt="" /> {from.key === "xDai" ? "Gnosis Chain" : from.key}
-                <div onClick={func} className="arrow-down"></div>
+                <div  className="arrow-down"></div>
             </span>
             )
             case "to":
             return(
-            <span className='chain-switch'>
+            <span onClick={func} className='chain-switch'>
                 <img style={{ width: "30px" }} src={to.image.src} alt="" /> {to.key === "xDai" ? "Gnosis Chain" : to.key}
-                <div onClick={func} className="arrow-down"></div>
+                <div  className="arrow-down"></div>
             </span>
             )
             default:

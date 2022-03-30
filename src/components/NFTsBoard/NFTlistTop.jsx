@@ -14,13 +14,8 @@ function NFTlistTop() {
   const dispatch = useDispatch();
   const nfts = useSelector((state) => state.general.NFTList);
   const onlyWhiteListedNFTs = nfts?.filter(n => n.whitelisted)
-  const { algorandAccount, tronWallet, elrondAccount, tezosAccount, account, bigLoader } = useSelector((state) => state.general);
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
-  const NFTListView = useSelector((state) => state.general.NFTListView);
   const OFF = { opacity: 0.6, pointerEvents: "none" };
-  const from = useSelector((state) => state.general.from);
-
-
 
   const handleFromChainSwitch = () => {
     dispatch(setDepartureOrDestination('departure'))
@@ -42,13 +37,13 @@ function NFTlistTop() {
           <Refresh />
         </div>
         <SelectedNFTs />
-        <div className="nftTopRIght">
+        {nfts?.length > 0 &&  <div className="nftTopRIght">
           <NFTSearch />
           <ViewButton />
           {onlyWhiteListedNFTs?.length === selectedNFTs?.length && selectedNFTs?.length  ? <div className="delete-all" onClick={() => dispatch(cleanSelectedNFTList())}></div>
           :<div style={nfts ? {} : OFF} onClick={() => dispatch(allSelected())} className="select-all"></div>
           }
-        </div>
+        </div>}
       </div>
     </>
   );

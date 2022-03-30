@@ -65,6 +65,7 @@
     padding: 6px;
     border-radius: 38px;
     box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.25);
+    cursor: pointer;
 }
 .arrow-down {
     position: relative;

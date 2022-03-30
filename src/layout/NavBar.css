@@ -20,6 +20,8 @@
   font-weight: 600;
   line-height: 20px;
   letter-spacing: 0.04em;
+  color: #222222 !important;
+
 }
 
 .navbar-nav{
@@ -53,7 +55,11 @@
 .nav-link--selected{
   background: #ECECF1;
 }
-.navbar-nav .active{
+.navbar-brand {
+  background-color: unset !important;
+}
+
+.active{
   background: #ECECF1;
   border-radius: 76px;
 }

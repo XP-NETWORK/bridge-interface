@@ -3,7 +3,6 @@ import AccountModal from "..//components/Modals/AccountModal/AccountModal"
 import { Navbar, Nav, Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import "./NavBar.css"
-// import Identicon from '../components/User/Identicon';
 import {LinkContainer} from 'react-router-bootstrap'
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import about from "../assets/img/nav/about.svg"
@@ -26,7 +25,7 @@ function NavBar() {
             <LinkContainer to="/connect">
                 <Navbar.Brand>
                     <img src={Logo} alt="Xp Network"/>
-                    <div >MULTICHAIN NFT BRIDGE</div>
+                    <div>MULTICHAIN NFT BRIDGE</div>
                     { testnet && <span className="testnet">TestNet</span>}
                 </Navbar.Brand>
             </LinkContainer>
