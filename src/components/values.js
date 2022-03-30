@@ -229,7 +229,7 @@ export const chains = [
     image: { avatar: true, src: Aurora },
     maintenance: false,
     testNet: false,
-    mainnet: true,
+    mainnet: false,
     newChain: true
   },
   {
@@ -240,7 +240,7 @@ export const chains = [
     order: 10,
     image: { avatar: true, src: Aurora },
     maintenance: false,
-    testNet: true,
+    testNet: false,
     mainnet: false,
     newChain: true
   }
