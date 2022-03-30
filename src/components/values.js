@@ -228,7 +228,19 @@ export const chains = [
     order: 4,
     image: { avatar: true, src: Aurora },
     maintenance: false,
-    testnet: false,
+    testNet: false,
+    mainnet: false,
+    newChain: true
+  },
+  {
+    type: "EVM",
+    key: "Godwoken",
+    text: "Godwoken",
+    value: "Godwoken",
+    order: 10,
+    image: { avatar: true, src: Aurora },
+    maintenance: false,
+    testNet: true,
     mainnet: false,
     newChain: true
   }
@@ -383,6 +395,15 @@ export const chainsConfig = {
     Chain: Chain.AURORA,
     tx: "https://explorer.mainnet.aurora.dev/tx/",
   },
+  Godwoken: {
+    type: "EVM",
+    token: "CKB",
+    image: Aurora,
+    rpc: "",
+    chainId: 868455272153094,
+    tx: ""
+  }
+
 };
 
 export const coins = [
@@ -404,6 +425,7 @@ export const coins = [
   "IOTX", //15
   "ONE", //16
   "AETH", //17
+  "CKB" //18
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -428,6 +450,10 @@ export const TESTNET_CHAIN_INFO = {
   },
   Tezos: {
     nonce: 0x12,
+  },
+  Godwoken: {
+    nonce: 0x16,
+    chainId: 868455272153094
   }
 };
 
@@ -548,7 +574,7 @@ export const CHAIN_INFO = {
     native: coins[12],
     nonce: 16,
     decimals: 1e18,
-    rpc: "https://rpc.fuse.io/",
+    rpcRrl: "https://rpc.fuse.io/",
     chainId: 122,
     blockExplorerUrls: "",
     contract: "",
@@ -557,7 +583,7 @@ export const CHAIN_INFO = {
     native: coins[13],
     nonce: 19,
     decimals: 1e18,
-    rpc: "https://velasnode.quigon.com/velas",
+    rpcRrl: "https://velasnode.quigon.com/velas",
     chainId: 106,
     blockExplorerUrls: "",
     contract: "",
@@ -566,7 +592,7 @@ export const CHAIN_INFO = {
     native: coins[14],
     nonce: 0x12,
     decimals: 1e6,
-    rpc: "https://mainnet-tezos.giganode.io/",
+    rpcRrl: "https://mainnet-tezos.giganode.io/",
     chainId: 0x12,
     blockExplorerUrls: "",
     contract: "",
@@ -575,7 +601,7 @@ export const CHAIN_INFO = {
     native: coins[15],
     nonce: 0x14,
     decimals: 1e18,
-    rpc: "https://babel-api.mainnet.iotex.io",
+    rpcRrl: "https://babel-api.mainnet.iotex.io",
     chainId: 4689,
     blockExplorerUrls: "",
     contract: "",
@@ -584,7 +610,7 @@ export const CHAIN_INFO = {
     native: coins[16],
     nonce: 12,
     decimals: 1e18,
-    rpc: "https://rpc.s0.t.hmny.io",
+    rpcRrl: "https://rpc.s0.t.hmny.io",
     chainId: 1666600000,
     blockExplorerUrls: "",
     contract: "",
@@ -593,9 +619,16 @@ export const CHAIN_INFO = {
     native: coins[17],
     nonce: 0x15,
     decimals: 1e18,
-    rpc: "https://mainnet.aurora.dev",
+    rpcRrl: "https://mainnet.aurora.dev",
     chainId: 1313161554,
     blockExplorerUrls: "",
     contract: "",
   },
+  Godwoken: {
+    native: coins[18],
+    nonce: 0x16,
+    decimals: 8,
+    rpcRrl: "https://godwoken-testnet-web3-v1-rpc.ckbapp.dev",
+    chainId: 868455272153094,
+  }
 };

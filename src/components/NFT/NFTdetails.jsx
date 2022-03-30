@@ -107,6 +107,14 @@ function NFTdetails({ nftInf }) {
                 <p>{nftInf.collectionIdent}</p>
               </div>}
               <div className="nftInfDesc nftInfBox">
+                <label>Collection Name</label>
+                <p>{native.name}</p>
+              </div>
+              <div className="nftInfDesc nftInfBox">
+                <label>Symbol</label>
+                <p>{native.symbol}</p>
+              </div>
+              <div className="nftInfDesc nftInfBox">
                 <label>Description</label>
                 <p>{description}</p>
               </div>

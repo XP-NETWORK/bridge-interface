@@ -4174,6 +4174,22 @@ algosdk@^1.12.0:
     tweetnacl "^1.0.3"
     url-parse "^1.5.1"
 
+algosdk@^1.15.0-beta.1:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/algosdk/-/algosdk-1.15.0.tgz#f6837702966dcce8df724fdb35dbe7156f7f6f18"
+  integrity sha512-541JhpsmtIh9WcEHBrRsIJhmI8IXsMan0VtCHRfZ1GvWS8CjqafqJUXxDa2kgyZx3wdm/pKin5+gt7HcmfOuaQ==
+  dependencies:
+    algo-msgpack-with-bigint "^2.1.1"
+    buffer "^6.0.2"
+    hi-base32 "^0.5.1"
+    js-sha256 "^0.9.0"
+    js-sha3 "^0.8.0"
+    js-sha512 "^0.8.0"
+    json-bigint "^1.0.0"
+    superagent "^6.1.0"
+    tweetnacl "^1.0.3"
+    url-parse "^1.5.1"
+
 alphanum-sort@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
@@ -16799,7 +16815,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "0.1.0"
-  resolved "git+https://github.com/xp-network/xpjs#89faa285d45bf29013c52020da93211462204f77"
+  resolved "git+https://github.com/xp-network/xpjs#885b12df6cde7701936a72557a3daeec93fa2e8e"
   dependencies:
     "@elrondnetwork/erdjs" "^8.0.1-alpha.8"
     "@json-rpc-tools/utils" "^1.7.6"
@@ -16809,7 +16825,7 @@ xmlhttprequest@1.8.0:
     "@taquito/tzip12" "^11.1.0"
     "@vechain/ethers" "^4.0.27-5"
     "@walletconnect/client" "^1.7.0"
-    algosdk "^1.12.0"
+    algosdk "^1.15.0-beta.1"
     axios "^0.21.1"
     bignumber.js "9.0.1"
     crypto-exchange-rate "git+https://github.com/xp-network/exchange-rate#master-dist"
