@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 html,
 body {
   font-family: "Inter", sans-serif;
@@ -1246,14 +1246,14 @@ span.statComp img {
   position: absolute;
   z-index: 1;
   left: 0;
-  top: 25%;
+  top: 27%;
   width: 100%;
   display: flex;
 }
 
 .nonftAcc {
   position: absolute;
-  left: 47.3%;
+  left: 49%;
   top: 50%;
   width: 505px;
   display: flex;
@@ -1267,35 +1267,38 @@ span.statComp img {
   font-size: 16px;
   line-height: 160%;
   color: #14161A;
-
-  background-image: url("./assets/img/noNftBG.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 .nonftAcc img.nonft {
-  margin-bottom: 35px;
+  margin-bottom: 22px;
   display: block;
 }
 
 .nonftAcc h2 {
-  font-weight: 800;
-  font-size: 38px;
-  line-height: 49px;
+  font-family: Poppins;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 38px;
   color: #14161A;
-
+}
+.nonftAcc span{
+  padding-top: 6px;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
 }
 
 .switching {
-  background: #3e64ed;
+  background: #395FEB;
   color: #fff;
-  font-size: 16px;
-  line-height: 126%;
-  padding: 18px 45px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  padding: 16px 32px;
   border-radius: 66px;
-  margin: 32px auto 18px;
-  max-width: 300px;
+  /* margin: 32px auto 18px; */
+  /* max-width: 300px; */
 }
 
 .maiarConnectBtn {

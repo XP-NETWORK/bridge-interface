@@ -10,14 +10,13 @@
     height: 320px;
     border-radius: 20px;
     background: rgba(220, 220, 224, 0.3);
-    border: 1px solid #ECECF1;
+    border: 1px dashed #ECECF1;
 }
 
 @media screen and (max-width: 1200px){
     .empty__box{
         height: 320px;
         border-radius: 20px;
-        border: 1px dashed #36405A;
     }
 }
 
