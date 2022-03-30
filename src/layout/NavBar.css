@@ -135,7 +135,7 @@
   background-image: url("../assets/img/nav/burger_close.svg");
 }
 .dropdown-menu{
-  left: -115px;
+  left: -240px;
   border: none;
   filter: drop-shadow(0px 4px 24px rgba(0, 0, 0, 0.12));
   border-radius: 20px;
