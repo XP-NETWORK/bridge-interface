@@ -132,6 +132,7 @@ export default function ButtonToTransfer() {
                 // console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 127 ~ sendEach ~ mintWidth", mintWidth)
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
+                console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 148 ~ sendEach ~ bigNumberFees", bigNumberFees)
                 result = await factory.transferNft(
                     fromChain, 
                     toChain,   

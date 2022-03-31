@@ -240,7 +240,7 @@ export const chains = [
     order: 10,
     image: { avatar: true, src: Aurora },
     maintenance: false,
-    testNet: false,
+    testNet: true,
     mainnet: false,
     newChain: true
   }
