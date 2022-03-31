@@ -204,7 +204,7 @@ export const chains = [
     newChain: true,
     coming: false,
     maintenance: false,
-    testNet: false,
+    testNet: true,
     mainnet: true,
     off: true,
   },
@@ -455,6 +455,10 @@ export const TESTNET_CHAIN_INFO = {
   Godwoken: {
     nonce: 0x16,
     chainId: 868455272153094
+  },
+  Iotex: {
+    nonce: 0x14,
+    chainId: 4690
   }
 };
 

@@ -32,7 +32,6 @@ export default function ChainListBox(props) {
     const [fromChains, setFromChains] = useState(chains)
     const [toChains, setToChains] = useState(chains)
     
-    console.log("🚀 ~ file: ChainListBox.jsx ~ line 4 ~ chains", chains)
 
 
 
