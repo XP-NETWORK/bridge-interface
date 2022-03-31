@@ -145,7 +145,7 @@ export default function AccountModal() {
         {/* <button onClick={() => switchNetwork()} className="changeBtn disabled">
           Change Network
         </button> */}
-        <button onClick={() => handleDisconnect()} className="changeBtn">
+        <button onClick={() => window.location.reload()} className="changeBtn">
           Disconnect
         </button>
       </div>

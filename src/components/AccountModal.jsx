@@ -55,7 +55,7 @@ export default function AccountModal() {
   const accountModal = useRef(null);
 
   function handleDisconnect() {
-    dispatch(setReset());
+   console.log("sdjkfhsuyfgshgfds");
   }
 
   async function switchNetwork() {
@@ -172,7 +172,7 @@ export default function AccountModal() {
         <button onClick={() => switchNetwork()} className="changeBtn disabled">
           Change Network
         </button>
-        <button onClick={() => handleDisconnect()} className="changeBtn">
+        <button onClick={handleDisconnect} className="changeBtn">
           Disconnect
         </button>
       </div>

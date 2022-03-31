@@ -242,7 +242,19 @@ export const chains = [
     order: 4,
     image: { avatar: true, src: Aurora },
     maintenance: false,
-    testnet: false,
+    testNet: false,
+    mainnet: false,
+    newChain: true
+  },
+  {
+    type: "EVM",
+    key: "Godwoken",
+    text: "Godwoken",
+    value: "Godwoken",
+    order: 10,
+    image: { avatar: true, src: Aurora },
+    maintenance: false,
+    testNet: false,
     mainnet: false,
     newChain: true
   }
