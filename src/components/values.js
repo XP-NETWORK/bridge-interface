@@ -107,8 +107,8 @@ export const chains = [
     value: "Algorand",
     order: 5,
     image: { avatar: true, src: Algorand },
-    maintenance: true,
-    testNet: false,
+    maintenance: false,
+    testNet: true,
     mainnet: true,
   },
   {
@@ -459,6 +459,9 @@ export const TESTNET_CHAIN_INFO = {
   Iotex: {
     nonce: 0x14,
     chainId: 4690
+  },
+  Algorand: {
+   nonce: 15,
   }
 };
 
