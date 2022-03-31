@@ -86,16 +86,12 @@ useEffect(() => {
           show={show || walletsModal}
           onHide={handleClose}
           animation={false}
-          className="ChainModal"
+          className="ChainModal wallet-modal"
         >
           <Modal.Header>
             <Modal.Title>Connect Wallet</Modal.Title>
             <span className="CloseModal" onClick={handleClose}>
-              {widget ? (
-                <CloseComp className="svgWidget" />
-              ) : (
-                <img src={Close} alt="" />
-              )}
+              <div className="close-modal"></div>
             </span>
           <div className="wallet-search__container">
             <input onChange={e => setWalletSearch(e.target.value)} value={walletSearch} className="wallet-search" type="search" placeholder="Search" />

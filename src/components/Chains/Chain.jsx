@@ -10,7 +10,7 @@ import Status from "./Status";
 export default function Chain(props) {
   const { filteredChain, chainSelectHandler, text, image, coming, newChain, chainKey, maintenance} = props
   const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
-  const OFF = { opacity: 0.6, pointerEvents: "none" };
+  const OFF = { pointerEvents: "none" };
   const [chainStatus, setChainStatus] = useState(undefined)
 
 

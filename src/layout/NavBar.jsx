@@ -44,7 +44,7 @@ function NavBar() {
                                 <div className="nav-link__icon"><img src={chains} alt="" /></div>
                                 <div className="nav-link__txt">Explorer</div>
                             </Nav.Link> */}
-                            <Nav.Link  target="_blank" href="https://docs.xp.network/docs/Multibridge2.0/faq/#how-to-whitelist-a-smart-contract-for-the-bridge-to-accept-it">
+                            <Nav.Link  target="_blank" href="https://docs.xp.network/docs/Multibridge2.0/faq">
                                 <div className="nav-link__icon"><img src={faq} alt="" /></div>
                                 <div className="nav-link__txt">FAQ</div>
                             </Nav.Link>
@@ -79,7 +79,7 @@ function NavBar() {
                                             <img src={about} alt="" />
                                             <div className="drop-icon">About</div>
                                         </div></Dropdown.Item>
-                                    <Dropdown.Item href="https://docs.xp.network/docs/Multibridge2.0/faq/#how-to-whitelist-a-smart-contract-for-the-bridge-to-accept-it" target="_blank">
+                                    <Dropdown.Item href="https://docs.xp.network/docs/Multibridge2.0/faq" target="_blank">
                                         <div className="drop-item">
                                             <img src={faq} alt="" />
                                             <div className="drop-icon">FAQs</div>

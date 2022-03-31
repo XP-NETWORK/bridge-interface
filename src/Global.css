@@ -217,12 +217,12 @@ div#root {
 }
 span.closeBox {
   height: 20px;
-  width: 28px;
+  width: 22px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   position: absolute;
-  right: 14px;
+  right: 18px;
   border-left: 1px solid #62718a;
   cursor: pointer;
 }
@@ -1297,8 +1297,8 @@ span.statComp img {
   line-height: 22px;
   padding: 16px 32px;
   border-radius: 66px;
-  /* margin: 32px auto 18px; */
-  /* max-width: 300px; */
+  width: 230px;
+  margin: 22px auto 0 auto;
 }
 
 .maiarConnectBtn {

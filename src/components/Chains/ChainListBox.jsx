@@ -12,8 +12,8 @@ import {
 import Chain from "./Chain"
 import ChainSearch from "../Chains/ChainSearch"
 import { Modal } from "react-bootstrap";
-import Close from "../../assets/img/icons/close.svg";
-import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
+// import Close from "../../assets/img/icons/close.svg";
+// import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 import { useState } from "react";
 import { filterChains } from "./ChainHelper";
 import { useWeb3React } from "@web3-react/core";
@@ -31,7 +31,8 @@ export default function ChainListBox(props) {
   const switchChain = useSelector((state) => state.general.switchDestination);
   const widget = useSelector((state) => state.general.widget);
   const [fromChains, setFromChains] = useState(chains.sort((a, b) => b.order - a.order))
-  const [toChains, searchToChains] = useState(chains.sort((a, b) => b.order - a.order))
+  const [toChains, setToChains] = useState(chains.sort((a, b) => b.order - a.order))
+  console.log("🚀 ~ file: ChainListBox.jsx ~ line 35 ~ ChainListBox ~ toChains", toChains)
   const elrondAccount = useSelector(state => state.general.elrondAccount)
   const tezosAccount = useSelector(state => state.general.tezosAccount)
   const algorandAccount = useSelector(state => state.general.algorandAccount)
@@ -95,20 +96,6 @@ export default function ChainListBox(props) {
     dispatch(setChainSearch(""));
   };
 
-  const checkChainId = chain => {
-   // debugger
-    if(chain.type !== "EVM"){
-      return true
-    }
-    else if(chainId && chainId === chainsConfig[chain.key].chainId){
-      console.log("false")
-      return true
-    }
-    else if(!chainId){
-      return true
-    }
-    else return false
-  }
 
   const chainSelectHandler = (chain) => {
     // debugger
@@ -159,7 +146,7 @@ export default function ChainListBox(props) {
   }, [elrondAccount, tezosAccount, algorandAccount, tronAccount, evmAccount])
 
   useEffect(() => {
-    if(from)searchToChains(filterChains(chains, from.text))
+    if(from)setToChains(filterChains(chains, from.text))
   }, [from])
   
   useEffect(() => {
@@ -177,7 +164,7 @@ export default function ChainListBox(props) {
           departureOrDestination === "destination" ? "destination" : "departure"
         } chain`}</Modal.Title>
         <span className="CloseModal" onClick={() => handleClose()}>
-          {widget ? <CloseComp className="svgWidget" /> : <img src={Close} alt="" />}
+          <div className="close-modal"></div>
         </span>
       </Modal.Header>
       <Modal.Body>
@@ -192,7 +179,7 @@ export default function ChainListBox(props) {
             : (mainnet || coming) && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`}/>})
             
             : toChains
-            .filter(chain => from && from.type === "EVM" && chain.type === "EVM")
+            // .filter(chain => from && from.type === "EVM" && chain.type === "EVM")
             .filter( chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : ""))
             .sort((chain) => {
               if(chain.coming) return 1

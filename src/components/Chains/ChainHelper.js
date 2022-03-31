@@ -8,5 +8,8 @@ export const checkIfLive = (chain, validatorsInfo) => {
 };
 
 export const filterChains = (arr, extraChain) => {
+console.log("🚀 ~ file: ChainHelper.js ~ line 11 ~ filterChains ~ extraChain", extraChain)
+console.log("🚀 ~ file: ChainHelper.js ~ line 11 ~ filterChains ~ arr", arr)
+console.log("🚀 ~ file: ChainHelper.js ~ line 11 ~ filterChains ~ arr", arr.filter(chain => chain.text !== extraChain))
   return arr.filter(chain => chain.text !== extraChain)
 }

@@ -8,7 +8,6 @@ function Alert() {
   const to = useSelector((state) => state.general.to);
   const from = useSelector((state) => state.general.from);
   const alert = useSelector((state) => state.general.alert);
-  console.log("🚀 ~ file: Alert.jsx ~ line 11 ~ Alert ~ alert", alert)
 
   const handleClose = () => {
     dispatch(setAlert(false))

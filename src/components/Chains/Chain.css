@@ -84,13 +84,9 @@
 .nftChainList {
   list-style: none;
   max-height: 364px;
-  overflow: auto;
+  overflow: scroll;
 }
-.nftChainList::-webkit-scrollbar {
-  display: none;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
+
 .nftChainItem {
   display: flex;
   align-items: center;
