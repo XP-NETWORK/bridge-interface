@@ -32,13 +32,13 @@ export default function UserConnect({desktop}) {
 
     const getAccountString = () => {
       if(innerWidth >= 425){
-        return `${walletAccount.substring(0, 18)}...${walletAccount.substring(walletAccount.length - 2)}`
+        return `${walletAccount.substring(0, 5)}...${walletAccount.substring(walletAccount.length - 4)}`
       }
       else if(innerWidth >= 375){
-        return `${walletAccount.substring(0, 12)}...${walletAccount.substring(walletAccount.length - 2)}`
+        return `${walletAccount.substring(0, 4)}...${walletAccount.substring(walletAccount.length - 4)}`
       }
       else if(innerWidth >= 320){
-        return `${walletAccount.substring(0, 6)}...${walletAccount.substring(walletAccount.length - 2)}`
+        return `${walletAccount.substring(0, 3)}...${walletAccount.substring(walletAccount.length - 4)}`
       }
     }
 

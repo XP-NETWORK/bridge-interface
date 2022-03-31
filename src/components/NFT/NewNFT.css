@@ -16,14 +16,15 @@
   top: 0;
   right: 0;
   height: 100%;
-  background: #ececf19a;
-  /* backdrop-filter: blur(0.2rem) grayscale(40%);  */
+  background: #ececf196;
+  backdrop-filter: blur(0.2rem) grayscale(40%); 
   width: 100%;
   z-index: 100;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   gap: 20px;
+  padding-right: 2px;
 
 }
 .listed-nft-radio, .listed-nft-radio--selected{
