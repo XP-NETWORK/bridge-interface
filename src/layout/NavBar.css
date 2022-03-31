@@ -73,9 +73,8 @@
   line-height: 19px;
   letter-spacing: 0em;
   color: #62718A;
-
   padding: 10px 16px;
-  background: rgba(207, 207, 217, 0.2);
+  /* background: rgba(207, 207, 217, 0.2); */
   border: 1px solid rgba(207, 207, 217, 0.9);
   box-sizing: border-box;
   border-radius: 52px;

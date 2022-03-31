@@ -28,7 +28,19 @@ export default function EVMWallet({ wallet, close }) {
      }
   }
 
-
+  const getStyle = () => {
+    if(!from){
+      return {}
+    }
+    else if(from && from.type === "EVM"){
+      return {}
+    }
+    else if((from.type === "EVM" && getMobOps() && window.innerWidth <= 600) 
+    || (window.ethereum && window.innerWidth <= 600 && from.type === "EVM")){
+      return {}
+    }
+    else return OFF
+  }
 
   useEffect(() => {
     if(account)
@@ -37,7 +49,8 @@ export default function EVMWallet({ wallet, close }) {
   
 
   return wallet === "MetaMask" /* METAMASK */ ? (
-    <li
+    <li 
+      style={getStyle()}
       onClick={connectHandler}
       className="wllListItem"
       data-wallet="MetaMask"
@@ -47,13 +60,9 @@ export default function EVMWallet({ wallet, close }) {
     </li>
   ) : wallet === "TrustWallet" /* TRUST WALLET */ ? (
     <li
+    
       onClick={connectHandler}
-      style={
-        (getMobOps() && window.innerWidth <= 600 && isEVM()) ||
-        (window.ethereum && window.innerWidth <= 600)
-          ? {}
-          : OFF
-      }
+      style={getStyle()}
       data-wallet="TrustWallet"
       className="wllListItem"
     >

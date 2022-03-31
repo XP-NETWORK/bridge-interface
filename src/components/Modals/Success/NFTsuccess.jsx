@@ -186,7 +186,7 @@ function NFTsuccess() {
                 <label>Sent From</label>{" "}
                 <span className="">
                   <img alt="" src={from ? from.image.src : ""} />{" "}
-                  {from?.text === "xDai" ? "Gnosis Chain" : from?.text}
+                  {from?.text === "xDai" ? "Gnosis" : from?.text}
                 </span>
               </div>
               <div className="sucesList">
@@ -203,7 +203,7 @@ function NFTsuccess() {
               <div className="sucesList">
                 <label>Sent To</label>{" "}
                 <span className="">
-                  <img alt="" src={to ? to.image.src : ""} /> {to?.key === "xDai" ? "Gnosis Chain" : to?.key}
+                  <img alt="" src={to ? to.image.src : ""} /> {to?.key === "xDai" ? "Gnosis" : to?.key}
                 </span>
               </div>
               <div className="sucesList">

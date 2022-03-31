@@ -32,7 +32,6 @@ export default function ChainListBox(props) {
   const widget = useSelector((state) => state.general.widget);
   const [fromChains, setFromChains] = useState(chains.sort((a, b) => b.order - a.order))
   const [toChains, setToChains] = useState(chains.sort((a, b) => b.order - a.order))
-  console.log("🚀 ~ file: ChainListBox.jsx ~ line 35 ~ ChainListBox ~ toChains", toChains)
   const elrondAccount = useSelector(state => state.general.elrondAccount)
   const tezosAccount = useSelector(state => state.general.tezosAccount)
   const algorandAccount = useSelector(state => state.general.algorandAccount)

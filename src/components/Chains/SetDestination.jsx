@@ -16,7 +16,7 @@ export default function SetDestination() {
     <div className="selChain seleDesti" onClick={() => handleShow("destination")}>
     { to ?
         <div className="seleDestiSele">
-            <img  style={{width: "28px"}} src={ to.image.src } alt="" />{to.text === "xDai" ? "Gnosis Chain" : to.text}
+            <img  style={{width: "28px"}} src={ to.image.src } alt="" />{to.text === "xDai" ? "Gnosis" : to.text}
         </div>
         :
         <div className="seleDestiSele">

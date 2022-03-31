@@ -74,11 +74,12 @@ function NavBar() {
                             <Dropdown className='navbar-dropdown'>
                                 <DropdownToggle><div className='navbar-dropdown__btn'></div></DropdownToggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item>
+                                    {/* <Dropdown.Item>
                                         <div className="drop-item">
                                             <img src={about} alt="" />
                                             <div className="drop-icon">About</div>
-                                        </div></Dropdown.Item>
+                                        </div>
+                                    </Dropdown.Item> */}
                                     <Dropdown.Item href="https://docs.xp.network/docs/Multibridge2.0/faq" target="_blank">
                                         <div className="drop-item">
                                             <img src={faq} alt="" />

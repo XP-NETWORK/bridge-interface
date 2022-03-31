@@ -114,12 +114,12 @@ function ChangeNetworkModal() {
                   </div>
                 </div>
               </span>
-              {isSupported ? <h3>Switch to {from?.key === "xDai" ? "Gnosis Chain" : from?.key} {testnet ? "TestNet" : "Mainnet"}</h3>
+              {isSupported ? <h3>Switch to {from?.key === "xDai" ? "Gnosis" : from?.key} {testnet ? "TestNet" : "Mainnet"}</h3>
               : <h3>Please switch to supported Network</h3>
               }
               {isSupported ? <p>
                 XP.NETWORK Bridge requires you to <br /> connect to the{" "}
-                {from?.key === "xDai" ? "Gnosis Chain" : from?.key} {testnet ? "TestNet" : "Mainnet"}
+                {from?.key === "xDai" ? "Gnosis" : from?.key} {testnet ? "TestNet" : "Mainnet"}
               </p>
               :<p>In order to continue bridging XP.NETWORK Bridge <br />  requires you to connect to supported Network.</p>
               }

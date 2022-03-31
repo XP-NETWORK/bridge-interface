@@ -16,7 +16,7 @@ export default function SetDeparture() {
         <div className="selChain seleDepat" onClick={() => handleShow("departure")}>
             { from ? 
                 <div className="seleDepatSelec">
-                    <img src={ from.image.src } alt="" />{from.text === "xDai" ? "Gnosis Chain" : from.text}
+                    <img src={ from.image.src } alt="" />{from.text === "xDai" ? "Gnosis" : from.text}
                 </div>
                 :
                 <div className="seleDepatSelec">

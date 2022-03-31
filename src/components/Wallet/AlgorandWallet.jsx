@@ -8,13 +8,13 @@ import AlgorandWalletIcon from "../../assets/img/wallet/AlgorandWallet.svg";
 import MyAlgoBlue from "../../assets/img/wallet/MyAlgoBlue.svg";
 import AlgoSignerIcon from "../../assets/img/wallet/Algo Signer.png";
 import { useSelector } from "react-redux";
+import { id } from "ethers/lib/utils";
 
 export default function AlgorandWallet({ wallet, close }) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
 
   const connectionHandler = wallet => {
-    console.log("jgjsdhfjsfhsjfhs")
     switch (wallet) {
       case "MyAlgo":
         connectMyAlgo()
@@ -33,8 +33,19 @@ export default function AlgorandWallet({ wallet, close }) {
     }
   }
 
+  const getStyle = () => {
+    if(!from){
+      return {}
+    }
+    else if(from && from.text === "Algorand"){
+      return {}
+    }
+    else return OFF
+  }
+
   return wallet === "MyAlgo" ? (
     <li
+      style={getStyle()}
       onClick={() => connectionHandler("MyAlgo")}
       className="wllListItem algo"
       data-wallet="MyAlgo"
@@ -43,6 +54,7 @@ export default function AlgorandWallet({ wallet, close }) {
     </li>
   ) : wallet === "AlgoSigner" ? (
     <li
+      style={getStyle()}
       onClick={() => connectionHandler("AlgoSigner")}
       data-wallet="AlgoSigner"
       className="wllListItem algo"

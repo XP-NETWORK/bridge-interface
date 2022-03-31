@@ -10,14 +10,14 @@ export default function ChainSwitch({ assignment, func }) {
             case "from":
             return(
             <span onClick={func} className='chain-switch'>
-                <img style={{ width: "30px" }} src={from.image.src} alt="" /> {from.key === "xDai" ? "Gnosis Chain" : from.key}
+                <img style={{ width: "30px" }} src={from.image.src} alt="" /> {from.key === "xDai" ? "Gnosis" : from.key}
                 <div  className="arrow-down"></div>
             </span>
             )
             case "to":
             return(
             <span onClick={func} className='chain-switch'>
-                <img style={{ width: "30px" }} src={to.image.src} alt="" /> {to.key === "xDai" ? "Gnosis Chain" : to.key}
+                <img style={{ width: "30px" }} src={to.image.src} alt="" /> {to.key === "xDai" ? "Gnosis" : to.key}
                 <div  className="arrow-down"></div>
             </span>
             )

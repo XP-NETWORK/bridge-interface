@@ -12,8 +12,18 @@ export default function TronWallet({close}) {
     close()
   }
 
+  const getStyle = () => {
+    if(!from){
+      return {}
+    }
+    else if(from && from.text === "Tron"){
+      return {}
+    }
+    else return OFF
+  }
+
   return (
-    <li onClick={connectHandler} data-wallet="TronLink" className="wllListItem" >
+    <li style={getStyle()} onClick={connectHandler} data-wallet="TronLink" className="wllListItem">
       <img src={Tron} alt="Tron Icon" /><p>TronLink</p>
     </li>
   );

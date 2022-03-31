@@ -38,10 +38,21 @@ export default function ElrondWallet({ wallet, close }) {
       }
     });
   }, [])
+
+  const getStyle = () => {
+    if(!from){
+      return {}
+    }
+    else if(from && from.text === "Elrond"){
+      return {}
+    }
+    else return OFF
+  }
   
 
   return wallet === "Maiar" ? (
     <li
+      style={getStyle()}
       onClick={() => handleConnect("Maiar")}
       className="wllListItem"
       data-wallet="Maiar"
@@ -50,6 +61,7 @@ export default function ElrondWallet({ wallet, close }) {
     </li>
   ) : (
     <li
+      style={getStyle()}
       onClick={() => handleConnect("Maiar Extension")}
       className="wllListItem"
       data-wallet="Maiar Extension"
