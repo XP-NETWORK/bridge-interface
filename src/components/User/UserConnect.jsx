@@ -47,7 +47,6 @@ export default function UserConnect({desktop}) {
     }
 
     useEffect(() => {
-      // debugger
       if(account && from){
         if(chainId && !testnet && chains.some(chain => chain.chainId === chainId)){
           dispatch(setWrongNetwork(false))
@@ -65,7 +64,7 @@ export default function UserConnect({desktop}) {
     
 
   return (
-    <div onClick={handleConnect} className={desktop ? walletAccount ? 'navbar-connect--connected' : 'navbar-connect' : walletAccount? 'navbar-connect navbar-connect-mob' : 'navbar-connect navbar-connect-mob-connected'}>
+    <div onClick={handleConnect} className={desktop ? walletAccount ? 'navbar-connect--connected' : 'navbar-connect' : walletAccount? 'navbar-connect navbar-connect-mob connected' : 'navbar-connect navbar-connect-mob'}>
     {walletAccount ? getAccountString() : "Connect Wallet"}
     {walletAccount && <Identicon account={walletAccount} />}
     </div>

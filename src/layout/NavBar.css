@@ -74,7 +74,7 @@
   letter-spacing: 0em;
   color: #62718A;
   padding: 10px 16px;
-  /* background: rgba(207, 207, 217, 0.2); */
+  background: #F7F7F9;
   border: 1px solid rgba(207, 207, 217, 0.9);
   box-sizing: border-box;
   border-radius: 52px;
@@ -82,7 +82,29 @@
   margin-left: 2px;
 }
 .navbar-connect:hover{
-  background: rgba(255, 255, 255, 0.5);
+  background: rgb(255, 255, 255);
+  border: 1px solid #8994A8;
+}
+.navbar-connect--connected{
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0em;
+  color: #62718A;
+  padding: 10px 16px;
+  background: #F7F7F9;
+  border: 1px solid rgba(207, 207, 217, 0.9);
+  box-sizing: border-box;
+  border-radius: 52px;
+  cursor: pointer;
+  margin-left: 2px;
+}
+.navbar-connect-connected:hover{
+  background: rgb(255, 255, 255);
   border: 1px solid #8994A8;
 }
 .navbar-light .navbar-toggler-icon {
