@@ -259,7 +259,7 @@ export const chainsConfig = {
     img: Etherium,
     chainId: 1,
     rpc:
-      "https://rough-dawn-meadow.quiknode.pro/2629bf63052353892b121c240f57f6b19a74ac8c/",
+      "https://mainnet.infura.io/v3/",
     tx: "https://etherscan.io/tx/",
     token: "ETH",
     Chain: Chain.ETHEREUM,
@@ -272,7 +272,7 @@ export const chainsConfig = {
     tx: "https://bscscan.com/tx/",
     testTx: "https://testnet.bscscan.com/tx/",
     rpc:
-      "https://wandering-shy-leaf.bsc.quiknode.pro/ad8d20d7895c15e9afc03ff011dc3418152b07f7/",
+      "https://bsc-dataseed.binance.org/",
     Chain: Chain.BSC,
   },
   Polygon: {
@@ -305,7 +305,7 @@ export const chainsConfig = {
     chainId: 250,
     tx: "https://ftmscan.com/tx/",
     rpc:
-      "https://summer-dark-sea.fantom.quiknode.pro/96ff3e9e727ddccec57f93e68ad321c6e02e88a0/",
+      "https://rpc.ftm.tools",
     Chain: Chain.FANTOM,
     // chainData: ChainData.Fantom
   },

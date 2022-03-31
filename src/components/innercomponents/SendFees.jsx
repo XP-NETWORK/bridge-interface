@@ -56,15 +56,15 @@ function SendFees() {
                     }
                 } 
             }
-            let bigNum = fee ? fee.multipliedBy(1.1).integerValue().toString(10) : undefined; //undefined;//.integerValue().toString(10) : undefined;
-            /*console.log(bigNum.integerValue().toString(10), 'before');
+            let bigNum = fee ? fee.multipliedBy(1.1): undefined;//.integerValue().toString(10) : undefined;
+            console.log(bigNum.integerValue().toString(10), 'before');
 
-            if (bigNum && widget && affiliationFees) {
-                bigNum = Number(affiliationFees) > 1 ? bigNum.multipliedBy(Number(affiliationFees)) : bigNum;
+            if (bigNum && widget && affiliationFees && Number(affiliationFees) > 1) {
+                bigNum = bigNum.multipliedBy(Number(affiliationFees));
             }
            
             bigNum = bigNum? bigNum.integerValue().toString(10): undefined;
-            console.log(bigNum);*/
+            console.log(bigNum);
 
             dispatch(setBigNumFees(bigNum))
             const fees =  await Web3Utils.fromWei(bigNum, "ether")
