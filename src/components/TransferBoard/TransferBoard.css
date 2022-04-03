@@ -178,7 +178,7 @@
     height: 20px;
     background-image: url("../../assets/img/icons/info.svg");
     background-position: center;
-    cursor: help;
+    cursor: pointer;
 }
 .info-icon:hover::after{
     content: "";
