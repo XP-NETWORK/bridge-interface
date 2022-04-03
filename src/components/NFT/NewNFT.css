@@ -3,8 +3,8 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: stretch;
-  gap: 12px;
-  padding: 5px 30px;
+  gap: 18px;
+  padding: 5px 10px;
 }
 
 .nft-box__wrapper{
@@ -519,6 +519,45 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
 .triangle--toggle{
   position: absolute;
 }
+
+.skeleton{
+  background: #ececf1;
+  width: 200px;
+  height: 268px;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+.skeleton__image{
+  height: 204px;
+}
+.skeleton__content{
+  height: 64px;
+  background: #d6d6db;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.skeleton__name, .skeleton__number{
+  width: 80%;
+  height: 10px;
+  background: #ececf1;
+  border-radius: 10px;
+}
+.skeleton::before{
+  content: "";
+  position: absolute;
+  top: -110%;
+  left: -200%;
+  width: 200%;
+  height: 300%;
+  transform: rotate(200deg);
+  opacity: 0.3;
+  background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 60%);
+  animation: shine 3.5s infinite;
+}
+
 
 @media screen and (max-width: 768px) {
   .nft-list__wrapper{
