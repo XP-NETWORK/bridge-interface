@@ -117,6 +117,8 @@
   border: none;
 }
 .identicon{
+  width: 18px;
+  height: 18px;
   margin-left: 4px;
   border-radius: 50%;
 }
