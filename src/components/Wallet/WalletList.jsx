@@ -11,7 +11,7 @@ export default function WalletList({search, connected, input}) {
 
     const from = useSelector(state => state.general.from)
 
-    const OFF = { pointerEvents: "none" }
+  
 
     const walletComponents = [
         { Component: <EVMWallet wallet={"MetaMask"} key="wallet-index-0" close={connected} />, name: "MetaMask", type: "EVM", mobile: true, desktop: true },

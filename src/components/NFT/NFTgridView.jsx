@@ -24,7 +24,7 @@ function NFTgridView() {
                 :
                     <div className="nft-list__wrapper">
                         { nfts?.length ? 
-                        search ? nfts.filter(nft => nft?.description?.toString().toLowerCase().includes(search.toLowerCase()) || nft.native.owner?.includes(search)).map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} />)
+                        search ? nfts.filter(nft => nft?.description?.toString().toLowerCase().includes(search?.toLowerCase()) || nft.native.owner?.includes(search)).map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} />)
                         :nfts.map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} />)
                         : 
                         <NFTempty /> }

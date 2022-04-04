@@ -10,9 +10,12 @@ import ListedView from "../NFT/ListedView"
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 
 
+
 function SelectedNFT() {
   const dispatch = useDispatch();
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
+  const from = useSelector((state) => state.general.from);
+  const to = useSelector((state) => state.general.to);
   const nfts = useSelector((state) => state.general.NFTList);
   const widget = useSelector((state) => state.general.widget);
   const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -25,6 +28,13 @@ function SelectedNFT() {
   };
 
   useEffect(() => {}, [selectedNFTs]);
+
+  useEffect(() => {
+    if (to && selectedNFTs.length) {
+      dispatch(cleanSelectedNFTList())
+    }
+
+  }, [from])
 
   return (
     <div className="selected-nfts-list">

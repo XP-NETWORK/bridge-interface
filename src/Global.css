@@ -1912,6 +1912,10 @@ span.transPend {
   fill: #395FEB;
 }
 
+.transferred-nft-name {
+  font-size: 14px;
+}
+
 @media screen and (max-height: 750px) {
   .first-step__container{
     margin: 39px 0;
