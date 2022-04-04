@@ -47,6 +47,10 @@
   margin-top: 30px;
 }
 
+.ChainModal .CloseModal{
+  top: 29px;
+}
+
 .close-modal{
   width: 12px;
   height: 12px;

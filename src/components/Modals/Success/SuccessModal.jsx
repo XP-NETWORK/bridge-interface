@@ -140,7 +140,7 @@ export default function SuccessModal() {
               <div className="info-item-label">Sent From</div>
               <div className="info-item-chain">
                 <img src={from?.image?.src} alt={from?.text} />
-                {from?.text || "Algorand"}
+                {from?.tex === "xDai" ? "Gnosis" : from?.tex}
               </div>
             </div>
             <div className="success-info-item">
@@ -158,7 +158,7 @@ export default function SuccessModal() {
               <div className="info-item-label">Sent To</div>
               <div className="info-item-chain">
                 <img src={to?.image?.src} alt={to?.text} />
-                {to?.text || "BSC"}
+                {to?.text === "xDai" ? "Gnosis" : to?.text}
               </div>
             </div>
             <div className="success-info-item">
