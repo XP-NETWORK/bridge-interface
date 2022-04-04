@@ -21,17 +21,17 @@ export default function ChainListBox(props) {
   const dispatch = useDispatch();
   const departureOrDestination = useSelector(
     (state) => state.general.departureOrDestination
-  );
-  const chainSearch = useSelector((state) => state.general.chainSearch);
-  const from = useSelector((state) => state.general.from);
-  const to = useSelector((state) => state.general.to);
-  const globalTestnet = useSelector((state) => state.general.testNet);
-  const show = useSelector((state) => state.general.showChainModal);
-  const switchChain = useSelector((state) => state.general.switchDestination);
-  const widget = useSelector((state) => state.general.widget);
-  const [fromChains, setFromChains] = useState(chains)
-  const [toChains, setToChains] = useState(chains)
-
+    );
+    const chainSearch = useSelector((state) => state.general.chainSearch);
+    const from = useSelector((state) => state.general.from);
+    const to = useSelector((state) => state.general.to);
+    const globalTestnet = useSelector((state) => state.general.testNet);
+    const show = useSelector((state) => state.general.showChainModal);
+    const switchChain = useSelector((state) => state.general.switchDestination);
+    const widget = useSelector((state) => state.general.widget);
+    const [fromChains, setFromChains] = useState(chains)
+    const [toChains, setToChains] = useState(chains)
+    
 
 
 

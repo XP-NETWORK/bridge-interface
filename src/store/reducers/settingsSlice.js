@@ -70,6 +70,7 @@ export const initialState = {
   iconColor: "#3e64ed",
   tooltipBg: "#1D212A",
   tooltipColor: "#ffffff",
+  affiliationFees: 0,
   showAlert: false,
   showLink: true,
   collapsed: false,

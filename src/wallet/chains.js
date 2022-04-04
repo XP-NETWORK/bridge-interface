@@ -1,6 +1,5 @@
 export const getAddEthereumChain = () => {
-    const o = allchains.reduce(
-        (obj, item) => Object.assign(obj, { [item.chainId]: item }), {});
+    const o = allchains.reduce((obj, item) => Object.assign(obj, { [item.chainId]: item }), {});
       
     return o
 }
@@ -4601,4 +4600,27 @@ const allchains = [{
     "shortName": "palm",
     "chainId": 11297108109,
     "networkId": 11297108109
-}]
+},{
+    "name": "Godwoken",
+    "chain": "CKB",
+    "network": "testnet",
+    "faucets": [],
+    "nativeCurrency": {
+        "name": "Godwoken",
+        "symbol": "CKB",
+        "decimals": 8
+    },
+    "infoURL": "https://ethereum.org",
+    "shortName": "BTC",
+    "chainId": 868455272153094,
+    // "networkId": 1,
+    // "slip44": 60,
+    // "ens": {
+    //     "registry": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e"
+    // },
+    // "explorers": [{
+    //     "name": "etherscan",
+    //     "url": "https://etherscan.io",
+    //     "standard": "EIP3091"
+    // }]
+    }]

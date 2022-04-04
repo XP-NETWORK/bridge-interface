@@ -53,7 +53,7 @@ export default function NFTlistedCard({nft, index}) {
     <NFTdetails nftInf={nft}/>
     {(!whitelisted && onHover) && <div className='listed-view__not-whitelisted'>
       <div className="listed-view__not-whitelisted__text">Not Whitelisted</div>
-      <a href='https://t.me/XP_NETWORK_Technical_Support' className="listed-view__not-whitelisted__button" rel="noreferrer" target="_blank">Tech support</a>
+      <a href='https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot' className="listed-view__not-whitelisted__button" rel="noreferrer" target="_blank">Tech support</a>
     </div>
     }
     {/* { !preloadListed && <div className='preload__nftListed'></div> } */}

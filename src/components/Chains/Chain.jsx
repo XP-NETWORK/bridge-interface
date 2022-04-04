@@ -30,7 +30,6 @@ export default function Chain(props) {
         <div className="chain--identifier"> 
           {(chainStatus === undefined && !coming && !maintenance) ? <div className="chain-connecting">Connecting...</div>
           :(!chainStatus && !coming && !maintenance) && <div className="chain__off">Offline</div>}
-          {/* {!checkIfLive(chainKey, validatorsInfo) && !coming && <div className="chain__off">Offline</div>} */}
           {coming && <div className="coming-chain">Coming</div>}
           {maintenance && <div className="coming-chain">Maintenance</div>}
           {!maintenance && newChain && <div className="new-chain">New</div>}

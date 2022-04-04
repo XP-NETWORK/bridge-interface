@@ -43,7 +43,7 @@ export default function EVMWallet({ wallet }) {
     </li>
   ) : (
     /* WALLET CONNECT */
-    <li style={from.type === "EVM" && from.text !== 'Iotex' && from.text !== "Velas" && from.text !== "Fuse" ? {} : OFF} onClick={() => onWalletConnect(activate, from.text)}  className="wllListItem" data-wallet="WalletConnect" /*onClick={() => onWalletConnect(activate,from.text)}*/>
+    <li style={from.type === "EVM" && from.text !== 'Iotex' && from.text !== "Velas" && from.text !== "Fuse" && from.text !== "Aurora" ? {} : OFF} onClick={() => onWalletConnect(activate, from.text)}  className="wllListItem" data-wallet="WalletConnect" /*onClick={() => onWalletConnect(activate,from.text)}*/>
       <img src={WalletConnect} alt="WalletConnect Icon" />
       WalletConnect
     </li>

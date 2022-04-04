@@ -1279,7 +1279,7 @@ li.blockChain_item:hover {
   padding-bottom: 12px;
 }
 
-.cornerRadi input[type="text"] {
+.cornerRadi input[type="text"], .cornerRadi input[type="number"] {
   background: #fefefe;
   border: 1px solid #d4d7dd;
   box-sizing: border-box;
@@ -1606,4 +1606,15 @@ li.blockChain_item .blockChainItem span {
 }
 
 #settingsPortal {
+}
+
+.feesWrapper {
+  display: flex;
+  align-items: center;
+
+}
+
+.feesWrapper input {
+  width: 80%;
+  margin-right: 15px;
 }

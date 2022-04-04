@@ -886,6 +886,40 @@ function WSettings({
                 </Accordion.Item>
               </Accordion>
 
+
+              <Accordion defaultActiveKey="18">
+                <Accordion.Item eventKey="9">
+                  <Accordion.Header>Affiliation Settings</Accordion.Header>
+                  <Accordion.Body>
+                  <div className="typographyContainer">
+                  <div className="typo-sel font-size-sel">
+                          <h5>Extra Fees</h5>
+                          <div className="select_font">
+                            <div className="typo-sel header_color_select">
+                              <div className="cornerRadi">
+                                <div className="feesWrapper">
+                                <input
+                                  type="number"
+                                  placeholder="0"
+                                  value={settings.affiliationFees}
+                                  onChange={(e) => {
+                        
+                                    if (e.target.value < 0)  return  deboucedSet(0, "affiliationFees");
+                                    deboucedSet(e.target.value, "affiliationFees")
+                                  }
+                                  }
+                                />
+                                <span>%</span>
+                                </div>
+                              </div>
+                            </div>
+                          
+                          </div>
+                        </div>
+                        </div>
+                    </Accordion.Body>
+                    </Accordion.Item>
+                </Accordion>
              {false &&  <div className="referalSwitch" onClick={toggleShow} >
                 <input type="checkbox" checked={showLink} />
                 <span>Powered by XP Network</span>

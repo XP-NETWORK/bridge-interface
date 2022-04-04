@@ -189,6 +189,8 @@ export const handleChainFactory = async (someChain) => {
         return await factory.inner(Chain.HARMONY)
       case "Aurora":
         return await factory.inner(Chain.AURORA)
+      case "Godwoken":
+        return await factory.inner(Chain.GODWOKEN)
       default: return ''
     }
   } catch (error) {

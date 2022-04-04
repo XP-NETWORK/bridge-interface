@@ -796,8 +796,11 @@ span.wallet {
 }
 .chain--identifier {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 2px;
 }
+
 
 .modalSelectOptionsText {
   width: 100%;
