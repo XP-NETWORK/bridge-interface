@@ -28,7 +28,6 @@ function ConnectWallet() {
   const tronAccount = useSelector(state => state.general.tronWallet)
   const testnet = useSelector(state => state.general.testNet)
   const { chainId } = useWeb3React()
-  console.log("🚀 ~ file: ConnectWallet.jsx ~ line 31 ~ ConnectWallet ~ chainId", chainId)
   const connected = (elrondAccount || tezosAccount || algorandAccount || evmAccount || tronAccount) ? true : false
 
   const handleClose = () => {
@@ -85,39 +84,39 @@ useEffect(() => {
           <div onClick={() => handleVideoClick()} className="about-btn about-video">Learn how to use NFT bridge</div>
           <div onClick={() => handleAboutClick()} className="about-btn about-text">What is NFT</div>
       </div>
-      {!qrCodeString ? (
-        <Modal
-          show={show || walletsModal}
-          onHide={handleClose}
-          animation={false}
-          className="ChainModal wallet-modal"
-        >
-          <Modal.Header>
-            <Modal.Title>Connect Wallet</Modal.Title>
-            <span className="CloseModal" onClick={handleClose}>
-              <div className="close-modal"></div>
-            </span>
-          <div className="wallet-search__container">
-            <input onChange={e => setWalletSearch(e.target.value)} value={walletSearch} className="wallet-search" type="search" placeholder="Search" />
-            <div className="magnify"></div>
-          </div>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="walletListBox">
-              <WalletList input={walletSearch} connected={handleClose} />
+      {!qrCodeString && <Modal
+            show={show || walletsModal}
+            onHide={handleClose}
+            animation={false}
+            className="ChainModal wallet-modal"
+          >
+            <Modal.Header>
+              <Modal.Title>Connect Wallet</Modal.Title>
+              <span className="CloseModal" onClick={handleClose}>
+                <div className="close-modal"></div>
+              </span>
+            <div className="wallet-search__container">
+              <input onChange={e => setWalletSearch(e.target.value)} value={walletSearch} className="wallet-search" type="search" placeholder="Search" />
+              <div className="magnify"></div>
             </div>
-          </Modal.Body>
-        </Modal>
-      ) : (
-        <MaiarModal
-          handleClose={handleClose}
-          strQR={qrCodeImage}
-          qrCodeString={qrCodeString}
-          show={show}
-        />
-      )}
+            </Modal.Header>
+            <Modal.Body>
+              <div className="walletListBox">
+                <WalletList input={walletSearch} connected={handleClose} />
+              </div>
+            </Modal.Body>
+      </Modal>}
+      {qrCodeString && <MaiarModal handleClose={handleClose} strQR={qrCodeImage} qrCodeString={qrCodeString} setShow={setShow} show={show}/>}
     </div>
   );
 }
 //
 export default ConnectWallet;
+
+
+{/* <MaiarModal
+          handleClose={handleClose}
+          strQR={qrCodeImage}
+          qrCodeString={qrCodeString}
+          show={show}
+/> */}
