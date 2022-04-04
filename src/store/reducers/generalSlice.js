@@ -11,13 +11,25 @@ const initialState = {
   currentTx: 0,
   bigLoader: true,
   innerWidth: 0,
-  alert: true
+  alert: true,
+  // preloadNFTs: []
 };
 
 const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
+    setEachNFT(state, action){
+      // debugger
+      const { nftObj, index } = action.payload
+      state.NFTList = state.NFTList.map((n, i) => {
+        if(i === index) n = nftObj
+        return n
+      })
+    },
+    setPreloadNFTs(state, action){
+      state.preloadNFTs = action.payload
+    },
     setAlert(state, action){
       state.alert = action.payload
     },
@@ -74,8 +86,7 @@ const generalSlice = createSlice({
     },
     //!!!!!!!
     setNFTList(state, action) {
-      const { parsedNFTs, from } = action.payload
-      state.NFTList = parsedNFTs;
+      state.NFTList = action.payload;
     },
     setSelectedNFTList(state, action) {
       state.selectedNFTList = [...state.selectedNFTList, action.payload];
@@ -297,6 +308,8 @@ const generalSlice = createSlice({
 });
 
 export const {
+  setEachNFT,
+  setPreloadNFTs,
   setAlert,
   setTxnStatus,
   setInnerWidth,

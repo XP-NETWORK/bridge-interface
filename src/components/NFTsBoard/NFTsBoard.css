@@ -164,7 +164,7 @@
 
 .nftListBox {
     width: 100%;
-    background: #F3F3F6;
+    /* background: #F3F3F6; */
     max-height: 680px;
     overflow: hidden auto;
     margin-right: -24px;

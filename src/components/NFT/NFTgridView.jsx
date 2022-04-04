@@ -3,12 +3,13 @@ import { useSelector } from 'react-redux';
 import NFTempty from '../innercomponents/NFTempty';
 import Missing from '../innercomponents/Missing';
 import BigLoader from "../../components/innercomponents/BigLoader"
-import NFT from "./NFT"
 import NFTcard from './NFTcard';
+import {  } from "../../wallet/helpers.js" 
 
-/////`
+
 function NFTgridView() {
     const nfts = useSelector(state => state.general.NFTList)
+    const preloadNFTs = useSelector(state => state.general.preloadNFTs)
     const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const search = useSelector(state => state.general.NFTListSearch)
     const nftsPlace = window.innerWidth <= 600 ? 2 : 9
@@ -16,10 +17,10 @@ function NFTgridView() {
     const loader = useSelector(state => state.general.bigLoader)
     
     useEffect(() => { }, [selectedNFTs])
+
     return (
-        <div style={ nfts?.length ? {} : {overflow: "hidden"}} className="nftListBox">
-                { loader ? 
-                    <BigLoader />
+        <div className="nftListBox">
+                { loader ? <BigLoader />
                 :
                     <div className="nft-list__wrapper">
                         { nfts?.length ? 

@@ -1,7 +1,7 @@
 import { AppConfigs, ChainFactory, ChainFactoryConfigs } from "xp.network";
 import { Chain, Config } from "xp.network/dist/consts";
 import { chainsConfig, CHAIN_INFO } from "../components/values";
-import { setAlgorandClaimables, setBigLoader, setFactory, setNFTList } from "../store/reducers/generalSlice";
+import { setAlgorandClaimables, setBigLoader, setEachNFT, setFactory, setNFTList, setPreloadNFTs } from "../store/reducers/generalSlice";
 import store from "../store/store";
 import io from "socket.io-client";
 
@@ -15,6 +15,9 @@ const axios = require("axios");
 export const setupURI = (uri) => {
   if (uri && (uri.includes("ipfs://"))) {
     return "https://ipfs.io/" + uri.replace(":/", "");
+  }
+  else if(uri && (uri.includes("https://ipfs.io"))){
+    return uri
   }
   else if(uri && (uri.includes("data:image/") || uri.includes("data:application/"))){
     return uri
@@ -34,6 +37,67 @@ export const checkIfJSON = jsonStr => {
     return false
   }
   return obj
+}
+
+export const parseEachNFT = async (nft, index) => {
+  const { from } = store.getState().general;
+  let dataLoaded = false
+  let nftObj = {
+    uri: nft.uri,
+    native: nft.native,
+    dataLoaded: true
+  }
+  
+  if(from.key === "Tezos"){
+    nftObj.description = nft.native?.meta?.token?.metadata?.description || undefined
+    nftObj.animation_url = nft.native?.meta?.token?.metadata?.animation_url || undefined
+    nftObj.artifactUri = nft.native?.meta?.token?.metadata?.artifactUri || undefined
+    nftObj.attributes = [...nft.native?.meta?.token?.metadata?.attributes] || undefined
+    nftObj.displayUri = nft.native?.meta?.token?.metadata?.displayUri || undefined
+    nftObj.displayUri = nft.native?.meta?.token?.metadata?.displayUri || undefined
+    nftObj.ipfs = nft.native?.meta?.token?.metadata?.ipfs || undefined
+    nftObj.name = nft.native?.meta?.token?.metadata?.name || undefined
+    nftObj.wrapped = {...nft.native?.meta?.token?.metadata?.wrapped} || undefined
+    nftObj.dataLoaded = true
+    store.dispatch(setEachNFT({nftObj, index}))
+    dataLoaded = true
+  }
+  else if(!nft.uri){
+    nftObj = {...nft, dataLoaded: true}
+    store.dispatch(setEachNFT({nftObj, index}))
+    dataLoaded = true
+  }
+  else{
+    // debugger
+    axios.get(`https://sheltered-crag-76748.herokuapp.com/${setupURI(nft.uri)}`)
+    .then(response => {
+      nftObj.name = response.data.name || undefined
+      nftObj.image = response.data.image || undefined
+      nftObj.description = response.data.description || undefined
+      nftObj.external_url = response.data.external_url || undefined
+      nftObj.attributes = [...response.data.attributes] || undefined
+      nftObj.animation_url = response.data.animation_url || undefined
+      nftObj.dataLoaded = true
+      if(nftObj.animation_url){
+        // debugger
+        const video = document.createElement('video');
+        video.src = nftObj.animation_url
+        video.onload = function(){
+          debugger
+          console.log(video.height, "height");
+        }
+      }
+      store.dispatch(setEachNFT({nftObj, index}))
+    })
+    .catch( error => {
+      console.error(error)
+      store.dispatch(setEachNFT({nftObj, index}))
+    })
+  }
+
+  
+
+  return dataLoaded
 }
 
 export const parseNFTS = async (nfts) => {
@@ -249,14 +313,16 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 export const setNFTS = async (w, from, testnet) => {
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from, testnet)
-  const parsedNFTs = await parseNFTS(res)
+  store.dispatch(setPreloadNFTs(res.length))
+  store.dispatch(setNFTList(res))
   store.dispatch(setBigLoader(false))
-  if(parsedNFTs.length){
-      store.dispatch(setNFTList({parsedNFTs, from}))
-  }
-  else {
-    store.dispatch(setNFTList([]))
-  }
+  // const parsedNFTs = await parseNFTS(res)
+  // if(parsedNFTs.length){
+  //     store.dispatch(setNFTList({parsedNFTs, from}))
+  // }
+  // else {
+  //   store.dispatch(setNFTList([]))
+  // }
 }
 
 export function isValidHttpUrl(string, index) {

@@ -230,7 +230,7 @@ export const chains = [
     image: { avatar: true, src: One },
     maintenance: false,
     testNet: true,
-    mainnet: false,
+    mainnet: true,
     newChain: true,
   },
   {

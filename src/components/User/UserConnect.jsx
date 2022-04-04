@@ -47,7 +47,7 @@ export default function UserConnect({desktop}) {
     }
 
     useEffect(() => {
-      if(account && from){
+      if(account && from && chainId){
         if(chainId && !testnet && chains.some(chain => chain.chainId === chainId)){
           dispatch(setWrongNetwork(false))
           const chain = getChain()
