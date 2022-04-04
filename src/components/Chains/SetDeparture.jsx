@@ -7,9 +7,19 @@ export default function SetDeparture() {
     const dispatch = useDispatch()
     const from = useSelector(state => state.general.from)
     const deisplayWidth = window.innerWidth
+    
     const handleShow = (str) => {
         dispatch(setChainModal(true));
-        str === "departure" ? dispatch(setDepartureOrDestination("departure")) : dispatch(setDepartureOrDestination("destination"))
+        switch (str) {
+            case "departure":
+                dispatch(setDepartureOrDestination("departure"))    
+                break;            
+            case "destination":
+            dispatch(setDepartureOrDestination("destination"))    
+                break;
+            default:
+                break;
+        }
     }
 
   return (

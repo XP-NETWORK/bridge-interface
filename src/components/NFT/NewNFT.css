@@ -1,3 +1,9 @@
+.missing-nft-box__wrapper {
+  background: #ECECF14D;
+  width: 200px;
+  height: 268px;
+  border-radius: 20px;
+}
 .nft__card, .nft__card--selected{
   margin: 0 auto;
   width: 200px;
@@ -25,12 +31,10 @@
   padding: 6px 12px;
   display: flex;
   flex-direction: column;
-  border: 1ps solid white;
   color: #000000;
   font-size: 14px;
   font-weight: 400;
   line-height: 18px;
-
 }
 .nft-media__wrapper{
   height: 204px;
@@ -295,7 +299,6 @@
     appearance: none;
     border: 1px solid white;
     transition: all 0.5s;
-
 }
 
 .broken-url{
@@ -518,13 +521,6 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
   text-overflow: ellipsis;
 }
 
-.singleNft.missing {
-  background: #ECECF14D;
-  padding-top: 3px;
-  padding-bottom: 138%;
-  width: 190px;
-}
-
 .singleNft.missing:hover {
   cursor: unset;
 }
@@ -649,21 +645,48 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
   }
 }
 
+@media screen and (max-width: 320px){
+  .nft__card, .nft__card--selected{
+    width: 150px !important;
+    height: auto;
+  }
+  .skeleton{
+    width: 150px;
+    height: 228px;
+  }
+  .skeleton__image {
+    height: 165px;
+  }
+}
+
+@media screen and (max-width: 375px){
+  .nft__card, .nft__card--selected{
+    width: 170px;
+    height: auto;
+  }
+  .nft__main{
+    height: 170px;
+  }
+  .skeleton{
+    width: 170px;
+    height: 228px;
+  }
+  .skeleton__image {
+    height: 165px;
+  }
+}
+
+/* 
 @media screen and (max-width: 375px){
   .nft-list__wrapper{
     gap: 10px;
   }
-  .nft-box__container{
-    width: 100%;
-   /*max-height: 240px;*/
-  }
-  .nft-box__container--selected{
-    width: 90%;
-    max-height: 240px;
+  .nft__card, .nft__card--selected{
+    width: 180px;
+    height: 268px;
   }
   .missing-nft-box__wrapper{
     width: 45%;
-
   }
   .preload__container{
     width: calc(100% - 15px);
@@ -675,7 +698,6 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
     max-height: calc(100% - 30px);
   }
   .nft-image__container{
-    /*max-height: 170px;*/
   }
   .radio__container{
     
@@ -684,4 +706,8 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
     width: 100%;
     height: 100%;
   }
-}
+  .nft__card, .nft__card--selected{
+    width: 195px;
+    height: 268px;
+  }
+} */

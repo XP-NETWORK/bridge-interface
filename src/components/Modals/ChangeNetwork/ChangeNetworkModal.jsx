@@ -89,6 +89,7 @@ function ChangeNetworkModal() {
       <Modal
         animation={false}
         show={showWrong}
+        // show={true}
         onHide={isSupported ? handleClose : undefined}
         className="nftWorng"
       >

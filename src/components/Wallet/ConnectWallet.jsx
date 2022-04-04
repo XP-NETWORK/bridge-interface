@@ -28,6 +28,7 @@ function ConnectWallet() {
   const tronAccount = useSelector(state => state.general.tronWallet)
   const testnet = useSelector(state => state.general.testNet)
   const { chainId } = useWeb3React()
+  console.log("🚀 ~ file: ConnectWallet.jsx ~ line 31 ~ ConnectWallet ~ chainId", chainId)
   const connected = (elrondAccount || tezosAccount || algorandAccount || evmAccount || tronAccount) ? true : false
 
   const handleClose = () => {
@@ -46,10 +47,13 @@ function ConnectWallet() {
     if(from && to && !connected){
       setShow(true)
     }
+    else if(from && to && connected && chainId === undefined){
+      navigate(testnet ? "/testnet/account" : "/account")
+    }
     else if(connected && to && from && chainsConfig[from.key].chainId === chainId){
       navigate(testnet ? "/testnet/account" : "/account")
     }
-    else if(connected && to && from && chainsConfig[from.key].chainId !== chainId){
+    else if(connected && to && from && chainsConfig[from.key].chainId !== chainId && chainId){
       dispatch(setWrongNetwork(true))
     }
     else{
@@ -65,7 +69,7 @@ function handleVideoClick() {
 }
 
 useEffect(() => {
-  if(chainId && from && chainId !== from.chainId){
+  if(chainId && from && chainId !== from.chainId && from.type === "EVM"){
     dispatch(setWrongNetwork(true))
   }
 }, [chainId])

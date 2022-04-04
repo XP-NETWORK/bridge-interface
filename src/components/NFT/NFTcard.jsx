@@ -11,6 +11,7 @@ import VideoAndImage from "./VideoAndImage"
 import NotWhiteListed from "./NotWhiteListed"
 import BrockenUtlGridView from "./BrockenUtlGridView";
 import "./NewNFT.css";
+// import "./NFTcard.css"
 import Preload from "./Preload";
 
 
@@ -25,8 +26,7 @@ export default function NFTcard({ nft, index }) {
         n.native.contract === nft.native.contract &&
         n.native.chainId === nft.native.chainId
     )[0];
-    const [onHover, setOnHover] = useState(false)
-    const [imageLoaded, setImageLoaded] = useState(false);
+
     const [whiteListed, setWhitelisted] = useState(true)
     const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
     const [dataLoaded, setDataloaded] = useState(false)
@@ -52,27 +52,18 @@ export default function NFTcard({ nft, index }) {
         }
     }
 
-    const imageLoadedHandler = () => {
-      setImageLoaded(true)
-    }
 
-    useEffect(() => {
-        setTimeout(() => {
-            setImageLoaded(true);
-        }, 5000);
-    }, [selectedNFTs]);
+  
     
     return (
-        <div className={`nft-box__wrapper`}
-        onMouseEnter={() => setOnHover(true)}
-        onMouseLeave={() => setOnHover(false)}>
+        <div className={`nft-box__wrapper`}>
           { !nft.dataLoaded ? <Preload /> : 
           <div onClick={() => whiteListed ? addRemoveNFT(nft, index): undefined } className={isSelected ? "nft__card--selected" : "nft__card"}>
             <div className="nft__main">
               { nft.uri && isValidHttpUrl(nft.uri, index) ? 
-                video && image ? <VideoAndImage index={index} imageLoaded={() => imageLoadedHandler} videoUrl={videoUrl} imageUrl={imageUrl} />
-              : image && !video ? <img onLoad={() => imageLoadedHandler} alt=""  src={setupURI(imageUrl)} /> 
-              : !image && video ? <video onLoadedData={imageLoadedHandler} controls={false}  playsInline={true} autoPlay={true} loop={true}  muted={true} src={setupURI(videoUrl)} />
+                video && image ? <VideoAndImage index={index} videoUrl={videoUrl} imageUrl={imageUrl} />
+              : image && !video ? <img alt=""  src={setupURI(imageUrl)} /> 
+              : !image && video ? <video controls={false}  playsInline={true} autoPlay={true} loop={true}  muted={true} src={setupURI(videoUrl)} />
               : ipfsArr?.length > 0 && <VideoOrImage urls={ipfsArr} i={index} />
               : <BrockenUtlGridView />
               }

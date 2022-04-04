@@ -12,8 +12,7 @@ import {
 import Chain from "./Chain"
 import ChainSearch from "../Chains/ChainSearch"
 import { Modal } from "react-bootstrap";
-// import Close from "../../assets/img/icons/close.svg";
-// import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
+
 import { useState } from "react";
 import { filterChains } from "./ChainHelper";
 import { useWeb3React } from "@web3-react/core";

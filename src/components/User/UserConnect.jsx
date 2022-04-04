@@ -47,6 +47,7 @@ export default function UserConnect({desktop}) {
     }
 
     useEffect(() => {
+      // debugger
       if(account && from && chainId){
         if(chainId && !testnet && chains.some(chain => chain.chainId === chainId)){
           dispatch(setWrongNetwork(false))
@@ -54,14 +55,16 @@ export default function UserConnect({desktop}) {
           setNFTS(account, chain.key)
           dispatch(setFrom(chain))
         }
+        else if(from.type !== "EVM"){
+          dispatch(setWrongNetwork(false))
+        }
         else{
           dispatch(setWrongNetwork(true))
         }
       }
     }, [account, chainId])
 
-
-    
+  
 
   return (
     <div onClick={handleConnect} className={desktop ? walletAccount ? 'navbar-connect--connected' : 'navbar-connect' : walletAccount? 'navbar-connect navbar-connect-mob connected' : 'navbar-connect navbar-connect-mob'}>
