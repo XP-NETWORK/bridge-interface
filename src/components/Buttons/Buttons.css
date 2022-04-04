@@ -78,7 +78,7 @@
     margin-left: 6px;
     margin-right: 9px;
 }
-.arrow-down:hover::before{
+.chain-switch:hover .arrow-down::before{
     position: absolute;
     top: 0; 
     content: "";
