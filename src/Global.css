@@ -201,7 +201,7 @@ div#root {
   position: fixed;
   display: flex;
   align-items: center;
-  font-size: 14px;
+  font-size: 16px;
   z-index: 11;
   left: 50%;
   bottom: 13vh;
