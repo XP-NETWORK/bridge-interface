@@ -22,7 +22,7 @@ function Alert() {
           Select Departure and Destination Chain to continue bridging
           <span onClick={() => handleClose()} className="closeBox">
             {" "}
-            <Close className="svgWidget" />
+            <Close className="svgWidget closeIcon" />
           </span>
         </div>
       )}

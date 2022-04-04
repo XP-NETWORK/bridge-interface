@@ -96,11 +96,9 @@ function ChangeNetworkModal() {
         <Modal.Header className="border-0">
           <Modal.Title>Wrong Network</Modal.Title>
           {isSupported && <span className="CloseModal" onClick={handleClose}>
-            {widget ? (
-              <CloseComp className="svgWidget" />
-            ) : (
-              <img src={Close} alt="" />
-            )}
+            
+              <CloseComp className="svgWidget closeIcon" />
+     
           </span>}
         </Modal.Header>
         <Modal.Body className="modalBody text-center">
