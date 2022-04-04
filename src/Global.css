@@ -206,10 +206,11 @@ div#root {
   left: 50%;
   bottom: 13vh;
   transform: translate(-50%);
-  background: linear-gradient(266.84deg, #272930 46.71%, #395FEB 148.31%);
+  background: #FFFFFF;
   border-radius: 16px;
   padding: 14px 54px 14px 16px;
-  color: #fff;
+  color: #14161A;
+
 }
 
 .Close img {
@@ -1297,7 +1298,7 @@ span.statComp img {
   line-height: 22px;
   padding: 16px 32px;
   border-radius: 66px;
-  width: 230px;
+  width: 180px;
   margin: 22px auto 0 auto;
 }
 
