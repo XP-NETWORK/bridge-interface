@@ -33,9 +33,9 @@ function NavBar() {
                 <Navbar.Toggle aria-controls="" />
                     <Navbar.Collapse id="">
                         <Nav>
-                            <LinkContainer to='/connect'>
+                            {/* <LinkContainer to='/connect'>
                                 <Nav.Link className="desc-link" target="_blank" href="#">Bridge</Nav.Link>
-                            </LinkContainer>
+                            </LinkContainer> */}
                             {/* <Nav.Link target="_blank" href="#">
                                 <div className="nav-link__icon"><img src={about} alt="" /></div>
                                 <div className="nav-link__txt">About</div>
@@ -44,10 +44,10 @@ function NavBar() {
                                 <div className="nav-link__icon"><img src={chains} alt="" /></div>
                                 <div className="nav-link__txt">Explorer</div>
                             </Nav.Link> */}
-                            <Nav.Link  target="_blank" href="https://docs.xp.network/docs/Multibridge2.0/faq">
+                            {/* <Nav.Link  target="_blank" href="https://docs.xp.network/docs/Multibridge2.0/faq">
                                 <div className="nav-link__icon"><img src={faq} alt="" /></div>
                                 <div className="nav-link__txt">FAQ</div>
-                            </Nav.Link>
+                            </Nav.Link> */}
                             <Nav.Link className="mob-link" target="_blank" href="https://docs.xp.network/">
                                 <div className="nav-link__icon"><img src={docs} alt="" /></div>
                                 <div className="nav-link__txt">DOCS</div>
@@ -84,7 +84,8 @@ function NavBar() {
                                         <div className="drop-item">
                                             <img src={faq} alt="" />
                                             <div className="drop-icon">FAQs</div>
-                                        </div></Dropdown.Item>
+                                        </div>
+                                    </Dropdown.Item>
                                     <Dropdown.Item href="https://docs.xp.network/" target="_blank">
                                         <div className="drop-item">
                                             <img src={docs} alt="" />
