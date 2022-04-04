@@ -9,15 +9,18 @@
     position: relative;
     cursor: pointer;
 }
-.select-all::after{
-    content: "";
-    position: absolute;
-    top: 7px;
-    left: 7px;
-    width: 24px;
-    height: 24px;
 
+
+.select-all svg {
+    transform: translate(30%, 30%);
 }
+
+.select-all:hover svg path {
+    fill: #395FEB;
+    opacity: 1;
+}
+
+
 
 
 .delete-all{

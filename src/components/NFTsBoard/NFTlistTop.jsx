@@ -42,7 +42,7 @@ function NFTlistTop() {
           <NFTSearch />
           <ViewButton />
           {onlyWhiteListedNFTs?.length === selectedNFTs?.length && selectedNFTs?.length  ? <div className="delete-all" onClick={() => dispatch(cleanSelectedNFTList())}></div>
-          :<div style={nfts ? {} : OFF} onClick={() => dispatch(allSelected())} className="select-all">
+          :<div style={nfts ? {} : OFF} onClick={() => dispatch(allSelected())} className="select-all svgWidget">
               <Check/>
           </div>
           }
