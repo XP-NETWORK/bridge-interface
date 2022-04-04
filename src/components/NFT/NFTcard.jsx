@@ -68,30 +68,45 @@ export default function NFTcard({ nft, index }) {
         onMouseEnter={() => setOnHover(true)}
         onMouseLeave={() => setOnHover(false)}>
           { !nft.dataLoaded ? <Preload /> : 
-          <div className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
-              <div onClick={() => whiteListed ? addRemoveNFT(nft, index): undefined} className="nft-image__container">
-                <div className="image__wrapper">
-                  { nft.uri && isValidHttpUrl(nft.uri, index) ? 
-                    video && image ? <VideoAndImage index={index} imageLoaded={() => imageLoadedHandler} videoUrl={videoUrl} imageUrl={imageUrl} />
-                  : image && !video ? <img onLoad={() => imageLoadedHandler} alt="only image"  src={setupURI(imageUrl)} /> 
-                  : !image && video ? <video onLoadedData={imageLoadedHandler} controls={false}  playsInline={true} autoPlay={true} loop={true}  muted={true} src={setupURI(videoUrl)} />
-                  : ipfsArr?.length > 0 && <VideoOrImage urls={ipfsArr} i={index} />
-                  : <BrockenUtlGridView />
-                  }
-                  { !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> }
-                </div>
-                { !whiteListed && <NotWhiteListed /> }
-              </div>
-              <div className={`nft-content__container ${!imageLoaded ? "preload-content-container" : ""}`}>
+          <div onClick={() => whiteListed ? addRemoveNFT(nft, index): undefined } className={isSelected ? "nft__card--selected" : "nft__card"}>
+            <div className="nft__main">
+              { nft.uri && isValidHttpUrl(nft.uri, index) ? 
+                video && image ? <VideoAndImage index={index} imageLoaded={() => imageLoadedHandler} videoUrl={videoUrl} imageUrl={imageUrl} />
+              : image && !video ? <img onLoad={() => imageLoadedHandler} alt=""  src={setupURI(imageUrl)} /> 
+              : !image && video ? <video onLoadedData={imageLoadedHandler} controls={false}  playsInline={true} autoPlay={true} loop={true}  muted={true} src={setupURI(videoUrl)} />
+              : ipfsArr?.length > 0 && <VideoOrImage urls={ipfsArr} i={index} />
+              : <BrockenUtlGridView />
+              }
+              { !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> }
+              { !whiteListed && <NotWhiteListed /> }
+            </div>
+            <div className="nft__footer">
                 <span className="nft-name"><span className="name">{nft.name || nft.native.name}</span><NFTdetails nftInf={nft} index={index} /></span>
                 <span className="nft-number">{nft.native.tokenId}</span>
-              </div>
-          </div>}
+            </div>
+          </div>
+          }
         </div>
       );
 }
 
 
-
-// 
-// }
+{/* <div className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
+<div onClick={() => whiteListed ? addRemoveNFT(nft, index): undefined} className="nft-image__container">
+  <div className="image__wrapper">
+    { nft.uri && isValidHttpUrl(nft.uri, index) ? 
+      video && image ? <VideoAndImage index={index} imageLoaded={() => imageLoadedHandler} videoUrl={videoUrl} imageUrl={imageUrl} />
+    : image && !video ? <img onLoad={() => imageLoadedHandler} alt="only image"  src={setupURI(imageUrl)} /> 
+    : !image && video ? <video onLoadedData={imageLoadedHandler} controls={false}  playsInline={true} autoPlay={true} loop={true}  muted={true} src={setupURI(videoUrl)} />
+    : ipfsArr?.length > 0 && <VideoOrImage urls={ipfsArr} i={index} />
+    : <BrockenUtlGridView />
+    }
+    { !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> }
+  </div>
+  { !whiteListed && <NotWhiteListed /> }
+</div>
+<div className={`nft-content__container ${!imageLoaded ? "preload-content-container" : ""}`}>
+  <span className="nft-name"><span className="name">{nft.name || nft.native.name}</span><NFTdetails nftInf={nft} index={index} /></span>
+  <span className="nft-number">{nft.native.tokenId}</span>
+</div>
+</div> */}

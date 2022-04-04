@@ -16,6 +16,9 @@ export const setupURI = (uri) => {
   if (uri && (uri.includes("ipfs://"))) {
     return "https://ipfs.io/" + uri.replace(":/", "");
   }
+  else if(uri && (uri.includes("https://ipfs.io"))){
+    return uri
+  }
   else if(uri && (uri.includes("data:image/") || uri.includes("data:application/"))){
     return uri
   }
@@ -65,7 +68,7 @@ export const parseEachNFT = async (nft, index) => {
     dataLoaded = true
   }
   else{
-    debugger
+    // debugger
     axios.get(`https://sheltered-crag-76748.herokuapp.com/${setupURI(nft.uri)}`)
     .then(response => {
       nftObj.name = response.data.name || undefined
@@ -73,7 +76,17 @@ export const parseEachNFT = async (nft, index) => {
       nftObj.description = response.data.description || undefined
       nftObj.external_url = response.data.external_url || undefined
       nftObj.attributes = [...response.data.attributes] || undefined
+      nftObj.animation_url = response.data.animation_url || undefined
       nftObj.dataLoaded = true
+      if(nftObj.animation_url){
+        // debugger
+        const video = document.createElement('video');
+        video.src = nftObj.animation_url
+        video.onload = function(){
+          debugger
+          console.log(video.height, "height");
+        }
+      }
       store.dispatch(setEachNFT({nftObj, index}))
     })
     .catch( error => {
@@ -81,6 +94,8 @@ export const parseEachNFT = async (nft, index) => {
       store.dispatch(setEachNFT({nftObj, index}))
     })
   }
+
+  
 
   return dataLoaded
 }
