@@ -1,11 +1,7 @@
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
-
-
 import DestinationChain from "./innercomponents/DestinationChain";
 import DestinationChainReload from "./innercomponents/DestinationChainReload";
-
-
 import SelectedNFT from "./innercomponents/SelectedNFT";
 import Approval from "./innercomponents/Approval";
 import NFTgridView from "../components/NFT/NFTgridView";
@@ -34,7 +30,7 @@ function NFTaccount() {
 
 
   async function getNFTsList() {
-    const useHardcoded = true;
+    const useHardcoded = false;
     const hard = "0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE";
     try {
       const w = useHardcoded

@@ -36,8 +36,6 @@
   height: 204px;
 }
 
-
-
 .nft-list__wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -45,6 +43,9 @@
   align-items: stretch;
   gap: 18px;
   padding: 5px 10px;
+}
+.video__wrapper video{
+  width: 100%;
 }
 
 .nft-box__wrapper{
@@ -115,8 +116,9 @@
   background: #62718A;
   opacity: 0.2;
   border-radius: 50%;
-  top: 3px;
-  left: 3px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .nft-radio--selected::after{
   position: absolute;
@@ -129,8 +131,9 @@
   height: 18px;
   background-image: url("../../assets/img/icons/blue_check-small.svg");
   border-radius: 50%;
-  top: 2px;
-  left: 2px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .nftListed__info{
@@ -538,8 +541,8 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
 
 .video--toggle, .image--toggle{
   position: absolute;
-  bottom: 35px;
-  right: 25px;
+  bottom: 15px;
+  right: 10px;
 }
 
 .video--toggle:hover{

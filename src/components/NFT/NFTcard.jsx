@@ -39,7 +39,6 @@ export default function NFTcard({ nft, index }) {
 
     useEffect(async() => {
       const loaded = await parseEachNFT(nft, index)
-      setDataloaded(loaded)
       const whitelisted = await isWhiteListed(from.text, nft)
       dispatch(updateNFTs({whitelisted, nft}))
     },[])
