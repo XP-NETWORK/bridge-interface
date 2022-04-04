@@ -8,6 +8,7 @@ import ChainSwitch from "../Buttons/ChainSwitch";
 import Refresh from "../Buttons/Refresh";
 import SelectedNFTs from "../Buttons/SelectedNFTs";
 import ViewButton from "../Buttons/ViewButton";
+import {ReactComponent as Check} from '../../assets/img/icons/gray_check.svg'
 
 
 function NFTlistTop() { 
@@ -41,7 +42,9 @@ function NFTlistTop() {
           <NFTSearch />
           <ViewButton />
           {onlyWhiteListedNFTs?.length === selectedNFTs?.length && selectedNFTs?.length  ? <div className="delete-all" onClick={() => dispatch(cleanSelectedNFTList())}></div>
-          :<div style={nfts ? {} : OFF} onClick={() => dispatch(allSelected())} className="select-all"></div>
+          :<div style={nfts ? {} : OFF} onClick={() => dispatch(allSelected())} className="select-all">
+              <Check/>
+          </div>
           }
         </div>}
       </div>

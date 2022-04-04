@@ -16,8 +16,9 @@
     left: 7px;
     width: 24px;
     height: 24px;
-    background-image: url("../../assets//img//icons/gray_check.svg");
+
 }
+
 
 .delete-all{
     width: 40px;
@@ -78,7 +79,7 @@
     margin-left: 6px;
     margin-right: 9px;
 }
-.arrow-down:hover::before{
+.chain-switch:hover .arrow-down::before{
     position: absolute;
     top: 0; 
     content: "";

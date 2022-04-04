@@ -1372,8 +1372,14 @@ span.invalid img {
   color: rgb(0, 0, 0);
 }
 
+#SearchDrop svg {
+  transform: translate(10%, -20%);
+}
 
+#SearchDrop:hover svg path{
+  fill: #395FEB;
 
+}
 
 .collecSlideCont .slideItem {
   padding: 0 15px;
