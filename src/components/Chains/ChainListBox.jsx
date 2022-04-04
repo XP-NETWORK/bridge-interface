@@ -178,7 +178,7 @@ export default function ChainListBox(props) {
             
             : toChains
             // .filter(chain => from && from.type === "EVM" && chain.type === "EVM")
-            .filter( chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : ""))
+            .filter( chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : "") && (chain.text?.toLowerCase() !== to.text?.toLowerCase()) )
             .sort((chain) => {
               if(chain.coming) return 1
               else if(chain.maintenance) return 0

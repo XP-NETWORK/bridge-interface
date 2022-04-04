@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
-import Search from "../../assets/img/icons/Search.svg";
+import { ReactComponent as Search} from "../../assets/img/icons/Search.svg";
 import { ReactComponent as SearchComp } from "../../assets/img/icons/Search.svg";
 import { setSearchNFTList } from '../../store/reducers/generalSlice';
 export default function NFTSearch() {
@@ -18,7 +18,7 @@ export default function NFTSearch() {
     
     <Dropdown className="search-dropdown" autoClose="outside">
       <Dropdown.Toggle id="SearchDrop">
-        <img src={Search} alt="" />
+        <Search className="svgWidget "/>
       </Dropdown.Toggle>
       <Dropdown.Menu>
           <input

@@ -216,7 +216,7 @@ background: rgba(73, 82, 108, 0.1);
     background-position: center;
     border-radius: 6px;
   }
-  .selChain > div:hover:after {
+  .selChain:hover > div:after {
     content: "";
     position: absolute;
     right: 0;
