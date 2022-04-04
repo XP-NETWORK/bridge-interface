@@ -29,8 +29,8 @@ export default function ChainListBox(props) {
   const show = useSelector((state) => state.general.showChainModal);
   const switchChain = useSelector((state) => state.general.switchDestination);
   const widget = useSelector((state) => state.general.widget);
-  const [fromChains, setFromChains] = useState(chains.sort((a, b) => b.order - a.order))
-  const [toChains, setToChains] = useState(chains.sort((a, b) => b.order - a.order))
+  const [fromChains, setFromChains] = useState(chains)
+  const [toChains, setToChains] = useState(chains)
   const elrondAccount = useSelector(state => state.general.elrondAccount)
   const tezosAccount = useSelector(state => state.general.tezosAccount)
   const algorandAccount = useSelector(state => state.general.algorandAccount)
@@ -128,10 +128,10 @@ export default function ChainListBox(props) {
   }
 
   useEffect(() => {
-    const withNew = chains.filter(chain => chain.newChain)
+    const withNew = chains.filter(chain => chain.newChain).sort((a, b) => a.order - b.order)
     const withComing = chains.filter( chain => chain.coming && !chain.newChain )
     const withMaintenance = chains.filter( chain => chain.maintenance && !chain.newChain )
-    const noComingNoMaintenance = chains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain)
+    const noComingNoMaintenance = chains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain).sort((a, b) => a.order - b.order)
     const sorted = [...withNew, ...noComingNoMaintenance, ...withMaintenance, ...withComing]
 
     const onlyElrond = elrondAccount ? sorted.filter( chain => chain.type === "Elrond") : undefined
@@ -183,7 +183,7 @@ export default function ChainListBox(props) {
               if(chain.coming) return 1
               else if(chain.maintenance) return 0
               else if(!chain.coming) return -1
-            })
+            }).sort((a, b) => a.order - b.order)
             .map((chain) => {
               const {image, text, key, coming, newChain, maintenance, testNet, mainnet } = chain;
               return globalTestnet ? ((testNet && chain.key !== from.key)) && <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming}  text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`} /> 
