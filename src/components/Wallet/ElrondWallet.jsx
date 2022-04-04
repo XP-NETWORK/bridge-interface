@@ -15,7 +15,6 @@ export default function ElrondWallet({ wallet, close }) {
     switch (wallet) {
       case "Maiar": 
         connectMaiar()
-        close()
         break;
       case "Maiar Extension":
         connectMaiarExtension()
