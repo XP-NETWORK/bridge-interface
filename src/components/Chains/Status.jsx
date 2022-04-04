@@ -25,7 +25,7 @@ export default function Status({status}) {
             case "off-line":
                 return <div className="chain__off">Offline</div>
             case "coming":
-                return <div className="coming-chain">Coming</div>
+                return <div className="coming-chain">Coming soon</div>
             case "maintenance":
                 return <div className="coming-chain">Maintenance</div>
             case "new":
