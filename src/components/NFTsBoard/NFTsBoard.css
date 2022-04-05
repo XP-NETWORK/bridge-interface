@@ -81,10 +81,11 @@
     width: 200px;
 }
 .search-dropdown .dropdown-menu input{
-    border: 0;
+    border: 1px solid #fff;
     padding-left: 10px;
     padding-top: 10px;
     outline: unset;
+    background-color: #F6F6F8;
   
 }
 .mobileOnly{
@@ -214,6 +215,12 @@
     font-weight: 400;
     line-height: 18px;
 }
+
+
+#SearchDrop {
+
+}
+
 @media screen and (min-width: 768px) {
     .mobile-col{
         display: none;

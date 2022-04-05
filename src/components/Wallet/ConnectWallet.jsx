@@ -90,7 +90,7 @@ function handleVideoClick() {
                 <div className="close-modal"></div>
               </span>
             <div className="wallet-search__container">
-              <input onChange={e => setWalletSearch(e.target.value)} value={walletSearch} className="wallet-search" type="search" placeholder="Search" />
+              <input onChange={e => setWalletSearch(e.target.value)} value={walletSearch} className="wallet-search serchInput" type="text" placeholder="Search" />
               <div className="magnify"></div>
             </div>
             </Modal.Header>

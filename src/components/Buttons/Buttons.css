@@ -43,7 +43,7 @@
     height: 24px;
     background-image: url("../../assets//img//icons/blue_check.svg");
 }
-.change-view__button{
+.change-view__button, .SearchDrop, .CloseIcon{
     width: 40px;
     height: 40px;
     background: #F6F6F8;
@@ -54,6 +54,33 @@
     cursor: pointer;
     transition: all 0.5s;
 }
+
+.serchInputConatainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.serchInputConatainer .decorIcon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.SearchDrop, .CloseIcon {
+    display: flex;
+}
+
+.SearchDrop svg, .CloseIcon svg{
+    margin: auto;
+    transform: translate(8%, -8%);
+}
+
+.CloseIcon svg{
+    transform: translate(5%, -17%);
+}
+
 .chain-switch{
     display: flex;
     align-items: center;
@@ -189,6 +216,11 @@
     border-radius: 168px;
     cursor: pointer;
 }
+
+.close__btn .CloseIcon svg {
+    transform: unset;
+}
+
 .close__btn::after{
     position: absolute;
     content: "";
@@ -196,7 +228,6 @@
     height: 24px;
     top: 8px;
     left: 7px;
-    background-image: url("../../assets/img/icons/close.svg");
 
 }
 @media screen and (min-width: 426px) {

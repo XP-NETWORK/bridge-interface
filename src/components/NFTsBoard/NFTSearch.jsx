@@ -1,23 +1,41 @@
-import { useState } from 'react'
-import { Dropdown } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux';
-import { ReactComponent as Search} from "../../assets/img/icons/Search.svg";
-import { ReactComponent as SearchComp } from "../../assets/img/icons/Search.svg";
-import { setSearchNFTList } from '../../store/reducers/generalSlice';
+import { useState } from "react";
+import { Dropdown } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { ReactComponent as Search } from "../../assets/img/icons/Search.svg";
+import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
+import { setSearchNFTList } from "../../store/reducers/generalSlice";
 export default function NFTSearch() {
+  const dispatch = useDispatch();
+  const widget = useSelector((state) => state.general.widget);
+  const [openSearch, setOpen] = useState(false);
 
-    const dispatch = useDispatch()
-    const widget = useSelector((state) => state.general.widget);
-  const [icon, setIcon] = useState(true)
-
-    const handleSearch = (e) => {
-        dispatch(setSearchNFTList(e.target.value));
-      };
+  const handleSearch = (e) => {
+    dispatch(setSearchNFTList(e.target.value));
+  };
 
   return (
-    
-    <Dropdown className="search-dropdown" autoClose="outside">
-      <Dropdown.Toggle id="SearchDrop">
+    <div className="search-dropdown">
+      {openSearch ? (
+        <div className="serchInputConatainer">
+           <Search className="svgWidget decorIcon"  />
+          <input type="text" className="serchInput" />{" "}
+          <div id="SearchDrop" className="CloseIcon" onClick={() => setOpen(false)}>
+            <Close className="svgWidget "  />
+          </div>{" "}
+        </div>
+      ) : (
+        <div id="SearchDrop" className="SearchDrop" onClick={() => setOpen(true)}>
+          <Search className="svgWidget "  />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * 
+ * 
+ *  <Dropdown.Toggle id="SearchDrop">
         <Search className="svgWidget "/>
       </Dropdown.Toggle>
       <Dropdown.Menu>
@@ -27,7 +45,4 @@ export default function NFTSearch() {
             placeholder="Search NFT"
           />
       </Dropdown.Menu>
-    </Dropdown>
-  
-  )
-}
+ */

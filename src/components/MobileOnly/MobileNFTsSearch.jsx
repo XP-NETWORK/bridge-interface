@@ -15,7 +15,7 @@ export default function MobileNFTsSearch({handleSearchTop}) {
         <CloseButton handleSearchTop={handleSearchTop} />
         <div className='mobile-search-input__box'>
           <div className='mobile-search-input__icon'></div>
-          <input onChange={e => handleSearch(e)} type="text" placeholder='Search NFT' />
+          <input onChange={e => handleSearch(e)} type="text" placeholder='Search NFT' className="serchInput"/>
         </div>
     </div>
   )
