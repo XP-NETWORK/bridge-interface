@@ -30,7 +30,7 @@ export default function Widget() {
       wsettings,
     })
   );
-
+console.log(settings);
   const dispatch = useDispatch();
 
   const [state, setState] = useState({});

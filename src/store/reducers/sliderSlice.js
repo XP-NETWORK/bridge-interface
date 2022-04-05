@@ -13,6 +13,7 @@ import image7 from '../../assets/img/nfts/nft_7.png'
 import image8 from '../../assets/img/nfts/nft_8.png'
 import image9 from '../../assets/img/nfts/nft_9.png'
 
+
 const initialState = {
     nfts:[
     {
@@ -61,6 +62,8 @@ const initialState = {
     position: 0
 };
 
+initialState.progWidth = initialState.nfts.map(n => 0)
+
 const sliderSlice = createSlice({
   name: "slider",
   initialState,
@@ -75,7 +78,7 @@ const sliderSlice = createSlice({
       state.nfts[state.step].action = true
     },
     setProgWidth(state){
-      state.nfts[state.step].progWidth = state.nfts[state.step].progWidth + 1
+      state.progWidth[state.step] = state.progWidth[state.step] + 1
     },
     setPosition(state){
       state.position = state.position - 78

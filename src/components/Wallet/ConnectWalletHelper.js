@@ -36,7 +36,7 @@ const { to, modalError } = store.getState()
 export const connectMetaMask = async (activate, from, to) => {
     try {
         if(!window.ethereum && window.innerWidth <= 600) {
-            const uri = `https://metamask.app.link/dapp/${window.location.host + `?to=${to.text}&from=${from.text}`}/`
+            const uri = `https://metamask.app.link/dapp/${window.location.host + `?to=${from}&from=${to}`}/`
           window.open(uri)
         }
         await activate(injected);

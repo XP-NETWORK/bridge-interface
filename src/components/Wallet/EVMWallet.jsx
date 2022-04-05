@@ -15,13 +15,14 @@ export default function EVMWallet({ wallet, close }) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   // console.log("🚀 ~ file: EVMWallet.jsx ~ line 15 ~ EVMWallet ~ chainId", chainId)
   const from = useSelector(state => state.general.from);
+  const to = useSelector(state => state.general.to);
   const dispatch = useDispatch()
   const getMobOps = () =>  /android/i.test(navigator.userAgent || navigator.vendor || window.opera) ? true : false;
   const testnet = useSelector((state) => state.general.testNet);
 
   
   const connectHandler = async () => {
-     const connected = await connectMetaMask(activate, from?.text)
+     const connected = await connectMetaMask(activate, from?.text, to?.text)
      if(connected){
        dispatch(setMetaMask(true))
        close()

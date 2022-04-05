@@ -151,7 +151,7 @@ export default function ChainListBox(props) {
     if(from?.text === to?.text && (location.pathname === "/connect" || location.pathname === "/testnet/connect")){
       dispatch(setTo(''))
     }
-    else if(from?.text === to?.text){
+    else if(from?.text === to?.text && location.pathname === '/account'){
       dispatch(setWrongNetwork(true))
     }
   }, [from])

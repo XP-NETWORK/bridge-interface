@@ -6,7 +6,7 @@ import { setProgWidth, setStep, setActionOn, setActionOff, setPosition, moveForw
 export default function SliderPagination({start, force, index}) {
     
     const length = useSelector(state => state.slider.nfts.length)
-    const width = useSelector(state => state.slider.nfts[index].progWidth)
+    const width = useSelector(state => state.slider.progWidth[index])
     const action = useSelector(state => state.slider.nfts[index].action)
     const dispatch = useDispatch()
     const step = useSelector(state => state.slider.step)
@@ -24,24 +24,30 @@ export default function SliderPagination({start, force, index}) {
     }
   
     useEffect(() => {
-        let s
-        if(action && !s){
-            s = setInterval(() => {
+     // console.log('d');
+       // let s
+        if(action){
+            //s = setInterval(() => {
                 if(width < 100){
-                  dispatch(setProgWidth())
+                  setTimeout( () => dispatch(setProgWidth()), 40)
                 }
                 else if(width === 100 && index !== length - 1){
-                    clearInterval(s)
-                    dispatch(setActionOff())
-                    dispatch(setStep(index + 1))
+                    //clearInterval(s)
+                    setTimeout(() => {
+             
+                      dispatch(setActionOff())
+                      dispatch(setStep(index + 1))
                     if(index > 1){
                         dispatch(setPosition())
                     }
+                    }, 30)
+                    
+                  }
+         //   }, 40)}
+        //return () => {}
+            //clearInterval(s)
+      //  }
                 }
-            }, 40)}
-        return () => {
-            clearInterval(s)
-        }
       });
      
 

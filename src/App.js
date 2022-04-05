@@ -84,7 +84,6 @@ function App() {
 
 
   
-
   return (
     <div className={"App"}>
       {state.wsettings && <WSettings />}
@@ -97,7 +96,7 @@ function App() {
       <ApproveLoader />
       <Error />
       <TronPopUp />
-      <Widget />
+     {false &&  <Widget />}
       <XpBridge />
       <Alert />
     </div>
