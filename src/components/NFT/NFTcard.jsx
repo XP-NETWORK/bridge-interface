@@ -28,18 +28,13 @@ export default function NFTcard({ nft, index }) {
     )[0];
 
     const [whiteListed, setWhitelisted] = useState(true)
-    const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
+    // const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
     const [dataLoaded, setDataloaded] = useState(false)
     
 
-    // useEffect(async() => {
-    //   const whitelisted = await isWhiteListed(from.text, nft)
-    //   setWhitelisted(whitelisted)
-    // },)
-
     useEffect(async() => {
        await parseEachNFT(nft, index)
-    })
+    },[])
     
 
     function addRemoveNFT(chosen) {
@@ -56,13 +51,13 @@ export default function NFTcard({ nft, index }) {
     return (
         <div className={`nft-box__wrapper`}>
           { !nft.dataLoaded ? <Preload /> : 
-          <div onClick={() => nft.whiteListed ? addRemoveNFT(nft, index): undefined } className={isSelected ? "nft__card--selected" : "nft__card"}>
+          <div onClick={() => nft.whiteListed ? addRemoveNFT(nft, index): undefined } className={nft.whiteListed ? "nft__card--selected" : "nft__card"}>
             <div className="nft__main">
               { nft.uri && isValidHttpUrl(nft.uri, index) ? 
-                video && image ? <VideoAndImage index={index} videoUrl={videoUrl} imageUrl={imageUrl} />
-              : image && !video ? <img alt=""  src={setupURI(imageUrl)} /> 
-              : !image && video ? <video controls={false}  playsInline={true} autoPlay={true} loop={true}  muted={true} src={setupURI(videoUrl)} />
-              : ipfsArr?.length > 0 && <VideoOrImage urls={ipfsArr} i={index} />
+                nft.animation_url && nft.image ? <VideoAndImage index={index} videoUrl={nft.animation_url} imageUrl={nft.image} />
+              : nft.image && !nft.animation_url ? <img alt=""  src={setupURI(nft.image)} /> 
+              : !nft.image && nft.animation_url ? <video controls={false}  playsInline={true} autoPlay={true} loop={true}  muted={true} src={setupURI(nft.animation_url)} />
+              : [nft.animation_url,nft.image]?.length > 0 && <VideoOrImage urls={[nft.animation_url,nft.image]} i={index} />
               : <BrockenUtlGridView />
               }
               { !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> }

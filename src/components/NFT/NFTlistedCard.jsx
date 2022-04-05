@@ -31,12 +31,6 @@ export default function NFTlistedCard({nft, index}) {
   }
 
 
-  // useEffect(async() => {
-  //   await parseEachNFT(nft, index)
-  // })
-  
-
-
   return (
   nft.dataLoaded ?
   <li onMouseEnter={() => setOnHover(true)} onMouseLeave={()=> setOnHover(false)} className="nftListed nftSelect">

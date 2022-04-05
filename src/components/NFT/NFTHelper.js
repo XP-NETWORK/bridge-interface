@@ -84,32 +84,32 @@ export const getUrl = nft => {
     return { video, videoUrl, image ,imageUrl, ipfsArr }
 }
 
-const getVideoSize = url => {
-    const video = document.createElement('video');
-    video.src = url
-    console.log("🚀 ~ file: NFTHelper.js ~ line 95 ~ video", video)
+// const getVideoSize = url => {
+//     const video = document.createElement('video');
+//     video.src = url
+//     console.log("🚀 ~ file: NFTHelper.js ~ line 95 ~ video", video)
     
-}
+// }
 
-const getImageSize = url => {
-    let errorFetching = false;
+// const getImageSize = url => {
+//     let errorFetching = false;
   
-    return new Promise((resolve, reject) => {
-      const i = new Image();
+//     return new Promise((resolve, reject) => {
+//       const i = new Image();
   
-      i.onload = function () {
-        if (i.height && i.width) {
-          return resolve({
-            errorFetching,
-            width: i.width,
-            height: i.height
-          });
-        }
-      };
+//       i.onload = function () {
+//         if (i.height && i.width) {
+//           return resolve({
+//             errorFetching,
+//             width: i.width,
+//             height: i.height
+//           });
+//         }
+//       };
   
-      i.src = url;
-    });
-  };
+//       i.src = url;
+//     });
+//   };
 
 export const isWhiteListed = async (from, nft) => {
     // debugg
