@@ -29,7 +29,7 @@ export default function SliderPagination({start, force, index}) {
         if(action){
             //s = setInterval(() => {
                 if(width < 100){
-                  setTimeout( () => dispatch(setProgWidth()), 40)
+                  setTimeout( () => dispatch(setProgWidth()), 45)
                 }
                 else if(width === 100 && index !== length - 1){
                     //clearInterval(s)
@@ -40,7 +40,7 @@ export default function SliderPagination({start, force, index}) {
                     if(index > 1){
                         dispatch(setPosition())
                     }
-                    }, 30)
+                    }, 10)
                     
                   }
          //   }, 40)}

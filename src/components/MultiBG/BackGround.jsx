@@ -7,31 +7,23 @@ export default function BackGround() {
   const location = useLocation()
   const nfts = useSelector(state => state.slider.nfts)
   const step = useSelector(state => state.slider.step)
-  const [pathname, setPathname] = useState()
+  const [style, setStyle] = useState({})
 
-  console.log('slider');
-            
-  const bgStyle = {
-    backgroundColor: `#E5E5E5`,
-    ...location.pathname === '/connect' || location.pathname === '/' ? {backgroundImage:`url(${nfts[step].image})`}: {} ,
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    transition: "all 2s",
-  }
-
-  /*useEffect(() => {
-    console.log('tlalim');
-    setPathname(location.pathname)
-  },[location.pathname])*/
-  
 
   useEffect(() => {
-      console.log('ralli');
+
+      setStyle({
+        backgroundColor: `#E5E5E5`,
+        ...location.pathname === '/connect' || location.pathname === '/' ? {backgroundImage:`url(${nfts[step].image})`}: {} ,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        transition: "all 2s",
+      })
   }, [step])
 
   return (
-    <div style={bgStyle} className='multi-background'>
+    <div style={style} className='multi-background'>
       <div className='multi-background__color'></div>
     </div>
   )
