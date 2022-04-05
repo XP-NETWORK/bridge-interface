@@ -6,6 +6,7 @@ import ListedView from './ListedView';
 import { useEffect } from 'react';
 import { isWhiteListed } from './NFTHelper';
 import NFTdetails from "./NFTdetails"
+import { parseEachNFT } from '../../wallet/helpers';
 
 export default function NFTlistedCard({nft, index}) {
 
@@ -30,14 +31,14 @@ export default function NFTlistedCard({nft, index}) {
   }
 
 
-  useEffect(async() => {
-    const whitelisted = await isWhiteListed(from.text, nft)
-    setWhitelisted(whitelisted)
-  },)
+  // useEffect(async() => {
+  //   await parseEachNFT(nft, index)
+  // })
   
 
 
   return (
+  nft.dataLoaded ?
   <li onMouseEnter={() => setOnHover(true)} onMouseLeave={()=> setOnHover(false)} className="nftListed nftSelect">
     <div className="nftListed__info">
         {!checkIfSelected(nft, selectedNFTs) ? <div onClick={(e) => addRemoveNFT(nft, e)} className="listed-nft-radio"></div> : <div onClick={(e) => addRemoveNFT(nft, e)} className="listed-nft-radio--selected"></div> }
@@ -45,10 +46,11 @@ export default function NFTlistedCard({nft, index}) {
         <span className="name" onClick={(e) => addRemoveNFT(nft, e)}>{nft?.data?.name || nft?.name || nft?.native.name}</span>
     </div>
     <NFTdetails nftInf={nft}/>
-    { (!whitelisted ) && <div className='listed-view__not-whitelisted'>
+    { (!nft.whitelisted ) && <div className='listed-view__not-whitelisted'>
       <div className="listed-view__not-whitelisted__text">This NFT not Whitelisted</div>
       <div href='https://t.me/XP_NETWORK_Technical_Support' className="listed-view__not-whitelisted__button" target="_blank">Tech support</div>
     </div>}
-  </li>
+  </li>:
+  <div>skeleton</div>
   )
 }
