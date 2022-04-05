@@ -27,7 +27,7 @@ export default function UserConnect({desktop}) {
         if(!walletAccount){
         dispatch(setWalletsModal(true))
         }
-        else if(walletAccount && location.pathname === "/account")dispatch(setAccountModal(true))
+        else if(walletAccount)dispatch(setAccountModal(true))
     }
 
     const getAccountString = () => {

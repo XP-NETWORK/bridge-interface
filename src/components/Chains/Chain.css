@@ -257,4 +257,20 @@ background: rgba(73, 82, 108, 0.1);
       }
 }
 
+@media screen and (max-width: 320px) {
+  .NftSelect {
+    width: 288px;
+  }
+  .slider__wrapper {
+    width: 288px !important;
+}
+}
 
+@media screen and (max-width: 375px) {
+  .NftSelect {
+    width: 344px;
+  }
+  .slider__wrapper {
+    width: 344px !important;
+}
+}
