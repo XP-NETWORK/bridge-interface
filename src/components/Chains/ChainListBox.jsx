@@ -8,6 +8,7 @@ import {
   setFrom,
   setChainSearch,
   setSwitchDestination,
+  setWrongNetwork,
 } from "../../store/reducers/generalSlice";
 import Chain from "./Chain"
 import ChainSearch from "../Chains/ChainSearch"
@@ -18,9 +19,11 @@ import { filterChains } from "./ChainHelper";
 import { useWeb3React } from "@web3-react/core";
 import { chainsConfig } from "..//values"
 import { getAddEthereumChain } from "../../wallet/chains";
+import { useLocation } from "react-router-dom";
 
 export default function ChainListBox(props) {
   const dispatch = useDispatch();
+  const location = useLocation()
   const departureOrDestination = useSelector((state) => state.general.departureOrDestination);
   const chainSearch = useSelector((state) => state.general.chainSearch);
   const from = useSelector((state) => state.general.from);
@@ -145,9 +148,18 @@ export default function ChainListBox(props) {
 
   useEffect(() => {
     if(from)setToChains(filterChains(chains, from.text))
+    if(from?.text === to?.text && (location.pathname === "/connect" || location.pathname === "/testnet/connect")){
+      dispatch(setTo(''))
+    }
+    else if(from?.text === to?.text){
+      dispatch(setWrongNetwork(true))
+    }
   }, [from])
   
   useEffect(() => {
+    if(from?.text === to?.text){
+      dispatch(setTo(''))
+    }
   }, [to]);
 
   return (

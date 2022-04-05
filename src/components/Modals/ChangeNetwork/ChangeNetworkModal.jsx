@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { setWrongNetwork } from "../../../store/reducers/generalSlice";
 import ChangeNetworkLoader from "../../innercomponents/ChangeNetworkLoader";
 import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import icon from "../../../assets/img/icons/book.svg"
 
@@ -18,23 +18,26 @@ function ChangeNetworkModal() {
     dispatch(setWrongNetwork(false))
   };
   const from = useSelector((state) => state.general.from);
+  const to = useSelector((state) => state.general.to);
   const showWrong = useSelector((state) => state.general.wrongNetwork);
   const account = useSelector((state) => state.general.account);
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(false);
   const testnet = useSelector((state) => state.general.testNet);
-  const widget = useSelector((state) => state.general.widget);
+  const location = useLocation()
   const navigate = useNavigate()
   const { chainId } = useWeb3React()
   const isSupported = chains.some(chain => chain.chainId === chainId)
+  const forbidden = chainId === to?.chainId && (location.pathname === "/account" || location.pathname === "/testnet/account")
+  console.log("🚀 ~ file: ChangeNetworkModal.jsx ~ line 32 ~ ChangeNetworkModal ~ forbidden", forbidden)
 
   async function switchNetwork() {
+    debugger
     setLoader(true);
     const info = testnet
       ? TESTNET_CHAIN_INFO[from?.key]
       : CHAIN_INFO[from?.key];
     const _chainId = `0x${info.chainId.toString(16)}`;
-    console.log("🚀 ~ file: ChangeNetworkModal.jsx ~ line 36 ~ switchNetwork ~ _chainId", _chainId)
     try {
       const success = await window.ethereum.request({
         method: "wallet_switchEthereumChain",
@@ -85,7 +88,36 @@ function ChangeNetworkModal() {
   useEffect(() => {}, [showWrong]);
 
   return (
-    <div>
+    forbidden ? <Modal
+    animation={false}
+    show={showWrong}
+    // show={true}
+    onHide={undefined}
+    className="nftWorng"
+  >
+    <Modal.Header className="border-0">
+      <Modal.Title>Wrong Network</Modal.Title>
+    </Modal.Header>
+    <Modal.Body className="modalBody text-center">
+      <div className="wrongNFT">
+        <div className="nftWornTop">
+          <span className="worngImg">
+            <div className="wrong-icon">
+              <div className="first-wrong__bg">
+                <div className="second-wrong__bg">
+                  <img src={icon} alt="" />
+                </div>
+              </div>
+            </div>
+          </span>
+          <h3>Destination and departure chains <br/> can't be same</h3>
+          <p>
+            Please use MetaMask to switch the departure chain.
+          </p>
+        </div>
+      </div>
+    </Modal.Body>
+  </Modal> :
       <Modal
         animation={false}
         show={showWrong}
@@ -95,10 +127,9 @@ function ChangeNetworkModal() {
       >
         <Modal.Header className="border-0">
           <Modal.Title>Wrong Network</Modal.Title>
-          {isSupported && <span className="CloseModal" onClick={handleClose}>
+          {isSupported && !forbidden && <span className="CloseModal" onClick={handleClose}>
             
               <CloseComp className="svgWidget closeIcon" />
-     
           </span>}
         </Modal.Header>
         <Modal.Body className="modalBody text-center">
@@ -138,7 +169,6 @@ function ChangeNetworkModal() {
           </div>
         </Modal.Body>
       </Modal>
-    </div>
   );
 }
 

@@ -11,9 +11,6 @@ import { DetectOutsideClick } from "../components/helpers";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { CHAIN_INFO } from "../components/values";
 import { getAddEthereumChain } from "../wallet/chains";
-// import copyTT from "../assets/img/icons/copytoclip.svg"
-// import copiedIcon from "../assets/img/icons/copiedtoclip.svg"
-// import msgCloud from "../assets/img/icons/msg-cloud.svg"
 import Tooltip from "./Tooltip";
 
 export default function AccountModal() {

@@ -27,7 +27,7 @@ export default function UserConnect({desktop}) {
         if(!walletAccount){
         dispatch(setWalletsModal(true))
         }
-        else if(walletAccount && location.pathname === "/account")dispatch(setAccountModal(true))
+        else if(walletAccount)dispatch(setAccountModal(true))
     }
 
     const getAccountString = () => {
@@ -60,6 +60,7 @@ export default function UserConnect({desktop}) {
         }
         else{
           dispatch(setWrongNetwork(true))
+          console.log("setWrongNetwork eseEffect userConnect");
         }
       }
     }, [account, chainId])
