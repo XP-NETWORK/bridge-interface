@@ -16,6 +16,7 @@ import Tezos from "../assets/img/chain/Tezos.svg";
 import Iotex from "../assets/img/chain/iotx.svg";
 import One from "../assets/img/chain/One.svg";
 import Aurora from "../assets/img/chain/aurora.svg";
+import Godwoken from "../assets/img/chain/nervos.png"
 import { Chain } from "xp.network/dist/consts";
 
 export const EVM = "EVM";
@@ -238,7 +239,7 @@ export const chains = [
     text: "Godwoken",
     value: "Godwoken",
     order: 10,
-    image: { avatar: true, src: Aurora },
+    image: { avatar: true, src: Godwoken },
     maintenance: false,
     testNet: true,
     mainnet: false,

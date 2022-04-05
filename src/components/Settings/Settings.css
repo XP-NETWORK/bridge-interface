@@ -1618,3 +1618,10 @@ li.blockChain_item .blockChainItem span {
   width: 80%;
   margin-right: 15px;
 }
+
+.feesWrapper {
+  margin-bottom: 10px;
+}
+.feesWrapper input:focus {
+  outline: none;
+}
