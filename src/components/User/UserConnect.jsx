@@ -60,6 +60,7 @@ export default function UserConnect({desktop}) {
         }
         else{
           dispatch(setWrongNetwork(true))
+          console.log("setWrongNetwork eseEffect userConnect");
         }
       }
     }, [account, chainId])

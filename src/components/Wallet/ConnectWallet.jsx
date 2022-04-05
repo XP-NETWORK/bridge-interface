@@ -54,6 +54,7 @@ function ConnectWallet() {
     }
     else if(connected && to && from && chainsConfig[from.key].chainId !== chainId && chainId){
       dispatch(setWrongNetwork(true))
+      console.log("setWrongNetwork eseEffect");
     }
     else{
       dispatch(setAlert(true))
@@ -66,13 +67,6 @@ function ConnectWallet() {
 function handleVideoClick() {
     dispatch(setShowVideo(true))
 }
-
-useEffect(() => {
-  if(chainId && from && chainId !== from.chainId && from.type === "EVM"){
-    dispatch(setWrongNetwork(true))
-  }
-}, [chainId])
-
 
   return (
     <div>
