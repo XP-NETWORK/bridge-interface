@@ -32,6 +32,7 @@ function ConnectWallet() {
 
   const handleClose = () => {
     setShow(false);
+    setWalletSearch('');
     dispatch(setWalletsModal(false))
     if (qrCodeImage) {
       dispatch(setQrCodeString(""));

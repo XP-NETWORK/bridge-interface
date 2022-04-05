@@ -23,7 +23,7 @@ export default function TronWallet({close}) {
   }
 
   return (
-    <li style={getStyle()} onClick={connectHandler} data-wallet="TronLink" className="wllListItem">
+    <li style={OFF} onClick={connectHandler} data-wallet="TronLink" className="wllListItem">
       <img src={Tron} alt="Tron Icon" /><p>TronLink</p>
     </li>
   );
