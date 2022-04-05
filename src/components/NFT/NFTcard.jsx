@@ -32,16 +32,14 @@ export default function NFTcard({ nft, index }) {
     const [dataLoaded, setDataloaded] = useState(false)
     
 
-    useEffect(async() => {
-      const whitelisted = await isWhiteListed(from.text, nft)
-      setWhitelisted(whitelisted)
-    },)
+    // useEffect(async() => {
+    //   const whitelisted = await isWhiteListed(from.text, nft)
+    //   setWhitelisted(whitelisted)
+    // },)
 
     useEffect(async() => {
-      const loaded = await parseEachNFT(nft, index)
-      const whitelisted = await isWhiteListed(from.text, nft)
-      dispatch(updateNFTs({whitelisted, nft}))
-    },[])
+       await parseEachNFT(nft, index)
+    })
     
 
     function addRemoveNFT(chosen) {
@@ -58,7 +56,7 @@ export default function NFTcard({ nft, index }) {
     return (
         <div className={`nft-box__wrapper`}>
           { !nft.dataLoaded ? <Preload /> : 
-          <div onClick={() => whiteListed ? addRemoveNFT(nft, index): undefined } className={isSelected ? "nft__card--selected" : "nft__card"}>
+          <div onClick={() => nft.whiteListed ? addRemoveNFT(nft, index): undefined } className={isSelected ? "nft__card--selected" : "nft__card"}>
             <div className="nft__main">
               { nft.uri && isValidHttpUrl(nft.uri, index) ? 
                 video && image ? <VideoAndImage index={index} videoUrl={videoUrl} imageUrl={imageUrl} />
@@ -68,7 +66,7 @@ export default function NFTcard({ nft, index }) {
               : <BrockenUtlGridView />
               }
               { !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> }
-              { !whiteListed && <NotWhiteListed /> }
+              { !nft.whitelisted && <NotWhiteListed /> }
             </div>
             <div className="nft__footer">
                 <span className="nft-name"><span className="name">{nft.name || nft.native.name}</span><NFTdetails nftInf={nft} index={index} /></span>

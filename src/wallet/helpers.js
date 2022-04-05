@@ -4,6 +4,7 @@ import { chainsConfig, CHAIN_INFO } from "../components/values";
 import { setAlgorandClaimables, setBigLoader, setEachNFT, setFactory, setNFTList, setPreloadNFTs } from "../store/reducers/generalSlice";
 import store from "../store/store";
 import io from "socket.io-client";
+import { isWhiteListed } from "./../components/NFT/NFTHelper"
 
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
 export const socket = io(socketUrl, {
@@ -41,6 +42,7 @@ export const checkIfJSON = jsonStr => {
 
 export const parseEachNFT = async (nft, index) => {
   const { from } = store.getState().general;
+  const whitelisted = await isWhiteListed(from.text, nft)
   let dataLoaded = false
   let nftObj = {
     uri: nft.uri,
@@ -58,6 +60,7 @@ export const parseEachNFT = async (nft, index) => {
     nftObj.ipfs = nft.native?.meta?.token?.metadata?.ipfs || undefined
     nftObj.name = nft.native?.meta?.token?.metadata?.name || undefined
     nftObj.wrapped = {...nft.native?.meta?.token?.metadata?.wrapped} || undefined
+    nftObj.whitelisted = whitelisted
     nftObj.dataLoaded = true
     store.dispatch(setEachNFT({nftObj, index}))
     dataLoaded = true
@@ -70,13 +73,14 @@ export const parseEachNFT = async (nft, index) => {
   else{
     // debugger
     axios.get(`https://sheltered-crag-76748.herokuapp.com/${setupURI(nft.uri)}`)
-    .then(response => {
+    .then( response => {
       nftObj.name = response.data.name || undefined
       nftObj.image = response.data.image || undefined
       nftObj.description = response.data.description || undefined
       nftObj.external_url = response.data.external_url || undefined
       nftObj.attributes = [...response.data.attributes] || undefined
       nftObj.animation_url = response.data.animation_url || undefined
+      nftObj.whitelisted = whitelisted
       nftObj.dataLoaded = true
       if(nftObj.animation_url){
         // debugger

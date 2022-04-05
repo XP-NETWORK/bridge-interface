@@ -112,7 +112,7 @@ const getImageSize = url => {
   };
 
 export const isWhiteListed = async (from, nft) => {
-    // debugger
+    // debugg
     let whitelisted
     const chainNonce = CHAIN_INFO[from].nonce
     const factory = await getFactory()
