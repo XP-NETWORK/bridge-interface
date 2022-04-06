@@ -36,7 +36,6 @@ export default function Widget() {
 
 
 
-
   const dispatch = useDispatch();
 
   const [state, setState] = useState({});

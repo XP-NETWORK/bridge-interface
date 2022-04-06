@@ -34,7 +34,8 @@ export default function NFTcard({ nft, index }) {
     const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
   
     useEffect(async() => {
-      const whitelisted = await isWhiteListed(from.text, nft)
+      const whitelisted = nft.native.contract === "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a" ? false 
+      : await isWhiteListed(from.text, nft)
       setWhitelisted(whitelisted)
     }, [])
     

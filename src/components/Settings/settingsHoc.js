@@ -156,7 +156,7 @@ const settingsHoc = (Wrapped) => (props) => {
           tooltipBg.split("#")[1]}&tooltipColor=${tooltipColor &&
             tooltipColor.split("#")[1]}&wallets=${selectedWallets.join(
         "-"
-      )}&bridgeState=${JSON.stringify(bridgeState)}&showLink=${showLink}&affiliationFees=${affiliationFees && +affiliationFees/100 + 1}`,
+      )}&bridgeState=${JSON.stringify(bridgeState)}&showLink=${showLink}&affiliationFees=${affiliationFees ? +affiliationFees/100 + 1:1}`,
     [settings]
   );
 
