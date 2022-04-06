@@ -1,3 +1,7 @@
+.nftListView{
+  border-radius: none !important;
+}
+
 .missing-nft-box__wrapper {
   background: #ECECF14D;
   width: 200px;
@@ -561,6 +565,60 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
   position: absolute;
 }
 
+.listed__skeleton{
+  height: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+  padding-left: 10px;
+}
+.listed__skeleton::after{
+  content: "";
+  position: absolute;
+  top: -110%;
+  left: -200%;
+  width: 200%;
+  height: 300%;
+  transform: rotate(250deg);
+  opacity: 0.3;
+  background: linear-gradient(270deg, rgba(255,255,255,0) 20%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 80%);
+  animation: shine 6s infinite;
+  animation-delay: 0.1s;
+}
+.listed__skeleton .checkmark{
+  height: 20px;
+  width: 20px;
+  background-color: #62718A;
+  border-radius: 50%;
+  opacity: 0.2;
+  overflow: hidden;
+}
+.listed__skeleton .image{
+  height: 30px;
+  width: 30px;
+  background-color: #62718A;
+  border-radius: 4px;
+  opacity: 0.2;
+}
+.listed__skeleton .name{
+  height: 20px;
+  /* width: 300px; */
+  background-color: #62718A;
+  border-radius: 4px;
+  opacity: 0.2;
+}
+.listed__skeleton .det{
+  height: 20px;
+  width: 20px;
+  background-color: #62718A;
+  border-radius: 50%;
+  opacity: 0.2;
+  margin-left: auto;
+}
 .skeleton{
   background: #ececf1;
   width: 200px;
