@@ -31,7 +31,6 @@ export const setupURI = (uri) => {
 };
 
 export const checkIfJSON = jsonStr => {
-console.log("🚀 ~ file: helpers.js ~ line 34 ~ jsonStr", jsonStr)
   let obj
   try {
     obj = JSON.parse(jsonStr)
@@ -317,7 +316,6 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 
 
 export const setNFTS = async (w, from, testnet) => {
-console.log("🚀 ~ file: helpers.js ~ line 318 ~ setNFTS ~ w", w)
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from, testnet)
   store.dispatch(setPreloadNFTs(res.length))

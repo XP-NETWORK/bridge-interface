@@ -12,6 +12,7 @@ export default function NFTlistedCard({nft, index}) {
 
   const dispatch = useDispatch()
   const selectedNFTs = useSelector(state => state.general.selectedNFTList)
+  const nfts = useSelector(state => state.general.NFTList)
   const from = useSelector(state => state.general.from)
   const [whitelisted, setWhitelisted] = useState(false)
   const OFF = {pointerEvents: "none"}
@@ -32,9 +33,10 @@ export default function NFTlistedCard({nft, index}) {
 
   useEffect(() => {
     if(!nft.dataLoaded){
+      console.log("🚀 ~ file: NFTlistedCard.jsx ~ line 35 ~ useEffect ~ nft.dataLoaded", nft.dataLoaded)
       parseEachNFT(nft, index)
     }
-  }, [])
+  }, [nfts])
   
 
 
