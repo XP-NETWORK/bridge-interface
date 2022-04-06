@@ -215,6 +215,7 @@
     background: rgb(247,247,249);
     border-radius: 20px ;
     border-bottom: 1px solid white;
+    overflow: hidden;
   }
   .navbar-connect-mob{
     display: flex;

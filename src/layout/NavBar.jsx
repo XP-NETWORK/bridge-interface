@@ -58,13 +58,13 @@ function NavBar() {
                                     GitHub
                                 </div>
                             </Nav.Link>}
-                            <Nav.Link className="mob-link" target="_blank" href="#">
-                                <div className="nav-link__icon"><img src={video} alt="" /></div>
+                            <Nav.Link className="mob-link" target="_blank" href="#" onClick={() => dispatch(setShowVideo(true))}>
+                                <div className="nav-link__icon"><img src={video} alt=""  /></div>
                                 <div className="nav-link__txt">
                                     Video Tutorial
                                 </div>
                             </Nav.Link>
-                            <Nav.Link className="mob-link" target="_blank" href="#">
+                            <Nav.Link className="mob-link" target="_blank" href="https://xp.network/">
                                 <div className="nav-link__icon"><img src={xpnet} alt="" /></div>
                                 <div className="nav-link__txt">
                                     XP.NETWORK
