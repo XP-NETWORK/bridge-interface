@@ -31,6 +31,7 @@ export const setupURI = (uri) => {
 };
 
 export const checkIfJSON = jsonStr => {
+console.log("🚀 ~ file: helpers.js ~ line 34 ~ jsonStr", jsonStr)
   let obj
   try {
     obj = JSON.parse(jsonStr)
@@ -39,6 +40,8 @@ export const checkIfJSON = jsonStr => {
   }
   return obj
 }
+
+
 
 export const parseEachNFT = async (nft, index) => {
   const { from } = store.getState().general;
@@ -71,7 +74,6 @@ export const parseEachNFT = async (nft, index) => {
     dataLoaded = true
   }
   else{
-    // debugger
     axios.get(`https://sheltered-crag-76748.herokuapp.com/${setupURI(nft.uri)}`)
     .then( response => {
       nftObj.name = response.data.name || undefined
