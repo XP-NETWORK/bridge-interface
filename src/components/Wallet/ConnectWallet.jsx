@@ -27,8 +27,8 @@ function ConnectWallet() {
   const evmAccount = useSelector(state => state.general.account)
   const tronAccount = useSelector(state => state.general.tronWallet)
   const testnet = useSelector(state => state.general.testNet)
-  const { chainId } = useWeb3React()
-  const connected = (elrondAccount || tezosAccount || algorandAccount || evmAccount || tronAccount) ? true : false
+  const { account, chainId } = useWeb3React()
+  const connected = (elrondAccount || tezosAccount || algorandAccount || evmAccount || tronAccount || account) ? true : false
 
   const handleClose = () => {
     setShow(false);

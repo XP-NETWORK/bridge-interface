@@ -24,65 +24,65 @@ function ChangeNetworkModal() {
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(false);
   const testnet = useSelector((state) => state.general.testNet);
+  const WalletConnect = useSelector((state) => state.general.WalletConnect);
   const location = useLocation()
   const navigate = useNavigate()
   const { chainId } = useWeb3React()
   const isSupported = chains.some(chain => chain.chainId === chainId)
   const forbidden = chainId === to?.chainId && (location.pathname === "/account" || location.pathname === "/testnet/account")
-  console.log("🚀 ~ file: ChangeNetworkModal.jsx ~ line 32 ~ ChangeNetworkModal ~ forbidden", forbidden)
 
   async function switchNetwork() {
-    debugger
-    setLoader(true);
-    const info = testnet
-      ? TESTNET_CHAIN_INFO[from?.key]
-      : CHAIN_INFO[from?.key];
-    const _chainId = `0x${info.chainId.toString(16)}`;
-    try {
-      const success = await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ _chainId }],
-      });
-      navigate(testnet ? "/testnet/account" : "/account")
-      dispatch(setWrongNetwork(false));
-    } catch (error) {
-      setLoader(false);
-      console.log(error);
+    
+      setLoader(true);
+      const info = testnet
+        ? TESTNET_CHAIN_INFO[from?.key]
+        : CHAIN_INFO[from?.key];
+      const _chainId = `0x${info.chainId.toString(16)}`;
       try {
-        const toHex = (num) => {
-          return "0x" + num.toString(16);
-        };
-        const chain = getAddEthereumChain()[parseInt(_chainId).toString()];
-
-        const params = {
-          chainId: _chainId, // A 0x-prefixed hexadecimal string
-          chainName: chain.name,
-          nativeCurrency: {
-            name: chain.nativeCurrency.name,
-            symbol: chain.nativeCurrency.symbol, // 2-6 characters long
-            decimals: chain.nativeCurrency.decimals,
-          },
-          rpcUrls: chain.rpc,
-          blockExplorerUrls: [
-            chain.explorers &&
-            chain.explorers.length > 0 &&
-            chain.explorers[0].url
-              ? chain.explorers[0].url
-              : chain.infoURL,
-          ],
-        };
-        await window.ethereum.request({
-          method: "wallet_addEthereumChain",
-          params: [params, account],
+        const success = await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ _chainId }],
         });
-        dispatch(setWrongNetwork(false));
-        setLoader(false);
         navigate(testnet ? "/testnet/account" : "/account")
+        dispatch(setWrongNetwork(false));
       } catch (error) {
         setLoader(false);
         console.log(error);
+        try {
+          const toHex = (num) => {
+            return "0x" + num.toString(16);
+          };
+          const chain = getAddEthereumChain()[parseInt(_chainId).toString()];
+
+          const params = {
+            chainId: _chainId, // A 0x-prefixed hexadecimal string
+            chainName: chain.name,
+            nativeCurrency: {
+              name: chain.nativeCurrency.name,
+              symbol: chain.nativeCurrency.symbol, // 2-6 characters long
+              decimals: chain.nativeCurrency.decimals,
+            },
+            rpcUrls: chain.rpc,
+            blockExplorerUrls: [
+              chain.explorers &&
+              chain.explorers.length > 0 &&
+              chain.explorers[0].url
+                ? chain.explorers[0].url
+                : chain.infoURL,
+            ],
+          };
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [params, account],
+          });
+          dispatch(setWrongNetwork(false));
+          setLoader(false);
+          navigate(testnet ? "/testnet/account" : "/account")
+        } catch (error) {
+          setLoader(false);
+          console.log(error);
+        }
       }
-    }
   }
 
   useEffect(() => {}, [showWrong]);
