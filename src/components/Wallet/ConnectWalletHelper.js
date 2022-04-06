@@ -141,7 +141,6 @@ export const onWalletConnect = async (activate, from) => {
     walletConnect.networkId = chainId;
     await activate(walletConnect, undefined, true);
     const account = await walletConnect.getAccount()
-    console.log("🚀 ~ file: ConnectWalletHelper.js ~ line 144 ~ onWalletConnect ~ account", account)
     store.dispatch(setAccount(account))
     store.dispatch(setOnWC(true));
     store.dispatch(setWC(walletConnect));
