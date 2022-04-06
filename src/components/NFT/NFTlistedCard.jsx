@@ -17,12 +17,12 @@ export default function NFTlistedCard({nft, index}) {
   const [whitelisted, setWhitelisted] = useState(false)
   const OFF = {pointerEvents: "none"}
   const [onHover, setOnHover] = useState(false)
-  const [_width, setWidth] = useState()
+  const [_width, setWidth] = useState(Math.floor(Math.random() * 125 + 35))
   
-  const generateRandom = () => {
-    setWidth(Math.floor(Math.random() * 25 + 5))
-  }
-  const width = nft.name ? {width: `${_width * 10}px`} : { width: "300px" }
+  // const generateRandom = () => {
+  //   setWidth(Math.floor(Math.random() * 25 + 5))
+  // }
+  // const width = nft.name ? {width: `${_width * 10}px`} : { width: "300px" }
 
   const checkIfSelected = ( nft ) => {
     return selectedNFTs.filter(n => n.native.tokenId === nft.native.tokenId && n.native.contract === nft.native.contract && n.native.chainId === nft.native.chainId)[0]
@@ -40,13 +40,13 @@ export default function NFTlistedCard({nft, index}) {
     if(!nft.dataLoaded){
       parseEachNFT(nft, index)
     }
-    generateRandom()
+    // generateRandom()
   }, [nfts])
   
 
 
   return (
-  !nft.dataLoaded ?
+  nft.dataLoaded ?
   <li onMouseEnter={() => setOnHover(true)} onMouseLeave={()=> setOnHover(false)} className="nftListed nftSelect">
     <div className="nftListed__info">
         {!checkIfSelected(nft, selectedNFTs) ? <div onClick={(e) => addRemoveNFT(nft, e)} className="listed-nft-radio"></div> : <div onClick={(e) => addRemoveNFT(nft, e)} className="listed-nft-radio--selected"></div> }
@@ -60,10 +60,8 @@ export default function NFTlistedCard({nft, index}) {
     </div>}
   </li>:
   <div className='listed__skeleton'>
-    {/* <div className='checkmark'></div> */}
     <div className='image'></div>
-    <div style={{width: width}} className='name'></div>
-    {/* <div className='det'></div> */}
+    <div style={{width: _width}} className='name'></div>
   </div>
   )
 }

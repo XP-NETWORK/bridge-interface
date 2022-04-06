@@ -170,12 +170,15 @@
 .listed-view__not-whitelisted__button{
   background: #3E64ED;
   border-radius: 66px;
-  width: 115px;
-  height: 32px;
+padding: 2px 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+font-size: 12px;
+font-weight: 500;
+line-height: 19px;
+margin-right: 14px;
 }
 
 .listed-view__not-whitelisted__button a{
@@ -188,10 +191,8 @@
 
 
 .listed-view__not-whitelisted__text{
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 26px;
-  text-align: left;
+  font-size: 14px;
+  line-height: 160%;
   color: rgb(43, 41, 41) !important;
 }
 
@@ -285,6 +286,7 @@
 
 .listed__view{
   display: flex;
+  overflow: hidden;
 }
 
 .nft-box__container {
@@ -318,7 +320,9 @@
 .nftList{
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  /* gap: 10px; */
+  background: #F3F3F6;
+  border-radius: 8px;
 }
 
 .nftListed .brocken-url{
@@ -566,7 +570,7 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
 }
 
 .listed__skeleton{
-  height: 30px;
+  height: 42px;
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -574,7 +578,7 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
   gap: 16px;
   position: relative;
   overflow: hidden;
-  padding-left: 10px;
+  padding: 6px 6px 5px 10px;
 }
 .listed__skeleton::after{
   content: "";
