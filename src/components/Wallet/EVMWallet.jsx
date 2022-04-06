@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
-import { connectMetaMask } from "./ConnectWalletHelper";
+import { connectMetaMask, onWalletConnect } from "./ConnectWalletHelper";
 import { useDispatch, useSelector } from "react-redux";
 import MetaMask from "../../assets/img/wallet/MetaMask.svg";
 import WalletConnect from "../../assets/img/wallet/WalletConnect 3.svg";
@@ -21,11 +21,23 @@ export default function EVMWallet({ wallet, close }) {
   const testnet = useSelector((state) => state.general.testNet);
 
   
-  const connectHandler = async () => {
-     const connected = await connectMetaMask(activate, from?.text, to?.text)
-     if(connected){
-       dispatch(setMetaMask(true))
-       close()
+  const connectHandler = async wallet => {
+     switch (wallet) {
+        case "MetaMask":
+        const connected = await connectMetaMask(activate, from?.text, to?.text)
+        if(connected){
+          dispatch(setMetaMask(true))
+          close()
+        }
+        break;
+        case "TrustWallet":
+        break;
+        case "WalletConnect":
+        onWalletConnect(activate, from.text)
+        close()
+        break;
+        default:
+        break;
      }
   }
 
@@ -52,7 +64,7 @@ export default function EVMWallet({ wallet, close }) {
   return wallet === "MetaMask" /* METAMASK */ ? (
     <li 
       style={getStyle()}
-      onClick={connectHandler}
+      onClick={() => connectHandler("MetaMask")}
       className="wllListItem"
       data-wallet="MetaMask"
     >
@@ -70,11 +82,11 @@ export default function EVMWallet({ wallet, close }) {
       <img src={TrustWallet} alt="WalletConnect Icon" />
       <p>Trust Wallet</p>
     </li>
-  ) : (
+  ) : from && from.type === "EVM" && from.text !== "Velas" &&  from.text !== "Iotex" &&  from.text !== "Fuse" ? 
     /* WALLET CONNECT */
-    <li style={OFF} className="wllListItem" data-wallet="WalletConnect">
+    <li onClick={() => connectHandler("WalletConnect")}  className="wllListItem" data-wallet="WalletConnect">
       <img src={WalletConnect} alt="WalletConnect Icon" />
       <p>WalletConnect</p>
-    </li>
-  );
+    </li>:''
+  ;
 }
