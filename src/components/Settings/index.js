@@ -20,7 +20,7 @@ import {
   newChains,
   comingSoonChains,
   availability,
-  fonts,
+  fonts
 } from "../../store/reducers/settingsSlice";
 import "./Settings.css";
 
@@ -56,7 +56,8 @@ function WSettings({
   onSaveSettings,
   onResetSettings,
   onSelectAll,
-  onUnSelectAll
+  onUnSelectAll,
+  debouncedAcc
 }) {
   const {
     backgroundColor,
@@ -901,11 +902,14 @@ function WSettings({
                                 <input
                                   type="number"
                                   placeholder="0"
+                                  max={1000}
+                                  min={0}
                                   value={settings.affiliationFees}
                                   onChange={(e) => {
                         
-                                    if (e.target.value < 0)  return  deboucedSet(0, "affiliationFees");
-                                    deboucedSet(e.target.value, "affiliationFees")
+                                    if (e.target.value < 0)  return  deboucedSet(0, "affiliationFees", true);
+                                    if (e.target.value > 1000)  return  deboucedSet(1000, "affiliationFees",true);
+                                    deboucedSet(e.target.value, "affiliationFees",true)
                                   }
                                   }
                                 />

@@ -38,3 +38,16 @@ export function DetectOutsideClick(ref, childFunction) {
       };
   }, [ref]);
 }
+
+
+export const debounce = (cb, delay) => {
+
+  let tm
+  
+  return (...args) => {
+     tm && clearTimeout(tm)
+     tm = setTimeout(() => {
+          cb(...args);
+      }, delay)
+  }
+}

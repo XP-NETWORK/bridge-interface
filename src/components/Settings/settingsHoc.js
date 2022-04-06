@@ -7,12 +7,9 @@ import {
   initialState as initSettings,
   initialState,
 } from "../../store/reducers/settingsSlice";
-import {
-  setBigNumFees,
-  setFees
-} from "../../store/reducers/generalSlice";
 
 
+import { debounce } from "../helpers";
 import { usePrevious } from "./hooks";
 
  const Web3Utils = require("web3-utils");
@@ -29,12 +26,16 @@ const settingsHoc = (Wrapped) => (props) => {
   const [activeChainsNumber, setActiveChains] = useState(activeChains.length);
   const [fixedHeader, setFixedHeader] = useState(false);
   const [toggleEditor, onToggleEditor] = useState(false);
+  const [debouncedAcc, setDebouncedAcc] = useState({
+    key: '',
+    val: ''
+  })
   //const [showLink, onToggleShow] = useState(true);
 
   const dispatch = useDispatch();
 
   const list = useRef(null);
-
+  
   const {
     backgroundColor,
     color,
@@ -82,8 +83,14 @@ const settingsHoc = (Wrapped) => (props) => {
     );
   };
 
-  const deboucedSet = (e, key) =>
+  const deboucedSet = (e, key, debounce) => {
     dispatch(setSettings({ ...settings, [key]: e }));
+  }
+
+
+  useEffect(() => {
+    debounce((arg) =>  dispatch(setSettings(arg)), 1000)({ ...settings, [debouncedAcc.key]: debouncedAcc.val })
+  }, [debouncedAcc])
 
   console.log(activeChainsNumber);
   const chainCheck = (val) => {
@@ -232,16 +239,7 @@ const settingsHoc = (Wrapped) => (props) => {
   }, [selectedChains]);
 
 
-  useEffect(() => {
-    //console.log(originalFees);
-    //console.log(originalFees?.multipliedBy(+affiliationFees/100 + 1));
-    originalFees && (async () => {
-     const bigNum = originalFees.multipliedBy(+affiliationFees/100 + 1).integerValue().toString(10);
-     console.log(bigNum);
-    dispatch(setBigNumFees(bigNum));
-   
-   })()
-  }, [settings.affiliationFees])
+
 
   const toggleShow = () =>
     dispatch(
@@ -306,6 +304,7 @@ const settingsHoc = (Wrapped) => (props) => {
       onResetSettings={onResetSettings}
       onSelectAll={onSelectAll}
       onUnSelectAll={onUnSelectAll}
+      debouncedAcc={debouncedAcc}
     />
   );
 };

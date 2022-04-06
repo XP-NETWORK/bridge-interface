@@ -104,7 +104,7 @@ export default function Widget() {
           tooltipBg: "#" + tooltipBg,
           iconColor: "#" + iconColor,
           showLink: showLink === "true" ? true : false,
-          affiliationFees
+          affiliationFees: ((+affiliationFees - 1) * 100).toFixed(0)
         })
       );
     }
@@ -345,12 +345,12 @@ export default function Widget() {
           filter: brightness(85%);
         }
 
-        .singleNft {
+        .singleNft, .preload__container {
           border-radius: ${cardRadius ? cardRadius + "px" : ""};
         }
 
 
-        .nft-box__container, .nft-box__container--selected,  .empty__box {
+        .nft-box__container, .nft-box__container--selected,  .empty__box, .nft-box__wrapper {
           -webkit-border-radius: ${cardRadius ? cardRadius + "px" : ""}
         }
 

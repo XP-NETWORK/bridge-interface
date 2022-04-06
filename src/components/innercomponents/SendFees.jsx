@@ -58,17 +58,17 @@ function SendFees() {
                 } 
             }
             let bigNum = fee ? fee.multipliedBy(1.1): undefined;//.integerValue().toString(10) : undefined;
-            dispatch(setOriginalFee(bigNum));
+           
      
 
-            if (bigNum && widget && affiliationFees && Number(affiliationFees) >= 1) {
-                console.log(affiliationFees, 'af');
-                bigNum = bigNum.multipliedBy(Number(affiliationFees));
+            if (bigNum && widget && affiliationFees && Number(affiliationFees)/100 + 1 > 1) {
+                console.log(affiliationFees);
+                bigNum = bigNum.multipliedBy(Number(affiliationFees)/100 + 1);
             }
            
             bigNum = bigNum? bigNum.integerValue().toString(10): undefined;
   
-            
+
             dispatch(setBigNumFees(bigNum))
             const fees =  await Web3Utils.fromWei(bigNum, "ether")
             setFees(+(fees*selectedNFTList.length))
@@ -95,12 +95,13 @@ function SendFees() {
     const config = chainsConfig[from?.text]
 
     useEffect(() => {
+        console.log('dsa');
         if(selectedNFTList.length > 0) estimate();
         else setFees("0")
         const s = setInterval(() => estimate(), 1000 * 30);
         setEstimateInterval(s)
         return () => clearInterval(s);
-    }, [selectedNFTList])
+    }, [selectedNFTList, affiliationFees])
 
     useEffect(() => {
         clearInterval(estimateInterval)
