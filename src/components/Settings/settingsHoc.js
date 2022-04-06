@@ -7,12 +7,20 @@ import {
   initialState as initSettings,
   initialState,
 } from "../../store/reducers/settingsSlice";
+import {
+  setBigNumFees,
+  setFees
+} from "../../store/reducers/generalSlice";
+
 
 import { usePrevious } from "./hooks";
 
+ const Web3Utils = require("web3-utils");
+
 const settingsHoc = (Wrapped) => (props) => {
-  const { settings, from, to } = useSelector(({ settings}) => ({
+  const { settings, selectedNFTList } = useSelector(({ settings, general :{selectedNFTList}}) => ({
     settings,
+    selectedNFTList
   }));
 
 
@@ -50,15 +58,14 @@ const settingsHoc = (Wrapped) => (props) => {
     showAlert,
     bridgeState,
     showLink,
-    affiliationFees
+    affiliationFees,
+    originalFees
   } = settings;
   console.log(showLink);
 
   const prevSelected = usePrevious(selectedChains);
 
-  useEffect(() => {
 
-  },[])
 
   const onClickEditor = () => {
     document.querySelector(".nftContainer").style = `margin-left: ${
@@ -223,6 +230,18 @@ const settingsHoc = (Wrapped) => (props) => {
       }
     }
   }, [selectedChains]);
+
+
+  useEffect(() => {
+    //console.log(originalFees);
+    //console.log(originalFees?.multipliedBy(+affiliationFees/100 + 1));
+    originalFees && (async () => {
+     const bigNum = originalFees.multipliedBy(+affiliationFees/100 + 1).integerValue().toString(10);
+     console.log(bigNum);
+    dispatch(setBigNumFees(bigNum));
+   
+   })()
+  }, [settings.affiliationFees])
 
   const toggleShow = () =>
     dispatch(

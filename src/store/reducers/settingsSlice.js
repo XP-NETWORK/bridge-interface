@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { chains as valuesChains } from "../../components/values";
-
+import BigNumber from "bignumber.js";
 export const fonts = [
   "Open Sans",
   "Roboto",
@@ -74,6 +74,7 @@ export const initialState = {
   showAlert: false,
   showLink: true,
   collapsed: false,
+  originalFees: new BigNumber('0')
 };
 
 const settingSlice = createSlice({
@@ -83,10 +84,13 @@ const settingSlice = createSlice({
     setSettings(state, action) {
       return action.payload;
     },
+    setOriginalFee(state, action) {
+      state.originalFees = action.payload
+    }
   },
 });
 
-export const { setSettings } = settingSlice.actions;
+export const { setSettings, setOriginalFee } = settingSlice.actions;
 
 export default settingSlice.reducer;
 

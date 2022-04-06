@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { chainsConfig } from '../values';
 import { getFactory,  handleChainFactory,  setClaimablesAlgorand, setNFTS } from "../../wallet/helpers"
 import { setBigNumFees } from '../../store/reducers/generalSlice';
+import { setOriginalFee } from '../../store/reducers/settingsSlice';
 import { useEffect } from 'react';
 const Web3Utils = require("web3-utils");
 
@@ -57,15 +58,17 @@ function SendFees() {
                 } 
             }
             let bigNum = fee ? fee.multipliedBy(1.1): undefined;//.integerValue().toString(10) : undefined;
-            console.log(bigNum.integerValue().toString(10), 'before');
+            dispatch(setOriginalFee(bigNum));
+     
 
-            if (bigNum && widget && affiliationFees && Number(affiliationFees) > 1) {
+            if (bigNum && widget && affiliationFees && Number(affiliationFees) >= 1) {
+                console.log(affiliationFees, 'af');
                 bigNum = bigNum.multipliedBy(Number(affiliationFees));
             }
            
             bigNum = bigNum? bigNum.integerValue().toString(10): undefined;
-            console.log(bigNum);
-
+  
+            
             dispatch(setBigNumFees(bigNum))
             const fees =  await Web3Utils.fromWei(bigNum, "ether")
             setFees(+(fees*selectedNFTList.length))
