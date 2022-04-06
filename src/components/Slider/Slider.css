@@ -21,6 +21,7 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 16px 40px 18px 40px;
+
 }
 .slider__img{
     position: absolute;

@@ -24,6 +24,11 @@ export default function BackGround() {
 
   return (
     <div style={style} className='multi-background'>
+            <div className="preloader" style={{display:"none"}}>
+        {
+          nfts.map(nft => <img src={nft.image} alt="" style={{display:"none"}}/>)
+        }
+      </div>
       <div className='multi-background__color'></div>
     </div>
   )

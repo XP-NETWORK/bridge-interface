@@ -10,7 +10,12 @@ export default function Slider() {
   const [bgStyle, setStyle] = React.useState({})
 
 
+  console.log('dsdsd');
+
 React.useEffect(() => {
+
+  const img = document.creat
+
   setStyle({
     backgroundImage: `url(${nfts[step].image})`,
     backgroundPosition: 'top',
@@ -18,7 +23,7 @@ React.useEffect(() => {
     backgroundRepeat: 'no-repeat',
     transition: "2s",
     transitionTimingFunction: "ease-in-out",
-    borderRadius: "30px"
+    borderRadius: "30px",
   })
 }, [step])
 
