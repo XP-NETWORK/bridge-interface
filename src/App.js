@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import "./components/Widget/Widget.css"
+import "./components/Settings/Settings.css"
 import "./Global.css";
 import "./Responsive.css";
 import XpBridge from "./pages/XpBridge";
@@ -11,11 +13,11 @@ import { chains } from "./components/values";
 import About from "./components/innercomponents/About";
 import Video from "./components/innercomponents/Video";
 import { setClaimablesAlgorand } from "./wallet/helpers";
-import Widget from "./components/Widget";
+//import Widget from "./components/Widget";
 import TechnicalSupport from "./components/innercomponents/TechnicalSupport";
 import TransferLoader from "./components/innercomponents/TransferLoader";
 import TronConnectionErrMod from "./components/Modals/TronModals/TronConnectionErrMod.jsx";
-import WSettings from "./components/Settings";
+//import WSettings from "./components/Settings";
 import "./components/Modals/Modal.css"
 import Alert from "./components/Alert"
 import SuccessModal from "./components/Modals/Success/SuccessModal.jsx"
@@ -86,7 +88,7 @@ function App() {
   
   return (
     <div className={"App"}>
-      {state.wsettings && <WSettings />}
+      {/*<WSettings />*/}
       <About />
       <Video />
       <TechnicalSupport />
@@ -96,7 +98,7 @@ function App() {
       <ApproveLoader />
       <Error />
       <TronPopUp />
-     {false &&  <Widget />}
+     {/*<Widget />*/}
       <XpBridge />
       <Alert />
     </div>

@@ -21,7 +21,7 @@ function NavBar() {
     const dispatch = useDispatch()
     return (
         !widget && <header id="Header"> 
-            <Navbar expand="lg">    
+            <Navbar expand="lg" >    
             <LinkContainer to="/connect">
                 <Navbar.Brand>
                     <img src={Logo} alt="Xp Network"/>
@@ -52,12 +52,12 @@ function NavBar() {
                                 <div className="nav-link__icon"><img src={docs} alt="" /></div>
                                 <div className="nav-link__txt">DOCS</div>
                             </Nav.Link>
-                            <Nav.Link className="mob-link" target="_blank" href="#####">
+                            {false && <Nav.Link className="mob-link" target="_blank" href="#####">
                                 <div className="nav-link__icon"><img src={github} alt="" /></div>
                                 <div className="nav-link__txt">
                                     GitHub
                                 </div>
-                            </Nav.Link>
+                            </Nav.Link>}
                             <Nav.Link className="mob-link" target="_blank" href="#">
                                 <div className="nav-link__icon"><img src={video} alt="" /></div>
                                 <div className="nav-link__txt">
