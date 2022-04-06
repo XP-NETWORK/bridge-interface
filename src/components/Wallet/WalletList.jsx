@@ -16,7 +16,7 @@ export default function WalletList({search, connected, input}) {
     const walletComponents = [
         { Component: <EVMWallet wallet={"MetaMask"} key="wallet-index-0" close={connected} />, name: "MetaMask", type: "EVM", mobile: true, desktop: true },
         { Component: <EVMWallet wallet={"TrustWallet"} key="wallet-index-2" close={connected} />, name: "Trust Wallet", type: "EVM", mobile:true, desktop: false },
-        { Component: <EVMWallet wallet={undefined} key="wallet-index-1" close={connected} />, name: "WalletConnect", type: "EVM", mobile: false, desktop: false },
+        { Component: <EVMWallet wallet={undefined} key="wallet-index-1" close={connected} />, name: "WalletConnect", type: "EVM", mobile: true, desktop: true },
         { Component: <TezosWallet wallet={"TempleWallet"} key="wallet-index-7" close={connected} />, name: "Temple Wallet Tezos", type: "Tezos", mobile: true, desktop: true },
         { Component: <TezosWallet wallet={undefined} key="wallet-index-8" close={connected} />, name: "Beacon Tezos", type: "Tezos", mobile: true, desktop: true },
         { Component: <ElrondWallet wallet={"Maiar"} key="wallet-index-9" close={connected} />, name: "Maiar Elrond", type: "Elrond", mobile: true, desktop: true },

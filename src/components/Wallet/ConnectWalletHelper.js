@@ -26,8 +26,12 @@ import { setTronWallet,
   setKukaiWallet, 
   setTempleWallet, 
   setQrImage, 
-  setQrCodeString } from "../../store/reducers/generalSlice"
+  setQrCodeString, 
+  setWC,
+  setOnWC} from "../../store/reducers/generalSlice"
 import { useNavigate } from 'react-router';
+import { chainsConfig } from "../values";
+import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 
 export const wallets = ["MetaMask", "WalletConnect", "Trust Wallet", "MyAlgo", "AlgoSigner", "Algorand Wallet", "TronLink", "Temple Wallet", "Beacon", "Maiar", "Maiar Extension", "Ledger", "Trezor"]
 const { to, modalError } = store.getState()
@@ -122,6 +126,28 @@ export const connectBeacon = async () => {
     console.log(error);
   }
 }
+
+export const onWalletConnect = async (activate, from) => {
+  const { rpc, chainId } = chainsConfig[from];
+  try {
+    const walletConnect = new WalletConnectConnector({
+      rpc: {
+        [chainId]: rpc,
+      },
+      chainId,
+      qrcode: true,
+    });
+    walletConnect.networkId = chainId;
+    await activate(walletConnect, undefined, true);
+    store.dispatch(setOnWC(true));
+    store.dispatch(setWC(walletConnect));
+  } catch (error) {
+    store.dispatch(setError(error));
+    if (error.data) {
+      console.log(error.data.message);
+    } else console.log(error);
+  }
+};
 
 const onClientConnect = ( maiarProvider ) => {
   return {

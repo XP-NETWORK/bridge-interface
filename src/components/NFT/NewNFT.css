@@ -161,11 +161,7 @@
   pointer-events: none;
 }
 
-.not-whitelisted::before{
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(0.1rem) grayscale(50%);
-}
+
 
 .listed-view__not-whitelisted__button{
   background: #3E64ED;
@@ -247,6 +243,7 @@
   align-items: center;
   padding: 0 15%;
   gap: 0.5rem;
+  backdrop-filter: grayscale(1);
 }
 
 .not-whitelisted__button{
