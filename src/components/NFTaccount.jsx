@@ -47,6 +47,7 @@ function NFTaccount() {
         ? tronWallet
         : undefined;
       await setNFTS(w, from);
+      console.log("🚀 ~ file: NFTaccount.jsx ~ line 50 ~ getNFTsList ~ w", w)
     } catch (error) {
       dispatch(setError(error.data ? error.data.message : error.message));
     }

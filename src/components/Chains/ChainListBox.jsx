@@ -39,55 +39,58 @@ export default function ChainListBox(props) {
   const algorandAccount = useSelector(state => state.general.algorandAccount)
   const evmAccount = useSelector(state => state.general.account)
   const tronAccount = useSelector(state => state.general.tronWallet)
+  const walletconnect = useSelector(state => state.general.WalletConnect)
   const { chainId, account } = useWeb3React()
   const testnet = useSelector(state => state.general.testNet)
+  const WCProvider = useSelector(state => state.general.testNet)
+
   
   async function switchNetwork(chain) {
-// debugger
 
-    const info = testnet
-      ? TESTNET_CHAIN_INFO[chain?.key]
-      : CHAIN_INFO[chain?.key];
-    const chainId = `0x${info.chainId.toString(16)}`;
+      const info = testnet
+        ? TESTNET_CHAIN_INFO[chain?.key]
+        : CHAIN_INFO[chain?.key];
+      const chainId = `0x${info.chainId.toString(16)}`;
 
-    try {
-      const success = await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId }],
-      });
-    } catch (error) {
-      console.log(error);
       try {
-        const toHex = (num) => {
-          return "0x" + num.toString(16);
-        };
-        const chain = getAddEthereumChain()[parseInt(chainId).toString()];
-
-        const params = {
-          chainId: chainId, // A 0x-prefixed hexadecimal string
-          chainName: chain.name,
-          nativeCurrency: {
-            name: chain.nativeCurrency.name,
-            symbol: chain.nativeCurrency.symbol, // 2-6 characters long
-            decimals: chain.nativeCurrency.decimals,
-          },
-          rpcUrls: chain.rpc,
-          blockExplorerUrls: [
-            chain.explorers &&
-            chain.explorers.length > 0 &&
-            chain.explorers[0].url
-              ? chain.explorers[0].url
-              : chain.infoURL,
-          ],
-        };
         await window.ethereum.request({
-          method: "wallet_addEthereumChain",
-          params: [params, account],
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId }],
         });
       } catch (error) {
         console.log(error);
+        try {
+          const toHex = (num) => {
+            return "0x" + num.toString(16);
+          };
+          const chain = getAddEthereumChain()[parseInt(chainId).toString()];
+
+          const params = {
+            chainId: chainId, // A 0x-prefixed hexadecimal string
+            chainName: chain.name,
+            nativeCurrency: {
+              name: chain.nativeCurrency.name,
+              symbol: chain.nativeCurrency.symbol, // 2-6 characters long
+              decimals: chain.nativeCurrency.decimals,
+            },
+            rpcUrls: chain.rpc,
+            blockExplorerUrls: [
+              chain.explorers &&
+              chain.explorers.length > 0 &&
+              chain.explorers[0].url
+                ? chain.explorers[0].url
+                : chain.infoURL,
+            ],
+          };
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [params, account],
+          });
+        } catch (error) {
+          console.log(error);
+        }
       }
-    }
+    
   }
 
   const handleClose = () => {
@@ -147,7 +150,12 @@ export default function ChainListBox(props) {
   }, [elrondAccount, tezosAccount, algorandAccount, tronAccount, evmAccount])
 
   useEffect(() => {
-    if(from)setToChains(filterChains(chains, from.text))
+    
+    if(from && from.type === "EVM"){
+      const c = chains.filter(chain => from.type === "EVM" && chain.type === "EVM")
+      setToChains(filterChains(c, from.text))
+    }
+    else if(from)setToChains(filterChains(chains, from.text))
     if(from?.text === to?.text && (location.pathname === "/connect" || location.pathname === "/testnet/connect")){
       dispatch(setTo(''))
     }
@@ -189,7 +197,7 @@ export default function ChainListBox(props) {
             : (mainnet || coming) && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`}/>})
             
             : toChains
-            // .filter(chain => from && from.type === "EVM" && chain.type === "EVM")
+            // .filter(chain => from && from.type === "EVM" && chain.type === "EVM" && location.pathname === "/connect")//??
             .filter( chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : "") && (chain.text?.toLowerCase() !== to.text?.toLowerCase()) )
             .sort((chain) => {
               if(chain.coming) return 1

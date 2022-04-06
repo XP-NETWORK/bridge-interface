@@ -315,18 +315,12 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 
 
 export const setNFTS = async (w, from, testnet) => {
+console.log("🚀 ~ file: helpers.js ~ line 318 ~ setNFTS ~ w", w)
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from, testnet)
   store.dispatch(setPreloadNFTs(res.length))
   store.dispatch(setNFTList(res))
   store.dispatch(setBigLoader(false))
-  // const parsedNFTs = await parseNFTS(res)
-  // if(parsedNFTs.length){
-  //     store.dispatch(setNFTList({parsedNFTs, from}))
-  // }
-  // else {
-  //   store.dispatch(setNFTList([]))
-  // }
 }
 
 export function isValidHttpUrl(string, index) {

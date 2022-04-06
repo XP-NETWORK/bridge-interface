@@ -28,7 +28,8 @@ import { setTronWallet,
   setQrImage, 
   setQrCodeString, 
   setWC,
-  setOnWC} from "../../store/reducers/generalSlice"
+  setOnWC,
+  setAccount} from "../../store/reducers/generalSlice"
 import { useNavigate } from 'react-router';
 import { chainsConfig } from "../values";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
@@ -139,6 +140,9 @@ export const onWalletConnect = async (activate, from) => {
     });
     walletConnect.networkId = chainId;
     await activate(walletConnect, undefined, true);
+    const account = await walletConnect.getAccount()
+    console.log("🚀 ~ file: ConnectWalletHelper.js ~ line 144 ~ onWalletConnect ~ account", account)
+    store.dispatch(setAccount(account))
     store.dispatch(setOnWC(true));
     store.dispatch(setWC(walletConnect));
   } catch (error) {
