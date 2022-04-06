@@ -1,13 +1,17 @@
 import "./Slider.css"
 import { useSelector } from "react-redux";
 import SliderPagination from "./SliderPagination"
+import React from 'react'
 
 export default function Slider() {
   const nfts = useSelector(state => state.slider.nfts)
   const step = useSelector(state => state.slider.step)
   const x = useSelector(state => state.slider.position)
+  const [bgStyle, setStyle] = React.useState({})
 
-  const bgStyle = {
+
+React.useEffect(() => {
+  setStyle({
     backgroundImage: `url(${nfts[step].image})`,
     backgroundPosition: 'top',
     backgroundSize: 'cover',
@@ -15,7 +19,8 @@ export default function Slider() {
     transition: "2s",
     transitionTimingFunction: "ease-in-out",
     borderRadius: "30px"
-  }
+  })
+}, [step])
 
 
   return (
