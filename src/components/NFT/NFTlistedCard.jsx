@@ -30,6 +30,13 @@ export default function NFTlistedCard({nft, index}) {
     }
   }
 
+  useEffect(() => {
+    if(!nft.dataLoaded){
+      parseEachNFT(nft, index)
+    }
+  }, [])
+  
+
 
   return (
   nft.dataLoaded ?

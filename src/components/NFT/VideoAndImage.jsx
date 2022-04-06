@@ -33,7 +33,7 @@ export default function VideoAndImage({ videoUrl, imageUrl, imageLoadedHandler, 
          </div> 
          : 
          <div className='img__wrapper'>
-           <img onLoad={imageLoadedHandler} src={setupURI(imageUrl)} alt="" />
+           <img loading="lazy" onLoad={imageLoadedHandler} src={setupURI(imageUrl)} alt="" />
          </div>
       }
       {play ?

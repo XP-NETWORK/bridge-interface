@@ -104,64 +104,64 @@ export const parseEachNFT = async (nft, index) => {
   return dataLoaded
 }
 
-export const parseNFTS = async (nfts) => {
-const { from, to } = store.getState().general;
-if(from.key === "Tezos"){
- return nfts.filter(n => n.native).map(n => {
-   return {
-     ...n,
-     ...n?.native?.meta?.token?.metadata
-   }
- })
-}
-  const result = await Promise.all(
-    nfts.map(async (n, index) => {
-      return await new Promise(async (resolve) => {
-        try {
-          if (!n.uri) resolve({ ...n })
+// export const parseNFTS = async (nfts) => {
+// const { from, to } = store.getState().general;
+// if(from.key === "Tezos"){
+//  return nfts.filter(n => n.native).map(n => {
+//    return {
+//      ...n,
+//      ...n?.native?.meta?.token?.metadata
+//    }
+//  })
+// }
+//   const result = await Promise.all(
+//     nfts.map(async (n, index) => {
+//       return await new Promise(async (resolve) => {
+//         try {
+//           if (!n.uri) resolve({ ...n })
 
-          const jsonURI = checkIfJSON(n.uri) || undefined
-          const uri = jsonURI?.image
-          if (jsonURI) resolve({...n, ...jsonURI, uri })
-          const res =  await axios({url: setupURI(n.uri), timeout: 5000});
+//           const jsonURI = checkIfJSON(n.uri) || undefined
+//           const uri = jsonURI?.image
+//           if (jsonURI) resolve({...n, ...jsonURI, uri })
+//           const res =  await axios({url: setupURI(n.uri), timeout: 5000});
           
-          if (res && res.data) {
-            const isImageIPFS = setupURI(res.data.image)?.includes('ipfs.io')
+//           if (res && res.data) {
+//             const isImageIPFS = setupURI(res.data.image)?.includes('ipfs.io')
             
-            let result = typeof res.data != "string" ? { ...res.data, ...n } : {...n}
-            if(isImageIPFS) {              
-              const ipfsNFT = await axios({url: setupURI(res.data.image), timeout: 5000});
-              if(ipfsNFT.data && ipfsNFT.data.displayUri) result.image = ipfsNFT.data.displayUri
-            }
-            resolve(result);
-          } 
-          else resolve(undefined);
-        } catch (err) {
-          if (err) {
-            try {
-              const res = await axios({url: `https://sheltered-crag-76748.herokuapp.com/${setupURI(n.uri?.uri ? n.uri?.uri : n.uri)}`, timeout: 5000});
-              if (res.data) {
-                try {
-                  const { uri } = res.data;
-                  const result = await axios({url: `https://sheltered-crag-76748.herokuapp.com/${setupURI(n.uri?.uri ? n.uri?.uri : n.uri)}`, timeout: 5000});
-                  resolve({ data: result.data, ...n, cantSend: true });
-                } catch (err) {
-                  resolve({...n});
-                }
-              } else {
-                resolve(undefined);
-              }
-            } catch (err) {
+//             let result = typeof res.data != "string" ? { ...res.data, ...n } : {...n}
+//             if(isImageIPFS) {              
+//               const ipfsNFT = await axios({url: setupURI(res.data.image), timeout: 5000});
+//               if(ipfsNFT.data && ipfsNFT.data.displayUri) result.image = ipfsNFT.data.displayUri
+//             }
+//             resolve(result);
+//           } 
+//           else resolve(undefined);
+//         } catch (err) {
+//           if (err) {
+//             try {
+//               const res = await axios({url: `https://sheltered-crag-76748.herokuapp.com/${setupURI(n.uri?.uri ? n.uri?.uri : n.uri)}`, timeout: 5000});
+//               if (res.data) {
+//                 try {
+//                   const { uri } = res.data;
+//                   const result = await axios({url: `https://sheltered-crag-76748.herokuapp.com/${setupURI(n.uri?.uri ? n.uri?.uri : n.uri)}`, timeout: 5000});
+//                   resolve({ data: result.data, ...n, cantSend: true });
+//                 } catch (err) {
+//                   resolve({...n});
+//                 }
+//               } else {
+//                 resolve(undefined);
+//               }
+//             } catch (err) {
               
-              resolve(undefined);
-            }
-          }
-        }
-      });
-    })
-  );
-  return result.filter((n) => n);
-};
+//               resolve(undefined);
+//             }
+//           }
+//         }
+//       });
+//     })
+//   );
+//   return result.filter((n) => n);
+// };
 
 export const isALLNFTsApproved = () => {
   const { selectedNFTList, approvedNFTList } = store.getState().general;

@@ -30,7 +30,7 @@ export default function VideoOrImage({ urls, i}) {
       <video onError={e => videoError(e)} controls={false} playsInline={true} autoPlay={true} loop={true} alt="video" src={noURL ? brokenUrl : setupURI(urls[urlIndex])} />
       :setupURI(urls[urlIndex]) === undefined ?
       <BrockenUtlGridView />
-      :<img onError={e => imgError(e)} alt="nft" src={setupURI(urls[urlIndex])} />
+      :<img loading="lazy" onError={e => imgError(e)} alt="nft" src={setupURI(urls[urlIndex])} />
 
   );
 }

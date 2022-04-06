@@ -27,13 +27,32 @@ export default function NFTcard({ nft, index }) {
         n.native.chainId === nft.native.chainId
     )[0];
 
+  
     const [whiteListed, setWhitelisted] = useState(true)
     // const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
     const [dataLoaded, setDataloaded] = useState(false)
     
+    const getBase64Image = (imageUrl) => {
+      var canvas = document.createElement("canvas");
+      const img = new Image(imageUrl)
+      canvas.width = img.width;
+      canvas.height = img.height;
+  
+      var ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+  
+      var dataURL = canvas.toDataURL("image/png");
+  
+      return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+    }
+    
 
     useEffect(async() => {
        await parseEachNFT(nft, index)
+       if(nft.dataLoaded){
+        const imgData = getBase64Image(nft.iamge);
+        localStorage.setItem("imgData", imgData);
+       }
     },[])
     
 
@@ -45,17 +64,16 @@ export default function NFTcard({ nft, index }) {
         }
     }
 
-
-  
+      
     
     return (
         <div className={`nft-box__wrapper`}>
           { !nft.dataLoaded ? <Preload /> : 
-          <div onClick={() => nft.whiteListed ? addRemoveNFT(nft, index): undefined } className={nft.whiteListed ? "nft__card--selected" : "nft__card"}>
+          <div onClick={() => nft.whitelisted ? addRemoveNFT(nft, index): undefined } className={nft.whitelisted ? "nft__card--selected" : "nft__card"}>
             <div className="nft__main">
               { nft.uri && isValidHttpUrl(nft.uri, index) ? 
                 nft.animation_url && nft.image ? <VideoAndImage index={index} videoUrl={nft.animation_url} imageUrl={nft.image} />
-              : nft.image && !nft.animation_url ? <img alt=""  src={setupURI(nft.image)} /> 
+              : nft.image && !nft.animation_url ? <img loading="lazy" alt=""  src={setupURI(nft.image)} /> 
               : !nft.image && nft.animation_url ? <video controls={false}  playsInline={true} autoPlay={true} loop={true}  muted={true} src={setupURI(nft.animation_url)} />
               : [nft.animation_url,nft.image]?.length > 0 && <VideoOrImage urls={[nft.animation_url,nft.image]} i={index} />
               : <BrockenUtlGridView />
