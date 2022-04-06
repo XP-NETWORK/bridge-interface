@@ -2009,6 +2009,11 @@ span.transPend {
 }
 
 @media screen and (max-width: 600px) {
+
+  .stickers {
+    justify-content: center;
+  }
+
   .modal-content {
     margin-top: 20vh;
   }

@@ -88,6 +88,14 @@ footer {
     background-image: url('../assets/img/icons/telegram_hovered.svg');
 
   }
+
+
+
+  .socliLink:hover a svg path {
+      fill: #395FEB;
+  }
+
+
   @media screen and (max-width: 1024px) {
     footer {
       width: 768px;

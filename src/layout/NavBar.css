@@ -192,6 +192,10 @@
 .nav-link__icon{
   display: none;
 }
+
+
+
+
  @media screen and (max-width: 1024px) {
   .navbar{
     width: 768px;
@@ -228,6 +232,12 @@
     display: none !important;
   }
 }
+
+
+
+
+
+
 @media screen and (max-width: 768px) {
   .navbar{
     width: calc(100% - 10px);
@@ -235,12 +245,28 @@
 }
 @media screen and (max-width: 475px) {
 
+
+
   .navbar-brand div{
     display: none;
   }
+
+  .navbar {
+    padding-right: 5px;
+  }
+  
+    .navbar-toggler {
+      padding-right: 0;
+    }
 } 
+
+
+
+
 @media screen and (max-width: 325px) {
   .navbar{
     width: calc(100% - 5px);
   }
 } 
+
+
