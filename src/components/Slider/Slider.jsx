@@ -31,7 +31,7 @@ React.useEffect(() => {
   return (
     <div style={bgStyle} className="slider__wrapper">
       <div className="pagination__wrapper">
-        <div style={{left: `${x}px`}} className="slider__pagination">
+        <div  className="slider__pagination">
         { nfts.map((pagination, index) => <SliderPagination start={pagination.action} index={index} key={`pagination_${index}`} />) }
         </div>
       </div>

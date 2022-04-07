@@ -38,11 +38,11 @@ export default function SliderPagination({start, force, index}) {
              
                       dispatch(setActionOff())
                       dispatch(setStep(index + 1))
-                    if(index > 1){
-                        dispatch(setPosition())
-                    }
+                
                     }, 1)
                     
+                  } else {
+                    console.log('d');
                   }
 
                 }
@@ -54,6 +54,7 @@ export default function SliderPagination({start, force, index}) {
            
            dispatch(setActionOn())
            setWidth(width + 1)
+
          }
       }, [step])
       

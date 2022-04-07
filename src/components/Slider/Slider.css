@@ -57,19 +57,21 @@
     overflow-wrap: anywhere;
 }
 .pagination__wrapper{
-    width: 230px;
+    display: flex;
+    align-items: center;
     height: 5px;
-    margin: 0 auto;
-    overflow: hidden;
     position: relative;
 }
 .slider__pagination{
     position: absolute;
     top: 0;
-    left: 0;
+    left: 50%;
+    height: 100%;
+    transform: translateX(-50%);
     display: flex;
     justify-content: center;
     gap: 6px;
+    align-items: center;
     z-index: 1;
     transition: all .5s;
 }
@@ -82,6 +84,11 @@
     position: relative;
     /* cursor: pointer; */
 }
+
+.pagination__bg:hover {
+    height: 5px;
+}
+
 .pagination__progress{
     position: absolute;
     height: 100%;

@@ -15,7 +15,7 @@ import "./NewNFT.css";
 import Preload from "./Preload";
 
 
-export default function NFTcard({ nft, index }) {
+export default function NFTcard({ nft, index, hide }) {
 
     const from = useSelector(state => state.general.from)
     const dispatch = useDispatch();
@@ -67,7 +67,7 @@ export default function NFTcard({ nft, index }) {
       
     
     return (
-        <div className={`nft-box__wrapper`}>
+        <div className={`nft-box__wrapper`} style={{display: hide? 'none' : 'block'}}>
           { !nft.dataLoaded ? <Preload /> : 
           <div onClick={() => nft.whitelisted ? addRemoveNFT(nft, index): undefined } className={nft.whitelisted ? "nft__card--selected" : "nft__card"}>
             <div className="nft__main">
