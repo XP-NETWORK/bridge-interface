@@ -20,8 +20,8 @@ function NFTgridView() {
     console.log(nfts, 'nfts');
 
     function isFiltred (nft) {
-       if (!nft?.description || !nft?.native?.owner) return false;
-        if (nft?.description?.toString().toLowerCase().includes(search?.toLowerCase()) || nft.native.owner?.includes(search)) {
+        if (!nft?.description || !nft?.native?.owner) return false;
+        if (nft.description?.toString().toLowerCase().includes(search?.toLowerCase()) || nft.native.owner?.includes(search)) {
             return false
         }
         return true
@@ -42,7 +42,7 @@ function NFTgridView() {
                     <div className="nft-list__wrapper">
                         { nfts?.length ? 
                         //search ? nfts.filter(nft => nft?.description?.toString().toLowerCase().includes(search?.toLowerCase()) || nft.native.owner?.includes(search)).map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} />)
-                        nfts.map((nft, index) => <NFTcard nft={nft} index={index} hide={isFiltred(nft)} key={`nft-${index}`} />)
+                        nfts.map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} />)
                         : 
                         <NFTempty /> }
                         { nfts && nfts?.length < nftsPlace ? placeholders.map((n, index) => <Missing key={`missing-${index}-component`}/>) : ''}

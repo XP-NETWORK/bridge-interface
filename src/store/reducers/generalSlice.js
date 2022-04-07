@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { isShown } from "../../components/NFT/NFTHelper";
 
 const initialState = {
   step: 0,
@@ -111,8 +112,9 @@ const generalSlice = createSlice({
     },
     allSelected(state) {
       const nfts = JSON.parse(JSON.stringify(state.NFTList))
-      const onlyWhiteListed = nfts.filter(n => n.whitelisted)
-      state.selectedNFTList = onlyWhiteListed;
+      const onlyWhiteListedAndNotHidden = nfts.filter(n => n.whitelisted).filter(n => isShown(state.NFTListSearch, n));
+
+      state.selectedNFTList = onlyWhiteListedAndNotHidden;
     },
     setNFTsListView(state) {
       state.NFTListView = !state.NFTListView;
