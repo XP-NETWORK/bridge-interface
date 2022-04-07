@@ -20,7 +20,7 @@ export default function SetDestination() {
         </div>
         :
         <div className="seleDestiSele">
-            <img  style={{width: "28px"}} src={ Destination } alt="" />{deisplayWidth > 350 ? "Destination chain" : "Destination chain"}
+            <img  style={{width: "28px"}} src={ Destination } alt="" />{window.innerWidth >= 600 ? "Select Destination chain" : "Destination chain"}
         </div>
     }
 </div>

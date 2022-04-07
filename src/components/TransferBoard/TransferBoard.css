@@ -6,7 +6,7 @@
     border-radius: 20px;
     padding: 24px 20px;
     height: 100%;
-    min-height: 778px;
+    min-height: 718px;
     display: flex;
     flex-direction: column;
 }
@@ -166,11 +166,11 @@
     width: 15px;
     height: 15px;
     box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.50);
-    background: #F3F3F6;
+    background: #ececf0;
     border-left: 0;
     border-top: 0;
-    transform: translate(-50%) rotate(45deg);
-    margin-top: -40px;
+    transform: translate(-50%, -100%) rotate(45deg);
+
 }
 .info-icon{
     position: relative;

@@ -228,7 +228,7 @@ function Approval(props) {
         <div className="approval__title">Approval</div>
         <div className="approval__inf">
             {/* before */}
-          <div className="info-icon"></div>
+           <InfLithComp className="svgWidget" alt="info"/>
             {/* after */}
         </div>
       </div>

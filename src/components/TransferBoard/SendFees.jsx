@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js';
 import React, { useState } from 'react'
+import { LittleLoader } from '../innercomponents/LittleLoader';
 import { useDispatch, useSelector } from 'react-redux';
 import { chainsConfig } from '../values';
 import { getFactory,  handleChainFactory,  setClaimablesAlgorand, setNFTS } from "../../wallet/helpers"
@@ -17,8 +18,10 @@ function SendFees() {
     const [fees, setFees ] = useState('')
     const Web3Utils = require("web3-utils");
     const [estimateInterval, setEstimateInterval] = useState()
+    const [loading, setLoading] = useState(false)
 
     async function estimate () {
+        
         // debugger
         let fact
         let fee
@@ -59,6 +62,7 @@ function SendFees() {
             dispatch(setBigNumFees(bigNum))
             const fees =  await Web3Utils.fromWei(bigNum, "ether")
             setFees(+(fees*selectedNFTList.length))
+           
         } catch (error) {
           console.log(error.data ? error.data.message : error.message);
         //   dispatch(setError(error))
@@ -80,8 +84,15 @@ function SendFees() {
 
     const config = chainsConfig[from?.text]
 
-    useEffect(() => {
-        if(selectedNFTList.length > 0) estimate();
+    useEffect( () => {
+        
+        if(selectedNFTList.length > 0){ 
+           (async () => {
+            setLoading(true)
+            await estimate();
+            setLoading(false)
+           })()
+        }
         else setFees("0")
         const s = setInterval(() => estimate(), 1000 * 30);
         setEstimateInterval(s)
@@ -99,7 +110,8 @@ function SendFees() {
     return (
         <div className="fees">
             <div className="fees__title">Fees</div>
-            <span>{fees && fees > 0  ? from.key === 'Tezos' ? ( new BigNumber(fees).multipliedBy(1e12).toString()) : fees?.toFixed(getNumToFix(fees)) : '0'} {config?.token}</span>
+            {loading? <LittleLoader/> :  <span>{fees && fees > 0  ? from.key === 'Tezos' ? ( new BigNumber(fees).multipliedBy(1e12).toString()) : fees?.toFixed(getNumToFix(fees)) : '0'} {config?.token}</span>}
+           
         </div>
     )
 }

@@ -158,7 +158,7 @@
   width: 100%;
   height: 100%;
   background: rgba(239, 241, 247, 0.8);
-  pointer-events: none;
+  /*pointer-events: none;*/
 }
 
 

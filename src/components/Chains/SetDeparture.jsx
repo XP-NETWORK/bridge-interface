@@ -30,7 +30,7 @@ export default function SetDeparture() {
                 </div>
                 :
                 <div className="seleDepatSelec">
-                    <img src={ Departure } alt="" />{deisplayWidth > 350 ? "Departure chain" : "Departure chain"}
+                    <img src={ Departure } alt="" />{window.innerWidth >= 600 ? "Select Departure chain" : "Departure chain"}
                 </div>
             }
         </div>
