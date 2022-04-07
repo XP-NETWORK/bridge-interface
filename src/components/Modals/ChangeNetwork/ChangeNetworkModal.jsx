@@ -110,7 +110,7 @@ function ChangeNetworkModal() {
               </div>
             </div>
           </span>
-          <h3>Destination and departure chains <br/> can't be same</h3>
+          <h3>Destination and departure chains <br/> can't be the same</h3>
           <p>
             Please use MetaMask to switch the departure chain.
           </p>
