@@ -9,7 +9,7 @@ import { CHAIN_INFO, TESTNET_CHAIN_INFO } from '../values';
 import { chains, chainsConfig } from '../values';
 import Identicon from './Identicon';
 
-export default function UserConnect({desktop}) {
+export default function UserConnect({desktop, mobile}) {
     const dispatch = useDispatch()
     const from = useSelector(state => state.general.from)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
@@ -71,7 +71,7 @@ export default function UserConnect({desktop}) {
   
 
   return (
-    <div onClick={handleConnect} className={walletAccount? 'navbar-connect connected' : 'navbar-connect'}>
+    <div onClick={handleConnect} className={`${walletAccount? 'navbar-connect connected' : 'navbar-connect'} ${mobile? 'xmobile_only': 'xdesktop_only'}`} >
     {walletAccount ? getAccountString() : "Connect Wallet"}
     {walletAccount && <Identicon account={walletAccount} />}
     </div>

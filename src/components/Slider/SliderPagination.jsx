@@ -18,7 +18,8 @@ export default function SliderPagination({start, force, index}) {
     const handleClick = () => {
       //dispatch(setStep(0))
      // clearTimeout(tm)
- 
+      
+      setWidth(0);
       setTimeout(() => dispatch(setStep(index)))
     }
   
@@ -30,7 +31,12 @@ export default function SliderPagination({start, force, index}) {
                 else if(width >= 100 && step + 1 < length){
                     //clearTimeout(tm)
                     setWidth(0)
-                    setTimeout(() => {dispatch(setStep(step + 1))
+                    setTimeout(() => {{
+                
+                      dispatch(setStep(step + 1))
+                    
+                    }
+                      
                 
                     }, 1) 
                   } else {
@@ -57,7 +63,7 @@ export default function SliderPagination({start, force, index}) {
       
 
   return (
-    <span onClick={handleClick} className='pagination__bg'>
+    <span  className='pagination__bg'>
         <span style={{width: `${width}%`}} className='pagination__progress'></span>
     </span> 
   )

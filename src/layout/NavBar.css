@@ -69,7 +69,7 @@
   align-items: center;
   font-size: 15px;
   font-weight: 500;
-  line-height: 19px;
+  line-height: 24px;
   letter-spacing: 0em;
   color: #62718A;
   padding: 10px 16px;
@@ -230,7 +230,8 @@
     display: block;
   }
   .navbar-nav .navbar-connect{
-    display: none;
+    position: absolute;
+
   }
   .navbar-nav .navbar-dropdown{
     display: none;
@@ -240,6 +241,39 @@
   }
 }
 
+
+@media only screen and (min-width: 600px) {
+
+
+
+
+  .xdesktop_only {
+    display: block !important;
+  }
+
+  .xmobile_only { 
+    display: none !important;
+    margin-left: auto;
+    margin-right: 0;
+  }
+}
+
+
+
+@media only screen and (max-width: 600px) {
+
+  
+ .xdesktop_only {
+  display: none !important;
+}
+
+.xmobile_only { 
+  display: block !important;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+}
 
 
 

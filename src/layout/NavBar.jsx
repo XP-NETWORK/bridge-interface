@@ -25,7 +25,8 @@ function NavBar() {
     const dispatch = useDispatch()
     return (
         !widget && <header id="Header"> 
-            <Navbar expand="lg" >    
+            <Navbar expand="lg" > 
+        
             <LinkContainer to="/connect">
                 <Navbar.Brand>
                     <img src={Logo} alt="Xp Network"/>
@@ -34,6 +35,7 @@ function NavBar() {
                 </Navbar.Brand>
             </LinkContainer>
             {/* <UserConnect desktop={true} /> */}
+            <UserConnect mobile={true}/>   
                 <Navbar.Toggle aria-controls="" />
                     <Navbar.Collapse id="">
                         <Nav>

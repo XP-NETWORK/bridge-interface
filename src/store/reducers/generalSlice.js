@@ -14,6 +14,7 @@ const initialState = {
   innerWidth: 0,
   alert: true,
 
+
   // preloadNFTs: []
 };
 
