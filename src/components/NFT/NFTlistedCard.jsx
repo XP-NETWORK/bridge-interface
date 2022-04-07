@@ -12,7 +12,7 @@ export default function NFTlistedCard({nft, index}) {
   const dispatch = useDispatch()
   const selectedNFTs = useSelector(state => state.general.selectedNFTList)
   const from = useSelector(state => state.general.from)
-  const [whitelisted, setWhitelisted] = useState(false)
+  const [whitelisted, setWhitelisted] = useState(undefined)
   const OFF = {pointerEvents: "none"}
   const [onHover, setOnHover] = useState(false)
   const [preloadListed, setPreloadListed] = useState(false)
