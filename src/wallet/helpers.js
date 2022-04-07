@@ -399,7 +399,6 @@ export const convertOne1 = (address) => {
 export const convert = (address) => {
   // debugger
   if(checkIfOne1(address)){
-    console.log(convertOne1(address))
     return convertOne1(address)
   }
   // else if(checkIfIo1(address)) return convertIo1(address)

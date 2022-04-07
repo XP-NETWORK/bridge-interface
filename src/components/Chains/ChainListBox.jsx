@@ -42,7 +42,6 @@ export default function ChainListBox(props) {
   const walletconnect = useSelector(state => state.general.WalletConnect)
   const { chainId, account } = useWeb3React()
   const testnet = useSelector(state => state.general.testNet)
-  const WCProvider = useSelector(state => state.general.testNet)
 
   
   async function switchNetwork(chain) {
