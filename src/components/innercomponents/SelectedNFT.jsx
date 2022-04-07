@@ -29,13 +29,6 @@ function SelectedNFT() {
 
   useEffect(() => {}, [selectedNFTs]);
 
-  // useEffect(() => {
-  //   if (to && selectedNFTs.length) {
-  //     dispatch(cleanSelectedNFTList())
-  //   }
-
-  // }, [from])
-
   return (
     <div className="selected-nfts-list">
       <div className="selected-nfts__header">
