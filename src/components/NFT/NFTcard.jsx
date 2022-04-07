@@ -72,7 +72,7 @@ export default function NFTcard({ nft, index }) {
                   : ipfsArr?.length && <VideoOrImage urls={ipfsArr} i={index} />
                   : <BrockenUtlGridView />
                   }
-                  { (!whiteListed && onHover) && <NotWhiteListed /> }
+                  { (!whiteListed ) && <NotWhiteListed /> }
                   <div className="radio__container">
                     {!isSelected ? (
                       <span className="selected-radio"></span>
