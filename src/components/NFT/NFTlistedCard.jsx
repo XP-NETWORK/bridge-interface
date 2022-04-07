@@ -17,7 +17,12 @@ export default function NFTlistedCard({nft, index}) {
   const [whitelisted, setWhitelisted] = useState(false)
   const OFF = {pointerEvents: "none"}
   const [onHover, setOnHover] = useState(false)
-
+  const [_width, setWidth] = useState(Math.floor(Math.random() * 125 + 35))
+  
+  // const generateRandom = () => {
+  //   setWidth(Math.floor(Math.random() * 25 + 5))
+  // }
+  // const width = nft.name ? {width: `${_width * 10}px`} : { width: "300px" }
 
   const checkIfSelected = ( nft ) => {
     return selectedNFTs.filter(n => n.native.tokenId === nft.native.tokenId && n.native.contract === nft.native.contract && n.native.chainId === nft.native.chainId)[0]
@@ -33,9 +38,9 @@ export default function NFTlistedCard({nft, index}) {
 
   useEffect(() => {
     if(!nft.dataLoaded){
-      console.log("🚀 ~ file: NFTlistedCard.jsx ~ line 35 ~ useEffect ~ nft.dataLoaded", nft.dataLoaded)
       parseEachNFT(nft, index)
     }
+    // generateRandom()
   }, [nfts])
   
 
@@ -54,6 +59,9 @@ export default function NFTlistedCard({nft, index}) {
       <div href='https://t.me/XP_NETWORK_Technical_Support' className="listed-view__not-whitelisted__button" target="_blank">Tech support</div>
     </div>}
   </li>:
-  <div>skeleton</div>
+  <div className='listed__skeleton'>
+    <div className='image'></div>
+    <div style={{width: _width}} className='name'></div>
+  </div>
   )
 }

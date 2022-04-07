@@ -186,6 +186,7 @@
     display: flex;
     gap: 6px;
     align-items: center;
+    justify-content: space-between;
     height: 40px;
     background: #F6F6F8;
     border: 1px solid #FFFFFF;
@@ -194,6 +195,7 @@
     border-radius: 168px;
     padding: 10px 10px;
     cursor: pointer;
+    min-width: 114px;
 }
 .selected-nfts__title{
     color: #14161A;

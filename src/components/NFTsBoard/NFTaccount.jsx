@@ -65,10 +65,7 @@ function NFTaccount() {
   }
 
   const handleShowSelected = () => {
-    if(selectedNFTs.length > 0){
     setShowSelected(!showSelected)
-    }
-    else return
   }
 
   const handleSearchTop = () => {
@@ -117,7 +114,7 @@ function NFTaccount() {
           </div>
           <div className="mobile-nfts__list">
             { !showNFTsSearch ? <div className="mobile-nfts__header">
-              <SelectedNFTs show={handleShowSelected} showSelected={showSelected} setOff={setShowSelected} />
+              <SelectedNFTs on={showSelected} show={selectedNFTs.length > 0 ? handleShowSelected : undefined} showSelected={showSelected} setOff={setShowSelected} />
               <div className="mobile-nfts__buttons">
                 <SearchButton handleSearchTop={handleSearchTop} />
                 <ViewButton />

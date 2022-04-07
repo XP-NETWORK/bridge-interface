@@ -1,18 +1,14 @@
 import { useEffect } from "react"
 import { useSelector } from "react-redux"
 
-export default function SelectedNFTs({show, showSelected, setOff}) {
+export default function SelectedNFTs({show, showSelected, setOff, on}) {
     const selected = useSelector(state => state.general.selectedNFTList)
 
-    // useEffect(() => {
-    //   if(selected.length === 0){
-    //     setOff(false)}
-    // }, [selected])
-    
+  
 
   return (
     <div  className="selected-nfts__button">
-        <span onClick={show} className="selected-nfts__title">Selected</span> 
+        <span onClick={show} className="selected-nfts__title">{!on ? "Selected" : "Back"}</span> 
         <span className="selected-nfts__selected">{`/ ${selected ? selected.length : ""} `}</span>
     </div>
   )
