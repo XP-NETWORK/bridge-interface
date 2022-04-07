@@ -67,7 +67,7 @@ export default function NFTcard({ nft, index, hide }) {
       
     
     return (
-        <div className={`nft-box__wrapper`} style={{display: hide? 'none' : 'block'}}>
+        <div className={`nft-box__wrapper`}>
           { !nft.dataLoaded ? <Preload /> : 
           <div onClick={() => nft.whitelisted ? addRemoveNFT(nft, index): undefined } className={nft.whitelisted ? "nft__card--selected" : "nft__card"}>
             <div className="nft__main">

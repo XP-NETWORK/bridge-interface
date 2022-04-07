@@ -70,7 +70,7 @@ function NavBar() {
                                     XP.NETWORK
                                 </div>
                             </Nav.Link>
-                            <UserConnect desktop={true} />
+                            {/* <UserConnect desktop={true} /> */}
                             <Dropdown className='navbar-dropdown'>
                                 <DropdownToggle><div className='navbar-dropdown__btn'></div></DropdownToggle>
                                 <Dropdown.Menu>
@@ -90,17 +90,20 @@ function NavBar() {
                                         <div className="drop-item">
                                             <img src={docs} alt="" />
                                             <div className="drop-icon">DOCs</div>
-                                        </div></Dropdown.Item>
+                                        </div>
+                                    </Dropdown.Item>
                                     <Dropdown.Item>
                                         <div onClick={() => dispatch(setShowVideo(true))} className="drop-item">
                                             <img src={video} alt="" />
                                             <div className="drop-icon">Video Tutorial</div>
-                                        </div></Dropdown.Item>
+                                        </div>
+                                    </Dropdown.Item>
                                     <Dropdown.Item href="https://xp.network/" target="_blank">
                                         <div className="drop-item">
                                             <img src={xpnet} alt="" />
                                             <div className="drop-icon">XP.NETWORK</div>
-                                        </div></Dropdown.Item>
+                                        </div>
+                                    </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </Nav>

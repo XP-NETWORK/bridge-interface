@@ -171,7 +171,6 @@
     border-left: 0;
     border-top: 0;
     transform: translate(-50%, -100%) rotate(45deg);
-
 }
 .info-icon{
     position: relative;
@@ -254,4 +253,15 @@
 .mobile-col .transfer-button--disabled, .transfer-button{
     width: calc(100% - 10px);
     margin: 10px auto 56px auto;
+}
+
+@media screen and (max-width: 425px) {
+    .approval__inf:hover::before{
+        bottom: 30px;
+        left: -190px;
+    }
+    .approval__inf:hover::after {
+        left: 50%;
+    }
+    
 }
