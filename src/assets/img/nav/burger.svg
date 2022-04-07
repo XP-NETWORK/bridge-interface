@@ -1,9 +1,9 @@
 <svg width="47" height="47" viewBox="0 0 47 47" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_203_72)">
 <rect x="4" y="2" width="39" height="39" rx="19.5" fill="#F7F7F9"/>
-<rect x="17" y="15.5" width="13" height="2" rx="1" fill="#14161A"/>
-<rect x="17" y="20.5" width="13" height="2" rx="1" fill="#14161A"/>
-<rect x="17" y="25.5" width="13" height="2" rx="1" fill="#14161A"/>
+<rect x="17" y="15.5" width="13" height="2" rx="1" fill="#14161A" class="dice"/>
+<rect x="17" y="20.5" width="13" height="2" rx="1" fill="#14161A" class="dice"/>
+<rect x="17" y="25.5" width="13" height="2" rx="1" fill="#14161A" class="dice"/>
 <rect x="4.5" y="2.5" width="38" height="38" rx="19" stroke="white"/>
 </g>
 <defs>

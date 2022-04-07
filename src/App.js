@@ -1,8 +1,4 @@
 import { useEffect } from "react";
-import "./components/Widget/Widget.css"
-import "./components/Settings/Settings.css"
-import "./Global.css";
-import "./Responsive.css";
 import XpBridge from "./pages/XpBridge";
 import { useDispatch, useSelector } from "react-redux";
 import { setFrom, setTestNet, setTo, setValidatorsInf, setInnerWidth } from "./store/reducers/generalSlice";
