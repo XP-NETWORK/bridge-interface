@@ -149,8 +149,8 @@ export default function Widget() {
 
   useEffect(() => {
       if (widget && !wsettings && settings.selectedChains.length === 2) {
-        dispatch(setFrom(chains.find(c => c.text === settings.selectedChains[0])))
-        dispatch(setTo(chains.find(c => c.text === settings.selectedChains[1])))
+        dispatch(setFrom(chains.find(c => c.text === settings.selectedChains[1])))
+        dispatch(setTo(chains.find(c => c.text === settings.selectedChains[0])))
      }
   }, [widget])
 
