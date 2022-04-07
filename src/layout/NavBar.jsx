@@ -33,7 +33,7 @@ function NavBar() {
                     { testnet && <span className="testnet">TestNet</span>}
                 </Navbar.Brand>
             </LinkContainer>
-            {/* <UserConnect desktop={false} /> */}
+            {/* <UserConnect desktop={true} /> */}
                 <Navbar.Toggle aria-controls="" />
                     <Navbar.Collapse id="">
                         <Nav>
@@ -74,7 +74,7 @@ function NavBar() {
                                     XP.NETWORK
                                 </div>
                             </Nav.Link>
-                            <UserConnect desktop={true} />
+                            <UserConnect/>
                             <Dropdown className='navbar-dropdown'>
                                 <DropdownToggle><div className='navbar-dropdown__btn'>
                                       {navMenuOpen? <HamburgerClose className="svgWidget" alt="burgerClose" onClick={() => toggleNavMenu(navMenuOpen? false: true)}/> : <Hamburger className="svgWidget" alt="burger" onClick={() => toggleNavMenu(navMenuOpen? false: true)}/>}

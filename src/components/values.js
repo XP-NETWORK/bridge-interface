@@ -556,7 +556,7 @@ export const CHAIN_INFO = {
     blockExplorerUrls: "https://explorer.pops.one/tx",
     contract: "0x22ddFB8954c9D75598385c6ad82cDeb124a78Bb3",
   },
-  Ont: {
+  One: {
     native: coins[10],
     nonce: 0xd,
     decimals: 1e18,
@@ -580,7 +580,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpc: "https://rpc.fuse.io/",
     chainId: 122,
-    blockExplorerUrls: "",
+    blockExplorerUrls: "https://explorer.fuse.io/",
     contract: "",
   },
   Velas: {
@@ -589,7 +589,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpc: "https://velasnode.quigon.com/velas",
     chainId: 106,
-    blockExplorerUrls: "",
+    blockExplorerUrls: "https://evmexplorer.velas.com/",
     contract: "",
   },
   Tezos: {
@@ -607,7 +607,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpc: "https://babel-api.mainnet.iotex.io",
     chainId: 4689,
-    blockExplorerUrls: "",
+    blockExplorerUrls: "https://iotexscan.io/",
     contract: "",
   },
   Harmony: {
@@ -616,7 +616,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpc: "https://rpc.s0.t.hmny.io",
     chainId: 1666600000,
-    blockExplorerUrls: "",
+    blockExplorerUrls: "https://explorer.harmony.one/",
     contract: "",
   },
   Aurora: {
@@ -625,7 +625,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpc: "https://mainnet.aurora.dev",
     chainId: 1313161554,
-    blockExplorerUrls: "",
+    blockExplorerUrls: "https://explorer.mainnet.aurora.dev/",
     contract: "",
   },
 };

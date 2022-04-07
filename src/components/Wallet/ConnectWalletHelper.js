@@ -2,6 +2,8 @@
 import { TempleWallet } from "@temple-wallet/dapp";
 import { injected, algoConnector } from "../../wallet/connectors"
 import store  from "../../store/store"
+import WalletConnect from "@walletconnect/client";
+import QRCodeModal from "@walletconnect/qrcode-modal";
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import MyAlgoConnect from '@randlabs/myalgo-connect';
@@ -36,7 +38,9 @@ import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 
 export const wallets = ["MetaMask", "WalletConnect", "Trust Wallet", "MyAlgo", "AlgoSigner", "Algorand Wallet", "TronLink", "Temple Wallet", "Beacon", "Maiar", "Maiar Extension", "Ledger", "Trezor"]
 const { to, modalError } = store.getState()
-
+const connector = new WalletConnect({
+  bridge: "https://bridge.walletconnect.org", // Required
+});
 
 export const connectMetaMask = async (activate, from, to) => {
     try {
@@ -79,6 +83,29 @@ export const connectAlgoSigner =async () => {
       console.log("Algo Signer not installed.");
     }
 }
+
+export const connectTrustWallet = async (activate, from) => {
+  debugger
+  const { rpc, chainId } = chainsConfig[from];
+  try {
+    const walletConnect = new WalletConnectConnector({
+      rpc: {
+        [chainId]: rpc,
+      },
+      chainId,
+      qrcode: true,
+    });
+    walletConnect.networkId = chainId;
+    await activate(walletConnect, undefined, true);
+    store.dispatch(setOnWC(true));
+    store.dispatch(setWC(walletConnect));
+  } catch (error) {
+    store.dispatch(setError(error));
+    if (error.data) {
+      console.log(error.data.message);
+    } else console.log(error);
+  }
+};
 
 // Tezos blockchain connection ( Temple Wallet )
 export const connectTempleWallet = async () => {

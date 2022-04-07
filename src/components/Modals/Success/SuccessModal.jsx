@@ -17,6 +17,7 @@ import {
 } from "../../../store/reducers/generalSlice";
 import "./SuccessModal.css";
 import Tooltip from "../AccountModal/Tooltip";
+import { chainsConfig } from "../../values";
 
 export default function SuccessModal() {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ export default function SuccessModal() {
   const receiver = useSelector((state) => state.general.receiver);
   const txnHashArr = useSelector((state) => state.general.txnHashArr);
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
+  const testnet = useSelector((state) => state.general.testNet);
   const address = account
     ? account
     : algorandAccount
@@ -123,7 +125,9 @@ export default function SuccessModal() {
             <div className="success-info-item">
               <div className="info-item-label">Txn Hash</div>
               <CopyToClipboard text={getTX() || "No tx"}>
-                <div className="success-hash">
+                <a href={testnet
+              ? `${chainsConfig[from?.key]?.testTx + getTX()}`
+              : `${chainsConfig[from?.key]?.tx + getTX()}`} target="_blank" className="success-hash">
                   {getTX()
                     ? `${getTX().substring(
                         0,
@@ -131,7 +135,7 @@ export default function SuccessModal() {
                       )}...${getTX().substring(getTX().length - 6)}`
                     : ""}
                   <Tooltip />
-                </div>
+                </a>
               </CopyToClipboard>
             </div>
           </div>
@@ -181,7 +185,7 @@ export default function SuccessModal() {
               {selectedNFTList.length
                 ? selectedNFTList.map((nft, index) => (
                     <TransferredNft
-                      key={`index-${index}-nft-succeess`}
+                      key={`index-${index}-nft-success`}
                       nft={nft}
                     />
                   ))
