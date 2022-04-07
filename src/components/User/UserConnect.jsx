@@ -2,7 +2,7 @@ import { useWeb3React } from '@web3-react/core';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { setAccountModal, setFrom, setWalletsModal, setWrongNetwork } from '../../store/reducers/generalSlice';
+import { setAccountModal, setFrom, setReset, setWalletsModal, setWrongNetwork } from '../../store/reducers/generalSlice';
 import { getAddEthereumChain } from '../../wallet/chains';
 import { setNFTS } from '../../wallet/helpers';
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from '../values';
@@ -17,7 +17,7 @@ export default function UserConnect({desktop}) {
     const algorandAccount = useSelector(state => state.general.algorandAccount)
     const innerWidth = useSelector(state => state.general.innerWidth)
     const tronWallet = useSelector(state => state.general.tronWallet)
-    const WC = useSelector(state => state.general.WCProvider)
+    const WalletConnect = useSelector(state => state.general.WalletConnect)
     const { account, chainId, active } = useWeb3React();
     const testnet = useSelector(state => state.general.testNet)
     const walletAccount = account || elrondAccount || tezosAccount || algorandAccount || tronWallet
@@ -63,10 +63,11 @@ export default function UserConnect({desktop}) {
       }
     }, [account, chainId])
 
-  // useEffect(() => {
-  //   if(!active)
-  //   console.log("🚀 ~ file: UserConnect.jsx ~ line 70 ~ UserConnect ~ active", active)
-  // }, [active])
+  useEffect(() => {
+    if(!account && WalletConnect){
+      active !== undefined && window.location.reload()
+    }
+  }, [active])
   
 
   return (
