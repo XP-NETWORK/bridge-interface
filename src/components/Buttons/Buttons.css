@@ -11,11 +11,13 @@
 }
 
 
-.select-all svg {
+.select-all svg, .delete-all svg {
     transform: translate(30%, 30%);
 }
 
-.select-all:hover svg path {
+
+
+.select-all:hover svg path, .delete-all:hover svg path,  .delete-all svg path {
     fill: #395FEB;
     opacity: 1;
 }
@@ -34,15 +36,7 @@
     cursor: pointer;
     transition: all 0.5s;
 }
-.delete-all::after{
-    content: "";
-    position: absolute;
-    top: 7px;
-    left: 7px;
-    width: 24px;
-    height: 24px;
-    background-image: url("../../assets//img//icons/blue_check.svg");
-}
+
 .change-view__button, .SearchDrop, .CloseIcon{
     width: 40px;
     height: 40px;

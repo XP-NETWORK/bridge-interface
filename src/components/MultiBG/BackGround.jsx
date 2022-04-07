@@ -14,13 +14,13 @@ export default function BackGround() {
 
       setStyle({
         backgroundColor: `#E5E5E5`,
-        ...location.pathname === '/connect' || location.pathname === '/' ? {backgroundImage:`url(${nfts[step].image})`}: {} ,
+        ...location.pathname === '/connect' || location.pathname === '/' ? {backgroundImage:`url(${nfts[step].image})`}: {backgroundImage: 'unset'} ,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         transition: "all 2s",
       })
-  }, [step])
+  }, [step,location])
 
   return (
     <div style={style} className='multi-background'>

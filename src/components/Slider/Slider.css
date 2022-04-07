@@ -103,7 +103,21 @@
     /* cursor: pointer; */
 }
 @media screen and (max-width: 1024px) {
+
+
+
     .slider__wrapper {
         width: 390px;
+    }
+}
+
+@media screen and (max-width: 725px){
+    
+    .slider__pagination {
+        transform: translateX(-50%) scale(.8);
+    }
+
+   .pagination__bg {
+        transform: scale(.9);
     }
 }

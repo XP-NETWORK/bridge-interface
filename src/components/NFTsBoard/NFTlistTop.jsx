@@ -41,9 +41,9 @@ function NFTlistTop() {
         {nfts?.length > 0 &&  <div className="nftTopRIght">
           <NFTSearch />
           <ViewButton />
-          {onlyWhiteListedNFTs?.length === selectedNFTs?.length && selectedNFTs?.length  ? <div className="delete-all" onClick={() => dispatch(cleanSelectedNFTList())}></div>
-          :<div style={nfts ? {} : OFF} onClick={() => dispatch(allSelected())} className="select-all svgWidget">
-              <Check/>
+          {onlyWhiteListedNFTs?.length === selectedNFTs?.length && selectedNFTs?.length  ? <div className="delete-all" onClick={() => dispatch(cleanSelectedNFTList())}> <Check className="svgWidget"/></div>
+          :<div style={nfts ? {} : OFF} onClick={() => dispatch(allSelected())} className="select-all">
+              <Check className="svgWidget"/>
           </div>
           }
         </div>}

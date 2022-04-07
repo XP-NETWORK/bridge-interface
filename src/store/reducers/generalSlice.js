@@ -172,6 +172,7 @@ const generalSlice = createSlice({
         ...initialState,
         widget: state.widget,
         wsettings: state.wsettings,
+        //account: state.account
       };
     },
     setElrondAccount(state, action) {

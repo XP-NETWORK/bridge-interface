@@ -16,6 +16,9 @@
 }
 
 @media only screen and (min-width: 860px) {
+
+
+
     .mobileOnly {
         display: none !important;
     }
@@ -332,6 +335,8 @@
 } 
        
 @media only screen and (max-width: 775px) {
+
+
     .accountBox {
         left: 50%;
         transform: translate(-50%, 0);
