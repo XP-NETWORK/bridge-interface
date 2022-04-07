@@ -51,7 +51,7 @@ export default function NFTlistedCard({nft, index}) {
     <div className="nftListed__info">
         {!checkIfSelected(nft, selectedNFTs) ? <div onClick={(e) => addRemoveNFT(nft, e)} className="listed-nft-radio"></div> : <div onClick={(e) => addRemoveNFT(nft, e)} className="listed-nft-radio--selected"></div> }
         <ListedView  addRemoveNFT={addRemoveNFT} nft={nft} key={`nft-n-${index}`} />
-        <span className="name" onClick={(e) => addRemoveNFT(nft, e)}>{nft?.data?.name || nft?.name || nft?.native.name}</span>
+        <span className="name" onClick={(e) => addRemoveNFT(nft, e)}>{nft.whitelisted ? nft?.name : ''}</span>
     </div>
     <NFTdetails nftInf={nft}/>
     { (!nft.whitelisted ) && <div className='listed-view__not-whitelisted'>

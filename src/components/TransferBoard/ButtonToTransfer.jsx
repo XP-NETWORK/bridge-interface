@@ -60,7 +60,7 @@ export default function ButtonToTransfer() {
     }
 
     const getSigner = async () => {
-        // debugger
+        debugger
         let signer 
         try {
             if(from === "Tezos"){
@@ -83,6 +83,8 @@ export default function ButtonToTransfer() {
                 const provider = new ethers.providers.Web3Provider(
                     WCProvider?.walletConnectProvider || window.ethereum
                   );
+                  signer = provider.getSigner(account)
+                  return signer
             }
         } catch (error) {
             console.error(error)
