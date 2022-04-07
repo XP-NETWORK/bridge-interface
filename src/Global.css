@@ -1387,6 +1387,7 @@ span.invalid img {
 
 .serchInput:focus, .serchInput:active {
   outline: none;
+  background-color: #fff;
 }
 
 .collecSlideCont .slideItem {
