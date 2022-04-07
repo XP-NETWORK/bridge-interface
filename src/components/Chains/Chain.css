@@ -72,6 +72,17 @@
     padding: 4px 6px;
     border-radius: 14px; 
 }
+.maintenance-chain{
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 5%;
+  line-height: 15.12px;
+  color: white;
+  background: linear-gradient(273.19deg, #2FC3E0 3.07%, #A8EFFF 138.75%);
+
+  padding: 4px 6px;
+  border-radius: 14px; 
+}
 
 .beacon img {
   width: 28px;

@@ -75,7 +75,7 @@ export default function SuccessModal() {
   };
 
   const toShow = () => {
-    return txnHashArr?.length ? true : false;
+    // return txnHashArr?.length ? true : false;
     return true
   };
 
@@ -123,7 +123,7 @@ export default function SuccessModal() {
             <div className="success-info-item">
               <div className="info-item-label">Txn Hash</div>
               <CopyToClipboard text={getTX() || "No tx"}>
-                <div className="success-hash">
+                <a href="#" target="_blank" className="success-hash">
                   {getTX()
                     ? `${getTX().substring(
                         0,
@@ -131,7 +131,7 @@ export default function SuccessModal() {
                       )}...${getTX().substring(getTX().length - 6)}`
                     : ""}
                   <Tooltip />
-                </div>
+                </a>
               </CopyToClipboard>
             </div>
           </div>

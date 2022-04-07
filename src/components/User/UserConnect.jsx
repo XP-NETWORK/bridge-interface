@@ -70,7 +70,7 @@ export default function UserConnect({desktop}) {
   
 
   return (
-    <div onClick={handleConnect} className={desktop ? walletAccount ? 'navbar-connect--connected' : 'navbar-connect' : walletAccount? 'navbar-connect navbar-connect-mob connected' : 'navbar-connect navbar-connect-mob'}>
+    <div onClick={handleConnect} className={walletAccount? 'navbar-connect connected' : 'navbar-connect'}>
     {walletAccount ? getAccountString() : "Connect Wallet"}
     {walletAccount && <Identicon account={walletAccount} />}
     </div>

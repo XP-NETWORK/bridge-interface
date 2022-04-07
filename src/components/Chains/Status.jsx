@@ -27,7 +27,7 @@ export default function Status({status}) {
             case "coming":
                 return <div className="coming-chain">Coming soon</div>
             case "maintenance":
-                return <div className="coming-chain">Maintenance</div>
+                return <div className="maintenance-chain">Maintenance</div>
             case "new":
                 return <div className="new-chain">New</div>
             default:
