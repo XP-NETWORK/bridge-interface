@@ -1933,6 +1933,10 @@ span.transPend {
   pointer-events: none;
 }
 
+.bridgeBody.modal-open {
+  pointer-events: none;
+}
+
 .approval__title {
   font-weight: 500;
 }

@@ -7,10 +7,11 @@ import { setSearchNFTList } from "../../store/reducers/generalSlice";
 export default function NFTSearch() {
   const dispatch = useDispatch();
   const widget = useSelector((state) => state.general.widget);
+  const search = useSelector(state => state.general.NFTListSearch)
   const [openSearch, setOpen] = useState(false);
 
-  const handleSearch = (e) => {
-    dispatch(setSearchNFTList(e.target.value));
+  const handleSearch = (text) => {
+    dispatch(setSearchNFTList(text));
   };
 
   return (
@@ -18,8 +19,11 @@ export default function NFTSearch() {
       {openSearch ? (
         <div className="serchInputConatainer">
            <Search className="svgWidget decorIcon"  />
-          <input type="text" className="serchInput" />{" "}
-          <div id="SearchDrop" className="CloseIcon" onClick={() => setOpen(false)}>
+          <input type="text" className="serchInput"  onChange={(e) => handleSearch(e.target.value)}  value={search}/>{" "}
+          <div id="SearchDrop" className="CloseIcon" onClick={() => {
+               dispatch(setSearchNFTList(''))
+            setOpen(false)}} >
+      
             <Close className="svgWidget "  />
           </div>{" "}
         </div>

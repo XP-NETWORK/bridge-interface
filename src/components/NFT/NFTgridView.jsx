@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import NFTempty from '../innercomponents/NFTempty';
 import Missing from '../innercomponents/Missing';
@@ -15,8 +15,25 @@ function NFTgridView() {
     const nftsPlace = window.innerWidth <= 600 ? 2 : 9
     const placeholders = new Array(nfts ? nftsPlace - nfts.length >= 0 ? nftsPlace - nfts.length : 0 : 0).fill(0)
     const loader = useSelector(state => state.general.bigLoader)
-    
-    useEffect(() => { }, [selectedNFTs])
+ 
+
+    console.log(nfts, 'nfts');
+
+    function isFiltred (nft) {
+       if (!nft?.description || !nft?.native?.owner) return false;
+        if (nft?.description?.toString().toLowerCase().includes(search?.toLowerCase()) || nft.native.owner?.includes(search)) {
+            return false
+        }
+        return true
+    }
+
+    /*useEffect(() => { 
+        console.log(search);
+        if (!search) return setFiltred(nfts);
+
+        const copy = [...nfts]
+        setFiltred(copy.filter(nft => nft?.description?.toString().toLowerCase().includes(search?.toLowerCase()) || nft.native.owner?.includes(search)))
+    }, [search, nfts])*/
 
     return (
         <div className="nftListBox">
@@ -24,8 +41,8 @@ function NFTgridView() {
                 :
                     <div className="nft-list__wrapper">
                         { nfts?.length ? 
-                        search ? nfts.filter(nft => nft?.description?.toString().toLowerCase().includes(search?.toLowerCase()) || nft.native.owner?.includes(search)).map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} />)
-                        :nfts.map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} />)
+                        //search ? nfts.filter(nft => nft?.description?.toString().toLowerCase().includes(search?.toLowerCase()) || nft.native.owner?.includes(search)).map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} />)
+                        nfts.map((nft, index) => <NFTcard nft={nft} index={index} hide={isFiltred(nft)} key={`nft-${index}`} />)
                         : 
                         <NFTempty /> }
                         { nfts && nfts?.length < nftsPlace ? placeholders.map((n, index) => <Missing key={`missing-${index}-component`}/>) : ''}

@@ -129,7 +129,7 @@ export default function ChainListBox(props) {
   };
 
   const showSearch = () => {
-    if(tezosAccount || tronAccount || algorandAccount || elrondAccount) return ""
+    if((tezosAccount || tronAccount || algorandAccount || elrondAccount) && !from?.text) return ""
     else return <ChainSearch />
   }
 
