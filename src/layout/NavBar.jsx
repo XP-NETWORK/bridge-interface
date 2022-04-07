@@ -29,7 +29,7 @@ function NavBar() {
                     { testnet && <span className="testnet">TestNet</span>}
                 </Navbar.Brand>
             </LinkContainer>
-            <UserConnect desktop={false} />
+            {/* <UserConnect desktop={false} /> */}
                 <Navbar.Toggle aria-controls="" />
                     <Navbar.Collapse id="">
                         <Nav>
@@ -44,10 +44,10 @@ function NavBar() {
                                 <div className="nav-link__icon"><img src={chains} alt="" /></div>
                                 <div className="nav-link__txt">Explorer</div>
                             </Nav.Link> */}
-                            {/* <Nav.Link  target="_blank" href="https://docs.xp.network/docs/Multibridge2.0/faq">
+                            <Nav.Link className="mob-link"  target="_blank" href="https://docs.xp.network/docs/Multibridge2.0/faq">
                                 <div className="nav-link__icon"><img src={faq} alt="" /></div>
                                 <div className="nav-link__txt">FAQ</div>
-                            </Nav.Link> */}
+                            </Nav.Link>
                             <Nav.Link className="mob-link" target="_blank" href="https://docs.xp.network/">
                                 <div className="nav-link__icon"><img src={docs} alt="" /></div>
                                 <div className="nav-link__txt">DOCS</div>
@@ -90,17 +90,20 @@ function NavBar() {
                                         <div className="drop-item">
                                             <img src={docs} alt="" />
                                             <div className="drop-icon">DOCs</div>
-                                        </div></Dropdown.Item>
+                                        </div>
+                                    </Dropdown.Item>
                                     <Dropdown.Item>
                                         <div onClick={() => dispatch(setShowVideo(true))} className="drop-item">
                                             <img src={video} alt="" />
                                             <div className="drop-icon">Video Tutorial</div>
-                                        </div></Dropdown.Item>
+                                        </div>
+                                    </Dropdown.Item>
                                     <Dropdown.Item href="https://xp.network/" target="_blank">
                                         <div className="drop-item">
                                             <img src={xpnet} alt="" />
                                             <div className="drop-icon">XP.NETWORK</div>
-                                        </div></Dropdown.Item>
+                                        </div>
+                                    </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </Nav>

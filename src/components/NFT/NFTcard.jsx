@@ -66,8 +66,6 @@ export default function NFTcard({ nft, index }) {
         }
     }
 
-      
-    
     return (
       <>
       {isShown(search, nft)?  <div className={`nft-box__wrapper`}  >
@@ -94,24 +92,3 @@ export default function NFTcard({ nft, index }) {
      
       </>)
 }
-
-
-{/* <div className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
-<div onClick={() => whiteListed ? addRemoveNFT(nft, index): undefined} className="nft-image__container">
-  <div className="image__wrapper">
-    { nft.uri && isValidHttpUrl(nft.uri, index) ? 
-      video && image ? <VideoAndImage index={index} imageLoaded={() => imageLoadedHandler} videoUrl={videoUrl} imageUrl={imageUrl} />
-    : image && !video ? <img onLoad={() => imageLoadedHandler} alt="only image"  src={setupURI(imageUrl)} /> 
-    : !image && video ? <video onLoadedData={imageLoadedHandler} controls={false}  playsInline={true} autoPlay={true} loop={true}  muted={true} src={setupURI(videoUrl)} />
-    : ipfsArr?.length > 0 && <VideoOrImage urls={ipfsArr} i={index} />
-    : <BrockenUtlGridView />
-    }
-    { !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> }
-  </div>
-  { !whiteListed && <NotWhiteListed /> }
-</div>
-<div className={`nft-content__container ${!imageLoaded ? "preload-content-container" : ""}`}>
-  <span className="nft-name"><span className="name">{nft.name || nft.native.name}</span><NFTdetails nftInf={nft} index={index} /></span>
-  <span className="nft-number">{nft.native.tokenId}</span>
-</div>
-</div> */}
