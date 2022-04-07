@@ -29,7 +29,7 @@ function NavBar() {
                     { testnet && <span className="testnet">TestNet</span>}
                 </Navbar.Brand>
             </LinkContainer>
-            <UserConnect desktop={false} />
+            {/* <UserConnect desktop={false} /> */}
                 <Navbar.Toggle aria-controls="" />
                     <Navbar.Collapse id="">
                         <Nav>
@@ -44,10 +44,10 @@ function NavBar() {
                                 <div className="nav-link__icon"><img src={chains} alt="" /></div>
                                 <div className="nav-link__txt">Explorer</div>
                             </Nav.Link> */}
-                            {/* <Nav.Link  target="_blank" href="https://docs.xp.network/docs/Multibridge2.0/faq">
+                            <Nav.Link className="mob-link"  target="_blank" href="https://docs.xp.network/docs/Multibridge2.0/faq">
                                 <div className="nav-link__icon"><img src={faq} alt="" /></div>
                                 <div className="nav-link__txt">FAQ</div>
-                            </Nav.Link> */}
+                            </Nav.Link>
                             <Nav.Link className="mob-link" target="_blank" href="https://docs.xp.network/">
                                 <div className="nav-link__icon"><img src={docs} alt="" /></div>
                                 <div className="nav-link__txt">DOCS</div>
@@ -70,7 +70,7 @@ function NavBar() {
                                     XP.NETWORK
                                 </div>
                             </Nav.Link>
-                            {/* <UserConnect desktop={true} /> */}
+                            <UserConnect desktop={true} />
                             <Dropdown className='navbar-dropdown'>
                                 <DropdownToggle><div className='navbar-dropdown__btn'></div></DropdownToggle>
                                 <Dropdown.Menu>

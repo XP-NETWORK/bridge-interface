@@ -111,6 +111,9 @@ export const getUrl = nft => {
 //     });
 //   };
 
+
+export const isShown = (search, nft) => !search || nft?.description?.toString().toLowerCase().includes(search?.toLowerCase()) || nft?.native?.owner?.includes(search);
+
 export const isWhiteListed = async (from, nft) => {
     // debugg
     let whitelisted
