@@ -1,5 +1,5 @@
 import { set } from 'immutable';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { setProgWidth, setStep, setActionOn, setActionOff, setPosition, moveForward, moveBack, fill } from '../../store/reducers/sliderSlice';
 
@@ -12,50 +12,47 @@ export default function SliderPagination({start, force, index}) {
     const step = useSelector(state => state.slider.step)
 
     const [width, setWidth] = useState(0)
+  
+
 
     const handleClick = () => {
-      if(index > step && (index !== length - 1 && index !== length - 2 && index !== length - 3 )){
-        dispatch(moveForward(+(index - step)))
-        dispatch(setStep(index))
-        dispatch(fill(index))
-      }
-      // else if(index < step && index !== 0){
-      //   dispatch(moveBack(+(index - step)))
-      //   dispatch(setStep(index))
-      // }
+      //dispatch(setStep(0))
+     // clearTimeout(tm)
+ 
+      setTimeout(() => dispatch(setStep(index)))
     }
   
     useEffect(() => {
-
-        if(action){
-
+        if (step === index) {
                 if(width < 100){
-                  setTimeout( () => setWidth(width + 0.5), 20)
+               setTimeout( () => setWidth(width + 0.5), 20)
                 }
-                else if(width === 100 && index !== length - 1){
-    
-                    setTimeout(() => {
-             
-                      dispatch(setActionOff())
-                      dispatch(setStep(index + 1))
+                else if(width >= 100 && step + 1 < length){
+                    //clearTimeout(tm)
+                    setWidth(0)
+                    setTimeout(() => {dispatch(setStep(step + 1))
                 
-                    }, 1)
-                    
+                    }, 1) 
                   } else {
-                    console.log('d');
+                    //clearTimeout(tm)
+                    setWidth(0)
+                    dispatch(setStep(0))
                   }
-
-                }
+        }
       }, [width]);
      
 
       useEffect(() => {
-         if(step === index){
-           
-           dispatch(setActionOn())
-           setWidth(width + 1)
 
-         }
+    
+
+        if (step === index) {
+         setWidth(width + 1)
+        } else {
+          console.log(index);
+          setWidth(0)
+        }
+
       }, [step])
       
 
