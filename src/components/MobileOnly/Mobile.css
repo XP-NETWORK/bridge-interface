@@ -15,7 +15,7 @@
     line-height: 26px;
 }
 .mobile-destination__subtitle{
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 500;
     line-height: 18px;
 }
@@ -38,7 +38,7 @@
     padding-left: 16px;
 }
 .mobile-destination__address input::placeholder{
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 22px;
     color: #62718A;

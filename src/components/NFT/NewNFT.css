@@ -685,6 +685,14 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
 }
 
 @media screen and (max-width: 600px){
+
+  .nftList {
+    padding-top: 12px;
+  }
+
+  .listed-view__not-whitelisted__button {
+    font-size: 14px;
+  }
   .nft-list__wrapper{
     gap: 10px;
   }
