@@ -17,11 +17,10 @@ export default function UserConnect({desktop}) {
     const algorandAccount = useSelector(state => state.general.algorandAccount)
     const innerWidth = useSelector(state => state.general.innerWidth)
     const tronWallet = useSelector(state => state.general.tronWallet)
-    const { account, chainId } = useWeb3React();
+    const WC = useSelector(state => state.general.WCProvider)
+    const { account, chainId, active } = useWeb3React();
     const testnet = useSelector(state => state.general.testNet)
     const walletAccount = account || elrondAccount || tezosAccount || algorandAccount || tronWallet
-    const location = useLocation()
-
 
     const handleConnect = () => {
         if(!walletAccount){
@@ -47,7 +46,6 @@ export default function UserConnect({desktop}) {
     }
 
     useEffect(() => {
-      // debugger
       if(account && from && chainId){
         if(chainId && !testnet && chains.some(chain => chain.chainId === chainId)){
           dispatch(setWrongNetwork(false))
@@ -65,6 +63,10 @@ export default function UserConnect({desktop}) {
       }
     }, [account, chainId])
 
+  // useEffect(() => {
+  //   if(!active)
+  //   console.log("🚀 ~ file: UserConnect.jsx ~ line 70 ~ UserConnect ~ active", active)
+  // }, [active])
   
 
   return (

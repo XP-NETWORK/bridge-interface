@@ -52,21 +52,6 @@ div#root {
   overflow: hidden;
 }
 
-/* div#root:after {
-  content: "";
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: left 10px;
-  display: block;
-  width: 886px;
-  height: 518px;
-  left: 50%;
-  transform: translate(-50%);
-  top: 110px;
-  position: absolute;
-  z-index: -1;
-} */
-
 .first-step__container{
   display: flex;
   justify-content: center;
@@ -84,14 +69,6 @@ div#root {
   gap: 6.5px;
   padding-right: 15px;
 }
-
-/* .nftTitle h2 {
-  font-weight: bold;
-  font-size: 38px;
-  line-height: 116%;
-  text-align: center;
-  color: #ffffff;
-} */
 
 .nftTitle {
   margin-bottom: 27px;
