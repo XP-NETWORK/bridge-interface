@@ -17,7 +17,6 @@
   margin-top: 29px;
   font-family: Montserrat;
   font-size: 16px;
-  font-weight: 600;
   line-height: 20px;
   letter-spacing: 0.04em;
   color: #000000 !important;
@@ -146,11 +145,10 @@
   margin-top: 5px;
   width: 47px;
   height: 47px;
-  background-image: url("../assets/img/nav/burger.svg");
-  background-position: center;
 }
-.navbar-dropdown__btn:hover{
-  background-image: url("../assets/img/nav/burger_hovered.svg");
+
+.navbar-dropdown__btn:hover svg .dice{
+    fill: #395FEB;
 }
 
 .dropdown .navbar-dropdown__btn:active, .navbar-dropdown__btn:focus,.dropdown .btn-primary:focus, .btn-primary:active {

@@ -5,7 +5,10 @@ import "slick-carousel/slick/slick-theme.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
 import store from "../src/store/store";
+import "./components/Widget/Widget.css"
+import "./components/Settings/Settings.css"
 import "./Global.css";
+import "./Responsive.css";
 import App from "./App";
 import NavBar from "./layout/NavBar";
 import Footer from "./layout/Footer";

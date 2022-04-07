@@ -14,10 +14,14 @@ import video from "../assets/img/nav/vid.svg"
 import xpnet from "../assets/img/nav/xpnet.svg"
 import UserConnect from "../components/User/UserConnect";
 import { setShowVideo } from "../store/reducers/generalSlice";
+import {ReactComponent as Hamburger} from "../assets/img/nav/burger.svg"
+import {ReactComponent as HamburgerClose} from "../assets/img/nav/burger_close.svg"
+import React, {useState} from 'react'
 
 function NavBar() {
     const widget = useSelector(state => state.general.widget)
     const testnet = useSelector(state => state.general.testNet)
+    const [navMenuOpen, toggleNavMenu] = useState(false)
     const dispatch = useDispatch()
     return (
         !widget && <header id="Header"> 
@@ -72,7 +76,9 @@ function NavBar() {
                             </Nav.Link>
                             <UserConnect desktop={true} />
                             <Dropdown className='navbar-dropdown'>
-                                <DropdownToggle><div className='navbar-dropdown__btn'></div></DropdownToggle>
+                                <DropdownToggle><div className='navbar-dropdown__btn'>
+                                      {navMenuOpen? <HamburgerClose className="svgWidget" alt="burgerClose" onClick={() => toggleNavMenu(navMenuOpen? false: true)}/> : <Hamburger className="svgWidget" alt="burger" onClick={() => toggleNavMenu(navMenuOpen? false: true)}/>}
+                                    </div></DropdownToggle>
                                 <Dropdown.Menu>
                                     {/* <Dropdown.Item>
                                         <div className="drop-item">
