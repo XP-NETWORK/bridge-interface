@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@walletconnect/qrcode-modal": "^1.7.5",
     "@airgap/beacon-sdk": "^2.3.9",
     "@elrondnetwork/erdjs": "^8.0.1-alpha.13",
     "@harmony-js/core": "^0.1.57",
@@ -19,6 +18,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "@walletconnect/client": "^1.7.0",
+    "@walletconnect/qrcode-modal": "^1.7.5",
     "@web3-react/core": "^6.1.9",
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.2.8",

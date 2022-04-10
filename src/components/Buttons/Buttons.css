@@ -8,11 +8,12 @@
     box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
     position: relative;
     cursor: pointer;
+    display: flex;
 }
 
 
 .select-all svg, .delete-all svg {
-    transform: translate(30%, 30%);
+    margin: auto;
 }
 
 

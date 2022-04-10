@@ -127,8 +127,10 @@ export default function ChainListBox(props) {
         }
   };
 
+  const nonEVM = tezosAccount || tronAccount || algorandAccount || elrondAccount;
+
   const showSearch = () => {
-    if((tezosAccount || tronAccount || algorandAccount || elrondAccount) && !from?.text) return ""
+    if(nonEVM && !from?.text) return ""
     else return <ChainSearch />
   }
 
@@ -189,7 +191,7 @@ export default function ChainListBox(props) {
           { showSearch() }
           <ul className="nftChainList scrollSty">
             {!from ? fromChains
-            .filter((chain) => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : ""))
+            .filter((chain) => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : "") )
             .map((filteredChain, index) => {
             const { image, text, key, coming, newChain, maintenance, testNet, mainnet } = filteredChain;
             return globalTestnet ? testNet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`}/>

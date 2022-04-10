@@ -1,10 +1,17 @@
 import React from 'react'
 import "./Planet.css"
 
+
 export default function Planet() {
+
+
+
+    let isIOS = /iPad|iPhone|iPod/.test(navigator.platform)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+
   return (
         <div className="content">
-            <div className="planet">
+          {isIOS? null :  <div className="planet">
                 <div className="ring"></div>
                     <div className="cover-ring"></div>
                 <div className="spots">
@@ -16,8 +23,8 @@ export default function Planet() {
                     <span></span>
                     <span></span>
                 </div>
-            </div>
-            <p>Approving</p>
+            </div>}
+            <p style={{bottom: isIOS? '90px': {} }}>Approving</p>
         </div>
   )
 }
