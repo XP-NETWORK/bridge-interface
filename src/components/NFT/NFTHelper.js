@@ -58,8 +58,10 @@ export const getUrl = nft => {
         }
     });
     strings.forEach(item => {
-        if((item.includes("https:") || item.includes("ipfs") || item.includes("base64")) && !item.includes('.json') && !checkIfJSON(item)){
-            urls.push(item)
+        if((item.includes("http:") || item.includes("https:") || item.includes("ipfs") || item.includes("base64")) && item.indexOf(' ') < 1 && !item.includes('.json') && !checkIfJSON(item)){
+           if(!urls.some(url => url === item)){
+               urls.push(item)
+           }
         }
     });
     if(urls.some(item => ifVideo(item))){
