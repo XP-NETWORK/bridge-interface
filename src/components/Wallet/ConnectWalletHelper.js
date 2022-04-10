@@ -85,7 +85,7 @@ export const connectAlgoSigner =async () => {
 }
 
 export const connectTrustWallet = async (activate, from) => {
-  debugger
+  // debugger
   const { rpc, chainId } = chainsConfig[from];
   try {
     const walletConnect = new WalletConnectConnector({

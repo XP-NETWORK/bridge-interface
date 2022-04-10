@@ -56,7 +56,9 @@ function NFTaccount() {
   
 
   useEffect(async () => {
+    if(nfts.length < 1){
     await getNFTsList();
+  }
   }, []);
 
   useEffect(async () => {}, [nfts]);

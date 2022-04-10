@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@walletconnect/qrcode-modal": "^1.7.5",
     "@airgap/beacon-sdk": "^2.3.9",
     "@elrondnetwork/erdjs": "^8.0.1-alpha.13",
     "@harmony-js/core": "^0.1.57",
@@ -19,6 +18,8 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "@walletconnect/client": "^1.7.0",
+    "@walletconnect/qrcode-modal": "^1.7.5",
+    "@walletconnect/web3-provider": "^1.7.7",
     "@web3-react/core": "^6.1.9",
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.2.8",
@@ -53,8 +54,9 @@
     "stream-signature": "^1.0.4",
     "strtok3": "^6.3.0",
     "web-vitals": "^1.1.2",
-    "web3": "^1.6.1",
+    "web3": "^1.7.3",
     "web3-utils": "^1.6.0",
+    "web3modal": "^1.9.6",
     "xp.network": "git+https://github.com/xp-network/xpjs#bleeding-edge"
   },
   "scripts": {

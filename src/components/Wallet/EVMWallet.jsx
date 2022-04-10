@@ -32,6 +32,7 @@ export default function EVMWallet({ wallet, close }) {
         break;
         case "TrustWallet":
         connectTrustWallet(activate, from.text)
+        close()
         break;
         case "WalletConnect":
         onWalletConnect(activate, from.text)
@@ -72,7 +73,7 @@ export default function EVMWallet({ wallet, close }) {
       <img src={MetaMask} alt="MetaMask Icon" />
       <p>MetaMask</p>
     </li>
-  ) : wallet === "TrustWallet" /* TRUST WALLET */ ? (
+  ) : wallet === "TrustWallet" && from && from.type === "EVM" && from.text !== "Velas" &&  from.text !== "Iotex" &&  from.text !== "Fuse" ? (
     <li
       onClick={() => connectHandler("TrustWallet")}
       style={getStyle()}
@@ -83,7 +84,7 @@ export default function EVMWallet({ wallet, close }) {
       <p>Trust Wallet</p>
     </li>
   ) : from && from.type === "EVM" && from.text !== "Velas" &&  from.text !== "Iotex" &&  from.text !== "Fuse" ? 
-    <li onClick={() => connectHandler("WalletConnect")}  className="wllListItem" data-wallet="WalletConnect">
+    <li style={getStyle()} onClick={() => connectHandler("WalletConnect")}  className="wllListItem" data-wallet="WalletConnect">
       <img src={WalletConnect} alt="WalletConnect Icon" />
       <p>WalletConnect</p>
     </li>:''
