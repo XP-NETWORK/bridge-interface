@@ -23,9 +23,10 @@ export default function Video() {
         <div className="tron-PopUp__header">
           <Modal.Title>Learn how to use NFT bridge</Modal.Title>
           <span className="CloseModal" onClick={() => handleClose()}>
-            {/* <Close className="svgWidget" /> */}
-            <div className="close-modal"></div>
+          <Close className="svgWidget" alt="closeIcon"/>
           </span>
+         
+         
         </div>
       </Modal.Header>
       <Modal.Body>

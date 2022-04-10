@@ -10,12 +10,10 @@ export default function Slider() {
   const [bgStyle, setStyle] = React.useState({})
 
 
-  console.log('dsdsd');
 
 React.useEffect(() => {
 
-  const img = document.creat
-
+  console.log(step, 'step');
   setStyle({
     backgroundImage: `url(${nfts[step].image})`,
     backgroundPosition: 'top',

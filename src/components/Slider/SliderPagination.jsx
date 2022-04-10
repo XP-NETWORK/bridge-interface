@@ -19,7 +19,7 @@ export default function SliderPagination({start, force, index}) {
       //dispatch(setStep(0))
      // clearTimeout(tm)
       if (index === step) return
-      setWidth(0);
+      
       setTimeout(() => dispatch(setStep(index)))
     }
   

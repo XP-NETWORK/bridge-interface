@@ -190,10 +190,6 @@ export default function ChainListBox(props) {
         <div className="nftChainListBox">
           { showSearch() }
           <ul className="nftChainList scrollSty">
-<<<<<<< HEAD
-            {!from ? fromChains
-            .filter((chain) => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : "") )
-=======
             { //! Show only mainnet FROM chains //
               departureOrDestination === "departure" && !globalTestnet && fromChains.map( chain => {
                 const { image, text, key, coming, newChain, maintenance, mainnet } = chain;
@@ -202,7 +198,6 @@ export default function ChainListBox(props) {
             }
             {/* {!from ? fromChains
             .filter((chain) => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : ""))
->>>>>>> 6dc533f768553f1142cd6489a10b1c9159c6fa45
             .map((filteredChain, index) => {
             const { image, text, key, coming, newChain, maintenance, testNet, mainnet } = filteredChain;
             return globalTestnet ? testNet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`}/>

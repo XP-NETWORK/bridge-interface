@@ -48,7 +48,7 @@
 }
 
 .ChainModal .CloseModal{
-  top: 29px;
+  transform: translateY(-30%);
 }
 
 .close-modal{
@@ -105,7 +105,8 @@
     z-index: 1;
     left: auto;
     right: 28px;
-    top: 25px;
+    top: 50%;
+    transform: translateY(-50%);
     cursor: pointer;
   }
   .walletListBox {
