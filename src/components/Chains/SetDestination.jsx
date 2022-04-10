@@ -6,8 +6,8 @@ import { setChainModal, setDepartureOrDestination } from '../../store/reducers/g
 
 export default function SetDestination() {
     const to = useSelector(state => state.general.to)
-    const deisplayWidth = window.innerWidth
     const dispatch = useDispatch()
+    
     const handleShow = (str) => {
         dispatch(setChainModal(true));
         str === "departure" ? dispatch(setDepartureOrDestination("departure")) : dispatch(setDepartureOrDestination("destination"))

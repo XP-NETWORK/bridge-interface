@@ -10,7 +10,6 @@ export default function ChainSelectBox() {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
-  const widget = useSelector((state) => state.general.widget);
 
 
   const switchChains = (e) => {

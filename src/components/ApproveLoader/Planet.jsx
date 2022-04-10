@@ -13,7 +13,7 @@ export default function Planet() {
         <div className="content">
           {isIOS? null :  <div className="planet">
                 <div className="ring"></div>
-                    <div className="cover-ring"></div>
+                <div className="cover-ring"></div>
                 <div className="spots">
                     <span></span>
                     <span></span>
