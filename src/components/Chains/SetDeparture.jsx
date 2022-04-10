@@ -6,7 +6,6 @@ import Departure from '../../assets/img/nftSelect/departure.svg';
 export default function SetDeparture() {
     const dispatch = useDispatch()
     const from = useSelector(state => state.general.from)
-    const deisplayWidth = window.innerWidth
     
     const handleShow = (str) => {
         dispatch(setChainModal(true));
