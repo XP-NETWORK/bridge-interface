@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import RedClose from "../../assets/img/icons/RedClose.svg";
 import {
+  setDepartureOrDestination,
   setReceiver,
   setSwitchDestination,
 } from "../../store/reducers/generalSlice";
@@ -24,6 +25,7 @@ function DestinationChain() {
   };
 
   function handleSwitchChain() {
+    dispatch(setDepartureOrDestination("destination"))
     dispatch(setSwitchDestination(true));
   }
 

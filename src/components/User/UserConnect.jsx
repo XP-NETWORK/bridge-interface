@@ -12,6 +12,7 @@ import Identicon from './Identicon';
 export default function UserConnect({desktop, mobile}) {
     const dispatch = useDispatch()
     const from = useSelector(state => state.general.from)
+    const to = useSelector(state => state.general.to)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const tezosAccount = useSelector(state => state.general.tezosAccount)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
@@ -46,8 +47,12 @@ export default function UserConnect({desktop, mobile}) {
     }
 
     useEffect(() => {
+      console.log("asdlkhsakjhdfsajkhdajkhsd");
       if(account && from && chainId){
-        if(chainId && !testnet && chains.some(chain => chain.chainId === chainId)){
+        if(chainId === to.chainId){
+          dispatch(setWrongNetwork(true))
+        }
+        else if(!testnet && chains.some(chain => chain.chainId === chainId)){
           dispatch(setWrongNetwork(false))
           const chain = getChain()
           setNFTS(account, chain.key)

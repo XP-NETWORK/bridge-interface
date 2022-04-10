@@ -91,9 +91,9 @@ export default function ChainListBox(props) {
 
 
   const chainSelectHandler = (chain) => {
-    
+    // debugger
         if (departureOrDestination === "departure") {
-          if(from && account){
+          if(from && account && location.pathname === "/account"){
             dispatch(setFrom(chain));
             switchNetwork(chain)
             handleClose();
@@ -124,47 +124,51 @@ export default function ChainListBox(props) {
   }
 
   useEffect(() => {
-    if(chainSearch && departureOrDestination === "departure"){
-      
-      const filteredChains = chains.filter(chain => chain.text.toLowerCase().includes(chainSearch.toLowerCase()))
-      setFromChains(filteredChains)
+    // debugger
+    let filteredChains = chains
+    if(to){
+      filteredChains = toChains.filter(chain => chain.text !== to.text)
     }
-    else if(departureOrDestination === "departure"){
-    const withNew = chains.filter(chain => chain.newChain).sort((a, b) => a.order - b.order)
-    const withComing = chains.filter( chain => chain.coming && !chain.newChain )
-    const withMaintenance = chains.filter( chain => chain.maintenance && !chain.newChain )
-    const noComingNoMaintenance = chains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain).sort((a, b) => a.order - b.order)
-    const sorted = [...withNew, ...noComingNoMaintenance, ...withMaintenance, ...withComing]
-
+    const withNew = filteredChains.filter(chain => chain.newChain).sort((a, b) => a.order - b.order)
+    const withComing = filteredChains.filter( chain => chain.coming && !chain.newChain )
+    const withMaintenance = filteredChains.filter( chain => chain.maintenance && !chain.newChain )
+    const noComingNoMaintenance = filteredChains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain).sort((a, b) => a.order - b.order)
+    let sorted = [...withNew, ...noComingNoMaintenance, ...withMaintenance, ...withComing]
+    if(chainSearch && departureOrDestination === "departure"){
+      sorted = chains.filter(chain => chain.text.toLowerCase().includes(chainSearch.toLowerCase()))
+    }
     const onlyElrond = elrondAccount ? sorted.filter( chain => chain.type === "Elrond") : undefined
     const onlyEVM = evmAccount ? sorted.filter( chain => chain.type === "EVM") : undefined
     const onlyTron = tronAccount ? sorted.filter( chain => chain.type === "Tron") : undefined
     const onlyAlgo = algorandAccount ? sorted.filter( chain => chain.type === "Algorand") : undefined
     const onlyTezos = tezosAccount ? sorted.filter( chain => chain.type === "Tezos") : undefined
-
-    setFromChains(onlyElrond || onlyEVM || onlyTron || onlyAlgo || onlyTezos || sorted)}
-  }, [elrondAccount, tezosAccount, algorandAccount, tronAccount, evmAccount, chainSearch])
-
-  // useEffect(() => {
-    
-  //   if(from && from.type === "EVM"){
-  //     const c = chains.filter(chain => from.type === "EVM" && chain.type === "EVM")
-  //     setToChains(filterChains(c, from.text))
-  //   }
-  //   else if(from)setToChains(filterChains(chains, from.text))
-  //   if(from?.text === to?.text && (location.pathname === "/connect" || location.pathname === "/testnet/connect")){
-  //     dispatch(setTo(''))
-  //   }
-  //   else if(from?.text === to?.text && location.pathname === '/account'){
-  //     dispatch(setWrongNetwork(true))
-  //   }
-  // }, [from])
+    const set = onlyElrond || onlyEVM || onlyTron || onlyAlgo || onlyTezos || sorted
+    setFromChains(set)
   
-  // useEffect(() => {
-  //   if(from?.text === to?.text){
-  //     dispatch(setTo(''))
-  //   }
-  // }, [to]);
+  }, [elrondAccount, tezosAccount, algorandAccount, tronAccount, evmAccount, chainSearch, to])
+
+  useEffect(() => {
+    // debugger 
+    let filteredChains = chains
+    if(from){
+      filteredChains = toChains.filter(chain => chain.text !== from.text)
+    }
+    const withNew = filteredChains.filter(chain => chain.newChain).sort((a, b) => a.order - b.order)
+    const withComing = filteredChains.filter( chain => chain.coming && !chain.newChain )
+    const withMaintenance = filteredChains.filter( chain => chain.maintenance && !chain.newChain )
+    const noComingNoMaintenance = filteredChains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain).sort((a, b) => a.order - b.order)
+    let sorted = [...withNew, ...noComingNoMaintenance, ...withMaintenance, ...withComing]
+    if(chainSearch && departureOrDestination === "destination"){
+      sorted = chains.filter(chain => chain.text.toLowerCase().includes(chainSearch.toLowerCase()))
+    }
+    setToChains(sorted)
+  }, [from, chainSearch, departureOrDestination])
+  
+  useEffect(() => {
+    if(from?.text === to?.text){
+      dispatch(setTo(''))
+    }
+  }, [to, from]);
 
  
   
@@ -190,6 +194,12 @@ export default function ChainListBox(props) {
           <ul className="nftChainList scrollSty">
             { //! Show only mainnet FROM chains //
               departureOrDestination === "departure" && !globalTestnet && fromChains.map( chain => {
+                const { image, text, key, coming, newChain, maintenance, mainnet } = chain;
+                return mainnet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
+              })
+            }
+            {
+              departureOrDestination === "destination" && !globalTestnet && toChains.map( chain => {
                 const { image, text, key, coming, newChain, maintenance, mainnet } = chain;
                 return mainnet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
               })
