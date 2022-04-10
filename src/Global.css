@@ -204,9 +204,12 @@ span.closeBox {
   right: 18px;
   border-left: 1px solid #62718a;
   cursor: pointer;
+
 }
 
-
+span.closeBox svg {
+  transform: translateX(27%);
+}
 
 
 

@@ -23,6 +23,18 @@
 
 }
 
+
+
+.navbaroverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 12;
+}
+
 .navbar-nav{
   margin-left: auto;
   margin-top: 14px;
@@ -107,17 +119,27 @@
   border: 1px solid #8994A8;
 }
 .navbar-toggler.collapsed .navbar-toggler-icon {
-  background-image: url("../assets/img/nav/burger.svg");
-  background-position: center;
+ 
+  background-size: contain;
   width: 2.5em;
   height: 2.5em;
 }
 
 .navbar-toggler .navbar-toggler-icon {
-  background-image: url("../assets/img/nav/burger_close.svg");
+
   background-position: center;
   width: 2.5em;
   height: 2.5em;
+}
+
+.hamburgerToggle {
+  transform: translateY(5%);
+  margin-left: 7px;
+}
+
+.navbarToggleMoblie  {
+  display: none;
+  background-image: none;
 }
 
 .navbar-toggler {
@@ -295,6 +317,7 @@
     transition: unset;
     filter: drop-shadow(0px 4px 24px rgba(0, 0, 0, 0.12));
     border-radius: 20px;
+    z-index: 9999;
 
   }
 

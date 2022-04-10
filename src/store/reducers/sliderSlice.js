@@ -52,7 +52,7 @@ const initialState = {
     {
       image:  image5,
       name: "Lorem Ipsum",
-      id: "669",
+      id: "670",
       description: "Lorem Ipsum ",
       progWidth: 0,
       action: false

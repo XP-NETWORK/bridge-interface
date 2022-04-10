@@ -36,6 +36,7 @@
     position: relative;
     cursor: pointer;
     transition: all 0.5s;
+    display: flex;
 }
 
 .change-view__button, .SearchDrop, .CloseIcon{

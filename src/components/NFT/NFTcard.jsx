@@ -50,10 +50,13 @@ export default function NFTcard({ nft, index }) {
     
 
     useEffect(async() => {
-       await parseEachNFT(nft, index)
+       
        if(nft.dataLoaded){
         const imgData = getBase64Image(nft.iamge);
         localStorage.setItem("imgData", imgData);
+       }
+       else{
+        await parseEachNFT(nft, index)
        }
     },[])
     

@@ -18,11 +18,16 @@ import {ReactComponent as Hamburger} from "../assets/img/nav/burger.svg"
 import {ReactComponent as HamburgerClose} from "../assets/img/nav/burger_close.svg"
 import React, {useState} from 'react'
 
+
+
+
 function NavBar() {
     const widget = useSelector(state => state.general.widget)
     const testnet = useSelector(state => state.general.testNet)
     const [navMenuOpen, toggleNavMenu] = useState(false)
     const dispatch = useDispatch()
+
+
     return (
         !widget && <header id="Header"> 
             <Navbar expand="lg" > 
@@ -35,8 +40,10 @@ function NavBar() {
                 </Navbar.Brand>
             </LinkContainer>
             {/* <UserConnect desktop={true} /> */}
-            <UserConnect mobile={true}/>   
-                <Navbar.Toggle aria-controls="" />
+            <UserConnect mobile={true}/>
+              {navMenuOpen? <><HamburgerClose className="svgWidget hamburgerToggle" onClick={() => {document.querySelector('.navbar-collapse.collapse').classList.remove('show'); toggleNavMenu(false)}}/> <div className="navbaroverlay" onClick={() => {document.querySelector('.navbar-collapse.collapse').classList.remove('show');toggleNavMenu(false)}}> </div></>:  <Hamburger className="svgWidget hamburgerToggle" onClick={() => {document.querySelector('.navbar-collapse.collapse').classList.add('show'); toggleNavMenu(true)}}/>}
+                <Navbar.Toggle aria-controls="" className="navbarToggleMoblie"/>
+           
                     <Navbar.Collapse id="">
                         <Nav>
                             {/* <LinkContainer to='/connect'>
@@ -79,9 +86,10 @@ function NavBar() {
                             <UserConnect/>
                             <Dropdown className='navbar-dropdown'>
                                 <DropdownToggle><div className='navbar-dropdown__btn'>
-                                      {navMenuOpen? <HamburgerClose className="svgWidget" alt="burgerClose" onClick={() => toggleNavMenu(navMenuOpen? false: true)}/> : <Hamburger className="svgWidget" alt="burger" onClick={() => toggleNavMenu(navMenuOpen? false: true)}/>}
+                                      {navMenuOpen? <><div className="navbaroverlay" onClick={() => toggleNavMenu(false)}></div> <HamburgerClose className="svgWidget" alt="burgerClose" onClick={() => toggleNavMenu(navMenuOpen? false: true)}/> </>: <Hamburger className="svgWidget" alt="burger" onClick={() => toggleNavMenu(navMenuOpen? false: true)}/>}
                                     </div></DropdownToggle>
                                 <Dropdown.Menu>
+                                    <div onClick={(e) => toggleNavMenu(false)}>
                                     {/* <Dropdown.Item>
                                         <div className="drop-item">
                                             <img src={about} alt="" />
@@ -100,8 +108,8 @@ function NavBar() {
                                             <div className="drop-icon">DOCs</div>
                                         </div>
                                     </Dropdown.Item>
-                                    <Dropdown.Item>
-                                        <div onClick={() => dispatch(setShowVideo(true))} className="drop-item">
+                                    <Dropdown.Item onClick={() => dispatch(setShowVideo(true))}>
+                                        <div  className="drop-item">
                                             <img src={video} alt="" />
                                             <div className="drop-icon">Video Tutorial</div>
                                         </div>
@@ -112,6 +120,7 @@ function NavBar() {
                                             <div className="drop-icon">XP.NETWORK</div>
                                         </div>
                                     </Dropdown.Item>
+                                    </div>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </Nav>

@@ -60,11 +60,7 @@ function NFTdetails({ nftInf }) {
         <Modal.Header>
           <Modal.Title>NFT Details</Modal.Title>
           <span className="CloseModal" onClick={handleClose}>
-            {widget ? (
-              <CloseComp className="svgWidget" />
-            ) : (
-              <img src={Close} alt="" />
-            )}
+              <CloseComp className="svgWidget" alt="closeIcon"/>
           </span>
         </Modal.Header>
         <Modal.Body className="modalBody">
