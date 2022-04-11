@@ -33,7 +33,7 @@ function NFTlistTop() {
       <div className="nftListTop">
         <ChainListBox />
         <div className="yourNft desktopOnly">
-          Your NFTs on
+          <div className="yourNft__title">Your NFTs on</div>
           <ChainSwitch assignment={"from"} func={handleFromChainSwitch} />
           <Refresh />
         </div>

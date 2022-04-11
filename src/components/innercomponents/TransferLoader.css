@@ -47,7 +47,7 @@
   .wave {
     width: 5px;
     height: 60px;
-    background: linear-gradient(180deg, #EDEFF8 0%, #C1CAEC 47.4%, #BDC9F7 100%);
+    background: linear-gradient(180deg, #8EA5FF 0%, #125ECD 47.4%, #3E64ED 100%);
     margin: 10px;
     animation: wave 1s linear infinite;
     border-radius: 20px;
