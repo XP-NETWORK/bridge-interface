@@ -201,32 +201,24 @@ export default function ChainListBox(props) {
                 return (mainnet || coming) && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
               })
             }
-            {
+            {//! Show only mainnet TO chains //
               departureOrDestination === "destination" && !globalTestnet && toChains.map( chain => {
                 const { image, text, key, coming, newChain, maintenance, mainnet } = chain;
                 return (mainnet || coming) && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
               })
             }
-            {/* {!from ? fromChains
-            .filter((chain) => chain.text.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : ""))
-            .map((filteredChain, index) => {
-            const { image, text, key, coming, newChain, maintenance, testNet, mainnet } = filteredChain;
-            return globalTestnet ? testNet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`}/>
-            : (mainnet || coming) && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={filteredChain} image={image} key={`chain-${key}`}/>})
-            
-            : toChains
-            // .filter(chain => from && from.type === "EVM" && chain.type === "EVM" && location.pathname === "/connect")//??
-            .filter( chain => chain.key.toLowerCase().includes(chainSearch ? chainSearch.toLowerCase() : "") && (chain.text?.toLowerCase() !== to.text?.toLowerCase()) )
-            .sort((chain) => {
-              if(chain.coming) return 1
-              else if(chain.maintenance) return 0
-              else if(!chain.coming) return -1
-            }).sort((a, b) => a.order - b.order)
-            .map((chain) => {
-              const {image, text, key, coming, newChain, maintenance, testNet, mainnet } = chain;
-              return globalTestnet ? ((testNet && chain.key !== from.key)) && <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming}  text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`} /> 
-              : (((mainnet || coming) && chain.key !== from.key)) && <Chain  chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming}  text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`} /> })
-            } */}
+            { //! Show only testnet FROM chains //
+              departureOrDestination === "departure" && globalTestnet && fromChains.map( chain => {
+                const { image, text, key, coming, newChain, maintenance, testNet } = chain;
+                return testNet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
+              })
+            }
+            {//! Show only testnet TO chains //
+              departureOrDestination === "destination" && globalTestnet && toChains.map( chain => {
+                const { image, text, key, coming, newChain, maintenance, testNet } = chain;
+                return testNet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
+              })
+            }
           </ul>
         </div>
       </Modal.Body>
