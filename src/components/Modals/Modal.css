@@ -174,9 +174,9 @@
 .modalSelectOptionsText {
   width: 100%;
   color: #14161A;
-
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 }
 .accountBox p {
