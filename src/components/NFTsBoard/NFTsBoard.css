@@ -134,6 +134,7 @@
     color: #14161A;
     border-bottom: 1px solid white;
     background: #F7F7F9;
+    font-weight: 500;
 }
 .mobile-col__header .chain-switch{
     margin-left: auto;

@@ -17,13 +17,13 @@ export default function TransferredNft({ nft }) {
     const txnHashArr = useSelector(state => state.general.txnHashArr)
     const [txnStatus, setTxnStatus] = useState("pending")
     const [hashes, setHashes] = useState({
-        depHash: '123123',
-        destHash: '123123123'
+        depHash: '',
+        destHash: ''
     })
 
     const getSubstringValue = () => {
         if (window.innerWidth <= 320) return 3;
-        else if (window.innerWidth <= 375) return 6;
+        else if (window.innerWidth <= 375) return 3;
         else return false;
       };
 
@@ -87,7 +87,7 @@ export default function TransferredNft({ nft }) {
                             0,
                             getSubstringValue() || 10
                           )
-                    }...{hashes.depHash.substring(hashes.depHash.length - 6)}</a>
+                    }...{hashes.depHash.substring(hashes.depHash.length - 3)}</a>
                 </div>
                 <div className="chain-hash">
                     <span>Dep Hash:</span>
@@ -96,7 +96,7 @@ export default function TransferredNft({ nft }) {
                             0,
                             getSubstringValue() || 10
                           )
-                    }...{hashes.destHash.substring(hashes.destHash.length - 6)}</a>
+                    }...{hashes.destHash.substring(hashes.destHash.length - 3)}</a>
                 </div>
             </div>
         </div>

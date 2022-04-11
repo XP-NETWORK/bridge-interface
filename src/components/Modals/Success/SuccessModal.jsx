@@ -147,7 +147,7 @@ export default function SuccessModal() {
           <div className="success-info-box">
           <div className="success-info-item">
           <div className="info-item-label">Date</div>
-          <div className="info-item-label">
+          <div className="info-item-chain">
                 {moment(txnHashArr[0]?.createdAt).format('YYYY-M-DD HH:mm') || moment.format('YYYY-M-DD HH:mm')}
           </div>
           </div>

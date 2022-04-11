@@ -1,5 +1,5 @@
 .success-modal .modal-dialog{
-    max-width: 530px;
+    max-width: 556px;
     min-height: 500px;
     color: #14161A;
 }
@@ -200,6 +200,13 @@
 @media screen and (max-width: 500px) {
     .success-modal .modal-content{
         padding: 0 10px;
+      
+    }
+
+    .success-modal .modal-dialog {
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
     }
 
     .success-info-box{
@@ -211,7 +218,7 @@
     }
 
     .success-modal-close{
-        top: 30px;
-        right: 10px;
+        top: 32px;
+        right: 15px;
     }
 }

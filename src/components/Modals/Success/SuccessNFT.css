@@ -55,7 +55,6 @@
     display: flex;
     justify-content: space-between;
     margin: 14px 0 3px 0;
-    padding: 0 11px;
     font-family: Inter,sans-serif;
     font-size: 12px;
 
@@ -76,6 +75,14 @@
 .transferred-nft-hashes a {
     color: #395FEB;
 
+}
+
+@media screen and (max-width:600px) {
+    .success-nft-info {
+        max-height: 40vh;
+        overflow-y: auto;
+     
+    }
 }
 
 @media screen and (max-width: 375) {

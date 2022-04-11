@@ -270,7 +270,7 @@
 
 
   .xdesktop_only {
-    display: block !important;
+    /* display: block !important; */
   }
 
   .xmobile_only { 
@@ -284,15 +284,19 @@
 
 @media only screen and (max-width: 600px) {
 
+  .navbar-connect{ 
+      margin-left: auto;
+      margin-right: 0;
+  }
+
   
  .xdesktop_only {
   display: none !important;
 }
 
 .xmobile_only { 
-  display: block !important;
-  margin-left: auto;
-  margin-right: 0;
+  /* display: block !important; */
+
 }
 
 }
