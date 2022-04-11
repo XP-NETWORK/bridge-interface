@@ -182,7 +182,6 @@
   font-size: 12px;
   font-weight: 500;
   line-height: 19px;
-  color: white;
 }
 
 .listed-view__not-whitelisted__button a{
@@ -392,8 +391,8 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
 }
 
 @keyframes shine {
-  form {left: -210%;}
-  to{left: 200%;}
+  form {left: -50%;}
+  to{left:50%;}
 }
 
 .preload__image{
@@ -584,7 +583,6 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
 
 .listed__skeleton{
   height: 42px;
-  width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -603,7 +601,7 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
   transform: rotate(250deg);
   opacity: 0.3;
   background: linear-gradient(270deg, rgba(255,255,255,0) 20%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 80%);
-  animation: shine 6s infinite;
+  animation: shine 2s infinite;
   animation-delay: 0.1s;
 }
 .listed__skeleton .checkmark{

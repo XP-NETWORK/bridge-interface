@@ -506,6 +506,11 @@ span.closeBox svg {
   left: 120px;
 }
 
+.listed_sceleton_wrap {
+  display: flex;
+  align-items: center;
+}
+
 .nft-sceleton-img {
   position: relative;
   display: flex;
@@ -831,7 +836,7 @@ li.nftSelecItem .Close:hover {
 
 .checkCircle:after {
   content: "";
-  background-image: url(./assets/img/icons/CheckGray.svg);
+  background-image: none;
   width: 15px;
   height: 15px;
   display: flex;
@@ -1380,6 +1385,10 @@ span.invalid img {
   font-size: 14px;
 
 }
+.serchInput:focus, .mobile-search-input__box input.serchInput:focus {
+  background-color: #fff;
+}
+ 
 
 .mobile-search-input__box input.serchInput {
   width: 100%;

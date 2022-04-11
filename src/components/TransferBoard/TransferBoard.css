@@ -217,7 +217,7 @@
   left: 27px;
 }
 .approveBtn input:checked + label .checkCircle:after {
-    background-image: url(../../assets/img/icons/CheckGreen.svg);
+   /* background-image: url(../../assets/img/icons/CheckGreen.svg);*/
 }
 .fees {
     margin: 5px 0;

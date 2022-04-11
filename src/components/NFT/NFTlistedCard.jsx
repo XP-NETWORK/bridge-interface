@@ -56,8 +56,10 @@ export default function NFTlistedCard({nft, index}) {
     { nft.whitelisted ? <NFTdetails nftInf={nft}/> : <a href='https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot' className="listed-view__not-whitelisted__button" target="_blank">Tech support</a>}
   </li>:
   <div className='listed__skeleton'>
+    <div className="listed_sceleton_wrap">
     <div className='image'></div>
     <div style={{width: _width}} className='name'></div>
+    </div>
   </div>
   )
 }
