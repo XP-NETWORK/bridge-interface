@@ -100,7 +100,6 @@ div#root {
 }
 .about-btn:hover{
   color: #395FEB;
-
 }
 
 .about-text::before{
@@ -384,11 +383,7 @@ span.closeBox svg {
 }
 
 .yourNft__title {
-  font-size: 16px;
-  color: #62718a;
-  font-weight: 600;
-  line-height: 20px;
-  letter-spacing: 0em;
+  font-weight: 500;
 }
 
 .yourNft__chain {
@@ -960,6 +955,10 @@ li.nftSelecItem .Close:hover {
   right: 0;
 }
 
+.error__modal .CloseModal{
+  top: 30px !important;
+}
+
 .successBox {
   background: #F3F3F6;
   border-radius: 6px;
@@ -1168,6 +1167,10 @@ span.statComp img {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.fees__title{
+  font-weight: 500;
 }
 
 table.transferTable.table {

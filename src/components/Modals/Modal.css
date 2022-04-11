@@ -119,6 +119,7 @@
     overflow-y: scroll;
   }
   .wllListItem {
+    position: relative;
     margin-bottom: 12px;
     height: 56px;
     border: 1px solid rgba(255, 255, 255);
@@ -138,12 +139,14 @@
     background-color: #ffffff50;
   }
   .wllListItem p {
-  width: 100%;
-  padding-left: 20%;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    left: 0;
   }
   .wllListItem img {
     display: block;
-    margin-right: 13px;
+    margin-right: auto;
   }
   
   .wllListItem:hover {

@@ -152,8 +152,9 @@
 }
 .nftListed__info .name{
   font-family: Inter;
+  color: #000000;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 18px;
 }
 .nftListed .image--toggle{
@@ -750,9 +751,13 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
   }
 }
 
-@media screen and (max-width: 415px){
+@media screen and (max-width: 425px){
   .nft__card, .nft__card--selected{
-    width: 170px;
+    width: 100%;
+    height: auto;
+  }
+  .nft__card, .nft__card--selected{
+    width: calc(100% - 2px);
     height: auto;
   }
   .nft__main{
