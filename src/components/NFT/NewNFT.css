@@ -390,9 +390,16 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
   animation: shine 2.5s infinite;
 }
 
+.listed_sceleton_wrap {
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
 @keyframes shine {
-  form {left: -50%;}
-  to{left:50%;}
+  form {left: 0;}
+  to{left:100%;}
 }
 
 .preload__image{
@@ -591,7 +598,7 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
   overflow: hidden;
   padding: 6px 6px 5px 10px;
 }
-.listed__skeleton::after{
+.listed_sceleton_wrap::after{
   content: "";
   position: absolute;
   top: -110%;
@@ -604,7 +611,7 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
   animation: shine 2s infinite;
   animation-delay: 0.1s;
 }
-.listed__skeleton .checkmark{
+.listed_sceleton_wrap .checkmark{
   height: 20px;
   width: 20px;
   background-color: #62718A;
@@ -612,12 +619,13 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
   opacity: 0.2;
   overflow: hidden;
 }
-.listed__skeleton .image{
+.listed_sceleton_wrap .image{
   height: 30px;
   width: 30px;
   background-color: #62718A;
   border-radius: 4px;
   opacity: 0.2;
+  margin-right: 10px;
 }
 .listed__skeleton .name{
   height: 20px;
