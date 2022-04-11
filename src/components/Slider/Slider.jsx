@@ -10,8 +10,6 @@ export default function Slider() {
   const [bgStyle, setStyle] = React.useState({})
 
 
-  console.log('dsdsd');
-
 React.useEffect(() => {
 
 

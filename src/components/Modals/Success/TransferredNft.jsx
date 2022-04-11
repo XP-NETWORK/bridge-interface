@@ -33,7 +33,7 @@ export default function TransferredNft({ nft }) {
     const checkStatus = () => {
         // debugger
         for (const tx of txnHashArr) {
-            if(nft.native.tokenId === tx.tokenId || nft.native.tokenId === tx.initialTokenId ){
+            if(nft.native.uri === tx.nftUri){
                 if(txnStatus !== "Completed")
                 setTxnStatus(tx?.status?.toLowerCase())
             }
@@ -41,6 +41,7 @@ export default function TransferredNft({ nft }) {
     }
 
     useEffect(() => {
+
         checkStatus()
     }, [txnHashArr])
     

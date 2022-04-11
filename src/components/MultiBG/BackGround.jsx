@@ -10,7 +10,7 @@ export default function BackGround() {
   const [style, setStyle] = useState({})
 
   const showBG = location.pathname === '/connect' || location.pathname === '/'
-  console.log(showBG);
+
 
   useEffect(() => {
 

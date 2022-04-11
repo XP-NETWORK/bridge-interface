@@ -93,11 +93,12 @@ function handleVideoClick() {
               <span className="CloseModal" onClick={handleClose}>
                 <div className="close-modal"></div>
               </span>
+        
+            </Modal.Header>
             <div className="wallet-search__container">
               <input onChange={e => setWalletSearch(e.target.value)} value={walletSearch} className="wallet-search serchInput" type="text" placeholder="Search" />
               <div className="magnify"></div>
             </div>
-            </Modal.Header>
             <Modal.Body>
               <div className="walletListBox">
                 <WalletList input={walletSearch} connected={handleClose} />

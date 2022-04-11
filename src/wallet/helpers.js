@@ -43,9 +43,10 @@ export const checkIfJSON = jsonStr => {
 
 
 export const parseEachNFT = async (nft, index) => {
+
   const { from } = store.getState().general;
-  const whitelisted = await isWhiteListed(from.text, nft)
-  
+  const whitelisted =  nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a' ? false :  await isWhiteListed(from.text, nft);
+
   let dataLoaded = false
   let nftObj = {
     uri: nft.uri,

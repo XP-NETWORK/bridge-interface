@@ -750,7 +750,7 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
   }
 }
 
-@media screen and (max-width: 375px){
+@media screen and (max-width: 415px){
   .nft__card, .nft__card--selected{
     width: 170px;
     height: auto;

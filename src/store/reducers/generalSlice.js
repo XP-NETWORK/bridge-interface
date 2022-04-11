@@ -37,12 +37,13 @@ const generalSlice = createSlice({
       state.alert = action.payload
     },
     setTxnStatus(state, action){
-      const { status, fromHash, tokenId, toHash, initialTokenId } = action.payload
+      const { status, fromHash, tokenId, toHash, initialTokenId, nftUri } = action.payload
       state.txnHashArr = state.txnHashArr.map((e) => {
         if(e.hash === fromHash){
           e.status = status
           e.tokenId = tokenId
           e.toHash = toHash
+          e.nftUri = nftUri
           e.initialTokenId = initialTokenId
         }
         return e

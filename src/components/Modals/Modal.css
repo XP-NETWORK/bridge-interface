@@ -4,6 +4,7 @@
 }
 .wallet-modal .modal-header{
   padding-top: 20px;
+  padding-bottom: 20px;
 }
 .modal-content {
     background: #F7F8F9;
@@ -19,13 +20,16 @@
 
 .wallet-search__container{
   position: relative;
+  width: calc(100% - 60px);
+  margin: 0 auto;
 }
 
 .magnify{
   position: absolute;
   width: 20px;
   height: 20px;
-  top: 45px;
+  top: 50%;
+  transform: translateY(-40%);
   right: 11px;
   background-image: url("../../assets/img/icons/lupa.svg");
   background-repeat: no-repeat;
@@ -44,11 +48,11 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 26px;
-  margin-top: 30px;
+ 
 }
 
 .ChainModal .CloseModal{
-  transform: translateY(-30%);
+
 }
 
 .close-modal{
@@ -97,7 +101,7 @@
     color: #14161A;
     font-size: 18px;
     font-weight: 500;
-    line-height: 27px;
+    line-height: 20px;
   }
   
   .CloseModal {
