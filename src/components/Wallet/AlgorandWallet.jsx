@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 export default function AlgorandWallet({ wallet }) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
+  const testnet = useSelector((state) => state.general.testNet);
 
   return wallet === "MyAlgo" ? (
     <li
@@ -24,7 +25,7 @@ export default function AlgorandWallet({ wallet }) {
     </li>
   ) : wallet === "AlgoSigner" ? (
     <li
-      onClick={connectAlgoSigner}
+      onClick={() => connectAlgoSigner(testnet)}
       data-wallet="AlgoSigner"
       style={
         from

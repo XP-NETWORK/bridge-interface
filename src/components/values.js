@@ -107,9 +107,9 @@ export const chains = [
     value: "Algorand",
     order: 5,
     image: { avatar: true, src: Algorand },
-    maintenance: true,
+    maintenance: false,
     testNet: true,
-    mainnet: true,
+    mainnet: false,
   },
   {
     type: "EVM",
