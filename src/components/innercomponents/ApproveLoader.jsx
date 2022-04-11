@@ -16,7 +16,7 @@ export default function ApproveLoader() {
           overflow: "hidden",
         }} 
         animation={true}
-        show={loader}>
+        show={true}>
             <Planet />
         </Modal>
     )
