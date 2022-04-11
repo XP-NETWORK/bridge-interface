@@ -45,6 +45,7 @@ export const checkIfJSON = jsonStr => {
 export const parseEachNFT = async (nft, index) => {
   const { from } = store.getState().general;
   const whitelisted = await isWhiteListed(from.text, nft)
+  
   let dataLoaded = false
   let nftObj = {
     uri: nft.uri,
