@@ -9,6 +9,7 @@ import ClaimAlgorandNFT from "../../ClaimAlgorandNFT";
 import { useEffect } from "react";
 import { setNFTS, socket } from "../../../wallet/helpers";
 
+
 import {
   cleanTxnHashArr,
   connectAlgorandWalletClaim,
@@ -78,7 +79,7 @@ export default function SuccessModal() {
 
   const toShow = () => {
     return txnHashArr?.length ? true : false;
-    return true
+    //return true
   };
 
   useEffect(() => {
@@ -111,7 +112,9 @@ export default function SuccessModal() {
       <ClaimAlgorandNFT />
       <Modal animation={false} className="success-modal" show={toShow()}>
         <span onClick={handleClose} className="success-modal-close">
-          <div className="close-modal"></div>
+          <div className="close-modal">
+
+          </div>
         </span>
         <Modal.Header className="border-0">
           <Modal.Title>
@@ -119,7 +122,7 @@ export default function SuccessModal() {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="success-info-list">
-          <div className="success-info-box">
+         {false &&  <div className="success-info-box">
             <div className="success-info-item">
               <div className="info-item-label">Date</div>
               <span>{moment().format("YYYY-MM-DD hh:mm")}</span>
@@ -140,8 +143,14 @@ export default function SuccessModal() {
                 </a>
               </CopyToClipboard>
             </div>
-          </div>
+          </div>}
           <div className="success-info-box">
+          <div className="success-info-item">
+          <div className="info-item-label">Date</div>
+          <div className="info-item-label">
+                {moment(txnHashArr[0]?.createdAt).format('YYYY-M-DD HH:mm') || moment.format('YYYY-M-DD HH:mm')}
+          </div>
+          </div>
             <div className="success-info-item">
               <div className="info-item-label">Sent From</div>
               <div className="info-item-chain">

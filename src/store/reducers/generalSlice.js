@@ -15,6 +15,7 @@ const initialState = {
   alert: true,
 
 
+
   // preloadNFTs: []
 };
 
@@ -37,13 +38,14 @@ const generalSlice = createSlice({
       state.alert = action.payload
     },
     setTxnStatus(state, action){
-      const { status, fromHash, tokenId, toHash, initialTokenId, nftUri } = action.payload
+      const { status, fromHash, tokenId, toHash, initialTokenId, nftUri, createdAt } = action.payload
       state.txnHashArr = state.txnHashArr.map((e) => {
         if(e.hash === fromHash){
           e.status = status
           e.tokenId = tokenId
           e.toHash = toHash
           e.nftUri = nftUri
+          e.trxDate = createdAt
           e.initialTokenId = initialTokenId
         }
         return e

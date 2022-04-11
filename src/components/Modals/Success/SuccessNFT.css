@@ -28,13 +28,15 @@
     height: 16px;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 5px;
+    
 }
 .tx-txt{
     font-size: 12px;
     font-weight: 400;
     line-height: 17px;
-    width: 60px;
+   
 }
 .tx-icon img{
     width: 16px;
@@ -47,6 +49,33 @@
 }
 .failed{
     color: #C23165;
+}
+
+.transferred-nft-hashes {
+    display: flex;
+    justify-content: space-between;
+    margin: 14px 0 3px 0;
+    padding: 0 11px;
+    font-family: Inter,sans-serif;
+    font-size: 12px;
+
+
+}
+
+.chain-hash {
+    background-color: #F3F3F6;
+    border-radius: 40px;
+    padding: 2px 11px;
+}
+
+.transferred-nft-hashes span {
+    color: #62718A;
+    margin-right: 6px;
+}
+
+.transferred-nft-hashes a {
+    color: #395FEB;
+
 }
 
 @media screen and (max-width: 375) {
