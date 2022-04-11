@@ -21,7 +21,7 @@ useEffect(() => {
         show={show || walletsModal}
         animation={false}
         onHide={handleClose}
-        className="ChainModal"
+        className="MaiarModal"
       >
         <Modal.Header>
           <Modal.Title>Maiar Login</Modal.Title>

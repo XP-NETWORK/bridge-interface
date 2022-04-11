@@ -86,15 +86,15 @@
   color: #62718A;
   padding: 10px 16px;
   background: #F7F7F9;
-  border: 1px solid rgba(207, 207, 217, 0.9);
+  border: 1px solid #fff;
   box-sizing: border-box;
   border-radius: 52px;
   cursor: pointer;
   margin-left: 2px;
 }
 .navbar-connect:hover{
-  background: rgb(255, 255, 255);
-  border: 1px solid #8994A8;
+  background: #FFFFFF;
+  border: 1px solid #fff;
 }
 .navbar-connect--connected{
   height: 44px;

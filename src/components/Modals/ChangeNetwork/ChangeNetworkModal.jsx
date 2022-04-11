@@ -43,7 +43,7 @@ function ChangeNetworkModal() {
           method: "wallet_switchEthereumChain",
           params: [{ _chainId }],
         });
-        navigate(testnet ? "/testnet/account" : "/account")
+        navigate(testnet ? `/testnet/account${location.search ? location.search : ''}` : `/account${location.search ? location.search : ''}`)
         dispatch(setWrongNetwork(false));
       } catch (error) {
         setLoader(false);
@@ -77,7 +77,7 @@ function ChangeNetworkModal() {
           });
           dispatch(setWrongNetwork(false));
           setLoader(false);
-          navigate(testnet ? "/testnet/account" : "/account")
+          navigate(testnet ? `/testnet/account${location.search ? location.search : ''}` : `/account${location.search ? location.search : ''}`)
         } catch (error) {
           setLoader(false);
           console.log(error);

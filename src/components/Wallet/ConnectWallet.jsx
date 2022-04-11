@@ -7,12 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAlert, setQrCodeString, setShowAbout, setShowVideo, setWalletsModal, setWrongNetwork } from "../../store/reducers/generalSlice";
 import MaiarModal from "../MaiarModal";
 import WalletList from "./WalletList";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { chainsConfig } from "../values";
 import { useWeb3React } from "@web3-react/core";
 
 function ConnectWallet() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const [walletSearch, setWalletSearch] = useState()
 
@@ -44,14 +45,16 @@ function ConnectWallet() {
 
   const handleShow = () => {
     // debugger
+
+    console.log(location.pathname);
     if(from && to && !connected){
       setShow(true)
     }
     else if(from && to && connected && chainId === undefined){
-      navigate(testnet ? "/testnet/account" : "/account")
+      navigate(testnet ? `/testnet/account${location.search ? location.search : ''}` : `/account${location.search ? location.search : ''}`)
     }
     else if(connected && to && from && chainsConfig[from.key].chainId === chainId){
-      navigate(testnet ? "/testnet/account" : "/account")
+      navigate(testnet ? `/testnet/account${location.search ? location.search : ''}` : `/account${location.search ? location.search : ''}`)
     }
     else if(connected && to && from && chainsConfig[from.key].chainId !== chainId && chainId){
       dispatch(setWrongNetwork(true))

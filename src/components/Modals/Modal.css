@@ -1,5 +1,5 @@
 
-.ChainModal .modal-dialog {
+.ChainModal .modal-dialog, .MaiarModal .modal-dialog{
     max-width: 370px;
 }
 .wallet-modal .modal-header{

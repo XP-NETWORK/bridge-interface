@@ -14,7 +14,7 @@ export default function NFTlistedCard({nft, index}) {
   const selectedNFTs = useSelector(state => state.general.selectedNFTList)
   const nfts = useSelector(state => state.general.NFTList)
   const from = useSelector(state => state.general.from)
-  const [whitelisted, setWhitelisted] = useState(false)
+  const [whitelisted, setWhitelisted] = useState(undefined)
   const OFF = {pointerEvents: "none"}
   const [onHover, setOnHover] = useState(false)
   const [_width, setWidth] = useState(Math.floor(Math.random() * 125 + 35))
@@ -36,6 +36,12 @@ export default function NFTlistedCard({nft, index}) {
     }
   }
 
+  useEffect(async() => {
+    const whitelisted = nft.native.contract === "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a" ? false 
+    : await isWhiteListed(from.text, nft)
+    setWhitelisted(whitelisted)
+  }, [])
+
   useEffect(() => {
     if(!nft.dataLoaded){
       parseEachNFT(nft, index)
@@ -53,11 +59,13 @@ export default function NFTlistedCard({nft, index}) {
         <ListedView nft={nft} key={`nft-n-${index}`} />
         <span className="name">{nft.whitelisted ? nft?.name : 'Not Whitelisted'}</span>
     </div>
-    { nft.whitelisted ? <NFTdetails nftInf={nft}/> : <a href='https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot' className="listed-view__not-whitelisted__button" target="_blank">Tech support</a>}
+    { whitelisted ? <NFTdetails nftInf={nft}/> : <a href='https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot' className="listed-view__not-whitelisted__button" target="_blank">Tech support</a>}
   </li>:
   <div className='listed__skeleton'>
+    <div className="listed_sceleton_wrap">
     <div className='image'></div>
     <div style={{width: _width}} className='name'></div>
+    </div>
   </div>
   )
 }

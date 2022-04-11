@@ -41,7 +41,7 @@ function NavBar() {
             </LinkContainer>
             {/* <UserConnect desktop={true} /> */}
             <UserConnect mobile={true}/>
-              {navMenuOpen? <><HamburgerClose className="svgWidget hamburgerToggle" onClick={() => {document.querySelector('.navbar-collapse.collapse').classList.remove('show'); toggleNavMenu(false)}}/> <div className="navbaroverlay" onClick={() => {document.querySelector('.navbar-collapse.collapse').classList.remove('show');toggleNavMenu(false)}}> </div></>:  <Hamburger className="svgWidget hamburgerToggle" onClick={() => {document.querySelector('.navbar-collapse.collapse').classList.add('show'); toggleNavMenu(true)}}/>}
+              {navMenuOpen? <><HamburgerClose className="svgWidget hamburgerToggle xmobile_only" onClick={() => {document.querySelector('.navbar-collapse.collapse').classList.remove('show'); toggleNavMenu(false)}}/> <div className="navbaroverlay" onClick={() => {document.querySelector('.navbar-collapse.collapse').classList.remove('show');toggleNavMenu(false)}}> </div></>:  <Hamburger className="svgWidget hamburgerToggle xmobile_only" onClick={() => {document.querySelector('.navbar-collapse.collapse').classList.add('show'); toggleNavMenu(true)}}/>}
                 <Navbar.Toggle aria-controls="" className="navbarToggleMoblie"/>
            
                     <Navbar.Collapse id="">
