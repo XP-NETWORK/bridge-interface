@@ -270,7 +270,7 @@
 
 
   .xdesktop_only {
-    display: block !important;
+    /* display: block !important; */
   }
 
   .xmobile_only { 
@@ -290,7 +290,7 @@
 }
 
 .xmobile_only { 
-  display: block !important;
+  /* display: block !important; */
   margin-left: auto;
   margin-right: 0;
 }

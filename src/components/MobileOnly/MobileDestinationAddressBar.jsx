@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setReceiver, setSwitchDestination } from '../../store/reducers/generalSlice';
+import { setDepartureOrDestination, setReceiver, setSwitchDestination } from '../../store/reducers/generalSlice';
 import ChainSwitch from '../Buttons/ChainSwitch'
 import RedClose from "../../assets/img/icons/RedClose.svg";
 import "./Mobile.css"
@@ -13,6 +13,7 @@ export default function MobileDestinationAddressBar() {
   };
 
   function handleSwitchChain() {
+    dispatch(setDepartureOrDestination("destination"))
     dispatch(setSwitchDestination(true));
   }
 
