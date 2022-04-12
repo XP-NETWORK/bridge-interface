@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { claimAlgorandPopup } from '../../../store/reducers/generalSlice';
 import { setClaimablesAlgorand, getFactory } from "../../../wallet/helpers"
 import TxStatus from './TxStatus';
-import {CHAIN_INFO} from '../../values'
+import {chainsConfig} from '../../values'
 
 export default function TransferredNft({ nft }) {
     const { image, txn, name, native } = nft
@@ -82,21 +82,12 @@ export default function TransferredNft({ nft }) {
             <div className="transferred-nft-hashes">
                 <div className="chain-hash">
                     <span>Dep Hash:</span>
-                    <a href={`${CHAIN_INFO[from.key].blockExplorerUrls}/${hashes.depHash}`}>{
-                        hashes.depHash.substring(
-                            0,
-                            getSubstringValue() || 10
-                          )
-                    }...{hashes.depHash.substring(hashes.depHash.length - 3)}</a>
+                    <a target="_blank" href={`${chainsConfig[from.key]?.tx}/${hashes?.depHash}`}>
+                        { hashes.depHash ? `${hashes?.depHash?.substring(0, getSubstringValue() || 10)}...${hashes?.depHash?.substring(hashes?.depHash?.length - 3)}` : '...'}</a>
                 </div>
                 <div className="chain-hash">
                     <span>Dep Hash:</span>
-                    <a href={`${CHAIN_INFO[to.key].blockExplorerUrls}/${hashes.destHash}`}>{
-                        hashes.destHash.substring(
-                            0,
-                            getSubstringValue() || 10
-                          )
-                    }...{hashes.destHash.substring(hashes.destHash.length - 3)}</a>
+                    <a target="_blank" href={`${chainsConfig[to.key]?.tx}/${hashes?.destHash}`}>{ hashes.destHash ? `${hashes?.destHash?.substring(0, getSubstringValue() || 10)}...${hashes?.destHash?.substring(hashes?.destHash?.length - 3)}` : '...'}</a>
                 </div>
             </div>
         </div>
