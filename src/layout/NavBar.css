@@ -12,6 +12,19 @@
   display: flex;
   gap: 7.61px;
   cursor: pointer;
+  position: relative;
+}
+.navbar-brand .testnet{
+  position: absolute;
+  top: 10px;
+  left: 56px;
+  font-size: 12px;
+  font-weight: 100;
+  line-height: 140%;
+  padding: 0 2px;
+  background-color: #DB233E;
+  border-radius: 2px;
+  color: white;
 }
 .navbar-brand div{
   margin-top: 29px;

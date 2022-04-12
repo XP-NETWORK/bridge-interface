@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import "./NavBar.css"
 import {LinkContainer} from 'react-router-bootstrap'
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
-import about from "../assets/img/nav/about.svg"
-import chains from "../assets/img/nav/chains.svg"
 import faq from "../assets/img/nav/faq.svg"
 import docs from "../assets/img/nav/docs.svg"
 import github from "../assets/img/nav/github.svg"
