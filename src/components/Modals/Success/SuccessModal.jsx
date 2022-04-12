@@ -148,7 +148,7 @@ export default function SuccessModal() {
           <div className="success-info-item">
           <div className="info-item-label">Date</div>
           <div className="info-item-chain">
-                {moment(txnHashArr[0]?.createdAt).format('YYYY-M-DD HH:mm') || moment.format('YYYY-M-DD HH:mm')}
+                {moment(txnHashArr[0]?.trxDate).format('YYYY-M-DD HH:mm') || moment.format('YYYY-M-DD HH:mm')}
           </div>
           </div>
             <div className="success-info-item">
@@ -177,7 +177,7 @@ export default function SuccessModal() {
               </div>
             </div>
             <div className="success-info-item">
-              <div className="info-item-label">Destination address</div>
+              <div className="info-item-label">Destination Address</div>
               <div className="success-hash">
                 {receiver
                   ? `${receiver.substring(
