@@ -21,6 +21,9 @@ export default function TransferredNft({ nft }) {
         destHash: ''
     })
 
+    const depText = window.innerWidth <= 600 ? 'Dep': 'Departure Hash'
+    const desText = window.innerWidth <= 600 ? 'Des': 'Destination Hash'
+
     const getSubstringValue = () => {
         if (window.innerWidth <= 320) return 3;
         else if (window.innerWidth <= 375) return 3;
@@ -81,12 +84,12 @@ export default function TransferredNft({ nft }) {
 
             <div className="transferred-nft-hashes">
                 <div className="chain-hash">
-                    <span>Dep Hash:</span>
+                    <span>{depText}:</span>
                     <a target="_blank" href={`${chainsConfig[from.key]?.tx}/${hashes?.depHash}`}>
                         { hashes.depHash ? `${hashes?.depHash?.substring(0, getSubstringValue() || 10)}...${hashes?.depHash?.substring(hashes?.depHash?.length - 3)}` : '...'}</a>
                 </div>
                 <div className="chain-hash">
-                    <span>Dep Hash:</span>
+                    <span>{desText}:</span>
                     <a target="_blank" href={`${chainsConfig[to.key]?.tx}/${hashes?.destHash}`}>{ hashes.destHash ? `${hashes?.destHash?.substring(0, getSubstringValue() || 10)}...${hashes?.destHash?.substring(hashes?.destHash?.length - 3)}` : '...'}</a>
                 </div>
             </div>

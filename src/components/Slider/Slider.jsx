@@ -33,11 +33,11 @@ React.useEffect(() => {
         </div>
       </div>
       <div className="slider-nft__info">
-        <div className="slider-nft__name">
+        {false && <div className="slider-nft__name">
           {nfts[step]?.name}
           <span className="slider-nft__id">#{nfts[step]?.id}</span>
-        </div>
-        <div className="slider-nft__description">{nfts[step]?.description}</div>
+        </div>}
+    {false &&     <div className="slider-nft__description">{nfts[step]?.description}</div>}
       </div>
     </div>
   )
