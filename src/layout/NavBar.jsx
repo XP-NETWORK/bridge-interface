@@ -66,8 +66,12 @@ function NavBar() {
                             </Nav.Link>
                              <Nav.Link className="mob-link" target="_blank" href="https://github.com/xp-network/">
                                 <div className="nav-link__icon"><img src={github} alt="" /></div>
-                                <div className="nav-link__txt">
-                                    GitHub
+                                <div className="nav-link__txt ">
+                                <span>GitHub</span>
+                                    {date && <div className="latest">
+                                        <div className="latest__spot"></div>
+                                        <div className="latest__date">{date}</div>
+                                    </div>}
                                 </div>
                             </Nav.Link>
                             <Nav.Link className="mob-link" target="_blank" href="#" onClick={() => dispatch(setShowVideo(true))}>

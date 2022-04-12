@@ -139,6 +139,10 @@
   align-items: center;
   padding: 10px 16px !important;
 }
+.nav-link__txt{
+  display: flex;
+  gap: 7px;
+}
 .show .nav-link{
   color: #14161A;
 
