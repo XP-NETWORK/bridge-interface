@@ -85,7 +85,8 @@
     background-color:#d3d3d4e8;
     overflow: hidden;
     position: relative;
-    /* cursor: pointer; */
+    cursor: pointer;
+    transition: height .4s;
 }
 
 .pagination__bg:hover {

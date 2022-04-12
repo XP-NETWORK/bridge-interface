@@ -8,7 +8,7 @@ export default function USBWallet({ wallet }) {
     <li style={OFF} data-wallet="Ledger" className="wllListItem">
       <div>
         <img src={Ledger} alt="Ledger Icon" />
-        Ledger
+        <p>Ledger</p>
       </div>
       <div className="coming-chain">Coming soon</div>
     </li>
@@ -16,7 +16,7 @@ export default function USBWallet({ wallet }) {
     <li style={OFF} data-wallet="Trezor" className="wllListItem">
       <div>
         <img style={{ marginLift: "-5px" }} src={Trezor} alt="Trezor Icon" />
-        Trezor
+       <p> Trezor</p>
       </div>
       <div className="coming-chain">Coming soon</div>
     </li>

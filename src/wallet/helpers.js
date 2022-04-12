@@ -186,6 +186,28 @@ export const isALLNFTsApproved = () => {
   } else return false;
 };
 
+export const transformToDate = (date) => {
+  const dateObj = new Date(date);
+  const month = dateObj.toLocaleDateString("en-US", {
+    month: "short", //month: window.innerWidth > 480 ? "long" : "short",
+    day: "numeric",
+  });
+  const year = dateObj.getFullYear();
+  const day = month.replace(/^\D+/g, "");
+  let ending = "th";
+  if (day === "1") {
+    ending = "st";
+  }
+  if (day === "2") {
+    ending = "nd";
+  }
+  if (day === "3") {
+    ending = "rd";
+  }
+  const tm = month + ", " + year;
+  return tm
+}
+
 
 export const getFactory = async () => {
   // debugger

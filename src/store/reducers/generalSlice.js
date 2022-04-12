@@ -23,6 +23,9 @@ const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
+    setGitLatestCommit(state, action){
+      state.gitLatestCommit = action.payload
+    },
     setEachNFT(state, action){
       // debugger
       const { nftObj, index } = action.payload
@@ -388,7 +391,8 @@ export const {
   setQrCodeString,
   setQrImage,
   setWSettings,
-  setWalletsModal
+  setWalletsModal,
+  setGitLatestCommit
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

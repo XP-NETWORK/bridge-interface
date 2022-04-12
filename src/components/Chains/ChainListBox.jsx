@@ -160,7 +160,6 @@ export default function ChainListBox(props) {
     const withMaintenance = filteredChains.filter( chain => chain.maintenance && !chain.newChain )
     const noComingNoMaintenance = filteredChains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain).sort((a, b) => a.order - b.order)
     let sorted = [...withNew, ...noComingNoMaintenance, ...withMaintenance, ...withComing]
-    console.log("🚀 ~ file: ChainListBox.jsx ~ line 163 ~ useEffect ~ sorted", sorted)
     if(chainSearch && departureOrDestination === "destination"){
       sorted = chains.filter(chain => chain.text.toLowerCase().includes(chainSearch.toLowerCase()))
     }

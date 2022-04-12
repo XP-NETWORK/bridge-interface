@@ -1,21 +1,21 @@
 import { useEffect } from "react";
 import XpBridge from "./pages/XpBridge";
 import { useDispatch, useSelector } from "react-redux";
-import { setFrom, setTestNet, setTo, setValidatorsInf, setInnerWidth } from "./store/reducers/generalSlice";
+import { setFrom, setTestNet, setTo, setValidatorsInf, setInnerWidth, setGitLatestCommit } from "./store/reducers/generalSlice";
 import ApproveLoader from "./components/innercomponents/ApproveLoader";
 import Error from "./components/innercomponents/Error";
 import TronPopUp from "./components/innercomponents/TronPopUp";
 import { chains } from "./components/values";
 import About from "./components/innercomponents/About";
 import Video from "./components/innercomponents/Video";
-import { setClaimablesAlgorand } from "./wallet/helpers";
+import { setClaimablesAlgorand, transformToDate } from "./wallet/helpers";
 import TechnicalSupport from "./components/innercomponents/TechnicalSupport";
 import TransferLoader from "./components/innercomponents/TransferLoader";
 import TronConnectionErrMod from "./components/Modals/TronModals/TronConnectionErrMod.jsx";
 import "./components/Modals/Modal.css"
 import Alert from "./components/Alert"
 import SuccessModal from "./components/Modals/Success/SuccessModal.jsx"
-
+import moment from "moment";
 
 function App() {
   const dispatch = useDispatch();
@@ -62,6 +62,15 @@ function App() {
       }
     }
     localStorage.removeItem("walletconnect")
+    // debugger
+    axios.get("https://xpvitaldata.herokuapp.com/last-commit")
+    .then((response) => {
+     const d = transformToDate(response.data)
+     dispatch(setGitLatestCommit(d))
+    }).catch(function (error) {
+      // handle error
+      console.log(error);
+    })
   }, []);
 
   useEffect(async () => {
@@ -69,7 +78,7 @@ function App() {
       try {
         setClaimablesAlgorand(algorandAccount);
       } catch (err) {
-        console.log(err, "algorand claimables error");
+        console.log(err, "Algorand claimables error");
       }
     }
   }, [algorandAccount]);

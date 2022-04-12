@@ -22,6 +22,7 @@ import React, {useState} from 'react'
 function NavBar() {
     const widget = useSelector(state => state.general.widget)
     const testnet = useSelector(state => state.general.testNet)
+    const date = useSelector(state => state.general.gitLatestCommit)
     const [navMenuOpen, toggleNavMenu] = useState(false)
     const dispatch = useDispatch()
 
@@ -63,12 +64,12 @@ function NavBar() {
                                 <div className="nav-link__icon"><img src={docs} alt="" /></div>
                                 <div className="nav-link__txt">DOCS</div>
                             </Nav.Link>
-                            {false && <Nav.Link className="mob-link" target="_blank" href="#####">
+                             <Nav.Link className="mob-link" target="_blank" href="https://github.com/xp-network/">
                                 <div className="nav-link__icon"><img src={github} alt="" /></div>
                                 <div className="nav-link__txt">
                                     GitHub
                                 </div>
-                            </Nav.Link>}
+                            </Nav.Link>
                             <Nav.Link className="mob-link" target="_blank" href="#" onClick={() => dispatch(setShowVideo(true))}>
                                 <div className="nav-link__icon"><img src={video} alt=""  /></div>
                                 <div className="nav-link__txt">
@@ -94,6 +95,18 @@ function NavBar() {
                                             <div className="drop-icon">About</div>
                                         </div>
                                     </Dropdown.Item> */}
+                                    <Dropdown.Item href="https://github.com/xp-network/" target="_blank">
+                                        <div className="drop-item">
+                                            <img src={github} alt="" />
+                                            <div className="drop-git">
+                                                <span>GitHub</span>
+                                                {date && <div className="latest">
+                                                    <div className="latest__spot"></div>
+                                                    <div className="latest__date">{date}</div>
+                                                </div>}
+                                            </div>
+                                        </div>
+                                    </Dropdown.Item>
                                     <Dropdown.Item href="https://docs.xp.network/docs/Multibridge2.0/faq" target="_blank">
                                         <div className="drop-item">
                                             <img src={faq} alt="" />
