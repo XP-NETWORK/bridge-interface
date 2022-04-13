@@ -318,7 +318,7 @@ export const getNFTS = async (wallet, from) => {
       return [];
     }
   } catch(err) {
-    console.log(err, 'nft list')
+    console.log(err, 'NFT Indexer error')
     return []
   }
 

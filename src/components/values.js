@@ -516,7 +516,7 @@ export const CHAIN_INFO = {
     rpcUrl: "https://data-seed-prebsc-1-s1.binance.org:8545",
     decimals: 1e18,
     contract: "0x12889E870A48Be2A04564e74f66fC91D439Da03e",
-    blockExplorerUrls: "https://testnet.bscscan.com/tx",
+    blockExplorerUrls: "https://testnet.bscscan.com/address/",
   },
   Algorand: {
     nonce: 15,
@@ -525,7 +525,7 @@ export const CHAIN_INFO = {
     rpcUrl: "https://algorand-node.xp.network/",
     decimals: 1e6,
     contract: "MGEZOCMF263SDRXYKNGVNTCIGM4RZXAF3HLS4MNTFVFTJC6LWGAGLBCW7E",
-    blockExplorerUrls: "https://algoexplorer.io/tx/",
+    blockExplorerUrls: "https://algoexplorer.io/address/",
   },
   Ethereum: {
     nonce: 5,
@@ -534,7 +534,7 @@ export const CHAIN_INFO = {
     rpcUrl: "https://ropsten.infura.io/v3/182b3d3fb2d14d5fbe7421348624d1ce",
     decimals: 1e18,
     contract: "0x2C742F65E6FEcDbb4ceE3D35473e39012aEDf3DD",
-    blockExplorerUrls: "https://ropsten.etherscan.io/tx",
+    blockExplorerUrls: "https://ropsten.etherscan.io/address/",
   },
   Avalanche: {
     nonce: 6,
@@ -543,7 +543,7 @@ export const CHAIN_INFO = {
     tnChainId: 43113,
     rpcUrl: "https://api.avax-test.network/ext/bc/C/rpc",
     decimals: 1e18,
-    blockExplorerUrls: "https://cchain.explorer.avax-test.network/tx",
+    blockExplorerUrls: "https://snowtrace.io/address/",
     contract: "0xAcFB2E7d6e6272f192D0D573A9bD1CC9d534dE1c",
   },
   Polygon: {
@@ -554,7 +554,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpcUrl: "https://matic-testnet-archive-rpc.bwarelabs.com",
     contract: "0x9E93256Df2a4fE757f8AEB533D3943E56ba8CF94",
-    blockExplorerUrls: "https://mumbai.polygonscan.com/tx",
+    blockExplorerUrls: "https://mumbai.polygonscan.com/address/",
   },
   Fantom: {
     native: coins[6],
@@ -563,7 +563,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     chainId: 250,
     contract: "0xbc53f71E12007b93Ed2868E5f6CAE1D2ceB7287C",
-    blockExplorerUrls: "https://explorer.testnet.fantom.network/transactions",
+    blockExplorerUrls: "https://ftmscan.com/address/",
   },
   Tron: {
     native: coins[7],
@@ -571,7 +571,7 @@ export const CHAIN_INFO = {
     rpcUrl: "https://api.shasta.trongrid.io/",
     decimals: 1e6,
     contract: "4179ff0b4e9e3f67806ff17e1d708a9490ef121e29",
-    blockExplorerUrls: "https://shasta.tronscan.org/#/transaction",
+    blockExplorerUrls: "https://shasta.tronscan.org/#/wallet/",
   },
   Celo: {
     native: coins[8],
@@ -589,17 +589,8 @@ export const CHAIN_INFO = {
     rpcUrl: "https://api.s0.b.hmny.io",
     chainId: 1666700000,
     tnChainId: 1666700000,
-    blockExplorerUrls: "https://explorer.pops.one/tx",
+    blockExplorerUrls: "https://explorer.harmony.one/address",
     contract: "0x22ddFB8954c9D75598385c6ad82cDeb124a78Bb3",
-  },
-  One: {
-    native: coins[10],
-    nonce: 0xd,
-    decimals: 1e18,
-    rpcUrl: "https://testing-bridge.xp.network/ontio",
-    chainId: 5851,
-    blockExplorerUrls: "https://explorer.ont.io/testnet/tx",
-    contract: "0xdceB7a6b2d2cC149aA74E049231c94D072eDF3E8",
   },
   xDai: {
     native: coins[11],
@@ -607,7 +598,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpcUrl: "https://rpc.xdaichain.com/",
     chainId: 100,
-    blockExplorerUrls: "https://blockscout.com/xdai/mainnet/",
+    blockExplorerUrls: "https://blockscout.com/xdai/mainnet/address",
     contract: "0xdceB7a6b2d2cC149aA74E049231c94D072eDF3E8",
   },
   Fuse: {
@@ -616,7 +607,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpc: "https://rpc.fuse.io/",
     chainId: 122,
-    blockExplorerUrls: "https://explorer.fuse.io/",
+    blockExplorerUrls: "https://explorer.fuse.io/address/",
     contract: "",
   },
   Velas: {
@@ -625,7 +616,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpc: "https://velasnode.quigon.com/velas",
     chainId: 106,
-    blockExplorerUrls: "https://evmexplorer.velas.com/",
+    blockExplorerUrls: "https://evmexplorer.velas.com/address/",
     contract: "",
   },
   Tezos: {
@@ -634,7 +625,7 @@ export const CHAIN_INFO = {
     decimals: 1e6,
     rpc: "https://mainnet-tezos.giganode.io/",
     chainId: 0x12,
-    blockExplorerUrls: "",
+    blockExplorerUrls: "https://tzstats.com/",
     contract: "",
   },
   Iotex: {
@@ -644,7 +635,7 @@ export const CHAIN_INFO = {
     rpc: "https://babel-api.mainnet.iotex.io",
     chainId: 4689,
     // tnChainId: 4690,
-    blockExplorerUrls: "https://iotexscan.io/",
+    blockExplorerUrls: "https://iotexscan.io/address/",
     contract: "",
   },
   Harmony: {
@@ -653,7 +644,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpc: "https://rpc.s0.t.hmny.io",
     chainId: 1666600000,
-    blockExplorerUrls: "https://explorer.harmony.one/",
+    blockExplorerUrls: "https://explorer.harmony.one/address/",
     contract: "",
   },
   Aurora: {
@@ -662,7 +653,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpc: "https://mainnet.aurora.dev",
     chainId: 1313161554,
-    blockExplorerUrls: "https://explorer.mainnet.aurora.dev/",
+    blockExplorerUrls: "https://explorer.mainnet.aurora.dev/address/",
     contract: "",
   },
   GateChain: {
