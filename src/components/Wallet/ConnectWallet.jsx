@@ -94,7 +94,7 @@ function ConnectWallet() {
 }
 
   const handleConnect = () => {
-    debugger
+    // debugger
     if(testnet && from.tnChainId === chainId){
       navigate(`/testnet/account${location.search ? location.search : ''}`)
     }

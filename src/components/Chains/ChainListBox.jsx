@@ -84,6 +84,7 @@ export default function ChainListBox(props) {
 }
 
   const handleClose = () => {
+    console.log("kgshjfgshjfgshdfgshdf")
     dispatch(setChainModal(false));
     dispatch(setDepartureOrDestination(""));
     dispatch(setSwitchDestination(false));
@@ -183,14 +184,14 @@ export default function ChainListBox(props) {
     <Modal
       animation={false}
       show={show || switchChain}
-      onHide={() => handleClose()}
+      onHide={handleClose}
       className="ChainModal"
     >
       <Modal.Header className="text-left">
         <Modal.Title>{`Select ${
           departureOrDestination === "destination" ? "destination" : "departure"
         } chain`}</Modal.Title>
-        <span className="CloseModal" onClick={() => handleClose()}>
+        <span className="CloseModal" onClick={handleClose}>
           <div className="close-modal"></div>
         </span>
       </Modal.Header>
