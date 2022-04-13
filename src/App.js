@@ -15,7 +15,6 @@ import TronConnectionErrMod from "./components/Modals/TronModals/TronConnectionE
 import "./components/Modals/Modal.css"
 import Alert from "./components/Alert"
 import SuccessModal from "./components/Modals/Success/SuccessModal.jsx"
-import moment from "moment";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,7 +40,7 @@ function App() {
     dispatch(setTestNet(window.location.href.indexOf("/testnet") > 0));
   });
 
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(setInnerWidth(window.innerWidth))
     const from = new URLSearchParams(window.location.search).get("from");
     const to = new URLSearchParams(window.location.search).get("to");
@@ -73,7 +72,7 @@ function App() {
     })
   }, []);
 
-  useEffect(async () => {
+  useEffect(() => {
     if (algorandAccount) {
       try {
         setClaimablesAlgorand(algorandAccount);

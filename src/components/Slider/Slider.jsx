@@ -32,13 +32,13 @@ React.useEffect(() => {
         { nfts.map((pagination, index) => <SliderPagination start={pagination.action} index={index} key={`pagination_${index}`} />) }
         </div>
       </div>
-      <div className="slider-nft__info">
+      {/* <div className="slider-nft__info">
         <div className="slider-nft__name">
           {nfts[step]?.name}
           <span className="slider-nft__id">#{nfts[step]?.id}</span>
         </div>
         <div className="slider-nft__description">{nfts[step]?.description}</div>
-      </div>
+      </div> */}
     </div>
   )
 }

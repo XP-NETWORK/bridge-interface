@@ -13,7 +13,6 @@ export default function BackGround() {
 
 
   useEffect(() => {
-
       setStyle({
         backgroundColor: '#E5E5E5',
         ...showBG ? {backgroundImage:`url(${nfts[step].image})`}: {backgroundImage: 'unset'} ,
@@ -28,7 +27,7 @@ export default function BackGround() {
     <div style={style} className='multi-background'>
             <div className="preloader" style={{display:"none"}}>
         {
-          nfts.map(nft => <img src={nft.image} alt="" style={{display:"none"}}/>)
+          nfts.map((nft, index )=> <img key={`background${index}`} src={nft.image} alt="" style={{display:"none"}}/>)
         }
       </div>
       <div style={{background: showBG? 'hsla(0,0%,89.8%,.9098039215686274)': '#F0F0F3'}} className='multi-background__color'></div>
