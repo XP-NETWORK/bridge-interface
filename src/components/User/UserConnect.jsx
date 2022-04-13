@@ -48,7 +48,7 @@ export default function UserConnect({desktop, mobile}) {
     }
 
     useEffect(() => {
-      debugger
+      // debugger
       if(chainId && (location.pathname === "/account" || location.pathname === "/testnet/account")){
         if(!testnet && chains.some(chain => chain.chainId === chainId)){
           if(getChain().text === to.text){

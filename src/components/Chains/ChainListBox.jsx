@@ -36,7 +36,7 @@ export default function ChainListBox(props) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   
   async function switchNetwork(chain) {
-debugger
+// debugger
     const info = testnet
       ? TESTNET_CHAIN_INFO[chain.key]
       : CHAIN_INFO[chain.key];
@@ -92,7 +92,7 @@ debugger
 
 
   const chainSelectHandler = (chain) => {
-    debugger
+    // debugger
         if (departureOrDestination === "departure") {
           if((chain.chainId === to.chainId || chain.tnChainId === to.tnChainId) && (location.pathname === "/account" || location.pathname === "/testnet/account")){
             console.log("bjasdjakdhakjdhakjsdh")

@@ -428,7 +428,7 @@ export const chainsConfig = {
     Chain: Chain.AURORA,
     tx: "https://explorer.mainnet.aurora.dev/tx/",
   },
-  GetaChain: {
+  GateChain: {
     type: EVM,
     token: "GT",
     image: Aurora,
