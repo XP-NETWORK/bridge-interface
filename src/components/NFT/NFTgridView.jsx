@@ -9,15 +9,10 @@ import {  } from "../../wallet/helpers.js"
 
 function NFTgridView() {
     const nfts = useSelector(state => state.general.NFTList)
-    const preloadNFTs = useSelector(state => state.general.preloadNFTs)
-    const selectedNFTs = useSelector(state => state.general.selectedNFTList)
     const search = useSelector(state => state.general.NFTListSearch)
     const nftsPlace = window.innerWidth <= 600 ? 2 : 6
     const placeholders = new Array(nfts ? nftsPlace - nfts.length >= 0 ? nftsPlace - nfts.length : 0 : 0).fill(0)
     const loader = useSelector(state => state.general.bigLoader)
- 
-
-    console.log(nfts, 'nfts');
 
     function isFiltred (nft) {
         if (!nft?.description || !nft?.native?.owner) return false;
@@ -45,7 +40,7 @@ function NFTgridView() {
                         nfts.map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} />)
                         : 
                         <NFTempty /> }
-                        { nfts && nfts?.length < nftsPlace ? placeholders.map((n, index) => <Missing key={`missing-${index}-component`}/>) : ''}
+                        { nfts.length > 0 && nfts?.length < nftsPlace ? placeholders.map((n, index) => <Missing key={`missing-${index}-component`}/>) : ''}
                     </div>
                 }
         </div>

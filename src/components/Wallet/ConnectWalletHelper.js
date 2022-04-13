@@ -63,13 +63,13 @@ export const connectMetaMask = async (activate, from, to) => {
 }
 
 // Algorand blockchain connection ( AlgoSigner )
-export const connectAlgoSigner =async () => {
+export const connectAlgoSigner =async (testnet) => {
   if (typeof window.AlgoSigner !== undefined) {
       try {
         await window.AlgoSigner.connect()
         console.log("Algo: ", window.AlgoSigner);
         const algo = await window.AlgoSigner.accounts({
-          ledger: 'MainNet'
+          ledger: testnet ? "TestNet" : 'MainNet'
         });
         const { address } = algo[0]
         
@@ -286,3 +286,6 @@ export const connectMaiar = async () => {
           algoConnector.createSession()   
       }
     }
+
+
+    

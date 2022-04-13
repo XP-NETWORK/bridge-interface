@@ -8,8 +8,10 @@ import { setAlert, setQrCodeString, setShowAbout, setShowVideo, setWalletsModal,
 import MaiarModal from "../MaiarModal";
 import WalletList from "./WalletList";
 import { useNavigate, useLocation } from "react-router-dom";
-import { chainsConfig } from "../values";
+import { chains, chainsConfig, CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 import { useWeb3React } from "@web3-react/core";
+import { getAddEthereumChain } from "../../wallet/chains";
+import UnsupportedNetwork from "../Modals/ChangeNetwork/UnsupportedNetwork";
 
 function ConnectWallet() {
   const navigate = useNavigate();
@@ -42,40 +44,78 @@ function ConnectWallet() {
   const walletsModal = useSelector(state => state.general.walletsModal)
   const widget = useSelector((state) => state.general.widget);
 
-
-  const handleShow = () => {
+  async function switchNetwork() {
     // debugger
+    const info = testnet
+      ? TESTNET_CHAIN_INFO[from?.key]
+      : CHAIN_INFO[from?.key];
+    const _chainId = `0x${info.chainId.toString(16)}`;
+    try {
+      const success = await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ _chainId }],
+      });
+      navigate(testnet ? `/testnet/account${location.search ? location.search : ''}` : `/account${location.search ? location.search : ''}`)
+      dispatch(setWrongNetwork(false));
+    } catch (error) {
+      console.log(error);
+      try {
+        const toHex = (num) => {
+          return "0x" + num.toString(16);
+        };
+        const chain = getAddEthereumChain()[parseInt(_chainId).toString()];
 
-    console.log(location.pathname);
-    if(from && to && !connected){
-      setShow(true)
+        const params = {
+          chainId: _chainId, // A 0x-prefixed hexadecimal string
+          chainName: chain.name,
+          nativeCurrency: {
+            name: chain.nativeCurrency.name,
+            symbol: chain.nativeCurrency.symbol, // 2-6 characters long
+            decimals: chain.nativeCurrency.decimals,
+          },
+          rpcUrls: chain.rpc,
+          blockExplorerUrls: [
+            chain.explorers &&
+            chain.explorers.length > 0 &&
+            chain.explorers[0].url
+              ? chain.explorers[0].url
+              : chain.infoURL,
+          ],
+        };
+        await window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [params, account],
+        });
+        navigate(testnet ? `/testnet/account${location.search ? location.search : ''}` : `/account${location.search ? location.search : ''}`)
+      } catch (error) {
+        console.log(error);
+      }
     }
-    else if(from && to && connected && chainId === undefined){
-      navigate(testnet ? `/testnet/account${location.search ? location.search : ''}` : `/account${location.search ? location.search : ''}`)
+}
+
+  const handleConnect = () => {
+    debugger
+    if(testnet && from.tnChainId === chainId){
+      navigate(`/testnet/account${location.search ? location.search : ''}`)
     }
-    else if(connected && to && from && chainsConfig[from.key].chainId === chainId){
-      navigate(testnet ? `/testnet/account${location.search ? location.search : ''}` : `/account${location.search ? location.search : ''}`)
-    }
-    else if(connected && to && from && chainsConfig[from.key].chainId !== chainId && chainId){
-      dispatch(setWrongNetwork(true))
-      console.log("setWrongNetwork eseEffect");
+    else if(!testnet && from.chainId === chainId){
+      navigate(`/account${location.search ? location.search : ''}`)
     }
     else{
-      dispatch(setAlert(true))
+      switchNetwork()
     }
   };
 
   function handleAboutClick() {
-    dispatch(setShowAbout(true))
-}
-function handleVideoClick() {
-    dispatch(setShowVideo(true))
-}
+      dispatch(setShowAbout(true))
+  }
+  function handleVideoClick() {
+      dispatch(setShowVideo(true))
+  }
 
   return (
     <div>
-      <ChangeNetworkModal />
-      <div onClick={handleShow} className={from && to ? "connect-wallet__button" : "connect-wallet__button--disabled"}>
+      <div onClick={() => !connected ? setShow(true) : handleConnect()} className={from && to ? "connect-wallet__button" : "connect-wallet__button--disabled"}>
         Continue bridging -&gt;
       </div>
       <div id="aboutnft" className="aboutNft">
@@ -111,11 +151,3 @@ function handleVideoClick() {
 }
 //
 export default ConnectWallet;
-
-
-{/* <MaiarModal
-          handleClose={handleClose}
-          strQR={qrCodeImage}
-          qrCodeString={qrCodeString}
-          show={show}
-/> */}

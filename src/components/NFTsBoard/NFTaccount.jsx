@@ -23,6 +23,7 @@ import Approval from "../TransferBoard/Approval";
 import SendFees from "../TransferBoard/SendFees";
 import ButtonToTransfer from "../TransferBoard/ButtonToTransfer";
 import ChangeNetworkModal from "../Modals/ChangeNetwork/ChangeNetworkModal";
+import UnsupportedNetwork from "../Modals/ChangeNetwork/UnsupportedNetwork";
 
 function NFTaccount() {
   const dispatch = useDispatch();
@@ -87,7 +88,8 @@ function NFTaccount() {
 
   return (
     <div className="NFTaccount">
-      
+      <ChangeNetworkModal />
+      <UnsupportedNetwork />
       <Container className="nftSlectContaine">
         <ReturnBtn />
         <div className="row">
@@ -133,7 +135,6 @@ function NFTaccount() {
           <ButtonToTransfer />
         </div>
       </Container>
-      <ChangeNetworkModal />
     </div>
   );
 }

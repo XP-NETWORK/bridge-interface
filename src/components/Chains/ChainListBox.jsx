@@ -33,12 +33,13 @@ export default function ChainListBox(props) {
   const walletconnect = useSelector(state => state.general.WalletConnect)
   const { chainId, account } = useWeb3React()
   const testnet = useSelector(state => state.general.testNet)
-
+  const OFF = { opacity: 0.6, pointerEvents: "none" };
+  
   async function switchNetwork(chain) {
-
+debugger
     const info = testnet
-      ? TESTNET_CHAIN_INFO[chain?.key]
-      : CHAIN_INFO[chain?.key];
+      ? TESTNET_CHAIN_INFO[chain.key]
+      : CHAIN_INFO[chain.key];
     const chainId = `0x${info.chainId.toString(16)}`;
 
     try {
@@ -91,9 +92,12 @@ export default function ChainListBox(props) {
 
 
   const chainSelectHandler = (chain) => {
-    // debugger
+    debugger
         if (departureOrDestination === "departure") {
-          if(from && account && location.pathname === "/account"){
+          if((chain.chainId === to.chainId || chain.tnChainId === to.tnChainId) && (location.pathname === "/account" || location.pathname === "/testnet/account")){
+            console.log("bjasdjakdhakjdhakjsdh")
+          }
+          else if(from && account && (location.pathname === "/account" || location.pathname === "/testnet/account")){
             dispatch(setFrom(chain));
             switchNetwork(chain)
             handleClose();
@@ -128,9 +132,9 @@ export default function ChainListBox(props) {
   useEffect(() => {
     // debugger
     let filteredChains = chains
-    if(to){
-      filteredChains = toChains.filter(chain => chain.text !== to.text)
-    }
+    // if(to){
+    //   filteredChains = toChains.filter(chain => chain.text !== to.text)
+    // }
     const withNew = filteredChains.filter(chain => chain.newChain).sort((a, b) => a.order - b.order)
     const withComing = filteredChains.filter( chain => chain.coming && !chain.newChain )
     const withMaintenance = filteredChains.filter( chain => chain.maintenance && !chain.newChain )
@@ -152,9 +156,9 @@ export default function ChainListBox(props) {
   useEffect(() => {
     // debugger 
     let filteredChains = chains
-    if(from){
-      filteredChains = toChains.filter(chain => chain.text !== from.text)
-    }
+    // if(from){
+    //   filteredChains = toChains.filter(chain => chain.text !== from.text)
+    // }
     const withNew = filteredChains.filter(chain => chain.newChain).sort((a, b) => a.order - b.order)
     const withComing = filteredChains.filter( chain => chain.coming && !chain.newChain )
     const withMaintenance = filteredChains.filter( chain => chain.maintenance && !chain.newChain )
@@ -203,7 +207,7 @@ export default function ChainListBox(props) {
             {//! Show only mainnet TO chains //
               departureOrDestination === "destination" && !globalTestnet && toChains.map( chain => {
                 const { image, text, key, coming, newChain, maintenance, mainnet } = chain;
-                return (mainnet || coming) && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
+                return (mainnet || coming) && from?.text !== chain.text && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
               })
             }
             { //! Show only testnet FROM chains //
@@ -215,7 +219,7 @@ export default function ChainListBox(props) {
             {//! Show only testnet TO chains //
               departureOrDestination === "destination" && globalTestnet && toChains.map( chain => {
                 const { image, text, key, coming, newChain, maintenance, testNet } = chain;
-                return testNet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
+                return testNet && from?.text !== chain.text && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
               })
             }
           </ul>

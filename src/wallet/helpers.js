@@ -215,13 +215,13 @@ export const getFactory = async () => {
   const testnet  = store.getState().general.testNet
 
   if (f) return f;
-  const testnetConfig = ChainFactoryConfigs.TestNet();
-  const mainnetConfig = ChainFactoryConfigs.MainNet();
+  const testnetConfig = await ChainFactoryConfigs.TestNet();
+  const mainnetConfig = await ChainFactoryConfigs.MainNet();
   if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
     mainnetConfig.tronParams.provider = window.tronWeb;
   }
   const factory = ChainFactory(
-    testnet ? AppConfigs.TestNet() : AppConfigs.MainNet(),
+    testnet ?  AppConfigs.TestNet() :  AppConfigs.MainNet(),
     testnet ? testnetConfig : mainnetConfig
   );
   store.dispatch(setFactory(factory));
@@ -274,6 +274,8 @@ export const handleChainFactory = async (someChain) => {
         return await factory.inner(Chain.HARMONY)
       case "Aurora":
         return await factory.inner(Chain.AURORA)
+      case "GateChain":
+        return await factory.inner(Chain.GATECHAIN)
       default: return ''
     }
   } catch (error) {

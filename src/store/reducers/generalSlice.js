@@ -171,6 +171,9 @@ const generalSlice = createSlice({
     setWrongNetwork(state, action) {
       state.wrongNetwork = action.payload;
     },
+    setUnsupportedNetwork(state, action){
+      state.unsupportedNetwork = action.payload
+    },
     setMetaMaskActive(state, action) {
       state.metaMaskActive = action.payload;
     },
@@ -320,6 +323,7 @@ const generalSlice = createSlice({
 
 export const {
   setEachNFT,
+  setUnsupportedNetwork,
   setPreloadNFTs,
   setAlert,
   setTxnStatus,

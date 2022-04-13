@@ -17,6 +17,7 @@ export default function ButtonToTransfer() {
     const receiver = useSelector(state => state.general.receiver)
     const receiverAddress = convert(receiver)
     const approved = useSelector(state => state.general.approved)
+    const testnet = useSelector(state => state.general.testNet)
     const to = useSelector(state => state.general.to.key)
     const from = useSelector(state => state.general.from.key)
     const bigNumberFees = useSelector(state => state.general.bigNumberFees)
@@ -53,7 +54,7 @@ export default function ButtonToTransfer() {
             const signer = {
                 address: algorandAccount,
                 algoSigner: window.AlgoSigner,
-                ledger: "MainNet"
+                ledger: testnet ? "TestNet" : "MainNet"
             }
             return signer
         }
@@ -137,6 +138,7 @@ export default function ButtonToTransfer() {
                     bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
                 )
+                console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 141 ~ sendEach ~ result", result)
                 dispatch(dispatch(setTransferLoaderModal(false)))
                 setLoading(false)
                 dispatch(setTxnHash({txn: result, nft}))
