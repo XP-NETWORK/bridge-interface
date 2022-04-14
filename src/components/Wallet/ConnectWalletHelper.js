@@ -45,8 +45,8 @@ const connector = new WalletConnect({
 export const connectMetaMask = async (activate, from, to) => {
     try {
         if(!window.ethereum && window.innerWidth <= 600) {
-            const uri = `https://metamask.app.link/dapp/${window.location.host + `?to=${to}&from=${from}`}/`
-          window.open(uri)
+            const link = `https://metamask.app.link/dapp/${window.location.host}?to=${to}&from=${from}/`
+          window.open(link)
         }
         await activate(injected);
         store.dispatch(setMetaMask(true))

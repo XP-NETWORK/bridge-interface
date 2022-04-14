@@ -21,6 +21,7 @@ export default function NFTcard({ nft, index }) {
     const from = useSelector(state => state.general.from)
     const dispatch = useDispatch();
     const search = useSelector(state => state.general.NFTListSearch)
+    const testnet = useSelector(state => state.general.testNet)
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
     const isSelected = selectedNFTs.filter(
       (n) =>
@@ -56,7 +57,7 @@ export default function NFTcard({ nft, index }) {
         localStorage.setItem("imgData", imgData);
        }
        else{
-        await parseEachNFT(nft, index)
+        await parseEachNFT(nft, index, testnet)
        }
     },[])
     
@@ -68,7 +69,6 @@ export default function NFTcard({ nft, index }) {
             dispatch(removeFromSelectedNFTList(nft));
         }
     }
-
     return (
       <>
       {isShown(search, nft)?  <div className={`nft-box__wrapper`}  >

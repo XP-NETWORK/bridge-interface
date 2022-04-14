@@ -42,11 +42,24 @@ export const checkIfJSON = jsonStr => {
 
 
 
-export const parseEachNFT = async (nft, index) => {
-
+export const parseEachNFT = async (nft, index, testnet) => {
+  // debugger
   const { from } = store.getState().general;
-  const whitelisted =  nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a' ? false :  await isWhiteListed(from.text, nft);
-
+  let whitelisted
+  if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
+    whitelisted = false
+  }
+  else if(!testnet){
+    try {
+      whitelisted = await isWhiteListed(from.text, nft)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  else if(testnet){
+    whitelisted = true
+  }
+  
   let dataLoaded = false
   let nftObj = {
     uri: nft.uri,
@@ -64,7 +77,7 @@ export const parseEachNFT = async (nft, index) => {
     nftObj.ipfs = nft.native?.meta?.token?.metadata?.ipfs || undefined
     nftObj.name = nft.native?.meta?.token?.metadata?.name || undefined
     nftObj.wrapped = {...nft.native?.meta?.token?.metadata?.wrapped} || undefined
-    nftObj.whitelisted = whitelisted
+    nftObj.whitelisted = testnet ? true : whitelisted
     nftObj.dataLoaded = true
     store.dispatch(setEachNFT({nftObj, index}))
     dataLoaded = true
@@ -74,29 +87,43 @@ export const parseEachNFT = async (nft, index) => {
     store.dispatch(setEachNFT({nftObj, index}))
     dataLoaded = true
   }
+  else if(nft.uri.includes(".json")){
+    axios.get(nft.uri).then( response => {
+      debugger
+      const { attributes, description, image, name, animation_url, external_url } = response.data
+      nftObj.name = name || undefined
+      nftObj.image = image || undefined
+      nftObj.description = description || undefined
+      nftObj.external_url = external_url || undefined
+      nftObj.attributes = [...attributes] || undefined
+      nftObj.animation_url = animation_url || undefined
+      nftObj.whitelisted = testnet ? true : whitelisted
+      nftObj.dataLoaded = true
+      dataLoaded = true
+    })
+  }
   else{
     axios.get(`https://sheltered-crag-76748.herokuapp.com/${setupURI(nft.uri)}`)
     .then( response => {
-      nftObj.name = response.data.name || undefined
-      nftObj.image = response.data.image || undefined
-      nftObj.description = response.data.description || undefined
-      nftObj.external_url = response.data.external_url || undefined
-      nftObj.attributes = [...response.data.attributes] || undefined
-      nftObj.animation_url = response.data.animation_url || undefined
-      nftObj.whitelisted = whitelisted
+      nftObj.name = response.data?.name || undefined
+      nftObj.image = response.data?.image || undefined
+      nftObj.description = response.data?.description || undefined
+      nftObj.external_url = response.data?.external_url || undefined
+      nftObj.attributes = [...response.data?.attributes] || undefined
+      nftObj.animation_url = response.data?.animation_url || undefined
+      nftObj.whitelisted = testnet ? true : whitelisted
       nftObj.dataLoaded = true
       if(nftObj.animation_url){
-        // debugger
         const video = document.createElement('video');
         video.src = nftObj.animation_url
         video.onload = function(){
-          debugger
           console.log(video.height, "height");
         }
       }
       store.dispatch(setEachNFT({nftObj, index}))
     })
     .catch( error => {
+      
       console.error(error)
       store.dispatch(setEachNFT({nftObj, index}))
     })
@@ -122,7 +149,6 @@ if(from.key === "Tezos"){
       return await new Promise(async (resolve) => {
         try {
           if (!n.uri) resolve({ ...n })
-
           const jsonURI = checkIfJSON(n.uri) || undefined
           const uri = jsonURI?.image
           if (jsonURI) resolve({...n, ...jsonURI, uri })
@@ -343,7 +369,7 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 }
 
 export const getAlgorandClaimables = async (account) => {
-  debugger
+  // debugger
   let claimables
   const factory = await getFactory()
   try {

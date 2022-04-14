@@ -1,17 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Modal } from "react-bootstrap";
-import Close from "../../assets/img/icons/close.svg";
-import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
-import ChangeNetworkModal from "../Modals/ChangeNetwork/ChangeNetworkModal"
 import { useDispatch, useSelector } from "react-redux";
-import { setAlert, setQrCodeString, setShowAbout, setShowVideo, setWalletsModal, setWrongNetwork } from "../../store/reducers/generalSlice";
+import { setQrCodeString, setShowAbout, setShowVideo, setWalletsModal, setWrongNetwork } from "../../store/reducers/generalSlice";
 import MaiarModal from "../MaiarModal";
 import WalletList from "./WalletList";
 import { useNavigate, useLocation } from "react-router-dom";
-import { chains, chainsConfig, CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
+import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 import { useWeb3React } from "@web3-react/core";
 import { getAddEthereumChain } from "../../wallet/chains";
-import UnsupportedNetwork from "../Modals/ChangeNetwork/UnsupportedNetwork";
 
 function ConnectWallet() {
   const navigate = useNavigate();

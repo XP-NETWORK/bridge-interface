@@ -91,13 +91,6 @@ function App() {
   
   return (
     <div className={"App"}>
-      <MetaTags>
-        <title>XP.NETWORK Cross-Chain NFT Bridge</title>
-        <meta name="description" content="Seamlessly move assets between chains | The first multichain NFT bridge to connect all major Blockchains into one ecosystem" />
-        <meta property="og:title" content="Seamlessly move assets between chains | The first multichain NFT bridge to connect all major Blockchains into one ecosystem" />
-        <meta property="og:image" content="../src/assets/img/Meta.png" />
-        <meta property="twitter:image" content="../src/assets/img/Meta.png" />
-      </MetaTags>
       <About />
       <Video />
       <TechnicalSupport />
