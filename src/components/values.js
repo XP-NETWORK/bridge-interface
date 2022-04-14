@@ -16,6 +16,7 @@ import Tezos from "../assets/img/chain/Tezos.svg";
 import Iotex from "../assets/img/chain/iotx.svg";
 import One from "../assets/img/chain/One.svg";
 import Aurora from "../assets/img/chain/aurora.svg";
+import GT from "../assets/img/chain/GateChain.svg"
 import { Chain } from "xp.network/dist/consts";
 
 export const EVM = "EVM";
@@ -41,6 +42,7 @@ export const chains = [
     text: "BSC",
     value: "BSC",
     chainId: 56,
+    tnChainId: 97,
     order: 4,
     image: { avatar: true, src: Binance },
     maintenance: false,
@@ -75,6 +77,7 @@ export const chains = [
     text: "Polygon",
     value: "Polygon",
     chainId: 137,
+    tnChainId: 80001,
     order: 6,
     image: { avatar: true, src: Polygon },
     maintenance: false,
@@ -87,6 +90,7 @@ export const chains = [
     text: "Avalanche",
     value: "Avalanche",
     chainId: 43114,
+    tnChainId: 43113,
     order: 5,
     image: { avatar: true, src: Avalanche },
     maintenance: false,
@@ -112,9 +116,9 @@ export const chains = [
     value: "Algorand",
     order: 11,
     image: { avatar: true, src: Algorand },
-    maintenance: true,
+    maintenance: false,
     testNet: true,
-    mainnet: true,
+    mainnet: false,
   },
   {
     type: "EVM",
@@ -226,6 +230,7 @@ export const chains = [
     text: "Harmony",
     value: "Harmony",
     chainId: 1666600000,
+    tnChainId: 1666700000,
     order: 3,
     image: { avatar: true, src: One },
     maintenance: false,
@@ -257,6 +262,19 @@ export const chains = [
     testNet: false,
     mainnet: false,
     newChain: true
+  },
+  {
+    type: "EVM",
+    key: "GateChain",
+    text: "GateChain",
+    value: "GateChain",
+    tnChainId: 85,
+    order: 2,
+    image: {avatar: true, src: GT },
+    maintenance: false,
+    testNet: true,
+    mainnet: false,
+    newChain: true 
   }
 ];
 
@@ -353,7 +371,7 @@ export const chainsConfig = {
     // chainData: ChainData.Avalanche,
     Chain: Chain.AVALANCHE,
     tx: "https://snowtrace.io/tx/",
-    testTx: "https://testnet.snowtrace.io/tx/",
+    testTx: "https://testnet.snowtrace.io/tx",
   },
   Fuse: {
     type: EVM,
@@ -410,6 +428,15 @@ export const chainsConfig = {
     Chain: Chain.AURORA,
     tx: "https://explorer.mainnet.aurora.dev/tx/",
   },
+  GateChain: {
+    type: EVM,
+    token: "GT",
+    image: Aurora,
+    rpc: "",
+    chainId: "",
+    Chain: Chain.GATECHAIN,
+    tx: ""
+  }
 };
 
 export const coins = [
@@ -431,6 +458,7 @@ export const coins = [
   "IOTX", //15
   "ONE", //16
   "AETH", //17
+  "GT", //18
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -458,6 +486,10 @@ export const TESTNET_CHAIN_INFO = {
   },
   Algorand: {
     nonce: 15
+  },
+  GateChain: {
+    nonce: 0x17,
+    chainId: 85,
   }
 };
 
@@ -480,6 +512,7 @@ export const CHAIN_INFO = {
     nonce: 4,
     native: coins[2],
     chainId: 56,
+    tnChainId: 97,
     rpcUrl: "https://data-seed-prebsc-1-s1.binance.org:8545",
     decimals: 1e18,
     contract: "0x12889E870A48Be2A04564e74f66fC91D439Da03e",
@@ -507,6 +540,7 @@ export const CHAIN_INFO = {
     nonce: 6,
     native: coins[4],
     chainId: 43114,
+    tnChainId: 43113,
     rpcUrl: "https://api.avax-test.network/ext/bc/C/rpc",
     decimals: 1e18,
     blockExplorerUrls: "https://cchain.explorer.avax-test.network/tx",
@@ -516,6 +550,7 @@ export const CHAIN_INFO = {
     nonce: 0x7,
     native: coins[5],
     chainId: 137,
+    tnChainId: 80001,
     decimals: 1e18,
     rpcUrl: "https://matic-testnet-archive-rpc.bwarelabs.com",
     contract: "0x9E93256Df2a4fE757f8AEB533D3943E56ba8CF94",
@@ -553,6 +588,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpcUrl: "https://api.s0.b.hmny.io",
     chainId: 1666700000,
+    tnChainId: 1666700000,
     blockExplorerUrls: "https://explorer.pops.one/tx",
     contract: "0x22ddFB8954c9D75598385c6ad82cDeb124a78Bb3",
   },
@@ -607,6 +643,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpc: "https://babel-api.mainnet.iotex.io",
     chainId: 4689,
+    // tnChainId: 4690,
     blockExplorerUrls: "https://iotexscan.io/",
     contract: "",
   },
@@ -628,4 +665,11 @@ export const CHAIN_INFO = {
     blockExplorerUrls: "https://explorer.mainnet.aurora.dev/",
     contract: "",
   },
+  GateChain: {
+    native: coins[18],
+    nonce: 0x17,
+    decimals: 1e18,
+    rpc: "",
+    chainId: "",
+  }
 };

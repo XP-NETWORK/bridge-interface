@@ -1073,7 +1073,7 @@ const allchains = [{
     "name": "GateChain Testnet",
     "chainId": 85,
     "shortName": "gttest",
-    "chain": "GTTEST",
+    "chain": "GT",
     "network": "testnet",
     "networkId": 85,
     "nativeCurrency": {
@@ -1081,7 +1081,7 @@ const allchains = [{
         "symbol": "GT",
         "decimals": 18
     },
-    "rpc": ["https://testnet.gatenode.cc"],
+    "rpc": ["https://meteora-evm.gatenode.cc"],
     "faucets": ["https://www.gatescan.org/testnet/faucet"],
     "explorers": [{
         "name": "GateScan",

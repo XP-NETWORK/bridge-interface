@@ -13,6 +13,7 @@ import { id } from "ethers/lib/utils";
 export default function AlgorandWallet({ wallet, close }) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
+  const testnet = useSelector((state) => state.general.testNet);
 
   const connectionHandler = wallet => {
     switch (wallet) {
@@ -21,7 +22,7 @@ export default function AlgorandWallet({ wallet, close }) {
         close()
         break;
       case "AlgoSigner":
-        connectAlgoSigner()
+        connectAlgoSigner(testnet)
         close()
         break;
       case "Algorand Wallet":
@@ -46,7 +47,7 @@ export default function AlgorandWallet({ wallet, close }) {
   return wallet === "MyAlgo" ? (
     <li
       style={getStyle()}
-      style={{pointerEvents: "none", opacity: '0.6'}}
+      // style={{pointerEvents: "none", opacity: '0.6'}}
       onClick={() => connectionHandler("MyAlgo")}
       className="wllListItem algo"
       data-wallet="MyAlgo"
@@ -56,7 +57,7 @@ export default function AlgorandWallet({ wallet, close }) {
   ) : wallet === "AlgoSigner" ? (
     <li
       style={getStyle()}
-      style={{pointerEvents: "none", opacity: '0.6'}}
+      // style={{pointerEvents: "none", opacity: '0.6'}}
       onClick={() => connectionHandler("AlgoSigner")}
       data-wallet="AlgoSigner"
       className="wllListItem algo"
@@ -65,9 +66,9 @@ export default function AlgorandWallet({ wallet, close }) {
     </li>
   ) : (
     <li
-    style={{pointerEvents: "none", opacity: '0.6'}}
+      style={{pointerEvents: "none", opacity: '0.6'}}
       onClick={() => connectionHandler("Algorand Wallet")}
-      style={OFF}
+      // style={OFF}
       data-wallet="Algorand Wallet"
       className="wllListItem algo"
     >

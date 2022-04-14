@@ -5,22 +5,35 @@ import { checkIfLive } from "./ChainHelper";
 import "./Chain.css";
 import { useState } from "react";
 import Status from "./Status";
+import { useLocation } from "react-router-dom";
 
 
 export default function Chain(props) {
   const { filteredChain, chainSelectHandler, text, image, coming, newChain, chainKey, maintenance} = props
   const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
+  const to = useSelector((state) => state.general.to);
   const OFF = { opacity: 0.6 ,pointerEvents: "none" };
   const [chainStatus, setChainStatus] = useState(undefined)
+  const location = useLocation()
 
 
   useEffect(() => {
     setChainStatus(checkIfLive(chainKey, validatorsInfo))
   }, [validatorsInfo]);
 
+  const getStyle = () => {
+    if(maintenance || maintenance || !checkIfLive(chainKey, validatorsInfo) || coming ){
+      return OFF
+    }
+    else if((location.pathname === "/testnet/account" ||location.pathname === "/account") && text === to.text){
+      return OFF
+    }
+    else return {}
+  }
+
   return (
     <li
-      style={maintenance || !checkIfLive(chainKey, validatorsInfo) || coming ? OFF : {}}
+      style={getStyle()}
       onClick={() => chainSelectHandler(filteredChain)}
       className="nftChainItem"
       data-chain={text}

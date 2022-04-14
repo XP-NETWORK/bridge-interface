@@ -30,6 +30,7 @@ function Approval(props) {
   const [finishedApproving, setFinishedApproving] = useState([]);
   const [approvedLoading, setApprovedLoading] = useState();
   const from = useSelector((state) => state.general.from);
+  const testnet = useSelector((state) => state.general.testNet);
   const account = useSelector((state) => state.general.account);
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
@@ -38,12 +39,10 @@ function Approval(props) {
   const receiver = useSelector((state) => state.general.receiver);
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const WCProvider = useSelector((state) => state.general.WCProvider);
-  // const onMaiar = useSelector((state) => state.general.onMaiar);
   const maiarProvider = useSelector((state) => state.general.maiarProvider);
   const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
   const algorandWallet = useSelector((state) => state.general.AlgorandWallet);
   const MyAlgo = useSelector((state) => state.general.MyAlgo);
-  // const templeWallet = useSelector((state) => state.general.templeWallet);
   const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
   const widget = useSelector((state) => state.general.widget);
 
@@ -70,7 +69,7 @@ function Approval(props) {
       const signer = {
         address: algorandAccount,
         algoSigner: window.AlgoSigner,
-        ledger: "MainNet",
+        ledger: testnet ? "TestNet" : "MainNet",
       };
       return signer;
     }

@@ -28,11 +28,15 @@ function ChangeNetworkModal() {
   const location = useLocation()
   const navigate = useNavigate()
   const { chainId } = useWeb3React()
-  const isSupported = chains.some(chain => chain.chainId === chainId)
+  const isSupported = !testnet ? chains.some(chain => chain.chainId === chainId) : chains.some(chain => chain.tnChainId === chainId)
+
   const forbidden = chainId === to?.chainId && (location.pathname === "/account" || location.pathname === "/testnet/account")
 
+
+  const checkIfSupported = () =>{
+  }
+
   async function switchNetwork() {
-    
       setLoader(true);
       const info = testnet
         ? TESTNET_CHAIN_INFO[from?.key]
@@ -90,7 +94,7 @@ function ChangeNetworkModal() {
   return (
     forbidden ? <Modal
     animation={false}
-    show={showWrong}
+    // show={showWrong}
     // show={true}
     onHide={undefined}
     className="nftWorng"
@@ -127,7 +131,7 @@ function ChangeNetworkModal() {
       >
         <Modal.Header className="border-0">
           <Modal.Title>Wrong Network</Modal.Title>
-          {isSupported && !forbidden && <span className="CloseModal" onClick={handleClose}>
+          {!forbidden && <span className="CloseModal" onClick={handleClose}>
             
               <CloseComp className="svgWidget closeIcon" />
           </span>}
@@ -144,24 +148,20 @@ function ChangeNetworkModal() {
                   </div>
                 </div>
               </span>
-              {isSupported ? <h3>Switch to {from?.key === "xDai" ? "Gnosis" : from?.key} {testnet ? "TestNet" : "Mainnet"}</h3>
-              : <h3>Please switch to supported Network</h3>
-              }
-              {isSupported ? <p>
+              <h3>Switch to {from?.key === "xDai" ? "Gnosis" : from?.key} {testnet ? "TestNet" : "Mainnet"}</h3>
+              <p>
                 XP.NETWORK Bridge requires you to <br /> connect to the{" "}
                 {from?.key === "xDai" ? "Gnosis" : from?.key} {testnet ? "TestNet" : "Mainnet"}
               </p>
-              :<p>In order to continue bridging XP.NETWORK Bridge <br />  requires you to connect to supported Network.</p>
-              }
             </div>
-            {loader && isSupported && (
+            {loader && (
               <div className="switchingAcc">
                 <ChangeNetworkLoader />
                 <p className="">"Switching to" {testnet ? "TestNet" : "Mainnet"}</p>
                 <p className="">Follow instructions in MetaMask</p>
               </div>
             )}
-            {!loader && isSupported && (
+            {!loader && (
               <div onClick={() => switchNetwork()} className="switching">
                 Switch Network
               </div>
