@@ -56,7 +56,7 @@ export const chains = [
     value: "Tron",
     order: 11,
     image: { avatar: true, src: Tron },
-    maintenance: true,
+    maintenance: false,
     testNet: false,
     mainnet: true,
   },
@@ -235,7 +235,7 @@ export const chains = [
     image: { avatar: true, src: One },
     maintenance: false,
     testNet: true,
-    mainnet: false,
+    mainnet: true,
     newChain: true,
   },
   {
@@ -248,7 +248,7 @@ export const chains = [
     image: { avatar: true, src: Aurora },
     maintenance: false,
     testNet: false,
-    mainnet: false,
+    mainnet: true,
     newChain: true
   },
   {
