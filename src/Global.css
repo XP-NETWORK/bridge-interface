@@ -1769,6 +1769,7 @@ span.transPend {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  color: black;
 }
 
 .tron-PopUp__header {
