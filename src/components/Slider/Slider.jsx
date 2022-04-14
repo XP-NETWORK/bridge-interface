@@ -1,7 +1,8 @@
 import "./Slider.css"
 import { useSelector } from "react-redux";
 import SliderPagination from "./SliderPagination"
-import React from 'react'
+import React, { useEffect } from 'react'
+import axios from "axios";
 
 export default function Slider() {
   const nfts = useSelector(state => state.slider.nfts)
@@ -11,8 +12,6 @@ export default function Slider() {
 
 
 React.useEffect(() => {
-
-
   setStyle({
     backgroundImage: `url(${nfts[step].image})`,
     backgroundPosition: 'top',
@@ -35,7 +34,7 @@ React.useEffect(() => {
       {/* <div className="slider-nft__info">
         <div className="slider-nft__name">
           {nfts[step]?.name}
-          <span className="slider-nft__id">#{nfts[step]?.id}</span>
+          <a href={`${nfts[step].collection}`} target="_blank" className="slider-nft__id">Collection</a>
         </div>
         <div className="slider-nft__description">{nfts[step]?.description}</div>
       </div> */}

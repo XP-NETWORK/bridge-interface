@@ -18,7 +18,7 @@ import {
 } from "../../../store/reducers/generalSlice";
 import "./SuccessModal.css";
 import Tooltip from "../AccountModal/Tooltip";
-import { chainsConfig } from "../../values";
+import { chainsConfig, CHAIN_INFO } from "../../values";
 
 export default function SuccessModal() {
   const dispatch = useDispatch();
@@ -81,6 +81,10 @@ export default function SuccessModal() {
     return txnHashArr?.length ? true : false;
     //return true
   };
+
+  const getExplorer = () =>{
+    return !testnet ? `${CHAIN_INFO[from?.text]?.blockExplorerUrls}${address}`: ''
+  }
 
   useEffect(() => {
     socket.on("incomingEvent", async e => {
@@ -160,14 +164,14 @@ export default function SuccessModal() {
             </div>
             <div className="success-info-item">
               <div className="info-item-label">Departure Address</div>
-              <div className="success-hash">
+              <a href={getExplorer() || "#"} className="success-hash">
                 {address
                   ? `${address.substring(
                       0,
                       getSubstringValue() || 10
                     )}...${address.substring(address.length - 6)}`
                   : ""}
-              </div>
+              </a>
             </div>
             <div className="success-info-item">
               <div className="info-item-label">Sent To</div>

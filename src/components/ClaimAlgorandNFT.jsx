@@ -28,7 +28,7 @@ function ClaimAlgorandNFT() {
       (n) => n?.name === algorandClaimPopup?.name
     );
     if (sameName && sameName.length > 0) {
-      const { contract, chainId, tokenId } = algorandClaimPopup.native;
+      const { contract, tokenId } = algorandClaimPopup.native;
       const fetched = await parseNFTS(sameName);
       const filtered = fetched.filter(
         (n) => n.wrapped.contract === contract && n.wrapped.tokenId === tokenId

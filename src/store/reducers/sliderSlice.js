@@ -1,59 +1,51 @@
 import { createSlice } from "@reduxjs/toolkit";
-import image01 from '../../assets/img/slider/s1.png'
-import image02 from '../../assets/img/slider/s2.png'
-import image03 from '../../assets/img/slider/s3.png'
-import image04 from '../../assets/img/slider/s4.png'
-import image1 from '../../assets/img/nfts/nft_1.png'
-import image2 from '../../assets/img/nfts/nft_2.png'
-import image3 from '../../assets/img/nfts/nft_3.png'
-import image4 from '../../assets/img/nfts/nft_4.png'
-import image5 from '../../assets/img/nfts/nft_5.png'
-import image6 from '../../assets/img/nfts/nft_6.png'
-import image7 from '../../assets/img/nfts/nft_7.png'
-import image8 from '../../assets/img/nfts/nft_8.png'
-import image9 from '../../assets/img/nfts/nft_9.png'
+import image01 from '../../assets/img/slider/1.jpeg'
+import image02 from '../../assets/img/slider/2.png'
+import image03 from '../../assets/img/slider/3.png'
+import image04 from '../../assets/img/slider/4.png'
+import image5 from '../../assets/img/slider/5.jpeg'
+
 
 
 const initialState = {
     nfts:[
     {
         image:  image01,
-        name: "Lorem Ipsum",
-        id: "666",
-        description: "Lorem Ipsum ",
+        name: "Tales of Ragnarok Avatar #23849",
+        description: "Tales of Ragnarok Avatar — NFT generative art for every player with utility use-cases in Tales of Ragnarok ecosystem such as profile, exclusive access, and future add-on integrated with the game and metaverse!",
+        collection: "https://tofunft.com/collection/tales-of-ragnarok-avatar/items",
         progWidth: 0,
         action: false
     },
     {
       image:  image02,
-      name: "Lorem Ipsum",
-      id: "667",
-      description: "Lorem Ipsum ",
+      name: "Azuki #2878",
+      description: "Azuki starts with a collection of 10,000 avatars that give you membership access to The Garden: a corner of the internet where artists, builders, and web3 enthusiasts meet to create a decentralized future.",
+      collection: "https://rarible.com/azuki/items",
       progWidth: 0,
       action: false
-
     },
     {
       image:  image03,
-      name: "Lorem Ipsum",
-      id: "668",
-      description: "Lorem Ipsum ",
+      name: "Velas Punks #9582",
+      description: "Velas Punks is the first NFT collection of 10,777 Vpunks on the Velas blockchain.",
+      collection: "https://velaspunks-collection.vercel.app/",
       progWidth: 0,
       action: false
     },
     {
       image:  image04,
-      name: "Lorem Ipsum",
-      id: "669",
-      description: "Lorem Ipsum ",
+      name: "Innovator #494",
+      description: "",
+      collection: "https://trust.market/collection/INNOVATOR-fca3a7",
       progWidth: 0,
       action: false
     },
     {
       image:  image5,
-      name: "Lorem Ipsum",
-      id: "670",
-      description: "Lorem Ipsum ",
+      name: "Unidonkey",
+      description: "The Unidonkey is quite skittish and reserved, but there is much power in their potential. Adored by even the smallest of hearts, its canter gives a calm rhythm to all eyes and ears.",
+      collection: "https://opensea.io/collection/polychainmonsters",
       progWidth: 0,
       action: false
     }

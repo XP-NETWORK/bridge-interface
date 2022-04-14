@@ -318,7 +318,7 @@ export const getNFTS = async (wallet, from) => {
       return [];
     }
   } catch(err) {
-    console.log(err, 'nft list')
+    console.log(err, 'NFT Indexer error')
     return []
   }
 
@@ -339,6 +339,20 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
   } catch(err) {
     console.error(err);
     return []
+  }
+}
+
+export const getAlgorandClaimables = async (account) => {
+  debugger
+  let claimables
+  const factory = await getFactory()
+  try {
+    claimables = await factory.claimableAlgorandNfts(account)
+    if(claimables && claimables.length > 0) {
+      store.dispatch(setAlgorandClaimables(claimables))
+    }
+  } catch (error) {
+    console.error(error);
   }
 }
 

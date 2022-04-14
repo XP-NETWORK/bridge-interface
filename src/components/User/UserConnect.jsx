@@ -2,16 +2,13 @@ import { useWeb3React } from '@web3-react/core';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { setAccountModal, setFrom, setReset, setUnsupportedNetwork, setWalletsModal, setWrongNetwork } from '../../store/reducers/generalSlice';
-import { getAddEthereumChain } from '../../wallet/chains';
+import { setAccountModal, setFrom, setUnsupportedNetwork, setWalletsModal, } from '../../store/reducers/generalSlice';
 import { setNFTS } from '../../wallet/helpers';
-import { CHAIN_INFO, TESTNET_CHAIN_INFO } from '../values';
-import { chains, chainsConfig } from '../values';
+import { chains } from '../values';
 import Identicon from './Identicon';
 
 export default function UserConnect({desktop, mobile}) {
     const dispatch = useDispatch()
-    const from = useSelector(state => state.general.from)
     const to = useSelector(state => state.general.to)
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const tezosAccount = useSelector(state => state.general.tezosAccount)
@@ -44,57 +41,47 @@ export default function UserConnect({desktop, mobile}) {
     }
 
     const getChain = () => {
-      return testnet ? chains.find(chain => chain.tnChainId === chainId) : chains.find( chain => chain.chainId === chainId)
+      // debugger
+      if(testnet){
+        return chains.find(chain => chain.tnChainId === chainId)
+      }
+      else{
+        return chains.find( chain => chain.chainId === chainId)
+      }
     }
 
     useEffect(() => {
       // debugger
-      if(chainId && (location.pathname === "/account" || location.pathname === "/testnet/account")){
-        if(!testnet && chains.some(chain => chain.chainId === chainId)){
-          if(getChain().text === to.text){
+      const chainConnected = getChain()
+      if(chainId && location.pathname.includes("/account")){
+        if(testnet){
+          if(!chainConnected?.testNet || !chains.some(chain => chain.chainId === chainId)){
+            dispatch(setUnsupportedNetwork(true))
+          }
+          else if(chainId === to.tnChainId){
             dispatch(setUnsupportedNetwork(true))
           }
           else{
-          dispatch(setUnsupportedNetwork(false))
-          dispatch(setWrongNetwork(false))
-          const chain = getChain()
-          setNFTS(account, chain.key)
-          dispatch(setFrom(chain))
+            dispatch(setUnsupportedNetwork(false))
+            dispatch(setFrom(chainConnected))
+            setNFTS(account, chainConnected.key)
+          }
         }
-        }
-        else if(!testnet && !chains.some(chain => chain.chainId === chainId)){
-          dispatch(setUnsupportedNetwork(true))
-        }
-        else if(testnet && chains.some(chain => chain.tnChainId === chainId)){
-          dispatch(setWrongNetwork(false))
-          const chain = getChain()
-          setNFTS(account, chain.key)
-          dispatch(setFrom(chain))
-        }
-        else if(!testnet && !chains.some(chain => chain.tnChainId === chainId)){
-          dispatch(setUnsupportedNetwork(true))
-        }
-        else if(testnet && !chains.some(chain => chain.tnChainId === chainId)){
-          dispatch(setUnsupportedNetwork(true))
+        else{
+          if(!chainConnected?.mainnet || !chains.some(chain => chain.chainId === chainId)){
+            dispatch(setUnsupportedNetwork(true))
+          }
+          else if(chainId === to.chainId){
+            dispatch(setUnsupportedNetwork(true))
+          }
+          else{
+            dispatch(setUnsupportedNetwork(false))
+            dispatch(setFrom(chainConnected))
+            setNFTS(account, chainConnected.key)
+          }
         }
       }
-      // if(account && from && chainId){
-      //   if(chainId === to.chainId){
-      //     dispatch(setWrongNetwork(true))
-      //   }
-      //   else if(!testnet && chains.some(chain => chain.chainId === chainId)){
-      //     dispatch(setWrongNetwork(false))
-      //     const chain = getChain()
-      //     setNFTS(account, chain.key)
-      //     dispatch(setFrom(chain))
-      //   }
-      //   else if(from.type !== "EVM"){
-      //     dispatch(setWrongNetwork(false))
-      //   }
-      //   else{
-      //     dispatch(setWrongNetwork(true))
-      //   }
-      // }
+
     }, [account, chainId])
 
   useEffect(() => {

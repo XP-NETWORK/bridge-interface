@@ -23,23 +23,13 @@ export default function UnsupportedNetwork() {
     const [loader, setLoader] = useState(false);
     const testnet = useSelector((state) => state.general.testNet);
     const unsupportedNetwork = useSelector((state) => state.general.unsupportedNetwork);
-    console.log("🚀 ~ file: UnsupportedNetwork.jsx ~ line 26 ~ UnsupportedNetwork ~ unsupportedNetwork", unsupportedNetwork)
     const location = useLocation()
-    const navigate = useNavigate()
     const { chainId } = useWeb3React()
-    // const isSupported = !testnet ? chains.some(chain => chain.chainId === chainId) : chains.some(chain => chain.tnChainId === chainId)
   
     const forbidden = chainId === to?.chainId && (location.pathname === "/account" || location.pathname === "/testnet/account")
   
-    
-  
-    const checkIfSupported = () =>{
-      // debugger
-      const testNetSupportedNetwork = chains.some(chain => chain.tnChainId === chainId)
-      const mainNetSupportedNetwork = chains.some(chain => chain.chainId === chainId)
-    }
-  
     async function switchNetwork() {
+      debugger
         setLoader(true);
         const info = testnet
           ? TESTNET_CHAIN_INFO[from?.key]
@@ -92,10 +82,10 @@ export default function UnsupportedNetwork() {
     useEffect(() => {}, [showWrong]);
   
     return (
-      forbidden ? <Modal
+      forbidden ? 
+      <Modal
       animation={false}
       show={unsupportedNetwork}
-      // show={true}
       onHide={undefined}
       className="nftWorng"
     >
@@ -126,7 +116,7 @@ export default function UnsupportedNetwork() {
           animation={false}
           show={unsupportedNetwork}
           // show={true}
-          onHide={checkIfSupported() ? handleClose : undefined}
+          onHide={handleClose}
           className="nftWorng"
         >
           <Modal.Header className="border-0">
