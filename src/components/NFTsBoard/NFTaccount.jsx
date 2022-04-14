@@ -5,7 +5,7 @@ import NFTlistView from "../NFT/NFTlistView";
 import NFTlistTop from "./NFTlistTop";
 import { setChainModal, setDepartureOrDestination, setError, setSearchNFTList } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { setNFTS } from "../../wallet/helpers";
+import { getAlgorandClaimables, setNFTS } from "../../wallet/helpers";
 import { ReturnBtn } from "../Settings/returnBtn";
 import DesktopTransferBoard from "../TransferBoard/DesktopTransferBoard";
 import MobileTransferBoard from "../TransferBoard/MobileTransferBoard";
@@ -76,6 +76,9 @@ function NFTaccount() {
 
   useEffect(async () => {
     await getNFTsList();
+    if(algorandAccount){
+      await getAlgorandClaimables(algorandAccount)
+    }
   }, []);
 
   const handleFromChainSwitch = () => {
