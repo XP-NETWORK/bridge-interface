@@ -214,6 +214,7 @@ background: rgba(73, 82, 108, 0.1);
     cursor: pointer;
     position: relative;
     z-index: 1;
+    gap: 35px;
   }
   .selChain > div:after {
     content: "";
