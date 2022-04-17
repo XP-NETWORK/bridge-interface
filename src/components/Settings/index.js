@@ -894,7 +894,7 @@ function WSettings({
                   <Accordion.Body>
                   <div className="typographyContainer">
                   <div className="typo-sel font-size-sel">
-                          <h5>Extra Fees</h5>
+                          <h5>Extra gas fees</h5>
                           <div className="select_font">
                             <div className="typo-sel header_color_select">
                               <div className="cornerRadi">
@@ -902,13 +902,13 @@ function WSettings({
                                 <input
                                   type="number"
                                   placeholder="0"
-                                  max={1000}
+                                  max={100}
                                   min={0}
                                   value={settings.affiliationFees}
                                   onChange={(e) => {
                         
                                     if (e.target.value < 0)  return  deboucedSet(0, "affiliationFees", true);
-                                    if (e.target.value > 1000)  return  deboucedSet(1000, "affiliationFees",true);
+                                    if (e.target.value > 100)  return  deboucedSet(100, "affiliationFees",true);
                                     deboucedSet(e.target.value, "affiliationFees",true)
                                   }
                                   }
