@@ -18,6 +18,14 @@ const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
+    setEachNFT(state, action){
+      // debugger
+      const { nftObj, index } = action.payload
+      state.NFTList = state.NFTList.map((n, i) => {
+        if(i === index) n = nftObj
+        return n
+      })
+    },
     setQrCodeString(state, action) {
       state.qrCodeString = action.payload;
     },
@@ -265,6 +273,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+  setEachNFT,
   setTempleWallet,
   setKukaiWallet,
   setTezosAccount,

@@ -16,7 +16,6 @@ export default function ButtonToTransfer() {
     const kukaiWallet = useSelector(state => state.general.kukaiWallet)
     const receiver = useSelector(state => state.general.receiver)
     const receiverAddress = convert(receiver)
-    // console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 19 ~ ButtonToTransfer ~ receiverAddress", receiverAddress)
     const approved = useSelector(state => state.general.approved)
     const to = useSelector(state => state.general.to.key)
     const from = useSelector(state => state.general.from.key)
@@ -55,14 +54,14 @@ export default function ButtonToTransfer() {
             const signer = {
                 address: algorandAccount,
                 algoSigner: window.AlgoSigner,
-                ledger: "MainNet"
+                ledger: testnet ? "TestNet" : "MainNet"
             }
             return signer
         }
     }
 
     const getSigner = async () => {
-        debugger
+        // debugger
         let signer 
         try {
             if(from === "Tezos"){
@@ -109,7 +108,6 @@ export default function ButtonToTransfer() {
                 factory = await getFactory()
                 const contract = nftSmartContract.toLowerCase()
                 const mintWidth = await factory.getVerifiedContracts(contract, toNonce, fromNonce)
-                // console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 107 ~ sendEach ~ mintWidth", mintWidth)
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
                 result = await factory.transferNft(
@@ -126,20 +124,20 @@ export default function ButtonToTransfer() {
                 dispatch(setTxnHash({txn: result, nft}))
             }
             else{
+                const useHard = false
+                const hard = ""
                 factory = await getFactory()
                 const contract = nftSmartContract.toLowerCase()
                 const mintWidth = await factory.getVerifiedContracts(contract, toNonce, fromNonce)
-                // console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 127 ~ sendEach ~ mintWidth", mintWidth)
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
-                console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 148 ~ sendEach ~ bigNumberFees", bigNumberFees)
                 result = await factory.transferNft(
                     fromChain, 
                     toChain,   
                     nft,      
                     signer,   
                     receiverAddress || receiver,  
-                    bigNumberFees,
+                    useHard ? hard : bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
                 )
                 dispatch(dispatch(setTransferLoaderModal(false)))
@@ -154,10 +152,11 @@ export default function ButtonToTransfer() {
             dispatch(dispatch(setTransferLoaderModal(false)))
             const { data, message, error } = err
             if(message){
+                console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 155 ~ sendEach ~ message", message)
                 if(
-                    message.includes("NFT not whitelisted") 
-                    || message.includes('contract not whitelisted')
-                    || (data ? data.message.includes('contract not whitelisted') : false )
+                    message?.includes("NFT not whitelisted") 
+                    || message?.includes('contract not whitelisted')
+                    || (data ? data?.message?.includes('contract not whitelisted') : false )
                 ){
                     dispatch(setNFTsToWhitelist({
                         url: nft.image,
@@ -165,10 +164,10 @@ export default function ButtonToTransfer() {
                     }))
                 }
                 else if(
-                    message.includes('User cant pay the bills')
-                    || (data ? data.message.includes('User cant pay the bills') : false )
+                    message?.includes('User cant pay the bills')
+                    || (data ? data?.message?.includes('User cant pay the bills') : false )
                 ) dispatch(setError(`You don't have enough funds to pay the fees`))
-                else dispatch(setError(err.data ? err.data.message : err.message))
+                else dispatch(setError(err?.data ? err.data?.message : err?.message))
                 return
             }
             else dispatch(setError(err.data ? err.data.message : err.message))

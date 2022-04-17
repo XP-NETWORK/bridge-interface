@@ -1,7 +1,8 @@
 import { AppConfigs, ChainFactory, ChainFactoryConfigs } from "xp.network";
 import { Chain, Config } from "xp.network/dist/consts";
+import { isWhiteListed } from "../components/NFT/NFTHelper";
 import { chainsConfig, CHAIN_INFO } from "../components/values";
-import { setAlgorandClaimables, setBigLoader, setFactory, setNFTList } from "../store/reducers/generalSlice";
+import { setAlgorandClaimables, setBigLoader, setEachNFT, setFactory, setNFTList } from "../store/reducers/generalSlice";
 import store from "../store/store";
 // import { from } from "@iotexproject/iotex-address-ts";
 const { Harmony } = require('@harmony-js/core')
@@ -40,7 +41,62 @@ const getURL = async (url) => {
   }).then(e => res = e)
 }
 
+// export const parseEachNFT = async (nft, index) => {
+//   const { from } = store.getState().general;
+//   const whitelisted = await isWhiteListed(from.text, nft)
+//   let dataLoaded = false
+//   let nftObj = {
+//     uri: nft.uri,
+//     native: nft.native,
+//     dataLoaded: true
+//   }
+  
+//   if(from.key === "Tezos"){
+//     nftObj.description = nft.native?.meta?.token?.metadata?.description || undefined
+//     nftObj.animation_url = nft.native?.meta?.token?.metadata?.animation_url || undefined
+//     nftObj.artifactUri = nft.native?.meta?.token?.metadata?.artifactUri || undefined
+//     nftObj.attributes = [...nft.native?.meta?.token?.metadata?.attributes] || undefined
+//     nftObj.displayUri = nft.native?.meta?.token?.metadata?.displayUri || undefined
+//     nftObj.displayUri = nft.native?.meta?.token?.metadata?.displayUri || undefined
+//     nftObj.ipfs = nft.native?.meta?.token?.metadata?.ipfs || undefined
+//     nftObj.name = nft.native?.meta?.token?.metadata?.name || undefined
+//     nftObj.wrapped = {...nft.native?.meta?.token?.metadata?.wrapped} || undefined
+//     nftObj.whitelisted = whitelisted
+//     nftObj.dataLoaded = true
+//     store.dispatch(setEachNFT({nftObj, index}))
+//     dataLoaded = true
+//   }
+//   else if(!nft.uri){
+//     nftObj = {...nft, dataLoaded: true}
+//     store.dispatch(setEachNFT({nftObj, index}))
+//     dataLoaded = true
+//   }
+//   else{
+//     axios.get(`https://sheltered-crag-76748.herokuapp.com/${setupURI(nft.uri)}`)
+//     .then( response => {
+//       nftObj.name = response.data.name || undefined
+//       nftObj.image = response.data.image || undefined
+//       nftObj.description = response.data.description || undefined
+//       nftObj.external_url = response.data.external_url || undefined
+//       nftObj.attributes = [...response.data.attributes] || undefined
+//       nftObj.animation_url = response.data.animation_url || undefined
+//       nftObj.whitelisted = whitelisted
+//       nftObj.dataLoaded = true
+//       store.dispatch(setEachNFT({nftObj, index}))
+//     })
+//     .catch( error => {
+//       console.error(error)
+//       store.dispatch(setEachNFT({nftObj, index}))
+//     })
+//   }
+
+  
+
+//   return dataLoaded
+// }
+
 export const parseNFTS = async (nfts) => {
+
 const { from } = store.getState().general;
 if(from.key === "Tezos"){
   const result = await Promise.all(
@@ -74,7 +130,7 @@ if(from.key === "Tezos"){
           if (res && res.data) {
             const isImageIPFS = setupURI(res.data.image)?.includes('ipfs.io')
             
-            let result = typeof res.data != "string" ? { ...res.data, ...n } : {...n}
+            let result = typeof res.data != "string" ? { ...res.data, ...n, } : {...n}
             if(isImageIPFS) {              
               const ipfsNFT = await axios.get(setupURI(res.data.image))
               if(ipfsNFT.data && ipfsNFT.data.displayUri) result.image = ipfsNFT.data.displayUri
