@@ -145,11 +145,9 @@ function NFTlistTop() {
                   />
                   {/* { search ?  <button type="button"><img src={Close} alt="" /></button> : <button type="button"><img src={Search} alt=""/></button>} */}
                   <button type="button">
-                    {widget ? (
+               
                       <SearchComp className="svgWidget" />
-                    ) : (
-                      <img src={Search} alt="#" />
-                    )}
+               
                   </button>
                 </form>
               </Dropdown.Menu>
@@ -202,7 +200,7 @@ function NFTlistTop() {
               onChange={(e) => handleSearch(e)}
             />
             <button type="button">
-              <img src={Search} />
+            <SearchComp className="svgWidget" />
             </button>
           </form>
         </div>

@@ -62,8 +62,8 @@ function SendFees() {
      
 
             if (bigNum && widget && affiliationFees && Number(affiliationFees)/100 + 1 > 1) {
-                console.log(affiliationFees);
-                bigNum = bigNum.multipliedBy(Number(affiliationFees)/100 + 1);
+                const feesMultiplier = Number(affiliationFees)/100 + 1;
+                bigNum = bigNum.multipliedBy(feesMultiplier <= 2 ? feesMultiplier : 2);
             }
            
             bigNum = bigNum? bigNum.integerValue().toString(10): undefined;

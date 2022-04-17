@@ -136,8 +136,8 @@ export const getFactory = async () => {
   const testnet  = store.getState().general.testNet
 
   if (f) return f;
-  const testnetConfig = ChainFactoryConfigs.TestNet();
-  const mainnetConfig = ChainFactoryConfigs.MainNet();
+  const testnetConfig = await ChainFactoryConfigs.TestNet();
+  const mainnetConfig = await ChainFactoryConfigs.MainNet();
   if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
     mainnetConfig.tronParams.provider = window.tronWeb;
   }
