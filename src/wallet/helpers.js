@@ -40,10 +40,10 @@ export const checkIfJSON = jsonStr => {
   return obj
 }
 
-
+const videoFormats = [".mp4", ".ogg", ".webm", ".avi"]
+const imageFormats = [".apng", ".gif", ".jpg", ".jpeg", ".png", ".svg", ".webp"]
 
 export const parseEachNFT = async (nft, index, testnet) => {
-  // debugger
   const { from } = store.getState().general;
   let whitelisted
   if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
@@ -64,7 +64,10 @@ export const parseEachNFT = async (nft, index, testnet) => {
   let nftObj = {
     uri: nft.uri,
     native: nft.native,
-    dataLoaded: true
+    dataLoaded: true,
+    whitelisted: testnet ? true : whitelisted,
+    image: imageFormats.some(format => format === nft.uri.slice(nft.uri.lastIndexOf('.'))) ? nft.uri : undefined,
+    animation_url: videoFormats.some(format => format === nft.uri.slice(nft.uri.lastIndexOf('.'))) ? nft.uri : undefined
   }
   
   if(from.key === "Tezos"){
@@ -72,24 +75,21 @@ export const parseEachNFT = async (nft, index, testnet) => {
     nftObj.animation_url = nft.native?.meta?.token?.metadata?.animation_url || undefined
     nftObj.artifactUri = nft.native?.meta?.token?.metadata?.artifactUri || undefined
     nftObj.attributes = [...nft.native?.meta?.token?.metadata?.attributes] || undefined
-    nftObj.displayUri = nft.native?.meta?.token?.metadata?.displayUri || undefined
+    nftObj.image = nft.native?.meta?.token?.metadata?.image || undefined
     nftObj.displayUri = nft.native?.meta?.token?.metadata?.displayUri || undefined
     nftObj.ipfs = nft.native?.meta?.token?.metadata?.ipfs || undefined
     nftObj.name = nft.native?.meta?.token?.metadata?.name || undefined
     nftObj.wrapped = {...nft.native?.meta?.token?.metadata?.wrapped} || undefined
-    nftObj.whitelisted = testnet ? true : whitelisted
     nftObj.dataLoaded = true
     store.dispatch(setEachNFT({nftObj, index}))
-    dataLoaded = true
   }
   else if(!nft.uri){
     nftObj = {...nft, dataLoaded: true}
     store.dispatch(setEachNFT({nftObj, index}))
-    dataLoaded = true
   }
   else if(nft.uri.includes(".json")){
+    // debugger
     axios.get(nft.uri).then( response => {
-      debugger
       const { attributes, description, image, name, animation_url, external_url } = response.data
       nftObj.name = name || undefined
       nftObj.image = image || undefined
@@ -97,21 +97,32 @@ export const parseEachNFT = async (nft, index, testnet) => {
       nftObj.external_url = external_url || undefined
       nftObj.attributes = [...attributes] || undefined
       nftObj.animation_url = animation_url || undefined
-      nftObj.whitelisted = testnet ? true : whitelisted
       nftObj.dataLoaded = true
-      dataLoaded = true
+      store.dispatch(setEachNFT({nftObj, index}))
+    }).catch(error => {
+      axios.get(setupURI(nft.uri)).then(response => {
+        // debugger
+        const { attributes, description, image, name, animation_url, external_url } = response.data
+        nftObj.name = name || undefined
+        nftObj.image = image || undefined
+        nftObj.description = description || undefined
+        nftObj.external_url = external_url || undefined
+        nftObj.attributes = attributes?.length > 0 ? [...attributes] : attributes || undefined
+        nftObj.animation_url = animation_url || undefined
+        nftObj.dataLoaded = true
+        store.dispatch(setEachNFT({nftObj, index}))
+      })
     })
   }
   else{
     axios.get(`https://sheltered-crag-76748.herokuapp.com/${setupURI(nft.uri)}`)
     .then( response => {
       nftObj.name = response.data?.name || undefined
-      nftObj.image = response.data?.image || undefined
+      nftObj.image = nftObj.image || response.data?.image || undefined
       nftObj.description = response.data?.description || undefined
       nftObj.external_url = response.data?.external_url || undefined
       nftObj.attributes = [...response.data?.attributes] || undefined
-      nftObj.animation_url = response.data?.animation_url || undefined
-      nftObj.whitelisted = testnet ? true : whitelisted
+      nftObj.animation_url = nftObj.animation_url || response.data?.animation_url || undefined
       nftObj.dataLoaded = true
       if(nftObj.animation_url){
         const video = document.createElement('video');
@@ -123,7 +134,6 @@ export const parseEachNFT = async (nft, index, testnet) => {
       store.dispatch(setEachNFT({nftObj, index}))
     })
     .catch( error => {
-      
       console.error(error)
       store.dispatch(setEachNFT({nftObj, index}))
     })
@@ -369,7 +379,7 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 }
 
 export const getAlgorandClaimables = async (account) => {
-  // debugger
+  debugger
   let claimables
   const factory = await getFactory()
   try {

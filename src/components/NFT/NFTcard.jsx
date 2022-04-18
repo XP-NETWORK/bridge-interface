@@ -61,7 +61,7 @@ export default function NFTcard({ nft, index }) {
        }
     },[])
     
-
+//onClick={() => nft.whitelisted ? addRemoveNFT(nft, index): undefined }
     function addRemoveNFT(chosen) {
         if (!isSelected) {
             dispatch(setSelectedNFTList(chosen));
