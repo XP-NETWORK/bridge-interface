@@ -11,6 +11,7 @@ import { useLocation } from "react-router-dom";
 export default function Chain(props) {
   const { filteredChain, chainSelectHandler, text, image, coming, newChain, chainKey, maintenance} = props
   const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
+  const testnet = useSelector((state) => state.general.testNet);
   const to = useSelector((state) => state.general.to);
   const OFF = { opacity: 0.6 ,pointerEvents: "none" };
   const [chainStatus, setChainStatus] = useState(undefined)
@@ -21,8 +22,16 @@ export default function Chain(props) {
     setChainStatus(checkIfLive(chainKey, validatorsInfo))
   }, [validatorsInfo]);
 
+  const algoStyle = {}
+
   const getStyle = () => {
-    if(maintenance || maintenance || !checkIfLive(chainKey, validatorsInfo) || coming ){
+    if(text === "Algorand" && !testnet){
+      return OFF
+    }
+    else if(text === "Algorand" && testnet){
+      return {}
+    }
+    else if(maintenance || maintenance || !checkIfLive(chainKey, validatorsInfo) || coming ){
       return OFF
     }
     else if((location.pathname === "/testnet/account" ||location.pathname === "/account") && text === to.text){
@@ -45,7 +54,9 @@ export default function Chain(props) {
           {(chainStatus === undefined && !coming && !maintenance) ? <Status status={"connecting"} />
           :(!chainStatus && !coming && !maintenance) && <Status status={"off-line"} /> }
           {coming && <Status status={"coming"} />}
-          {maintenance && <Status status={"maintenance"} />}
+          {maintenance && text !== "Algorand" && <Status status={"maintenance"} />}
+          {/* //!for algorand only  */}
+          {maintenance && text === "Algorand" && !testnet && <Status status={"maintenance"} />}
           {!maintenance && newChain && <Status status={"new"} />}
         </div>
       </div>

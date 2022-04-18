@@ -35,12 +35,11 @@ export default function SetDeparture() {
         <div className="selChain seleDepat" onClick={() => handleShow("departure")}>
             { from ? 
                 <div className="seleDepatSelec">
-                    <Jazzicon diameter={30} seed={seed} />
-                    <div className="select-chain__text">{from.text === "xDai" ? "Gnosis" : from.text}</div>
+                    <img src={ from.image.src } alt="" />{from.text === "xDai" ? "Gnosis" : from.text}
                 </div>
                 :
                 <div className="seleDepatSelec">
-                    <Jazzicon diameter={30} seed={seed} />
+                    <Jazzicon diameter={28} seed={seed} />
                     <div className="select-chain__text">{window.innerWidth >= 600 ? "Select Departure chain" : "Departure chain"}</div>
                 </div>
             }

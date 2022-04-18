@@ -206,7 +206,7 @@ background: rgba(73, 82, 108, 0.1);
   }
   .selChain img {
     display: block;
-    margin-right: 16px;
+    /* margin-right: 16px; */
   }
   .selChain > div {
     display: flex;

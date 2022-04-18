@@ -116,9 +116,9 @@ export const chains = [
     value: "Algorand",
     order: 11,
     image: { avatar: true, src: Algorand },
-    maintenance: false,
+    maintenance: true,
     testNet: true,
-    mainnet: false,
+    mainnet: true,
   },
   {
     type: "EVM",
@@ -233,9 +233,9 @@ export const chains = [
     tnChainId: 1666700000,
     order: 3,
     image: { avatar: true, src: One },
-    maintenance: false,
+    maintenance: true,
     testNet: true,
-    mainnet: true,
+    mainnet: false,
     newChain: true,
   },
   {
@@ -246,9 +246,9 @@ export const chains = [
     chainId: 1313161554,
     order: 4,
     image: { avatar: true, src: Aurora },
-    maintenance: false,
+    maintenance: true,
     testNet: false,
-    mainnet: true,
+    mainnet: false,
     newChain: true
   },
   {
