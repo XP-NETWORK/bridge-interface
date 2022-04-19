@@ -82,7 +82,7 @@ export default function NFTcard({ nft, index }) {
           : [nft.animation_url,nft.image]?.length > 0 && <VideoOrImage urls={[nft.animation_url,nft.image]} i={index} />
           : <BrockenUtlGridView />
           }
-          { !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> }
+          { nft.whitelisted ? !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> : "" }
           { !nft.whitelisted && <NotWhiteListed /> }
         </div>
         <div className="nft__footer">
