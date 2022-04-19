@@ -38,13 +38,13 @@ function SelectedNFT() {
               {selectedNFTs.length} / {nfts?.length}
             </span>
           </span>
-          <div
+          {selectedNFTs.length > 0 && <div
             style={selectedNFTs.length ? {} : OFF}
             onClick={() => handleClear()}
             className="clear-selected"
           >
             Clear all
-          </div>
+          </div>}
 
       </div>
       <ul className="selected-nfts__body">
