@@ -50,19 +50,6 @@ export const parseEachNFT = async (nft, index, testnet) => {
   let whitelisted
   let ipfsImage
   let ipfsVideo
-  if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
-    whitelisted = false
-  }
-  else if(!testnet){
-    try {
-      whitelisted = await isWhiteListed(from.text, nft)
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  else if(testnet){
-    whitelisted = true
-  }
   
   let dataLoaded = false
   // debugger
@@ -124,10 +111,8 @@ export const parseEachNFT = async (nft, index, testnet) => {
     axios.get(setupURI(nft.uri))
     .then( response => {
       if(response.data?.image.includes('ipfs')){
-        // debugger
         axios.get(setupURI(response.data?.image)).then(response => {
           if(response.data?.formats[0]?.mimeType.includes("image")){
-            // debugger
             ipfsImage = response.data?.formats[0]?.uri
           }
           else if(response.data?.formats[0]?.mimeType.includes("video")){
@@ -138,12 +123,14 @@ export const parseEachNFT = async (nft, index, testnet) => {
         })
       }
       // debugger
+      let _img = imageFormats.some(format => format === response.data?.image.slice(response.data?.image.lastIndexOf(".")))
+      let _vid = videoFormats.some(format => format === response.data?.animation_url.slice(response.data?.image.lastIndexOf(".")))
       nftObj.name = response.data?.name || undefined
-      nftObj.image = ipfsImage || nftObj.image || response.data?.image || undefined
+      nftObj.image = _img || ipfsImage || nftObj.image || response.data?.image || undefined
       nftObj.description = response.data?.description || undefined
-      nftObj.external_url = response.data?.external_url || undefined
+      nftObj.external_url = _vid ||response.data?.external_url || undefined
       nftObj.attributes = [...response.data?.attributes] || undefined
-      nftObj.animation_url = ipfsImage ? undefined : nftObj.animation_url || response.data?.animation_url || undefined
+      nftObj.animation_url = nftObj.animation_url || response.data?.animation_url || undefined
       nftObj.dataLoaded = true
       store.dispatch(setEachNFT({nftObj, index}))
     })
@@ -153,7 +140,19 @@ export const parseEachNFT = async (nft, index, testnet) => {
     })
   }
 
-  
+  if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
+    whitelisted = false
+  }
+  else if(!testnet){
+    try {
+      whitelisted = await isWhiteListed(from.text, nft)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  else if(testnet){
+    whitelisted = true
+  }
 
   return dataLoaded
 }
