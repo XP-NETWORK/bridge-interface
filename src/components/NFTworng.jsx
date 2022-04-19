@@ -24,6 +24,7 @@ function NFTworng() {
   const widget = useSelector((state) => state.general.widget);
 
   async function switchNetwork() {
+    console.log("nft wrong useeffect")
     setLoader(true);
     const info = testnet
       ? TESTNET_CHAIN_INFO[from?.key]

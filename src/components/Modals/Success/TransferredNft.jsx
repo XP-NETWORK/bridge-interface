@@ -90,7 +90,7 @@ export default function TransferredNft({ nft }) {
                 </div>
                 <div className="chain-hash">
                     <span>{desText}:</span>
-                    <a target="_blank" href={`${chainsConfig[to.key]?.tx}/${hashes?.destHash}`}>{ hashes.destHash ? `${hashes?.destHash?.substring(0, getSubstringValue() || 10)}...${hashes?.destHash?.substring(hashes?.destHash?.length - 3)}` : '...'}</a>
+                    <a target="_blank" href={`${chainsConfig[to.key]?.tx}${hashes?.destHash}`}>{ hashes.destHash ? `${hashes?.destHash?.substring(0, getSubstringValue() || 10)}...${hashes?.destHash?.substring(hashes?.destHash?.length - 3)}` : '...'}</a>
                 </div>
             </div>
         </div>

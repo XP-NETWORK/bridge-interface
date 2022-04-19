@@ -296,7 +296,7 @@ export const chainsConfig = {
     token: "TRX",
     img: Tron,
     rpc: "https://api.trongrid.io/",
-    tx: "https://tronscan.org/#/transaction/",
+    tx: "https://tronscan.org/#/transaction/tx/",
     Chain: Chain.TRON,
   },
   Ethereum: {
@@ -371,7 +371,7 @@ export const chainsConfig = {
     // chainData: ChainData.Avalanche,
     Chain: Chain.AVALANCHE,
     tx: "https://snowtrace.io/tx/",
-    testTx: "https://testnet.snowtrace.io/tx",
+    testTx: "https://testnet.snowtrace.io/tx/",
   },
   Fuse: {
     type: EVM,
@@ -398,7 +398,7 @@ export const chainsConfig = {
     rpc: "https://mainnet-tezos.giganode.io/tx/",
     chainId: 0x12,
     Chain: Chain.TEZOS,
-    tx: "https://tzstats.com/",
+    tx: "https://tzstats.com/tx/",
   },
   Iotex: {
     type: EVM,

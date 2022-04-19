@@ -37,6 +37,7 @@ export default function ChainListBox(props) {
   
   async function switchNetwork(chain) {
 // debugger
+console.log("switchNetwork")
     const info = testnet
       ? TESTNET_CHAIN_INFO[chain.key]
       : CHAIN_INFO[chain.key];
@@ -95,7 +96,7 @@ export default function ChainListBox(props) {
   const chainSelectHandler = (chain) => {
     // debugger
         if (departureOrDestination === "departure") {
-          if((chain.chainId === to.chainId || chain.tnChainId === to.tnChainId) && (location.pathname === "/account" || location.pathname === "/testnet/account")){
+          if((chain.chainId === to.chainId || (to.tnChainId && chain.tnChainId === to.tnChainId)) && (location.pathname === "/account" || location.pathname === "/testnet/account")){
             console.log("bjasdjakdhakjdhakjsdh")
           }
           else if(from && account && (location.pathname === "/account" || location.pathname === "/testnet/account")){
@@ -133,9 +134,6 @@ export default function ChainListBox(props) {
   useEffect(() => {
     // debugger
     let filteredChains = chains
-    // if(to){
-    //   filteredChains = toChains.filter(chain => chain.text !== to.text)
-    // }
     const withNew = filteredChains.filter(chain => chain.newChain).sort((a, b) => a.order - b.order)
     const withComing = filteredChains.filter( chain => chain.coming && !chain.newChain )
     const withMaintenance = filteredChains.filter( chain => chain.maintenance && !chain.newChain )
@@ -157,9 +155,6 @@ export default function ChainListBox(props) {
   useEffect(() => {
     // debugger 
     let filteredChains = chains
-    // if(from){
-    //   filteredChains = toChains.filter(chain => chain.text !== from.text)
-    // }
     const withNew = filteredChains.filter(chain => chain.newChain).sort((a, b) => a.order - b.order)
     const withComing = filteredChains.filter( chain => chain.coming && !chain.newChain )
     const withMaintenance = filteredChains.filter( chain => chain.maintenance && !chain.newChain )
