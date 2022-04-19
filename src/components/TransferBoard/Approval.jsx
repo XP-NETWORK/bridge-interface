@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import InfLith from "../../assets/img/icons/infoLifht.svg";
-import { ReactComponent as InfLithComp } from "../../assets/img/icons/infoLifht.svg";
+import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
 // import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import { Chain, Config } from "xp.network/dist/consts";
 import { ethers } from "ethers";
@@ -227,7 +226,7 @@ function Approval(props) {
         <div className="approval__title">Approval</div>
         <div className="approval__inf">
             {/* before */}
-           <InfLithComp className="svgWidget" alt="info"/>
+           <InfLithComp className="svgWidget nftInfIcon" alt="info"/>
             {/* after */}
         </div>
       </div>
