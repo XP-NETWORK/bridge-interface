@@ -86,6 +86,12 @@ function NFTaccount() {
     dispatch(setChainModal(true))
   }
 
+  useEffect(() => {
+    if(selectedNFTs.length < 1){
+      setShowSelected(false)
+    }
+  }, [selectedNFTs])
+  
   
   useEffect(async () => {}, [nfts]);
 
