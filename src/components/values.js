@@ -56,7 +56,7 @@ export const chains = [
     value: "Tron",
     order: 11,
     image: { avatar: true, src: Tron },
-    maintenance: false,
+    maintenance: true,
     testNet: false,
     mainnet: true,
   },

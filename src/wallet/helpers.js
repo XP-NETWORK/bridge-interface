@@ -14,6 +14,7 @@ const { Harmony } = require('@harmony-js/core')
 const axios = require("axios");
 
 export const setupURI = (uri) => {
+  // debugger
   if (uri && (uri.includes("ipfs://"))) {
     return "https://ipfs.io/" + uri.replace(":/", "");
   }
@@ -40,12 +41,15 @@ export const checkIfJSON = jsonStr => {
   return obj
 }
 
-const videoFormats = [".mp4", ".ogg", ".webm", ".avi"]
-const imageFormats = [".apng", ".gif", ".jpg", ".jpeg", ".png", ".svg", ".webp"]
+const videoFormats = ["mp4", "ogg", "webm", "avi"]
+const imageFormats = ["apng", "gif", "jpg", "jpeg", "png", "svg", "webp"]
 
 export const parseEachNFT = async (nft, index, testnet) => {
+  // debugger
   const { from } = store.getState().general;
   let whitelisted
+  let ipfsImage
+  let ipfsVideo
   if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
     whitelisted = false
   }
@@ -61,9 +65,11 @@ export const parseEachNFT = async (nft, index, testnet) => {
   }
   
   let dataLoaded = false
+  // debugger
   let nftObj = {
     uri: nft.uri,
-    native: nft.native,
+    collectionIdent: nft.collectionIdent || undefined,
+    native: {...nft.native},
     dataLoaded: true,
     whitelisted: testnet ? true : whitelisted,
     image: imageFormats.some(format => format === nft.uri.slice(nft.uri.lastIndexOf('.'))) ? nft.uri : undefined,
@@ -88,8 +94,8 @@ export const parseEachNFT = async (nft, index, testnet) => {
     store.dispatch(setEachNFT({nftObj, index}))
   }
   else if(nft.uri.includes(".json")){
-    // debugger
-    axios.get(nft.uri).then( response => {
+    axios.get(nft.uri)
+    .then( response => {
       const { attributes, description, image, name, animation_url, external_url } = response.data
       nftObj.name = name || undefined
       nftObj.image = image || undefined
@@ -99,9 +105,9 @@ export const parseEachNFT = async (nft, index, testnet) => {
       nftObj.animation_url = animation_url || undefined
       nftObj.dataLoaded = true
       store.dispatch(setEachNFT({nftObj, index}))
-    }).catch(error => {
+    })
+    .catch(error => {
       axios.get(setupURI(nft.uri)).then(response => {
-        // debugger
         const { attributes, description, image, name, animation_url, external_url } = response.data
         nftObj.name = name || undefined
         nftObj.image = image || undefined
@@ -115,22 +121,30 @@ export const parseEachNFT = async (nft, index, testnet) => {
     })
   }
   else{
-    axios.get(`https://sheltered-crag-76748.herokuapp.com/${setupURI(nft.uri)}`)
+    axios.get(setupURI(nft.uri))
     .then( response => {
+      if(response.data?.image.includes('ipfs')){
+        // debugger
+        axios.get(setupURI(response.data?.image)).then(response => {
+          if(response.data?.formats[0]?.mimeType.includes("image")){
+            // debugger
+            ipfsImage = response.data?.formats[0]?.uri
+          }
+          else if(response.data?.formats[0]?.mimeType.includes("video")){
+            ipfsVideo = response.data?.formats[0]?.uri
+          }
+        }).catch(error => {
+        console.log(error)
+        })
+      }
+      // debugger
       nftObj.name = response.data?.name || undefined
-      nftObj.image = nftObj.image || response.data?.image || undefined
+      nftObj.image = ipfsImage || nftObj.image || response.data?.image || undefined
       nftObj.description = response.data?.description || undefined
       nftObj.external_url = response.data?.external_url || undefined
       nftObj.attributes = [...response.data?.attributes] || undefined
-      nftObj.animation_url = nftObj.animation_url || response.data?.animation_url || undefined
+      nftObj.animation_url = ipfsImage ? undefined : nftObj.animation_url || response.data?.animation_url || undefined
       nftObj.dataLoaded = true
-      if(nftObj.animation_url){
-        const video = document.createElement('video');
-        video.src = nftObj.animation_url
-        video.onload = function(){
-          console.log(video.height, "height");
-        }
-      }
       store.dispatch(setEachNFT({nftObj, index}))
     })
     .catch( error => {

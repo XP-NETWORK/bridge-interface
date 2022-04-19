@@ -61,7 +61,7 @@ export default function ButtonToTransfer() {
     }
 
     const getSigner = async () => {
-        debugger
+        // debugger
         let signer 
         try {
             if(from === "Tezos"){
@@ -94,7 +94,7 @@ export default function ButtonToTransfer() {
     }
 
     const sendEach = async (nft, index) => {
-        // debugger
+        debugger
         const signer = await getSigner()
         const toNonce = CHAIN_INFO[to].nonce
         const fromNonce = CHAIN_INFO[from].nonce
@@ -125,10 +125,12 @@ export default function ButtonToTransfer() {
             }
             else{
                 factory = await getFactory()
-                const contract = nftSmartContract.toLowerCase()
+                const contract = nft.collectionIdent || nftSmartContract.toLowerCase()
                 const mintWidth = await factory.getVerifiedContracts(contract, toNonce, fromNonce)
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
+                const preTransfer = await fromChain.preTransfer(signer, nft, bigNumberFees)
+                console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 133 ~ sendEach ~ pretransfer", preTransfer)
                 result = await factory.transferNft(
                     fromChain, 
                     toChain,   
