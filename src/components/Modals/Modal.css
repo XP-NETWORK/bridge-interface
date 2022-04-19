@@ -38,7 +38,7 @@
 
 .wallet-search{
   outline: none;
-  box-shadow: 0px 1px 6px rgba(180, 185, 199, 0.25);
+  /* box-shadow: 0px 1px 6px rgba(180, 185, 199, 0.25); */
   border-radius: 38px;
   border: 1px solid #FFFFFF;
   width: 310px;
@@ -48,6 +48,7 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 26px;
+  background-color: white;
  
 }
 

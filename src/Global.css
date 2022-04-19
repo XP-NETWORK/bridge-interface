@@ -1382,7 +1382,7 @@ span.invalid img {
 
 .serchInput, .mobile-search-input__box input.serchInput {
   border-radius: 200px;
-  box-shadow: 0px 1.26582px 11.3924px rgba(55, 63, 92, 0.12);
+  /* box-shadow: 0px 1.26582px 11.3924px rgba(55, 63, 92, 0.12); */
   border: 1.26582px solid #FFFFFF;
   background: #F6F6F8;
   padding: 10px 15px 10px 40px;
