@@ -42,7 +42,15 @@ export const checkIfJSON = jsonStr => {
 }
 
 const videoFormats = ["mp4", "ogg", "webm", "avi"]
+const checkIfVid = (url) => {
+  const _format = url.slice(url.lastIndexOf("."))
+  return videoFormats.some(format => format === _format)
+}
 const imageFormats = ["apng", "gif", "jpg", "jpeg", "png", "svg", "webp"]
+const checkIfImg = (url) => {
+  const _format = url.slice(url.lastIndexOf("."))
+  return imageFormats.some(format => format === _format)
+}
 
 export const parseEachNFT = async (nft, index, testnet) => {
   // debugger
@@ -59,10 +67,12 @@ export const parseEachNFT = async (nft, index, testnet) => {
     native: {...nft.native},
     dataLoaded: true,
     whitelisted: testnet ? true : whitelisted,
-    image: imageFormats.some(format => format === nft.uri.slice(nft.uri.lastIndexOf('.'))) ? nft.uri : undefined,
-    animation_url: videoFormats.some(format => format === nft.uri.slice(nft.uri.lastIndexOf('.'))) ? nft.uri : undefined
   }
-  
+
+  if(!nft.uri){
+    nftObj = {...nft, dataLoaded: true}
+    store.dispatch(setEachNFT({nftObj, index}))
+  }
   if(from.key === "Tezos"){
     nftObj.description = nft.native?.meta?.token?.metadata?.description || undefined
     nftObj.animation_url = nft.native?.meta?.token?.metadata?.animation_url || undefined
@@ -76,83 +86,81 @@ export const parseEachNFT = async (nft, index, testnet) => {
     nftObj.dataLoaded = true
     store.dispatch(setEachNFT({nftObj, index}))
   }
-  else if(!nft.uri){
-    nftObj = {...nft, dataLoaded: true}
-    store.dispatch(setEachNFT({nftObj, index}))
-  }
-  else if(nft.uri.includes(".json")){
-    axios.get(nft.uri)
-    .then( response => {
-      const { attributes, description, image, name, animation_url, external_url } = response.data
-      nftObj.name = name || undefined
-      nftObj.image = image || undefined
-      nftObj.description = description || undefined
-      nftObj.external_url = external_url || undefined
-      nftObj.attributes = [...attributes] || undefined
-      nftObj.animation_url = animation_url || undefined
-      nftObj.dataLoaded = true
-      store.dispatch(setEachNFT({nftObj, index}))
-    })
-    .catch(error => {
-      axios.get(setupURI(nft.uri)).then(response => {
-        const { attributes, description, image, name, animation_url, external_url } = response.data
-        nftObj.name = name || undefined
-        nftObj.image = image || undefined
-        nftObj.description = description || undefined
-        nftObj.external_url = external_url || undefined
-        nftObj.attributes = attributes?.length > 0 ? [...attributes] : attributes || undefined
-        nftObj.animation_url = animation_url || undefined
-        nftObj.dataLoaded = true
-        store.dispatch(setEachNFT({nftObj, index}))
-      })
-    })
-  }
-  else{
-    axios.get(setupURI(nft.uri))
-    .then( response => {
-      if(response.data?.image.includes('ipfs')){
-        axios.get(setupURI(response.data?.image)).then(response => {
-          if(response.data?.formats[0]?.mimeType.includes("image")){
-            ipfsImage = response.data?.formats[0]?.uri
-          }
-          else if(response.data?.formats[0]?.mimeType.includes("video")){
-            ipfsVideo = response.data?.formats[0]?.uri
-          }
-        }).catch(error => {
-        console.log(error)
-        })
-      }
-      // debugger
-      let _img = imageFormats.some(format => format === response.data?.image.slice(response.data?.image.lastIndexOf(".")))
-      let _vid = videoFormats.some(format => format === response.data?.animation_url.slice(response.data?.image.lastIndexOf(".")))
-      nftObj.name = response.data?.name || undefined
-      nftObj.image = _img || ipfsImage || nftObj.image || response.data?.image || undefined
-      nftObj.description = response.data?.description || undefined
-      nftObj.external_url = _vid ||response.data?.external_url || undefined
-      nftObj.attributes = [...response.data?.attributes] || undefined
-      nftObj.animation_url = nftObj.animation_url || response.data?.animation_url || undefined
-      nftObj.dataLoaded = true
-      store.dispatch(setEachNFT({nftObj, index}))
-    })
-    .catch( error => {
-      console.error(error)
-      store.dispatch(setEachNFT({nftObj, index}))
-    })
-  }
+  else if(nft.uri.includes(".json"))
+  
+  // else if(nft.uri.includes(".json")){
+  //   axios.get(nft.uri)
+  //   .then( response => {
+  //     const { attributes, description, image, name, animation_url, external_url } = response.data
+  //     nftObj.name = name || undefined
+  //     nftObj.image = image || undefined
+  //     nftObj.description = description || undefined
+  //     nftObj.external_url = external_url || undefined
+  //     nftObj.attributes = [...attributes] || undefined
+  //     nftObj.animation_url = animation_url || undefined
+  //     nftObj.dataLoaded = true
+  //     store.dispatch(setEachNFT({nftObj, index}))
+  //   })
+  //   .catch(error => {
+  //     axios.get(setupURI(nft.uri)).then(response => {
+  //       const { attributes, description, image, name, animation_url, external_url } = response.data
+  //       nftObj.name = name || undefined
+  //       nftObj.image = image || undefined
+  //       nftObj.description = description || undefined
+  //       nftObj.external_url = external_url || undefined
+  //       nftObj.attributes = attributes?.length > 0 ? [...attributes] : attributes || undefined
+  //       nftObj.animation_url = animation_url || undefined
+  //       nftObj.dataLoaded = true
+  //       store.dispatch(setEachNFT({nftObj, index}))
+  //     })
+  //   })
+  // }
+  // else{
+  //   axios.get(setupURI(nft.uri))
+  //   .then( response => {
+  //     if(response.data?.image.includes('ipfs')){
+  //       axios.get(setupURI(response.data?.image)).then(response => {
+  //         if(response.data?.formats[0]?.mimeType.includes("image")){
+  //           ipfsImage = response.data?.formats[0]?.uri
+  //         }
+  //         else if(response.data?.formats[0]?.mimeType.includes("video")){
+  //           ipfsVideo = response.data?.formats[0]?.uri
+  //         }
+  //       }).catch(error => {
+  //       console.log(error)
+  //       })
+  //     }
+  //     // debugger
+  //     let _img = imageFormats.some(format => format === response.data?.image.slice(response.data?.image.lastIndexOf(".")))
+  //     let _vid = videoFormats.some(format => format === response.data?.animation_url.slice(response.data?.image.lastIndexOf(".")))
+  //     nftObj.name = response.data?.name || undefined
+  //     nftObj.image = _img || ipfsImage || nftObj.image || response.data?.image || undefined
+  //     nftObj.description = response.data?.description || undefined
+  //     nftObj.external_url = _vid ||response.data?.external_url || undefined
+  //     nftObj.attributes = [...response.data?.attributes] || undefined
+  //     nftObj.animation_url = nftObj.animation_url || response.data?.animation_url || undefined
+  //     nftObj.dataLoaded = true
+  //     store.dispatch(setEachNFT({nftObj, index}))
+  //   })
+  //   .catch( error => {
+  //     console.error(error)
+  //     store.dispatch(setEachNFT({nftObj, index}))
+  //   })
+  // }
 
-  if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
-    whitelisted = false
-  }
-  else if(!testnet){
-    try {
-      whitelisted = await isWhiteListed(from.text, nft)
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  else if(testnet){
-    whitelisted = true
-  }
+  // if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
+  //   whitelisted = false
+  // }
+  // else if(!testnet){
+  //   try {
+  //     whitelisted = await isWhiteListed(from.text, nft)
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+  // else if(testnet){
+  //   whitelisted = true
+  // }
 
   return dataLoaded
 }
