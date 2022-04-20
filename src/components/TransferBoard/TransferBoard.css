@@ -152,10 +152,12 @@
     content: "We'd like to make sure you really want to send the NFTs and pay the associated fees.";
     position: absolute;
     font-size: 12px;
+    font-weight: 400;
+    line-height: 16.8px;
     width: 220px;
     bottom: 30px;
     left: -100px;
-    padding: 8px;
+    padding: 12px 12px 21px 12px;
     background: #F3F3F6;
     border-radius: 10px;
     box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.50);

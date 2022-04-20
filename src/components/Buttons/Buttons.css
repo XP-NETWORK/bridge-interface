@@ -80,6 +80,7 @@
 .chain-switch{
     display: flex;
     align-items: center;
+    height: 40px;
     background: #F7F8F9;
     color: #14161A;
     border: 1px solid white;

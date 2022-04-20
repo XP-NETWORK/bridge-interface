@@ -40,11 +40,12 @@ function NFTaccount() {
   const [showNFTsSearch, setNFTsSearch] = useState(false)
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
 
-
+//Angelika - 0x0d7df42014064a163DfDA404253fa9f6883b9187
+//Dima. U - 0x6449b68cc5675f6011e8DB681B142773A3157cb9
 
   async function getNFTsList() {
     const useHardcoded = false;
-    const hard = "0x6449b68cc5675f6011e8DB681B142773A3157cb9";
+    const hard = "0x0d7df42014064a163DfDA404253fa9f6883b9187";
     try {
       const w = useHardcoded
         ? hard
