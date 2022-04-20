@@ -93,13 +93,11 @@ export const parseEachNFT = async (nft, index, testnet) => {
     let response
     try {
       response = await axios.get(nft.uri)
-      debugger
       const { description, attributes, image, animation_url } = response.data
       nftObj.description = description
       nftObj.attributes = attributes
       nftObj.image = image
       nftObj.animation_url = animation_url
-      // store.dispatch(setEachNFT({nftObj, index}))
     } catch (error) {
       console.log(error)
       response = await axios.get(setupURI(nft.uri))
@@ -108,9 +106,7 @@ export const parseEachNFT = async (nft, index, testnet) => {
       nftObj.attributes = attributes
       nftObj.image = image
       nftObj.animation_url = animation_url
-      // store.dispatch(setEachNFT({nftObj, index}))
     }
-    
   }
   
   // else if(nft.uri.includes(".json")){
