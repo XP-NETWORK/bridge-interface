@@ -15,7 +15,10 @@ const axios = require("axios");
 
 export const setupURI = (uri) => {
   // debugger
-  if (uri && (uri.includes("ipfs://"))) {
+if(uri){ if(uri.includes("https://ipfs.io")){
+    return uri
+  }
+  else if (uri && (uri.includes("ipfs://"))) {
     return "https://ipfs.io/" + uri.replace(":/", "");
   }
   else if(uri && (uri.includes("https://ipfs.io"))){
@@ -27,7 +30,7 @@ export const setupURI = (uri) => {
   else 
     {
       if (uri) return uri.replace("http://", "https://");
-    }
+    }}
   return uri;
 };
 
@@ -86,7 +89,29 @@ export const parseEachNFT = async (nft, index, testnet) => {
     nftObj.dataLoaded = true
     store.dispatch(setEachNFT({nftObj, index}))
   }
-  else if(nft.uri.includes(".json"))
+  else if(nft.uri.includes(".json")){
+    let response
+    try {
+      response = await axios.get(nft.uri)
+      debugger
+      const { description, attributes, image, animation_url } = response.data
+      nftObj.description = description
+      nftObj.attributes = attributes
+      nftObj.image = image
+      nftObj.animation_url = animation_url
+      // store.dispatch(setEachNFT({nftObj, index}))
+    } catch (error) {
+      console.log(error)
+      response = await axios.get(setupURI(nft.uri))
+      const { description, attributes, image, animation_url } = response.data
+      nftObj.description = description
+      nftObj.attributes = attributes
+      nftObj.image = image
+      nftObj.animation_url = animation_url
+      // store.dispatch(setEachNFT({nftObj, index}))
+    }
+    
+  }
   
   // else if(nft.uri.includes(".json")){
   //   axios.get(nft.uri)
@@ -148,20 +173,20 @@ export const parseEachNFT = async (nft, index, testnet) => {
   //   })
   // }
 
-  // if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
-  //   whitelisted = false
-  // }
-  // else if(!testnet){
-  //   try {
-  //     whitelisted = await isWhiteListed(from.text, nft)
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-  // else if(testnet){
-  //   whitelisted = true
-  // }
-
+  if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
+    whitelisted = false
+  }
+  else if(!testnet){
+    try {
+      whitelisted = await isWhiteListed(from.text, nft)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  else if(testnet){
+    whitelisted = true
+  }
+  store.dispatch(setEachNFT({nftObj, index}))
   return dataLoaded
 }
 

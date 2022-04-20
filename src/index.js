@@ -26,7 +26,7 @@ ReactDOM.render(
     <Web3ReactProvider getLibrary={getLibrary}>
       <Provider store={store}>
         <BrowserRouter>
-          {/* <BackGround /> */}
+          <BackGround />
           <NavBar />
           <App />
           <Footer />
