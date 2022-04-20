@@ -15,7 +15,10 @@ const axios = require("axios");
 
 export const setupURI = (uri) => {
   // debugger
-  if (uri && (uri.includes("ipfs://"))) {
+if(uri){ if(uri.includes("https://ipfs.io")){
+    return uri
+  }
+  else if (uri && (uri.includes("ipfs://"))) {
     return "https://ipfs.io/" + uri.replace(":/", "");
   }
   else if(uri && (uri.includes("https://ipfs.io"))){
@@ -27,135 +30,108 @@ export const setupURI = (uri) => {
   else 
     {
       if (uri) return uri.replace("http://", "https://");
-    }
+    }}
   return uri;
 };
 
-export const checkIfJSON = jsonStr => {
-  let obj
-  try {
-    obj = JSON.parse(jsonStr)
-  } catch (error) {
-    return false
+const checkIfImage = async (url) => {
+  let response
+  const imageFormats = [".png", ".gif", ".jpg", ".jpeg", ".png", ".svg", ".webp"]
+  const imageFormat = imageFormats.some(format => url.includes(format))
+  if(imageFormat){
+    return true
   }
-  return obj
+  else{
+    try {
+      response = await axios.get(url)
+    } catch (error) {
+      console.log(error)
+      response = await axios.get(setupURI(url))
+    }
+  }
 }
 
-const videoFormats = ["mp4", "ogg", "webm", "avi"]
-const imageFormats = ["apng", "gif", "jpg", "jpeg", "png", "svg", "webp"]
+const checkIfVideo = async (url) => {
+  // debugger
+  let response
+  const videoFormats = [".mp4", ".ogg", ".webm", ".avi"]
+  const videoFormat = videoFormats.some(format => url.includes(format))
+  if(videoFormat){
+    return true
+  }
+  else{
+    try {
+      response = await axios.get(url)
+      console.log("🚀 ~ file: helpers.js ~ line 65 ~ checkIfVideo ~ response", response)
+      if(typeof response.data === "object"){
+        console.log(response)
+      }
+    } catch (error) {
+      console.log(error)
+      response = await axios.get(setupURI(url))
+      console.log("🚀 ~ file: helpers.js ~ line 72 ~ checkIfVideo ~ response", response)
+      if(typeof response.data === "object"){
+        console.log(response)
+      }
+    }
+  }
+}
 
 export const parseEachNFT = async (nft, index, testnet) => {
-  debugger
+  // debugger
+  const uri = nft.uri
   const { from } = store.getState().general;
   let whitelisted
-  let ipfsImage
-  let ipfsVideo
-  
   let dataLoaded = false
-  // debugger
   let nftObj = {
     uri: nft.uri,
     collectionIdent: nft.collectionIdent || undefined,
     native: {...nft.native},
     dataLoaded: true,
     whitelisted: testnet ? true : whitelisted,
-    image: imageFormats.some(format => format === nft.uri.slice(nft.uri.lastIndexOf('.'))) ? nft.uri : undefined,
-    animation_url: videoFormats.some(format => format === nft.uri.slice(nft.uri.lastIndexOf('.'))) ? nft.uri : undefined
   }
-  
-  if(from.key === "Tezos"){
-    nftObj.description = nft.native?.meta?.token?.metadata?.description || undefined
-    nftObj.animation_url = nft.native?.meta?.token?.metadata?.animation_url || undefined
-    nftObj.artifactUri = nft.native?.meta?.token?.metadata?.artifactUri || undefined
-    nftObj.attributes = [...nft.native?.meta?.token?.metadata?.attributes] || undefined
-    nftObj.image = nft.native?.meta?.token?.metadata?.image || undefined
-    nftObj.displayUri = nft.native?.meta?.token?.metadata?.displayUri || undefined
-    nftObj.ipfs = nft.native?.meta?.token?.metadata?.ipfs || undefined
-    nftObj.name = nft.native?.meta?.token?.metadata?.name || undefined
-    nftObj.wrapped = {...nft.native?.meta?.token?.metadata?.wrapped} || undefined
+  if(uri.indexOf("http://") === -1 || uri.indexOf("https://") -1){
     nftObj.dataLoaded = true
-    store.dispatch(setEachNFT({nftObj, index}))
+    nftObj.image = undefined
+    nftObj.animation_url = undefined
   }
-  else if(!nft.uri){
-    nftObj = {...nft, dataLoaded: true}
-    store.dispatch(setEachNFT({nftObj, index}))
+  let response
+  try {
+    response = await axios.get(uri)
+    nftObj = {...nftObj, ...response.data}
+    if(nftObj.data?.image_url){
+      const image  = nftObj.data?.image
+      nftObj.image = image
+    }
+  } catch (error) {
+    response = await axios.get(setupURI(uri))
+    nftObj = {...nftObj, ...response.data}
+    if(nftObj.data?.image_url){
+      const image  = nftObj.data?.image
+      nftObj.image = image
+    }
   }
-  else if(nft.uri.includes(".json")){
-    axios.get(nft.uri)
-    .then( response => {
-      const { attributes, description, image, name, animation_url, external_url } = response.data
-      nftObj.name = name || undefined
-      nftObj.image = image || undefined
-      nftObj.description = description || undefined
-      nftObj.external_url = external_url || undefined
-      nftObj.attributes = [...attributes] || undefined
-      nftObj.animation_url = animation_url || undefined
-      nftObj.dataLoaded = true
-      store.dispatch(setEachNFT({nftObj, index}))
-    })
-    .catch(error => {
-      axios.get(setupURI(nft.uri)).then(response => {
-        const { attributes, description, image, name, animation_url, external_url } = response.data
-        nftObj.name = name || undefined
-        nftObj.image = image || undefined
-        nftObj.description = description || undefined
-        nftObj.external_url = external_url || undefined
-        nftObj.attributes = attributes?.length > 0 ? [...attributes] : attributes || undefined
-        nftObj.animation_url = animation_url || undefined
-        nftObj.dataLoaded = true
-        store.dispatch(setEachNFT({nftObj, index}))
-      })
-    })
-  }
-  else{
-    axios.get(setupURI(nft.uri))
-    .then( response => {
-      if(response.data?.image.includes('ipfs')){
-        axios.get(setupURI(response.data?.image)).then(response => {
-          if(response.data?.formats[0]?.mimeType.includes("image")){
-            ipfsImage = response.data?.formats[0]?.uri
-          }
-          else if(response.data?.formats[0]?.mimeType.includes("video")){
-            ipfsVideo = response.data?.formats[0]?.uri
-          }
-        }).catch(error => {
-        console.log(error)
-        })
-      }
-      // debugger
-      let _img = imageFormats.some(format => format === response.data?.image.slice(response.data?.image.lastIndexOf(".")))
-      let _vid = videoFormats.some(format => format === response.data?.animation_url.slice(response.data?.image.lastIndexOf(".")))
-      nftObj.name = response.data?.name || undefined
-      nftObj.image = _img || ipfsImage || nftObj.image || response.data?.image || undefined
-      nftObj.description = response.data?.description || undefined
-      nftObj.external_url = _vid ||response.data?.external_url || undefined
-      nftObj.attributes = [...response.data?.attributes] || undefined
-      nftObj.animation_url = nftObj.animation_url || response.data?.animation_url || undefined
-      nftObj.dataLoaded = true
-      store.dispatch(setEachNFT({nftObj, index}))
-    })
-    .catch( error => {
-      console.error(error)
-      store.dispatch(setEachNFT({nftObj, index}))
-    })
-  }
-
   if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
     whitelisted = false
   }
   else if(!testnet){
     try {
       whitelisted = await isWhiteListed(from.text, nft)
+      nftObj.whitelisted = whitelisted
     } catch (error) {
       console.log(error);
     }
   }
-  else if(testnet){
-    whitelisted = true
+  if(nftObj.image){
+    checkIfImage(nftObj.image)
   }
-
+  if(nftObj.animation_url){
+    checkIfVideo(nftObj.animation_url)
+  }
+  store.dispatch(setEachNFT({nftObj, index}))
   return dataLoaded
 }
+
 
 export const parseNFTS = async (nfts) => {
 const { from, to } = store.getState().general;
@@ -172,7 +148,7 @@ if(from.key === "Tezos"){
       return await new Promise(async (resolve) => {
         try {
           if (!n.uri) resolve({ ...n })
-          const jsonURI = checkIfJSON(n.uri) || undefined
+          const jsonURI =  undefined
           const uri = jsonURI?.image
           if (jsonURI) resolve({...n, ...jsonURI, uri })
           const res =  await axios({url: setupURI(n.uri), timeout: 5000});

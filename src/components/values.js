@@ -189,7 +189,7 @@ export const chains = [
     text: "Velas",
     value: "Velas",
     chainId: 106,
-    order: 1,
+    order: 2,
     image: { avatar: true, src: Velas },
     newChain: true,
     maintenance: false,
@@ -244,11 +244,11 @@ export const chains = [
     text: "Aurora",
     value: "Aurora",
     chainId: 1313161554,
-    order: 4,
+    order: 1,
     image: { avatar: true, src: Aurora },
-    maintenance: true,
+    maintenance: false,
     testNet: false,
-    mainnet: false,
+    mainnet: true,
     newChain: true
   },
   {
