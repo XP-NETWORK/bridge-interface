@@ -45,7 +45,7 @@ const videoFormats = ["mp4", "ogg", "webm", "avi"]
 const imageFormats = ["apng", "gif", "jpg", "jpeg", "png", "svg", "webp"]
 
 export const parseEachNFT = async (nft, index, testnet) => {
-  // debugger
+  debugger
   const { from } = store.getState().general;
   let whitelisted
   let ipfsImage

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import image01 from '../../assets/img/slider/1.jpeg'
-import image02 from '../../assets/img/slider/2.png'
+import image02 from '../../assets/img/slider/2.gif'
 import image03 from '../../assets/img/slider/3.png'
 import image04 from '../../assets/img/slider/4.png'
 import image5 from '../../assets/img/slider/5.jpeg'
@@ -19,9 +19,9 @@ const initialState = {
     },
     {
       image:  image02,
-      name: "Azuki #2878",
-      description: "Azuki starts with a collection of 10,000 avatars that give you membership access to The Garden: a corner of the internet where artists, builders, and web3 enthusiasts meet to create a decentralized future.",
-      collection: "https://rarible.com/azuki/items",
+      name: "MachineFi NFT",
+      description: undefined,
+      collection: undefined,
       progWidth: 0,
       action: false
     },
