@@ -27,9 +27,15 @@ const generalSlice = createSlice({
       state.gitLatestCommit = action.payload
     },
     setEachNFT(state, action){
-      // debugger
       const { nftObj, index } = action.payload
       state.NFTList = state.NFTList.map((n, i) => {
+        if(i === index) n = nftObj
+        return n
+      })
+    },
+    setEachClaimables(state, action){
+      const { nftObj, index } = action.payload
+      state.algorandClaimables = state.algorandClaimables.map((n, i) => {
         if(i === index) n = nftObj
         return n
       })
@@ -322,6 +328,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+  setEachClaimables,
   setEachNFT,
   setUnsupportedNetwork,
   setPreloadNFTs,

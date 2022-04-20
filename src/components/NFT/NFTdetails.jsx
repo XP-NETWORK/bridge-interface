@@ -14,7 +14,7 @@ import VideoOrImage from "./VideoOrImage";
 import { useSelector } from "react-redux";
 
 
-function NFTdetails({ nftInf }) {
+function NFTdetails({ nftInf, claimables }) {
   const widget = new URLSearchParams(window.location.search).get("widget");
   const { name, description, attributes, uri, native } = nftInf;
   const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nftInf);
@@ -29,7 +29,7 @@ function NFTdetails({ nftInf }) {
     let mintWidth
     const toNonce = CHAIN_INFO[toKey].nonce
     const fromNonce = CHAIN_INFO[fromKey].nonce
-    const contract = native.contract.toLowerCase()
+    const contract = native?.contract?.toLowerCase()
     const factory = await getFactory()
     try {
       mintWidth = await factory.getVerifiedContracts(contract, toNonce, fromNonce)
@@ -41,7 +41,9 @@ function NFTdetails({ nftInf }) {
   }
 
   useEffect(() => {
-    getMintedWith()
+    if(!claimables){
+      getMintedWith()
+    }
   },[])
 
   return (

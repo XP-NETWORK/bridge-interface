@@ -14,9 +14,10 @@ import BrockenUtlGridView from "./BrockenUtlGridView";
 import "./NewNFT.css";
 // import "./NFTcard.css"
 import Preload from "./Preload";
+import ClaimableCard from "./ClaimableCard";
 
 
-export default function NFTcard({ nft, index }) {
+export default function NFTcard({ nft, index, claimables }) {
 
     const from = useSelector(state => state.general.from)
     const dispatch = useDispatch();
@@ -57,7 +58,7 @@ export default function NFTcard({ nft, index }) {
         localStorage.setItem("imgData", imgData);
        }
        else{
-        await parseEachNFT(nft, index, testnet)
+        await parseEachNFT(nft, index, testnet, claimables)
        }
     },[])
     
@@ -73,7 +74,7 @@ export default function NFTcard({ nft, index }) {
       <>
       {isShown(search, nft)?  <div className={`nft-box__wrapper`}  >
       { !nft.dataLoaded ? <Preload /> : 
-      <div onClick={() => nft.whitelisted ? addRemoveNFT(nft, index): undefined } className={nft.whitelisted ? "nft__card--selected" : "nft__card"}>
+      <div onClick={() => nft.whitelisted && !claimables ? addRemoveNFT(nft, index): undefined } className={nft.whitelisted ? "nft__card--selected" : "nft__card"}>
         <div className="nft__main">
           { nft.uri && isValidHttpUrl(nft.uri, index) ? 
             nft.animation_url && nft.image ? <VideoAndImage index={index} videoUrl={nft.animation_url} imageUrl={nft.image} />
@@ -82,11 +83,12 @@ export default function NFTcard({ nft, index }) {
           : [nft.animation_url,nft.image]?.length > 0 && <VideoOrImage urls={[nft.animation_url,nft.image]} i={index} />
           : <BrockenUtlGridView />
           }
-          { nft.whitelisted ? !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> : "" }
+          { !claimables && nft.whitelisted ? !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> : "" }
           { !nft.whitelisted && <NotWhiteListed /> }
+          { claimables && < ClaimableCard nft={nft} /> }
         </div>
         <div className="nft__footer">
-            <span className="nft-name"><span className="name">{nft.name || nft.native.name}</span><NFTdetails nftInf={nft} index={index} /></span>
+            <span className="nft-name"><span className="name">{nft.name || nft.native.name}</span><NFTdetails nftInf={nft} index={index} claimables={claimables} /></span>
             <span className="nft-number">{nft.native.tokenId}</span>
         </div>
       </div>

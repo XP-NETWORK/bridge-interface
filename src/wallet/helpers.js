@@ -1,7 +1,7 @@
 import { AppConfigs, ChainFactory, ChainFactoryConfigs } from "xp.network";
 import { Chain, Config } from "xp.network/dist/consts";
 import { chainsConfig, CHAIN_INFO } from "../components/values";
-import { setAlgorandClaimables, setBigLoader, setEachNFT, setFactory, setNFTList, setPreloadNFTs } from "../store/reducers/generalSlice";
+import { setAlgorandClaimables, setBigLoader, setEachClaimables, setEachNFT, setFactory, setNFTList, setPreloadNFTs } from "../store/reducers/generalSlice";
 import store from "../store/store";
 import io from "socket.io-client";
 import { isWhiteListed } from "./../components/NFT/NFTHelper"
@@ -77,7 +77,7 @@ const checkIfVideo = async (url) => {
   }
 }
 
-export const parseEachNFT = async (nft, index, testnet) => {
+export const parseEachNFT = async (nft, index, testnet, claimables) => {
   // debugger
   const uri = nft.uri
   const { from } = store.getState().general;
@@ -89,6 +89,7 @@ export const parseEachNFT = async (nft, index, testnet) => {
     native: {...nft.native},
     dataLoaded: true,
     whitelisted: testnet ? true : whitelisted,
+    nftId: nft.nftId || undefined
   }
   if(uri.indexOf("http://") === -1 || uri.indexOf("https://") -1){
     nftObj.dataLoaded = true
@@ -127,6 +128,9 @@ export const parseEachNFT = async (nft, index, testnet) => {
   }
   if(nftObj.animation_url){
     checkIfVideo(nftObj.animation_url)
+  }
+  if(claimables){
+    store.dispatch(setEachClaimables({nftObj, index}))
   }
   store.dispatch(setEachNFT({nftObj, index}))
   return dataLoaded

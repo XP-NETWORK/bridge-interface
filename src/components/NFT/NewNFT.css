@@ -165,7 +165,7 @@
   display: none;
 }
 
-.not-whitelisted{
+.not-whitelisted, .claimable-card{
   position: absolute;
   top: 0;
   right: 0;
@@ -249,7 +249,7 @@
   letter-spacing: 0em;
 }
 
-.not-whitelisted__wrapper{
+.not-whitelisted__wrapper, .claimable-card__wrapper{
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -305,6 +305,9 @@
   width: 100%;
   backdrop-filter: blur(2.5px);
   border-radius: 8px;
+}
+.not-whitelisted__button:hover{
+  box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.52);
 }
 
 .nft-box__container {
