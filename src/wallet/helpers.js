@@ -98,6 +98,7 @@ export const parseEachNFT = async (nft, index, testnet) => {
   let response
   try {
     response = await axios.get(uri)
+    debugger
     nftObj = {...nftObj, ...response.data}
   } catch (error) {
     response = await axios.get(setupURI(uri))
