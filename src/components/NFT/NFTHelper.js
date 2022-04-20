@@ -58,7 +58,7 @@ export const getUrl = nft => {
         }
     });
     strings.forEach(item => {
-        if((item.includes("https:") || item.includes("ipfs") || item.includes("base64")) && !item.includes('.json') && !checkIfJSON(item)){
+        if((item.includes("https:") || item.includes("ipfs") || item.includes("base64")) && !item.includes('.json')){
             urls.push(item)
         }
     });
