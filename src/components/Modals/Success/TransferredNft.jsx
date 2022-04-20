@@ -61,7 +61,6 @@ export default function TransferredNft({ nft }) {
     }
 
     useEffect(() => {
-
         checkStatus()
     }, [txnHashArr])
     

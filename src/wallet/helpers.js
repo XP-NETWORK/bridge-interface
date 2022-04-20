@@ -368,7 +368,7 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 }
 
 export const getAlgorandClaimables = async (account) => {
-  debugger
+  // debugger
   let claimables
   const factory = await getFactory()
   try {
