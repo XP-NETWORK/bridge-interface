@@ -31,25 +31,25 @@ export default function NFTcard({ nft, index, claimables }) {
         n.native.chainId === nft.native.chainId
     )[0];
 
-  
-    const [whiteListed, setWhitelisted] = useState(true)
-    // const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
-    const [dataLoaded, setDataloaded] = useState(false)
     
     const getBase64Image = (imageUrl) => {
       var canvas = document.createElement("canvas");
       const img = new Image(imageUrl)
       canvas.width = img.width;
       canvas.height = img.height;
-  
       var ctx = canvas.getContext("2d");
       ctx.drawImage(img, 0, 0);
-  
       var dataURL = canvas.toDataURL("image/png");
-  
       return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
     }
     
+    function addRemoveNFT(chosen) {
+      if (!isSelected) {
+          dispatch(setSelectedNFTList(chosen));
+      } else {
+          dispatch(removeFromSelectedNFTList(nft));
+      }
+  }
 
     useEffect(async() => {
        
@@ -62,14 +62,7 @@ export default function NFTcard({ nft, index, claimables }) {
        }
     },[])
     
-//onClick={() => nft.whitelisted ? addRemoveNFT(nft, index): undefined }
-    function addRemoveNFT(chosen) {
-        if (!isSelected) {
-            dispatch(setSelectedNFTList(chosen));
-        } else {
-            dispatch(removeFromSelectedNFTList(nft));
-        }
-    }
+
     return (
       <>
       {isShown(search, nft)?  <div className={`nft-box__wrapper`}  >
@@ -84,7 +77,7 @@ export default function NFTcard({ nft, index, claimables }) {
           : <BrockenUtlGridView />
           }
           { !claimables && nft.whitelisted ? !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> : "" }
-          { !nft.whitelisted && <NotWhiteListed /> }
+          {/* { !nft.whitelisted && <NotWhiteListed /> } */}
           { claimables && < ClaimableCard nft={nft} /> }
         </div>
         <div className="nft__footer">

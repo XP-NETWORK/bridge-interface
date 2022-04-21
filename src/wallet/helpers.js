@@ -37,16 +37,18 @@ if(uri){ if(uri.includes("https://ipfs.io")){
 const checkIfImage = async (url) => {
   let response
   const imageFormats = [".png", ".gif", ".jpg", ".jpeg", ".png", ".svg", ".webp"]
-  const imageFormat = imageFormats.some(format => url.includes(format))
-  if(imageFormat){
-    return true
-  }
-  else{
-    try {
-      response = await axios.get(url)
-    } catch (error) {
-      console.log(error)
-      response = await axios.get(setupURI(url))
+  if(url){
+    const imageFormat = imageFormats.some(format => url?.includes(format))
+    if(imageFormat){
+      return true
+    }
+    else{
+      try {
+        response = await axios.get(url)
+      } catch (error) {
+        console.log(error)
+        response = await axios.get(setupURI(url))
+      }
     }
   }
 }
@@ -55,24 +57,24 @@ const checkIfVideo = async (url) => {
   // debugger
   let response
   const videoFormats = [".mp4", ".ogg", ".webm", ".avi"]
-  const videoFormat = videoFormats.some(format => url.includes(format))
-  if(videoFormat){
-    return true
-  }
-  else{
-    try {
-      response = await axios.get(url)
-      console.log("🚀 ~ file: helpers.js ~ line 65 ~ checkIfVideo ~ response", response)
-      if(typeof response.data === "object"){
-        console.log(response)
-      }
-    } catch (error) {
-      console.log(error)
-      response = await axios.get(setupURI(url))
-      console.log("🚀 ~ file: helpers.js ~ line 72 ~ checkIfVideo ~ response", response)
-      if(typeof response.data === "object"){
-        console.log(response)
-      }
+  if(url){
+    const videoFormat = videoFormats.some(format => url?.includes(format))
+    if(videoFormat){
+      return true
+    }
+    else{
+      // try {
+      //   response = await axios.get(url)
+      //   if(typeof response.data === "object"){
+      //     console.log(response)
+      //   }
+      // } catch (error) {
+      //   console.log(error)
+      //   response = await axios.get(setupURI(url))
+      //   if(typeof response.data === "object"){
+      //     console.log(response)
+      //   }
+      // }
     }
   }
 }
@@ -113,6 +115,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
       nftObj.image = image
     }
   }
+
   if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
     whitelisted = false
   }
@@ -124,15 +127,23 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
       console.log(error);
     }
   }
+  
   if(nftObj.image){
-    checkIfImage(nftObj.image)
+    // debugger
+    if(await checkIfVideo(nftObj.image)){
+      console.log("🚀 ~ file: helpers.js ~ line 119 ~ parseEachNFT ~ nftObj.image", nftObj.image, index)
+      nftObj.animation_url = nftObj.image
+      nftObj.image = undefined
+    }
   }
-  if(nftObj.animation_url){
-    checkIfVideo(nftObj.animation_url)
-  }
+  // if(nftObj.animation_url){
+  //   const animation = await checkIfVideo(nftObj.animation_url)
+  // }
   if(claimables){
     store.dispatch(setEachClaimables({nftObj, index}))
   }
+
+
   store.dispatch(setEachNFT({nftObj, index}))
   return dataLoaded
 }
@@ -316,6 +327,7 @@ export const handleChainFactory = async (someChain) => {
 
 export const getNFTS = async (wallet, from) => {
   // debugger
+  console.log("getNFTS")
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
   const { algorandAccount, tronWallet } = store.getState().general
   const factory = await getFactory();

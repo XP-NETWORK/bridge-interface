@@ -9,7 +9,7 @@ export default function Slider() {
   const step = useSelector(state => state.slider.step)
   const x = useSelector(state => state.slider.position)
   const [bgStyle, setStyle] = React.useState({})
-  console.log("🚀 ~ file: Slider.jsx ~ line 12 ~ Slider ~ bgStyle", bgStyle)
+  // console.log("🚀 ~ file: Slider.jsx ~ line 12 ~ Slider ~ bgStyle", bgStyle)
 
 
 React.useEffect(() => {

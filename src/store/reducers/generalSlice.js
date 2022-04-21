@@ -13,10 +13,6 @@ const initialState = {
   bigLoader: true,
   innerWidth: 0,
   alert: true,
-
-
-
-  // preloadNFTs: []
 };
 
 const generalSlice = createSlice({

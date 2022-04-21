@@ -110,7 +110,7 @@ function ConnectWallet() {
 
   return (
     <div>
-      <div onClick={() => !connected ? setShow(true) : handleConnect()} className={from && to ? "connect-wallet__button" : "connect-wallet__button--disabled"}>
+      <div onClick={() => from && to ? !connected ? setShow(true) : handleConnect() : undefined} className={from && to ? "connect-wallet__button" : "connect-wallet__button--disabled"}>
         Continue bridging -&gt;
       </div>
       <div id="aboutnft" className="aboutNft">
