@@ -89,7 +89,8 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     native: {...nft.native},
     dataLoaded: true,
     whitelisted: testnet ? true : whitelisted,
-    nftId: nft.nftId || undefined
+    nftId: nft.nftId || undefined,
+    appId: nft.appId || undefined
   }
   if(uri.indexOf("http://") === -1 || uri.indexOf("https://") -1){
     nftObj.dataLoaded = true
