@@ -129,7 +129,6 @@ export default function ButtonToTransfer() {
                 const mintWidth = await factory.getVerifiedContracts(contract, toNonce, fromNonce)
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
-                const preTransfer = await fromChain.preTransfer(signer, nft, bigNumberFees)
                 result = await factory.transferNft(
                     fromChain, 
                     toChain,   
@@ -139,7 +138,7 @@ export default function ButtonToTransfer() {
                     bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
                 )
-                console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 141 ~ sendEach ~ result", result)
+                console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 141 ~ sendEach ~ result", result?.data?.data?.toString())
                 dispatch(dispatch(setTransferLoaderModal(false)))
                 setLoading(false)
                 dispatch(setTxnHash({txn: result, nft}))

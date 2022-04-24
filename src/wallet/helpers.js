@@ -82,7 +82,7 @@ const checkIfVideo = async (url) => {
 
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
-  // debugger
+  debugger
   const uri = nft.uri
   const { from } = store.getState().general;
   let whitelisted
@@ -102,8 +102,11 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftObj.animation_url = undefined
   }
   let response
+
   try {
-    response = await axios.get(uri)
+    response = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`).catch( error => {
+      console.log(error)
+    })
     nftObj = {...nftObj, ...response.data}
     if(nftObj.data?.image_url){
       const image  = nftObj.data?.image
@@ -138,11 +141,12 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
       console.log(error);
     }
   }
-  
+  if(nftObj.image.includes("ipfs://") && !nftObj.image.includes("https://ipfs.io")){
+    nftObj.image = "https://ipfs.io/" + nftObj.image.replace(":/", "")
+  }
   if(nftObj.image){
     // debugger
     if(await checkIfVideo(nftObj.image)){
-      console.log("🚀 ~ file: helpers.js ~ line 119 ~ parseEachNFT ~ nftObj.image", nftObj.image, index)
       nftObj.animation_url = nftObj.image
       nftObj.image = undefined
     }

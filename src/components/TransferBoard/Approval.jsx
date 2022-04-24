@@ -116,7 +116,7 @@ function Approval(props) {
       const c = await factory.inner(15);
       const signer = await getAlgorandWalletSigner();
       try {
-        const approv = await c.preTransfer(signer, nft, bigNumberFees);
+        const approve = await c.preTransfer(signer, nft, bigNumberFees);
       } catch (error) {
         console.log(error);
       }
