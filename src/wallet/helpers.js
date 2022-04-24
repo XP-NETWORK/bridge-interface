@@ -34,6 +34,7 @@ if(uri){ if(uri.includes("https://ipfs.io")){
   return uri;
 };
 
+
 const checkIfImage = async (url) => {
   let response
   const imageFormats = [".png", ".gif", ".jpg", ".jpeg", ".png", ".svg", ".webp"]
@@ -79,6 +80,7 @@ const checkIfVideo = async (url) => {
   }
 }
 
+
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
   // debugger
   const uri = nft.uri
@@ -114,6 +116,15 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
       const image  = nftObj.data?.image
       nftObj.image = image
     }
+  }
+
+  if(from.text === "Tezos"){
+    debugger
+    nftObj.image = nft.image || nft.native?.uri
+    nftObj.collectionIdent = nft.collectionIdent
+    nftObj.native.token_id = nft.native?.token_id
+    nftObj.native.contract = nft.native?.contract
+    nftObj.native = {...nftObj.native, ...nftObj.native?.meta}
   }
 
   if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){

@@ -130,7 +130,6 @@ export default function ButtonToTransfer() {
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
                 const preTransfer = await fromChain.preTransfer(signer, nft, bigNumberFees)
-                console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 133 ~ sendEach ~ pretransfer", preTransfer)
                 result = await factory.transferNft(
                     fromChain, 
                     toChain,   
