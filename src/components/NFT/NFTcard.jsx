@@ -12,6 +12,7 @@ import BrockenUtlGridView from "./BrockenUtlGridView";
 import "./NewNFT.css";
 import Preload from "./Preload";
 import ClaimableCard from "./ClaimableCard";
+import NotWhiteListed from "./NotWhiteListed";
 
 
 export default function NFTcard({ nft, index, claimables }) {
@@ -69,7 +70,7 @@ export default function NFTcard({ nft, index, claimables }) {
           : <BrockenUtlGridView />
           }
           { !claimables && nft.whitelisted ? !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> : "" }
-          {/* { !nft.whitelisted && <NotWhiteListed /> } */}
+          { !nft.whitelisted && <NotWhiteListed /> }
           { claimables && < ClaimableCard nft={nft} index={index} /> }
         </div>
         <div className="nft__footer">
