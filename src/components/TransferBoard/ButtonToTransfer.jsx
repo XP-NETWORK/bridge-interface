@@ -107,7 +107,11 @@ export default function ButtonToTransfer() {
             if(from === "Tron"){
                 factory = await getFactory()
                 const contract = nftSmartContract.toLowerCase()
-                const mintWidth = await factory.getVerifiedContracts(contract, toNonce, fromNonce)
+                const wrapped = await factory.isWrappedNft(nft, fromNonce)
+                let mintWidth
+                if(!wrapped){
+                    mintWidth = await factory.getVerifiedContracts(contract, toNonce, fromNonce)
+                }
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
                 result = await factory.transferNft(
@@ -126,7 +130,11 @@ export default function ButtonToTransfer() {
             else{
                 factory = await getFactory()
                 const contract = nft.collectionIdent || nftSmartContract.toLowerCase()
-                const mintWidth = await factory.getVerifiedContracts(contract, toNonce, fromNonce)
+                const wrapped = await factory.isWrappedNft(nft, fromNonce)
+                let mintWidth
+                if(!wrapped){
+                    mintWidth = await factory.getVerifiedContracts(contract, toNonce, fromNonce)
+                }
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
                 result = await factory.transferNft(
@@ -138,9 +146,9 @@ export default function ButtonToTransfer() {
                     bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
                 )
-                const destinationTxn = await factory.getDestinationTransaction(toChain)
-                console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 142 ~ sendEach ~ destinationTxn", destinationTxn)
-                console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 141 ~ sendEach ~ result", result?.data?.data?.toString())
+                // const destinationTxn = await factory.getDestinationTransaction(toChain)
+                // console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 142 ~ sendEach ~ destinationTxn", destinationTxn)
+                // console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 141 ~ sendEach ~ result", result?.data?.data?.toString())
                 dispatch(dispatch(setTransferLoaderModal(false)))
                 setLoading(false)
                 dispatch(setTxnHash({txn: result, nft}))
