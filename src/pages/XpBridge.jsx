@@ -11,12 +11,8 @@ import ProtectedRoute from "../pages/ProtectedRoute"
 // import SuccessModal from "../components/Modals/Success/SuccessModal"
 
 function XpBridge() {
-  useEffect(() => {}, []);
   const testnet = useSelector(state => state.general.testNet)
-  const { widget } = useSelector((s) => s.general);
-  const algorandClaimables = useSelector(
-    (state) => state.general.algorandClaimables
-  );
+
   return (
     <div className="nftContainer">
       {/* { algorandClaimables && algorandClaimables.length > 0 && <Transactionhistory /> } */}

@@ -138,6 +138,8 @@ export default function ButtonToTransfer() {
                     bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
                 )
+                const destinationTxn = await factory.getDestinationTransaction(toChain)
+                console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 142 ~ sendEach ~ destinationTxn", destinationTxn)
                 console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 141 ~ sendEach ~ result", result?.data?.data?.toString())
                 dispatch(dispatch(setTransferLoaderModal(false)))
                 setLoading(false)

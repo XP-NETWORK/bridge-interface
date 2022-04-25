@@ -268,6 +268,10 @@ const generalSlice = createSlice({
     setAlgorandClaimables(state, action) {
       state.algorandClaimables = action.payload;
     },
+    removeFromClaimables(state, action){
+      const { index } = action.payload
+      state.algorandClaimables = state.algorandClaimables.filter((n, i) => i !== index )
+    },
     setAlgorandWallet(state, action) {
       state.AlgorandWallet = action.payload;
     },
@@ -324,6 +328,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+  removeFromClaimables,
   setEachClaimables,
   setEachNFT,
   setUnsupportedNetwork,

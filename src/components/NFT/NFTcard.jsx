@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setSelectedNFTList,removeFromSelectedNFTList, updateNFTs } from "../../store/reducers/generalSlice";
+import { setSelectedNFTList,removeFromSelectedNFTList } from "../../store/reducers/generalSlice";
 import NFTdetails from './NFTdetails'
 import { useSelector } from "react-redux";
 import { setupURI } from "../../wallet/oldHelper";
-import { getUrl, isWhiteListed } from "./NFTHelper.js";
 import { isValidHttpUrl, parseEachNFT } from "../../wallet/helpers";
 import { isShown } from "./NFTHelper.js";
 import VideoOrImage from "./VideoOrImage";
 import VideoAndImage from "./VideoAndImage"
-import NotWhiteListed from "./NotWhiteListed"
 import BrockenUtlGridView from "./BrockenUtlGridView";
 import "./NewNFT.css";
-// import "./NFTcard.css"
 import Preload from "./Preload";
 import ClaimableCard from "./ClaimableCard";
 
@@ -52,13 +49,8 @@ export default function NFTcard({ nft, index, claimables }) {
   }
 
     useEffect(async() => {
-       
-       if(nft.dataLoaded){
-        const imgData = getBase64Image(nft.iamge);
-        localStorage.setItem("imgData", imgData);
-       }
-       else{
-        await parseEachNFT(nft, index, testnet, claimables)
+       if(!nft.dataLoaded){
+         await parseEachNFT(nft, index, testnet, claimables)
        }
     },[])
     
@@ -78,7 +70,7 @@ export default function NFTcard({ nft, index, claimables }) {
           }
           { !claimables && nft.whitelisted ? !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> : "" }
           {/* { !nft.whitelisted && <NotWhiteListed /> } */}
-          { claimables && < ClaimableCard nft={nft} /> }
+          { claimables && < ClaimableCard nft={nft} index={index} /> }
         </div>
         <div className="nft__footer">
             <span className="nft-name"><span className="name">{nft.name || nft.native.name}</span><NFTdetails nftInf={nft} index={index} claimables={claimables} /></span>

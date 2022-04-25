@@ -8,22 +8,18 @@ import TronPopUp from "./components/innercomponents/TronPopUp";
 import { chains } from "./components/values";
 import About from "./components/innercomponents/About";
 import Video from "./components/innercomponents/Video";
-import { setClaimablesAlgorand, transformToDate } from "./wallet/helpers";
+import { transformToDate } from "./wallet/helpers";
 import TechnicalSupport from "./components/innercomponents/TechnicalSupport";
 import TransferLoader from "./components/innercomponents/TransferLoader";
 import TronConnectionErrMod from "./components/Modals/TronModals/TronConnectionErrMod.jsx";
 import "./components/Modals/Modal.css"
 import Alert from "./components/Alert"
 import SuccessModal from "./components/Modals/Success/SuccessModal.jsx"
-import MetaTags from 'react-meta-tags';
 
 function App() {
   const dispatch = useDispatch();
-  const algorandAccount = useSelector((state) => state.general.algorandAccount);
   const state = useSelector((state) => state.general);
   const axios = require("axios");
-
-
 
   const checkValidators = async () => {
     let res;
@@ -73,15 +69,15 @@ function App() {
     })
   }, []);
 
-  useEffect(() => {
-    if (algorandAccount) {
-      try {
-        setClaimablesAlgorand(algorandAccount);
-      } catch (err) {
-        console.log(err, "Algorand claimables error");
-      }
-    }
-  }, [algorandAccount]);
+  // useEffect(() => {
+  //   if (algorandAccount) {
+  //     try {
+  //       setClaimablesAlgorand(algorandAccount);
+  //     } catch (err) {
+  //       console.log(err, "Algorand claimables error");
+  //     }
+  //   }
+  // }, [algorandAccount]);
 
   useEffect(async () => {
     if (!state.validatorsInfo) await checkValidators();

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { removeAlgorandClaimable, setTransferLoaderModal } from '../../store/reducers/generalSlice'
-import { getFactory, setClaimablesAlgorand, setNFTS } from '../../wallet/helpers'
+import { removeAlgorandClaimable, removeFromClaimables, setTransferLoaderModal } from '../../store/reducers/generalSlice'
+import { getAlgorandClaimables, getFactory, setClaimablesAlgorand, setNFTS } from '../../wallet/helpers'
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { algoConnector } from "../../wallet/connectors.js"
 
 
-export default function ClaimableCard({nft}) {
+export default function ClaimableCard({nft, index}) {
 
   const dispatch = useDispatch()
   const algorandAccount = useSelector(state => state.general.algorandAccount)
@@ -82,10 +82,12 @@ const claim = async () => {
       const signer = await getAlgorandWalletSigner()
       try {
           const c = await algorand.claimNft(signer, nft)
-          console.log("🚀 ~ file: ClaimableCard.jsx ~ line 85 ~ claim ~ c", c)
-
+          if(c){
+            // dispatch(removeFromClaimables(index))
+            dispatch(removeAlgorandClaimable(nft.nftId))
+          }
+          setNFTS(algorandAccount, 'Algorand')
               // setClaimablesAlgorand(algorandAccount)
-              // setNFTS(algorandAccount, 'Algorand')
               // dispatch(removeAlgorandClaimable(nft.nftId))
 
       } catch(err) {
@@ -106,7 +108,7 @@ useEffect(() => {
         <div className="claimable-card__wrapper">
             <span className='claimable-card__text'>The NFT is not claimed</span>
             <div style={isOptin ? OFF : {} } onClick={optIn} className='not-whitelisted__button' >Optin</div>
-            <div onClick={claim} className='not-whitelisted__button' >Claim</div>
+            <div style={isOptin ? {} : OFF } onClick={claim} className='not-whitelisted__button' >Claim</div>
         </div>
     </div>
   )

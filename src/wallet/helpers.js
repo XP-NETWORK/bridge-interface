@@ -82,11 +82,9 @@ const checkIfVideo = async (url) => {
 
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
-  debugger
   const uri = nft.uri
-  const { from } = store.getState().general;
+  const { from, NFTList } = store.getState().general;
   let whitelisted
-  let dataLoaded = false
   let nftObj = {
     uri: nft.uri,
     collectionIdent: nft.collectionIdent || undefined,
@@ -122,7 +120,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
   }
 
   if(from.text === "Tezos"){
-    debugger
+    // debugger
     nftObj.image = nft.image || nft.native?.uri
     nftObj.collectionIdent = nft.collectionIdent
     nftObj.native.token_id = nft.native?.token_id
@@ -141,11 +139,10 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
       console.log(error);
     }
   }
-  if(nftObj.image.includes("ipfs://") && !nftObj.image.includes("https://ipfs.io")){
+  if(nftObj?.image?.includes("ipfs://") && !nftObj?.image?.includes("https://ipfs.io")){
     nftObj.image = "https://ipfs.io/" + nftObj.image.replace(":/", "")
   }
   if(nftObj.image){
-    // debugger
     if(await checkIfVideo(nftObj.image)){
       nftObj.animation_url = nftObj.image
       nftObj.image = undefined
@@ -157,10 +154,9 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
   if(claimables){
     store.dispatch(setEachClaimables({nftObj, index}))
   }
-
-
-  store.dispatch(setEachNFT({nftObj, index}))
-  return dataLoaded
+  if(!NFTList[index].dataLoaded){
+    store.dispatch(setEachNFT({nftObj, index}))
+  }
 }
 
 
@@ -405,9 +401,7 @@ export const getAlgorandClaimables = async (account) => {
   const factory = await getFactory()
   try {
     claimables = await factory.claimableAlgorandNfts(account)
-    if(claimables && claimables.length > 0) {
-      store.dispatch(setAlgorandClaimables(claimables))
-    }
+    store.dispatch(setAlgorandClaimables(claimables))
   } catch (error) {
     console.error(error);
   }

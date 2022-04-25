@@ -10,18 +10,9 @@ import {  } from "../../wallet/helpers.js"
 function NFTgridView() {
     const nfts = useSelector(state => state.general.NFTList)
     const algorandClaimables = useSelector(state => state.general.algorandClaimables)
-    const search = useSelector(state => state.general.NFTListSearch)
     const nftsPlace = window.innerWidth <= 600 ? 2 : 6
     const placeholders = new Array(nfts ? nftsPlace - nfts.length >= 0 ? nftsPlace - nfts.length : 0 : 0).fill(0)
     const loader = useSelector(state => state.general.bigLoader)
-
-    function isFiltred (nft) {
-        if (!nft?.description || !nft?.native?.owner) return false;
-        if (nft.description?.toString().toLowerCase().includes(search?.toLowerCase()) || nft.native.owner?.includes(search)) {
-            return false
-        }
-        return true
-    }
 
 
     return (
@@ -29,7 +20,7 @@ function NFTgridView() {
                 { loader ? <BigLoader />
                 :
                     <div className="nft-list__wrapper">
-                        {   algorandClaimables && 
+                        { algorandClaimables && 
                         algorandClaimables.map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} claimables={true} />)
                         }
                         { nfts?.length ? 

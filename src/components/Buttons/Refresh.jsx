@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import { setNFTS } from "../../wallet/helpers";
+import { getAlgorandClaimables, setNFTS } from "../../wallet/helpers";
 
 export default function Refresh() {
 
@@ -16,6 +16,9 @@ export default function Refresh() {
           else if (from.type === "Elrond") w = elrondAccount;
           else if (from.type === "Tron") w = tronWallet;
           await setNFTS(w, from.key);
+          if(from.type === "Algorand"){
+            await getAlgorandClaimables(algorandAccount)
+          }
         }
       };
 

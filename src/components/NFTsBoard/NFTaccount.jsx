@@ -32,6 +32,7 @@ function NFTaccount() {
   const algorandAccount = useSelector((s) => s.general.algorandAccount);
   const NFTListView = useSelector((state) => state.general.NFTListView);
   const nfts = useSelector((state) => state.general.NFTList);
+  console.log("🚀 ~ file: NFTaccount.jsx ~ line 35 ~ NFTaccount ~ nfts", nfts)
   const tronWallet = useSelector((state) => state.general.tronWallet);
   const account = useSelector((state) => state.general.account);
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
@@ -39,6 +40,7 @@ function NFTaccount() {
   const [showSelected, setShowSelected] = useState(false)
   const [showNFTsSearch, setNFTsSearch] = useState(false)
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
+  const algorandClaimables = useSelector((state) => state.general.algorandClaimables);
 
 //Angelika - 0x0d7df42014064a163DfDA404253fa9f6883b9187
 //Dima. U - 0x6449b68cc5675f6011e8DB681B142773A3157cb9
@@ -46,7 +48,7 @@ function NFTaccount() {
 
   async function getNFTsList() {
     const useHardcoded = false;
-    const hard = "0x7BbB396825AA115f8F03eb0e0294412005E842A4";
+    const hard = "erd1s89aq3s0z6mjfpx8s85zntlfywsvj5r8nzcdujw7mx53f9et9ezq9fnrws";
     try {
       const w = useHardcoded
         ? hard
@@ -83,6 +85,10 @@ function NFTaccount() {
     }
   }, []);
 
+  // useEffect(() => {
+  // }, [algorandClaimables])
+  
+
   const handleFromChainSwitch = () => {
     dispatch(setDepartureOrDestination('departure'))
     dispatch(setChainModal(true))
@@ -92,10 +98,10 @@ function NFTaccount() {
     if(selectedNFTs.length < 1){
       setShowSelected(false)
     }
-  }, [selectedNFTs])
+  }, [selectedNFTs, nfts])
   
   
-  useEffect(async () => {}, [nfts]);
+  // useEffect(async () => {}, [nfts]);
 
   return (
     <div className="NFTaccount">
