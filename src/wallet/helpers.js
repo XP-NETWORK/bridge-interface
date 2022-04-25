@@ -109,6 +109,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     if(nftObj.data?.image_url){
       const image  = nftObj.data?.image
       nftObj.image = image
+      nftObj.dataLoaded = true
     }
   } catch (error) {
     response = await axios.get(setupURI(uri))
@@ -116,6 +117,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     if(nftObj.data?.image_url){
       const image  = nftObj.data?.image
       nftObj.image = image
+      nftObj.dataLoaded = true
     }
   }
 

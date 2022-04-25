@@ -17,6 +17,7 @@ import Iotex from "../assets/img/chain/iotx.svg";
 import One from "../assets/img/chain/One.svg";
 import Aurora from "../assets/img/chain/aurora.svg";
 import GT from "../assets/img/chain/GateChain.svg"
+import VET from "../assets/img/chain/Vechain.png"
 import { Chain } from "xp.network/dist/consts";
 
 export const EVM = "EVM";
@@ -56,7 +57,7 @@ export const chains = [
     value: "Tron",
     order: 11,
     image: { avatar: true, src: Tron },
-    maintenance: true,
+    maintenance: false,
     testNet: false,
     mainnet: true,
   },
@@ -269,12 +270,27 @@ export const chains = [
     text: "GateChain",
     value: "GateChain",
     tnChainId: 85,
+    chainId: 86,
     order: 2,
     image: {avatar: true, src: GT },
     maintenance: false,
     testNet: true,
-    mainnet: false,
+    mainnet: true,
     newChain: true 
+  },
+  {
+    type: "EVM",
+    key: "VeChain",
+    text: "VeChain",
+    value: "VeChain",
+    tnChainId: 39,
+    chainId: undefined,
+    order: 4,
+    image: {avatar: true, src: VET},
+    maintenance: false,
+    mainnet: false,
+    testNet: false,
+    newChain: true
   }
 ];
 
@@ -432,10 +448,21 @@ export const chainsConfig = {
     type: EVM,
     token: "GT",
     image: Aurora,
-    rpc: "",
-    chainId: "",
+    rpc: "https://evm.gatenode.cc",
+    tnRpc: "https://meteora-evm.gatenode.cc",
+    chainId: "86",
     Chain: Chain.GATECHAIN,
-    tx: ""
+    tx: "https://www.gatescan.org/tx/"
+  },
+  VeChain: {
+    type: EVM,
+    token: "VET",
+    image: VET,
+    rpc: "https://sync-testnet.veblocks.net",
+    tnRpc: "https://sync-testnet.veblocks.net",
+    chainId: 39,
+    Chain: Chain.VECHAIN,
+    tx: "https://explore-testnet.vechain.org/transactions/"
   }
 };
 
@@ -459,6 +486,7 @@ export const coins = [
   "ONE", //16
   "AETH", //17
   "GT", //18
+  "VET", //19
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -490,6 +518,10 @@ export const TESTNET_CHAIN_INFO = {
   GateChain: {
     nonce: 0x17,
     chainId: 85,
+  },
+  VeChain:  {
+    nonce: 0x19,
+    chainId: 39
   }
 };
 
@@ -660,7 +692,15 @@ export const CHAIN_INFO = {
     native: coins[18],
     nonce: 0x17,
     decimals: 1e18,
-    rpc: "",
-    chainId: "",
+    rpc: "https://evm.gatenode.cc",
+    chainId: 86,
+  },
+  VeChain: {
+    native: coins[19],
+    nonce: 0x19,
+    decimals: 1e18,
+    chainId: 39,
+    rpc: "https://sync-testnet.veblocks.net",
+    blockExplorerUrl: "https://explore-testnet.vechain.org/transactions/",
   }
 };

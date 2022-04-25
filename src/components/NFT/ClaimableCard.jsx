@@ -52,6 +52,7 @@ export default function ClaimableCard({nft, index}) {
   }
 
   const optIn = async () => {
+    // debugger
     dispatch(setTransferLoaderModal(true))
     const factory = await getFactory()
     const algorand = await factory.inner(15)
@@ -61,7 +62,9 @@ export default function ClaimableCard({nft, index}) {
         const signer = await getAlgorandWalletSigner()
         try {
             const optin = await algorand.optInNft(signer, nft)
-            if(optin) setIsOptin(true)
+            if(optin){
+              setIsOptin(true)
+            }
         } catch (error) {
             console.log(error);
             dispatch(setTransferLoaderModal(false))
@@ -106,7 +109,7 @@ useEffect(() => {
   return (
     <div className="image__wrapper claimable-card">
         <div className="claimable-card__wrapper">
-            <span className='claimable-card__text'>The NFT is not claimed</span>
+            <div className='claimable-card__text'>The NFT is not claimed</div>
             <div style={isOptin ? OFF : {} } onClick={optIn} className='not-whitelisted__button' >Optin</div>
             <div style={isOptin ? {} : OFF } onClick={claim} className='not-whitelisted__button' >Claim</div>
         </div>

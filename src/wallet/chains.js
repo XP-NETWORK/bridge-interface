@@ -1,4 +1,5 @@
 export const getAddEthereumChain = () => {
+    debugger
     const o = allchains.reduce(
         (obj, item) => Object.assign(obj, { [item.chainId]: item }), {});
       
@@ -4601,4 +4602,46 @@ const allchains = [{
     "shortName": "palm",
     "chainId": 11297108109,
     "networkId": 11297108109
+},
+{
+    "name": "VeChain Testnet",
+    "chain": "VeChain",
+    "network": "testnet",
+    "rpc": ["https://sync-testnet.veblocks.net"],
+    "faucets": [],
+    "nativeCurrency": {
+        "name": "VeChain",
+        "symbol": "VET",
+        "decimals": 18
+    },
+    "infoURL": "",
+    "shortName": "vechain",
+    "chainId": 39,
+    "networkId": undefined,
+    "explorers": [{
+        "name": "VeChain",
+        "url": "https://explore-testnet.vechain.org/transactions/",
+        "standard": "EIP3091"
+    }]
+},
+{
+    "name": "VeChain Mainnet",
+    "chain": "VeChain",
+    "network": "mainnet",
+    "rpc": ["https://sync-mainnet.veblocks.net"],
+    "faucets": [],
+    "nativeCurrency": {
+        "name": "VeChain",
+        "symbol": "VET",
+        "decimals": 18
+    },
+    "infoURL": "",
+    "shortName": "vechain",
+    "chainId": undefined,
+    "networkId": 0x4a,
+    "explorers": [{
+        "name": "VeChain",
+        "url": "https://explore.vechain.org/transactions/",
+        "standard": "EIP3091"
+    }]
 }]
