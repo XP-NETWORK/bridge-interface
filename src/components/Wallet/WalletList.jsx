@@ -5,6 +5,7 @@ import AlgorandWallet from "./AlgorandWallet";
 import TronWallet from "./TronWallet";
 import ElrondWallet from "./ElrondWallet";
 import USBWallet from "./USBWallet";
+import VeChainWallet from "./VeChainWallet"
 import { useSelector } from "react-redux";
 
 export default function WalletList({search, connected, input}) {
@@ -25,6 +26,7 @@ export default function WalletList({search, connected, input}) {
         { Component: <AlgorandWallet wallet={"AlgoSigner"} key="wallet-index-4" close={connected} />, name: "AlgoSigner", type: "Algorand", mobile:false, desktop: true },
         { Component: <AlgorandWallet wallet={undefined} key="wallet-index-5" close={connected} />, name: "Algorand Wallet", type: "Algorand", mobile:false, desktop: false },
         { Component: <TronWallet key="wallet-index-6" close={connected} />, name: "TronLink", type: "Tron", mobile:true, desktop: true},
+        { Component: <VeChainWallet key="wallet-index-14" />, name: "Sync2", type: "VeChain", mobile: false, desktop: true},
         { Component: <USBWallet wallet={"Ledger"} key="wallet-index-11" connected={connected} />, name: "Ledger", mobile:false, desktop: true },
         { Component: <USBWallet key="wallet-index12" connected={connected} />, name: "Trezor", mobile:false, desktop: true }
      ]
