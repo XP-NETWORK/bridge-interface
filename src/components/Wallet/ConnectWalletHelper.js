@@ -75,8 +75,20 @@ export const connectSync2 = async(testnet) => {
       network: "main"
     });
   const vendor = new Connex.Vendor('main')
-  const clientDetails = await client.thor.block().get();
-  const account = JSON.stringify(clientDetails, 2, null)
+  await vendor.sign('cert',{
+    purpose: 'identification',
+    payload: {
+      type: 'text',
+      content: 'sign certificate to continue bridging'
+  }
+  })
+  .link('https://connex.vecha.in/{certid}') // User will be back to the app by the url https://connex.vecha.in/0xffff....
+  .request()
+  .then(result=>{
+      console.log(result)
+  })
+  // const clientDetails = await client.thor.block().get();
+  // const account = JSON.stringify(clientDetails, 2, null)
  
 };
 
