@@ -331,6 +331,8 @@ export const handleChainFactory = async (someChain) => {
         return await factory.inner(Chain.AURORA)
       case "GateChain":
         return await factory.inner(Chain.GATECHAIN)
+      case "VeChain":
+        return await factory.inner(Chain.VECHAIN)
       default: return ''
     }
   } catch (error) {

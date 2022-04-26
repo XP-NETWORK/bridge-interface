@@ -32,7 +32,6 @@ function NFTaccount() {
   const algorandAccount = useSelector((s) => s.general.algorandAccount);
   const NFTListView = useSelector((state) => state.general.NFTListView);
   const nfts = useSelector((state) => state.general.NFTList);
-  console.log("🚀 ~ file: NFTaccount.jsx ~ line 35 ~ NFTaccount ~ nfts", nfts)
   const tronWallet = useSelector((state) => state.general.tronWallet);
   const account = useSelector((state) => state.general.account);
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
@@ -40,7 +39,6 @@ function NFTaccount() {
   const [showSelected, setShowSelected] = useState(false)
   const [showNFTsSearch, setNFTsSearch] = useState(false)
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
-  const algorandClaimables = useSelector((state) => state.general.algorandClaimables);
 
 //Angelika - 0x0d7df42014064a163DfDA404253fa9f6883b9187
 //Dima. U - 0x6449b68cc5675f6011e8DB681B142773A3157cb9

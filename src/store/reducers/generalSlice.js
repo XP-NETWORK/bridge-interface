@@ -323,11 +323,16 @@ const generalSlice = createSlice({
     },
     setInnerWidth(state, action){
       state.innerWidth = action.payload
+    },
+    setSync2(state, action){
+      state.account = action.payload
+      state.Sync2 = true
     }
   },
 });
 
 export const {
+  setSync2,
   removeFromClaimables,
   setEachClaimables,
   setEachNFT,

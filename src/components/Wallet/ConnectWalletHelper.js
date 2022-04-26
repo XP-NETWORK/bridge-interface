@@ -32,7 +32,8 @@ import { setTronWallet,
   setQrCodeString, 
   setWC,
   setOnWC,
-  setAccount} from "../../store/reducers/generalSlice"
+  setAccount,
+  setSync2} from "../../store/reducers/generalSlice"
 import { useNavigate } from 'react-router';
 import { chainsConfig } from "../values";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
@@ -64,7 +65,8 @@ export const connectMetaMask = async (activate, from, to) => {
 }
 
 export const connectSync2 = async(testnet) => {
-  debugger
+  // debugger
+  let account
   const client = new Connex(testnet ?
     {
       node: 'https://testnet.veblocks.net/',
@@ -85,8 +87,9 @@ export const connectSync2 = async(testnet) => {
   .link('https://connex.vecha.in/{certid}') // User will be back to the app by the url https://connex.vecha.in/0xffff....
   .request()
   .then(result => {
-      console.log(result)
-  }) 
+    account = result?.annex?.signer
+  })
+  return account
 };
 
 // Algorand blockchain connection ( AlgoSigner )
