@@ -1,4 +1,5 @@
 
+import Connex from '@vechain/connex';
 import { TempleWallet } from "@temple-wallet/dapp";
 import { injected, algoConnector } from "../../wallet/connectors"
 import store  from "../../store/store"
@@ -61,6 +62,23 @@ export const connectMetaMask = async (activate, from, to) => {
           return false
       }
 }
+
+export const connectSync2 = async(testnet) => {
+  debugger
+  const client = new Connex(testnet ?
+    {
+      node: 'https://testnet.veblocks.net/',
+      network: 'test'
+    }:
+    {
+      node: "https://sync-mainnet.veblocks.net",
+      network: "main"
+    });
+  const vendor = new Connex.Vendor('main')
+  const clientDetails = await client.thor.block().get();
+  const account = JSON.stringify(clientDetails, 2, null)
+ 
+};
 
 // Algorand blockchain connection ( AlgoSigner )
 export const connectAlgoSigner =async (testnet) => {

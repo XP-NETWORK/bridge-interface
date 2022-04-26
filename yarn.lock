@@ -3803,6 +3803,16 @@
   resolved "https://registry.yarnpkg.com/@vechain/connex-types/-/connex-types-2.0.2.tgz#089d94137ba9934daf903025647897f804f4b7c4"
   integrity sha512-as905zXnVgc74mLkWkr2zMgJRJmFTMEDrRgtOPn68rqLeYCBzR7Ye1QCGbGKnPUaYGDLbGutoIW8r1y8wmGCUg==
 
+"@vechain/connex@^2.0.9":
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/@vechain/connex/-/connex-2.0.9.tgz#5b8f725648d6d05c1dedfcff9fe7fc09d3f78ae7"
+  integrity sha512-I2wd6sGlucYFsIX15BzsWiRoizvokVjjPK8DEFCIgaLZ/Y3xGS7egLI069CFk9UcF347jKPncqQfv5+hpv0ojQ==
+  dependencies:
+    "@vechain/connex-driver" "^2.0.8"
+    "@vechain/connex-framework" "^2.0.8"
+    randombytes "^2.1.0"
+    thor-devkit "^2.0.4"
+
 "@vechain/ethers@^4.0.27-5":
   version "4.0.27-5"
   resolved "https://registry.yarnpkg.com/@vechain/ethers/-/ethers-4.0.27-5.tgz#2e7d40294b2e14ddf4cf6f6094bbdc871e26e299"

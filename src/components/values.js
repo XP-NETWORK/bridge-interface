@@ -288,7 +288,7 @@ export const chains = [
     order: 4,
     image: {avatar: true, src: VET},
     maintenance: false,
-    mainnet: false,
+    mainnet: true,
     testNet: false,
     newChain: true
   }
@@ -458,7 +458,7 @@ export const chainsConfig = {
     type: EVM,
     token: "VET",
     image: VET,
-    rpc: "https://sync-testnet.veblocks.net",
+    rpc: "https://sync-mainnet.veblocks.net",
     tnRpc: "https://sync-testnet.veblocks.net",
     chainId: 39,
     Chain: Chain.VECHAIN,
