@@ -25,13 +25,7 @@ export default function Chain(props) {
   const algoStyle = {}
 
   const getStyle = () => {
-    if(text === "Algorand" && !testnet){
-      return OFF
-    }
-    else if(text === "Algorand" && testnet){
-      return {}
-    }
-    else if(maintenance || maintenance || !checkIfLive(chainKey, validatorsInfo) || coming ){
+ if(maintenance || maintenance || !checkIfLive(chainKey, validatorsInfo) || coming ){
       return OFF
     }
     else if((location.pathname === "/testnet/account" ||location.pathname === "/account") && text === to.text){
@@ -54,9 +48,7 @@ export default function Chain(props) {
           {(chainStatus === undefined && !coming && !maintenance) ? <Status status={"connecting"} />
           :(!chainStatus && !coming && !maintenance) && <Status status={"off-line"} /> }
           {coming && <Status status={"coming"} />}
-          {maintenance && text !== "Algorand" && <Status status={"maintenance"} />}
-          {/* //!for algorand only  */}
-          {maintenance && text === "Algorand" && !testnet && <Status status={"maintenance"} />}
+          {maintenance  && <Status status={"maintenance"} />}
           {!maintenance && newChain && <Status status={"new"} />}
         </div>
       </div>
