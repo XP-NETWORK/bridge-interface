@@ -137,6 +137,7 @@ export default function ButtonToTransfer() {
                 }
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
+                console.log("nft", nft)
                 result = await factory.transferNft(
                     fromChain, 
                     toChain,   
