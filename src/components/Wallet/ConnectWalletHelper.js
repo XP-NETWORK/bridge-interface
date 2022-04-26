@@ -65,7 +65,7 @@ export const connectMetaMask = async (activate, from, to) => {
 }
 
 export const connectSync2 = async(testnet) => {
-  // debugger
+  debugger
   let account
   const client = new Connex(testnet ?
     {
@@ -76,7 +76,7 @@ export const connectSync2 = async(testnet) => {
       node: "https://sync-mainnet.veblocks.net",
       network: "main"
     });
-  const vendor = new Connex.Vendor('main')
+  const vendor = new Connex.Vendor(testnet ? 'test' : 'main')
   await vendor.sign('cert',{
     purpose: 'identification',
     payload: {

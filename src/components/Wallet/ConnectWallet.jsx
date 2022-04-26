@@ -28,7 +28,6 @@ function ConnectWallet() {
   const testnet = useSelector(state => state.general.testNet)
   const { account, chainId } = useWeb3React()
   const connected = (elrondAccount || tezosAccount || algorandAccount || evmAccount || tronAccount || account) ? true : false
-  console.log("🚀 ~ file: ConnectWallet.jsx ~ line 31 ~ ConnectWallet ~ connected", connected)
 
   const handleClose = () => {
     setShow(false);
@@ -91,11 +90,17 @@ function ConnectWallet() {
 }
 
   const handleConnect = () => {
-    debugger
+    // debugger
     if(testnet && from.tnChainId === chainId){
       navigate(`/testnet/account${location.search ? location.search : ''}`)
     }
     else if(!testnet && from.chainId === chainId){
+      navigate(`/account${location.search ? location.search : ''}`)
+    }
+    else if(testnet && from.type !== "EVM"){
+      navigate(`/testnet/account${location.search ? location.search : ''}`)
+    }
+    else if(from.type !== "EVM"){
       navigate(`/account${location.search ? location.search : ''}`)
     }
     else{

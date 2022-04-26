@@ -45,22 +45,24 @@ function NFTaccount() {
 // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
 
   async function getNFTsList() {
+    debugger
     const useHardcoded = false;
     const hard = "2RKU6NQ3T36B42NJHUO27WTUCS3BOBM7YTAMGQNHPP2CAAUVO2LLMYW5EE";
     try {
       const w = useHardcoded
-        ? hard
-        : type === "EVM"
-        ? account
-        : type === "Tezos"
-        ? tezosAccount
-        : type === "Algorand"
-        ? algorandAccount
-        : type === "Elrond"
-        ? elrondAccount
-        : type === "Tron"
-        ? tronWallet
-        : undefined;
+      ? hard
+      : type === "EVM" || type === "VeChain"
+      ? account
+      : type === "Tezos"
+      ? tezosAccount
+      : type === "Algorand"
+      ? algorandAccount
+      : type === "Elrond"
+      ? elrondAccount
+      : type === "Tron"
+      ? tronWallet
+      : undefined;
+      
       await setNFTS(w, from);
     } catch (error) {
       dispatch(setError(error.data ? error.data.message : error.message));

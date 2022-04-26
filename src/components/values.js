@@ -279,7 +279,7 @@ export const chains = [
     newChain: true 
   },
   {
-    type: "VeChai",
+    type: "VeChain",
     key: "VeChain",
     text: "VeChain",
     value: "VeChain",
@@ -289,7 +289,7 @@ export const chains = [
     image: {avatar: true, src: VET},
     maintenance: false,
     mainnet: true,
-    testNet: false,
+    testNet: true,
     newChain: true
   }
 ];
