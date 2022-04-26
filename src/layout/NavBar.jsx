@@ -14,9 +14,9 @@ import UserConnect from "../components/User/UserConnect";
 import { setShowVideo } from "../store/reducers/generalSlice";
 import {ReactComponent as Hamburger} from "../assets/img/nav/burger.svg"
 import {ReactComponent as HamburgerClose} from "../assets/img/nav/burger_close.svg"
-import React, {useState} from 'react'
-
-
+import React, {useEffect, useState} from 'react'
+import { useLocation } from "react-router";
+import {cleanSelectedNFTList, setReceiver} from '../store/reducers/generalSlice'
 
 
 function NavBar() {
@@ -25,6 +25,15 @@ function NavBar() {
     const date = useSelector(state => state.general.gitLatestCommit)
     const [navMenuOpen, toggleNavMenu] = useState(false)
     const dispatch = useDispatch()
+    const loc = useLocation();
+
+
+    useEffect(() => {
+        if (loc.pathname === '/connect') {
+            dispatch(cleanSelectedNFTList())
+            dispatch(setReceiver(''));
+        }
+    }, [loc])
 
 
     return (

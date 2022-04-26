@@ -1,5 +1,5 @@
 export const getAddEthereumChain = () => {
-    debugger
+ 
     const o = allchains.reduce(
         (obj, item) => Object.assign(obj, { [item.chainId]: item }), {});
       
