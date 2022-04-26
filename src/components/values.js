@@ -117,7 +117,7 @@ export const chains = [
     value: "Algorand",
     order: 11,
     image: { avatar: true, src: Algorand },
-    maintenance: true,
+    maintenance: false,
     testNet: true,
     mainnet: true,
   },
