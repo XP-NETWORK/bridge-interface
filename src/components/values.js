@@ -58,7 +58,7 @@ export const chains = [
     order: 11,
     image: { avatar: true, src: Tron },
     maintenance: false,
-    testNet: false,
+    testNet: true,
     mainnet: true,
   },
   {
@@ -117,7 +117,7 @@ export const chains = [
     value: "Algorand",
     order: 11,
     image: { avatar: true, src: Algorand },
-    maintenance: true,
+    maintenance: false,
     testNet: true,
     mainnet: true,
   },
@@ -274,9 +274,9 @@ export const chains = [
     order: 2,
     image: {avatar: true, src: GT },
     maintenance: false,
-    testNet: true,
-    mainnet: true,
-    newChain: true 
+    testNet: false,
+    mainnet: false,
+    newChain: true
   },
   {
     type: "EVM",
