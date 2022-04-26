@@ -279,7 +279,7 @@ export const chains = [
     newChain: true 
   },
   {
-    type: "EVM",
+    type: "VeChai",
     key: "VeChain",
     text: "VeChain",
     value: "VeChain",

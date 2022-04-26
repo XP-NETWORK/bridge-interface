@@ -84,12 +84,9 @@ export const connectSync2 = async(testnet) => {
   })
   .link('https://connex.vecha.in/{certid}') // User will be back to the app by the url https://connex.vecha.in/0xffff....
   .request()
-  .then(result=>{
+  .then(result => {
       console.log(result)
-  })
-  // const clientDetails = await client.thor.block().get();
-  // const account = JSON.stringify(clientDetails, 2, null)
- 
+  }) 
 };
 
 // Algorand blockchain connection ( AlgoSigner )
