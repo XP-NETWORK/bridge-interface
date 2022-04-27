@@ -29,7 +29,7 @@ export default function UnsupportedNetwork() {
     const forbidden = chainId === to?.chainId && (location.pathname === "/account" || location.pathname === "/testnet/account")
   
     async function switchNetwork() {
-      debugger
+      // debugger
         setLoader(true);
         const info = testnet
           ? TESTNET_CHAIN_INFO[from?.key]

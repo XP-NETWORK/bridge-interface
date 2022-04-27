@@ -41,7 +41,7 @@ function ConnectWallet() {
   const widget = useSelector((state) => state.general.widget);
 
   async function switchNetwork() {
-    debugger
+    // debugger
     const info = testnet
       ? TESTNET_CHAIN_INFO[from?.key]
       : CHAIN_INFO[from?.key];

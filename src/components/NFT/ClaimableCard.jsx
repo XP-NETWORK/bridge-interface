@@ -77,7 +77,7 @@ export default function ClaimableCard({nft, index}) {
 }
 
 const claim = async () => {
-  debugger
+  // debugger
   dispatch(setTransferLoaderModal(true))
   if(isOptin) {
       const factory = await getFactory()
