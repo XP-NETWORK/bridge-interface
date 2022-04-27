@@ -32,7 +32,6 @@ function NFTaccount() {
   const algorandAccount = useSelector((s) => s.general.algorandAccount);
   const NFTListView = useSelector((state) => state.general.NFTListView);
   const nfts = useSelector((state) => state.general.NFTList);
-  console.log("🚀 ~ file: NFTaccount.jsx ~ line 35 ~ NFTaccount ~ nfts", nfts)
   const tronWallet = useSelector((state) => state.general.tronWallet);
   const account = useSelector((state) => state.general.account);
   const tezosAccount = useSelector((state) => state.general.tezosAccount);

@@ -42,6 +42,12 @@ const generalSlice = createSlice({
     setAlert(state, action){
       state.alert = action.payload
     },
+    setNFTSelectAlert(state, action){
+      state.NFTselectAlert = action.payload
+    },
+    setDestinationAlert(state, action){
+      state.destinationAlert = action.payload
+    },
     setTxnStatus(state, action){
       const { status, fromHash, tokenId, toHash, initialTokenId, nftUri, createdAt } = action.payload
       state.txnHashArr = state.txnHashArr.map((e) => {

@@ -128,6 +128,7 @@ export default function ButtonToTransfer() {
                 dispatch(setTxnHash({txn: result, nft}))
             }
             else{
+                // debugger
                 factory = await getFactory()
                 const contract = nft.collectionIdent || nftSmartContract.toLowerCase()
                 const wrapped = await factory.isWrappedNft(nft, fromNonce)
@@ -147,14 +148,10 @@ export default function ButtonToTransfer() {
                     bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
                 )
-                // const destinationTxn = await factory.getDestinationTransaction(toChain)
-                // console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 142 ~ sendEach ~ destinationTxn", destinationTxn)
-                // console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 141 ~ sendEach ~ result", result?.data?.data?.toString())
                 dispatch(dispatch(setTransferLoaderModal(false)))
                 setLoading(false)
                 dispatch(setTxnHash({txn: result, nft}))
             }
-            if(to === "Algorand") await setClaimablesAlgorand(algorandAccount)
         } catch (err) {
             console.error(err)
             console.log('this is error in sendeach')
@@ -163,19 +160,13 @@ export default function ButtonToTransfer() {
             const { data, message, error } = err
             if(message){
                 if(
-                    message.includes("NFT not whitelisted") 
-                    || message.includes('contract not whitelisted')
-                    || (data ? data.message.includes('contract not whitelisted') : false )
-                ){
-                    dispatch(setNFTsToWhitelist({
-                        url: nft.image,
-                        name: nft.name
-                    }))
-                }
-                else if(
                     message.includes('User cant pay the bills')
                     || (data ? data.message.includes('User cant pay the bills') : false )
                 ) dispatch(setError(`You don't have enough funds to pay the fees`))
+                else if(message){
+                    console.log(`http://localhost:3000/?to_opt-in=true&testnet=${testnet}&nft_uri=${nft.uri}`)
+                    dispatch(setError(err.data ? err.data.message : err.message))
+                }
                 else dispatch(setError(err.data ? err.data.message : err.message))
                 return
             }

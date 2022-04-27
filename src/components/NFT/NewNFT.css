@@ -240,6 +240,7 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 23px;
+  color: #14161A;
 }
 
 .broken__text{
@@ -248,6 +249,7 @@
   font-weight: 400;
   line-height: 23px;
   letter-spacing: 0em;
+  color: #14161A;
 }
 
 .not-whitelisted__wrapper, .claimable-card__wrapper{

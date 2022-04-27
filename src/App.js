@@ -13,7 +13,7 @@ import TechnicalSupport from "./components/innercomponents/TechnicalSupport";
 import TransferLoader from "./components/innercomponents/TransferLoader";
 import TronConnectionErrMod from "./components/Modals/TronModals/TronConnectionErrMod.jsx";
 import "./components/Modals/Modal.css"
-import Alert from "./components/Alert"
+import Alert from "./components/Alerts/Alert.jsx"
 import SuccessModal from "./components/Modals/Success/SuccessModal.jsx"
 
 function App() {
@@ -38,7 +38,16 @@ function App() {
   });
 
   useEffect(() => {
+    // debugger
     dispatch(setInnerWidth(window.innerWidth))
+    const algoToOpt = new URLSearchParams(window.location.search).get("to_opt-in");
+    const nftToOptIn = new URLSearchParams(window.location.search).get("nft_uri");
+    const testnet = new URLSearchParams(window.location.search).get("testnet");
+    if(algoToOpt && nftToOptIn && testnet){
+      console.log("🚀 ~ file: App.js ~ line 46 ~ useEffect ~ algoToOpt", testnet)
+      console.log("🚀 ~ file: App.js ~ line 46 ~ useEffect ~ algoToOpt", nftToOptIn)
+      console.log("🚀 ~ file: App.js ~ line 46 ~ useEffect ~ algoToOpt", algoToOpt)
+    }
     const from = new URLSearchParams(window.location.search).get("from");
     const to = new URLSearchParams(window.location.search).get("to");
     if (from !== to) {

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ReactComponent as Close } from "../assets/img/icons/close.svg";
-import { setAlert } from "../store/reducers/generalSlice";
+import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
+import { setAlert } from "../../store/reducers/generalSlice";
 
 function Alert() {
   const dispatch = useDispatch()
@@ -19,7 +18,7 @@ function Alert() {
         ""
       ) : (
         <div className="aleartBox">
-          Select Departure and Destination Chain to continue bridging
+          Select NFT to continue bridging
           <span onClick={() => handleClose()} className="closeBox">
             {" "}
             <Close className="svgWidget closeIcon" />

@@ -45,6 +45,12 @@
     border: 1px solid #E0E4EB;
     padding: 0 16px;
 }
+.destination__address input:focus{
+    background-color: #ffffff;
+    border: 1px solid #E0E4EB;
+
+}
+
 .destination__address input::placeholder{
     color: #62718A;
     font-size: 14px;
