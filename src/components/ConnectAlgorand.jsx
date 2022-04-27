@@ -92,6 +92,8 @@ function ConnectAlgorand({nftToOptIn, testnet}) {
     dispatch(setTransferLoaderModal(true))
     const factory = await getFactory()
     const algorand = await factory.inner(15)
+    const accounts = await window.AlgoSigner.accounts({ledger:"TestNet"})
+    console.log("🚀 ~ file: ConnectAlgorand.jsx ~ line 96 ~ optIn ~ accounts", accounts)
     const signer = {
       address: algorandAccountToOptIn,
       algoSigner: window.AlgoSigner,
