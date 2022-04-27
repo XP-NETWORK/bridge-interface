@@ -329,11 +329,15 @@ const generalSlice = createSlice({
     },
     setInnerWidth(state, action){
       state.innerWidth = action.payload
+    },
+    setAlgoAccountToClaim(state, action){
+      state.algorandAccountToClaim = action.payload
     }
   },
 });
 
 export const {
+  setAlgoAccountToClaim,
   removeFromClaimables,
   setEachClaimables,
   setEachNFT,

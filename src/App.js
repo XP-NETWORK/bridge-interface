@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import XpBridge from "./pages/XpBridge";
 import { useDispatch, useSelector } from "react-redux";
-import { setFrom, setTestNet, setTo, setValidatorsInf, setInnerWidth, setGitLatestCommit } from "./store/reducers/generalSlice";
+import { setFrom, setTestNet, setTo, setValidatorsInf, setInnerWidth, setGitLatestCommit, connectAlgorandWalletClaim } from "./store/reducers/generalSlice";
 import ApproveLoader from "./components/innercomponents/ApproveLoader";
 import Error from "./components/innercomponents/Error";
 import TronPopUp from "./components/innercomponents/TronPopUp";
@@ -44,9 +44,7 @@ function App() {
     const nftToOptIn = new URLSearchParams(window.location.search).get("nft_uri");
     const testnet = new URLSearchParams(window.location.search).get("testnet");
     if(algoToOpt && nftToOptIn && testnet){
-      console.log("🚀 ~ file: App.js ~ line 46 ~ useEffect ~ algoToOpt", testnet)
-      console.log("🚀 ~ file: App.js ~ line 46 ~ useEffect ~ algoToOpt", nftToOptIn)
-      console.log("🚀 ~ file: App.js ~ line 46 ~ useEffect ~ algoToOpt", algoToOpt)
+      dispatch(connectAlgorandWalletClaim(true))
     }
     const from = new URLSearchParams(window.location.search).get("from");
     const to = new URLSearchParams(window.location.search).get("to");

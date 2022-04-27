@@ -10,12 +10,12 @@ import {
   connectAlgorandWalletClaim,
   setMyAlgo,
   setAlgorandWallet,
+  setAlgoAccountToClaim,
 } from "../store/reducers/generalSlice";
 import { injected, algoConnector } from "../wallet/connectors";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import AlgorandIcon from "../assets/img/algorandwallet.svg";
 import MyAlgoBlue from "../assets/img/wallet/MyAlgoBlue.svg";
-import AlgorandWallet from "../assets/img/wallet/AlgorandWallet.svg";
 
 function ConnectAlgorand() {
   const dispatch = useDispatch();
@@ -34,6 +34,8 @@ function ConnectAlgorand() {
   const trustWallet = useSelector((state) => state.general.trustWallet);
   const AlgoSigner = useSelector((state) => state.general.AlgoSigner);
   const onWC = useSelector((state) => state.general.WalletConnect);
+  const testnet = useSelector((state) => state.general.testNet);
+  const algorandAccountToClaim = useSelector((state) => state.general.algorandAccountToClaim);
   const [qrCodeString, setQqrCodeString] = useState();
   const [strQR, setStrQr] = useState();
   const { chainId, account, activate } = useWeb3React();
@@ -69,18 +71,18 @@ function ConnectAlgorand() {
     }
   });
 
-  const onAlgoSigner = useCallback(async () => {
+  const onAlgoSigner = async () => {
     if (typeof window.AlgoSigner !== undefined) {
       try {
         await window.AlgoSigner.connect();
         const algo = await window.AlgoSigner.accounts({
-          ledger: "MainNet",
+          ledger: testnet ? "TestNet" : "MainNet",
         });
         const { address } = algo[0];
 
         dispatch(setAlgoSigner(true));
-        dispatch(setAlgorandAccount(address));
-        handleClose();
+        dispatch(setAlgoAccountToClaim(address));
+        // handleClose();
       } catch (e) {
         console.error(e);
         return JSON.stringify(e, null, 2);
@@ -88,7 +90,7 @@ function ConnectAlgorand() {
     } else {
       console.log("Algo Signer not installed.");
     }
-  });
+  };
 
   return (
     // connectClaimAlgorand
@@ -104,6 +106,7 @@ function ConnectAlgorand() {
           <Close className="svgWidget" />
         </span>
       </Modal.Header>
+      { !algorandAccountToClaim ? 
       <Modal.Body>
         <div className="walletListBox">
           <div className="imgcontainer">
@@ -121,16 +124,24 @@ function ConnectAlgorand() {
           {window.innerWidth > 600 && (
             <ul className="walletList scrollSty">
               <li onClick={onAlgoSigner} className="wllListItem algo">
-                <img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo Signer
+                <img src={AlgoSignerIcon} alt="Algor Signer Icon" /><p>Algo Signer</p>
               </li>
-              <li onClick={onMyAlgo} className="wllListItem algo">
+              {testnet && <li onClick={onMyAlgo} className="wllListItem algo">
                 <img src={MyAlgoBlue} alt="" /> MyAlgo
-              </li>
-              {/* <li onClick={() => onAlgoWallet()} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li> */}
+              </li>}
             </ul>
           )}
         </div>
       </Modal.Body>
+      :
+      <Modal.Body>
+        <div className="walletListBox">
+          <div className="imgcontainer">
+            <img src={AlgorandIcon} alt="" />
+          </div>
+        </div>
+      </Modal.Body>
+      }
     </Modal>
   );
 }
