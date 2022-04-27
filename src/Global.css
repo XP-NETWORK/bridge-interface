@@ -599,7 +599,6 @@ span.NFTInf:hover img {
   width: 100%;
   max-height: 680px;
   overflow: hidden;
-  /* margin-right: -24px; */
   margin-top: 5px;
   padding: 0px 9px;
 }
@@ -1892,6 +1891,44 @@ span.transPend {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.algo-opt-in__header{
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 27px;
+}
+.algo-opt-in__name{
+  font-family: Inter;
+font-size: 16px;
+font-weight: 600;
+line-height: 29px;
+color: #14161A;
+text-align: center;
+}
+.algo-opt-in__btns{
+  display: flex;
+  margin: 20px auto 0 auto;
+  width: 100%;
+  gap: 12px;
+}
+.algo-opt-in__button{
+  width: 160px;
+  height: 40px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid #395FEB;
+  color: #395FEB;
+}
+
+.algo-opt-in__button:hover{
+  border: 1px solid transparent;
+  background: #395FEB;
+  color: white;
 }
 
 .claimablealgornadnftss td img {

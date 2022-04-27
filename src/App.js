@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import XpBridge from "./pages/XpBridge";
 import { useDispatch, useSelector } from "react-redux";
 import { setFrom, setTestNet, setTo, setValidatorsInf, setInnerWidth, setGitLatestCommit, connectAlgorandWalletClaim } from "./store/reducers/generalSlice";
@@ -15,12 +15,14 @@ import TronConnectionErrMod from "./components/Modals/TronModals/TronConnectionE
 import "./components/Modals/Modal.css"
 import Alert from "./components/Alerts/Alert.jsx"
 import SuccessModal from "./components/Modals/Success/SuccessModal.jsx"
+import ConnectAlgorand from "./components/ConnectAlgorand";
 
 function App() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.general);
   const axios = require("axios");
-
+  const [nftToOptIn, setNFTToOptIn] = useState()
+  const [testnet, setTestnet] = useState()
   const checkValidators = async () => {
     let res;
     try {
@@ -42,8 +44,10 @@ function App() {
     dispatch(setInnerWidth(window.innerWidth))
     const algoToOpt = new URLSearchParams(window.location.search).get("to_opt-in");
     const nftToOptIn = new URLSearchParams(window.location.search).get("nft_uri");
-    const testnet = new URLSearchParams(window.location.search).get("testnet");
-    if(algoToOpt && nftToOptIn && testnet){
+    setNFTToOptIn(nftToOptIn)
+    const test = new URLSearchParams(window.location.search).get("testnet");
+    setTestnet(test)
+    if(algoToOpt && nftToOptIn && test){
       dispatch(connectAlgorandWalletClaim(true))
     }
     const from = new URLSearchParams(window.location.search).get("from");
@@ -94,6 +98,7 @@ function App() {
   
   return (
     <div className={"App"}>
+      <ConnectAlgorand nftToOptIn={nftToOptIn} testnet={testnet} />
       <About />
       <Video />
       <TechnicalSupport />

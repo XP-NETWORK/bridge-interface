@@ -113,7 +113,7 @@ export default function SuccessModal() {
 
   return (
     <>
-      <ConnectAlgorand />
+      {/* <ConnectAlgorand /> */}
       <ClaimAlgorandNFT />
       <Modal animation={false} className="success-modal" show={toShow()}>
         <span onClick={handleClose} className="success-modal-close">
