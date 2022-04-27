@@ -82,6 +82,7 @@ const checkIfVideo = async (url) => {
 
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
+  // debugger
   const uri = nft.uri
   const { from, NFTList } = store.getState().general;
   let whitelisted

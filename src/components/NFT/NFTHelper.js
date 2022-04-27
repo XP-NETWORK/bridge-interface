@@ -115,14 +115,16 @@ export const getUrl = nft => {
 export const isShown = (search, nft) => !search || nft?.description?.toString().toLowerCase().includes(search?.toLowerCase()) || nft?.native?.owner?.includes(search);
 
 export const isWhiteListed = async (from, nft) => {
-    // debugg
+    // debugger
     let whitelisted
     const chainNonce = CHAIN_INFO[from].nonce
     const factory = await getFactory()
     const inner = await factory.inner(chainNonce)
     if(inner){
         try {
-            whitelisted = await factory.checkWhitelist(inner, nft)
+            whitelisted = await factory.checkWhitelist(inner, nft).catch(error => {
+                console.log(error)
+            })
         } catch (error) {
             console.error("isWhiteListed: ", error)
         }
