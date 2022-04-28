@@ -1,5 +1,5 @@
 import Etherium from "../assets/img/chain/Etherium.svg";
-import Heco from "../assets/img/chain/HECO.svg";
+import Ton from "../assets/img/chain/ton.svg";
 import Elrond from "../assets/img/chain/Elrond.svg";
 import Binance from "../assets/img/chain/Binance.svg";
 import Cardano from "../assets/img/chain/Cardano.svg";
@@ -139,7 +139,7 @@ export const chains = [
     text: "Solana",
     value: "Solana",
     chainId: undefined,
-    order: 21,
+    order: 20,
     coming: true,
     image: { avatar: true, src: Solana },
     maintenance: false,
@@ -152,7 +152,7 @@ export const chains = [
     text: "Cardano",
     value: "Cardano",
     chainId: undefined,
-    order: 20,
+    order: 21,
     coming: true,
     image: { avatar: true, src: Cardano },
     maintenance: false,
@@ -161,13 +161,13 @@ export const chains = [
   },
   {
     type: "EVM",
-    key: "Heco",
-    text: "Heco",
-    value: "Heco",
+    key: "Ton",
+    text: "Ton",
+    value: "Ton",
     chainId: undefined,
     order: 22,
     coming: true,
-    image: { avatar: true, src: Heco },
+    image: { avatar: true, src: Ton },
     maintenance: false,
     testNet: false,
     mainnet: false,
@@ -216,7 +216,7 @@ export const chains = [
     text: "Iotex",
     value: "Iotex",
     chainId: 4689,
-    order: 2,
+    order: 3,
     image: { avatar: true, src: Iotex },
     newChain: true,
     coming: false,
@@ -232,7 +232,7 @@ export const chains = [
     value: "Harmony",
     chainId: 1666600000,
     tnChainId: 1666700000,
-    order: 3,
+    order: 4,
     image: { avatar: true, src: One },
     maintenance: true,
     testNet: true,
@@ -245,7 +245,7 @@ export const chains = [
     text: "Aurora",
     value: "Aurora",
     chainId: 1313161554,
-    order: 1,
+    order: 2,
     image: { avatar: true, src: Aurora },
     maintenance: false,
     testNet: false,
@@ -271,7 +271,7 @@ export const chains = [
     value: "GateChain",
     tnChainId: 85,
     chainId: 86,
-    order: 2,
+    order: 1,
     image: {avatar: true, src: GT },
     maintenance: false,
     testNet: false,
@@ -298,12 +298,13 @@ export const chainsConfig = {
   Algorand: {
     Chain: 15,
     token: "ALGO",
+    img: Algorand,
     tx: "https://algoexplorer.io/tx/",
     testTx: "https://testnet.algoexplorer.io/"
   },
-  Heco: {
+  Ton: {
     type: EVM,
-    img: Heco,
+    img: Ton,
     Chain: Chain.HECO,
   },
   Tron: {
@@ -438,7 +439,7 @@ export const chainsConfig = {
   Aurora: {
     type: EVM,
     token: "AETH",
-    image: Aurora,
+    img: Aurora,
     rpc: "https://mainnet.aurora.dev",
     chainId: 1313161554,
     Chain: Chain.AURORA,
@@ -447,7 +448,7 @@ export const chainsConfig = {
   GateChain: {
     type: EVM,
     token: "GT",
-    image: Aurora,
+    img: GT,
     rpc: "https://evm.gatenode.cc",
     tnRpc: "https://meteora-evm.gatenode.cc",
     chainId: "86",
@@ -457,7 +458,7 @@ export const chainsConfig = {
   VeChain: {
     type: EVM,
     token: "VET",
-    image: VET,
+    img: VET,
     rpc: "https://sync-testnet.veblocks.net",
     tnRpc: "https://sync-testnet.veblocks.net",
     chainId: 39,
@@ -531,7 +532,7 @@ export const CHAIN_INFO = {
     native: "EGLD",
     decimals: 1e18,
   },
-  HECO: {
+  TON: {
     nonce: 3,
     native: coins[1],
     chainId: 256,

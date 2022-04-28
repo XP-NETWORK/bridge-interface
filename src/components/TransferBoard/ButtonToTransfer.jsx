@@ -164,8 +164,8 @@ export default function ButtonToTransfer() {
                     || (data ? data.message.includes('User cant pay the bills') : false )
                 ) dispatch(setError(`You don't have enough funds to pay the fees`))
                 else if(message){
-                    console.log(`http://localhost:3000/?to_opt-in=true&testnet=${testnet}&nft_uri=${nft.uri}`)
-                    dispatch(setURLToOptIn(`http://localhost:3000/?to_opt-in=true&testnet=${testnet}&nft_uri=${nft.uri}`))
+                    if(message === "receiver hasn't opted-in to wrapped nft"){
+                    dispatch(setURLToOptIn(`${window.location}/?to_opt-in=true&testnet=${testnet}&nft_uri=${nft.uri}`))}
                     dispatch(setError(err.data ? err.data.message : err.message))
                 }
                 else dispatch(setError(err.data ? err.data.message : err.message))
