@@ -22,7 +22,7 @@ import { getFactory } from "../wallet/helpers";
 function ConnectAlgorand({nftToOptIn, testnet}) {
   const dispatch = useDispatch();
   const [toOptIn, setToOptIn] = useState()
-  console.log("🚀 ~ file: ConnectAlgorand.jsx ~ line 24 ~ ConnectAlgorand ~ toOptIn", toOptIn)
+  // console.log("🚀 ~ file: ConnectAlgorand.jsx ~ line 24 ~ ConnectAlgorand ~ toOptIn", toOptIn)
   const handleClose = () => {
     dispatch(connectAlgorandWalletClaim(false));
   };
@@ -93,7 +93,6 @@ function ConnectAlgorand({nftToOptIn, testnet}) {
     const factory = await getFactory()
     const algorand = await factory.inner(15)
     const accounts = await window.AlgoSigner.accounts({ledger:"TestNet"})
-    console.log("🚀 ~ file: ConnectAlgorand.jsx ~ line 96 ~ optIn ~ accounts", accounts)
     const signer = {
       address: algorandAccountToOptIn,
       algoSigner: window.AlgoSigner,
@@ -116,7 +115,7 @@ function ConnectAlgorand({nftToOptIn, testnet}) {
      if(algorandAccountToOptIn){
         try {
           const response = await axios.get(nftToOptIn)
-          console.log("🚀 ~ file: ConnectAlgorand.jsx ~ line 117 ~ useEffect ~ response", response.data)
+          // console.log("🚀 ~ file: ConnectAlgorand.jsx ~ line 117 ~ useEffect ~ response", response.data)
           nft = {
             image: response.data.image,
             nftId: response.data.wrapped.assetID,

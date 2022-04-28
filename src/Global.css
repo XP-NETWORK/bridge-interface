@@ -959,6 +959,29 @@ li.nftSelecItem .Close:hover {
   top: 30px !important;
 }
 
+.opt-in__error{
+  display: flex;
+  justify-content: center;
+}
+
+.opt-in__url{
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  color: #14161A;
+  background-color: tomato;
+  width: 100px;
+  height: 20px;
+  overflow: scroll hidden;
+}
+
+.opt-in__text{
+font-size: 16px;
+font-weight: 400;
+line-height: 26px;
+color: #14161A;
+}
+
 .successBox {
   background: #F3F3F6;
   border-radius: 6px;

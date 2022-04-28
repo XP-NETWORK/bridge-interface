@@ -10,7 +10,7 @@ import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import { ethers } from "ethers";
-import { setError, setNFTsToWhitelist, setTransferLoaderModal, setTxnHash } from '../../store/reducers/generalSlice'
+import { setError, setNFTsToWhitelist, setTransferLoaderModal, setTxnHash, setURLToOptIn } from '../../store/reducers/generalSlice'
 
 export default function ButtonToTransfer() {
     const kukaiWallet = useSelector(state => state.general.kukaiWallet)
@@ -156,7 +156,7 @@ export default function ButtonToTransfer() {
             console.error(err)
             console.log('this is error in sendeach')
             setLoading(false)
-            dispatch(dispatch(setTransferLoaderModal(false)))
+        dispatch(dispatch(setTransferLoaderModal(false)))
             const { data, message, error } = err
             if(message){
                 if(
@@ -165,6 +165,7 @@ export default function ButtonToTransfer() {
                 ) dispatch(setError(`You don't have enough funds to pay the fees`))
                 else if(message){
                     console.log(`http://localhost:3000/?to_opt-in=true&testnet=${testnet}&nft_uri=${nft.uri}`)
+                    dispatch(setURLToOptIn(`http://localhost:3000/?to_opt-in=true&testnet=${testnet}&nft_uri=${nft.uri}`))
                     dispatch(setError(err.data ? err.data.message : err.message))
                 }
                 else dispatch(setError(err.data ? err.data.message : err.message))

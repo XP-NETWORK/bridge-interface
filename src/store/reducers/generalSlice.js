@@ -332,11 +332,15 @@ const generalSlice = createSlice({
     },
     setAlgoAccountToClaim(state, action){
       state.algorandAccountToClaim = action.payload
+    },
+    setURLToOptIn(state, action){
+      state.URLToOptIn = action.payload
     }
   },
 });
 
 export const {
+  setURLToOptIn,
   setAlgoAccountToClaim,
   removeFromClaimables,
   setEachClaimables,
