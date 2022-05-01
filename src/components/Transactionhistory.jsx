@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Container } from "react-bootstrap";
 
-import SelectedNFT_1 from '../assets/img/nfts/SelectedNFT_1.png';
 
 import MyAlgoConnect from "@randlabs/myalgo-connect";
-import Check from '../assets/img/icons/Check_circle.svg';
-import Failed from '../assets/img/icons/Failed.svg';
-import Pending from '../assets/img/icons/Pending.svg';
 import { useDispatch, useSelector } from 'react-redux';
 // import axios from 'tronweb/node_modules/axios';
 import { getFactory, setClaimablesAlgorand, setNFTS } from '../wallet/helpers';
-import { claimAlgorandPopup, removeAlgorandClaimable, setAlgorandClaimables, setTransferLoaderModal } from '../store/reducers/generalSlice';
+import { claimAlgorandPopup, removeAlgorandClaimable, setTransferLoaderModal } from '../store/reducers/generalSlice';
 import { algoConnector } from "../wallet/connectors"
 import { axios } from 'axios';
 // Chain

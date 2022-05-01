@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Close from "../../assets/img/icons/close.svg";
 import { Modal } from "react-bootstrap";
-import tronPopUp from "../../assets/img/icons/tronPopUp.png";
+
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import FileCopy from "../../assets/img/icons/FileCopy.svg";

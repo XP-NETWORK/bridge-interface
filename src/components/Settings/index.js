@@ -225,7 +225,7 @@ function WSettings({
                         >
                           Unselect all
                         </Button>
-                        {chains.map((chain, i) => (
+                        {chains.filter(c => c.coming || c.maintenance || c.mainnet || c.testNet).map((chain, i) => (
                           <li
                             key={i}
                             className="blockChain_item"

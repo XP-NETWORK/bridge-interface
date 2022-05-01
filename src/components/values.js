@@ -153,7 +153,7 @@ export const chains = [
     text: "Heco",
     value: "Heco",
     order: 22,
-    coming: true,
+    coming: false,
     image: { avatar: true, src: Heco },
     maintenance: false,
     testNet: false,
