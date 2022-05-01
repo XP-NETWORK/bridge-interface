@@ -27,30 +27,34 @@
     gap: 8px;
 }
 .list-icon{
-    position: absolute;
+    /*position: absolute;
     top: 7px;
     left: 7px;
     width: 24px;
     height: 24px;
     background-image: url("../../assets/img/icons/ListView.svg");
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat;*/
+}
+
+.grid-icon:hover svg rect  {
+    fill: #3E64ED;
 }
 .grid-icon{
-    position: absolute;
+    /*position: absolute;
     top: 7px;
     left: 7px;
     width: 24px;
     height: 24px;
     background-image: url("../../assets/img/icons/GridView.svg");
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat;*/
 }
 .change-view__button:hover .grid-icon{
-    background-image: url("../../assets/img/icons/Gridview_hovered.svg");
+    /*background-image: url("../../assets/img/icons/Gridview_hovered.svg");*/
 }
 .change-view__button:hover .list-icon{
-    background-image: url("../../assets/img/icons/listView_hovered.svg");
+   /* background-image: url("../../assets/img/icons/listView_hovered.svg");*/
 }
 
 .search-dropdown .dropdown-toggle{

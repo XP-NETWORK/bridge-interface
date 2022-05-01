@@ -665,7 +665,7 @@ img {
   border: 0;
   outline: none;
   box-shadow: none;
-  background: transparent;
+  background: #2F2E30;
   padding: 0 40px 0 15px;
   color: #fff;
   border-radius: 10px;
@@ -744,7 +744,7 @@ img {
   background-image: url("assets/img/icon/arrow_down_small.svg");
   width: 24px;
   height: 24px;
-
+  filter: invert();
   transform: translateY(50%);
   right: 15px;
   cursor: pointer;
@@ -925,12 +925,17 @@ h6 {
   top: 0;
   height: 100vh;
   width: 300px;
-  background: #fff;
-  color: #000;
+  background: #2F2E30;
+  color: #fff;
   display: flex;
   flex-direction: column;
   font-family: "Inter", sans-serif !important;
   z-index: 12;
+}
+
+.setting_sidebar input {
+  background: #5c5e5f;
+  color: #fff;
 }
 
 .bodyWrap {
@@ -961,7 +966,7 @@ h6 {
 .setting_list button.accordion-button {
   background: transparent;
   box-shadow: none !important;
-  color: #000;
+  color: #fff;
   min-height: 48px;
   padding: 5px 17px 5px 30px;
   border: 0;
@@ -1021,7 +1026,7 @@ h6 {
 .setting_list .accordion-body {
   padding: 0;
   border-bottom: 1px solid rgba(224, 228, 235, 0.5);
-  background: #f9fafb;
+  background: #5c5e5f;
 }
 
 .smart_con_opt:first-child {
@@ -1182,8 +1187,8 @@ li.blockChain_item:hover {
   font-size: 16px;
   line-height: 160%;
   font-weight: normal;
-  color: #000000;
-  opacity: 0.6;
+  color: #fff;
+
   padding: 12px 0 4px;
 }
 
@@ -1208,10 +1213,10 @@ li.blockChain_item:hover {
 .select_color {
   display: flex;
   align-items: center;
-  background: #fefefe;
+  background: #5c5e5f;
   /* Outline */
   padding: 10px;
-  border: 1px solid #d4d7dd;
+  border: 1px solid black;
   border-radius: 8px;
 }
 
@@ -1394,7 +1399,8 @@ li.blockChain_item .blockChainItem span {
 
 #SearchDrop svg {
   position: relative;
-  top: 3px;
+  top: 2px;
+  right: .5px;
 }
 
 .comingSoon {
@@ -1557,7 +1563,7 @@ li.blockChain_item .blockChainItem span {
 .returnBtn {
   position: absolute;
   top: -50px;
-  left: 30px;
+  left: 20px;
   z-index: 9000;
 }
 

@@ -39,6 +39,10 @@
     display: flex;
 }
 
+.list-icon:hover svg path {
+    fill: #3E64ED;
+}
+
 .change-view__button, .SearchDrop, .CloseIcon{
     width: 40px;
     height: 40px;
@@ -49,6 +53,9 @@
     position: relative;
     cursor: pointer;
     transition: all 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .serchInputConatainer {
@@ -126,8 +133,19 @@
     border-radius: 168px;
     cursor: pointer;
     position: relative;
+    display: flex;
+    
 
 }
+
+.refresh-button svg {
+    margin: auto;
+}
+
+.refresh-button:hover svg path{
+    fill: #3E64ED;
+}
+
 .refresh-button--disabled{
     width: 40px;
     height: 40px;
@@ -141,24 +159,24 @@
     position: relative;
 }
 .refresh-button::after, .refresh-button--disabled::after{
-    position: absolute;
+    /*position: absolute;
     content: "";
     top: 8px;
     left: 10px;
     width: 22px;
     height: 22px;
     background-image: url(../../assets/img/refresh.svg);
-    background-repeat: no-repeat;
+    background-repeat: no-repeat;*/
 }
 .refresh-button:hover::after, .refresh-button--disabled:hover:after{
-    position: absolute;
+    /*position: absolute;
     content: "";
     top: 8px;
     left: 10px;
     width: 22px;
     height: 22px;
     background-image: url("../../assets/img/icons/blue_refresh.svg");
-    background-repeat: no-repeat;
+    background-repeat: no-repeat;*/
 }
 .search-button{
     width: 40px;

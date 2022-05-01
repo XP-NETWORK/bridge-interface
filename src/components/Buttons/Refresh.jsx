@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { getAlgorandClaimables, setNFTS } from "../../wallet/helpers";
+import {ReactComponent as RefreshComp} from '../../assets/img/refresh.svg'
 
 export default function Refresh() {
 
@@ -23,6 +24,6 @@ export default function Refresh() {
       };
 
   return (
-    <span className={bigLoader ? 'refresh-button--disabled' : 'refresh-button'} onClick={refresh}></span>
+    <span className={bigLoader ? 'refresh-button--disabled' : 'refresh-button'} onClick={refresh}><RefreshComp className="svgWidget"/></span>
   )
 }

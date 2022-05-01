@@ -30,9 +30,10 @@ export default function Error() {
           </span>
         </div>
       </Modal.Header>
-      <Modal.Body className="modalBody text-center">
-        <div className="wrongNFT">
-          {typeof error === "object" ? error?.message : error}
+      <Modal.Body className="modalBody text-center" >
+        <div className="wrongNFT" style={{overflowWrap: "break-word"}}>
+          <p> {typeof error === "object" ? error?.message : error}</p>
+         
         </div>
         { URLToOptIn &&
           <CopyToClipboard text={URLToOptIn}>

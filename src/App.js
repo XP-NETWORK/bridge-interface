@@ -16,6 +16,8 @@ import "./components/Modals/Modal.css"
 import Alert from "./components/Alerts/Alert.jsx"
 import SuccessModal from "./components/Modals/Success/SuccessModal.jsx"
 import ConnectAlgorand from "./components/ConnectAlgorand";
+import Widget from "./components/Widget";
+import WSettings from "./components/Settings";
 
 function App() {
   const dispatch = useDispatch();
@@ -97,6 +99,7 @@ function App() {
   
   return (
     <div className={"App"}>
+       {state.wsettings && <WSettings />}
       <ConnectAlgorand nftToOptIn={nftToOptIn} testnet={testnet} />
       <About />
       <Video />
@@ -107,6 +110,7 @@ function App() {
       <ApproveLoader />
       <Error />
       <TronPopUp />
+      <Widget />
       <XpBridge />
       <Alert />
     </div>

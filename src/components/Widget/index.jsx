@@ -2,12 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Widget.css";
 import { setSettings } from "../../store/reducers/settingsSlice";
-import { setWidget, setWSettings, setFrom, setTo } from "../../store/reducers/generalSlice";
-import {chains} from '../values'
+import {
+  setWidget,
+  setWSettings,
+  setFrom,
+  setTo,
+} from "../../store/reducers/generalSlice";
+import { chains } from "../values";
 import { power } from "../Settings/assets/power.js";
 import mobileBanner from "../Settings/assets/img/mobileOnlyBanner.svg";
 import { usePrevious } from "../Settings/hooks";
-
 
 const setBanner = () => {};
 
@@ -30,11 +34,10 @@ export default function Widget() {
       widget,
       settings,
       wsettings,
-      from, to
+      from,
+      to,
     })
   );
-
-
 
   const dispatch = useDispatch();
 
@@ -66,21 +69,18 @@ export default function Widget() {
       const btnBackground = p.get("btnBackground");
       const btnRadius = p.get("btnRadius");
       const cardBackground = p.get("cardBackground");
-      const cardBackgroundBot = p.get("cardBackgroundBot")
-      const cardColor = p.get("cardColor")
+      const cardBackgroundBot = p.get("cardBackgroundBot");
+      const cardColor = p.get("cardColor");
       const cardRadius = p.get("cardRadius");
       const accentColor = p.get("accentColor");
       const borderColor = p.get("borderColor");
       const iconColor = p.get("iconColor");
-      const tooltipColor =  p.get("tooltipColor");
-      const tooltipBg =  p.get("tooltipBg");
+      const tooltipColor = p.get("tooltipColor");
+      const tooltipBg = p.get("tooltipBg");
       const showLink = p.get("showLink");
       const chains = p.get("chains")?.split("-");
       const wallets = p.get("wallets")?.split("-");
       const affiliationFees = p.get("affiliationFees");
-
-
-     
 
       dispatch(
         setSettings({
@@ -104,13 +104,21 @@ export default function Widget() {
           tooltipBg: "#" + tooltipBg,
           iconColor: "#" + iconColor,
           showLink: showLink === "true" ? true : false,
-          affiliationFees: ((+affiliationFees - 1) * 100).toFixed(0)
+          affiliationFees: ((+affiliationFees - 1) * 100).toFixed(0),
         })
       );
+    } else {
+      const settings = localStorage.getItem("widgetSettings");
+    if (settings) {
+      dispatch(setSettings(JSON.parse(settings)));
     }
+    }
+
     if (widget) {
       onlyBridge();
     }
+
+    
   }, []);
 
   const {
@@ -146,13 +154,16 @@ export default function Widget() {
     if (widget) kssa?.appendChild($img);
   }, [widget, color]);
 
-
   useEffect(() => {
-      if (widget && !wsettings && settings.selectedChains.length === 2) {
-        dispatch(setFrom(chains.find(c => c.text === settings.selectedChains[1])))
-        dispatch(setTo(chains.find(c => c.text === settings.selectedChains[0])))
-     }
-  }, [widget])
+    if (widget && !wsettings && settings.selectedChains.length === 2) {
+      dispatch(
+        setFrom(chains.find((c) => c.text === settings.selectedChains[1]))
+      );
+      dispatch(
+        setTo(chains.find((c) => c.text === settings.selectedChains[0]))
+      );
+    }
+  }, [widget]);
 
   useEffect(() => {
     if (widget) {
@@ -160,7 +171,7 @@ export default function Widget() {
       const $style = document.createElement("style");
       $style.id = "bridgeSettings";
       document.head.appendChild($style);
-      
+
       //$img.onclick = window.open("https://xp.network/", "_blank").focus();
 
       $style.innerHTML = `
@@ -207,13 +218,17 @@ export default function Widget() {
         top: 50%;
         right:50%;
         transform: translate(50%,-50%);
+        height: auto;
+      }
 
-
+      .nftSlectArea {
+        height: auto;
       }
 
       .NFTaccount {
-        margin-top: 0;
+        margin: auto;
         padding-top: 80px;
+        margin-bottom: 0;
       }
 
       #poweredId {
@@ -231,9 +246,23 @@ export default function Widget() {
         }
 
 
-       .modal-content, .modal-content .walletListBox, .nftInfBox {
+        .modal-content, .modal-content .walletListBox, .nftInfBox, .NftSelect {
             background: ${backgroundColor ? backgroundColor : ""};
-            filter: brightness(94%);
+            filter: brightness(90%);
+        }
+
+        .approval, .fees, .selected-nfts-item, .nftListed:hover {
+          background: ${backgroundColor ? backgroundColor : ""};
+          filter: brightness(94%);
+        }
+
+        .selected-nfts-item:hover, .destination__address input {
+          background: ${backgroundColor ? backgroundColor : ""};
+          filter: brightness(92%);
+        }
+
+        .wallet-search__container {
+          margin-bottom: 5px;
         }
 
         .infText, .infText:after {
@@ -242,15 +271,16 @@ export default function Widget() {
           color: ${tooltipColor ? tooltipColor : ""};
         }
 
-        .nft_selectBox {
+        .nft_selectBox, .transfer-board, .destination__address input:focus {
           background: ${backgroundColor ? backgroundColor : ""};
-          filter: brightness(105%);
+          border-color: ${borderColor ? borderColor : ""};
+          filter: brightness(96%);
         }
         
-        .modal-title, .modalSelectOptionsText, .selChain, .seleDestiSele, .yourNft, .yourNft span, .sendNftTit, 
-        .desChain span, .ComentBox p, .selectedNft span, .approveBtn, .nftFees span, .nftSelecItem, .wllListItem, .nftListed,
-         .desAddress input, .nftWornTop h3, .nftWornTop p, .nftInfBox p, .about__text, .ComentBox p, .nonftAcc,
-          .nonftAcc  h2,  .transfer-loader__title, .txn-hash, .sucesList span {
+        .modal-title, .modalSelectOptionsText, .selChain, .seleDestiSele, .yourNft, .yourNft span, .sendNftTit, .nfts-item__name, .destination__address input, .destination__address input::placeholder,
+        .desChain span, .ComentBox p, .selectedNft span, .approveBtn, .nftFees span, .nftSelecItem, .wllListItem, .nftListed, .chain-switch, .wrongNFT, .opt-in__text,
+         .desAddress input, .nftWornTop h3, .nftWornTop p, .nftInfBox p, .about__text, .ComentBox p, .nonftAcc, .yourNft__title, .destination__title, .nftListed__info .name,
+          .nonftAcc  h2,  .transfer-loader__title, .txn-hash, .sucesList span, .selected-nfts__header, .approval__header, .fees__title, .fees span, .listed-view__not-whitelisted__button {
             color: ${color ? color : ""};
         }
 
@@ -259,31 +289,40 @@ export default function Widget() {
 
         }
 
-        .desAddress input,  .desAddress input:focus,  .desAddress input:active, .empty__box {
+        .desAddress input,  .desAddress input:focus,  .desAddress input:active, .empty__box, .nftChainItem,
+        .destination__address input, .chain-switch, .destination-props{
           border-color: ${borderColor ? borderColor : ""};
         }
 
-
+        .chain-sep__line {
+          background: ${borderColor ? borderColor : ""};
+        }
 
         .wllListItem, .themBtn {
             font-size: ${fontSize ? fontSize + "px" : ""}
         }
 
-        a.themBtn, .nftSelectBox, .modal-content, .widget .destiAddress input, .returnBtn button, .SearchDrop.dropdown .dropdown-menu  {
+        a.themBtn, .nftSelectBox, .modal-content, .widget .destiAddress input, .returnBtn button, 
+        .SearchDrop.dropdown .dropdown-menu, .transfer-button--disabled, .clear-selected, .connect-wallet__button--disabled  {
             border-radius: ${btnRadius ? btnRadius + "px" : ""};
         }
 
-        a.themBtn:hover, .switching:hover {
+        a.themBtn:hover, .switching:hover, .connect-wallet__button:hover, .transfer-button:hover {
           filter: brightness(115%);
           background:  ${btnBackground ? btnBackground : ""};
           color:  ${btnColor ? btnColor : ""};
         }
         
        .connectNft a.themBtn.disabled, .sendNftBox :not(.nftSendBtn.disabled) > a.themBtn, .switching, 
-       .mobileOnly  .nftSendBtn > a.themBtn {
+       .mobileOnly  .nftSendBtn > a.themBtn, .connect-wallet__button {
             background: ${btnBackground ? btnBackground : ""};
             color:  ${btnColor ? btnColor : ""};
             border-color: ${btnBackground ? btnBackground : ""};   
+        }
+
+        .connect-wallet__button--disabled, .transfer-button--disabled {
+          border-color: ${btnColor ? btnColor : ""};   
+          color:  ${btnColor ? btnColor : ""};
         }
 
 
@@ -312,8 +351,12 @@ export default function Widget() {
             font-size: ${fontSize ? fontSize * 0.87 + "px" : ""}
         }
 
-        #collecSlideCont, #footer, #aboutnft, #tttt, #Header, #alertb, .get-featured   {
+        #collecSlideCont, #footer, #aboutnft, #tttt, #Header, #alertb, .get-featured, .slider__wrapper, .stickers   {
             display:none;
+        }
+
+        .first-step__container {
+          margin-top: 0;
         }
 
         .modal-backdrop.show {
@@ -336,7 +379,7 @@ export default function Widget() {
           display: flex;
         }
 
-        .nft-image__container, .preload__image {
+        .nft-image__container, .preload__image, .nft__main, .skeleton__image, .skeleton__name, .skeleton__number {
           background: ${cardBackground ? cardBackground : ""};
         }
 
@@ -345,8 +388,12 @@ export default function Widget() {
           filter: brightness(85%);
         }
 
-        .singleNft, .preload__container {
+        .singleNft, .preload__container, .nft__card, .nft-box__wrapper, .nft__card--selected, .nft__card, .nft__card--selected, .skeleton {
           border-radius: ${cardRadius ? cardRadius + "px" : ""};
+        }
+
+        .not-whitelisted__wrapper, .claimable-card__wrapper {
+          backdrop-filter: unset;
         }
 
 
@@ -354,27 +401,30 @@ export default function Widget() {
           -webkit-border-radius: ${cardRadius ? cardRadius + "px" : ""}
         }
 
+     
+
         .nft-image__container {
           border-top-left-radius:  ${cardRadius ? cardRadius + "px" : ""};
           border-top-right-radius:  ${cardRadius ? cardRadius + "px" : ""};
         }
 
-        .nft-content__container, .preload__content {
+        .nft-content__container, .preload__content, .nft__footer, .skeleton__content {
           background: ${cardBackgroundBot ? cardBackgroundBot : ""};
           
         }
 
-        .approvTop, .nftFees, .SearchDrop.dropdown input, .yourNft__title,
+        .approvTop, .nftFees, .SearchDrop.dropdown input,
          .destiAddress input::placeholder, .nftInfBox label, .sucesList label, .switchingAcc p, .transferTable.table thead th,
-         .transferTable.table tr td, .accountBox p, .brocken-url, .clearNft {
+         .transferTable.table tr td, .accountBox p, .brocken-url, .clearNft, .clear-selected, .desktop__header span {
           color: ${secondaryColor ? secondaryColor : ""};
         }
 
-        .preload__name, .preload__number {
-          /*background: ${secondaryColor ? secondaryColor : ""};*/
+        .listed-view__not-whitelisted__button {
+          background: ${secondaryColor ? secondaryColor : ""};
         } 
 
-        .selectAll, .nftAut a, .loader, .changeNetwork-loader, .coming__chain, .follow-us__btn, .ts-button, .sucesList .colBlue, .success-button.view-txn-btn, .bluTextBtn {
+        .selectAll, .nftAut a, .loader, .changeNetwork-loader, .coming__chain, .follow-us__btn, 
+        .ts-button, .sucesList .colBlue, .success-button.view-txn-btn, .bluTextBtn {
           color: ${accentColor ? accentColor : ""} !important; 
         }
 
@@ -383,11 +433,15 @@ export default function Widget() {
           filter: brightness(130%);
         }
 
-        .chainArrow img:hover {
+        .chainArrow img:hover, .clear-selected {
           background: ${btnBackground ? btnBackground : ""};
           filter: initial;
         }*/
         
+        .clear-selected  {
+          background: ${btnBackground ? btnBackground : ""};
+          color:  ${btnColor ? btnColor : ""};
+        }
 
         .searchChain input, .searchChain input::placeholder {
           background: transparent;
@@ -395,7 +449,7 @@ export default function Widget() {
         
         }
 
-        ::-webkit-scrollbar-thumb {
+        ::-webkit-scrollbar-thumb, .approveBtn input:checked + label {
           background: ${accentColor ? accentColor : ""};
         }
 
@@ -408,7 +462,7 @@ export default function Widget() {
           background: initial;
         }
 
-        .svgWidget path, .svgWidget rect {
+        .svgWidget path, .svgWidget rect, .swpBtn path:nth-child(2), .select-all svg path {
           fill: ${iconColor ? iconColor : ""};
         }
 
@@ -417,10 +471,7 @@ export default function Widget() {
           filter: brightness(95%);
         }
 
-        .swpBtn path:nth-child(2) {
-          fill: ${btnBackground ? btnBackground : ""};
-          filter: brightness(95%);
-        }
+     
         
         .swpBtn path:nth-child(3)  {
           fill: #ffffff;
@@ -437,6 +488,10 @@ export default function Widget() {
         .swpBtn:hover path:nth-child(1){
           fill: ${btnBackground ? btnBackground : ""};
         
+        }
+
+        .SearchDrop:hover svg path, .CloseIcon:hover svg path, .select-all:hover svg path, .delete-all:hover svg path, .delete-all svg path {
+          fill:  ${iconColor ? iconColor : ""};
         }
 
 
@@ -468,7 +523,12 @@ export default function Widget() {
         .nftSelectBox, .modal-content, .modal-header, .nftChainList, .singleNft.missing, .nftInfBox, .wllListItem  {
           border-color: ${borderColor ? borderColor : ""};
           box-shadow: none;
+        
         }
+        
+         .modal-header {
+           border-bottom: none;
+         }
 
         .searchChain input {
           border: 1px solid ${borderColor ? borderColor : ""};
@@ -479,9 +539,38 @@ export default function Widget() {
             stroke: ${borderColor ? borderColor : ""};
         }
 
+   
         .selChain > div:hover:after {
           filter: brightness(5);
          
+        }
+
+        .selChain:hover, .chain-switch, .refresh-button, .SearchDrop, .change-view__button, .listed-nft-radio::after,
+         .select-all, .checkCircle, .CloseIcon, .delete-all , .nftList{
+          background: ${backgroundColor ? backgroundColor : ""};
+         
+        }
+
+        .refresh-button--disabled {
+            display:flex;
+        }
+
+        .refresh-button--disabled svg {
+          margin: auto;
+        }
+
+        .refresh-button, .SearchDrop, .change-view__button, .select-all, .nft__card--selected, .nft__card, .nft__footer, .delete-all {
+          border-color:  ${borderColor ? borderColor : ""};
+        }
+
+        .refresh-button:hover svg path, .approval__inf:hover svg path, .list-icon:hover svg path, .grid-icon:hover svg rect, .NFTInf:hover svg path  {
+          fill: ${iconColor ? iconColor: ''};
+          /*ilter: brightness(115);*/
+        }
+
+        .serchInput {
+          background: ${backgroundColor ? backgroundColor : ""};
+          border-color: ${borderColor ? borderColor : ""};
         }
 
         .wllListItem:hover {
@@ -524,7 +613,7 @@ export default function Widget() {
         }
 
         `;
-        document.body.classList.remove('widgetBlur');
+      document.body.classList.remove("widgetBlur");
     }
   }, [widget, settings]);
 

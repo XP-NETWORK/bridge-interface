@@ -13,6 +13,7 @@ import "./NewNFT.css";
 import Preload from "./Preload";
 import ClaimableCard from "./ClaimableCard";
 import NotWhiteListed from "./NotWhiteListed";
+import {ReactComponent as CheckComp} from "../../assets/img/icons/blue_check-small.svg"
 
 
 export default function NFTcard({ nft, index, claimables }) {
@@ -68,7 +69,7 @@ export default function NFTcard({ nft, index, claimables }) {
           : [nft.animation_url,nft.image]?.length > 0 && <VideoOrImage urls={[nft.animation_url,nft.image]} i={index} />
           : <BrockenUtlGridView />
           }
-          { !claimables && nft.whitelisted ? !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> : "" }
+          { !claimables && nft.whitelisted ? !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"><CheckComp className="svgWidget"/></div> : "" }
           { !nft.whitelisted && <NotWhiteListed /> }
           { claimables && < ClaimableCard nft={nft} index={index} /> }
         </div>

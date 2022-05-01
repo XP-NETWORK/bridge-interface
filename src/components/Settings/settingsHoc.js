@@ -15,9 +15,10 @@ import { usePrevious } from "./hooks";
  const Web3Utils = require("web3-utils");
 
 const settingsHoc = (Wrapped) => (props) => {
-  const { settings, selectedNFTList } = useSelector(({ settings, general :{selectedNFTList}}) => ({
+  const { settings, widget, selectedNFTList } = useSelector(({ settings, general :{selectedNFTList, widget}}) => ({
     settings,
-    selectedNFTList
+    selectedNFTList,
+    widget
   }));
 
 
@@ -211,12 +212,7 @@ const settingsHoc = (Wrapped) => (props) => {
     );
   };
 
-  useEffect(() => {
-    const settings = localStorage.getItem("widgetSettings");
-    if (settings) {
-      dispatch(setSettings(JSON.parse(settings)));
-    }
-  }, []);
+
 
   useEffect(() => {
     if (prevSelected) {
