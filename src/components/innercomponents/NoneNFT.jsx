@@ -11,8 +11,8 @@ function NoneNFT() {
             <div className="nonftAcc">
                 <img src={NONFT} alt="No NFT" className="nonft" />
                 <h2>Oops...</h2>
-                There is nothing here.
-                <a onClick={() => dispatch(setReset())} className="switching">Switch Network</a>
+                <span>There is nothing here.</span>
+                <div onClick={() => window.location.reload()} className="switching">Switch Network</div>
             </div>
         </div>
     )

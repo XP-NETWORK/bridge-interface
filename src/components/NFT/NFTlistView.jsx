@@ -12,30 +12,8 @@ import NFTlistedCard from "./NFTlistedCard";
 
 function NFTlistView() {
     const nfts = useSelector(state => state.general.NFTList)
-    // const selectedNFTs = useSelector(state => state.general.selectedNFTList)
-    // const from = useSelector(state => state.general.from)
     const search = useSelector(state => state.general.NFTListSearch)
-    // const [whitelisted, setWhitelisted] = useState()
-    // const dispatch = useDispatch()
-    // const OFF = {pointerEvents: "none"}
-    // const checkIfSelected = ( nft ) => {
-    //     return selectedNFTs.filter(n => n.native.tokenId === nft.native.tokenId && n.native.contract === nft.native.contract && n.native.chainId === nft.native.chainId)[0]
-    // }
 
-    // function addRemoveNFT (nft, e){
-    //     if(!checkIfSelected(nft)){
-    //         dispatch(setSelectedNFTList(nft))
-    //     }
-    //     else{
-    //         dispatch(removeFromSelectedNFTList(nft))
-    //     }
-    // }
-
-    // useEffect(async () => {
-    //   const wl = await isWhiteListed(from.text, nft)
-    // }, [])
-    
-    
     return (
         <div  className="nftListBox nftListView"> 
             <ul className="nftList">

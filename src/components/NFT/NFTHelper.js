@@ -58,10 +58,8 @@ export const getUrl = nft => {
         }
     });
     strings.forEach(item => {
-        if((item.includes("http:") || item.includes("https:") || item.includes("ipfs") || item.includes("base64")) && item.indexOf(' ') < 1 && !item.includes('.json') && !checkIfJSON(item)){
-           if(!urls.some(url => url === item)){
-               urls.push(item)
-           }
+        if((item.includes("https:") || item.includes("ipfs") || item.includes("base64")) && !item.includes('.json')){
+            urls.push(item)
         }
     });
     if(urls.some(item => ifVideo(item))){
@@ -86,6 +84,36 @@ export const getUrl = nft => {
     return { video, videoUrl, image ,imageUrl, ipfsArr }
 }
 
+// const getVideoSize = url => {
+//     const video = document.createElement('video');
+//     video.src = url
+//     console.log("🚀 ~ file: NFTHelper.js ~ line 95 ~ video", video)
+    
+// }
+
+// const getImageSize = url => {
+//     let errorFetching = false;
+  
+//     return new Promise((resolve, reject) => {
+//       const i = new Image();
+  
+//       i.onload = function () {
+//         if (i.height && i.width) {
+//           return resolve({
+//             errorFetching,
+//             width: i.width,
+//             height: i.height
+//           });
+//         }
+//       };
+  
+//       i.src = url;
+//     });
+//   };
+
+
+export const isShown = (search, nft) => !search || nft?.description?.toString().toLowerCase().includes(search?.toLowerCase()) || nft?.native?.owner?.includes(search);
+
 export const isWhiteListed = async (from, nft) => {
     // debugger
     let whitelisted
@@ -94,7 +122,9 @@ export const isWhiteListed = async (from, nft) => {
     const inner = await factory.inner(chainNonce)
     if(inner){
         try {
-            whitelisted = await factory.checkWhitelist(inner, nft)
+            whitelisted = await factory.checkWhitelist(inner, nft).catch(error => {
+                console.log(error)
+            })
         } catch (error) {
             console.error("isWhiteListed: ", error)
         }

@@ -1,37 +1,31 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import NFTaccount from "../components/NFTaccount";
-import NftSelect from "../components/NftSelect";
-import NftSlider from "../components/NftSlider";
-import NFTsuccess from "../components/NFTsuccess";
-import Transactionhistory from "../components/Transactionhistory";
-import { Routes, Route } from "react-router";
+import NFTaccount from "../components/NFTsBoard/NFTaccount";
+import NFTsuccess from "../components/Modals/Success/NFTsuccess";
+import {
+  Routes,
+  Route,
+} from "react-router-dom";
+import ConnectWallet from "./ConnectWallet";
+import ProtectedRoute from "../pages/ProtectedRoute"
+// import SuccessModal from "../components/Modals/Success/SuccessModal"
 
 function XpBridge() {
-  useEffect(() => {}, []);
-  const { widget } = useSelector((s) => s.general);
-  const step = useSelector((state) => state.general.step);
-  const algorandClaimables = useSelector(
-    (state) => state.general.algorandClaimables
-  );
+  const testnet = useSelector(state => state.general.testNet)
+
   return (
     <div className="nftContainer">
-      {algorandClaimables && algorandClaimables.length > 0 ? (
-        <Transactionhistory />
-      ) : (
-        ""
-      )}
-      {/* <Transactionhistory /> */}
-      {step === 1 ? (
-        <>
-          <NftSelect />
-          {!widget ? <NftSlider /> : ""}
-        </>
-      ) : (
-        ""
-      )}
-      {step === 2 ? <NFTaccount /> : ""}
-      <NFTsuccess />
+      {/* { algorandClaimables && algorandClaimables.length > 0 && <Transactionhistory /> } */}
+      <Routes>
+        <Route path="/" element={<ConnectWallet />} />
+        <Route path="/testnet" element={<ConnectWallet />} />
+        <Route path="/connect" element={<ConnectWallet />} />
+        <Route path="/testnet/connect" element={<ConnectWallet />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path={testnet ? "/testnet/account" : "/account"} components={ <NFTaccount  />} />
+        </Route>
+      </Routes>
+      {/* <NFTsuccess /> */}
     </div>
   );
 }

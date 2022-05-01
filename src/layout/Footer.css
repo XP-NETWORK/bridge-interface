@@ -1,15 +1,17 @@
 
 footer {
-    margin-top: auto;
-  }
+    margin: auto auto 20px auto;
+    width: 1024px;
+    z-index: 1;
+}
   
   .footContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    padding: 8px 45px 25px 45px;
-    border: 1px solid #292f3f;
+    padding-top: 16px;
+    border-top: 1px solid rgba(98, 113, 138, 0.4);
   }
   
   ul.socialLInks {
@@ -18,30 +20,111 @@ footer {
     list-style: none;
     display: flex;
     align-items: center;
+    cursor: pointer;
+    transition: all 1s;
   }
-  
   ul.socialLInks li {
     margin-right: 6px;
   }
-  
   a.socliLink img {
-    width: 24px;
+    width: 36px;
   }
-  
   ul.socialLInks li img:hover {
     filter: brightness(100);
   }
-  
   .footRight {
     display: flex;
+    gap: 10px;
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: right;
+    color: #14161A;
   }
   
-  .powerBy {
-    /* margin-right: 98px; */
-  }
   
+  .footRight a, .footRight a:active{
+    color: #62718A;
+  }
   .powerBy img {
     display: block;
-    /* margin-left: 15px; */
   }
-  
+  .twitter{
+    width: 48px;
+    height: 48px;
+    background-image: url('../assets/img/footer/twitter.svg');
+
+  }
+  .twitter:hover{
+    background-image: url('../assets/img/icons/twitter_hovered.svg');
+  }
+  .reddit{
+    width: 48px;
+    height: 48px;
+    background-image: url('../assets/img/footer/redit.svg');
+  }
+  .reddit:hover{
+    background-image: url('../assets/img/icons/reddit_hovered.svg');
+
+  }
+  .linkedin{
+    width: 48px;
+    height: 48px;
+    background-image: url('../assets/img/footer/linkedin.svg');
+  }
+  .linkedin:hover{
+    background-image: url('../assets/img/icons/linkedin_hovered.svg');
+
+  }
+  .telegram{
+    width: 48px;
+    height: 48px;
+    background-image: url('../assets/img/footer/telegram.svg');
+  }
+  .telegram:hover{
+    background-image: url('../assets/img/icons/telegram_hovered.svg');
+
+  }
+
+
+
+  .socliLink:hover a svg path {
+      fill: #395FEB;
+  }
+
+
+  @media screen and (max-width: 1024px) {
+    footer {
+      width: 768px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    footer {
+      width: calc(100% - 20px) !important;
+   }
+   .footContainer{
+    justify-content: center;
+    gap: 35px;
+   }
+   .footRight{
+     flex-direction: column;
+     align-items: center;
+     gap: 20px;
+   }
+   .footRight a:nth-of-type(1){
+    order: 1;
+   }
+  }
+  @media screen and (max-width: 425px) {
+    footer {
+      width: 375px;
+   }
+  }
+  @media screen and (max-width: 375px) {
+    footer {
+      width: 346px;
+   }
+  }

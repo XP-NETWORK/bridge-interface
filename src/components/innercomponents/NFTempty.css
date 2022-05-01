@@ -1,28 +1,29 @@
 .empty__row{
     display: flex;
+    justify-content: flex-start;
     flex-wrap: wrap;
     gap: 10px;
 }
 
 .empty__box{
-    width: calc(90% / 3);
-    height: 320px;
+    width: 200px;
+    height: 267px;
     border-radius: 20px;
-    border: 1px dashed #36405A;
+    background: rgba(220, 220, 224, 0.3);
+    border: 1px dashed #ECECF1;
 }
 
 @media screen and (max-width: 1200px){
     .empty__box{
-        height: 320px;
+        height: 267px;
         border-radius: 20px;
-        border: 1px dashed #36405A;
     }
 }
 
 @media screen and (max-width: 768px) {
     .empty__box{
         width: calc(90% / 3);
-        height: 320px;
+        height: 267px;
     }
 }
 

@@ -1,5 +1,7 @@
 export const getAddEthereumChain = () => {
-    const o = allchains.reduce((obj, item) => Object.assign(obj, { [item.chainId]: item }), {});
+ 
+    const o = allchains.reduce(
+        (obj, item) => Object.assign(obj, { [item.chainId]: item }), {});
       
     return o
 }
@@ -1072,7 +1074,7 @@ const allchains = [{
     "name": "GateChain Testnet",
     "chainId": 85,
     "shortName": "gttest",
-    "chain": "GTTEST",
+    "chain": "GT",
     "network": "testnet",
     "networkId": 85,
     "nativeCurrency": {
@@ -1080,7 +1082,7 @@ const allchains = [{
         "symbol": "GT",
         "decimals": 18
     },
-    "rpc": ["https://testnet.gatenode.cc"],
+    "rpc": ["https://meteora-evm.gatenode.cc"],
     "faucets": ["https://www.gatescan.org/testnet/faucet"],
     "explorers": [{
         "name": "GateScan",
@@ -4600,27 +4602,46 @@ const allchains = [{
     "shortName": "palm",
     "chainId": 11297108109,
     "networkId": 11297108109
-},{
-    "name": "Godwoken",
-    "chain": "CKB",
+},
+{
+    "name": "VeChain Testnet",
+    "chain": "VeChain",
     "network": "testnet",
+    "rpc": ["https://sync-testnet.veblocks.net"],
     "faucets": [],
     "nativeCurrency": {
-        "name": "Godwoken",
-        "symbol": "CKB",
-        "decimals": 8
+        "name": "VeChain",
+        "symbol": "VET",
+        "decimals": 18
     },
-    "infoURL": "https://ethereum.org",
-    "shortName": "BTC",
-    "chainId": 868455272153094,
-    // "networkId": 1,
-    // "slip44": 60,
-    // "ens": {
-    //     "registry": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e"
-    // },
-    // "explorers": [{
-    //     "name": "etherscan",
-    //     "url": "https://etherscan.io",
-    //     "standard": "EIP3091"
-    // }]
+    "infoURL": "",
+    "shortName": "vechain",
+    "chainId": 39,
+    "networkId": undefined,
+    "explorers": [{
+        "name": "VeChain",
+        "url": "https://explore-testnet.vechain.org/transactions/",
+        "standard": "EIP3091"
     }]
+},
+{
+    "name": "VeChain Mainnet",
+    "chain": "VeChain",
+    "network": "mainnet",
+    "rpc": ["https://sync-mainnet.veblocks.net"],
+    "faucets": [],
+    "nativeCurrency": {
+        "name": "VeChain",
+        "symbol": "VET",
+        "decimals": 18
+    },
+    "infoURL": "",
+    "shortName": "vechain",
+    "chainId": undefined,
+    "networkId": 0x4a,
+    "explorers": [{
+        "name": "VeChain",
+        "url": "https://explore.vechain.org/transactions/",
+        "standard": "EIP3091"
+    }]
+}]

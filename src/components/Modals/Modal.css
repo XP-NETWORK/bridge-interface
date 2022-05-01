@@ -1,0 +1,303 @@
+
+.ChainModal .modal-dialog, .MaiarModal .modal-dialog{
+    max-width: 370px;
+}
+.wallet-modal .modal-header{
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.modal-content {
+    background: #F7F8F9;
+    box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.13);
+    border-radius: 20px;
+}
+
+.modal-header{
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
+}
+
+.wallet-search__container{
+  position: relative;
+  width: calc(100% - 60px);
+  margin: 0 auto;
+}
+
+.magnify{
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  transform: translateY(-40%);
+  right: 11px;
+  background-image: url("../../assets/img/icons/lupa.svg");
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+
+.wallet-search{
+  outline: none;
+  /* box-shadow: 0px 1px 6px rgba(180, 185, 199, 0.25); */
+  border-radius: 38px;
+  border: 1px solid #FFFFFF;
+  width: 310px;
+  height: 48px;
+  padding: 0 16px;
+  color: #62718A;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  background-color: white;
+ 
+}
+
+.ChainModal .CloseModal{
+
+}
+
+.close-modal{
+  width: 12px;
+  height: 12px;
+  background-image: url("../../assets/img/icons/close.svg");
+}
+.close-modal:hover{
+  background-image: url("../../assets/img/icons/close_hovered.svg");
+}
+
+.modal-backdrop {
+    background: #1d212a;
+    opacity: 0.9;
+}
+
+.modal-header {
+    border-bottom: 1px solid transparent;
+    position: relative;
+    z-index: 1;
+    min-height: 70px;
+    align-items: center;
+    padding: 8px 30px;
+    justify-content: center;
+}
+.about__text {
+  width: calc(100% - 82px);
+  height: 236px;
+  margin: 0 auto;
+  overflow: auto;
+  color: #14161A;
+  background: #F3F3F6;
+  border-radius: 6px;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  padding: 8px 0;
+  overflow: auto;
+}
+.about__text p {
+  margin-bottom: 30px;
+  padding: 0 12px;
+}
+  .modal-title {
+    color: #14161A;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+  
+  .CloseModal {
+    position: absolute;
+    z-index: 1;
+    left: auto;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  .walletListBox {
+    padding: 19px 30px 19px 30px;
+    background: #F9F9FB;
+    overflow-y: scroll;
+  }
+  .wllListItem {
+    position: relative;
+    margin-bottom: 12px;
+    height: 56px;
+    border: 1px solid rgba(255, 255, 255);
+    box-sizing: border-box;
+    box-shadow: 0px 1px 6px rgba(180, 185, 199, 0.25);
+    border-radius: 86px;
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 160%;
+    color: #14161A;
+    cursor: pointer;
+    display: flex;
+    background-color: #ffffff50;
+  }
+  .wllListItem p {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    left: 0;
+  }
+  .wllListItem img {
+    display: block;
+    margin-right: auto;
+  }
+  
+  .wllListItem:hover {
+    background: #ECECF1;
+    border: 1px solid #ffffff;
+  }
+  
+  .wllListItem:last-child {
+    margin: 0;
+  }
+
+  .walletList {
+    list-style: none;
+    max-height: 336px;
+  }
+
+  .wllListItem .coming-chain {
+    margin-left: auto;
+  }
+  
+  .wllListItem div {
+    display: flex;
+  }
+  
+.modalSelectOptionsText {
+  width: 100%;
+  color: #14161A;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.accountBox p {
+  font-size: 16px;
+  line-height: 28px;
+  color: #14161A;
+  margin: 12px 0;
+}
+
+.account-modal__account {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #14161A;
+  margin-bottom: 25px;
+  width: 100%;
+}
+.copy-tooltip{
+  position: relative;
+  cursor: pointer;
+}
+.copy-tooltip__text{
+  position: absolute;
+  visibility: hidden;
+  display: flex;
+  justify-content: center;
+}
+.copy-tooltip__icon{
+  background-image: url("../../assets/img/copy_regular.svg");
+  background-repeat: no-repeat;
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+.copy-tooltip__icon:hover{
+  background-image: url("../../assets/img/copy_hovered.svg");
+}
+.copy-tooltip:hover .copy-tooltip__text{
+  position: absolute;
+  visibility: visible;
+  top: -40px;
+  left: -55px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+  min-width: 120px;
+  padding: 6px;
+  background: #242020;
+  border-radius: 6px;
+  text-align: center;
+  color: white;
+}
+.copy-tooltip__text::after{
+  content: " ";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  
+  border-color: #242020 transparent transparent transparent;
+}
+
+.video__modal .modal-dialog{
+  max-width: 1024px !important;
+}
+
+.wrong-icon{
+  width: 102px;
+  height: 102px;
+  margin: 0 auto;
+}
+
+.first-wrong__bg{
+  width: 100%;
+  height: 100%;
+  background: #F7F7F9;
+  border: 1px solid #FFFFFF;
+  box-sizing: border-box;
+  box-shadow: 0px 2px 4px rgba(180, 185, 199, 0.25);
+  border-radius: 62px;
+  position: relative;
+}
+
+.second-wrong__bg{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  left: center;
+  width: 76px;
+  height: 76px;
+  background: #F7F7F9;
+  border: 1px solid #FFFFFF;
+  box-sizing: border-box;
+  box-shadow: 0px 2px 4px rgba(180, 185, 199, 0.25);
+  border-radius: 62px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 501px) {
+  .copy-tooltip:hover .copy-tooltip__text{
+    font-size: 10px;
+    min-width: 70px;
+    left: -30px;
+    top: -55px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .ChainModal .modal-dialog {
+    max-width: 100% !important;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  .about-nft__modal .modal-dialog{
+    max-width: 660px !important;
+  }  
+}

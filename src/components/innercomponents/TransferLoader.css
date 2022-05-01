@@ -15,13 +15,14 @@
     flex-direction: column;
     align-items: center;
     padding: 20px 20px 50px 20px;
+    color: #14161A;
 }
 
 .transfer-loader__title{
     font-size: 18px;
     font-weight: 600;
     line-height: 21.78px;
-    color: white;
+    color: #14161A;
     padding-bottom: 28px;
 }
 
@@ -46,7 +47,7 @@
   .wave {
     width: 5px;
     height: 60px;
-    background: linear-gradient(45deg, cyan, #fff);
+    background: linear-gradient(180deg, #8EA5FF 0%, #125ECD 47.4%, #3E64ED 100%);
     margin: 10px;
     animation: wave 1s linear infinite;
     border-radius: 20px;

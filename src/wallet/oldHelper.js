@@ -223,8 +223,11 @@ export const getChainId = () => {
 }
 
 export const setupURI = uri => {
-
-    if(uri && uri.includes('ipfs://')){ 
+    // debugger
+    if(uri.includes('https://ipfs.io')){
+        return uri
+    }
+    else if(uri && uri.includes('ipfs://')){ 
         return 'https://ipfs.io/' + uri.replace(':/', '')
     }
     else if(uri) {

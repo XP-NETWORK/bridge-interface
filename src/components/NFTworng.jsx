@@ -24,6 +24,7 @@ function NFTworng() {
   const widget = useSelector((state) => state.general.widget);
 
   async function switchNetwork() {
+    console.log("nft wrong useeffect")
     setLoader(true);
     const info = testnet
       ? TESTNET_CHAIN_INFO[from?.key]
@@ -113,9 +114,9 @@ function NFTworng() {
               </div>
             )}
             {!loader && (
-              <a onClick={() => switchNetwork()} className="switching">
+              <div onClick={() => switchNetwork()} className="switching">
                 Switch Network
-              </a>
+              </div>
             )}
           </div>
         </Modal.Body>

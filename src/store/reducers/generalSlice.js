@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { isShown } from "../../components/NFT/NFTHelper";
 
 const initialState = {
-  step: 1,
+  step: 0,
   selectedNFTList: [],
   NFTListView: false,
   approvedNFTList: [],
@@ -10,21 +11,59 @@ const initialState = {
   fees: 0,
   currentTx: 0,
   bigLoader: true,
-
-
+  innerWidth: 0,
+  alert: true,
 };
 
 const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
+    setGitLatestCommit(state, action){
+      state.gitLatestCommit = action.payload
+    },
     setEachNFT(state, action){
-      // debugger
       const { nftObj, index } = action.payload
       state.NFTList = state.NFTList.map((n, i) => {
         if(i === index) n = nftObj
         return n
       })
+    },
+    setEachClaimables(state, action){
+      const { nftObj, index } = action.payload
+      state.algorandClaimables = state.algorandClaimables.map((n, i) => {
+        if(i === index) n = nftObj
+        return n
+      })
+    },
+    setPreloadNFTs(state, action){
+      state.preloadNFTs = action.payload
+    },
+    setAlert(state, action){
+      state.alert = action.payload
+    },
+    setNFTSelectAlert(state, action){
+      state.NFTselectAlert = action.payload
+    },
+    setDestinationAlert(state, action){
+      state.destinationAlert = action.payload
+    },
+    setTxnStatus(state, action){
+      const { status, fromHash, tokenId, toHash, initialTokenId, nftUri, createdAt } = action.payload
+      state.txnHashArr = state.txnHashArr.map((e) => {
+        if(e.hash === fromHash){
+          e.status = status
+          e.tokenId = tokenId
+          e.toHash = toHash
+          e.nftUri = nftUri
+          e.trxDate = createdAt
+          e.initialTokenId = initialTokenId
+        }
+        return e
+      })
+    },
+    setWalletsModal(state, action){
+      state.walletsModal = action.payload
     },
     setQrCodeString(state, action) {
       state.qrCodeString = action.payload;
@@ -62,14 +101,12 @@ const generalSlice = createSlice({
     setAccount(state, action) {
       state.account = action.payload;
     },
+    //!!!!!!!
     setNFTList(state, action) {
       state.NFTList = action.payload;
     },
     setSelectedNFTList(state, action) {
       state.selectedNFTList = [...state.selectedNFTList, action.payload];
-    },
-    cleartSelectedNFT(state, action) {
-      state.selectedNFTList = [];
     },
     cleanSelectedNFTList(state, action) {
       state.selectedNFTList = [];
@@ -89,7 +126,10 @@ const generalSlice = createSlice({
       state.NFTListSearch = action.payload;
     },
     allSelected(state) {
-      state.selectedNFTList = state.NFTList;
+      const nfts = JSON.parse(JSON.stringify(state.NFTList))
+      const onlyWhiteListedAndNotHidden = nfts.filter(n => n.whitelisted).filter(n => isShown(state.NFTListSearch, n));
+
+      state.selectedNFTList = onlyWhiteListedAndNotHidden;
     },
     setNFTsListView(state) {
       state.NFTListView = !state.NFTListView;
@@ -139,6 +179,9 @@ const generalSlice = createSlice({
     setWrongNetwork(state, action) {
       state.wrongNetwork = action.payload;
     },
+    setUnsupportedNetwork(state, action){
+      state.unsupportedNetwork = action.payload
+    },
     setMetaMaskActive(state, action) {
       state.metaMaskActive = action.payload;
     },
@@ -147,6 +190,7 @@ const generalSlice = createSlice({
         ...initialState,
         widget: state.widget,
         wsettings: state.wsettings,
+        //account: state.account
       };
     },
     setElrondAccount(state, action) {
@@ -230,6 +274,10 @@ const generalSlice = createSlice({
     setAlgorandClaimables(state, action) {
       state.algorandClaimables = action.payload;
     },
+    removeFromClaimables(state, action){
+      const { index } = action.payload
+      state.algorandClaimables = state.algorandClaimables.filter((n, i) => i !== index )
+    },
     setAlgorandWallet(state, action) {
       state.AlgorandWallet = action.payload;
     },
@@ -263,17 +311,46 @@ const generalSlice = createSlice({
     setTempleWallet(state, action) {
       state.templeWallet = action.payload;
     },
-    setTempleWallet(state, action) {
-      state.templeWallet = action.payload;
-    },
     setTestNet(state, action) {
       state.testNet = action.payload;
     },
+    updateNFTs(state, action){
+      const {whitelisted, nft} = action.payload
+      const actionContract = nft.native.contract
+      const actionOwner = nft.native.owner
+      const actionTokenId = nft.native.tokenId
+      const nfts = JSON.parse(JSON.stringify(state.NFTList))
+      nfts.forEach((n, index)=> {
+        const { contract, owner, tokenId } = n.native
+        if(contract === actionContract && owner === actionOwner  && tokenId === actionTokenId){
+          state.NFTList[index].whitelisted = whitelisted
+        }
+      });
+    },
+    setInnerWidth(state, action){
+      state.innerWidth = action.payload
+    },
+    setAlgoAccountToClaim(state, action){
+      state.algorandAccountToClaim = action.payload
+    },
+    setURLToOptIn(state, action){
+      state.URLToOptIn = action.payload
+    }
   },
 });
 
 export const {
+  setURLToOptIn,
+  setAlgoAccountToClaim,
+  removeFromClaimables,
+  setEachClaimables,
   setEachNFT,
+  setUnsupportedNetwork,
+  setPreloadNFTs,
+  setAlert,
+  setTxnStatus,
+  setInnerWidth,
+  updateNFTs,
   setTempleWallet,
   setKukaiWallet,
   setTezosAccount,
@@ -340,6 +417,8 @@ export const {
   setQrCodeString,
   setQrImage,
   setWSettings,
+  setWalletsModal,
+  setGitLatestCommit
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

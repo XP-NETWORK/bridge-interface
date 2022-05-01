@@ -3,40 +3,37 @@ import { Modal } from "react-bootstrap";
 import { ReactComponent as Close } from "../assets/img/icons/close.svg";
 import AlgoSignerIcon from "../assets/img/wallet/Algo Signer.png";
 import { useDispatch, useSelector } from "react-redux";
-import { useWeb3React } from "@web3-react/core";
 import {
   setAlgoSigner,
   setAlgorandAccount,
   connectAlgorandWalletClaim,
   setMyAlgo,
   setAlgorandWallet,
+  setAlgoAccountToClaim,
+  setTransferLoaderModal,
 } from "../store/reducers/generalSlice";
-import { injected, algoConnector } from "../wallet/connectors";
+import { algoConnector } from "../wallet/connectors";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import AlgorandIcon from "../assets/img/algorandwallet.svg";
 import MyAlgoBlue from "../assets/img/wallet/MyAlgoBlue.svg";
-import AlgorandWallet from "../assets/img/wallet/AlgorandWallet.svg";
+import axios from "axios";
+import { getFactory } from "../wallet/helpers";
 
-function ConnectAlgorand() {
+function ConnectAlgorand({nftToOptIn, testnet}) {
   const dispatch = useDispatch();
-  const from = useSelector((state) => state.general.from);
-  const to = useSelector((state) => state.general.to);
-  const [show, setShow] = useState();
-  const OFF = { opacity: 0.6, pointerEvents: "none" };
+  const [toOptIn, setToOptIn] = useState()
+  // console.log("🚀 ~ file: ConnectAlgorand.jsx ~ line 24 ~ ConnectAlgorand ~ toOptIn", toOptIn)
   const handleClose = () => {
     dispatch(connectAlgorandWalletClaim(false));
   };
-  const handleShow = () => setShow(true);
+
   const connectClaimAlgorand = useSelector(
     (state) => state.general.connectClaimAlgorand
   );
-  const tronLink = useSelector((state) => state.general.tronLink);
-  const trustWallet = useSelector((state) => state.general.trustWallet);
-  const AlgoSigner = useSelector((state) => state.general.AlgoSigner);
-  const onWC = useSelector((state) => state.general.WalletConnect);
-  const [qrCodeString, setQqrCodeString] = useState();
-  const [strQR, setStrQr] = useState();
-  const { chainId, account, activate } = useWeb3React();
+
+  const algorandAccountToOptIn = useSelector((state) => state.general.algorandAccountToClaim);
+  const networkTestnet = useSelector((state) => state.general.testNet);
+
 
   const onAlgoWallet = async () => {
     if (!algoConnector.connected) {
@@ -69,18 +66,18 @@ function ConnectAlgorand() {
     }
   });
 
-  const onAlgoSigner = useCallback(async () => {
+  const onAlgoSigner = async () => {
     if (typeof window.AlgoSigner !== undefined) {
       try {
         await window.AlgoSigner.connect();
         const algo = await window.AlgoSigner.accounts({
-          ledger: "MainNet",
+          ledger: testnet ? "TestNet" : "MainNet",
         });
         const { address } = algo[0];
 
         dispatch(setAlgoSigner(true));
-        dispatch(setAlgorandAccount(address));
-        handleClose();
+        dispatch(setAlgoAccountToClaim(address));
+        // handleClose();
       } catch (e) {
         console.error(e);
         return JSON.stringify(e, null, 2);
@@ -88,21 +85,64 @@ function ConnectAlgorand() {
     } else {
       console.log("Algo Signer not installed.");
     }
-  });
+  };
+
+  const optIn = async () => {
+    debugger
+    dispatch(setTransferLoaderModal(true))
+    const factory = await getFactory()
+    const algorand = await factory.inner(15)
+    const accounts = await window.AlgoSigner.accounts({ledger:"TestNet"})
+    const signer = {
+      address: algorandAccountToOptIn,
+      algoSigner: window.AlgoSigner,
+      ledger: testnet ? "TestNet" : "MainNet"
+    }
+        try {
+            const optin = await algorand.optInNft(signer, toOptIn.nftId)
+            if(optin){
+              handleClose()
+            }
+        } catch (error) {
+            console.log(error);
+            dispatch(setTransferLoaderModal(false))
+        }
+    dispatch(setTransferLoaderModal(false))
+}
+
+   useEffect(async () => {
+     let nft
+     if(algorandAccountToOptIn){
+        try {
+          const response = await axios.get(nftToOptIn)
+          // console.log("🚀 ~ file: ConnectAlgorand.jsx ~ line 117 ~ useEffect ~ response", response.data)
+          nft = {
+            image: response.data.image,
+            nftId: response.data.wrapped.assetID,
+            name: response.data.name
+          }
+          setToOptIn(nft)
+        } catch (error) {
+          console.error(error)
+        }
+     }
+   }, [algorandAccountToOptIn])
+   
 
   return (
-    // connectClaimAlgorand
     <Modal
       show={connectClaimAlgorand}
       onHide={handleClose}
       animation={false}
       className="ChainModal"
     >
+      { !algorandAccountToOptIn ?
+      <>
       <Modal.Header>
-        <Modal.Title>Connect Wallet</Modal.Title>
-        <span className="CloseModal" onClick={handleClose}>
-          <Close className="svgWidget" />
-        </span>
+      <Modal.Title>Connect Wallet</Modal.Title>
+      <span className="CloseModal" onClick={handleClose}>
+        <Close className="svgWidget" />
+      </span>
       </Modal.Header>
       <Modal.Body>
         <div className="walletListBox">
@@ -121,16 +161,37 @@ function ConnectAlgorand() {
           {window.innerWidth > 600 && (
             <ul className="walletList scrollSty">
               <li onClick={onAlgoSigner} className="wllListItem algo">
-                <img src={AlgoSignerIcon} alt="Algor Signer Icon" /> Algo Signer
+                <img src={AlgoSignerIcon} alt="Algor Signer Icon" /><p>Algo Signer</p>
               </li>
-              <li onClick={onMyAlgo} className="wllListItem algo">
+              {networkTestnet && <li onClick={onMyAlgo} className="wllListItem algo">
                 <img src={MyAlgoBlue} alt="" /> MyAlgo
-              </li>
-              {/* <li onClick={() => onAlgoWallet()} className="wllListItem algo"><img src={AlgorandWallet} alt="Algor Wallet Icon" /> Algorand Wallet</li> */}
+              </li>}
             </ul>
           )}
         </div>
+      </Modal.Body></>
+      :
+      <>
+      <Modal.Header>
+      <Modal.Title className="algo-opt-in__header">Algorand Opt-in</Modal.Title>
+      <span className="CloseModal" onClick={handleClose}>
+        <Close className="svgWidget" />
+      </span>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="walletListBox">
+          <div className="imgcontainer">
+            <img src={toOptIn?.image} alt=""/>
+          </div>
+          <div className="algo-opt-in__name">{toOptIn?.name}</div>
+          <div className="algo-opt-in__btns">
+            <div onClick={handleClose} className="algo-opt-in__button">Skip for now</div>
+            <div onClick={optIn} className="algo-opt-in__button">Opt-in NFT</div>
+          </div>
+        </div>
       </Modal.Body>
+      </>
+      }
     </Modal>
   );
 }

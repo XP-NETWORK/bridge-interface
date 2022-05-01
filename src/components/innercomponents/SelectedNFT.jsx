@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Close from "../../assets/img/icons/close.svg";
-import Back from "../../assets/img/icons/Back.svg";
 import { useSelector } from "react-redux";
 import {
   cleanSelectedNFTList,
@@ -9,11 +8,14 @@ import {
 import { useDispatch } from "react-redux";
 import ListedView from "../NFT/ListedView"
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
-import { ReactComponent as BackComp } from "../../assets/img/icons/Back.svg";
+
+
 
 function SelectedNFT() {
   const dispatch = useDispatch();
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
+  const from = useSelector((state) => state.general.from);
+  const to = useSelector((state) => state.general.to);
   const nfts = useSelector((state) => state.general.NFTList);
   const widget = useSelector((state) => state.general.widget);
   const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -28,45 +30,36 @@ function SelectedNFT() {
   useEffect(() => {}, [selectedNFTs]);
 
   return (
-    <div className="nftSelectList">
-      <div className="nftSeleTop">
-        <div className="selectedNft nftselectedtop">
-          <a className="backBtn mobileOnly">
-            {widget ? (
-              <BackComp className="svgWidget" />
-            ) : (
-              <img src={Back} alt="Back" />
-            )}
-          </a>
-          <span className="mobileOnly">Selected NFTs</span>
-          <span className="desktopOnly">
+    <div className="selected-nfts-list">
+      <div className="selected-nfts__header">
+          <span className="desktop__header">
             Selected NFTs{" "}
             <span>
               {selectedNFTs.length} / {nfts?.length}
             </span>
           </span>
-          <button
+          {selectedNFTs.length > 0 && <div
             style={selectedNFTs.length ? {} : OFF}
             onClick={() => handleClear()}
-            className="clearNft"
+            className="clear-selected"
           >
             Clear all
-          </button>
-        </div>
+          </div>}
+
       </div>
-      <ul className="nftSelected">
+      <ul className="selected-nfts__body">
         {selectedNFTs
           ? selectedNFTs.map((nft, index) => (
               <li
                 key={`selected-nft-${index}`}
                 onClick={() => handleRemove(nft)}
-                className="nftSelecItem"
+                className="selected-nfts-item"
               >
                 <ListedView nft={nft} key={`nft-n-${index}`} />
-                <span className="nftSelecItem__name">
+                <span className="nfts-item__name">
                   {nft.data?.name || nft.name || nft.native.name}
                 </span>
-                <span className="Close">
+                <span className="selected-nfts__delete">
                   {widget ? (
                     <CloseComp className="svgWidget" />
                   ) : (

@@ -18,7 +18,7 @@ export default function ChainSearch() {
         <input
           value={search}
           onChange={(e) => handleChange(e)}
-          type="search"
+          type="text"
           placeholder="Search"
         />
         <button type="submit">

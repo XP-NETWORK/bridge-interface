@@ -1,0 +1,92 @@
+
+.nftSelected__name{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sucesList{
+    position: relative;
+}
+
+.tooltip-icon{
+    position: absolute;
+    right: -56px;
+    top: -45px;
+    cursor: pointer;
+}
+
+.tooltip-icon:hover{
+    cursor: pointer;
+}
+
+.success__copy{
+    cursor: pointer;
+}
+
+.tx-status{
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+}
+.tx-txt{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 17px;
+    width: 100px;
+   
+}
+.tx-icon img{
+    width: 16px;
+}
+.pending{
+    color: #C058FF;
+}
+.completed{
+    color: #10B67A;
+}
+.failed{
+    color: #C23165;
+}
+
+.transferred-nft-hashes {
+    display: flex;
+    justify-content: space-between;
+    margin: 14px 0 3px 0;
+    font-family: Inter,sans-serif;
+    font-size: 12px;
+
+
+}
+
+.chain-hash {
+    background-color: #F3F3F6;
+    border-radius: 40px;
+    padding: 2px 11px;
+}
+
+.transferred-nft-hashes span {
+    color: #62718A;
+    margin-right: 6px;
+}
+
+.transferred-nft-hashes a {
+    color: #395FEB;
+
+}
+
+@media screen and (max-width:600px) {
+    .success-nft-info {
+        max-height: 40vh;
+        overflow-y: auto;
+     
+    }
+}
+
+@media screen and (max-width: 375) {
+    .nft--success .nftSelecItem{
+        padding: 6px 20px !important ;
+    }
+}

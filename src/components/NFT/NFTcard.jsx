@@ -1,26 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import {
-  setSelectedNFTList,
-  removeFromSelectedNFTList,
-} from "../../store/reducers/generalSlice";
-import CheckGreen from "../../assets/img/icons/check_green.svg";
+import { setSelectedNFTList,removeFromSelectedNFTList } from "../../store/reducers/generalSlice";
 import NFTdetails from './NFTdetails'
 import { useSelector } from "react-redux";
 import { setupURI } from "../../wallet/oldHelper";
-import { getUrl, isWhiteListed } from "./NFTHelper.js";
-import "./NewNFT.css";
-import { isValidHttpUrl } from "../../wallet/helpers";
+import { isValidHttpUrl, parseEachNFT } from "../../wallet/helpers";
+import { isShown } from "./NFTHelper.js";
 import VideoOrImage from "./VideoOrImage";
 import VideoAndImage from "./VideoAndImage"
-import NotWhiteListed from "./NotWhiteListed"
 import BrockenUtlGridView from "./BrockenUtlGridView";
+import "./NewNFT.css";
+import Preload from "./Preload";
+import ClaimableCard from "./ClaimableCard";
+import NotWhiteListed from "./NotWhiteListed";
 
 
-export default function NFTcard({ nft, index }) {
+export default function NFTcard({ nft, index, claimables }) {
 
     const from = useSelector(state => state.general.from)
     const dispatch = useDispatch();
+    const search = useSelector(state => state.general.NFTListSearch)
+    const testnet = useSelector(state => state.general.testNet)
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
     const isSelected = selectedNFTs.filter(
       (n) =>
@@ -28,75 +28,57 @@ export default function NFTcard({ nft, index }) {
         n.native.contract === nft.native.contract &&
         n.native.chainId === nft.native.chainId
     )[0];
-    const [onHover, setOnHover] = useState(false)
-    const [imageLoaded, setImageLoaded] = useState(false);
-    const [whiteListed, setWhitelisted] = useState(true)
-    const { video, videoUrl, imageUrl, image, ipfsArr } = getUrl(nft);
-
-  
-    useEffect(async() => {
-      const whitelisted = nft.native.contract === "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a" ? false 
-      : await isWhiteListed(from.text, nft)
-      setWhitelisted(whitelisted)
-    }, [])
     
-
+    const getBase64Image = (imageUrl) => {
+      var canvas = document.createElement("canvas");
+      const img = new Image(imageUrl)
+      canvas.width = img.width;
+      canvas.height = img.height;
+      var ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+      var dataURL = canvas.toDataURL("image/png");
+      return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+    }
+    
     function addRemoveNFT(chosen) {
-        if (!isSelected) {
-            dispatch(setSelectedNFTList(chosen));
-        } else {
-            dispatch(removeFromSelectedNFTList(nft));
-        }
-    }
+      if (!isSelected) {
+          dispatch(setSelectedNFTList(chosen));
+      } else {
+          dispatch(removeFromSelectedNFTList(nft));
+      }
+  }
 
-    const imageLoadedHandler = () => {
-      setImageLoaded(true)
-    }
-
-    useEffect(() => {
-        setTimeout(() => {
-            setImageLoaded(true);
-        }, 5000);
-    }, [selectedNFTs]);
+    useEffect(async() => {
+       if(!nft.dataLoaded){
+         await parseEachNFT(nft, index, testnet, claimables)
+       }
+    },[])
     
+
     return (
-        <div className={`nft-box__wrapper`}
-        onMouseEnter={() => setOnHover(true)}
-        onMouseLeave={() => setOnHover(false)}>
-            <div className={isSelected ? "nft-box__container--selected" : "nft-box__container"}>
-              <div onClick={() => whiteListed ? addRemoveNFT(nft, index) : undefined} className="nft-image__container">
-                <div className="image__wrapper">
-                  { nft.uri && isValidHttpUrl(nft.uri, index) ? 
-                    video && image ? <VideoAndImage index={index} imageLoaded={() => imageLoadedHandler} videoUrl={videoUrl} imageUrl={imageUrl} />
-                  : image && !video ? <img onLoad={() => imageLoadedHandler} alt="only image"  src={setupURI(imageUrl)} /> 
-                  : !image && video ? <video onLoadedData={imageLoadedHandler} controls={false}  playsInline={true} autoPlay={true} loop={true}  muted={true} src={setupURI(videoUrl)} />
-                  : ipfsArr?.length && <VideoOrImage urls={ipfsArr} i={index} />
-                  : <BrockenUtlGridView />
-                  }
-                  { (!whiteListed ) && <NotWhiteListed /> }
-                  <div className="radio__container">
-                    {!isSelected ? (
-                      <span className="selected-radio"></span>
-                    ) : (
-                      <img src={CheckGreen} alt="" />
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div className={`nft-content__container ${!imageLoaded ? "preload-content-container" : ""}`}>
-                <span className="nft-name"><span className="name">{nft.name || nft.native.name}</span><NFTdetails nftInf={nft} index={index} /></span>
-                <span className="nft-number">{nft.native.tokenId}</span>
-              </div>
-            </div>
-            { !imageLoaded && 
-                <div className="preload__container">
-                    <div className="preload__image"></div>
-                    <div className="preload__content">
-                        <div className="preload__name"></div>
-                        <div className="preload__number"></div>
-                    </div>
-                </div>
-            }
+      <>
+      {isShown(search, nft)?  <div className={`nft-box__wrapper`}  >
+      { !nft.dataLoaded ? <Preload /> : 
+      <div onClick={() => nft.whitelisted && !claimables ? addRemoveNFT(nft, index): undefined } className={nft.whitelisted ? "nft__card--selected" : "nft__card"}>
+        <div className="nft__main">
+          { nft.uri && isValidHttpUrl(nft.uri, index) ? 
+            nft.animation_url && nft.image ? <VideoAndImage index={index} videoUrl={nft.animation_url} imageUrl={nft.image} />
+          : nft.image && !nft.animation_url ? <img loading="lazy" alt=""  src={setupURI(nft.image)} /> 
+          : !nft.image && nft.animation_url ? <video controls={false}  playsInline={true} autoPlay={true} loop={true}  muted={true} src={setupURI(nft.animation_url)} />
+          : [nft.animation_url,nft.image]?.length > 0 && <VideoOrImage urls={[nft.animation_url,nft.image]} i={index} />
+          : <BrockenUtlGridView />
+          }
+          { !claimables && nft.whitelisted ? !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> : "" }
+          { !nft.whitelisted && <NotWhiteListed /> }
+          { claimables && < ClaimableCard nft={nft} index={index} /> }
         </div>
-      );
+        <div className="nft__footer">
+            <span className="nft-name"><span className="name">{nft.name || nft.native.name}</span><NFTdetails nftInf={nft} index={index} claimables={claimables} /></span>
+            <span className="nft-number">{nft.native.tokenId}</span>
+        </div>
+      </div>
+      }
+    </div>: null}
+     
+      </>)
 }

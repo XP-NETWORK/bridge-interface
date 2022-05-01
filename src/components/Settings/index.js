@@ -244,7 +244,7 @@ function WSettings({
                               <img src={chain.image.src} alt={chain.value} />
 
                               {chain.value === "xDai"
-                                ? "Gnosis Chain"
+                                ? "Gnosis"
                                 : chain.value}
 
                               {chain.maintenance ? (

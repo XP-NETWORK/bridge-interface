@@ -6,16 +6,23 @@ import ListedView from './ListedView';
 import { useEffect } from 'react';
 import { isWhiteListed } from './NFTHelper';
 import NFTdetails from "./NFTdetails"
+import { parseEachNFT } from '../../wallet/helpers';
 
 export default function NFTlistedCard({nft, index}) {
 
   const dispatch = useDispatch()
   const selectedNFTs = useSelector(state => state.general.selectedNFTList)
+  const nfts = useSelector(state => state.general.NFTList)
   const from = useSelector(state => state.general.from)
   const [whitelisted, setWhitelisted] = useState(undefined)
   const OFF = {pointerEvents: "none"}
   const [onHover, setOnHover] = useState(false)
-  const [preloadListed, setPreloadListed] = useState(false)
+  const [_width, setWidth] = useState(Math.floor(Math.random() * 125 + 35))
+  
+  // const generateRandom = () => {
+  //   setWidth(Math.floor(Math.random() * 25 + 5))
+  // }
+  // const width = nft.name ? {width: `${_width * 10}px`} : { width: "300px" }
 
   const checkIfSelected = ( nft ) => {
     return selectedNFTs.filter(n => n.native.tokenId === nft.native.tokenId && n.native.contract === nft.native.contract && n.native.chainId === nft.native.chainId)[0]
@@ -30,32 +37,34 @@ export default function NFTlistedCard({nft, index}) {
   }
 
 
-  useEffect(async() => {
-    const whitelisted = nft.native.contract === "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a" ? false 
-    : await isWhiteListed(from.text, nft)
-    setWhitelisted(whitelisted)
-  }, [])
+  useEffect(() => {
+    if(!nft.dataLoaded){
+      parseEachNFT(nft, index)
+    }
+    // generateRandom()
+  }, [nfts])
+  
+
 
   return (
-  <li onMouseEnter={() => setOnHover(true)} onMouseLeave={()=> setOnHover(false)} className="nftListed nftSelect">
-    <span onClick={(e) => addRemoveNFT(nft, e)} className="selectNftListed">
-        {checkIfSelected(nft, selectedNFTs) ? 
-            <img onClick={(e) => addRemoveNFT(nft, e)} src={CheckGreen} alt={`${nft?.name}`} />
-            : 
-            ''
-        }
-    </span>
+  nft.dataLoaded ?
+  <li onClick={(e) => nft.whitelisted ? addRemoveNFT(nft, e) : undefined} onMouseEnter={() => setOnHover(true)} onMouseLeave={()=> setOnHover(false)} className="nftListed nftSelect">
     <div className="nftListed__info">
-        <ListedView  addRemoveNFT={addRemoveNFT} nft={nft} key={`nft-n-${index}`} />
-        <span className="name" onClick={(e) => addRemoveNFT(nft, e)}>{nft?.data?.name || nft?.name || nft?.native.name}</span>
+        {nft.whitelisted ?!checkIfSelected(nft, selectedNFTs) ? 
+        <div className="listed-nft-radio"></div> 
+        :
+        <div onClick={(e) => addRemoveNFT(nft, e)} className="listed-nft-radio--selected"></div> : <div className='empty-radio'></div>
+        }
+        <ListedView nft={nft} key={`nft-n-${index}`} />
+        <span className="name">{nft.whitelisted ? nft?.name : 'Not Whitelisted'}</span>
     </div>
-    <NFTdetails nftInf={nft}/>
-    {!whitelisted && <div className='listed-view__not-whitelisted'>
-      <div className="listed-view__not-whitelisted__text">Not Whitelisted</div>
-      <a href='https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot' className="listed-view__not-whitelisted__button" rel="noreferrer" target="_blank">Tech support</a>
+    { nft.whitelisted ? <NFTdetails nftInf={nft}/> : <a href='https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot' className="listed-view__not-whitelisted__button" target="_blank">Tech support</a>}
+  </li>:
+  <div className='listed__skeleton'>
+    <div className="listed_sceleton_wrap">
+    <div className='image'></div>
+    <div style={{width: _width}} className='name'></div>
     </div>
-    }
-    {/* { !preloadListed && <div className='preload__nftListed'></div> } */}
-  </li>
+  </div>
   )
 }
