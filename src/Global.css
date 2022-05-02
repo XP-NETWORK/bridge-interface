@@ -10,7 +10,7 @@ body {
   color: rgb(149 164 191 / 80%);
   font-size: 16px;
   line-height: 160%;
-  color: #fff;
+  background-color: #F0F0F3;
 }
 .widgetBlack {
   color: black !important;
@@ -183,11 +183,11 @@ div#root {
   left: 50%;
   bottom: 13vh;
   transform: translate(-50%);
-  background: #F7F7F9;
+  background: #ffffff;
   border-radius: 16px;
   padding: 14px 54px 14px 16px;
   color: #14161A;
-
+  box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.25);
 }
 
 .Close img {

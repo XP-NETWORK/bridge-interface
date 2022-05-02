@@ -9,6 +9,8 @@ import {
   setApproved,
   setApproveLoader,
   setError,
+  setSelectNFTAlert,
+  setPasteDestinationAlert,
 } from "../../store/reducers/generalSlice";
 import {
   getFactory,
@@ -44,6 +46,7 @@ function Approval(props) {
   const MyAlgo = useSelector((state) => state.general.MyAlgo);
   const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
   const widget = useSelector((state) => state.general.widget);
+
 
   const getAlgorandWalletSigner = async () => {
     const base = new MyAlgoConnect();
@@ -201,6 +204,22 @@ function Approval(props) {
       }
     }
   };
+
+
+
+  const onClickHandler = () => {
+    // debugger
+    if(!receiver){
+     dispatch(setPasteDestinationAlert(true))
+    }
+    else if(selectedNFTList.length < 1){
+      dispatch(setSelectNFTAlert(true))
+    }
+    else{
+      approveAllNFTs()
+    }
+  }
+
   // sdsdfsddsfsdf
   useEffect(() => {
     if (
@@ -232,11 +251,11 @@ function Approval(props) {
       </div>
       <div
         style={
-          selectedNFTList.length
-            ? approvedLoading
+          // selectedNFTList.length ?
+            approvedLoading
               ? { opacity: 0.6, pointerEvents: "none" }
               : {}
-            : OFF
+            // : OFF
         }
         className="approveBtn"
       >
@@ -250,13 +269,13 @@ function Approval(props) {
           />
           <label
             style={
-              !receiver
-                ? { pointerEvents: "none", opacity: "0.6" }
-                : approved
+              // !receiver
+              //   ? { pointerEvents: "none", opacity: "0.6" }
+                 approved
                 ? { pointerEvents: "none" }
                 : {}
             }
-            onClick={approveAllNFTs}
+            onClick={onClickHandler}
             htmlFor="approveCheck"
           >
             <span className="checkCircle"></span>

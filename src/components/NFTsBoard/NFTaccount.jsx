@@ -24,6 +24,8 @@ import SendFees from "../TransferBoard/SendFees";
 import ButtonToTransfer from "../TransferBoard/ButtonToTransfer";
 import ChangeNetworkModal from "../Modals/ChangeNetwork/ChangeNetworkModal";
 import UnsupportedNetwork from "../Modals/ChangeNetwork/UnsupportedNetwork";
+import SelectNFTAler from "../Alerts/SelectNFTAler"
+import PasteDestinationAlert from "../Alerts/PasteDestinationAlert"
 
 function NFTaccount() {
   const dispatch = useDispatch();
@@ -46,22 +48,23 @@ function NFTaccount() {
 // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
 
   async function getNFTsList() {
-    const useHardcoded = true;
+    const useHardcoded = false;
     const hard = "tz1Kyfi2VyRewa4eUevmPRDHVzUMnYzYMRT8";
     try {
       const w = useHardcoded
-        ? hard
-        : type === "EVM"
-        ? account
-        : type === "Tezos"
-        ? tezosAccount
-        : type === "Algorand"
-        ? algorandAccount
-        : type === "Elrond"
-        ? elrondAccount
-        : type === "Tron"
-        ? tronWallet
-        : undefined;
+      ? hard
+      : type === "EVM"
+      ? account
+      : type === "Tezos"
+      ? tezosAccount
+      : type === "Algorand"
+      ? algorandAccount
+      : type === "Elrond"
+      ? elrondAccount
+      : type === "Tron"
+      ? tronWallet
+      : undefined;
+      console.log("🚀 ~ file: NFTaccount.jsx ~ line 55 ~ getNFTsList ~ w", w)
       await setNFTS(w, from);
     } catch (error) {
       dispatch(setError(error.data ? error.data.message : error.message));
@@ -106,6 +109,8 @@ function NFTaccount() {
     <div className="NFTaccount">
       <ChangeNetworkModal />
       <UnsupportedNetwork />
+      <SelectNFTAler />
+      <PasteDestinationAlert />
       <Container className="nftSlectContaine">
         <ReturnBtn />
         <div className="row">
