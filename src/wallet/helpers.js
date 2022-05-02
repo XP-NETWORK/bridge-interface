@@ -125,6 +125,9 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
   if(from.text === "Tezos"){
     // debugger
     nftObj.image = nft.image || nft.native?.uri
+    nftObj.attributes =  nft.attributes || nft.native?.meta?.token?.metadata?.attributes
+    nftObj.description =  nft.description || nft.native?.meta?.token?.metadata?.description
+    nftObj.name =  nft.name || nft.native?.meta?.token?.metadata?.name
     nftObj.collectionIdent = nft.collectionIdent
     nftObj.native.token_id = nft.native?.token_id
     nftObj.native.contract = nft.native?.contract
