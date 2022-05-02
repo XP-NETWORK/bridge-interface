@@ -1891,6 +1891,7 @@ span.transPend {
   display: flex;
   align-items: center;
   text-align: center;
+  justify-content: center;
   margin-bottom: 12px;
   color: #14161A;
 }

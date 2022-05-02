@@ -288,7 +288,7 @@ export const chains = [
     order: 4,
     image: {avatar: true, src: VET},
     maintenance: false,
-    mainnet: false,
+    mainnet: true,
     testNet: false,
     newChain: true
   }
