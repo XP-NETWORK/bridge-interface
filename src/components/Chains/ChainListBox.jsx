@@ -123,9 +123,7 @@ console.log("switchNetwork")
           handleClose();
         }
   };
-
   const nonEVM = tezosAccount || tronAccount || algorandAccount || elrondAccount;
-
   const showSearch = () => {
     if(nonEVM && !from?.text) return ""
     else return <ChainSearch />
@@ -149,7 +147,7 @@ console.log("switchNetwork")
     const onlyTezos = tezosAccount ? sorted.filter( chain => chain.type === "Tezos") : undefined
     const set = onlyElrond || onlyEVM || onlyTron || onlyAlgo || onlyTezos || sorted
     setFromChains(set)
-  
+
   }, [elrondAccount, tezosAccount, algorandAccount, tronAccount, evmAccount, chainSearch, to])
 
   useEffect(() => {

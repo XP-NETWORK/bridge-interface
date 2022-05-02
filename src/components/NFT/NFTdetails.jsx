@@ -14,13 +14,19 @@ import VideoOrImage from "./VideoOrImage";
 import { useSelector } from "react-redux";
 
 
-function NFTdetails({ nftInf, claimables }) {
+function NFTdetails({ nftInf, claimables, details }) {
   const widget = new URLSearchParams(window.location.search).get("widget");
   const { name, description, attributes, uri, native } = nftInf;
   const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nftInf);
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+    details(false)
+  }
+  const handleShow = () => {
+    setShow(true);
+    details(true)
+  }
   const toKey = useSelector(state => state.general.to.key)
   const fromKey = useSelector(state => state.general.from.key)
   const [minted, setMinted] = useState()
