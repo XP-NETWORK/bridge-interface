@@ -16,6 +16,7 @@ export default function MobileDestinationAddressBar() {
     dispatch(setDepartureOrDestination("destination"))
     dispatch(setSwitchDestination(true));
   }
+  const alert = useSelector((state) => state.general.pasteDestinationAlert);
 
   useEffect(() => {}, [to]);
 
@@ -27,7 +28,7 @@ export default function MobileDestinationAddressBar() {
           </div>
           <ChainSwitch assignment={"to"} func={handleSwitchChain} />
         </div>
-        <div className="mobile-destination__address">
+        <div className={!alert ? "mobile-destination__address" : "mobile-destination__address desti-alert"}>
           <input
             onChange={(e) => handleChange(e)}
             type="text"

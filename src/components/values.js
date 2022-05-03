@@ -104,11 +104,12 @@ export const chains = [
     text: "Fantom",
     value: "Fantom",
     chainId: 250,
-    order: 9,
+    order: 2,
     image: { avatar: true, src: Fantom },
     maintenance: false,
     testNet: false,
-    mainnet: false
+    mainnet: true,
+    newChain: true
   },
   {
     type: "Algorand",
@@ -161,9 +162,9 @@ export const chains = [
   },
   {
     type: "EVM",
-    key: "Ton",
-    text: "Ton",
-    value: "Ton",
+    key: "TON",
+    text: "TON",
+    value: "TON",
     chainId: undefined,
     order: 22,
     coming: true,
@@ -190,9 +191,9 @@ export const chains = [
     text: "Velas",
     value: "Velas",
     chainId: 106,
-    order: 2,
+    order: 6,
     image: { avatar: true, src: Velas },
-    newChain: true,
+    newChain: false,
     maintenance: false,
     testNet: false,
     mainnet: true,
@@ -216,7 +217,7 @@ export const chains = [
     text: "Iotex",
     value: "Iotex",
     chainId: 4689,
-    order: 3,
+    order: 4,
     image: { avatar: true, src: Iotex },
     newChain: true,
     coming: false,
@@ -290,7 +291,7 @@ export const chains = [
     maintenance: false,
     mainnet: false,
     testNet: false,
-    newChain: true
+    newChain: false
   }
 ];
 

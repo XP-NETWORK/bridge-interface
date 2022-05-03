@@ -46,7 +46,7 @@
     padding: 0 16px;
 }
 .desti-alert input {
-    border: 1px solid #395FEB;
+    border: 1px solid #395FEB !important;
 }
 .destination__address input:focus{
     background-color: #ffffff;
