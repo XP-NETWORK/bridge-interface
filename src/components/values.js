@@ -699,7 +699,8 @@ export const CHAIN_INFO = {
     native: coins[19],
     nonce: 0x19,
     decimals: 1e18,
-    chainId: 39,
+    chainId: 74,
+    tnChainId: 39,
     rpc: "https://sync-testnet.veblocks.net",
     blockExplorerUrl: "https://explore-testnet.vechain.org/transactions/",
   }

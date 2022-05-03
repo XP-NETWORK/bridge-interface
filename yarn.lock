@@ -17057,8 +17057,8 @@ xmlhttprequest@1.8.0:
   integrity sha1-Z/4HXFwk/vOfnWX197f+dRcZaPw=
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
-  version "0.1.0"
-  resolved "git+https://github.com/xp-network/xpjs#feabcca86d10451c07f1aba4fa5fcd47df748ee4"
+  version "3.0.0"
+  resolved "git+https://github.com/xp-network/xpjs#d894b6efee0ad33909cc5095dc2c31bd4e24e7a9"
   dependencies:
     "@elrondnetwork/erdjs" "^8.0.1-alpha.8"
     "@json-rpc-tools/utils" "^1.7.6"
