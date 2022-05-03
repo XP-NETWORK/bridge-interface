@@ -117,10 +117,11 @@ function NFTdetails({ nftInf, claimables, details }) {
                 <label>Minted With</label>
                 <p>{minted}</p>
               </div>}
+              {native.name && 
               <div className="nftInfDesc nftInfBox">
                 <label>Collection Name</label>
                 <p>{native.name}</p>
-              </div>
+              </div>}
               <div className="nftInfDesc nftInfBox">
                 <label>Symbol</label>
                 <p>{native.symbol}</p>
