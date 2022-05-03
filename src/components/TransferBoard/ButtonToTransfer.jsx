@@ -10,7 +10,9 @@ import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import { ethers } from "ethers";
-import { setError, setNFTsToWhitelist, setTransferLoaderModal, setTxnHash, setURLToOptIn } from '../../store/reducers/generalSlice'
+import { setError, setNFTsToWhitelist, setNoApprovedNFTAlert, setTransferLoaderModal, setTxnHash, setURLToOptIn } from '../../store/reducers/generalSlice'
+import { setPasteDestinationAlert, setSelectNFTAlert } from "../../store/reducers/generalSlice";
+
 
 export default function ButtonToTransfer() {
     const kukaiWallet = useSelector(state => state.general.kukaiWallet)
@@ -178,7 +180,17 @@ export default function ButtonToTransfer() {
     }
 
     const sendAllNFTs = () => {
-        if(!loading && approved) {
+        debugger
+        if(!receiver){
+            dispatch(setPasteDestinationAlert(true))
+        }
+        else if(selectedNFTList.length < 1){
+            dispatch(setSelectNFTAlert(true))
+        }
+        else if(!approved){
+            dispatch(setNoApprovedNFTAlert(true))
+        }
+        else if(!loading && approved) {
             setLoading(true)
             dispatch(setTransferLoaderModal(true))
             selectedNFTList.forEach( (nft, index) => {
@@ -188,7 +200,7 @@ export default function ButtonToTransfer() {
     }
 
   return (
-    <div onClick={sendAllNFTs} className={approved && receiver && !loading ? 'transfer-button' : 'transfer-button--disabled'}  >
+    <div onClick={sendAllNFTs} className={!loading ? 'transfer-button' : 'transfer-button--disabled'}  >
             {loading ? 'Processing' : 'Send' }
     </div>
   )

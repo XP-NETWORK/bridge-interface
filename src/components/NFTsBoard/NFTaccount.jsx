@@ -26,6 +26,7 @@ import ChangeNetworkModal from "../Modals/ChangeNetwork/ChangeNetworkModal";
 import UnsupportedNetwork from "../Modals/ChangeNetwork/UnsupportedNetwork";
 import SelectNFTAler from "../Alerts/SelectNFTAler"
 import PasteDestinationAlert from "../Alerts/PasteDestinationAlert"
+import NoApprovedNFT from "../Alerts/NoApprovedNFT"
 
 function NFTaccount() {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ function NFTaccount() {
 // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
 
   async function getNFTsList() {
-    const useHardcoded = true;
+    const useHardcoded = false;
     const hard = "tz1Kyfi2VyRewa4eUevmPRDHVzUMnYzYMRT8";
     try {
       const w = useHardcoded
@@ -111,6 +112,7 @@ function NFTaccount() {
       <UnsupportedNetwork />
       <SelectNFTAler />
       <PasteDestinationAlert />
+      <NoApprovedNFT />
       <Container className="nftSlectContaine">
         <ReturnBtn />
         <div className="row">

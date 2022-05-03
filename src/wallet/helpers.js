@@ -98,7 +98,32 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftId: nft.nftId || undefined,
     appId: nft.appId || undefined
   }
+  if(uri.indexOf("http://") === -1 || uri.indexOf("https://") -1){
+    nftObj.dataLoaded = true
+    nftObj.image = undefined
+    nftObj.animation_url = undefined
+  }
+  let response
 
+  // try {
+  //   response = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`).catch( error => {
+  //     console.log(error)
+  //   })
+  //   nftObj = {...nftObj, ...response.data}
+  //   if(nftObj.data?.image_url){
+  //     const image  = nftObj.data?.image
+  //     nftObj.image = image
+  //     nftObj.dataLoaded = true
+  //   }
+  // } catch (error) {
+  //   response = await axios.get(setupURI(uri))
+  //   nftObj = {...nftObj, ...response.data}
+  //   if(nftObj.data?.image_url){
+  //     const image  = nftObj.data?.image
+  //     nftObj.image = image
+  //     nftObj.dataLoaded = true
+  //   }
+  // }
   if(from.text === "Tezos"){
     debugger
     nftObj.image = nft.image || nft.native?.uri
@@ -110,10 +135,26 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftObj.description =  nft.description || nft.native?.meta?.token?.metadata?.description
     nftObj.native.symbol =  nft.symbol || nft.native?.meta?.token?.metadata?.symbol
   }
-  else if(uri.indexOf("http://") === -1 || uri.indexOf("https://") -1){
-    nftObj.dataLoaded = true
-    nftObj.image = undefined
-    nftObj.animation_url = undefined
+  else{
+    try {
+      response = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`).catch( error => {
+        console.log(error)
+      })
+      nftObj = {...nftObj, ...response.data}
+      if(nftObj.data?.image_url){
+        const image  = nftObj.data?.image
+        nftObj.image = image
+        nftObj.dataLoaded = true
+      }
+    } catch (error) {
+      response = await axios.get(setupURI(uri))
+      nftObj = {...nftObj, ...response.data}
+      if(nftObj.data?.image_url){
+        const image  = nftObj.data?.image
+        nftObj.image = image
+        nftObj.dataLoaded = true
+      }
+    }
   }
 
   if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
@@ -127,7 +168,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
       console.log(error);
     }
   }
-
   if(nftObj?.image?.includes("ipfs://") && !nftObj?.image?.includes("https://ipfs.io")){
     nftObj.image = "https://ipfs.io/" + nftObj.image.replace(":/", "")
   }
