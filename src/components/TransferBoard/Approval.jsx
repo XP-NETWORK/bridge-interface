@@ -20,6 +20,7 @@ import { algoConnector } from "../../wallet/connectors";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { BeaconWallet } from "@taquito/beacon-wallet";
+import Connex from '@vechain/connex';
 
 
 
@@ -44,6 +45,8 @@ function Approval(props) {
   const MyAlgo = useSelector((state) => state.general.MyAlgo);
   const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
   const widget = useSelector((state) => state.general.widget);
+  const sync2Connex = useSelector((state) => state.general.sync2Connex);
+
 
   const getAlgorandWalletSigner = async () => {
     const base = new MyAlgoConnect();
@@ -75,7 +78,7 @@ function Approval(props) {
   };
 
   const approveEach = async (nft, signer, chain, index) => {
-    // debugger;
+    debugger;
     const arr = new Array(index + 1).fill(0);
     const factory = await getFactory();
     if (
@@ -150,7 +153,26 @@ function Approval(props) {
         } else console.log(error);
         console.log(error);
       }
-    } else {
+    }
+    else if(from.type === "VeChain"){
+      try {
+        const factory = await getFactory();
+        const chain = await factory.inner(Chain.VECHAIN);
+        const signer = sync2Connex.Vendor(testnet ? 'test' : 'main')
+        const swap = await chain.preTransfer(signer, nft, bigNumberFees);
+
+        dispatch(updateApprovedNFTs(nft));
+        setFinishedApproving(arr);
+      } catch (error) {
+        setFinishedApproving(arr);
+        dispatch(setError(error.data ? error.data.message : error.message));
+        if (error.data) {
+          console.log(error.data.message);
+        } else console.log(error);
+        console.log(error);
+      }
+    } 
+    else {
       try {
         const factory = await getFactory();
         const chain = await factory.inner(Chain.ELROND);

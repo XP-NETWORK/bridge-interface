@@ -327,12 +327,16 @@ const generalSlice = createSlice({
     setSync2(state, action){
       state.account = action.payload
       state.Sync2 = true
-    }
+    },
+    setSync2Connecx(state, action){
+      state.sync2Connex = action.payload
+    },
   },
 });
 
 export const {
   setSync2,
+  setSync2Connecx,
   removeFromClaimables,
   setEachClaimables,
   setEachNFT,

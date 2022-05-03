@@ -264,7 +264,6 @@ export const transformToDate = (date) => {
 
 
 export const getFactory = async () => {
-  debugger
   const f = store.getState().general.factory;
   const testnet  = store.getState().general.testNet
 

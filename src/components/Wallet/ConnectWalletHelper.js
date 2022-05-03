@@ -33,7 +33,8 @@ import { setTronWallet,
   setWC,
   setOnWC,
   setAccount,
-  setSync2} from "../../store/reducers/generalSlice"
+  setSync2,
+  setSync2Connecx} from "../../store/reducers/generalSlice"
 import { useNavigate } from 'react-router';
 import { chainsConfig } from "../values";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
@@ -76,6 +77,7 @@ export const connectSync2 = async(testnet) => {
       node: "https://sync-mainnet.veblocks.net",
       network: "main"
     });
+    store.dispatch(setSync2Connecx(client))
   const vendor = new Connex.Vendor(testnet ? 'test' : 'main')
   await vendor.sign('cert',{
     purpose: 'identification',
