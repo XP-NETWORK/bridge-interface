@@ -31,8 +31,8 @@ useEffect(() => {
         </Modal.Header>
         <Modal.Body>
           <div className="maiarModal">
-            <div className="maiarSubtitle">Scan the QR code using Maiar</div>
             <Image src={strQR} />
+            <div className="maiarSubtitle">Scan the QR code to connect Maiar</div>
             {window.innerWidth <= 600 ? (
               <a
                 href={`${walletConnectDeepLink}https://maiar.com/?wallet-connect=${encodeURIComponent(

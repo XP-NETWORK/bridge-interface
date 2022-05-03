@@ -7,7 +7,7 @@
   padding-bottom: 20px;
 }
 .modal-content {
-    background: #F7F8F9;
+    /* background: #F7F8F9; */
     box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.13);
     border-radius: 20px;
 }
@@ -102,7 +102,7 @@
     color: #14161A;
     font-size: 18px;
     font-weight: 500;
-    line-height: 20px;
+    line-height: 27px;
   }
   
   .CloseModal {
