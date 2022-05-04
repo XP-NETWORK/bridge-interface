@@ -4,6 +4,10 @@ import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
 // import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import { Chain, Config } from "xp.network/dist/consts";
 import { ethers } from "ethers";
+import * as thor from "web3-providers-connex";
+import { Driver, SimpleNet, SimpleWallet } from "@vechain/connex-driver";
+import { Framework } from "@vechain/connex-framework";
+
 import {
   updateApprovedNFTs,
   setApproved,
@@ -196,7 +200,6 @@ function Approval(props) {
 
   // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
   const approveAllNFTs = async () => {
-    // debugger
     if (!approvedLoading) {
       dispatch(setApproveLoader(true));
       setApprovedLoading(true);
@@ -210,7 +213,20 @@ function Approval(props) {
         selectedNFTList.forEach((nft, index) => {
           approveEach(nft, signer, chain, index);
         });
-      } else if (from.type === "Tron") {
+      }else if(from.type === "VeChain"){
+        const net = new SimpleNet(testnet ? "https://sync-testnet.veblocks.net" : "https://sync-mainnet.veblocks.net");
+        const driver = await Driver.connect(net, account);
+        const provider = thor.ethers.modifyProvider(
+          new ethers.providers.Web3Provider(
+          new thor.ConnexProvider({ connex: new Framework(driver) }))
+        );
+        const signer = await provider.getSigner(account)
+        const chain = await handleChainFactory(from.key);
+        selectedNFTList.forEach((nft, index) => {
+          approveEach(nft, signer, chain, index);
+        });
+      }
+      else if (from.type === "Tron") {
         setFinishedApproving(selectedNFTList);
         selectedNFTList.forEach((nft, index) => {
           dispatch(updateApprovedNFTs(nft));
