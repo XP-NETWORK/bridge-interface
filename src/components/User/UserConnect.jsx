@@ -13,12 +13,13 @@ export default function UserConnect({desktop, mobile}) {
     const elrondAccount = useSelector(state => state.general.elrondAccount)
     const tezosAccount = useSelector(state => state.general.tezosAccount)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
+    const _account = useSelector(state => state.general.account)
     const innerWidth = useSelector(state => state.general.innerWidth)
     const tronWallet = useSelector(state => state.general.tronWallet)
     const WalletConnect = useSelector(state => state.general.WalletConnect)
     const { account, chainId, active } = useWeb3React();
     const testnet = useSelector(state => state.general.testNet)
-    const walletAccount = account || elrondAccount || tezosAccount || algorandAccount || tronWallet
+    const walletAccount = account || elrondAccount || tezosAccount || algorandAccount || tronWallet || _account
     const location = useLocation()
   const txnHashArr = useSelector((state) => state.general.txnHashArr);
 

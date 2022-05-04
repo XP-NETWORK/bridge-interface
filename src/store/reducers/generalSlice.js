@@ -344,7 +344,15 @@ const generalSlice = createSlice({
     },
     setNoApprovedNFTAlert(state, action){
       state.noApprovedNFTAlert = action.payload
-    }
+    },
+    setSync2(state, action){
+      state.account = action.payload
+      state.Sync2 = true
+    },
+    setSync2Connecx(state, action){
+      state.sync2Connex = action.payload
+    },
+
   },
 });
 
@@ -354,6 +362,8 @@ export const {
   setSelectNFTAlert,
   setURLToOptIn,
   setAlgoAccountToClaim,
+  setSync2,
+  setSync2Connecx,
   removeFromClaimables,
   setEachClaimables,
   setEachNFT,

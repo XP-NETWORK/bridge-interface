@@ -97,6 +97,12 @@ function ConnectWallet() {
     else if(!testnet && from.chainId === chainId){
       navigate(`/account${location.search ? location.search : ''}`)
     }
+    else if(testnet && from.type !== "EVM"){
+      navigate(`/testnet/account${location.search ? location.search : ''}`)
+    }
+    else if(from.type !== "EVM"){
+      navigate(`/account${location.search ? location.search : ''}`)
+    }
     else{
       switchNetwork()
     }
