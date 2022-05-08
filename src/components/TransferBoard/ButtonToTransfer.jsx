@@ -182,7 +182,6 @@ export default function ButtonToTransfer() {
     }
 
     const sendAllNFTs = () => {
-        debugger
         if(!receiver){
             dispatch(setPasteDestinationAlert(true))
         }

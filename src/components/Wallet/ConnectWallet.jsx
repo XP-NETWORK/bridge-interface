@@ -41,7 +41,7 @@ function ConnectWallet() {
   const widget = useSelector((state) => state.general.widget);
 
   async function switchNetwork() {
-    // debugger
+    debugger
     const info = testnet
       ? TESTNET_CHAIN_INFO[from?.key]
       : CHAIN_INFO[from?.key];
@@ -49,7 +49,7 @@ function ConnectWallet() {
     try {
       const success = await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ _chainId }],
+        params: [{ chainId : _chainId }],
       });
       navigate(testnet ? `/testnet/account${location.search ? location.search : ''}` : `/account${location.search ? location.search : ''}`)
       dispatch(setWrongNetwork(false));

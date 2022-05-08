@@ -236,7 +236,7 @@ export const chains = [
     order: 4,
     image: { avatar: true, src: One },
     maintenance: false,
-    testNet: true,
+    testNet: false,
     mainnet: true,
     newChain: true,
   },
@@ -246,7 +246,7 @@ export const chains = [
     text: "Aurora",
     value: "Aurora",
     chainId: 1313161554,
-    order: 2,
+    order: 1,
     image: { avatar: true, src: Aurora },
     maintenance: false,
     testNet: false,
@@ -277,7 +277,7 @@ export const chains = [
     maintenance: false,
     testNet: false,
     mainnet: true,
-    newChain: true
+    newChain: false
   },
   {
     type: "VeChain",
@@ -290,7 +290,7 @@ export const chains = [
     image: {avatar: true, src: VET},
     maintenance: false,
     mainnet: true,
-    testNet: true,
+    testNet: false,
     newChain: true
   }
 ];
