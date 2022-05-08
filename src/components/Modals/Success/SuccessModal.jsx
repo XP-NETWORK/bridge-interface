@@ -83,7 +83,7 @@ export default function SuccessModal() {
   };
 
   const getExplorer = () =>{
-    return !testnet ? `${CHAIN_INFO[from?.text]?.blockExplorerUrls}${address}`: ''
+    return !testnet ? `${CHAIN_INFO[from?.text]?.blockExplorerUrls}${address}`:`${CHAIN_INFO[from?.text]?.testBlockExplorerUrls}${address}`
   }
 
   useEffect(() => {
@@ -165,7 +165,7 @@ export default function SuccessModal() {
             </div>
             <div className="success-info-item">
               <div className="info-item-label">Departure Address</div>
-              <a href={getExplorer() || "#"} className="success-hash">
+              <a href={getExplorer() || "#"} className="success-hash" target="_blank">
                 {address
                   ? `${address.substring(
                       0,

@@ -89,7 +89,7 @@ function WSettings({
     ReactDom.createPortal(
       <>
         <div
-          className="setting_sidebar"
+          className="setting_sidebar dtm"
           style={{ width: settings.collapsed ? "35px" : "300px" }}
         >
           <img
@@ -263,11 +263,8 @@ function WSettings({
 
                               {chain.coming ? (
                                 <span
-                                  style={{
-                                    color: "grey",
-                                    borderColor: "grey",
-                                    fontSize: "10px",
-                                  }}
+                                className="comingSoon"
+                                
                                 >
                                   coming soon
                                 </span>
@@ -334,11 +331,8 @@ function WSettings({
 
                                 {wallet === "Ledger" || wallet === "Trezor" ? (
                                   <span
-                                    style={{
-                                      color: "grey",
-                                      borderColor: "grey",
-                                      fontSize: "10px",
-                                    }}
+                                  className="comingSoon"
+                                   
                                   >
                                     coming soon
                                   </span>

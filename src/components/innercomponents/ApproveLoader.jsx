@@ -1,8 +1,8 @@
 import React from 'react'
 import { Modal } from "react-bootstrap"
-import Close from '../../assets/img/icons/close.svg';
-import { useDispatch, useSelector } from 'react-redux'
-import Planet from '../ApproveLoader/Planet';
+import { useSelector } from 'react-redux'
+import "../ApproveLoader/Planet.css"
+import logo from "../../assets/img/icons/approving_logo.svg"
 
 
 export default function ApproveLoader() {
@@ -15,9 +15,12 @@ export default function ApproveLoader() {
         style={{
           overflow: "hidden",
         }} 
-        animation={true}
         show={loader}>
-            <Planet />
+            <div className="content">
+                <div className="clip">
+                    <p>Approving</p>
+                </div>
+            </div>
         </Modal>
     )
 }

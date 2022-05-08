@@ -10,7 +10,9 @@ import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import { ethers } from "ethers";
-import { setError, setNFTsToWhitelist, setTransferLoaderModal, setTxnHash, setURLToOptIn } from '../../store/reducers/generalSlice'
+import { setError, setNFTsToWhitelist, setNoApprovedNFTAlert, setTransferLoaderModal, setTxnHash, setURLToOptIn } from '../../store/reducers/generalSlice'
+import { setPasteDestinationAlert, setSelectNFTAlert } from "../../store/reducers/generalSlice";
+
 
 export default function ButtonToTransfer() {
     const kukaiWallet = useSelector(state => state.general.kukaiWallet)
@@ -164,8 +166,9 @@ export default function ButtonToTransfer() {
                     || (data ? data.message.includes('User cant pay the bills') : false )
                 ) dispatch(setError(`You don't have enough funds to pay the fees`))
                 else if(message){
-                    console.log(`http://localhost:3000/?to_opt-in=true&testnet=${testnet}&nft_uri=${nft.uri}`)
-                    dispatch(setURLToOptIn(`http://localhost:3000/?to_opt-in=true&testnet=${testnet}&nft_uri=${nft.uri}`))
+                    // if(message === "receiver hasn't opted-in to wrapped nft"){
+                    // dispatch(setURLToOptIn(`${window.location}/?to_opt-in=true&testnet=${testnet}&nft_uri=${nft.uri}`))
+                    // }
                     dispatch(setError(err.data ? err.data.message : err.message))
                 }
                 else dispatch(setError(err.data ? err.data.message : err.message))
@@ -177,7 +180,17 @@ export default function ButtonToTransfer() {
     }
 
     const sendAllNFTs = () => {
-        if(!loading && approved) {
+        debugger
+        if(!receiver){
+            dispatch(setPasteDestinationAlert(true))
+        }
+        else if(selectedNFTList.length < 1){
+            dispatch(setSelectNFTAlert(true))
+        }
+        else if(!approved){
+            dispatch(setNoApprovedNFTAlert(true))
+        }
+        else if(!loading && approved) {
             setLoading(true)
             dispatch(setTransferLoaderModal(true))
             selectedNFTList.forEach( (nft, index) => {
@@ -187,7 +200,7 @@ export default function ButtonToTransfer() {
     }
 
   return (
-    <div onClick={sendAllNFTs} className={approved && receiver && !loading ? 'transfer-button' : 'transfer-button--disabled'}  >
+    <div onClick={sendAllNFTs} className={!loading ? 'transfer-button' : 'transfer-button--disabled'}  >
             {loading ? 'Processing' : 'Send' }
     </div>
   )

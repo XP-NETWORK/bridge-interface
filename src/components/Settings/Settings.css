@@ -745,6 +745,7 @@ img {
   width: 24px;
   height: 24px;
   filter: invert();
+  opacity: .5;
   transform: translateY(50%);
   right: 15px;
   cursor: pointer;
@@ -752,8 +753,8 @@ img {
   transform: rotate(180deg);
 }
 
-.accordion-header button:hover::after {
-  opacity: 0.5;
+.accordion-header button:hover::after, .accordion-button[aria-expanded="true"]::after {
+  opacity: 1;
 }
 
 .selectyourNft .btn:hover {
@@ -823,8 +824,17 @@ img {
   width: 17px;
   height: 17px;
   pointer-events: none;
+  border-radius: 4px;
+}
+
+.ltm .icon.selectNfticon {
   background: #fff;
-  border-radius: 3px;
+
+}
+
+.dtm .icon.selectNfticon {
+  background:  #3D3D3E;
+  border: 2px solid rgba(249,250,251, .5);
 }
 
 .select_nft > * {
@@ -832,8 +842,8 @@ img {
 }
 
 .select_nft input:checked + .selectNfticon {
-  background-image: url("assets/img/icon/CheckGreen.svg") !important;
-  background-size: 100% 100%;
+  background-image: url("./assets/checkBlue.svg") !important;
+  background-size: 120% 120%;
   outline: 1px solid #000;
 }
 
@@ -925,12 +935,20 @@ h6 {
   top: 0;
   height: 100vh;
   width: 300px;
-  background: #2F2E30;
-  color: #fff;
   display: flex;
   flex-direction: column;
   font-family: "Inter", sans-serif !important;
   z-index: 12;
+}
+
+.dtm.setting_sidebar{
+  background: #272728;
+  color: #fff;
+}
+
+.ltm.setting_sidebar {
+  background: #fff;
+  color: black;
 }
 
 .setting_sidebar input {
@@ -966,7 +984,7 @@ h6 {
 .setting_list button.accordion-button {
   background: transparent;
   box-shadow: none !important;
-  color: #fff;
+
   min-height: 48px;
   padding: 5px 17px 5px 30px;
   border: 0;
@@ -979,8 +997,20 @@ h6 {
   text-align: left;
 }
 
-.setting_list .accordion-item:nth-child(1) button.accordion-button {
+.dtm .setting_list button.accordion-button {
+  color: #F9FAFB
+}
+
+.ltm .setting_list button.accordion-button {
+  color: #000000;
+}
+
+.ltm .setting_list .accordion-item:nth-child(1) button.accordion-button {
   border-top: 1px solid rgba(224, 228, 235, 0.5);
+}
+
+.dtm .setting_list .accordion-item:nth-child(1) button.accordion-button {
+  border-top: 1px solid #3D3D3E;
 }
 
 .setting_list .accordion-item {
@@ -1023,11 +1053,18 @@ h6 {
   border: 1px solid #d4d7dd;
 }
 
-.setting_list .accordion-body {
+.dtm .setting_list .accordion-body {
+  padding: 0;
+  border-bottom: 1px solid #3D3D3E;
+  background: #3D3D3E;
+}
+
+.ltm .setting_list .accordion-body {
   padding: 0;
   border-bottom: 1px solid rgba(224, 228, 235, 0.5);
-  background: #5c5e5f;
+  background: #f9fafb;
 }
+
 
 .smart_con_opt:first-child {
   border: 0;
@@ -1068,11 +1105,12 @@ li.blockChain_item .select_nft input:checked + .selectNfticon {
 .blockChainItem {
   display: flex;
   align-items: center;
+  padding-top: 3px;
 }
 
 .blockChainItem img {
   display: block;
-  width: 28px;
+  width: 22px;
   margin-right: 8px;
 }
 
@@ -1080,9 +1118,17 @@ li.blockChain_item .select_nft input:checked + .selectNfticon {
   padding: 12px 0px;
 }
 
-li.blockChain_item:hover {
+.dtm li.blockChain_item:hover {
+  background: #313132;
+
+}
+
+.ltm li.blockChain_item:hover {
   background: rgba(212, 215, 221, 0.3);
 }
+
+
+
 
 .themcolor_sett {
   display: flex;
@@ -1213,12 +1259,31 @@ li.blockChain_item:hover {
 .select_color {
   display: flex;
   align-items: center;
-  background: #5c5e5f;
   /* Outline */
   padding: 10px;
-  border: 1px solid black;
   border-radius: 8px;
 }
+
+.dtm .select_color, .dtm .cornerRadi input {
+  border: none !important;
+  background: #5c5e5f !important;
+  
+}
+
+.dtm .cornerRadi input::placeholder {
+  color:rgb(240, 236, 236);
+}
+
+.dtm .cornerRadi input:focus {
+  border: none !important;
+  outline: none !important;
+}
+
+.ltm .select_color{
+  border: 1px solid #d4d7dd;
+  background: #fff;
+}
+
 
 .colorCode {
   width: 50%;
@@ -1231,6 +1296,10 @@ li.blockChain_item:hover {
   border: 0;
   outline: none;
   box-shadow: none;
+}
+
+.select_font #dropdown-basic{
+  padding: 0 6px !important;
 }
 
 .typo-sel .btn {
@@ -1247,6 +1316,26 @@ li.blockChain_item:hover {
   color: #000;
 }
 
+.dropdown-menu.show ul li a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.dtm .dropdown-menu.show ul li:hover a {
+    background-color: #313132;
+}
+
+.dtm .typo-sel .btn,.dtm .dropdown-menu.show,.dtm .dropdown-menu.show ul li a{
+  background: #5c5e5f;
+  border: none;
+  color:rgb(240, 236, 236)
+}
+
+.ltm .typo-sel .btn {
+  background: #ffffff;
+  border: 1px solid #d4d7dd;
+}
+
 .select_font .dropdown-menu {
   width: 100%;
 }
@@ -1260,7 +1349,7 @@ li.blockChain_item:hover {
 
 .sidebar_content {
   max-height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding-bottom: 50px;
   flex-grow: 1;
 }
@@ -1298,11 +1387,22 @@ li.blockChain_item:hover {
 }
 
 .exportCodeCont {
-  background: #fefefe;
-  border: 1px solid #d4d7dd;
   border-radius: 8px;
   padding: 10px 50px 10px 10px;
   position: relative;
+}
+
+.ltm .exportCodeCont {
+  background: #fefefe;
+  border: 1px solid #d4d7dd;
+  color: black;
+} 
+
+
+.dtm .exportCodeCont {
+  background: #5c5e5f;
+  color: #fff;
+  border: none;
 }
 
 .exportCodeCont p {
@@ -1324,7 +1424,11 @@ li.blockChain_item:hover {
   background-size: 18px;
 }
 
-.copyCode.icon:hover {
+.dtm .copyCode.icon:hover {
+  filter: invert();
+} 
+
+.ltm .copyCode.icon:hover { 
   background-image: url("./assets/img/icon/copy-gray.svg");
 }
 
@@ -1355,7 +1459,7 @@ a.help_icon:hover .qustion_icon {
 
 .powerBySet {
   padding: 10px 30px;
-  background: #4a515c;
+  background: #404449;
 }
 .searchNft .btn-primary {
   background: transparent;
@@ -1411,7 +1515,7 @@ li.blockChain_item .blockChainItem span {
 }
 
 .cornerRadi input {
-  width: 95%;
+  width: 97%;
 }
 
 .genarel_setting {
@@ -1422,8 +1526,17 @@ li.blockChain_item .blockChainItem span {
 .fixed {
   position: fixed;
   width: 300px;
-  background-color: #fff;
   z-index: 999;
+  
+}
+
+.dtm .fixed {
+  background-color: #272728;
+  border-bottom: #272728;
+}
+
+.ltm .fixed {
+  background-color: #fff;
   border-bottom: 1px solid rgb(240, 236, 236);
 }
 
@@ -1568,11 +1681,12 @@ li.blockChain_item .blockChainItem span {
 }
 
 .returnBtn button {
+  font-size: 16px !important;
   border-radius: 16px;
   border: 1px solid #62718a;
   background: transparent;
   color: #62718a;
-  padding: 10px 20px;
+  padding: 3px 20px;
 }
 
 .selectAllBtn {
@@ -1630,4 +1744,25 @@ li.blockChain_item .blockChainItem span {
 }
 .feesWrapper input:focus {
   outline: none;
+}
+
+.dtm .comingSoon {
+  color: #F9FAFB !important;
+  border-color: #F9FAFB !important;
+  font-size: 10px !important;
+}
+
+.ltm .comingSoon {
+  color: gray !important;
+  border-color: grey !important;
+  font-size: 10px !important;
+}
+
+.dtm .sidebar_content::-webkit-scrollbar-track {
+  background: rgb(63, 62, 62);
+}
+
+.dtm .sidebar_content::-webkit-scrollbar-thumb {
+  background: rgb(27, 27, 27);
+
 }

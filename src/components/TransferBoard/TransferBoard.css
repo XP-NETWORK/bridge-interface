@@ -45,10 +45,12 @@
     border: 1px solid #E0E4EB;
     padding: 0 16px;
 }
+.desti-alert input {
+    border: 1px solid #395FEB !important;
+}
 .destination__address input:focus{
     background-color: #ffffff;
     border: 1px solid #E0E4EB;
-
 }
 
 .destination__address input::placeholder{

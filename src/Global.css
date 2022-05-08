@@ -10,7 +10,7 @@ body {
   color: rgb(149 164 191 / 80%);
   font-size: 16px;
   line-height: 160%;
-  color: #fff;
+  background-color: #F0F0F3;
 }
 .widgetBlack {
   color: black !important;
@@ -183,11 +183,11 @@ div#root {
   left: 50%;
   bottom: 13vh;
   transform: translate(-50%);
-  background: #F7F7F9;
+  background: #ffffff;
   border-radius: 16px;
   padding: 14px 54px 14px 16px;
   color: #14161A;
-
+  box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.25);
 }
 
 .Close img {
@@ -276,6 +276,8 @@ span.closeBox svg {
   background: #0000;
 }
 
+
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background:  #C8CCD6;
@@ -307,13 +309,9 @@ span.closeBox svg {
 } */
 
 .maiarModal {
-  padding: 20px 30px;
-  background: linear-gradient(
-    309.48deg,
-    #282e3c -3.65%,
-    rgba(40, 46, 60, 0) 122.77%
-  );
-  border-bottom: 1px solid #2d3342;
+  /* padding: 20px 30px; */
+  background-color: white;
+  /* border-bottom: 1px solid #2d3342; */
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
@@ -857,6 +855,9 @@ li.nftSelecItem .Close:hover {
   margin-top: 10vh;
 }
 
+.NftDetails{
+}
+
 .NftDetails .modal-dialog {
   max-width: 630px;
 }
@@ -880,7 +881,7 @@ li.nftSelecItem .Close:hover {
 
 .nftDetImg img,
 .nftDetImg video {
-  height: 60%;
+  height: 85%;
   border-radius: 16px;
 }
 
@@ -1350,8 +1351,13 @@ span.statComp img {
 }
 
 .maiarSubtitle {
-  padding-bottom: 10px;
-  color: white;
+  padding: 10px 0;
+  color: #14161A;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  /* letter-spacing: 0em; */
+  text-align: center;
 }
 
 .maiarConnectBtn:hover {
@@ -1903,6 +1909,7 @@ span.transPend {
   display: flex;
   align-items: center;
   text-align: center;
+  justify-content: center;
   margin-bottom: 12px;
   color: #14161A;
 }

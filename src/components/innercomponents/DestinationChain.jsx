@@ -12,6 +12,7 @@ import ChainSwitch from "../Buttons/ChainSwitch";
 // import { ReactComponent as Vet } from "../../assets/img/Vector.svg";
 
 function DestinationChain() {
+  const alert = useSelector((state) => state.general.pasteDestinationAlert);
   const to = useSelector((state) => state.general.to);
   const { widget } = useSelector(({ general: { widget } }) => ({
     widget,
@@ -38,7 +39,7 @@ function DestinationChain() {
         <ChainSwitch assignment={"to"} func={handleSwitchChain} />
       </div>
 
-      <div className="destination__address">
+      <div className={!alert? "destination__address" : "destination__address desti-alert"}>
         <input
           value={receiver}
           onChange={(e) => handleChange(e)}

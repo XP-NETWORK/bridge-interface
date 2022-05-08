@@ -123,9 +123,7 @@ console.log("switchNetwork")
           handleClose();
         }
   };
-
   const nonEVM = tezosAccount || tronAccount || algorandAccount || elrondAccount;
-
   const showSearch = () => {
     if(nonEVM && !from?.text) return ""
     else return <ChainSearch />
@@ -135,7 +133,7 @@ console.log("switchNetwork")
     // debugger
     let filteredChains = chains
     const withNew = filteredChains.filter(chain => chain.newChain).sort((a, b) => a.order - b.order)
-    const withComing = filteredChains.filter( chain => chain.coming && !chain.newChain )
+    const withComing = filteredChains.filter( chain => chain.coming && !chain.newChain).sort((a, b) => b.order - a.order)
     const withMaintenance = filteredChains.filter( chain => chain.maintenance && !chain.newChain )
     const noComingNoMaintenance = filteredChains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain).sort((a, b) => a.order - b.order)
     let sorted = [...withNew, ...noComingNoMaintenance, ...withMaintenance, ...withComing]
@@ -149,14 +147,14 @@ console.log("switchNetwork")
     const onlyTezos = tezosAccount ? sorted.filter( chain => chain.type === "Tezos") : undefined
     const set = onlyElrond || onlyEVM || onlyTron || onlyAlgo || onlyTezos || sorted
     setFromChains(set)
-  
+
   }, [elrondAccount, tezosAccount, algorandAccount, tronAccount, evmAccount, chainSearch, to])
 
   useEffect(() => {
     // debugger 
     let filteredChains = chains
     const withNew = filteredChains.filter(chain => chain.newChain).sort((a, b) => a.order - b.order)
-    const withComing = filteredChains.filter( chain => chain.coming && !chain.newChain )
+    const withComing = filteredChains.filter( chain => chain.coming && !chain.newChain ).sort((a, b) => b.order - a.order)
     const withMaintenance = filteredChains.filter( chain => chain.maintenance && !chain.newChain )
     const noComingNoMaintenance = filteredChains.filter( chain => !chain.coming && !chain.maintenance && !chain.newChain).sort((a, b) => a.order - b.order)
     let sorted = [...withNew, ...noComingNoMaintenance, ...withMaintenance, ...withComing]

@@ -4,7 +4,8 @@ import { useSelector } from "react-redux";
 import SetDeparture from "./SetDeparture"
 import SetDestination from "./SetDestination";
 import ChainListBox from "./ChainListBox";
-import swap from "../../assets/img/icons/swapChain.svg"
+//import swap from "../../assets/img/icons/swapChain.svg"
+import {ReactComponent as SwapComp} from "../../assets/img/icons/swapChain.svg"
 
 export default function ChainSelectBox() {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export default function ChainSelectBox() {
     <div className="chain-select__box">Transfer NFTs<br /> between blockchains</div>
     <div className="nftSelectBox">
       <SetDeparture />
-      <span className="swap-chain__btn" onClick={(e) => switchChains(e)}><img src={swap} alt="" /></span>
+      <span className="swap-chain__btn" onClick={(e) => switchChains(e)}><SwapComp className="swapIcon" alt="swap"/></span>
       <span className="chain-sep__line"></span>
       <SetDestination />
     </div>

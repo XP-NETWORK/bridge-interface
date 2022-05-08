@@ -7,7 +7,10 @@ import store from "../store/store";
 import io from "socket.io-client";
 
 
+// const testnet  = store.getState()?.general?.testNet
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
+const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/"
+
 export const socket = io(socketUrl, {
   path: "/socket.io",
 });
@@ -103,33 +106,56 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
   }
   let response
 
-  try {
-    response = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`).catch( error => {
-      console.log(error)
-    })
-    nftObj = {...nftObj, ...response.data}
-    if(nftObj.data?.image_url){
-      const image  = nftObj.data?.image
-      nftObj.image = image
-      nftObj.dataLoaded = true
-    }
-  } catch (error) {
-    response = await axios.get(setupURI(uri))
-    nftObj = {...nftObj, ...response.data}
-    if(nftObj.data?.image_url){
-      const image  = nftObj.data?.image
-      nftObj.image = image
-      nftObj.dataLoaded = true
-    }
-  }
-
+  // try {
+  //   response = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`).catch( error => {
+  //     console.log(error)
+  //   })
+  //   nftObj = {...nftObj, ...response.data}
+  //   if(nftObj.data?.image_url){
+  //     const image  = nftObj.data?.image
+  //     nftObj.image = image
+  //     nftObj.dataLoaded = true
+  //   }
+  // } catch (error) {
+  //   response = await axios.get(setupURI(uri))
+  //   nftObj = {...nftObj, ...response.data}
+  //   if(nftObj.data?.image_url){
+  //     const image  = nftObj.data?.image
+  //     nftObj.image = image
+  //     nftObj.dataLoaded = true
+  //   }
+  // }
   if(from.text === "Tezos"){
-    // debugger
+    debugger
     nftObj.image = nft.image || nft.native?.uri
-    nftObj.collectionIdent = nft.collectionIdent
-    nftObj.native.token_id = nft.native?.token_id
     nftObj.native.contract = nft.native?.contract
-    nftObj.native = {...nftObj.native, ...nftObj.native?.meta}
+    nftObj.native.tokenId = nft.native?.tokenId
+    nftObj.native.uri = nft.native?.uri
+    nftObj.name =  nft.name || nft.native?.meta?.token?.metadata?.name
+    nftObj.collectionIdent = nft.collectionIdent
+    nftObj.description =  nft.description || nft.native?.meta?.token?.metadata?.description
+    nftObj.native.symbol =  nft.symbol || nft.native?.meta?.token?.metadata?.symbol
+  }
+  else{
+    try {
+      response = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`).catch( error => {
+        console.log(error)
+      })
+      nftObj = {...nftObj, ...response.data}
+      if(nftObj.data?.image_url){
+        const image  = nftObj.data?.image
+        nftObj.image = image
+        nftObj.dataLoaded = true
+      }
+    } catch (error) {
+      response = await axios.get(setupURI(uri))
+      nftObj = {...nftObj, ...response.data}
+      if(nftObj.data?.image_url){
+        const image  = nftObj.data?.image
+        nftObj.image = image
+        nftObj.dataLoaded = true
+      }
+    }
   }
 
   if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
@@ -352,6 +378,7 @@ export const handleChainFactory = async (someChain) => {
 };
 
 export const getNFTS = async (wallet, from) => {
+console.log("🚀 ~ file: helpers.js ~ line 355 ~ getNFTS ~ wallet", wallet)
   // debugger
   console.log("getNFTS")
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
@@ -425,6 +452,7 @@ export const getAlgorandClaimables = async (account) => {
 
 
 export const setNFTS = async (w, from, testnet) => {
+console.log("🚀 ~ file: helpers.js ~ line 426 ~ setNFTS ~ w", w)
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from, testnet)
   store.dispatch(setPreloadNFTs(res.length))

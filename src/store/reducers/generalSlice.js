@@ -335,11 +335,23 @@ const generalSlice = createSlice({
     },
     setURLToOptIn(state, action){
       state.URLToOptIn = action.payload
+    },
+    setSelectNFTAlert(state, action){
+      state.selectNFTAlert = action.payload
+    },
+    setPasteDestinationAlert(state, action){
+      state.pasteDestinationAlert = action.payload
+    },
+    setNoApprovedNFTAlert(state, action){
+      state.noApprovedNFTAlert = action.payload
     }
   },
 });
 
 export const {
+  setNoApprovedNFTAlert,
+  setPasteDestinationAlert,
+  setSelectNFTAlert,
   setURLToOptIn,
   setAlgoAccountToClaim,
   removeFromClaimables,
