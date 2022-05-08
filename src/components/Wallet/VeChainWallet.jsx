@@ -13,7 +13,7 @@ export default function VeChainWallet({close}) {
     else if(from && from.type === "VeChain"){
       return {}
     }
-    else return {}
+    else return OFF
   }
 
   const handleConnect = async () => {

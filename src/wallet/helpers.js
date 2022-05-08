@@ -105,27 +105,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
   }
   let response
 
-  // try {
-  //   response = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`).catch( error => {
-  //     console.log(error)
-  //   })
-  //   nftObj = {...nftObj, ...response.data}
-  //   if(nftObj.data?.image_url){
-  //     const image  = nftObj.data?.image
-  //     nftObj.image = image
-  //     nftObj.dataLoaded = true
-  //   }
-  // } catch (error) {
-  //   response = await axios.get(setupURI(uri))
-  //   nftObj = {...nftObj, ...response.data}
-  //   if(nftObj.data?.image_url){
-  //     const image  = nftObj.data?.image
-  //     nftObj.image = image
-  //     nftObj.dataLoaded = true
-  //   }
-  // }
   if(from.text === "Tezos"){
-    debugger
     nftObj.image = nft.image || nft.native?.uri
     nftObj.native.contract = nft.native?.contract
     nftObj.native.tokenId = nft.native?.tokenId
@@ -136,25 +116,25 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftObj.native.symbol =  nft.symbol || nft.native?.meta?.token?.metadata?.symbol
   }
   else{
-    try {
-      response = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`).catch( error => {
-        console.log(error)
+    await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`).then(resp => {
+      nftObj = {...nftObj, ...resp.data}
+      if(nftObj.data?.image_url){
+        const image  = nftObj.data?.image
+        nftObj.image = image
+        nftObj.dataLoaded = true
+      }
+    })
+    .catch(error => {
+      console.log(error)
+      axios.get(setupURI(uri)).then(resp => {
+        nftObj = {...nftObj, ...resp.data}
+        if(nftObj.data?.image_url){
+          const image  = nftObj.data?.image
+          nftObj.image = image
+          nftObj.dataLoaded = true
+        }
       })
-      nftObj = {...nftObj, ...response.data}
-      if(nftObj.data?.image_url){
-        const image  = nftObj.data?.image
-        nftObj.image = image
-        nftObj.dataLoaded = true
-      }
-    } catch (error) {
-      response = await axios.get(setupURI(uri))
-      nftObj = {...nftObj, ...response.data}
-      if(nftObj.data?.image_url){
-        const image  = nftObj.data?.image
-        nftObj.image = image
-        nftObj.dataLoaded = true
-      }
-    }
+    })
   }
 
   if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
@@ -172,7 +152,10 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftObj.image = "https://ipfs.io/" + nftObj.image.replace(":/", "")
   }
   if(nftObj.image){
-    if(await checkIfVideo(nftObj.image)){
+    // debugger
+    const isVideo = await checkIfVideo(nftObj.image)
+    if(isVideo){
+      console.log("🚀 ~ file: helpers.js ~ line 155 ~ parseEachNFT ~ nftObj.image", nftObj.image)
       nftObj.animation_url = nftObj.image
       nftObj.image = undefined
     }

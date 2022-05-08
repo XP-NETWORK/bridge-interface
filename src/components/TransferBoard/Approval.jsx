@@ -85,7 +85,7 @@ function Approval(props) {
   };
 
   const approveEach = async (nft, signer, chain, index) => {
-    debugger;
+    // debugger;
     const arr = new Array(index + 1).fill(0);
     const factory = await getFactory();
     if (
@@ -164,8 +164,6 @@ function Approval(props) {
     else if(from.type === "VeChain"){
       try {
         const factory = await getFactory();
-        const chain = await factory.inner(Chain.VECHAIN);
-        const signer = sync2Connex.Vendor(testnet ? 'test' : 'main')
         const swap = await chain.preTransfer(signer, nft, bigNumberFees);
 
         dispatch(updateApprovedNFTs(nft));
@@ -217,11 +215,12 @@ function Approval(props) {
           approveEach(nft, signer, chain, index);
         });
       }else if(from.type === "VeChain"){
-        const net = new SimpleNet(testnet ? "https://sync-testnet.veblocks.net" : "https://sync-mainnet.veblocks.net");
-        const driver = await Driver.connect(net, account);
         const provider = thor.ethers.modifyProvider(
           new ethers.providers.Web3Provider(
-          new thor.ConnexProvider({ connex: new Framework(driver) }))
+          new thor.ConnexProvider({ connex: new Connex({
+            node: testnet ? 'https://testnet.veblocks.net/': "https://sync-mainnet.veblocks.net",
+            network: testnet ? 'test' : 'main'
+        }) }))
         );
         const signer = await provider.getSigner(account)
         const chain = await handleChainFactory(from.key);

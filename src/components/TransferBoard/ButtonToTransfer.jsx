@@ -12,7 +12,10 @@ import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import { ethers } from "ethers";
 import { setError, setNFTsToWhitelist, setNoApprovedNFTAlert, setTransferLoaderModal, setTxnHash, setURLToOptIn } from '../../store/reducers/generalSlice'
 import { setPasteDestinationAlert, setSelectNFTAlert } from "../../store/reducers/generalSlice";
-
+import * as thor from "web3-providers-connex";
+import { Driver, SimpleNet, SimpleWallet } from "@vechain/connex-driver";
+import { Framework } from "@vechain/connex-framework";
+import Connex from '@vechain/connex';
 
 export default function ButtonToTransfer() {
     const kukaiWallet = useSelector(state => state.general.kukaiWallet)
@@ -83,7 +86,17 @@ export default function ButtonToTransfer() {
                 return signer
             }
             else if(from === 'Elrond') return maiarProvider || ExtensionProvider.getInstance()
-            else if(from === "VeChain") return sync2Connex.Vendor(testnet ? 'test' : 'main')
+            else if(from === "VeChain") {
+                const provider = thor.ethers.modifyProvider(
+                    new ethers.providers.Web3Provider(
+                    new thor.ConnexProvider({ connex: new Connex({
+                      node: testnet ? 'https://testnet.veblocks.net/': "https://sync-mainnet.veblocks.net",
+                      network: testnet ? 'test' : 'main'
+                  }) }))
+                  );
+                  const signer = await provider.getSigner(account)
+                  return signer
+            }
             else{
                 const provider = new ethers.providers.Web3Provider(
                     WCProvider?.walletConnectProvider || window.ethereum
@@ -160,7 +173,7 @@ export default function ButtonToTransfer() {
             console.error(err)
             console.log('this is error in sendeach')
             setLoading(false)
-        dispatch(dispatch(setTransferLoaderModal(false)))
+            dispatch(dispatch(setTransferLoaderModal(false)))
             const { data, message, error } = err
             if(message){
                 if(

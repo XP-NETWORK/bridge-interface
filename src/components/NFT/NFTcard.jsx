@@ -20,7 +20,6 @@ export default function NFTcard({ nft, index, claimables }) {
     const from = useSelector(state => state.general.from)
     const dispatch = useDispatch();
     const [detailsOn, setDetailsOn] = useState(false)
-    console.log("🚀 ~ file: NFTcard.jsx ~ line 23 ~ NFTcard ~ detailsOn", detailsOn)
     const search = useSelector(state => state.general.NFTListSearch)
     const testnet = useSelector(state => state.general.testNet)
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
@@ -62,7 +61,8 @@ export default function NFTcard({ nft, index, claimables }) {
       <>
       {isShown(search, nft)?  <div className={`nft-box__wrapper`}  >
       { !nft.dataLoaded ? <Preload /> : 
-      <div onClick={() => nft.whitelisted && !detailsOn && !claimables ? addRemoveNFT(nft, index): undefined } className={nft.whitelisted ? "nft__card--selected" : "nft__card"}>
+      // <div onClick={() => nft.whitelisted && !detailsOn && !claimables ? addRemoveNFT(nft, index): undefined } className={nft.whitelisted ? "nft__card--selected" : "nft__card"}>
+      <div onClick={() => addRemoveNFT(nft, index)} className={nft.whitelisted ? "nft__card--selected" : "nft__card"}>
         <div className="nft__main">
           { nft.uri && isValidHttpUrl(nft.uri, index) ? 
             nft.animation_url && nft.image ? <VideoAndImage index={index} videoUrl={nft.animation_url} imageUrl={nft.image} />
