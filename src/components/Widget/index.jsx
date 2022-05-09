@@ -449,6 +449,10 @@ export default function Widget() {
         
         }
 
+        .searchChain input:focus, input.serchInput:focus {
+          background: transparent;
+        }
+
         ::-webkit-scrollbar-thumb, .approveBtn input:checked + label {
           background: ${accentColor ? accentColor : ""};
         }
