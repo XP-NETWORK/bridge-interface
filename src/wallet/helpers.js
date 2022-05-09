@@ -83,9 +83,11 @@ const checkIfVideo = async (url) => {
   }
 }
 
+const fetchURI = uri => {
+  
+}
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
-  // debugger
   const uri = nft.uri
   const { from, NFTList } = store.getState().general;
   let whitelisted
@@ -103,8 +105,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftObj.image = undefined
     nftObj.animation_url = undefined
   }
-  let response
-
   if(from.text === "Tezos"){
     nftObj.image = nft.image || nft.native?.uri
     nftObj.native.contract = nft.native?.contract
@@ -116,16 +116,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftObj.native.symbol =  nft.symbol || nft.native?.meta?.token?.metadata?.symbol
   }
   else{
-    await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`).then(resp => {
-      nftObj = {...nftObj, ...resp.data}
-      if(nftObj.data?.image_url){
-        const image  = nftObj.data?.image
-        nftObj.image = image
-        nftObj.dataLoaded = true
-      }
-    })
-    .catch(error => {
-      console.log(error)
       axios.get(setupURI(uri)).then(resp => {
         nftObj = {...nftObj, ...resp.data}
         if(nftObj.data?.image_url){
@@ -134,7 +124,17 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
           nftObj.dataLoaded = true
         }
       })
-    })
+      .catch(error => {
+        console.log(error)
+        axios.get(setupURI(uri)).then(resp => {
+          nftObj = {...nftObj, ...resp.data}
+          if(nftObj.data?.image_url){
+            const image  = nftObj.data?.image
+            nftObj.image = image
+            nftObj.dataLoaded = true
+          }
+        })
+      })
   }
 
   if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
@@ -155,7 +155,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     // debugger
     const isVideo = await checkIfVideo(nftObj.image)
     if(isVideo){
-      console.log("🚀 ~ file: helpers.js ~ line 155 ~ parseEachNFT ~ nftObj.image", nftObj.image)
       nftObj.animation_url = nftObj.image
       nftObj.image = undefined
     }
