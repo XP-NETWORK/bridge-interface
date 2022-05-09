@@ -14,6 +14,8 @@ import power from "./assets/img/power.svg";
 
 import settingsHoc from "./settingsHoc";
 
+import ThemeSwitch from "./themeSwitch";
+
 import {
   chains,
   wallets,
@@ -24,8 +26,8 @@ import {
 } from "../../store/reducers/settingsSlice";
 import "./Settings.css";
 
+import {ReactComponent as CollapseComp} from "./assets/img/collapse.svg";
 import collapse from "./assets/img/collapse.svg";
-
 /*const debounce = (func, delay) => {
   let tm;
 
@@ -80,6 +82,7 @@ function WSettings({
     borderColor,
     selectedWallets,
     showAlert,
+    theme
   } = settings;
 
   const portalDiv = document.getElementById("settingsPortal");
@@ -89,18 +92,13 @@ function WSettings({
     ReactDom.createPortal(
       <>
         <div
-          className="setting_sidebar"
+          className={`setting_sidebar ${theme}`}
           style={{ width: settings.collapsed ? "35px" : "300px" }}
         >
-          <img
-            src={collapse}
-            alt=""
-            className="collapseImg collapsed"
-            onClick={onClickEditor}
-            style={{
+          <CollapseComp className="collapseImg collapsed"  onClick={onClickEditor}  style={{
               display: settings.collapsed ? "inline-block" : "none",
-            }}
-          />
+            }}/> 
+          
 
           <Alert
             show={settings.showAlert}
@@ -147,12 +145,8 @@ function WSettings({
             style={{ display: settings.collapsed ? "none" : "block" }}
           >
             <h2>Settings</h2>
-            <img
-              src={collapse}
-              alt=""
-              className="collapseImg"
-              onClick={onClickEditor}
-            />
+            <CollapseComp className="collapseImg"   onClick={onClickEditor}/>
+            
           </div>
           <div
             className={`sidebar_content`}
@@ -161,7 +155,7 @@ function WSettings({
             onScroll={(e) => handleScroll(e)}
           >
             <div className={`genarel_setting ${fixedHeader ? "fixed" : ""}`}>
-              <h6></h6>
+              <ThemeSwitch/>
 
               {false && (
                 <button className="showIframe">{"< "}Hide editor</button>
@@ -209,22 +203,9 @@ function WSettings({
                   <Accordion.Body>
                     <div className="blockChainCont">
                       <ul className="select_block_chain">
-                        <Button
-                          size="sm"
-                          variant="outline-primary"
-                          className="selectAllBtn"
-                          onClick={onSelectAll}
-                        >
-                          Select all
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="outline-primary"
-                          className="selectAllBtn"
-                          onClick={onUnSelectAll}
-                        >
-                          Unselect all
-                        </Button>
+                        <button className="controlBtn"  onClick={onSelectAll}>Select all</button>
+                        <button className="controlBtn"  onClick={onUnSelectAll}>Unselect all</button>
+                        
                         {chains.filter(c => c.coming || c.maintenance || c.mainnet || c.testNet).map((chain, i) => (
                           <li
                             key={i}
@@ -263,11 +244,8 @@ function WSettings({
 
                               {chain.coming ? (
                                 <span
-                                  style={{
-                                    color: "grey",
-                                    borderColor: "grey",
-                                    fontSize: "10px",
-                                  }}
+                                className="comingSoon"
+                                
                                 >
                                   coming soon
                                 </span>
@@ -334,11 +312,8 @@ function WSettings({
 
                                 {wallet === "Ledger" || wallet === "Trezor" ? (
                                   <span
-                                    style={{
-                                      color: "grey",
-                                      borderColor: "grey",
-                                      fontSize: "10px",
-                                    }}
+                                  className="comingSoon"
+                                   
                                   >
                                     coming soon
                                   </span>
@@ -930,18 +905,11 @@ function WSettings({
               </div>}
 
               <div className="referalSwitch">
-                <Button size="sm" onClick={onSaveSettings}>
-                  Save settings
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={onResetSettings}
-                  type="reset"
-                  className="resetBtn"
-                  variant="outline-primary"
-                >
-                  Reset settings
-                </Button>
+                <button onClick={onSaveSettings} className="controlBtn">Save settings</button>
+                <button onClick={onResetSettings} className="controlBtn">Reset settings</button>
+
+
+    
               </div>
 
               <Accordion defaultActiveKey="18">

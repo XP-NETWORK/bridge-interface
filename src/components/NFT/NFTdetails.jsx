@@ -14,13 +14,19 @@ import VideoOrImage from "./VideoOrImage";
 import { useSelector } from "react-redux";
 
 
-function NFTdetails({ nftInf, claimables }) {
+function NFTdetails({ nftInf, claimables, details }) {
   const widget = new URLSearchParams(window.location.search).get("widget");
   const { name, description, attributes, uri, native } = nftInf;
   const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nftInf);
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+    details(false)
+  }
+  const handleShow = () => {
+    setShow(true);
+    details(true)
+  }
   const toKey = useSelector(state => state.general.to.key)
   const fromKey = useSelector(state => state.general.from.key)
   const [minted, setMinted] = useState()
@@ -111,10 +117,11 @@ function NFTdetails({ nftInf, claimables }) {
                 <label>Minted With</label>
                 <p>{minted}</p>
               </div>}
+              {native.name && 
               <div className="nftInfDesc nftInfBox">
                 <label>Collection Name</label>
                 <p>{native.name}</p>
-              </div>
+              </div>}
               <div className="nftInfDesc nftInfBox">
                 <label>Symbol</label>
                 <p>{native.symbol}</p>
@@ -145,6 +152,10 @@ export default NFTdetails;
 function Attribute(props) {
 
   const { trait_type, display_type, value } = props;
+  if(trait_type === "Original Chain"){
+    console.log("🚀 ~ file: NFTdetails.jsx ~ line 148 ~ Attribute ~ value", chainsConfig[value]?.img)
+    
+  }
   return (
     <div className="nftToken nftInfBox">
       <label>

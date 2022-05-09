@@ -74,7 +74,7 @@ export const initialState = {
   showAlert: false,
   showLink: true,
   collapsed: false,
-
+  theme: 'dtm'
 };
 
 const settingSlice = createSlice({
@@ -82,12 +82,15 @@ const settingSlice = createSlice({
   initialState,
   reducers: {
     setSettings(state, action) {
-      return action.payload;
+      return action.payload
+    },
+    toggleTheme(state) {
+      state.theme = state.theme === 'dtm'? 'ltm': 'dtm'
     }
   },
 });
 
-export const { setSettings } = settingSlice.actions;
+export const { setSettings, toggleTheme } = settingSlice.actions;
 
 export default settingSlice.reducer;
 

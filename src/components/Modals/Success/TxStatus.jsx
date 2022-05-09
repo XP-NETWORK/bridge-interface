@@ -3,6 +3,8 @@ import failedIcon from "../../../assets/img/icons/Failed.svg"
 import pending from "../../../assets/img/icons/Pending.svg"
 import complete from "../../../assets/img/icons/completed.svg"
 
+import {ReactComponent as PendingComp} from "../../../assets/img/icons/Pending.svg"
+
 export default function TxStatus({status}) {
 
   const [dots, setDots] = useState("")
@@ -33,7 +35,7 @@ export default function TxStatus({status}) {
             case "pending":
             return (
               <div className='tx-status pending'>
-                <div className='tx-icon'><img src={pending} alt="" /></div>
+                <div className='tx-icon'><PendingComp className='successIcon' alt="pending"/> </div>
                 <div className='tx-txt'>{`Pending${dots}`}</div>
               </div>)
             case "completed":
