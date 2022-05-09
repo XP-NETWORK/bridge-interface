@@ -171,7 +171,6 @@
     margin-right: -24px;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
-    border-radius: 8px;
   }
   .nftListBox::-webkit-scrollbar {
     display: none;
