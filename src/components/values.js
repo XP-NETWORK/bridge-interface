@@ -272,12 +272,12 @@ export const chains = [
     value: "GateChain",
     tnChainId: 85,
     chainId: 86,
-    order: 1,
+    order: 0,
     image: {avatar: true, src: GT },
     maintenance: false,
     testNet: false,
     mainnet: true,
-    newChain: false
+    newChain: true
   },
   {
     type: "VeChain",

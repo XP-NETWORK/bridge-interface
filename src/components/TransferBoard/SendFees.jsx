@@ -59,9 +59,14 @@ function SendFees() {
             }
 
             const bigNum = fee ? fee.multipliedBy(1.1).integerValue().toString(10) : undefined
-            console.log("🚀 ~ file: SendFees.jsx ~ line 62 ~ estimate ~ bigNum", bigNum)
             dispatch(setBigNumFees(bigNum))
-            const fees =  await Web3Utils.fromWei(bigNum, "ether")
+            let fees
+            if(from.type === "Tron"){
+                fees = bigNum / 1e6
+            }
+            else{
+                fees =  await Web3Utils.fromWei(bigNum, "ether")
+            }
             setFees(+(fees*selectedNFTList.length))
            
         } catch (error) {
