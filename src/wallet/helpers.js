@@ -38,53 +38,26 @@ if(uri){ if(uri.includes("https://ipfs.io")){
 };
 
 
-const checkIfImage = async (url) => {
-  let response
+const checkIfImage = (url) => {
   const imageFormats = [".png", ".gif", ".jpg", ".jpeg", ".png", ".svg", ".webp"]
-  if(url){
-    const imageFormat = imageFormats.some(format => url?.includes(format))
-    if(imageFormat){
-      return true
-    }
-    else{
-      try {
-        response = await axios.get(url)
-      } catch (error) {
-        console.log(error)
-        response = await axios.get(setupURI(url))
-      }
-    }
-  }
+  const imageFormat = imageFormats.some(format => url?.includes(format))
+  return imageFormat ? url : undefined
 }
 
-const checkIfVideo = async (url) => {
-  // debugger
-  let response
+const checkIfVideo = (url) => {
   const videoFormats = [".mp4", ".ogg", ".webm", ".avi"]
-  if(url){
-    const videoFormat = videoFormats.some(format => url?.includes(format))
-    if(videoFormat){
-      return true
-    }
-    else{
-      // try {
-      //   response = await axios.get(url)
-      //   if(typeof response.data === "object"){
-      //     console.log(response)
-      //   }
-      // } catch (error) {
-      //   console.log(error)
-      //   response = await axios.get(setupURI(url))
-      //   if(typeof response.data === "object"){
-      //     console.log(response)
-      //   }
-      // }
-    }
-  }
+  const videoFormat = videoFormats.some(format => url?.includes(format))
+  return videoFormat ? url : undefined
 }
 
-const fetchURI = uri => {
-  
+const fetchURI = async uri => {
+  let response
+  try {
+    response = await axios(uri)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
@@ -116,25 +89,39 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftObj.native.symbol =  nft.symbol || nft.native?.meta?.token?.metadata?.symbol
   }
   else{
-      axios.get(setupURI(uri)).then(resp => {
-        nftObj = {...nftObj, ...resp.data}
-        if(nftObj.data?.image_url){
-          const image  = nftObj.data?.image
-          nftObj.image = image
-          nftObj.dataLoaded = true
-        }
-      })
-      .catch(error => {
-        console.log(error)
-        axios.get(setupURI(uri)).then(resp => {
-          nftObj = {...nftObj, ...resp.data}
-          if(nftObj.data?.image_url){
-            const image  = nftObj.data?.image
-            nftObj.image = image
-            nftObj.dataLoaded = true
-          }
-        })
-      })
+    // debugger
+    const video = checkIfVideo(setupURI(uri))
+    nftObj.animation_url = video 
+    const image = !video ? checkIfImage(setupURI(uri)) : undefined
+    nftObj.image = image 
+    const data = await fetchURI(setupURI(uri))
+    console.log("🚀 ~ file: helpers.js ~ line 126 ~ parseEachNFT ~ data", data)
+    if(typeof data === 'object'){
+      nftObj = {...nftObj, ...data}
+      if(nftObj.data?.image_url){
+        const image  = nftObj.data?.image
+        nftObj.image = image
+        nftObj.dataLoaded = true
+    }}
+      // axios.get(setupURI(uri)).then(resp => {
+      //   nftObj = {...nftObj, ...resp.data}
+      //   if(nftObj.data?.image_url){
+      //     const image  = nftObj.data?.image
+      //     nftObj.image = image
+      //     nftObj.dataLoaded = true
+      //   }
+      // })
+      // .catch(error => {
+      //   console.log(error)
+      //   axios.get(setupURI(uri)).then(resp => {
+      //     nftObj = {...nftObj, ...resp.data}
+      //     if(nftObj.data?.image_url){
+      //       const image  = nftObj.data?.image
+      //       nftObj.image = image
+      //       nftObj.dataLoaded = true
+      //     }
+      //   })
+      // })
   }
 
   if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){

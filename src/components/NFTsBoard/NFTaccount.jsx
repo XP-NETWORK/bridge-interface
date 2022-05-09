@@ -50,7 +50,7 @@ function NFTaccount() {
 
   async function getNFTsList() {
     // debugger
-    const useHardcoded = true;
+    const useHardcoded = false;
     const hard = "erd1mgz6e4pe233hg9795ld542kl5vukqyq55008720qnqtq8uqeksmszfd5gu";
     try {
       const w = useHardcoded
@@ -89,9 +89,6 @@ function NFTaccount() {
     }
   }, []);
 
-  // useEffect(() => {
-  // }, [algorandClaimables])
-  
 
   const handleFromChainSwitch = () => {
     dispatch(setDepartureOrDestination('departure'))
