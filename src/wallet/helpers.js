@@ -303,6 +303,7 @@ export const transformToDate = (date) => {
 
 
 export const getFactory = async () => {
+  // debugger
   const f = store.getState().general.factory;
   const testnet  = store.getState().general.testNet
 
@@ -379,7 +380,6 @@ export const handleChainFactory = async (someChain) => {
 };
 
 export const getNFTS = async (wallet, from) => {
-console.log("🚀 ~ file: helpers.js ~ line 355 ~ getNFTS ~ wallet", wallet)
   // debugger
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
   const { tronWallet } = store.getState().general
@@ -396,7 +396,6 @@ console.log("🚀 ~ file: helpers.js ~ line 355 ~ getNFTS ~ wallet", wallet)
     }
     const unique = {};
     try {
-      // .filter((n) => n.native).filter(n => n.uri)
       const allNFTs = response
         .filter((n) => {
           const { tokenId, contract, chainId } = n?.native;
@@ -475,6 +474,7 @@ export function isValidHttpUrl(string, index) {
 
 export const getTronNFTs = async wallet => {
   const res = await axios.get(`https://apilist.tronscan.org/api/account/tokens?address=${wallet}&start=0&limit=500&hidden=0&show=3&sortType=0&sortBy=0`)
+  console.log("🚀 ~ file: helpers.js ~ line 433 ~ res", res)
   const { total, data } = res.data
 
   if(total > 0) {

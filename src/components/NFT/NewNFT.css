@@ -55,7 +55,7 @@
   align-items: stretch;
   gap: 12px;
   padding: 5px 6px 5px 12px;
-  overflow: auto;
+  overflow-x: auto;
   height: 560px;
 }
 .video__wrapper video{

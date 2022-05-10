@@ -272,12 +272,12 @@ export const chains = [
     value: "GateChain",
     tnChainId: 85,
     chainId: 86,
-    order: 1,
+    order: 0,
     image: {avatar: true, src: GT },
     maintenance: false,
     testNet: false,
     mainnet: false,
-    newChain: false
+    newChain: true
   },
   {
     type: "VeChain",
@@ -464,7 +464,8 @@ export const chainsConfig = {
     tnRpc: "https://sync-testnet.veblocks.net",
     chainId: 39,
     Chain: Chain.VECHAIN,
-    tx: "https://explore-testnet.vechain.org/transactions/"
+    tx: "https://explore-testnet.vechain.org/transactions/",
+    testTx: "https://explore-testnet.vechain.org/transactions/"
   }
 };
 
