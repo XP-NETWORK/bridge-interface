@@ -102,17 +102,10 @@ export default function SuccessModal() {
     }
   }, [])
   
-
-  useEffect(() => {
-    if (txnHashArr && txnHashArr.length > 0 && to && to.key === "Algorand") {
-      dispatch(connectAlgorandWalletClaim(true));
-    }
-  }, [txnHashArr]);
-
   return (
     <>
       {/* <ConnectAlgorand /> */}
-      <ClaimAlgorandNFT />
+      {/* <ClaimAlgorandNFT /> */}
       <Modal animation={false} className="success-modal" show={toShow()}>
         <span onClick={handleClose} className="success-modal-close">
           <div className="close-modal">
