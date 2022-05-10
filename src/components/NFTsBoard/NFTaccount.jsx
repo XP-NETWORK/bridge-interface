@@ -42,19 +42,20 @@ function NFTaccount() {
   const [showSelected, setShowSelected] = useState(false)
   const [showNFTsSearch, setNFTsSearch] = useState(false)
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
-  const algorandClaimables = useSelector((state) => state.general.algorandClaimables);
-
+  const [index, setIndex] = useState(0)
+  console.log("🚀 ~ file: NFTaccount.jsx ~ line 46 ~ NFTaccount ~ index", index)
 //Angelika - 0x0d7df42014064a163DfDA404253fa9f6883b9187
 //Dima. U - 0x6449b68cc5675f6011e8DB681B142773A3157cb9
 // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
 
   async function getNFTsList() {
+    // debugger
     const useHardcoded = false;
-    const hard = "tz1Kyfi2VyRewa4eUevmPRDHVzUMnYzYMRT8";
+    const hard = "erd1mgz6e4pe233hg9795ld542kl5vukqyq55008720qnqtq8uqeksmszfd5gu";
     try {
       const w = useHardcoded
       ? hard
-      : type === "EVM"
+      : type === "EVM" || type === "VeChain"
       ? account
       : type === "Tezos"
       ? tezosAccount
@@ -65,7 +66,7 @@ function NFTaccount() {
       : type === "Tron"
       ? tronWallet
       : undefined;
-      console.log("🚀 ~ file: NFTaccount.jsx ~ line 55 ~ getNFTsList ~ w", w)
+      
       await setNFTS(w, from);
     } catch (error) {
       dispatch(setError(error.data ? error.data.message : error.message));
@@ -88,9 +89,6 @@ function NFTaccount() {
     }
   }, []);
 
-  // useEffect(() => {
-  // }, [algorandClaimables])
-  
 
   const handleFromChainSwitch = () => {
     dispatch(setDepartureOrDestination('departure'))
@@ -119,7 +117,7 @@ function NFTaccount() {
           <div className="nftListCol col-lg-8">
             <div className="nft_selectBox">
               <NFTlistTop />
-              {NFTListView ? <NFTlistView /> : <NFTgridView />}
+              {NFTListView ? <NFTlistView /> : <NFTgridView scrollIndex={index} setIndex={setIndex} />}
               {/* <div className="algo-claimable">
                 // TODO Algorand Claimable
               </div> */}

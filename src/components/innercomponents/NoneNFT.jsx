@@ -8,6 +8,7 @@ function NoneNFT() {
     const dispatch = useDispatch()
     return (
         <div className="nonftContainer">
+       
             <div className="nonftAcc">
                 <img src={NONFT} alt="No NFT" className="nonft" />
                 <h2>Oops...</h2>

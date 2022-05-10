@@ -52,10 +52,10 @@ export const wallets = [
 export const initialState = {
   btnRadius: 9,
   fontSize: 16,
-  backgroundColor: "#ffffff",
+  backgroundColor: "#efecec",
   color: "#14161a",
   btnBackground: "#395FEB",
-  btnColor: "#395FEB",
+  btnColor: "#ffffff",
   fontFamily: "Roboto",
   cardBackground: "#1e222d",
   cardBackgroundBot: "#1e222d",

@@ -39,54 +39,29 @@ if(uri){ if(uri.includes("https://ipfs.io")){
 };
 
 
-const checkIfImage = async (url) => {
-  let response
+const checkIfImage = (url) => {
   const imageFormats = [".png", ".gif", ".jpg", ".jpeg", ".png", ".svg", ".webp"]
-  if(url){
-    const imageFormat = imageFormats.some(format => url?.includes(format))
-    if(imageFormat){
-      return true
-    }
-    else{
-      try {
-        response = await axios.get(url)
-      } catch (error) {
-        console.log(error)
-        response = await axios.get(setupURI(url))
-      }
-    }
-  }
+  const imageFormat = imageFormats.some(format => url?.includes(format))
+  return imageFormat ? url : undefined
 }
 
-const checkIfVideo = async (url) => {
-  // debugger
-  let response
+const checkIfVideo = (url) => {
   const videoFormats = [".mp4", ".ogg", ".webm", ".avi"]
-  if(url){
-    const videoFormat = videoFormats.some(format => url?.includes(format))
-    if(videoFormat){
-      return true
-    }
-    else{
-      // try {
-      //   response = await axios.get(url)
-      //   if(typeof response.data === "object"){
-      //     console.log(response)
-      //   }
-      // } catch (error) {
-      //   console.log(error)
-      //   response = await axios.get(setupURI(url))
-      //   if(typeof response.data === "object"){
-      //     console.log(response)
-      //   }
-      // }
-    }
-  }
+  const videoFormat = videoFormats.some(format => url?.includes(format))
+  return videoFormat ? url : undefined
 }
 
+const fetchURI = async uri => {
+  let response
+  try {
+    response = await axios(uri)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
-  // debugger
   const uri = nft.uri
   const { from, NFTList } = store.getState().general;
   let whitelisted
@@ -104,29 +79,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftObj.image = undefined
     nftObj.animation_url = undefined
   }
-  let response
-
-  // try {
-  //   response = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`).catch( error => {
-  //     console.log(error)
-  //   })
-  //   nftObj = {...nftObj, ...response.data}
-  //   if(nftObj.data?.image_url){
-  //     const image  = nftObj.data?.image
-  //     nftObj.image = image
-  //     nftObj.dataLoaded = true
-  //   }
-  // } catch (error) {
-  //   response = await axios.get(setupURI(uri))
-  //   nftObj = {...nftObj, ...response.data}
-  //   if(nftObj.data?.image_url){
-  //     const image  = nftObj.data?.image
-  //     nftObj.image = image
-  //     nftObj.dataLoaded = true
-  //   }
-  // }
   if(from.text === "Tezos"){
-    debugger
     nftObj.image = nft.image || nft.native?.uri
     nftObj.native.contract = nft.native?.contract
     nftObj.native.tokenId = nft.native?.tokenId
@@ -137,25 +90,39 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftObj.native.symbol =  nft.symbol || nft.native?.meta?.token?.metadata?.symbol
   }
   else{
-    try {
-      response = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`).catch( error => {
-        console.log(error)
-      })
-      nftObj = {...nftObj, ...response.data}
+    // debugger
+    const video = checkIfVideo(setupURI(uri))
+    nftObj.animation_url = video 
+    const image = !video ? checkIfImage(setupURI(uri)) : undefined
+    nftObj.image = image 
+    const data = await fetchURI(setupURI(uri))
+    console.log("🚀 ~ file: helpers.js ~ line 126 ~ parseEachNFT ~ data", data)
+    if(typeof data === 'object'){
+      nftObj = {...nftObj, ...data}
       if(nftObj.data?.image_url){
         const image  = nftObj.data?.image
         nftObj.image = image
         nftObj.dataLoaded = true
-      }
-    } catch (error) {
-      response = await axios.get(setupURI(uri))
-      nftObj = {...nftObj, ...response.data}
-      if(nftObj.data?.image_url){
-        const image  = nftObj.data?.image
-        nftObj.image = image
-        nftObj.dataLoaded = true
-      }
-    }
+    }}
+      // axios.get(setupURI(uri)).then(resp => {
+      //   nftObj = {...nftObj, ...resp.data}
+      //   if(nftObj.data?.image_url){
+      //     const image  = nftObj.data?.image
+      //     nftObj.image = image
+      //     nftObj.dataLoaded = true
+      //   }
+      // })
+      // .catch(error => {
+      //   console.log(error)
+      //   axios.get(setupURI(uri)).then(resp => {
+      //     nftObj = {...nftObj, ...resp.data}
+      //     if(nftObj.data?.image_url){
+      //       const image  = nftObj.data?.image
+      //       nftObj.image = image
+      //       nftObj.dataLoaded = true
+      //     }
+      //   })
+      // })
   }
 
   if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
@@ -173,7 +140,9 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftObj.image = "https://ipfs.io/" + nftObj.image.replace(":/", "")
   }
   if(nftObj.image){
-    if(await checkIfVideo(nftObj.image)){
+    // debugger
+    const isVideo = await checkIfVideo(nftObj.image)
+    if(isVideo){
       nftObj.animation_url = nftObj.image
       nftObj.image = undefined
     }
@@ -303,7 +272,6 @@ export const transformToDate = (date) => {
 
 
 export const getFactory = async () => {
-  // debugger
   const f = store.getState().general.factory;
   const testnet  = store.getState().general.testNet
 
@@ -370,6 +338,8 @@ export const handleChainFactory = async (someChain) => {
         return await factory.inner(Chain.AURORA)
       case "GateChain":
         return await factory.inner(Chain.GATECHAIN)
+      case "VeChain":
+        return await factory.inner(Chain.VECHAIN)
       default: return ''
     }
   } catch (error) {
@@ -380,10 +350,8 @@ export const handleChainFactory = async (someChain) => {
 export const getNFTS = async (wallet, from) => {
 console.log("🚀 ~ file: helpers.js ~ line 355 ~ getNFTS ~ wallet", wallet)
   // debugger
-  console.log("getNFTS")
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
-  // const { from } = store.getState().general;
-  const { algorandAccount, tronWallet } = store.getState().general
+  const { tronWallet } = store.getState().general
   const factory = await getFactory();
   const chain = await factory.inner(chainsConfig[from].Chain)
   try {
@@ -452,7 +420,7 @@ export const getAlgorandClaimables = async (account) => {
 
 
 export const setNFTS = async (w, from, testnet) => {
-console.log("🚀 ~ file: helpers.js ~ line 426 ~ setNFTS ~ w", w)
+  // debugger
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from, testnet)
   store.dispatch(setPreloadNFTs(res.length))

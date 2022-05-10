@@ -11,7 +11,7 @@ export default function Refresh() {
       const refresh = async () => {
         if (!bigLoader || !nfts) {
           let w;
-          if (from.type === "EVM") w = account;
+          if (from.type === "EVM" || from.type === "VeChain") w = account;
           else if (from.type === "Tezos") w = tezosAccount;
           else if (from.type === "Algorand") w = algorandAccount;
           else if (from.type === "Elrond") w = elrondAccount;

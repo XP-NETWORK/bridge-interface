@@ -1,4 +1,5 @@
 
+import Connex from '@vechain/connex';
 import { TempleWallet } from "@temple-wallet/dapp";
 import { injected, algoConnector } from "../../wallet/connectors"
 import store  from "../../store/store"
@@ -31,7 +32,9 @@ import { setTronWallet,
   setQrCodeString, 
   setWC,
   setOnWC,
-  setAccount} from "../../store/reducers/generalSlice"
+  setAccount,
+  setSync2,
+  setSync2Connecx} from "../../store/reducers/generalSlice"
 import { useNavigate } from 'react-router';
 import { chainsConfig } from "../values";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
@@ -61,6 +64,35 @@ export const connectMetaMask = async (activate, from, to) => {
           return false
       }
 }
+
+export const connectSync2 = async(testnet) => {
+  // debugger
+  let account
+  const client = new Connex(testnet ?
+    {
+      node: 'https://testnet.veblocks.net/',
+      network: 'test'
+    }:
+    {
+      node: "https://sync-mainnet.veblocks.net",
+      network: "main"
+    });
+    store.dispatch(setSync2Connecx(client))
+  const vendor = new Connex.Vendor(testnet ? 'test' : 'main')
+  await vendor.sign('cert',{
+    purpose: 'identification',
+    payload: {
+      type: 'text',
+      content: 'sign certificate to continue bridging'
+  }
+  })
+  .link('https://connex.vecha.in/{certid}') // User will be back to the app by the url https://connex.vecha.in/0xffff....
+  .request()
+  .then(result => {
+    account = result?.annex?.signer
+  })
+  return account
+};
 
 // Algorand blockchain connection ( AlgoSigner )
 export const connectAlgoSigner =async (testnet) => {

@@ -15,6 +15,7 @@ function XpBridge() {
 
   return (
     <div className="nftContainer">
+      <div id="settingsPanelContainer"></div>
       {/* { algorandClaimables && algorandClaimables.length > 0 && <Transactionhistory /> } */}
       <Routes>
         <Route path="/" element={<ConnectWallet />} />

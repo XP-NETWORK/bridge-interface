@@ -21,7 +21,6 @@ export default function NFTcard({ nft, index, claimables }) {
     const from = useSelector(state => state.general.from)
     const dispatch = useDispatch();
     const [detailsOn, setDetailsOn] = useState(false)
-    console.log("🚀 ~ file: NFTcard.jsx ~ line 23 ~ NFTcard ~ detailsOn", detailsOn)
     const search = useSelector(state => state.general.NFTListSearch)
     const testnet = useSelector(state => state.general.testNet)
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);

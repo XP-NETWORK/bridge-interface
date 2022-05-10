@@ -236,7 +236,7 @@ export const chains = [
     order: 4,
     image: { avatar: true, src: One },
     maintenance: false,
-    testNet: true,
+    testNet: false,
     mainnet: true,
     newChain: true,
   },
@@ -246,7 +246,7 @@ export const chains = [
     text: "Aurora",
     value: "Aurora",
     chainId: 1313161554,
-    order: 2,
+    order: 1,
     image: { avatar: true, src: Aurora },
     maintenance: false,
     testNet: false,
@@ -277,10 +277,10 @@ export const chains = [
     maintenance: false,
     testNet: false,
     mainnet: true,
-    newChain: true
+    newChain: false
   },
   {
-    type: "EVM",
+    type: "VeChain",
     key: "VeChain",
     text: "VeChain",
     value: "VeChain",
@@ -289,9 +289,9 @@ export const chains = [
     order: 4,
     image: {avatar: true, src: VET},
     maintenance: false,
-    mainnet: false,
+    mainnet: true,
     testNet: false,
-    newChain: false
+    newChain: true
   }
 ];
 
@@ -459,8 +459,8 @@ export const chainsConfig = {
   VeChain: {
     type: EVM,
     token: "VET",
-    img: VET,
-    rpc: "https://sync-testnet.veblocks.net",
+    image: VET,
+    rpc: "https://sync-mainnet.veblocks.net",
     tnRpc: "https://sync-testnet.veblocks.net",
     chainId: 39,
     Chain: Chain.VECHAIN,
@@ -711,7 +711,8 @@ export const CHAIN_INFO = {
     native: coins[19],
     nonce: 0x19,
     decimals: 1e18,
-    chainId: 39,
+    chainId: 74,
+    tnChainId: 39,
     rpc: "https://sync-testnet.veblocks.net",
     blockExplorerUrl: "https://explore.vechain.org/accounts/",
     testBlockExplorerUrls: "https://explore-testnet.vechain.org/accounts/"

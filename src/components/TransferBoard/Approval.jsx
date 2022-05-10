@@ -4,6 +4,10 @@ import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
 // import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
 import { Chain, Config } from "xp.network/dist/consts";
 import { ethers } from "ethers";
+import * as thor from "web3-providers-connex";
+import { Driver, SimpleNet, SimpleWallet } from "@vechain/connex-driver";
+import { Framework } from "@vechain/connex-framework";
+
 import {
   updateApprovedNFTs,
   setApproved,
@@ -22,6 +26,7 @@ import { algoConnector } from "../../wallet/connectors";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { BeaconWallet } from "@taquito/beacon-wallet";
+import Connex from '@vechain/connex';
 
 
 
@@ -46,6 +51,8 @@ function Approval(props) {
   const MyAlgo = useSelector((state) => state.general.MyAlgo);
   const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
   const widget = useSelector((state) => state.general.widget);
+  const sync2Connex = useSelector((state) => state.general.sync2Connex);
+
 
 
   const getAlgorandWalletSigner = async () => {
@@ -78,7 +85,7 @@ function Approval(props) {
   };
 
   const approveEach = async (nft, signer, chain, index) => {
-    // debugger;
+    debugger;
     const arr = new Array(index + 1).fill(0);
     const factory = await getFactory();
     if (
@@ -153,7 +160,24 @@ function Approval(props) {
         } else console.log(error);
         console.log(error);
       }
-    } else {
+    }
+    else if(from.type === "VeChain"){
+      try {
+        const factory = await getFactory();
+        const swap = await chain.preTransfer(signer, nft, bigNumberFees);
+
+        dispatch(updateApprovedNFTs(nft));
+        setFinishedApproving(arr);
+      } catch (error) {
+        setFinishedApproving(arr);
+        dispatch(setError(error.data ? error.data.message : error.message));
+        if (error.data) {
+          console.log(error.data.message);
+        } else console.log(error);
+        console.log(error);
+      }
+    } 
+    else {
       try {
         const factory = await getFactory();
         const chain = await factory.inner(Chain.ELROND);
@@ -177,7 +201,6 @@ function Approval(props) {
 
   // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
   const approveAllNFTs = async () => {
-    // debugger
     if (!approvedLoading) {
       dispatch(setApproveLoader(true));
       setApprovedLoading(true);
@@ -191,7 +214,21 @@ function Approval(props) {
         selectedNFTList.forEach((nft, index) => {
           approveEach(nft, signer, chain, index);
         });
-      } else if (from.type === "Tron") {
+      }else if(from.type === "VeChain"){
+        const provider = thor.ethers.modifyProvider(
+          new ethers.providers.Web3Provider(
+          new thor.ConnexProvider({ connex: new Connex({
+            node: testnet ? 'https://testnet.veblocks.net/': "https://sync-mainnet.veblocks.net",
+            network: testnet ? 'test' : 'main'
+        }) }))
+        );
+        const signer = await provider.getSigner(account)
+        const chain = await handleChainFactory(from.key);
+        selectedNFTList.forEach((nft, index) => {
+          approveEach(nft, signer, chain, index);
+        });
+      }
+      else if (from.type === "Tron") {
         setFinishedApproving(selectedNFTList);
         selectedNFTList.forEach((nft, index) => {
           dispatch(updateApprovedNFTs(nft));

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React from "react";
 import ReactDom from "react-dom";
 import {
   Image,
@@ -13,7 +13,7 @@ import {
 import power from "./assets/img/power.svg";
 
 import settingsHoc from "./settingsHoc";
-
+import SettingsPannel from "./SettingsPannel";
 import ThemeSwitch from "./themeSwitch";
 
 import {
@@ -87,10 +87,12 @@ function WSettings({
 
   const portalDiv = document.getElementById("settingsPortal");
 
+
   return (
     portalDiv &&
     ReactDom.createPortal(
       <>
+   { false && <SettingsPannel theme={theme}/>}
         <div
           className={`setting_sidebar ${theme}`}
           style={{ width: settings.collapsed ? "35px" : "300px" }}
