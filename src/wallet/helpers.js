@@ -50,12 +50,15 @@ const checkIfVideo = (url) => {
   return videoFormat ? url : undefined
 }
 
+
+
+ 
+
 const fetchURI = async uri => {
-  debugger
+  // debugger
   let resp
   try {
-    resp = await axios.get({
-    uri: `https://sheltered-crag-76748.herokuapp.com/${uri}`})
+    resp = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`)
     console.log(resp.data)
     return resp.data
   } catch (error) {
