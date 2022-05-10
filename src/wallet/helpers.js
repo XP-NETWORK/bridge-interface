@@ -5,6 +5,7 @@ import { setAlgorandClaimables, setBigLoader, setEachClaimables, setEachNFT, set
 import store from "../store/store";
 import io from "socket.io-client";
 import { isWhiteListed } from "./../components/NFT/NFTHelper"
+// import { fetchURI } from "./getDataFromURL"
 
 // const testnet  = store.getState()?.general?.testNet
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
