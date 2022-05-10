@@ -6,6 +6,7 @@ import { setAlgorandClaimables, setBigLoader, setEachClaimables, setEachNFT, set
 import store from "../store/store";
 import io from "socket.io-client";
 
+// import { fetchURI } from "./getDataFromURL"
 
 // const testnet  = store.getState()?.general?.testNet
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
@@ -51,12 +52,15 @@ const checkIfVideo = (url) => {
   return videoFormat ? url : undefined
 }
 
+
+
+ 
+
 const fetchURI = async uri => {
-  debugger
+  // debugger
   let resp
   try {
-    resp = await axios.get({
-    uri: `https://sheltered-crag-76748.herokuapp.com/${uri}`})
+    resp = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`)
     console.log(resp.data)
     return resp.data
   } catch (error) {
