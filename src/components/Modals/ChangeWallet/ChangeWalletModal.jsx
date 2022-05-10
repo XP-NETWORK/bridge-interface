@@ -4,12 +4,14 @@ import { setAccount, setAlgorandAccount, setAlgoSigner, setChangeWallet, setConf
 import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg";
 import { Modal } from "react-bootstrap";
 import icon from "../../../assets/img/icons/book.svg"
+import { useWeb3React } from '@web3-react/core';
 
 export default function ChangeWalletModal() {
   const changeWallet = useSelector((state) => state.general.changeWallet);
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
   const dispatch = useDispatch()
+  const { deactivate } = useWeb3React();
 
   const handleClose = () => {
     dispatch(setChangeWallet(false))
@@ -29,6 +31,7 @@ export default function ChangeWalletModal() {
           dispatch(setWC(''));
           dispatch(setMetaMask(''))
           dispatch(setChangeWallet(false))
+          deactivate()
           handleSwitch()
           dispatch(setWalletsModal(true))
             break;

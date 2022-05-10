@@ -17058,7 +17058,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "3.0.1"
-  resolved "git+https://github.com/xp-network/xpjs#40cb242475c821dca69daa95eeadf9277655ba6f"
+  resolved "git+https://github.com/xp-network/xpjs#d8dca680097cc93398e8392be8b8704c5fe2126a"
   dependencies:
     "@elrondnetwork/erdjs" "^8.0.1-alpha.8"
     "@json-rpc-tools/utils" "^1.7.6"
@@ -17072,7 +17072,7 @@ xmlhttprequest@1.8.0:
     "@walletconnect/client" "^1.7.0"
     algosdk "^1.15.0-beta.1"
     axios "^0.21.1"
-    bignumber.js "9.0.1"
+    bignumber.js "=9.0.1"
     crypto-exchange-rate "git+https://github.com/xp-network/exchange-rate#master-dist"
     ethers "^5.5.4"
     js-base64 "^3.6.1"
