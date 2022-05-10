@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { setAlgorandAccount, setAlgoSigner, setChangeWallet, setMyAlgo } from '../../../store/reducers/generalSlice';
+import { setAccount, setAlgorandAccount, setAlgoSigner, setChangeWallet, setConfirmMaiarMob, setElrondAccount, setFrom, setKukaiWallet, setMaiarProvider, setMetaMask, setMyAlgo, setOnMaiar, setOnWC, setQrCodeString, setQrImage, setSync2, setSync2Connecx, setTempleWallet, setTezosAccount, setTo, setTronLink, setTronWallet, setWalletsModal, setWC } from '../../../store/reducers/generalSlice';
 import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg";
 import { Modal } from "react-bootstrap";
 import icon from "../../../assets/img/icons/book.svg"
@@ -8,34 +8,71 @@ import icon from "../../../assets/img/icons/book.svg"
 export default function ChangeWalletModal() {
   const changeWallet = useSelector((state) => state.general.changeWallet);
   const from = useSelector((state) => state.general.from);
+  const to = useSelector((state) => state.general.to);
   const dispatch = useDispatch()
 
   const handleClose = () => {
     dispatch(setChangeWallet(false))
   }
 
+  const handleSwitch = (e) => {
+    const temp = to;
+    dispatch(setTo(from));
+    dispatch(setFrom(temp));
+  }
+
   const handleClick = () => {
       switch (from.type) {
         case "EVM":
-        console.log("Disconnect from EVM")
+          dispatch(setAccount(''))
+          dispatch(setOnWC(''));
+          dispatch(setWC(''));
+          dispatch(setMetaMask(''))
+          dispatch(setChangeWallet(false))
+          handleSwitch()
+          dispatch(setWalletsModal(true))
             break;
         case "Tron":
-        console.log("Disconnect from Tron")
+          dispatch(setTronWallet(''))
+          dispatch(setTronLink(''))
+          handleSwitch()
+          dispatch(setChangeWallet(false))
             break;
         case "Elrond":
-        console.log("Disconnect from Elrond")
+          dispatch(setOnMaiar(''))
+          dispatch(setElrondAccount(''))
+          dispatch(setMaiarProvider(''))
+          dispatch(setQrImage(''))
+          dispatch(setQrCodeString(''))
+          dispatch(setConfirmMaiarMob(''))
+          dispatch(setChangeWallet(false))
+          handleSwitch()
+          dispatch(setWalletsModal(true))
             break;
         case "Tezos":
-        console.log("Disconnect from Tezos")
+          dispatch(setTezosAccount(''))
+          dispatch(setKukaiWallet(''))
+          dispatch(setTempleWallet(''))
+          dispatch(setChangeWallet(false))
+          handleSwitch()
+          dispatch(setWalletsModal(true))
             break;
         case "VeChain":
-        console.log("Disconnect from VeChain")
+            dispatch(setSync2Connecx(''))
+            dispatch(setSync2(''))
+            dispatch(setAccount(''))
+            dispatch(setChangeWallet(false))
+            handleSwitch()
+            dispatch(setWalletsModal(true))
             break;
         case "Algorand":
             dispatch(setAlgoSigner(''))
             dispatch(setAlgorandAccount(''))
             dispatch(setAlgorandAccount(''))
             dispatch(setMyAlgo(''))
+            dispatch(setChangeWallet(false))
+            handleSwitch()
+            dispatch(setWalletsModal(true))
             break;
           default:
               break;

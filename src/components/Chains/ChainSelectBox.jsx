@@ -10,20 +10,66 @@ export default function ChainSelectBox() {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
+  const account = useSelector((state) => state.general.account);
+  const algorandAccount = useSelector((state) => state.general.algorandAccount);
+  const tezosAccount = useSelector((state) => state.general.tezosAccount);
+  const elrondAccount = useSelector((state) => state.general.elrondAccount);
+  const tronWallet = useSelector((state) => state.general.tronWallet);
  
 
 
   const switchChains = (e) => {
     if(from.type !== to.type){
-      dispatch(setChangeWallet(true))
+      switch (from.type) {
+        case "EVM":
+          if(account){
+            dispatch(setChangeWallet(true))
+        
+          }
+          else handleSwitch(e)
+            break;
+        case "Tron":
+          if(tronWallet)dispatch(setChangeWallet(true))
+          else handleSwitch(e)
+            break;
+        case "Elrond":
+          if(elrondAccount)dispatch(setChangeWallet(true))
+          else handleSwitch(e)
+            break;
+        case "Tezos":
+          if(tezosAccount)dispatch(setChangeWallet(true))
+          else handleSwitch(e)
+            break;
+        case "VeChain":
+          if(account)dispatch(setChangeWallet(true))
+          else handleSwitch(e)
+            break;
+        case "Algorand":
+          if(algorandAccount){
+
+            dispatch(setChangeWallet(true))}
+          else handleSwitch(e)
+            break;
+          default:
+              break;
+      }
+      // dispatch(setChangeWallet(true))
     }
     else{
-      e.preventDefault();
-      const temp = to;
-      dispatch(setTo(from));
-      dispatch(setFrom(temp));
+      handleSwitch(e)
+      // e.preventDefault();
+      // const temp = to;
+      // dispatch(setTo(from));
+      // dispatch(setFrom(temp));
     }
   };
+
+  const handleSwitch = (e) => {
+    e.preventDefault();
+    const temp = to;
+    dispatch(setTo(from));
+    dispatch(setFrom(temp));
+  }
 
   return (
     <>
