@@ -43,15 +43,14 @@ function NFTaccount() {
   const [showNFTsSearch, setNFTsSearch] = useState(false)
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
   const [index, setIndex] = useState(0)
-  console.log("🚀 ~ file: NFTaccount.jsx ~ line 46 ~ NFTaccount ~ index", index)
 //Angelika - 0x0d7df42014064a163DfDA404253fa9f6883b9187
 //Dima. U - 0x6449b68cc5675f6011e8DB681B142773A3157cb9
 // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
 
   async function getNFTsList() {
     // debugger
-    const useHardcoded = false;
-    const hard = "erd1mgz6e4pe233hg9795ld542kl5vukqyq55008720qnqtq8uqeksmszfd5gu";
+    const useHardcoded = true;
+    const hard = "0x6449b68cc5675f6011e8DB681B142773A3157cb9";
     try {
       const w = useHardcoded
       ? hard

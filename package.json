@@ -27,7 +27,7 @@
     "add": "^2.0.6",
     "algorand-walletconnect-qrcode-modal": "^1.6.1",
     "algosdk": "^1.12.0",
-    "axios": "^0.24.0",
+    "axios": "^0.27.2",
     "bignumber.js": "=9.0.1",
     "bootstrap": "^4.6.0",
     "buffer-type": "^1.0.0",

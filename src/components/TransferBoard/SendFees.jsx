@@ -6,7 +6,6 @@ import { chainsConfig } from '../values';
 import { getFactory,  handleChainFactory,  setClaimablesAlgorand, setNFTS } from "../../wallet/helpers"
 import { setBigNumFees } from '../../store/reducers/generalSlice';
 import { useEffect } from 'react';
-const Web3Utils = require("web3-utils");
 
 function SendFees() {
     const dispatch = useDispatch()
@@ -21,8 +20,6 @@ function SendFees() {
     const [loading, setLoading] = useState(false)
 
     async function estimate () {
-        
-        // debugger
         let fact
         let fee
         try {
@@ -59,14 +56,12 @@ function SendFees() {
             }
 
             const bigNum = fee ? fee.multipliedBy(1.1).integerValue().toString(10) : undefined
-            console.log("🚀 ~ file: SendFees.jsx ~ line 62 ~ estimate ~ bigNum", bigNum)
             dispatch(setBigNumFees(bigNum))
             const fees =  await Web3Utils.fromWei(bigNum, "ether")
             setFees(+(fees*selectedNFTList.length))
            
         } catch (error) {
           console.log(error.data ? error.data.message : error.message);
-        //   dispatch(setError(error))
         }
     }
 
