@@ -53,9 +53,9 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: stretch;
-  gap: 18px;
+  gap: 12px;
   padding: 5px 6px 5px 12px;
-  overflow: scroll;
+  overflow: auto;
   height: 560px;
 }
 .video__wrapper video{

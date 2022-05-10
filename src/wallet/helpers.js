@@ -52,19 +52,25 @@ const checkIfVideo = (url) => {
 }
 
 const fetchURI = async uri => {
-  let response
+  debugger
+  let resp
   try {
-    response = await axios(uri)
-    return response.data
+    resp = await axios.get({
+    uri: `https://sheltered-crag-76748.herokuapp.com/${uri}`})
+    console.log(resp.data)
+    return resp.data
   } catch (error) {
     console.log(error)
   }
 }
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
+  // debugger
   const uri = nft.uri
   const { from, NFTList } = store.getState().general;
   let whitelisted
+  let videoFormat
+  let imageFormat
   let nftObj = {
     uri: nft.uri,
     collectionIdent: nft.collectionIdent || undefined,
@@ -80,7 +86,41 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftObj.animation_url = undefined
   }
   if(from.text === "Tezos"){
-    nftObj.image = nft.image || nft.native?.uri
+    if(nft.native?.meta?.token?.metadata?.formats){
+      const obj = nft.native?.meta?.token?.metadata?.formats
+      const mimeType = obj[0]['mimeType']
+      const format = mimeType.slice(0,mimeType.lastIndexOf("/"))
+      if(format === "image"){
+        imageFormat = true
+        nftObj.image = setupURI(obj.uri)
+      }
+      else if(format === "video"){
+        videoFormat = true
+        nftObj.animation_url = setupURI(obj.uri)
+      }
+    }
+    if(nft.native?.meta?.token?.metadata?.mimeType){
+      const mimeType = nft.native?.meta?.token?.metadata?.mimeType
+      const format = mimeType.slice(0,mimeType.lastIndexOf("/"))
+      if(format === "image"){
+        imageFormat = true
+        nftObj.image = setupURI(nft.native?.meta?.token?.metadata?.displayUri)
+      }
+      else if(format === "video"){
+        videoFormat = true
+        nftObj.animation_url = setupURI(nft.native?.meta?.token?.metadata?.displayUri)
+      }
+    }
+    if(!nftObj.image && nft.native?.meta?.token?.metadata?.displayUri){
+      nftObj.image = nft.native?.meta?.token?.metadata?.displayUri
+      imageFormat = true
+    }
+    else if(!nftObj.image && nft.native?.meta?.token?.metadata?.image){
+      nftObj.image = nft.native?.meta?.token?.metadata?.image
+      imageFormat = true
+    }
+    nftObj.image = imageFormat ? nftObj.image || nft.native?.meta?.token?.metadata?.formats?.uri || nft.image || nft.native?.uri : undefined
+    nftObj.animation_url = videoFormat ? nftObj.animation_url || nft.native?.meta?.token?.metadata?.formats?.uri : undefined
     nftObj.native.contract = nft.native?.contract
     nftObj.native.tokenId = nft.native?.tokenId
     nftObj.native.uri = nft.native?.uri
@@ -96,7 +136,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     const image = !video ? checkIfImage(setupURI(uri)) : undefined
     nftObj.image = image 
     const data = await fetchURI(setupURI(uri))
-    console.log("🚀 ~ file: helpers.js ~ line 126 ~ parseEachNFT ~ data", data)
     if(typeof data === 'object'){
       nftObj = {...nftObj, ...data}
       if(nftObj.data?.image_url){
