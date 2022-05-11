@@ -9,7 +9,8 @@ import TxStatus from './TxStatus';
 import {chainsConfig} from '../../values'
 
 export default function TransferredNft({ nft }) {
-    const { image, txn, name, native } = nft
+    const { image, animation_url, txn, name, native } = nft
+    console.log("🚀 ~ file: TransferredNft.jsx ~ line 13 ~ TransferredNft ~ animation_url", animation_url)
     const from = useSelector((state) => state.general.from);
     const to = useSelector(state => state.general.to)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
@@ -75,7 +76,7 @@ export default function TransferredNft({ nft }) {
         <div className='success-nft-info__wrapper'>
             <div className="transferred-nft">
                 <div className='nft-image-name'>
-                    <img src={image} alt={name} />
+                    {animation_url ? <video src={animation_url}></video>:<img src={image} alt={name} />}
                     <div classNam="transferred-nft-name">{name}</div>
                 </div>
                 <TxStatus status={txn ? txnStatus : "failed"} />

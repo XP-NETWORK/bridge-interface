@@ -35,7 +35,7 @@ export const chains = [
     order: 3,
     image: { avatar: true, src: Etherium },
     maintenance: false,
-    testNet: true,
+    testNet: false,
     mainnet: true,
   },
   {
