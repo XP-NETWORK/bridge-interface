@@ -150,6 +150,7 @@
     display: flex;
     align-items: center;
     gap: 14px;
+    margin: 4px;
 }
 
 .txn-status-pending{

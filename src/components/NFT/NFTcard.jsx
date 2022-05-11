@@ -21,6 +21,7 @@ export default function NFTcard({ nft, index, claimables }) {
     const dispatch = useDispatch();
     const [detailsOn, setDetailsOn] = useState(false)
     const search = useSelector(state => state.general.NFTListSearch)
+    const [loadingTimeOut, setLoadingTomeOut] = useState()
     const testnet = useSelector(state => state.general.testNet)
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
     let isSelected = selectedNFTs.filter(
@@ -54,13 +55,16 @@ export default function NFTcard({ nft, index, claimables }) {
        if(!nft.dataLoaded){
          await parseEachNFT(nft, index, testnet, claimables)
        }
+       setTimeout(() => {
+        setLoadingTomeOut(false)
+      }, "7000")
     },[])
     
 
     return (
       <>
       {isShown(search, nft)?  <div className={`nft-box__wrapper`}  >
-      { !nft.dataLoaded ? <Preload /> : 
+      { !nft?.dataLoaded || loadingTimeOut ? <Preload /> : 
       <div onClick={() => nft.whitelisted && !detailsOn && !claimables ? addRemoveNFT(nft, index): undefined } className={nft.whitelisted ? "nft__card--selected" : "nft__card"}>
         <div className="nft__main">
           { nft.uri && isValidHttpUrl(nft.uri, index) ? 

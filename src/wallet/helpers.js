@@ -56,7 +56,6 @@ const checkIfVideo = (url) => {
  
 
 const fetchURI = async uri => {
-  console.log("fetchURI")
   let resp
   try {
     resp = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`)
@@ -68,7 +67,7 @@ const fetchURI = async uri => {
 }
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
-  console.log("parseEachNFT")
+  debugger
   const uri = nft.uri
   const { from, NFTList } = store.getState().general;
   let whitelisted
@@ -167,7 +166,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
       // })
   }
 
-  if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
+  if(!testnet && nft?.native?.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
     whitelisted = false
   }
   else if(!testnet){
@@ -189,13 +188,10 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
       nftObj.image = undefined
     }
   }
-  // if(nftObj.animation_url){
-  //   const animation = await checkIfVideo(nftObj.animation_url)
-  // }
-  if(claimables){
+  if(claimables && (!claimables[index]?.dataLoaded || !claimables[index]?.image || !claimables[index]?.animation_url)){
     store.dispatch(setEachClaimables({nftObj, index}))
   }
-  if(!NFTList[index].dataLoaded){
+  if(!NFTList[index]?.dataLoaded || !NFTList[index]?.image || !NFTList[index]?.animation_url){
     store.dispatch(setEachNFT({nftObj, index}))
   }
 }
@@ -436,11 +432,12 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 }
 
 export const getAlgorandClaimables = async (account) => {
-  // debugger
+  debugger
   let claimables
   const factory = await getFactory()
   try {
     claimables = await factory.claimableAlgorandNfts(account)
+    console.log("🚀 ~ file: helpers.js ~ line 443 ~ getAlgorandClaimables ~ claimables", claimables)
     store.dispatch(setAlgorandClaimables(claimables))
   } catch (error) {
     console.error(error);
@@ -449,7 +446,7 @@ export const getAlgorandClaimables = async (account) => {
 
 
 export const setNFTS = async (w, from, testnet) => {
-  // debugger
+
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from, testnet)
   store.dispatch(setPreloadNFTs(res.length))
@@ -458,7 +455,7 @@ export const setNFTS = async (w, from, testnet) => {
 }
 
 export function isValidHttpUrl(string, index) {
-  // debugger
+
 
   let url;
   if((string.includes("data:image/") || string.includes("data:application/"))) return true
@@ -474,7 +471,6 @@ export function isValidHttpUrl(string, index) {
 
 export const getTronNFTs = async wallet => {
   const res = await axios.get(`https://apilist.tronscan.org/api/account/tokens?address=${wallet}&start=0&limit=500&hidden=0&show=3&sortType=0&sortBy=0`)
-  console.log("🚀 ~ file: helpers.js ~ line 433 ~ res", res)
   const { total, data } = res.data
 
   if(total > 0) {

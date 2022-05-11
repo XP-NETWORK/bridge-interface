@@ -1,14 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
-import { setAlert, setNoApprovedNFTAlert, setPasteDestinationAlert, setSelectNFTAlert } from "../../store/reducers/generalSlice";
+import { setAlert, setNoApprovedNFTAlert } from "../../store/reducers/generalSlice";
 
 function NoApprovedNFT() {
   const dispatch = useDispatch()
   const to = useSelector((state) => state.general.to);
   const receiver = useSelector((state) => state.general.receiver);
   const alert = useSelector((state) => state.general.noApprovedNFTAlert);
-  console.log("🚀 ~ file: NoApprovedNFT.jsx ~ line 11 ~ NoApprovedNFT ~ alert", alert)
   const approved = useSelector(state => state.general.approved)
 
 

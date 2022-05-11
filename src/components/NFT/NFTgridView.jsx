@@ -41,8 +41,10 @@ function NFTgridView({setIndex, scrollIndex}) {
                         }
                         { nfts?.length ? 
                         nfts.map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} />)
-                        : 
-                        <NFTempty /> }
+                        :
+                        !algorandClaimables &&
+                        <NFTempty />
+                        }
                         { nfts.length > 0 && nfts?.length < nftsPlace ? placeholders.map((n, index) => <Missing key={`missing-${index}-component`}/>) : ''}
                     </div>
                 }

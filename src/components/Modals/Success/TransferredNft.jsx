@@ -10,7 +10,6 @@ import {chainsConfig} from '../../values'
 
 export default function TransferredNft({ nft }) {
     const { image, animation_url, txn, name, native } = nft
-    console.log("🚀 ~ file: TransferredNft.jsx ~ line 13 ~ TransferredNft ~ animation_url", animation_url)
     const from = useSelector((state) => state.general.from);
     const to = useSelector(state => state.general.to)
     const algorandAccount = useSelector(state => state.general.algorandAccount)

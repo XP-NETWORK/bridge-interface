@@ -90,7 +90,6 @@ const checkValidators = async () => {
 };
 
   const handleClose = () => {
-    console.log("kgshjfgshjfgshdfgshdf")
     dispatch(setChainModal(false));
     dispatch(setDepartureOrDestination(""));
     dispatch(setSwitchDestination(false));

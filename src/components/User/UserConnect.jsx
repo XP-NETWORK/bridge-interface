@@ -54,7 +54,6 @@ export default function UserConnect({desktop, mobile}) {
 
     useEffect(() => {
       // debugger
-      console.log("useEffect")
       const chainConnected = getChain()
       if(chainId && location.pathname.includes("/account")){
         if(testnet){

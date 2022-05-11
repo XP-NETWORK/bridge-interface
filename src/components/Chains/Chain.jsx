@@ -14,7 +14,8 @@ export default function Chain(props) {
   const testnet = useSelector((state) => state.general.testNet);
   const to = useSelector((state) => state.general.to);
   const from = useSelector((state) => state.general.from);
-  const OFF = { opacity: 0.6 ,pointerEvents: "none", display: "none" };
+  const OFF = { opacity: 0.6 ,pointerEvents: "none"};
+  const NONE = { display: "none" };
   const [chainStatus, setChainStatus] = useState(undefined)
   const location = useLocation()
 
@@ -34,7 +35,7 @@ export default function Chain(props) {
       return OFF
     }
     else if((location.pathname === "/testnet/connect" || location.pathname === "/connect" || location.pathname === "/") && text === from?.text){
-      return OFF
+      return NONE
     }
     else return {}
   }

@@ -25,7 +25,6 @@ export default function Step({start, finished}) {
     }, [start]);
 
     useEffect(() => { 
-        console.log("finished");
         width.current = finished ? 100 : null 
     }, [finished]);
     

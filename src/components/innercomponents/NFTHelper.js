@@ -40,7 +40,6 @@ export const getUrl = nft => {
         else valuesForCheck.push(item)
     });
 
-    // console.log("valuesForCheck: ", valuesForCheck)
     valuesForCheck.forEach(item => {
         if(item && typeof item === 'string' && item.length > 1){
             strings.push(item)

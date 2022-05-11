@@ -99,7 +99,6 @@ export const connectAlgoSigner =async (testnet) => {
   if (typeof window.AlgoSigner !== undefined) {
       try {
         await window.AlgoSigner.connect()
-        console.log("Algo: ", window.AlgoSigner);
         const algo = await window.AlgoSigner.accounts({
           ledger: testnet ? "TestNet" : 'MainNet'
         });
@@ -179,7 +178,6 @@ export const connectBeacon = async () => {
   const myAlgoConnect = new MyAlgoConnect();
   try {
     const accountsSharedByUser = await myAlgoConnect.connect()
-    console.log("MY Algo: ", myAlgoConnect);
     store.dispatch(setAlgorandAccount(accountsSharedByUser[0].address))
     store.dispatch(setMyAlgo(true))
   } catch (error) {

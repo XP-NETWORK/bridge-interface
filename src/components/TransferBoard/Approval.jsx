@@ -104,7 +104,6 @@ function Approval(props) {
         )[0];
         if (!isInApprovedNFTs) {
           try {
-            // console.log(chain, 'hello')
             const ap = await chain.approveForMinter(nft, signer);
             dispatch(updateApprovedNFTs(nft));
             setFinishedApproving(arr);
@@ -183,9 +182,7 @@ function Approval(props) {
       try {
         const factory = await getFactory();
         const chain = await factory.inner(Chain.ELROND);
-        console.log("🚀 ~ file: Approval.jsx ~ line 187 ~ approveEach ~ chain", chain)
         const signer = maiarProvider || ExtensionProvider.getInstance();
-        console.log("🚀 ~ file: Approval.jsx ~ line 188 ~ approveEach ~ signer", signer)
         const swap = await chain.preTransfer(signer, nft, bigNumberFees);
 
         dispatch(updateApprovedNFTs(nft));
