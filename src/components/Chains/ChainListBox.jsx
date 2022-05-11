@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { chains, CHAIN_INFO, TESTNET_CHAIN_INFO } from "../../components/values";
-import { setChainModal, setDepartureOrDestination, setTo, setFrom, setChainSearch, setSwitchDestination, setValidatorsInf} from "../../store/reducers/generalSlice";
+import { setChainModal, setDepartureOrDestination, setTo, setFrom, setChainSearch, setSwitchDestination, setValidatorsInf, setSelectedNFTList, cleanSelectedNFTList} from "../../store/reducers/generalSlice";
 import Chain from "./Chain"
 import ChainSearch from "../Chains/ChainSearch"
 import { Modal } from "react-bootstrap";
@@ -103,13 +103,14 @@ const checkValidators = async () => {
 
 
   const chainSelectHandler = (chain) => {
-    debugger
+    // debugger
         if (departureOrDestination === "departure") {
           if(from && account && (location.pathname === "/account" || location.pathname === "/testnet/account")){
             let temp = from
             dispatch(setFrom(chain));
             dispatch(setTo(temp))
             switchNetwork(chain)
+            dispatch(cleanSelectedNFTList())
             handleClose();
           } 
           else if (to && chain.key !== to.key) {
@@ -126,7 +127,9 @@ const checkValidators = async () => {
           if(chain.chainId === from.chainId){
             let temp = from
             dispatch(setFrom(to));
+            switchNetwork(to)
             dispatch(setTo(temp));
+            dispatch(cleanSelectedNFTList())
             handleClose();
           }
           else{

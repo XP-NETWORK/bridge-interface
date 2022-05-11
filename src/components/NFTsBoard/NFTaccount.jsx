@@ -97,7 +97,6 @@ function NFTaccount() {
 
   useEffect(async () => {
     await getNFTsList();
-    dispatch(setSelectedNFTList([]))
   }, [from]);
 
 
