@@ -31,10 +31,11 @@ export const chains = [
     text: "Ethereum",
     value: "Ethereum",
     chainId: 1,
+    tnChainId: 3,
     order: 3,
     image: { avatar: true, src: Etherium },
     maintenance: false,
-    testNet: false,
+    testNet: true,
     mainnet: true,
   },
   {
@@ -324,6 +325,7 @@ export const chainsConfig = {
     rpc:
       "https://mainnet.infura.io/v3/",
     tx: "https://etherscan.io/tx/",
+    testTx: "https://ropsten.etherscan.io/tx/",
     token: "ETH",
     Chain: Chain.ETHEREUM,
   },
@@ -493,6 +495,10 @@ export const coins = [
 ];
 
 export const TESTNET_CHAIN_INFO = {
+  Ethereum: {
+    nonce: 5,
+    chainId: 3
+  },
   BSC: {
     nonce: 4,
     chainId: 97,
@@ -683,7 +689,6 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpc: "https://babel-api.mainnet.iotex.io",
     chainId: 4689,
-    // tnChainId: 4690,
     contract: "",
     blockExplorerUrls: "https://iotexscan.io/address/",
     testBlockExplorerUrls: "https://testnet.iotexscan.io/"
