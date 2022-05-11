@@ -87,12 +87,13 @@ export default function SuccessModal() {
   }
 
   useEffect(() => {
-    // debugger
-    if(toShow()){
+    console.log(socket)
       socket.on("incomingEvent", async e => {
+        console.log("🚀 ~ file: SuccessModal.jsx ~ line 95 ~ useEffect ~ event", e)
         dispatch(setTxnStatus(e))
       });
       socket.on("updateEvent", async e => {
+        console.log("🚀 ~ file: SuccessModal.jsx ~ line 98 ~ useEffect ~ event", e)
         dispatch(setTxnStatus(e))
       })
       return () => {
@@ -100,7 +101,7 @@ export default function SuccessModal() {
         socket.off("incomingEvent");
         socket.off("updateEvent");
         }
-    }}
+    }
   }, [])
   
   return (

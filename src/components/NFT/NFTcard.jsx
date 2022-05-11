@@ -23,7 +23,7 @@ export default function NFTcard({ nft, index, claimables }) {
     const search = useSelector(state => state.general.NFTListSearch)
     const testnet = useSelector(state => state.general.testNet)
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
-    const isSelected = selectedNFTs.filter(
+    let isSelected = selectedNFTs.filter(
       (n) =>
         n.native.tokenId === nft.native.tokenId &&
         n.native.contract === nft.native.contract &&

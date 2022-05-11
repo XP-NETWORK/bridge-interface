@@ -56,7 +56,7 @@ const checkIfVideo = (url) => {
  
 
 const fetchURI = async uri => {
-  // debugger
+  console.log("fetchURI")
   let resp
   try {
     resp = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`)
@@ -68,7 +68,7 @@ const fetchURI = async uri => {
 }
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
-  // debugger
+  console.log("parseEachNFT")
   const uri = nft.uri
   const { from, NFTList } = store.getState().general;
   let whitelisted

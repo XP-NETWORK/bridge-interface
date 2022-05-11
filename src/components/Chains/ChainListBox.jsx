@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { chains, CHAIN_INFO, TESTNET_CHAIN_INFO } from "../../components/values";
-import { setChainModal, setDepartureOrDestination, setTo, setFrom, setChainSearch, setSwitchDestination, setValidatorsInf} from "../../store/reducers/generalSlice";
+import { setChainModal, setDepartureOrDestination, setTo, setFrom, setChainSearch, setSwitchDestination, setValidatorsInf, setSelectedNFTList, cleanSelectedNFTList} from "../../store/reducers/generalSlice";
 import Chain from "./Chain"
 import ChainSearch from "../Chains/ChainSearch"
 import { Modal } from "react-bootstrap";
@@ -30,7 +30,6 @@ export default function ChainListBox(props) {
   const { account } = useWeb3React()
   const testnet = useSelector(state => state.general.testNet)
   const validatorsInfo = useSelector(state => state.general.validatorsInfo)
-  console.log("🚀 ~ file: ChainListBox.jsx ~ line 33 ~ ChainListBox ~ validatorsInfo", validatorsInfo)
   const axios = require('axios')
   
 
@@ -104,13 +103,14 @@ const checkValidators = async () => {
 
 
   const chainSelectHandler = (chain) => {
+    // debugger
         if (departureOrDestination === "departure") {
-          if((chain.chainId === to.chainId || (to.tnChainId && chain.tnChainId === to.tnChainId)) && (location.pathname === "/account" || location.pathname === "/testnet/account")){
-            console.log("bjasdjakdhakjdhakjsdh")
-          }
-          else if(from && account && (location.pathname === "/account" || location.pathname === "/testnet/account")){
+          if(from && account && (location.pathname === "/account" || location.pathname === "/testnet/account")){
+            let temp = from
             dispatch(setFrom(chain));
+            dispatch(setTo(temp))
             switchNetwork(chain)
+            dispatch(cleanSelectedNFTList())
             handleClose();
           } 
           else if (to && chain.key !== to.key) {
@@ -122,7 +122,21 @@ const checkValidators = async () => {
             dispatch(setFrom(chain));
             handleClose();
           }
-        } 
+        }
+        else if(location.pathname === "/account" || location.pathname === "/testnet/account"){
+          if(chain.chainId === from.chainId){
+            let temp = from
+            dispatch(setFrom(to));
+            switchNetwork(to)
+            dispatch(setTo(temp));
+            dispatch(cleanSelectedNFTList())
+            handleClose();
+          }
+          else{
+            dispatch(setTo(chain));
+            handleClose();
+          }
+        }
         else if (switchChain) {
           dispatch(setTo(chain));
           handleClose();
@@ -174,7 +188,7 @@ const checkValidators = async () => {
   }, [from, chainSearch, departureOrDestination])
   
   useEffect(() => {
-    if(from?.text === to?.text){
+    if(from?.text === to?.text && (!location.pathname === "/account" || !location.pathname === "/testnet/account")){
       dispatch(setTo(''))
     }
   }, [to, from]);
@@ -210,7 +224,7 @@ const checkValidators = async () => {
             {//! Show only mainnet TO chains //
               departureOrDestination === "destination" && !globalTestnet && toChains.map( chain => {
                 const { image, text, key, coming, newChain, maintenance, mainnet } = chain;
-                return (mainnet || coming) && from?.text !== chain.text && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
+                return (mainnet || coming) && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
               })
             }
             { //! Show only testnet FROM chains //
@@ -222,7 +236,7 @@ const checkValidators = async () => {
             {//! Show only testnet TO chains //
               departureOrDestination === "destination" && globalTestnet && toChains.map( chain => {
                 const { image, text, key, coming, newChain, maintenance, testNet } = chain;
-                return testNet && from?.text !== chain.text && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
+                return testNet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
               })
             }
           </ul>
