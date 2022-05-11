@@ -21,7 +21,6 @@ export default function UserConnect({desktop, mobile}) {
     const testnet = useSelector(state => state.general.testNet)
     const walletAccount = account || elrondAccount || tezosAccount || algorandAccount || tronWallet || _account
     const location = useLocation()
-  const txnHashArr = useSelector((state) => state.general.txnHashArr);
 
 
     const handleConnect = () => {
@@ -59,7 +58,7 @@ export default function UserConnect({desktop, mobile}) {
       const chainConnected = getChain()
       if(chainId && location.pathname.includes("/account")){
         if(testnet){
-          if(!chainConnected?.testNet || !chains.some(chain => chain.tnCainId === chainId)){
+          if(!chainConnected?.testNet || !chains.some(chain => chain.tnChainId === chainId)){
             dispatch(setUnsupportedNetwork(true))
           }
           else if(chainId === to.tnChainId){
