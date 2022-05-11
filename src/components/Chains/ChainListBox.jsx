@@ -1,14 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { chains, CHAIN_INFO, TESTNET_CHAIN_INFO } from "../../components/values";
-import { setChainModal, setDepartureOrDestination, setTo, setFrom, setChainSearch, setSwitchDestination, setWrongNetwork } from "../../store/reducers/generalSlice";
+import { setChainModal, setDepartureOrDestination, setTo, setFrom, setChainSearch, setSwitchDestination, setValidatorsInf} from "../../store/reducers/generalSlice";
 import Chain from "./Chain"
 import ChainSearch from "../Chains/ChainSearch"
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
-import { filterChains } from "./ChainHelper";
 import { useWeb3React } from "@web3-react/core";
-import { chainsConfig } from "..//values"
 import { getAddEthereumChain } from "../../wallet/chains";
 import { useLocation } from "react-router-dom";
 
@@ -22,7 +20,6 @@ export default function ChainListBox(props) {
   const globalTestnet = useSelector((state) => state.general.testNet);
   const show = useSelector((state) => state.general.showChainModal);
   const switchChain = useSelector((state) => state.general.switchDestination);
-  const widget = useSelector((state) => state.general.widget);
   const [fromChains, setFromChains] = useState(chains)
   const [toChains, setToChains] = useState(chains)
   const elrondAccount = useSelector(state => state.general.elrondAccount)
@@ -30,14 +27,15 @@ export default function ChainListBox(props) {
   const algorandAccount = useSelector(state => state.general.algorandAccount)
   const evmAccount = useSelector(state => state.general.account)
   const tronAccount = useSelector(state => state.general.tronWallet)
-  const walletconnect = useSelector(state => state.general.WalletConnect)
-  const { chainId, account } = useWeb3React()
+  const { account } = useWeb3React()
   const testnet = useSelector(state => state.general.testNet)
-  const OFF = { opacity: 0.6, pointerEvents: "none" };
+  const validatorsInfo = useSelector(state => state.general.validatorsInfo)
+  console.log("🚀 ~ file: ChainListBox.jsx ~ line 33 ~ ChainListBox ~ validatorsInfo", validatorsInfo)
+  const axios = require('axios')
   
+
   async function switchNetwork(chain) {
 // debugger
-console.log("switchNetwork")
     const info = testnet
       ? TESTNET_CHAIN_INFO[chain.key]
       : CHAIN_INFO[chain.key];
@@ -51,9 +49,6 @@ console.log("switchNetwork")
     } catch (error) {
       console.log(error);
       try {
-        const toHex = (num) => {
-          return "0x" + num.toString(16);
-        };
         const chain = getAddEthereumChain()[parseInt(chainId).toString()];
 
         const params = {
@@ -84,6 +79,17 @@ console.log("switchNetwork")
   
 }
 
+
+const checkValidators = async () => {
+  let res;
+  try {
+    res = await axios.get("https://bridgestatus.herokuapp.com/status");
+  } catch (error) {
+    console.error(error);
+  }
+  if (res?.data) dispatch(setValidatorsInf(res.data));
+};
+
   const handleClose = () => {
     console.log("kgshjfgshjfgshdfgshdf")
     dispatch(setChainModal(false));
@@ -92,9 +98,12 @@ console.log("switchNetwork")
     dispatch(setChainSearch(""));
   };
 
+  useEffect(async () => {
+    if (!validatorsInfo) await checkValidators();
+  }, [validatorsInfo]);
+
 
   const chainSelectHandler = (chain) => {
-    // debugger
         if (departureOrDestination === "departure") {
           if((chain.chainId === to.chainId || (to.tnChainId && chain.tnChainId === to.tnChainId)) && (location.pathname === "/account" || location.pathname === "/testnet/account")){
             console.log("bjasdjakdhakjdhakjsdh")

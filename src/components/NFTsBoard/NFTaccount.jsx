@@ -72,6 +72,12 @@ function NFTaccount() {
     }
   }
 
+
+  const handleFromChainSwitch = () => {
+    dispatch(setDepartureOrDestination('departure'))
+    dispatch(setChainModal(true))
+  }
+
   const handleShowSelected = () => {
     setShowSelected(!showSelected)
   }
@@ -89,19 +95,12 @@ function NFTaccount() {
   }, []);
 
 
-  const handleFromChainSwitch = () => {
-    dispatch(setDepartureOrDestination('departure'))
-    dispatch(setChainModal(true))
-  }
-
   useEffect(() => {
     if(selectedNFTs.length < 1){
       setShowSelected(false)
     }
   }, [selectedNFTs, nfts])
   
-  
-  // useEffect(async () => {}, [nfts]);
 
   return (
     <div className="NFTaccount">

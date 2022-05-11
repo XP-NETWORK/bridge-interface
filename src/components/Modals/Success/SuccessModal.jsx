@@ -88,18 +88,19 @@ export default function SuccessModal() {
 
   useEffect(() => {
     // debugger
-    socket.on("incomingEvent", async e => {
-      dispatch(setTxnStatus(e))
-    });
-    socket.on("updateEvent", async e => {
-      dispatch(setTxnStatus(e))
-    })
-    return () => {
-      if (socket) {
-      socket.off("incomingEvent");
-      socket.off("updateEvent");
-      }
-    }
+    if(toShow()){
+      socket.on("incomingEvent", async e => {
+        dispatch(setTxnStatus(e))
+      });
+      socket.on("updateEvent", async e => {
+        dispatch(setTxnStatus(e))
+      })
+      return () => {
+        if (socket) {
+        socket.off("incomingEvent");
+        socket.off("updateEvent");
+        }
+    }}
   }, [])
   
   return (
