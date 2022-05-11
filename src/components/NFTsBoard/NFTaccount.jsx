@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import NFTgridView from "../NFT/NFTgridView";
 import NFTlistView from "../NFT/NFTlistView";
 import NFTlistTop from "./NFTlistTop";
-import { setChainModal, setDepartureOrDestination, setError, setSearchNFTList } from "../../store/reducers/generalSlice";
+import { setChainModal, setDepartureOrDestination, setError, setSearchNFTList, setSelectedNFTList } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getAlgorandClaimables, setNFTS } from "../../wallet/helpers";
 import { ReturnBtn } from "../Settings/returnBtn";
@@ -97,6 +97,7 @@ function NFTaccount() {
 
   useEffect(async () => {
     await getNFTsList();
+    dispatch(setSelectedNFTList([]))
   }, [from]);
 
 
