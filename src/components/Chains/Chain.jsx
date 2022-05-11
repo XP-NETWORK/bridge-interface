@@ -13,10 +13,10 @@ export default function Chain(props) {
   const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
   const testnet = useSelector((state) => state.general.testNet);
   const to = useSelector((state) => state.general.to);
-  const OFF = { opacity: 0.6 ,pointerEvents: "none" };
+  const from = useSelector((state) => state.general.from);
+  const OFF = { opacity: 0.6 ,pointerEvents: "none", display: "none" };
   const [chainStatus, setChainStatus] = useState(undefined)
   const location = useLocation()
-
 
   useEffect(() => {
     setChainStatus(checkIfLive(chainKey, validatorsInfo))
@@ -25,6 +25,7 @@ export default function Chain(props) {
   const algoStyle = {}
 
   const getStyle = () => {
+    // debugger
     // if(!testnet && text === "Algorand"){
     //   return OFF
     // }
@@ -32,7 +33,7 @@ export default function Chain(props) {
     if(maintenance || maintenance || !checkIfLive(chainKey, validatorsInfo) || coming ){
       return OFF
     }
-    else if((location.pathname === "/testnet/account" ||location.pathname === "/account") && text === to.text){
+    else if((location.pathname === "/testnet/connect" || location.pathname === "/connect" || location.pathname === "/") && text === from?.text){
       return OFF
     }
     else return {}

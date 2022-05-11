@@ -95,6 +95,10 @@ function NFTaccount() {
     }
   }, []);
 
+  useEffect(async () => {
+    await getNFTsList();
+  }, [from]);
+
 
   useEffect(() => {
     if(selectedNFTs.length < 1){
