@@ -46,6 +46,7 @@ function Approval(props) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const WCProvider = useSelector((state) => state.general.WCProvider);
   const maiarProvider = useSelector((state) => state.general.maiarProvider);
+
   const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
   const algorandWallet = useSelector((state) => state.general.AlgorandWallet);
   const MyAlgo = useSelector((state) => state.general.MyAlgo);
@@ -85,7 +86,7 @@ function Approval(props) {
   };
 
   const approveEach = async (nft, signer, chain, index) => {
-    debugger;
+
     const arr = new Array(index + 1).fill(0);
     const factory = await getFactory();
     if (
@@ -178,12 +179,13 @@ function Approval(props) {
       }
     } 
     else {
+      debugger
       try {
         const factory = await getFactory();
         const chain = await factory.inner(Chain.ELROND);
-        const signer = maiarProvider
-          ? maiarProvider
-          : ExtensionProvider.getInstance();
+        console.log("🚀 ~ file: Approval.jsx ~ line 187 ~ approveEach ~ chain", chain)
+        const signer = maiarProvider || ExtensionProvider.getInstance();
+        console.log("🚀 ~ file: Approval.jsx ~ line 188 ~ approveEach ~ signer", signer)
         const swap = await chain.preTransfer(signer, nft, bigNumberFees);
 
         dispatch(updateApprovedNFTs(nft));

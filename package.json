@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@airgap/beacon-sdk": "^2.3.9",
-    "@elrondnetwork/erdjs": "^8.0.1-alpha.13",
+    "@elrondnetwork/erdjs": "=9.2.6",
     "@harmony-js/core": "^0.1.57",
     "@iotexproject/iotex-address-ts": "^1.0.4",
     "@json-rpc-tools/utils": "^1.7.6",
@@ -27,7 +27,7 @@
     "add": "^2.0.6",
     "algorand-walletconnect-qrcode-modal": "^1.6.1",
     "algosdk": "^1.12.0",
-    "axios": "^0.24.0",
+    "axios": "^0.27.2",
     "bignumber.js": "=9.0.1",
     "bootstrap": "^4.6.0",
     "buffer-type": "^1.0.0",

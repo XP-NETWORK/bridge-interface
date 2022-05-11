@@ -352,11 +352,14 @@ const generalSlice = createSlice({
     setSync2Connecx(state, action){
       state.sync2Connex = action.payload
     },
-
+    setChangeWallet(state, action){
+      state.changeWallet = action.payload
+    }
   },
 });
 
 export const {
+  setChangeWallet,
   setNoApprovedNFTAlert,
   setPasteDestinationAlert,
   setSelectNFTAlert,

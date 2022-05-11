@@ -88,33 +88,25 @@ export default function SuccessModal() {
 
   useEffect(() => {
     // debugger
-    socket.on("incomingEvent", async e => {
-      console.log("🚀 ~ file: SuccessModal.jsx ~ line 94 ~ useEffect ~ e", e)
-      dispatch(setTxnStatus(e))
-    });
-    socket.on("updateEvent", async e => {
-      console.log("🚀 ~ file: SuccessModal.jsx ~ line 98 ~ useEffect ~ e", e)
-      dispatch(setTxnStatus(e))
-    })
-    return () => {
-      if (socket) {
-      socket.off("incomingEvent");
-      socket.off("updateEvent");
-      }
-    }
+    if(toShow()){
+      socket.on("incomingEvent", async e => {
+        dispatch(setTxnStatus(e))
+      });
+      socket.on("updateEvent", async e => {
+        dispatch(setTxnStatus(e))
+      })
+      return () => {
+        if (socket) {
+        socket.off("incomingEvent");
+        socket.off("updateEvent");
+        }
+    }}
   }, [])
   
-
-  useEffect(() => {
-    if (txnHashArr && txnHashArr.length > 0 && to && to.key === "Algorand") {
-      dispatch(connectAlgorandWalletClaim(true));
-    }
-  }, [txnHashArr]);
-
   return (
     <>
       {/* <ConnectAlgorand /> */}
-      <ClaimAlgorandNFT />
+      {/* <ClaimAlgorandNFT /> */}
       <Modal animation={false} className="success-modal" show={toShow()}>
         <span onClick={handleClose} className="success-modal-close">
           <div className="close-modal">

@@ -139,13 +139,13 @@ export default function ButtonToTransfer() {
                     receiverAddress || receiver,  
                     bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
-                )
-                dispatch(dispatch(setTransferLoaderModal(false)))
-                setLoading(false)
-                dispatch(setTxnHash({txn: result, nft}))
-            }
-            else{
-                // debugger
+                    )
+                    dispatch(dispatch(setTransferLoaderModal(false)))
+                    setLoading(false)
+                    dispatch(setTxnHash({txn: result, nft}))
+                }
+                else{
+                    // debugger
                 factory = await getFactory()
                 const contract = nft.collectionIdent || nftSmartContract.toLowerCase()
                 const wrapped = await factory.isWrappedNft(nft, fromNonce)

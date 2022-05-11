@@ -5,6 +5,7 @@ import { setAlgorandClaimables, setBigLoader, setEachClaimables, setEachNFT, set
 import store from "../store/store";
 import io from "socket.io-client";
 import { isWhiteListed } from "./../components/NFT/NFTHelper"
+// import { fetchURI } from "./getDataFromURL"
 
 // const testnet  = store.getState()?.general?.testNet
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
@@ -50,20 +51,29 @@ const checkIfVideo = (url) => {
   return videoFormat ? url : undefined
 }
 
+
+
+ 
+
 const fetchURI = async uri => {
-  let response
+  // debugger
+  let resp
   try {
-    response = await axios(uri)
-    return response.data
+    resp = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`)
+    console.log(resp.data)
+    return resp.data
   } catch (error) {
     console.log(error)
   }
 }
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
+  // debugger
   const uri = nft.uri
   const { from, NFTList } = store.getState().general;
   let whitelisted
+  let videoFormat
+  let imageFormat
   let nftObj = {
     uri: nft.uri,
     collectionIdent: nft.collectionIdent || undefined,
@@ -79,7 +89,41 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftObj.animation_url = undefined
   }
   if(from.text === "Tezos"){
-    nftObj.image = nft.image || nft.native?.uri
+    if(nft.native?.meta?.token?.metadata?.formats){
+      const obj = nft.native?.meta?.token?.metadata?.formats
+      const mimeType = obj[0]['mimeType']
+      const format = mimeType.slice(0,mimeType.lastIndexOf("/"))
+      if(format === "image"){
+        imageFormat = true
+        nftObj.image = setupURI(obj.uri)
+      }
+      else if(format === "video"){
+        videoFormat = true
+        nftObj.animation_url = setupURI(obj.uri)
+      }
+    }
+    if(nft.native?.meta?.token?.metadata?.mimeType){
+      const mimeType = nft.native?.meta?.token?.metadata?.mimeType
+      const format = mimeType.slice(0,mimeType.lastIndexOf("/"))
+      if(format === "image"){
+        imageFormat = true
+        nftObj.image = setupURI(nft.native?.meta?.token?.metadata?.displayUri)
+      }
+      else if(format === "video"){
+        videoFormat = true
+        nftObj.animation_url = setupURI(nft.native?.meta?.token?.metadata?.displayUri)
+      }
+    }
+    if(!nftObj.image && nft.native?.meta?.token?.metadata?.displayUri){
+      nftObj.image = nft.native?.meta?.token?.metadata?.displayUri
+      imageFormat = true
+    }
+    else if(!nftObj.image && nft.native?.meta?.token?.metadata?.image){
+      nftObj.image = nft.native?.meta?.token?.metadata?.image
+      imageFormat = true
+    }
+    nftObj.image = imageFormat ? nftObj.image || nft.native?.meta?.token?.metadata?.formats?.uri || nft.image || nft.native?.uri : undefined
+    nftObj.animation_url = videoFormat ? nftObj.animation_url || nft.native?.meta?.token?.metadata?.formats?.uri : undefined
     nftObj.native.contract = nft.native?.contract
     nftObj.native.tokenId = nft.native?.tokenId
     nftObj.native.uri = nft.native?.uri
@@ -95,7 +139,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     const image = !video ? checkIfImage(setupURI(uri)) : undefined
     nftObj.image = image 
     const data = await fetchURI(setupURI(uri))
-    console.log("🚀 ~ file: helpers.js ~ line 126 ~ parseEachNFT ~ data", data)
     if(typeof data === 'object'){
       nftObj = {...nftObj, ...data}
       if(nftObj.data?.image_url){
@@ -260,6 +303,7 @@ export const transformToDate = (date) => {
 
 
 export const getFactory = async () => {
+  // debugger
   const f = store.getState().general.factory;
   const testnet  = store.getState().general.testNet
 
@@ -336,7 +380,6 @@ export const handleChainFactory = async (someChain) => {
 };
 
 export const getNFTS = async (wallet, from) => {
-console.log("🚀 ~ file: helpers.js ~ line 355 ~ getNFTS ~ wallet", wallet)
   // debugger
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
   const { tronWallet } = store.getState().general
@@ -353,7 +396,6 @@ console.log("🚀 ~ file: helpers.js ~ line 355 ~ getNFTS ~ wallet", wallet)
     }
     const unique = {};
     try {
-      // .filter((n) => n.native).filter(n => n.uri)
       const allNFTs = response
         .filter((n) => {
           const { tokenId, contract, chainId } = n?.native;
@@ -432,6 +474,7 @@ export function isValidHttpUrl(string, index) {
 
 export const getTronNFTs = async wallet => {
   const res = await axios.get(`https://apilist.tronscan.org/api/account/tokens?address=${wallet}&start=0&limit=500&hidden=0&show=3&sortType=0&sortBy=0`)
+  console.log("🚀 ~ file: helpers.js ~ line 433 ~ res", res)
   const { total, data } = res.data
 
   if(total > 0) {
