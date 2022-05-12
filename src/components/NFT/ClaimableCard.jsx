@@ -52,11 +52,17 @@ export default function ClaimableCard({nft, index}) {
   }
 
   const optIn = async () => {
-    // debugger
+    debugger
     dispatch(setTransferLoaderModal(true))
     const factory = await getFactory()
     const algorand = await factory.inner(15)
-    const isOpted = await algorand.isOptIn(algorandAccount, nft.nftId)
+    let isOpted
+    try {
+      isOpted = await algorand.isOptIn(algorandAccount, nft.nftId)
+    } catch (error) {
+      console.log(error)
+      dispatch(setTransferLoaderModal(false))
+    }
 
     if(!isOpted) {
         const signer = await getAlgorandWalletSigner()

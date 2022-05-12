@@ -8,8 +8,9 @@ import TrustWallet from "../../assets/img/wallet/TWT.svg";
 import { setAccount, setMetaMask } from "../../store/reducers/generalSlice";
 
 export default function EVMWallet({ wallet, close }) {
-  const {  account, activate } = useWeb3React();
+  const {  account, activate, error } = useWeb3React();
   const OFF = { opacity: 0.6, pointerEvents: "none" };
+  console.log("🚀 ~ file: EVMWallet.jsx ~ line 13 ~ EVMWallet ~ error", error)
   const from = useSelector(state => state.general.from);
   const to = useSelector(state => state.general.to);
   const dispatch = useDispatch()

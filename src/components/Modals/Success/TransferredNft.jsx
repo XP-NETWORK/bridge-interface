@@ -76,7 +76,7 @@ export default function TransferredNft({ nft }) {
             <div className="transferred-nft">
                 <div className='nft-image-name'>
                     {animation_url ? <video src={animation_url}></video>:<img src={image} alt={name} />}
-                    <div classNam="transferred-nft-name">{name}</div>
+                    <div className="transferred-nft-name">{name}</div>
                 </div>
                 <TxStatus status={txn ? txnStatus : "failed"} />
             </div> 

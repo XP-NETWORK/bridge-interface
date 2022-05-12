@@ -5,13 +5,17 @@ import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg
 import { Modal } from "react-bootstrap";
 import icon from "../../../assets/img/icons/book.svg"
 import { useWeb3React } from '@web3-react/core';
+import { getAddEthereumChain } from '../../../wallet/chains';
+import { CHAIN_INFO, TESTNET_CHAIN_INFO } from '../../values';
 
 export default function ChangeWalletModal() {
   const changeWallet = useSelector((state) => state.general.changeWallet);
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
+  const testnet = useSelector((state) => state.general.testNet);
   const dispatch = useDispatch()
   const { deactivate } = useWeb3React();
+
 
   const handleClose = () => {
     dispatch(setChangeWallet(false))
@@ -21,6 +25,7 @@ export default function ChangeWalletModal() {
     const temp = to;
     dispatch(setTo(from));
     dispatch(setFrom(temp));
+    
   }
 
   const handleClick = () => {

@@ -5,6 +5,8 @@ import SetDeparture from "./SetDeparture"
 import SetDestination from "./SetDestination";
 import ChainListBox from "./ChainListBox";
 import swap from "../../assets/img/icons/swapChain.svg"
+import { TESTNET_CHAIN_INFO, CHAIN_INFO } from "../values";
+import { useWeb3React } from "@web3-react/core";
 
 export default function ChainSelectBox() {
   const dispatch = useDispatch();
@@ -15,6 +17,7 @@ export default function ChainSelectBox() {
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
   const tronWallet = useSelector((state) => state.general.tronWallet);
+  const testnet = useSelector((state) => state.general.testNet);
  
 
 
@@ -24,7 +27,6 @@ export default function ChainSelectBox() {
         case "EVM":
           if(account){
             dispatch(setChangeWallet(true))
-        
           }
           else handleSwitch(e)
             break;
@@ -46,29 +48,39 @@ export default function ChainSelectBox() {
             break;
         case "Algorand":
           if(algorandAccount){
-
             dispatch(setChangeWallet(true))}
           else handleSwitch(e)
             break;
           default:
               break;
       }
-      // dispatch(setChangeWallet(true))
     }
     else{
       handleSwitch(e)
-      // e.preventDefault();
-      // const temp = to;
-      // dispatch(setTo(from));
-      // dispatch(setFrom(temp));
     }
   };
+
+  async function switchNetwork(chain) {
+    const info = testnet
+      ? TESTNET_CHAIN_INFO[chain?.key]
+      : CHAIN_INFO[chain?.key];
+    const chainId = `0x${info.chainId.toString(16)}`;
+    try {
+      const success = await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId}],
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleSwitch = (e) => {
     e.preventDefault();
     const temp = to;
     dispatch(setTo(from));
     dispatch(setFrom(temp));
+    if(account)switchNetwork(temp)
   }
 
   return (

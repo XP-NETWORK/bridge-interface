@@ -87,7 +87,7 @@ export default function SuccessModal() {
   }
 
   useEffect(() => {
-    console.log(socket)
+    console.log("socket" ,socket)
       socket.on("incomingEvent", async e => {
         dispatch(setTxnStatus(e))
       });
