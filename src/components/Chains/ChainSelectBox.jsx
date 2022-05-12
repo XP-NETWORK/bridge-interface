@@ -61,26 +61,35 @@ export default function ChainSelectBox() {
   };
 
   async function switchNetwork(chain) {
+    debugger
     const info = testnet
       ? TESTNET_CHAIN_INFO[chain?.key]
       : CHAIN_INFO[chain?.key];
     const chainId = `0x${info.chainId.toString(16)}`;
     try {
-      const success = await window.ethereum.request({
+      await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId}],
-      });
+        params: [{chainId}],
+      })
+      return true
     } catch (error) {
       console.log(error);
+      return false
     }
   }
 
-  const handleSwitch = (e) => {
+  const handleSwitch = async (e) => {
+    debugger
     e.preventDefault();
     const temp = to;
-    dispatch(setTo(from));
-    dispatch(setFrom(temp));
-    if(account)switchNetwork(temp)
+    let success
+    if(account){
+      success = await switchNetwork(temp)
+    }
+    if(success){
+      dispatch(setTo(from));
+      dispatch(setFrom(temp));
+    }
   }
 
   return (
