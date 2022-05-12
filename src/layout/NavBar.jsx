@@ -37,7 +37,7 @@ function NavBar() {
 
 
     return (
-        !widget && <header id="Header"> 
+       <header id="Header"> 
             <Navbar expand="lg" > 
         
             <LinkContainer to="/connect">

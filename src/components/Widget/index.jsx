@@ -373,6 +373,10 @@ export default function Widget() {
             display:none;
         }
 
+        
+
+
+
         .first-step__container {
           margin-top: 0;
         }
