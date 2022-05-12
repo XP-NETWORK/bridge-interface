@@ -14,7 +14,7 @@ function NFTgridView({setIndex, scrollIndex}) {
     const placeholders = new Array(nfts ? nftsPlace - nfts.length >= 0 ? nftsPlace - nfts.length : 0 : 0).fill(0)
     const ref = useRef(0)
     const [goingUp, setGoingUp] = useState(false);
-    // const [index, setIndex] = useState(0)
+    const auto = {"overflowX":"auto"}
     const loader = useSelector(state => state.general.bigLoader)
 
 
@@ -35,7 +35,7 @@ function NFTgridView({setIndex, scrollIndex}) {
         <div onScroll={e => handleScroll(e)} className="nftListBox">
                 { loader ? <BigLoader />
                 :
-                    <div className="nft-list__wrapper">
+                    <div style={nfts.length > 0 ? auto : {}} className="nft-list__wrapper">
                         { algorandClaimables && 
                         algorandClaimables.map((nft, index) => <NFTcard nft={nft} index={index} key={`nft-${index}`} claimables={true} />)
                         }
