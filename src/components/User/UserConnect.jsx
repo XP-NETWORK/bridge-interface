@@ -66,7 +66,7 @@ export default function UserConnect({desktop, mobile}) {
           else{
             dispatch(setUnsupportedNetwork(false))
             dispatch(setFrom(chainConnected))
-            setNFTS(account, chainConnected.key)
+            setNFTS(account, chainConnected.key, undefined, "user one")
           }
         }
         else{
@@ -79,12 +79,12 @@ export default function UserConnect({desktop, mobile}) {
           else{
             dispatch(setUnsupportedNetwork(false))
             dispatch(setFrom(chainConnected))
-            setNFTS(account, chainConnected.key)
+            // setNFTS(account, chainConnected.key, undefined, "user two")
           }
         }
       }
 
-    }, [account, chainId])
+    }, [chainId])
 
   useEffect(() => {
     if(!account && WalletConnect){

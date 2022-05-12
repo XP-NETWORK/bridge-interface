@@ -140,7 +140,7 @@ export function AlgorandClaimable(props) {
                 const c = await algorand.claimNft(signer, props.nft)
                 setTimeout(() => {
                     setClaimablesAlgorand(algorandAccount)
-                    setNFTS(algorandAccount, 'Algorand')
+                    setNFTS(algorandAccount, 'Algorand', undefined, "transaction history")
                     dispatch(claimAlgorandPopup(undefined))
                     dispatch(removeAlgorandClaimable(props.nft.nftId))
                 },500)

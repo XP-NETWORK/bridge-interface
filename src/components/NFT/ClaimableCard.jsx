@@ -95,7 +95,7 @@ const claim = async () => {
             // dispatch(removeFromClaimables(index))
             dispatch(removeAlgorandClaimable(nft.nftId))
           }
-          setNFTS(algorandAccount, 'Algorand')
+          setNFTS(algorandAccount, 'Algorand', undefined, "Claimable Card")
               // setClaimablesAlgorand(algorandAccount)
               // dispatch(removeAlgorandClaimable(nft.nftId))
 

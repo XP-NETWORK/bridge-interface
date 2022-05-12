@@ -67,7 +67,7 @@ const fetchURI = async uri => {
 }
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
-  debugger
+  // debugger
   const uri = nft.uri
   const { from, NFTList } = store.getState().general;
   let whitelisted
@@ -445,8 +445,8 @@ export const getAlgorandClaimables = async (account) => {
 }
 
 
-export const setNFTS = async (w, from, testnet) => {
-
+export const setNFTS = async (w, from, testnet, str) => {
+  console.log("setNFTS", str)
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from, testnet)
   store.dispatch(setPreloadNFTs(res.length))

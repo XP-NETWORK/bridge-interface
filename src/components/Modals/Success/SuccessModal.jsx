@@ -49,7 +49,7 @@ export default function SuccessModal() {
       if (txn) dispatch(removeFromSelectedNFTList(nft));
     });
     dispatch(cleanTxnHashArr());
-    setNFTS(address, from.key)
+    setNFTS(address, from.key, undefined, "success")
   };
 
   const getSubstringValue = () => {

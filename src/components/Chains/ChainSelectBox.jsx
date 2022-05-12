@@ -61,7 +61,6 @@ export default function ChainSelectBox() {
   };
 
   async function switchNetwork(chain) {
-    debugger
     const info = testnet
       ? TESTNET_CHAIN_INFO[chain?.key]
       : CHAIN_INFO[chain?.key];
@@ -79,7 +78,6 @@ export default function ChainSelectBox() {
   }
 
   const handleSwitch = async (e) => {
-    debugger
     e.preventDefault();
     const temp = to;
     let success

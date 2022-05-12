@@ -48,8 +48,8 @@ function NFTaccount() {
 // Dima.B - 0x0d7df42014064a163DfDA404253fa9f6883b9187
 // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
 
-  async function getNFTsList() {
-    // debugger
+  async function getNFTsList(str) {
+    console.log("🚀 ~ file: NFTaccount.jsx ~ line 52 ~ setNFTS ~ str", str)
     const useHardcoded = false;
     const hard = "erd1mgz6e4pe233hg9795ld542kl5vukqyq55008720qnqtq8uqeksmszfd5gu";
     try {
@@ -67,7 +67,7 @@ function NFTaccount() {
       ? tronWallet
       : undefined;
       
-      await setNFTS(w, from);
+      await setNFTS(w, from, undefined, "account");
     } catch (error) {
       dispatch(setError(error.data ? error.data.message : error.message));
     }
@@ -89,14 +89,16 @@ function NFTaccount() {
   }
 
   useEffect(async () => {
-    await getNFTsList();
+    await getNFTsList("1");
     if(algorandAccount){
       await getAlgorandClaimables(algorandAccount)
     }
   }, []);
 
   useEffect(async () => {
-    await getNFTsList();
+    if(nfts){
+      await getNFTsList("2");
+    }
   }, [from]);
 
 

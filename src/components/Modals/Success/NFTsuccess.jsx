@@ -45,7 +45,7 @@ function NFTsuccess() {
     else if (from.type === "Algorand") w = algorandAccount;
     else if (from.type === "Elrond") w = elrondAccount;
     else if (from.type === "Tron") w = tronWallet;
-    await setNFTS(w, from.key);
+    await setNFTS(w, from.key, undefined, "Success");
   };
 
 
