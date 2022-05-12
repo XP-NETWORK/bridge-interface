@@ -27,18 +27,24 @@ import UnsupportedNetwork from "../Modals/ChangeNetwork/UnsupportedNetwork";
 import SelectNFTAler from "../Alerts/SelectNFTAler"
 import PasteDestinationAlert from "../Alerts/PasteDestinationAlert"
 import NoApprovedNFT from "../Alerts/NoApprovedNFT"
+import { usePrevious } from "../Settings/hooks";
 
 function NFTaccount() {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from.key);
+  const prevSelected = usePrevious(from);
   const type = useSelector((state) => state.general.from.type);
   const algorandAccount = useSelector((s) => s.general.algorandAccount);
   const NFTListView = useSelector((state) => state.general.NFTListView);
   const nfts = useSelector((state) => state.general.NFTList);
+  const algorandClaimables = useSelector((state) => state.general.algorandClaimables);
   const tronWallet = useSelector((state) => state.general.tronWallet);
   const account = useSelector((state) => state.general.account);
+  const prevAccount = usePrevious(account)
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
+  const NFTSetToggler = useSelector((state) => state.general.NFTSetToggler);
+  const prevNFTSetToggler = usePrevious(NFTSetToggler)
   const [showSelected, setShowSelected] = useState(false)
   const [showNFTsSearch, setNFTsSearch] = useState(false)
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
@@ -49,9 +55,8 @@ function NFTaccount() {
 // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
 
   async function getNFTsList(str) {
-    console.log("🚀 ~ file: NFTaccount.jsx ~ line 52 ~ setNFTS ~ str", str)
     const useHardcoded = false;
-    const hard = "erd1mgz6e4pe233hg9795ld542kl5vukqyq55008720qnqtq8uqeksmszfd5gu";
+    const hard = "0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE";
     try {
       const w = useHardcoded
       ? hard
@@ -89,17 +94,25 @@ function NFTaccount() {
   }
 
   useEffect(async () => {
-    await getNFTsList("1");
-    if(algorandAccount){
+    if(!nfts?.some(nft => nft.dataLoaded)){
+      await getNFTsList("1");
+    }
+    if(algorandAccount && !algorandClaimables?.some(nft => nft.dataLoaded)){
       await getAlgorandClaimables(algorandAccount)
     }
   }, []);
 
   useEffect(async () => {
-    if(nfts){
+    if(nfts && prevSelected !== from){
       await getNFTsList("2");
     }
-  }, [from]);
+    else if(nfts && prevAccount !== account){
+      await getNFTsList("2");
+    }
+    else if(nfts && NFTSetToggler !== prevNFTSetToggler){
+      await getNFTsList("2");
+    }
+  }, [from, account, NFTSetToggler]);
 
 
   useEffect(() => {

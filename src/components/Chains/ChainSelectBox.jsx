@@ -7,10 +7,12 @@ import ChainListBox from "./ChainListBox";
 import swap from "../../assets/img/icons/swapChain.svg"
 import { TESTNET_CHAIN_INFO, CHAIN_INFO } from "../values";
 import { useWeb3React } from "@web3-react/core";
+import { usePrevious } from "../Settings/hooks";
 
 export default function ChainSelectBox() {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
+  const prevSelected = usePrevious(from);
   const to = useSelector((state) => state.general.to);
   const account = useSelector((state) => state.general.account);
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
@@ -22,6 +24,7 @@ export default function ChainSelectBox() {
 
 
   const switchChains = (e) => {
+    // debugger
     if(from.type !== to.type){
       switch (from.type) {
         case "EVM":
@@ -78,13 +81,18 @@ export default function ChainSelectBox() {
   }
 
   const handleSwitch = async (e) => {
+    // debugger
     e.preventDefault();
     const temp = to;
     let success
     if(account){
       success = await switchNetwork(temp)
+      if(success){
+        dispatch(setTo(from));
+        dispatch(setFrom(temp));
+      }
     }
-    if(success){
+    else{
       dispatch(setTo(from));
       dispatch(setFrom(temp));
     }

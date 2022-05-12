@@ -36,7 +36,7 @@ export default function MobileTransferBoard() {
             : type === "Tron"
             ? tronWallet
             : undefined;
-          await setNFTS(w, from, undefined, "mobile tr");
+          // await setNFTS(w, from, undefined, "mobile tr");
         } catch (error) {
           dispatch(setError(error.data ? error.data.message : error.message));
         }

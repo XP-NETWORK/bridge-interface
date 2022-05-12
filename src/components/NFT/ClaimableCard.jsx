@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { removeAlgorandClaimable, removeFromClaimables, setTransferLoaderModal } from '../../store/reducers/generalSlice'
+import { removeAlgorandClaimable, removeFromClaimables, setNFTSetToggler, setTransferLoaderModal } from '../../store/reducers/generalSlice'
 import { getAlgorandClaimables, getFactory, setClaimablesAlgorand, setNFTS } from '../../wallet/helpers'
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { algoConnector } from "../../wallet/connectors.js"
@@ -95,7 +95,8 @@ const claim = async () => {
             // dispatch(removeFromClaimables(index))
             dispatch(removeAlgorandClaimable(nft.nftId))
           }
-          setNFTS(algorandAccount, 'Algorand', undefined, "Claimable Card")
+          dispatch(setNFTSetToggler())
+          // setNFTS(algorandAccount, 'Algorand', undefined, "Claimable Card")
               // setClaimablesAlgorand(algorandAccount)
               // dispatch(removeAlgorandClaimable(nft.nftId))
 
