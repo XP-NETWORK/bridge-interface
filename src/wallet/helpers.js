@@ -10,7 +10,7 @@ import { isWhiteListed } from "./../components/NFT/NFTHelper"
 // const testnet  = store.getState()?.general?.testNet
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
 const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/"
-
+const base64 = require('base-64');
 export const socket = io(socketUrl, {
   path: "/socket.io",
 });
@@ -59,15 +59,25 @@ const fetchURI = async uri => {
   let resp
   try {
     resp = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`)
-    console.log(resp.data)
     return resp.data
   } catch (error) {
     console.log(error)
   }
 }
 
+const ipfsOrjson = (url) => {
+  if(url.includes("ipfs")){
+    return "ipfs"
+  }
+  else if(url.includes(".json")){
+    return "json"
+  }
+  else{
+    return undefined
+  }
+}
+
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
-  debugger
   const uri = nft.uri
   const { from, NFTList } = store.getState().general;
   let whitelisted
@@ -137,14 +147,56 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftObj.animation_url = video 
     const image = !video ? checkIfImage(setupURI(uri)) : undefined
     nftObj.image = image 
-    const data = await fetchURI(setupURI(uri))
+    let data
+    if(uri){
+      data = await fetchURI(setupURI(uri))
+    }
     if(typeof data === 'object'){
       nftObj = {...nftObj, ...data}
+      if(nftObj.image?.includes(".json")){
+        const n = await fetchURI(setupURI(nftObj.image))
+        if(typeof n === "object"){
+          nftObj = {...nftObj, ...data, ...n}
+        }
+      }
       if(nftObj.data?.image_url){
         const image  = nftObj.data?.image
         nftObj.image = image
         nftObj.dataLoaded = true
-    }}
+      }
+    }
+    else{
+        if(data){
+          let n 
+          try {
+            n = base64.decode(data)
+          } catch (error) {
+            console.log(error)
+          }
+          const json = JSON.parse(n)
+          nftObj.image =  setupURI(json.image)
+        }
+      }
+      if(nftObj.animation_url && nftObj.image){
+        if(ipfsOrjson(nftObj.animation_url)){
+          const n = await fetchURI(setupURI(nftObj.animation_url))
+          if(typeof n === "object"){
+            const imageFormat = n.formats[0]?.mimeType?.includes("image")
+            const videoFormat = n.formats[0]?.mimeType?.includes("video")
+            nftObj.image = imageFormat ? n.displayUri : undefined
+            nftObj.animation_url = videoFormat ? n.displayUri : undefined
+          }
+        }
+        if(ipfsOrjson(nftObj.image)){
+          const n = await fetchURI(setupURI(nftObj.image))
+          if(typeof n === "object"){
+            const imageFormat = n.formats[0]?.mimeType?.includes("image")
+            const videoFormat = n.formats[0]?.mimeType?.includes("video")
+            nftObj.image = imageFormat ? n.displayUri : undefined
+            nftObj.animation_url = videoFormat ? n.displayUri : undefined
+          }
+        }
+      }
       // axios.get(setupURI(uri)).then(resp => {
       //   nftObj = {...nftObj, ...resp.data}
       //   if(nftObj.data?.image_url){
@@ -432,12 +484,11 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 }
 
 export const getAlgorandClaimables = async (account) => {
-  debugger
+  // debugger
   let claimables
   const factory = await getFactory()
   try {
     claimables = await factory.claimableAlgorandNfts(account)
-    console.log("🚀 ~ file: helpers.js ~ line 443 ~ getAlgorandClaimables ~ claimables", claimables)
     store.dispatch(setAlgorandClaimables(claimables))
   } catch (error) {
     console.error(error);
@@ -445,8 +496,7 @@ export const getAlgorandClaimables = async (account) => {
 }
 
 
-export const setNFTS = async (w, from, testnet) => {
-
+export const setNFTS = async (w, from, testnet, str) => {
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from, testnet)
   store.dispatch(setPreloadNFTs(res.length))

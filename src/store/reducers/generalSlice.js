@@ -19,6 +19,9 @@ const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
+    setNFTSetToggler(state, action){
+      state.NFTSetToggler = !state.NFTSetToggler
+    },
     setGitLatestCommit(state, action){
       state.gitLatestCommit = action.payload
     },
@@ -359,6 +362,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+  setNFTSetToggler,
   setChangeWallet,
   setNoApprovedNFTAlert,
   setPasteDestinationAlert,

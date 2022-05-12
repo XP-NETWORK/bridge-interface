@@ -14,6 +14,7 @@ import {
   cleanTxnHashArr,
   connectAlgorandWalletClaim,
   removeFromSelectedNFTList,
+  setNFTSetToggler,
   setTxnStatus,
 } from "../../../store/reducers/generalSlice";
 import "./SuccessModal.css";
@@ -49,7 +50,8 @@ export default function SuccessModal() {
       if (txn) dispatch(removeFromSelectedNFTList(nft));
     });
     dispatch(cleanTxnHashArr());
-    setNFTS(address, from.key)
+    dispatch(setNFTSetToggler())
+    // setNFTS(address, from.key, undefined, "success")
   };
 
   const getSubstringValue = () => {
