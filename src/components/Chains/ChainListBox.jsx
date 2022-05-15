@@ -30,6 +30,7 @@ export default function ChainListBox(props) {
   const { account } = useWeb3React()
   const testnet = useSelector(state => state.general.testNet)
   const validatorsInfo = useSelector(state => state.general.validatorsInfo)
+  const Sync2 = useSelector(state => state.general.Sync2)
   const axios = require('axios')
   
 
@@ -163,11 +164,12 @@ const checkValidators = async () => {
       sorted = chains.filter(chain => chain.text.toLowerCase().includes(chainSearch.toLowerCase()))
     }
     const onlyElrond = elrondAccount ? sorted.filter( chain => chain.type === "Elrond") : undefined
+    const onlyVeChain = evmAccount && Sync2 ? sorted.filter( chain => chain.type === "VeChain") : undefined
     const onlyEVM = evmAccount ? sorted.filter( chain => chain.type === "EVM") : undefined
     const onlyTron = tronAccount ? sorted.filter( chain => chain.type === "Tron") : undefined
     const onlyAlgo = algorandAccount ? sorted.filter( chain => chain.type === "Algorand") : undefined
     const onlyTezos = tezosAccount ? sorted.filter( chain => chain.type === "Tezos") : undefined
-    const set = onlyElrond || onlyEVM || onlyTron || onlyAlgo || onlyTezos || sorted
+    const set = onlyVeChain || onlyElrond || onlyEVM || onlyTron || onlyAlgo || onlyTezos || sorted
     setFromChains(set)
 
   }, [elrondAccount, tezosAccount, algorandAccount, tronAccount, evmAccount, chainSearch, to])
@@ -216,6 +218,7 @@ const checkValidators = async () => {
           <ul className="nftChainList scrollSty">
             { //! Show only mainnet FROM chains //
               departureOrDestination === "departure" && !globalTestnet && fromChains.map( chain => {
+              console.log("🚀 ~ file: ChainListBox.jsx ~ line 219 ~ ChainListBox ~ chain", chain)
                 const { image, text, key, coming, newChain, maintenance, mainnet } = chain;
                 return (mainnet || coming) && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
               })
