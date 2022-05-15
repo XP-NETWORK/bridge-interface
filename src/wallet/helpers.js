@@ -172,10 +172,10 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         nftObj.dataLoaded = true
       }
     }
-    else if(data.includes("image")){
+    else if(data?.includes("image")){
       nftObj.image = uri
     }
-    else if(data.includes("video")){
+    else if(data?.includes("video")){
       nftObj.animation_url = uri
     }
     else{
