@@ -56,10 +56,13 @@ const checkIfVideo = (url) => {
  
 
 const fetchURI = async uri => {
-  let resp
+
   try {
-    resp = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`)
-    return resp.data
+    const { data, status, headers }  = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`)
+    if(headers["content-type"].includes("image") || headers["content-type"].includes("video")){
+      return headers["content-type"]
+    }
+    return data
   } catch (error) {
     console.log(error)
   }
@@ -78,6 +81,7 @@ const ipfsOrjson = (url) => {
 }
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
+  // debugger
   const uri = nft.uri
   const { from, NFTList } = store.getState().general;
   let whitelisted
@@ -153,7 +157,10 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     }
     if(typeof data === 'object'){
       nftObj = {...nftObj, ...data}
-      if(nftObj.image?.includes(".json")){
+      if(!nftObj.image?.includes("http") || !nftObj.image?.includes("https")){
+        nftObj.image = undefined
+      }
+      else if(nftObj.image?.includes(".json")){
         const n = await fetchURI(setupURI(nftObj.image))
         if(typeof n === "object"){
           nftObj = {...nftObj, ...data, ...n}
@@ -164,6 +171,12 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         nftObj.image = image
         nftObj.dataLoaded = true
       }
+    }
+    else if(data.includes("image")){
+      nftObj.image = uri
+    }
+    else if(data.includes("video")){
+      nftObj.animation_url = uri
     }
     else{
         if(data){
@@ -378,7 +391,6 @@ export const getFac = async () => {
 
 
 export const handleChainFactory = async (someChain) => {
-  // debugger
   const factory = await getFactory();
   try {
     switch (someChain) {
