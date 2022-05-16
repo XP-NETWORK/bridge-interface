@@ -5,7 +5,7 @@ import NFTlistView from "../NFT/NFTlistView";
 import NFTlistTop from "./NFTlistTop";
 import { setChainModal, setDepartureOrDestination, setError, setSearchNFTList, setSelectedNFTList } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { getAlgorandClaimables, setNFTS } from "../../wallet/helpers";
+import { getAlgorandClaimables, getFactory, setNFTS } from "../../wallet/helpers";
 import { ReturnBtn } from "../Settings/returnBtn";
 import DesktopTransferBoard from "../TransferBoard/DesktopTransferBoard";
 import MobileTransferBoard from "../TransferBoard/MobileTransferBoard";
@@ -28,6 +28,8 @@ import SelectNFTAler from "../Alerts/SelectNFTAler"
 import PasteDestinationAlert from "../Alerts/PasteDestinationAlert"
 import NoApprovedNFT from "../Alerts/NoApprovedNFT"
 import { usePrevious } from "../Settings/hooks";
+import { chainsConfig } from "../values";
+import { useWeb3React } from "@web3-react/core";
 
 function NFTaccount() {
   const dispatch = useDispatch();
@@ -49,6 +51,7 @@ function NFTaccount() {
   const [showNFTsSearch, setNFTsSearch] = useState(false)
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
   const [index, setIndex] = useState(0)
+  const { library } = useWeb3React()
 //Anjelika - 0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE
 //Anjelika elrond - erd1s89aq3s0z6mjfpx8s85zntlfywsvj5r8nzcdujw7mx53f9et9ezq9fnrws
 //Dima. U - 0x6449b68cc5675f6011e8DB681B142773A3157cb9
@@ -57,7 +60,7 @@ function NFTaccount() {
 
   async function getNFTsList(str) {
     const useHardcoded = false;
-    const hard = "erd1s89aq3s0z6mjfpx8s85zntlfywsvj5r8nzcdujw7mx53f9et9ezq9fnrws";
+    const hard = "tz1iC3VtfM6dPV7xB9F99zpXqjBwAi47JPSV";
     try {
       const w = useHardcoded
       ? hard
@@ -94,6 +97,21 @@ function NFTaccount() {
     dispatch(setSearchNFTList(''));
   }
 
+  // const getBalance = async () => {
+  //   let _account = account || algorandAccount || tezosAccount || elrondAccount || tronWallet
+  //   const factory = await getFactory()
+  //   const fromChain = await factory.inner(chainsConfig[from].Chain)
+  //   let balance
+  //   while (!balance) {
+  //     try {
+  //       balance = factory ? await factory.balance(fromChain,_account) : undefined
+  //       const ethBalance = library.utils.fromWei(`${balance.toNumber()}`, "ether" );
+  //       return balance
+  //   } catch (error) {
+  //       console.log(error)
+  //   }
+  // }}
+
   useEffect(async () => {
     if(!nfts?.some(nft => nft.dataLoaded)){
       await getNFTsList("1");
@@ -101,6 +119,7 @@ function NFTaccount() {
     if(algorandAccount && !algorandClaimables?.some(nft => nft.dataLoaded)){
       await getAlgorandClaimables(algorandAccount)
     }
+    // getBalance()
   }, []);
 
   useEffect(async () => {

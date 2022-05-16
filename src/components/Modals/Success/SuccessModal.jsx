@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { setNFTS, socket } from "../../../wallet/helpers";
 
 
+
 import {
   cleanTxnHashArr,
   connectAlgorandWalletClaim,
@@ -81,7 +82,7 @@ export default function SuccessModal() {
 
   const toShow = () => {
     return txnHashArr?.length ? true : false;
-    // return true
+    return true
   };
 
   const getExplorer = () =>{
@@ -175,14 +176,14 @@ export default function SuccessModal() {
             </div>
             <div className="success-info-item">
               <div className="info-item-label">Destination Address</div>
-              <div className="success-hash">
+              <a className="success-hash" href={`${CHAIN_INFO[to?.text]?.blockExplorerUrls}${receiver}`} target="_blank">
                 {receiver
                   ? `${receiver.substring(
                       0,
                       getSubstringValue() || 10
                     )}...${receiver.substring(receiver.length - 6)}`
                   : "test"}
-              </div>
+              </a>
             </div>
           </div>
           <div className="success-info-box">

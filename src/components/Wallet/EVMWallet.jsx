@@ -13,6 +13,7 @@ export default function EVMWallet({ wallet, close }) {
   console.log("🚀 ~ file: EVMWallet.jsx ~ line 13 ~ EVMWallet ~ error", error)
   const from = useSelector(state => state.general.from);
   const to = useSelector(state => state.general.to);
+  const testnet = useSelector(state => state.general.testNet);
   const dispatch = useDispatch()
   const getMobOps = () =>  /android/i.test(navigator.userAgent || navigator.vendor || window.opera) ? true : false;
 
@@ -31,7 +32,7 @@ export default function EVMWallet({ wallet, close }) {
         close()
         break;
         case "WalletConnect":
-        onWalletConnect(activate, from.text)
+        onWalletConnect(activate, from.text, testnet)
         close()
         break;
         default:

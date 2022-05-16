@@ -34,7 +34,7 @@ export default function Chain(props) {
     if(maintenance || maintenance || !checkIfLive(chainKey, validatorsInfo) || coming ){
       return OFF
     }
-    else if((location.pathname === "/testnet/account" || location.pathname === "/account" || location.pathname === "/") && from?.text === text){
+    else if((location.pathname === "/testnet/account" || location.pathname === "/account" || location.pathname === "/") && from?.text === text && from.type !== "EVM"){
       return NONE
     }
     else if((location.pathname === "/testnet/connect" || location.pathname === "/connect" || location.pathname === "/") && text === from?.text){

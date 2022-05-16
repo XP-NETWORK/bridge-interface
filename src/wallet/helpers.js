@@ -96,7 +96,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftId: nft.nftId || undefined,
     appId: nft.appId || undefined
   }
-  if(uri.indexOf("http://") === -1 || uri.indexOf("https://") -1){
+  if(uri?.indexOf("http://") === -1 || uri?.indexOf("https://") -1){
     nftObj.dataLoaded = true
     nftObj.image = undefined
     nftObj.animation_url = undefined

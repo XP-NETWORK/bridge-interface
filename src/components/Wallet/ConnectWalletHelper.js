@@ -95,7 +95,7 @@ export const connectSync2 = async(testnet) => {
 };
 
 // Algorand blockchain connection ( AlgoSigner )
-export const connectAlgoSigner =async (testnet) => {
+export const connectAlgoSigner = async (testnet) => {
   if (typeof window.AlgoSigner !== undefined) {
       try {
         await window.AlgoSigner.connect()
@@ -185,12 +185,13 @@ export const connectBeacon = async () => {
   }
 }
 
-export const onWalletConnect = async (activate, from) => {
+export const onWalletConnect = async (activate, from, testnet) => {
   const { rpc, chainId } = chainsConfig[from];
   try {
     const walletConnect = new WalletConnectConnector({
       rpc: {
         [chainId]: rpc,
+        network : testnet ? "testnet" : "mainnet"
       },
       chainId,
       qrcode: true,

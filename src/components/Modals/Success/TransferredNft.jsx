@@ -30,20 +30,20 @@ export default function TransferredNft({ nft }) {
         else return false;
       };
 
-    const checkIfAlgoOptIn = async () => {
-        try {
-            const factory = await getFactory()
-            const algorand = await factory.inner(15)
-            const isOpted = await algorand.isOptIn(algorandAccount, native.nftId)
-            return isOpted ? true : false
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    // const checkIfAlgoOptIn = async () => {
+    //     try {
+    //         const factory = await getFactory()
+    //         const algorand = await factory.inner(15)
+    //         const isOpted = await algorand.isOptIn(algorandAccount, native.nftId)
+    //         return isOpted ? true : false
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
 
-    const claim = () => {
-        dispatch(claimAlgorandPopup(nft))
-    }
+    // const claim = () => {
+    //     dispatch(claimAlgorandPopup(nft))
+    // }
 
     const checkStatus = () => {
         // debugger

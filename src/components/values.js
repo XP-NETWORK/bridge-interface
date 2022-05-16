@@ -58,7 +58,7 @@ export const chains = [
     value: "Tron",
     order: 11,
     image: { avatar: true, src: Tron },
-    maintenance: false,
+    maintenance: true,
     testNet: true,
     mainnet: true,
   },
@@ -119,7 +119,7 @@ export const chains = [
     value: "Algorand",
     order: 11,
     image: { avatar: true, src: Algorand },
-    maintenance: false,
+    maintenance: true,
     testNet: true,
     mainnet: true,
   },
@@ -315,7 +315,7 @@ export const chainsConfig = {
     token: "TRX",
     img: Tron,
     rpc: "https://api.trongrid.io/",
-    tx: "https://tronscan.org/#/transaction/tx/",
+    tx: "https://tronscan.org/#/transaction/",
     Chain: Chain.TRON,
   },
   Ethereum: {
@@ -709,8 +709,8 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpc: "https://evm.gatenode.cc",
     chainId: 86,
-    blockExplorerUrls: "https://gatescan.org/address/?lang=en_US",
-    testBlockExplorerUrls: "https://gatescan.org/testnet/address?lang=en_US"
+    blockExplorerUrls: "https://gatescan.org/address/",
+    testBlockExplorerUrls: "https://gatescan.org/testnet/address/"
   },
   VeChain: {
     native: coins[19],
