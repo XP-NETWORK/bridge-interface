@@ -221,7 +221,7 @@ const onClientConnect = ( maiarProvider ) => {
       store.dispatch(setStep(2))
     },
     onClientLogout: async () => {
-      store.dispatch(setReset())
+      store.dispatch(setQrCodeString(""));
     }
   }
 }

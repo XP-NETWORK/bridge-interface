@@ -35,17 +35,17 @@ export default function ChainListBox(props) {
   
 
 
-  const hideChain = chain => {
-    const version = 'staging'
-    //development
-    //staging
-    const hideChains = ["VeChain", "GateChain", "Harmony"]
-    if(version === 'development') return true
-    else if(hideChains.some(c => chain === c)){
-      return false
-    }
-    else return true
-  }
+  // const hideChain = chain => {
+  //   const version = 'staging'
+  //   //development
+  //   //staging
+  //   const hideChains = ["VeChain", "GateChain", "Harmony"]
+  //   if(version === 'development') return true
+  //   else if(hideChains.some(c => chain === c)){
+  //     return false
+  //   }
+  //   else return true
+  // }
 
   async function switchNetwork(chain) {
 // debugger
@@ -232,25 +232,25 @@ const checkValidators = async () => {
             { //! Show only mainnet FROM chains //
               departureOrDestination === "departure" && !globalTestnet && fromChains.map( chain => {
                 const { image, text, key, coming, newChain, maintenance, mainnet } = chain;
-                return (mainnet || coming) && hideChain(text) && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
+                return (mainnet || coming) && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
               })
             }
             {//! Show only mainnet TO chains //
               departureOrDestination === "destination" && !globalTestnet && toChains.map( chain => {
                 const { image, text, key, coming, newChain, maintenance, mainnet } = chain;
-                return (mainnet || coming) && hideChain(text) && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
+                return (mainnet || coming) && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
               })
             }
             { //! Show only testnet FROM chains //
               departureOrDestination === "departure" && globalTestnet && fromChains.map( chain => {
                 const { image, text, key, coming, newChain, maintenance, testNet } = chain;
-                return testNet && hideChain(text) && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
+                return testNet &&  <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
               })
             }
             {//! Show only testnet TO chains //
               departureOrDestination === "destination" && globalTestnet && toChains.map( chain => {
                 const { image, text, key, coming, newChain, maintenance, testNet } = chain;
-                return testNet && hideChain(text) && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
+                return testNet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
               })
             }
           </ul>

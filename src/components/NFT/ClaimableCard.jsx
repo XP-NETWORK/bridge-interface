@@ -92,14 +92,9 @@ const claim = async () => {
       try {
           const c = await algorand.claimNft(signer, nft)
           if(c){
-            // dispatch(removeFromClaimables(index))
             dispatch(removeAlgorandClaimable(nft.nftId))
           }
           dispatch(setNFTSetToggler())
-          // setNFTS(algorandAccount, 'Algorand', undefined, "Claimable Card")
-              // setClaimablesAlgorand(algorandAccount)
-              // dispatch(removeAlgorandClaimable(nft.nftId))
-
       } catch(err) {
           dispatch(setTransferLoaderModal(false))
           console.log(err)

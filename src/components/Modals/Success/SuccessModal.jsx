@@ -91,9 +91,11 @@ export default function SuccessModal() {
 
   useEffect(() => {
       socket.on("incomingEvent", async e => {
+        console.log("Socket incomingEvent", e)
         dispatch(setTxnStatus(e))
       });
       socket.on("updateEvent", async e => {
+        console.log("updateEvent", e)
         dispatch(setTxnStatus(e))
       })
       return () => {
@@ -106,8 +108,6 @@ export default function SuccessModal() {
   
   return (
     <>
-      {/* <ConnectAlgorand /> */}
-      {/* <ClaimAlgorandNFT /> */}
       <Modal animation={false} className="success-modal" show={toShow()}>
         <span onClick={handleClose} className="success-modal-close">
           <div className="close-modal">

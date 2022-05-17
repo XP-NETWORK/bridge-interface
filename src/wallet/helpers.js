@@ -80,6 +80,22 @@ const ipfsOrjson = (url) => {
   }
 }
 
+function isJson(item) {
+  item = typeof item !== "string" ? JSON.stringify(item) : item;
+
+  try {
+      item = JSON.parse(item);
+  } catch (e) {
+      return false;
+  }
+
+  if (typeof item === "object" && item !== null) {
+      return item;
+  }
+
+  return false;
+}
+
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
   // debugger
   const uri = nft.uri
@@ -152,7 +168,13 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     const image = !video ? checkIfImage(setupURI(uri)) : undefined
     nftObj.image = image 
     let data
-    if(uri){
+    if(isJson(uri)){
+      const { description, image, name } = isJson(uri)
+      nftObj.image = image
+      nftObj.name = name
+      nftObj.description = description
+    }
+    else if(uri){
       data = await fetchURI(setupURI(uri))
     }
     if(typeof data === 'object'){
@@ -256,7 +278,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
   if(claimables && (!claimables[index]?.dataLoaded || !claimables[index]?.image || !claimables[index]?.animation_url)){
     store.dispatch(setEachClaimables({nftObj, index}))
   }
-  if(!NFTList[index]?.dataLoaded || !NFTList[index]?.image || !NFTList[index]?.animation_url){
+  else if(!NFTList[index]?.dataLoaded || !NFTList[index]?.image || !NFTList[index]?.animation_url){
     store.dispatch(setEachNFT({nftObj, index}))
   }
 }

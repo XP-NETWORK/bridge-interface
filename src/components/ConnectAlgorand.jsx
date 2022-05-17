@@ -135,7 +135,7 @@ function ConnectAlgorand({nftToOptIn, testnet}) {
     <Modal
       show={connectClaimAlgorand}
       onHide={handleClose}
-      animation={false}
+      animation="false"
       className="ChainModal"
     >
       { !algorandAccountToOptIn ?

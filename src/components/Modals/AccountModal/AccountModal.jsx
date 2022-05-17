@@ -63,7 +63,6 @@ export default function AccountModal() {
   };
 
   DetectOutsideClick(accountModal, () => setTimeout(() => handleClose(), 100));
-  console.log(currentAccount, 'acc');
   return show ? (
     <div
       ref={accountModal}

@@ -32,7 +32,7 @@ export default function GetFeatured() {
           Get your NFT featured
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body className="border-1" className="ger-featured__body">
+      <Modal.Body className="border-1 ger-featured__body">
         <ol className="get-featured-action-list">
           <li>Follow @xpnetwork_ in Twitter and Instagram</li>
           <li>

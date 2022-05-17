@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import React, { useState } from 'react'
 import { LittleLoader } from '../innercomponents/LittleLoader';
 import { useDispatch, useSelector } from 'react-redux';
-import { chainsConfig } from '../values';
+import { chainsConfig, CHAIN_INFO } from '../values';
 import { getFactory,  handleChainFactory,  setClaimablesAlgorand, setNFTS } from "../../wallet/helpers"
 import { setBigNumFees } from '../../store/reducers/generalSlice';
 import { useEffect } from 'react';
@@ -81,7 +81,8 @@ function SendFees() {
             const bigNum = fee ? fee.multipliedBy(1.1).integerValue().toString(10) : undefined
             dispatch(setBigNumFees(bigNum))
             let fees
-            if(from.type === "Tron"){
+            // console.log("fee", bigNum / CHAIN_INFO[to.text].decimals)
+            if(from.type === "Tron" || from.type === "Algorand"){
                 fees = bigNum / 1e6
             }
             else{

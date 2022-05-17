@@ -86,7 +86,7 @@ function Approval(props) {
   };
 
   const approveEach = async (nft, signer, chain, index) => {
-
+debugger
     const arr = new Array(index + 1).fill(0);
     const factory = await getFactory();
     if (
@@ -178,7 +178,7 @@ function Approval(props) {
       }
     } 
     else {
-      debugger
+      // debugger
       try {
         const factory = await getFactory();
         const chain = await factory.inner(Chain.ELROND);

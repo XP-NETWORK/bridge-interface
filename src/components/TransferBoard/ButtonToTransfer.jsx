@@ -155,7 +155,6 @@ export default function ButtonToTransfer() {
                 }
                 toChain = await factory.inner(chainsConfig[to].Chain)
                 fromChain = await factory.inner(chainsConfig[from].Chain)
-                console.log("nft", nft)
                 result = await factory.transferNft(
                     fromChain, 
                     toChain,   
@@ -165,6 +164,7 @@ export default function ButtonToTransfer() {
                     bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
                 )
+                console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 167 ~ sendEach ~ result", result)
                 dispatch(dispatch(setTransferLoaderModal(false)))
                 setLoading(false)
                 dispatch(setTxnHash({txn: result, nft}))

@@ -16,9 +16,9 @@ export default function Refresh() {
           else if (from.type === "Elrond") w = elrondAccount;
           else if (from.type === "Tron") w = tronWallet;
           await setNFTS(w, from.key, testNet, "refresh");
-          if(from.type === "Algorand"){
-            await getAlgorandClaimables(algorandAccount)
-          }
+          // if(from.type === "Algorand"){
+          //   await getAlgorandClaimables(algorandAccount)
+          // }
         }
       };
 

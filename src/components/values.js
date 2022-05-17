@@ -24,6 +24,8 @@ export const EVM = "EVM";
 export const ELROND = "Elrond";
 export const TEZOS = "TEZOS";
 
+const biz = window.location.hostname.includes("localhost") ||  window.location.hostname.includes("staging") || window.location.hostname.includes("testing")
+
 export const chains = [
   {
     type: "EVM",
@@ -58,7 +60,7 @@ export const chains = [
     value: "Tron",
     order: 11,
     image: { avatar: true, src: Tron },
-    maintenance: true,
+    maintenance: biz ? false : true,
     testNet: true,
     mainnet: true,
   },
@@ -119,7 +121,7 @@ export const chains = [
     value: "Algorand",
     order: 11,
     image: { avatar: true, src: Algorand },
-    maintenance: true,
+    maintenance: biz ? false : true,
     testNet: true,
     mainnet: true,
   },
@@ -238,7 +240,7 @@ export const chains = [
     image: { avatar: true, src: One },
     maintenance: false,
     testNet: false,
-    mainnet: true,
+    mainnet: biz ? true : false,
     newChain: true,
   },
   {
@@ -277,7 +279,7 @@ export const chains = [
     image: {avatar: true, src: GT },
     maintenance: false,
     testNet: false,
-    mainnet: true,
+    mainnet: biz ? true : false,
     newChain: true
   },
   {
@@ -290,7 +292,7 @@ export const chains = [
     order: 4,
     image: {avatar: true, src: VET},
     maintenance: false,
-    mainnet: true,
+    mainnet: biz ? true : false,
     testNet: false,
     newChain: true
   }

@@ -854,6 +854,12 @@ li.nftSelecItem .Close:hover {
   padding-bottom: 10px;
 }
 
+.NftDetails .brocken-url{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
 .nftDetImg {
   flex-shrink: 0;
   height: 300px;
