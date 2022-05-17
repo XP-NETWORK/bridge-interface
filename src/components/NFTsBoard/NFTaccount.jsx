@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import NFTgridView from "../NFT/NFTgridView";
 import NFTlistView from "../NFT/NFTlistView";
 import NFTlistTop from "./NFTlistTop";
-import { setChainModal, setDepartureOrDestination, setError, setSearchNFTList, setSelectedNFTList } from "../../store/reducers/generalSlice";
+import { setBalance, setChainModal, setDepartureOrDestination, setError, setSearchNFTList, setSelectedNFTList } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getAlgorandClaimables, getFactory, setNFTS } from "../../wallet/helpers";
 import { ReturnBtn } from "../Settings/returnBtn";
@@ -34,6 +34,7 @@ import { useWeb3React } from "@web3-react/core";
 function NFTaccount() {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from.key);
+  const _from = useSelector((state) => state.general.from);
   const prevSelected = usePrevious(from);
   const type = useSelector((state) => state.general.from.type);
   const algorandAccount = useSelector((s) => s.general.algorandAccount);
@@ -97,41 +98,66 @@ function NFTaccount() {
     dispatch(setSearchNFTList(''));
   }
 
-  // const getBalance = async () => {
-  //   let _account = account || algorandAccount || tezosAccount || elrondAccount || tronWallet
-  //   const factory = await getFactory()
-  //   const fromChain = await factory.inner(chainsConfig[from].Chain)
-  //   let balance
-  //   while (!balance) {
-  //     try {
-  //       balance = factory ? await factory.balance(fromChain,_account) : undefined
-  //       const ethBalance = library.utils.fromWei(`${balance.toNumber()}`, "ether" );
-  //       return balance
-  //   } catch (error) {
-  //       console.log(error)
-  //   }
-  // }}
+  const getBalance = async () => {
+    console.log("getBalance")
+    let _account = account || algorandAccount || tezosAccount || elrondAccount || tronWallet
+    const factory = await getFactory()
+    const fromChain = await factory.inner(chainsConfig[from].Chain)
+    let balance
+    let balanceToShow
+    while (!balance) {
+      try {
+        balance = factory ? await factory.balance(fromChain,_account) : undefined
+        switch (_from.type) {
+          case "EVM":
+            balanceToShow = library.utils.fromWei(`${balance.toNumber()}`, "ether" );
+            dispatch(setBalance(Number(balanceToShow)))
+            break;
+          case "Tezos":
+            dispatch(setBalance(balance / 1e6))
+            break;
+          case "Tron":
+            dispatch(setBalance(balance / 1e6))
+            break;
+          case "Algorand":
+            dispatch(setBalance(balance / 1e6))
+            break;
+          case "Elrond":
+            dispatch(setBalance(balance / 1e18))
+            break;
+          case "VeChain":
+            dispatch(setBalance(balance / 1e18))
+            break;
+          default:
+            break;
+        }
+        return balance
+    } catch (error) {
+        console.log(error)
+    }
+  }}
 
   useEffect(async () => {
     if(!nfts?.some(nft => nft.dataLoaded)){
-      await getNFTsList("1");
+      await getNFTsList();
     }
     if(algorandAccount && !algorandClaimables?.some(nft => nft.dataLoaded)){
       await getAlgorandClaimables(algorandAccount)
     }
-    // getBalance()
+    getBalance()
   }, []);
 
   useEffect(async () => {
     if(nfts && prevSelected !== from){
-      await getNFTsList("2");
+      await getNFTsList();
     }
     else if(nfts && prevAccount !== account){
-      await getNFTsList("2");
+      await getNFTsList();
     }
     else if(nfts && NFTSetToggler !== prevNFTSetToggler){
-      await getNFTsList("2");
+      await getNFTsList();
     }
+    getBalance()
   }, [from, account, NFTSetToggler]);
 
 

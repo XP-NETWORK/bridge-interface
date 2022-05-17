@@ -19,6 +19,9 @@ const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
+    setBalance(state, action){
+      state.balance = action.payload
+    },
     setNFTSetToggler(state, action){
       state.NFTSetToggler = !state.NFTSetToggler
     },
@@ -447,7 +450,8 @@ export const {
   setQrImage,
   setWSettings,
   setWalletsModal,
-  setGitLatestCommit
+  setGitLatestCommit,
+  setBalance
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

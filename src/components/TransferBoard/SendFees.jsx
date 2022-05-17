@@ -10,7 +10,7 @@ import { useWeb3React } from "@web3-react/core";
 
 function SendFees() {
     const dispatch = useDispatch()
-    const [balance, setBalance] = useState()
+    const balance = useSelector(state => state.general.balance)
     const to = useSelector(state => state.general.to)
     const from = useSelector(state => state.general.from)
     const account = useSelector(state => state.general.account)
@@ -142,7 +142,7 @@ function SendFees() {
         <div className="fees">
             <div className="fees__title">Fees</div>
             <div className="fees__bank">
-                {balance && <span className='fees__balance'>{`Balance: ${balance} ${config?.token}`}</span>}
+                {balance && <span className='fees__balance'>{`Balance: ${balance.toFixed(5)} ${config?.token}`}</span>}
                 {loading? <LittleLoader/> :  <span>{fees && fees > 0  ? from.key === 'Tezos' ? ( new BigNumber(fees).multipliedBy(1e12).toString()) : fees?.toFixed(getNumToFix(fees)) : '0'} {config?.token}</span>}
             </div>
         </div>
