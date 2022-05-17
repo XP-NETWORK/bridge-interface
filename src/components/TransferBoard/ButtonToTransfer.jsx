@@ -164,10 +164,11 @@ export default function ButtonToTransfer() {
                     bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
                 )
+                result = from === "Algorand" ? { hash: result } : result
                 console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 167 ~ sendEach ~ result", result)
                 dispatch(dispatch(setTransferLoaderModal(false)))
                 setLoading(false)
-                dispatch(setTxnHash({txn: {hash : result}, nft}))
+                dispatch(setTxnHash({txn: result, nft}))
             }
         } catch (err) {
             console.error(err)
