@@ -167,7 +167,7 @@ export default function ButtonToTransfer() {
                 console.log("🚀 ~ file: ButtonToTransfer.jsx ~ line 167 ~ sendEach ~ result", result)
                 dispatch(dispatch(setTransferLoaderModal(false)))
                 setLoading(false)
-                dispatch(setTxnHash({txn: result, nft}))
+                dispatch(setTxnHash({txn: {hash : result}, nft}))
             }
         } catch (err) {
             console.error(err)

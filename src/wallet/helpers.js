@@ -5,13 +5,12 @@ import { setAlgorandClaimables, setBigLoader, setEachClaimables, setEachNFT, set
 import store from "../store/store";
 import io from "socket.io-client";
 import { isWhiteListed } from "./../components/NFT/NFTHelper"
-// import { fetchURI } from "./getDataFromURL"
 
-// const testnet  = store.getState()?.general?.testNet
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
+const testnet = window.location.href.includes("testnet")
 const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/"
 const base64 = require('base-64');
-export const socket = io(socketUrl, {
+export const socket = io(testnet ? testnetSocketUrl : socketUrl, {
   path: "/socket.io",
 });
 const { Harmony } = require('@harmony-js/core')
