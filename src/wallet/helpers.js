@@ -58,7 +58,6 @@ const checkIfVideo = (url) => {
  
 
 const fetchURI = async uri => {
-
   try {
     const { data, status, headers }  = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`)
     if(headers["content-type"].includes("image") || headers["content-type"].includes("video")){

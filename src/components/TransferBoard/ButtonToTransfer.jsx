@@ -140,6 +140,7 @@ export default function ButtonToTransfer() {
                     bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
                     )
+                console.log("result", result)
                     dispatch(dispatch(setTransferLoaderModal(false)))
                     setLoading(false)
                     dispatch(setTxnHash({txn: result, nft}))
@@ -164,6 +165,7 @@ export default function ButtonToTransfer() {
                     bigNumberFees,
                     mintWidth?.length ? mintWidth[0] : undefined
                 )
+                console.log("result", result)
                 result = from === "Algorand" ? { hash: result } : result
                 dispatch(dispatch(setTransferLoaderModal(false)))
                 setLoading(false)

@@ -14,32 +14,13 @@ function SendFees() {
     const to = useSelector(state => state.general.to)
     const from = useSelector(state => state.general.from)
     const account = useSelector(state => state.general.account)
-    const algorandAccount = useSelector(state => state.general.algorandAccount)
-    const tezosAccount = useSelector(state => state.general.tezosAccount)
-    const elrondAccount = useSelector(state => state.general.elrondAccount)
-    const tronWallet = useSelector(state => state.general.tronWallet)
-    
     const selectedNFTList = useSelector(state => state.general.selectedNFTList)
     const isToEVM = useSelector(state => state.general.to).type === 'EVM'
     const [fees, setFees ] = useState('')
     const Web3Utils = require("web3-utils");
     const [estimateInterval, setEstimateInterval] = useState()
     const [loading, setLoading] = useState(false)
-    const { library } = useWeb3React()
 
-
-    // const getBalance = async () => {
-    //     let _account = account || algorandAccount || tezosAccount || elrondAccount || tronWallet
-    //     const factory = await getFactory()
-    //     const fromChain = await factory.inner(chainsConfig[from.key].Chain)
-    //     let balance
-    //     try {
-    //         balance = factory ? await factory.balance(fromChain,_account) : undefined
-    //         return balance
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
 
 
     async function estimate () {

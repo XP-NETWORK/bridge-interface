@@ -872,7 +872,7 @@ li.nftSelecItem .Close:hover {
 
 .nftDetImg img,
 .nftDetImg video {
-  height: 85%;
+  height: 75%;
   border-radius: 16px;
 }
 
