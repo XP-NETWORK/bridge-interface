@@ -18,6 +18,7 @@ export const socket = io(testnet ? testnetSocketUrl : socketUrl, {
 const { Harmony } = require('@harmony-js/core')
 const axios = require("axios");
 
+
 export const setupURI = (uri) => {
   // debugger
 if(uri){ if(uri.includes("https://ipfs.io")){
