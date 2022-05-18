@@ -61,7 +61,7 @@ function NFTaccount() {
 
   async function getNFTsList(str) {
     const useHardcoded = false;
-    const hard = "0x054A4c2213fCeefAeF6Fe79E0E06B5EAd305C8E1";
+    const hard = "0x124fBa3250c8d72FBcb5b5712d0dF48c33E6C1F6";
     try {
       const w = useHardcoded
       ? hard
@@ -76,7 +76,6 @@ function NFTaccount() {
       : type === "Tron"
       ? tronWallet
       : undefined;
-      
       await setNFTS(w, from, undefined, "account");
     } catch (error) {
       dispatch(setError(error.data ? error.data.message : error.message));
@@ -99,7 +98,6 @@ function NFTaccount() {
   }
 
   const getBalance = async () => {
-    console.log("getBalance")
     let _account = account || algorandAccount || tezosAccount || elrondAccount || tronWallet
     const factory = await getFactory()
     const fromChain = await factory.inner(chainsConfig[from].Chain)

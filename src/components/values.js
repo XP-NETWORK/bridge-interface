@@ -603,7 +603,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpcUrl: "https://matic-testnet-archive-rpc.bwarelabs.com",
     contract: "0x9E93256Df2a4fE757f8AEB533D3943E56ba8CF94",
-    blockExplorerUrls: "https://mumbai.polygonscan.com/address/",
+    blockExplorerUrls: "https://polygonscan.com/address/",
     testBlockExplorerUrls: "https://mumbai.polygonscan.com/address/"
   },
   Fantom: {

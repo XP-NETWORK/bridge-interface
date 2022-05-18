@@ -16,7 +16,6 @@ import NotWhiteListed from "./NotWhiteListed";
 
 
 export default function NFTcard({ nft, index, claimables }) {
-// console.log("🚀 ~ file: NFTcard.jsx ~ line 19 ~ NFTcard ~ nft", nft.image)
 
     const from = useSelector(state => state.general.from)
     const dispatch = useDispatch();
@@ -25,6 +24,7 @@ export default function NFTcard({ nft, index, claimables }) {
     const [loadingTimeOut, setLoadingTomeOut] = useState()
     const testnet = useSelector(state => state.general.testNet)
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
+    const [imageErr, setImageErr] = useState(false)
     let isSelected = selectedNFTs.filter(
       (n) =>
         n.native.tokenId === nft.native.tokenId &&
@@ -68,9 +68,9 @@ export default function NFTcard({ nft, index, claimables }) {
       { !nft?.dataLoaded || loadingTimeOut ? <Preload /> : 
       <div onClick={() => nft.whitelisted && !detailsOn && !claimables ? addRemoveNFT(nft, index): undefined } className={nft.whitelisted ? "nft__card--selected" : "nft__card"}>
         <div className="nft__main">
-          { nft.uri ? 
+          { nft.uri || imageErr ? 
             nft.animation_url && nft.image ? <VideoAndImage index={index} videoUrl={nft.animation_url} imageUrl={nft.image} />
-          : nft.image && !nft.animation_url ? <img loading="lazy" alt=""  src={setupURI(nft.image)} /> 
+          : nft.image && !nft.animation_url ? <img loading="lazy" alt="" onError={() => setImageErr(true)}  src={setupURI(nft.image)} /> 
           : !nft.image && nft.animation_url ? <video controls={false}  playsInline={true} autoPlay={true} loop={true}  muted={true} src={setupURI(nft.animation_url)} />
           : [nft.animation_url,nft.image]?.length > 0 && <VideoOrImage urls={[nft.animation_url,nft.image]} i={index} />
           : <BrockenUtlGridView />

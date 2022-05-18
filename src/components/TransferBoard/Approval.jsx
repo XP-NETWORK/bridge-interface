@@ -251,6 +251,9 @@ debugger
     else if(selectedNFTList.length < 1){
       dispatch(setSelectNFTAlert(true))
     }
+    else if(!bigNumberFees){
+      console.log("no fees need to estimate")
+    }
     else{
       approveAllNFTs()
     }
@@ -311,7 +314,7 @@ debugger
                 ? { pointerEvents: "none" }
                 : {}
             }
-            onClick={onClickHandler}
+            onClick={bigNumberFees ? onClickHandler : undefined}
             htmlFor="approveCheck"
           >
             <span className="checkCircle"></span>

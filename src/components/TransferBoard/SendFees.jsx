@@ -81,7 +81,6 @@ function SendFees() {
             const bigNum = fee ? fee.multipliedBy(1.1).integerValue().toString(10) : undefined
             dispatch(setBigNumFees(bigNum))
             let fees
-            // console.log("fee", bigNum / CHAIN_INFO[to.text].decimals)
             if(from.type === "Tron" || from.type === "Algorand"){
                 fees = bigNum / 1e6
             }

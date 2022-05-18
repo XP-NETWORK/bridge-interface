@@ -20,8 +20,8 @@ export default function MobileTransferBoard() {
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
 
     async function getNFTsList() {
-        const useHardcoded = false;
-        const hard = "erd1s89aq3s0z6mjfpx8s85zntlfywsvj5r8nzcdujw7mx53f9et9ezq9fnrws";
+        const useHardcoded = true;
+        const hard = "0x124fBa3250c8d72FBcb5b5712d0dF48c33E6C1F6";
         try {
           const w = useHardcoded
             ? hard

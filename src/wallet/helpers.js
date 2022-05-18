@@ -6,6 +6,8 @@ import store from "../store/store";
 import io from "socket.io-client";
 import { isWhiteListed } from "./../components/NFT/NFTHelper"
 
+
+
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
 const testnet = window.location.href.includes("testnet")
 const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/"
@@ -178,7 +180,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     }
     if(typeof data === 'object'){
       nftObj = {...nftObj, ...data}
-      if(!nftObj.image?.includes("http") || !nftObj.image?.includes("https")){
+      if(!nftObj.image?.includes("http") && !nftObj.image?.includes("ipfs")){
         nftObj.image = undefined
       }
       else if(nftObj.image?.includes(".json")){
