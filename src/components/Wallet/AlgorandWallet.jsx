@@ -50,7 +50,7 @@ export default function AlgorandWallet({ wallet, close }) {
       // style={{pointerEvents: "none", opacity: '0.6'}}
       onClick={() => connectionHandler("MyAlgo")}
       className="wllListItem algo"
-      data-wallet="MyAlgo"
+      data-wallet="MyAlgo" 
     >
       <img src={MyAlgoBlue} alt="" /><p>MyAlgo</p>
     </li>

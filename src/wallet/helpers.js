@@ -471,12 +471,12 @@ export const getNFTS = async (wallet, from) => {
   try {
     // debugger
     let response 
-    if(tronWallet){
-      response = await getTronNFTs(tronWallet)
-    }
-    else{
+    // if(tronWallet){
+    //   response = await getTronNFTs(tronWallet)
+    // }
+    // else{
       response = await factory.nftList(chain, hardcoded ? hardcoded : wallet)
-    }
+    // }
     const unique = {};
     try {
       const allNFTs = response
