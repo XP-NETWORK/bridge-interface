@@ -16,15 +16,18 @@ import Tezos from "../assets/img/chain/Tezos.svg";
 import Iotex from "../assets/img/chain/iotx.svg";
 import One from "../assets/img/chain/One.svg";
 import Aurora from "../assets/img/chain/aurora.svg";
-import GT from "../assets/img/chain/GateChain.svg"
-import VET from "../assets/img/chain/Vechain.png"
+import GT from "../assets/img/chain/GateChain.svg";
+import VET from "../assets/img/chain/Vechain.png";
 import { Chain } from "xp.network/dist/consts";
 
 export const EVM = "EVM";
 export const ELROND = "Elrond";
 export const TEZOS = "TEZOS";
 
-const biz = window.location.hostname.includes("localhost") ||  window.location.hostname.includes("staging") || window.location.hostname.includes("testing")
+const biz =
+  window.location.hostname.includes("localhost") ||
+  window.location.hostname.includes("staging") ||
+  window.location.hostname.includes("testing");
 
 export const chains = [
   {
@@ -112,7 +115,7 @@ export const chains = [
     maintenance: false,
     testNet: false,
     mainnet: true,
-    newChain: true
+    newChain: true,
   },
   {
     type: "Algorand",
@@ -212,7 +215,7 @@ export const chains = [
     coming: false,
     maintenance: false,
     testNet: true,
-    mainnet: true
+    mainnet: true,
   },
   {
     type: "EVM",
@@ -254,7 +257,7 @@ export const chains = [
     maintenance: false,
     testNet: false,
     mainnet: true,
-    newChain: true
+    newChain: true,
   },
   {
     type: "EVM",
@@ -266,7 +269,7 @@ export const chains = [
     maintenance: false,
     testNet: false,
     mainnet: false,
-    newChain: true
+    newChain: true,
   },
   {
     type: "EVM",
@@ -276,11 +279,11 @@ export const chains = [
     tnChainId: 85,
     chainId: 86,
     order: 0,
-    image: {avatar: true, src: GT },
+    image: { avatar: true, src: GT },
     maintenance: false,
     testNet: false,
     mainnet: biz ? true : false,
-    newChain: true
+    newChain: true,
   },
   {
     type: "VeChain",
@@ -290,12 +293,12 @@ export const chains = [
     tnChainId: 39,
     chainId: undefined,
     order: 4,
-    image: {avatar: true, src: VET},
+    image: { avatar: true, src: VET },
     maintenance: false,
     mainnet: biz ? true : false,
     testNet: false,
-    newChain: true
-  }
+    newChain: true,
+  },
 ];
 
 export const chainsConfig = {
@@ -304,7 +307,7 @@ export const chainsConfig = {
     token: "ALGO",
     img: Algorand,
     tx: "https://algoexplorer.io/tx/",
-    testTx: "https://testnet.algoexplorer.io/"
+    testTx: "https://testnet.algoexplorer.io/",
   },
   Ton: {
     type: EVM,
@@ -324,8 +327,7 @@ export const chainsConfig = {
     type: EVM,
     img: Etherium,
     chainId: 1,
-    rpc:
-      "https://mainnet.infura.io/v3/",
+    rpc: "https://mainnet.infura.io/v3/",
     tx: "https://etherscan.io/tx/",
     testTx: "https://ropsten.etherscan.io/tx/",
     token: "ETH",
@@ -338,8 +340,7 @@ export const chainsConfig = {
     chainId: 56,
     tx: "https://bscscan.com/tx/",
     testTx: "https://testnet.bscscan.com/tx/",
-    rpc:
-      "https://bsc-dataseed.binance.org/",
+    rpc: "https://bsc-dataseed.binance.org/",
     Chain: Chain.BSC,
   },
   Polygon: {
@@ -349,8 +350,7 @@ export const chainsConfig = {
     tx: "https://polygonscan.com/tx/",
     testTx: "https://mumbai.polygonscan.com/tx/",
     chainId: 137,
-    rpc:
-    "https://rpc-mainnet.matic.network",
+    rpc: "https://rpc-mainnet.matic.network",
     // rpc: 'https://matic-mainnet-full-rpc.bwarelabs.com',
     Chain: Chain.POLYGON,
     // chainData: ChainData.Polygon
@@ -437,6 +437,7 @@ export const chainsConfig = {
     img: One,
     rpc: "https://api.harmony.one",
     chainId: 1666600000,
+    tsChainId: 1666700000,
     Chain: Chain.HARMONY,
     tx: "https://explorer.harmony.one/tx/",
     testTx: "https://explorer.testnet.harmony.one/tx/",
@@ -458,7 +459,7 @@ export const chainsConfig = {
     tnRpc: "https://meteora-evm.gatenode.cc",
     chainId: "86",
     Chain: Chain.GATECHAIN,
-    tx: "https://www.gatescan.org/tx/"
+    tx: "https://www.gatescan.org/tx/",
   },
   VeChain: {
     type: EVM,
@@ -469,8 +470,8 @@ export const chainsConfig = {
     chainId: 39,
     Chain: Chain.VECHAIN,
     tx: "https://explore-testnet.vechain.org/transactions/",
-    testTx: "https://explore-testnet.vechain.org/transactions/"
-  }
+    testTx: "https://explore-testnet.vechain.org/transactions/",
+  },
 };
 
 export const coins = [
@@ -499,7 +500,7 @@ export const coins = [
 export const TESTNET_CHAIN_INFO = {
   Ethereum: {
     nonce: 5,
-    chainId: 3
+    chainId: 3,
   },
   BSC: {
     nonce: 4,
@@ -517,23 +518,23 @@ export const TESTNET_CHAIN_INFO = {
     chainId: 1666700000,
   },
   Avalanche: {
-      nonce: 6,
-      chainId: 43113
+    nonce: 6,
+    chainId: 43113,
   },
   Tezos: {
     nonce: 0x12,
   },
   Algorand: {
-    nonce: 15
+    nonce: 15,
   },
   GateChain: {
     nonce: 0x17,
     chainId: 85,
   },
-  VeChain:  {
+  VeChain: {
     nonce: 0x19,
-    chainId: 39
-  }
+    chainId: 39,
+  },
 };
 
 export const CHAIN_INFO = {
@@ -541,7 +542,7 @@ export const CHAIN_INFO = {
     nonce: 2,
     native: "EGLD",
     decimals: 1e18,
-    blockExplorerUrls: "https://explorer.elrond.com/address/"
+    blockExplorerUrls: "https://explorer.elrond.com/address/",
   },
   TON: {
     nonce: 3,
@@ -551,7 +552,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     contract: "0x1247a6cB7aA2c90C6B9eF96AE3E7b269139BE06b",
     blockExplorerUrls: "https://testnet.hecoinfo.com/address",
-    testBlockExplorerUrls: "https://testnet-explorer.elrond.com/address"
+    testBlockExplorerUrls: "https://testnet-explorer.elrond.com/address",
   },
   BSC: {
     nonce: 4,
@@ -572,7 +573,7 @@ export const CHAIN_INFO = {
     decimals: 1e6,
     contract: "MGEZOCMF263SDRXYKNGVNTCIGM4RZXAF3HLS4MNTFVFTJC6LWGAGLBCW7E",
     blockExplorerUrls: "https://algoexplorer.io/address/",
-    testBlockExplorerUrls: "https://testnet.algoexplorer.io/address/"
+    testBlockExplorerUrls: "https://testnet.algoexplorer.io/address/",
   },
   Ethereum: {
     nonce: 5,
@@ -582,7 +583,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     contract: "0x2C742F65E6FEcDbb4ceE3D35473e39012aEDf3DD",
     blockExplorerUrls: "https://ropsten.etherscan.io/address/",
-    testBlockExplorerUrls: "https://ropsten.etherscan.io/address/"
+    testBlockExplorerUrls: "https://ropsten.etherscan.io/address/",
   },
   Avalanche: {
     nonce: 6,
@@ -593,7 +594,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     contract: "0xAcFB2E7d6e6272f192D0D573A9bD1CC9d534dE1c",
     blockExplorerUrls: "https://snowtrace.io/address/",
-    testBlockExplorerUrls: "https://testnet.snowtrace.io/address/"
+    testBlockExplorerUrls: "https://testnet.snowtrace.io/address/",
   },
   Polygon: {
     nonce: 0x7,
@@ -604,7 +605,7 @@ export const CHAIN_INFO = {
     rpcUrl: "https://matic-testnet-archive-rpc.bwarelabs.com",
     contract: "0x9E93256Df2a4fE757f8AEB533D3943E56ba8CF94",
     blockExplorerUrls: "https://polygonscan.com/address/",
-    testBlockExplorerUrls: "https://mumbai.polygonscan.com/address/"
+    testBlockExplorerUrls: "https://mumbai.polygonscan.com/address/",
   },
   Fantom: {
     native: coins[6],
@@ -614,7 +615,7 @@ export const CHAIN_INFO = {
     chainId: 250,
     contract: "0xbc53f71E12007b93Ed2868E5f6CAE1D2ceB7287C",
     blockExplorerUrls: "https://ftmscan.com/address/",
-    testBlockExplorerUrls: "https://testnet.ftmscan.com/address"
+    testBlockExplorerUrls: "https://testnet.ftmscan.com/address",
   },
   Tron: {
     native: coins[7],
@@ -623,7 +624,7 @@ export const CHAIN_INFO = {
     decimals: 1e6,
     contract: "4179ff0b4e9e3f67806ff17e1d708a9490ef121e29",
     blockExplorerUrls: "https://tronscan.io/#/address/",
-    testBlockExplorerUrls: "https://shasta.tronscan.org/#/address/"
+    testBlockExplorerUrls: "https://shasta.tronscan.org/#/address/",
   },
   Celo: {
     native: coins[8],
@@ -639,7 +640,7 @@ export const CHAIN_INFO = {
     nonce: 0xc,
     decimals: 1e18,
     rpcUrl: "https://api.s0.b.hmny.io",
-    chainId: 1666700000,
+    chainId: 1666600000,
     tnChainId: 1666700000,
     contract: "0x22ddFB8954c9D75598385c6ad82cDeb124a78Bb3",
     blockExplorerUrls: "https://explorer.harmony.one/address",
@@ -653,7 +654,7 @@ export const CHAIN_INFO = {
     chainId: 100,
     contract: "0xdceB7a6b2d2cC149aA74E049231c94D072eDF3E8",
     blockExplorerUrls: "https://blockscout.com/xdai/mainnet/address",
-    testBlockExplorerUrls: "https://blockscout.com/xdai/testnet/address/"
+    testBlockExplorerUrls: "https://blockscout.com/xdai/testnet/address/",
   },
   Fuse: {
     native: coins[12],
@@ -663,7 +664,7 @@ export const CHAIN_INFO = {
     chainId: 122,
     contract: "",
     blockExplorerUrls: "https://explorer.fuse.io/address/",
-    testBlockExplorerUrls: "https://explorer.fusespark.io/address/"
+    testBlockExplorerUrls: "https://explorer.fusespark.io/address/",
   },
   Velas: {
     native: coins[13],
@@ -673,7 +674,7 @@ export const CHAIN_INFO = {
     chainId: 106,
     contract: "",
     blockExplorerUrls: "https://evmexplorer.velas.com/address/",
-    testBlockExplorerUrls: "https://explorer.testnet.velas.com/address"
+    testBlockExplorerUrls: "https://explorer.testnet.velas.com/address",
   },
   Tezos: {
     native: coins[14],
@@ -683,7 +684,7 @@ export const CHAIN_INFO = {
     chainId: 0x12,
     contract: "",
     blockExplorerUrls: "https://tzstats.com/",
-    testBlockExplorerUrls: "https://hangzhounet.tzkt.io/address"
+    testBlockExplorerUrls: "https://hangzhounet.tzkt.io/address",
   },
   Iotex: {
     native: coins[15],
@@ -693,7 +694,7 @@ export const CHAIN_INFO = {
     chainId: 4689,
     contract: "",
     blockExplorerUrls: "https://iotexscan.io/address/",
-    testBlockExplorerUrls: "https://testnet.iotexscan.io/"
+    testBlockExplorerUrls: "https://testnet.iotexscan.io/",
   },
   Aurora: {
     native: coins[17],
@@ -703,7 +704,7 @@ export const CHAIN_INFO = {
     chainId: 1313161554,
     contract: "",
     blockExplorerUrls: "https://explorer.mainnet.aurora.dev/address/",
-    testBlockExplorerUrls: "https://testnet.aurorascan.dev/address/"
+    testBlockExplorerUrls: "https://testnet.aurorascan.dev/address/",
   },
   GateChain: {
     native: coins[18],
@@ -712,7 +713,7 @@ export const CHAIN_INFO = {
     rpc: "https://evm.gatenode.cc",
     chainId: 86,
     blockExplorerUrls: "https://gatescan.org/address/",
-    testBlockExplorerUrls: "https://gatescan.org/testnet/address/"
+    testBlockExplorerUrls: "https://gatescan.org/testnet/address/",
   },
   VeChain: {
     native: coins[19],
@@ -722,6 +723,6 @@ export const CHAIN_INFO = {
     tnChainId: 39,
     rpc: "https://sync-testnet.veblocks.net",
     blockExplorerUrl: "https://explore.vechain.org/accounts/",
-    testBlockExplorerUrls: "https://explore-testnet.vechain.org/accounts/"
-  }
+    testBlockExplorerUrls: "https://explore-testnet.vechain.org/accounts/",
+  },
 };

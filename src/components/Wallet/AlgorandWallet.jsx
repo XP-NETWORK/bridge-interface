@@ -66,9 +66,8 @@ export default function AlgorandWallet({ wallet, close }) {
     </li>
   ) : (
     <li
-      style={{pointerEvents: "none", opacity: '0.6'}}
+      style={getStyle()}
       onClick={() => connectionHandler("Algorand Wallet")}
-      // style={OFF}
       data-wallet="Algorand Wallet"
       className="wllListItem algo"
     >
