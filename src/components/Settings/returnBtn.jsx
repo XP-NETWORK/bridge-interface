@@ -8,7 +8,7 @@ export const ReturnBtn = () => {
 
   return widget ? (
     <div className="returnBtn">
-      <button onClick={() => window.open(`/connect?widget=true${wsettings? '&wsettings=true' : ''}`, "_self")}>{"< Back"}</button>
+      <button onClick={() => window.open(`/connect${widget && !wsettings? window.location.search : '?widget=true&wsettings=true'}`, "_self")}>{"< Back"}</button>
     </div>
   ) : null;
 };
