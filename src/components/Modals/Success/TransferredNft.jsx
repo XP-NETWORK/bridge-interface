@@ -9,7 +9,7 @@ import TxStatus from './TxStatus';
 import {chainsConfig} from '../../values'
 
 export default function TransferredNft({ nft }) {
-    const { image, txn, name, native } = nft
+    const { image, animation_url, txn, name, native } = nft
     const from = useSelector((state) => state.general.from);
     const to = useSelector(state => state.general.to)
     const algorandAccount = useSelector(state => state.general.algorandAccount)
@@ -30,20 +30,20 @@ export default function TransferredNft({ nft }) {
         else return false;
       };
 
-    const checkIfAlgoOptIn = async () => {
-        try {
-            const factory = await getFactory()
-            const algorand = await factory.inner(15)
-            const isOpted = await algorand.isOptIn(algorandAccount, native.nftId)
-            return isOpted ? true : false
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    // const checkIfAlgoOptIn = async () => {
+    //     try {
+    //         const factory = await getFactory()
+    //         const algorand = await factory.inner(15)
+    //         const isOpted = await algorand.isOptIn(algorandAccount, native.nftId)
+    //         return isOpted ? true : false
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
 
-    const claim = () => {
-        dispatch(claimAlgorandPopup(nft))
-    }
+    // const claim = () => {
+    //     dispatch(claimAlgorandPopup(nft))
+    // }
 
     const checkStatus = () => {
         // debugger
@@ -75,8 +75,8 @@ export default function TransferredNft({ nft }) {
         <div className='success-nft-info__wrapper'>
             <div className="transferred-nft">
                 <div className='nft-image-name'>
-                    <img src={image} alt={name} />
-                    <div classNam="transferred-nft-name">{name}</div>
+                    {animation_url ? <video src={animation_url}></video>:<img src={image} alt={name} />}
+                    <div className="transferred-nft-name">{name}</div>
                 </div>
                 <TxStatus status={txn ? txnStatus : "failed"} />
             </div> 
@@ -84,7 +84,7 @@ export default function TransferredNft({ nft }) {
             <div className="transferred-nft-hashes">
                 <div className="chain-hash">
                     <span>{depText}:</span>
-                    <a target="_blank" href={`${chainsConfig[from.key]?.tx}/${hashes?.depHash}`}>
+                    <a target="_blank" href={`${chainsConfig[from.key]?.tx}/${hashes?.depHash || txn.hash}`}>
                         { hashes.depHash ? `${hashes?.depHash?.substring(0, getSubstringValue() || 10)}...${hashes?.depHash?.substring(hashes?.depHash?.length - 3)}` : '...'}</a>
                 </div>
                 <div className="chain-hash">

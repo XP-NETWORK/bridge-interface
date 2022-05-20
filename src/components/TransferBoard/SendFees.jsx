@@ -2,14 +2,16 @@ import BigNumber from 'bignumber.js';
 import React, { useState } from 'react'
 import { LittleLoader } from '../innercomponents/LittleLoader';
 import { useDispatch, useSelector } from 'react-redux';
-import { chainsConfig } from '../values';
+import { chainsConfig, CHAIN_INFO } from '../values';
 import { getFactory,  handleChainFactory,  setClaimablesAlgorand, setNFTS } from "../../wallet/helpers"
 import { setBigNumFees } from '../../store/reducers/generalSlice';
 import { setOriginalFee } from '../../store/reducers/settingsSlice';
 import { useEffect } from 'react';
+import { useWeb3React } from "@web3-react/core";
 
 function SendFees() {
     const dispatch = useDispatch()
+    const balance = useSelector(state => state.general.balance)
     const to = useSelector(state => state.general.to)
     const from = useSelector(state => state.general.from)
     const account = useSelector(state => state.general.account)
@@ -21,6 +23,8 @@ function SendFees() {
     const Web3Utils = require("web3-utils");
     const [estimateInterval, setEstimateInterval] = useState()
     const [loading, setLoading] = useState(false)
+
+
 
     async function estimate () {
         let fact
@@ -71,7 +75,13 @@ function SendFees() {
 
           
             dispatch(setBigNumFees(bigNum))
-            const fees =  await Web3Utils.fromWei(bigNum, "ether")
+            let fees
+            if(from.type === "Tron" || from.type === "Algorand"){
+                fees = bigNum / 1e6
+            }
+            else{
+                fees =  await Web3Utils.fromWei(bigNum, "ether")
+            }
             setFees(+(fees*selectedNFTList.length))
            
         } catch (error) {
@@ -94,8 +104,7 @@ function SendFees() {
 
     const config = chainsConfig[from?.text]
 
-    useEffect( () => {
-        
+    useEffect(() => {
         if(selectedNFTList.length > 0){ 
            (async () => {
             setLoading(true)
@@ -117,11 +126,19 @@ function SendFees() {
         return () => clearInterval(s)
     }, [to])
 
+    // useEffect(async() => {
+    //     const balance = await getBalance()
+    //     setBalance(balance)
+    // }, [])
+    
+
     return (
         <div className="fees">
             <div className="fees__title">Fees</div>
-            {loading? <LittleLoader/> :  <span>{fees && fees > 0  ? from.key === 'Tezos' ? ( new BigNumber(fees).multipliedBy(1e12).toString()) : fees?.toFixed(getNumToFix(fees)) : '0'} {config?.token}</span>}
-           
+            <div className="fees__bank">
+                {balance && <span className='fees__balance'>{`Balance: ${balance.toFixed(5)} ${config?.token}`}</span>}
+                {loading? <LittleLoader/> :  <span>{fees && fees > 0  ? from.key === 'Tezos' ? ( new BigNumber(fees).multipliedBy(1e12).toString()) : fees?.toFixed(getNumToFix(fees)) : '0'} {config?.token}</span>}
+            </div>
         </div>
     )
 }

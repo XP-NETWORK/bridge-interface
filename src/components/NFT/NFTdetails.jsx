@@ -153,7 +153,6 @@ function Attribute(props) {
 
   const { trait_type, display_type, value } = props;
   if(trait_type === "Original Chain"){
-    console.log("🚀 ~ file: NFTdetails.jsx ~ line 148 ~ Attribute ~ value", chainsConfig[value]?.img)
     
   }
   return (

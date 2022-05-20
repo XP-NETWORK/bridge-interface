@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { setSelectedNFTList,removeFromSelectedNFTList } from "../../store/reducers/generalSlice";
 import NFTdetails from './NFTdetails'
@@ -18,29 +18,35 @@ import {ReactComponent as CheckComp} from "../../assets/img/icons/blue_check-sma
 
 export default function NFTcard({ nft, index, claimables }) {
 
-    const from = useSelector(state => state.general.from)
     const dispatch = useDispatch();
     const [detailsOn, setDetailsOn] = useState(false)
     const search = useSelector(state => state.general.NFTListSearch)
     const testnet = useSelector(state => state.general.testNet)
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
-    const isSelected = selectedNFTs.filter(
+    const [imageErr, setImageErr] = useState(false)
+    const [isVisible, setIsVisible] = useState()
+    
+    const callBackWhenObserver = entries => {
+      const [entry] = entries;
+      setIsVisible(entry.isIntersecting)
+    }
+    const cardRef = useRef(null)
+    const options = useMemo(() => {
+      return {
+          root: null,
+          tootMargin: "0px",
+          threshold: 0.3
+      }
+  }, [])
+
+    let isSelected = selectedNFTs.filter(
       (n) =>
         n.native.tokenId === nft.native.tokenId &&
         n.native.contract === nft.native.contract &&
         n.native.chainId === nft.native.chainId
     )[0];
     
-    const getBase64Image = (imageUrl) => {
-      var canvas = document.createElement("canvas");
-      const img = new Image(imageUrl)
-      canvas.width = img.width;
-      canvas.height = img.height;
-      var ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0);
-      var dataURL = canvas.toDataURL("image/png");
-      return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-    }
+
     
     function addRemoveNFT(chosen) {
       if (!isSelected) {
@@ -51,21 +57,34 @@ export default function NFTcard({ nft, index, claimables }) {
   }
 
     useEffect(async() => {
+      const observer = new IntersectionObserver(callBackWhenObserver, options)
+      const currentTarget = cardRef.current
+      if(currentTarget) observer.observe(currentTarget)
+      return () => {
+        if(currentTarget){
+          observer.unobserve(currentTarget)
+        }
+      }
+    },[cardRef, options])
+
+    useEffect(async() => {
        if(!nft.dataLoaded){
-         await parseEachNFT(nft, index, testnet, claimables)
+         if(isVisible){
+           await parseEachNFT(nft, index, testnet, claimables)
+          }
        }
-    },[])
+    },[isVisible])
     
 
     return (
       <>
-      {isShown(search, nft)?  <div className={`nft-box__wrapper`}  >
-      { !nft.dataLoaded ? <Preload /> : 
+      {isShown(search, nft) ?  <div className={`nft-box__wrapper`} ref={cardRef} >
+      { !nft?.dataLoaded ? <Preload /> : 
       <div onClick={() => nft.whitelisted && !detailsOn && !claimables ? addRemoveNFT(nft, index): undefined } className={nft.whitelisted ? "nft__card--selected" : "nft__card"}>
         <div className="nft__main">
-          { nft.uri && isValidHttpUrl(nft.uri, index) ? 
+          { nft.uri || imageErr ? 
             nft.animation_url && nft.image ? <VideoAndImage index={index} videoUrl={nft.animation_url} imageUrl={nft.image} />
-          : nft.image && !nft.animation_url ? <img loading="lazy" alt=""  src={setupURI(nft.image)} /> 
+          : nft.image && !nft.animation_url ? <img loading="lazy" alt="" onError={() => setImageErr(true)}  src={setupURI(nft.image)} /> 
           : !nft.image && nft.animation_url ? <video controls={false}  playsInline={true} autoPlay={true} loop={true}  muted={true} src={setupURI(nft.animation_url)} />
           : [nft.animation_url,nft.image]?.length > 0 && <VideoOrImage urls={[nft.animation_url,nft.image]} i={index} />
           : <BrockenUtlGridView />
@@ -81,6 +100,5 @@ export default function NFTcard({ nft, index, claimables }) {
       </div>
       }
     </div>: null}
-     
-      </>)
+    </>)
 }

@@ -1,15 +1,14 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { setReset } from "../../store/reducers/generalSlice";
 
 export const ReturnBtn = () => {
-  const dispatch = useDispatch();
+
   const widget = useSelector((state) => state.general.widget);
 
   return widget ? (
     <div className="returnBtn">
-      <button onClick={() => dispatch(setReset())}>{"< Back"}</button>
+      <button onClick={() => window.open(`/connect?widget=true&wsettings=true`, "_self")}>{"< Back"}</button>
     </div>
   ) : null;
 };

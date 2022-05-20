@@ -79,7 +79,7 @@ function NFTworng() {
   return (
     <div>
       <Modal
-        animation={false}
+        animation="false"
         show={showWrong}
         onHide={handleClose}
         className="nftWorng"

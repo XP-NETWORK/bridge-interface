@@ -117,7 +117,6 @@ function ConnectAlgorand({nftToOptIn, testnet}) {
      if(algorandAccountToOptIn){
         try {
           const response = await axios.get(nftToOptIn)
-          // console.log("🚀 ~ file: ConnectAlgorand.jsx ~ line 117 ~ useEffect ~ response", response.data)
           nft = {
             image: response.data.image,
             nftId: response.data.wrapped.assetID,
@@ -135,7 +134,7 @@ function ConnectAlgorand({nftToOptIn, testnet}) {
     <Modal
       show={connectClaimAlgorand}
       onHide={handleClose}
-      animation={false}
+      animation="false"
       className="ChainModal"
     >
       { !algorandAccountToOptIn ?

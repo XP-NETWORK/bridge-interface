@@ -5,6 +5,10 @@
     gap: 10px;
 }
 
+.mobile-nfts__body .empty__row{
+    display: none;
+}
+
 .empty__box{
     width: 200px;
     height: 267px;

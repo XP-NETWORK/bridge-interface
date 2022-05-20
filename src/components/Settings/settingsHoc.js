@@ -8,37 +8,37 @@ import {
   initialState,
 } from "../../store/reducers/settingsSlice";
 
-
 import { debounce } from "../helpers";
 import { usePrevious } from "./hooks";
 
- const Web3Utils = require("web3-utils");
+const Web3Utils = require("web3-utils");
 
 const settingsHoc = (Wrapped) => (props) => {
-  const { settings, widget, selectedNFTList } = useSelector(({ settings, general :{selectedNFTList, widget}}) => ({
-    settings,
-    selectedNFTList,
-    widget
-  }));
-
-
+  const { settings, widget, selectedNFTList } = useSelector(
+    ({ settings, general: { selectedNFTList, widget } }) => ({
+      settings,
+      selectedNFTList,
+      widget,
+    })
+  );
 
   const [copied, setCopied] = useState(false);
   const [activeChainsNumber, setActiveChains] = useState(activeChains.length);
   const [fixedHeader, setFixedHeader] = useState(false);
   const [toggleEditor, onToggleEditor] = useState(false);
   const [debouncedAcc, setDebouncedAcc] = useState({
-    key: '',
-    val: ''
-  })
+    key: "",
+    val: "",
+  });
   //const [showLink, onToggleShow] = useState(true);
 
   const dispatch = useDispatch();
 
   const list = useRef(null);
-  
+
   const {
     backgroundColor,
+    modalBackground,
     color,
     fontSize,
     btnColor,
@@ -61,13 +61,11 @@ const settingsHoc = (Wrapped) => (props) => {
     bridgeState,
     showLink,
     affiliationFees,
-    originalFees
+    panelBackground,
   } = settings;
   console.log(showLink);
 
   const prevSelected = usePrevious(selectedChains);
-
-
 
   const onClickEditor = () => {
     document.querySelector(".nftContainer").style = `margin-left: ${
@@ -86,14 +84,15 @@ const settingsHoc = (Wrapped) => (props) => {
 
   const deboucedSet = (e, key, debounce) => {
     dispatch(setSettings({ ...settings, [key]: e }));
-  }
-
+  };
 
   useEffect(() => {
-    debounce((arg) =>  dispatch(setSettings(arg)), 1000)({ ...settings, [debouncedAcc.key]: debouncedAcc.val })
-  }, [debouncedAcc])
+    debounce(
+      (arg) => dispatch(setSettings(arg)),
+      1000
+    )({ ...settings, [debouncedAcc.key]: debouncedAcc.val });
+  }, [debouncedAcc]);
 
-  console.log(activeChainsNumber);
   const chainCheck = (val) => {
     console.log(val);
     const checked = selectedChains.includes(val);
@@ -151,7 +150,9 @@ const settingsHoc = (Wrapped) => (props) => {
       `${window.location.href
         .replace("#", "")
         .replace("wsettings=true", "")}background=${backgroundColor &&
-        backgroundColor.split("#")[1]}&color=${color &&
+        backgroundColor.split("#")[1]}&panelBackground=${panelBackground &&
+        panelBackground.split("#")[1]}&modalBackground=${modalBackground &&
+          modalBackground.split("#")[1]}&color=${color &&
         color.split("#")[1]}&fontSize=${fontSize &&
         fontSize}&btnColor=${btnColor &&
         btnColor.split("#")[1]}&btnBackground=${btnBackground &&
@@ -161,17 +162,21 @@ const settingsHoc = (Wrapped) => (props) => {
         "-"
       )}&cardBackground=${cardBackground &&
         cardBackground.split("#")[1]}&cardBackgroundBot=${cardBackgroundBot &&
-          cardBackgroundBot.split("#")[1]}&cardColor=${cardColor &&
-            cardColor.split("#")[1]}&cardRadius=${cardRadius &&
+        cardBackgroundBot.split("#")[1]}&cardColor=${cardColor &&
+        cardColor.split("#")[1]}&cardRadius=${cardRadius &&
         cardRadius}&secondaryColor=${secondaryColor &&
         secondaryColor.split("#")[1]}&accentColor=${accentColor &&
         accentColor.split("#")[1]}&borderColor=${borderColor &&
         borderColor.split("#")[1]}&iconColor=${iconColor &&
         iconColor.split("#")[1]}&tooltipBg=${tooltipBg &&
-          tooltipBg.split("#")[1]}&tooltipColor=${tooltipColor &&
-            tooltipColor.split("#")[1]}&wallets=${selectedWallets.join(
+        tooltipBg.split("#")[1]}&tooltipColor=${tooltipColor &&
+        tooltipColor.split("#")[1]}&wallets=${selectedWallets.join(
         "-"
-      )}&bridgeState=${JSON.stringify(bridgeState)}&showLink=${showLink}&affiliationFees=${affiliationFees ? +affiliationFees/100 + 1:1}`,
+      )}&bridgeState=${JSON.stringify(
+        bridgeState
+      )}&showLink=${showLink}&affiliationFees=${
+        affiliationFees ? +affiliationFees / 100 + 1 : 1
+      }`,
     [settings]
   );
 
@@ -212,8 +217,6 @@ const settingsHoc = (Wrapped) => (props) => {
     );
   };
 
-
-
   useEffect(() => {
     if (prevSelected) {
       const difference = prevSelected.filter(
@@ -233,9 +236,6 @@ const settingsHoc = (Wrapped) => (props) => {
       }
     }
   }, [selectedChains]);
-
-
-
 
   const toggleShow = () =>
     dispatch(
@@ -273,11 +273,11 @@ const settingsHoc = (Wrapped) => (props) => {
     dispatch(
       setSettings({
         ...settings,
-        selectedChains: [selectedChains[0], selectedChains[1]]
+        selectedChains: [selectedChains[0], selectedChains[1]],
       })
     );
     setActiveChains(2);
-  }
+  };
 
   return (
     <Wrapped

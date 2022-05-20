@@ -10,6 +10,7 @@ import docs from "../assets/img/nav/docs.svg"
 import github from "../assets/img/nav/github.svg"
 import video from "../assets/img/nav/vid.svg"
 import xpnet from "../assets/img/nav/xpnet.svg"
+import message from "../assets/img/nav/message.svg"
 import UserConnect from "../components/User/UserConnect";
 import { setShowVideo } from "../store/reducers/generalSlice";
 import {ReactComponent as Hamburger} from "../assets/img/nav/burger.svg"
@@ -61,10 +62,10 @@ function NavBar() {
                                 <div className="nav-link__icon"><img src={about} alt="" /></div>
                                 <div className="nav-link__txt">About</div>
                             </Nav.Link> */}
-                            {/* <Nav.Link target="_blank" href="##">
-                                <div className="nav-link__icon"><img src={chains} alt="" /></div>
-                                <div className="nav-link__txt">Explorer</div>
-                            </Nav.Link> */}
+                            <Nav.Link target="_blank" href='https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot'>
+                                <div className="nav-link__icon"><img src={message} alt="" /></div>
+                                <div className="nav-link__txt">Helpcenter</div>
+                            </Nav.Link>
                             <Nav.Link className="mob-link"  target="_blank" href="https://docs.xp.network/docs/Multibridge2.0/faq">
                                 <div className="nav-link__icon"><img src={faq} alt="" /></div>
                                 <div className="nav-link__txt">FAQ</div>
@@ -142,6 +143,12 @@ function NavBar() {
                                         <div className="drop-item">
                                             <img src={xpnet} alt="" />
                                             <div className="drop-icon">XP.NETWORK</div>
+                                        </div>
+                                    </Dropdown.Item>
+                                    <Dropdown.Item href='https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot' target="_blank">
+                                        <div className="drop-item">
+                                            <img src={message} alt="" />
+                                            <div className="drop-icon">Helpcenter</div>
                                         </div>
                                     </Dropdown.Item>
                                     </div>

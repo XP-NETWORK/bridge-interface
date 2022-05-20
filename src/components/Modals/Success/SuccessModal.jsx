@@ -10,10 +10,12 @@ import { useEffect } from "react";
 import { setNFTS, socket } from "../../../wallet/helpers";
 
 
+
 import {
   cleanTxnHashArr,
   connectAlgorandWalletClaim,
   removeFromSelectedNFTList,
+  setNFTSetToggler,
   setTxnStatus,
 } from "../../../store/reducers/generalSlice";
 import "./SuccessModal.css";
@@ -49,7 +51,8 @@ export default function SuccessModal() {
       if (txn) dispatch(removeFromSelectedNFTList(nft));
     });
     dispatch(cleanTxnHashArr());
-    setNFTS(address, from.key)
+    dispatch(setNFTSetToggler())
+    // setNFTS(address, from.key, undefined, "success")
   };
 
   const getSubstringValue = () => {
@@ -79,7 +82,7 @@ export default function SuccessModal() {
 
   const toShow = () => {
     return txnHashArr?.length ? true : false;
-    // return true
+    return true
   };
 
   const getExplorer = () =>{
@@ -87,32 +90,22 @@ export default function SuccessModal() {
   }
 
   useEffect(() => {
-    // debugger
-    socket.on("incomingEvent", async e => {
-      dispatch(setTxnStatus(e))
-    });
-    socket.on("updateEvent", async e => {
-      dispatch(setTxnStatus(e))
-    })
-    return () => {
-      if (socket) {
-      socket.off("incomingEvent");
-      socket.off("updateEvent");
-      }
+      socket.on("incomingEvent", async e => {
+        dispatch(setTxnStatus(e))
+      });
+      socket.on("updateEvent", async e => {
+        dispatch(setTxnStatus(e))
+      })
+      return () => {
+        if (socket) {
+        socket.off("incomingEvent");
+        socket.off("updateEvent");
+        }
     }
   }, [])
   
-
-  useEffect(() => {
-    if (txnHashArr && txnHashArr.length > 0 && to && to.key === "Algorand") {
-      dispatch(connectAlgorandWalletClaim(true));
-    }
-  }, [txnHashArr]);
-
   return (
     <>
-      {/* <ConnectAlgorand /> */}
-      <ClaimAlgorandNFT />
       <Modal animation={false} className="success-modal" show={toShow()}>
         <span onClick={handleClose} className="success-modal-close">
           <div className="close-modal">
@@ -181,14 +174,14 @@ export default function SuccessModal() {
             </div>
             <div className="success-info-item">
               <div className="info-item-label">Destination Address</div>
-              <div className="success-hash">
+              <a className="success-hash" href={`${CHAIN_INFO[to?.text]?.blockExplorerUrls}${receiver}`} target="_blank">
                 {receiver
                   ? `${receiver.substring(
                       0,
                       getSubstringValue() || 10
                     )}...${receiver.substring(receiver.length - 6)}`
                   : "test"}
-              </div>
+              </a>
             </div>
           </div>
           <div className="success-info-box">

@@ -18,7 +18,6 @@ export default function VeChainWallet({close}) {
 
   const handleConnect = async () => {
     const account = await connectSync2(testnet)
-    console.log("🚀 ~ file: VeChainWallet.jsx ~ line 21 ~ handleConnect ~ account", account)
     dispatch(setSync2(account))
     close()
   }

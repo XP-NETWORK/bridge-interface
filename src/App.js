@@ -21,19 +21,10 @@ import WSettings from "./components/Settings";
 
 function App() {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.general);
   const axios = require("axios");
   const [nftToOptIn, setNFTToOptIn] = useState()
   const [testnet, setTestnet] = useState()
-  const checkValidators = async () => {
-    let res;
-    try {
-      res = await axios.get("https://bridgestatus.herokuapp.com/status");
-    } catch (error) {
-      console.error(error);
-    }
-    if (res?.data) dispatch(setValidatorsInf(res.data));
-  };
+  const state = useSelector((state) => state.general )
 
   useEffect(() => {
     dispatch(setTestNet(window.location.href.indexOf("/testnet") > 0));
@@ -80,21 +71,6 @@ function App() {
       console.log(error);
     })
   }, []);
-
-  // useEffect(() => {
-  //   if (algorandAccount) {
-  //     try {
-  //       setClaimablesAlgorand(algorandAccount);
-  //     } catch (err) {
-  //       console.log(err, "Algorand claimables error");
-  //     }
-  //   }
-  // }, [algorandAccount]);
-
-  useEffect(async () => {
-    if (!state.validatorsInfo) await checkValidators();
-  }, [state.validatorsInfo]);
-
 
   
   return (

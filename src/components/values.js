@@ -24,6 +24,8 @@ export const EVM = "EVM";
 export const ELROND = "Elrond";
 export const TEZOS = "TEZOS";
 
+const biz = window.location.hostname.includes("localhost") ||  window.location.hostname.includes("staging") || window.location.hostname.includes("testing")
+
 export const chains = [
   {
     type: "EVM",
@@ -31,6 +33,7 @@ export const chains = [
     text: "Ethereum",
     value: "Ethereum",
     chainId: 1,
+    tnChainId: 3,
     order: 3,
     image: { avatar: true, src: Etherium },
     maintenance: false,
@@ -50,17 +53,17 @@ export const chains = [
     testNet: true,
     mainnet: true,
   },
-  {
+  /*{
     type: "Tron",
     key: "Tron",
     text: "Tron",
     value: "Tron",
     order: 11,
     image: { avatar: true, src: Tron },
-    maintenance: true,
+    maintenance: biz ? false : true,
     testNet: true,
     mainnet: true,
-  },
+  },*/
   {
     type: "Elrond",
     key: ELROND,
@@ -111,17 +114,17 @@ export const chains = [
     mainnet: true,
     newChain: true
   },
-  {
+ /* {
     type: "Algorand",
     key: "Algorand",
     text: "Algorand",
     value: "Algorand",
     order: 11,
     image: { avatar: true, src: Algorand },
-    maintenance: true,
+    maintenance: biz ? false : true,
     testNet: true,
     mainnet: true,
-  },
+  },*/
   {
     type: "EVM",
     key: "xDai",
@@ -134,7 +137,7 @@ export const chains = [
     testNet: false,
     mainnet: true,
   },
-  {
+  /*{
     type: "Solana",
     key: "Solana",
     text: "Solana",
@@ -147,7 +150,7 @@ export const chains = [
     testNet: false,
     mainnet: false,
   },
-  {
+  /*{
     type: "Cardano",
     key: "Cardano",
     text: "Cardano",
@@ -172,7 +175,7 @@ export const chains = [
     maintenance: false,
     testNet: false,
     mainnet: false,
-  },
+  },*/
   {
     type: "EVM",
     key: "Fuse",
@@ -237,7 +240,7 @@ export const chains = [
     image: { avatar: true, src: One },
     maintenance: false,
     testNet: false,
-    mainnet: false,
+    mainnet: biz ? true : false,
     newChain: true,
   },
   {
@@ -272,12 +275,12 @@ export const chains = [
     value: "GateChain",
     tnChainId: 85,
     chainId: 86,
-    order: 1,
+    order: 0,
     image: {avatar: true, src: GT },
     maintenance: false,
     testNet: false,
-    mainnet: false,
-    newChain: false
+    mainnet: biz ? true : false,
+    newChain: true
   },
   {
     type: "VeChain",
@@ -289,9 +292,9 @@ export const chains = [
     order: 4,
     image: {avatar: true, src: VET},
     maintenance: false,
-    mainnet: false,
+    mainnet: biz ? true : false,
     testNet: false,
-    newChain: false
+    newChain: true
   }
 ];
 
@@ -314,7 +317,7 @@ export const chainsConfig = {
     token: "TRX",
     img: Tron,
     rpc: "https://api.trongrid.io/",
-    tx: "https://tronscan.org/#/transaction/tx/",
+    tx: "https://tronscan.org/#/transaction/",
     Chain: Chain.TRON,
   },
   Ethereum: {
@@ -324,6 +327,7 @@ export const chainsConfig = {
     rpc:
       "https://mainnet.infura.io/v3/",
     tx: "https://etherscan.io/tx/",
+    testTx: "https://ropsten.etherscan.io/tx/",
     token: "ETH",
     Chain: Chain.ETHEREUM,
   },
@@ -464,7 +468,8 @@ export const chainsConfig = {
     tnRpc: "https://sync-testnet.veblocks.net",
     chainId: 39,
     Chain: Chain.VECHAIN,
-    tx: "https://explore-testnet.vechain.org/transactions/"
+    tx: "https://explore-testnet.vechain.org/transactions/",
+    testTx: "https://explore-testnet.vechain.org/transactions/"
   }
 
 };
@@ -493,6 +498,10 @@ export const coins = [
 ];
 
 export const TESTNET_CHAIN_INFO = {
+  Ethereum: {
+    nonce: 5,
+    chainId: 3
+  },
   BSC: {
     nonce: 4,
     chainId: 97,
@@ -595,7 +604,7 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpcUrl: "https://matic-testnet-archive-rpc.bwarelabs.com",
     contract: "0x9E93256Df2a4fE757f8AEB533D3943E56ba8CF94",
-    blockExplorerUrls: "https://mumbai.polygonscan.com/address/",
+    blockExplorerUrls: "https://polygonscan.com/address/",
     testBlockExplorerUrls: "https://mumbai.polygonscan.com/address/"
   },
   Fantom: {
@@ -683,7 +692,6 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpcRrl: "https://babel-api.mainnet.iotex.io",
     chainId: 4689,
-    // tnChainId: 4690,
     contract: "",
     blockExplorerUrls: "https://iotexscan.io/address/",
     testBlockExplorerUrls: "https://testnet.iotexscan.io/"
@@ -704,8 +712,8 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     rpc: "https://evm.gatenode.cc",
     chainId: 86,
-    blockExplorerUrls: "https://gatescan.org/address/?lang=en_US",
-    testBlockExplorerUrls: "https://gatescan.org/testnet/address?lang=en_US"
+    blockExplorerUrls: "https://gatescan.org/address/",
+    testBlockExplorerUrls: "https://gatescan.org/testnet/address/"
   },
   VeChain: {
     native: coins[19],

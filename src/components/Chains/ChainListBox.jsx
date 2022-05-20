@@ -1,14 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { chains, CHAIN_INFO, TESTNET_CHAIN_INFO } from "../../components/values";
-import { setChainModal, setDepartureOrDestination, setTo, setFrom, setChainSearch, setSwitchDestination, setWrongNetwork } from "../../store/reducers/generalSlice";
+import { setChainModal, setDepartureOrDestination, setTo, setFrom, setChainSearch, setSwitchDestination, setValidatorsInf, setSelectedNFTList, cleanSelectedNFTList} from "../../store/reducers/generalSlice";
 import Chain from "./Chain"
 import ChainSearch from "../Chains/ChainSearch"
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
-import { filterChains } from "./ChainHelper";
 import { useWeb3React } from "@web3-react/core";
-import { chainsConfig } from "..//values"
 import { getAddEthereumChain } from "../../wallet/chains";
 import { useLocation } from "react-router-dom";
 
@@ -22,7 +20,6 @@ export default function ChainListBox(props) {
   const globalTestnet = useSelector((state) => state.general.testNet);
   const show = useSelector((state) => state.general.showChainModal);
   const switchChain = useSelector((state) => state.general.switchDestination);
-  const widget = useSelector((state) => state.general.widget);
   const [fromChains, setFromChains] = useState(chains)
   const [toChains, setToChains] = useState(chains)
   const elrondAccount = useSelector(state => state.general.elrondAccount)
@@ -30,14 +27,28 @@ export default function ChainListBox(props) {
   const algorandAccount = useSelector(state => state.general.algorandAccount)
   const evmAccount = useSelector(state => state.general.account)
   const tronAccount = useSelector(state => state.general.tronWallet)
-  const walletconnect = useSelector(state => state.general.WalletConnect)
-  const { chainId, account } = useWeb3React()
+  const { account } = useWeb3React()
   const testnet = useSelector(state => state.general.testNet)
-  const OFF = { opacity: 0.6, pointerEvents: "none" };
+  const validatorsInfo = useSelector(state => state.general.validatorsInfo)
+  const Sync2 = useSelector(state => state.general.Sync2)
+  const axios = require('axios')
   
+
+
+  // const hideChain = chain => {
+  //   const version = 'staging'
+  //   //development
+  //   //staging
+  //   const hideChains = ["VeChain", "GateChain", "Harmony"]
+  //   if(version === 'development') return true
+  //   else if(hideChains.some(c => chain === c)){
+  //     return false
+  //   }
+  //   else return true
+  // }
+
   async function switchNetwork(chain) {
 // debugger
-console.log("switchNetwork")
     const info = testnet
       ? TESTNET_CHAIN_INFO[chain.key]
       : CHAIN_INFO[chain.key];
@@ -51,9 +62,6 @@ console.log("switchNetwork")
     } catch (error) {
       console.log(error);
       try {
-        const toHex = (num) => {
-          return "0x" + num.toString(16);
-        };
         const chain = getAddEthereumChain()[parseInt(chainId).toString()];
 
         const params = {
@@ -84,24 +92,38 @@ console.log("switchNetwork")
   
 }
 
+
+const checkValidators = async () => {
+  let res;
+  try {
+    res = await axios.get("https://bridgestatus.herokuapp.com/status");
+  } catch (error) {
+    console.error(error);
+  }
+  if (res?.data) dispatch(setValidatorsInf(res.data));
+};
+
   const handleClose = () => {
-    console.log("kgshjfgshjfgshdfgshdf")
     dispatch(setChainModal(false));
     dispatch(setDepartureOrDestination(""));
     dispatch(setSwitchDestination(false));
     dispatch(setChainSearch(""));
   };
 
+  useEffect(async () => {
+    if (!validatorsInfo) await checkValidators();
+  }, [validatorsInfo]);
+
 
   const chainSelectHandler = (chain) => {
     // debugger
         if (departureOrDestination === "departure") {
-          if((chain.chainId === to.chainId || (to.tnChainId && chain.tnChainId === to.tnChainId)) && (location.pathname === "/account" || location.pathname === "/testnet/account")){
-            console.log("bjasdjakdhakjdhakjsdh")
-          }
-          else if(from && account && (location.pathname === "/account" || location.pathname === "/testnet/account")){
+          if(from && account && (location.pathname === "/account" || location.pathname === "/testnet/account")){
+            let temp = from
             dispatch(setFrom(chain));
+            dispatch(setTo(temp))
             switchNetwork(chain)
+            dispatch(cleanSelectedNFTList())
             handleClose();
           } 
           else if (to && chain.key !== to.key) {
@@ -113,7 +135,21 @@ console.log("switchNetwork")
             dispatch(setFrom(chain));
             handleClose();
           }
-        } 
+        }
+        else if(location.pathname === "/account" || location.pathname === "/testnet/account"){
+          if(chain.chainId === from.chainId){
+            let temp = from
+            dispatch(setFrom(to));
+            switchNetwork(to)
+            dispatch(setTo(temp));
+            dispatch(cleanSelectedNFTList())
+            handleClose();
+          }
+          else{
+            dispatch(setTo(chain));
+            handleClose();
+          }
+        }
         else if (switchChain) {
           dispatch(setTo(chain));
           handleClose();
@@ -141,11 +177,12 @@ console.log("switchNetwork")
       sorted = chains.filter(chain => chain.text.toLowerCase().includes(chainSearch.toLowerCase()))
     }
     const onlyElrond = elrondAccount ? sorted.filter( chain => chain.type === "Elrond") : undefined
+    const onlyVeChain = evmAccount && Sync2 ? sorted.filter( chain => chain.type === "VeChain") : undefined
     const onlyEVM = evmAccount ? sorted.filter( chain => chain.type === "EVM") : undefined
     const onlyTron = tronAccount ? sorted.filter( chain => chain.type === "Tron") : undefined
     const onlyAlgo = algorandAccount ? sorted.filter( chain => chain.type === "Algorand") : undefined
     const onlyTezos = tezosAccount ? sorted.filter( chain => chain.type === "Tezos") : undefined
-    const set = onlyElrond || onlyEVM || onlyTron || onlyAlgo || onlyTezos || sorted
+    const set = onlyVeChain || onlyElrond || onlyEVM || onlyTron || onlyAlgo || onlyTezos || sorted
     setFromChains(set)
 
   }, [elrondAccount, tezosAccount, algorandAccount, tronAccount, evmAccount, chainSearch, to])
@@ -165,7 +202,7 @@ console.log("switchNetwork")
   }, [from, chainSearch, departureOrDestination])
   
   useEffect(() => {
-    if(from?.text === to?.text){
+    if(from?.text === to?.text && (!location.pathname === "/account" || !location.pathname === "/testnet/account")){
       dispatch(setTo(''))
     }
   }, [to, from]);
@@ -201,19 +238,19 @@ console.log("switchNetwork")
             {//! Show only mainnet TO chains //
               departureOrDestination === "destination" && !globalTestnet && toChains.map( chain => {
                 const { image, text, key, coming, newChain, maintenance, mainnet } = chain;
-                return (mainnet || coming) && from?.text !== chain.text && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
+                return (mainnet || coming) && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
               })
             }
             { //! Show only testnet FROM chains //
               departureOrDestination === "departure" && globalTestnet && fromChains.map( chain => {
                 const { image, text, key, coming, newChain, maintenance, testNet } = chain;
-                return testNet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
+                return testNet &&  <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
               })
             }
             {//! Show only testnet TO chains //
               departureOrDestination === "destination" && globalTestnet && toChains.map( chain => {
                 const { image, text, key, coming, newChain, maintenance, testNet } = chain;
-                return testNet && from?.text !== chain.text && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
+                return testNet && <Chain chainSelectHandler={chainSelectHandler} newChain={newChain} maintenance={maintenance} coming={coming} text={text} chainKey={key} filteredChain={chain} image={image} key={`chain-${key}`}/>
               })
             }
           </ul>

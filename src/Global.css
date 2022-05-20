@@ -869,6 +869,12 @@ li.nftSelecItem .Close:hover {
   padding-bottom: 10px;
 }
 
+.NftDetails .brocken-url{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
 .nftDetImg {
   flex-shrink: 0;
   height: 300px;
@@ -881,7 +887,7 @@ li.nftSelecItem .Close:hover {
 
 .nftDetImg img,
 .nftDetImg video {
-  height: 85%;
+  height: 75%;
   border-radius: 16px;
 }
 
@@ -1212,6 +1218,19 @@ span.statComp img {
 
 .fees__title{
   font-weight: 500;
+}
+
+.fees__bank{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.fees__balance{
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #62718A;
 }
 
 table.transferTable.table {

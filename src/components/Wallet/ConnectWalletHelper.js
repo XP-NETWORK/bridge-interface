@@ -95,11 +95,10 @@ export const connectSync2 = async(testnet) => {
 };
 
 // Algorand blockchain connection ( AlgoSigner )
-export const connectAlgoSigner =async (testnet) => {
+export const connectAlgoSigner = async (testnet) => {
   if (typeof window.AlgoSigner !== undefined) {
       try {
         await window.AlgoSigner.connect()
-        console.log("Algo: ", window.AlgoSigner);
         const algo = await window.AlgoSigner.accounts({
           ledger: testnet ? "TestNet" : 'MainNet'
         });
@@ -179,7 +178,6 @@ export const connectBeacon = async () => {
   const myAlgoConnect = new MyAlgoConnect();
   try {
     const accountsSharedByUser = await myAlgoConnect.connect()
-    console.log("MY Algo: ", myAlgoConnect);
     store.dispatch(setAlgorandAccount(accountsSharedByUser[0].address))
     store.dispatch(setMyAlgo(true))
   } catch (error) {
@@ -187,12 +185,13 @@ export const connectBeacon = async () => {
   }
 }
 
-export const onWalletConnect = async (activate, from) => {
+export const onWalletConnect = async (activate, from, testnet) => {
   const { rpc, chainId } = chainsConfig[from];
   try {
     const walletConnect = new WalletConnectConnector({
       rpc: {
         [chainId]: rpc,
+        network : testnet ? "testnet" : "mainnet"
       },
       chainId,
       qrcode: true,
@@ -222,7 +221,7 @@ const onClientConnect = ( maiarProvider ) => {
       store.dispatch(setStep(2))
     },
     onClientLogout: async () => {
-      store.dispatch(setReset())
+      store.dispatch(setQrCodeString(""));
     }
   }
 }

@@ -46,6 +46,7 @@ function Approval(props) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const WCProvider = useSelector((state) => state.general.WCProvider);
   const maiarProvider = useSelector((state) => state.general.maiarProvider);
+
   const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
   const algorandWallet = useSelector((state) => state.general.AlgorandWallet);
   const MyAlgo = useSelector((state) => state.general.MyAlgo);
@@ -85,7 +86,7 @@ function Approval(props) {
   };
 
   const approveEach = async (nft, signer, chain, index) => {
-    debugger;
+debugger
     const arr = new Array(index + 1).fill(0);
     const factory = await getFactory();
     if (
@@ -103,7 +104,6 @@ function Approval(props) {
         )[0];
         if (!isInApprovedNFTs) {
           try {
-            // console.log(chain, 'hello')
             const ap = await chain.approveForMinter(nft, signer);
             dispatch(updateApprovedNFTs(nft));
             setFinishedApproving(arr);
@@ -178,12 +178,11 @@ function Approval(props) {
       }
     } 
     else {
+      // debugger
       try {
         const factory = await getFactory();
         const chain = await factory.inner(Chain.ELROND);
-        const signer = maiarProvider
-          ? maiarProvider
-          : ExtensionProvider.getInstance();
+        const signer = maiarProvider || ExtensionProvider.getInstance();
         const swap = await chain.preTransfer(signer, nft, bigNumberFees);
 
         dispatch(updateApprovedNFTs(nft));
@@ -252,6 +251,9 @@ function Approval(props) {
     else if(selectedNFTList.length < 1){
       dispatch(setSelectNFTAlert(true))
     }
+    else if(!bigNumberFees){
+      console.log("no fees need to estimate")
+    }
     else{
       approveAllNFTs()
     }
@@ -312,7 +314,7 @@ function Approval(props) {
                 ? { pointerEvents: "none" }
                 : {}
             }
-            onClick={onClickHandler}
+            onClick={bigNumberFees ? onClickHandler : undefined}
             htmlFor="approveCheck"
           >
             <span className="checkCircle"></span>

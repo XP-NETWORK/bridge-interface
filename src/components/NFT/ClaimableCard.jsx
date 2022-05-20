@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { removeAlgorandClaimable, removeFromClaimables, setTransferLoaderModal } from '../../store/reducers/generalSlice'
+import { removeAlgorandClaimable, removeFromClaimables, setNFTSetToggler, setTransferLoaderModal } from '../../store/reducers/generalSlice'
 import { getAlgorandClaimables, getFactory, setClaimablesAlgorand, setNFTS } from '../../wallet/helpers'
 import MyAlgoConnect from '@randlabs/myalgo-connect';
 import { algoConnector } from "../../wallet/connectors.js"
@@ -52,11 +52,17 @@ export default function ClaimableCard({nft, index}) {
   }
 
   const optIn = async () => {
-    // debugger
+    debugger
     dispatch(setTransferLoaderModal(true))
     const factory = await getFactory()
     const algorand = await factory.inner(15)
-    const isOpted = await algorand.isOptIn(algorandAccount, nft.nftId)
+    let isOpted
+    try {
+      isOpted = await algorand.isOptIn(algorandAccount, nft.nftId)
+    } catch (error) {
+      console.log(error)
+      dispatch(setTransferLoaderModal(false))
+    }
 
     if(!isOpted) {
         const signer = await getAlgorandWalletSigner()
@@ -86,13 +92,9 @@ const claim = async () => {
       try {
           const c = await algorand.claimNft(signer, nft)
           if(c){
-            // dispatch(removeFromClaimables(index))
             dispatch(removeAlgorandClaimable(nft.nftId))
           }
-          setNFTS(algorandAccount, 'Algorand')
-              // setClaimablesAlgorand(algorandAccount)
-              // dispatch(removeAlgorandClaimable(nft.nftId))
-
+          dispatch(setNFTSetToggler())
       } catch(err) {
           dispatch(setTransferLoaderModal(false))
           console.log(err)

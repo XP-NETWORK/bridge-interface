@@ -6,17 +6,17 @@ import { setAlgorandClaimables, setBigLoader, setEachClaimables, setEachNFT, set
 import store from "../store/store";
 import io from "socket.io-client";
 
-// import { fetchURI } from "./getDataFromURL"
 
-// const testnet  = store.getState()?.general?.testNet
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
+const testnet = window.location.href.includes("testnet")
 const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/"
-
-export const socket = io(socketUrl, {
+const base64 = require('base-64');
+export const socket = io(testnet ? testnetSocketUrl : socketUrl, {
   path: "/socket.io",
 });
 const { Harmony } = require('@harmony-js/core')
 const axios = require("axios");
+
 
 export const setupURI = (uri) => {
   // debugger
@@ -57,15 +57,43 @@ const checkIfVideo = (url) => {
  
 
 const fetchURI = async uri => {
-  // debugger
-  let resp
   try {
-    resp = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`)
-    console.log(resp.data)
-    return resp.data
+    const { data, status, headers }  = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`)
+    if(headers["content-type"].includes("image") || headers["content-type"].includes("video")){
+      return headers["content-type"]
+    }
+    return data
   } catch (error) {
     console.log(error)
   }
+}
+
+const ipfsOrjson = (url) => {
+  if(url.includes("ipfs")){
+    return "ipfs"
+  }
+  else if(url.includes(".json")){
+    return "json"
+  }
+  else{
+    return undefined
+  }
+}
+
+function isJson(item) {
+  item = typeof item !== "string" ? JSON.stringify(item) : item;
+
+  try {
+      item = JSON.parse(item);
+  } catch (e) {
+      return false;
+  }
+
+  if (typeof item === "object" && item !== null) {
+      return item;
+  }
+
+  return false;
 }
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
@@ -84,7 +112,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftId: nft.nftId || undefined,
     appId: nft.appId || undefined
   }
-  if(uri.indexOf("http://") === -1 || uri.indexOf("https://") -1){
+  if(uri?.indexOf("http://") === -1 || uri?.indexOf("https://") -1){
     nftObj.dataLoaded = true
     nftObj.image = undefined
     nftObj.animation_url = undefined
@@ -139,14 +167,71 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftObj.animation_url = video 
     const image = !video ? checkIfImage(setupURI(uri)) : undefined
     nftObj.image = image 
-    const data = await fetchURI(setupURI(uri))
+    let data
+    if(isJson(uri)){
+      const { description, image, name } = isJson(uri)
+      nftObj.image = image
+      nftObj.name = name
+      nftObj.description = description
+    }
+    else if(uri){
+      data = await fetchURI(setupURI(uri))
+    }
     if(typeof data === 'object'){
       nftObj = {...nftObj, ...data}
+      if(!nftObj.image?.includes("http") && !nftObj.image?.includes("ipfs")){
+        nftObj.image = undefined
+      }
+      else if(nftObj.image?.includes(".json")){
+        const n = await fetchURI(setupURI(nftObj.image))
+        if(typeof n === "object"){
+          nftObj = {...nftObj, ...data, ...n}
+        }
+      }
       if(nftObj.data?.image_url){
         const image  = nftObj.data?.image
         nftObj.image = image
         nftObj.dataLoaded = true
-    }}
+      }
+    }
+    else if(data?.includes("image")){
+      nftObj.image = uri
+    }
+    else if(data?.includes("video")){
+      nftObj.animation_url = uri
+    }
+    else{
+        if(data){
+          let n 
+          try {
+            n = base64.decode(data)
+          } catch (error) {
+            console.log(error)
+          }
+          const json = JSON.parse(n)
+          nftObj.image =  setupURI(json.image)
+        }
+      }
+      if(nftObj.animation_url && nftObj.image){
+        if(ipfsOrjson(nftObj.animation_url)){
+          const n = await fetchURI(setupURI(nftObj.animation_url))
+          if(typeof n === "object"){
+            const imageFormat = n.formats[0]?.mimeType?.includes("image")
+            const videoFormat = n.formats[0]?.mimeType?.includes("video")
+            nftObj.image = imageFormat ? n.displayUri : undefined
+            nftObj.animation_url = videoFormat ? n.displayUri : undefined
+          }
+        }
+        if(ipfsOrjson(nftObj.image)){
+          const n = await fetchURI(setupURI(nftObj.image))
+          if(typeof n === "object"){
+            const imageFormat = n.formats[0]?.mimeType?.includes("image")
+            const videoFormat = n.formats[0]?.mimeType?.includes("video")
+            nftObj.image = imageFormat ? n.displayUri : undefined
+            nftObj.animation_url = videoFormat ? n.displayUri : undefined
+          }
+        }
+      }
       // axios.get(setupURI(uri)).then(resp => {
       //   nftObj = {...nftObj, ...resp.data}
       //   if(nftObj.data?.image_url){
@@ -168,7 +253,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
       // })
   }
 
-  if(!testnet && nft.native.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
+  if(!testnet && nft?.native?.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
     whitelisted = false
   }
   else if(!testnet){
@@ -190,13 +275,10 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
       nftObj.image = undefined
     }
   }
-  // if(nftObj.animation_url){
-  //   const animation = await checkIfVideo(nftObj.animation_url)
-  // }
-  if(claimables){
+  if(claimables && (!claimables[index]?.dataLoaded || !claimables[index]?.image || !claimables[index]?.animation_url)){
     store.dispatch(setEachClaimables({nftObj, index}))
   }
-  if(!NFTList[index].dataLoaded){
+  else if(!NFTList[index]?.dataLoaded || !NFTList[index]?.image || !NFTList[index]?.animation_url){
     store.dispatch(setEachNFT({nftObj, index}))
   }
 }
@@ -315,6 +397,7 @@ export const transformToDate = (date) => {
 
 
 export const getFactory = async () => {
+  // debugger
   const f = store.getState().general.factory;
   const testnet  = store.getState().general.testNet
 
@@ -341,7 +424,6 @@ export const getFac = async () => {
 
 
 export const handleChainFactory = async (someChain) => {
-  // debugger
   const factory = await getFactory();
   try {
     switch (someChain) {
@@ -391,7 +473,6 @@ export const handleChainFactory = async (someChain) => {
 };
 
 export const getNFTS = async (wallet, from) => {
-console.log("🚀 ~ file: helpers.js ~ line 355 ~ getNFTS ~ wallet", wallet)
   // debugger
   const hardcoded = new URLSearchParams(window.location.search).get('checkWallet')
   const { tronWallet } = store.getState().general
@@ -408,7 +489,6 @@ console.log("🚀 ~ file: helpers.js ~ line 355 ~ getNFTS ~ wallet", wallet)
     }
     const unique = {};
     try {
-      // .filter((n) => n.native).filter(n => n.uri)
       const allNFTs = response
         .filter((n) => {
           const { tokenId, contract, chainId } = n?.native;
@@ -462,8 +542,7 @@ export const getAlgorandClaimables = async (account) => {
 }
 
 
-export const setNFTS = async (w, from, testnet) => {
-  // debugger
+export const setNFTS = async (w, from, testnet, str) => {
   store.dispatch(setBigLoader(true))
   const res = await getNFTS(w, from, testnet)
   store.dispatch(setPreloadNFTs(res.length))
@@ -472,7 +551,7 @@ export const setNFTS = async (w, from, testnet) => {
 }
 
 export function isValidHttpUrl(string, index) {
-  // debugger
+
 
   let url;
   if((string.includes("data:image/") || string.includes("data:application/"))) return true

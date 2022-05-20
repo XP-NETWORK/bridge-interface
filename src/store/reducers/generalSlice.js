@@ -12,13 +12,20 @@ const initialState = {
   currentTx: 0,
   bigLoader: true,
   innerWidth: 0,
-  alert: true
+  alert: true,
+
 };
 
 const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
+    setBalance(state, action){
+      state.balance = action.payload
+    },
+    setNFTSetToggler(state, action){
+      state.NFTSetToggler = !state.NFTSetToggler
+    },
     setGitLatestCommit(state, action){
       state.gitLatestCommit = action.payload
     },
@@ -352,11 +359,15 @@ const generalSlice = createSlice({
     setSync2Connecx(state, action){
       state.sync2Connex = action.payload
     },
-
+    setChangeWallet(state, action){
+      state.changeWallet = action.payload
+    }
   },
 });
 
 export const {
+  setNFTSetToggler,
+  setChangeWallet,
   setNoApprovedNFTAlert,
   setPasteDestinationAlert,
   setSelectNFTAlert,
@@ -440,7 +451,8 @@ export const {
   setQrImage,
   setWSettings,
   setWalletsModal,
-  setGitLatestCommit
+  setGitLatestCommit,
+  setBalance
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

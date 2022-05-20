@@ -11,10 +11,7 @@ import {
 import { chains } from "../values";
 import { power } from "../Settings/assets/power.js";
 import mobileBanner from "../Settings/assets/img/mobileOnlyBanner.svg";
-import { usePrevious } from "../Settings/hooks";
-import { ColorLensTwoTone } from "@mui/icons-material";
 
-const setBanner = () => {};
 
 const mobileOnlyBanner = `
 <div class="mobileOnlyBanner"><img src=${mobileBanner} alt="mobileOnlyXP"/><div class="testComp">
@@ -42,7 +39,7 @@ export default function Widget() {
 
   const dispatch = useDispatch();
 
-  const [state, setState] = useState({});
+
 
   useEffect(() => {
     // debugger
@@ -62,6 +59,8 @@ export default function Widget() {
 
     if (widget && !wsettings) {
       const backgroundColor = p.get("background");
+      const panelBackground = p.get("panelBackground");
+      const modalBackground = p.get("modalBackground");
       const color = p.get("color");
       const secondaryColor = p.get("secondaryColor");
       const fontFamily = p.get("fontFamily");
@@ -86,6 +85,8 @@ export default function Widget() {
       dispatch(
         setSettings({
           backgroundColor: "#" + backgroundColor,
+          panelBackground: "#" + panelBackground,
+          modalBackground: "#" + modalBackground,
           color: "#" + color,
           fontFamily,
           fontSize,
@@ -124,6 +125,8 @@ export default function Widget() {
 
   const {
     backgroundColor,
+    panelBackground,
+    modalBackground,
     color,
     fontFamily,
     fontSize,
@@ -248,22 +251,38 @@ export default function Widget() {
         }
 
 
-        .modal-content, .modal-content .walletListBox, .nftInfBox, .NftSelect, .success-nft-info__wrapper {
-            background: ${backgroundColor ? backgroundColor : ""};
+        .modal-content, .modal-content .walletListBox, .nftInfBox, .success-nft-info__wrapper, .serchInput {
+            background: ${modalBackground ? modalBackground : ""};
             filter: brightness(90%);
         }
+
 
         .success-nft-info__wrapper {
           border-color: ${backgroundColor ? backgroundColor : ""};
         }
 
-        .approval, .fees, .selected-nfts-item, .nftListed:hover, .success-info-box {
-          background: ${backgroundColor ? backgroundColor : ""};
+        .NftSelect {
+          background: ${panelBackground ? panelBackground : ""};
+        
+        }
+
+        .selChain:hover {
+          background: ${panelBackground ? panelBackground : ""};
+          filter: brightness(105%);
+        }
+
+        .selChain:hover {
+          border-top-left-radius: 8px;
+          border-top-right-radius: 8px;
+        }
+
+        .approval, .fees, .selected-nfts-item, .nftListed:hover, .success-info-box, .chain-switch, .destination__address input{
+          background: ${panelBackground ? panelBackground : ""};
           filter: brightness(94%);
         }
 
-        .selected-nfts-item:hover, .destination__address input, .chain-hash {
-          background: ${backgroundColor ? backgroundColor : ""};
+        .selected-nfts-item:hover,  .chain-hash {
+          background: ${panelBackground ? panelBackground : ""};
           filter: brightness(92%);
         }
 
@@ -278,9 +297,9 @@ export default function Widget() {
         }
 
         .nft_selectBox, .transfer-board, .destination__address input:focus {
-          background: ${backgroundColor ? backgroundColor : ""};
+          background: ${panelBackground ? panelBackground : ""};
           border-color: ${borderColor ? borderColor : ""};
-          filter: brightness(96%);
+          
         }
         
         .modal-title, .modalSelectOptionsText, .selChain, .seleDestiSele, .yourNft, .yourNft span, .sendNftTit, .nfts-item__name, .destination__address input, .destination__address input::placeholder,
@@ -297,7 +316,7 @@ export default function Widget() {
         }
 
         .desAddress input,  .desAddress input:focus,  .desAddress input:active, .empty__box, .nftChainItem,
-        .destination__address input, .chain-switch, .destination-props{
+        .destination__address input, .chain-switch, .destination-props, .NftSelect, .serchInput{
           border-color: ${borderColor ? borderColor : ""};
         }
 
@@ -334,11 +353,15 @@ export default function Widget() {
             border-color: ${btnBackground ? btnBackground : ""};   
         }
 
-        .connect-wallet__button--disabled, .transfer-button--disabled, .transfer-button {
+         .transfer-button--disabled, .transfer-button {
           border-color: ${btnColor ? btnColor : ""};   
           color:  ${btnColor ? btnColor : ""};
         }
 
+        .connect-wallet__button--disabled {
+          border-color: ${btnBackground ? btnBackground : ""};   
+          color:  ${btnBackground ? btnBackground : ""};
+        }
 
         a.themBtn.disabled span {
           position: relative;
@@ -387,6 +410,7 @@ export default function Widget() {
 
         .nftChainItem, .wllListItem {
           display: none;
+          cursor: pointer;
         }
 
         ${selectedChains
@@ -507,9 +531,9 @@ export default function Widget() {
           filter: brightness(95%);
         }
 
-        .clip {
+        .clip, .clip p {
           background: ${cardBackgroundBot? cardBackgroundBot : ''};
-          color: ${cardColor? cardColor : ''};
+          color: ${cardColor? cardColor : ''} !important;
         }
 
         .clip ::before, .clip ::after {
@@ -569,11 +593,10 @@ export default function Widget() {
         
         }
 
-        .nftSelectBox {
-          border: solid ${borderColor ? borderColor : ""};
-          border-width: 1px;
+        .nftSelectBox, .modal-content {
+          border: 1px solid ${borderColor ? borderColor : ""} !important;
           filter: unset;
-          opacity: 1;
+          opacity: .8;
       
         }
         
@@ -596,7 +619,7 @@ export default function Widget() {
          
         }
 
-        .selChain:hover, .chain-switch, .refresh-button, .SearchDrop, .change-view__button, .listed-nft-radio::after,
+         .refresh-button, .SearchDrop, .change-view__button, .listed-nft-radio::after,
          .select-all, .checkCircle, .CloseIcon, .delete-all , .nftList{
           background: ${backgroundColor ? backgroundColor : ""};
          
@@ -617,11 +640,6 @@ export default function Widget() {
         .refresh-button:hover svg path, .approval__inf:hover svg path, .list-icon:hover svg path, .grid-icon:hover svg rect, .NFTInf:hover svg path, .swap-chain__btn:hover svg rect  {
           fill: ${iconColor ? iconColor: ''};
           /*ilter: brightness(115);*/
-        }
-
-        .serchInput {
-          background: ${backgroundColor ? backgroundColor : ""};
-          border-color: ${borderColor ? borderColor : ""};
         }
 
         .wllListItem:hover {

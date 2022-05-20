@@ -2,7 +2,7 @@ import { useWeb3React } from '@web3-react/core';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { setAccountModal, setFrom, setUnsupportedNetwork, setWalletsModal, } from '../../store/reducers/generalSlice';
+import { setAccount, setAccountModal, setFrom, setUnsupportedNetwork, setWalletsModal, } from '../../store/reducers/generalSlice';
 import { setNFTS } from '../../wallet/helpers';
 import { chains } from '../values';
 import Identicon from './Identicon';
@@ -21,7 +21,6 @@ export default function UserConnect({desktop, mobile}) {
     const testnet = useSelector(state => state.general.testNet)
     const walletAccount = account || elrondAccount || tezosAccount || algorandAccount || tronWallet || _account
     const location = useLocation()
-  const txnHashArr = useSelector((state) => state.general.txnHashArr);
 
 
     const handleConnect = () => {
@@ -55,11 +54,11 @@ export default function UserConnect({desktop, mobile}) {
 
     useEffect(() => {
       // debugger
-      console.log("useEffect")
+      dispatch(setAccount(account))
       const chainConnected = getChain()
       if(chainId && location.pathname.includes("/account")){
         if(testnet){
-          if(!chainConnected?.testNet || !chains.some(chain => chain.tnCainId === chainId)){
+          if(!chainConnected?.testNet || !chains.some(chain => chain.tnChainId === chainId)){
             dispatch(setUnsupportedNetwork(true))
           }
           else if(chainId === to.tnChainId){
@@ -68,7 +67,7 @@ export default function UserConnect({desktop, mobile}) {
           else{
             dispatch(setUnsupportedNetwork(false))
             dispatch(setFrom(chainConnected))
-            setNFTS(account, chainConnected.key)
+            // setNFTS(account, chainConnected.key, undefined, "user one")
           }
         }
         else{
@@ -81,12 +80,12 @@ export default function UserConnect({desktop, mobile}) {
           else{
             dispatch(setUnsupportedNetwork(false))
             dispatch(setFrom(chainConnected))
-            setNFTS(account, chainConnected.key)
+            // setNFTS(account, chainConnected.key, undefined, "user two")
           }
         }
       }
 
-    }, [account, chainId])
+    }, [chainId, account])
 
   useEffect(() => {
     if(!account && WalletConnect){

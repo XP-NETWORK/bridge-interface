@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom"
 import NFTaccount from "../components/NFTsBoard/NFTaccount"
 
 export default function ProtectedRoute() {
-    const from = useSelector(state => state.general.from)
+    const {from, widget} = useSelector(state => ({from :state.general.from, widget: state.general.widget}))
 
-  return from ? <NFTaccount /> : <Navigate to="/connect" replace />
+  return from ? <NFTaccount /> : <Navigate to={`/connect`} replace />
 }

@@ -136,6 +136,7 @@
 .nav-link{
   margin: 0 1px;
   display: flex;
+  gap: 6px;
   align-items: center;
   padding: 10px 16px !important;
 }
@@ -304,9 +305,6 @@
 }
 .nav-about::before{
   
-}
-.nav-link__icon{
-  display: none;
 }
 
 

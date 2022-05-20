@@ -8,10 +8,11 @@ import TrustWallet from "../../assets/img/wallet/TWT.svg";
 import { setAccount, setMetaMask } from "../../store/reducers/generalSlice";
 
 export default function EVMWallet({ wallet, close }) {
-  const {  account, activate } = useWeb3React();
+  const {  account, activate, error } = useWeb3React();
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector(state => state.general.from);
   const to = useSelector(state => state.general.to);
+  const testnet = useSelector(state => state.general.testNet);
   const dispatch = useDispatch()
   const getMobOps = () =>  /android/i.test(navigator.userAgent || navigator.vendor || window.opera) ? true : false;
 
@@ -30,7 +31,7 @@ export default function EVMWallet({ wallet, close }) {
         close()
         break;
         case "WalletConnect":
-        onWalletConnect(activate, from.text)
+        onWalletConnect(activate, from.text, testnet)
         close()
         break;
         default:

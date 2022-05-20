@@ -82,36 +82,37 @@ export default function UnsupportedNetwork() {
     useEffect(() => {}, [showWrong]);
   
     return (
-      forbidden ? 
-      <Modal
-      animation={false}
-      show={unsupportedNetwork}
-      onHide={undefined}
-      className="nftWorng"
-    >
-      <Modal.Header className="border-0">
-        <Modal.Title>Wrong Network</Modal.Title>
-      </Modal.Header>
-      <Modal.Body className="modalBody text-center">
-        <div className="wrongNFT">
-          <div className="nftWornTop">
-            <span className="worngImg">
-              <div className="wrong-icon">
-                <div className="first-wrong__bg">
-                  <div className="second-wrong__bg">
-                    <img src={icon} alt="" />
-                  </div>
-                </div>
-              </div>
-            </span>
-            <h3>Destination and departure chains <br/> can't be the same</h3>
-            <p>
-              Please use MetaMask to switch the departure chain.
-            </p>
-          </div>
-        </div>
-      </Modal.Body>
-    </Modal> :
+    //   forbidden ? 
+    //   <Modal
+    //   animation={false}
+    //   show={unsupportedNetwork}
+    //   show={false}
+    //   onHide={undefined}
+    //   className="nftWorng"
+    // >
+    //   <Modal.Header className="border-0">
+    //     <Modal.Title>Wrong Network</Modal.Title>
+    //   </Modal.Header>
+    //   <Modal.Body className="modalBody text-center">
+    //     <div className="wrongNFT">
+    //       <div className="nftWornTop">
+    //         <span className="worngImg">
+    //           <div className="wrong-icon">
+    //             <div className="first-wrong__bg">
+    //               <div className="second-wrong__bg">
+    //                 <img src={icon} alt="" />
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </span>
+    //         <h3>Destination and departure chains <br/> can't be the same</h3>
+    //         <p>
+    //           Please use MetaMask to switch the departure chain.
+    //         </p>
+    //       </div>
+    //     </div>
+    //   </Modal.Body>
+    // </Modal> :
         <Modal
           animation={false}
           show={unsupportedNetwork}

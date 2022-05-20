@@ -63,6 +63,8 @@ function WSettings({
 }) {
   const {
     backgroundColor,
+    panelBackground,
+    modalBackground,
     color,
     fontSize,
     btnColor,
@@ -361,6 +363,62 @@ function WSettings({
                                 value={backgroundColor}
                                 onChange={(e) =>
                                   deboucedSet(e.target.value, "backgroundColor")
+                                }
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="typo-sel header_color_select">
+                          <h5>Panel Color</h5>
+                          <div className="select_color">
+                            <div className="colorInp">
+                              <input
+                                type="color"
+                                name="check_txt_fl2"
+                                id="check_txt_f2"
+                                value={panelBackground}
+                                onChange={(e) =>
+                                  deboucedSet(e.target.value, "panelBackground")
+                                }
+                              />
+                            </div>
+                            <div className="colorCode">
+                              <input
+                                type="text"
+                                placeholder="# 000000"
+                                id="color_of_head"
+                                value={panelBackground}
+                                onChange={(e) =>
+                                  deboucedSet(e.target.value, "panelBackground")
+                                }
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="typo-sel header_color_select">
+                          <h5>Modal Color</h5>
+                          <div className="select_color">
+                            <div className="colorInp">
+                              <input
+                                type="color"
+                                name="check_txt_fl2"
+                                id="check_txt_f2"
+                                value={modalBackground}
+                                onChange={(e) =>
+                                  deboucedSet(e.target.value, "modalBackground")
+                                }
+                              />
+                            </div>
+                            <div className="colorCode">
+                              <input
+                                type="text"
+                                placeholder="# 000000"
+                                id="color_of_head"
+                                value={modalBackground}
+                                onChange={(e) =>
+                                  deboucedSet(e.target.value, "modalBackground")
                                 }
                               />
                             </div>
