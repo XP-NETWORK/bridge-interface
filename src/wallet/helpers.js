@@ -114,9 +114,27 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     appId: nft.appId || undefined
   }
   if(uri?.indexOf("http://") === -1 || uri?.indexOf("https://") -1){
+    let d = await fetchURI(`https://ipfs.io/ipfs/${uri}`)
+    if(d?.image){
+      let u = await fetchURI(`https://ipfs.io/ipfs/${d.image}`)
+      if(u.includes("image")){
+        nftObj.image = `https://ipfs.io/ipfs/${d.image}`
+        nftObj.description = d.description
+        nftObj.name = d.name
+        nftObj.dataLoaded = true
+      }
+      else if(u.includes("video")){
+        nftObj.animation_url = `https://ipfs.io/ipfs/${d.image}`
+        nftObj.description = d.description
+        nftObj.name = d.name
+        nftObj.dataLoaded = true
+      }
+    }
+    else{
     nftObj.dataLoaded = true
     nftObj.image = undefined
     nftObj.animation_url = undefined
+    }
   }
   if(from.text === "Tezos"){
     if(nft.native?.meta?.token?.metadata?.formats){
@@ -167,7 +185,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     const video = checkIfVideo(setupURI(uri))
     nftObj.animation_url = video 
     const image = !video ? checkIfImage(setupURI(uri)) : undefined
-    nftObj.image = image 
+    nftObj.image = nftObj.image ? nftObj.image : image 
     let data
     if(isJson(uri)){
       const { description, image, name } = isJson(uri)
@@ -182,7 +200,14 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     if(typeof data === 'object'){
       nftObj = {...nftObj, ...data}
       if(!nftObj.image?.includes("http") && !nftObj.image?.includes("ipfs")){
-        nftObj.image = undefined
+        let u = await fetchURI(`https://ipfs.io/ipfs/${nftObj.image}`)
+        if(u.includes("image")){
+          nftObj.image = `https://ipfs.io/ipfs/${nftObj.image}`
+        }
+        else if(u.includes("video")){
+          nftObj.animation_url = `https://ipfs.io/ipfs/${nftObj.image}`
+        }
+        else nftObj.image = undefined
       }
       else if(nftObj.image?.includes(".json")){
         const n = await fetchURI(setupURI(nftObj.image))
