@@ -43,12 +43,13 @@ export default function UserConnect({desktop, mobile}) {
     }
 
     const getChain = () => {
-      // debugger
       if(testnet){
+        console.log()
         return chains.find(chain => chain.tnChainId === chainId)
       }
       else{
-        return chains.find( chain => chain.chainId === chainId)
+        console.log()
+        return chains.find(chain => chain.chainId === chainId)
       }
     }
 
@@ -67,7 +68,6 @@ export default function UserConnect({desktop, mobile}) {
           else{
             dispatch(setUnsupportedNetwork(false))
             dispatch(setFrom(chainConnected))
-            // setNFTS(account, chainConnected.key, undefined, "user one")
           }
         }
         else{
@@ -80,7 +80,6 @@ export default function UserConnect({desktop, mobile}) {
           else{
             dispatch(setUnsupportedNetwork(false))
             dispatch(setFrom(chainConnected))
-            // setNFTS(account, chainConnected.key, undefined, "user two")
           }
         }
       }
