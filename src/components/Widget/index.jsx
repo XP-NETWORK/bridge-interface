@@ -11,6 +11,7 @@ import {
 import { chains } from "../values";
 import { power } from "../Settings/assets/power.js";
 import mobileBanner from "../Settings/assets/img/mobileOnlyBanner.svg";
+import { useLocation } from "react-router";
 
 
 const mobileOnlyBanner = `
@@ -27,17 +28,20 @@ overlay.classList.add("bannerOverlay");
 overlay.innerHTML = mobileOnlyBanner;
 
 export default function Widget() {
-  const { widget, wsettings, settings, from, to } = useSelector(
-    ({ general: { widget, wsettings, from, to }, settings }) => ({
+  const { widget, wsettings, settings, from, to, step } = useSelector(
+    ({ general: { widget, wsettings, from, to, step}, settings }) => ({
       widget,
       settings,
       wsettings,
       from,
       to,
+      step
     })
   );
 
   const dispatch = useDispatch();
+
+  const location = useLocation()
 
 
 
@@ -178,7 +182,7 @@ export default function Widget() {
       document.head.appendChild($style);
 
       //$img.onclick = window.open("https://xp.network/", "_blank").focus();
-
+      console.log(location.pathname);
       $style.innerHTML = `
 
       ${
@@ -204,7 +208,17 @@ export default function Widget() {
       }
 
       div#root {
-        overflow-y: auto;
+      
+        overflow-y: ${!location.pathname.includes('account')? 'hidden': 'auto'};
+      }
+
+      #root {
+        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        scrollbar-width: none;  /* Firefox */
+      }
+
+      #root::-webkit-scrollbar { 
+          display: none;  /* Safari and Chrome */
       }
 
      .nftSlectContaine.container {
@@ -681,7 +695,7 @@ export default function Widget() {
         @media only screen and (max-width: 764px) {
 
           .nftListBox {
-            max-height: 450px;
+            max-height: 350px;
           }
 
           .nft-list__wrapper::-webkit-scrollbar {
@@ -705,7 +719,7 @@ export default function Widget() {
         `;
       document.body.classList.remove("widgetBlur");
     }
-  }, [widget, settings]);
+  }, [widget, settings, location]);
 
   const screenSize = useRef();
 
