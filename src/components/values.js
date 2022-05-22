@@ -252,10 +252,11 @@ export const chains = [
     text: "Aurora",
     value: "Aurora",
     chainId: 1313161554,
+    tnChainId: 1313161555,
     order: 1,
     image: { avatar: true, src: Aurora },
     maintenance: false,
-    testNet: false,
+    testNet: true,
     mainnet: true,
     newChain: true,
   },
@@ -448,8 +449,10 @@ export const chainsConfig = {
     img: Aurora,
     rpc: "https://mainnet.aurora.dev",
     chainId: 1313161554,
+    tnChainId: 1313161555,
     Chain: Chain.AURORA,
     tx: "https://explorer.mainnet.aurora.dev/tx/",
+    testTx: "https://explore-testnet.vechain.org/tx/"
   },
   GateChain: {
     type: EVM,
@@ -535,6 +538,10 @@ export const TESTNET_CHAIN_INFO = {
     nonce: 0x19,
     chainId: 39,
   },
+  Aurora: {
+    nonce: 0x15,
+    chainId: 1313161555
+  }
 };
 
 export const CHAIN_INFO = {

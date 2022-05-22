@@ -177,6 +177,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     }
     else if(uri){
       data = await fetchURI(setupURI(uri))
+      console.log("🚀 ~ file: helpers.js ~ line 180 ~ parseEachNFT ~ data", data, index)
     }
     if(typeof data === 'object'){
       nftObj = {...nftObj, ...data}
@@ -471,12 +472,12 @@ export const getNFTS = async (wallet, from) => {
   try {
     // debugger
     let response 
-    if(tronWallet){
-      response = await getTronNFTs(tronWallet)
-    }
-    else{
+    // if(tronWallet){
+    //   response = await getTronNFTs(tronWallet)
+    // }
+    // else{
       response = await factory.nftList(chain, hardcoded ? hardcoded : wallet)
-    }
+    // }
     const unique = {};
     try {
       const allNFTs = response

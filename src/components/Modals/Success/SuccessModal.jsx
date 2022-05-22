@@ -26,7 +26,8 @@ export default function SuccessModal() {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
-
+  console.log("🚀 ~ file: SuccessModal.jsx ~ line 11 ~ socket", socket)
+  
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
   const tronWallet = useSelector((state) => state.general.tronWallet);
@@ -91,9 +92,11 @@ export default function SuccessModal() {
 
   useEffect(() => {
       socket.on("incomingEvent", async e => {
+        console.log("🚀 ~ file: SuccessModal.jsx ~ line 95 ~ useEffect ~ e", e)
         dispatch(setTxnStatus(e))
       });
       socket.on("updateEvent", async e => {
+        console.log("🚀 ~ file: SuccessModal.jsx ~ line 99 ~ useEffect ~ e", e)
         dispatch(setTxnStatus(e))
       })
       return () => {
