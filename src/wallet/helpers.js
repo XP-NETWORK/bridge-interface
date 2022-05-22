@@ -195,13 +195,12 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     }
     else if(uri){
       data = await fetchURI(setupURI(uri))
-      console.log("🚀 ~ file: helpers.js ~ line 180 ~ parseEachNFT ~ data", data, index)
     }
     if(typeof data === 'object'){
       nftObj = {...nftObj, ...data}
       if(!nftObj.image?.includes("http") && !nftObj.image?.includes("ipfs")){
         let u = await fetchURI(`https://ipfs.io/ipfs/${nftObj.image}`)
-        if(u.includes("image")){
+        if(u?.includes("image")){
           nftObj.image = `https://ipfs.io/ipfs/${nftObj.image}`
         }
         else if(u.includes("video")){
