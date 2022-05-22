@@ -113,7 +113,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftId: nft.nftId || undefined,
     appId: nft.appId || undefined
   }
-  if(uri?.indexOf("http://") === -1 || uri?.indexOf("https://") -1){
+  if(uri?.indexOf("http://") === -1 || uri?.indexOf("https://") === -1){
     let d = await fetchURI(`https://ipfs.io/ipfs/${uri}`)
     if(d?.image){
       let u = await fetchURI(`https://ipfs.io/ipfs/${d.image}`)
@@ -195,19 +195,31 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     }
     else if(uri){
       data = await fetchURI(setupURI(uri))
-      console.log("🚀 ~ file: helpers.js ~ line 180 ~ parseEachNFT ~ data", data, index)
     }
     if(typeof data === 'object'){
       nftObj = {...nftObj, ...data}
       if(!nftObj.image?.includes("http") && !nftObj.image?.includes("ipfs")){
         let u = await fetchURI(`https://ipfs.io/ipfs/${nftObj.image}`)
-        if(u.includes("image")){
-          nftObj.image = `https://ipfs.io/ipfs/${nftObj.image}`
+        if(typeof u === 'object'){
+          let i = await fetchURI(`https://ipfs.io/ipfs/${u.image}`)
+          if(i?.includes("image")){
+            nftObj.image = `https://ipfs.io/ipfs/${u.image}`
+            nftObj.name = u.name
+          }
+          else if(i?.includes("video")){
+            nftObj.animation_url = `https://ipfs.io/ipfs/${u.image}`
+            nftObj.name = u.name
+          }
+          else nftObj.image = undefined
+        }else{
+          if(u.image.includes("image")){
+            nftObj.image = `https://ipfs.io/ipfs/${nftObj.image}`
+          }
+          else if(u.image.includes("video")){
+            nftObj.animation_url = `https://ipfs.io/ipfs/${nftObj.image}`
+          }
+          else nftObj.image = undefined
         }
-        else if(u.includes("video")){
-          nftObj.animation_url = `https://ipfs.io/ipfs/${nftObj.image}`
-        }
-        else nftObj.image = undefined
       }
       else if(nftObj.image?.includes(".json")){
         const n = await fetchURI(setupURI(nftObj.image))
@@ -259,25 +271,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
           }
         }
       }
-      // axios.get(setupURI(uri)).then(resp => {
-      //   nftObj = {...nftObj, ...resp.data}
-      //   if(nftObj.data?.image_url){
-      //     const image  = nftObj.data?.image
-      //     nftObj.image = image
-      //     nftObj.dataLoaded = true
-      //   }
-      // })
-      // .catch(error => {
-      //   console.log(error)
-      //   axios.get(setupURI(uri)).then(resp => {
-      //     nftObj = {...nftObj, ...resp.data}
-      //     if(nftObj.data?.image_url){
-      //       const image  = nftObj.data?.image
-      //       nftObj.image = image
-      //       nftObj.dataLoaded = true
-      //     }
-      //   })
-      // })
   }
 
   if(!testnet && nft?.native?.contract === '0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a'){
