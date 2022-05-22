@@ -163,7 +163,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftObj.native.symbol =  nft.symbol || nft.native?.meta?.token?.metadata?.symbol
   }
   else{
-    // debugger
+    debugger
     const video = checkIfVideo(setupURI(uri))
     nftObj.animation_url = video 
     const image = !video ? checkIfImage(setupURI(uri)) : undefined
@@ -177,11 +177,19 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     }
     else if(uri){
       data = await fetchURI(setupURI(uri))
+      console.log("🚀 ~ file: helpers.js ~ line 180 ~ parseEachNFT ~ data", data)
     }
     if(typeof data === 'object'){
       nftObj = {...nftObj, ...data}
       if(!nftObj.image?.includes("http") && !nftObj.image?.includes("ipfs")){
-        nftObj.image = undefined
+        let u = await fetchURI(`https://ipfs.io/ipfs/${nftObj.image}`)
+        if(u.includes("image")){
+          nftObj.image = `https://ipfs.io/ipfs/${nftObj.image}`
+        }
+        else if(u.includes("video")){
+          nftObj.animation_url = `https://ipfs.io/ipfs/${nftObj.image}`
+        }
+        else nftObj.image = undefined
       }
       else if(nftObj.image?.includes(".json")){
         const n = await fetchURI(setupURI(nftObj.image))
