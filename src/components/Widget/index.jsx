@@ -13,7 +13,7 @@ import { power } from "../Settings/assets/power.js";
 import mobileBanner from "../Settings/assets/img/mobileOnlyBanner.svg";
 import { useLocation } from "react-router";
 
-
+//.nft-list__wrapper
 const mobileOnlyBanner = `
 <div class="mobileOnlyBanner"><img src=${mobileBanner} alt="mobileOnlyXP"/><div class="testComp">
     <h2>Widget</h2>
@@ -693,6 +693,18 @@ export default function Widget() {
 
 
         @media only screen and (max-width: 764px) {
+
+          .modal-content {
+            margin-top: 15vh;
+          }
+          
+          .nft-list__wrapper {
+            height: unset;
+          }
+
+          .nonftAcc img {
+            height: 100px
+          }
 
           .nftListBox {
             max-height: 350px;

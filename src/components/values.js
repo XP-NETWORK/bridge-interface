@@ -243,7 +243,7 @@ export const chains = [
     image: { avatar: true, src: One },
     maintenance: false,
     testNet: false,
-    mainnet: biz ? true : false,
+    mainnet: true, //biz ? true : false,
     newChain: true,
   },
   {
