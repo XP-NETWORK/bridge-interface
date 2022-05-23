@@ -54,18 +54,38 @@ const checkIfVideo = (url) => {
 }
 
 
-
- 
+const tryIPFS = async str => {
+  console.log("🚀 ~ file: helpers.js ~ line 101 ~ str", str)
+    let res
+    try {
+      res = await axios.get(`https://sheltered-crag-76748.herokuapp.com/https://ipfs.io/ipfs/${str}`)
+      if(res && typeof data === "object"){
+        return res.data
+      }
+      else if(typeof data === "string"){
+        res = await tryIPFS(res)
+        return res.data
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
 const fetchURI = async uri => {
-  try {
-    const { data, status, headers }  = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`)
-    if(headers["content-type"].includes("image") || headers["content-type"].includes("video")){
-      return headers["content-type"]
+  if(uri.includes("http") || uri.includes("https")){
+    try {
+      const { data, headers }  = await axios.get(`https://sheltered-crag-76748.herokuapp.com/${uri}`)
+      if(headers["content-type"].includes("image") || headers["content-type"].includes("video")){
+        return headers["content-type"]
+      }
+      return data
+    } catch (error) {
+      console.log(error)
     }
-    return data
-  } catch (error) {
-    console.log(error)
+  }
+  else{
+    const data  = await tryIPFS(uri)
+    return  data 
   }
 }
 
@@ -113,29 +133,29 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftId: nft.nftId || undefined,
     appId: nft.appId || undefined
   }
-  if(uri?.indexOf("http://") === -1 || uri?.indexOf("https://") === -1){
-    let d = await fetchURI(`https://ipfs.io/ipfs/${uri}`)
-    if(d?.image){
-      let u = await fetchURI(`https://ipfs.io/ipfs/${d.image}`)
-      if(u.includes("image")){
-        nftObj.image = `https://ipfs.io/ipfs/${d.image}`
-        nftObj.description = d.description
-        nftObj.name = d.name
-        nftObj.dataLoaded = true
-      }
-      else if(u.includes("video")){
-        nftObj.animation_url = `https://ipfs.io/ipfs/${d.image}`
-        nftObj.description = d.description
-        nftObj.name = d.name
-        nftObj.dataLoaded = true
-      }
-    }
-    else{
-    nftObj.dataLoaded = true
-    nftObj.image = undefined
-    nftObj.animation_url = undefined
-    }
-  }
+  // if(uri?.indexOf("http://") === -1 && uri?.indexOf("https://") === -1 && uri?.indexOf("ipfs")){
+  //   let d = uri.includes("ipfs.io") ? await fetchURI(uri) : await tryIPFS(uri)
+  //   if(d?.image){
+  //     let u = await fetchURI(`https://ipfs.io/ipfs/${d.image}`)
+  //     if(u.includes("image")){
+  //       nftObj.image = `https://ipfs.io/ipfs/${d.image}`
+  //       nftObj.description = d.description
+  //       nftObj.name = d.name
+  //       nftObj.dataLoaded = true
+  //     }
+  //     else if(u.includes("video")){
+  //       nftObj.animation_url = `https://ipfs.io/ipfs/${d.image}`
+  //       nftObj.description = d.description
+  //       nftObj.name = d.name
+  //       nftObj.dataLoaded = true
+  //     }
+  //   }
+  //   else{
+  //   nftObj.dataLoaded = true
+  //   nftObj.image = undefined
+  //   nftObj.animation_url = undefined
+  //   } 
+  // }
   if(from.text === "Tezos"){
     if(nft.native?.meta?.token?.metadata?.formats){
       const obj = nft.native?.meta?.token?.metadata?.formats
@@ -199,48 +219,49 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     if(typeof data === 'object'){
       nftObj = {...nftObj, ...data}
       if(!nftObj.image?.includes("http") && !nftObj.image?.includes("ipfs")){
-        let u = await fetchURI(`https://ipfs.io/ipfs/${nftObj.image}`)
-        if(typeof u === 'object'){
-          let i = await fetchURI(`https://ipfs.io/ipfs/${u.image}`)
-          if(i?.includes("image")){
-            nftObj.image = `https://ipfs.io/ipfs/${u.image}`
-            nftObj.name = u.name
+        nftObj.image = `https://ipfs.io/ipfs/${nftObj.image}`
+    //     if(typeof u === 'object'){
+    //       let i = await fetchURI(`https://ipfs.io/ipfs/${u.image}`)
+    //       if(i?.includes("image")){
+    //         nftObj.image = `https://ipfs.io/ipfs/${u.image}`
+    //         nftObj.name = u.name
           }
-          else if(i?.includes("video")){
-            nftObj.animation_url = `https://ipfs.io/ipfs/${u.image}`
-            nftObj.name = u.name
-          }
-          else nftObj.image = undefined
-        }else{
-          if(u.image.includes("image")){
-            nftObj.image = `https://ipfs.io/ipfs/${nftObj.image}`
-          }
-          else if(u.image.includes("video")){
-            nftObj.animation_url = `https://ipfs.io/ipfs/${nftObj.image}`
-          }
-          else nftObj.image = undefined
-        }
-      }
+    //       else if(i?.includes("video")){
+    //         nftObj.animation_url = `https://ipfs.io/ipfs/${u.image}`
+    //         nftObj.name = u.name
+    //       }
+    //       else nftObj.image = undefined
+    //     }
+    //     else{
+    //       if(u.image?.includes("image")){
+    //         nftObj.image = `https://ipfs.io/ipfs/${nftObj.image}`
+    //       }
+    //       else if(u.image?.includes("video")){
+    //         nftObj.animation_url = `https://ipfs.io/ipfs/${nftObj.image}`
+    //       }
+    //       else nftObj.image = undefined
+    //     }
+    //   }
       else if(nftObj.image?.includes(".json")){
         const n = await fetchURI(setupURI(nftObj.image))
         if(typeof n === "object"){
           nftObj = {...nftObj, ...data, ...n}
         }
       }
-      if(nftObj.data?.image_url){
-        const image  = nftObj.data?.image
-        nftObj.image = image
-        nftObj.dataLoaded = true
-      }
-    }
-    else if(data?.includes("image")){
-      nftObj.image = uri
-    }
-    else if(data?.includes("video")){
-      nftObj.animation_url = uri
+    //   if(nftObj.data?.image_url){
+    //     const image  = nftObj.data?.image
+    //     nftObj.image = image
+    //     nftObj.dataLoaded = true
+    //   }
+    // }
+    // else if(data?.includes("image")){
+    //   nftObj.image = uri
+    // }
+    // else if(data?.includes("video")){
+    //   nftObj.animation_url = uri
     }
     else{
-        if(data){
+      if(data){
           let n 
           try {
             n = base64.decode(data)

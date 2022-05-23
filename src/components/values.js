@@ -239,11 +239,11 @@ export const chains = [
     value: "Harmony",
     chainId: 1666600000,
     tnChainId: 1666700000,
-    order: 4,
+    order: biz ? 4 : 0,
     image: { avatar: true, src: One },
     maintenance: false,
     testNet: false,
-    mainnet: biz ? true : false,
+    mainnet: true,
     newChain: true,
   },
   {
