@@ -980,7 +980,7 @@ function WSettings({
                       <div className="typo-sel header_color_select">
                         <h5>Paste this code</h5>
                         <div className="exportCodeCont">
-                          <p id="iframeSrc">{`<iframe src='${iframeSrc}' frameborder='0'  width="100%" height="100%"></iframe>`}</p>
+                          <p id="iframeSrc">{`<iframe src='${iframeSrc}' frameborder='0'  width="100%" height="800px"></iframe>`}</p>
                           <button
                             className={`copyCode icon ${
                               copied ? "copied" : ""

@@ -117,7 +117,7 @@ export const chains = [
     mainnet: true,
     newChain: true,
   },
- /* {
+  {
     type: "Algorand",
     key: "Algorand",
     text: "Algorand",
@@ -127,7 +127,7 @@ export const chains = [
     maintenance: biz ? false : true,
     testNet: true,
     mainnet: true,
-  },*/
+  },
   {
     type: "EVM",
     key: "xDai",

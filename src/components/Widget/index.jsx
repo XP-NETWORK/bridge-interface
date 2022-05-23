@@ -28,22 +28,20 @@ overlay.classList.add("bannerOverlay");
 overlay.innerHTML = mobileOnlyBanner;
 
 export default function Widget() {
-  const { widget, wsettings, settings, from, to, step } = useSelector(
-    ({ general: { widget, wsettings, from, to, step}, settings }) => ({
+  const { widget, wsettings, settings, NFTList } = useSelector(
+    ({ general: { widget, wsettings, from, to, NFTList }, settings }) => ({
       widget,
       settings,
       wsettings,
       from,
       to,
-      step
+      NFTList,
     })
   );
 
   const dispatch = useDispatch();
 
-  const location = useLocation()
-
-
+  const location = useLocation();
 
   useEffect(() => {
     // debugger
@@ -115,16 +113,14 @@ export default function Widget() {
       );
     } else {
       const settings = localStorage.getItem("widgetSettings");
-    if (settings) {
-      dispatch(setSettings(JSON.parse(settings)));
-    }
+      if (settings) {
+        dispatch(setSettings(JSON.parse(settings)));
+      }
     }
 
     if (widget) {
       onlyBridge();
     }
-
-    
   }, []);
 
   const {
@@ -155,22 +151,37 @@ export default function Widget() {
   } = settings;
 
   useEffect(() => {
-    document.getElementById("poweredId")?.remove();
+    //document.getElementById("poweredId")?.remove();
+    //document.querySelectorAll(".poweredLogo").forEach((e) => e.remove());
+    document.querySelectorAll(".poweredWRapper").forEach((e) => e.remove());
     const kssa = document.querySelector(".NftSelect");
+    const board = document.querySelector(".transfer-board");
     const $img = document.createElement("svg");
+    $img.classList.add("poweredWRapper");
     $img.innerHTML = power(color);
-    if (widget) kssa?.appendChild($img);
-  }, [widget, color]);
+    if (widget) {
+      kssa?.appendChild($img);
+      board?.appendChild($img);
+    }
+  }, [widget, color, NFTList]);
 
   useEffect(() => {
     if (widget && !wsettings && settings.selectedChains.length === 2) {
       console.log(chains.find((c) => c.text === settings.selectedChains[0]));
-      setTimeout(() => dispatch(
-        setFrom(chains.find((c) => c.text === settings.selectedChains[1]))
-      ), 5);
-      setTimeout(() => dispatch(
-        setTo(chains.find((c) => c.text === settings.selectedChains[0]))
-      ), 7);
+      setTimeout(
+        () =>
+          dispatch(
+            setFrom(chains.find((c) => c.text === settings.selectedChains[1]))
+          ),
+        5
+      );
+      setTimeout(
+        () =>
+          dispatch(
+            setTo(chains.find((c) => c.text === settings.selectedChains[0]))
+          ),
+        7
+      );
     }
   }, [widget]);
 
@@ -209,7 +220,9 @@ export default function Widget() {
 
       div#root {
       
-        overflow-y: ${!location.pathname.includes('account')? 'hidden': 'auto'};
+        overflow-y: ${
+          !location.pathname.includes("account") ? "hidden" : "auto"
+        };
       }
 
       #root {
@@ -546,12 +559,12 @@ export default function Widget() {
         }
 
         .clip, .clip p {
-          background: ${cardBackgroundBot? cardBackgroundBot : ''};
-          color: ${cardColor? cardColor : ''} !important;
+          background: ${cardBackgroundBot ? cardBackgroundBot : ""};
+          color: ${cardColor ? cardColor : ""} !important;
         }
 
         .clip ::before, .clip ::after {
-          box-shadow: inset 0 0 0 2px ${iconColor? iconColor : ''};
+          box-shadow: inset 0 0 0 2px ${iconColor ? iconColor : ""};
         }
         
         .swpBtn path:nth-child(3)  {
@@ -652,7 +665,7 @@ export default function Widget() {
         }
 
         .refresh-button:hover svg path, .approval__inf:hover svg path, .list-icon:hover svg path, .grid-icon:hover svg rect, .NFTInf:hover svg path, .swap-chain__btn:hover svg rect  {
-          fill: ${iconColor ? iconColor: ''};
+          fill: ${iconColor ? iconColor : ""};
           /*ilter: brightness(115);*/
         }
 
@@ -694,12 +707,19 @@ export default function Widget() {
 
         @media only screen and (max-width: 764px) {
 
+ 
+
+          .switching {
+            width: auto;
+            padding: 8px 12px;
+          }
+
           .modal-content {
             margin-top: 15vh;
           }
           
           .nft-list__wrapper {
-            height: unset;
+            height: 300px;
           }
 
           .nonftAcc img {
