@@ -22,9 +22,15 @@ export default function WalletList({search, connected, input}) {
         { Component: <TezosWallet wallet={undefined} key="wallet-index-8" close={connected} />, name: "Beacon Tezos", type: "Tezos", mobile: true, desktop: true },
         { Component: <ElrondWallet wallet={"Maiar"} key="wallet-index-9" close={connected} />, name: "Maiar Elrond", type: "Elrond", mobile: true, desktop: true },
         { Component: <ElrondWallet wallet={undefined} key="wallet-index-10" close={connected} />, name: "Maiar Extension Elrond", type: "Elrond", mobile: false, desktop: true },
+<<<<<<< HEAD
         { Component: <AlgorandWallet wallet={"MyAlgo"} key="wallet-index-3" close={connected} />, name: "MyAlgo", type: "Algorand", mobile:false, desktop: true },
         { Component: <AlgorandWallet wallet={"AlgoSigner"} key="wallet-index-4" close={connected} />, name: "AlgoSigner", type: "Algorand", mobile:false, desktop: true },
         { Component: <AlgorandWallet wallet={undefined} key="wallet-index-5" close={connected} />, name: "Algorand Wallet", type: "Algorand", mobile:false, desktop: false },
+=======
+        //{ Component: <AlgorandWallet wallet={"MyAlgo"} key="wallet-index-3" close={connected} />, name: "MyAlgo", type: "Algorand", mobile:false, desktop: true },
+        //{ Component: <AlgorandWallet wallet={"AlgoSigner"} key="wallet-index-4" close={connected} />, name: "AlgoSigner", type: "Algorand", mobile:false, desktop: true },
+        //{ Component: <AlgorandWallet wallet={undefined} key="wallet-index-5" close={connected} />, name: "Algorand Wallet", type: "Algorand", mobile:false, desktop: false },
+>>>>>>> 91ca19dc2cd78cd2f44856f8df107ab01aad4739
         //{ Component: <TronWallet key="wallet-index-6" close={connected} />, name: "TronLink", type: "Tron", mobile:true, desktop: true},
         { Component: <VeChainWallet key="wallet-index-14" close={connected} />, name: "Sync2", type: "VeChain", mobile: true, desktop: true},
         //{ Component: <USBWallet wallet={"Ledger"} key="wallet-index-11" connected={connected} />, name: "Ledger", mobile:false, desktop: true },
