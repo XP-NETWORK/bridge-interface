@@ -715,7 +715,7 @@ export default function Widget() {
           }
 
           .modal-content {
-            margin-top: 30vh;
+            margin-top: 20vh;
           }
           
           .nft-list__wrapper {
