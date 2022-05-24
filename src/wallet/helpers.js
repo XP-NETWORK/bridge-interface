@@ -243,7 +243,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
             nftObj.description = description;
         } else if (uri) {
             data = await fetchURI(setupURI(uri));
-            console.log("nft", data, index);
         }
         if (typeof data === "object") {
             nftObj = { ...nftObj, ...data };
