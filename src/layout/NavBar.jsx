@@ -111,7 +111,7 @@ function NavBar() {
                                 <div className="nav-link__icon">
                                     <img src={message} alt="" />
                                 </div>
-                                <div className="nav-link__txt">Help center</div>
+                                <div className="nav-link__txt">Help Center</div>
                             </Nav.Link>
                             <Nav.Link
                                 className="mob-link"
@@ -294,7 +294,7 @@ function NavBar() {
                                             <div className="drop-item">
                                                 <img src={message} alt="" />
                                                 <div className="drop-icon">
-                                                    Help center
+                                                    Help Center
                                                 </div>
                                             </div>
                                         </Dropdown.Item>
