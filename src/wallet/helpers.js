@@ -66,7 +66,6 @@ const checkIfVideo = (url) => {
 };
 
 const tryIPFS = async (str) => {
-    console.log("🚀 ~ file: helpers.js ~ line 101 ~ str", str);
     let res;
     try {
         res = await axios.get(
@@ -76,6 +75,7 @@ const tryIPFS = async (str) => {
             return res.data;
         } else if (typeof data === "string") {
             res = await tryIPFS(res);
+            console.log("nft", res);
             return res.data;
         }
     } catch (error) {
@@ -95,12 +95,13 @@ const fetchURI = async (uri) => {
             ) {
                 return headers["content-type"];
             }
-            return data;
+            return data.data ? data.data : data;
         } catch (error) {
             console.log(error);
         }
     } else {
         const data = await tryIPFS(uri);
+        console.log("data", data);
         return data;
     }
 };
@@ -132,7 +133,7 @@ function isJson(item) {
 }
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
-    // debugger
+    // debugger;
     const uri = nft.uri;
     const { from, NFTList } = store.getState().general;
     let whitelisted;
@@ -198,7 +199,11 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
                 );
             }
         }
-        if (!nftObj.image && nft.native?.meta?.token?.metadata?.displayUri) {
+        if (
+            !nftObj.image &&
+            nft.native?.meta?.token?.metadata?.displayUri &&
+            imageFormat
+        ) {
             nftObj.image = nft.native?.meta?.token?.metadata?.displayUri;
             imageFormat = true;
         } else if (!nftObj.image && nft.native?.meta?.token?.metadata?.image) {
@@ -238,11 +243,13 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
             nftObj.description = description;
         } else if (uri) {
             data = await fetchURI(setupURI(uri));
+            console.log("nft", data, index);
         }
         if (typeof data === "object") {
             nftObj = { ...nftObj, ...data };
             if (
                 !nftObj.image?.includes("http") &&
+                !nftObj.image?.includes("https") &&
                 !nftObj.image?.includes("ipfs")
             ) {
                 nftObj.image = `https://ipfs.io/ipfs/${nftObj.image}`;
@@ -345,7 +352,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         }
     }
     if (
-        nftObj?.image?.includes("ipfs://") &&
+        nftObj?.image?.includes("ipfs") &&
         !nftObj?.image?.includes("https://ipfs.io")
     ) {
         nftObj.image = "https://ipfs.io/" + nftObj.image.replace(":/", "");
