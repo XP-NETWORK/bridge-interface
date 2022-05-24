@@ -124,7 +124,7 @@ export const chains = [
     value: "Algorand",
     order: 11,
     image: { avatar: true, src: Algorand },
-    maintenance: biz ? false : true,
+    maintenance: false, //biz ? false : true,
     testNet: true,
     mainnet: true,
   },
@@ -372,8 +372,7 @@ export const chainsConfig = {
     img: Fantom,
     chainId: 250,
     tx: "https://ftmscan.com/tx/",
-    rpc:
-      "https://rpc.ftm.tools",
+    rpc: "https://rpc.ftm.tools",
     Chain: Chain.FANTOM,
     // chainData: ChainData.Fantom
   },
@@ -452,7 +451,7 @@ export const chainsConfig = {
     tnChainId: 1313161555,
     Chain: Chain.AURORA,
     tx: "https://explorer.mainnet.aurora.dev/tx/",
-    testTx: "https://explore-testnet.vechain.org/tx/"
+    testTx: "https://explore-testnet.vechain.org/tx/",
   },
   GateChain: {
     type: EVM,
@@ -540,8 +539,8 @@ export const TESTNET_CHAIN_INFO = {
   },
   Aurora: {
     nonce: 0x15,
-    chainId: 1313161555
-  }
+    chainId: 1313161555,
+  },
 };
 
 export const CHAIN_INFO = {
