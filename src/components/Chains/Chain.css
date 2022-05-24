@@ -1,7 +1,7 @@
 .NftSelect {
     width: 500px;
     height: 525px;
-    background: #F7F7F9;
+    background: #f7f7f9;
     z-index: 1;
     border-radius: 20px;
     padding: 40px 25px 20px 25px;
@@ -10,51 +10,61 @@
 .nftSelectBox {
     position: relative;
     z-index: 1;
-    background: #ECECF14D;
+    background: #ececf14d;
     backdrop-filter: blur(42px);
     border-radius: 16px;
     border: 1px solid #ffffff;
     margin-bottom: 26px;
 }
 .aboutNft {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  grid-gap: 12px;
-  gap: 12px;
-  padding-top: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-gap: 12px;
+    gap: 12px;
+    padding-top: 22px;
 }
-.seleDepat:hover{
-  background: #ECECF1;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  cursor: pointer;
+.seleDepat:hover {
+    background: #ececf1;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    cursor: pointer;
 }
-.seleDesti:hover{
-  background: #ECECF1;
-  border-bottom-left-radius: 16px;
-  border-bottom-right-radius: 16px;
-  cursor: pointer;
+.seleDesti:hover {
+    background: #ececf1;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    cursor: pointer;
 }
-.new-chain{
+.new-chain {
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 5%;
     line-height: 15.12px;
     color: white;
-    background: linear-gradient(100.8deg, #29FFCC -59.7%, #3763FF 123.09%);
+    background: linear-gradient(100.8deg, #29ffcc -59.7%, #3763ff 123.09%);
+    padding: 2px 8px;
+    border-radius: 14px;
+}
+.updated {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 5%;
+    line-height: 15.12px;
+    color: white;
+    background: linear-gradient(281.21deg, #10b67a 19.02%, #20bcde 99.09%);
     padding: 2px 8px;
     border-radius: 14px;
 }
 .chain__off {
-  width: 50px;
-  height: 20px;
-  border-radius: 4px;
-  font-size: 12px;
-  color: #ed3e3e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 50px;
+    height: 20px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #ed3e3e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .nftSlectArea {
     max-width: 380px;
@@ -62,79 +72,78 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-  }
-.coming-chain{
+}
+.coming-chain {
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 5%;
     line-height: 15.12px;
     color: white;
-    background: linear-gradient(283.28deg, #3763FF 0%, #8F37FF 111.38%);
+    background: linear-gradient(283.28deg, #3763ff 0%, #8f37ff 111.38%);
     padding: 4px 6px;
-    border-radius: 14px; 
+    border-radius: 14px;
 }
-.maintenance-chain{
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 5%;
-  line-height: 15.12px;
-  color: white;
-  background: linear-gradient(273.19deg, #2FC3E0 3.07%, #A8EFFF 138.75%);
+.maintenance-chain {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 5%;
+    line-height: 15.12px;
+    color: white;
+    background: linear-gradient(273.19deg, #2fc3e0 3.07%, #a8efff 138.75%);
 
-  padding: 4px 6px;
-  border-radius: 14px; 
+    padding: 4px 6px;
+    border-radius: 14px;
 }
 
 .beacon img {
-  width: 28px;
+    width: 28px;
 }
 
 .algo img {
-  width: 28px;
-  border-radius: 5px;
+    width: 28px;
+    border-radius: 5px;
 }
 .nftChainList {
-  list-style: none;
-  max-height: 364px;
-  overflow: scroll;
+    list-style: none;
+    max-height: 364px;
+    overflow: scroll;
 }
 
 .nftChainItem {
-  display: flex;
-  align-items: center;
-  height: 56px;
-  margin: 8px 26px;
-  padding: 14px 16px;
-  cursor: pointer;
-  transition: all .5s;
-  border-radius: 86px;
-  border: 1px solid white;
-  box-shadow: 0px 1px 6px rgba(180, 185, 199, 0.25);
+    display: flex;
+    align-items: center;
+    height: 56px;
+    margin: 8px 26px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.5s;
+    border-radius: 86px;
+    border: 1px solid white;
+    box-shadow: 0px 1px 6px rgba(180, 185, 199, 0.25);
 }
 
 .nftChainItem img {
-  display: block;
-  width: 28px;
-  margin-right: 13px;
+    display: block;
+    width: 28px;
+    margin-right: 13px;
 }
-
 
 .nftChainItem:hover {
-background: rgba(73, 82, 108, 0.1);
+    background: rgba(73, 82, 108, 0.1);
 }
 
-.chain-connecting{
+.chain-connecting {
     display: flex;
     min-width: 102px;
     font-size: 12px;
     font-weight: 500;
     line-height: 15px;
     letter-spacing: 0.05em;
-    background: #ECECF1;
+    background: #ececf1;
     border-radius: 14px;
     padding: 2px 8px;
 }
-.chain-select__box{
+.chain-select__box {
     font-family: Poppins;
     font-size: 32px;
     font-style: normal;
@@ -142,11 +151,11 @@ background: rgba(73, 82, 108, 0.1);
     line-height: 38px;
     letter-spacing: 0em;
     text-align: center;
-    color: #14161A;
+    color: #14161a;
     margin-bottom: 32px;
 }
-.connect-wallet__button{
-    background-color: #395FEB;
+.connect-wallet__button {
+    background-color: #395feb;
     color: white;
     width: 100%;
     height: 56px;
@@ -158,13 +167,13 @@ background: rgba(73, 82, 108, 0.1);
     user-select: none;
     margin-bottom: 24px;
 }
-.connect-wallet__button:hover{
-    background: #2D51D0;
+.connect-wallet__button:hover {
+    background: #2d51d0;
 }
-.connect-wallet__button--disabled{
+.connect-wallet__button--disabled {
     border-radius: 62px;
-    border: 1px solid #395FEB;
-    color: #395FEB;
+    border: 1px solid #395feb;
+    color: #395feb;
     font-family: Inter;
     font-size: 16px;
     font-style: normal;
@@ -179,12 +188,12 @@ background: rgba(73, 82, 108, 0.1);
     user-select: none;
     margin-bottom: 24px;
 }
-.chain-sep__line{
+.chain-sep__line {
     height: 1px;
     background-color: rgb(255, 255, 255);
     display: block;
 }
-.swap-chain__btn{
+.swap-chain__btn {
     display: block;
     position: absolute;
     top: 50%;
@@ -194,7 +203,7 @@ background: rgba(73, 82, 108, 0.1);
     cursor: pointer;
     user-select: none;
 }
-.swap-chain__btn:hover:before{
+.swap-chain__btn:hover:before {
     position: absolute;
     content: url("../../assets/img/icons/swapChain_hover.svg");
     z-index: 2001;
@@ -205,20 +214,20 @@ background: rgba(73, 82, 108, 0.1);
     position: relative;
     z-index: 1;
     color: #fff;
-  }
-  .selChain img {
+}
+.selChain img {
     display: block;
     /* margin-right: 16px; */
-  }
-  .selChain > div {
+}
+.selChain > div {
     display: flex;
     align-items: center;
     cursor: pointer;
     position: relative;
     z-index: 1;
     gap: 35px;
-  }
-  .selChain > div:after {
+}
+.selChain > div:after {
     content: "";
     position: absolute;
     right: 0;
@@ -233,8 +242,8 @@ background: rgba(73, 82, 108, 0.1);
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 6px;
-  }
-  .selChain:hover > div:after {
+}
+.selChain:hover > div:after {
     content: "";
     position: absolute;
     right: 0;
@@ -249,19 +258,20 @@ background: rgba(73, 82, 108, 0.1);
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 6px;
-  }
-  span.chainArrow {
+}
+span.chainArrow {
     display: block;
     position: absolute;
     top: 50%;
     left: 50%;
     z-index: 2000;
-  }
-  span.chainArrow:hover {
+}
+span.chainArrow:hover {
     cursor: pointer;
-  }
-.selChain, .seleDestiSele{
-    color: #14161A;
+}
+.selChain,
+.seleDestiSele {
+    color: #14161a;
     font-size: 16px;
     font-weight: 400;
     line-height: 20px;
@@ -269,43 +279,34 @@ background: rgba(73, 82, 108, 0.1);
     user-select: none;
 }
 
-
-
-
-
 @media screen and (max-width: 1024px) {
     .NftSelect {
         width: 390px;
-      }
+    }
 }
 
-
 @media screen and (max-width: 600px) {
-  .chain-select__box {
-    font-size: 22px;
-  }
+    .chain-select__box {
+        font-size: 22px;
+    }
 }
 
 @media screen and (max-width: 320px) {
+    .NftSelect,
+    nav {
+        width: 288px;
+    }
 
-
-
-
-  .NftSelect, nav {
-    width: 288px;
-  }
-
-  
-  .slider__wrapper {
-    width: 288px !important;
-}
+    .slider__wrapper {
+        width: 288px !important;
+    }
 }
 
 @media screen and (max-width: 375px) {
-  .NftSelect {
-    width: 344px;
-  }
-  .slider__wrapper {
-    width: 344px !important;
-}
+    .NftSelect {
+        width: 344px;
+    }
+    .slider__wrapper {
+        width: 344px !important;
+    }
 }
