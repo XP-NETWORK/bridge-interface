@@ -73,7 +73,7 @@ export default function NFTcard({ nft, index, claimables }) {
         if (!nft.dataLoaded) {
             if (isVisible) {
                 await parseEachNFT(nft, index, testnet, claimables);
-                await NFTParser(nft.uri, index);
+                await NFTParser(nft, index);
             }
         }
     }, [isVisible]);
