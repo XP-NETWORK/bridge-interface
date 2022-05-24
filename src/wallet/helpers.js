@@ -253,45 +253,12 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
                 !nftObj.image?.includes("ipfs")
             ) {
                 nftObj.image = `https://ipfs.io/ipfs/${nftObj.image}`;
-                //     if(typeof u === 'object'){
-                //       let i = await fetchURI(`https://ipfs.io/ipfs/${u.image}`)
-                //       if(i?.includes("image")){
-                //         nftObj.image = `https://ipfs.io/ipfs/${u.image}`
-                //         nftObj.name = u.name
-            }
-            //       else if(i?.includes("video")){
-            //         nftObj.animation_url = `https://ipfs.io/ipfs/${u.image}`
-            //         nftObj.name = u.name
-            //       }
-            //       else nftObj.image = undefined
-            //     }
-            //     else{
-            //       if(u.image?.includes("image")){
-            //         nftObj.image = `https://ipfs.io/ipfs/${nftObj.image}`
-            //       }
-            //       else if(u.image?.includes("video")){
-            //         nftObj.animation_url = `https://ipfs.io/ipfs/${nftObj.image}`
-            //       }
-            //       else nftObj.image = undefined
-            //     }
-            //   }
-            else if (nftObj.image?.includes(".json")) {
+            } else if (nftObj.image?.includes(".json")) {
                 const n = await fetchURI(setupURI(nftObj.image));
                 if (typeof n === "object") {
                     nftObj = { ...nftObj, ...data, ...n };
                 }
             }
-            //   if(nftObj.data?.image_url){
-            //     const image  = nftObj.data?.image
-            //     nftObj.image = image
-            //     nftObj.dataLoaded = true
-            //   }
-            // }
-            // else if(data?.includes("image")){
-            //   nftObj.image = uri
-            // }
-            // else if(data?.includes("video")){
-            //   nftObj.animation_url = uri
         } else {
             if (data) {
                 let n;
