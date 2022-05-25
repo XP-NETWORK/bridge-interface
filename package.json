@@ -8,6 +8,7 @@
     "@harmony-js/core": "^0.1.57",
     "@iotexproject/iotex-address-ts": "^1.0.4",
     "@json-rpc-tools/utils": "^1.7.6",
+    "@metamask/detect-provider": "^1.2.0",
     "@mui/icons-material": "^5.4.2",
     "@randlabs/myalgo-connect": "^1.1.1",
     "@reduxjs/toolkit": "^1.6.2",

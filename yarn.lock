@@ -2153,6 +2153,11 @@
   resolved "https://registry.yarnpkg.com/@ledgerhq/logs/-/logs-6.10.0.tgz#c012c1ecc1a0e53d50e6af381618dca5268461c1"
   integrity sha512-lLseUPEhSFUXYTKj6q7s2O3s2vW2ebgA11vMAlKodXGf5AFw4zUoEbTz9CoFOC9jS6xY4Qr8BmRnxP/odT4Uuw==
 
+"@metamask/detect-provider@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@metamask/detect-provider/-/detect-provider-1.2.0.tgz#3667a7531f2a682e3c3a43eaf3a1958bdb42a696"
+  integrity sha512-ocA76vt+8D0thgXZ7LxFPyqw3H7988qblgzddTDA6B8a/yU0uKV42QR/DhA+Jh11rJjxW0jKvwb5htA6krNZDQ==
+
 "@metamask/safe-event-emitter@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-2.0.0.tgz#af577b477c683fad17c619a78208cede06f9605c"
@@ -17125,7 +17130,7 @@ xmlhttprequest@1.8.0:
   integrity sha1-Z/4HXFwk/vOfnWX197f+dRcZaPw=
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
-  version "3.0.1"
+  version "3.0.3"
   resolved "git+https://github.com/xp-network/xpjs#3038978c27e73ae1088a4f6a3e3cd17d2949335a"
   dependencies:
     "@elrondnetwork/erdjs" "^9.2.6"
