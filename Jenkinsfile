@@ -10,16 +10,20 @@ pipeline {
     npm_config_cache = 'npm-cache'
   }
   stages {
-    stage('Install Packages') {
+    stage('Setup') {
       steps {
+         withChecks('Setup') {
             sh 'rm -rf package-lock.json'
             sh  'npm install'
+         }
       }
     }
-    stage('Test and Build') {
+    stage('Build') {
 
         steps {
-            sh 'npm run build'
+            withChecks('Build') {
+                sh 'npm run build'
+            }
         }
 
 
@@ -27,9 +31,11 @@ pipeline {
 
     stage('Production') {
        steps {
-          withAWS(region:"us-east-1", credentials: "7c7202fd-9de5-46ce-a20f-991c6eaabf8e") {
-              s3Delete(bucket: 'test-bucket-replica', path:'**/*')
-              s3Upload(bucket: 'test-bucket-replica', workingDir:'build', includePathPattern:'**/*');
+          withChecks('Production') {
+              withAWS(region:"us-east-1", credentials: "7c7202fd-9de5-46ce-a20f-991c6eaabf8e") {
+                  s3Delete(bucket: 'test-bucket-replica', path:'**/*')
+                  s3Upload(bucket: 'test-bucket-replica', workingDir:'build', includePathPattern:'**/*');
+              }
           }
        }
     }
