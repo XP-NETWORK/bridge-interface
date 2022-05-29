@@ -101,7 +101,9 @@ export default function ImportNFTModal() {
                             >
                                 Import
                             </div>
-                            <div className="btn-cancel">Cancel</div>
+                            <div onClick={handleClose} className="btn-cancel">
+                                Cancel
+                            </div>
                         </div>
                     </form>
                 </div>
