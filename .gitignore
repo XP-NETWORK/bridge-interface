@@ -5,3 +5,4 @@ yarn-error.log
 **/build.rar
 **/build.zip
 .DS_Store
+.env

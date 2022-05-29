@@ -13,7 +13,9 @@ export default function ImportNFTModal() {
     const dispatch = useDispatch();
     const from = useSelector((state) => state.general.from);
     const account = useSelector((state) => state.general.account);
+    const [validContract, setValidContract] = useState(NaN);
     const [contract, setContract] = useState();
+    const [contractOnBlur, setContractOnBlur] = useState(false);
     const [tokenId, setTokenId] = useState();
     const [importBlocked, setImportBlocked] = useState(false);
     const [error, setError] = useState("");
@@ -24,18 +26,27 @@ export default function ImportNFTModal() {
     const handleClose = () => {
         dispatch(setImportModal(false));
     };
-    //"https://indexnft.herokuapp.com/nfts/nftCheck";
+
+    const handleContractChange = (value) => {
+        setContract(value);
+        if (value.length !== 42) {
+            setValidContract(false);
+        } else setValidContract(true);
+    };
+
+    //"http://192.168.129.241:3000/nfts/nftCheck";
     const handleImport = async () => {
-        debugger;
-        const baseURL = "http://192.168.129.241:3000/nfts/nftCheck";
+        const baseURL = "https://indexnft.herokuapp.com/nfts/nftCheck";
         const _headers = {
             Accept: "*",
             "Content-Type": "application/json",
-            Authorization:
-                "Bearer eyJhbGciOiJFUzI1NiJ9.eyJhdXRob3JpdHkiOjIxNDc0ODM2NDcsImlhdCI6MTY1MDE5NjQ5NywiZXhwIjoxNjU3OTcyNDk3fQ.3mgndQav2x6m6MuXz5zRhSNN1reQLjYwoKSvXtUVUHxeTEWlfyc5VbDe2EKbFQLToB_SVYTP75iC_GAdFfXIhw",
+            Authorization: `Bearer ${process.env.REACT_APP_BEARER}`,
         };
         try {
             setImportBlocked(true);
+            setTimeout(() => {
+                setImportBlocked(false);
+            }, 10000);
             const imported = await axios({
                 method: "post",
                 url: baseURL,
@@ -48,11 +59,13 @@ export default function ImportNFTModal() {
                 }),
             });
             setImportBlocked(false);
-            dispatch(addImportedNFTtoNFTlist(imported.data));
+            if (typeof imported.data === "object") {
+                dispatch(addImportedNFTtoNFTlist(imported.data));
+            } else setError(imported.data);
             dispatch(setImportModal(false));
         } catch (error) {
             setError(error.message);
-            setImportBlocked(true);
+            setImportBlocked(false);
             console.error(error);
         }
     };
@@ -74,13 +87,30 @@ export default function ImportNFTModal() {
                                 1. Paste contract address
                             </label>
                             <input
-                                onChange={(e) => setContract(e.target.value)}
+                                onBlur={() => setContractOnBlur(true)}
+                                onChange={(e) =>
+                                    handleContractChange(e.target.value)
+                                }
                                 type="text"
                                 id="contractAdd"
                                 name="contractAddress"
                                 placeholder="0x..."
                                 value={contract}
+                                className={
+                                    contractOnBlur && !validContract
+                                        ? "contract__input--invalid"
+                                        : "contract__input--valid"
+                                }
                             />
+                            <div
+                                className={
+                                    contractOnBlur && !validContract
+                                        ? "contract--invalid"
+                                        : "contract--valid"
+                                }
+                            >
+                                Error contract address
+                            </div>
                         </div>
                         <div>
                             <label htmlFor="tokeId">2. Paste Toked ID</label>

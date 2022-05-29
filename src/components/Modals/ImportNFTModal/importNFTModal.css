@@ -18,13 +18,38 @@
     justify-content: center;
     margin-bottom: 20px;
 }
+.contract__input--invalid {
+    border: 1px solid #e31432 !important;
+}
+.contract__input--valid {
+    width: 100%;
+    height: 46px;
+    border-radius: 40px;
+    outline: none;
+    padding: 16px;
+    border: 1px solid #ececf1;
+    padding: 4px;
+}
+.contract--invalid {
+    padding-top: 4px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 160%;
+    color: #e31432;
+    visibility: visible;
+}
+
+.contract--valid {
+    visibility: hidden;
+}
+
 .import-nft__form {
     padding: 0 32px;
 }
 .import-nft__form form {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 12px;
     width: 100%;
     font-weight: 400;
     font-size: 14px;
