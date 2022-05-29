@@ -1,10 +1,10 @@
-.container{
+.container {
     width: 1024px !important;
 }
 .NFTaccount {
     margin-top: 60px;
     margin-bottom: 80px;
-}  
+}
 .nftListTop {
     padding: 14px 10px;
     display: flex;
@@ -12,7 +12,7 @@
     padding-right: 10px;
 }
 .nft_selectBox {
-    background: #F7F8F9;
+    background: #f7f8f9;
     border: 1px solid white;
     border-radius: 20px;
     padding: 16px 0;
@@ -20,13 +20,13 @@
     /*height: 100%;*/
     position: relative;
     z-index: 1;
-}  
-.nftTopRIght{
+}
+.nftTopRIght {
     display: flex;
     align-items: center;
     gap: 8px;
 }
-.list-icon{
+.list-icon {
     position: absolute;
     top: 7px;
     left: 7px;
@@ -36,7 +36,7 @@
     background-position: center;
     background-repeat: no-repeat;
 }
-.grid-icon{
+.grid-icon {
     position: absolute;
     top: 7px;
     left: 7px;
@@ -46,32 +46,60 @@
     background-position: center;
     background-repeat: no-repeat;
 }
-.change-view__button:hover .grid-icon{
+.change-view__button:hover .grid-icon {
     background-image: url("../../assets/img/icons/Gridview_hovered.svg");
 }
-.change-view__button:hover .list-icon{
+.change-view__button:hover .list-icon {
     background-image: url("../../assets/img/icons/listView_hovered.svg");
 }
 
-.search-dropdown .dropdown-toggle{
+.import-nft-button {
     width: 40px;
     height: 40px;
-    background: #F6F6F8;
+    background: #f6f6f8;
     border: 1px solid rgb(255, 255, 255) !important;
     border-radius: 50%;
     box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
     position: relative;
     cursor: pointer;
 }
-.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+
+.import-nft-button .import-icon {
+    width: 20px;
+    height: 20px;
+    background-image: url("../../assets/img/icons/import.svg");
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.import-nft-button:hover .import-icon {
+    background-image: url("../../assets/img/icons/importHovered.svg");
+}
+
+.search-dropdown .dropdown-toggle {
+    width: 40px;
+    height: 40px;
+    background: #f6f6f8;
+    border: 1px solid rgb(255, 255, 255) !important;
+    border-radius: 50%;
+    box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
+    position: relative;
+    cursor: pointer;
+}
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
     color: #fff;
     background-color: transparent;
     border-color: transparent;
 }
-.search-dropdown .dropdown-toggle::after{
+.search-dropdown .dropdown-toggle::after {
     display: none !important;
 }
-.search-dropdown .dropdown-menu{
+.search-dropdown .dropdown-menu {
     inset: -45px auto auto -170px !important;
     height: 44px;
     padding: 0;
@@ -80,38 +108,37 @@
     overflow: hidden;
     width: 200px;
 }
-.search-dropdown .dropdown-menu input{
+.search-dropdown .dropdown-menu input {
     border: 1px solid #fff;
     padding-left: 10px;
     padding-top: 10px;
     outline: unset;
-    background-color: #F6F6F8;
-  
+    background-color: #f6f6f8;
 }
-.mobileOnly{
-    background: #F7F7F9;
+.mobileOnly {
+    background: #f7f7f9;
     padding-bottom: 16px;
     margin-bottom: 12px;
 }
-.mobileOnly .desChain{
+.mobileOnly .desChain {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 14px;
     font-weight: 500;
-    color: #14161A;
+    color: #14161a;
     line-height: 126%;
 }
-.mobileOnly .desAddress input{
- background-color: white;
- border-radius: 40px;
- border: 1px solid #E0E4EB;
- height: 44px;
+.mobileOnly .desAddress input {
+    background-color: white;
+    border-radius: 40px;
+    border: 1px solid #e0e4eb;
+    height: 44px;
 }
-.mobile-col{
-    background: #F3F3F6;
+.mobile-col {
+    background: #f3f3f6;
 }
-.mobile-col__tittle{
+.mobile-col__tittle {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -119,24 +146,23 @@
     font-size: 22px;
     font-weight: 600;
     line-height: 26px;
-    color: #14161A;
+    color: #14161a;
     padding: 22px 16px 16px 16px;
     border-bottom: 1px solid white;
-    background: #F7F7F9;
-
+    background: #f7f7f9;
 }
-.mobile-col__header{
+.mobile-col__header {
     display: flex;
     font-size: 14px;
     align-items: center;
     gap: 10px;
     padding: 22px 10px 16px 10px;
-    color: #14161A;
+    color: #14161a;
     border-bottom: 1px solid white;
-    background: #F7F7F9;
+    background: #f7f7f9;
     font-weight: 500;
 }
-.mobile-col__header .chain-switch{
+.mobile-col__header .chain-switch {
     margin-left: auto;
 }
 .yourNft--mobile {
@@ -146,19 +172,19 @@
     padding: 18px 10px;
     border: 1px solid white;
 }
-.mobile-nfts__header{
+.mobile-nfts__header {
     padding: 20px 10px 16px 10px;
     width: 100%;
     display: flex;
     align-items: center;
-    background: #F7F7F9;
+    background: #f7f7f9;
     border-bottom: 1px solid white;
 }
-.mobile-nfts__list{
+.mobile-nfts__list {
     display: flex;
     flex-direction: column;
 }
-.mobile-nfts__buttons{
+.mobile-nfts__buttons {
     margin-left: auto;
     display: flex;
     gap: 6px;
@@ -169,37 +195,36 @@
     max-height: 680px;
     overflow: hidden auto;
     margin-right: -24px;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-  .nftListBox::-webkit-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.nftListBox::-webkit-scrollbar {
     display: none;
-  }
+}
 
-  .mobile-search__top{
+.mobile-search__top {
     display: flex;
     gap: 12px;
     justify-content: space-between;
     padding: 20px 10px 16px 10px;
-    background: #F3F3F6;
+    background: #f3f3f6;
     border-bottom: 1px solid transparent;
 }
-.mobile-search-input__box input{
+.mobile-search-input__box input {
     position: relative;
     width: 100%;
     height: 100%;
-    background: #ECECF1;
-    border: 1px solid #D4D9E1;
+    background: #ececf1;
+    border: 1px solid #d4d9e1;
     box-shadow: 0px 1px 5px rgba(180, 185, 199, 0.25);
     border-radius: 38px;
     padding-left: 36px;
 }
-.mobile-search-input__box{
+.mobile-search-input__box {
     position: relative;
     width: 100%;
-    
 }
-.mobile-search-input__icon{
+.mobile-search-input__icon {
     position: absolute;
     z-index: 1;
     top: 13px;
@@ -210,25 +235,23 @@
     background-size: 16px;
     background-position: center;
 }
-.mobile-search-input__box input::placeholder{
+.mobile-search-input__box input::placeholder {
     font-size: 16px;
     font-weight: 400;
     line-height: 18px;
 }
 
-
 #SearchDrop {
-
 }
 
 @media screen and (min-width: 768px) {
-    .mobile-col{
+    .mobile-col {
         display: none;
     }
 
     .nft_selectBox {
         border: 1px solid white;
-      }
+    }
 }
 @media screen and (min-width: 426px) {
     .nft_selectBox {
@@ -237,47 +260,47 @@
     .yourNft--mobile {
         display: none;
     }
-    .nftListBox{
+    .nftListBox {
         /* max-height: unset; */
         height: 560px !important;
     }
 }
 
 @media screen and (min-width: 320px) {
-    .nftListCol{
+    .nftListCol {
         padding: 0;
     }
 }
-@media screen and (max-width: 769px){
-    .row{
+@media screen and (max-width: 769px) {
+    .row {
         display: none;
     }
-    .container{
+    .container {
         padding: 0;
     }
-    .mobile-nfts__body .selected-nfts__header{
+    .mobile-nfts__body .selected-nfts__header {
         display: none;
     }
 }
 
 @media screen and (max-width: 426px) {
-    .nftListTop{
+    .nftListTop {
         padding: 20px 10px;
     }
-    .nft_selectBox{
+    .nft_selectBox {
         padding: 0;
         border-radius: unset;
     }
-    .mobileOnly .destiAddress{
+    .mobileOnly .destiAddress {
         padding: 0 16px;
     }
     .NFTaccount {
         margin: 0;
     }
-    .aboutNft{
+    .aboutNft {
         padding-top: 0;
     }
-    .nftListBox{
+    .nftListBox {
         border-radius: unset;
     }
 }
