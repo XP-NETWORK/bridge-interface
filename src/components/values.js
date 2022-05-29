@@ -279,11 +279,11 @@ export const chains = [
         value: "GateChain",
         tnChainId: 85,
         chainId: 86,
-        order: 5,
+        order: -1,
         image: { avatar: true, src: GT },
         maintenance: false,
         testNet: false,
-        mainnet: biz ? true : false,
+        mainnet: true,
         newChain: true,
     },
     {
