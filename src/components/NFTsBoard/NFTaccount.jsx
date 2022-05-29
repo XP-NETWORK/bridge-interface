@@ -43,6 +43,7 @@ import NoApprovedNFT from "../Alerts/NoApprovedNFT";
 import { usePrevious } from "../Settings/hooks";
 import { chainsConfig } from "../values";
 import { useWeb3React } from "@web3-react/core";
+import ImportNFTButton from "../Buttons/ImportNFTButton";
 
 function NFTaccount() {
     const dispatch = useDispatch();
@@ -256,6 +257,9 @@ function NFTaccount() {
                                     <SearchButton
                                         handleSearchTop={handleSearchTop}
                                     />
+                                    {_from.type === "EVM" && (
+                                        <ImportNFTButton />
+                                    )}
                                     <ViewButton />
                                     <SelectClearAll />
                                 </div>
