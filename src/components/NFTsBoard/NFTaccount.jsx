@@ -3,6 +3,8 @@ import { Container } from "react-bootstrap";
 import NFTgridView from "../NFT/NFTgridView";
 import NFTlistView from "../NFT/NFTlistView";
 import NFTlistTop from "./NFTlistTop";
+import { Modal } from "react-bootstrap";
+import ImportNFTModal from "../Modals/ImportNFTModal/ImportNFTModal";
 import {
     setBalance,
     setChainModal,
@@ -51,6 +53,7 @@ function NFTaccount() {
     const algorandAccount = useSelector((s) => s.general.algorandAccount);
     const NFTListView = useSelector((state) => state.general.NFTListView);
     const nfts = useSelector((state) => state.general.NFTList);
+    const importModal = useSelector((state) => state.general.importModal);
     const algorandClaimables = useSelector(
         (state) => state.general.algorandClaimables
     );
@@ -190,6 +193,13 @@ function NFTaccount() {
 
     return (
         <div className="NFTaccount">
+            <Modal
+                show={importModal}
+                animation={false}
+                className=" ChainModal import-nft__modal"
+            >
+                <ImportNFTModal />
+            </Modal>
             <ChangeNetworkModal />
             <UnsupportedNetwork />
             <SelectNFTAler />
