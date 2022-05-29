@@ -236,6 +236,12 @@ export default function Widget() {
 
      .nftSlectContaine.container {
         position: relative;
+        width: 90%;
+        max-width: 95%;
+      }
+
+      .sendNftCol {
+        padding-right: 0;
       }
 
 
@@ -259,7 +265,7 @@ export default function Widget() {
 
       .NFTaccount {
         margin: auto;
-        padding-top: 120px;
+        padding-top: 107px;
         margin-bottom: 0;
       }
 
@@ -315,6 +321,7 @@ export default function Widget() {
 
         .wallet-search__container {
           margin-bottom: 5px;
+          width:auto;
         }
 
         .infText, .infText:after, .approval__inf:hover::before, .approval__inf:hover::after {
