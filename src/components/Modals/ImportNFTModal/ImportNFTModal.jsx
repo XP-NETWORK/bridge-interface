@@ -37,11 +37,12 @@ export default function ImportNFTModal() {
     //"http://192.168.129.241:3000/nfts/nftCheck";
     const handleImport = async () => {
         debugger;
-        const baseURL = "http://192.168.129.241:3000/nfts/nftCheck";
+        const baseURL =
+            "https://xp-network-check-nft.herokuapp.com/nfts/nftCheck";
         const _headers = {
             Accept: "*",
             "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.REACT_APP_BEARER}`,
+            // Authorization: `Bearer ${process.env.REACT_APP_BEARER}`,
         };
         try {
             setImportBlocked(true);
@@ -59,10 +60,6 @@ export default function ImportNFTModal() {
                     address: account,
                 }),
             });
-            console.log(
-                "🚀 ~ file: ImportNFTModal.jsx ~ line 62 ~ handleImport ~ imported",
-                imported
-            );
             setImportBlocked(false);
             if (typeof imported.data === "object") {
                 dispatch(addImportedNFTtoNFTlist(imported.data));
