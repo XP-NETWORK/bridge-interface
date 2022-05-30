@@ -41,7 +41,8 @@ import NoApprovedNFT from "../Alerts/NoApprovedNFT";
 import { usePrevious } from "../Settings/hooks";
 import { chainsConfig } from "../values";
 import { useWeb3React } from "@web3-react/core";
-
+import UserConnect from "../User/UserConnect";
+import AccountModal from "../Modals/AccountModal/AccountModal";
 function NFTaccount() {
     const dispatch = useDispatch();
     const from = useSelector((state) => state.general.from.key);
@@ -66,6 +67,7 @@ function NFTaccount() {
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
     const [index, setIndex] = useState(0);
     const { library } = useWeb3React();
+    const widget = useSelector((state) => state.general.widget);
     //Anjelika - 0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE
     //Anjelika elrond - erd1s89aq3s0z6mjfpx8s85zntlfywsvj5r8nzcdujw7mx53f9et9ezq9fnrws
     //Dima. U - 0x6449b68cc5675f6011e8DB681B142773A3157cb9
@@ -197,6 +199,9 @@ function NFTaccount() {
             <NoApprovedNFT />
             <Container className="nftSlectContaine">
                 <ReturnBtn />
+             {widget && <UserConnect />}
+             {widget && window.innerWidth < 760 && <UserConnect mobile={true}/>}
+             {widget && <AccountModal />}
                 <div className="row">
                     <div className="nftListCol col-lg-8">
                         <div className="nft_selectBox">

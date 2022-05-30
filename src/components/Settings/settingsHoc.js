@@ -259,24 +259,26 @@ const settingsHoc = (Wrapped) => (props) => {
     localStorage.removeItem("widgetSettings");
   };
 
-  const onSelectAll = () => {
+  const onSelectAll = (entity) => {
     dispatch(
       setSettings({
         ...settings,
-        selectedChains: initialState.selectedChains,
+        [entity]: initialState[entity]
+        //selectedChains: initialState.selectedChains,
       })
     );
-    setActiveChains(activeChains.length);
+    entity === 'selectedChains' && setActiveChains(activeChains.length);
   };
 
-  const onUnSelectAll = () => {
+  const onUnSelectAll = entity => {
     dispatch(
       setSettings({
         ...settings,
-        selectedChains: [selectedChains[0], selectedChains[1]],
+       [entity]: [settings[entity][0], (entity === 'selectedChains' && settings[entity][1])]
+       // selectedChains: [selectedChains[0], selectedChains[1]],
       })
     );
-    setActiveChains(2);
+    entity === 'selectedChains' && setActiveChains(2);
   };
 
   return (

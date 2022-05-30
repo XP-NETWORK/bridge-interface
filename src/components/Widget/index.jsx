@@ -284,17 +284,16 @@ export default function Widget() {
         }
 
 
-        .modal-content, .modal-content .walletListBox, .nftInfBox, .success-nft-info__wrapper, .serchInput {
+        .modal-content, .modal-content .walletListBox, .nftInfBox, .success-nft-info__wrapper, .serchInput, .accountBox  {
             background: ${modalBackground ? modalBackground : ""};
             filter: brightness(90%);
         }
-
 
         .success-nft-info__wrapper {
           border-color: ${backgroundColor ? backgroundColor : ""};
         }
 
-        .NftSelect {
+        .NftSelect, .navbar-connect {
           background: ${panelBackground ? panelBackground : ""};
         
         }
@@ -309,7 +308,7 @@ export default function Widget() {
           border-top-right-radius: 8px;
         }
 
-        .approval, .fees, .selected-nfts-item, .nftListed:hover, .success-info-box, .chain-switch, .destination__address input{
+        .approval, .fees, .selected-nfts-item, .nftListed:hover, .success-info-box, .chain-switch, .destination__address input, .navbar-connect:hover{
           background: ${panelBackground ? panelBackground : ""};
           filter: brightness(94%);
         }
@@ -330,7 +329,7 @@ export default function Widget() {
           color: ${tooltipColor ? tooltipColor : ""};
         }
 
-        .nft_selectBox, .transfer-board, .destination__address input:focus {
+        .nft_selectBox, .transfer-board, .destination__address input:focus, .accountBox  {
           background: ${panelBackground ? panelBackground : ""};
           border-color: ${borderColor ? borderColor : ""};
           
@@ -340,7 +339,8 @@ export default function Widget() {
         .desChain span, .ComentBox p, .selectedNft span, .approveBtn, .nftFees span, .nftSelecItem, .wllListItem, .nftListed, .chain-switch, .wrongNFT, .opt-in__text, .transferred-nft-hashes span,
          .desAddress input, .nftWornTop h3, .nftWornTop p, .nftInfBox p, .about__text, .ComentBox p, .nonftAcc, .yourNft__title, .destination__title, .nftListed__info .name,
           .nonftAcc  h2,  .transfer-loader__title, .txn-hash, .sucesList span, .selected-nfts__header, .approval__header, .fees__title, .clip p,
-          .fees span, .listed-view__not-whitelisted__button, .success-info-box, .info-item-chain, .chain-select__box, .desktop__header span {
+          .fees span, .listed-view__not-whitelisted__button, .success-info-box, .accountTit, .accountBox p,
+          .info-item-chain, .chain-select__box, .desktop__header span, .account-modal__account,  .navbar-connect {
             color: ${color ? color : ""};
         }
 
@@ -350,7 +350,7 @@ export default function Widget() {
         }
 
         .desAddress input,  .desAddress input:focus,  .desAddress input:active, .empty__box, .nftChainItem,
-        .destination__address input, .chain-switch, .destination-props, .NftSelect, .serchInput{
+        .destination__address input, .chain-switch, .destination-props, .NftSelect, .serchInput, .navbar-connect, .navbar-connect:hover {
           border-color: ${borderColor ? borderColor : ""};
         }
 
@@ -363,7 +363,8 @@ export default function Widget() {
         }
 
         a.themBtn, .nftSelectBox, .modal-content, .widget .destiAddress input, .returnBtn button, 
-        .SearchDrop.dropdown .dropdown-menu, .transfer-button--disabled, .clear-selected, .connect-wallet__button--disabled  {
+        .SearchDrop.dropdown .dropdown-menu, .transfer-button--disabled, .clear-selected, 
+        .connect-wallet__button--disabled, .switching, .chain-switch, .transfer-button, .listed-view__not-whitelisted__button, .navbar-connect  {
             border-radius: ${btnRadius ? btnRadius + "px" : ""};
         }
 
@@ -374,6 +375,16 @@ export default function Widget() {
           opacity: 1;
         }
 
+        .listed-nft-radio--selected {
+          background: ${iconColor? iconColor : ""};
+          filter: brightness(145%);
+        }
+
+
+        .chain-switch, .nonftAcc h2, .nonftAcc span {
+          font-family: ${fontFamily ? fontFamily : ""};
+        }
+
         .transfer-button, .transfer-button--disabled{
           opacity: .8;
           background:  ${btnBackground ? btnBackground : ""};
@@ -381,10 +392,17 @@ export default function Widget() {
         }
         
        .connectNft a.themBtn.disabled, .sendNftBox :not(.nftSendBtn.disabled) > a.themBtn, .switching, 
-       .mobileOnly  .nftSendBtn > a.themBtn, .connect-wallet__button {
+       .mobileOnly  .nftSendBtn > a.themBtn, .connect-wallet__button, .accountBtn button {
             background: ${btnBackground ? btnBackground : ""};
             color:  ${btnColor ? btnColor : ""};
             border-color: ${btnBackground ? btnBackground : ""};   
+        }
+
+        .accountBtn button:hover {
+          background: ${btnBackground ? btnBackground : ""};
+            color:  ${btnColor ? btnColor : ""};
+            border-color: ${btnBackground ? btnBackground : ""};
+            filter: brightness(92%);
         }
 
          .transfer-button--disabled, .transfer-button {
@@ -430,8 +448,13 @@ export default function Widget() {
             display:none;
         }
 
+        .navbar-connect {
+          position: absolute;
+          top: -55px;
+          right: 0;
+          width: 200px;
         
-
+        }
 
 
         .first-step__container {
@@ -495,9 +518,11 @@ export default function Widget() {
 
         .approvTop, .nftFees, .SearchDrop.dropdown input,
          .destiAddress input::placeholder, .nftInfBox label, .sucesList label, .switchingAcc p, .transferTable.table thead th,
-         .transferTable.table tr td, .accountBox p, .brocken-url, .clearNft, .clear-selected {
+         .transferTable.table tr td, .brocken-url, .clearNft, .clear-selected {
           color: ${secondaryColor ? secondaryColor : ""};
         }
+
+
 
         .listed-view__not-whitelisted__button {
           background: ${secondaryColor ? secondaryColor : ""};
@@ -697,6 +722,11 @@ export default function Widget() {
         .returnBtn button {
           border-color: ${color ? color : ""};
           color:  ${color ? color : ""};
+        }
+
+        .accountBox {
+          top: -2px;
+          right: -2px;
         }
 
        

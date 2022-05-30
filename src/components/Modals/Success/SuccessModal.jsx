@@ -83,7 +83,7 @@ export default function SuccessModal() {
 
   const toShow = () => {
     return txnHashArr?.length ? true : false;
-    return true
+    //return true
   };
 
   const getExplorer = () =>{

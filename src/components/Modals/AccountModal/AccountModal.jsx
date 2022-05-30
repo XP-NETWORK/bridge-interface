@@ -13,9 +13,13 @@ import { getAddEthereumChain } from "../../../wallet/chains";
 import Tooltip from "./Tooltip";
 
 export default function AccountModal() {
-  const widget = new URLSearchParams(window.location.search).get("widget");
+
   const dispatch = useDispatch();
   const account = useSelector((state) => state.general.account);
+  const {widget, wsettings} = useSelector((state) => ({
+    widget: state.general.widget,
+    wsettings: state.general.wsettings
+  }));
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
   const MetaMask = useSelector((state) => state.general.MetaMask);
   const algorandWallet = useSelector((state) => state.general.AlgorandWallet);
@@ -95,7 +99,9 @@ export default function AccountModal() {
         {/* <button onClick={() => switchNetwork()} className="changeBtn disabled">
           Change Network
         </button> */}
-        <button onClick={() => window.location.reload()} className="changeBtn">
+        <button onClick={widget? () => window.open(widget && !wsettings
+      ? `/connect${window.location.search}`
+      : `/connect?widget=true&wsettings=true`, "_self"): () => window.location.reload()} className="changeBtn">
           Disconnect
         </button>
       </div>

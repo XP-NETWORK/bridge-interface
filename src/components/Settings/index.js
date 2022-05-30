@@ -150,14 +150,6 @@ function WSettings({
           >
             <h2>Settings</h2>
             <CollapseComp className="collapseImg"   onClick={onClickEditor}/>
-            
-          </div>
-          <div
-            className={`sidebar_content`}
-            style={{ display: settings.collapsed ? "none" : "block" }}
-            ref={list}
-            onScroll={(e) => handleScroll(e)}
-          >
             <div className={`genarel_setting ${fixedHeader ? "fixed" : ""}`}>
               <ThemeSwitch/>
 
@@ -199,6 +191,14 @@ function WSettings({
                 }}
               ></button>
             </div>
+          </div>
+          <div
+            className={`sidebar_content ${fixedHeader? 'shoved' : ''}`}
+            style={{ display: settings.collapsed ? "none" : "block" }}
+            ref={list}
+            onScroll={(e) => handleScroll(e)}
+          >
+   
             <div className="setting_list">
               <Accordion defaultActiveKey="10" className="open">
                 <Accordion.Item eventKey="1">
@@ -207,8 +207,8 @@ function WSettings({
                   <Accordion.Body>
                     <div className="blockChainCont">
                       <ul className="select_block_chain">
-                        <button className="controlBtn"  onClick={onSelectAll}>Select all</button>
-                        <button className="controlBtn"  onClick={onUnSelectAll}>Unselect all</button>
+                        <button className="controlBtn"  onClick={() => onSelectAll('selectedChains')}>Select all</button>
+                        <button className="controlBtn"  onClick={() => onUnSelectAll('selectedChains')}>Unselect all</button>
                         
                         {chains.filter(c => c.coming || c.maintenance || c.mainnet || c.testNet).map((chain, i) => (
                           <li
@@ -276,6 +276,8 @@ function WSettings({
                   <Accordion.Body>
                     <div className="blockChainCont">
                       <ul className="select_block_chain">
+                        <button className="controlBtn"  onClick={() => onSelectAll('selectedWallets')}>Select all</button>
+                        <button className="controlBtn"  onClick={() => onUnSelectAll('selectedWallets')}>Unselect all</button>
                         {wallets.map((wallet, i) => {
                           const chain = Object.keys(availability).find((key) =>
                             availability[key].includes(wallet)
