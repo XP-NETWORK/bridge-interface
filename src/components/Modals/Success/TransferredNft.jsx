@@ -38,7 +38,6 @@ export default function TransferredNft({ nft }) {
             if (nft.native.uri === tx.nftUri) {
                 if (txnStatus !== "Completed")
                     setTxnStatus(tx?.status?.toLowerCase());
-
                 setHashes({
                     depHash: tx.hash,
                     destHash: tx.toHash,
@@ -71,7 +70,7 @@ export default function TransferredNft({ nft }) {
                     )}
                     <div className="transferred-nft-name">{name}</div>
                 </div>
-                <TxStatus status={txn ? txnStatus : "failed"} />
+                <TxStatus status={txn ? txnStatus : "processing"} />
             </div>
 
             <div className="transferred-nft-hashes">
@@ -80,7 +79,7 @@ export default function TransferredNft({ nft }) {
                     <a
                         target="_blank"
                         href={`${chainsConfig[from.key]?.tx}${hashes?.depHash ||
-                            txn.hash}`}
+                            txn?.hash}`}
                     >
                         {txn?.hash
                             ? `${txn?.hash.substring(

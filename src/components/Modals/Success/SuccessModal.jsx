@@ -82,11 +82,6 @@ export default function SuccessModal() {
         }
     };
 
-    const toShow = () => {
-        return txnHashArr?.length ? true : false;
-        return true;
-    };
-
     const getExplorer = () => {
         return !testnet
             ? `${CHAIN_INFO[from?.text]?.blockExplorerUrls}${address}`
@@ -95,17 +90,9 @@ export default function SuccessModal() {
 
     useEffect(() => {
         socket.on("incomingEvent", async (e) => {
-            console.log(
-                "🚀 ~ file: SuccessModal.jsx ~ line 95 ~ useEffect ~ e",
-                e
-            );
             dispatch(setTxnStatus(e));
         });
         socket.on("updateEvent", async (e) => {
-            console.log(
-                "🚀 ~ file: SuccessModal.jsx ~ line 99 ~ useEffect ~ e",
-                e
-            );
             dispatch(setTxnStatus(e));
         });
         return () => {
