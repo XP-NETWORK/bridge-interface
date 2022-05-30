@@ -33,10 +33,11 @@ export default function ImportNFTModal() {
             setValidContract(false);
         } else setValidContract(true);
     };
-
+    //"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ";
     //"http://192.168.129.241:3000/nfts/nftCheck";
     const handleImport = async () => {
-        const baseURL = "https://indexnft.herokuapp.com/nfts/nftCheck";
+        debugger;
+        const baseURL = "http://192.168.129.241:3000/nfts/nftCheck";
         const _headers = {
             Accept: "*",
             "Content-Type": "application/json",
@@ -58,6 +59,10 @@ export default function ImportNFTModal() {
                     address: account,
                 }),
             });
+            console.log(
+                "🚀 ~ file: ImportNFTModal.jsx ~ line 62 ~ handleImport ~ imported",
+                imported
+            );
             setImportBlocked(false);
             if (typeof imported.data === "object") {
                 dispatch(addImportedNFTtoNFTlist(imported.data));
