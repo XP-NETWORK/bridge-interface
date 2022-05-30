@@ -11,6 +11,7 @@ import github from "../assets/img/nav/github.svg";
 import video from "../assets/img/nav/vid.svg";
 import xpnet from "../assets/img/nav/xpnet.svg";
 import message from "../assets/img/nav/message.svg";
+import explorer from "../assets/img/nav/explorer.svg";
 import UserConnect from "../components/User/UserConnect";
 import { setShowVideo } from "../store/reducers/generalSlice";
 import { ReactComponent as Hamburger } from "../assets/img/nav/burger.svg";
@@ -100,10 +101,25 @@ function NavBar() {
                             {/* <LinkContainer to='/connect'>
                                 <Nav.Link className="desc-link" target="_blank" href="#">Bridge</Nav.Link>
                             </LinkContainer> */}
-                            {/* <Nav.Link target="_blank" href="#">
-                                <div className="nav-link__icon"><img src={about} alt="" /></div>
-                                <div className="nav-link__txt">About</div>
+                            {/* <Nav.Link
+                                target="_blank"
+                                href="https://bridge-explorer.xp.network/"
+                            >
+                                <div className="nav-link__icon">
+                                    <img src={explorer} alt="" />
+                                </div>
+                                <div className="nav-link__txt">Explorer</div>
                             </Nav.Link> */}
+                            <Nav.Link
+                                className="mob-link"
+                                target="_blank"
+                                href="https://bridge-explorer.xp.network/"
+                            >
+                                <div className="nav-link__icon">
+                                    <img src={explorer} alt="" />
+                                </div>
+                                <div className="nav-link__txt">Explorer</div>
+                            </Nav.Link>
                             <Nav.Link
                                 target="_blank"
                                 href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"
@@ -217,12 +233,17 @@ function NavBar() {
                                 </DropdownToggle>
                                 <Dropdown.Menu>
                                     <div onClick={(e) => toggleNavMenu(false)}>
-                                        {/* <Dropdown.Item>
-                                        <div className="drop-item">
-                                            <img src={about} alt="" />
-                                            <div className="drop-icon">About</div>
-                                        </div>
-                                    </Dropdown.Item> */}
+                                        <Dropdown.Item
+                                            href="https://bridge-explorer.xp.network/"
+                                            target="-blank"
+                                        >
+                                            <div className="drop-item">
+                                                <img src={explorer} alt="" />
+                                                <div className="drop-icon">
+                                                    Explorer
+                                                </div>
+                                            </div>
+                                        </Dropdown.Item>
                                         <Dropdown.Item
                                             href="https://github.com/xp-network/"
                                             target="_blank"
