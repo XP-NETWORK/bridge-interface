@@ -133,7 +133,7 @@ function isJson(item) {
 }
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
-    // debugger;
+    debugger;
     const collectionIdent = nft.collectionIdent;
     let uri = nft.uri;
     if (collectionIdent === "0x36f8f51f65fe200311f709b797baf4e193dd0b0d") {

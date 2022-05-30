@@ -100,9 +100,14 @@ function NavBar() {
                             {/* <LinkContainer to='/connect'>
                                 <Nav.Link className="desc-link" target="_blank" href="#">Bridge</Nav.Link>
                             </LinkContainer> */}
-                            {/* <Nav.Link target="_blank" href="#">
-                                <div className="nav-link__icon"><img src={about} alt="" /></div>
-                                <div className="nav-link__txt">About</div>
+                            {/* <Nav.Link
+                                target="_blank"
+                                href="https://bridge-explorer.xp.network/"
+                            >
+                                <div className="nav-link__icon">
+                                    <img src="#" alt="" />
+                                </div>
+                                <div className="nav-link__txt">Explorer</div>
                             </Nav.Link> */}
                             <Nav.Link
                                 target="_blank"
@@ -112,6 +117,16 @@ function NavBar() {
                                     <img src={message} alt="" />
                                 </div>
                                 <div className="nav-link__txt">Help Center</div>
+                            </Nav.Link>
+                            <Nav.Link
+                                className="mob-link"
+                                target="_blank"
+                                href="https://bridge-explorer.xp.network/"
+                            >
+                                <div className="nav-link__icon">
+                                    <img src={faq} alt="" />
+                                </div>
+                                <div className="nav-link__txt">Explorer</div>
                             </Nav.Link>
                             <Nav.Link
                                 className="mob-link"
@@ -217,12 +232,17 @@ function NavBar() {
                                 </DropdownToggle>
                                 <Dropdown.Menu>
                                     <div onClick={(e) => toggleNavMenu(false)}>
-                                        {/* <Dropdown.Item>
-                                        <div className="drop-item">
-                                            <img src={about} alt="" />
-                                            <div className="drop-icon">About</div>
-                                        </div>
-                                    </Dropdown.Item> */}
+                                        <Dropdown.Item
+                                            href="https://bridge-explorer.xp.network/"
+                                            target="_blank"
+                                        >
+                                            <div className="drop-item">
+                                                <img src="#" alt="" />
+                                                <div className="drop-icon">
+                                                    Explorer
+                                                </div>
+                                            </div>
+                                        </Dropdown.Item>
                                         <Dropdown.Item
                                             href="https://github.com/xp-network/"
                                             target="_blank"
