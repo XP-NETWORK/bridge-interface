@@ -1,92 +1,135 @@
-
-.nftSelected__name{
+.nftSelected__name {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.sucesList{
+.sucesList {
     position: relative;
 }
 
-.tooltip-icon{
+.tooltip-icon {
     position: absolute;
     right: -56px;
     top: -45px;
     cursor: pointer;
 }
 
-.tooltip-icon:hover{
+.tooltip-icon:hover {
     cursor: pointer;
 }
 
-.success__copy{
+.success__copy {
     cursor: pointer;
 }
 
-.tx-status{
+.tx-status {
     height: 16px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: 5px;
 }
-.tx-txt{
+.tx-txt {
     font-size: 12px;
     font-weight: 400;
     line-height: 17px;
-    width: 100px;
-   
+    width: 70px;
 }
-.tx-icon img{
+.tx-icon img {
     width: 16px;
 }
-.pending{
-    color: #C058FF;
+.pending {
+    color: #c058ff;
 }
-.completed{
-    color: #10B67A;
+.completed {
+    color: #10b67a;
 }
-.failed{
-    color: #C23165;
+.failed {
+    color: #6d7a92;
 }
-
+.txn-processing__inf {
+    width: 20px;
+    height: 20px;
+    background-image: url("../../../assets/img/icons/info.svg");
+    background-position: center;
+    position: relative;
+}
+.txn-processing__inf:hover {
+    background-image: url("../../../assets/img/icons/inf_hovered.svg");
+}
+.txn-processing__inf:hover::before {
+    content: "Halted by the validators Please be patient 💙";
+    position: absolute;
+    width: 160px;
+    bottom: 30px;
+    left: -70px;
+    padding: 6px 9px;
+    background: #282829;
+    border-radius: 10px;
+    box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.5);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 17px;
+    color: white;
+    text-align: center;
+    z-index: 3;
+}
+.txn-processing__inf:hover::after {
+    position: absolute;
+    bottom: 20px;
+    z-index: 3;
+    left: 0;
+    content: "";
+    /* width: 15px;
+    height: 15px; */
+    box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.5);
+    /* background: #282829; */
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #282829;
+}
 .transferred-nft-hashes {
     display: flex;
     justify-content: space-between;
     margin: 14px 0 3px 0;
-    font-family: Inter,sans-serif;
+    font-family: Inter, sans-serif;
     font-size: 12px;
-
-
 }
 
 .chain-hash {
-    background-color: #F3F3F6;
+    background-color: #f3f3f6;
     border-radius: 40px;
     padding: 2px 11px;
 }
 
 .transferred-nft-hashes span {
-    color: #62718A;
+    color: #62718a;
     margin-right: 6px;
 }
 
 .transferred-nft-hashes a {
-    color: #395FEB;
-
+    color: #395feb;
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width: 600px) {
     .success-nft-info {
         max-height: 40vh;
         overflow-y: auto;
-     
     }
 }
 
-@media screen and (max-width: 375) {
-    .nft--success .nftSelecItem{
+@media screen and (max-width: 375px) {
+    .nft--success .nftSelecItem {
         padding: 6px 20px !important ;
+    }
+    .txn-processing__inf:hover::before {
+        left: -170px !important;
+        bottom: -15px !important;
+    }
+    .txn-processing__inf:hover::after {
+        left: -16px;
+        bottom: 5px;
+        transform: rotate(-90deg);
     }
 }
