@@ -10,7 +10,7 @@
 .nftSelectBox {
     position: relative;
     z-index: 1;
-    background: #d00f0f4d;
+    background: #f1ecec4d;
     backdrop-filter: blur(42px);
     border-radius: 16px;
     border: 1px solid #ffffff;
