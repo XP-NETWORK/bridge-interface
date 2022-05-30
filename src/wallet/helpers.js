@@ -134,13 +134,18 @@ function isJson(item) {
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
     // debugger;
-    const uri = nft.uri;
+    const collectionIdent = nft.collectionIdent;
+    let uri = nft.uri;
+    if (collectionIdent === "0x36f8f51f65fe200311f709b797baf4e193dd0b0d") {
+        // const id = uri.slice(uri.lastIndexOf("/"));
+        uri = `https://treatdao.com/api/nft/${nft.native.tokenId}`;
+    }
     const { from, NFTList } = store.getState().general;
     let whitelisted;
     let videoFormat;
     let imageFormat;
     let nftObj = {
-        uri: nft.uri,
+        uri,
         collectionIdent: nft.collectionIdent || undefined,
         native: { ...nft.native },
         dataLoaded: true,
@@ -320,7 +325,8 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     }
     if (
         nftObj?.image?.includes("ipfs") &&
-        !nftObj?.image?.includes("https://ipfs.io")
+        !nftObj?.image?.includes("https://ipfs.io") &&
+        !nftObj?.image?.includes("https://treatdao")
     ) {
         nftObj.image = "https://ipfs.io/" + nftObj.image.replace(":/", "");
     }
