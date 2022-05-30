@@ -41,6 +41,8 @@ import NoApprovedNFT from "../Alerts/NoApprovedNFT";
 import { usePrevious } from "../Settings/hooks";
 import { chainsConfig } from "../values";
 import { useWeb3React } from "@web3-react/core";
+import { Modal } from "react-bootstrap";
+import SuccessModal from "../Modals/Success/SuccessModal";
 
 function NFTaccount() {
     const dispatch = useDispatch();
@@ -156,6 +158,11 @@ function NFTaccount() {
                 console.log(error);
             }
         }
+    };
+
+    const toShowSuccess = () => {
+        // return txnHashArr?.length ? true : false;
+        return true;
     };
 
     useEffect(async () => {
