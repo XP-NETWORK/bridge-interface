@@ -38,7 +38,7 @@ function App() {
     });
 
     const toShowSuccess = () => {
-        // return txnHashArr?.length ? true : false;
+        return txnHashArr?.length ? true : false;
         return true;
     };
 
