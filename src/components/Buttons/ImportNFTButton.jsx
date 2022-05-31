@@ -8,7 +8,6 @@ export default function ImportNFTButton() {
     const handleClick = () => {
         dispatch(setImportModal(true));
     };
-
     return (
         <div onClick={handleClick} className="import-nft-button">
             <div className="import-icon"></div>

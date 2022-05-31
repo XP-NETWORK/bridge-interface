@@ -258,16 +258,19 @@ function NFTaccount() {
                                     showSelected={showSelected}
                                     setOff={setShowSelected}
                                 />
-                                <div className="mobile-nfts__buttons">
-                                    <SearchButton
-                                        handleSearchTop={handleSearchTop}
-                                    />
-                                    {_from.type === "EVM" && (
-                                        <ImportNFTButton />
-                                    )}
-                                    <ViewButton />
-                                    <SelectClearAll />
-                                </div>
+                                {_from.type === "EVM" && <ImportNFTButton />}
+                                {nfts?.length > 0 && (
+                                    <div className="mobile-nfts__buttons">
+                                        <SearchButton
+                                            handleSearchTop={handleSearchTop}
+                                        />
+                                        {_from.type === "EVM" && (
+                                            <ImportNFTButton />
+                                        )}
+                                        <ViewButton />
+                                        <SelectClearAll />
+                                    </div>
+                                )}
                             </div>
                         ) : (
                             <MobileNFTsSearch

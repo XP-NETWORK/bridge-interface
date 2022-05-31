@@ -64,6 +64,10 @@
     cursor: pointer;
 }
 
+.mobile-nfts__header .import-nft-button {
+    margin-left: auto;
+}
+
 .import-nft-button .import-icon {
     width: 20px;
     height: 20px;
