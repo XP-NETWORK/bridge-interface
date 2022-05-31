@@ -48,7 +48,7 @@ function NFTlistTop() {
                     <Refresh />
                 </div>
                 <SelectedNFTs />
-                {from.type === "EVM" && <ImportNFTButton />}
+                {from.type === "EVM" && nfts?.length < 1 && <ImportNFTButton />}
                 {nfts?.length > 0 && (
                     <div className="nftTopRIght">
                         <NFTSearch />

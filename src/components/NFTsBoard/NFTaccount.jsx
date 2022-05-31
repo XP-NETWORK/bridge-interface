@@ -258,7 +258,9 @@ function NFTaccount() {
                                     showSelected={showSelected}
                                     setOff={setShowSelected}
                                 />
-                                {_from.type === "EVM" && <ImportNFTButton />}
+                                {_from.type === "EVM" && nfts?.length < 1 && (
+                                    <ImportNFTButton />
+                                )}
                                 {nfts?.length > 0 && (
                                     <div className="mobile-nfts__buttons">
                                         <SearchButton

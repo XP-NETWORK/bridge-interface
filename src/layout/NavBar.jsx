@@ -110,7 +110,7 @@ function NavBar() {
                                 </div>
                                 <div className="nav-link__txt">Explorer</div>
                             </Nav.Link> */}
-                            <Nav.Link
+                            {/* <Nav.Link
                                 className="mob-link"
                                 target="_blank"
                                 href="https://bridge-explorer.xp.network/"
@@ -119,7 +119,7 @@ function NavBar() {
                                     <img src={explorer} alt="" />
                                 </div>
                                 <div className="nav-link__txt">Explorer</div>
-                            </Nav.Link>
+                            </Nav.Link> */}
                             <Nav.Link
                                 target="_blank"
                                 href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"
@@ -233,7 +233,7 @@ function NavBar() {
                                 </DropdownToggle>
                                 <Dropdown.Menu>
                                     <div onClick={(e) => toggleNavMenu(false)}>
-                                        <Dropdown.Item
+                                        {/* <Dropdown.Item
                                             href="https://bridge-explorer.xp.network/"
                                             target="-blank"
                                         >
@@ -243,7 +243,7 @@ function NavBar() {
                                                     Explorer
                                                 </div>
                                             </div>
-                                        </Dropdown.Item>
+                                        </Dropdown.Item> */}
                                         <Dropdown.Item
                                             href="https://github.com/xp-network/"
                                             target="_blank"
