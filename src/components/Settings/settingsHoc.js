@@ -7,7 +7,7 @@ import {
   initialState as initSettings,
   initialState,
 } from "../../store/reducers/settingsSlice";
-
+import { comingSoonChains } from "../../store/reducers/settingsSlice";
 import { debounce } from "../helpers";
 import { usePrevious } from "./hooks";
 
@@ -99,7 +99,7 @@ const settingsHoc = (Wrapped) => (props) => {
 
     if (checked) {
       if (activeChains.includes(val)) {
-        const canCheckout = activeChainsNumber > 2;
+        const canCheckout = activeChainsNumber > 2; //comingSoonChains.includes(val)? true: activeChainsNumber - selectedChains.reduce((acc, cur) => acc + comingSoonChains.includes(cur)? 1: 0, 0) > 2;
 
         dispatch(
           setSettings({

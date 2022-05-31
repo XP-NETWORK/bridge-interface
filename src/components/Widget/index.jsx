@@ -91,16 +91,16 @@ export default function Widget() {
           modalBackground: "#" + modalBackground,
           color: "#" + color,
           fontFamily,
-          fontSize,
+          fontSize: fontSize.replace(/\D/g,''),
           btnColor: "#" + btnColor,
           btnBackground: "#" + btnBackground,
-          btnRadius,
+          btnRadius: btnRadius.replace(/\D/g,''),
           selectedChains: chains,
           selectedWallets: wallets,
           cardBackground: "#" + cardBackground,
           cardBackgroundBot: "#" + cardBackgroundBot,
           cardColor: "#" + cardColor,
-          cardRadius,
+          cardRadius: cardRadius.replace(/\D/g,''),
           accentColor: "#" + accentColor,
           secondaryColor: "#" + secondaryColor,
           borderColor: "#" + borderColor,
@@ -729,7 +729,31 @@ export default function Widget() {
           right: -2px;
         }
 
+        .nft__card, .nft__card--selected {
+          width: 192px;
+        }
+
+        
+
+        @media only screen and (max-width: 1024px) {
+          .nft__card, .nft__card--selected {
+            width: 182px;
+          }
+
+          .sendNftCol {
+            margin-top: 0;
+            padding-left: 15px;
+          }
+        }
+
        
+        @media only screen and (max-width: 980px) {
+            .sendNftCol {
+              margin-top: 15px;
+              padding-left: 0px;
+            }
+        }
+
 
         @media only screen and (max-width: 860px) {
 

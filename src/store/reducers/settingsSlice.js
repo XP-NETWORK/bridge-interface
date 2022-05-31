@@ -24,7 +24,7 @@ export const activeChains = [
 
 export const newChains = ["Velas"];
 
-export const comingSoonChains = ["Cardano", "Heco", "Solana", "Tezos"];
+export const comingSoonChains = ["Cardano", "Solana", "TON"];
 
 export const availability = {
   Algorand: ["MyAlgo", "AlgoSigner"],
