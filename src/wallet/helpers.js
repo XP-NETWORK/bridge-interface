@@ -13,7 +13,6 @@ import {
 import store from "../store/store";
 import io from "socket.io-client";
 import { isWhiteListed } from "./../components/NFT/NFTHelper";
-import { nftparse } from "nft-parser";
 
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
 const testnet = window.location.href.includes("testnet");
@@ -135,8 +134,6 @@ function isJson(item) {
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
     // debugger;
-    const some = await nftparse(nft);
-    console.log("🚀 ~ file: helpers.js ~ line 139 ~ parseEachNFT ~ some", some);
     const collectionIdent = nft.collectionIdent;
     let uri = nft.uri;
     if (collectionIdent === "0x36f8f51f65fe200311f709b797baf4e193dd0b0d") {
