@@ -1,0 +1,105 @@
+.import-nft__body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.import-error {
+    width: 301px;
+    height: 60px;
+    background: #fae2e2;
+    color: #d71336;
+    border-radius: 8px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 160%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.contract__input--invalid {
+    border: 1px solid #e31432 !important;
+}
+.contract__input--valid {
+    width: 100%;
+    height: 46px;
+    border-radius: 40px;
+    outline: none;
+    padding: 16px;
+    border: 1px solid #ececf1;
+    padding: 4px;
+}
+.contract--invalid {
+    padding-top: 4px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 160%;
+    color: #e31432;
+    visibility: visible;
+}
+
+.contract--valid {
+    visibility: hidden;
+}
+
+.import-nft__form {
+    padding: 0 32px;
+}
+.import-nft__form form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 160%;
+    color: #14161a;
+}
+.import-nft__form input[type="text"] {
+    width: 100%;
+    height: 46px;
+    border-radius: 40px;
+    outline: none;
+    padding: 16px;
+    border: 1px solid #ececf1;
+}
+
+.import-nft__buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.import-nft__buttons .btn-import {
+    border-radius: 40px;
+    outline: none;
+    height: 46px;
+    border: 1px solid #ececf1;
+    background: #395feb;
+    color: white;
+    width: 99px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.import-nft__buttons .btn-cancel {
+    border-radius: 40px;
+    outline: none;
+    height: 46px;
+    width: 99px;
+    background-color: none;
+    border: 1px solid #395feb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #395feb;
+    cursor: pointer;
+}
+.import-nft__buttons .btn-import:active {
+    background: #2d51d0;
+}
+.import-nft__buttons .btn-cancel:active {
+    border: 1px solid #2d51d0;
+    color: #2d51d0;
+}

@@ -46,15 +46,7 @@ export const setupURI = (uri) => {
 };
 
 const checkIfImage = (url) => {
-    const imageFormats = [
-        ".png",
-        ".gif",
-        ".jpg",
-        ".jpeg",
-        ".png",
-        ".svg",
-        ".webp",
-    ];
+    const imageFormats = [".gif", ".jpg", ".jpeg", ".png", ".svg", ".webp"];
     const imageFormat = imageFormats.some((format) => url?.includes(format));
     return imageFormat ? url : undefined;
 };

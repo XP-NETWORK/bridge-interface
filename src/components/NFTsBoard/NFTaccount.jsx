@@ -3,6 +3,8 @@ import { Container } from "react-bootstrap";
 import NFTgridView from "../NFT/NFTgridView";
 import NFTlistView from "../NFT/NFTlistView";
 import NFTlistTop from "./NFTlistTop";
+import { Modal } from "react-bootstrap";
+import ImportNFTModal from "../Modals/ImportNFTModal/ImportNFTModal";
 import {
     setBalance,
     setChainModal,
@@ -41,8 +43,7 @@ import NoApprovedNFT from "../Alerts/NoApprovedNFT";
 import { usePrevious } from "../Settings/hooks";
 import { chainsConfig } from "../values";
 import { useWeb3React } from "@web3-react/core";
-import { Modal } from "react-bootstrap";
-import SuccessModal from "../Modals/Success/SuccessModal";
+import ImportNFTButton from "../Buttons/ImportNFTButton";
 
 function NFTaccount() {
     const dispatch = useDispatch();
@@ -53,6 +54,7 @@ function NFTaccount() {
     const algorandAccount = useSelector((s) => s.general.algorandAccount);
     const NFTListView = useSelector((state) => state.general.NFTListView);
     const nfts = useSelector((state) => state.general.NFTList);
+    const importModal = useSelector((state) => state.general.importModal);
     const algorandClaimables = useSelector(
         (state) => state.general.algorandClaimables
     );
@@ -197,6 +199,13 @@ function NFTaccount() {
 
     return (
         <div className="NFTaccount">
+            <Modal
+                show={importModal}
+                animation={false}
+                className=" ChainModal import-nft__modal"
+            >
+                <ImportNFTModal />
+            </Modal>
             <ChangeNetworkModal />
             <UnsupportedNetwork />
             <SelectNFTAler />
@@ -253,6 +262,9 @@ function NFTaccount() {
                                     <SearchButton
                                         handleSearchTop={handleSearchTop}
                                     />
+                                    {_from.type === "EVM" && (
+                                        <ImportNFTButton />
+                                    )}
                                     <ViewButton />
                                     <SelectClearAll />
                                 </div>
