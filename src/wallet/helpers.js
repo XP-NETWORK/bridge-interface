@@ -135,7 +135,7 @@ function isJson(item) {
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
     // debugger;
-    const { general: account } = store.getState();
+    const { account } = store.getState().general;
     const some = await nftparse(nft, account);
     const collectionIdent = nft.collectionIdent;
     let uri = nft.uri;

@@ -17678,7 +17678,7 @@
   "version" "1.8.0"
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
-  "resolved" "git+ssh://git@github.com/xp-network/xpjs.git#281d315d7c9cb8a7905a6b0fbdcd65cafb190018"
+  "resolved" "git+ssh://git@github.com/xp-network/xpjs.git#fc755f2300e65449ba9df8acc2e99535c736aefa"
   "version" "3.0.7"
   dependencies:
     "@elrondnetwork/erdjs" "^9.2.6"
