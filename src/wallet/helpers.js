@@ -133,6 +133,61 @@ function isJson(item) {
     return false;
 }
 
+const parseForTezos = async (nft) => {
+    const {
+        native: {
+            meta: {
+                token: {
+                    metadata: {
+                        formats,
+                        mimeType,
+                        animation_url,
+                        displayUri,
+                        attributes,
+                        description,
+                        image,
+                        name,
+                        wrapped: { tokenId },
+                    },
+                },
+            },
+        },
+    } = nft;
+
+    const parsedNFT = {
+        uri: nft.uri,
+        native: nft.native,
+        collectionIdent: nft.collectionIdent,
+    };
+    if (nft.native?.meta?.token?.metadata?.formats) {
+        const obj = nft.native?.meta?.token?.metadata?.formats;
+        const mimeType = obj[0]["mimeType"];
+        const format = mimeType.slice(0, mimeType.lastIndexOf("/"));
+        if (format === "image") {
+            // imageFormat = true;
+            // nftObj.image = setupURI(obj.uri);
+        } else if (format === "video") {
+            // videoFormat = true;
+            // nftObj.animation_url = setupURI(obj.uri);
+        }
+    }
+    if (nft.native?.meta?.token?.metadata?.mimeType) {
+        const mimeType = nft.native?.meta?.token?.metadata?.mimeType;
+        const format = mimeType.slice(0, mimeType.lastIndexOf("/"));
+        if (format === "image") {
+            // imageFormat = true;
+            // nftObj.image = setupURI(
+            //     nft.native?.meta?.token?.metadata?.displayUri
+            // );
+        } else if (format === "video") {
+            // videoFormat = true;
+            // nftObj.animation_url = setupURI(
+            //     nft.native?.meta?.token?.metadata?.displayUri
+            // );
+        }
+    }
+};
+
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
     // debugger;
     const { account } = store.getState().general;
