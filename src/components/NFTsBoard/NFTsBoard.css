@@ -62,6 +62,34 @@
     box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
     position: relative;
     cursor: pointer;
+    position: relative;
+}
+
+.import-nft-button:hover::before {
+    position: absolute;
+    content: "Import token";
+    width: 90px;
+    top: -49px;
+    left: -28px;
+    padding: 8px;
+    background: #282829;
+    color: white;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 17px;
+}
+
+.import-nft-button:hover::after {
+    position: absolute;
+    top: -17px;
+    left: 8px;
+    width: 0;
+    height: 0;
+    content: "";
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #282829;
 }
 
 .mobile-nfts__header .import-nft-button {
