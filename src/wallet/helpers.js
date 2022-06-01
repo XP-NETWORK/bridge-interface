@@ -128,8 +128,22 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     // debugger;
     const collectionIdent = nft.collectionIdent;
     let uri = nft.uri;
+    let SC = nft.native.contract;
+
     if (collectionIdent === "0x36f8f51f65fe200311f709b797baf4e193dd0b0d") {
         // const id = uri.slice(uri.lastIndexOf("/"));
+        uri = `https://treatdao.com/api/nft/${nft.native.tokenId}`;
+    } else if (
+        collectionIdent === "0x691bd0f2f5a145fcf297cf4be79095b66f002cbc"
+    ) {
+        uri = `https://api.crosspunks.com/cars/meta/2/${nft.native.tokenId}`;
+    } else if (
+        collectionIdent === "0x7f3495cf2d05db6e9e52cdf989bced71e786725c"
+    ) {
+        uri = `https://api.crosspunks.com/cars/meta/1/${nft.native.tokenId}`;
+    } else if (
+        collectionIdent === "0x36f8f51f65fe200311f709b797baf4e193dd0b0d"
+    ) {
         uri = `https://treatdao.com/api/nft/${nft.native.tokenId}`;
     }
     const { from, NFTList } = store.getState().general;
