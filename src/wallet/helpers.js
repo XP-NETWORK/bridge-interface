@@ -13,7 +13,7 @@ import {
 import store from "../store/store";
 import io from "socket.io-client";
 import { isWhiteListed } from "./../components/NFT/NFTHelper";
-import { nftparse } from "nft-parser";
+import { nftGeneralParser } from "nft-parser";
 
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
 const testnet = window.location.href.includes("testnet");
@@ -147,51 +147,32 @@ const parseForTezos = async (nft) => {
                         description,
                         image,
                         name,
-                        wrapped: { tokenId },
                     },
                 },
             },
         },
     } = nft;
 
+    console.log("tezos formats: ", formats);
+    console.log("tezos mimeType: ", mimeType);
+
     const parsedNFT = {
         uri: nft.uri,
         native: nft.native,
         collectionIdent: nft.collectionIdent,
+        metadata: {
+            image: undefined,
+            imageFormat: undefined,
+            animation_url: undefined,
+            animation_url_format: undefined,
+        },
     };
-    if (nft.native?.meta?.token?.metadata?.formats) {
-        const obj = nft.native?.meta?.token?.metadata?.formats;
-        const mimeType = obj[0]["mimeType"];
-        const format = mimeType.slice(0, mimeType.lastIndexOf("/"));
-        if (format === "image") {
-            // imageFormat = true;
-            // nftObj.image = setupURI(obj.uri);
-        } else if (format === "video") {
-            // videoFormat = true;
-            // nftObj.animation_url = setupURI(obj.uri);
-        }
-    }
-    if (nft.native?.meta?.token?.metadata?.mimeType) {
-        const mimeType = nft.native?.meta?.token?.metadata?.mimeType;
-        const format = mimeType.slice(0, mimeType.lastIndexOf("/"));
-        if (format === "image") {
-            // imageFormat = true;
-            // nftObj.image = setupURI(
-            //     nft.native?.meta?.token?.metadata?.displayUri
-            // );
-        } else if (format === "video") {
-            // videoFormat = true;
-            // nftObj.animation_url = setupURI(
-            //     nft.native?.meta?.token?.metadata?.displayUri
-            // );
-        }
-    }
 };
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
     // debugger;
     const { account } = store.getState().general;
-    const parsed = await nftparse(nft, account);
+    const parsed = await nftGeneralParser(nft, account);
     console.log(" parsed: ", parsed);
     const collectionIdent = nft.collectionIdent;
     let uri = nft.uri;
