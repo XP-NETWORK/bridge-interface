@@ -44,6 +44,7 @@ import { usePrevious } from "../Settings/hooks";
 import { chainsConfig } from "../values";
 import { useWeb3React } from "@web3-react/core";
 import ImportNFTButton from "../Buttons/ImportNFTButton";
+import BigNumber from "bignumber.js";
 
 function NFTaccount() {
     const dispatch = useDispatch();
@@ -131,10 +132,7 @@ function NFTaccount() {
                     : undefined;
                 switch (_from.type) {
                     case "EVM":
-                        balanceToShow = library.utils.fromWei(
-                            `${balance.toNumber()}`,
-                            "ether"
-                        );
+                        balanceToShow = balance / 1e18;
                         dispatch(setBalance(Number(balanceToShow)));
                         break;
                     case "Tezos":
