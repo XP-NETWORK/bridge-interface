@@ -37,8 +37,7 @@ export default function ImportNFTModal() {
     //"http://192.168.129.241:3000/nfts/nftCheck";
     const handleImport = async () => {
         debugger;
-        const baseURL =
-            "https://xp-network-check-nft.herokuapp.com/nfts/nftCheck";
+        const baseURL = "https://indexnft.herokuapp.com/nfts/nftCheck";
         const _headers = {
             Accept: "*",
             "Content-Type": "application/json",
