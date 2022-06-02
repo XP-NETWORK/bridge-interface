@@ -251,6 +251,10 @@ export default function Widget() {
 
       }
 
+      .nft-list__wrapper {
+        justify-content: center;
+      }
+
       .NftSelect {
         position: absolute;
         top: 50%;
@@ -737,7 +741,7 @@ export default function Widget() {
 
         @media only screen and (max-width: 1024px) {
           .nft__card, .nft__card--selected {
-            width: 182px;
+            width: 180px;
           }
 
           .sendNftCol {
@@ -768,6 +772,10 @@ export default function Widget() {
 
         @media only screen and (max-width: 764px) {
 
+          .nft__card, .nft__card--selected {
+            width: 172px;
+          }
+
  
 
           .switching {
@@ -781,6 +789,7 @@ export default function Widget() {
           
           .nft-list__wrapper {
             height: 300px;
+      
           }
 
           .nonftAcc img {
@@ -803,7 +812,22 @@ export default function Widget() {
         }
 
 
+
+
+        @media only screen and (max-width: 400px) {
+
+          .nft__card, .nft__card--selected {
+            width: 152px;
+          }
+
+        }
+
+
+
         @media only screen and (max-height: 633px) {
+
+       
+
           .modal-dialog {
             margin-top: 6vh;
           }
