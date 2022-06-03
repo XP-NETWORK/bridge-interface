@@ -1,30 +1,30 @@
-.success-modal .modal-dialog{
+.success-modal .modal-dialog {
     max-width: 586px;
     min-height: 500px;
-    color: #14161A;
+    color: #14161a;
 }
 
-.success-modal .modal-content{
+.success-modal .modal-content {
     padding: 0 30px;
 }
 
-.success-modal .modal-header{
+.success-modal .modal-header {
     padding: 20px 0;
 }
 
-.success-info-list{
+.success-info-list {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
-.success-info-box{
-    background: #F3F3F6;
+.success-info-box {
+    background: #f3f3f6;
     border-radius: 6px;
     padding: 10px 18px;
 }
 
-.success-modal-close{
+.success-modal-close {
     position: absolute;
     top: 30px;
     right: 30px;
@@ -32,74 +32,73 @@
     z-index: 20;
 }
 
-.view-txn-btn{
-    background: #62718A1A;
+.view-txn-btn {
+    background: #62718a1a;
     padding: 0 4px;
     border-radius: 6px;
-    color: #3763FF;
+    color: #3763ff;
 }
 
-.claim-btn{
+.claim-btn {
     color: white;
-    background-color: #3763FF;
+    background-color: #3763ff;
     padding: 0 4px;
     border-radius: 6px;
 }
 
-.success-buttons{
+.success-buttons {
     display: flex;
     gap: 4px;
     font-size: 14px;
 }
 
-.success-button.claim-btn{
+.success-button.claim-btn {
     cursor: pointer;
 }
 
-.success-info-item{
+.success-info-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 6px 0;
 }
 
-.success-info-item span{
-    color: #14161A;
+.success-info-item span {
+    color: #14161a;
     margin-left: 6px;
     display: flex;
     align-items: center;
     font-size: 14px;
-
 }
 
-.success-hash img{
+.success-hash img {
     cursor: pointer;
 }
 
-.success-hash img:hover{
+.success-hash img:hover {
     filter: brightness(5);
 }
-.info-item-label{
+.info-item-label {
     font-size: 14px;
     font-weight: 600;
     line-height: 18px;
 }
-.info-item-chain{
+.info-item-chain {
     font-size: 14px;
     font-weight: 400;
     line-height: 26px;
-    color: #14161A;
+    color: #14161a;
 
     display: flex;
     align-items: center;
 }
 
-.info-item-chain img{
+.info-item-chain img {
     margin-right: 6px;
     width: 28px;
 }
 
-.success-info-box label{
+.success-info-box label {
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
@@ -116,21 +115,21 @@
     padding: 18px 0 0 0;
 }
 
-.success-hash{
+.success-hash {
     font-size: 14px;
     font-weight: 400;
     line-height: 26px;
     letter-spacing: 0em;
-    color: #395FEB;
+    color: #395feb;
     display: flex;
     align-items: center;
 }
 
-.success-hash img{
+.success-hash img {
     margin-left: 12px;
 }
 
-.transferred-nft{
+.transferred-nft {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -138,30 +137,30 @@
     max-height: 40px;
 }
 
-.success-nft-info__wrapper{
+.success-nft-info__wrapper {
     width: 100%;
     padding: 6px;
     background: rgba(255, 255, 255, 0.4);
-    border: 1px solid #FFFFFF;
+    border: 1px solid #ffffff;
     border-radius: 8px;
 }
 
-.nft-image-name{
+.nft-image-name {
     display: flex;
     align-items: center;
     gap: 14px;
     margin: 4px;
 }
 
-.txn-status-pending{
+.txn-status-pending {
     color: rgb(226, 195, 21);
 }
 
-.txn-status{
+.txn-status {
     min-width: 70px;
 }
 
-.nft-image-name div{
+.nft-image-name div {
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -169,39 +168,37 @@
     font-size: 14px;
 }
 
-.transferred-nft img, .transferred-nft video{
+.transferred-nft img,
+.transferred-nft video {
     height: 32px;
     border-radius: 4px;
 }
 
-.transferred-nft-name{
+.transferred-nft-name {
     display: flex;
     align-items: center;
     gap: 5px;
-   
 }
 
-.transferred-nft-name__txt{
+.transferred-nft-name__txt {
     width: 140px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.txn-failed{
+.txn-failed {
     display: flex;
     align-items: center;
 }
 
 .txn-failed img {
-    width: 20px;
     margin-right: 5px;
 }
 
 @media screen and (max-width: 500px) {
-    .success-modal .modal-content{
+    .success-modal .modal-content {
         padding: 0 10px;
-      
     }
 
     .success-modal .modal-dialog {
@@ -210,15 +207,15 @@
         margin-right: 0;
     }
 
-    .success-info-box{
+    .success-info-box {
         padding: 10px 10px;
     }
 
-    .success-modal .modal-header{
+    .success-modal .modal-header {
         padding-top: 30px;
     }
 
-    .success-modal-close{
+    .success-modal-close {
         top: 32px;
         right: 15px;
     }

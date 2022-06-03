@@ -47,15 +47,7 @@ export const setupURI = (uri) => {
 };
 
 const checkIfImage = (url) => {
-    const imageFormats = [
-        ".png",
-        ".gif",
-        ".jpg",
-        ".jpeg",
-        ".png",
-        ".svg",
-        ".webp",
-    ];
+    const imageFormats = [".gif", ".jpg", ".jpeg", ".png", ".svg", ".webp"];
     const imageFormat = imageFormats.some((format) => url?.includes(format));
     return imageFormat ? url : undefined;
 };
@@ -133,15 +125,39 @@ function isJson(item) {
     return false;
 }
 
+const Rookie = async (nft) => {
+    let uri = nft.uri;
+    const { data } = await axios.get(setupURI(uri));
+    return data;
+};
+
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
     // debugger;
-    const uri = nft.uri;
+    const collectionIdent = nft.collectionIdent;
+    let uri = nft.uri;
+    let SC = nft.native.contract;
+
+    if (collectionIdent === "0x36f8f51f65fe200311f709b797baf4e193dd0b0d") {
+        uri = `https://treatdao.com/api/nft/${nft.native.tokenId}`;
+    } else if (
+        collectionIdent === "0x691bd0f2f5a145fcf297cf4be79095b66f002cbc"
+    ) {
+        uri = `https://api.crosspunks.com/cars/meta/2/${nft.native.tokenId}`;
+    } else if (
+        collectionIdent === "0x7f3495cf2d05db6e9e52cdf989bced71e786725c"
+    ) {
+        uri = `https://api.crosspunks.com/cars/meta/1/${nft.native.tokenId}`;
+    } else if (
+        collectionIdent === "0x36f8f51f65fe200311f709b797baf4e193dd0b0d"
+    ) {
+        uri = `https://treatdao.com/api/nft/${nft.native.tokenId}`;
+    }
     const { from, NFTList } = store.getState().general;
     let whitelisted;
     let videoFormat;
     let imageFormat;
     let nftObj = {
-        uri: nft.uri,
+        uri,
         collectionIdent: nft.collectionIdent || undefined,
         native: { ...nft.native },
         dataLoaded: true,
@@ -149,29 +165,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         nftId: nft.nftId || undefined,
         appId: nft.appId || undefined,
     };
-    // if(uri?.indexOf("http://") === -1 && uri?.indexOf("https://") === -1 && uri?.indexOf("ipfs")){
-    //   let d = uri.includes("ipfs.io") ? await fetchURI(uri) : await tryIPFS(uri)
-    //   if(d?.image){
-    //     let u = await fetchURI(`https://ipfs.io/ipfs/${d.image}`)
-    //     if(u.includes("image")){
-    //       nftObj.image = `https://ipfs.io/ipfs/${d.image}`
-    //       nftObj.description = d.description
-    //       nftObj.name = d.name
-    //       nftObj.dataLoaded = true
-    //     }
-    //     else if(u.includes("video")){
-    //       nftObj.animation_url = `https://ipfs.io/ipfs/${d.image}`
-    //       nftObj.description = d.description
-    //       nftObj.name = d.name
-    //       nftObj.dataLoaded = true
-    //     }
-    //   }
-    //   else{
-    //   nftObj.dataLoaded = true
-    //   nftObj.image = undefined
-    //   nftObj.animation_url = undefined
-    //   }
-    // }
     if (from.text === "Tezos") {
         if (nft.native?.meta?.token?.metadata?.formats) {
             const obj = nft.native?.meta?.token?.metadata?.formats;
@@ -244,7 +237,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
             nftObj.description = description;
         } else if (uri) {
             data = await fetchURI(setupURI(uri));
-            console.log("nft", data, index);
         }
         if (typeof data === "object") {
             nftObj = { ...nftObj, ...data };
@@ -254,45 +246,12 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
                 !nftObj.image?.includes("ipfs")
             ) {
                 nftObj.image = `https://ipfs.io/ipfs/${nftObj.image}`;
-                //     if(typeof u === 'object'){
-                //       let i = await fetchURI(`https://ipfs.io/ipfs/${u.image}`)
-                //       if(i?.includes("image")){
-                //         nftObj.image = `https://ipfs.io/ipfs/${u.image}`
-                //         nftObj.name = u.name
-            }
-            //       else if(i?.includes("video")){
-            //         nftObj.animation_url = `https://ipfs.io/ipfs/${u.image}`
-            //         nftObj.name = u.name
-            //       }
-            //       else nftObj.image = undefined
-            //     }
-            //     else{
-            //       if(u.image?.includes("image")){
-            //         nftObj.image = `https://ipfs.io/ipfs/${nftObj.image}`
-            //       }
-            //       else if(u.image?.includes("video")){
-            //         nftObj.animation_url = `https://ipfs.io/ipfs/${nftObj.image}`
-            //       }
-            //       else nftObj.image = undefined
-            //     }
-            //   }
-            else if (nftObj.image?.includes(".json")) {
+            } else if (nftObj.image?.includes(".json")) {
                 const n = await fetchURI(setupURI(nftObj.image));
                 if (typeof n === "object") {
                     nftObj = { ...nftObj, ...data, ...n };
                 }
             }
-            //   if(nftObj.data?.image_url){
-            //     const image  = nftObj.data?.image
-            //     nftObj.image = image
-            //     nftObj.dataLoaded = true
-            //   }
-            // }
-            // else if(data?.includes("image")){
-            //   nftObj.image = uri
-            // }
-            // else if(data?.includes("video")){
-            //   nftObj.animation_url = uri
         } else {
             if (data) {
                 let n;
@@ -354,7 +313,8 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     }
     if (
         nftObj?.image?.includes("ipfs") &&
-        !nftObj?.image?.includes("https://ipfs.io")
+        !nftObj?.image?.includes("https://ipfs.io") &&
+        !nftObj?.image?.includes("https://treatdao")
     ) {
         nftObj.image = "https://ipfs.io/" + nftObj.image.replace(":/", "");
     }
@@ -365,6 +325,24 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
             nftObj.animation_url = nftObj.image;
             nftObj.image = undefined;
         }
+    }
+    if (nft.native.name.includes("Rookie77")) {
+        const object = await Rookie(nft);
+        nftObj.image = object.image;
+        nftObj.animation_url = object.video;
+    }
+    if (collectionIdent === "0x35b5583e9dffe80aab650b158cc263d9ebfe1138") {
+        const { data } = await axios(setupURI(nft.uri));
+        nftObj.image = data.image;
+        nftObj.animation_url = data.video;
+    } else if (
+        collectionIdent === "0xfc2b3db912fcd8891483ed79ba31b8e5707676c9"
+    ) {
+        const { data } = await axios(setupURI(nft.uri));
+        nftObj.name = data.name;
+        nftObj.attributes = data.attributes;
+        nftObj.image = data.image;
+        nftObj.description = data.description;
     }
     if (
         claimables &&

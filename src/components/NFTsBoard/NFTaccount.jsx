@@ -3,6 +3,8 @@ import { Container } from "react-bootstrap";
 import NFTgridView from "../NFT/NFTgridView";
 import NFTlistView from "../NFT/NFTlistView";
 import NFTlistTop from "./NFTlistTop";
+import { Modal } from "react-bootstrap";
+import ImportNFTModal from "../Modals/ImportNFTModal/ImportNFTModal";
 import {
     setBalance,
     setChainModal,
@@ -43,6 +45,9 @@ import { chainsConfig } from "../values";
 import { useWeb3React } from "@web3-react/core";
 import UserConnect from "../User/UserConnect";
 import AccountModal from "../Modals/AccountModal/AccountModal";
+
+import ImportNFTButton from "../Buttons/ImportNFTButton";
+
 function NFTaccount() {
     const dispatch = useDispatch();
     const from = useSelector((state) => state.general.from.key);
@@ -52,6 +57,7 @@ function NFTaccount() {
     const algorandAccount = useSelector((s) => s.general.algorandAccount);
     const NFTListView = useSelector((state) => state.general.NFTListView);
     const nfts = useSelector((state) => state.general.NFTList);
+    const importModal = useSelector((state) => state.general.importModal);
     const algorandClaimables = useSelector(
         (state) => state.general.algorandClaimables
     );
@@ -129,10 +135,7 @@ function NFTaccount() {
                     : undefined;
                 switch (_from.type) {
                     case "EVM":
-                        balanceToShow = library.utils.fromWei(
-                            `${balance.toNumber()}`,
-                            "ether"
-                        );
+                        balanceToShow = balance / 1e18;
                         dispatch(setBalance(Number(balanceToShow)));
                         break;
                     case "Tezos":
@@ -158,6 +161,11 @@ function NFTaccount() {
                 console.log(error);
             }
         }
+    };
+
+    const toShowSuccess = () => {
+        // return txnHashArr?.length ? true : false;
+        return true;
     };
 
     useEffect(async () => {
@@ -192,6 +200,13 @@ function NFTaccount() {
 
     return (
         <div className="NFTaccount">
+            <Modal
+                show={importModal}
+                animation={false}
+                className=" ChainModal import-nft__modal"
+            >
+                <ImportNFTModal />
+            </Modal>
             <ChangeNetworkModal />
             <UnsupportedNetwork />
             <SelectNFTAler />
@@ -247,13 +262,21 @@ function NFTaccount() {
                                     showSelected={showSelected}
                                     setOff={setShowSelected}
                                 />
-                                <div className="mobile-nfts__buttons">
-                                    <SearchButton
-                                        handleSearchTop={handleSearchTop}
-                                    />
-                                    <ViewButton />
-                                    <SelectClearAll />
-                                </div>
+                                {_from.type === "EVM" && nfts?.length < 1 && (
+                                    <ImportNFTButton />
+                                )}
+                                {nfts?.length > 0 && (
+                                    <div className="mobile-nfts__buttons">
+                                        <SearchButton
+                                            handleSearchTop={handleSearchTop}
+                                        />
+                                        {_from.type === "EVM" && (
+                                            <ImportNFTButton />
+                                        )}
+                                        <ViewButton />
+                                        <SelectClearAll />
+                                    </div>
+                                )}
                             </div>
                         ) : (
                             <MobileNFTsSearch
