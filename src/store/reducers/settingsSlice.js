@@ -16,7 +16,9 @@ export const fonts = [
   "Ubuntu",
 ];
 
-export const chains = [...valuesChains]//.filter(c => c.text !== 'Fantom');
+const hideChain = ['VeChain']
+
+export const chains = [...valuesChains].filter(c => !hideChain.includes(c.value));
 
 export const activeChains = [
   ...chains.filter((chain) => !chain.maintenance).map((c) => c.value),
@@ -24,7 +26,7 @@ export const activeChains = [
 
 export const newChains = ["Velas"];
 
-export const comingSoonChains = ["Cardano", "Heco", "Solana", "Tezos"];
+export const comingSoonChains = ["Cardano", "Solana", "TON"];
 
 export const availability = {
   Algorand: ["MyAlgo", "AlgoSigner"],
@@ -39,9 +41,9 @@ export const wallets = [
   "MetaMask",
   "WalletConnect",
   "TrustWallet",
-  //"MyAlgo",
-  //"AlgoSigner",
-  //"TronLink",
+  "MyAlgo",
+  "AlgoSigner",
+  "TronLink",
   "Maiar",
   "Beacon",
   "TempleWallet",

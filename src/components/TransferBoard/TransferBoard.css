@@ -1,7 +1,7 @@
 .transfer-board {
-    color: #14161A;
-    background: #F7F8F9;
-    border: 1px solid #FFFFFF;
+    color: #14161a;
+    background: #f7f8f9;
+    border: 1px solid #ffffff;
     box-shadow: 0px 4px 14px rgba(47, 61, 84, 0.05);
     border-radius: 20px;
     padding: 24px 20px;
@@ -16,11 +16,11 @@
 .destination-props {
     padding: 0 0 22px 0;
     margin-bottom: 20px;
-    border-bottom: 1px solid #ECEEF4;
+    border-bottom: 1px solid #eceef4;
 }
 .destination-props input::placeholder {
     color: #62718a;
-} 
+}
 .destination-props input:focus {
     border: 1px solid #fff;
 }
@@ -31,32 +31,32 @@
     height: 40px;
     margin-bottom: 12px;
 }
-.destination__title{
+.destination__title {
     font-size: 14px;
     font-weight: 500;
     line-height: 18px;
 }
-.destination__address input{
-    background-color: #ECECF1;
+.destination__address input {
+    background-color: #ececf1;
     width: 100%;
     height: 44px;
     border-radius: 40px;
     outline: none;
-    border: 1px solid #E0E4EB;
+    border: 1px solid #e0e4eb;
     padding: 0 16px;
 }
 .desti-alert input {
-    border: 1px solid #395FEB !important;
+    border: 1px solid #395feb !important;
 }
-.destination__address input:focus{
+.destination__address input:focus {
     background-color: #ffffff;
-    border: 1px solid #E0E4EB;
+    border: 1px solid #e0e4eb;
 }
 
-.destination__address input::placeholder{
-    color: #62718A;
+.destination__address input::placeholder {
+    color: #62718a;
     font-size: 14px;
-    opacity: .7;
+    opacity: 0.7;
 }
 
 .desChain span img:nth-child(2) {
@@ -69,8 +69,8 @@
     height: 56px;
     padding: 16px 16px 12px;
 }
-.selected-nfts__header{
-    color: #14161A;
+.selected-nfts__header {
+    color: #14161a;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -82,35 +82,33 @@
     font-weight: 500;
 }
 
-.desktop__header span{
+.desktop__header span {
     color: #3e64ed;
     font-weight: 400;
-
 }
-.clear-selected{
+.clear-selected {
     font-size: 12px;
     font-weight: 500;
     line-height: 19px;
-    color: #62718A;
+    color: #62718a;
     padding: 4px 10px;
-    background: #ECEEF4;
+    background: #eceef4;
     border-radius: 40px;
     cursor: pointer;
 }
-.clear-selected:hover{
-    background: #E4E7F3;
-    color: #395FEB;
-
+.clear-selected:hover {
+    background: #e4e7f3;
+    color: #395feb;
 }
-.selected-nfts__body{
+.selected-nfts__body {
     color: black;
-    background: #F3F3F6;
+    background: #f3f3f6;
     border-radius: 8px;
     overflow-y: auto;
     max-height: 170px;
     margin-top: 15.5px;
 }
-.selected-nfts-item{
+.selected-nfts-item {
     display: flex;
     align-items: center;
     min-height: 44px;
@@ -119,44 +117,44 @@
     cursor: pointer;
     font-size: 14px;
 }
-.selected-nfts-item:hover{
-    background: #ECECF1;
+.selected-nfts-item:hover {
+    background: #ececf1;
 }
-.selected-nfts__delete{
+.selected-nfts__delete {
     margin-left: auto;
     max-width: 18px;
     visibility: hidden;
 }
-.selected-nfts-item:hover .selected-nfts__delete{
+.selected-nfts-item:hover .selected-nfts__delete {
     visibility: visible;
 }
-.approval{
+.approval {
     margin-top: 5px;
-    padding:15px 11px 10px 8px;
-    background: #F3F3F6;
+    padding: 15px 11px 10px 8px;
+    background: #f3f3f6;
     border-radius: 8px;
     font-size: 14px;
 }
-.mobile-col .approval{
+.mobile-col .approval {
     border: 1px solid white;
     border-radius: 0;
 }
-.mobile-col .fees{
+.mobile-col .fees {
     border: 1px solid white;
     border-radius: 0;
     margin: 12px 0;
 }
-.approval__header{
-    color: #14161A;
+.approval__header {
+    color: #14161a;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
 }
-.approval__inf{
+.approval__inf {
     position: relative;
 }
-.approval__inf:hover::before{
+.approval__inf:hover::before {
     content: "We'd like to make sure you really want to send the NFTs and pay the associated fees.";
     position: absolute;
     font-size: 12px;
@@ -166,9 +164,10 @@
     bottom: 30px;
     left: -100px;
     padding: 12px 12px 21px 12px;
-    background: #F3F3F6;
+    background: #282829;
     border-radius: 10px;
-    box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.50);
+    color: white;
+    /* box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.5); */
 }
 .approval__inf:hover::after {
     position: absolute;
@@ -177,13 +176,13 @@
     content: "";
     width: 15px;
     height: 15px;
-    box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.50);
-    background: #ececf0;
+    /* box-shadow: 0px 4px 24px rgba(180, 185, 199); */
+    background: #282829;
     border-left: 0;
     border-top: 0;
     transform: translate(-50%, -100%) rotate(45deg);
 }
-.info-icon{
+.info-icon {
     position: relative;
     width: 20px;
     height: 20px;
@@ -191,11 +190,11 @@
     background-position: center;
     cursor: pointer;
 }
-.info-icon:hover::after{
+.info-icon:hover::after {
     content: "";
     width: 20px;
     height: 20px;
-    background: #F3F3F6;
+    background: #f3f3f6;
     background-image: url("../../assets/img/icons/info_hover.svg");
     background-position: center;
     position: absolute;
@@ -204,75 +203,76 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: #14161A;
+    color: #14161a;
 }
 .approveBtn input {
-  display: none;
+    display: none;
 }
 .approveBtn label {
     margin: 0;
     width: 56px;
     height: 31px;
-    background: #EBEFF4;
+    background: #ebeff4;
     border-radius: 56px;
-    border: 1px solid #D4D7DD;
+    border: 1px solid #d4d7dd;
     position: relative;
     z-index: 1;
     cursor: pointer;
     transition: 0.3s ease all;
 }
 .approveBtn input:checked + label {
-    background: #395FEB;
+    background: #395feb;
 }
 .approveBtn input:checked + label .checkCircle {
-  left: 27px;
+    left: 27px;
 }
 .approveBtn input:checked + label .checkCircle:after {
-   /* background-image: url(../../assets/img/icons/CheckGreen.svg);*/
+    /* background-image: url(../../assets/img/icons/CheckGreen.svg);*/
 }
 .fees {
     margin: 5px 0;
-    background: #F3F3F6;
+    background: #f3f3f6;
     border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #14161A;
+    color: #14161a;
     height: 62px;
     padding: 16px;
     font-size: 14px;
 }
-.transfer-button--disabled, .transfer-button{
-    border: 1px solid #395FEB;
+.transfer-button--disabled,
+.transfer-button {
+    border: 1px solid #395feb;
     width: 100%;
     height: 54px;
     border-radius: 66px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #395FEB;
+    color: #395feb;
     margin-top: 16px;
 }
-.transfer-button:hover{
-    background-color: #395FEB;
+.transfer-button:hover {
+    background-color: #395feb;
     cursor: pointer;
     color: white;
 }
-.transfer-button:active{
-    background: #2D51D0;
+.transfer-button:active {
+    background: #2d51d0;
 }
-.mobile-col .transfer-button--disabled, .transfer-button{
+.mobile-col .transfer-button--disabled,
+.transfer-button {
     width: calc(100% - 10px);
     margin: 10px auto 56px auto;
 }
 
 @media screen and (max-width: 425px) {
-    .approval__inf:hover::before{
+    .approval__inf:hover::before {
         bottom: 30px;
         left: -190px;
     }
     .approval__inf:hover::after {
         left: 50%;
     }
-    
 }

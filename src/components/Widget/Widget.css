@@ -1,36 +1,30 @@
-
 @font-face {
   font-family: Poppins;
-  src: url('../../assets/fonts/Poppins-SemiBold.ttf');
+  src: url("../../assets/fonts/Poppins-SemiBold.ttf");
   fallback: san-serif;
   font-weight: 600;
 }
 
-
 @font-face {
   font-family: Poppins;
-  src: url('../../assets/fonts/Poppins-Regular.ttf');
+  src: url("../../assets/fonts/Poppins-Regular.ttf");
   fallback: san-serif;
   font-weight: 400;
 }
 
-
-
 @font-face {
   font-family: Montserrat;
-  src: url('../../assets/fonts/Montserrat-SemiBold.ttf');
+  src: url("../../assets/fonts/Montserrat-SemiBold.ttf");
   fallback: san-serif;
   font-weight: 600;
 }
 
-
 @font-face {
   font-family: Montserrat;
-  src: url('../../assets/fonts/Montserrat-Regular.ttf');
+  src: url("../../assets/fonts/Montserrat-Regular.ttf");
   fallback: san-serif;
   font-weight: 400;
 }
-
 
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Lato&family=Mukta&family=Playfair+Display&family=Quicksand&family=Raleway&family=Ubuntu&display=swap");
@@ -141,4 +135,8 @@
 
 .font-size-xl .nftInfBox p {
   font-size: 16px !important;
+}
+
+.transfer-board > svg {
+  margin-top: auto;
 }

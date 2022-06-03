@@ -2,7 +2,7 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import generalSlice from "./reducers/generalSlice";
 import settingSlice from "./reducers/settingsSlice";
 import sliderSlice from "./reducers/sliderSlice";
-import transferResultsSlice from "./reducers/transferResultsSlice"
+import transferResultsSlice from "./reducers/transferResultsSlice";
 
 const middleware = [
   ...getDefaultMiddleware({

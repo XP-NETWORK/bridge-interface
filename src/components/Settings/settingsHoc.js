@@ -7,7 +7,7 @@ import {
   initialState as initSettings,
   initialState,
 } from "../../store/reducers/settingsSlice";
-
+import { comingSoonChains } from "../../store/reducers/settingsSlice";
 import { debounce } from "../helpers";
 import { usePrevious } from "./hooks";
 
@@ -99,7 +99,7 @@ const settingsHoc = (Wrapped) => (props) => {
 
     if (checked) {
       if (activeChains.includes(val)) {
-        const canCheckout = activeChainsNumber > 2;
+        const canCheckout = activeChainsNumber > 2; //comingSoonChains.includes(val)? true: activeChainsNumber - selectedChains.reduce((acc, cur) => acc + comingSoonChains.includes(cur)? 1: 0, 0) > 2;
 
         dispatch(
           setSettings({
@@ -259,24 +259,26 @@ const settingsHoc = (Wrapped) => (props) => {
     localStorage.removeItem("widgetSettings");
   };
 
-  const onSelectAll = () => {
+  const onSelectAll = (entity) => {
     dispatch(
       setSettings({
         ...settings,
-        selectedChains: initialState.selectedChains,
+        [entity]: initialState[entity]
+        //selectedChains: initialState.selectedChains,
       })
     );
-    setActiveChains(activeChains.length);
+    entity === 'selectedChains' && setActiveChains(activeChains.length);
   };
 
-  const onUnSelectAll = () => {
+  const onUnSelectAll = entity => {
     dispatch(
       setSettings({
         ...settings,
-        selectedChains: [selectedChains[0], selectedChains[1]],
+       [entity]: [settings[entity][0], (entity === 'selectedChains' && settings[entity][1])]
+       // selectedChains: [selectedChains[0], selectedChains[1]],
       })
     );
-    setActiveChains(2);
+    entity === 'selectedChains' && setActiveChains(2);
   };
 
   return (

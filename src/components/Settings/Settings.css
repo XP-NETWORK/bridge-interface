@@ -1379,6 +1379,7 @@ li.blockChain_item .select_nft input:checked + .selectNfticon {
   overflow-y: auto;
   padding-bottom: 50px;
   flex-grow: 1;
+
 }
 
 /* Handle */
@@ -1551,6 +1552,7 @@ li.blockChain_item .blockChainItem span {
 .genarel_setting {
   position: relative;
   padding-bottom: 10px;
+
 }
 
 .fixed {
@@ -1558,6 +1560,10 @@ li.blockChain_item .blockChainItem span {
   width: 300px;
   z-index: 999;
   
+}
+
+.shoved {
+  padding-top: 50px;
 }
 
 .dtm .fixed {
@@ -1694,6 +1700,7 @@ li.blockChain_item .blockChainItem span {
   font-weight: 500;
   font-size: 18px;
   pointer-events: none;
+  color: #ffffff;
 }
 
 .testComp h2 {
@@ -1765,7 +1772,7 @@ li.blockChain_item .blockChainItem span {
 .collapseImg {
   position: absolute;
   right: -15px;
-  top: 50%;
+  top: 40px;
   transform: translateY(-50%);
   cursor: pointer;
   z-index: 99;

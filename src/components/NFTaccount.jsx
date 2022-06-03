@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
-
+import UserConnect from "./User/UserConnect";
 
 import DestinationChain from "./innercomponents/DestinationChain";
 import DestinationChainReload from "./innercomponents/DestinationChainReload";
@@ -31,6 +31,7 @@ function NFTaccount() {
   const account = useSelector((state) => state.general.account);
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
+  const widget = useSelector((state) => state.general.widget);
 
 
   async function getNFTsList() {
