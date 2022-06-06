@@ -342,6 +342,13 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         nftObj.attributes = data.attributes;
         nftObj.image = data.image;
         nftObj.description = data.description;
+    } else if (
+        collectionIdent === "0xf0E778BD5C4c2F219A2A5699e3AfD2D82D50E271"
+    ) {
+        const { data } = await axios(setupURI(nft.uri));
+        nftObj.animation_url = data.artifactUri;
+        nftObj.attributes = data.attributes;
+        nftObj.name = data.name;
     }
     if (
         claimables &&
