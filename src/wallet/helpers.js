@@ -168,7 +168,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         if (nft.native?.meta?.token?.metadata?.formats) {
             const obj = nft.native?.meta?.token?.metadata?.formats;
             const mimeType = obj[0]["mimeType"];
-            const format = mimeType.slice(0, mimeType.lastIndexOf("/"));
+            const format = mimeType?.slice(0, mimeType?.lastIndexOf("/"));
             if (format === "image") {
                 imageFormat = true;
                 nftObj.image = setupURI(obj.uri);
@@ -325,7 +325,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
             nftObj.image = undefined;
         }
     }
-    if (nft.native.name.includes("Rookie77")) {
+    if (nft?.native?.name?.includes("Rookie77")) {
         const object = await Rookie(nft);
         nftObj.image = object.image;
         nftObj.animation_url = object.video;
