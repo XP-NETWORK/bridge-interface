@@ -719,11 +719,6 @@ export const convertOne1 = (address) => {
     return ethAddr;
 };
 
-// export const convertIo1 = (address) => {
-//   const addr = from(address)
-//   return addr.stringEth()
-// }
-
 export const convert = (address) => {
     // debugger
     if (checkIfOne1(address)) {
