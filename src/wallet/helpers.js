@@ -133,41 +133,6 @@ function isJson(item) {
     return false;
 }
 
-const parseForTezos = async (nft) => {
-    const {
-        native: {
-            meta: {
-                token: {
-                    metadata: {
-                        formats,
-                        mimeType,
-                        animation_url,
-                        displayUri,
-                        attributes,
-                        description,
-                        image,
-                        name,
-                    },
-                },
-            },
-        },
-    } = nft;
-
-    console.log("tezos formats: ", formats);
-    console.log("tezos mimeType: ", mimeType);
-
-    const parsedNFT = {
-        uri: nft.uri,
-        native: nft.native,
-        collectionIdent: nft.collectionIdent,
-        metadata: {
-            image: undefined,
-            imageFormat: undefined,
-            animation_url: undefined,
-            animation_url_format: undefined,
-        },
-    };
-};
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
     // debugger;
