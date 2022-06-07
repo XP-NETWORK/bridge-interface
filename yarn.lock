@@ -2802,6 +2802,20 @@
     elliptic "^6.5.4"
     typedarray-to-buffer "^4.0.0"
 
+"@taquito/utils@^12.1.1":
+  version "12.1.1"
+  resolved "https://registry.yarnpkg.com/@taquito/utils/-/utils-12.1.1.tgz#c19008dea05c5146463ab58015ac145fb79c23cb"
+  integrity sha512-GxNSBrA02vwhy56ayWB49VZficB+j2oyhPdlsRb2CguephmyEYnlUaNV27ILa6dPDW+zv6+QWQj6GyqLBRpIlA==
+  dependencies:
+    "@stablelib/blake2b" "^1.0.1"
+    "@stablelib/ed25519" "^1.0.2"
+    "@types/bs58check" "^2.1.0"
+    blakejs "^1.1.1"
+    bs58check "^2.1.2"
+    buffer "^6.0.3"
+    elliptic "^6.5.4"
+    typedarray-to-buffer "^4.0.0"
+
 "@temple-wallet/dapp@^6.1.0":
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/@temple-wallet/dapp/-/dapp-6.1.1.tgz#55530ecd4b9109fa8977afdd03255ce208ebe76d"
@@ -17145,8 +17159,8 @@ xmlhttprequest@1.8.0:
   integrity sha1-Z/4HXFwk/vOfnWX197f+dRcZaPw=
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
-  version "3.0.7"
-  resolved "git+https://github.com/xp-network/xpjs#fc755f2300e65449ba9df8acc2e99535c736aefa"
+  version "3.0.9"
+  resolved "git+https://github.com/xp-network/xpjs#cad98f6fa9e21e23778ca6c312737aacc1c5dd39"
   dependencies:
     "@elrondnetwork/erdjs" "^9.2.6"
     "@json-rpc-tools/utils" "^1.7.6"

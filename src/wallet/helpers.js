@@ -134,7 +134,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     // debugger;
     const collectionIdent = nft.collectionIdent;
     let uri = nft.uri;
-    let SC = nft.native.contract;
 
     if (collectionIdent === "0x36f8f51f65fe200311f709b797baf4e193dd0b0d") {
         uri = `https://treatdao.com/api/nft/${nft.native.tokenId}`;
@@ -626,7 +625,8 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 };
 
 export const getAlgorandClaimables = async (account) => {
-    // debugger
+    // debugger;
+    const hard = "2RKU6NQ3T36B42NJHUO27WTUCS3BOBM7YTAMGQNHPP2CAAUVO2LLMYW5EE";
     let claimables;
     const factory = await getFactory();
     try {
