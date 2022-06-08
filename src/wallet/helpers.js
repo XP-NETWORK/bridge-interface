@@ -326,7 +326,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
             nftObj.image = undefined;
         }
     }
-    if (nft.native.name.includes("Rookie77")) {
+    if (nft?.native?.name?.includes("Rookie77")) {
         const object = await Rookie(nft);
         nftObj.image = object.image;
         nftObj.animation_url = object.video;
