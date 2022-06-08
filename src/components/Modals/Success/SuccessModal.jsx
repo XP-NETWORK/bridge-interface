@@ -5,7 +5,7 @@ import moment from "moment";
 import TransferredNft from "./TransferredNft";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import ConnectAlgorand from "../../ConnectAlgorand";
-import ClaimAlgorandNFT from "../../ClaimAlgorandNFT";
+
 import { useEffect } from "react";
 import { setNFTS, socket } from "../../../wallet/helpers";
 
