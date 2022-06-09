@@ -13,6 +13,7 @@ import {
 import store from "../store/store";
 import io from "socket.io-client";
 import { isWhiteListed } from "./../components/NFT/NFTHelper";
+import NFTdetails from "../components/NFT/NFTdetails";
 
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
 const testnet = window.location.href.includes("testnet");
@@ -130,6 +131,21 @@ const Rookie = async (nft) => {
     return data;
 };
 
+const addToCash = async (url, index) => {
+    // debugger;
+    const route = "https://nft-cache.herokuapp.com/nft/file";
+    const body = { uri: setupURI(url) };
+    try {
+        const { data } = await axios.post(route, body, {
+            headers: { "Content-type": "application/json" },
+        });
+        return data === "timedOut" ? data : { uri: url };
+    } catch (error) {
+        console.error(error, "nft index: ", index);
+        return { uri: url };
+    }
+};
+
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
     // debugger;
     const collectionIdent = nft.collectionIdent;
@@ -164,63 +180,112 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         appId: nft.appId || undefined,
     };
     if (from.text === "Tezos") {
-        if (nft.native?.meta?.token?.metadata?.formats) {
-            const obj = nft.native?.meta?.token?.metadata?.formats;
-            const mimeType = obj[0]["mimeType"];
-            const format = mimeType?.slice(0, mimeType?.lastIndexOf("/"));
-            if (format === "image") {
-                imageFormat = true;
-                nftObj.image = setupURI(obj.uri);
-            } else if (format === "video") {
-                videoFormat = true;
-                nftObj.animation_url = setupURI(obj.uri);
-            }
+        // if (nft.native?.meta?.token?.metadata?.formats) {
+        //     const obj = nft.native?.meta?.token?.metadata?.formats;
+        //     const mimeType = obj[0]["mimeType"];
+        //     const format = mimeType?.slice(0, mimeType?.lastIndexOf("/"));
+        //     if (format === "image") {
+        //         imageFormat = true;
+        //         nftObj.image = setupURI(obj.uri);
+        //     } else if (format === "video") {
+        //         videoFormat = true;
+        //         nftObj.animation_url = setupURI(obj.uri);
+        //     }
+        // }
+        // if (nft.native?.meta?.token?.metadata?.mimeType) {
+        //     const mimeType = nft.native?.meta?.token?.metadata?.mimeType;
+        //     const format = mimeType.slice(0, mimeType.lastIndexOf("/"));
+        //     if (format === "image") {
+        //         imageFormat = true;
+        //         nftObj.image = setupURI(
+        //             nft.native?.meta?.token?.metadata?.displayUri
+        //         );
+        //     } else if (format === "video") {
+        //         videoFormat = true;
+        //         nftObj.animation_url = setupURI(
+        //             nft.native?.meta?.token?.metadata?.displayUri
+        //         );
+        //     }
+        // }
+        // if (
+        //     !nftObj.image &&
+        //     nft.native?.meta?.token?.metadata?.displayUri &&
+        //     imageFormat
+        // ) {
+        //     nftObj.image = nft.native?.meta?.token?.metadata?.displayUri;
+        //     imageFormat = true;
+        // } else if (!nftObj.image && nft.native?.meta?.token?.metadata?.image) {
+        //     nftObj.image = nft.native?.meta?.token?.metadata?.image;
+        //     imageFormat = true;
+        // }
+        // nftObj.image = imageFormat
+        //     ? nftObj.image ||
+        //       nft.native?.meta?.token?.metadata?.formats?.uri ||
+        //       nft.image ||
+        //       nft.native?.uri
+        //     : undefined;
+        // nftObj.animation_url = videoFormat
+        //     ? nftObj.animation_url ||
+        //       nft.native?.meta?.token?.metadata?.formats?.uri
+        //     : undefined;
+        // nftObj.native.contract = nft.native?.contract;
+        // nftObj.native.tokenId = nft.native?.tokenId;
+        // nftObj.native.uri = nft.native?.uri;
+        // nftObj.name = nft.name || nft.native?.meta?.token?.metadata?.name;
+        // nftObj.collectionIdent = nft.collectionIdent;
+        // nftObj.description =
+        //     nft.description || nft.native?.meta?.token?.metadata?.description;
+        // nftObj.native.symbol =
+        //     nft.symbol || nft.native?.meta?.token?.metadata?.symbol;
+        // // ! //////////
+        const {
+            native: {
+                meta: {
+                    token: { metadata },
+                },
+            },
+        } = nft;
+        const dataLoaded = true;
+        const tokenId = nft.native.tokenId;
+        const chainId = nft.native.chainId;
+        const native = { tokenId, chainId };
+        const { animation_url, artifactUri } = metadata;
+        let artifactUriVid;
+        try {
+            debugger;
+            const { headers } = await axios.get(setupURI(artifactUri));
+            console.log(
+                "🚀 ~ file: helpers.js ~ line 258 ~ parseEachNFT ~ headers",
+                headers,
+                index
+            );
+            if (headers["content-type"].includes("video")) {
+                artifactUriVid = true;
+            } else artifactUriVid = false;
+        } catch (error) {
+            console.error("headers: ", error);
         }
-        if (nft.native?.meta?.token?.metadata?.mimeType) {
-            const mimeType = nft.native?.meta?.token?.metadata?.mimeType;
-            const format = mimeType.slice(0, mimeType.lastIndexOf("/"));
-            if (format === "image") {
-                imageFormat = true;
-                nftObj.image = setupURI(
-                    nft.native?.meta?.token?.metadata?.displayUri
-                );
-            } else if (format === "video") {
-                videoFormat = true;
-                nftObj.animation_url = setupURI(
-                    nft.native?.meta?.token?.metadata?.displayUri
-                );
-            }
+        const cashedImage = await addToCash(setupURI(artifactUri), index);
+        console.log(
+            "🚀 ~ file: helpers.js ~ line 254 ~ parseEachNFT ~ cashedImage",
+            cashedImage,
+            index
+        );
+        let cashedVid;
+        if (animation_url) {
+            cashedVid = await addToCash(setupURI(animation_url));
         }
-        if (
-            !nftObj.image &&
-            nft.native?.meta?.token?.metadata?.displayUri &&
-            imageFormat
-        ) {
-            nftObj.image = nft.native?.meta?.token?.metadata?.displayUri;
-            imageFormat = true;
-        } else if (!nftObj.image && nft.native?.meta?.token?.metadata?.image) {
-            nftObj.image = nft.native?.meta?.token?.metadata?.image;
-            imageFormat = true;
-        }
-        nftObj.image = imageFormat
-            ? nftObj.image ||
-              nft.native?.meta?.token?.metadata?.formats?.uri ||
-              nft.image ||
-              nft.native?.uri
-            : undefined;
-        nftObj.animation_url = videoFormat
-            ? nftObj.animation_url ||
-              nft.native?.meta?.token?.metadata?.formats?.uri
-            : undefined;
-        nftObj.native.contract = nft.native?.contract;
-        nftObj.native.tokenId = nft.native?.tokenId;
-        nftObj.native.uri = nft.native?.uri;
-        nftObj.name = nft.name || nft.native?.meta?.token?.metadata?.name;
-        nftObj.collectionIdent = nft.collectionIdent;
-        nftObj.description =
-            nft.description || nft.native?.meta?.token?.metadata?.description;
-        nftObj.native.symbol =
-            nft.symbol || nft.native?.meta?.token?.metadata?.symbol;
+        nftObj = {
+            uri,
+            collectionIdent,
+            ...metadata,
+            dataLoaded,
+            native,
+        };
+        nftObj.image = !artifactUriVid ? cashedImage?.uri : undefined;
+        nftObj.animation_url = artifactUriVid
+            ? cashedImage?.uri
+            : cashedVid?.uri;
     } else {
         // debugger
         const video = checkIfVideo(setupURI(uri));
@@ -308,13 +373,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         } catch (error) {
             console.log(error);
         }
-    }
-    if (
-        nftObj?.image?.includes("ipfs") &&
-        !nftObj?.image?.includes("https://ipfs.io") &&
-        !nftObj?.image?.includes("https://treatdao")
-    ) {
-        nftObj.image = "https://ipfs.io/" + nftObj.image.replace(":/", "");
     }
     if (nftObj.image) {
         // debugger
