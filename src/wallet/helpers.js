@@ -131,7 +131,6 @@ const Rookie = async (nft) => {
 };
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
-    // debugger;
     const collectionIdent = nft.collectionIdent;
     let uri = nft.uri;
 
@@ -222,7 +221,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         nftObj.native.symbol =
             nft.symbol || nft.native?.meta?.token?.metadata?.symbol;
     } else {
-        // debugger
+        // debugger;
         const video = checkIfVideo(setupURI(uri));
         nftObj.animation_url = video;
         const image = !video ? checkIfImage(setupURI(uri)) : undefined;
@@ -234,7 +233,11 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
             nftObj.name = name;
             nftObj.description = description;
         } else if (uri) {
-            data = await fetchURI(setupURI(uri));
+            try {
+                data = await fetchURI(setupURI(uri));
+            } catch (error) {
+                console.error(error);
+            }
         }
         if (typeof data === "object") {
             nftObj = { ...nftObj, ...data };

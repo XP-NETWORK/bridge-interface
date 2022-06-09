@@ -24,7 +24,7 @@ function NFTgridView({ setIndex, scrollIndex }) {
                 <BigLoader />
             ) : (
                 <div
-                    style={nfts.length > 0 ? auto : {}}
+                    style={nfts?.length > 0 ? auto : {}}
                     className="nft-list__wrapper"
                 >
                     {algorandClaimables &&
@@ -37,15 +37,16 @@ function NFTgridView({ setIndex, scrollIndex }) {
                             />
                         ))}
                     {nfts?.length
-                        ? nfts.map((nft, index) => (
+                        ? nfts?.map((nft, index) => (
                               <NFTcard
                                   nft={nft}
                                   index={index}
                                   key={`nft-${index}`}
                               />
                           ))
-                        : algorandClaimables.length < 1 && <NFTempty />}
-                    {nfts.length > 0 && nfts?.length < nftsPlace
+                        : (!algorandClaimables ||
+                              algorandClaimables?.length < 1) && <NFTempty />}
+                    {nfts?.length > 0 && nfts?.length < nftsPlace
                         ? placeholders.map((n, index) => (
                               <Missing key={`missing-${index}-component`} />
                           ))
