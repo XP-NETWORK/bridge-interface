@@ -168,8 +168,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     }
     const { from, NFTList } = store.getState().general;
     let whitelisted;
-    let videoFormat;
-    let imageFormat;
     let nftObj = {
         uri,
         collectionIdent: nft.collectionIdent || undefined,
@@ -180,64 +178,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         appId: nft.appId || undefined,
     };
     if (from.text === "Tezos") {
-        // if (nft.native?.meta?.token?.metadata?.formats) {
-        //     const obj = nft.native?.meta?.token?.metadata?.formats;
-        //     const mimeType = obj[0]["mimeType"];
-        //     const format = mimeType?.slice(0, mimeType?.lastIndexOf("/"));
-        //     if (format === "image") {
-        //         imageFormat = true;
-        //         nftObj.image = setupURI(obj.uri);
-        //     } else if (format === "video") {
-        //         videoFormat = true;
-        //         nftObj.animation_url = setupURI(obj.uri);
-        //     }
-        // }
-        // if (nft.native?.meta?.token?.metadata?.mimeType) {
-        //     const mimeType = nft.native?.meta?.token?.metadata?.mimeType;
-        //     const format = mimeType.slice(0, mimeType.lastIndexOf("/"));
-        //     if (format === "image") {
-        //         imageFormat = true;
-        //         nftObj.image = setupURI(
-        //             nft.native?.meta?.token?.metadata?.displayUri
-        //         );
-        //     } else if (format === "video") {
-        //         videoFormat = true;
-        //         nftObj.animation_url = setupURI(
-        //             nft.native?.meta?.token?.metadata?.displayUri
-        //         );
-        //     }
-        // }
-        // if (
-        //     !nftObj.image &&
-        //     nft.native?.meta?.token?.metadata?.displayUri &&
-        //     imageFormat
-        // ) {
-        //     nftObj.image = nft.native?.meta?.token?.metadata?.displayUri;
-        //     imageFormat = true;
-        // } else if (!nftObj.image && nft.native?.meta?.token?.metadata?.image) {
-        //     nftObj.image = nft.native?.meta?.token?.metadata?.image;
-        //     imageFormat = true;
-        // }
-        // nftObj.image = imageFormat
-        //     ? nftObj.image ||
-        //       nft.native?.meta?.token?.metadata?.formats?.uri ||
-        //       nft.image ||
-        //       nft.native?.uri
-        //     : undefined;
-        // nftObj.animation_url = videoFormat
-        //     ? nftObj.animation_url ||
-        //       nft.native?.meta?.token?.metadata?.formats?.uri
-        //     : undefined;
-        // nftObj.native.contract = nft.native?.contract;
-        // nftObj.native.tokenId = nft.native?.tokenId;
-        // nftObj.native.uri = nft.native?.uri;
-        // nftObj.name = nft.name || nft.native?.meta?.token?.metadata?.name;
-        // nftObj.collectionIdent = nft.collectionIdent;
-        // nftObj.description =
-        //     nft.description || nft.native?.meta?.token?.metadata?.description;
-        // nftObj.native.symbol =
-        //     nft.symbol || nft.native?.meta?.token?.metadata?.symbol;
-        // // ! //////////
         const {
             native: {
                 meta: {
@@ -252,13 +192,8 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         const { animation_url, artifactUri } = metadata;
         let artifactUriVid;
         try {
-            debugger;
+            // debugger;
             const { headers } = await axios.get(setupURI(artifactUri));
-            console.log(
-                "🚀 ~ file: helpers.js ~ line 258 ~ parseEachNFT ~ headers",
-                headers,
-                index
-            );
             if (headers["content-type"].includes("video")) {
                 artifactUriVid = true;
             } else artifactUriVid = false;
@@ -266,11 +201,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
             console.error("headers: ", error);
         }
         const cashedImage = await addToCash(setupURI(artifactUri), index);
-        console.log(
-            "🚀 ~ file: helpers.js ~ line 254 ~ parseEachNFT ~ cashedImage",
-            cashedImage,
-            index
-        );
         let cashedVid;
         if (animation_url) {
             cashedVid = await addToCash(setupURI(animation_url));
