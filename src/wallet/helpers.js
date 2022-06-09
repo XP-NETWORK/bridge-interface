@@ -238,23 +238,33 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     }
     if (from.text === "Tezos") {
     } else {
-        const cashed = await axios.get(
-            `https://nft-cache.herokuapp.com/nft/data/?tokenId=${nft.native.tokenId}&chainId=${nft.native.chainId}&contract=${nft.native.contract}`
-        );
-        if (typeof cashed?.data === "object") {
-            const dataLoaded = true;
-            nftObj = { ...nft, ...cashed.data, dataLoaded };
-        } else {
-            const parsed = await nftGeneralParser(nft, account);
-            const cashed = await nftCash(parsed, "add");
-
-            if (typeof parsed?.data === "object") {
-                const dataLoaded = true;
-                nftObj = { ...nft, ...parsed.data, dataLoaded };
-            } else {
-                console.error("NFT cash error: ", parsed);
-            }
-        }
+        // try {
+        //     const cashed = await axios.get(
+        //         `https://nft-cache.herokuapp.com/nft/data?tokenId=${nft.native.tokenId}&chainId=${nft.native.chainId}&contract=${nft.native.contract}`
+        //     );
+        //     console.log("test cashed: ", cashed);
+        //     if (typeof cashed?.data === "object") {
+        //         const dataLoaded = true;
+        //         nftObj = { ...nft, ...cashed.data, dataLoaded };
+        //     } else {
+        //         const parsed = await nftGeneralParser(nft, account);
+        //         console.log("test parsed: ", parsed);
+        //         const cashed = await nftCash(parsed, "add");
+        //         console.log("test cashed2: ", cashed);
+        //         if (typeof cashed?.data === "object") {
+        //             const dataLoaded = true;
+        //             nftObj = { ...nft, ...cashed.data, dataLoaded };
+        //         } else {
+        //             console.error("NFT cash error: ", parsed);
+        //         }
+        //     }
+        // } catch (error) {
+        //     console.error("tets error: ", error);
+        // }
+        const parsed = await nftGeneralParser(nft, account);
+        console.log("parsed data: ", parsed, index);
+        const dataLoaded = true;
+        nftObj = { ...nft, ...parsed.metaData, dataLoaded };
     }
     if (
         !testnet &&
