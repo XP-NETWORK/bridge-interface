@@ -18,7 +18,6 @@ import { nftGeneralParser } from "nft-parser";
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
 const testnet = window.location.href.includes("testnet");
 const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/";
-const base64 = require("base-64");
 export const socket = io(testnet ? testnetSocketUrl : socketUrl, {
     path: "/socket.io",
 });
@@ -26,7 +25,6 @@ const { Harmony } = require("@harmony-js/core");
 const axios = require("axios");
 
 export const setupURI = (uri) => {
-    // debugger
     if (uri) {
         if (uri.includes("https://ipfs.io")) {
             return uri;
@@ -249,7 +247,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         } else {
             const parsed = await nftGeneralParser(nft, account);
             const cashed = await nftCash(parsed, "add");
-            console.log("parsed data: ", parsed);
+
             if (typeof parsed?.data === "object") {
                 const dataLoaded = true;
                 nftObj = { ...nft, ...parsed.data, dataLoaded };
