@@ -302,7 +302,7 @@ export const chains = [
         newChain: true,
     },
     {
-        type: "Secret",
+        type: "Cosmos",
         key: "Secret",
         text: "Secret",
         value: "Secret",
@@ -566,7 +566,7 @@ export const TESTNET_CHAIN_INFO = {
         chainId: 1313161555,
     },
     Secret: {
-        none: 25,
+        none: 0x18,
         chainId: "pulsar-2",
     },
 };
@@ -761,7 +761,8 @@ export const CHAIN_INFO = {
     },
     Secret: {
         native: coins[20],
-        nonce: 25,
+        nonce: 0x18,
+        chainId: "cosmoshub-4",
         tnChainId: "pulsar-2",
         decimals: 1e6,
         blockExplorerUrl: "https://atomscan.com/secret-network/",

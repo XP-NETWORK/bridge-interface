@@ -63,6 +63,7 @@ function NFTaccount() {
     const account = useSelector((state) => state.general.account);
     const prevAccount = usePrevious(account);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
+    const keplrAccount = useSelector((state) => state.general.keplrAccount);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const NFTSetToggler = useSelector((state) => state.general.NFTSetToggler);
     const prevNFTSetToggler = usePrevious(NFTSetToggler);
@@ -87,6 +88,8 @@ function NFTaccount() {
                 ? hard
                 : type === "EVM" || type === "VeChain"
                 ? account
+                : type === "Cosmos"
+                ? keplrAccount
                 : type === "Tezos"
                 ? tezosAccount
                 : type === "Algorand"

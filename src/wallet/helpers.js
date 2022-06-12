@@ -572,6 +572,7 @@ export const handleChainFactory = async (someChain) => {
 };
 
 export const getNFTS = async (wallet, from) => {
+    console.log("🚀 ~ file: helpers.js ~ line 575 ~ getNFTS ~ wallet", wallet);
     // debugger
     const hardcoded = new URLSearchParams(window.location.search).get(
         "checkWallet"
@@ -579,15 +580,11 @@ export const getNFTS = async (wallet, from) => {
     const { tronWallet } = store.getState().general;
     const factory = await getFactory();
     const chain = await factory.inner(chainsConfig[from].Chain);
+    console.log("🚀 ~ file: helpers.js ~ line 583 ~ getNFTS ~ chain", chain);
     try {
         // debugger
         let response;
-        // if(tronWallet){
-        //   response = await getTronNFTs(tronWallet)
-        // }
-        // else{
         response = await factory.nftList(chain, hardcoded ? hardcoded : wallet);
-        // }
         const unique = {};
         try {
             const allNFTs = response.filter((n) => {
