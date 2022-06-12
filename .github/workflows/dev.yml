@@ -1,43 +1,43 @@
-# name: Deploy Bridge Interface to Staging
+name: Deploy Bridge Interface to Staging
 
-# on:
-#   push:
-#     branches:
-#       - dev
-# jobs:
-#   run:
-#     runs-on: ubuntu-latest
-#     env:
-#       AWS_ACCESS_KEY_ID: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
-#       AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
-#     steps:
-#       - uses: actions/checkout@v2
+on:
+  push:
+    branches:
+      - dev-stag
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      # AWS_ACCESS_KEY_ID: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
+      # AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - uses: actions/checkout@v2
 
-#       - name: Install dependencies
-#         run: yarn
+      - name: Install dependencies
+        run: yarn
 
-#       - name: Build
-#         run: yarn build
+      - name: Build
+        run: yarn build
 
-#       - name: Deploy
-#         uses: reggionick/s3-deploy@v3
-#         with:
-#           folder: build
-#           bucket: ${{ secrets.DEV_S3_BUCKET }}
-#           bucket-region: ${{ secrets.DEV_S3_BUCKET_REGION }}
-#           invalidation: /
-#           delete-removed: true
-#           no-cache: true
-#           private: false
-# © 2022 GitHub, Inc.
-# Terms
-# Privacy
-# Security
-# Status
-# Docs
-# Contact GitHub
-# Pricing
-# API
-# Training
-# Blog
-# About
+      - name: Deploy
+        uses: reggionick/s3-deploy@v3
+        with:
+          folder: build
+          # bucket: ${{ secrets.DEV_S3_BUCKET }}
+          # bucket-region: ${{ secrets.DEV_S3_BUCKET_REGION }}
+          invalidation: /
+          delete-removed: true
+          no-cache: true
+          private: false
+© 2022 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
