@@ -39,6 +39,7 @@ import {
     setAccount,
     setSync2,
     setSync2Connecx,
+    setTempleWalletSigner,
 } from "../../store/reducers/generalSlice";
 import { useNavigate } from "react-router";
 import { chainsConfig } from "../values";
@@ -168,10 +169,7 @@ export const connectTempleWallet = async () => {
         }
         const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
         await wallet.connect("mainnet");
-        console.log(
-            "🚀 ~ file: ConnectWalletHelper.js ~ line 151 ~ connectTempleWal ~ wallet",
-            wallet
-        );
+        store.dispatch(setTempleWalletSigner(wallet));
         const tezos = wallet.toTezos();
         const accountPkh = await tezos.wallet.pkh();
         store.dispatch(setTezosAccount(accountPkh));

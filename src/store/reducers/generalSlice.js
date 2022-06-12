@@ -19,6 +19,9 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setTempleWalletSigner(state, action) {
+            state.templeSigner = action.payload;
+        },
         setBalance(state, action) {
             state.balance = action.payload;
         },
@@ -479,6 +482,7 @@ export const {
     setWalletsModal,
     setGitLatestCommit,
     setBalance,
+    setTempleWalletSigner,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

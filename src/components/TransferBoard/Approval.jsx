@@ -36,6 +36,7 @@ function Approval(props) {
     const from = useSelector((state) => state.general.from);
     const testnet = useSelector((state) => state.general.testNet);
     const account = useSelector((state) => state.general.account);
+    const templeSigner = useSelector((state) => state.general.templeSigner);
     const algorandAccount = useSelector(
         (state) => state.general.algorandAccount
     );
@@ -137,24 +138,24 @@ function Approval(props) {
             setFinishedApproving(arr);
         } else if (from.text === "Tezos") {
             try {
-                if (kukaiWallet) {
-                    const factory = await getFactory();
-                    const chain = await factory.inner(Chain.TEZOS);
-                    const wallet = new BeaconWallet({
-                        name: "XP.NETWORK Cross-Chain NFT Bridge",
-                    });
-                    const swap = await chain.preTransfer(wallet, nft);
-                    dispatch(updateApprovedNFTs(nft));
-                    setFinishedApproving(arr);
-                } else {
-                    const factory = await getFactory();
-                    const chain = await factory.inner(Chain.TEZOS);
-                    const signer = new TempleWallet("My Super DApp");
-                    await signer.connect("mainnet");
-                    const swap = await chain.preTransfer(signer, nft);
-                    dispatch(updateApprovedNFTs(nft));
-                    setFinishedApproving(arr);
-                }
+                // if (kukaiWallet) {
+                //     const factory = await getFactory();
+                //     const chain = await factory.inner(Chain.TEZOS);
+                //     const wallet = new BeaconWallet({
+                //         name: "XP.NETWORK Cross-Chain NFT Bridge",
+                //     });
+                //     const swap = await chain.preTransfer(wallet, nft);
+                //     dispatch(updateApprovedNFTs(nft));
+                //     setFinishedApproving(arr);
+                // } else {
+                const factory = await getFactory();
+                const chain = await factory.inner(Chain.TEZOS);
+                // const signer = new TempleWallet("My Super DApp");
+                // await signer.connect("mainnet");
+                const swap = await chain.preTransfer(templeSigner, nft);
+                dispatch(updateApprovedNFTs(nft));
+                setFinishedApproving(arr);
+                // }
             } catch (error) {
                 setFinishedApproving(arr);
                 dispatch(
