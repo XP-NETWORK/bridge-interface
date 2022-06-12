@@ -19,6 +19,12 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setKeplrAccount(state, action) {
+            state.keplrAccount = action.payload;
+        },
+        setKeplrWallet(state, action) {
+            state.keplrWallet = action.payload;
+        },
         setBalance(state, action) {
             state.balance = action.payload;
         },
@@ -479,6 +485,8 @@ export const {
     setWalletsModal,
     setGitLatestCommit,
     setBalance,
+    setKeplrAccount,
+    setKeplrWallet,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

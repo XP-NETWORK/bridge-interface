@@ -561,6 +561,8 @@ export const handleChainFactory = async (someChain) => {
                 return await factory.inner(Chain.GATECHAIN);
             case "VeChain":
                 return await factory.inner(Chain.VECHAIN);
+            case "Secret":
+                return await factory.inner(Chain.SECRET);
             default:
                 return "";
         }

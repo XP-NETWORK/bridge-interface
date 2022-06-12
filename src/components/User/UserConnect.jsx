@@ -1,102 +1,127 @@
-import { useWeb3React } from '@web3-react/core';
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { setAccount, setAccountModal, setFrom, setUnsupportedNetwork, setWalletsModal, } from '../../store/reducers/generalSlice';
-import { setNFTS } from '../../wallet/helpers';
-import { chains } from '../values';
-import Identicon from './Identicon';
+import { useWeb3React } from "@web3-react/core";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import {
+    setAccount,
+    setAccountModal,
+    setFrom,
+    setUnsupportedNetwork,
+    setWalletsModal,
+} from "../../store/reducers/generalSlice";
+import { setNFTS } from "../../wallet/helpers";
+import { chains } from "../values";
+import Identicon from "./Identicon";
 
-export default function UserConnect({desktop, mobile}) {
-    const dispatch = useDispatch()
-    const to = useSelector(state => state.general.to)
-    const elrondAccount = useSelector(state => state.general.elrondAccount)
-    const tezosAccount = useSelector(state => state.general.tezosAccount)
-    const algorandAccount = useSelector(state => state.general.algorandAccount)
-    const _account = useSelector(state => state.general.account)
-    const innerWidth = useSelector(state => state.general.innerWidth)
-    const tronWallet = useSelector(state => state.general.tronWallet)
-    const WalletConnect = useSelector(state => state.general.WalletConnect)
+export default function UserConnect({ desktop, mobile }) {
+    const dispatch = useDispatch();
+    const to = useSelector((state) => state.general.to);
+    const elrondAccount = useSelector((state) => state.general.elrondAccount);
+    const tezosAccount = useSelector((state) => state.general.tezosAccount);
+    const algorandAccount = useSelector(
+        (state) => state.general.algorandAccount
+    );
+    const _account = useSelector((state) => state.general.account);
+    const innerWidth = useSelector((state) => state.general.innerWidth);
+    const tronWallet = useSelector((state) => state.general.tronWallet);
+    const WalletConnect = useSelector((state) => state.general.WalletConnect);
+    const keplrAccount = useSelector((state) => state.general.keplrAccount);
+    const keplrWallet = useSelector((state) => state.general.keplrWallet);
     const { account, chainId, active } = useWeb3React();
-    const testnet = useSelector(state => state.general.testNet)
-    const walletAccount = account || elrondAccount || tezosAccount || algorandAccount || tronWallet || _account
-    const location = useLocation()
-
+    const testnet = useSelector((state) => state.general.testNet);
+    const walletAccount =
+        keplrAccount ||
+        account ||
+        elrondAccount ||
+        tezosAccount ||
+        algorandAccount ||
+        tronWallet ||
+        _account;
+    const location = useLocation();
 
     const handleConnect = () => {
-        if(!walletAccount){
-        dispatch(setWalletsModal(true))
-        }
-        else if(walletAccount)dispatch(setAccountModal(true))
-    }
+        if (!walletAccount) {
+            dispatch(setWalletsModal(true));
+        } else if (walletAccount) dispatch(setAccountModal(true));
+    };
 
     const getAccountString = () => {
-      if(innerWidth >= 425){
-        return `${walletAccount.substring(0, 5)}...${walletAccount.substring(walletAccount.length - 4)}`
-      }
-      else if(innerWidth >= 375){
-        return `${walletAccount.substring(0, 4)}...${walletAccount.substring(walletAccount.length - 4)}`
-      }
-      else if(innerWidth >= 320){
-        return `${walletAccount.substring(0, 3)}...${walletAccount.substring(walletAccount.length - 4)}`
-      }
-    }
+        if (innerWidth >= 425) {
+            return `${walletAccount.substring(
+                0,
+                5
+            )}...${walletAccount.substring(walletAccount.length - 4)}`;
+        } else if (innerWidth >= 375) {
+            return `${walletAccount.substring(
+                0,
+                4
+            )}...${walletAccount.substring(walletAccount.length - 4)}`;
+        } else if (innerWidth >= 320) {
+            return `${walletAccount.substring(
+                0,
+                3
+            )}...${walletAccount.substring(walletAccount.length - 4)}`;
+        }
+    };
 
     const getChain = () => {
-      if(testnet){
-        console.log()
-        return chains.find(chain => chain.tnChainId === chainId)
-      }
-      else{
-        console.log()
-        return chains.find(chain => chain.chainId === chainId)
-      }
-    }
+        if (testnet) {
+            console.log();
+            return chains.find((chain) => chain.tnChainId === chainId);
+        } else {
+            console.log();
+            return chains.find((chain) => chain.chainId === chainId);
+        }
+    };
 
     useEffect(() => {
-      // debugger
-      dispatch(setAccount(account))
-      const chainConnected = getChain()
-      if(chainId && location.pathname.includes("/account")){
-        if(testnet){
-          if(!chainConnected?.testNet || !chains.some(chain => chain.tnChainId === chainId)){
-            dispatch(setUnsupportedNetwork(true))
-          }
-          else if(chainId === to.tnChainId){
-            dispatch(setUnsupportedNetwork(true))
-          }
-          else{
-            dispatch(setUnsupportedNetwork(false))
-            dispatch(setFrom(chainConnected))
-          }
+        // debugger
+        dispatch(setAccount(account));
+        const chainConnected = getChain();
+        if (chainId && location.pathname.includes("/account")) {
+            if (testnet) {
+                if (
+                    !chainConnected?.testNet ||
+                    !chains.some((chain) => chain.tnChainId === chainId)
+                ) {
+                    dispatch(setUnsupportedNetwork(true));
+                } else if (chainId === to.tnChainId) {
+                    dispatch(setUnsupportedNetwork(true));
+                } else {
+                    dispatch(setUnsupportedNetwork(false));
+                    dispatch(setFrom(chainConnected));
+                }
+            } else {
+                if (
+                    !chainConnected?.mainnet ||
+                    !chains.some((chain) => chain.chainId === chainId)
+                ) {
+                    dispatch(setUnsupportedNetwork(true));
+                } else if (chainId === to.chainId) {
+                    dispatch(setUnsupportedNetwork(true));
+                } else {
+                    dispatch(setUnsupportedNetwork(false));
+                    dispatch(setFrom(chainConnected));
+                }
+            }
         }
-        else{
-          if(!chainConnected?.mainnet || !chains.some(chain => chain.chainId === chainId)){
-            dispatch(setUnsupportedNetwork(true))
-          }
-          else if(chainId === to.chainId){
-            dispatch(setUnsupportedNetwork(true))
-          }
-          else{
-            dispatch(setUnsupportedNetwork(false))
-            dispatch(setFrom(chainConnected))
-          }
+    }, [chainId, account]);
+
+    useEffect(() => {
+        if (!account && WalletConnect) {
+            active !== undefined && window.location.reload();
         }
-      }
+    }, [active]);
 
-    }, [chainId, account])
-
-  useEffect(() => {
-    if(!account && WalletConnect){
-      active !== undefined && window.location.reload()
-    }
-  }, [active])
-  
-
-  return (
-    <div onClick={handleConnect} className={`${walletAccount? 'navbar-connect connected' : 'navbar-connect'} ${mobile? 'xmobile_only': 'xdesktop_only'}`} >
-    {walletAccount ? getAccountString() : "Connect Wallet"}
-    {walletAccount && <Identicon account={walletAccount} />}
-    </div>
-  )
+    return (
+        <div
+            onClick={handleConnect}
+            className={`${
+                walletAccount ? "navbar-connect connected" : "navbar-connect"
+            } ${mobile ? "xmobile_only" : "xdesktop_only"}`}
+        >
+            {walletAccount ? getAccountString() : "Connect Wallet"}
+            {walletAccount && <Identicon account={walletAccount} />}
+        </div>
+    );
 }
