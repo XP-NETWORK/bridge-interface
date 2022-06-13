@@ -322,6 +322,7 @@ export const connectTronlink = async () => {
                 const publicAddress = window.tronWeb.defaultAddress.base58;
                 store.dispatch(setTronWallet(publicAddress));
                 store.dispatch(setTronLink(true));
+                return true;
             }
         } catch (error) {
             if (!modalError) {
@@ -330,6 +331,7 @@ export const connectTronlink = async () => {
                     console.log(error.data.message);
                 } else console.log(error);
             }
+            return false;
         }
     }
 };
