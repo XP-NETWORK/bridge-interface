@@ -284,6 +284,11 @@ export const connectMaiar = async () => {
 
 // Elrond blockchain connection ( Maiar Extension )
 export const connectMaiarExtension = async () => {
+    console.log(
+        "🚀 ~ file: ConnectWalletHelper.js ~ line 15 ~ ExtensionProvider",
+        ExtensionProvider
+    );
+
     const instance = ExtensionProvider.getInstance();
     try {
         await instance.init();
