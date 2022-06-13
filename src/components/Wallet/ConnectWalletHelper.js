@@ -83,7 +83,7 @@ export const connectMetaMask = async (activate, from, to) => {
 };
 
 export const connectSync2 = async (testnet) => {
-    // debugger
+    debugger;
     let account;
     const client = new Connex(
         testnet
