@@ -262,8 +262,7 @@ export const connectMaiar = async () => {
     const provider = new ProxyProvider("https://gateway.elrond.com");
     const maiarProvider = new WalletConnectProvider(
         provider,
-        "https://bridge.walletconnect.org/",
-        onClientConnect
+        "https://bridge.walletconnect.org/"
     );
     try {
         await maiarProvider.init();
@@ -282,11 +281,6 @@ export const connectMaiar = async () => {
 
 // Elrond blockchain connection ( Maiar Extension )
 export const connectMaiarExtension = async () => {
-    console.log(
-        "🚀 ~ file: ConnectWalletHelper.js ~ line 15 ~ ExtensionProvider",
-        ExtensionProvider
-    );
-
     const instance = ExtensionProvider.getInstance();
     try {
         await instance.init();
