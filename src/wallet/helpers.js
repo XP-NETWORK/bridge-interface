@@ -221,7 +221,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         nftObj.native.symbol =
             nft.symbol || nft.native?.meta?.token?.metadata?.symbol;
     } else {
-        // debugger;
+        debugger;
         const video = checkIfVideo(setupURI(uri));
         nftObj.animation_url = video;
         const image = !video ? checkIfImage(setupURI(uri)) : undefined;
@@ -254,7 +254,11 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
                 }
             }
         } else {
-            if (data) {
+            if (!data.includes("json")) {
+                if (data.includes("image")) nftObj.image = setupURI(uri);
+                else if (data.includes("image"))
+                    nftObj.animation_url = setupURI(uri);
+            } else if (data) {
                 let n;
                 try {
                     n = base64.decode(data);
