@@ -160,7 +160,6 @@ export const connectTrustWallet = async (activate, from) => {
 
 // Tezos blockchain connection ( Temple Wallet )
 export const connectTempleWallet = async () => {
-    // debugger
     try {
         const available = await TempleWallet.isAvailable();
         if (!available) {
@@ -168,16 +167,14 @@ export const connectTempleWallet = async () => {
         }
         const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
         await wallet.connect("mainnet");
-        console.log(
-            "🚀 ~ file: ConnectWalletHelper.js ~ line 151 ~ connectTempleWal ~ wallet",
-            wallet
-        );
         const tezos = wallet.toTezos();
         const accountPkh = await tezos.wallet.pkh();
         store.dispatch(setTezosAccount(accountPkh));
         store.dispatch(setTempleWallet(true));
+        return true;
     } catch (error) {
         console.error(error);
+        return false;
     }
 };
 // Tezos blockchain connection ( Beacon )
@@ -187,7 +184,6 @@ export const connectBeacon = async () => {
         name: "XP.NETWORK Cross-Chain NFT Bridge",
     });
     Tezos.setWalletProvider(wallet);
-    console.log("Tezos: ", Tezos);
     try {
         const permissions = await wallet.client.requestPermissions();
         store.dispatch(setTezosAccount(permissions.address));
