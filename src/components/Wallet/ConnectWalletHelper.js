@@ -237,6 +237,7 @@ const onClientConnect = (maiarProvider) => {
             const add = await maiarProvider.getAddress();
             store.dispatch(setConfirmMaiarMob(true));
             store.dispatch(setElrondAccount(add));
+
             store.dispatch(setMaiarProvider(maiarProvider));
             store.dispatch(setOnMaiar(true));
             store.dispatch(setStep(2));
@@ -288,9 +289,11 @@ export const connectMaiarExtension = async () => {
         store.dispatch(setOnMaiar(true));
         store.dispatch(setElrondAccount(account.address));
         store.dispatch(setMaiarProvider(instance));
+        return true;
     } catch (err) {
         window.open("https://getmaiar.com/defi", "_blank");
         console.log(err);
+        return false;
     }
 };
 

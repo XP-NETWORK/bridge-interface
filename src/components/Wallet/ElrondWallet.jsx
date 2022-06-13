@@ -8,24 +8,32 @@ import {
     setAlgorandAccount,
     setAlgorandWallet,
 } from "../../store/reducers/generalSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function ElrondWallet({ wallet, close }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector((state) => state.general.from);
+    const testnet = useSelector((state) => state.general.testNet);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const handleConnect = (wallet) => {
+    const handleConnect = async (wallet) => {
         switch (wallet) {
             case "Maiar":
                 connectMaiar();
                 break;
             case "Maiar Extension":
-                connectMaiarExtension();
+                const connected = await connectMaiarExtension();
                 close();
+                if (connected) navigateToAccountRoute();
                 break;
             default:
                 break;
         }
+    };
+
+    const navigateToAccountRoute = () => {
+        navigate(testnet ? `/testnet/account` : `/account`);
     };
 
     useEffect(() => {
@@ -37,6 +45,7 @@ export default function ElrondWallet({ wallet, close }) {
             if (accounts) {
                 dispatch(setAlgorandWallet(true));
                 dispatch(setAlgorandAccount(accounts[0]));
+                navigateToAccountRoute();
             }
         });
     }, []);
