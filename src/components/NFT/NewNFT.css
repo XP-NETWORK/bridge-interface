@@ -113,6 +113,17 @@
   border-radius: 50%;
   box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.212);
 }
+.zoomInBtn{
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  right: 12px;
+  top: 12px;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  /* box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.212); */
+}
 .listed-nft-radio--selected::after{
   position: absolute;
   left: 2px;
