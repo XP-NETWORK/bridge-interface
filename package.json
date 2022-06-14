@@ -11,7 +11,7 @@
         "@mui/icons-material": "^5.4.2",
         "@randlabs/myalgo-connect": "^1.1.1",
         "@reduxjs/toolkit": "^1.6.2",
-        "@taquito/beacon-wallet": "^11.1.0",
+        "@taquito/beacon-wallet": "^13.0.0",
         "@taquito/taquito": "^12.1.1",
         "@taquito/utils": "^11.1.0",
         "@temple-wallet/dapp": "^7.0.0",
