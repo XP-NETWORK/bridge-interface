@@ -55,6 +55,10 @@ export default function UnwrapWegld() {
                     setDots("");
                 }
             }, 500);
+            setTimeout(() => {
+                clearInterval(interval);
+                setUnwrapping(false);
+            }, "20000");
         }
         if (!unwrapping) clearInterval(interval);
         return () => clearInterval(interval);
