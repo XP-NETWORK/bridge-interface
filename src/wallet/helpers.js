@@ -603,7 +603,6 @@ export const getNFTS = async (wallet, from) => {
                     return true;
                 }
             });
-            console.log("unique: ", unique);
             return allNFTs;
         } catch (err) {
             return [];

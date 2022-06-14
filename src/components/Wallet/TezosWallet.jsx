@@ -29,7 +29,7 @@ export default function TezosWallet({ wallet, close }) {
         switch (wallet) {
             case "TempleWallet":
                 if (window.innerWidth < 600) {
-                    return OFF;
+                    return { display: "none" };
                 } else if (!from) {
                     return {};
                 } else if (from.text !== "Tezos") {

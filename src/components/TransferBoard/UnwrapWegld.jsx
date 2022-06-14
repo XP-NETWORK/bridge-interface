@@ -12,10 +12,6 @@ export default function UnwrapWegld() {
     const [unwrapping, setUnwrapping] = useState("");
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const [dots, setDots] = useState("");
-    console.log(
-        "🚀 ~ file: UnwrapWegld.jsx ~ line 15 ~ UnwrapWegld ~ dots",
-        dots
-    );
 
     const dispatch = useDispatch();
     const unwrapWegld = async () => {
