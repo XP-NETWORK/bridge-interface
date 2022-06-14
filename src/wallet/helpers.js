@@ -254,9 +254,9 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
                 }
             }
         } else {
-            if (!data.includes("json")) {
-                if (data.includes("image")) nftObj.image = setupURI(uri);
-                else if (data.includes("image"))
+            if (!data?.includes("json")) {
+                if (data?.includes("image")) nftObj.image = setupURI(uri);
+                else if (data?.includes("image"))
                     nftObj.animation_url = setupURI(uri);
             } else if (data) {
                 let n;
