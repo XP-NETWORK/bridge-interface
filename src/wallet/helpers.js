@@ -221,7 +221,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         nftObj.native.symbol =
             nft.symbol || nft.native?.meta?.token?.metadata?.symbol;
     } else {
-        debugger;
         const video = checkIfVideo(setupURI(uri));
         nftObj.animation_url = video;
         const image = !video ? checkIfImage(setupURI(uri)) : undefined;

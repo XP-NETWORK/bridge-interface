@@ -10,6 +10,9 @@
     display: flex;
     flex-direction: column;
 }
+.transfer-board .transfer-button {
+    margin: 10px 5px;
+}
 .transfer-board > form {
     display: contents;
 }
@@ -240,6 +243,25 @@
     height: 62px;
     padding: 16px;
     font-size: 14px;
+}
+.mobile-col .transfer-button {
+    margin: 10px 5px;
+}
+.mobile-col .unwrapWegld {
+    width: calc(100% - 10px);
+}
+.unwrapWegld {
+    border: 1px solid #395feb;
+    width: 100%;
+    height: 54px;
+    border-radius: 66px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: #395feb;
+    cursor: pointer;
+    margin-top: 10px;
 }
 .transfer-button--disabled,
 .transfer-button {
