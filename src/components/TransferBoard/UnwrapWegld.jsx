@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setWrappedEGold } from "../../store/reducers/generalSlice";
 import { getFactory } from "../../wallet/helpers";
@@ -8,11 +8,18 @@ import { ExtensionProvider } from "@elrondnetwork/erdjs";
 export default function UnwrapWegld() {
     const wrappedEGold = useSelector((state) => state.general.wrappedEGold);
     const from = useSelector((state) => state.general.from);
-    const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const maiarProvider = useSelector((state) => state.general.maiarProvider);
+    const [unwrapping, setUnwrapping] = useState("");
+    const OFF = { opacity: 0.6, pointerEvents: "none" };
+    const [dots, setDots] = useState("");
+    console.log(
+        "🚀 ~ file: UnwrapWegld.jsx ~ line 15 ~ UnwrapWegld ~ dots",
+        dots
+    );
 
     const dispatch = useDispatch();
     const unwrapWegld = async () => {
+        setUnwrapping(true);
         try {
             const signer = maiarProvider || ExtensionProvider.getInstance();
             const factory = await getFactory();
@@ -23,12 +30,13 @@ export default function UnwrapWegld() {
                 signer,
                 wrappedEGold
             );
-            console.log(
-                "🚀 ~ file: UnwrapWegld.jsx ~ line 22 ~ unwrapWegld ~ unwrapped",
-                unwrapped
-            );
-            if (unwrapped) dispatch(setWrappedEGold(""));
+            if (unwrapped) {
+                dispatch(setWrappedEGold(""));
+                setUnwrapping(false);
+            }
         } catch (error) {
+            setUnwrapping(false);
+
             console.error(error);
         }
     };
@@ -37,9 +45,32 @@ export default function UnwrapWegld() {
         unwrapWegld();
     };
 
+    useEffect(() => {
+        let interval;
+        if (unwrapping) {
+            interval = setInterval(() => {
+                if (dots?.length !== 3) {
+                    setDots(dots + ".");
+                } else if (dots?.length === 3) {
+                    setDots("");
+                }
+            }, 500);
+        }
+        if (!unwrapping) clearInterval(interval);
+        return () => clearInterval(interval);
+    });
+
     return wrappedEGold ? (
-        <div onClick={handleClick} className="unwrapWegld">
-            Unwrap eGold
+        <div
+            style={unwrapping ? OFF : {}}
+            onClick={handleClick}
+            className="unwrapWegld"
+        >
+            {!unwrapping ? (
+                <div>Unwrap eGold</div>
+            ) : (
+                <div style={{ width: "100px" }}>{`Unwrapping${dots}`}</div>
+            )}
         </div>
     ) : (
         ""
