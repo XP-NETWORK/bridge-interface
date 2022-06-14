@@ -133,8 +133,7 @@ function NFTaccount() {
                 const weGoldBalance = await elronfFactory.wegldBalance(
                     elrondAccount
                 );
-                if (weGoldBalance)
-                    dispatch(setWrappedEGold(weGoldBalance / 1e18));
+                if (weGoldBalance) dispatch(setWrappedEGold(weGoldBalance));
             } catch (error) {
                 console.error(error);
             }
