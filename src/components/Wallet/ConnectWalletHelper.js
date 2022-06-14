@@ -161,7 +161,6 @@ export const connectTrustWallet = async (activate, from) => {
 
 // Tezos blockchain connection ( Temple Wallet )
 export const connectTempleWallet = async () => {
-    // debugger
     try {
         const available = await TempleWallet.isAvailable();
         if (!available) {
