@@ -216,7 +216,7 @@
     border-radius: 56px;
     border: 1px solid #d4d7dd;
     position: relative;
-    z-index: 1;
+    z-index: 0;
     cursor: pointer;
     transition: 0.3s ease all;
 }
