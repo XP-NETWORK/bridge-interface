@@ -46,6 +46,7 @@ import { chainsConfig } from "../values";
 import { useWeb3React } from "@web3-react/core";
 import ImportNFTButton from "../Buttons/ImportNFTButton";
 import BigNumber from "bignumber.js";
+import UnwrapWegld from "../TransferBoard/UnwrapWegld";
 
 function NFTaccount() {
     const dispatch = useDispatch();
@@ -322,6 +323,7 @@ function NFTaccount() {
                     <Approval />
                     <SendFees />
                     <ButtonToTransfer />
+                    <UnwrapWegld />
                 </div>
             </Container>
         </div>

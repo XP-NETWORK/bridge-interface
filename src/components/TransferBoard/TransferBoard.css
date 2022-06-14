@@ -244,6 +244,12 @@
     padding: 16px;
     font-size: 14px;
 }
+.mobile-col .transfer-button {
+    margin: 10px 5px;
+}
+.mobile-col .unwrapWegld {
+    width: calc(100% - 10px);
+}
 .unwrapWegld {
     border: 1px solid #395feb;
     width: 100%;
@@ -255,6 +261,7 @@
     color: white;
     background-color: #395feb;
     cursor: pointer;
+    margin-top: 10px;
 }
 .transfer-button--disabled,
 .transfer-button {
