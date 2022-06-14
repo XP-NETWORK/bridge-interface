@@ -13,6 +13,8 @@ import "./NewNFT.css";
 import Preload from "./Preload";
 import ClaimableCard from "./ClaimableCard";
 import NotWhiteListed from "./NotWhiteListed";
+import zoomIn from '../../assets/img/icons/zoomInWhite.png'
+import ModalImage from "react-modal-image";
 
 
 export default function NFTcard({ nft, index, claimables }) {
@@ -75,6 +77,10 @@ export default function NFTcard({ nft, index, claimables }) {
        }
     },[isVisible])
     
+    const handleZoomIn = () =>{
+      console.log("zoom innnn");
+
+    }
 
     return (
       <>
@@ -90,6 +96,7 @@ export default function NFTcard({ nft, index, claimables }) {
           : <BrockenUtlGridView />
           }
           { !claimables && nft.whitelisted ? !isSelected ? <div className="nft-radio"></div> : <div className="nft-radio--selected"></div> : "" }
+          <div className="zoomDiv"><ModalImage className="zoomInBtn" small={zoomIn} large={setupURI(nft.image)} hideDownload={true} hideZoom={true}/></div>
           { !nft.whitelisted && <NotWhiteListed /> }
           { claimables && < ClaimableCard nft={nft} index={index} /> }
         </div>
