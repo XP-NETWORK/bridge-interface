@@ -130,7 +130,7 @@ export default function WalletList({ search, connected, input }) {
       mobile: false,
       desktop: false,
     },
-    //{ Component: <TronWallet key="wallet-index-6" close={connected} />, name: "TronLink", type: "Tron", mobile:true, desktop: true},
+    { Component: <TronWallet key="wallet-index-6" close={connected} />, name: "TronLink", type: "Tron", mobile:true, desktop: true},
     {
       Component: <VeChainWallet key="wallet-index-14" close={connected} />,
       name: "Sync2",

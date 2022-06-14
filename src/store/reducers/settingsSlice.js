@@ -16,7 +16,9 @@ export const fonts = [
   "Ubuntu",
 ];
 
-export const chains = [...valuesChains]//.filter(c => c.text !== 'Fantom');
+const hideChain = ['VeChain']
+
+export const chains = [...valuesChains].filter(c => !hideChain.includes(c.value));
 
 export const activeChains = [
   ...chains.filter((chain) => !chain.maintenance).map((c) => c.value),
@@ -41,7 +43,7 @@ export const wallets = [
   "TrustWallet",
   "MyAlgo",
   "AlgoSigner",
-  //"TronLink",
+  "TronLink",
   "Maiar",
   "Beacon",
   "TempleWallet",
