@@ -264,8 +264,8 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         }
         const parsed = await nftGeneralParser(nft, account);
         console.log("parsed data: ", parsed, index);
-        // const cashed = await nftCash(parsed, "add");
-        // console.log("parsed cashed", cashed);
+        const cashed = await nftCash(parsed, "add");
+        console.log("parsed cashed", cashed);
         const dataLoaded = true;
         nftObj = { ...nft, ...parsed.metaData, dataLoaded };
     }
