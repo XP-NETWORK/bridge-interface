@@ -71,15 +71,11 @@ export default function EVMWallet({ wallet, close }) {
                             : chain.infoURL,
                     ],
                 };
-                await window.ethereum
-                    .request({
-                        method: "wallet_addEthereumChain",
-                        params: [params, account],
-                    })
-                    .catch((e) => {
-                        return false;
-                    });
-                return true;
+                const switched = await window.ethereum.request({
+                    method: "wallet_addEthereumChain",
+                    params: [params, account],
+                });
+                return switched ? true : false;
             } catch (error) {
                 console.log(error);
                 return false;
