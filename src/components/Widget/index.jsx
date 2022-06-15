@@ -788,7 +788,7 @@ export default function Widget() {
           }
 
           .serchInput {
-            width: 120px;
+            width: 200px;
           }
 
           .sendNftCol {
