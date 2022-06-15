@@ -1249,6 +1249,7 @@
     tweetnacl "1.0.3"
     uuid "8.3.2"
 
+
 "@elrondnetwork/erdjs@9.2.3":
   version "9.2.3"
   resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs/-/erdjs-9.2.3.tgz#53dbabb3651433a6001cae779b235aa89b37aab9"

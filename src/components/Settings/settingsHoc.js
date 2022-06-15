@@ -63,7 +63,6 @@ const settingsHoc = (Wrapped) => (props) => {
     affiliationFees,
     panelBackground,
   } = settings;
-  console.log(showLink);
 
   const prevSelected = usePrevious(selectedChains);
 
@@ -94,7 +93,6 @@ const settingsHoc = (Wrapped) => (props) => {
   }, [debouncedAcc]);
 
   const chainCheck = (val) => {
-    console.log(val);
     const checked = selectedChains.includes(val);
 
     if (checked) {
@@ -152,7 +150,7 @@ const settingsHoc = (Wrapped) => (props) => {
         .replace("wsettings=true", "")}background=${backgroundColor &&
         backgroundColor.split("#")[1]}&panelBackground=${panelBackground &&
         panelBackground.split("#")[1]}&modalBackground=${modalBackground &&
-          modalBackground.split("#")[1]}&color=${color &&
+        modalBackground.split("#")[1]}&color=${color &&
         color.split("#")[1]}&fontSize=${fontSize &&
         fontSize}&btnColor=${btnColor &&
         btnColor.split("#")[1]}&btnBackground=${btnBackground &&
@@ -263,22 +261,25 @@ const settingsHoc = (Wrapped) => (props) => {
     dispatch(
       setSettings({
         ...settings,
-        [entity]: initialState[entity]
+        [entity]: initialState[entity],
         //selectedChains: initialState.selectedChains,
       })
     );
-    entity === 'selectedChains' && setActiveChains(activeChains.length);
+    entity === "selectedChains" && setActiveChains(activeChains.length);
   };
 
-  const onUnSelectAll = entity => {
+  const onUnSelectAll = (entity) => {
     dispatch(
       setSettings({
         ...settings,
-       [entity]: [settings[entity][0], (entity === 'selectedChains' && settings[entity][1])]
-       // selectedChains: [selectedChains[0], selectedChains[1]],
+        [entity]: [
+          settings[entity][0],
+          entity === "selectedChains" && settings[entity][1],
+        ],
+        // selectedChains: [selectedChains[0], selectedChains[1]],
       })
     );
-    entity === 'selectedChains' && setActiveChains(2);
+    entity === "selectedChains" && setActiveChains(2);
   };
 
   return (

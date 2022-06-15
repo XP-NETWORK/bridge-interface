@@ -84,7 +84,6 @@ export const connectMetaMask = async (activate, from, to) => {
 };
 
 export const connectSync2 = async (testnet) => {
-    // debugger
     let account;
     const client = new Connex(
         testnet
@@ -151,11 +150,13 @@ export const connectTrustWallet = async (activate, from) => {
         await activate(walletConnect, undefined, true);
         store.dispatch(setOnWC(true));
         store.dispatch(setWC(walletConnect));
+        return true;
     } catch (error) {
         store.dispatch(setError(error));
         if (error.data) {
             console.log(error.data.message);
         } else console.log(error);
+        return false;
     }
 };
 
@@ -173,8 +174,10 @@ export const connectTempleWallet = async () => {
         const accountPkh = await tezos.wallet.pkh();
         store.dispatch(setTezosAccount(accountPkh));
         store.dispatch(setTempleWallet(true));
+        return true;
     } catch (error) {
         console.error(error);
+        return false;
     }
 };
 // Tezos blockchain connection ( Beacon )
@@ -184,7 +187,6 @@ export const connectBeacon = async () => {
         name: "XP.NETWORK Cross-Chain NFT Bridge",
     });
     Tezos.setWalletProvider(wallet);
-    console.log("Tezos: ", Tezos);
     try {
         const permissions = await wallet.client.requestPermissions();
         store.dispatch(setTezosAccount(permissions.address));
@@ -224,11 +226,13 @@ export const onWalletConnect = async (activate, from, testnet) => {
         store.dispatch(setAccount(account));
         store.dispatch(setOnWC(true));
         store.dispatch(setWC(walletConnect));
+        return true;
     } catch (error) {
         store.dispatch(setError(error));
         if (error.data) {
             console.log(error.data.message);
         } else console.log(error);
+        return false;
     }
 };
 
@@ -238,6 +242,7 @@ const onClientConnect = (maiarProvider) => {
             const add = await maiarProvider.getAddress();
             store.dispatch(setConfirmMaiarMob(true));
             store.dispatch(setElrondAccount(add));
+
             store.dispatch(setMaiarProvider(maiarProvider));
             store.dispatch(setOnMaiar(true));
             store.dispatch(setStep(2));
@@ -288,9 +293,11 @@ export const connectMaiarExtension = async () => {
         store.dispatch(setOnMaiar(true));
         store.dispatch(setElrondAccount(account.address));
         store.dispatch(setMaiarProvider(instance));
+        return true;
     } catch (err) {
         window.open("https://getmaiar.com/defi", "_blank");
         console.log(err);
+        return false;
     }
 };
 
@@ -319,6 +326,7 @@ export const connectTronlink = async () => {
                 const publicAddress = window.tronWeb.defaultAddress.base58;
                 store.dispatch(setTronWallet(publicAddress));
                 store.dispatch(setTronLink(true));
+                return true;
             }
         } catch (error) {
             if (!modalError) {
@@ -327,6 +335,7 @@ export const connectTronlink = async () => {
                     console.log(error.data.message);
                 } else console.log(error);
             }
+            return false;
         }
     }
 };

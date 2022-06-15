@@ -58,11 +58,7 @@ export default function WalletList({ search, connected, input }) {
     },
     {
       Component: (
-        <TezosWallet
-          wallet={undefined}
-          key="wallet-index-8"
-          close={connected}
-        />
+        <TezosWallet wallet={"Beacon"} key="wallet-index-8" close={connected} />
       ),
       name: "Beacon Tezos",
       type: "Tezos",
@@ -130,7 +126,13 @@ export default function WalletList({ search, connected, input }) {
       mobile: false,
       desktop: false,
     },
-    { Component: <TronWallet key="wallet-index-6" close={connected} />, name: "TronLink", type: "Tron", mobile:true, desktop: true},
+    {
+      Component: <TronWallet key="wallet-index-6" close={connected} />,
+      name: "TronLink",
+      type: "Tron",
+      mobile: true,
+      desktop: true,
+    },
     {
       Component: <VeChainWallet key="wallet-index-14" close={connected} />,
       name: "Sync2",
