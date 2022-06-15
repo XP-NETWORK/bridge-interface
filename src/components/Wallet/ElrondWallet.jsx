@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 export default function ElrondWallet({ wallet, close }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector((state) => state.general.from);
+    const to = useSelector((state) => state.general.to);
     const testnet = useSelector((state) => state.general.testNet);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -25,7 +26,7 @@ export default function ElrondWallet({ wallet, close }) {
             case "Maiar Extension":
                 const connected = await connectMaiarExtension();
                 close();
-                if (connected) navigateToAccountRoute();
+                if (connected && to) navigateToAccountRoute();
                 break;
             default:
                 break;
@@ -45,7 +46,7 @@ export default function ElrondWallet({ wallet, close }) {
             if (accounts) {
                 dispatch(setAlgorandWallet(true));
                 dispatch(setAlgorandAccount(accounts[0]));
-                navigateToAccountRoute();
+                if (to) navigateToAccountRoute();
             }
         });
     }, []);

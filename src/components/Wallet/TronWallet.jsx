@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function TronWallet({ close }) {
     const from = useSelector((state) => state.general.from);
+    const to = useSelector((state) => state.general.to);
     const testnet = useSelector((state) => state.general.testNet);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function TronWallet({ close }) {
     const connectHandler = async () => {
         const connected = await connectTronlink();
         close();
-        if (connected) navigateToAccountRoute();
+        if (connected && to) navigateToAccountRoute();
     };
 
     const navigateToAccountRoute = () => {

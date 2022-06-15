@@ -29,7 +29,7 @@ export default function VeChainWallet({ close }) {
         const account = await connectSync2(testnet);
         dispatch(setSync2(account));
         close();
-        navigateToAccountRoute();
+        if (to) navigateToAccountRoute();
     };
 
     return (

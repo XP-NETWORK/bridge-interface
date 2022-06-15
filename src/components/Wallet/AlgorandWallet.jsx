@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 export default function AlgorandWallet({ wallet, close }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector((state) => state.general.from);
+    const to = useSelector((state) => state.general.to);
     const testnet = useSelector((state) => state.general.testNet);
     const navigate = useNavigate();
 
@@ -26,17 +27,17 @@ export default function AlgorandWallet({ wallet, close }) {
             case "MyAlgo":
                 connectMyAlgo();
                 close();
-                navigateToAccountRoute();
+                if (to) navigateToAccountRoute();
                 break;
             case "AlgoSigner":
                 connectAlgoSigner(testnet);
                 close();
-                navigateToAccountRoute();
+                if (to) navigateToAccountRoute();
                 break;
             case "Algorand Wallet":
                 connectAlgoWallet();
                 close();
-                navigateToAccountRoute();
+                if (to) navigateToAccountRoute();
                 break;
             default:
                 break;

@@ -94,21 +94,23 @@ export default function EVMWallet({ wallet, close }) {
                 if (connected) {
                     dispatch(setMetaMask(true));
                     close();
-                    if (chainId !== from.chainId) {
-                        const switched = await switchNetwork();
-                        if (switched) navigateToAccountRoute();
-                    } else navigateToAccountRoute();
+                    if (to) {
+                        if (chainId !== from.chainId) {
+                            const switched = await switchNetwork();
+                            if (switched) navigateToAccountRoute();
+                        } else navigateToAccountRoute();
+                    }
                 }
                 break;
             case "TrustWallet":
                 connected = await connectTrustWallet(activate, from.text);
                 close();
-                if (connected) navigateToAccountRoute();
+                if (connected && to) navigateToAccountRoute();
                 break;
             case "WalletConnect":
                 connected = await onWalletConnect(activate, from.text, testnet);
                 close();
-                if (connected) navigateToAccountRoute();
+                if (connected && to) navigateToAccountRoute();
                 break;
             default:
                 break;

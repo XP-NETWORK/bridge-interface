@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 export default function TezosWallet({ wallet, close }) {
     const from = useSelector((state) => state.general.from);
+    const to = useSelector((state) => state.general.to);
     const testnet = useSelector((state) => state.general.testNet);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const navigate = useNavigate();
@@ -22,12 +23,12 @@ export default function TezosWallet({ wallet, close }) {
             case "TempleWallet":
                 connected = await connectTempleWallet();
                 close();
-                if (connected) navigateToAccountRoute();
+                if (connected && to) navigateToAccountRoute();
                 break;
             case "Beacon":
                 connected = await connectBeacon();
                 close();
-                if (connected) navigateToAccountRoute();
+                if (connected && to) navigateToAccountRoute();
                 break;
             default:
                 break;
