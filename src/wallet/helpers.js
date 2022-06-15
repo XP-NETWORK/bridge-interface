@@ -570,23 +570,15 @@ export const handleChainFactory = async (someChain) => {
 };
 
 export const getNFTS = async (wallet, from) => {
-    // debugger
-    // const hardcoded = new URLSearchParams(window.location.search).get(
-    //     "checkWallet"
-    // );
-
     const { checkWallet } = store.getState().general;
-
     const factory = await getFactory();
     const chain = await factory.inner(chainsConfig[from].Chain);
     try {
         let response;
-
         response = await factory.nftList(
             chain,
             checkWallet ? checkWallet : wallet
         );
-        // }
         const unique = {};
         try {
             const allNFTs = response.filter((n) => {
