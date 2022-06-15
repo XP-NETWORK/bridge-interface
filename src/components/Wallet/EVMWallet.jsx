@@ -1,88 +1,179 @@
 import React, { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
-import { connectMetaMask, onWalletConnect, connectTrustWallet } from "./ConnectWalletHelper";
+import {
+    connectMetaMask,
+    onWalletConnect,
+    connectTrustWallet,
+} from "./ConnectWalletHelper";
 import { useDispatch, useSelector } from "react-redux";
 import MetaMask from "../../assets/img/wallet/MetaMask.svg";
 import WalletConnect from "../../assets/img/wallet/WalletConnect 3.svg";
 import TrustWallet from "../../assets/img/wallet/TWT.svg";
 import { setAccount, setMetaMask } from "../../store/reducers/generalSlice";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getAddEthereumChain } from "../../wallet/chains";
+import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 
 export default function EVMWallet({ wallet, close }) {
-  const {  account, activate, error } = useWeb3React();
-  const OFF = { opacity: 0.6, pointerEvents: "none" };
-  const from = useSelector(state => state.general.from);
-  const to = useSelector(state => state.general.to);
-  const testnet = useSelector(state => state.general.testNet);
-  const dispatch = useDispatch()
-  const getMobOps = () =>  /android/i.test(navigator.userAgent || navigator.vendor || window.opera) ? true : false;
+    const { account, activate, chainId } = useWeb3React();
+    const OFF = { opacity: 0.6, pointerEvents: "none" };
+    const from = useSelector((state) => state.general.from);
+    const to = useSelector((state) => state.general.to);
+    const testnet = useSelector((state) => state.general.testNet);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-  
-  const connectHandler = async wallet => {
-     switch (wallet) {
-        case "MetaMask":
-        const connected = await connectMetaMask(activate, from?.text, to?.text)
-        if(connected){
-          dispatch(setMetaMask(true))
-          close()
+    const getMobOps = () =>
+        /android/i.test(navigator.userAgent || navigator.vendor || window.opera)
+            ? true
+            : false;
+
+    const navigateToAccountRoute = () => {
+        navigate(testnet ? `/testnet/account` : `/account`);
+    };
+
+    async function switchNetwork() {
+        const info = testnet
+            ? TESTNET_CHAIN_INFO[from?.key]
+            : CHAIN_INFO[from?.key];
+        const _chainId = `0x${info.chainId.toString(16)}`;
+        try {
+            const success = await window.ethereum.request({
+                method: "wallet_switchEthereumChain",
+                params: [{ _chainId }],
+            });
+            return true;
+        } catch (error) {
+            console.log(error);
+            try {
+                const toHex = (num) => {
+                    return "0x" + num.toString(16);
+                };
+                const chain = getAddEthereumChain()[
+                    parseInt(_chainId).toString()
+                ];
+
+                const params = {
+                    chainId: _chainId, // A 0x-prefixed hexadecimal string
+                    chainName: chain.name,
+                    nativeCurrency: {
+                        name: chain.nativeCurrency.name,
+                        symbol: chain.nativeCurrency.symbol, // 2-6 characters long
+                        decimals: chain.nativeCurrency.decimals,
+                    },
+                    rpcUrls: chain.rpc,
+                    blockExplorerUrls: [
+                        chain.explorers &&
+                        chain.explorers.length > 0 &&
+                        chain.explorers[0].url
+                            ? chain.explorers[0].url
+                            : chain.infoURL,
+                    ],
+                };
+                await window.ethereum.request({
+                    method: "wallet_addEthereumChain",
+                    params: [params, account],
+                });
+                return true;
+            } catch (error) {
+                console.log(error);
+                return false;
+            }
         }
-        break;
-        case "TrustWallet":
-        connectTrustWallet(activate, from.text)
-        close()
-        break;
-        case "WalletConnect":
-        onWalletConnect(activate, from.text, testnet)
-        close()
-        break;
-        default:
-        break;
-     }
-  }
-
-  const getStyle = () => {
-    if(!from){
-      return {}
     }
-    else if(from && from.type === "EVM"){
-      return {}
-    }
-    else if((from.type === "EVM" && getMobOps() && window.innerWidth <= 600) 
-    || (window.ethereum && window.innerWidth <= 600 && from.type === "EVM")){
-      return {}
-    }
-    else return OFF
-  }
 
-  useEffect(() => {
-    if(account)
-    dispatch(setAccount(account))
-  }, [account])
-  
+    const connectHandler = async (wallet) => {
+        let connected;
+        switch (wallet) {
+            case "MetaMask":
+                connected = await connectMetaMask(
+                    activate,
+                    from?.text,
+                    to?.text
+                );
+                if (connected) {
+                    dispatch(setMetaMask(true));
+                    close();
+                    if (to) {
+                        if (chainId !== from.chainId) {
+                            const switched = await switchNetwork();
+                            if (switched) navigateToAccountRoute();
+                        } else navigateToAccountRoute();
+                    }
+                }
+                break;
+            case "TrustWallet":
+                connected = await connectTrustWallet(activate, from.text);
+                close();
+                if (connected && to) navigateToAccountRoute();
+                break;
+            case "WalletConnect":
+                connected = await onWalletConnect(activate, from.text, testnet);
+                close();
+                if (connected && to) navigateToAccountRoute();
+                break;
+            default:
+                break;
+        }
+    };
 
-  return wallet === "MetaMask" /* METAMASK */ ? (
-    <li 
-      style={getStyle()}
-      onClick={() => connectHandler("MetaMask")}
-      className="wllListItem"
-      data-wallet="MetaMask"
-    >
-      <img src={MetaMask} alt="MetaMask Icon" />
-      <p>MetaMask</p>
-    </li>
-  ) : wallet === "TrustWallet" && from && from.type === "EVM" && from.text !== "Velas" &&  from.text !== "Iotex" &&  from.text !== "Fuse" ? (
-    <li
-      onClick={() => connectHandler("TrustWallet")}
-      style={getStyle()}
-      data-wallet="TrustWallet"
-      className="wllListItem"
-    >
-      <img src={TrustWallet} alt="WalletConnect Icon" />
-      <p>Trust Wallet</p>
-    </li>
-  ) : from && from.type === "EVM" && from.text !== "Velas" &&  from.text !== "Iotex" &&  from.text !== "Fuse" ? 
-    <li style={getStyle()} onClick={() => connectHandler("WalletConnect")}  className="wllListItem" data-wallet="WalletConnect">
-      <img src={WalletConnect} alt="WalletConnect Icon" />
-      <p>WalletConnect</p>
-    </li>:''
-  ;
+    const getStyle = () => {
+        if (!from) {
+            return {};
+        } else if (from && from.type === "EVM") {
+            return {};
+        } else if (
+            (from.type === "EVM" && getMobOps() && window.innerWidth <= 600) ||
+            (window.ethereum && window.innerWidth <= 600 && from.type === "EVM")
+        ) {
+            return {};
+        } else return OFF;
+    };
+
+    useEffect(() => {
+        if (account) dispatch(setAccount(account));
+    }, [account]);
+
+    return wallet === "MetaMask" /* METAMASK */ ? (
+        <li
+            style={getStyle()}
+            onClick={() => connectHandler("MetaMask")}
+            className="wllListItem"
+            data-wallet="MetaMask"
+        >
+            <img src={MetaMask} alt="MetaMask Icon" />
+            <p>MetaMask</p>
+        </li>
+    ) : wallet === "TrustWallet" &&
+      from &&
+      from.type === "EVM" &&
+      from.text !== "Velas" &&
+      from.text !== "Iotex" &&
+      from.text !== "Fuse" ? (
+        <li
+            onClick={() => connectHandler("TrustWallet")}
+            style={getStyle()}
+            data-wallet="TrustWallet"
+            className="wllListItem"
+        >
+            <img src={TrustWallet} alt="WalletConnect Icon" />
+            <p>Trust Wallet</p>
+        </li>
+    ) : from &&
+      from.type === "EVM" &&
+      from.text !== "Velas" &&
+      from.text !== "Iotex" &&
+      from.text !== "Fuse" ? (
+        <li
+            style={getStyle()}
+            onClick={() => connectHandler("WalletConnect")}
+            className="wllListItem"
+            data-wallet="WalletConnect"
+        >
+            <img src={WalletConnect} alt="WalletConnect Icon" />
+            <p>WalletConnect</p>
+        </li>
+    ) : (
+        ""
+    );
 }

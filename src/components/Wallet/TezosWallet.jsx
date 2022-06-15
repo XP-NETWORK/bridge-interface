@@ -3,9 +3,32 @@ import { connectTempleWallet, connectBeacon } from "./ConnectWalletHelper";
 import BeaconW from "../../assets/img/wallet/BeaconWhite.svg";
 import Temple from "../../assets/img/wallet/Temple.svg";
 import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function TezosWallet({ wallet, close }) {
     const from = useSelector((state) => state.general.from);
+    const to = useSelector((state) => state.general.to);
+    const testnet = useSelector((state) => state.general.testNet);
+    const OFF = { opacity: 0.6, pointerEvents: "none" };
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const navigateToAccountRoute = () => {
+        navigate(testnet ? `/testnet/account` : `/account`);
+    };
+
+    const handleConnect = async (wallet) => {
+        let connected;
+        switch (wallet) {
+            case "TempleWallet":
+                connected = await connectTempleWallet();
+                close();
+                if (connected && to) navigateToAccountRoute();
+                break;
+            case "Beacon":
+                connected = await connectBeacon();
+                close();
+                if (connected && to) navigateToAccountRoute();
     const innerWidth = useSelector((state) => state.general.innerWidth);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
 

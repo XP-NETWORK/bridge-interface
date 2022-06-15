@@ -150,6 +150,7 @@ function NFTaccount() {
         const fromChain = await factory.inner(chainsConfig[from].Chain);
         let balance;
         let balanceToShow;
+
         while (!balance) {
             try {
                 balance = factory

@@ -19,11 +19,15 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setCheckWallet(state, action) {
+            state.checkWallet = action.payload;
+
         setWrappedEGold(state, action) {
             state.wrappedEGold = action.payload;
         },
         setTempleWalletSigner(state, action) {
             state.templeSigner = action.payload;
+
         },
         setBalance(state, action) {
             state.balance = action.payload;
@@ -396,6 +400,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+    setCheckWallet,
     addImportedNFTtoNFTlist,
     setImportModal,
     setNFTSetToggler,
