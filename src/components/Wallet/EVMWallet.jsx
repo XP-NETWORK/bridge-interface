@@ -47,7 +47,7 @@ export default function EVMWallet({ wallet, close }) {
                 close();
                 break;
             case "BitKeep":
-                connectBitKeep();
+                connectBitKeep(from);
                 close();
             // eslint-disable-next-line no-fallthrough
             default:

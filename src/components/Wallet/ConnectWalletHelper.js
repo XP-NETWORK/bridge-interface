@@ -44,6 +44,7 @@ import {
 import { useNavigate } from "react-router";
 import { chainsConfig } from "../values";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import Web3 from "web3";
 
 export const wallets = [
     "MetaMask",
@@ -65,12 +66,27 @@ const connector = new WalletConnect({
     bridge: "https://bridge.walletconnect.org", // Required
 });
 
-export const connectBitKeep = async () => {
-    const bitkeep = window.ethereum;
+export const connectBitKeep = async (from) => {
     console.log(
-        "🚀 ~ file: ConnectWalletHelper.js ~ line 69 ~ connectBitKeep ~ bitkeep",
-        bitkeep
+        "🚀 ~ file: ConnectWalletHelper.js ~ line 70 ~ connectBitKeep ~ from",
+        from
     );
+    let provider;
+    const isInstallBikeep = () => {
+        return window.bitkeep && window.bitkeep.ethereum;
+    };
+    if (!isInstallBikeep) {
+        window.location.href =
+            "https://chrome.google.com/webstore/detail/bitkeep-bitcoin-crypto-wa/jiidiaalihmmhddjgbnbgdfflelocpak";
+    } else {
+        provider = window.bitkeep.ethereum;
+        await provider.request({ method: "eth_requestAccounts" });
+        const web3 = new Web3(provider);
+        const address = await web3.eth.getAccounts();
+        const chainId = await web3.eth.getChainId();
+        if (from?.chainId !== chainId) {
+        }
+    }
 };
 
 export const connectMetaMask = async (activate, from, to) => {
