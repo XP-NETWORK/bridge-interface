@@ -312,7 +312,7 @@ export default function Widget() {
           border-top-right-radius: 8px;
         }
 
-        .approval, .fees, .selected-nfts-item, .nftListed:hover, .mobile-destination__address input, .mobile-search-input__box input.serchInput, .selected-nfts__button, .success-info-box, .chain-switch, .destination__address input, .navbar-connect:hover, .import-nft__form input[type="text"]{
+        .approval, .fees, .selected-nfts-item, .nftListed:hover, .mobile-destination__address input, .wllListItem, .mobile-search-input__box input.serchInput, .selected-nfts__button, .success-info-box, .chain-switch, .destination__address input, .navbar-connect:hover, .import-nft__form input[type="text"]{
           background: ${panelBackground ? panelBackground : ""};
           filter: brightness(94%);
         }
@@ -330,6 +330,12 @@ export default function Widget() {
         .wallet-search__container {
           margin-bottom: 5px;
           width:auto;
+        }
+
+        .magnify {
+          background-image: unset;
+          width: unset;
+          height: unset;
         }
 
         .infText, .infText:after, .approval__inf:hover::before, .approval__inf:hover::after {
@@ -614,6 +620,11 @@ export default function Widget() {
         .svgWidget.swpBtn path {
           fill: white !important;
           opacity: 1;
+        }
+
+        .svgWidget.swpBtn:hover rect {
+          fill: ${btnBackground ? btnBackground : ""};
+          filter: brightness(105%);
         }
 
         .clip, .clip p {

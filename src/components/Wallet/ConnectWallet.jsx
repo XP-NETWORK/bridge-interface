@@ -8,6 +8,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 import { useWeb3React } from "@web3-react/core";
 import { getAddEthereumChain } from "../../wallet/chains";
+import {ReactComponent as SearchComp} from '../../assets/img/icons/lupa.svg'
 
 function ConnectWallet() {
   const navigate = useNavigate();
@@ -138,7 +139,7 @@ function ConnectWallet() {
             </Modal.Header>
             <div className="wallet-search__container">
               <input onChange={e => setWalletSearch(e.target.value)} value={walletSearch} className="wallet-search serchInput" type="text" placeholder="Search" />
-              <div className="magnify"></div>
+              <SearchComp className="svgWidget magnify"/>
             </div>
             <Modal.Body>
               <div className="walletListBox">
