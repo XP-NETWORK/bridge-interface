@@ -127,10 +127,7 @@ function NFTaccount() {
         const fromChain = await factory.inner(chainsConfig[from].Chain);
         let balance;
         let balanceToShow;
-        console.log(
-            "🚀 ~ file: NFTaccount.jsx ~ line 164 ~ getBalance ~ tezosAccount",
-            tezosAccount
-        );
+
         while (!balance) {
             try {
                 balance = factory
