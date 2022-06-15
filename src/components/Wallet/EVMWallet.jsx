@@ -33,6 +33,7 @@ export default function EVMWallet({ wallet, close }) {
     };
 
     async function switchNetwork() {
+        // debugger;
         const info = testnet
             ? TESTNET_CHAIN_INFO[from?.key]
             : CHAIN_INFO[from?.key];
@@ -70,10 +71,14 @@ export default function EVMWallet({ wallet, close }) {
                             : chain.infoURL,
                     ],
                 };
-                await window.ethereum.request({
-                    method: "wallet_addEthereumChain",
-                    params: [params, account],
-                });
+                await window.ethereum
+                    .request({
+                        method: "wallet_addEthereumChain",
+                        params: [params, account],
+                    })
+                    .catch((e) => {
+                        return false;
+                    });
                 return true;
             } catch (error) {
                 console.log(error);
@@ -97,6 +102,10 @@ export default function EVMWallet({ wallet, close }) {
                     if (to) {
                         if (chainId !== from.chainId) {
                             const switched = await switchNetwork();
+                            console.log(
+                                "🚀 ~ file: EVMWallet.jsx ~ line 100 ~ connectHandler ~ switched",
+                                switched
+                            );
                             if (switched) navigateToAccountRoute();
                         } else navigateToAccountRoute();
                     }
