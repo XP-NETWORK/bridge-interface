@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
+    setCheckWallet,
     setQrCodeString,
     setShowAbout,
     setShowVideo,
@@ -20,7 +21,10 @@ function ConnectWallet() {
     const location = useLocation();
     const dispatch = useDispatch();
     const [walletSearch, setWalletSearch] = useState();
-
+    const hardcoded = new URLSearchParams(window.location.search).get(
+        "checkWallet"
+    );
+    dispatch(setCheckWallet(hardcoded));
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const [show, setShow] = useState();
