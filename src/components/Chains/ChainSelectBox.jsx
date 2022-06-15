@@ -5,6 +5,7 @@ import SetDeparture from "./SetDeparture"
 import SetDestination from "./SetDestination";
 import ChainListBox from "./ChainListBox";
 import swap from "../../assets/img/icons/swapChain.svg"
+import {ReactComponent as SwapComp} from "../../assets/img/icons/swapChain.svg"
 import { TESTNET_CHAIN_INFO, CHAIN_INFO } from "../values";
 import { useWeb3React } from "@web3-react/core";
 import { usePrevious } from "../Settings/hooks";
@@ -104,7 +105,7 @@ export default function ChainSelectBox() {
     <div className="chain-select__box">Transfer NFTs<br /> between blockchains</div>
     <div className="nftSelectBox">
       <SetDeparture />
-      <span className="swap-chain__btn" onClick={(e) => from && to ? switchChains(e) : undefined}><img src={swap} alt="" /></span>
+      <span className="swap-chain__btn" onClick={(e) => from && to ? switchChains(e) : undefined}><SwapComp className="svgWidget swpBtn"/> </span>
       <span className="chain-sep__line"></span>
       <SetDestination />
     </div>

@@ -132,10 +132,8 @@ const Rookie = async (nft) => {
 };
 
 export const parseEachNFT = async (nft, index, testnet, claimables) => {
-    // debugger;
     const collectionIdent = nft.collectionIdent;
     let uri = nft.uri;
-    let SC = nft.native.contract;
 
     if (collectionIdent === "0x36f8f51f65fe200311f709b797baf4e193dd0b0d") {
         uri = `https://treatdao.com/api/nft/${nft.native.tokenId}`;
@@ -169,7 +167,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         if (nft.native?.meta?.token?.metadata?.formats) {
             const obj = nft.native?.meta?.token?.metadata?.formats;
             const mimeType = obj[0]["mimeType"];
-            const format = mimeType.slice(0, mimeType.lastIndexOf("/"));
+            const format = mimeType?.slice(0, mimeType?.lastIndexOf("/"));
             if (format === "image") {
                 imageFormat = true;
                 nftObj.image = setupURI(obj.uri);
@@ -224,7 +222,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         nftObj.native.symbol =
             nft.symbol || nft.native?.meta?.token?.metadata?.symbol;
     } else {
-        // debugger
+        // debugger;
         const video = checkIfVideo(setupURI(uri));
         nftObj.animation_url = video;
         const image = !video ? checkIfImage(setupURI(uri)) : undefined;
@@ -236,7 +234,11 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
             nftObj.name = name;
             nftObj.description = description;
         } else if (uri) {
-            data = await fetchURI(setupURI(uri));
+            try {
+                data = await fetchURI(setupURI(uri));
+            } catch (error) {
+                console.error(error);
+            }
         }
         if (typeof data === "object") {
             nftObj = { ...nftObj, ...data };
@@ -253,7 +255,11 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
                 }
             }
         } else {
-            if (data) {
+            if (!data?.includes("json")) {
+                if (data?.includes("image")) nftObj.image = setupURI(uri);
+                else if (data?.includes("image"))
+                    nftObj.animation_url = setupURI(uri);
+            } else if (data) {
                 let n;
                 try {
                     n = base64.decode(data);
@@ -343,6 +349,13 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         nftObj.attributes = data.attributes;
         nftObj.image = data.image;
         nftObj.description = data.description;
+    } else if (
+        collectionIdent === "0xf0E778BD5C4c2F219A2A5699e3AfD2D82D50E271"
+    ) {
+        const { data } = await axios(setupURI(nft.uri));
+        nftObj.animation_url = data.artifactUri;
+        nftObj.attributes = data.attributes;
+        nftObj.name = data.name;
     }
     if (
         claimables &&
@@ -580,11 +593,11 @@ export const getNFTS = async (wallet, from) => {
         // }
         const unique = {};
         try {
-            const allNFTs = response.filter((n) => {
+            const allNFTs = response.filter((n, index) => {
                 const { tokenId, contract, chainId } = n?.native;
-                if (unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`])
+                if (unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`]) {
                     return false;
-                else {
+                } else {
                     unique[
                         `${tokenId}_${contract.toLowerCase()}_${chainId}`
                     ] = true;
@@ -620,7 +633,8 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 };
 
 export const getAlgorandClaimables = async (account) => {
-    // debugger
+    // debugger;
+    const hard = "2RKU6NQ3T36B42NJHUO27WTUCS3BOBM7YTAMGQNHPP2CAAUVO2LLMYW5EE";
     let claimables;
     const factory = await getFactory();
     try {

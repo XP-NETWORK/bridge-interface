@@ -6,31 +6,30 @@ import Comment from "../innercomponents/Comment";
 import DestinationChain from "../innercomponents/DestinationChain";
 import SelectedNFT from "../innercomponents/SelectedNFT";
 import SendFees from "./SendFees";
-
 import "./TransferBoard.css";
+import UnwrapWegld from "./UnwrapWegld.jsx";
 
 export default function DesktopTransferBoard() {
-  const { nfts } = useSelector((state) => ({
-    nfts: state.general.NFTList,
-  }));
+    const nfts = useSelector((state) => state.general.NFTList);
 
-  return (
-    <div className="sendNftCol col-lg-4 desktopOnly">
-      <div className="transfer-board">
-        <form action="#">
-          <DestinationChain />
-          {nfts?.length ? (
-            <>
-              <SelectedNFT />
-              <Approval />
-              <SendFees />
-              <ButtonToTransfer />
-            </>
-          ) : (
-            <Comment />
-          )}
-        </form>
-      </div>
-    </div>
-  );
+    return (
+        <div className="sendNftCol col-lg-4 desktopOnly">
+            <div className="transfer-board">
+                <form action="#">
+                    <DestinationChain />
+                    {nfts?.length ? (
+                        <>
+                            <SelectedNFT />
+                            <Approval />
+                            <SendFees />
+                            <ButtonToTransfer />
+                            <UnwrapWegld />
+                        </>
+                    ) : (
+                        <Comment />
+                    )}
+                </form>
+            </div>
+        </div>
+    );
 }

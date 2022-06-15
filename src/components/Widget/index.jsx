@@ -606,9 +606,14 @@ export default function Widget() {
           stroke:  ${iconColor ? iconColor : ""};
         }
 
-        .swpBtn path:first-child {
+        .svgWidget.swpBtn rect {
           fill: ${btnBackground ? btnBackground : ""};
           filter: brightness(95%);
+        }
+
+        .svgWidget.swpBtn path {
+          fill: white !important;
+          opacity: 1;
         }
 
         .clip, .clip p {
@@ -620,32 +625,28 @@ export default function Widget() {
           box-shadow: inset 0 0 0 2px ${iconColor ? iconColor : ""};
         }
         
-        .swpBtn path:nth-child(3)  {
-          fill: #ffffff;
-        }
+
 
         .svgWidget.lineArrow line{
             stroke: ${borderColor ? borderColor : ""}
         }
 
         .svgWidget:hover {
-          filter: brightness(135%);
+          filter: brightness(125%);
         }
 
-        .swpBtn:hover path:nth-child(1){
-          fill: ${btnBackground ? btnBackground : ""};
-        
+        .swap-chain__btn:hover:before {
+          display: none;
         }
+
+
 
         .SearchDrop:hover svg path, .CloseIcon:hover svg path, .select-all:hover svg path, .delete-all:hover svg path, .delete-all svg path {
           fill:  ${iconColor ? iconColor : ""};
         }
 
 
-        .swpBtn:hover path:nth-child(2){
-          fill: ${btnBackground ? btnBackground : ""};
-          filter: brightness(100%);
-        }
+  
 
         .nft-box__container--selected, .nft-box__container:hover {
           border-color: ${accentColor ? accentColor : ""} !important;

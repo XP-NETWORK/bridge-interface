@@ -116,6 +116,36 @@
   justify-content: center;
   align-items: center;
 }
+.zoomInBtn{
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  right: 12px;
+  top: 12px;
+  background: none;
+  border: none;
+}
+.__react_modal_image__medium_img{
+  max-width: 600px !important;
+  max-height: 600px !important;
+  cursor: default !important;
+}
+.__react_modal_image__modal_content{
+  position:absolute;
+  cursor: default !important;
+}
+
+.__react_modal_image__large_img{
+  max-width: 600px !important;
+  max-height: 600px !important;
+  cursor: default !important;
+}
+
+.__react_modal_image__header{
+  background: none !important;
+  z-index: 5000;
+}
+
 .listed-nft-radio--selected::after{
   
 }
@@ -761,6 +791,7 @@ background: linear-gradient(270deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1)
     justify-content: flex-start !important;
 
   }
+  
 }
 
 @media screen and (max-width: 320px){
