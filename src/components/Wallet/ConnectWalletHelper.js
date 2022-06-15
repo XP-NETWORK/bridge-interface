@@ -42,8 +42,9 @@ import {
     setTempleWalletSigner,
 } from "../../store/reducers/generalSlice";
 import { useNavigate } from "react-router";
-import { chainsConfig } from "../values";
+import { chainsConfig, CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { getAddEthereumChain } from "../../wallet/chains";
 
 export const wallets = [
     "MetaMask",
@@ -65,7 +66,57 @@ const connector = new WalletConnect({
     bridge: "https://bridge.walletconnect.org", // Required
 });
 
+async function switchNetwork(from) {
+    const { testNet, account } = store.getState().general;
+    const info = testNet
+        ? TESTNET_CHAIN_INFO[from?.key]
+        : CHAIN_INFO[from?.key];
+    const _chainId = `0x${info.chainId.toString(16)}`;
+    try {
+        const success = await window.ethereum.request({
+            method: "wallet_switchEthereumChain",
+            params: [{ _chainId }],
+        });
+        return true;
+    } catch (error) {
+        console.log(error);
+        try {
+            const toHex = (num) => {
+                return "0x" + num.toString(16);
+            };
+            const chain = getAddEthereumChain()[parseInt(_chainId).toString()];
+
+            const params = {
+                chainId: _chainId, // A 0x-prefixed hexadecimal string
+                chainName: chain.name,
+                nativeCurrency: {
+                    name: chain.nativeCurrency.name,
+                    symbol: chain.nativeCurrency.symbol, // 2-6 characters long
+                    decimals: chain.nativeCurrency.decimals,
+                },
+                rpcUrls: chain.rpc,
+                blockExplorerUrls: [
+                    chain.explorers &&
+                    chain.explorers.length > 0 &&
+                    chain.explorers[0].url
+                        ? chain.explorers[0].url
+                        : chain.infoURL,
+                ],
+            };
+            await window.ethereum.request({
+                method: "wallet_addEthereumChain",
+                params: [params, account],
+            });
+            return true;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+}
+
 export const connectMetaMask = async (activate, from, to) => {
+    debugger;
     try {
         if (!window.ethereum && window.innerWidth <= 600) {
             const link = `https://metamask.app.link/dapp/${window.location.host}?to=${to}&from=${from}/`;
