@@ -204,8 +204,10 @@ export const connectMyAlgo = async () => {
         const accountsSharedByUser = await myAlgoConnect.connect();
         store.dispatch(setAlgorandAccount(accountsSharedByUser[0].address));
         store.dispatch(setMyAlgo(true));
+        return true;
     } catch (error) {
         console.log(error);
+        return false;
     }
 };
 
