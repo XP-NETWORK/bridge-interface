@@ -10,23 +10,83 @@ import MetaMask from "../../assets/img/wallet/MetaMask.svg";
 import WalletConnect from "../../assets/img/wallet/WalletConnect 3.svg";
 import TrustWallet from "../../assets/img/wallet/TWT.svg";
 import { setAccount, setMetaMask } from "../../store/reducers/generalSlice";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getAddEthereumChain } from "../../wallet/chains";
+import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 
 export default function EVMWallet({ wallet, close }) {
-    const { account, activate, error } = useWeb3React();
+    const { account, activate, chainId } = useWeb3React();
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const testnet = useSelector((state) => state.general.testNet);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const getMobOps = () =>
         /android/i.test(navigator.userAgent || navigator.vendor || window.opera)
             ? true
             : false;
 
+    const navigateToAccountRoute = () => {
+        navigate(testnet ? `/testnet/account` : `/account`);
+    };
+
+    async function switchNetwork() {
+        const info = testnet
+            ? TESTNET_CHAIN_INFO[from?.key]
+            : CHAIN_INFO[from?.key];
+        const _chainId = `0x${info.chainId.toString(16)}`;
+        try {
+            const success = await window.ethereum.request({
+                method: "wallet_switchEthereumChain",
+                params: [{ _chainId }],
+            });
+            return true;
+        } catch (error) {
+            console.log(error);
+            try {
+                const toHex = (num) => {
+                    return "0x" + num.toString(16);
+                };
+                const chain = getAddEthereumChain()[
+                    parseInt(_chainId).toString()
+                ];
+
+                const params = {
+                    chainId: _chainId, // A 0x-prefixed hexadecimal string
+                    chainName: chain.name,
+                    nativeCurrency: {
+                        name: chain.nativeCurrency.name,
+                        symbol: chain.nativeCurrency.symbol, // 2-6 characters long
+                        decimals: chain.nativeCurrency.decimals,
+                    },
+                    rpcUrls: chain.rpc,
+                    blockExplorerUrls: [
+                        chain.explorers &&
+                        chain.explorers.length > 0 &&
+                        chain.explorers[0].url
+                            ? chain.explorers[0].url
+                            : chain.infoURL,
+                    ],
+                };
+                await window.ethereum.request({
+                    method: "wallet_addEthereumChain",
+                    params: [params, account],
+                });
+                return true;
+            } catch (error) {
+                console.log(error);
+                return false;
+            }
+        }
+    }
+
     const connectHandler = async (wallet) => {
+        let connected;
         switch (wallet) {
             case "MetaMask":
-                const connected = await connectMetaMask(
+                connected = await connectMetaMask(
                     activate,
                     from?.text,
                     to?.text
@@ -34,15 +94,23 @@ export default function EVMWallet({ wallet, close }) {
                 if (connected) {
                     dispatch(setMetaMask(true));
                     close();
+                    if (to) {
+                        if (chainId !== from.chainId) {
+                            const switched = await switchNetwork();
+                            if (switched) navigateToAccountRoute();
+                        } else navigateToAccountRoute();
+                    }
                 }
                 break;
             case "TrustWallet":
-                connectTrustWallet(activate, from.text);
+                connected = await connectTrustWallet(activate, from.text);
                 close();
+                if (connected && to) navigateToAccountRoute();
                 break;
             case "WalletConnect":
-                onWalletConnect(activate, from.text, testnet);
+                connected = await onWalletConnect(activate, from.text, testnet);
                 close();
+                if (connected && to) navigateToAccountRoute();
                 break;
             default:
                 break;
