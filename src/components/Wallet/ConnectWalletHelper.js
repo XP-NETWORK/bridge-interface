@@ -150,11 +150,13 @@ export const connectTrustWallet = async (activate, from) => {
         await activate(walletConnect, undefined, true);
         store.dispatch(setOnWC(true));
         store.dispatch(setWC(walletConnect));
+        return true;
     } catch (error) {
         store.dispatch(setError(error));
         if (error.data) {
             console.log(error.data.message);
         } else console.log(error);
+        return false;
     }
 };
 
@@ -223,11 +225,13 @@ export const onWalletConnect = async (activate, from, testnet) => {
         store.dispatch(setAccount(account));
         store.dispatch(setOnWC(true));
         store.dispatch(setWC(walletConnect));
+        return true;
     } catch (error) {
         store.dispatch(setError(error));
         if (error.data) {
             console.log(error.data.message);
         } else console.log(error);
+        return false;
     }
 };
 
