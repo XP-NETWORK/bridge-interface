@@ -29,19 +29,6 @@ export default function TezosWallet({ wallet, close }) {
                 connected = await connectBeacon();
                 close();
                 if (connected && to) navigateToAccountRoute();
-    const innerWidth = useSelector((state) => state.general.innerWidth);
-    const OFF = { opacity: 0.6, pointerEvents: "none" };
-
-    const handleConnect = async (wallet) => {
-        let connected;
-        switch (wallet) {
-            case "TempleWallet":
-                connectTempleWallet();
-                close();
-                break;
-            case "Beacon":
-                await connectBeacon();
-                close();
                 break;
             default:
                 break;
