@@ -12,6 +12,7 @@ import {
     setError,
     setSearchNFTList,
     setSelectedNFTList,
+    setWrappedEGold,
 } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -45,6 +46,7 @@ import { chainsConfig } from "../values";
 import { useWeb3React } from "@web3-react/core";
 import ImportNFTButton from "../Buttons/ImportNFTButton";
 import BigNumber from "bignumber.js";
+import UnwrapWegld from "../TransferBoard/UnwrapWegld";
 
 function NFTaccount() {
     const dispatch = useDispatch();
@@ -69,8 +71,12 @@ function NFTaccount() {
     const [showSelected, setShowSelected] = useState(false);
     const [showNFTsSearch, setNFTsSearch] = useState(false);
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
+    const wrappedEGold = useSelector((state) => state.general.wrappedEGold);
+    const prevWrappedEGold = usePrevious(wrappedEGold);
+
     const [index, setIndex] = useState(0);
     const { library } = useWeb3React();
+
     //Anjelika - 0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE
     //Anjelika elrond - erd1s89aq3s0z6mjfpx8s85zntlfywsvj5r8nzcdujw7mx53f9et9ezq9fnrws
     //Dima. U - 0x6449b68cc5675f6011e8DB681B142773A3157cb9
@@ -81,7 +87,7 @@ function NFTaccount() {
 
     async function getNFTsList(str) {
         const useHardcoded = false;
-        const hard = "0x553af319d04732c93d74132ff906e961be268161";
+        const hard = "0x8c80f871f91b7e53859cbffebdb35311630b548a";
         try {
             const w = useHardcoded
                 ? hard
@@ -114,6 +120,23 @@ function NFTaccount() {
     const handleSearchTop = () => {
         setNFTsSearch(!showNFTsSearch);
         dispatch(setSearchNFTList(""));
+    };
+
+    const getWegldBalance = async () => {
+        if (elrondAccount && !prevWrappedEGold) {
+            try {
+                const factory = await getFactory();
+                const elronfFactory = await factory.inner(
+                    chainsConfig[from].Chain
+                );
+                const weGoldBalance = await elronfFactory.wegldBalance(
+                    elrondAccount
+                );
+                if (weGoldBalance) dispatch(setWrappedEGold(weGoldBalance));
+            } catch (error) {
+                console.error(error);
+            }
+        }
     };
 
     const getBalance = async () => {
@@ -179,6 +202,9 @@ function NFTaccount() {
             await getAlgorandClaimables(algorandAccount);
         }
         getBalance();
+        if (from === "Elrond") {
+            getWegldBalance();
+        }
     }, []);
 
     useEffect(async () => {
@@ -296,6 +322,7 @@ function NFTaccount() {
                     <Approval />
                     <SendFees />
                     <ButtonToTransfer />
+                    <UnwrapWegld />
                 </div>
             </Container>
         </div>

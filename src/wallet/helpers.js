@@ -254,7 +254,11 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
                 }
             }
         } else {
-            if (data) {
+            if (!data?.includes("json")) {
+                if (data?.includes("image")) nftObj.image = setupURI(uri);
+                else if (data?.includes("image"))
+                    nftObj.animation_url = setupURI(uri);
+            } else if (data) {
                 let n;
                 try {
                     n = base64.decode(data);
@@ -581,11 +585,11 @@ export const getNFTS = async (wallet, from) => {
         );
         const unique = {};
         try {
-            const allNFTs = response.filter((n) => {
+            const allNFTs = response.filter((n, index) => {
                 const { tokenId, contract, chainId } = n?.native;
-                if (unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`])
+                if (unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`]) {
                     return false;
-                else {
+                } else {
                     unique[
                         `${tokenId}_${contract.toLowerCase()}_${chainId}`
                     ] = true;

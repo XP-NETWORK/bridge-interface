@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
-// import { ChainFactoryConfigs,    ChainFactory } from "xp.network/dist";
-import { Chain, Config } from "xp.network/dist/consts";
+import { Chain } from "xp.network/dist/consts";
 import { ethers } from "ethers";
 import * as thor from "web3-providers-connex";
-import { Driver, SimpleNet, SimpleWallet } from "@vechain/connex-driver";
-import { Framework } from "@vechain/connex-framework";
-
+import {
+    WalletConnectProvider,
+    ProxyProvider,
+    ExtensionProvider,
+} from "@elrondnetwork/erdjs";
 import {
     updateApprovedNFTs,
     setApproved,
@@ -21,14 +22,11 @@ import {
     handleChainFactory,
     isALLNFTsApproved,
 } from "../../wallet/helpers";
-import { ExtensionProvider } from "@elrondnetwork/erdjs/out";
+// import { ExtensionProvider } from "@elrondnetwork/erdjs";
 import { algoConnector } from "../../wallet/connectors";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
-import { TempleWallet } from "@temple-wallet/dapp";
-import { BeaconWallet } from "@taquito/beacon-wallet";
 import Connex from "@vechain/connex";
 
-const TronWeb = require("tronweb");
 function Approval(props) {
     const dispatch = useDispatch();
     const [finishedApproving, setFinishedApproving] = useState([]);
@@ -36,6 +34,7 @@ function Approval(props) {
     const from = useSelector((state) => state.general.from);
     const testnet = useSelector((state) => state.general.testNet);
     const account = useSelector((state) => state.general.account);
+    const templeSigner = useSelector((state) => state.general.templeSigner);
     const algorandAccount = useSelector(
         (state) => state.general.algorandAccount
     );
@@ -137,24 +136,24 @@ function Approval(props) {
             setFinishedApproving(arr);
         } else if (from.text === "Tezos") {
             try {
-                if (kukaiWallet) {
-                    const factory = await getFactory();
-                    const chain = await factory.inner(Chain.TEZOS);
-                    const wallet = new BeaconWallet({
-                        name: "XP.NETWORK Cross-Chain NFT Bridge",
-                    });
-                    const swap = await chain.preTransfer(wallet, nft);
-                    dispatch(updateApprovedNFTs(nft));
-                    setFinishedApproving(arr);
-                } else {
-                    const factory = await getFactory();
-                    const chain = await factory.inner(Chain.TEZOS);
-                    const signer = new TempleWallet("My Super DApp");
-                    await signer.connect("mainnet");
-                    const swap = await chain.preTransfer(signer, nft);
-                    dispatch(updateApprovedNFTs(nft));
-                    setFinishedApproving(arr);
-                }
+                // if (kukaiWallet) {
+                //     const factory = await getFactory();
+                //     const chain = await factory.inner(Chain.TEZOS);
+                //     const wallet = new BeaconWallet({
+                //         name: "XP.NETWORK Cross-Chain NFT Bridge",
+                //     });
+                //     const swap = await chain.preTransfer(wallet, nft);
+                //     dispatch(updateApprovedNFTs(nft));
+                //     setFinishedApproving(arr);
+                // } else {
+                const factory = await getFactory();
+                const chain = await factory.inner(Chain.TEZOS);
+                // const signer = new TempleWallet("My Super DApp");
+                // await signer.connect("mainnet");
+                const swap = await chain.preTransfer(templeSigner, nft);
+                dispatch(updateApprovedNFTs(nft));
+                setFinishedApproving(arr);
+                // }
             } catch (error) {
                 setFinishedApproving(arr);
                 dispatch(
@@ -192,6 +191,7 @@ function Approval(props) {
                 const factory = await getFactory();
                 const chain = await factory.inner(Chain.ELROND);
                 const signer = maiarProvider || ExtensionProvider.getInstance();
+                console.log("inst", signer instanceof WalletConnectProvider);
                 const swap = await chain.preTransfer(
                     signer,
                     nft,
@@ -206,9 +206,9 @@ function Approval(props) {
                     setError(error.data ? error.data.message : error.message)
                 );
                 if (error.data) {
-                    console.log(error.data.message);
-                } else console.log(error);
-                console.log(error);
+                    console.error(error.data.message);
+                } else console.error(error);
+                console.error(error);
             }
         }
     };
