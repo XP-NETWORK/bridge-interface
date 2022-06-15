@@ -53,6 +53,19 @@ export default function WalletList({ search, connected, input }) {
         },
         {
             Component: (
+                <EVMWallet
+                    wallet={"BitKeep"}
+                    key="wallet-index-1"
+                    close={connected}
+                />
+            ),
+            name: "BitKeep",
+            type: "EVM",
+            mobile: false,
+            desktop: true,
+        },
+        {
+            Component: (
                 <TezosWallet
                     wallet={"TempleWallet"}
                     key="wallet-index-7"

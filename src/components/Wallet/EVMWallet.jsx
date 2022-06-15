@@ -4,6 +4,7 @@ import {
     connectMetaMask,
     onWalletConnect,
     connectTrustWallet,
+    connectBitKeep,
 } from "./ConnectWalletHelper";
 import { useDispatch, useSelector } from "react-redux";
 import MetaMask from "../../assets/img/wallet/MetaMask.svg";
@@ -13,6 +14,7 @@ import { setAccount, setMetaMask } from "../../store/reducers/generalSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getAddEthereumChain } from "../../wallet/chains";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
+import BitKeep from "../../assets/img/wallet/bitkeep.svg";
 
 export default function EVMWallet({ wallet, close }) {
     const { account, activate, chainId } = useWeb3React();
@@ -112,6 +114,10 @@ export default function EVMWallet({ wallet, close }) {
                 close();
                 if (connected && to) navigateToAccountRoute();
                 break;
+            case "BitKeep":
+                connectBitKeep(from);
+                close();
+                break;
             default:
                 break;
         }
@@ -143,6 +149,15 @@ export default function EVMWallet({ wallet, close }) {
         >
             <img src={MetaMask} alt="MetaMask Icon" />
             <p>MetaMask</p>
+        </li>
+    ) : wallet === "BitKeep" ? (
+        <li
+            onClick={() => connectHandler("BitKeep")}
+            className="wllListItem"
+            data-wallet="MetaMask"
+        >
+            <img src={BitKeep} alt="BitKeep Icon" />
+            <p>BitKeep</p>
         </li>
     ) : wallet === "TrustWallet" &&
       from &&
