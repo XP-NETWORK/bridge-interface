@@ -12,6 +12,8 @@ import { chains } from "../values";
 import { power } from "../Settings/assets/power.js";
 import mobileBanner from "../Settings/assets/img/mobileOnlyBanner.svg";
 import { useLocation } from "react-router";
+import { useWeb3React } from "@web3-react/core";
+import { InjectedMetaMask } from "../../metamask/conectors";
 
 //.nft-list__wrapper
 const mobileOnlyBanner = `
@@ -45,6 +47,9 @@ export default function Widget() {
   const dispatch = useDispatch();
 
   const location = useLocation();
+
+  const { ethereum } = window;
+  const { activate, account, chainId, library, active } = useWeb3React();
 
   useEffect(() => {
     // debugger
@@ -200,7 +205,7 @@ export default function Widget() {
       widget &&
       !wsettings &&
       chains.find((c) => c.text === settings.fromChain) &&
-        chains.find((c) => c.text === settings.toChain)
+      chains.find((c) => c.text === settings.toChain)
     ) {
       setChainsLengthEqauls2(true);
     }
@@ -348,8 +353,11 @@ export default function Widget() {
         }
 
       
-
-
+        .swap-chain__btn{
+          display: ${
+            isFrom !== isTo && !wsettings ? "none" : "inline"
+          } !important;
+        }
         .seleDepat{
           pointer-events: ${isFrom && !wsettings ? "none" : "auto"};
         }
@@ -936,6 +944,27 @@ export default function Widget() {
   }, [widget, settings, location, chainsLengthEqauls2, isFrom, isTo]);
 
   const screenSize = useRef();
+
+  // useEffect(() => {
+  //     const connectMetaMask = async() =>{
+  //     if(!ethereum){
+  //       console.log("please install MetaMask");
+  //     }
+  //     else{
+  //       try{
+  //         await activate(InjectedMetaMask);
+  //         await window.ethereum.request({
+  //             method: 'wallet_switchEthereumChain',
+  //             params: [{ chainId: '0x4' }], // chainId must be in hexadecimal numbers
+  //         });
+  //       }
+  //       catch(err){
+  //           console.log(err);
+  //       }
+  //     }
+  //   }
+  //   connectMetaMask().catch(console.error);;
+  // }, []);
 
   useEffect(() => {
     const handler = () => {
