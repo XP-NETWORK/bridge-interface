@@ -17,7 +17,7 @@ import { useWeb3React } from '@web3-react/core';
 import { InjectedMetaMask } from "../../metamask/conectors";
 
 
-//.nft-list__wrapper
+//.nft-list__wrappera
 const mobileOnlyBanner = `
 <div class="mobileOnlyBanner"><img src=${mobileBanner} alt="mobileOnlyXP"/><div class="testComp">
     <h2>Widget</h2>
