@@ -348,9 +348,7 @@ export default function Widget() {
         }
 
       
-       /* .selChain{
-          pointer-events: ${isFrom && !wsettings ? "none" : "auto"};
-         }*/
+
 
         .seleDepat{
           pointer-events: ${isFrom && !wsettings ? "none" : "auto"};
