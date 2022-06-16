@@ -262,25 +262,26 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         } catch (error) {
             // console.error("tets error: ", error);
         }
-        const parsed = await nftGeneralParser(nft, account);
-        console.log("parsed data: ", parsed, index);
+        if (
+            !testnet &&
+            nft?.native?.contract ===
+                "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a"
+        ) {
+            whitelisted = false;
+        } else if (!testnet) {
+            try {
+                whitelisted = await isWhiteListed(from.text, nft);
+                nftObj.whitelisted = whitelisted;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        const parsed = await nftGeneralParser(nft, account, whitelisted);
+        console.log("parsed: ", parsed, index);
         const cashed = await nftCash(parsed, "add");
-        console.log("parsed cashed", cashed);
+        // console.log("parsed cashed", cashed, index);
         const dataLoaded = true;
         nftObj = { ...nft, ...parsed.metaData, dataLoaded };
-    }
-    if (
-        !testnet &&
-        nft?.native?.contract === "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a"
-    ) {
-        whitelisted = false;
-    } else if (!testnet) {
-        try {
-            whitelisted = await isWhiteListed(from.text, nft);
-            nftObj.whitelisted = whitelisted;
-        } catch (error) {
-            console.log(error);
-        }
     }
 
     if (
