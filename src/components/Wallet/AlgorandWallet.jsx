@@ -22,17 +22,18 @@ export default function AlgorandWallet({ wallet, close }) {
         navigate(testnet ? `/testnet/account` : `/account`);
     };
 
-    const connectionHandler = (wallet) => {
+    const connectionHandler = async (wallet) => {
+        let connected;
         switch (wallet) {
             case "MyAlgo":
-                connectMyAlgo();
+                connected = await connectMyAlgo();
                 close();
-                if (to) navigateToAccountRoute();
+                if (connected && to) navigateToAccountRoute();
                 break;
             case "AlgoSigner":
-                connectAlgoSigner(testnet);
+                connected = await connectAlgoSigner(testnet);
                 close();
-                if (to) navigateToAccountRoute();
+                if (connected && to) navigateToAccountRoute();
                 break;
             case "Algorand Wallet":
                 connectAlgoWallet();

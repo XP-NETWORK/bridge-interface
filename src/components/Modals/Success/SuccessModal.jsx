@@ -24,6 +24,7 @@ export default function SuccessModal() {
     const dispatch = useDispatch();
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
+    console.log("🚀 ~ file: SuccessModal.jsx ~ line 11 ~ socket", socket);
 
     const algorandAccount = useSelector(
         (state) => state.general.algorandAccount
@@ -90,10 +91,19 @@ export default function SuccessModal() {
 
     useEffect(() => {
         socket.on("incomingEvent", async (e) => {
+            debugger;
             dispatch(setTxnStatus(e));
+            console.log(
+                "🚀 ~ file: SuccessModal.jsx ~ line 96 ~ socket.on ~ e",
+                e
+            );
         });
         socket.on("updateEvent", async (e) => {
             dispatch(setTxnStatus(e));
+            console.log(
+                "🚀 ~ file: SuccessModal.jsx ~ line 99 ~ socket.on ~ e",
+                e
+            );
         });
         return () => {
             if (socket) {

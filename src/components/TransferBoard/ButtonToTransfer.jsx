@@ -93,19 +93,10 @@ export default function ButtonToTransfer() {
     };
 
     const getSigner = async () => {
-        // debugger
         let signer;
         try {
             if (from === "Tezos") {
-                // if(kukaiWallet){
-                //     signer = new BeaconWallet({ name: "XP.NETWORK Cross-Chain NFT Bridge" })
-                //     return signer
-                // }
-                // else{
-                // signer = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
-                // await signer.connect("mainnet");
                 return templeSigner;
-                // }
             } else if (from === "Algorand") {
                 signer = await getAlgorandWalletSigner();
                 return signer;
@@ -140,8 +131,8 @@ export default function ButtonToTransfer() {
     };
 
     const sendEach = async (nft, index) => {
-        debugger;
-        const signer = await getSigner();
+        // debugger;
+        const signer = from === "Tezos" ? templeSigner : await getSigner();
         const toNonce = CHAIN_INFO[to].nonce;
         const fromNonce = CHAIN_INFO[from].nonce;
         const nftSmartContract = nft.native.contract;
@@ -203,7 +194,10 @@ export default function ButtonToTransfer() {
                     mintWidth?.length ? mintWidth[0] : undefined
                 );
                 console.log("result", result);
-                result = from === "Algorand" ? { hash: result } : result;
+                result =
+                    from === "Algorand" || from === "Tezos"
+                        ? { hash: result }
+                        : result;
                 dispatch(dispatch(setTransferLoaderModal(false)));
                 setLoading(false);
                 dispatch(setTxnHash({ txn: result, nft }));

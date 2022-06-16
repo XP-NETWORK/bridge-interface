@@ -42,8 +42,9 @@ import {
     setTempleWalletSigner,
 } from "../../store/reducers/generalSlice";
 import { useNavigate } from "react-router";
-import { chainsConfig } from "../values";
+import { chainsConfig, CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { getAddEthereumChain } from "../../wallet/chains";
 
 export const wallets = [
     "MetaMask",
@@ -66,6 +67,7 @@ const connector = new WalletConnect({
 });
 
 export const connectMetaMask = async (activate, from, to) => {
+    // debugger;
     try {
         if (!window.ethereum && window.innerWidth <= 600) {
             const link = `https://metamask.app.link/dapp/${window.location.host}?to=${to}&from=${from}/`;
@@ -204,8 +206,10 @@ export const connectMyAlgo = async () => {
         const accountsSharedByUser = await myAlgoConnect.connect();
         store.dispatch(setAlgorandAccount(accountsSharedByUser[0].address));
         store.dispatch(setMyAlgo(true));
+        return true;
     } catch (error) {
         console.log(error);
+        return false;
     }
 };
 
