@@ -12,6 +12,9 @@ import { chains } from "../values";
 import { power } from "../Settings/assets/power.js";
 import mobileBanner from "../Settings/assets/img/mobileOnlyBanner.svg";
 import { useLocation } from "react-router";
+import { useWeb3React } from '@web3-react/core';
+import { InjectedMetaMask } from "../../metamask/conectors";
+
 
 //.nft-list__wrapper
 const mobileOnlyBanner = `
@@ -45,6 +48,9 @@ export default function Widget() {
   const dispatch = useDispatch();
 
   const location = useLocation();
+
+  const {ethereum} = window;
+  const { activate, account, chainId, library, active} = useWeb3React();
 
   useEffect(() => {
     // debugger
@@ -348,10 +354,9 @@ export default function Widget() {
         }
 
       
-       /* .selChain{
-          pointer-events: ${isFrom && !wsettings ? "none" : "auto"};
-         }*/
-
+        .swap-chain__btn{
+          display: ${((isFrom !== isTo) && !wsettings) ? "none" : "inline"} !important;
+        }
         .seleDepat{
           pointer-events: ${isFrom && !wsettings ? "none" : "auto"};
         }
@@ -364,6 +369,28 @@ export default function Widget() {
         .seleDestiSele::after{
           display: ${isTo && !wsettings ? "none" : "inline"} !important;
         }
+        .dropdown-item:{
+          width: 100%;
+        }
+        .dropdown-item:last-of-type{
+          padding-top: 10px;
+          padding-bottom: 10px;
+          color:white;
+        }
+        .dropdown-item:hover{
+          background-color: #212529;
+        }
+        .select_font #dropdown-basic{
+            background-color:#5c5e5f;
+            width: 100%;
+            height: 41px;
+            text-align:left;
+        }        
+        .dropdown-toggle::after{
+          left: 100px;
+        } 
+        
+
 
         .approval, .fees, .selected-nfts-item, .nftListed:hover, .mobile-destination__address input, .mobile-search-input__box input.serchInput, .selected-nfts__button, .success-info-box, .chain-switch, .destination__address input, .navbar-connect:hover, .import-nft__form input[type="text"]{
           background: ${panelBackground ? panelBackground : ""};
@@ -940,6 +967,28 @@ export default function Widget() {
   const screenSize = useRef();
 
   useEffect(() => {
+      const connectMetaMask = async() =>{
+      if(!ethereum){
+        console.log("please install MetaMask");
+      }
+      else{
+        try{
+          await activate(InjectedMetaMask);
+          await window.ethereum.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: '0x4' }], // chainId must be in hexadecimal numbers
+          });
+        }
+        catch(err){
+            console.log(err);
+        }
+      }
+    }
+    connectMetaMask().catch(console.error);;
+  }, []);
+  
+
+  useEffect(() => {
     const handler = () => {
       screenSize.current = window.innerWidth;
 
@@ -955,6 +1004,7 @@ export default function Widget() {
       window.addEventListener("resize", handler);
     }
     return () => window.removeEventListener("resize", handler);
+
   }, []);
 
   const onlyBridge = () => {
