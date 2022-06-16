@@ -12,6 +12,7 @@ import { chains } from "../values";
 import { power } from "../Settings/assets/power.js";
 import mobileBanner from "../Settings/assets/img/mobileOnlyBanner.svg";
 import { useLocation } from "react-router";
+import {ethers} from 'ethers';
 import { useWeb3React } from '@web3-react/core';
 import { InjectedMetaMask } from "../../metamask/conectors";
 
@@ -984,7 +985,25 @@ export default function Widget() {
   //       }
   //     }
   //   }
-  //   connectMetaMask().catch(console.error);;
+  //   connectMetaMask().catch(console.error);
+  //   const verifySignature = async() =>{
+  //     try{
+  //       await window.ethereum.send("eth_requestAccounts");
+  //         const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //         const signer = provider.getSigner();
+  //         const msg = "Please sign in order to see your widgets ";
+  //         const signature = await signer.signMessage(msg);
+  //         const address = await signer.getAddress();
+  //         const signerAddr = await ethers.utils.verifyMessage(msg, signature);
+  //         if (signerAddr !== address) {
+  //           console.log("signature isnt valid!!!");
+  //         }
+  //     }
+  //     catch(e){
+  //       console.log(e);
+  //     }
+  //   }
+  //   verifySignature();
   // }, []);
   
 
