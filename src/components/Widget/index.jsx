@@ -966,26 +966,26 @@ export default function Widget() {
 
   const screenSize = useRef();
 
-  useEffect(() => {
-      const connectMetaMask = async() =>{
-      if(!ethereum){
-        console.log("please install MetaMask");
-      }
-      else{
-        try{
-          await activate(InjectedMetaMask);
-          await window.ethereum.request({
-              method: 'wallet_switchEthereumChain',
-              params: [{ chainId: '0x4' }], // chainId must be in hexadecimal numbers
-          });
-        }
-        catch(err){
-            console.log(err);
-        }
-      }
-    }
-    connectMetaMask().catch(console.error);;
-  }, []);
+  // useEffect(() => {
+  //     const connectMetaMask = async() =>{
+  //     if(!ethereum){
+  //       console.log("please install MetaMask");
+  //     }
+  //     else{
+  //       try{
+  //         await activate(InjectedMetaMask);
+  //         await window.ethereum.request({
+  //             method: 'wallet_switchEthereumChain',
+  //             params: [{ chainId: '0x4' }], // chainId must be in hexadecimal numbers
+  //         });
+  //       }
+  //       catch(err){
+  //           console.log(err);
+  //       }
+  //     }
+  //   }
+  //   connectMetaMask().catch(console.error);;
+  // }, []);
   
 
   useEffect(() => {
