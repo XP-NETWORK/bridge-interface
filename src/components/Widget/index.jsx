@@ -38,6 +38,9 @@ export default function Widget() {
       NFTList,
     })
   );
+  const [chainsLengthEqauls2, setChainsLengthEqauls2] = useState(false);
+  const [isFrom, setIsFrom] = useState(false);
+  const [isTo, setIsTo] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -81,6 +84,8 @@ export default function Widget() {
       const tooltipBg = p.get("tooltipBg");
       const showLink = p.get("showLink");
       const chains = p.get("chains")?.split("-");
+      const fromChain = p.get("from");
+      const toChain = p.get("to");
       const wallets = p.get("wallets")?.split("-");
       const affiliationFees = p.get("affiliationFees");
 
@@ -109,6 +114,8 @@ export default function Widget() {
           iconColor: "#" + iconColor,
           showLink: showLink === "true" ? true : false,
           affiliationFees: ((+affiliationFees - 1) * 100).toFixed(0),
+          fromChain: fromChain,
+          toChain: toChain
         })
       );
     } else {
@@ -148,6 +155,8 @@ export default function Widget() {
     wallets,
     showLink,
     collapsed,
+    fromChain,
+    toChain
   } = settings;
 
   useEffect(() => {
@@ -165,25 +174,38 @@ export default function Widget() {
     }
   }, [widget, color, NFTList]);
 
-  useEffect(() => {
-    if (widget && !wsettings && settings.selectedChains.length === 2) {
-      console.log(chains.find((c) => c.text === settings.selectedChains[0]));
-      setTimeout(
-        () =>
-          dispatch(
-            setFrom(chains.find((c) => c.text === settings.selectedChains[1]))
-          ),
-        5
-      );
-      setTimeout(
-        () =>
-          dispatch(
-            setTo(chains.find((c) => c.text === settings.selectedChains[0]))
-          ),
-        7
-      );
+  // useEffect(() => {
+  //   if (widget && !wsettings && settings.selectedChains.length === 2) {
+  //     setChainsLengthEqauls2(true);
+  //     console.log(chains.find((c) => c.text === settings.selectedChains[0]));
+  //     setTimeout(
+  //       () =>
+  //         dispatch(
+  //           setFrom(chains.find((c) => c.text === settings.selectedChains[1]))
+  //         ),
+  //       5
+  //     );
+  //     setTimeout(
+  //       () =>
+  //         dispatch(
+  //           setTo(chains.find((c) => c.text === settings.selectedChains[0]))
+  //         ),
+  //       7
+  //     );
+  //   }
+  // }, [widget]);
+
+  useEffect(() => { 
+    if (widget && !wsettings && (chains.find((c) => c.text === settings.fromChain) && chains.find((c) => c.text === settings.toChain) )) {
+      setChainsLengthEqauls2(true);
     }
-  }, [widget]);
+    if (widget && !wsettings && chains.find((c) => c.text === settings.fromChain)) {
+      setIsFrom(true);
+    }
+    if (widget && !wsettings && chains.find((c) => c.text === settings.toChain)) {
+      setIsTo(true)
+    }
+  }, [widget,settings]);
 
   useEffect(() => {
     if (widget) {
@@ -306,10 +328,27 @@ export default function Widget() {
           background: ${panelBackground ? panelBackground : ""};
           filter: brightness(105%);
         }
-
+        
         .selChain:hover {
           border-top-left-radius: 8px;
           border-top-right-radius: 8px;
+        }
+
+      
+        // .selChain{
+        //   pointer-events: ${(isFrom && !wsettings) ? "none" : "auto"};
+        // }
+        .seleDepat{
+          pointer-events: ${(isFrom && !wsettings) ? "none" : "auto"};
+        }
+        .seleDesti{
+          pointer-events: ${(isTo && !wsettings) ? "none" : "auto"};
+        }
+        .seleDepatSelec::after{
+          display: ${(isFrom && !wsettings) ? "none" : "inline"} !important;
+        }
+        .seleDestiSele::after{
+          display: ${(isTo && !wsettings) ? "none" : "inline"} !important;
         }
 
         .approval, .fees, .selected-nfts-item, .nftListed:hover, .mobile-destination__address input, .mobile-search-input__box input.serchInput, .selected-nfts__button, .success-info-box, .chain-switch, .destination__address input, .navbar-connect:hover, .import-nft__form input[type="text"]{
@@ -768,7 +807,6 @@ export default function Widget() {
           width: 192px;
         }
 
-        
 
         @media only screen and (max-width: 1024px) {
           .nft__card, .nft__card--selected, .skeleton {
@@ -871,7 +909,7 @@ export default function Widget() {
         `;
       document.body.classList.remove("widgetBlur");
     }
-  }, [widget, settings, location]);
+  }, [widget, settings, location, chainsLengthEqauls2,isFrom,isTo]);
 
   const screenSize = useRef();
 

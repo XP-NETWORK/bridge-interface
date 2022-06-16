@@ -22,11 +22,11 @@ import {
   newChains,
   comingSoonChains,
   availability,
-  fonts
+  fonts,
 } from "../../store/reducers/settingsSlice";
 import "./Settings.css";
 
-import {ReactComponent as CollapseComp} from "./assets/img/collapse.svg";
+import { ReactComponent as CollapseComp } from "./assets/img/collapse.svg";
 import collapse from "./assets/img/collapse.svg";
 /*const debounce = (func, delay) => {
   let tm;
@@ -59,7 +59,7 @@ function WSettings({
   onResetSettings,
   onSelectAll,
   onUnSelectAll,
-  debouncedAcc
+  debouncedAcc,
 }) {
   const {
     backgroundColor,
@@ -84,25 +84,29 @@ function WSettings({
     borderColor,
     selectedWallets,
     showAlert,
-    theme
+    theme,
+    fromChain,
+    toChain,
   } = settings;
 
   const portalDiv = document.getElementById("settingsPortal");
-
 
   return (
     portalDiv &&
     ReactDom.createPortal(
       <>
-   { false && <SettingsPannel theme={theme}/>}
+        {false && <SettingsPannel theme={theme} />}
         <div
           className={`setting_sidebar ${theme}`}
           style={{ width: settings.collapsed ? "35px" : "300px" }}
         >
-          <CollapseComp className="collapseImg collapsed"  onClick={onClickEditor}  style={{
+          <CollapseComp
+            className="collapseImg collapsed"
+            onClick={onClickEditor}
+            style={{
               display: settings.collapsed ? "inline-block" : "none",
-            }}/> 
-          
+            }}
+          />
 
           <Alert
             show={settings.showAlert}
@@ -149,9 +153,9 @@ function WSettings({
             style={{ display: settings.collapsed ? "none" : "block" }}
           >
             <h2>Settings</h2>
-            <CollapseComp className="collapseImg"   onClick={onClickEditor}/>
+            <CollapseComp className="collapseImg" onClick={onClickEditor} />
             <div className={`genarel_setting ${fixedHeader ? "fixed" : ""}`}>
-              <ThemeSwitch/>
+              <ThemeSwitch />
 
               {false && (
                 <button className="showIframe">{"< "}Hide editor</button>
@@ -193,12 +197,11 @@ function WSettings({
             </div>
           </div>
           <div
-            className={`sidebar_content ${fixedHeader? 'shoved' : ''}`}
+            className={`sidebar_content ${fixedHeader ? "shoved" : ""}`}
             style={{ display: settings.collapsed ? "none" : "block" }}
             ref={list}
             onScroll={(e) => handleScroll(e)}
           >
-   
             <div className="setting_list">
               <Accordion defaultActiveKey="10" className="open">
                 <Accordion.Item eventKey="1">
@@ -207,63 +210,155 @@ function WSettings({
                   <Accordion.Body>
                     <div className="blockChainCont">
                       <ul className="select_block_chain">
-                        <button className="controlBtn"  onClick={() => onSelectAll('selectedChains')}>Select all</button>
-                        <button className="controlBtn"  onClick={() => onUnSelectAll('selectedChains')}>Unselect all</button>
-                        
-                        {chains.filter(c => c.coming || c.maintenance || c.mainnet || c.testNet).map((chain, i) => (
-                          <li
-                            key={i}
-                            className="blockChain_item"
-                            onClick={() => chainCheck(chain.value)}
-                          >
-                            <div className="select_nft">
-                              <input
-                                type="checkbox"
-                                name=""
-                                id=""
-                                checked={selectedChains.includes(chain.value)}
-                              />
-                              <span className="icon selectNfticon"></span>
-                            </div>
-                            <div className="blockChainItem">
-                              <img src={chain.image.src} alt={chain.value} />
+                        <button
+                          className="controlBtn"
+                          onClick={() => onSelectAll("selectedChains")}
+                        >
+                          Select all
+                        </button>
+                        <button
+                          className="controlBtn"
+                          onClick={() => onUnSelectAll("selectedChains")}
+                        >
+                          Unselect all
+                        </button>
 
-                              {chain.value === "xDai"
-                                ? "Gnosis"
-                                : chain.value}
+                        {chains
+                          .filter(
+                            (c) =>
+                              c.coming ||
+                              c.maintenance ||
+                              c.mainnet ||
+                              c.testNet
+                          )
+                          .map((chain, i) => (
+                            <li
+                              key={i}
+                              className="blockChain_item"
+                              onClick={() => chainCheck(chain.value)}
+                            >
+                              <div className="select_nft">
+                                <input
+                                  type="checkbox"
+                                  name=""
+                                  id=""
+                                  checked={selectedChains.includes(chain.value)}
+                                />
+                                <span className="icon selectNfticon"></span>
+                              </div>
+                              <div className="blockChainItem">
+                                <img src={chain.image.src} alt={chain.value} />
 
-                              {chain.maintenance ? (
-                                <span
-                                  style={{
-                                    color: "grey",
-                                    borderColor: "grey",
-                                    fontSize: "11px",
-                                  }}
-                                >
-                                  Maintenance
-                                </span>
-                              ) : (
-                                ""
-                              )}
+                                {chain.value === "xDai"
+                                  ? "Gnosis"
+                                  : chain.value}
 
-                              {chain.coming ? (
-                                <span
-                                className="comingSoon"
-                                
-                                >
-                                  coming soon
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                              {false && newChains.includes(chain.value) ? (
-                                <span>new</span>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                          </li>
-                        ))}
+                                {chain.maintenance ? (
+                                  <span
+                                    style={{
+                                      color: "grey",
+                                      borderColor: "grey",
+                                      fontSize: "11px",
+                                    }}
+                                  >
+                                    Maintenance
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+
+                                {chain.coming ? (
+                                  <span className="comingSoon">
+                                    coming soon
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                                {false && newChains.includes(chain.value) ? (
+                                  <span>new</span>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                            </li>
+                          ))}
+                        <li>
+                          <div className="select_font" style={{padding: "10px 30px"}}>From Chain (Permanent): 
+                            <Dropdown>
+                              <Dropdown.Toggle id="dropdown-basic">
+                                {fromChain === undefined ? "None" : (fromChain !== '') ? fromChain : "Select Chain"}
+                              </Dropdown.Toggle>
+                              <Dropdown.Menu style={{maxHeight: "300px", overflow:"auto"}}>
+                                <ul>
+                                <li key={"none"}>
+                                  <span
+                                    className="dropdown-item"
+                                    // style={{ fontFamily: font }}
+                                    onClick={(e) =>
+                                      deboucedSet(undefined, "fromChain")
+                                    }
+                                  >
+                                    None
+                                  </span>
+                                </li>
+                                  {chains.filter((chain)=> chain.text !== toChain).map((chain, i) => (
+                                    <li key={i + "chain"}>
+                                      <span
+                                        className="dropdown-item"
+                                        // style={{ fontFamily: font }}
+                                        onClick={(e) =>{
+                                          deboucedSet(chain.text, "fromChain");
+                                        }
+                                          
+                                        }
+                                      >
+                                        {chain.text}
+                                      </span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </div>
+                        </li>
+                        <li>
+                          
+                          <div className="select_font" style={{padding: "10px 30px"}}>To Chain (Permanent):
+                            <Dropdown>
+                              <Dropdown.Toggle id="dropdown-basic">
+                              {toChain === undefined ? "None" : (toChain !== '') ? toChain : "Select Chain"}
+                              </Dropdown.Toggle>
+                              <Dropdown.Menu style={{maxHeight: "300px", overflow:"auto"}}>
+                                <ul>
+                                <li key={"none"}>
+                                      <span
+                                        className="dropdown-item"
+                                        // style={{ fontFamily: font }}
+                                        onClick={(e) =>
+                                          deboucedSet(undefined, "toChain")
+                                        }
+                                      >
+                                        None
+                                      </span>
+                                   </li>
+                                  {chains.filter((chain)=> chain.text !== fromChain).map((chain, i) => (
+                                    <li key={i + "chain"}>
+                                      <span
+                                        className="dropdown-item"
+                                        // style={{ fontFamily: font }}
+                                        onClick={(e) =>
+                                          deboucedSet(chain.text, "toChain")
+                                        }
+                                      >
+                                        {chain.text}
+                                      </span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </div>
+                        </li>
                       </ul>
                     </div>
                   </Accordion.Body>
@@ -276,8 +371,18 @@ function WSettings({
                   <Accordion.Body>
                     <div className="blockChainCont">
                       <ul className="select_block_chain">
-                        <button className="controlBtn"  onClick={() => onSelectAll('selectedWallets')}>Select all</button>
-                        <button className="controlBtn"  onClick={() => onUnSelectAll('selectedWallets')}>Unselect all</button>
+                        <button
+                          className="controlBtn"
+                          onClick={() => onSelectAll("selectedWallets")}
+                        >
+                          Select all
+                        </button>
+                        <button
+                          className="controlBtn"
+                          onClick={() => onUnSelectAll("selectedWallets")}
+                        >
+                          Unselect all
+                        </button>
                         {wallets.map((wallet, i) => {
                           const chain = Object.keys(availability).find((key) =>
                             availability[key].includes(wallet)
@@ -317,10 +422,7 @@ function WSettings({
                                 {wallet}
 
                                 {wallet === "Ledger" || wallet === "Trezor" ? (
-                                  <span
-                                  className="comingSoon"
-                                   
-                                  >
+                                  <span className="comingSoon">
                                     coming soon
                                   </span>
                                 ) : (
@@ -771,8 +873,6 @@ function WSettings({
                         </div>
                       </div>
 
-
-
                       <div className="typo-sel header_color_select">
                         <h5>Card corner radius</h5>
                         <div className="cornerRadi">
@@ -924,18 +1024,17 @@ function WSettings({
                 </Accordion.Item>
               </Accordion>
 
-
               <Accordion defaultActiveKey="18">
                 <Accordion.Item eventKey="9">
                   <Accordion.Header>Affiliation Settings</Accordion.Header>
                   <Accordion.Body>
-                  <div className="typographyContainer">
-                  <div className="typo-sel font-size-sel">
-                          <h5>Extra gas fees</h5>
-                          <div className="select_font">
-                            <div className="typo-sel header_color_select">
-                              <div className="cornerRadi">
-                                <div className="feesWrapper">
+                    <div className="typographyContainer">
+                      <div className="typo-sel font-size-sel">
+                        <h5>Extra gas fees</h5>
+                        <div className="select_font">
+                          <div className="typo-sel header_color_select">
+                            <div className="cornerRadi">
+                              <div className="feesWrapper">
                                 <input
                                   type="number"
                                   placeholder="0"
@@ -943,35 +1042,49 @@ function WSettings({
                                   min={0}
                                   value={settings.affiliationFees}
                                   onChange={(e) => {
-                        
-                                    if (e.target.value < 0)  return  deboucedSet(0, "affiliationFees", true);
-                                    if (e.target.value > 100)  return  deboucedSet(100, "affiliationFees",true);
-                                    deboucedSet(e.target.value, "affiliationFees",true)
-                                  }
-                                  }
+                                    if (e.target.value < 0)
+                                      return deboucedSet(
+                                        0,
+                                        "affiliationFees",
+                                        true
+                                      );
+                                    if (e.target.value > 100)
+                                      return deboucedSet(
+                                        100,
+                                        "affiliationFees",
+                                        true
+                                      );
+                                    deboucedSet(
+                                      e.target.value,
+                                      "affiliationFees",
+                                      true
+                                    );
+                                  }}
                                 />
                                 <span>%</span>
-                                </div>
                               </div>
                             </div>
-                          
                           </div>
                         </div>
-                        </div>
-                    </Accordion.Body>
-                    </Accordion.Item>
-                </Accordion>
-             {false &&  <div className="referalSwitch" onClick={toggleShow} >
-                <input type="checkbox" checked={showLink} />
-                <span>Powered by XP Network</span>
-              </div>}
+                      </div>
+                    </div>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+              {false && (
+                <div className="referalSwitch" onClick={toggleShow}>
+                  <input type="checkbox" checked={showLink} />
+                  <span>Powered by XP Network</span>
+                </div>
+              )}
 
               <div className="referalSwitch">
-                <button onClick={onSaveSettings} className="controlBtn">Save settings</button>
-                <button onClick={onResetSettings} className="controlBtn">Reset settings</button>
-
-
-    
+                <button onClick={onSaveSettings} className="controlBtn">
+                  Save settings
+                </button>
+                <button onClick={onResetSettings} className="controlBtn">
+                  Reset settings
+                </button>
               </div>
 
               <Accordion defaultActiveKey="18">

@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setFrom, setTo } from "../../store/reducers/generalSlice";
 import {
   setSettings,
   activeChains,
   availability,
   initialState as initSettings,
   initialState,
+  chains,
 } from "../../store/reducers/settingsSlice";
 import { comingSoonChains } from "../../store/reducers/settingsSlice";
 import { debounce } from "../helpers";
@@ -62,8 +64,12 @@ const settingsHoc = (Wrapped) => (props) => {
     showLink,
     affiliationFees,
     panelBackground,
+    fromChain,
+    toChain
   } = settings;
   console.log(showLink);
+  // console.log(settings);
+
 
   const prevSelected = usePrevious(selectedChains);
 
@@ -92,6 +98,18 @@ const settingsHoc = (Wrapped) => (props) => {
       1000
     )({ ...settings, [debouncedAcc.key]: debouncedAcc.val });
   }, [debouncedAcc]);
+
+  useEffect(() => {
+    if (settings.fromChain !== ''){
+      dispatch(setFrom(chains.find((c) => c.text === fromChain)));
+  }
+  }, [fromChain]);
+
+  useEffect(() => {
+    if (settings.toChain !== ''){
+      dispatch(setTo(chains.find((c) => c.text === toChain)));
+  }
+  }, [toChain]);
 
   const chainCheck = (val) => {
     console.log(val);
@@ -160,7 +178,7 @@ const settingsHoc = (Wrapped) => (props) => {
         btnRadius}&fontFamily=${fontFamily &&
         fontFamily}&chains=${selectedChains.join(
         "-"
-      )}&cardBackground=${cardBackground &&
+      )}&from=${fromChain}&to=${toChain}&cardBackground=${cardBackground &&
         cardBackground.split("#")[1]}&cardBackgroundBot=${cardBackgroundBot &&
         cardBackgroundBot.split("#")[1]}&cardColor=${cardColor &&
         cardColor.split("#")[1]}&cardRadius=${cardRadius &&

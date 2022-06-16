@@ -16,9 +16,11 @@ export const fonts = [
   "Ubuntu",
 ];
 
-const hideChain = ['VeChain']
+const hideChain = ["VeChain"];
 
-export const chains = [...valuesChains].filter(c => !hideChain.includes(c.value));
+export const chains = [...valuesChains].filter(
+  (c) => !hideChain.includes(c.value)
+);
 
 export const activeChains = [
   ...chains.filter((chain) => !chain.maintenance).map((c) => c.value),
@@ -64,7 +66,7 @@ export const initialState = {
   fontFamily: "Roboto",
   cardBackground: "#1e222d",
   cardBackgroundBot: "#1e222d",
-  cardColor:"#ffffff",
+  cardColor: "#ffffff",
   cardRadius: 25,
   accentColor: "#3e64ed",
   secondaryColor: "#0c0d0d",
@@ -79,7 +81,9 @@ export const initialState = {
   showAlert: false,
   showLink: true,
   collapsed: false,
-  theme: 'dtm'
+  theme: "dtm",
+  fromChain: "",
+  toChain: "",
 };
 
 const settingSlice = createSlice({
@@ -87,18 +91,17 @@ const settingSlice = createSlice({
   initialState,
   reducers: {
     setSettings(state, action) {
-      return action.payload
+      return action.payload;
     },
     toggleTheme(state) {
-      state.theme = state.theme === 'dtm'? 'ltm': 'dtm'
-    }
+      state.theme = state.theme === "dtm" ? "ltm" : "dtm";
+    },
   },
 });
 
 export const { setSettings, toggleTheme } = settingSlice.actions;
 
 export default settingSlice.reducer;
-
 
 /**
  * 
