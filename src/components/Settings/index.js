@@ -288,14 +288,17 @@ function WSettings({
                               <Dropdown.Toggle id="dropdown-basic">
                                 {fromChain === undefined ? "None" : (fromChain !== '') ? fromChain : "Select Chain"}
                               </Dropdown.Toggle>
-                              <Dropdown.Menu style={{maxHeight: "300px", overflow:"auto"}}>
+                              <Dropdown.Menu style={{maxHeight: "300px", overflow:"auto"}} id="fromMenu">
                                 <ul>
                                 <li key={"none"}>
                                   <span
                                     className="dropdown-item"
                                     // style={{ fontFamily: font }}
                                     onClick={(e) =>
-                                      deboucedSet(undefined, "fromChain")
+                                      {
+                                         deboucedSet(undefined, "fromChain");
+                                          
+                                      }
                                     }
                                   >
                                     None
