@@ -5,7 +5,6 @@ import NFTsuccess from "../components/Modals/Success/NFTsuccess";
 import { Routes, Route } from "react-router-dom";
 import ConnectWallet from "./ConnectWallet";
 import ProtectedRoute from "../pages/ProtectedRoute";
-// import SuccessModal from "../components/Modals/Success/SuccessModal"
 
 function XpBridge() {
     const testnet = useSelector((state) => state.general.testNet);

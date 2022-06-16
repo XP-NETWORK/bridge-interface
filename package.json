@@ -4,7 +4,7 @@
     "private": true,
     "dependencies": {
         "@airgap/beacon-sdk": "^2.3.9",
-        "@elrondnetwork/erdjs": "9.2.3",
+        "@elrondnetwork/erdjs": "9.0.3",
         "@harmony-js/core": "^0.1.57",
         "@iotexproject/iotex-address-ts": "^1.0.4",
         "@json-rpc-tools/utils": "^1.7.6",
