@@ -355,6 +355,27 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         nftObj.animation_url = data.artifactUri;
         nftObj.attributes = data.attributes;
         nftObj.name = data.name;
+    } else if (collectionIdent === "KT1EpGgjQs73QfFJs9z7m1Mxm5MTnpC2tqse") {
+        const {
+            native: {
+                meta: {
+                    token: {
+                        metadata: {
+                            displayUri,
+                            artifactUri,
+                            description,
+                            name,
+                            collectionName,
+                        },
+                    },
+                },
+            },
+        } = nft;
+        nftObj.image = displayUri;
+        nftObj.animation_url = artifactUri;
+        nftObj.description = description;
+        nftObj.name = name;
+        nftObj.collectionName = collectionName;
     }
     if (
         claimables &&
