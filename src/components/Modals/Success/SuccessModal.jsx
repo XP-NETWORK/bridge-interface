@@ -4,10 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import TransferredNft from "./TransferredNft";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import ConnectAlgorand from "../../ConnectAlgorand";
-import ClaimAlgorandNFT from "../../ClaimAlgorandNFT";
 import { useEffect } from "react";
-import { setNFTS, socket } from "../../../wallet/helpers";
+import { socket } from "../../../wallet/helpers";
 
 import {
     cleanTxnHashArr,
@@ -24,7 +22,6 @@ export default function SuccessModal() {
     const dispatch = useDispatch();
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
-    console.log("🚀 ~ file: SuccessModal.jsx ~ line 11 ~ socket", socket);
 
     const algorandAccount = useSelector(
         (state) => state.general.algorandAccount

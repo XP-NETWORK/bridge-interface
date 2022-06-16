@@ -7,7 +7,7 @@ import {
 import NFTdetails from "./NFTdetails";
 import { useSelector } from "react-redux";
 import { setupURI } from "../../wallet/helpers";
-import { isValidHttpUrl, parseEachNFT } from "../../wallet/helpers";
+import { parseEachNFT } from "../../wallet/nftParser";
 import { isShown } from "./NFTHelper.js";
 import VideoOrImage from "./VideoOrImage";
 import VideoAndImage from "./VideoAndImage";
