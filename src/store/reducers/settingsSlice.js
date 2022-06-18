@@ -91,7 +91,10 @@ const settingSlice = createSlice({
   initialState,
   reducers: {
     setSettings(state, action) {
-      return action.payload;
+      return {
+        ...state,
+        ...action.payload
+      }
     },
     toggleTheme(state) {
       state.theme = state.theme === "dtm" ? "ltm" : "dtm";

@@ -1864,13 +1864,13 @@ li.blockChain_item .blockChainItem span {
   background: #2f55dd;
 }
 
-.arrowed {
+.withIcon {
   padding-left: 46px;
   position: relative;
 
 }
 
-.arrowed::before {
+.withIcon::before {
   content: '';
   position: absolute;
   left: 14px;
@@ -1944,6 +1944,7 @@ li.blockChain_item .blockChainItem span {
   left: 50%;
   transform: translateX(-50%);
   display: inline-block;
+  z-index: 90000;
 }
 
 .settingsPannel {
@@ -1991,7 +1992,60 @@ li.blockChain_item .blockChainItem span {
 }
 
 .codeModal {
-    width: 800px;
+    position: absolute;
     border-radius: 8px;
     background: #313132;
+    left: 50%;
+    top: 120%;
+    transform: translateX(-50%);
+    width: 700px;
+    padding: 0 16px 16px 16px;
+   
+
+
+
+}
+
+.codeModal .header {
+    padding: 12px 0 22px 0;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+}
+
+.codeModal .header img {
+  cursor: pointer;
+}
+
+.codeModal .main, .codeModal textarea {
+  color: #F9FAFB;
+  background-color: #272728;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.codeModal .main p {
+  padding: 16px 16px 0 16px;
+  word-wrap: break-word;
+}
+
+.codeModal .controlPannel {
+  display: flex;
+}
+
+.codeModal .main .controlPannel .controlBtn {
+  margin: 10px 10px 0 auto;
+}
+
+
+button.withIcon.import::before  {
+  
+  background: url('./assets/importCode.svg') no-repeat;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+}
+
+button.import {
+  margin-left: 10px;
 }

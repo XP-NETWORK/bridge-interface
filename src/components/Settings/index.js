@@ -1,14 +1,11 @@
 import React from "react";
 import ReactDom from "react-dom";
 import {
-  Image,
+
   Dropdown,
   Accordion,
   Alert,
-  FormCheck,
-  Form,
-  Button,
-  Modal,
+
 } from "react-bootstrap";
 import power from "./assets/img/power.svg";
 
@@ -20,24 +17,14 @@ import {
   chains,
   wallets,
   newChains,
-  comingSoonChains,
+
   availability,
   fonts,
 } from "../../store/reducers/settingsSlice";
 import "./Settings.css";
 
 import { ReactComponent as CollapseComp } from "./assets/img/collapse.svg";
-import collapse from "./assets/img/collapse.svg";
-/*const debounce = (func, delay) => {
-  let tm;
-
-  return (...args) => {
-    clearTimeout(tm);
-    tm = setTimeout(() => {
-      return func(...args);
-    }, delay);
-  };
-};*/
+import {copyCode} from './helpers'
 
 function WSettings({
   settings,
@@ -95,7 +82,7 @@ function WSettings({
     portalDiv &&
     ReactDom.createPortal(
       <>
-        {false && <SettingsPannel theme={theme} />}
+        {true && <SettingsPannel theme={theme} iframeSrc={iframeSrc} setCopied={setCopied}/>}
         <div
           className={`setting_sidebar ${theme}`}
           style={{ width: settings.collapsed ? "35px" : "300px" }}
@@ -1103,28 +1090,7 @@ function WSettings({
                             className={`copyCode icon ${
                               copied ? "copied" : ""
                             }`}
-                            onClick={() => {
-                              var aux = document.createElement("div");
-                              aux.setAttribute("contentEditable", true);
-                              aux.innerHTML = document.getElementById(
-                                "iframeSrc"
-                              ).innerHTML;
-                              aux.setAttribute(
-                                "onfocus",
-                                "document.execCommand('selectAll',false,null)"
-                              );
-                              document.body.appendChild(aux);
-                              aux.focus();
-                              document.execCommand("copy");
-                              document.body.removeChild(aux);
-
-                              // navigator.clipboard.writeText(
-                              //</div> `<iframe src='${iframeSrc}' frameborder='0' ></iframe>`
-                              //);
-                              setCopied(true);
-
-                              setTimeout(() => setCopied(false), 500);
-                            }}
+                            onClick={() => copyCode(setCopied, "iframeSrc")}
                           ></button>
                         </div>
                       </div>

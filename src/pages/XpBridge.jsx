@@ -8,9 +8,12 @@ import ProtectedRoute from "../pages/ProtectedRoute";
 
 function XpBridge() {
     const testnet = useSelector((state) => state.general.testNet);
+    const widget = useSelector((state) => state.general.widget);
+    const wsettings = useSelector((state) => state.general.wsettings);
 
     return (
         <div className="nftContainer">
+             {wsettings && widget && <div id="settingsPanelContainer"></div>}
             {/* { algorandClaimables && algorandClaimables.length > 0 && <Transactionhistory /> } */}
             <Routes>
                 <Route path="/" element={<ConnectWallet />} />
