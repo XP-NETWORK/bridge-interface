@@ -1,12 +1,6 @@
 import React from "react";
 import ReactDom from "react-dom";
-import {
-
-  Dropdown,
-  Accordion,
-  Alert,
-
-} from "react-bootstrap";
+import { Dropdown, Accordion, Alert } from "react-bootstrap";
 import power from "./assets/img/power.svg";
 
 import settingsHoc from "./settingsHoc";
@@ -17,14 +11,13 @@ import {
   chains,
   wallets,
   newChains,
-
   availability,
   fonts,
 } from "../../store/reducers/settingsSlice";
 import "./Settings.css";
 
 import { ReactComponent as CollapseComp } from "./assets/img/collapse.svg";
-import {copyCode} from './helpers'
+import { copyCode } from "./helpers";
 
 function WSettings({
   settings,
@@ -82,7 +75,13 @@ function WSettings({
     portalDiv &&
     ReactDom.createPortal(
       <>
-        {true && <SettingsPannel theme={theme} iframeSrc={iframeSrc} setCopied={setCopied}/>}
+        {true && (
+          <SettingsPannel
+            theme={theme}
+            iframeSrc={iframeSrc}
+            setCopied={setCopied}
+          />
+        )}
         <div
           className={`setting_sidebar ${theme}`}
           style={{ width: settings.collapsed ? "35px" : "300px" }}
@@ -270,80 +269,102 @@ function WSettings({
                             </li>
                           ))}
                         <li>
-                          <div className="select_font" style={{padding: "10px 30px"}}>From Chain (Permanent): 
+                          <div
+                            className="select_font"
+                            style={{ padding: "10px 30px" }}
+                          >
+                            From Chain (Locked):
                             <Dropdown>
                               <Dropdown.Toggle id="dropdown-basic">
-                                {fromChain === undefined ? "None" : (fromChain !== '') ? fromChain : "Select Chain"}
+                                {fromChain === undefined
+                                  ? "None"
+                                  : fromChain !== ""
+                                  ? fromChain
+                                  : "Select Chain"}
                               </Dropdown.Toggle>
-                              <Dropdown.Menu style={{maxHeight: "300px", overflow:"auto"}} id="fromMenu">
+                              <Dropdown.Menu
+                                style={{ maxHeight: "300px", overflow: "auto" }}
+                                id="fromMenu"
+                              >
                                 <ul>
-                                <li key={"none"}>
-                                  <span
-                                    className="dropdown-item"
-                                    // style={{ fontFamily: font }}
-                                    onClick={(e) =>
-                                      {
-                                         deboucedSet(undefined, "fromChain");
-                                          
-                                      }
-                                    }
-                                  >
-                                    None
-                                  </span>
-                                </li>
-                                  {chains.filter((chain)=> chain.text !== toChain).map((chain, i) => (
-                                    <li key={i + "chain"}>
-                                      <span
-                                        className="dropdown-item"
-                                        // style={{ fontFamily: font }}
-                                        onClick={(e) =>{
-                                          deboucedSet(chain.text, "fromChain");
-                                        }
-                                          
-                                        }
-                                      >
-                                        {chain.text}
-                                      </span>
-                                    </li>
-                                  ))}
+                                  <li key={"none"}>
+                                    <span
+                                      className="dropdown-item"
+                                      // style={{ fontFamily: font }}
+                                      onClick={(e) => {
+                                        deboucedSet(undefined, "fromChain");
+                                      }}
+                                    >
+                                      None
+                                    </span>
+                                  </li>
+                                  {chains
+                                    .filter((chain) => chain.text !== toChain)
+                                    .map((chain, i) => (
+                                      <li key={i + "chain"}>
+                                        <span
+                                          className="dropdown-item"
+                                          // style={{ fontFamily: font }}
+                                          onClick={(e) => {
+                                            deboucedSet(
+                                              chain.text,
+                                              "fromChain"
+                                            );
+                                          }}
+                                        >
+                                          {chain.text}
+                                        </span>
+                                      </li>
+                                    ))}
                                 </ul>
                               </Dropdown.Menu>
                             </Dropdown>
                           </div>
                         </li>
                         <li>
-                          
-                          <div className="select_font" style={{padding: "10px 30px"}}>To Chain (Permanent):
+                          <div
+                            className="select_font"
+                            style={{ padding: "10px 30px" }}
+                          >
+                            To Chain (Locked):
                             <Dropdown>
                               <Dropdown.Toggle id="dropdown-basic">
-                              {toChain === undefined ? "None" : (toChain !== '') ? toChain : "Select Chain"}
+                                {toChain === undefined
+                                  ? "None"
+                                  : toChain !== ""
+                                  ? toChain
+                                  : "Select Chain"}
                               </Dropdown.Toggle>
-                              <Dropdown.Menu style={{maxHeight: "300px", overflow:"auto"}}>
+                              <Dropdown.Menu
+                                style={{ maxHeight: "300px", overflow: "auto" }}
+                              >
                                 <ul>
-                                <li key={"none"}>
-                                      <span
-                                        className="dropdown-item"
-                                        // style={{ fontFamily: font }}
-                                        onClick={(e) =>
-                                          deboucedSet(undefined, "toChain")
-                                        }
-                                      >
-                                        None
-                                      </span>
-                                   </li>
-                                  {chains.filter((chain)=> chain.text !== fromChain).map((chain, i) => (
-                                    <li key={i + "chain"}>
-                                      <span
-                                        className="dropdown-item"
-                                        // style={{ fontFamily: font }}
-                                        onClick={(e) =>
-                                          deboucedSet(chain.text, "toChain")
-                                        }
-                                      >
-                                        {chain.text}
-                                      </span>
-                                    </li>
-                                  ))}
+                                  <li key={"none"}>
+                                    <span
+                                      className="dropdown-item"
+                                      // style={{ fontFamily: font }}
+                                      onClick={(e) =>
+                                        deboucedSet(undefined, "toChain")
+                                      }
+                                    >
+                                      None
+                                    </span>
+                                  </li>
+                                  {chains
+                                    .filter((chain) => chain.text !== fromChain)
+                                    .map((chain, i) => (
+                                      <li key={i + "chain"}>
+                                        <span
+                                          className="dropdown-item"
+                                          // style={{ fontFamily: font }}
+                                          onClick={(e) =>
+                                            deboucedSet(chain.text, "toChain")
+                                          }
+                                        >
+                                          {chain.text}
+                                        </span>
+                                      </li>
+                                    ))}
                                 </ul>
                               </Dropdown.Menu>
                             </Dropdown>

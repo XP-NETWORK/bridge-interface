@@ -665,7 +665,7 @@ img {
   border: 0;
   outline: none;
   box-shadow: none;
-  background: #2F2E30;
+  background: #2f2e30;
   padding: 0 40px 0 15px;
   color: #fff;
   border-radius: 10px;
@@ -744,7 +744,7 @@ img {
   width: 24px;
   height: 24px;
   filter: invert();
-  opacity: .5;
+  opacity: 0.5;
   transform: translateY(50%);
   right: 15px;
   cursor: pointer;
@@ -759,11 +759,11 @@ img {
 .ltm .accordion-header button::after {
   background-image: url("assets/img/icon/arrow-down-small-light.svg") !important;
   filter: unset;
-  opacity: .8;
+  opacity: 0.8;
 }
 
-
-.accordion-header button:hover::after, .accordion-button[aria-expanded="true"]::after {
+.accordion-header button:hover::after,
+.accordion-button[aria-expanded="true"]::after {
   opacity: 1;
 }
 
@@ -839,12 +839,11 @@ img {
 
 .ltm .icon.selectNfticon {
   background: #fff;
-
 }
 
 .dtm .icon.selectNfticon {
-  background:  #3D3D3E;
-  border: 2px solid rgba(249,250,251, .5);
+  background: #3d3d3e;
+  border: 2px solid rgba(249, 250, 251, 0.5);
 }
 
 .select_nft > * {
@@ -951,7 +950,7 @@ h6 {
   z-index: 12;
 }
 
-.dtm.setting_sidebar{
+.dtm.setting_sidebar {
   background: #272728;
   color: #fff;
 }
@@ -968,10 +967,11 @@ h6 {
 
 .setting_sidebar input:focus {
   outline: none !important;
-
 }
 
-.ltm .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+.ltm .btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
   color: #000 !important;
 }
 
@@ -1017,7 +1017,7 @@ h6 {
 }
 
 .dtm .setting_list button.accordion-button {
-  color: #F9FAFB
+  color: #f9fafb;
 }
 
 .ltm .setting_list button.accordion-button {
@@ -1025,11 +1025,11 @@ h6 {
 }
 
 .ltm .setting_list .accordion-item:nth-child(1) button.accordion-button {
-  border-top: 1px solid #D4D7DD
+  border-top: 1px solid #d4d7dd;
 }
 
 .dtm .setting_list .accordion-item:nth-child(1) button.accordion-button {
-  border-top: 1px solid #3D3D3E;
+  border-top: 1px solid #3d3d3e;
 }
 
 .setting_list .accordion-item {
@@ -1074,8 +1074,8 @@ h6 {
 
 .dtm .setting_list .accordion-body {
   padding: 0;
-  border-bottom: 1px solid #3D3D3E;
-  background: #3D3D3E;
+  border-bottom: 1px solid #3d3d3e;
+  background: #3d3d3e;
 }
 
 .ltm .setting_list .accordion-body {
@@ -1083,7 +1083,6 @@ h6 {
   border-bottom: 1px solid rgba(224, 228, 235, 0.5);
   background: #f9fafb;
 }
-
 
 .smart_con_opt:first-child {
   border: 0;
@@ -1139,15 +1138,11 @@ li.blockChain_item .select_nft input:checked + .selectNfticon {
 
 .dtm li.blockChain_item:hover {
   background: #313132;
-
 }
 
 .ltm li.blockChain_item:hover {
   background: rgba(212, 215, 221, 0.3);
 }
-
-
-
 
 .themcolor_sett {
   display: flex;
@@ -1283,18 +1278,18 @@ li.blockChain_item .select_nft input:checked + .selectNfticon {
   display: flex;
   align-items: center;
   /* Outline */
-  padding:7px 10px;
+  padding: 7px 10px;
   border-radius: 8px;
 }
 
-.dtm .select_color, .dtm .cornerRadi input {
+.dtm .select_color,
+.dtm .cornerRadi input {
   border: none !important;
   background: #5c5e5f !important;
-  
 }
 
 .dtm .cornerRadi input::placeholder {
-  color:rgb(240, 236, 236);
+  color: rgb(240, 236, 236);
 }
 
 .dtm .cornerRadi input:focus {
@@ -1302,11 +1297,10 @@ li.blockChain_item .select_nft input:checked + .selectNfticon {
   outline: none !important;
 }
 
-.ltm .select_color{
+.ltm .select_color {
   border: 1px solid #d4d7dd;
   background: #fff;
 }
-
 
 .colorCode {
   width: 50%;
@@ -1321,7 +1315,7 @@ li.blockChain_item .select_nft input:checked + .selectNfticon {
   box-shadow: none;
 }
 
-.select_font #dropdown-basic{
+.select_font #dropdown-basic {
   padding: 0 6px !important;
 }
 
@@ -1349,13 +1343,15 @@ li.blockChain_item .select_nft input:checked + .selectNfticon {
 }
 
 .dtm .dropdown-menu.show ul li:hover a {
-    background-color: #313132;
+  background-color: #313132;
 }
 
-.dtm .typo-sel .btn,.dtm .dropdown-menu.show,.dtm .dropdown-menu.show ul li a{
+.dtm .typo-sel .btn,
+.dtm .dropdown-menu.show,
+.dtm .dropdown-menu.show ul li a {
   background: #5c5e5f;
   border: none;
-  color:rgb(240, 236, 236)
+  color: rgb(240, 236, 236);
 }
 
 .ltm .typo-sel .btn {
@@ -1379,7 +1375,6 @@ li.blockChain_item .select_nft input:checked + .selectNfticon {
   overflow-y: auto;
   padding-bottom: 50px;
   flex-grow: 1;
-
 }
 
 /* Handle */
@@ -1401,7 +1396,8 @@ li.blockChain_item .select_nft input:checked + .selectNfticon {
   padding-bottom: 12px;
 }
 
-.cornerRadi input[type="text"], .cornerRadi input[type="number"] {
+.cornerRadi input[type="text"],
+.cornerRadi input[type="number"] {
   background: #fefefe;
   border: 1px solid #d4d7dd;
   box-sizing: border-box;
@@ -1424,8 +1420,7 @@ li.blockChain_item .select_nft input:checked + .selectNfticon {
   background: #fefefe;
   border: 1px solid #d4d7dd;
   color: black;
-} 
-
+}
 
 .dtm .exportCodeCont {
   background: #5c5e5f;
@@ -1454,9 +1449,9 @@ li.blockChain_item .select_nft input:checked + .selectNfticon {
 
 .dtm .copyCode.icon:hover {
   filter: invert();
-} 
+}
 
-.ltm .copyCode.icon:hover { 
+.ltm .copyCode.icon:hover {
   background-image: url("./assets/img/icon/copy-gray.svg");
 }
 
@@ -1489,8 +1484,6 @@ a.help_icon:hover .qustion_icon {
   padding: 10px 30px;
   background: #404449;
 }
-
-
 
 .searchNft .btn-primary {
   background: transparent;
@@ -1535,7 +1528,7 @@ li.blockChain_item .blockChainItem span {
 #SearchDrop svg {
   position: relative;
   top: 2px;
-  right: .5px;
+  right: 0.5px;
 }
 
 .comingSoon {
@@ -1552,14 +1545,12 @@ li.blockChain_item .blockChainItem span {
 .genarel_setting {
   position: relative;
   padding-bottom: 10px;
-
 }
 
 .fixed {
   position: fixed;
   width: 300px;
   z-index: 999;
-  
 }
 
 .shoved {
@@ -1592,11 +1583,11 @@ li.blockChain_item .blockChainItem span {
   background-image: url("assets/img/icon/arrow_down_small.svg");
 }
 
-.dtm .expandAll, .dtm .collapseAll {
-  background-color:#525357;
+.dtm .expandAll,
+.dtm .collapseAll {
+  background-color: #525357;
   border: none;
 }
-
 
 .expandAll:hover,
 .collapseAll:hover {
@@ -1648,7 +1639,7 @@ li.blockChain_item .blockChainItem span {
 }
 
 .referalSwitch button:first-child {
-  margin-right: 10px
+  margin-right: 10px;
 }
 
 .referalSwitch input {
@@ -1676,8 +1667,6 @@ li.blockChain_item .blockChainItem span {
   margin-left: 20px;
   margin-right: 10px;
 }
-
-
 
 .mobileOnlyBanner {
   position: absolute;
@@ -1787,13 +1776,13 @@ li.blockChain_item .blockChainItem span {
   fill: rgb(220, 220, 220);
 }
 
-.dtm .collapseImg circle{
-    fill:  #525357;
-    stroke: #525357;
+.dtm .collapseImg circle {
+  fill: #525357;
+  stroke: #525357;
 }
 
-.dtm .collapseImg:hover circle{
-  fill:  #5c5d61;
+.dtm .collapseImg:hover circle {
+  fill: #5c5d61;
 }
 
 .dtm .collapseImg path {
@@ -1811,7 +1800,6 @@ li.blockChain_item .blockChainItem span {
 .feesWrapper {
   display: flex;
   align-items: center;
-
 }
 
 .feesWrapper input {
@@ -1827,8 +1815,8 @@ li.blockChain_item .blockChainItem span {
 }
 
 .dtm .comingSoon {
-  color: #F9FAFB !important;
-  border-color: #F9FAFB !important;
+  color: #f9fafb !important;
+  border-color: #f9fafb !important;
   font-size: 10px !important;
 }
 
@@ -1844,20 +1832,18 @@ li.blockChain_item .blockChainItem span {
 
 .dtm .sidebar_content::-webkit-scrollbar-thumb {
   background: rgb(177, 170, 170);
-
 }
 
 .controlBtn {
   display: inline-block;
-  background: #395FEB;
+  background: #395feb;
   padding: 2px 5px;
-  color: #FFFFFF;
+  color: #ffffff;
   font-family: Inter, sans-serif;
   font-weight: 500;
   font-size: 12px;
   border-radius: 9px;
   border: none;
-
 }
 
 .controlBtn:hover {
@@ -1867,21 +1853,19 @@ li.blockChain_item .blockChainItem span {
 .withIcon {
   padding-left: 46px;
   position: relative;
-
 }
 
 .withIcon::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
   width: 24px;
   height: 24px;
-  background: url('/src/assets/img/duarrows.svg') no-repeat;
+  background: url("/src/assets/img/duarrows.svg") no-repeat;
   background-size: cover;
 }
-
 
 .themeSwitch {
   display: inline-block;
@@ -1893,7 +1877,6 @@ li.blockChain_item .blockChainItem span {
   width: 43px;
   height: 23px;
   position: relative;
-
 }
 
 .switchToggler {
@@ -1906,7 +1889,7 @@ li.blockChain_item .blockChainItem span {
   transform: translateY(-53%);
   display: flex;
   box-shadow: 0px 0.773402px 3.86701px rgba(0, 0, 0, 0.25);
-  transition: right .7s ease;
+  transition: right 0.7s ease;
 }
 
 .switchToggler img {
@@ -1920,14 +1903,14 @@ li.blockChain_item .blockChainItem span {
 }
 
 .dtm .switchWrap {
-  background: #4D4D51;
+  background: #4d4d51;
 }
 .ltm .switchWrap {
-  background: #D4D7DD;
+  background: #d4d7dd;
 }
 
 .ltm .switchToggler {
-  background: #F9FAFB;
+  background: #f9fafb;
   left: unset;
   right: 5px;
 }
@@ -1938,7 +1921,6 @@ li.blockChain_item .blockChainItem span {
 }
 
 #settingsPanelContainer {
-
   position: absolute;
   top: 20px;
   left: 50%;
@@ -1954,7 +1936,6 @@ li.blockChain_item .blockChainItem span {
   background: #272728;
 }
 
-
 .settingsPannel .arrows {
   display: flex;
   align-items: center;
@@ -1962,10 +1943,9 @@ li.blockChain_item .blockChainItem span {
   border-radius: 9px;
   margin-right: 10px;
   padding: 8px;
-  
 }
 
-.ltm.settingsPannel  {
+.ltm.settingsPannel {
   background-color: #ffffff;
 }
 
@@ -1981,10 +1961,9 @@ li.blockChain_item .blockChainItem span {
   cursor: pointer;
 }
 
-.settingsPannel .arrows svg:hover path{
-  opacity: .7;
-
-} 
+.settingsPannel .arrows svg:hover path {
+  opacity: 0.7;
+}
 
 .settingsPannel .arrows svg:last-child {
   transform: rotateY(180deg);
@@ -1992,36 +1971,56 @@ li.blockChain_item .blockChainItem span {
 }
 
 .codeModal {
-    position: absolute;
-    border-radius: 8px;
-    background: #313132;
-    left: 50%;
-    top: 120%;
-    transform: translateX(-50%);
-    width: 700px;
-    padding: 0 16px 16px 16px;
-   
-
-
-
+  position: absolute;
+  border-radius: 8px;
+  background: #313132;
+  left: 50%;
+  top: 120%;
+  transform: translateX(-50%);
+  width: 700px;
+  padding: 0 16px 16px 16px;
 }
 
 .codeModal .header {
-    padding: 12px 0 22px 0;
-    color: #FFFFFF;
-    display: flex;
-    justify-content: space-between;
+  padding: 12px 0 22px 0;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
 }
 
 .codeModal .header img {
   cursor: pointer;
 }
 
-.codeModal .main, .codeModal textarea {
-  color: #F9FAFB;
+.codeModal .main,
+.codeModal textarea {
+  color: #f9fafb;
   background-color: #272728;
   width: 100%;
   margin-top: 10px;
+}
+
+.codeModal textarea {
+  min-height: 300px;
+  padding: 5px;
+}
+
+.codeModal textarea:focus {
+  outline: none !important;
+}
+
+.codeModal.ltm {
+  background-color: #ffffff;
+}
+
+.codeModal.ltm .header {
+  color: #111111;
+}
+
+.ltm.codeModal .main,
+.ltm.codeModal textarea {
+  color: #111111;
+  background-color: #eeeef5;
 }
 
 .codeModal .main p {
@@ -2037,10 +2036,8 @@ li.blockChain_item .blockChainItem span {
   margin: 10px 10px 0 auto;
 }
 
-
-button.withIcon.import::before  {
-  
-  background: url('./assets/importCode.svg') no-repeat;
+button.withIcon.import::before {
+  background: url("./assets/importCode.svg") no-repeat;
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
@@ -2048,4 +2045,12 @@ button.withIcon.import::before  {
 
 button.import {
   margin-left: 10px;
+}
+
+.dtm .show > .btn-primary.dropdown-toggle {
+  color: #fff !important;
+}
+
+.ltm .show > .btn-primary.dropdown-toggle {
+  color: rgb(17, 17, 17) !important;
 }
