@@ -225,6 +225,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
       nftObj.description = description;
     } else if (uri) {
       try {
+        console.log("lola");
         data = await fetchURI(setupURI(uri));
       } catch (error) {
         console.error(error);
@@ -323,6 +324,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     collectionIdent === "0xfc2b3db912fcd8891483ed79ba31b8e5707676c9" ||
     collectionIdent === "0x817c63be246dcfb5f218091baa581949b6796bdb"
   ) {
+    console.log("molly");
     const { data } = await axios(setupURI(nft.uri));
     nftObj.name = data.name;
     nftObj.attributes = data.attributes;
