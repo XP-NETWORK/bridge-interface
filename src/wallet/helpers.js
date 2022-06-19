@@ -13,11 +13,15 @@ import {
 import store from "../store/store";
 import io from "socket.io-client";
 import { isWhiteListed } from "./../components/NFT/NFTHelper";
+import requestPool from "./requestPool";
 
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
 const testnet = window.location.href.includes("testnet");
 const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/";
 const base64 = require("base-64");
+
+const pool = requestPool(5000);
+
 export const socket = io(testnet ? testnetSocketUrl : socketUrl, {
   path: "/socket.io",
 });
@@ -89,7 +93,10 @@ const fetchURI = async (uri) => {
       }
       return data.data ? data.data : data;
     } catch (error) {
-      console.log(error);
+      if (error?.request?.status === 429) {
+        const res = await pool.addRequest(error?.request?.responseURL);
+        return res.data || res;
+      }
     }
   } else {
     const data = await tryIPFS(uri);
@@ -225,7 +232,6 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
       nftObj.description = description;
     } else if (uri) {
       try {
-        console.log("lola");
         data = await fetchURI(setupURI(uri));
       } catch (error) {
         console.error(error);
@@ -320,11 +326,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     const { data } = await axios(setupURI(nft.uri));
     nftObj.image = data.image;
     nftObj.animation_url = data.video;
-  } else if (
-    collectionIdent === "0xfc2b3db912fcd8891483ed79ba31b8e5707676c9" ||
-    collectionIdent === "0x817c63be246dcfb5f218091baa581949b6796bdb"
-  ) {
-    console.log("molly");
+  } else if (collectionIdent === "0xfc2b3db912fcd8891483ed79ba31b8e5707676c9") {
     const { data } = await axios(setupURI(nft.uri));
     nftObj.name = data.name;
     nftObj.attributes = data.attributes;
@@ -356,7 +358,17 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     nftObj.description = description;
     nftObj.name = name;
     nftObj.collectionName = collectionName;
+  } else if (collectionIdent === "0x817c63be246dcfb5f218091baa581949b6796bdb") {
+    if (!nftObj.image) {
+      const data = await fetchURI(setupURI(nft.uri));
+      nftObj.name = data.name;
+      nftObj.attributes = data.attributes;
+      nftObj.image = data.image;
+      nftObj.description = data.description;
+    }
+    nftObj.image = nftObj.image.replace("ipfs.io/https/", "");
   }
+
   if (
     claimables &&
     (!claimables[index]?.dataLoaded ||
