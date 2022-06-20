@@ -167,7 +167,7 @@ export default function NFTcard({ nft, index, claimables }) {
                                 </span>
                                 <span style={indexStyle}>{index}</span>
                                 <span className="nft-number">
-                                    {nft.native.tokenId}
+                                    {nft?.native?.tokenId}
                                 </span>
                             </div>
                         </div>

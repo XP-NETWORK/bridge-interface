@@ -276,12 +276,21 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
                 console.log(error);
             }
         }
-        const parsed = await nftGeneralParser(nft, account, whitelisted);
-        console.log("parsed: ", parsed, index);
+        let parsed;
+        if (!claimables) {
+            // debugger;
+            parsed = await nftGeneralParser(nft, account, whitelisted);
+        } else {
+            const native = { contract: "", chainId: 15, tokeId: nft.nftId };
+            const nftNew = { ...nft, native };
+            parsed = await nftGeneralParser(nftNew, account, whitelisted);
+        }
         const cashed = await nftCash(parsed, "add");
         // console.log("parsed cashed", cashed, index);
         const dataLoaded = true;
-        nftObj = { ...nft, ...parsed.metaData, dataLoaded };
+        nftObj = !claimables
+            ? { ...nft, ...parsed.metaData, dataLoaded }
+            : { ...nft, dataLoaded };
     }
 
     if (
