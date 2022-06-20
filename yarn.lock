@@ -1249,6 +1249,36 @@
     tweetnacl "1.0.3"
     uuid "8.3.2"
 
+"@elrondnetwork/erdjs@9.2.3":
+  version "9.2.3"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs/-/erdjs-9.2.3.tgz#53dbabb3651433a6001cae779b235aa89b37aab9"
+  integrity sha512-C6w98OeSAtXV1gcraWILQ71X0fY5Kx5Tqg8nCRZxgFgVp3L2rkdK2V940BQwdnaulGE1Jk2TXLkEL2TuyPS0aQ==
+  dependencies:
+    "@babel/runtime" "7.11.2"
+    "@elrondnetwork/bls-wasm" "0.3.3"
+    "@elrondnetwork/hw-app-elrond" "0.3.2"
+    "@ledgerhq/hw-transport-u2f" "^5.36.0-deprecated"
+    "@ledgerhq/hw-transport-webhid" "^6.11.2"
+    "@ledgerhq/hw-transport-webusb" "6.11.2"
+    "@walletconnect/client" "1.6.5"
+    abort-controller "3.0.0"
+    axios "0.24.0"
+    bech32 "1.1.4"
+    bignumber.js "9.0.1"
+    bip39 "3.0.2"
+    blake2b "2.1.3"
+    buffer "6.0.3"
+    ed25519-hd-key "1.1.2"
+    json-bigint "1.0.0"
+    json-duplicate-key-handle "1.0.0"
+    keccak "^3.0.1"
+    platform "1.3.6"
+    protobufjs "6.10.2"
+    qs "6.10.1"
+    scryptsy "2.1.0"
+    tweetnacl "1.0.3"
+    uuid "8.3.2"
+
 "@elrondnetwork/hw-app-elrond@0.3.2":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@elrondnetwork/hw-app-elrond/-/hw-app-elrond-0.3.2.tgz#3c01cda58a58a63e7e3caf1b36ac8d5909550fb2"
@@ -17530,7 +17560,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "3.0.10"
-  resolved "git+https://github.com/xp-network/xpjs#72415463d7b771510646e70090107a43fff400c7"
+  resolved "git+https://github.com/xp-network/xpjs#7dacdd28254dc436f343fa5b023fbd388c613521"
   dependencies:
     "@elrondnetwork/erdjs" "9.0.3"
     "@json-rpc-tools/utils" "^1.7.6"

@@ -10,6 +10,10 @@ import { chainsConfig } from "../../values";
 
 export default function TransferredNft({ nft }) {
     const { image, animation_url, txn, name, native } = nft;
+    console.log(
+        "🚀 ~ file: TransferredNft.jsx ~ line 13 ~ TransferredNft ~ txn",
+        txn
+    );
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const algorandAccount = useSelector(
@@ -82,10 +86,14 @@ export default function TransferredNft({ nft }) {
                             txn?.hash}`}
                     >
                         {txn?.hash
-                            ? `${txn?.hash.substring(
-                                  0,
-                                  getSubstringValue() || 10
-                              )}...${txn?.hash.substring(txn?.hash.length - 3)}`
+                            ? `${txn?.hash
+                                  .toString()
+                                  .substring(
+                                      0,
+                                      getSubstringValue() || 10
+                                  )}...${txn?.hash
+                                  .toString()
+                                  .substring(txn?.hash.toString().length - 3)}`
                             : hashes.depHash
                             ? `${hashes?.depHash?.substring(
                                   0,
