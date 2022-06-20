@@ -93,7 +93,7 @@ const fetchURI = async (uri) => {
       }
       return data.data ? data.data : data;
     } catch (error) {
-      if (error?.request?.status === 429) {
+      if (error?.request?.status === 429 || error?.request?.status === 504) {
         const res = await pool.addRequest(error?.request?.responseURL);
         return res.data || res;
       }
@@ -367,6 +367,13 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
       nftObj.description = data.description;
     }
     nftObj.image = nftObj.image.replace("ipfs.io/https/", "");
+  } else if (collectionIdent === "AERMES-ac9886") {
+    //nftObj.image = nftObj.native?.uri;
+    nftObj.animation_url = nftObj.native?.uri;
+    nftObj.name = nftObj.native?.name;
+  } else if (collectionIdent === "DRIFTERS-efd96c") {
+    //nftObj.image = nftObj.native?.uri;
+    nftObj.image = nftObj.uri.split(".json")[0] + ".png";
   }
 
   if (
