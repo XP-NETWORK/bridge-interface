@@ -11960,7 +11960,7 @@
 
 "nft-parser@file:../nft-parser":
   "resolved" "file:../nft-parser"
-  "version" "0.1.6"
+  "version" "0.1.5"
   dependencies:
     "@elrondnetwork/erdjs" "^10.2.5"
     "@taquito/taquito" "^12.1.1"

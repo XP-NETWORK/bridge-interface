@@ -13,7 +13,7 @@ import {
 import store from "../store/store";
 import io from "socket.io-client";
 import { isWhiteListed } from "./../components/NFT/NFTHelper";
-import { nftGeneralParser } from "nft-parser";
+import { nftGeneralParser } from "nft-parser/dist/src";
 
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
 const testnet = window.location.href.includes("testnet");
