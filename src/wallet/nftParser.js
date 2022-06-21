@@ -31,7 +31,7 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
     let nftCashResponse;
     try {
       nftCashResponse = await axios.get(
-        `http://localhost:3030/nft/data?chainId=${nft.native?.chainId}&tokenId=${nft.native?.tokenId}&contract=${nft.native?.contract}`,
+        `https://nft-cache.herokuapp.com/nft/data?chainId=${nft.native?.chainId}&tokenId=${nft.native?.tokenId}&contract=${nft.native?.contract}`,
         {
           headers: { "Content-type": "application/json" },
         }
@@ -52,9 +52,14 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
 
       if (parsed?.metaData?.image || parsed?.metaData?.animation_url) {
         try {
-          axios.post(`http://localhost:3030/nft/add`, JSON.stringify(parsed), {
-            headers: { "Content-type": "application/json" },
-          });
+          false &&
+            axios.post(
+              `https://nft-cache.herokuapp.com/nft/add`,
+              JSON.stringify(parsed),
+              {
+                headers: { "Content-type": "application/json" },
+              }
+            );
         } catch (error) {
           console.error("nft-cache add: ", error);
         }
