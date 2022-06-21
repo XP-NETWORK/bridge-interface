@@ -4,6 +4,7 @@ import axios from "axios";
 import { nftGeneralParser } from "nft-parser/dist/src/index";
 import store from "../store/store";
 import { setEachNFT } from "../store/reducers/generalSlice";
+import { parseEachNFT } from "./helpers";
 
 const pool = requestPool(5000);
 
@@ -47,7 +48,7 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
         }
       }
       const parsed = await nftGeneralParser(nft, account, whitelisted);
-      debugger;
+
       if (parsed?.image || parsed?.animation_url) {
         try {
           false &&
@@ -84,6 +85,6 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
       store.dispatch(setEachNFT({ nftObj, index }));
     }
   } else {
-    // TODO IF NFT IS FROm CLAIMABLE
+    await parseEachNFT(nft, index, testnet, claimable);
   }
 };

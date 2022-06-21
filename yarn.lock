@@ -11829,10 +11829,9 @@ next-tick@^1.1.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.1.0.tgz#1836ee30ad56d67ef281b22bd199f709449b35eb"
   integrity sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==
 
-nft-parser@^0.1.7:
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/nft-parser/-/nft-parser-0.1.7.tgz#13a21fe208609c20516db9e1bad158f3752825a8"
-  integrity sha512-JpBb4+JITcVmbsKnsfudjBl+aI9ZaKuPJG9llHDrp4AgEoXklr5kibm5IgelBpQvEq6Jo4vjBRz8lwUmBSx59A==
+"nft-parser@git+https://github.com/xp-network/nft-parser#bleeding-edge":
+  version "0.1.5"
+  resolved "git+https://github.com/xp-network/nft-parser#6d081500c7f204e11cad1b909d5f44fd801fb6b9"
   dependencies:
     "@types/node" "^17.0.35"
     axios "^0.27.2"
