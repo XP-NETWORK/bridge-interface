@@ -177,121 +177,120 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         nftId: nft.nftId || undefined,
         appId: nft.appId || undefined,
     };
-    if (from.text === "Tezos") {
-        if (nft.native?.meta?.token?.metadata?.formats) {
-            const obj = nft.native?.meta?.token?.metadata?.formats;
-            const mimeType = obj[0]["mimeType"];
-            const format = mimeType.slice(0, mimeType.lastIndexOf("/"));
-            if (format === "image") {
-                imageFormat = true;
-                nftObj.image = setupURI(obj.uri);
-            } else if (format === "video") {
-                videoFormat = true;
-                nftObj.animation_url = setupURI(obj.uri);
-            }
-        }
-        if (nft.native?.meta?.token?.metadata?.mimeType) {
-            const mimeType = nft.native?.meta?.token?.metadata?.mimeType;
-            const format = mimeType.slice(0, mimeType.lastIndexOf("/"));
-            if (format === "image") {
-                imageFormat = true;
-                nftObj.image = setupURI(
-                    nft.native?.meta?.token?.metadata?.displayUri
-                );
-            } else if (format === "video") {
-                videoFormat = true;
-                nftObj.animation_url = setupURI(
-                    nft.native?.meta?.token?.metadata?.displayUri
-                );
-            }
-        }
-        if (
-            !nftObj.image &&
-            nft.native?.meta?.token?.metadata?.displayUri &&
-            imageFormat
-        ) {
-            nftObj.image = nft.native?.meta?.token?.metadata?.displayUri;
-            imageFormat = true;
-        } else if (!nftObj.image && nft.native?.meta?.token?.metadata?.image) {
-            nftObj.image = nft.native?.meta?.token?.metadata?.image;
-            imageFormat = true;
-        }
-        nftObj.image = imageFormat
-            ? nftObj.image ||
-              nft.native?.meta?.token?.metadata?.formats?.uri ||
-              nft.image ||
-              nft.native?.uri
-            : undefined;
-        nftObj.animation_url = videoFormat
-            ? nftObj.animation_url ||
-              nft.native?.meta?.token?.metadata?.formats?.uri
-            : undefined;
-        nftObj.native.contract = nft.native?.contract;
-        nftObj.native.tokenId = nft.native?.tokenId;
-        nftObj.native.uri = nft.native?.uri;
-        nftObj.name = nft.name || nft.native?.meta?.token?.metadata?.name;
-        nftObj.collectionIdent = nft.collectionIdent;
-        nftObj.description =
-            nft.description || nft.native?.meta?.token?.metadata?.description;
-        nftObj.native.symbol =
-            nft.symbol || nft.native?.meta?.token?.metadata?.symbol;
-    }
-    if (from.text === "Tezos") {
-    } else {
+    // if (from.text === "Tezos") {
+    //     if (nft.native?.meta?.token?.metadata?.formats) {
+    //         const obj = nft.native?.meta?.token?.metadata?.formats;
+    //         const mimeType = obj[0]["mimeType"];
+    //         const format = mimeType.slice(0, mimeType.lastIndexOf("/"));
+    //         if (format === "image") {
+    //             imageFormat = true;
+    //             nftObj.image = setupURI(obj.uri);
+    //         } else if (format === "video") {
+    //             videoFormat = true;
+    //             nftObj.animation_url = setupURI(obj.uri);
+    //         }
+    //     }
+    //     if (nft.native?.meta?.token?.metadata?.mimeType) {
+    //         const mimeType = nft.native?.meta?.token?.metadata?.mimeType;
+    //         const format = mimeType.slice(0, mimeType.lastIndexOf("/"));
+    //         if (format === "image") {
+    //             imageFormat = true;
+    //             nftObj.image = setupURI(
+    //                 nft.native?.meta?.token?.metadata?.displayUri
+    //             );
+    //         } else if (format === "video") {
+    //             videoFormat = true;
+    //             nftObj.animation_url = setupURI(
+    //                 nft.native?.meta?.token?.metadata?.displayUri
+    //             );
+    //         }
+    //     }
+    //     if (
+    //         !nftObj.image &&
+    //         nft.native?.meta?.token?.metadata?.displayUri &&
+    //         imageFormat
+    //     ) {
+    //         nftObj.image = nft.native?.meta?.token?.metadata?.displayUri;
+    //         imageFormat = true;
+    //     } else if (!nftObj.image && nft.native?.meta?.token?.metadata?.image) {
+    //         nftObj.image = nft.native?.meta?.token?.metadata?.image;
+    //         imageFormat = true;
+    //     }
+    //     nftObj.image = imageFormat
+    //         ? nftObj.image ||
+    //           nft.native?.meta?.token?.metadata?.formats?.uri ||
+    //           nft.image ||
+    //           nft.native?.uri
+    //         : undefined;
+    //     nftObj.animation_url = videoFormat
+    //         ? nftObj.animation_url ||
+    //           nft.native?.meta?.token?.metadata?.formats?.uri
+    //         : undefined;
+    //     nftObj.native.contract = nft.native?.contract;
+    //     nftObj.native.tokenId = nft.native?.tokenId;
+    //     nftObj.native.uri = nft.native?.uri;
+    //     nftObj.name = nft.name || nft.native?.meta?.token?.metadata?.name;
+    //     nftObj.collectionIdent = nft.collectionIdent;
+    //     nftObj.description =
+    //         nft.description || nft.native?.meta?.token?.metadata?.description;
+    //     nftObj.native.symbol =
+    //         nft.symbol || nft.native?.meta?.token?.metadata?.symbol;
+    // }
+    // if (from.text === "Tezos") {
+    // } else {
+    //     try {
+    // const { data } = await axios.get(
+    //     `https://nft-cache.herokuapp.com/nft/data?tokenId=${nft.native.tokenId}&chainId=${nft.native.chainId}&contract=${nft.native.contract}`
+    // );
+    // console.log("parseEachNFT ~ parsed", data);
+    //     console.log("test cashed: ", cashed);
+    //     if (typeof cashed?.data === "object") {
+    //         const dataLoaded = true;
+    //         nftObj = { ...nft, ...cashed.data, dataLoaded };
+    //     } else {
+    //         const parsed = await nftGeneralParser(nft, account);
+    //         console.log("test parsed: ", parsed);
+    //         const cashed = await nftCash(parsed, "add");
+    //         console.log("test cashed2: ", cashed);
+    //         if (typeof cashed?.data === "object") {
+    //             const dataLoaded = true;
+    //             nftObj = { ...nft, ...cashed.data, dataLoaded };
+    //         } else {
+    //             console.error("NFT cash error: ", parsed);
+    //         }
+    //     }
+    // } catch (error) {
+    //     // console.error("tets error: ", error);
+    // }
+    if (
+        !testnet &&
+        nft?.native?.contract === "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a"
+    ) {
+        whitelisted = false;
+    } else if (!testnet) {
         try {
-            // const { data } = await axios.get(
-            //     `https://nft-cache.herokuapp.com/nft/data?tokenId=${nft.native.tokenId}&chainId=${nft.native.chainId}&contract=${nft.native.contract}`
-            // );
-            // console.log("parseEachNFT ~ parsed", data);
-            //     console.log("test cashed: ", cashed);
-            //     if (typeof cashed?.data === "object") {
-            //         const dataLoaded = true;
-            //         nftObj = { ...nft, ...cashed.data, dataLoaded };
-            //     } else {
-            //         const parsed = await nftGeneralParser(nft, account);
-            //         console.log("test parsed: ", parsed);
-            //         const cashed = await nftCash(parsed, "add");
-            //         console.log("test cashed2: ", cashed);
-            //         if (typeof cashed?.data === "object") {
-            //             const dataLoaded = true;
-            //             nftObj = { ...nft, ...cashed.data, dataLoaded };
-            //         } else {
-            //             console.error("NFT cash error: ", parsed);
-            //         }
-            //     }
+            whitelisted = await isWhiteListed(from.text, nft);
+            nftObj.whitelisted = whitelisted;
         } catch (error) {
-            // console.error("tets error: ", error);
+            console.log(error);
         }
-        if (
-            !testnet &&
-            nft?.native?.contract ===
-                "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a"
-        ) {
-            whitelisted = false;
-        } else if (!testnet) {
-            try {
-                whitelisted = await isWhiteListed(from.text, nft);
-                nftObj.whitelisted = whitelisted;
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        let parsed;
-        if (!claimables) {
-            // debugger;
-            parsed = await nftGeneralParser(nft, account, whitelisted);
-        } else {
-            const native = { contract: "", chainId: 15, tokeId: nft.nftId };
-            const nftNew = { ...nft, native };
-            parsed = await nftGeneralParser(nftNew, account, whitelisted);
-        }
-        const cashed = await nftCash(parsed, "add");
-        // console.log("parsed cashed", cashed, index);
-        const dataLoaded = true;
-        nftObj = !claimables
-            ? { ...nft, ...parsed.metaData, dataLoaded }
-            : { ...nft, dataLoaded };
     }
+    let parsed;
+    if (!claimables) {
+        // debugger;
+        parsed = await nftGeneralParser(nft, account, whitelisted);
+    } else {
+        const native = { contract: "", chainId: 15, tokeId: nft.nftId };
+        const nftNew = { ...nft, native };
+        parsed = await nftGeneralParser(nftNew, account, whitelisted);
+    }
+    const cashed = await nftCash(parsed, "add");
+    // console.log("parsed cashed", cashed, index);
+    const dataLoaded = true;
+    nftObj = !claimables
+        ? { ...nft, ...parsed.metaData, dataLoaded }
+        : { ...nft, dataLoaded };
+    // }
 
     if (
         claimables &&
