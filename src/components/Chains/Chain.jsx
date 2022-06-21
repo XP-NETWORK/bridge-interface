@@ -44,14 +44,17 @@ export default function Chain(props) {
     if (
       maintenance ||
       maintenance ||
-      (testnet ? false : !checkIfLive(chainKey, validatorsInfo)) ||
+      (location.pathname.includes("testnet")
+        ? false
+        : !checkIfLive(chainKey, validatorsInfo)) ||
       coming
     ) {
       return OFF;
     } else if (
       (location.pathname === "/testnet/account" ||
         location.pathname === "/account" ||
-        location.pathname === "/") &&
+        location.pathname === "/" ||
+        location.pathname.includes("testnet")) &&
       from?.text === text &&
       from.type !== "EVM"
     ) {
@@ -59,7 +62,8 @@ export default function Chain(props) {
     } else if (
       (location.pathname === "/testnet/connect" ||
         location.pathname === "/connect" ||
-        location.pathname === "/") &&
+        location.pathname === "/" ||
+        location.pathname.includes("testnet")) &&
       text === from?.text
     ) {
       return NONE;
