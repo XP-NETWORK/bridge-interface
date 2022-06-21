@@ -18,6 +18,7 @@ import ClaimableCard from "./ClaimableCard";
 import NotWhiteListed from "./NotWhiteListed";
 import zoomIn from "../../assets/img/icons/zoomInWhite.png";
 import ModalImage from "react-modal-image";
+import { parseNFT } from "../../wallet/nftParser";
 
 export default function NFTcard({ nft, index, claimables }) {
     const dispatch = useDispatch();
@@ -27,6 +28,7 @@ export default function NFTcard({ nft, index, claimables }) {
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
     const [imageErr, setImageErr] = useState(false);
     const [isVisible, setIsVisible] = useState();
+    const localhost = window.location.hostname;
 
     const callBackWhenObserver = (entries) => {
         const [entry] = entries;
@@ -73,7 +75,8 @@ export default function NFTcard({ nft, index, claimables }) {
     useEffect(async () => {
         if (!nft.dataLoaded) {
             if (isVisible) {
-                await parseEachNFT(nft, index, testnet, claimables);
+                // await parseEachNFT(nft, index, testnet, claimables);
+                await parseNFT(nft, index, testnet, claimables);
             }
         }
     }, [isVisible]);
@@ -164,6 +167,16 @@ export default function NFTcard({ nft, index, claimables }) {
                                 )}
                             </div>
                             <div className="nft__footer">
+                                {localhost === "localhost" && (
+                                    <span
+                                        style={{
+                                            fontSize: "10px",
+                                            color: "red",
+                                        }}
+                                    >
+                                        index: {index}
+                                    </span>
+                                )}
                                 <span className="nft-name">
                                     <span className="name">
                                         {nft.name || nft.native.name}
