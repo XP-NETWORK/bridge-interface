@@ -8,6 +8,9 @@ import { parseEachNFT } from "./helpers";
 
 const pool = requestPool(5000);
 
+const cacheUrl = `https://nft-cache.herokuapp.com`;
+//const cacheUrl = `http://localhost:3030`;
+
 export const parseNFT = async (nft, index, testnet, claimable) => {
   const { uri } = nft;
   let whitelisted = !testnet
@@ -27,11 +30,12 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
   const {
     general: { from, NFTList, account },
   } = store.getState();
+
   if (!claimable) {
     let nftCashResponse;
     try {
       nftCashResponse = await axios.get(
-        `https://nft-cache.herokuapp.com/nft/data?chainId=${nft.native?.chainId}&tokenId=${nft.native?.tokenId}&contract=${nft.native?.contract}`,
+        `${cacheUrl}/nft/data?chainId=${nft.native?.chainId}&tokenId=${nft.native?.tokenId}&contract=${nft.native?.contract}`,
         {
           headers: { "Content-type": "application/json" },
         }
@@ -40,6 +44,7 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
       console.error("nft-cache check db: ", error);
     }
     if (nftCashResponse.data === "no NFT with that data was found") {
+      console.log("new Nft");
       if (!testnet) {
         try {
           whitelisted = await isWhiteListed(from.text, nft);
@@ -48,18 +53,12 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
         }
       }
       const parsed = await nftGeneralParser(nft, account, whitelisted);
-      console.log(parsed, "parsed");
 
       if (parsed?.metaData?.image || parsed?.metaData?.animation_url) {
         try {
-          false &&
-            axios.post(
-              `https://nft-cache.herokuapp.com/nft/add`,
-              JSON.stringify(parsed),
-              {
-                headers: { "Content-type": "application/json" },
-              }
-            );
+          axios.post(`${cacheUrl}/nft/add`, JSON.stringify(parsed), {
+            headers: { "Content-type": "application/json" },
+          });
         } catch (error) {
           console.error("nft-cache add: ", error);
         }
@@ -78,6 +77,7 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
       }
       nftObj = { ...nft, ...nftCashResponse?.data, dataLoaded };
     }
+
     if (
       !NFTList[index]?.dataLoaded ||
       !NFTList[index]?.image ||
