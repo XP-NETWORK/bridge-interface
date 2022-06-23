@@ -6,7 +6,7 @@ import store from "../store/store";
 import { setEachNFT } from "../store/reducers/generalSlice";
 import { parseEachNFT } from "./helpers";
 
-const pool = requestPool(5000);
+//const pool = requestPool(5000);
 
 const cacheUrl = `https://nft-cache.herokuapp.com`;
 //const cacheUrl = `http://localhost:3030`;
@@ -44,7 +44,6 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
       console.error("nft-cache check db: ", error);
     }
     if (nftCashResponse.data === "no NFT with that data was found") {
-      console.log("new Nft");
       if (!testnet) {
         try {
           whitelisted = await isWhiteListed(from.text, nft);
@@ -53,8 +52,12 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
         }
       }
       const parsed = await nftGeneralParser(nft, account, whitelisted);
+      console.log(parsed, "parsed By Lib");
 
       if (parsed?.metaData?.image || parsed?.metaData?.animation_url) {
+        console.log(
+          `caching Nft ${parsed?.metaData?.name || parsed?.native?.name}`
+        );
         try {
           axios.post(`${cacheUrl}/nft/add`, JSON.stringify(parsed), {
             headers: { "Content-type": "application/json" },

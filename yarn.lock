@@ -1328,12 +1328,12 @@
     strip-json-comments "^3.1.1"
 
 "@ethereumjs/common@^2.5.0", "@ethereumjs/common@^2.6.4":
-  version "2.6.4"
-  resolved "https://registry.yarnpkg.com/@ethereumjs/common/-/common-2.6.4.tgz#1b3cdd3aa4ee3b0ca366756fc35e4a03022a01cc"
-  integrity sha512-RDJh/R/EAr+B7ZRg5LfJ0BIpf/1LydFgYdvZEuTraojCbVypO2sQ+QnpP5u2wJf9DASyooKqu8O4FJEWUV6NXw==
+  version "2.6.5"
+  resolved "https://registry.yarnpkg.com/@ethereumjs/common/-/common-2.6.5.tgz#0a75a22a046272579d91919cb12d84f2756e8d30"
+  integrity sha512-lRyVQOeCDaIVtgfbowla32pzeDv2Obr8oR8Put5RdUBNRGr1VGPGQNGP6elWIpgK3YdpzqTOh4GyUGOureVeeA==
   dependencies:
     crc-32 "^1.2.0"
-    ethereumjs-util "^7.1.4"
+    ethereumjs-util "^7.1.5"
 
 "@ethereumjs/tx@^3.3.2":
   version "3.5.2"
@@ -4325,9 +4325,9 @@ algosdk@^1.12.0:
     url-parse "^1.5.1"
 
 algosdk@^1.15.0-beta.1:
-  version "1.17.0"
-  resolved "https://registry.yarnpkg.com/algosdk/-/algosdk-1.17.0.tgz#fd61e6d97d976b007df9c26b864037a325481a34"
-  integrity sha512-WwHbZV03tZ2C/VLOapWOzJImm4lokav9HXnPLqbGrXyb8Gn/Q2AsoKMbOxd6MTzWguhaXU4Yk0VtbFlYhkaeoA==
+  version "1.18.0"
+  resolved "https://registry.yarnpkg.com/algosdk/-/algosdk-1.18.0.tgz#251abbb495843dbc2998426a548794e2e1ff772f"
+  integrity sha512-+baSG0IrcZf2Qt35HyQF7wAkOykEW2iMhghUa/tcFNu4dMcvv41AUPRrB1T/bKq6dsb4OvbCzCEHAdaztBp32w==
   dependencies:
     algo-msgpack-with-bigint "^2.1.1"
     buffer "^6.0.2"
@@ -7889,7 +7889,7 @@ ethereumjs-util@^6.0.0:
     ethjs-util "0.1.6"
     rlp "^2.2.3"
 
-ethereumjs-util@^7.0.10, ethereumjs-util@^7.1.0, ethereumjs-util@^7.1.4, ethereumjs-util@^7.1.5:
+ethereumjs-util@^7.0.10, ethereumjs-util@^7.1.0, ethereumjs-util@^7.1.5:
   version "7.1.5"
   resolved "https://registry.yarnpkg.com/ethereumjs-util/-/ethereumjs-util-7.1.5.tgz#9ecf04861e4fbbeed7465ece5f23317ad1129181"
   integrity sha512-SDl5kKrQAudFBUe5OJM9Ac6WmMyYmXX/6sTmLZ3ffG2eY6ZIGBes3pEDxNN6V72WyOw4CPD5RomKdsa8DAAwLg==
@@ -10982,9 +10982,9 @@ keyv@^3.0.0:
     json-buffer "3.0.0"
 
 keyv@^4.0.0:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/keyv/-/keyv-4.3.1.tgz#7970672f137d987945821b1a07b524ce5a4edd27"
-  integrity sha512-nwP7AQOxFzELXsNq3zCx/oh81zu4DHWwCE6W9RaeHb7OHO0JpmKS8n801ovVQC7PTsZDWtPA5j1QY+/WWtARYg==
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/keyv/-/keyv-4.3.2.tgz#e839df676a0c7ee594c8835e7c1c83742558e5c2"
+  integrity sha512-kn8WmodVBe12lmHpA6W8OY7SNh6wVR+Z+wZESF4iF5FCazaVXGWOtnbnvX0tMQ1bO+/TmOD9LziuYMvrIIs0xw==
   dependencies:
     compress-brotli "^1.3.8"
     json-buffer "3.0.1"
@@ -11905,7 +11905,7 @@ next-tick@^1.1.0:
 
 "nft-parser@git+https://github.com/xp-network/nft-parser#bleeding-edge":
   version "0.1.5"
-  resolved "git+https://github.com/xp-network/nft-parser#4142faed617a0a93441bab511aed006b88bf38a8"
+  resolved "git+https://github.com/xp-network/nft-parser#3e996d596d4d72ba3cd92c7f80621d5b7e456eac"
   dependencies:
     "@types/node" "^17.0.35"
     axios "^0.27.2"
@@ -17897,7 +17897,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "3.0.10"
-  resolved "git+https://github.com/xp-network/xpjs#7dacdd28254dc436f343fa5b023fbd388c613521"
+  resolved "git+https://github.com/xp-network/xpjs#6cd109242f064c43f3e30b77b463c07404ef94f7"
   dependencies:
     "@elrondnetwork/erdjs" "9.0.3"
     "@json-rpc-tools/utils" "^1.7.6"
