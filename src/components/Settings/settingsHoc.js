@@ -13,6 +13,8 @@ import { comingSoonChains } from "../../store/reducers/settingsSlice";
 import { debounce } from "../helpers";
 import { usePrevious } from "./hooks";
 
+import {checkRgbaOut} from './helpers'
+
 const Web3Utils = require("web3-utils");
 
 const settingsHoc = (Wrapped) => (props) => {
@@ -162,31 +164,30 @@ const settingsHoc = (Wrapped) => (props) => {
   };
 
   const iframeSrc = useMemo(
-    () =>
-      `${window.location.href
+    () =>  `${window.location.href
         .replace("#", "")
         .replace("wsettings=true", "")}background=${backgroundColor &&
-        backgroundColor.split("#")[1]}&panelBackground=${panelBackground &&
-        panelBackground.split("#")[1]}&modalBackground=${modalBackground &&
-        modalBackground.split("#")[1]}&color=${color &&
-        color.split("#")[1]}&fontSize=${fontSize &&
+          checkRgbaOut(backgroundColor).split("#")[1]}&panelBackground=${panelBackground &&
+        checkRgbaOut(panelBackground).split("#")[1]}&modalBackground=${modalBackground &&
+          checkRgbaOut(modalBackground).split("#")[1]}&color=${color &&
+            checkRgbaOut(color).split("#")[1]}&fontSize=${fontSize &&
         fontSize}&btnColor=${btnColor &&
-        btnColor.split("#")[1]}&btnBackground=${btnBackground &&
-        btnBackground.split("#")[1]}&btnRadius=${btnRadius &&
+          checkRgbaOut(btnColor).split("#")[1]}&btnBackground=${btnBackground &&
+            checkRgbaOut(btnBackground).split("#")[1]}&btnRadius=${btnRadius &&
         btnRadius}&fontFamily=${fontFamily &&
         fontFamily}&chains=${selectedChains.join(
         "-"
       )}&from=${fromChain}&to=${toChain}&cardBackground=${cardBackground &&
-        cardBackground.split("#")[1]}&cardBackgroundBot=${cardBackgroundBot &&
-        cardBackgroundBot.split("#")[1]}&cardColor=${cardColor &&
-        cardColor.split("#")[1]}&cardRadius=${cardRadius &&
+        checkRgbaOut(cardBackground).split("#")[1]}&cardBackgroundBot=${cardBackgroundBot &&
+          checkRgbaOut(cardBackgroundBot).split("#")[1]}&cardColor=${cardColor &&
+            checkRgbaOut(cardColor).split("#")[1]}&cardRadius=${cardRadius &&
         cardRadius}&secondaryColor=${secondaryColor &&
-        secondaryColor.split("#")[1]}&accentColor=${accentColor &&
-        accentColor.split("#")[1]}&borderColor=${borderColor &&
-        borderColor.split("#")[1]}&iconColor=${iconColor &&
-        iconColor.split("#")[1]}&tooltipBg=${tooltipBg &&
-        tooltipBg.split("#")[1]}&tooltipColor=${tooltipColor &&
-        tooltipColor.split("#")[1]}&wallets=${selectedWallets.join(
+          checkRgbaOut(secondaryColor).split("#")[1]}&accentColor=${accentColor &&
+            checkRgbaOut(accentColor).split("#")[1]}&borderColor=${borderColor &&
+              checkRgbaOut(borderColor).split("#")[1]}&iconColor=${iconColor &&
+                checkRgbaOut(iconColor).split("#")[1]}&tooltipBg=${tooltipBg &&
+          checkRgbaOut(tooltipBg).split("#")[1]}&tooltipColor=${tooltipColor &&
+            checkRgbaOut(tooltipColor).split("#")[1]}&wallets=${selectedWallets.join(
         "-"
       )}&bridgeState=${JSON.stringify(
         bridgeState

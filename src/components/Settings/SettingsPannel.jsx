@@ -4,7 +4,7 @@ import { Modal } from "react-bootstrap";
 import { ReactComponent as UndoComp } from "./assets/img/undo.svg";
 import { ReactComponent as RedoComp } from "./assets/img/undo.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { copyCode } from "./helpers";
+import { copyCode, checkRgbaIn } from "./helpers";
 import { setSettings } from "../../store/reducers/settingsSlice";
 
 import close from "./assets/img/icon/close_light.svg";
@@ -49,34 +49,34 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
         btnRadius: Number(findValue("btnRadius")) || settings["btnRadius"],
         fontSize: Number(findValue("fontSize")) || settings["fontSize"],
         backgroundColor:
-          "#" + findValue("background") || settings["backgroundColor"],
+          checkRgbaIn("#" + findValue("background")) || settings["backgroundColor"],
         panelBackground:
-          "#" + findValue("panelBackground") || settings["panelBackground"],
+          checkRgbaIn("#" + findValue("panelBackground")) || settings["panelBackground"],
         modalBackground:
-          "#" + findValue("modalBackground") || settings["modalBackground"],
-        color: "#" + findValue("color") || settings["color"],
+          checkRgbaIn("#" + findValue("modalBackground")) || settings["modalBackground"],
+        color: checkRgbaIn("#" + findValue("color")) || settings["color"],
         btnBackground:
-          "#" + findValue("btnBackground") || settings["btnBackground"],
-        btnColor: "#" + findValue("btnColor") || settings["btnColor"],
+          checkRgbaIn("#" + findValue("btnBackground")) || settings["btnBackground"],
+        btnColor: checkRgbaIn("#" + findValue("btnColor")) || settings["btnColor"],
         fontFamily: findValue("fontFamily") || settings["fontFamily"],
         cardBackground:
-          "#" + findValue("cardBackground") || settings["cardBackground"],
+          checkRgbaIn("#" + findValue("cardBackground")) || settings["cardBackground"],
         cardBackgroundBot:
-          "#" + findValue("cardBackgroundBot") || settings["cardBackgroundBot"],
-        cardColor: "#" + findValue("cardColor") || settings["cardColor"],
+          checkRgbaIn("#" + findValue("cardBackgroundBot")) || settings["cardBackgroundBot"],
+        cardColor: checkRgbaIn("#" + findValue("cardColor")) || settings["cardColor"],
         cardRadius: Number(findValue("cardRadius")) || settings["cardRadius"],
-        accentColor: "#" + findValue("accentColor") || settings["accentColor"],
+        accentColor: checkRgbaIn("#" + findValue("accentColor")) || settings["accentColor"],
         secondaryColor:
-          "#" + findValue("secondaryColor") || settings["secondaryColor"],
+          checkRgbaIn("#" + findValue("secondaryColor")) || settings["secondaryColor"],
         selectedChains:
           findValue("chains")?.split("-") || settings["selectedChains"],
         selectedWallets:
           findValue("wallets")?.split("-") || settings["selectedWallets"],
-        borderColor: "#" + findValue("borderColor") || settings["borderColor"],
-        iconColor: "#" + findValue("iconColor") || settings["iconColor"],
-        tooltipBg: "#" + findValue("tooltipBg") || settings["tooltipBg"],
+        borderColor: checkRgbaIn("#" + findValue("borderColor")) || settings["borderColor"],
+        iconColor: checkRgbaIn("#" + findValue("iconColor")) || settings["iconColor"],
+        tooltipBg: checkRgbaIn("#" + findValue("tooltipBg")) || settings["tooltipBg"],
         tooltipColor:
-          "#" + findValue("tooltipColor") || settings["tooltipColor"],
+          checkRgbaIn("#" + findValue("tooltipColor")) || settings["tooltipColor"],
         affiliationFees: findValue("affiliationFees")
           ? Math.floor((Number(findValue("affiliationFees")) - 1) * 100)
           : settings["affiliationFees"],
@@ -124,7 +124,7 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
                     Copy Code
                   </button>
                 </div>
-                <textarea id="pannelIframe" value={iframeSrc}></textarea>
+                <textarea id="pannelIframe" value={`<iframe src='${iframeSrc}' frameborder='0'  width="100%" height="800px"></iframe>`}></textarea>
               </>
             )}
 

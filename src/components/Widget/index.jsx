@@ -15,6 +15,7 @@ import { useLocation } from "react-router";
 import { ethers } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import { InjectedMetaMask } from "../../metamask/conectors";
+import { checkRgbaIn } from '../Settings/helpers'
 
 //.nft-list__wrappera
 const mobileOnlyBanner = `
@@ -97,27 +98,27 @@ export default function Widget() {
 
       dispatch(
         setSettings({
-          backgroundColor: "#" + backgroundColor,
-          panelBackground: "#" + panelBackground,
-          modalBackground: "#" + modalBackground,
-          color: "#" + color,
+          backgroundColor: checkRgbaIn("#" + backgroundColor),
+          panelBackground: checkRgbaIn("#" + panelBackground),
+          modalBackground: checkRgbaIn("#" + modalBackground),
+          color: checkRgbaIn("#" + color),
           fontFamily,
           fontSize: fontSize.replace(/\D/g, ""),
-          btnColor: "#" + btnColor,
-          btnBackground: "#" + btnBackground,
+          btnColor: checkRgbaIn("#" + btnColor),
+          btnBackground: checkRgbaIn("#" + btnBackground),
           btnRadius: btnRadius.replace(/\D/g, ""),
           selectedChains: chains,
           selectedWallets: wallets,
-          cardBackground: "#" + cardBackground,
-          cardBackgroundBot: "#" + cardBackgroundBot,
-          cardColor: "#" + cardColor,
+          cardBackground: checkRgbaIn("#" + cardBackground),
+          cardBackgroundBot: checkRgbaIn("#" + cardBackgroundBot),
+          cardColor: checkRgbaIn("#" + cardColor),
           cardRadius: cardRadius.replace(/\D/g, ""),
-          accentColor: "#" + accentColor,
-          secondaryColor: "#" + secondaryColor,
-          borderColor: "#" + borderColor,
-          tooltipColor: "#" + tooltipColor,
-          tooltipBg: "#" + tooltipBg,
-          iconColor: "#" + iconColor,
+          accentColor: checkRgbaIn("#" + accentColor),
+          secondaryColor: checkRgbaIn("#" + secondaryColor),
+          borderColor: checkRgbaIn("#" + borderColor),
+          tooltipColor: checkRgbaIn("#" + tooltipColor),
+          tooltipBg: checkRgbaIn("#" + tooltipBg),
+          iconColor: checkRgbaIn("#" + iconColor),
           showLink: showLink === "true" ? true : false,
           affiliationFees: ((+affiliationFees - 1) * 100).toFixed(0),
           fromChain: fromChain,
@@ -237,8 +238,7 @@ export default function Widget() {
       console.log(location.pathname);
       $style.innerHTML = `
 
-      ${
-        wsettings
+      ${wsettings
           ? `
           .modal-backdrop.show, .modal {
               width: calc(100% - ${collapsed ? "35" : "300"}px);
@@ -248,7 +248,7 @@ export default function Widget() {
       
       `
           : ""
-      }
+        }
 
       .setting_sidebar {
         font-size: 16px !important;
@@ -261,8 +261,7 @@ export default function Widget() {
 
       div#root {
       
-        overflow-y: ${
-          !location.pathname.includes("account") ? "hidden" : "auto"
+        overflow-y: ${!location.pathname.includes("account") ? "hidden" : "auto"
         };
       }
 
@@ -291,7 +290,7 @@ export default function Widget() {
         margin-top: 0;
 
       }
-
+      
       .nft-list__wrapper {
         justify-content: center;
       }
@@ -355,9 +354,8 @@ export default function Widget() {
 
       
         .swap-chain__btn{
-          display: ${
-            isFrom !== isTo && !wsettings ? "none" : "inline"
-          } !important;
+          display: ${isFrom !== isTo && !wsettings ? "none" : "inline"
+        } !important;
         }
         .seleDepat{
           pointer-events: ${isFrom && !wsettings ? "none" : "auto"};

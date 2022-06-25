@@ -20,3 +20,6 @@ export const copyCode = (setCopied, id) => {
 
     setTimeout(() => setCopied(false), 500);
   }
+
+  export const checkRgbaOut = (text) => text.includes('rgba(')? '#' + text : text
+  export const checkRgbaIn = (text) => text.includes('rgba(')? text.replace('#', ''): text
