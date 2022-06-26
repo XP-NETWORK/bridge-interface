@@ -33,14 +33,10 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
     settings,
   }));
 
-  console.log(settings);
-
   const findValue = (param) =>
     iframeInput
       ?.match(new RegExp(`(?<=${param}\=)(.*?)(?=(\&amp\;|\&|\'|\"))`))
       ?.at(0);
-
-  console.log(findValue("btnBackground"));
 
   const parseIframe = () => {
     if (!iframeInput) return;
@@ -49,34 +45,50 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
         btnRadius: Number(findValue("btnRadius")) || settings["btnRadius"],
         fontSize: Number(findValue("fontSize")) || settings["fontSize"],
         backgroundColor:
-          checkRgbaIn("#" + findValue("background")) || settings["backgroundColor"],
+          checkRgbaIn("#" + findValue("background")) ||
+          settings["backgroundColor"],
         panelBackground:
-          checkRgbaIn("#" + findValue("panelBackground")) || settings["panelBackground"],
+          checkRgbaIn("#" + findValue("panelBackground")) ||
+          settings["panelBackground"],
         modalBackground:
-          checkRgbaIn("#" + findValue("modalBackground")) || settings["modalBackground"],
+          checkRgbaIn("#" + findValue("modalBackground")) ||
+          settings["modalBackground"],
         color: checkRgbaIn("#" + findValue("color")) || settings["color"],
         btnBackground:
-          checkRgbaIn("#" + findValue("btnBackground")) || settings["btnBackground"],
-        btnColor: checkRgbaIn("#" + findValue("btnColor")) || settings["btnColor"],
+          checkRgbaIn("#" + findValue("btnBackground")) ||
+          settings["btnBackground"],
+        btnColor:
+          checkRgbaIn("#" + findValue("btnColor")) || settings["btnColor"],
         fontFamily: findValue("fontFamily") || settings["fontFamily"],
         cardBackground:
-          checkRgbaIn("#" + findValue("cardBackground")) || settings["cardBackground"],
+          checkRgbaIn("#" + findValue("cardBackground")) ||
+          settings["cardBackground"],
         cardBackgroundBot:
-          checkRgbaIn("#" + findValue("cardBackgroundBot")) || settings["cardBackgroundBot"],
-        cardColor: checkRgbaIn("#" + findValue("cardColor")) || settings["cardColor"],
+          checkRgbaIn("#" + findValue("cardBackgroundBot")) ||
+          settings["cardBackgroundBot"],
+        cardColor:
+          checkRgbaIn("#" + findValue("cardColor")) || settings["cardColor"],
         cardRadius: Number(findValue("cardRadius")) || settings["cardRadius"],
-        accentColor: checkRgbaIn("#" + findValue("accentColor")) || settings["accentColor"],
+        accentColor:
+          checkRgbaIn("#" + findValue("accentColor")) ||
+          settings["accentColor"],
         secondaryColor:
-          checkRgbaIn("#" + findValue("secondaryColor")) || settings["secondaryColor"],
+          checkRgbaIn("#" + findValue("secondaryColor")) ||
+          settings["secondaryColor"],
         selectedChains:
           findValue("chains")?.split("-") || settings["selectedChains"],
         selectedWallets:
           findValue("wallets")?.split("-") || settings["selectedWallets"],
-        borderColor: checkRgbaIn("#" + findValue("borderColor")) || settings["borderColor"],
-        iconColor: checkRgbaIn("#" + findValue("iconColor")) || settings["iconColor"],
-        tooltipBg: checkRgbaIn("#" + findValue("tooltipBg")) || settings["tooltipBg"],
+        borderColor:
+          checkRgbaIn("#" + findValue("borderColor")) ||
+          settings["borderColor"],
+        iconColor:
+          checkRgbaIn("#" + findValue("iconColor")) || settings["iconColor"],
+        tooltipBg:
+          checkRgbaIn("#" + findValue("tooltipBg")) || settings["tooltipBg"],
         tooltipColor:
-          checkRgbaIn("#" + findValue("tooltipColor")) || settings["tooltipColor"],
+          checkRgbaIn("#" + findValue("tooltipColor")) ||
+          settings["tooltipColor"],
         affiliationFees: findValue("affiliationFees")
           ? Math.floor((Number(findValue("affiliationFees")) - 1) * 100)
           : settings["affiliationFees"],
@@ -102,13 +114,13 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
             className="controlBtn withIcon"
             onClick={() => setMode("export")}
           >
-            Export code
+            <span>Export code</span>
           </button>
           <button
             className="controlBtn withIcon import"
             onClick={() => setMode("import")}
           >
-            Import code
+            <span>Import code</span>
           </button>
         </div>
 
@@ -124,7 +136,10 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
                     Copy Code
                   </button>
                 </div>
-                <textarea id="pannelIframe" value={`<iframe src='${iframeSrc}' frameborder='0'  width="100%" height="800px"></iframe>`}></textarea>
+                <textarea
+                  id="pannelIframe"
+                  value={`<iframe src='${iframeSrc}' frameborder='0'  width="100%" height="800px"></iframe>`}
+                ></textarea>
               </>
             )}
 

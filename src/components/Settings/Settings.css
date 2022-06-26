@@ -1855,10 +1855,14 @@ li.blockChain_item .blockChainItem span {
   position: relative;
 }
 
+.controlBtn.withIcon span {
+  margin-left: -10px;
+}
+
 .withIcon::before {
   content: "";
   position: absolute;
-  left: 14px;
+  left: 10px;
   top: 50%;
   transform: translateY(-50%);
   width: 24px;

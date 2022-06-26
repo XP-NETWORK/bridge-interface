@@ -26,6 +26,8 @@ export const activeChains = [
   ...chains.filter((chain) => !chain.maintenance).map((c) => c.value),
 ];
 
+console.log(activeChains);
+
 export const newChains = ["Velas"];
 
 export const comingSoonChains = ["Cardano", "Solana", "TON"];
@@ -93,8 +95,8 @@ const settingSlice = createSlice({
     setSettings(state, action) {
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     },
     toggleTheme(state) {
       state.theme = state.theme === "dtm" ? "ltm" : "dtm";

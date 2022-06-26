@@ -13,7 +13,7 @@ import { comingSoonChains } from "../../store/reducers/settingsSlice";
 import { debounce } from "../helpers";
 import { usePrevious } from "./hooks";
 
-import {checkRgbaOut} from './helpers'
+import { checkRgbaOut } from "./helpers";
 
 const Web3Utils = require("web3-utils");
 
@@ -117,7 +117,7 @@ const settingsHoc = (Wrapped) => (props) => {
 
     if (checked) {
       if (activeChains.includes(val)) {
-        const canCheckout = activeChainsNumber > 2; //comingSoonChains.includes(val)? true: activeChainsNumber - selectedChains.reduce((acc, cur) => acc + comingSoonChains.includes(cur)? 1: 0, 0) > 2;
+        const canCheckout = activeChainsNumber > 3; //comingSoonChains.includes(val)? true: activeChainsNumber - selectedChains.reduce((acc, cur) => acc + comingSoonChains.includes(cur)? 1: 0, 0) > 2;
 
         dispatch(
           setSettings({
@@ -164,32 +164,39 @@ const settingsHoc = (Wrapped) => (props) => {
   };
 
   const iframeSrc = useMemo(
-    () =>  `${window.location.href
+    () =>
+      `${window.location.href
         .replace("#", "")
         .replace("wsettings=true", "")}background=${backgroundColor &&
-          checkRgbaOut(backgroundColor).split("#")[1]}&panelBackground=${panelBackground &&
-        checkRgbaOut(panelBackground).split("#")[1]}&modalBackground=${modalBackground &&
-          checkRgbaOut(modalBackground).split("#")[1]}&color=${color &&
-            checkRgbaOut(color).split("#")[1]}&fontSize=${fontSize &&
+        checkRgbaOut(backgroundColor).split(
+          "#"
+        )[1]}&panelBackground=${panelBackground &&
+        checkRgbaOut(panelBackground).split(
+          "#"
+        )[1]}&modalBackground=${modalBackground &&
+        checkRgbaOut(modalBackground).split("#")[1]}&color=${color &&
+        checkRgbaOut(color).split("#")[1]}&fontSize=${fontSize &&
         fontSize}&btnColor=${btnColor &&
-          checkRgbaOut(btnColor).split("#")[1]}&btnBackground=${btnBackground &&
-            checkRgbaOut(btnBackground).split("#")[1]}&btnRadius=${btnRadius &&
+        checkRgbaOut(btnColor).split("#")[1]}&btnBackground=${btnBackground &&
+        checkRgbaOut(btnBackground).split("#")[1]}&btnRadius=${btnRadius &&
         btnRadius}&fontFamily=${fontFamily &&
         fontFamily}&chains=${selectedChains.join(
         "-"
       )}&from=${fromChain}&to=${toChain}&cardBackground=${cardBackground &&
-        checkRgbaOut(cardBackground).split("#")[1]}&cardBackgroundBot=${cardBackgroundBot &&
-          checkRgbaOut(cardBackgroundBot).split("#")[1]}&cardColor=${cardColor &&
-            checkRgbaOut(cardColor).split("#")[1]}&cardRadius=${cardRadius &&
+        checkRgbaOut(cardBackground).split(
+          "#"
+        )[1]}&cardBackgroundBot=${cardBackgroundBot &&
+        checkRgbaOut(cardBackgroundBot).split("#")[1]}&cardColor=${cardColor &&
+        checkRgbaOut(cardColor).split("#")[1]}&cardRadius=${cardRadius &&
         cardRadius}&secondaryColor=${secondaryColor &&
-          checkRgbaOut(secondaryColor).split("#")[1]}&accentColor=${accentColor &&
-            checkRgbaOut(accentColor).split("#")[1]}&borderColor=${borderColor &&
-              checkRgbaOut(borderColor).split("#")[1]}&iconColor=${iconColor &&
-                checkRgbaOut(iconColor).split("#")[1]}&tooltipBg=${tooltipBg &&
-          checkRgbaOut(tooltipBg).split("#")[1]}&tooltipColor=${tooltipColor &&
-            checkRgbaOut(tooltipColor).split("#")[1]}&wallets=${selectedWallets.join(
-        "-"
-      )}&bridgeState=${JSON.stringify(
+        checkRgbaOut(secondaryColor).split("#")[1]}&accentColor=${accentColor &&
+        checkRgbaOut(accentColor).split("#")[1]}&borderColor=${borderColor &&
+        checkRgbaOut(borderColor).split("#")[1]}&iconColor=${iconColor &&
+        checkRgbaOut(iconColor).split("#")[1]}&tooltipBg=${tooltipBg &&
+        checkRgbaOut(tooltipBg).split("#")[1]}&tooltipColor=${tooltipColor &&
+        checkRgbaOut(tooltipColor).split(
+          "#"
+        )[1]}&wallets=${selectedWallets.join("-")}&bridgeState=${JSON.stringify(
         bridgeState
       )}&showLink=${showLink}&affiliationFees=${
         affiliationFees ? +affiliationFees / 100 + 1 : 1

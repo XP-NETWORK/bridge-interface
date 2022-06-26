@@ -15,7 +15,7 @@ import { useLocation } from "react-router";
 import { ethers } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import { InjectedMetaMask } from "../../metamask/conectors";
-import { checkRgbaIn } from '../Settings/helpers'
+import { checkRgbaIn } from "../Settings/helpers";
 
 //.nft-list__wrappera
 const mobileOnlyBanner = `
@@ -235,10 +235,11 @@ export default function Widget() {
       document.head.appendChild($style);
 
       //$img.onclick = window.open("https://xp.network/", "_blank").focus();
-      console.log(location.pathname);
+
       $style.innerHTML = `
 
-      ${wsettings
+      ${
+        wsettings
           ? `
           .modal-backdrop.show, .modal {
               width: calc(100% - ${collapsed ? "35" : "300"}px);
@@ -248,7 +249,7 @@ export default function Widget() {
       
       `
           : ""
-        }
+      }
 
       .setting_sidebar {
         font-size: 16px !important;
@@ -261,7 +262,8 @@ export default function Widget() {
 
       div#root {
       
-        overflow-y: ${!location.pathname.includes("account") ? "hidden" : "auto"
+        overflow-y: ${
+          !location.pathname.includes("account") ? "hidden" : "auto"
         };
       }
 
@@ -354,8 +356,9 @@ export default function Widget() {
 
       
         .swap-chain__btn{
-          display: ${isFrom !== isTo && !wsettings ? "none" : "inline"
-        } !important;
+          display: ${
+            isFrom !== isTo && !wsettings ? "none" : "inline"
+          } !important;
         }
         .seleDepat{
           pointer-events: ${isFrom && !wsettings ? "none" : "auto"};
