@@ -133,9 +133,6 @@ export default function ChangeWalletModal() {
             default:
                 break;
         }
-        // } else {
-        //     console.log("jshskdhf");
-        // }
     };
 
     return (

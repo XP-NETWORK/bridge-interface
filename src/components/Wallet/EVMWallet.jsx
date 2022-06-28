@@ -96,12 +96,8 @@ export default function EVMWallet({ wallet, close }) {
                     dispatch(setMetaMask(true));
                     close();
                     if (to) {
-                        if (chainId !== from.chainId) {
+                        if (chainId !== from?.chainId) {
                             const switched = await switchNetwork();
-                            console.log(
-                                "🚀 ~ file: EVMWallet.jsx ~ line 100 ~ connectHandler ~ switched",
-                                switched
-                            );
                             if (switched) navigateToAccountRoute();
                         } else navigateToAccountRoute();
                     }
