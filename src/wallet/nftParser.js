@@ -38,6 +38,7 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
         `${cacheUrl}/nft/data?chainId=${nft.native?.chainId}&tokenId=${nft.native?.tokenId}&contract=${nft.native?.contract}`,
         {
           headers: { "Content-type": "application/json" },
+          timeout: 5000,
         }
       );
     } catch (error) {
@@ -89,6 +90,7 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
       store.dispatch(setEachNFT({ nftObj, index }));
     }
   } else {
+    console.log("da");
     await parseEachNFT(nft, index, testnet, claimable);
   }
 };
