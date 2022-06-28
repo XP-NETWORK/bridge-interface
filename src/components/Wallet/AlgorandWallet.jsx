@@ -9,7 +9,7 @@ import MyAlgoBlue from "../../assets/img/wallet/MyAlgoBlue.svg";
 import AlgoSignerIcon from "../../assets/img/wallet/Algo Signer.png";
 import { useSelector } from "react-redux";
 import { id } from "ethers/lib/utils";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function AlgorandWallet({ wallet, close }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -17,6 +17,11 @@ export default function AlgorandWallet({ wallet, close }) {
     const to = useSelector((state) => state.general.to);
     const testnet = useSelector((state) => state.general.testNet);
     const navigate = useNavigate();
+    const location = useLocation();
+    const truePathname =
+        location.pathname === "/" ||
+        location.pathname === "/connect" ||
+        location.pathname === "/testnet/connect";
 
     const navigateToAccountRoute = () => {
         navigate(testnet ? `/testnet/account` : `/account`);
@@ -55,7 +60,7 @@ export default function AlgorandWallet({ wallet, close }) {
 
     return wallet === "MyAlgo" ? (
         <li
-            style={getStyle()}
+            style={truePathname ? getStyle() : {}}
             // style={{pointerEvents: "none", opacity: '0.6'}}
             onClick={() => connectionHandler("MyAlgo")}
             className="wllListItem algo"
@@ -66,7 +71,7 @@ export default function AlgorandWallet({ wallet, close }) {
         </li>
     ) : wallet === "AlgoSigner" ? (
         <li
-            style={getStyle()}
+            style={truePathname ? getStyle() : {}}
             // style={{pointerEvents: "none", opacity: '0.6'}}
             onClick={() => connectionHandler("AlgoSigner")}
             data-wallet="AlgoSigner"
@@ -77,7 +82,7 @@ export default function AlgorandWallet({ wallet, close }) {
         </li>
     ) : (
         <li
-            style={getStyle()}
+            style={truePathname ? getStyle() : {}}
             onClick={() => connectionHandler("Algorand Wallet")}
             data-wallet="Algorand Wallet"
             className="wllListItem algo"

@@ -12,10 +12,10 @@ export default function TezosWallet({ wallet, close }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const navigate = useNavigate();
     const location = useLocation();
-    const truePath =
+    const truePathname =
         location.pathname === "/" ||
         location.pathname === "/connect" ||
-        location.pathname === "";
+        location.pathname === "/testnet/connect";
 
     const navigateToAccountRoute = () => {
         navigate(testnet ? `/testnet/account` : `/account`);
@@ -64,7 +64,7 @@ export default function TezosWallet({ wallet, close }) {
         <li
             onClick={() => handleConnect("TempleWallet")}
             data-wallet="TempleWallet"
-            style={getStyle()}
+            style={truePathname ? getStyle() : {}}
             className="wllListItem"
         >
             <img style={{ width: "28px" }} src={Temple} alt="Temple Icon" />{" "}
@@ -72,7 +72,7 @@ export default function TezosWallet({ wallet, close }) {
         </li>
     ) : (
         <li
-            style={getStyle()}
+            style={truePathname ? getStyle() : {}}
             data-wallet="Beacon"
             onClick={() => handleConnect("Beacon")}
             className="wllListItem beacon"

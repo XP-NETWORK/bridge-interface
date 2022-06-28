@@ -22,6 +22,11 @@ export default function EVMWallet({ wallet, close }) {
     const testnet = useSelector((state) => state.general.testNet);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
+    const truePathname =
+        location.pathname === "/" ||
+        location.pathname === "/connect" ||
+        location.pathname === "/testnet/connect";
 
     const getMobOps = () =>
         /android/i.test(navigator.userAgent || navigator.vendor || window.opera)
@@ -137,7 +142,7 @@ export default function EVMWallet({ wallet, close }) {
 
     return wallet === "MetaMask" /* METAMASK */ ? (
         <li
-            style={getStyle()}
+            style={truePathname ? getStyle() : {}}
             onClick={() => connectHandler("MetaMask")}
             className="wllListItem"
             data-wallet="MetaMask"
@@ -153,7 +158,7 @@ export default function EVMWallet({ wallet, close }) {
       from.text !== "Fuse" ? (
         <li
             onClick={() => connectHandler("TrustWallet")}
-            style={getStyle()}
+            style={truePathname ? getStyle() : {}}
             data-wallet="TrustWallet"
             className="wllListItem"
         >
@@ -166,7 +171,7 @@ export default function EVMWallet({ wallet, close }) {
       from.text !== "Iotex" &&
       from.text !== "Fuse" ? (
         <li
-            style={getStyle()}
+            style={truePathname ? getStyle() : {}}
             onClick={() => connectHandler("WalletConnect")}
             className="wllListItem"
             data-wallet="WalletConnect"

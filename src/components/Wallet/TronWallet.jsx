@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { connectTronlink } from "./ConnectWalletHelper";
 import Tron from "../../assets/img/wallet/TronLink.svg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function TronWallet({ close }) {
     const from = useSelector((state) => state.general.from);
@@ -10,6 +10,11 @@ export default function TronWallet({ close }) {
     const testnet = useSelector((state) => state.general.testNet);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const navigate = useNavigate();
+    const location = useLocation();
+    const truePathname =
+        location.pathname === "/" ||
+        location.pathname === "/connect" ||
+        location.pathname === "/testnet/connect";
 
     const connectHandler = async () => {
         const connected = await connectTronlink();
@@ -22,16 +27,13 @@ export default function TronWallet({ close }) {
     };
 
     const getStyle = () => {
-        if (!from) {
-            return {};
-        } else if (from && from.text === "Tron") {
-            return {};
-        } else return OFF;
+        if (from?.text === "Tron") return {};
+        else return OFF;
     };
 
     return (
         <li
-            style={from?.text === "Tron" ? {} : OFF}
+            style={truePathname ? getStyle() : {}}
             onClick={connectHandler}
             data-wallet="TronLink"
             className="wllListItem"

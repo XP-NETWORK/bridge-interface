@@ -3,7 +3,7 @@ import Sync2 from "../../assets/img/wallet/Sync2_.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { connectSync2 } from "./ConnectWalletHelper";
 import { setSync2 } from "../../store/reducers/generalSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function VeChainWallet({ close }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -12,6 +12,11 @@ export default function VeChainWallet({ close }) {
     const testnet = useSelector((state) => state.general.testNet);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
+    const truePathname =
+        location.pathname === "/" ||
+        location.pathname === "/connect" ||
+        location.pathname === "/testnet/connect";
 
     const getStyle = () => {
         if (!from) {
@@ -34,7 +39,7 @@ export default function VeChainWallet({ close }) {
 
     return (
         <li
-            style={getStyle()}
+            style={truePathname ? getStyle() : {}}
             onClick={handleConnect}
             className="wllListItem"
             data-wallet="Sync2"

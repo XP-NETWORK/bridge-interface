@@ -8,7 +8,7 @@ import {
     setAlgorandAccount,
     setAlgorandWallet,
 } from "../../store/reducers/generalSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function ElrondWallet({ wallet, close }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -17,6 +17,11 @@ export default function ElrondWallet({ wallet, close }) {
     const testnet = useSelector((state) => state.general.testNet);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
+    const truePathname =
+        location.pathname === "/" ||
+        location.pathname === "/connect" ||
+        location.pathname === "/testnet/connect";
 
     const handleConnect = async (wallet) => {
         switch (wallet) {
@@ -61,7 +66,7 @@ export default function ElrondWallet({ wallet, close }) {
 
     return wallet === "Maiar" ? (
         <li
-            style={getStyle()}
+            style={truePathname ? getStyle() : {}}
             onClick={() => handleConnect("Maiar")}
             className="wllListItem"
             data-wallet="Maiar"
@@ -71,7 +76,7 @@ export default function ElrondWallet({ wallet, close }) {
         </li>
     ) : (
         <li
-            style={getStyle()}
+            style={truePathname ? getStyle() : {}}
             onClick={() => handleConnect("Maiar Extension")}
             className="wllListItem"
             data-wallet="Maiar Extension"
