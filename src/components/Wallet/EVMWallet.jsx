@@ -9,7 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import MetaMask from "../../assets/img/wallet/MetaMask.svg";
 import WalletConnect from "../../assets/img/wallet/WalletConnect 3.svg";
 import TrustWallet from "../../assets/img/wallet/TWT.svg";
-import { setAccount, setMetaMask } from "../../store/reducers/generalSlice";
+import {
+    setAccount,
+    setFrom,
+    setMetaMask,
+} from "../../store/reducers/generalSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getAddEthereumChain } from "../../wallet/chains";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
@@ -19,6 +23,7 @@ export default function EVMWallet({ wallet, close }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
+    const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
     const testnet = useSelector((state) => state.general.testNet);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -99,6 +104,7 @@ export default function EVMWallet({ wallet, close }) {
                 );
                 if (connected) {
                     dispatch(setMetaMask(true));
+                    if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                     close();
                     if (to) {
                         if (chainId !== from?.chainId) {
@@ -112,6 +118,7 @@ export default function EVMWallet({ wallet, close }) {
                 connected = await connectTrustWallet(activate, from.text);
                 close();
                 if (connected && to) navigateToAccountRoute();
+                if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                 break;
             case "WalletConnect":
                 connected = await onWalletConnect(activate, from.text, testnet);
@@ -124,7 +131,12 @@ export default function EVMWallet({ wallet, close }) {
     };
 
     const getStyle = () => {
-        if (!from) {
+        debugger;
+        if (temporaryFrom?.type === "EVM") {
+            return {};
+        } else if (temporaryFrom && temporaryFrom?.type !== "EVM") {
+            return OFF;
+        } else if (!from) {
             return {};
         } else if (from && from.type === "EVM") {
             return {};
@@ -142,7 +154,7 @@ export default function EVMWallet({ wallet, close }) {
 
     return wallet === "MetaMask" /* METAMASK */ ? (
         <li
-            style={truePathname ? getStyle() : {}}
+            style={getStyle()}
             onClick={() => connectHandler("MetaMask")}
             className="wllListItem"
             data-wallet="MetaMask"
@@ -158,7 +170,7 @@ export default function EVMWallet({ wallet, close }) {
       from.text !== "Fuse" ? (
         <li
             onClick={() => connectHandler("TrustWallet")}
-            style={truePathname ? getStyle() : {}}
+            style={getStyle()}
             data-wallet="TrustWallet"
             className="wllListItem"
         >
@@ -171,7 +183,7 @@ export default function EVMWallet({ wallet, close }) {
       from.text !== "Iotex" &&
       from.text !== "Fuse" ? (
         <li
-            style={truePathname ? getStyle() : {}}
+            style={getStyle()}
             onClick={() => connectHandler("WalletConnect")}
             className="wllListItem"
             data-wallet="WalletConnect"

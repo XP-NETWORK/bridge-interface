@@ -33,7 +33,7 @@ export default function TronWallet({ close }) {
 
     return (
         <li
-            style={truePathname ? getStyle() : {}}
+            style={getStyle()}
             onClick={connectHandler}
             data-wallet="TronLink"
             className="wllListItem"

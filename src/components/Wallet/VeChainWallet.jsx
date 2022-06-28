@@ -39,7 +39,7 @@ export default function VeChainWallet({ close }) {
 
     return (
         <li
-            style={truePathname ? getStyle() : {}}
+            style={getStyle()}
             onClick={handleConnect}
             className="wllListItem"
             data-wallet="Sync2"

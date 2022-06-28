@@ -19,6 +19,9 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setTemporaryFrom(state, action) {
+            state.temporaryFrom = action.payload;
+        },
         setAccountWalletModal(state, action) {
             state.accountWalletModal = action.payload;
         },
@@ -402,6 +405,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+    setTemporaryFrom,
     setCheckWallet,
     addImportedNFTtoNFTlist,
     setImportModal,

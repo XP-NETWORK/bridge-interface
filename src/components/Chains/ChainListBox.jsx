@@ -17,6 +17,7 @@ import {
     cleanSelectedNFTList,
     setChangeWallet,
     setAccountWalletModal,
+    setTemporaryFrom,
 } from "../../store/reducers/generalSlice";
 import Chain from "./Chain";
 import ChainSearch from "../Chains/ChainSearch";
@@ -133,87 +134,35 @@ export default function ChainListBox(props) {
     };
 
     const chainSelectHandler = (chain) => {
-        console.log("type: ", typeOfChainConnected());
         // debugger;
-        console.log(location.pathname);
-        if (
-            location.pathname === "/testnet/connect" ||
-            location.pathname === "/" ||
-            location.pathname === "/connect"
-        ) {
-            if (departureOrDestination === "departure") {
-                if (
-                    chain.type === typeOfChainConnected() ||
-                    !typeOfChainConnected()
-                ) {
-                    dispatch(setFrom(chain));
-                    handleClose();
-                } else {
-                    dispatch(setChangeWallet(true));
-                    handleClose();
-                }
-                //     if (
-                //         from &&
-                //         account &&
-                //         (location.pathname === "/account" ||
-                //             location.pathname === "/testnet/account")
-                //     ) {
-                //         let temp = from;
-                //         dispatch(setFrom(chain));
-                //         chain.key !== from.key && dispatch(setTo(temp));
-                //         switchNetwork(chain);
-                //         dispatch(cleanSelectedNFTList());
-                //         handleClose();
-                //     } else if (to && chain.key !== to.key) {
-                //         dispatch(setFrom(chain));
-                //         handleClose();
-                //     } else {
-                //         dispatch(setTo(""));
-                //         dispatch(setFrom(chain));
-                //         handleClose();
-                //     }
+
+        // if (
+        //     location.pathname === "/testnet/connect" ||
+        //     location.pathname === "/" ||
+        //     location.pathname === "/connect"
+        // ) {
+        if (departureOrDestination === "departure") {
+            if (
+                chain.type === typeOfChainConnected() ||
+                !typeOfChainConnected()
+            ) {
+                dispatch(setFrom(chain));
+                handleClose();
             } else {
-                dispatch(setTo(chain));
+                dispatch(setTemporaryFrom(chain));
+                dispatch(setChangeWallet(true));
                 handleClose();
             }
-        } else {
-            dispatch(setChangeWallet(true));
+        } else if (departureOrDestination === "destination") {
+            dispatch(setTo(chain));
             handleClose();
         }
-        //  else if (
-        //     location.pathname === "/account" ||
-        //     location.pathname === "/testnet/account"
-        // ) {
-        //     if (chain.value === from.value) {
-        //         let temp = from;
-        //         dispatch(setFrom(to));
-        //         switchNetwork(to);
-        //         dispatch(setTo(temp));
-        //         dispatch(cleanSelectedNFTList());
-        //         handleClose();
-        //     } else {
-        //         console.log("b");
-        //         dispatch(setTo(chain));
-        //         handleClose();
-        //     }
-        // }
-        // else if (switchChain) {
-        //     dispatch(setTo(chain));
-        //     handleClose();
         // } else {
-        //     console.log("c");
-        //     dispatch(setTo(chain));
-        //     dispatch(setSwitchDestination(false));
+        //     dispatch(setTemporaryFrom(chain));
+        //     dispatch(setChangeWallet(true));
         //     handleClose();
         // }
     };
-
-    const nonEVM =
-        tezosAccount || tronAccount || algorandAccount || elrondAccount;
-    // const showSearch = () => {
-    //     if (nonEVM && !from?.text) return "";
-    //     else return <ChainSearch />;
-    // };
 
     useEffect(() => {
         // debugger

@@ -66,7 +66,7 @@ export default function ElrondWallet({ wallet, close }) {
 
     return wallet === "Maiar" ? (
         <li
-            style={truePathname ? getStyle() : {}}
+            style={getStyle()}
             onClick={() => handleConnect("Maiar")}
             className="wllListItem"
             data-wallet="Maiar"
@@ -76,7 +76,7 @@ export default function ElrondWallet({ wallet, close }) {
         </li>
     ) : (
         <li
-            style={truePathname ? getStyle() : {}}
+            style={getStyle()}
             onClick={() => handleConnect("Maiar Extension")}
             className="wllListItem"
             data-wallet="Maiar Extension"
