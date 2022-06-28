@@ -122,6 +122,7 @@ export const isWhiteListed = async (from, nft) => {
     // debugger
     let whitelisted;
     const chainNonce = CHAIN_INFO[from].nonce;
+    console.log(chainNonce, 'chainNonce');
     const factory = await getFactory();
     const inner = await factory.inner(chainNonce);
     if (inner) {

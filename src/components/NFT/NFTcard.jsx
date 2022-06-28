@@ -106,21 +106,24 @@ export default function NFTcard({ nft, index, claimables }) {
                       videoUrl={nft.animation_url}
                       imageUrl={nft.image}
                     />
-                  ) : nft.image && !nft.animation_url ? (
+                  ) : nft.image &&
+                    !nft.animation_url &&
+                    !nft.imageFormat?.includes("mp4") ? (
                     <img
                       loading="lazy"
                       alt=""
                       onError={() => setImageErr(true)}
                       src={setupURI(nft.image)}
                     />
-                  ) : !nft.image && nft.animation_url ? (
+                  ) : (!nft.image && nft.animation_url) ||
+                    nft.imageFormat?.includes("mp4") ? (
                     <video
                       controls={false}
                       playsInline={true}
                       autoPlay={true}
                       loop={true}
                       muted={true}
-                      src={setupURI(nft.animation_url)}
+                      src={setupURI(nft.animation_url || nft.image)}
                     />
                   ) : (
                     [nft.animation_url, nft.image]?.length > 0 && (

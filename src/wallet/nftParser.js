@@ -44,7 +44,10 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
     } catch (error) {
       console.error("nft-cache check db: ", error);
     }
-    if (nftCashResponse.data === "no NFT with that data was found") {
+    if (
+      nftCashResponse &&
+      nftCashResponse.data === "no NFT with that data was found"
+    ) {
       if (!testnet) {
         try {
           whitelisted = await isWhiteListed(from.text, nft);
@@ -53,25 +56,32 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
         }
       }
       const parsed = await nftGeneralParser(nft, account, whitelisted);
-      console.log(parsed, "parsed By Lib");
+      console.log(parsed, "parsed By Lib", whitelisted);
 
       if (parsed?.metaData?.image || parsed?.metaData?.animation_url) {
         console.log(
           `caching Nft ${parsed?.metaData?.name || parsed?.native?.name}`
         );
         try {
-          axios.post(`${cacheUrl}/nft/add`, JSON.stringify(parsed), {
-            headers: { "Content-type": "application/json" },
-          });
+          !testnet &&
+            axios.post(`${cacheUrl}/nft/add`, JSON.stringify(parsed), {
+              headers: { "Content-type": "application/json" },
+            });
         } catch (error) {
           console.error("nft-cache add: ", error);
         }
       }
       const dataLoaded = true;
-      nftObj = { ...nft, ...(parsed?.metaData || parsed), dataLoaded };
+      nftObj = {
+        ...nft,
+        ...(parsed?.metaData || parsed),
+        dataLoaded,
+        whitelisted,
+      };
     } else {
       const dataLoaded = true;
       whitelisted = nftCashResponse?.data?.whitelisted;
+
       try {
         whitelisted = !whitelisted
           ? await isWhiteListed(from.text, nft)
@@ -79,7 +89,7 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
       } catch (error) {
         console.error(error);
       }
-      nftObj = { ...nft, ...nftCashResponse?.data, dataLoaded };
+      nftObj = { ...nft, ...nftCashResponse?.data, dataLoaded, whitelisted };
     }
 
     if (
