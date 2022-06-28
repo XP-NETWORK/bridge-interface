@@ -138,6 +138,7 @@ export default function ChainListBox(props) {
                 !typeOfChainConnected()
             ) {
                 dispatch(setFrom(chain));
+                handleClose();
             }
             //     if (
             //         from &&
@@ -159,6 +160,9 @@ export default function ChainListBox(props) {
             //         dispatch(setFrom(chain));
             //         handleClose();
             //     }
+        } else {
+            dispatch(setTo(chain));
+            handleClose();
         }
         //  else if (
         //     location.pathname === "/account" ||
@@ -224,7 +228,7 @@ export default function ChainListBox(props) {
                 chain.text.toLowerCase().includes(chainSearch.toLowerCase())
             );
         }
-        setFromChains(sorted);
+        setFromChains(sorted.filter((e) => e.text !== to?.text));
     }, [
         elrondAccount,
         tezosAccount,
@@ -268,7 +272,7 @@ export default function ChainListBox(props) {
                 chain.text.toLowerCase().includes(chainSearch.toLowerCase())
             );
         }
-        setToChains(sorted);
+        setToChains(sorted.filter((e) => e.text !== from?.text));
     }, [from, chainSearch, departureOrDestination]);
 
     useEffect(() => {
