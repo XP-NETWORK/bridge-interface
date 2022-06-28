@@ -82,10 +82,14 @@ export default function TransferredNft({ nft }) {
                             txn?.hash}`}
                     >
                         {txn?.hash
-                            ? `${txn?.hash.substring(
-                                  0,
-                                  getSubstringValue() || 10
-                              )}...${txn?.hash.substring(txn?.hash.length - 3)}`
+                            ? `${txn?.hash
+                                  .toString()
+                                  .substring(
+                                      0,
+                                      getSubstringValue() || 10
+                                  )}...${txn?.hash
+                                  .toString()
+                                  .substring(txn?.hash.toString().length - 3)}`
                             : hashes.depHash
                             ? `${hashes?.depHash?.substring(
                                   0,
