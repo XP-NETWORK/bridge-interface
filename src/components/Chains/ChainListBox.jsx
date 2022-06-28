@@ -15,6 +15,7 @@ import {
     setValidatorsInf,
     setSelectedNFTList,
     cleanSelectedNFTList,
+    setChangeWallet,
 } from "../../store/reducers/generalSlice";
 import Chain from "./Chain";
 import ChainSearch from "../Chains/ChainSearch";
@@ -138,6 +139,9 @@ export default function ChainListBox(props) {
                 !typeOfChainConnected()
             ) {
                 dispatch(setFrom(chain));
+                handleClose();
+            } else {
+                dispatch(setChangeWallet(true));
                 handleClose();
             }
             //     if (

@@ -41,7 +41,13 @@ export default function ChangeWalletModal() {
     const testnet = useSelector((state) => state.general.testNet);
     const dispatch = useDispatch();
     const { deactivate } = useWeb3React();
-
+    const evmAccount = useSelector((state) => state.general.account);
+    const tronAccount = useSelector((state) => state.general.tronWallet);
+    const elrondAccount = useSelector((state) => state.general.elrondAccount);
+    const tezosAccount = useSelector((state) => state.general.tezosAccount);
+    const algorandAccount = useSelector(
+        (state) => state.general.algorandAccount
+    );
     const handleClose = () => {
         dispatch(setChangeWallet(false));
     };
@@ -52,8 +58,26 @@ export default function ChangeWalletModal() {
         dispatch(setFrom(temp));
     };
 
+    const typeOfChainConnected = () => {
+        switch (true) {
+            case evmAccount?.length > 0:
+                return "EVM";
+            case algorandAccount?.length > 0:
+                return "Algorand";
+            case tezosAccount?.length > 0:
+                return "Tezos";
+            case elrondAccount?.length > 0:
+                return "Elrond";
+            case tronAccount?.length > 0:
+                return "Tron";
+            default:
+                return undefined;
+        }
+    };
+
     const handleClick = () => {
-        switch (from.type) {
+        // debugger;
+        switch (typeOfChainConnected()) {
             case "EVM":
                 dispatch(setAccount(""));
                 dispatch(setOnWC(""));
@@ -109,6 +133,9 @@ export default function ChangeWalletModal() {
             default:
                 break;
         }
+        // } else {
+        //     console.log("jshskdhf");
+        // }
     };
 
     return (
