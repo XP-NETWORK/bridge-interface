@@ -12,6 +12,10 @@ export default function TezosWallet({ wallet, close }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const navigate = useNavigate();
     const location = useLocation();
+    const truePath =
+        location.pathname === "/" ||
+        location.pathname === "/connect" ||
+        location.pathname === "";
 
     const navigateToAccountRoute = () => {
         navigate(testnet ? `/testnet/account` : `/account`);

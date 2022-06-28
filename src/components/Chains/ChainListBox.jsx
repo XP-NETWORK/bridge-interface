@@ -16,6 +16,7 @@ import {
     setSelectedNFTList,
     cleanSelectedNFTList,
     setChangeWallet,
+    setAccountWalletModal,
 } from "../../store/reducers/generalSlice";
 import Chain from "./Chain";
 import ChainSearch from "../Chains/ChainSearch";
@@ -133,39 +134,50 @@ export default function ChainListBox(props) {
 
     const chainSelectHandler = (chain) => {
         console.log("type: ", typeOfChainConnected());
-        if (departureOrDestination === "departure") {
-            if (
-                chain.type === typeOfChainConnected() ||
-                !typeOfChainConnected()
-            ) {
-                dispatch(setFrom(chain));
-                handleClose();
+        // debugger;
+        console.log(location.pathname);
+        if (
+            location.pathname === "/testnet/connect" ||
+            location.pathname === "/" ||
+            location.pathname === "/connect"
+        ) {
+            if (departureOrDestination === "departure") {
+                if (
+                    chain.type === typeOfChainConnected() ||
+                    !typeOfChainConnected()
+                ) {
+                    dispatch(setFrom(chain));
+                    handleClose();
+                } else {
+                    dispatch(setChangeWallet(true));
+                    handleClose();
+                }
+                //     if (
+                //         from &&
+                //         account &&
+                //         (location.pathname === "/account" ||
+                //             location.pathname === "/testnet/account")
+                //     ) {
+                //         let temp = from;
+                //         dispatch(setFrom(chain));
+                //         chain.key !== from.key && dispatch(setTo(temp));
+                //         switchNetwork(chain);
+                //         dispatch(cleanSelectedNFTList());
+                //         handleClose();
+                //     } else if (to && chain.key !== to.key) {
+                //         dispatch(setFrom(chain));
+                //         handleClose();
+                //     } else {
+                //         dispatch(setTo(""));
+                //         dispatch(setFrom(chain));
+                //         handleClose();
+                //     }
             } else {
-                dispatch(setChangeWallet(true));
+                dispatch(setTo(chain));
                 handleClose();
             }
-            //     if (
-            //         from &&
-            //         account &&
-            //         (location.pathname === "/account" ||
-            //             location.pathname === "/testnet/account")
-            //     ) {
-            //         let temp = from;
-            //         dispatch(setFrom(chain));
-            //         chain.key !== from.key && dispatch(setTo(temp));
-            //         switchNetwork(chain);
-            //         dispatch(cleanSelectedNFTList());
-            //         handleClose();
-            //     } else if (to && chain.key !== to.key) {
-            //         dispatch(setFrom(chain));
-            //         handleClose();
-            //     } else {
-            //         dispatch(setTo(""));
-            //         dispatch(setFrom(chain));
-            //         handleClose();
-            //     }
         } else {
-            dispatch(setTo(chain));
+            dispatch(setChangeWallet(true));
             handleClose();
         }
         //  else if (

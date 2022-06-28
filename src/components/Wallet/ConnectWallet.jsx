@@ -57,6 +57,7 @@ function ConnectWallet() {
             dispatch(setQrCodeString(""));
         }
     };
+
     const walletsModal = useSelector((state) => state.general.walletsModal);
     const widget = useSelector((state) => state.general.widget);
 
