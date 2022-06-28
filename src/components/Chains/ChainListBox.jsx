@@ -48,20 +48,7 @@ export default function ChainListBox(props) {
     const { account } = useWeb3React();
     const testnet = useSelector((state) => state.general.testNet);
     const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
-    const Sync2 = useSelector((state) => state.general.Sync2);
     const axios = require("axios");
-
-    // const hideChain = chain => {
-    //   const version = 'staging'
-    //   //development
-    //   //staging
-    //   const hideChains = ["VeChain", "GateChain", "Harmony"]
-    //   if(version === 'development') return true
-    //   else if(hideChains.some(c => chain === c)){
-    //     return false
-    //   }
-    //   else return true
-    // }
 
     async function switchNetwork(chain) {
         // debugger
@@ -126,59 +113,81 @@ export default function ChainListBox(props) {
         dispatch(setChainSearch(""));
     };
 
-    useEffect(async () => {
-        if (!validatorsInfo) await checkValidators();
-    }, [validatorsInfo]);
-
-    const chainSelectHandler = (chain) => {
-        // debugger
-        if (departureOrDestination === "departure") {
-            if (
-                from &&
-                account &&
-                (location.pathname === "/account" ||
-                    location.pathname === "/testnet/account")
-            ) {
-                let temp = from;
-                dispatch(setFrom(chain));
-                chain.key !== from.key && dispatch(setTo(temp));
-                switchNetwork(chain);
-                dispatch(cleanSelectedNFTList());
-                handleClose();
-            } else if (to && chain.key !== to.key) {
-                dispatch(setFrom(chain));
-                handleClose();
-            } else {
-                dispatch(setTo(""));
-                dispatch(setFrom(chain));
-                handleClose();
-            }
-        } else if (
-            location.pathname === "/account" ||
-            location.pathname === "/testnet/account"
-        ) {
-            if (chain.value === from.value) {
-                let temp = from;
-                dispatch(setFrom(to));
-                switchNetwork(to);
-                dispatch(setTo(temp));
-                dispatch(cleanSelectedNFTList());
-                handleClose();
-            } else {
-                console.log("b");
-                dispatch(setTo(chain));
-                handleClose();
-            }
-        } else if (switchChain) {
-            dispatch(setTo(chain));
-            handleClose();
-        } else {
-            console.log("c");
-            dispatch(setTo(chain));
-            dispatch(setSwitchDestination(false));
-            handleClose();
+    const typeOfChainConnected = () => {
+        switch (true) {
+            case evmAccount?.length > 0:
+                return "EVM";
+            case algorandAccount?.length > 0:
+                return "Algorand";
+            case tezosAccount?.length > 0:
+                return "Tezos";
+            case elrondAccount?.length > 0:
+                return "Elrond";
+            case tronAccount?.length > 0:
+                return "Tron";
+            default:
+                return undefined;
         }
     };
+
+    const chainSelectHandler = (chain) => {
+        console.log("type: ", typeOfChainConnected());
+        if (departureOrDestination === "departure") {
+            if (
+                chain.type === typeOfChainConnected() ||
+                !typeOfChainConnected()
+            ) {
+                dispatch(setFrom(chain));
+            }
+            //     if (
+            //         from &&
+            //         account &&
+            //         (location.pathname === "/account" ||
+            //             location.pathname === "/testnet/account")
+            //     ) {
+            //         let temp = from;
+            //         dispatch(setFrom(chain));
+            //         chain.key !== from.key && dispatch(setTo(temp));
+            //         switchNetwork(chain);
+            //         dispatch(cleanSelectedNFTList());
+            //         handleClose();
+            //     } else if (to && chain.key !== to.key) {
+            //         dispatch(setFrom(chain));
+            //         handleClose();
+            //     } else {
+            //         dispatch(setTo(""));
+            //         dispatch(setFrom(chain));
+            //         handleClose();
+            //     }
+        }
+        //  else if (
+        //     location.pathname === "/account" ||
+        //     location.pathname === "/testnet/account"
+        // ) {
+        //     if (chain.value === from.value) {
+        //         let temp = from;
+        //         dispatch(setFrom(to));
+        //         switchNetwork(to);
+        //         dispatch(setTo(temp));
+        //         dispatch(cleanSelectedNFTList());
+        //         handleClose();
+        //     } else {
+        //         console.log("b");
+        //         dispatch(setTo(chain));
+        //         handleClose();
+        //     }
+        // }
+        // else if (switchChain) {
+        //     dispatch(setTo(chain));
+        //     handleClose();
+        // } else {
+        //     console.log("c");
+        //     dispatch(setTo(chain));
+        //     dispatch(setSwitchDestination(false));
+        //     handleClose();
+        // }
+    };
+
     const nonEVM =
         tezosAccount || tronAccount || algorandAccount || elrondAccount;
     // const showSearch = () => {
@@ -225,6 +234,10 @@ export default function ChainListBox(props) {
         chainSearch,
         to,
     ]);
+
+    useEffect(async () => {
+        if (!validatorsInfo) await checkValidators();
+    }, [validatorsInfo]);
 
     useEffect(() => {
         // debugger
