@@ -13,14 +13,9 @@ import {
 } from "../store/reducers/generalSlice";
 import store from "../store/store";
 import io from "socket.io-client";
-<<<<<<< .merge_file_H2Rxtf
-
-
-=======
 import { isWhiteListed } from "./../components/NFT/NFTHelper";
 import requestPool from "./requestPool";
 import { nftGeneralParser } from "nft-parser/dist/src/index";
->>>>>>> .merge_file_LBEz9y
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
 const testnet = window.location.href.includes("testnet");
 const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/";

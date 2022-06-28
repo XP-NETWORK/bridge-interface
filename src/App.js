@@ -29,20 +29,12 @@ import Widget from "./components/Widget";
 import WSettings from "./components/Settings";
 
 function App() {
-<<<<<<< .merge_file_OEgj4x
     const dispatch = useDispatch();
     const axios = require("axios");
     const [nftToOptIn, setNFTToOptIn] = useState();
     const [testnet, setTestnet] = useState();
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
     const state = useSelector((state) => state.general);
-=======
-  const dispatch = useDispatch();
-  const axios = require("axios");
-  const [nftToOptIn, setNFTToOptIn] = useState();
-  const [testnet, setTestnet] = useState();
-  const txnHashArr = useSelector((state) => state.general.txnHashArr);
->>>>>>> .merge_file_JwJy07
 
   useEffect(() => {
     dispatch(setTestNet(window.location.href.indexOf("/testnet") > 0));
@@ -100,7 +92,6 @@ function App() {
       });
   }, []);
 
-<<<<<<< .merge_file_OEgj4x
     return (
         <div className={"App"}>
               {state.wsettings && <WSettings />}
@@ -125,26 +116,6 @@ function App() {
             <Alert />
         </div>
     );
-=======
-  return (
-    <div className={"App"}>
-      <ConnectAlgorand nftToOptIn={nftToOptIn} testnet={testnet} />
-      <About />
-      <Video />
-      <TechnicalSupport />
-      <Modal animation={false} className="success-modal" show={toShowSuccess()}>
-        <SuccessModal />
-      </Modal>
-      <TransferLoader />
-      <TronConnectionErrMod />
-      <ApproveLoader />
-      <Error />
-      <TronPopUp />
-      <XpBridge />
-      <Alert />
-    </div>
-  );
->>>>>>> .merge_file_JwJy07
 }
 
 export default App;

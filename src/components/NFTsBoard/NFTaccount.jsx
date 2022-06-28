@@ -77,7 +77,6 @@ function NFTaccount() {
   const wrappedEGold = useSelector((state) => state.general.wrappedEGold);
   const prevWrappedEGold = usePrevious(wrappedEGold);
 
-<<<<<<< .merge_file_KZiFgP
 
 
     const widget = useSelector((state) => state.general.widget);
@@ -91,18 +90,6 @@ function NFTaccount() {
     // Dima.B - 0x0d7df42014064a163DfDA404253fa9f6883b9187
     //
     // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
-=======
-  const [index, setIndex] = useState(0);
-  const { library } = useWeb3React();
-
-  //Anjelika - 0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE
-  //Anjelika elrond - erd1s89aq3s0z6mjfpx8s85zntlfywsvj5r8nzcdujw7mx53f9et9ezq9fnrws
-  //Dima. U - 0x6449b68cc5675f6011e8DB681B142773A3157cb9
-  // -||- vechain 0x124fBa3250c8d72FBcb5b5712d0dF48c33E6C1F6, 0x124fBa3250c8d72FBcb5b5712d0dF48c33E6C1F6
-  // Dima.B - 0x0d7df42014064a163DfDA404253fa9f6883b9187
-  //
-  // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
->>>>>>> .merge_file_39e6ci
 
   async function getNFTsList(str) {
     const useHardcoded = false;
@@ -233,7 +220,6 @@ function NFTaccount() {
     }
   }, [selectedNFTs, nfts]);
 
-<<<<<<< .merge_file_KZiFgP
     return (
         <div className="NFTaccount">
             <Modal
@@ -266,34 +252,6 @@ function NFTaccount() {
                                 />
                             )}
                             {/* <div className="algo-claimable">
-=======
-  return (
-    <div className="NFTaccount">
-      <Modal
-        show={importModal}
-        animation={false}
-        className=" ChainModal import-nft__modal"
-      >
-        <ImportNFTModal />
-      </Modal>
-      <ChangeNetworkModal />
-      <UnsupportedNetwork />
-      <SelectNFTAler />
-      <PasteDestinationAlert />
-      <NoApprovedNFT />
-      <Container className="nftSlectContaine">
-        <ReturnBtn />
-        <div className="row">
-          <div className="nftListCol col-lg-8">
-            <div className="nft_selectBox">
-              <NFTlistTop />
-              {NFTListView ? (
-                <NFTlistView />
-              ) : (
-                <NFTgridView scrollIndex={index} setIndex={setIndex} />
-              )}
-              {/* <div className="algo-claimable">
->>>>>>> .merge_file_39e6ci
                 // TODO Algorand Claimable
               </div> */}
             </div>
