@@ -26,17 +26,6 @@ import "./Settings.css";
 
 import collapse from "./assets/img/collapse.svg";
 
-/*const debounce = (func, delay) => {
-  let tm;
-
-  return (...args) => {
-    clearTimeout(tm);
-    tm = setTimeout(() => {
-      return func(...args);
-    }, delay);
-  };
-};*/
-
 function WSettings({
   settings,
   copied,
@@ -229,9 +218,7 @@ function WSettings({
                             <div className="blockChainItem">
                               <img src={chain.image.src} alt={chain.value} />
 
-                              {chain.value === "xDai"
-                                ? "Gnosis"
-                                : chain.value}
+                              {chain.value === "xDai" ? "Gnosis" : chain.value}
 
                               {chain.maintenance ? (
                                 <span

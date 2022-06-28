@@ -100,7 +100,6 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
       store.dispatch(setEachNFT({ nftObj, index }));
     }
   } else {
-    console.log("da");
     await parseEachNFT(nft, index, testnet, claimable);
   }
 };

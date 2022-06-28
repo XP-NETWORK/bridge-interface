@@ -34,6 +34,7 @@ export default function NFTcard({ nft, index, claimables }) {
     const [entry] = entries;
     setIsVisible(entry.isIntersecting);
   };
+
   const cardRef = useRef(null);
   const options = useMemo(() => {
     return {
@@ -41,7 +42,7 @@ export default function NFTcard({ nft, index, claimables }) {
       tootMargin: "0px",
       threshold: 0.3,
     };
-  }, []);
+  }, [search]);
 
   let isSelected = selectedNFTs.filter(
     (n) =>
@@ -70,14 +71,14 @@ export default function NFTcard({ nft, index, claimables }) {
   }, [cardRef, options]);
 
   useEffect(() => {
-    if (!nft.dataLoaded) {
-      if (isVisible) {
+    if (isVisible) {
+      if (!nft.dataLoaded) {
         // await parseEachNFT(nft, index, testnet, claimables);
 
         parseNFT(nft, index, testnet, claimables);
       }
     }
-  }, [isVisible]);
+  }, [isVisible, nft, search]);
 
   const handleZoomIn = () => {
     console.log("zoom innnn");
