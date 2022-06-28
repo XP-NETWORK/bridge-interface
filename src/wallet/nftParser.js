@@ -12,85 +12,85 @@ const cacheUrl = `https://nft-cache.herokuapp.com`;
 //const cacheUrl = `http://localhost:3030`;
 
 export const parseNFT = async (nft, index, testnet, claimable) => {
-  const { uri } = nft;
-  let whitelisted = !testnet
-    ? nft?.native?.contract === "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a"
-      ? false
-      : undefined
-    : true;
-  let nftObj = {
-    uri,
-    collectionIdent: nft.collectionIdent || undefined,
-    native: { ...nft.native },
-    dataLoaded: true,
-    whitelisted,
-    nftId: nft.nftId || undefined,
-    appId: nft.appId || undefined,
-  };
-  const {
-    general: { from, NFTList, account },
-  } = store.getState();
+    const { uri } = nft;
+    let whitelisted = !testnet
+        ? nft?.native?.contract === "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a"
+            ? false
+            : undefined
+        : true;
+    let nftObj = {
+        uri,
+        collectionIdent: nft.collectionIdent || undefined,
+        native: { ...nft.native },
+        dataLoaded: true,
+        whitelisted,
+        nftId: nft.nftId || undefined,
+        appId: nft.appId || undefined,
+    };
+    const {
+        general: { from, NFTList, account },
+    } = store.getState();
 
-  if (!claimable) {
-    let nftCashResponse;
-    try {
-      nftCashResponse = await axios.get(
-        `${cacheUrl}/nft/data?chainId=${nft.native?.chainId}&tokenId=${nft.native?.tokenId}&contract=${nft.native?.contract}`,
-        {
-          headers: { "Content-type": "application/json" },
-          timeout: 5000,
-        }
-      );
-    } catch (error) {
-      console.error("nft-cache check db: ", error);
-    }
-    if (nftCashResponse.data === "no NFT with that data was found") {
-      if (!testnet) {
+    if (!claimable) {
+        let nftCashResponse;
         try {
-          whitelisted = await isWhiteListed(from.text, nft);
+            nftCashResponse = await axios.get(
+                `${cacheUrl}/nft/data?chainId=${nft.native?.chainId}&tokenId=${nft.native?.tokenId}&contract=${nft.native?.contract}`,
+                {
+                    headers: { "Content-type": "application/json" },
+                    timeout: 5000,
+                }
+            );
         } catch (error) {
-          console.error(error);
+            console.error("nft-cache check db: ", error);
         }
-      }
-      const parsed = await nftGeneralParser(nft, account, whitelisted);
-      console.log(parsed, "parsed By Lib");
+        if (nftCashResponse.data === "no NFT with that data was found") {
+            if (!testnet) {
+                try {
+                    whitelisted = await isWhiteListed(from.text, nft);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+            const parsed = await nftGeneralParser(nft, account, whitelisted);
+            console.log(parsed, "parsed By Lib");
 
-      if (parsed?.metaData?.image || parsed?.metaData?.animation_url) {
-        console.log(
-          `caching Nft ${parsed?.metaData?.name || parsed?.native?.name}`
-        );
-        try {
-          axios.post(`${cacheUrl}/nft/add`, JSON.stringify(parsed), {
-            headers: { "Content-type": "application/json" },
-          });
-        } catch (error) {
-          console.error("nft-cache add: ", error);
+            if (parsed?.metaData?.image || parsed?.metaData?.animation_url) {
+                console.log(
+                    `caching Nft ${parsed?.metaData?.name ||
+                        parsed?.native?.name}`
+                );
+                try {
+                    axios.post(`${cacheUrl}/nft/add`, JSON.stringify(parsed), {
+                        headers: { "Content-type": "application/json" },
+                    });
+                } catch (error) {
+                    console.error("nft-cache add: ", error);
+                }
+            }
+            const dataLoaded = true;
+            nftObj = { ...nft, ...(parsed?.metaData || parsed), dataLoaded };
+        } else {
+            const dataLoaded = true;
+            whitelisted = nftCashResponse?.data?.whitelisted;
+            try {
+                whitelisted = !whitelisted
+                    ? await isWhiteListed(from.text, nft)
+                    : whitelisted;
+            } catch (error) {
+                console.error(error);
+            }
+            nftObj = { ...nft, ...nftCashResponse?.data, dataLoaded };
         }
-      }
-      const dataLoaded = true;
-      nftObj = { ...nft, ...(parsed?.metaData || parsed), dataLoaded };
+
+        if (
+            !NFTList[index]?.dataLoaded ||
+            !NFTList[index]?.image ||
+            !NFTList[index]?.animation_url
+        ) {
+            store.dispatch(setEachNFT({ nftObj, index }));
+        }
     } else {
-      const dataLoaded = true;
-      whitelisted = nftCashResponse?.data?.whitelisted;
-      try {
-        whitelisted = !whitelisted
-          ? await isWhiteListed(from.text, nft)
-          : whitelisted;
-      } catch (error) {
-        console.error(error);
-      }
-      nftObj = { ...nft, ...nftCashResponse?.data, dataLoaded };
+        await parseEachNFT(nft, index, testnet, claimable);
     }
-
-    if (
-      !NFTList[index]?.dataLoaded ||
-      !NFTList[index]?.image ||
-      !NFTList[index]?.animation_url
-    ) {
-      store.dispatch(setEachNFT({ nftObj, index }));
-    }
-  } else {
-    console.log("da");
-    await parseEachNFT(nft, index, testnet, claimable);
-  }
 };
