@@ -100,10 +100,6 @@ export default function ChainListBox(props) {
         let res;
         try {
             res = await axios.get("https://bridgestatus.herokuapp.com/status");
-            console.log(
-                "🚀 ~ file: ChainListBox.jsx ~ line 104 ~ checkValidators ~ res",
-                res
-            );
         } catch (error) {
             console.error(error);
         }

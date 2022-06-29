@@ -39,6 +39,7 @@ export default function EVMWallet({ wallet, close }) {
             : false;
 
     const navigateToAccountRoute = () => {
+        debugger;
         navigate(testnet ? `/testnet/account` : `/account`);
     };
 
@@ -81,11 +82,12 @@ export default function EVMWallet({ wallet, close }) {
                             : chain.infoURL,
                     ],
                 };
-                const switched = await window.ethereum.request({
+                // debugger;
+                window.ethereum.request({
                     method: "wallet_addEthereumChain",
                     params: [params, account],
                 });
-                return switched ? true : false;
+                return true;
             } catch (error) {
                 console.log(error);
                 return false;
