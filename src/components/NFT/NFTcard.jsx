@@ -20,6 +20,8 @@ import zoomIn from "../../assets/img/icons/zoomInWhite.png";
 import ModalImage from "react-modal-image";
 import { parseNFT } from "../../wallet/nftParser";
 
+import { useDidUpdateEffect } from "../Settings/hooks";
+
 export default function NFTcard({ nft, index, claimables }) {
   const dispatch = useDispatch();
   const [detailsOn, setDetailsOn] = useState(false);
@@ -42,7 +44,7 @@ export default function NFTcard({ nft, index, claimables }) {
       tootMargin: "0px",
       threshold: 0.3,
     };
-  }, [search]);
+  }, []);
 
   let isSelected = selectedNFTs.filter(
     (n) =>
@@ -61,16 +63,19 @@ export default function NFTcard({ nft, index, claimables }) {
 
   useEffect(() => {
     const observer = new IntersectionObserver(callBackWhenObserver, options);
+
     const currentTarget = cardRef.current;
+
     if (currentTarget) observer.observe(currentTarget);
     return () => {
       if (currentTarget) {
         observer.unobserve(currentTarget);
       }
     };
-  }, [cardRef, options]);
+  }, [cardRef, options, search]);
 
-  useEffect(() => {
+  useDidUpdateEffect(() => {
+    console.log(search, "ds");
     if (isVisible) {
       if (!nft.dataLoaded) {
         // await parseEachNFT(nft, index, testnet, claimables);
@@ -78,7 +83,7 @@ export default function NFTcard({ nft, index, claimables }) {
         parseNFT(nft, index, testnet, claimables);
       }
     }
-  }, [isVisible, nft, search]);
+  }, [isVisible, nft]);
 
   const handleZoomIn = () => {
     console.log("zoom innnn");

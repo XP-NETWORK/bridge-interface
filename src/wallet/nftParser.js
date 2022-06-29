@@ -56,7 +56,7 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
         }
       }
       const parsed = await nftGeneralParser(nft, account, whitelisted);
-      console.log(parsed, "parsed By Lib", whitelisted);
+      //console.log(parsed, "parsed By Lib", whitelisted);
 
       if (parsed?.metaData?.image || parsed?.metaData?.animation_url) {
         console.log(
@@ -81,6 +81,8 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
     } else {
       const dataLoaded = true;
       whitelisted = nftCashResponse?.data?.whitelisted;
+
+      index === 14 && console.log(await isWhiteListed(from.text, nft));
 
       try {
         whitelisted = !whitelisted
