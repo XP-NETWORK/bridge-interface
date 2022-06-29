@@ -39,7 +39,6 @@ export default function EVMWallet({ wallet, close }) {
             : false;
 
     const navigateToAccountRoute = () => {
-        debugger;
         navigate(testnet ? `/testnet/account` : `/account`);
     };
 

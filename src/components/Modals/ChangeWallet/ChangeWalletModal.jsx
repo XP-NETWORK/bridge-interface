@@ -14,6 +14,7 @@ import {
     setMaiarProvider,
     setMetaMask,
     setMyAlgo,
+    setNFTSetToggler,
     setOnMaiar,
     setOnWC,
     setQrCodeString,
@@ -43,6 +44,8 @@ export default function ChangeWalletModal() {
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const testnet = useSelector((state) => state.general.testNet);
+    const Sync2 = useSelector((state) => state.general.Sync2);
+
     const dispatch = useDispatch();
     const { deactivate } = useWeb3React();
     const evmAccount = useSelector((state) => state.general.account);
@@ -71,7 +74,7 @@ export default function ChangeWalletModal() {
     const typeOfChainConnected = () => {
         switch (true) {
             case evmAccount?.length > 0:
-                return "EVM";
+                return Sync2 ? "VeChain" : "EVM";
             case algorandAccount?.length > 0:
                 return "Algorand";
             case tezosAccount?.length > 0:
@@ -107,12 +110,14 @@ export default function ChangeWalletModal() {
                 dispatch(setChangeWallet(false));
                 deactivate();
                 chooseWalletModal();
+                dispatch(setNFTSetToggler());
                 break;
             case "Tron":
                 dispatch(setTronWallet(""));
                 dispatch(setTronLink(""));
                 handleSwitch();
                 chooseWalletModal();
+                dispatch(setNFTSetToggler());
                 break;
             case "Elrond":
                 dispatch(setOnMaiar(""));
@@ -123,6 +128,7 @@ export default function ChangeWalletModal() {
                 dispatch(setConfirmMaiarMob(""));
                 dispatch(setChangeWallet(false));
                 chooseWalletModal();
+                dispatch(setNFTSetToggler());
                 break;
             case "Tezos":
                 dispatch(setTezosAccount(""));
@@ -130,13 +136,16 @@ export default function ChangeWalletModal() {
                 dispatch(setTempleWallet(""));
                 dispatch(setChangeWallet(false));
                 chooseWalletModal();
+                dispatch(setNFTSetToggler());
                 break;
             case "VeChain":
+                // debugger;
                 dispatch(setSync2Connecx(""));
                 dispatch(setSync2(""));
                 dispatch(setAccount(""));
                 dispatch(setChangeWallet(false));
                 chooseWalletModal();
+                dispatch(setNFTSetToggler());
                 break;
             case "Algorand":
                 dispatch(setAlgoSigner(""));
@@ -145,6 +154,7 @@ export default function ChangeWalletModal() {
                 dispatch(setMyAlgo(""));
                 dispatch(setChangeWallet(false));
                 chooseWalletModal();
+                dispatch(setNFTSetToggler());
                 break;
             default:
                 break;

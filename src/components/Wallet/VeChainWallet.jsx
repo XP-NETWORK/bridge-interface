@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Sync2 from "../../assets/img/wallet/Sync2_.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { connectSync2 } from "./ConnectWalletHelper";
@@ -13,6 +13,7 @@ export default function VeChainWallet({ close }) {
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [connecting, setConnecting] = useState("");
 
     const getStyle = () => {
         if (temporaryFrom?.type === "VeChain") {
@@ -31,7 +32,9 @@ export default function VeChainWallet({ close }) {
     };
 
     const handleConnect = async () => {
+        setConnecting(true);
         const account = await connectSync2(testnet);
+        if (account) setConnecting(false);
         dispatch(setSync2(account));
         close();
         if (temporaryFrom) dispatch(setFrom(temporaryFrom));
@@ -40,7 +43,7 @@ export default function VeChainWallet({ close }) {
 
     return (
         <li
-            style={getStyle()}
+            style={!connecting ? getStyle() : OFF}
             onClick={handleConnect}
             className="wllListItem"
             data-wallet="Sync2"

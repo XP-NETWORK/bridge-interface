@@ -1,8 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { connectTronlink } from "./ConnectWalletHelper";
 import Tron from "../../assets/img/wallet/TronLink.svg";
 import { useLocation, useNavigate } from "react-router-dom";
+import { setFrom } from "../../store/reducers/generalSlice";
 
 export default function TronWallet({ close }) {
     const from = useSelector((state) => state.general.from);
@@ -11,6 +12,7 @@ export default function TronWallet({ close }) {
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const location = useLocation();
     const truePathname =
         location.pathname === "/" ||
@@ -20,6 +22,7 @@ export default function TronWallet({ close }) {
     const connectHandler = async () => {
         const connected = await connectTronlink();
         close();
+        if (temporaryFrom) dispatch(setFrom(temporaryFrom));
         if (connected && to) navigateToAccountRoute();
     };
 

@@ -37,7 +37,7 @@ const generalSlice = createSlice({
         setBalance(state, action) {
             state.balance = action.payload;
         },
-        setNFTSetToggler(state, action) {
+        setNFTSetToggler(state) {
             state.NFTSetToggler = !state.NFTSetToggler;
         },
         setGitLatestCommit(state, action) {
