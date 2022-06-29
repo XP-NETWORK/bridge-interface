@@ -127,10 +127,17 @@ export const isWhiteListed = async (from, nft) => {
   const inner = await factory.inner(chainNonce);
   if (inner) {
     try {
-      whitelisted = await factory.checkWhitelist(inner, nft).catch((error) => {
-        console.log(error);
-      });
+      whitelisted = await factory.checkWhitelist(inner, nft);
     } catch (error) {
+      whitelisted = await new Promise((resolve, reject) => {
+        setTimeout(async () => {
+          const status = await isWhiteListed(from.text, nft).catch(() =>
+            reject(undefined)
+          );
+          resolve(status);
+        }, 4000);
+      });
+
       console.error("isWhiteListed: ", error);
     }
   }

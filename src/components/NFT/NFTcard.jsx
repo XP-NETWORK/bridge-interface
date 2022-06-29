@@ -75,7 +75,6 @@ export default function NFTcard({ nft, index, claimables }) {
   }, [cardRef, options, search]);
 
   useDidUpdateEffect(() => {
-    console.log(search, "ds");
     if (isVisible) {
       if (!nft.dataLoaded) {
         // await parseEachNFT(nft, index, testnet, claimables);

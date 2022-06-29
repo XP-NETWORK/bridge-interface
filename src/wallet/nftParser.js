@@ -49,14 +49,12 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
       nftCashResponse.data === "no NFT with that data was found"
     ) {
       if (!testnet) {
-        try {
-          whitelisted = await isWhiteListed(from.text, nft);
-        } catch (error) {
-          console.error(error);
-        }
+        whitelisted = await isWhiteListed(from.text, nft).catch(
+          () => undefined
+        );
       }
       const parsed = await nftGeneralParser(nft, account, whitelisted);
-      //console.log(parsed, "parsed By Lib", whitelisted);
+      console.log(parsed, "parsed By Lib", whitelisted);
 
       if (parsed?.metaData?.image || parsed?.metaData?.animation_url) {
         console.log(
@@ -64,6 +62,7 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
         );
         try {
           !testnet &&
+            whitelisted !== undefined &&
             axios.post(`${cacheUrl}/nft/add`, JSON.stringify(parsed), {
               headers: { "Content-type": "application/json" },
             });
@@ -81,8 +80,6 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
     } else {
       const dataLoaded = true;
       whitelisted = nftCashResponse?.data?.whitelisted;
-
-      index === 14 && console.log(await isWhiteListed(from.text, nft));
 
       try {
         whitelisted = !whitelisted
