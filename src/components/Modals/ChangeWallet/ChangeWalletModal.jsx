@@ -63,6 +63,11 @@ export default function ChangeWalletModal() {
         dispatch(setFrom(temp));
     };
 
+    const chooseWalletModal = () =>
+        isRightLocation()
+            ? dispatch(setAccountWalletModal(true))
+            : dispatch(setWalletsModal(true));
+
     const typeOfChainConnected = () => {
         switch (true) {
             case evmAccount?.length > 0:
@@ -101,16 +106,13 @@ export default function ChangeWalletModal() {
                 dispatch(setMetaMask(""));
                 dispatch(setChangeWallet(false));
                 deactivate();
-                // handleSwitch();
-                dispatch(setWalletsModal(true));
-                if (isRightLocation()) dispatch(setAccountWalletModal(true));
+                chooseWalletModal();
                 break;
             case "Tron":
                 dispatch(setTronWallet(""));
                 dispatch(setTronLink(""));
                 handleSwitch();
-                dispatch(setChangeWallet(false));
-                if (isRightLocation()) dispatch(setAccountWalletModal(true));
+                chooseWalletModal();
                 break;
             case "Elrond":
                 dispatch(setOnMaiar(""));
@@ -120,27 +122,21 @@ export default function ChangeWalletModal() {
                 dispatch(setQrCodeString(""));
                 dispatch(setConfirmMaiarMob(""));
                 dispatch(setChangeWallet(false));
-                // handleSwitch();
-                dispatch(setWalletsModal(true));
-                if (isRightLocation()) dispatch(setAccountWalletModal(true));
+                chooseWalletModal();
                 break;
             case "Tezos":
                 dispatch(setTezosAccount(""));
                 dispatch(setKukaiWallet(""));
                 dispatch(setTempleWallet(""));
                 dispatch(setChangeWallet(false));
-                // handleSwitch();
-                dispatch(setWalletsModal(true));
-                if (isRightLocation()) dispatch(setAccountWalletModal(true));
+                chooseWalletModal();
                 break;
             case "VeChain":
                 dispatch(setSync2Connecx(""));
                 dispatch(setSync2(""));
                 dispatch(setAccount(""));
                 dispatch(setChangeWallet(false));
-                // handleSwitch();
-                dispatch(setWalletsModal(true));
-                if (isRightLocation()) dispatch(setAccountWalletModal(true));
+                chooseWalletModal();
                 break;
             case "Algorand":
                 dispatch(setAlgoSigner(""));
@@ -148,9 +144,7 @@ export default function ChangeWalletModal() {
                 dispatch(setAlgorandClaimables([]));
                 dispatch(setMyAlgo(""));
                 dispatch(setChangeWallet(false));
-                // handleSwitch();
-                dispatch(setWalletsModal(true));
-                if (isRightLocation()) dispatch(setAccountWalletModal(true));
+                chooseWalletModal();
                 break;
             default:
                 break;
