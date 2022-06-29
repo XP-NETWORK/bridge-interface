@@ -9,7 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import MetaMask from "../../assets/img/wallet/MetaMask.svg";
 import WalletConnect from "../../assets/img/wallet/WalletConnect 3.svg";
 import TrustWallet from "../../assets/img/wallet/TWT.svg";
-import { setAccount, setMetaMask } from "../../store/reducers/generalSlice";
+import {
+    setAccount,
+    setFrom,
+    setMetaMask,
+} from "../../store/reducers/generalSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getAddEthereumChain } from "../../wallet/chains";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
@@ -19,9 +23,15 @@ export default function EVMWallet({ wallet, close }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
+    const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
     const testnet = useSelector((state) => state.general.testNet);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
+    const truePathname =
+        location.pathname === "/" ||
+        location.pathname === "/connect" ||
+        location.pathname === "/testnet/connect";
 
     const getMobOps = () =>
         /android/i.test(navigator.userAgent || navigator.vendor || window.opera)
@@ -71,11 +81,12 @@ export default function EVMWallet({ wallet, close }) {
                             : chain.infoURL,
                     ],
                 };
-                const switched = await window.ethereum.request({
+                // debugger;
+                window.ethereum.request({
                     method: "wallet_addEthereumChain",
                     params: [params, account],
                 });
-                return switched ? true : false;
+                return true;
             } catch (error) {
                 console.log(error);
                 return false;
@@ -94,14 +105,11 @@ export default function EVMWallet({ wallet, close }) {
                 );
                 if (connected) {
                     dispatch(setMetaMask(true));
+                    if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                     close();
                     if (to) {
-                        if (chainId !== from.chainId) {
+                        if (chainId !== from?.chainId) {
                             const switched = await switchNetwork();
-                            console.log(
-                                "🚀 ~ file: EVMWallet.jsx ~ line 100 ~ connectHandler ~ switched",
-                                switched
-                            );
                             if (switched) navigateToAccountRoute();
                         } else navigateToAccountRoute();
                     }
@@ -111,6 +119,7 @@ export default function EVMWallet({ wallet, close }) {
                 connected = await connectTrustWallet(activate, from.text);
                 close();
                 if (connected && to) navigateToAccountRoute();
+                if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                 break;
             case "WalletConnect":
                 connected = await onWalletConnect(activate, from.text, testnet);
@@ -123,7 +132,12 @@ export default function EVMWallet({ wallet, close }) {
     };
 
     const getStyle = () => {
-        if (!from) {
+        // debugger;
+        if (temporaryFrom?.type === "EVM") {
+            return {};
+        } else if (temporaryFrom && temporaryFrom?.type !== "EVM") {
+            return OFF;
+        } else if (!from) {
             return {};
         } else if (from && from.type === "EVM") {
             return {};

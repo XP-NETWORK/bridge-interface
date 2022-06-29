@@ -7,37 +7,49 @@ import {
 import AlgorandWalletIcon from "../../assets/img/wallet/AlgorandWallet.svg";
 import MyAlgoBlue from "../../assets/img/wallet/MyAlgoBlue.svg";
 import AlgoSignerIcon from "../../assets/img/wallet/Algo Signer.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { id } from "ethers/lib/utils";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { setFrom } from "../../store/reducers/generalSlice";
 
 export default function AlgorandWallet({ wallet, close }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
+    const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
     const testnet = useSelector((state) => state.general.testNet);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
+    const truePathname =
+        location.pathname === "/" ||
+        location.pathname === "/connect" ||
+        location.pathname === "/testnet/connect";
 
     const navigateToAccountRoute = () => {
         navigate(testnet ? `/testnet/account` : `/account`);
     };
 
     const connectionHandler = async (wallet) => {
+        debugger;
         let connected;
         switch (wallet) {
             case "MyAlgo":
                 connected = await connectMyAlgo();
                 close();
+                if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                 if (connected && to) navigateToAccountRoute();
                 break;
             case "AlgoSigner":
                 connected = await connectAlgoSigner(testnet);
                 close();
+                if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                 if (connected && to) navigateToAccountRoute();
                 break;
             case "Algorand Wallet":
                 connectAlgoWallet();
                 close();
+                if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                 if (to) navigateToAccountRoute();
                 break;
             default:
@@ -46,7 +58,12 @@ export default function AlgorandWallet({ wallet, close }) {
     };
 
     const getStyle = () => {
-        if (!from) {
+        // debugger;
+        if (temporaryFrom?.type === "Algorand") {
+            return {};
+        } else if (temporaryFrom && temporaryFrom?.type !== "Algorand") {
+            return OFF;
+        } else if (!from) {
             return {};
         } else if (from && from.text === "Algorand") {
             return {};
