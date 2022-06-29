@@ -11829,7 +11829,7 @@ next-tick@^1.1.0:
 
 "nft-parser@git+https://github.com/xp-network/nft-parser#bleeding-edge":
   version "0.1.5"
-  resolved "git+https://github.com/xp-network/nft-parser#aa8d981c3a8de2bcb878f08f440b006d37beb2ce"
+  resolved "git+https://github.com/xp-network/nft-parser#7ede56b56d4a1f3ef7961029b08cbd3e4c583d40"
   dependencies:
     "@types/node" "^17.0.35"
     axios "^0.27.2"
