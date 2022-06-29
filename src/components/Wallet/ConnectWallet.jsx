@@ -6,6 +6,7 @@ import {
     setQrCodeString,
     setShowAbout,
     setShowVideo,
+    setTemporaryFrom,
     setWalletsModal,
     setWrongNetwork,
 } from "../../store/reducers/generalSlice";
@@ -56,6 +57,7 @@ function ConnectWallet() {
         if (qrCodeImage) {
             dispatch(setQrCodeString(""));
         }
+        dispatch(setTemporaryFrom(""));
     };
 
     const walletsModal = useSelector((state) => state.general.walletsModal);

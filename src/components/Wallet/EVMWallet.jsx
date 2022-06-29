@@ -131,7 +131,7 @@ export default function EVMWallet({ wallet, close }) {
     };
 
     const getStyle = () => {
-        debugger;
+        // debugger;
         if (temporaryFrom?.type === "EVM") {
             return {};
         } else if (temporaryFrom && temporaryFrom?.type !== "EVM") {

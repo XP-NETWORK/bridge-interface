@@ -51,6 +51,8 @@ export default function TezosWallet({ wallet, close }) {
                     return { display: "none" };
                 } else if (temporaryFrom?.type === "Tezos") {
                     return {};
+                } else if (temporaryFrom && temporaryFrom?.type !== "Tezos") {
+                    return OFF;
                 } else if (!from) {
                     return {};
                 } else if (from.text !== "Tezos") {

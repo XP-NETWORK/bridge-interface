@@ -11,6 +11,7 @@ import WalletList from "./WalletList";
 export default function WalletConnectionModal() {
     const [walletSearch, setWalletSearch] = useState();
     const qrCodeImage = useSelector((state) => state.general.qrCodeImage);
+    const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
 
     const [show, setShow] = useState();
     const dispatch = useDispatch();
@@ -28,9 +29,11 @@ export default function WalletConnectionModal() {
         <>
             <Modal.Header>
                 <Modal.Title>Connect Wallet</Modal.Title>
-                <span className="CloseModal" onClick={handleClose}>
-                    <div className="close-modal"></div>
-                </span>
+                {!temporaryFrom && (
+                    <span className="CloseModal" onClick={handleClose}>
+                        <div className="close-modal"></div>
+                    </span>
+                )}
             </Modal.Header>
             <div className="wallet-search__container">
                 <input

@@ -21,6 +21,7 @@ import {
     setSync2,
     setSync2Connecx,
     setTempleWallet,
+    setTemporaryFrom,
     setTezosAccount,
     setTo,
     setTronLink,
@@ -53,6 +54,7 @@ export default function ChangeWalletModal() {
     );
     const handleClose = () => {
         dispatch(setChangeWallet(false));
+        dispatch(setTemporaryFrom(""));
     };
 
     const handleSwitch = (e) => {

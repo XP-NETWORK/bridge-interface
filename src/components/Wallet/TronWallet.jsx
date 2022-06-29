@@ -8,6 +8,7 @@ export default function TronWallet({ close }) {
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const testnet = useSelector((state) => state.general.testNet);
+    const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const navigate = useNavigate();
     const location = useLocation();
@@ -27,8 +28,12 @@ export default function TronWallet({ close }) {
     };
 
     const getStyle = () => {
-        if (from?.text === "Tron") return {};
-        else return OFF;
+        if (temporaryFrom?.type === "Tron") {
+            return {};
+        } else if (temporaryFrom && temporaryFrom?.type !== "Tron") {
+            return OFF;
+        } else if (from && from?.text !== "Tron") return OFF;
+        else return {};
     };
 
     return (

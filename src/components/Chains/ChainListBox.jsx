@@ -13,10 +13,7 @@ import {
     setChainSearch,
     setSwitchDestination,
     setValidatorsInf,
-    setSelectedNFTList,
-    cleanSelectedNFTList,
     setChangeWallet,
-    setAccountWalletModal,
     setTemporaryFrom,
 } from "../../store/reducers/generalSlice";
 import Chain from "./Chain";
@@ -136,11 +133,6 @@ export default function ChainListBox(props) {
     const chainSelectHandler = (chain) => {
         // debugger;
 
-        // if (
-        //     location.pathname === "/testnet/connect" ||
-        //     location.pathname === "/" ||
-        //     location.pathname === "/connect"
-        // ) {
         if (departureOrDestination === "departure") {
             if (
                 chain.type === typeOfChainConnected() ||
@@ -157,11 +149,6 @@ export default function ChainListBox(props) {
             dispatch(setTo(chain));
             handleClose();
         }
-        // } else {
-        //     dispatch(setTemporaryFrom(chain));
-        //     dispatch(setChangeWallet(true));
-        //     handleClose();
-        // }
     };
 
     useEffect(() => {
