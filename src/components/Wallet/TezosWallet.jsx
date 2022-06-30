@@ -2,16 +2,23 @@ import React from "react";
 import { connectTempleWallet, connectBeacon } from "./ConnectWalletHelper";
 import BeaconW from "../../assets/img/wallet/BeaconWhite.svg";
 import Temple from "../../assets/img/wallet/Temple.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { setFrom } from "../../store/reducers/generalSlice";
 
 export default function TezosWallet({ wallet, close }) {
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const testnet = useSelector((state) => state.general.testNet);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
+    const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const location = useLocation();
+    const truePathname =
+        location.pathname === "/" ||
+        location.pathname === "/connect" ||
+        location.pathname === "/testnet/connect";
 
     const navigateToAccountRoute = () => {
         navigate(testnet ? `/testnet/account` : `/account`);
@@ -23,11 +30,13 @@ export default function TezosWallet({ wallet, close }) {
             case "TempleWallet":
                 connected = await connectTempleWallet();
                 close();
+                if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                 if (connected && to) navigateToAccountRoute();
                 break;
             case "Beacon":
                 connected = await connectBeacon();
                 close();
+                if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                 if (connected && to) navigateToAccountRoute();
                 break;
             default:
@@ -40,6 +49,10 @@ export default function TezosWallet({ wallet, close }) {
             case "TempleWallet":
                 if (window.innerWidth < 600) {
                     return { display: "none" };
+                } else if (temporaryFrom?.type === "Tezos") {
+                    return {};
+                } else if (temporaryFrom && temporaryFrom?.type !== "Tezos") {
+                    return OFF;
                 } else if (!from) {
                     return {};
                 } else if (from.text !== "Tezos") {
@@ -47,7 +60,9 @@ export default function TezosWallet({ wallet, close }) {
                 }
                 break;
             case "Beacon":
-                if (!from) {
+                if (temporaryFrom?.type === "Tezos") {
+                    return {};
+                } else if (!from) {
                     return {};
                 } else if (from.text !== "Tezos") return OFF;
                 break;
