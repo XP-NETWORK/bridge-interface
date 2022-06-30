@@ -8,7 +8,6 @@ import USBWallet from "./USBWallet";
 import VeChainWallet from "./VeChainWallet";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useDidUpdateEffect } from "../Settings/hooks";
 
 export default function WalletList({ search, connected, input }) {
     const from = useSelector((state) => state.general.from);
