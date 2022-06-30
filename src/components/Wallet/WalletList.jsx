@@ -7,6 +7,8 @@ import ElrondWallet from "./ElrondWallet";
 import USBWallet from "./USBWallet";
 import VeChainWallet from "./VeChainWallet";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDidUpdateEffect } from "../Settings/hooks";
 
 export default function WalletList({ search, connected, input }) {
     const from = useSelector((state) => state.general.from);
@@ -24,6 +26,7 @@ export default function WalletList({ search, connected, input }) {
             type: "EVM",
             mobile: true,
             desktop: true,
+            order: 1,
         },
         {
             Component: (
@@ -37,6 +40,7 @@ export default function WalletList({ search, connected, input }) {
             type: "EVM",
             mobile: true,
             desktop: false,
+            order: 2,
         },
         {
             Component: (
@@ -50,6 +54,7 @@ export default function WalletList({ search, connected, input }) {
             type: "EVM",
             mobile: true,
             desktop: true,
+            order: 3,
         },
         {
             Component: (
@@ -63,6 +68,7 @@ export default function WalletList({ search, connected, input }) {
             type: "Tezos",
             mobile: true,
             desktop: true,
+            order: 4,
         },
         {
             Component: (
@@ -76,6 +82,7 @@ export default function WalletList({ search, connected, input }) {
             type: "Tezos",
             mobile: true,
             desktop: true,
+            order: 5,
         },
         {
             Component: (
@@ -89,6 +96,7 @@ export default function WalletList({ search, connected, input }) {
             type: "Elrond",
             mobile: true,
             desktop: true,
+            order: 6,
         },
         {
             Component: (
@@ -102,6 +110,7 @@ export default function WalletList({ search, connected, input }) {
             type: "Elrond",
             mobile: false,
             desktop: true,
+            order: 7,
         },
         {
             Component: (
@@ -115,6 +124,7 @@ export default function WalletList({ search, connected, input }) {
             type: "Algorand",
             mobile: false,
             desktop: true,
+            order: 8,
         },
         {
             Component: (
@@ -128,6 +138,7 @@ export default function WalletList({ search, connected, input }) {
             type: "Algorand",
             mobile: false,
             desktop: true,
+            order: 9,
         },
         {
             Component: (
@@ -141,6 +152,7 @@ export default function WalletList({ search, connected, input }) {
             type: "Algorand",
             mobile: true,
             desktop: false,
+            order: 10,
         },
         {
             Component: <TronWallet key="wallet-index-6" close={connected} />,
@@ -148,6 +160,7 @@ export default function WalletList({ search, connected, input }) {
             type: "Tron",
             mobile: true,
             desktop: true,
+            order: 11,
         },
         {
             Component: (
@@ -157,6 +170,7 @@ export default function WalletList({ search, connected, input }) {
             type: "VeChain",
             mobile: true,
             desktop: true,
+            order: 12,
         },
         {
             Component: (
@@ -169,20 +183,28 @@ export default function WalletList({ search, connected, input }) {
             name: "Ledger",
             mobile: false,
             desktop: true,
+            order: 13,
         },
         {
             Component: <USBWallet key="wallet-index12" connected={connected} />,
             name: "Trezor",
             mobile: false,
             desktop: true,
+            order: 14,
         },
     ];
 
     const filteredWallets = input
-        ? walletComponents.filter((wallet) =>
-              wallet.name.toLowerCase().includes(input.toLowerCase())
-          )
-        : walletComponents;
+        ? walletComponents
+              .sort((a, b) => b.order - a.order)
+              .filter((wallet) =>
+                  wallet.name.toLowerCase().includes(input.toLowerCase())
+              )
+        : from
+        ? walletComponents.sort((e) => {
+              if (from.type === e.type) return -1;
+          })
+        : walletComponents.sort((a, b) => a.order - b.order);
 
     return (
         <ul className="walletList scrollSty">
