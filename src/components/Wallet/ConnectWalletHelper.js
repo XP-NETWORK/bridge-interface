@@ -45,6 +45,7 @@ import { useNavigate } from "react-router";
 import { chainsConfig, CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { getAddEthereumChain } from "../../wallet/chains";
+import Web3 from "web3";
 
 export const wallets = [
     "MetaMask",
@@ -65,6 +66,71 @@ const { to, modalError } = store.getState();
 const connector = new WalletConnect({
     bridge: "https://bridge.walletconnect.org", // Required
 });
+
+const switchNetWork = async (from) => {
+    debugger;
+    const transfer16 = (val = 0) => {
+        val = isNaN(Number(val)) ? 1 : Number(val);
+        return "0x" + val.toString(16);
+    };
+    let fromChainId;
+    try {
+        fromChainId = transfer16(from.chainId);
+        await window.bitkeep.ethereum.request({
+            method: "wallet_switchEthereumChain",
+            params: [{ fromChainId }],
+        });
+    } catch (error) {
+        console.error(error);
+        const chain = getAddEthereumChain()[parseInt(fromChainId).toString()];
+        const params = {
+            chainId: fromChainId, // A 0x-prefixed hexadecimal string
+            chainName: chain.name,
+            nativeCurrency: {
+                name: chain.nativeCurrency.name,
+                symbol: chain.nativeCurrency.symbol, // 2-6 characters long
+                decimals: chain.nativeCurrency.decimals,
+            },
+            rpcUrls: chain.rpc,
+            blockExplorerUrls: [
+                chain.explorers &&
+                chain.explorers.length > 0 &&
+                chain.explorers[0].url
+                    ? chain.explorers[0].url
+                    : chain.infoURL,
+            ],
+        };
+        try {
+            fromChainId = transfer16(from.chainId);
+            window.bitkeep.ethereum.request({
+                method: "wallet_addEthereumChain",
+                params,
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+};
+
+export const connectBitKeep = async (from) => {
+    let provider;
+    const isInstallBikeep = () => {
+        return window.bitkeep && window.bitkeep.ethereum;
+    };
+    if (!isInstallBikeep) {
+        window.location.href =
+            "https://chrome.google.com/webstore/detail/bitkeep-bitcoin-crypto-wa/jiidiaalihmmhddjgbnbgdfflelocpak";
+    } else {
+        provider = window.bitkeep.ethereum;
+        await provider.request({ method: "eth_requestAccounts" });
+        const web3 = new Web3(provider);
+        const address = await web3.eth.getAccounts();
+        const chainId = await web3.eth.getChainId();
+        if (from?.chainId !== chainId) {
+            switchNetWork(from);
+        }
+    }
+};
 
 export const connectMetaMask = async (activate, from, to) => {
     // debugger;

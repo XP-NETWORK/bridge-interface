@@ -8,6 +8,7 @@ import USBWallet from "./USBWallet";
 import VeChainWallet from "./VeChainWallet";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import BitKeep from "../../assets/img/wallet/bitkeep.svg";
 
 export default function WalletList({ search, connected, input }) {
     const from = useSelector((state) => state.general.from);
@@ -44,7 +45,7 @@ export default function WalletList({ search, connected, input }) {
         {
             Component: (
                 <EVMWallet
-                    wallet={undefined}
+                    wallet={"WalletConnect"}
                     key="wallet-index-1"
                     close={connected}
                 />
@@ -52,6 +53,20 @@ export default function WalletList({ search, connected, input }) {
             name: "WalletConnect",
             type: "EVM",
             mobile: true,
+            desktop: true,
+            order: 3,
+        },
+        {
+            Component: (
+                <EVMWallet
+                    wallet={"BitKeep"}
+                    key="wallet-index-1"
+                    close={connected}
+                />
+            ),
+            name: "BitKeep",
+            type: "EVM",
+            mobile: false,
             desktop: true,
             order: 3,
         },
