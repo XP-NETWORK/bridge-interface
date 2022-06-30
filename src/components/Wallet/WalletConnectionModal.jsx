@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,6 +7,7 @@ import {
     setWalletsModal,
 } from "../../store/reducers/generalSlice";
 import WalletList from "./WalletList";
+import { useDidUpdateEffect } from "../Settings/hooks";
 
 export default function WalletConnectionModal() {
     const [walletSearch, setWalletSearch] = useState();
@@ -15,6 +16,7 @@ export default function WalletConnectionModal() {
 
     const [show, setShow] = useState();
     const dispatch = useDispatch();
+    const inputElement = useRef(null);
 
     const handleClose = () => {
         setShow(false);
@@ -24,6 +26,10 @@ export default function WalletConnectionModal() {
             dispatch(setQrCodeString(""));
         }
     };
+
+    useEffect(() => {
+        inputElement?.current?.focus();
+    }, []);
 
     return (
         <>
@@ -37,6 +43,7 @@ export default function WalletConnectionModal() {
             </Modal.Header>
             <div className="wallet-search__container">
                 <input
+                    ref={inputElement}
                     onChange={(e) => setWalletSearch(e.target.value)}
                     value={walletSearch}
                     className="wallet-search serchInput"
