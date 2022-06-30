@@ -45,56 +45,8 @@ export default function ChainListBox(props) {
     );
     const evmAccount = useSelector((state) => state.general.account);
     const tronAccount = useSelector((state) => state.general.tronWallet);
-    const { account } = useWeb3React();
-    const testnet = useSelector((state) => state.general.testNet);
     const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
     const axios = require("axios");
-
-    async function switchNetwork(chain) {
-        // debugger
-        const info = testnet
-            ? TESTNET_CHAIN_INFO[chain.key]
-            : CHAIN_INFO[chain.key];
-        const chainId = `0x${info.chainId.toString(16)}`;
-
-        try {
-            await window.ethereum.request({
-                method: "wallet_switchEthereumChain",
-                params: [{ chainId }],
-            });
-        } catch (error) {
-            console.log(error);
-            try {
-                const chain = getAddEthereumChain()[
-                    parseInt(chainId).toString()
-                ];
-
-                const params = {
-                    chainId: chainId, // A 0x-prefixed hexadecimal string
-                    chainName: chain.name,
-                    nativeCurrency: {
-                        name: chain.nativeCurrency.name,
-                        symbol: chain.nativeCurrency.symbol, // 2-6 characters long
-                        decimals: chain.nativeCurrency.decimals,
-                    },
-                    rpcUrls: chain.rpc,
-                    blockExplorerUrls: [
-                        chain.explorers &&
-                        chain.explorers.length > 0 &&
-                        chain.explorers[0].url
-                            ? chain.explorers[0].url
-                            : chain.infoURL,
-                    ],
-                };
-                await window.ethereum.request({
-                    method: "wallet_addEthereumChain",
-                    params: [params, account],
-                });
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    }
 
     const checkValidators = async () => {
         let res;
