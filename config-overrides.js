@@ -1,16 +1,26 @@
-module.exports = function override(config, env) {
-  // New config, e.g. config.plugins.push...
+const path = require("path");
+const fs = require("fs");
+const rewireBabelLoader = require("react-app-rewire-babel-loader");
 
-  config.resolve.extensions = [...config.resolve.extensions, ".mjs"];
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
 
-  config.module.rules = [
-    ...config.module.rules,
-    {
-      test: /\.mjs$/,
-      include: /node_modules/,
-      type: "javascript/auto",
-    },
-  ];
+module.exports = function override(webpackConfig) {
+  webpackConfig.module.rules.push({
+    test: /\.mjs$/,
+    include: /node_modules/,
+    type: "javascript/auto",
+  });
 
-  return config;
+  webpackConfig = rewireBabelLoader.include(
+    webpackConfig,
+    resolveApp("node_modules/@dfinity")
+  );
+
+  webpackConfig = rewireBabelLoader.include(
+    webpackConfig,
+    resolveApp("node_modules/tonweb")
+  );
+
+  return webpackConfig;
 };
