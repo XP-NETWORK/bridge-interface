@@ -13,7 +13,7 @@
     "@reduxjs/toolkit": "^1.6.2",
     "@taquito/beacon-wallet": "^13.0.0",
     "@taquito/taquito": "^12.1.1",
-    "@taquito/utils": "^11.1.0",
+    "@taquito/utils": "^13.0.0",
     "@temple-wallet/dapp": "^7.0.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
