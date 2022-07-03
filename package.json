@@ -66,7 +66,7 @@
     "web3": "^1.7.3",
     "web3-utils": "^1.6.0",
     "web3modal": "^1.9.6",
-    "xp.network": "git+https://github.com/xp-network/xpjs#6cd109242f064c43f3e30b77b463c07404ef94f7"
+    "xp.network": "git+https://github.com/xp-network/xpjs#bleeding-edge"
   },
   "scripts": {
     "start": "react-scripts start",
