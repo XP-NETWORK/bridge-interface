@@ -85,14 +85,14 @@ export default function ChainListBox(props) {
     };
 
     const chainSelectHandler = (chain) => {
-        debugger;
+        // debugger;
 
         if (departureOrDestination === "departure") {
             if (
                 chain.type === typeOfChainConnected() ||
                 !typeOfChainConnected()
             ) {
-                if (to.text === chain.text) {
+                if (to?.text === chain.text) {
                     dispatch(setTo(from));
                     dispatch(setFrom(to));
                 } else {
@@ -105,7 +105,7 @@ export default function ChainListBox(props) {
                 handleClose();
             }
         } else if (departureOrDestination === "destination") {
-            if (from.text === chain.text) {
+            if (from?.text === chain.text) {
                 dispatch(setTo(from));
                 dispatch(setFrom(to));
             } else {
