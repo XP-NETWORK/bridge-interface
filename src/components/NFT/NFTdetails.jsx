@@ -31,6 +31,7 @@ function NFTdetails({ nftInf, claimables, details }) {
     const [minted, setMinted] = useState();
 
     const getMintedWith = async () => {
+        // debugger;
         let mintWidth;
         const toNonce = CHAIN_INFO[toKey].nonce;
         const fromNonce = CHAIN_INFO[fromKey].nonce;
