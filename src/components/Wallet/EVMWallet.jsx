@@ -21,7 +21,7 @@ import BitKeep from "../../assets/img/wallet/bitkeep.svg";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 
 export default function EVMWallet({ wallet, close }) {
-    const { account, activate, chainId } = useWeb3React();
+    const { account, activate, chainId, deactivate } = useWeb3React();
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
@@ -123,6 +123,7 @@ export default function EVMWallet({ wallet, close }) {
                 if (connected && to) navigateToAccountRoute();
                 break;
             case "BitKeep":
+                deactivate();
                 connected = await connectBitKeep(from);
                 close();
                 if (connected && to) navigateToAccountRoute();

@@ -68,7 +68,7 @@ const connector = new WalletConnect({
 });
 
 const switchNetWork = async (from) => {
-    // debugger;
+    debugger;
     const transfer16 = (val = 0) => {
         val = isNaN(Number(val)) ? 1 : Number(val);
         return "0x" + val.toString(16);
@@ -143,7 +143,6 @@ const switchNetWork = async (from) => {
 };
 
 export const connectBitKeep = async (from) => {
-    debugger;
     let provider;
     const isInstallBikeep = () => {
         return window.bitkeep && window.bitkeep.ethereum;

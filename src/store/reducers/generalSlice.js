@@ -20,6 +20,9 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setBitKeep(state, action) {
+            state.bitKeep = action.payload;
+        },
         setTemporaryFrom(state, action) {
             state.temporaryFrom = action.payload;
         },
@@ -776,6 +779,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+    setBitKeep,
     setTemporaryFrom,
     setCheckWallet,
     addImportedNFTtoNFTlist,
