@@ -60,7 +60,7 @@ export default function WalletList({ search, connected, input }) {
             Component: (
                 <EVMWallet
                     wallet={"BitKeep"}
-                    key="wallet-index-1"
+                    key="wallet-index-1-bitkeep"
                     close={connected}
                 />
             ),

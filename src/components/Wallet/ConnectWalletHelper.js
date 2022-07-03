@@ -68,51 +68,82 @@ const connector = new WalletConnect({
 });
 
 const switchNetWork = async (from) => {
-    debugger;
+    // debugger;
     const transfer16 = (val = 0) => {
         val = isNaN(Number(val)) ? 1 : Number(val);
         return "0x" + val.toString(16);
     };
-    let fromChainId;
-    try {
-        fromChainId = transfer16(from.chainId);
-        await window.bitkeep.ethereum.request({
-            method: "wallet_switchEthereumChain",
-            params: [{ fromChainId }],
-        });
-    } catch (error) {
-        console.error(error);
-        const chain = getAddEthereumChain()[parseInt(fromChainId).toString()];
-        const params = {
-            chainId: fromChainId, // A 0x-prefixed hexadecimal string
-            chainName: chain.name,
-            nativeCurrency: {
-                name: chain.nativeCurrency.name,
-                symbol: chain.nativeCurrency.symbol, // 2-6 characters long
-                decimals: chain.nativeCurrency.decimals,
-            },
-            rpcUrls: chain.rpc,
-            blockExplorerUrls: [
-                chain.explorers &&
-                chain.explorers.length > 0 &&
-                chain.explorers[0].url
-                    ? chain.explorers[0].url
-                    : chain.infoURL,
-            ],
-        };
-        try {
-            fromChainId = transfer16(from.chainId);
-            window.bitkeep.ethereum.request({
-                method: "wallet_addEthereumChain",
+    // let fromChainId;
+    const chain = getAddEthereumChain()[parseInt(from.chainId).toString()];
+    const params = {
+        chainId: from.chainID, // A 0x-prefixed hexadecimal string
+        chainName: chain.name,
+        nativeCurrency: {
+            name: chain.nativeCurrency.name,
+            symbol: chain.nativeCurrency.symbol, // 2-6 characters long
+            decimals: chain.nativeCurrency.decimals,
+        },
+        rpcUrls: chain.rpc,
+        blockExplorerUrls: [
+            chain.explorers &&
+            chain.explorers.length > 0 &&
+            chain.explorers[0].url
+                ? chain.explorers[0].url
+                : chain.infoURL,
+        ],
+    };
+    window.bitkeep.ethereum &&
+        window.bitkeep.ethereum
+            .request({
+                method: "wallet_switchEthereumChain",
                 params,
+            })
+            .then(() => {
+                console.log("Network Switch Success");
+            })
+            .catch((e) => {
+                console.log(e);
             });
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    // try {
+    //     fromChainId = transfer16(from.chainId);
+    //     await window.bitkeep.ethereum.request({
+    //         method: "wallet_switchEthereumChain",
+    //         params: fromChainId,
+    //     });
+    // } catch (error) {
+    //     console.error(error);
+    //     const chain = getAddEthereumChain()[parseInt(fromChainId).toString()];
+    // const params = {
+    //     chainId: fromChainId, // A 0x-prefixed hexadecimal string
+    //     chainName: chain.name,
+    //     nativeCurrency: {
+    //         name: chain.nativeCurrency.name,
+    //         symbol: chain.nativeCurrency.symbol, // 2-6 characters long
+    //         decimals: chain.nativeCurrency.decimals,
+    //     },
+    //     rpcUrls: chain.rpc,
+    //     blockExplorerUrls: [
+    //         chain.explorers &&
+    //         chain.explorers.length > 0 &&
+    //         chain.explorers[0].url
+    //             ? chain.explorers[0].url
+    //             : chain.infoURL,
+    //     ],
+    // };
+    //     try {
+    //         fromChainId = transfer16(from.chainId);
+    //         window.bitkeep.ethereum.request({
+    //             method: "wallet_addEthereumChain",
+    //             params,
+    //         });
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
 };
 
 export const connectBitKeep = async (from) => {
+    debugger;
     let provider;
     const isInstallBikeep = () => {
         return window.bitkeep && window.bitkeep.ethereum;
@@ -126,8 +157,10 @@ export const connectBitKeep = async (from) => {
         const web3 = new Web3(provider);
         const address = await web3.eth.getAccounts();
         const chainId = await web3.eth.getChainId();
-        if (from?.chainId !== chainId) {
-            switchNetWork(from);
+        if (from && from?.chainId !== chainId) {
+            switchNetWork(from, true);
+        } else {
+            store.dispatch(setAccount(address[0]));
         }
     }
 };

@@ -6,6 +6,7 @@ import TronWeb from "tronweb";
 import { ExtensionProvider } from "@elrondnetwork/erdjs/out";
 import { chainsConfig } from "../components/values";
 import { create } from "ipfs-http-client";
+import { getAddEthereumChain } from "./chains";
 
 export const moralisParams = {
     exchangeRateUri: "https://testing-bridge.xp.network/exchange/",
@@ -19,7 +20,6 @@ export const moralisParams = {
     nftListUri: "https://indexnft.herokuapp.com",
     heartbeatUri: "https://xpheartbeat.herokuapp.com",
 };
-const axios = require("axios");
 
 export const getFromParams = async () => {
     const from = store.getState().general.from.key;
@@ -292,64 +292,6 @@ export const preloadItem = (item, type, setLoaded) => {
     }
 };
 
-// export const parseNFTS = async (nfts) => {
-//     // console.log("oldHelpers");
-//     const { elrondWallet } = store.getState().general;
-//     const { from, to } = store.getState().general;
-//     const factory = await getRPCFactory();
-//     const fromChain = chainsConfig[from];
-//     const inner = await factory.inner(fromChain.Chain);
-//     const result = await Promise.all(
-//         nfts.map(async (n) => {
-//             return await new Promise(async (resolve) => {
-//                 try {
-//                     if (!n.uri) resolve({ ...n });
-//                     const res = await axios.get(setupURI(n.uri));
-//                     if (res && res.data) {
-//                         if (res.data.animation_url)
-//                             preloadItem(
-//                                 res.data.animation_url,
-//                                 "video",
-//                                 () => {}
-//                             );
-//                         else preloadItem(res.data.image, "image", () => {});
-//                         resolve({ ...res.data, ...n });
-//                     } else resolve(undefined);
-//                 } catch (err) {
-//                     if (err) {
-//                         try {
-//                             const res = await axios.get(
-//                                 "https://sheltered-crag-76748.herokuapp.com/" +
-//                                     setupURI(n.uri?.uri ? n.uri?.uri : n.uri)
-//                             );
-//                             if (res.data) {
-//                                 try {
-//                                     const { uri } = res.data;
-//                                     const result = await axios.get(
-//                                         setupURI(uri?.uri)
-//                                     );
-
-//                                     resolve({
-//                                         ...result.data,
-//                                         ...n,
-//                                         cantSend: true,
-//                                     });
-//                                 } catch (err) {
-//                                     resolve(undefined);
-//                                 }
-//                             } else {
-//                                 resolve(undefined);
-//                             }
-//                         } catch (err) {
-//                             resolve(undefined);
-//                         }
-//                     }
-//                 }
-//             });
-//         })
-//     );
-//     return result.filter((n) => n);
-// };
 const Web3Utils = require("web3-utils");
 export const isAddress = async (address) => {
     const { to } = store.getState().general;
