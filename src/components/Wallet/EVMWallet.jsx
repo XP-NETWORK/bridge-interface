@@ -159,7 +159,7 @@ export default function EVMWallet({ wallet, close }) {
         case "MetaMask":
             return (
                 <li
-                    style={getStyle()}
+                    style={from?.text === "Harmony" ? OFF : getStyle()}
                     onClick={() => connectHandler("MetaMask")}
                     className="wllListItem"
                     data-wallet="MetaMask"
@@ -211,7 +211,7 @@ export default function EVMWallet({ wallet, close }) {
         case "BitKeep":
             return (
                 <li
-                    style={getStyle()}
+                    style={from?.text === "Harmony" ? OFF : getStyle()}
                     onClick={() => connectHandler("BitKeep")}
                     className="wllListItem"
                     data-wallet="MetaMask"
