@@ -31,7 +31,6 @@ function NFTdetails({ nftInf, claimables, details }) {
     const [minted, setMinted] = useState();
 
     const getMintedWith = async () => {
-        // debugger;
         let mintWidth;
         const toNonce = CHAIN_INFO[toKey].nonce;
         const fromNonce = CHAIN_INFO[fromKey].nonce;
@@ -117,11 +116,18 @@ function NFTdetails({ nftInf, claimables, details }) {
                                 <label>Token ID</label>
                                 <p>{native.tokenId}</p>
                             </div>
-                            {minted?.length > 0 && (
+                            {minted && minted?.length > 0 ? (
                                 <div className="nftInfDesc nftInfBox">
                                     <label>Minted With</label>
                                     <p>{minted}</p>
                                 </div>
+                            ) : minted && minted.length < 1 ? (
+                                <div className="nftInfDesc nftInfBox">
+                                    <label>Minted With</label>
+                                    <p>WNFT</p>
+                                </div>
+                            ) : (
+                                <></>
                             )}
                             {native.name && (
                                 <div className="nftInfDesc nftInfBox">

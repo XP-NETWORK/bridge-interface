@@ -211,6 +211,7 @@ export default function EVMWallet({ wallet, close }) {
         case "BitKeep":
             return (
                 <li
+                    style={getStyle()}
                     onClick={() => connectHandler("BitKeep")}
                     className="wllListItem"
                     data-wallet="MetaMask"
