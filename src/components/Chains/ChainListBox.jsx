@@ -50,52 +50,6 @@ export default function ChainListBox(props) {
     const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
     const axios = require("axios");
 
-    async function switchNetwork(chain) {
-        // debugger
-        const info = testnet
-            ? TESTNET_CHAIN_INFO[chain.key]
-            : CHAIN_INFO[chain.key];
-        const chainId = `0x${info.chainId.toString(16)}`;
-
-        try {
-            await window.ethereum.request({
-                method: "wallet_switchEthereumChain",
-                params: [{ chainId }],
-            });
-        } catch (error) {
-            console.log(error);
-            try {
-                const chain = getAddEthereumChain()[
-                    parseInt(chainId).toString()
-                ];
-
-                const params = {
-                    chainId: chainId, // A 0x-prefixed hexadecimal string
-                    chainName: chain.name,
-                    nativeCurrency: {
-                        name: chain.nativeCurrency.name,
-                        symbol: chain.nativeCurrency.symbol, // 2-6 characters long
-                        decimals: chain.nativeCurrency.decimals,
-                    },
-                    rpcUrls: chain.rpc,
-                    blockExplorerUrls: [
-                        chain.explorers &&
-                        chain.explorers.length > 0 &&
-                        chain.explorers[0].url
-                            ? chain.explorers[0].url
-                            : chain.infoURL,
-                    ],
-                };
-                await window.ethereum.request({
-                    method: "wallet_addEthereumChain",
-                    params: [params, account],
-                });
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    }
-
     const checkValidators = async () => {
         let res;
         try {
@@ -138,7 +92,12 @@ export default function ChainListBox(props) {
                 chain.type === typeOfChainConnected() ||
                 !typeOfChainConnected()
             ) {
-                dispatch(setFrom(chain));
+                if (to?.text === chain.text) {
+                    dispatch(setTo(from));
+                    dispatch(setFrom(to));
+                } else {
+                    dispatch(setFrom(chain));
+                }
                 handleClose();
             } else {
                 dispatch(setTemporaryFrom(chain));
@@ -146,7 +105,12 @@ export default function ChainListBox(props) {
                 handleClose();
             }
         } else if (departureOrDestination === "destination") {
-            dispatch(setTo(chain));
+            if (from?.text === chain.text) {
+                dispatch(setTo(from));
+                dispatch(setFrom(to));
+            } else {
+                dispatch(setTo(chain));
+            }
             handleClose();
         }
     };
@@ -180,7 +144,13 @@ export default function ChainListBox(props) {
                 chain.text.toLowerCase().includes(chainSearch.toLowerCase())
             );
         }
-        setFromChains(sorted.filter((e) => e.text !== to?.text));
+        if (
+            location.pathname === "connect" ||
+            location.pathname === "/testnet/connect" ||
+            location.pathname === "/"
+        ) {
+            setFromChains(sorted.filter((e) => e.text !== to?.text));
+        } else setFromChains(sorted);
     }, [
         elrondAccount,
         tezosAccount,
@@ -224,7 +194,15 @@ export default function ChainListBox(props) {
                 chain.text.toLowerCase().includes(chainSearch.toLowerCase())
             );
         }
-        setToChains(sorted.filter((e) => e.text !== from?.text));
+        if (
+            location.pathname === "connect" ||
+            location.pathname === "/testnet/connect" ||
+            location.pathname === "/"
+        ) {
+            setToChains(sorted.filter((e) => e.text !== from?.text));
+        } else {
+            setToChains(sorted);
+        }
     }, [from, chainSearch, departureOrDestination]);
 
     useEffect(() => {
