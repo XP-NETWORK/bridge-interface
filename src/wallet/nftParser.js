@@ -32,32 +32,21 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
   } = store.getState();
 
   if (!claimable) {
-    let nftCashResponse;
-    try {
-      nftCashResponse = await axios.get(
-        `${cacheUrl}/nft/data?chainId=${nft.native?.chainId}&tokenId=${nft.native?.tokenId}&contract=${nft.native?.contract}`,
-        {
-          headers: { "Content-type": "application/json" },
-          timeout: 5000,
-        }
-      );
-    } catch (error) {
-      console.error("nft-cache check db: ", error);
-    }
-
     const [nftObject, wlListed] = await Promise.allSettled([
       (async () => {
-        const res = await axios.get(
-          `${cacheUrl}/nft/data?chainId=${nft.native?.chainId}&tokenId=${nft.native?.tokenId}&contract=${nft.native?.contract}`,
-          {
-            headers: { "Content-type": "application/json" },
-            timeout: 5000,
-          }
-        );
+        const res = await axios
+          .get(
+            `${cacheUrl}/nft/data?chainId=${nft.native?.chainId}&tokenId=${nft.native?.tokenId}&contract=${nft.native?.contract}`,
+            {
+              headers: { "Content-type": "application/json" },
+              timeout: 5000,
+            }
+          )
+          .catch((e) => "error");
 
         if (
-          nftCashResponse &&
-          nftCashResponse.data === "no NFT with that data was found"
+          (res && res.data === "no NFT with that data was found") ||
+          res === "error"
         ) {
           const parsed = await nftGeneralParser(nft, account, whitelisted);
           return {
@@ -74,26 +63,34 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
       !testnet ? isWhiteListed(from.text, nft) : true,
     ]);
 
-    nftObjectResponse =
+    const nftObjectResponse =
       nftObject.status === "fulfilled" ? nftObject.value : undefined;
-    whitelisted = wl.status === "fulfilled" ? wl.value : undefined;
+    whitelisted = wlListed.status === "fulfilled" ? wlListed.value : undefined;
 
     if (nftObjectResponse) {
       const { data, toCache } = nftObjectResponse;
       if (toCache) {
-        if (
-          nftObjectResponse.data?.metaData?.image ||
-          parsed?.metaData?.animation_url
-        ) {
+        if (data.metaData?.image || data.metaData?.animation_url) {
           console.log(
-            `caching Nft ${parsed?.metaData?.name || parsed?.native?.name}`
+            `caching Nft ${data?.metaData?.name || data?.native?.name}`
           );
+
           try {
             !testnet &&
               whitelisted !== undefined &&
-              axios.post(`${cacheUrl}/nft/add`, JSON.stringify(parsed), {
-                headers: { "Content-type": "application/json" },
-              });
+              axios.post(
+                `${cacheUrl}/nft/add`,
+                JSON.stringify({
+                  ...data,
+                  metaData: {
+                    ...data.metaData,
+                    whitelisted,
+                  },
+                }),
+                {
+                  headers: { "Content-type": "application/json" },
+                }
+              );
           } catch (error) {
             console.error("nft-cache add: ", error);
           }
@@ -101,27 +98,19 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
         const dataLoaded = true;
         nftObj = {
           ...nft,
-          ...(parsed?.metaData || parsed),
+          ...data.metaData,
           dataLoaded,
           whitelisted,
         };
       } else {
+        const dataLoaded = true;
+        nftObj = {
+          ...nft,
+          ...data,
+          dataLoaded,
+          whitelisted,
+        };
       }
-    } else {
-      const dataLoaded = true;
-      //whitelisted = nftCashResponse?.data?.whitelisted;
-
-      /* try {
-        whitelisted = await isWhiteListed(from.text, nft);
-      } catch (error) {
-        console.error(error);
-      }*/
-      nftObj = {
-        ...nft,
-        ...nftCashResponse?.data,
-        dataLoaded,
-        whitelisted,
-      };
     }
 
     if (
