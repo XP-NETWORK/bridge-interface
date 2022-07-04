@@ -159,7 +159,7 @@ export default function EVMWallet({ wallet, close }) {
         case "MetaMask":
             return (
                 <li
-                    style={from?.text === "Harmony" ? OFF : getStyle()}
+                    style={getStyle()}
                     onClick={() => connectHandler("MetaMask")}
                     className="wllListItem"
                     data-wallet="MetaMask"
