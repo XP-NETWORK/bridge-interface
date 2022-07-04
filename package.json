@@ -2,6 +2,9 @@
   "name": "xp-network-bridge",
   "version": "0.1.0",
   "private": true,
+  "browser": {
+    "electron": false
+  },
   "dependencies": {
     "@airgap/beacon-sdk": "^2.3.9",
     "@elrondnetwork/erdjs": "9.2.3",
@@ -29,6 +32,7 @@
     "algorand-walletconnect-qrcode-modal": "^1.6.1",
     "algosdk": "^1.12.0",
     "axios": "^0.27.2",
+    "babel-preset-es2015": "^6.24.1",
     "base-64": "^1.0.0",
     "bignumber.js": "=9.0.1",
     "bootstrap": "^4.6.0",
@@ -42,6 +46,7 @@
     "moment": "^2.29.1",
     "nft-parser": "git+https://github.com/xp-network/nft-parser#bleeding-edge",
     "react": "^17.0.2",
+    "react-app-rewire-babel-loader": "^0.1.1",
     "react-app-rewired": "^2.2.1",
     "react-blockies": "^1.4.1",
     "react-bootstrap": "^2.0.0",
@@ -49,6 +54,7 @@
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-jazzicon": "^1.0.3",
+    "react-leaflet": "^4.0.1",
     "react-meta-tags": "^1.0.1",
     "react-modal-image": "^2.5.0",
     "react-redux": "^7.2.6",
@@ -69,10 +75,10 @@
     "xp.network": "git+https://github.com/xp-network/xpjs#bleeding-edge"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
