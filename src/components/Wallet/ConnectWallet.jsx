@@ -124,6 +124,7 @@ function ConnectWallet() {
     debugger;
     let provider;
     provider = window.bitkeep?.ethereum;
+    if (!provider) return;
     await provider.request({ method: "eth_requestAccounts" });
     const web3 = new Web3(provider);
     const _chainId = await web3.eth.getChainId();

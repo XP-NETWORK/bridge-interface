@@ -90,16 +90,17 @@ const switchNetWork = async (from) => {
         : chain.infoURL,
     ],
   };
+
   window.bitkeep?.ethereum &&
     window.bitkeep?.ethereum
-      .request({
+      ?.request({
         method: "wallet_switchEthereumChain",
         params,
       })
-      .then(() => {
+      ?.then(() => {
         console.log("Network Switch Success");
       })
-      .catch((e) => {
+      ?.catch((e) => {
         console.log(e);
       });
   // try {
@@ -150,6 +151,7 @@ export const connectBitKeep = async (from) => {
       "https://chrome.google.com/webstore/detail/bitkeep-bitcoin-crypto-wa/jiidiaalihmmhddjgbnbgdfflelocpak";
   } else {
     provider = window.bitkeep?.ethereum;
+    if (!provider) return;
     await provider.request({ method: "eth_requestAccounts" });
     const web3 = new Web3(provider);
     const address = await web3.eth.getAccounts();

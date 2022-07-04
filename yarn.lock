@@ -12947,7 +12947,7 @@ next-tick@^1.1.0:
 
 "nft-parser@git+https://github.com/xp-network/nft-parser#bleeding-edge":
   version "0.1.7"
-  resolved "git+https://github.com/xp-network/nft-parser#fcadc4062cca5f0b334f154e403cbb3fc71a9b95"
+  resolved "git+https://github.com/xp-network/nft-parser#046f096c5701d5ae512491c8e468901e767403ed"
   dependencies:
     "@taquito/taquito" "^13.0.0"
     "@types/node" "^17.0.35"
