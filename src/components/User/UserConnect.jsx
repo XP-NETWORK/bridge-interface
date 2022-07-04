@@ -84,7 +84,7 @@ export default function UserConnect({ desktop, mobile }) {
     };
 
     const handleChangeAccountOrChainId = async () => {
-        debugger;
+        // debugger;
         let provider;
         let _chainId;
         if (bitKeep) {
