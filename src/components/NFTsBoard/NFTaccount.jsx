@@ -82,7 +82,17 @@ function NFTaccount() {
     const prevWrappedEGold = usePrevious(wrappedEGold);
 
     const [index, setIndex] = useState(0);
-    const { library } = useWeb3React();
+
+    //! Pagination
+    const NFTsPerPage = 6;
+    const [currentPage, setCurrentPage] = useState();
+    const indexOfLastNFT = currentPage * NFTsPerPage;
+    const indexOfFirstNFT = indexOfLastNFT - NFTsPerPage;
+    const currentNFTs = nfts?.slice(indexOfFirstNFT, indexOfLastNFT);
+    console.log(
+        "🚀 ~ file: NFTaccount.jsx ~ line 92 ~ NFTaccount ~ currentNFTs",
+        currentNFTs
+    );
 
     //Anjelika - 0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE
     //Anjelika elrond - erd1s89aq3s0z6mjfpx8s85zntlfywsvj5r8nzcdujw7mx53f9et9ezq9fnrws
@@ -93,7 +103,7 @@ function NFTaccount() {
     // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
 
     async function getNFTsList(str) {
-        const useHardcoded = false;
+        const useHardcoded = true;
         const hard = "0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE";
         try {
             const w = useHardcoded
@@ -271,7 +281,7 @@ function NFTaccount() {
                                     setIndex={setIndex}
                                 />
                             )}
-                            <Pagination />
+                            <Pagination setCurrentPage={setCurrentPage} />
                         </div>
                         <MobileTransferBoard />
                     </div>

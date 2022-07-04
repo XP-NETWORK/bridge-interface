@@ -110,10 +110,15 @@ div#root {
     font-weight: 600;
     font-size: 14px;
     line-height: 20px;
+    margin-top: 20px;
 }
 .pagination__list {
     display: flex;
     gap: 30px;
+}
+
+.pagination__page {
+    cursor: pointer;
 }
 
 .about-text::before {
