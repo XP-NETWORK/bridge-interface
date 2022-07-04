@@ -34,9 +34,15 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
   if (!claimable) {
     const [nftObject, wlListed] = await Promise.allSettled([
       (async () => {
+        const contract =
+          nft.native?.contract === nft.collectionIdent
+            ? nft.native?.contract
+            : nft.collectionIdent;
         const res = await axios
           .get(
-            `${cacheUrl}/nft/data?chainId=${nft.native?.chainId}&tokenId=${nft.native?.tokenId}&contract=${nft.native?.contract}`,
+            `${cacheUrl}/nft/data?chainId=${nft.native?.chainId}&tokenId=${
+              nft.native?.tokenId
+            }&contract=${contract || nft.native?.contract}`,
             {
               headers: { "Content-type": "application/json" },
               timeout: 5000,
