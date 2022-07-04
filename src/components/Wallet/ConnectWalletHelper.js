@@ -143,6 +143,7 @@ const switchNetWork = async (from) => {
 };
 
 export const connectBitKeep = async (from) => {
+    debugger;
     let provider;
     const isInstallBikeep = () => {
         return window.bitkeep && window.bitkeep.ethereum;

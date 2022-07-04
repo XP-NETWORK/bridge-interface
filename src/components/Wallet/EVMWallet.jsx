@@ -91,6 +91,7 @@ export default function EVMWallet({ wallet, close }) {
     }
 
     const connectHandler = async (wallet) => {
+        // debugger;
         let connected;
         switch (wallet) {
             case "MetaMask":

@@ -102,6 +102,16 @@ div#root {
     color: #395feb;
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+}
+
 .about-text::before {
     position: absolute;
     content: "";
