@@ -17,6 +17,7 @@ import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 import { useWeb3React } from "@web3-react/core";
 import { getAddEthereumChain } from "../../wallet/chains";
 import { useDidUpdateEffect } from "../Settings/hooks";
+import Web3 from "web3";
 
 function ConnectWallet() {
     const navigate = useNavigate();
@@ -127,12 +128,19 @@ function ConnectWallet() {
         }
     }
 
-    const handleConnect = () => {
-        if (testnet && from.tnChainId === chainId) {
+    const handleConnect = async () => {
+        debugger;
+        let provider;
+        provider = window.bitkeep.ethereum;
+        await provider.request({ method: "eth_requestAccounts" });
+        const web3 = new Web3(provider);
+        const _chainId = await web3.eth.getChainId();
+        const chainID = chainId || _chainId;
+        if (testnet && from.tnChainId === chainID) {
             navigate(
                 `/testnet/account${location.search ? location.search : ""}`
             );
-        } else if (!testnet && from.chainId === chainId) {
+        } else if (!testnet && from.chainId === chainID) {
             navigate(`/account${location.search ? location.search : ""}`);
         } else if (testnet && from.type !== "EVM") {
             navigate(
