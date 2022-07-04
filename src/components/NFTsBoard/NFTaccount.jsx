@@ -11,7 +11,6 @@ import {
     setDepartureOrDestination,
     setError,
     setSearchNFTList,
-    setSelectedNFTList,
     setWrappedEGold,
 } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -235,7 +234,7 @@ function NFTaccount() {
             <Modal
                 show={importModal}
                 animation={false}
-                className=" ChainModal import-nft__modal"
+                className="ChainModal import-nft__modal"
             >
                 <ImportNFTModal />
             </Modal>

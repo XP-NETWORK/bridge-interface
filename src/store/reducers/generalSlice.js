@@ -20,6 +20,9 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setHighEthGasPriceModal(state, action) {
+            state.highEthGasPriceModal = action.payload;
+        },
         setTemporaryFrom(state, action) {
             state.temporaryFrom = action.payload;
         },
@@ -776,6 +779,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+    setHighEthGasPriceModal,
     setTemporaryFrom,
     setCheckWallet,
     addImportedNFTtoNFTlist,

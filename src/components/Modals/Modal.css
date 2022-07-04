@@ -337,6 +337,54 @@
     align-items: center;
 }
 
+.helperCenter__modal .modal-content {
+    padding: 26px 32.5px;
+    color: #14161a;
+}
+.helper-center__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 42px;
+}
+.close-modal {
+    cursor: pointer;
+}
+.helper-center__title {
+    display: flex;
+    gap: 14px;
+    justify-content: start;
+}
+.helper-center__text {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.helper-center__text > div:first-child {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 27px;
+}
+.helper-center__button {
+    display: flex;
+    justify-content: center;
+    padding-top: 44px;
+}
+.helper-center__button > div {
+    width: 142px;
+    height: 46px;
+    color: white;
+    background-color: #3e64ed;
+    border-radius: 66px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.helper-center__button > div:active {
+    background-color: #2d51d0;
+}
+
 @media screen and (max-width: 501px) {
     .copy-tooltip:hover .copy-tooltip__text {
         font-size: 10px;

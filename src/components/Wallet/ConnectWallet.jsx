@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
     setCheckWallet,
+    setHighEthGasPriceModal,
     setQrCodeString,
     setShowAbout,
     setShowVideo,
@@ -17,6 +18,8 @@ import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 import { useWeb3React } from "@web3-react/core";
 import { getAddEthereumChain } from "../../wallet/chains";
 import { useDidUpdateEffect } from "../Settings/hooks";
+import axios from "axios";
+import HighEthGasPriceModal from "../Modals/HighEthGasPriceModal/HighEthGasPriceModal";
 
 function ConnectWallet() {
     const navigate = useNavigate();
@@ -31,6 +34,10 @@ function ConnectWallet() {
     const to = useSelector((state) => state.general.to);
     const [show, setShow] = useState();
     const qrCodeString = useSelector((state) => state.general.qrCodeString);
+    const highEthGasPriceModal = useSelector(
+        (state) => state.general.highEthGasPriceModal
+    );
+
     const qrCodeImage = useSelector((state) => state.general.qrCodeImage);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
@@ -127,6 +134,17 @@ function ConnectWallet() {
         }
     }
 
+    const estimateToEthereum = async () => {
+        try {
+            const {
+                data: { average },
+            } = await axios.get(
+                "https://ethgasstation.info/api/ethgasAPI.json"
+            );
+            // dispatch(setHighEthGasPriceModal(true));
+        } catch (error) {}
+    };
+
     const handleConnect = () => {
         if (testnet && from.tnChainId === chainId) {
             navigate(
@@ -156,8 +174,22 @@ function ConnectWallet() {
         inputElement?.current?.focus();
     }, [show, walletsModal]);
 
+    useDidUpdateEffect(() => {
+        if (to?.text === "Ethereum") {
+            estimateToEthereum();
+        }
+    }, [to]);
+
     return (
         <div>
+            <Modal
+                show={highEthGasPriceModal}
+                onHide={() => dispatch(setHighEthGasPriceModal(false))}
+                animation={false}
+                className="ChainModal helperCenter__modal"
+            >
+                <HighEthGasPriceModal />
+            </Modal>
             <div
                 onClick={() =>
                     from && to
