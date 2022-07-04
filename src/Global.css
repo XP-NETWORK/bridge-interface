@@ -111,6 +111,10 @@ div#root {
     font-size: 14px;
     line-height: 20px;
 }
+.pagination__list {
+    display: flex;
+    gap: 30px;
+}
 
 .about-text::before {
     position: absolute;
