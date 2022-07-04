@@ -216,7 +216,8 @@ export default function WalletList({ search, connected, input }) {
               )
         : from
         ? walletComponents.sort((e) => {
-              if (from.type === e.type) return -1;
+              if (from.text === "Harmony") return 2;
+              else if (from.type === e.type) return -1;
           })
         : walletComponents.sort((a, b) => a.order - b.order);
 
