@@ -3,26 +3,30 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Pagination() {
     const dispatch = useDispatch();
+    const pageNumber = [];
     const nfts = useSelector((state) => state.general.NFTList);
 
-    const currentPageClick = (i) => {
+    const currentPageClick = (page) => {
         debugger;
-        console.log(i);
+        console.log(page);
     };
+
+    for (let i = 1; i <= Math.ceil(nfts?.length / 6); i++) {
+        pageNumber.push(i);
+    }
 
     return (
         <div className="pagination">
             <div className="pagination__prev">&#10094;</div>
             <ul className="pagination__list">
-                {nfts?.map((e, i) => {
-                    if ((i / 6) % 6 === 0) {
-                        return (
-                            <li onClick={() => currentPageClick(i)}>
-                                {i > 0 ? nfts.length / i : i}
+                {pageNumber?.map(
+                    (page, i) =>
+                        pageNumber[i + 1] && (
+                            <li onClick={() => currentPageClick(page)}>
+                                {page}
                             </li>
-                        );
-                    }
-                })}
+                        )
+                )}
                 {(nfts?.length / 6) % 6 > 3 && <div>...</div>}
                 <div>{(nfts?.length / 6) % 6}</div>
             </ul>
