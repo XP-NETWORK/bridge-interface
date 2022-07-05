@@ -8,15 +8,21 @@ import {
   setAlgorandAccount,
   setAlgorandWallet,
 } from "../../store/reducers/generalSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function ElrondWallet({ wallet, close }) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
+  const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
   const to = useSelector((state) => state.general.to);
   const testnet = useSelector((state) => state.general.testNet);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const truePathname =
+    location.pathname === "/" ||
+    location.pathname === "/connect" ||
+    location.pathname === "/testnet/connect";
 
   const handleConnect = async (wallet) => {
     switch (wallet) {
@@ -52,7 +58,11 @@ export default function ElrondWallet({ wallet, close }) {
   }, []);
 
   const getStyle = () => {
-    if (!from) {
+    if (temporaryFrom?.type === "Elrond") {
+      return {};
+    } else if (temporaryFrom && temporaryFrom?.type !== "Elrond") {
+      return OFF;
+    } else if (!from) {
       return {};
     } else if (from && from.text === "Elrond") {
       return {};

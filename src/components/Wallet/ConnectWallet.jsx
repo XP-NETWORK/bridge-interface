@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -6,6 +6,7 @@ import {
   setQrCodeString,
   setShowAbout,
   setShowVideo,
+  setTemporaryFrom,
   setWalletsModal,
   setWrongNetwork,
 } from "../../store/reducers/generalSlice";
@@ -16,6 +17,8 @@ import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 import { useWeb3React } from "@web3-react/core";
 import { getAddEthereumChain } from "../../wallet/chains";
 import { ReactComponent as SearchComp } from "../../assets/img/icons/lupa.svg";
+import { useDidUpdateEffect } from "../Settings/hooks";
+import Web3 from "web3";
 
 function ConnectWallet() {
   const navigate = useNavigate();
@@ -38,6 +41,8 @@ function ConnectWallet() {
   const tronAccount = useSelector((state) => state.general.tronWallet);
   const testnet = useSelector((state) => state.general.testNet);
   const { account, chainId } = useWeb3React();
+  const inputElement = useRef(null);
+
   const connected =
     elrondAccount ||
     tezosAccount ||
@@ -55,9 +60,10 @@ function ConnectWallet() {
     if (qrCodeImage) {
       dispatch(setQrCodeString(""));
     }
+    dispatch(setTemporaryFrom(""));
   };
+
   const walletsModal = useSelector((state) => state.general.walletsModal);
-  const widget = useSelector((state) => state.general.widget);
 
   async function switchNetwork() {
     const info = testnet
@@ -115,10 +121,18 @@ function ConnectWallet() {
     }
   }
 
-  const handleConnect = () => {
-    if (testnet && from.tnChainId === chainId) {
+  const handleConnect = async () => {
+    debugger;
+    let provider;
+    provider = window.bitkeep?.ethereum;
+    if (!provider) return;
+    await provider.request({ method: "eth_requestAccounts" });
+    const web3 = new Web3(provider);
+    const _chainId = await web3.eth.getChainId();
+    const chainID = chainId || _chainId;
+    if (testnet && from.tnChainId === chainID) {
       navigate(`/testnet/account${location.search ? location.search : ""}`);
-    } else if (!testnet && from.chainId === chainId) {
+    } else if (!testnet && from.chainId === chainID) {
       navigate(`/account${location.search ? location.search : ""}`);
     } else if (testnet && from.type !== "EVM") {
       navigate(`/testnet/account${location.search ? location.search : ""}`);
@@ -135,6 +149,10 @@ function ConnectWallet() {
   function handleVideoClick() {
     dispatch(setShowVideo(true));
   }
+
+  useDidUpdateEffect(() => {
+    inputElement?.current?.focus();
+  }, [show, walletsModal]);
 
   return (
     <div>
@@ -183,6 +201,7 @@ function ConnectWallet() {
           </Modal.Header>
           <div className="wallet-search__container">
             <input
+              ref={inputElement}
               onChange={(e) => setWalletSearch(e.target.value)}
               value={walletSearch}
               className="wallet-search serchInput"

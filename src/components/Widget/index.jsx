@@ -107,7 +107,7 @@ export default function Widget() {
           btnColor: checkRgbaIn("#" + btnColor),
           btnBackground: checkRgbaIn("#" + btnBackground),
           btnRadius: btnRadius.replace(/\D/g, ""),
-          selectedChains: chains,
+          selectedChains: chains.map((c) => (c === "Gnosis" ? "xDai" : c)),
           selectedWallets: wallets,
           cardBackground: checkRgbaIn("#" + cardBackground),
           cardBackgroundBot: checkRgbaIn("#" + cardBackgroundBot),

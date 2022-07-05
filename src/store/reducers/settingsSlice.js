@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { chains as valuesChains } from "../../components/values";
 import BigNumber from "bignumber.js";
+import { biz } from "../../components/values";
+
 export const fonts = [
   "Open Sans",
   "Roboto",
@@ -16,10 +18,8 @@ export const fonts = [
   "Ubuntu",
 ];
 
-const hideChain = ["VeChain"];
-
-export const chains = [...valuesChains].filter(
-  (c) => !hideChain.includes(c.value)
+export const chains = [...valuesChains].sort((a, b) =>
+  a.coming && !b.coming ? 1 : -1
 );
 
 export const activeChains = [
@@ -37,12 +37,14 @@ export const availability = {
   Elrond: ["Maiar", "MaiarExtension"],
   Tron: ["TronLink"],
   Tezos: ["Beacon", "TempleWallet"],
+  VeChain: ["Sync2"],
 
   //["BSC", "Velas", "Ethereum", "Polygon", ]: ["MetaMask", "WalletConnect", "TrustWallet", "Ledger", "Trezor"],
 };
 
 export const wallets = [
   "MetaMask",
+  ...(biz ? ["BitKeep"] : []),
   "WalletConnect",
   "TrustWallet",
   "MyAlgo",
@@ -52,6 +54,8 @@ export const wallets = [
   "Beacon",
   "TempleWallet",
   "MaiarExtension",
+  "Sync2",
+
   //"Ledger",
   //"Trezor",
 ];

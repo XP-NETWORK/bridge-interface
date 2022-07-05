@@ -2,6 +2,9 @@
   "name": "xp-network-bridge",
   "version": "0.1.0",
   "private": true,
+  "browser": {
+    "electron": false
+  },
   "dependencies": {
     "@airgap/beacon-sdk": "^2.3.9",
     "@elrondnetwork/erdjs": "9.2.3",
@@ -13,7 +16,7 @@
     "@reduxjs/toolkit": "^1.6.2",
     "@taquito/beacon-wallet": "^13.0.0",
     "@taquito/taquito": "^12.1.1",
-    "@taquito/utils": "^11.1.0",
+    "@taquito/utils": "^13.0.0",
     "@temple-wallet/dapp": "^7.0.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -42,6 +45,8 @@
     "moment": "^2.29.1",
     "nft-parser": "git+https://github.com/xp-network/nft-parser#bleeding-edge",
     "react": "^17.0.2",
+    "react-app-rewire-babel-loader": "^0.1.1",
+    "react-app-rewired": "^2.2.1",
     "react-blockies": "^1.4.1",
     "react-bootstrap": "^2.0.0",
     "react-copy-to-clipboard": "^5.0.4",
@@ -68,10 +73,10 @@
     "xp.network": "git+https://github.com/xp-network/xpjs#bleeding-edge"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },

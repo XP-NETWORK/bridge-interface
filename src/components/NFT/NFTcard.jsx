@@ -20,7 +20,8 @@ import zoomIn from "../../assets/img/icons/zoomInWhite.png";
 import ModalImage from "react-modal-image";
 import { parseNFT } from "../../wallet/nftParser";
 
-import {ReactComponent as CheckComp} from "../../assets/img/icons/blue_check-small.svg"
+import { ReactComponent as CheckComp } from "../../assets/img/icons/blue_check-small.svg";
+import { useDidUpdateEffect } from "../Settings/hooks";
 
 export default function NFTcard({ nft, index, claimables }) {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ export default function NFTcard({ nft, index, claimables }) {
     const [entry] = entries;
     setIsVisible(entry.isIntersecting);
   };
+
   const cardRef = useRef(null);
   const options = useMemo(() => {
     return {
@@ -62,24 +64,26 @@ export default function NFTcard({ nft, index, claimables }) {
 
   useEffect(() => {
     const observer = new IntersectionObserver(callBackWhenObserver, options);
+
     const currentTarget = cardRef.current;
+
     if (currentTarget) observer.observe(currentTarget);
     return () => {
       if (currentTarget) {
         observer.unobserve(currentTarget);
       }
     };
-  }, [cardRef, options]);
+  }, [cardRef, options, search]);
 
-  useEffect(() => {
-    if (!nft.dataLoaded) {
-      if (isVisible) {
+  useDidUpdateEffect(() => {
+    if (isVisible) {
+      if (!nft.dataLoaded) {
         // await parseEachNFT(nft, index, testnet, claimables);
 
         parseNFT(nft, index, testnet, claimables);
       }
     }
-  }, [isVisible]);
+  }, [isVisible, nft]);
 
   const handleZoomIn = () => {
     console.log("zoom innnn");

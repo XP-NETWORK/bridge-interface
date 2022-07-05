@@ -24,7 +24,7 @@ export const EVM = "EVM";
 export const ELROND = "Elrond";
 export const TEZOS = "TEZOS";
 
-const biz =
+export const biz =
   window.location.hostname.includes("localhost") ||
   window.location.hostname.includes("staging") ||
   window.location.hostname.includes("testing");
@@ -272,7 +272,7 @@ export const chains = [
     mainnet: false,
     newChain: true,
   },
-  /*{
+  {
     type: "EVM",
     key: "GateChain",
     text: "GateChain",
@@ -285,7 +285,7 @@ export const chains = [
     testNet: false,
     mainnet: true,
     newChain: true,
-  },*/
+  },
   {
     type: "VeChain",
     key: "VeChain",
@@ -293,7 +293,7 @@ export const chains = [
     value: "VeChain",
     tnChainId: 39,
     chainId: undefined,
-    order: 5,
+    order: -2,
     image: { avatar: true, src: VET },
     maintenance: false,
     mainnet: biz ? true : false,

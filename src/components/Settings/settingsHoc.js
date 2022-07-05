@@ -117,7 +117,7 @@ const settingsHoc = (Wrapped) => (props) => {
 
     if (checked) {
       if (activeChains.includes(val)) {
-        const canCheckout = activeChainsNumber > 3; //comingSoonChains.includes(val)? true: activeChainsNumber - selectedChains.reduce((acc, cur) => acc + comingSoonChains.includes(cur)? 1: 0, 0) > 2;
+        const canCheckout = activeChainsNumber > 2; //comingSoonChains.includes(val)? true: activeChainsNumber - selectedChains.reduce((acc, cur) => acc + comingSoonChains.includes(cur)? 1: 0, 0) > 2;
 
         dispatch(
           setSettings({
@@ -180,9 +180,11 @@ const settingsHoc = (Wrapped) => (props) => {
         checkRgbaOut(btnColor).split("#")[1]}&btnBackground=${btnBackground &&
         checkRgbaOut(btnBackground).split("#")[1]}&btnRadius=${btnRadius &&
         btnRadius}&fontFamily=${fontFamily &&
-        fontFamily}&chains=${selectedChains.join(
-        "-"
-      )}&from=${fromChain}&to=${toChain}&cardBackground=${cardBackground &&
+        fontFamily}&chains=${selectedChains
+        .map((c) => (c === "xDai" ? "Gnosis" : c))
+        .join(
+          "-"
+        )}&from=${fromChain}&to=${toChain}&cardBackground=${cardBackground &&
         checkRgbaOut(cardBackground).split(
           "#"
         )[1]}&cardBackgroundBot=${cardBackgroundBot &&
@@ -248,15 +250,20 @@ const settingsHoc = (Wrapped) => (props) => {
       );
 
       if (difference.length > 0) {
-        const wallets = availability[difference[0]];
-        if (wallets) {
-          removMultiple(wallets);
+        const removeWallets = [];
+
+        for (let i = 0; i < difference.length; i++) {
+          const wallets = availability[difference[i]];
+          wallets && removeWallets.push(...wallets);
         }
+        removeWallets && removMultiple(removeWallets);
       } else {
-        const wallets = availability[selectedChains[selectedChains.length - 1]];
-        if (wallets) {
-          addMultiple(wallets);
+        const addWallets = [];
+        for (let i = 0; i < selectedChains.length; i++) {
+          const wallets = availability[selectedChains[i]];
+          wallets && addWallets.push(...wallets);
         }
+        addWallets && addMultiple(addWallets);
       }
     }
   }, [selectedChains]);

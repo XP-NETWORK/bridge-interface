@@ -1098,27 +1098,29 @@ function WSettings({
                 </button>
               </div>
 
-              <Accordion defaultActiveKey="18">
-                <Accordion.Item eventKey="5">
-                  <Accordion.Header>Export Code</Accordion.Header>
-                  <Accordion.Body>
-                    <div className="export_code">
-                      <div className="typo-sel header_color_select">
-                        <h5>Paste this code</h5>
-                        <div className="exportCodeCont">
-                          <p id="iframeSrc">{`<iframe src='${iframeSrc}' frameborder='0'  width="100%" height="800px"></iframe>`}</p>
-                          <button
-                            className={`copyCode icon ${
-                              copied ? "copied" : ""
-                            }`}
-                            onClick={() => copyCode(setCopied, "iframeSrc")}
-                          ></button>
+              {false && (
+                <Accordion defaultActiveKey="18">
+                  <Accordion.Item eventKey="5">
+                    <Accordion.Header>Export Code</Accordion.Header>
+                    <Accordion.Body>
+                      <div className="export_code">
+                        <div className="typo-sel header_color_select">
+                          <h5>Paste this code</h5>
+                          <div className="exportCodeCont">
+                            <p id="iframeSrc">{`<iframe src='${iframeSrc}' frameborder='0'  width="100%" height="800px"></iframe>`}</p>
+                            <button
+                              className={`copyCode icon ${
+                                copied ? "copied" : ""
+                              }`}
+                              onClick={() => copyCode(setCopied, "iframeSrc")}
+                            ></button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Accordion>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+              )}
             </div>
           </div>
           <div
