@@ -296,7 +296,7 @@ export const chains = [
     order: -2,
     image: { avatar: true, src: VET },
     maintenance: false,
-    mainnet: biz ? true : false,
+    mainnet: biz,
     testNet: false,
     newChain: true,
   },

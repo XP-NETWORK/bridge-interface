@@ -105,6 +105,12 @@ export default function NFTcard({ nft, index, claimables }) {
               className={nft.whitelisted ? "nft__card--selected" : "nft__card"}
             >
               <div className="nft__main">
+                {!nft.uri && nft.animation_url && nft.image && (
+                  <VideoOrImage
+                    urls={[nft.animation_url, nft.image]}
+                    i={index}
+                  />
+                )}
                 {nft.uri || imageErr ? (
                   nft.animation_url && nft.image ? (
                     <VideoAndImage

@@ -116,7 +116,7 @@ function NFTdetails({ nftInf, claimables, details }) {
                                 <label>Token ID</label>
                                 <p>{native.tokenId}</p>
                             </div>
-                            {minted && minted?.length > 0 ? (
+                            {/* {minted && minted?.length > 0 ? (
                                 <div className="nftInfDesc nftInfBox">
                                     <label>Minted With</label>
                                     <p>{minted}</p>
@@ -128,7 +128,7 @@ function NFTdetails({ nftInf, claimables, details }) {
                                 </div>
                             ) : (
                                 <></>
-                            )}
+                            )} */}
                             {native.name && (
                                 <div className="nftInfDesc nftInfBox">
                                     <label>Collection Name</label>
