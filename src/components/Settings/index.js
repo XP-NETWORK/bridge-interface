@@ -228,6 +228,7 @@ function WSettings({
                                   type="checkbox"
                                   name=""
                                   id=""
+                                  readOnly
                                   checked={selectedChains.includes(chain.value)}
                                 />
                                 <span className="icon selectNfticon"></span>
@@ -414,6 +415,7 @@ function WSettings({
                                   type="checkbox"
                                   name=""
                                   id=""
+                                  readOnly
                                   checked={selectedWallets.includes(wallet)}
                                 />
                                 <span className="icon selectNfticon"></span>
@@ -1084,7 +1086,7 @@ function WSettings({
               </Accordion>
               {false && (
                 <div className="referalSwitch" onClick={toggleShow}>
-                  <input type="checkbox" checked={showLink} />
+                  <input type="checkbox" checked={showLink} readOnly />
                   <span>Powered by XP Network</span>
                 </div>
               )}

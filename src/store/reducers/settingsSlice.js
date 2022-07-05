@@ -18,9 +18,11 @@ export const fonts = [
   "Ubuntu",
 ];
 
-export const chains = [...valuesChains].sort((a, b) =>
-  a.coming && !b.coming ? 1 : -1
-);
+console.log(valuesChains);
+
+export const chains = [...valuesChains]
+  .filter((c) => c.mainnet || c.testNet || c.coming)
+  .sort((a, b) => (a.coming && !b.coming ? 1 : -1));
 
 export const activeChains = [
   ...chains.filter((chain) => !chain.maintenance).map((c) => c.value),
@@ -54,7 +56,7 @@ export const wallets = [
   "Beacon",
   "TempleWallet",
   "MaiarExtension",
-  "Sync2",
+  ...(biz ? ["Sync2"] : []),
 
   //"Ledger",
   //"Trezor",
