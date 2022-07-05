@@ -32,13 +32,16 @@ export default function Pagination({ setCurrentPage, currentPage }) {
         }
     };
 
+    const handleClickOnScope = () => {
+        setScope(scope + 3);
+        if (currentPage < scope + 2) setCurrentPage(currentPage + 3);
+    };
+
     for (let i = 1; i <= Math.ceil(nfts?.length / 6); i++) {
         pageNumbers.push(i);
     }
 
-    useDidUpdateEffect(() => {
-        console.log("scope: ", scope, "currentPage: ", currentPage);
-    }, [scope, currentPage]);
+    useDidUpdateEffect(() => {}, [currentPage]);
 
     return (
         pageNumbers.length > 1 && (
@@ -70,7 +73,7 @@ export default function Pagination({ setCurrentPage, currentPage }) {
                     {(nfts?.length / 6) % 6 > 3 && (
                         <div
                             className="pagination__page"
-                            onClick={() => setScope(scope + 3)}
+                            onClick={handleClickOnScope}
                         >
                             ...
                         </div>
