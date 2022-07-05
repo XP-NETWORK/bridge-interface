@@ -14,6 +14,7 @@ import {
     setSelectedNFTList,
     setWrappedEGold,
     cleanSelectedNFTList,
+    setCurrentNFTs,
 } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -241,7 +242,7 @@ function NFTaccount() {
     }, [selectedNFTs, nfts]);
 
     useDidUpdateEffect(() => {
-        console.log("currentNFTs: ", currentNFTs);
+        dispatch(setCurrentNFTs(currentNFTs));
     }, [currentPage]);
 
     return (
