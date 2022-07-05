@@ -208,7 +208,7 @@ export default function EVMWallet({ wallet, close }) {
           style={from?.text === "Harmony" ? OFF : getStyle()}
           onClick={() => connectHandler("BitKeep")}
           className="wllListItem"
-          data-wallet="MetaMask"
+          data-wallet="BitKeep"
         >
           <img src={BitKeep} alt="BitKeep Icon" />
           <p>BitKeep</p>
