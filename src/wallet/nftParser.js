@@ -55,6 +55,7 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
           res === "error"
         ) {
           const parsed = await nftGeneralParser(nft, account, whitelisted);
+
           return {
             data: parsed,
             toCache: true,
