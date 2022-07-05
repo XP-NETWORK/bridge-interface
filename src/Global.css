@@ -116,8 +116,14 @@ div#root {
     display: flex;
     gap: 30px;
 }
-
+.pagination__pag--active {
+    color: #14161a;
+}
 .pagination__page {
+    cursor: pointer;
+}
+.pagination__prev,
+.pagination__next {
     cursor: pointer;
 }
 

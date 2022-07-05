@@ -42,7 +42,7 @@ import UnsupportedNetwork from "../Modals/ChangeNetwork/UnsupportedNetwork";
 import SelectNFTAler from "../Alerts/SelectNFTAler";
 import PasteDestinationAlert from "../Alerts/PasteDestinationAlert";
 import NoApprovedNFT from "../Alerts/NoApprovedNFT";
-import { usePrevious } from "../Settings/hooks";
+import { useDidUpdateEffect, usePrevious } from "../Settings/hooks";
 import { chainsConfig } from "../values";
 import { useWeb3React } from "@web3-react/core";
 import ImportNFTButton from "../Buttons/ImportNFTButton";
@@ -85,14 +85,10 @@ function NFTaccount() {
 
     //! Pagination
     const NFTsPerPage = 6;
-    const [currentPage, setCurrentPage] = useState();
+    const [currentPage, setCurrentPage] = useState(1);
     const indexOfLastNFT = currentPage * NFTsPerPage;
     const indexOfFirstNFT = indexOfLastNFT - NFTsPerPage;
     const currentNFTs = nfts?.slice(indexOfFirstNFT, indexOfLastNFT);
-    console.log(
-        "🚀 ~ file: NFTaccount.jsx ~ line 92 ~ NFTaccount ~ currentNFTs",
-        currentNFTs
-    );
 
     //Anjelika - 0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE
     //Anjelika elrond - erd1s89aq3s0z6mjfpx8s85zntlfywsvj5r8nzcdujw7mx53f9et9ezq9fnrws
@@ -244,6 +240,10 @@ function NFTaccount() {
         }
     }, [selectedNFTs, nfts]);
 
+    useDidUpdateEffect(() => {
+        console.log("currentNFTs: ", currentNFTs);
+    }, [currentPage]);
+
     return (
         <div className="NFTaccount">
             <Modal
@@ -281,7 +281,10 @@ function NFTaccount() {
                                     setIndex={setIndex}
                                 />
                             )}
-                            <Pagination setCurrentPage={setCurrentPage} />
+                            <Pagination
+                                setCurrentPage={setCurrentPage}
+                                currentPage={currentPage}
+                            />
                         </div>
                         <MobileTransferBoard />
                     </div>
