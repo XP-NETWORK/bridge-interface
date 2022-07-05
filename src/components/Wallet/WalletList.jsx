@@ -10,6 +10,8 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import BitKeep from "../../assets/img/wallet/bitkeep.svg";
 
+import { biz } from "../values";
+
 export default function WalletList({ search, connected, input }) {
   const from = useSelector((state) => state.general.from);
 
@@ -52,34 +54,34 @@ export default function WalletList({ search, connected, input }) {
       desktop: true,
       order: 3,
     },
-    /* {
-            Component: (
-                <EVMWallet
-                    wallet={"BitKeep"}
-                    key="wallet-index-1-bitkeep"
-                    close={connected}
-                />
-            ),
-            name: "BitKeep",
-            type: "EVM",
-            mobile: false,
-            desktop: true,
-            order: 3,
-        },*/
     {
       Component: (
-        <TezosWallet
-          wallet={"TempleWallet"}
-          key="wallet-index-7"
+        <EVMWallet
+          wallet={"BitKeep"}
+          key="wallet-index-1-bitkeep"
           close={connected}
         />
       ),
-      name: "Temple Wallet Tezos",
-      type: "Tezos",
-      mobile: true,
-      desktop: true,
-      order: 4,
-    },
+      name: "BitKeep",
+      type: "EVM",
+      mobile: false,
+      desktop: biz,
+      order: 3,
+    } /
+      {
+        Component: (
+          <TezosWallet
+            wallet={"TempleWallet"}
+            key="wallet-index-7"
+            close={connected}
+          />
+        ),
+        name: "Temple Wallet Tezos",
+        type: "Tezos",
+        mobile: true,
+        desktop: true,
+        order: 4,
+      },
     {
       Component: (
         <TezosWallet wallet={"Beacon"} key="wallet-index-8" close={connected} />

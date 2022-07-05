@@ -24,7 +24,7 @@ export const EVM = "EVM";
 export const ELROND = "Elrond";
 export const TEZOS = "TEZOS";
 
-const biz =
+export const biz =
   window.location.hostname.includes("localhost") ||
   window.location.hostname.includes("staging") ||
   window.location.hostname.includes("testing");
@@ -296,7 +296,7 @@ export const chains = [
     order: -2,
     image: { avatar: true, src: VET },
     maintenance: false,
-    mainnet: biz ? true : false,
+    mainnet: biz,
     testNet: false,
     newChain: true,
   },
