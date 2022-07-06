@@ -54,6 +54,23 @@ export default function WalletList({ search, connected, input }) {
       desktop: true,
       order: 3,
     },
+<<<<<<< HEAD
+=======
+    {
+      Component: (
+        <EVMWallet
+          wallet={"BitKeep"}
+          key="wallet-index-1-bitkeep"
+          close={connected}
+        />
+      ),
+      name: "BitKeep",
+      type: "EVM",
+      mobile: false,
+      desktop: biz,
+      order: 3,
+    },
+>>>>>>> new-ui
     {
       Component: (
         <EVMWallet
