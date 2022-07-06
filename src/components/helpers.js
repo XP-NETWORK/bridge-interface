@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect } from "react";
 
 export const isEqual = (value, other) => {
@@ -51,3 +52,18 @@ export const debounce = (cb, delay) => {
       }, delay)
   }
 }
+
+export const getWidgetsById = async (widgetId) => {
+  let res;
+  try {
+    res = await axios.get(
+      `https://xpnetwork-widget.herokuapp.com/getWidget?widgetId=${widgetId}`
+    );
+    // if (res && typeof data === "object") {
+    console.log("widget from get req", res.data);
+    return res.data;
+    // }
+  } catch (error) {
+    console.log(error);
+  }
+};

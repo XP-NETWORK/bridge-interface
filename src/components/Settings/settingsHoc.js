@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFrom, setTo } from "../../store/reducers/generalSlice";
@@ -33,6 +34,7 @@ const settingsHoc = (Wrapped) => (props) => {
     val: "",
   });
   //const [showLink, onToggleShow] = useState(true);
+  const [widgetId, setWidgetId] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -65,11 +67,10 @@ const settingsHoc = (Wrapped) => (props) => {
     affiliationFees,
     panelBackground,
     fromChain,
-    toChain
+    toChain,
   } = settings;
-  console.log(showLink);
-  // console.log(settings);
 
+  // console.log(settings);
 
   const prevSelected = usePrevious(selectedChains);
 
@@ -92,27 +93,56 @@ const settingsHoc = (Wrapped) => (props) => {
     dispatch(setSettings({ ...settings, [key]: e }));
   };
 
-  useEffect(() => {
-    debounce(
-      (arg) => dispatch(setSettings(arg)),
-      1000
-    )({ ...settings, [debouncedAcc.key]: debouncedAcc.val });
-  }, [debouncedAcc]);
+  // useEffect(() => {
+  //   debounce(
+  //     (arg) => dispatch(setSettings(arg)),
+  //     1000
+  //   )({ ...settings, [debouncedAcc.key]: debouncedAcc.val });
+  // }, [debouncedAcc]);
+
+  // const getWidgetsById = async (widgetId) => {
+  //   let res;
+  //   try {
+  //     res = await axios.get(
+  //       `https://xpnetwork-widget.herokuapp.com/getWidget?widgetId=${widgetId}`
+  //     );
+  //     // if (res && typeof data === "object") {
+  //     console.log("widget", res.data);
+  //     return res.data;
+  //     // }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // // console.log(settings);
+  // useEffect(() => {
+  //   let widgetSettings;
+  //   const queryString = window.location.search;
+  //   const urlParams = new URLSearchParams(queryString);
+  //   const widgetId = urlParams.get("id");
+  //   console.log("id", widgetId);
+  //   async function fetchSettings() {
+  //     widgetSettings = await getWidgetsById(widgetId);
+  //   }
+  //   fetchSettings();
+  //   dispatch(setSettings(widgetSettings));
+  //   console.log("settings from get req", widgetSettings);
+  // }, []);
 
   useEffect(() => {
-    if (settings.fromChain !== ''){
+    if (settings.fromChain !== "") {
       dispatch(setFrom(chains.find((c) => c.text === fromChain)));
-  }
+    }
   }, [fromChain]);
 
   useEffect(() => {
-    if (settings.toChain !== ''){
+    if (settings.toChain !== "") {
       dispatch(setTo(chains.find((c) => c.text === toChain)));
-  }
+    }
   }, [toChain]);
 
   const chainCheck = (val) => {
-    console.log(val);
     const checked = selectedChains.includes(val);
 
     if (checked) {
@@ -170,7 +200,7 @@ const settingsHoc = (Wrapped) => (props) => {
         .replace("wsettings=true", "")}background=${backgroundColor &&
         backgroundColor.split("#")[1]}&panelBackground=${panelBackground &&
         panelBackground.split("#")[1]}&modalBackground=${modalBackground &&
-          modalBackground.split("#")[1]}&color=${color &&
+        modalBackground.split("#")[1]}&color=${color &&
         color.split("#")[1]}&fontSize=${fontSize &&
         fontSize}&btnColor=${btnColor &&
         btnColor.split("#")[1]}&btnBackground=${btnBackground &&
@@ -263,13 +293,70 @@ const settingsHoc = (Wrapped) => (props) => {
       })
     );
 
-  const onSaveSettings = () => {
+  const getCookie = (cUser) => {
+    let user = cUser + "=";
+    let ca = document.cookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(user) == 0) {
+        console.log("cookie", c.substring(user.length, c.length));
+        return c.substring(user.length, c.length);
+      }
+    }
+    return "";
+  };
+
+  useEffect(() => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const id = urlParams.get("id");
+    setWidgetId(id);
+    //console.log(widgetId);
+  }, []);
+
+  const onSaveSettings = async () => {
     localStorage.setItem("widgetSettings", JSON.stringify(settings));
     setCopied("saved");
 
     setTimeout(() => {
       setCopied(false);
     }, 700);
+
+    let user = JSON.parse(getCookie("user"));
+    console.log("user from cookieeeee", user);
+
+    if (widgetId !== "" && widgetId !== null) {
+      console.log("widget Updated");
+      await axios.patch("https://xpnetwork-widget.herokuapp.com/updateWidget", {
+        widgetId: widgetId,
+        settings: settings,
+      });
+    } else {
+      console.log("widget added");
+      console.log("user add and sign", user.address, user.signature);
+      let id = await axios.post(
+        "https://xpnetwork-widget.herokuapp.com/addWidget",
+        {
+          address: user.address,
+          signature: user.signature,
+          widget: settings,
+        }
+      );
+      setWidgetId(id._id);
+    }
+  };
+
+  const onSaveWidget = async () => {
+    try {
+      // const response = await axios.post('/');
+      // console.log(response);
+      alert("widget saved");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onResetSettings = () => {
@@ -281,22 +368,25 @@ const settingsHoc = (Wrapped) => (props) => {
     dispatch(
       setSettings({
         ...settings,
-        [entity]: initialState[entity]
+        [entity]: initialState[entity],
         //selectedChains: initialState.selectedChains,
       })
     );
-    entity === 'selectedChains' && setActiveChains(activeChains.length);
+    entity === "selectedChains" && setActiveChains(activeChains.length);
   };
 
-  const onUnSelectAll = entity => {
+  const onUnSelectAll = (entity) => {
     dispatch(
       setSettings({
         ...settings,
-       [entity]: [settings[entity][0], (entity === 'selectedChains' && settings[entity][1])]
-       // selectedChains: [selectedChains[0], selectedChains[1]],
+        [entity]: [
+          settings[entity][0],
+          entity === "selectedChains" && settings[entity][1],
+        ],
+        // selectedChains: [selectedChains[0], selectedChains[1]],
       })
     );
-    entity === 'selectedChains' && setActiveChains(2);
+    entity === "selectedChains" && setActiveChains(2);
   };
 
   return (
@@ -317,6 +407,7 @@ const settingsHoc = (Wrapped) => (props) => {
       toggleShow={toggleShow}
       showLink={showLink}
       onSaveSettings={onSaveSettings}
+      onSaveWidget={onSaveWidget}
       onResetSettings={onResetSettings}
       onSelectAll={onSelectAll}
       onUnSelectAll={onUnSelectAll}

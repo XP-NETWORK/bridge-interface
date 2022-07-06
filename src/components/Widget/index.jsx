@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import "./Widget.css";
-import { setSettings } from "../../store/reducers/settingsSlice";
+import { initialState, setSettings } from "../../store/reducers/settingsSlice";
 import {
   setWidget,
   setWSettings,
@@ -15,6 +16,7 @@ import { useLocation } from "react-router";
 import {ethers} from 'ethers';
 import { useWeb3React } from '@web3-react/core';
 import { InjectedMetaMask } from "../../metamask/conectors";
+import { getWidgetsById } from "../helpers";
 
 
 //.nft-list__wrapper
@@ -32,6 +34,7 @@ overlay.classList.add("bannerOverlay");
 overlay.innerHTML = mobileOnlyBanner;
 
 export default function Widget() {
+
   const { widget, wsettings, settings, NFTList } = useSelector(
     ({ general: { widget, wsettings, from, to, NFTList }, settings }) => ({
       widget,
@@ -45,9 +48,10 @@ export default function Widget() {
   const [chainsLengthEqauls2, setChainsLengthEqauls2] = useState(false);
   const [isFrom, setIsFrom] = useState(false);
   const [isTo, setIsTo] = useState(false);
+  const [currentSettings, setCurrentSettings] = useState({});
 
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const location = useLocation();
 
   const {ethereum} = window;
@@ -103,16 +107,16 @@ export default function Widget() {
           modalBackground: "#" + modalBackground,
           color: "#" + color,
           fontFamily,
-          fontSize: fontSize.replace(/\D/g,''),
+          fontSize: fontSize.replace(/\D/g, ""),
           btnColor: "#" + btnColor,
           btnBackground: "#" + btnBackground,
-          btnRadius: btnRadius.replace(/\D/g,''),
+          btnRadius: btnRadius.replace(/\D/g, ""),
           selectedChains: chains,
           selectedWallets: wallets,
           cardBackground: "#" + cardBackground,
           cardBackgroundBot: "#" + cardBackgroundBot,
           cardColor: "#" + cardColor,
-          cardRadius: cardRadius.replace(/\D/g,''),
+          cardRadius: cardRadius.replace(/\D/g, ""),
           accentColor: "#" + accentColor,
           secondaryColor: "#" + secondaryColor,
           borderColor: "#" + borderColor,
@@ -122,7 +126,7 @@ export default function Widget() {
           showLink: showLink === "true" ? true : false,
           affiliationFees: ((+affiliationFees - 1) * 100).toFixed(0),
           fromChain: fromChain,
-          toChain: toChain
+          toChain: toChain,
         })
       );
     } else {
@@ -137,6 +141,37 @@ export default function Widget() {
     }
   }, []);
 
+  useEffect(() => {
+    let curSettings={};
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const widgetId = urlParams.get("id");
+    console.log("id", widgetId);
+    async function fetchSettings() {
+      if(widgetId !== null){
+        curSettings = await getWidgetsById(widgetId);
+        dispatch(setSettings(curSettings.settings));
+      }
+      else{
+        console.log("init settingssss");
+        dispatch(setSettings(initialState));
+      }
+    }
+    fetchSettings();
+  }, []);
+
+  useEffect(() => {
+    
+    let user = JSON.parse(getCookie("user"));
+    console.log("here",account,user.address );
+    if(account !== undefined && user.address !== undefined) {
+      if(account !== user.address){
+       window.history.go(-1);
+    }
+    }
+  }, [account]);
+
+ 
   const {
     backgroundColor,
     panelBackground,
@@ -163,7 +198,7 @@ export default function Widget() {
     showLink,
     collapsed,
     fromChain,
-    toChain
+    toChain,
   } = settings;
 
   useEffect(() => {
@@ -202,17 +237,30 @@ export default function Widget() {
   //   }
   // }, [widget]);
 
-  useEffect(() => { 
-    if (widget && !wsettings && (chains.find((c) => c.text === settings.fromChain) && chains.find((c) => c.text === settings.toChain) )) {
+  useEffect(() => {
+    if (
+      widget &&
+      !wsettings &&
+      chains.find((c) => c.text === settings.fromChain) &&
+        chains.find((c) => c.text === settings.toChain)
+    ) {
       setChainsLengthEqauls2(true);
     }
-    if (widget && !wsettings && chains.find((c) => c.text === settings.fromChain)) {
+    if (
+      widget &&
+      !wsettings &&
+      chains.find((c) => c.text === settings.fromChain)
+    ) {
       setIsFrom(true);
     }
-    if (widget && !wsettings && chains.find((c) => c.text === settings.toChain)) {
-      setIsTo(true)
+    if (
+      widget &&
+      !wsettings &&
+      chains.find((c) => c.text === settings.toChain)
+    ) {
+      setIsTo(true);
     }
-  }, [widget,settings]);
+  }, [widget, settings]);
 
   useEffect(() => {
     if (widget) {
@@ -346,16 +394,16 @@ export default function Widget() {
           display: ${((isFrom !== isTo) && !wsettings) ? "none" : "inline"} !important;
         }
         .seleDepat{
-          pointer-events: ${(isFrom && !wsettings) ? "none" : "auto"};
+          pointer-events: ${isFrom && !wsettings ? "none" : "auto"};
         }
         .seleDesti{
-          pointer-events: ${(isTo && !wsettings) ? "none" : "auto"};
+          pointer-events: ${isTo && !wsettings ? "none" : "auto"};
         }
         .seleDepatSelec::after{
-          display: ${(isFrom && !wsettings) ? "none" : "inline"} !important;
+          display: ${isFrom && !wsettings ? "none" : "inline"} !important;
         }
         .seleDestiSele::after{
-          display: ${(isTo && !wsettings) ? "none" : "inline"} !important;
+          display: ${isTo && !wsettings ? "none" : "inline"} !important;
         }
         .dropdown-item:{
           width: 100%;
@@ -398,6 +446,12 @@ export default function Widget() {
         .wallet-search__container {
           margin-bottom: 5px;
           width:auto;
+        }
+
+        .magnify {
+          background-image: unset;
+          width: unset;
+          height: unset;
         }
 
         .infText, .infText:after, .approval__inf:hover::before, .approval__inf:hover::after {
@@ -456,7 +510,7 @@ export default function Widget() {
         }
 
         .listed-nft-radio--selected {
-          background: ${iconColor? iconColor : ""};
+          background: ${iconColor ? iconColor : ""};
           filter: brightness(145%);
         }
 
@@ -674,9 +728,19 @@ export default function Widget() {
           stroke:  ${iconColor ? iconColor : ""};
         }
 
-        .swpBtn path:first-child {
+        .svgWidget.swpBtn rect {
           fill: ${btnBackground ? btnBackground : ""};
           filter: brightness(95%);
+        }
+
+        .svgWidget.swpBtn path {
+          fill: white !important;
+          opacity: 1;
+        }
+
+        .svgWidget.swpBtn:hover rect {
+          fill: ${btnBackground ? btnBackground : ""};
+          filter: brightness(105%);
         }
 
         .clip, .clip p {
@@ -688,32 +752,28 @@ export default function Widget() {
           box-shadow: inset 0 0 0 2px ${iconColor ? iconColor : ""};
         }
         
-        .swpBtn path:nth-child(3)  {
-          fill: #ffffff;
-        }
+
 
         .svgWidget.lineArrow line{
             stroke: ${borderColor ? borderColor : ""}
         }
 
         .svgWidget:hover {
-          filter: brightness(135%);
+          filter: brightness(125%);
         }
 
-        .swpBtn:hover path:nth-child(1){
-          fill: ${btnBackground ? btnBackground : ""};
-        
+        .swap-chain__btn:hover:before {
+          display: none;
         }
+
+
 
         .SearchDrop:hover svg path, .CloseIcon:hover svg path, .select-all:hover svg path, .delete-all:hover svg path, .delete-all svg path {
           fill:  ${iconColor ? iconColor : ""};
         }
 
 
-        .swpBtn:hover path:nth-child(2){
-          fill: ${btnBackground ? btnBackground : ""};
-          filter: brightness(100%);
-        }
+  
 
         .nft-box__container--selected, .nft-box__container:hover {
           border-color: ${accentColor ? accentColor : ""} !important;
@@ -843,7 +903,7 @@ export default function Widget() {
           }
 
           .serchInput {
-            width: 120px;
+            width: 200px;
           }
 
           .sendNftCol {
@@ -938,48 +998,104 @@ export default function Widget() {
         `;
       document.body.classList.remove("widgetBlur");
     }
-  }, [widget, settings, location, chainsLengthEqauls2,isFrom,isTo]);
+  }, [widget, settings, location, chainsLengthEqauls2, isFrom, isTo]);
 
   const screenSize = useRef();
 
-  // useEffect(() => {
-  //     const connectMetaMask = async() =>{
-  //     if(!ethereum){
-  //       console.log("please install MetaMask");
-  //     }
-  //     else{
-  //       try{
-  //         await activate(InjectedMetaMask);
-  //         await window.ethereum.request({
-  //             method: 'wallet_switchEthereumChain',
-  //             params: [{ chainId: '0x4' }], // chainId must be in hexadecimal numbers
-  //         });
-  //       }
-  //       catch(err){
-  //           console.log(err);
-  //       }
+
+  function setCookie(csignature, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    let expires = "expires="+d.toUTCString();
+    document.cookie = csignature + "=" + cvalue + ";" + expires;
+    console.log("set sign to :",cvalue);
+    console.log("all cockies: ",document.cookie);
+  }
+  
+  function getCookie(csignature) {
+    let signature = csignature + "=";
+    let ca = document.cookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(signature) == 0) {
+        return c.substring(signature.length, c.length);
+      }
+    }
+    return "";
+  }
+  
+  // function checkCookie() {
+  //   let userSign = getCookie("signature");
+  //   if (userSign != "") {
+  //     alert("the signature " + userSign);
+  //   } else {
+  //     verifySignature();
+  //     userSign = prompt("Please sign:", "");
+  //     if (userSign != "" && userSign != null) {
+  //       setCookie("username", userSign, 365);
   //     }
   //   }
-  //   connectMetaMask().catch(console.error);
-  //   const verifySignature = async() =>{
-  //     try{
-  //       await window.ethereum.send("eth_requestAccounts");
-  //         const provider = new ethers.providers.Web3Provider(window.ethereum);
-  //         const signer = provider.getSigner();
-  //         const msg = "Please sign in order to see your widgets ";
-  //         const signature = await signer.signMessage(msg);
-  //         const address = await signer.getAddress();
-  //         const signerAddr = await ethers.utils.verifyMessage(msg, signature);
-  //         if (signerAddr !== address) {
-  //           console.log("signature isnt valid!!!");
-  //         }
-  //     }
-  //     catch(e){
-  //       console.log(e);
-  //     }
-  //   }
-  //   verifySignature();
-  // }, []);
+  // }
+
+
+
+  useEffect(() => {
+      const connectMetaMask = async() =>{
+      if(!ethereum){
+        console.log("please install MetaMask");
+      }
+      else{
+        try{
+          await activate(InjectedMetaMask);
+          await window.ethereum.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: '0x4' }], // chainId must be in hexadecimal numbers
+          });
+        }
+        catch(err){
+            console.log(err);
+        }
+      }
+    }
+    connectMetaMask().catch(console.error);
+
+    const verifySignature = async() =>{
+      try{
+        await window.ethereum.send("eth_requestAccounts");
+          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          const signer = provider.getSigner();
+          const msg = "Please sign in order to see your widgets ";
+          const signature = await signer.signMessage(msg);
+          const address = await signer.getAddress();
+          const signerAddr = await ethers.utils.verifyMessage(msg, signature);
+          // if (signerAddr !== address) {
+          //   console.log("signature isnt valid!!!");
+          //   return "";
+          // }
+          // else{
+            console.log("signature in verify",signature);
+            return signature;
+          // }
+      }
+      catch(e){
+        console.log(e);
+      }
+    }
+    let userSign = getCookie("signature");
+    if (userSign != "") {
+      console.log("the signature " + userSign);
+    } else {
+    verifySignature().then(function(signature) {
+      console.log("thennnnn ",signature);
+      if (signature != "" && signature != null && signature != undefined) {
+        setCookie("signature", signature, 365);
+      }
+    })
+  }
+  }, []);
   
 
   useEffect(() => {
