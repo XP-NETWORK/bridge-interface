@@ -7,33 +7,27 @@ export default function Pagination({
     currentPage,
     NFTsPerPage,
 }) {
-    const dispatch = useDispatch();
+    const [clickable, setClickable] = useState(true);
+    const OFF = { pointerEvents: "none" };
     const [scope, setScope] = useState(1);
-
     const pageNumbers = [];
-
     const nfts = useSelector((state) => state.general.NFTList);
 
     const currentPageClick = (page) => {
-        // debugger;
+        setClickable(false);
         if (page > 1 && page < 3) {
             setCurrentPage(2);
         } else setCurrentPage(page);
+        tornOnClickable();
     };
 
-    // Math.round(nfts?.length / NFTsPerPage) > 3 &&
-    //                     currentPage <
-    //                         Math.round(nfts?.length / NFTsPerPage) - 2 && (
-    //                         <div
-    //                             className="pagination__page"
-    //                             onClick={handleClickOnScope}
-    //                         >
-    //                             ...
-    //                         </div>
-    //                     )
+    const tornOnClickable = () => {
+        setTimeout(() => {
+            setClickable(true);
+        }, [2500]);
+    };
 
     const showScope = () => {
-        console.log("scope: ", scope);
         let show;
         switch (true) {
             case Math.round(nfts?.length / NFTsPerPage) > 3:
@@ -41,6 +35,7 @@ export default function Pagination({
                 break;
             case currentPage < Math.round(nfts?.length / NFTsPerPage):
                 show = true;
+
                 break;
             default:
                 break;
@@ -55,6 +50,7 @@ export default function Pagination({
     };
 
     const handleArrowClick = (arrow) => {
+        setClickable(false);
         switch (arrow) {
             case "prev":
                 if (currentPage !== 1) {
@@ -71,22 +67,23 @@ export default function Pagination({
             default:
                 break;
         }
+        tornOnClickable();
     };
 
     const handleClickOnScope = () => {
+        setClickable(false);
         setScope(scope + 3);
         if (currentPage < scope + 2) setCurrentPage(currentPage + 3);
+        tornOnClickable();
     };
 
     for (let i = 1; i <= Math.ceil(nfts?.length / NFTsPerPage); i++) {
         pageNumbers.push(i);
     }
 
-    useDidUpdateEffect(() => {}, [currentPage]);
-
     return (
         pageNumbers.length >= 2 && (
-            <div className="pagination">
+            <div style={clickable ? {} : OFF} className="pagination">
                 <div
                     onClick={() => handleArrowClick("prev")}
                     className="pagination__prev"
@@ -100,6 +97,7 @@ export default function Pagination({
                             (page === scope ||
                                 (page < scope + 2 && page > scope - 2)) && (
                                 <li
+                                    key={i}
                                     className={
                                         currentPage === page
                                             ? "pagination__page--active"

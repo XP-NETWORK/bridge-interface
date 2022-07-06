@@ -86,12 +86,7 @@ function NFTaccount() {
 
     //! Pagination
     const [NFTsPerPage, setNFTsPerPage] = useState(6);
-
     const [currentPage, setCurrentPage] = useState(1);
-    console.log(
-        "🚀 ~ file: NFTaccount.jsx ~ line 91 ~ NFTaccount ~ currentPage",
-        currentPage
-    );
     const indexOfLastNFT = currentPage * NFTsPerPage;
     const indexOfFirstNFT = indexOfLastNFT - NFTsPerPage;
     const currentNFTs = nfts?.slice(indexOfFirstNFT, indexOfLastNFT);
@@ -246,9 +241,9 @@ function NFTaccount() {
         }
     }, [selectedNFTs, nfts]);
 
-    useEffect(() => {
+    useDidUpdateEffect(() => {
         dispatch(setCurrentNFTs(currentNFTs));
-    }, [currentPage, currentNFTs]);
+    }, [currentNFTs]);
 
     useDidUpdateEffect(() => {
         if (NFTListView) {
