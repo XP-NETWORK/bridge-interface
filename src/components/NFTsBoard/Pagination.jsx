@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useDidUpdateEffect } from "../Settings/hooks";
 
-export default function Pagination({ setCurrentPage, currentPage }) {
-    console.log(
-        "🚀 ~ file: Pagination.jsx ~ line 6 ~ Pagination ~ currentPage",
-        currentPage
-    );
+export default function Pagination({
+    setCurrentPage,
+    currentPage,
+    NFTsPerPage,
+}) {
     const dispatch = useDispatch();
     const [scope, setScope] = useState(1);
 
@@ -42,7 +42,7 @@ export default function Pagination({ setCurrentPage, currentPage }) {
         if (currentPage < scope + 2) setCurrentPage(currentPage + 3);
     };
 
-    for (let i = 1; i <= Math.ceil(nfts?.length / 6); i++) {
+    for (let i = 1; i <= Math.ceil(nfts?.length / NFTsPerPage); i++) {
         pageNumbers.push(i);
     }
 
@@ -75,8 +75,9 @@ export default function Pagination({ setCurrentPage, currentPage }) {
                                 </li>
                             )
                     )}
-                    {(nfts?.length / 6) % 6 > 3 &&
-                        currentPage < Math.round(nfts?.length / 6) - 2 && (
+                    {(nfts?.length / NFTsPerPage) % NFTsPerPage > 3 &&
+                        currentPage <
+                            Math.round(nfts?.length / NFTsPerPage) - 2 && (
                             <div
                                 className="pagination__page"
                                 onClick={handleClickOnScope}
@@ -86,13 +87,18 @@ export default function Pagination({ setCurrentPage, currentPage }) {
                         )}
                     <div
                         className={
-                            currentPage === Math.round(nfts?.length / 6)
+                            currentPage ===
+                            Math.round(nfts?.length / NFTsPerPage)
                                 ? "pagination__pag--active"
                                 : "pagination__page"
                         }
-                        onClick={() => currentPageClick((nfts?.length / 6) % 6)}
+                        onClick={() =>
+                            currentPageClick(
+                                (nfts?.length / NFTsPerPage) % NFTsPerPage
+                            )
+                        }
                     >
-                        {Math.round(nfts?.length / 6)}
+                        {Math.round(nfts?.length / NFTsPerPage)}
                     </div>
                 </ul>
                 <div

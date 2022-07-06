@@ -52,7 +52,7 @@ const generalSlice = createSlice({
         },
         setEachNFT(state, action) {
             const { nftObj, index } = action.payload;
-            state.NFTList = state.NFTList.map((n, i) => {
+            state.currentNFTs = state.currentNFTs.map((n, i) => {
                 if (i === index) n = nftObj;
                 return n;
             });

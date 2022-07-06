@@ -85,7 +85,8 @@ function NFTaccount() {
     const [index, setIndex] = useState(0);
 
     //! Pagination
-    const NFTsPerPage = 6;
+    const [NFTsPerPage, setNFTsPerPage] = useState(6);
+
     const [currentPage, setCurrentPage] = useState(1);
     const indexOfLastNFT = currentPage * NFTsPerPage;
     const indexOfFirstNFT = indexOfLastNFT - NFTsPerPage;
@@ -241,9 +242,15 @@ function NFTaccount() {
         }
     }, [selectedNFTs, nfts]);
 
-    useDidUpdateEffect(() => {
+    useEffect(() => {
         dispatch(setCurrentNFTs(currentNFTs));
-    }, [currentPage]);
+    }, [currentPage, currentNFTs]);
+
+    useDidUpdateEffect(() => {
+        if (NFTListView) {
+            setNFTsPerPage(10);
+        } else setNFTsPerPage(6);
+    }, [NFTListView]);
 
     return (
         <div className="NFTaccount">
@@ -285,6 +292,7 @@ function NFTaccount() {
                             <Pagination
                                 setCurrentPage={setCurrentPage}
                                 currentPage={currentPage}
+                                NFTsPerPage={NFTsPerPage}
                             />
                         </div>
                         <MobileTransferBoard />

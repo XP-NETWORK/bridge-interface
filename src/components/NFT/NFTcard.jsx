@@ -82,13 +82,14 @@ export default function NFTcard({ nft, index, claimables }) {
     }, [cardRef, options, search]);
 
     useDidUpdateEffect(() => {
-        if (isVisible) {
-            if (!nft.dataLoaded) {
-                // await parseEachNFT(nft, index, testnet, claimables);
+        // if (isVisible) {
+        // debugger;
+        if (!nft.dataLoaded) {
+            // await parseEachNFT(nft, index, testnet, claimables);
 
-                parseNFT(nft, index, testnet, claimables);
-            }
+            parseNFT(nft, index, testnet, claimables);
         }
+        // }
     }, [isVisible, nft]);
 
     const handleZoomIn = () => {
