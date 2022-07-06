@@ -30,10 +30,6 @@ export default function NFTcard({ nft, index, claimables }) {
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
     const [imageErr, setImageErr] = useState(false);
     const [isVisible, setIsVisible] = useState();
-    console.log(
-        "🚀 ~ file: NFTcard.jsx ~ line 33 ~ NFTcard ~ isVisible",
-        isVisible
-    );
     const localhost = window.location.hostname;
 
     const callBackWhenObserver = (entries) => {
@@ -91,10 +87,6 @@ export default function NFTcard({ nft, index, claimables }) {
         }
         // }
     }, [isVisible, nft]);
-
-    const handleZoomIn = () => {
-        console.log("zoom innnn");
-    };
 
     return (
         <>

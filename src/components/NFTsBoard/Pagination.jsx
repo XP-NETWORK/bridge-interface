@@ -11,10 +11,17 @@ export default function Pagination({
     const [scope, setScope] = useState(1);
 
     const pageNumbers = [];
+    console.log(
+        "🚀 ~ file: Pagination.jsx ~ line 14 ~ pageNumbers",
+        pageNumbers
+    );
     const nfts = useSelector((state) => state.general.NFTList);
 
     const currentPageClick = (page) => {
-        setCurrentPage(page);
+        // debugger;
+        if (page > 1 && page < 3) {
+            setCurrentPage(2);
+        } else setCurrentPage(page);
     };
 
     const handleArrowClick = (arrow) => {
@@ -49,7 +56,7 @@ export default function Pagination({
     useDidUpdateEffect(() => {}, [currentPage]);
 
     return (
-        pageNumbers.length > 1 && (
+        pageNumbers.length >= 2 && (
             <div className="pagination">
                 <div
                     onClick={() => handleArrowClick("prev")}
@@ -87,8 +94,11 @@ export default function Pagination({
                         )}
                     <div
                         className={
-                            currentPage ===
-                            Math.round(nfts?.length / NFTsPerPage)
+                            currentPage === nfts?.length / NFTsPerPage
+                                ? "pagination__pag--active"
+                                : currentPage === 2 &&
+                                  nfts?.length / NFTsPerPage > 1 &&
+                                  nfts?.length / NFTsPerPage < 3
                                 ? "pagination__pag--active"
                                 : "pagination__page"
                         }
@@ -98,7 +108,9 @@ export default function Pagination({
                             )
                         }
                     >
-                        {Math.round(nfts?.length / NFTsPerPage)}
+                        {Math.round(nfts?.length / NFTsPerPage) < 2
+                            ? "2"
+                            : Math.round(nfts?.length / NFTsPerPage)}
                     </div>
                 </ul>
                 <div
