@@ -24,7 +24,7 @@ export default function Pagination({
     const tornOnClickable = () => {
         setTimeout(() => {
             setClickable(true);
-        }, [2500]);
+        }, [1500]);
     };
 
     const showScope = () => {
