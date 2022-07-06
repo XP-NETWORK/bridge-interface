@@ -2194,14 +2194,7 @@ span.closeBox:hover svg path {
 }
 
 @media screen and (min-width: 600px) {
-<<<<<<< HEAD
-    .yourNft--mobile {
-        display: none;
-    }
-}
-=======
   .yourNft--mobile {
     display: none;
   }
 }
->>>>>>> new-ui

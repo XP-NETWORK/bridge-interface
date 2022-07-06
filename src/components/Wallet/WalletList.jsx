@@ -54,8 +54,6 @@ export default function WalletList({ search, connected, input }) {
       desktop: true,
       order: 3,
     },
-<<<<<<< HEAD
-=======
     {
       Component: (
         <EVMWallet
@@ -70,35 +68,20 @@ export default function WalletList({ search, connected, input }) {
       desktop: biz,
       order: 3,
     },
->>>>>>> new-ui
     {
       Component: (
-        <EVMWallet
-          wallet={"BitKeep"}
-          key="wallet-index-1-bitkeep"
+        <TezosWallet
+          wallet={"TempleWallet"}
+          key="wallet-index-7"
           close={connected}
         />
       ),
-      name: "BitKeep",
-      type: "EVM",
-      mobile: false,
-      desktop: biz,
-      order: 3,
-    } /
-      {
-        Component: (
-          <TezosWallet
-            wallet={"TempleWallet"}
-            key="wallet-index-7"
-            close={connected}
-          />
-        ),
-        name: "Temple Wallet Tezos",
-        type: "Tezos",
-        mobile: true,
-        desktop: true,
-        order: 4,
-      },
+      name: "Temple Wallet Tezos",
+      type: "Tezos",
+      mobile: true,
+      desktop: true,
+      order: 4,
+    },
     {
       Component: (
         <TezosWallet wallet={"Beacon"} key="wallet-index-8" close={connected} />
