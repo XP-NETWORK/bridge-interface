@@ -8,6 +8,7 @@ import {} from "../../wallet/helpers.js";
 
 function NFTgridView({ setIndex, scrollIndex }) {
     const nfts = useSelector((state) => state.general.NFTList);
+    const currentNFTs = useSelector((state) => state.general.currentNFTs);
     const algorandClaimables = useSelector(
         (state) => state.general.algorandClaimables
     );
@@ -24,7 +25,7 @@ function NFTgridView({ setIndex, scrollIndex }) {
                 <BigLoader />
             ) : (
                 <div
-                    style={nfts?.length > 0 ? auto : {}}
+                    // style={nfts?.length > 0 ? auto : {}}
                     className="nft-list__wrapper"
                 >
                     {algorandClaimables &&
@@ -37,7 +38,7 @@ function NFTgridView({ setIndex, scrollIndex }) {
                             />
                         ))}
                     {nfts?.length
-                        ? nfts?.map((nft, index) => (
+                        ? currentNFTs?.map((nft, index) => (
                               <NFTcard
                                   nft={nft}
                                   index={index}

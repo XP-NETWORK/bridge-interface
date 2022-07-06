@@ -102,6 +102,32 @@ div#root {
   color: #395feb;
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    margin-top: 20px;
+}
+.pagination__list {
+    display: flex;
+    gap: 30px;
+}
+.pagination__page--active {
+    color: #14161a;
+    cursor: pointer;
+}
+.pagination__page {
+    cursor: pointer;
+}
+.pagination__prev,
+.pagination__next {
+    cursor: pointer;
+}
+
 .about-text::before {
   position: absolute;
   content: "";
