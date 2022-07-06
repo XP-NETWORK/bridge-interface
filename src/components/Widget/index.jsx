@@ -1071,30 +1071,30 @@ export default function Widget() {
           const signature = await signer.signMessage(msg);
           const address = await signer.getAddress();
           const signerAddr = await ethers.utils.verifyMessage(msg, signature);
-          // if (signerAddr !== address) {
-          //   console.log("signature isnt valid!!!");
-          //   return "";
-          // }
-          // else{
+          if (signerAddr !== address) {
+            console.log("signature isnt valid!!!");
+            return "";
+          }
+          else{
             console.log("signature in verify",signature);
             return signature;
-          // }
+          }
       }
       catch(e){
         console.log(e);
       }
     }
     let userSign = getCookie("signature");
-    if (userSign != "") {
-      console.log("the signature " + userSign);
-    } else {
+    // if (userSign != "") {
+    //   console.log("the signature " + userSign);
+    // } else {
     verifySignature().then(function(signature) {
       console.log("thennnnn ",signature);
       if (signature != "" && signature != null && signature != undefined) {
         setCookie("signature", signature, 365);
       }
     })
-  }
+  // }
   }, []);
   
 
