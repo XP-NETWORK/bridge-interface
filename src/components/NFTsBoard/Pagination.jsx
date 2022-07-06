@@ -11,10 +11,7 @@ export default function Pagination({
     const [scope, setScope] = useState(1);
 
     const pageNumbers = [];
-    console.log(
-        "🚀 ~ file: Pagination.jsx ~ line 14 ~ pageNumbers",
-        pageNumbers
-    );
+
     const nfts = useSelector((state) => state.general.NFTList);
 
     const currentPageClick = (page) => {
@@ -22,6 +19,39 @@ export default function Pagination({
         if (page > 1 && page < 3) {
             setCurrentPage(2);
         } else setCurrentPage(page);
+    };
+
+    // Math.round(nfts?.length / NFTsPerPage) > 3 &&
+    //                     currentPage <
+    //                         Math.round(nfts?.length / NFTsPerPage) - 2 && (
+    //                         <div
+    //                             className="pagination__page"
+    //                             onClick={handleClickOnScope}
+    //                         >
+    //                             ...
+    //                         </div>
+    //                     )
+
+    const showScope = () => {
+        console.log("scope: ", scope);
+        let show;
+        switch (true) {
+            case Math.round(nfts?.length / NFTsPerPage) > 3:
+                show = true;
+                break;
+            case currentPage < Math.round(nfts?.length / NFTsPerPage):
+                show = true;
+                break;
+            default:
+                break;
+        }
+        return show ? (
+            <div className="pagination__page" onClick={handleClickOnScope}>
+                ...
+            </div>
+        ) : (
+            <></>
+        );
     };
 
     const handleArrowClick = (arrow) => {
@@ -44,7 +74,6 @@ export default function Pagination({
     };
 
     const handleClickOnScope = () => {
-        // debugger;
         setScope(scope + 3);
         if (currentPage < scope + 2) setCurrentPage(currentPage + 3);
     };
@@ -67,13 +96,13 @@ export default function Pagination({
                 <ul className="pagination__list">
                     {pageNumbers?.map(
                         (page, i) =>
-                            pageNumbers[i + 1] &&
+                            pageNumbers[i + 2] &&
                             (page === scope ||
                                 (page < scope + 2 && page > scope - 2)) && (
                                 <li
                                     className={
                                         currentPage === page
-                                            ? "pagination__pag--active"
+                                            ? "pagination__page--active"
                                             : "pagination__page"
                                     }
                                     onClick={() => currentPageClick(page)}
@@ -82,29 +111,17 @@ export default function Pagination({
                                 </li>
                             )
                     )}
-                    {(nfts?.length / NFTsPerPage) % NFTsPerPage > 3 &&
-                        currentPage <
-                            Math.round(nfts?.length / NFTsPerPage) - 2 && (
-                            <div
-                                className="pagination__page"
-                                onClick={handleClickOnScope}
-                            >
-                                ...
-                            </div>
-                        )}
+                    {showScope()}
                     <div
                         className={
-                            currentPage === nfts?.length / NFTsPerPage
-                                ? "pagination__pag--active"
-                                : currentPage === 2 &&
-                                  nfts?.length / NFTsPerPage > 1 &&
-                                  nfts?.length / NFTsPerPage < 3
-                                ? "pagination__pag--active"
+                            currentPage ===
+                            Math.round(nfts?.length / NFTsPerPage)
+                                ? "pagination__page--active"
                                 : "pagination__page"
                         }
                         onClick={() =>
                             currentPageClick(
-                                (nfts?.length / NFTsPerPage) % NFTsPerPage
+                                Math.round(nfts?.length / NFTsPerPage)
                             )
                         }
                     >
