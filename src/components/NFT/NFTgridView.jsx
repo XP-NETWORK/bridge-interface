@@ -25,7 +25,7 @@ function NFTgridView({ setIndex, scrollIndex }) {
                 <BigLoader />
             ) : (
                 <div
-                    style={nfts?.length > 0 ? auto : {}}
+                    // style={nfts?.length > 0 ? auto : {}}
                     className="nft-list__wrapper"
                 >
                     {algorandClaimables &&

@@ -357,6 +357,11 @@ function NFTaccount() {
                             )}
                         </div>
                     </div>
+                    <Pagination
+                        setCurrentPage={setCurrentPage}
+                        currentPage={currentPage}
+                        NFTsPerPage={NFTsPerPage}
+                    />
                     <MobileDestinationAddressBar />
                     <Approval />
                     <SendFees />

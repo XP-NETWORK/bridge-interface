@@ -16,10 +16,6 @@ function NFTlistView() {
     const nfts = useSelector((state) => state.general.NFTList);
     const search = useSelector((state) => state.general.NFTListSearch);
     const currentNFTs = useSelector((state) => state.general.currentNFTs);
-    console.log(
-        "🚀 ~ file: NFTlistView.jsx ~ line 19 ~ NFTlistView ~ currentNFTs",
-        currentNFTs
-    );
 
     return (
         <div className="nftListBox nftListView">
