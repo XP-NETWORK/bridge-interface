@@ -11,6 +11,7 @@ export default function Pagination({
     const OFF = { pointerEvents: "none" };
     const [scope, setScope] = useState(1);
     const pageNumbers = [];
+
     const nfts = useSelector((state) => state.general.NFTList);
 
     const currentPageClick = (page) => {
@@ -30,12 +31,14 @@ export default function Pagination({
     const showScope = () => {
         let show;
         switch (true) {
+            case pageNumbers.length <= 3:
+                show = false;
+                break;
             case Math.round(nfts?.length / NFTsPerPage) > 3:
                 show = true;
                 break;
             case currentPage < Math.round(nfts?.length / NFTsPerPage):
                 show = true;
-
                 break;
             default:
                 break;
@@ -93,7 +96,7 @@ export default function Pagination({
                 <ul className="pagination__list">
                     {pageNumbers?.map(
                         (page, i) =>
-                            pageNumbers[i + 2] &&
+                            pageNumbers[i + 1] &&
                             (page === scope ||
                                 (page < scope + 2 && page > scope - 2)) && (
                                 <li
