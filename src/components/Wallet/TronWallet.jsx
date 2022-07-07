@@ -27,7 +27,7 @@ export default function TronWallet({ close }) {
     };
 
     const navigateToAccountRoute = () => {
-        navigate(testnet ? `/testnet/account` : `/account`);
+        navigate(testnet ? `/testnet/account${location.search ? location.search : ""}` : `/account${location.search ? location.search : ""}`);
     };
 
     const getStyle = () => {

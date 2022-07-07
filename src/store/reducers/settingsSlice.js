@@ -18,17 +18,17 @@ export const fonts = [
   "Ubuntu",
 ];
 
-console.log(valuesChains);
+
 
 export const chains = [...valuesChains]
   .filter((c) => c.mainnet || c.testNet || c.coming)
   .sort((a, b) => (a.coming && !b.coming ? 1 : -1));
 
 export const activeChains = [
-  ...chains.filter((chain) => !chain.maintenance).map((c) => c.value),
+  ...chains.filter((chain) => !chain.maintenance ).map((c) => c.value),
 ];
 
-console.log(activeChains);
+
 
 export const newChains = ["Velas"];
 
@@ -40,9 +40,12 @@ export const availability = {
   Tron: ["TronLink"],
   Tezos: ["Beacon", "TempleWallet"],
   VeChain: ["Sync2"],
-
-  //["BSC", "Velas", "Ethereum", "Polygon", ]: ["MetaMask", "WalletConnect", "TrustWallet", "Ledger", "Trezor"],
+  Evms: ["MetaMask", "WalletConnect", "TrustWallet"]
 };
+
+
+
+
 
 export const wallets = [
   "MetaMask",

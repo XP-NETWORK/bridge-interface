@@ -16,6 +16,7 @@ import { usePrevious } from "./hooks";
 import { checkRgbaOut } from "./helpers";
 
 const Web3Utils = require("web3-utils");
+const evms = chains.filter(c => c.type === "EVM").map(c => c.value);
 
 const settingsHoc = (Wrapped) => (props) => {
   const { settings, widget, selectedNFTList } = useSelector(
@@ -253,9 +254,15 @@ const settingsHoc = (Wrapped) => (props) => {
         const removeWallets = [];
 
         for (let i = 0; i < difference.length; i++) {
+    
           const wallets = availability[difference[i]];
+          
           wallets && removeWallets.push(...wallets);
         }
+     
+       // if (selectedChains.every(c => !evms.includes(c))) {
+         // removMultiple(availability['Evms'])
+       // }
         removeWallets && removMultiple(removeWallets);
       } else {
         const addWallets = [];
@@ -266,7 +273,10 @@ const settingsHoc = (Wrapped) => (props) => {
         addWallets && addMultiple(addWallets);
       }
     }
+
+   
   }, [selectedChains]);
+
 
   const toggleShow = () =>
     dispatch(

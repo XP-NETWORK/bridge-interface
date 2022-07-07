@@ -24,8 +24,7 @@ export const EVM = "EVM";
 export const ELROND = "Elrond";
 export const TEZOS = "TEZOS";
 
-export const biz =
-  window.location.hostname.includes("localhost") ||
+export const biz = window.location.hostname.includes("localhost") ||
   window.location.hostname.includes("staging") ||
   window.location.hostname.includes("testing");
 

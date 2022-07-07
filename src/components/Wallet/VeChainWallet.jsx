@@ -28,7 +28,7 @@ export default function VeChainWallet({ close }) {
     };
 
     const navigateToAccountRoute = () => {
-        navigate(testnet ? `/testnet/account` : `/account`);
+        navigate(testnet ? `/testnet/account${location.search ? location.search : ""}` : `/account${location.search ? location.search : ""}`);
     };
 
     const handleConnect = async () => {
