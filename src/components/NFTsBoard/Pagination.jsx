@@ -88,6 +88,7 @@ export default function Pagination({
         pageNumbers.length >= 2 && (
             <div style={clickable ? {} : OFF} className="pagination">
                 <div
+                    style={currentPage !== 1 ? {} : OFF}
                     onClick={() => handleArrowClick("prev")}
                     className="pagination__prev"
                 >
@@ -133,6 +134,7 @@ export default function Pagination({
                     </div>
                 </ul>
                 <div
+                    style={currentPage !== pageNumbers.length ? {} : OFF}
                     className="pagination__next"
                     onClick={() => handleArrowClick("next")}
                 >
