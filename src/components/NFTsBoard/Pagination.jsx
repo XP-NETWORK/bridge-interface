@@ -96,7 +96,7 @@ export default function Pagination({
                 <ul className="pagination__list">
                     {pageNumbers?.map(
                         (page, i) =>
-                            pageNumbers[i + 1] &&
+                            (pageNumbers[i + 1] || pageNumbers[i + 2]) &&
                             (page === scope ||
                                 (page < scope + 2 && page > scope - 2)) && (
                                 <li
@@ -112,6 +112,7 @@ export default function Pagination({
                                 </li>
                             )
                     )}
+
                     {showScope()}
                     <div
                         className={
