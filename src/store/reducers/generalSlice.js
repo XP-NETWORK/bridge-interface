@@ -162,7 +162,7 @@ const generalSlice = createSlice({
             state.NFTListSearch = action.payload;
         },
         allSelected(state) {
-            const nfts = JSON.parse(JSON.stringify(state.NFTList));
+            const nfts = JSON.parse(JSON.stringify(state.currentNFTs));
             const onlyWhiteListedAndNotHidden = nfts
                 .filter((n) => n.whitelisted)
                 .filter((n) => isShown(state.NFTListSearch, n));

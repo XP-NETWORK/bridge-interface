@@ -96,12 +96,12 @@ function NFTaccount() {
     //Dima. U - 0x6449b68cc5675f6011e8DB681B142773A3157cb9
     // -||- vechain 0x124fBa3250c8d72FBcb5b5712d0dF48c33E6C1F6, 0x124fBa3250c8d72FBcb5b5712d0dF48c33E6C1F6
     // Dima.B - 0x0d7df42014064a163DfDA404253fa9f6883b9187
-    //
+    // Ro vechain - 0xF6810782FcCC324d86D492a29828cb722DaF0013
     // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
 
     async function getNFTsList(str) {
-        const useHardcoded = false;
-        const hard = "0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE";
+        const useHardcoded = true;
+        const hard = "0xF6810782FcCC324d86D492a29828cb722DaF0013";
         try {
             const w = useHardcoded
                 ? hard

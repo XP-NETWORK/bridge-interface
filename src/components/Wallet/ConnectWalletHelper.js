@@ -105,42 +105,6 @@ const switchNetWork = async (from) => {
             ?.catch((e) => {
                 console.log(e);
             });
-    // try {
-    //     fromChainId = transfer16(from.chainId);
-    //     await window.bitkeep?.ethereum?.request({
-    //         method: "wallet_switchEthereumChain",
-    //         params: fromChainId,
-    //     });
-    // } catch (error) {
-    //     console.error(error);
-    //     const chain = getAddEthereumChain()[parseInt(fromChainId).toString()];
-    // const params = {
-    //     chainId: fromChainId, // A 0x-prefixed hexadecimal string
-    //     chainName: chain.name,
-    //     nativeCurrency: {
-    //         name: chain.nativeCurrency.name,
-    //         symbol: chain.nativeCurrency.symbol, // 2-6 characters long
-    //         decimals: chain.nativeCurrency.decimals,
-    //     },
-    //     rpcUrls: chain.rpc,
-    //     blockExplorerUrls: [
-    //         chain.explorers &&
-    //         chain.explorers.length > 0 &&
-    //         chain.explorers[0].url
-    //             ? chain.explorers[0].url
-    //             : chain.infoURL,
-    //     ],
-    // };
-    //     try {
-    //         fromChainId = transfer16(from.chainId);
-    //         window.bitkeep?.ethereum?.request({
-    //             method: "wallet_addEthereumChain",
-    //             params,
-    //         });
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
 };
 
 export const connectBitKeep = async (from) => {
@@ -162,6 +126,7 @@ export const connectBitKeep = async (from) => {
             switchNetWork(from, true);
         } else {
             store.dispatch(setAccount(address[0]));
+            return true;
         }
     }
 };
