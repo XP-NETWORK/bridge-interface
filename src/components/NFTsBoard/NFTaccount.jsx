@@ -14,7 +14,6 @@ import {
     setSelectedNFTList,
     setWrappedEGold,
     cleanSelectedNFTList,
-    setCurrentNFTs,
 } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -83,13 +82,7 @@ function NFTaccount() {
     const prevWrappedEGold = usePrevious(wrappedEGold);
 
     const [index, setIndex] = useState(0);
-
-    //! Pagination
-    const [NFTsPerPage, setNFTsPerPage] = useState(6);
-    const [currentPage, setCurrentPage] = useState(1);
-    const indexOfLastNFT = currentPage * NFTsPerPage;
-    const indexOfFirstNFT = indexOfLastNFT - NFTsPerPage;
-    const currentNFTs = nfts?.slice(indexOfFirstNFT, indexOfLastNFT);
+    const { library } = useWeb3React();
 
     //Anjelika - 0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE
     //Anjelika elrond - erd1s89aq3s0z6mjfpx8s85zntlfywsvj5r8nzcdujw7mx53f9et9ezq9fnrws
@@ -241,16 +234,6 @@ function NFTaccount() {
         }
     }, [selectedNFTs, nfts]);
 
-    useDidUpdateEffect(() => {
-        dispatch(setCurrentNFTs(currentNFTs));
-    }, [currentNFTs]);
-
-    useDidUpdateEffect(() => {
-        if (NFTListView) {
-            setNFTsPerPage(10);
-        } else setNFTsPerPage(6);
-    }, [NFTListView]);
-
     return (
         <div className="NFTaccount">
             <Modal
@@ -288,11 +271,9 @@ function NFTaccount() {
                                     setIndex={setIndex}
                                 />
                             )}
-                            <Pagination
-                                setCurrentPage={setCurrentPage}
-                                currentPage={currentPage}
-                                NFTsPerPage={NFTsPerPage}
-                            />
+                            {/* <div className="algo-claimable">
+                // TODO Algorand Claimable
+              </div> */}
                         </div>
                         <MobileTransferBoard />
                     </div>
@@ -356,11 +337,6 @@ function NFTaccount() {
                             )}
                         </div>
                     </div>
-                    <Pagination
-                        setCurrentPage={setCurrentPage}
-                        currentPage={currentPage}
-                        NFTsPerPage={NFTsPerPage}
-                    />
                     <MobileDestinationAddressBar />
                     <Approval />
                     <SendFees />
