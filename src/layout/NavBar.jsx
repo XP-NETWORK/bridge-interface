@@ -22,6 +22,7 @@ import {
     cleanSelectedNFTList,
     setReceiver,
 } from "../store/reducers/generalSlice";
+import DarkMode from "../components/Buttons/DarkMode";
 
 function NavBar() {
     const widget = useSelector((state) => state.general.widget);
@@ -40,7 +41,7 @@ function NavBar() {
 
     return (
         !widget && (
-            <header id="Header">
+            <header id="Header" className="dark-mode">
                 <Navbar expand="lg">
                     <LinkContainer to="/connect">
                         <Navbar.Brand>
@@ -193,6 +194,7 @@ function NavBar() {
                                 <div className="nav-link__txt">XP.NETWORK</div>
                             </Nav.Link>
                             <UserConnect />
+                            <DarkMode />
                             <Dropdown className="navbar-dropdown">
                                 <DropdownToggle>
                                     <div className="navbar-dropdown__btn">

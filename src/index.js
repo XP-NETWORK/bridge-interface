@@ -5,8 +5,8 @@ import "slick-carousel/slick/slick-theme.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
 import store from "../src/store/store";
-import "./components/Widget/Widget.css"
-import "./components/Settings/Settings.css"
+import "./components/Widget/Widget.css";
+import "./components/Settings/Settings.css";
 import "./Global.css";
 import "./Responsive.css";
 import App from "./App";
@@ -18,21 +18,20 @@ import { BrowserRouter } from "react-router-dom";
 import BackGround from "./components/MultiBG/BackGround";
 
 function getLibrary(provider) {
-  return new Web3(provider);
+    return new Web3(provider);
 }
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Web3ReactProvider getLibrary={getLibrary}>
-      <Provider store={store}>
-        <BrowserRouter>
-          {/* <BackGround /> */}
-          <NavBar />
-          <App />
-          <Footer />
-        </BrowserRouter>
-      </Provider>
-    </Web3ReactProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+    <React.StrictMode>
+        <Web3ReactProvider getLibrary={getLibrary}>
+            <Provider store={store}>
+                <BrowserRouter>
+                    <NavBar />
+                    <App />
+                    <Footer />
+                </BrowserRouter>
+            </Provider>
+        </Web3ReactProvider>
+    </React.StrictMode>,
+    document.getElementById("root")
 );

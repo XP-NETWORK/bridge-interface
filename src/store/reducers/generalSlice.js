@@ -14,12 +14,16 @@ const initialState = {
     innerWidth: 0,
     alert: true,
     NFTListSearch: "",
+    darkMode: false,
 };
 
 const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setDarkMode(state, action) {
+            state.darkMode = !state.darkMode;
+        },
         setBitKeep(state, action) {
             state.bitKeep = action.payload;
         },
@@ -779,6 +783,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+    setDarkMode,
     setBitKeep,
     setTemporaryFrom,
     setCheckWallet,
