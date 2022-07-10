@@ -32,6 +32,12 @@ const CodeModal = ({ children, mode, setMode, theme }) => {
 const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
   const dispatch = useDispatch();
 
+  const pannel = useRef(null)
+
+  useEffect(() => {
+    pannel.current && dragElement(pannel.current)
+  }, [pannel.current])
+
   const portalDiv = document.getElementById("settingsPanelContainer");
   const [mode, setMode] = useState(null);
   const [iframeInput, setInput] = useState("");
@@ -110,7 +116,7 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
     portalDiv &&
     ReactDom.createPortal(
       <>
-        <div className={`settingsPannel ${theme}`}>
+        <div className={`settingsPannel ${theme}`} ref={pannel} id="settingsPannel">
           {false && (
             <div className="arrows">
               <UndoComp className="controlArrow" />

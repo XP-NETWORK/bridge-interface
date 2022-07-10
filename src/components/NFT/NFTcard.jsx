@@ -32,6 +32,7 @@ export default function NFTcard({ nft, index, claimables }) {
   const [isVisible, setIsVisible] = useState();
   const localhost = window.location.hostname;
 
+
   const callBackWhenObserver = (entries) => {
     const [entry] = entries;
     setIsVisible(entry.isIntersecting);
@@ -77,6 +78,7 @@ export default function NFTcard({ nft, index, claimables }) {
   }, [cardRef, options, search]);
 
   useDidUpdateEffect(() => {
+
     if (isVisible) {
       if (!nft.dataLoaded) {
         parseNFT(nft, index, testnet, claimables);
@@ -109,6 +111,7 @@ export default function NFTcard({ nft, index, claimables }) {
                     index={index}
                     videoUrl={nft.animation_url}
                     imageUrl={nft.image}
+                    nft={nft}
                   />
                 ) : nft.image ? (
                   <Image nft={nft} />

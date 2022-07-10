@@ -1937,7 +1937,20 @@ li.blockChain_item .blockChainItem span {
   padding: 12px;
   border-radius: 10px;
   display: flex;
+  align-items: center;
   background: #272728;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateX(-50%);
+  overflow: hidden;
+  cursor: move;
+  /*min-width: 300px;
+  padding: 0 16px 16px 16px;*/
+}
+
+.settingsPannel  button {
+  width: 130px;
 }
 
 .settingsPannel .arrows {
@@ -1981,7 +1994,7 @@ li.blockChain_item .blockChainItem span {
   left: 50%;
   top: 120%;
   transform: translateX(-50%);
-  max-width: 600px;
+  min-width: 300px;
   padding: 0 16px 16px 16px;
 }
 
@@ -2005,13 +2018,15 @@ li.blockChain_item .blockChainItem span {
   width: 100%;
   margin-top: 10px;
   z-index: 100000;
+  min-width: 400px;
+
 }
 
 .codeModal textarea {
-  min-height: 300px;
+  min-height: 200px;
   padding: 5px;
-  resize: vertical;
-  resize: horizontal;
+  resize: both;
+
 }
 
 .codeModal textarea:focus {
