@@ -79,8 +79,8 @@ function NFTdetails({ nftInf, claimables, details }) {
                     <div className="nftDetailBox">
                         <div className="nftDetImg">
                             {(imageUrl || videoUrl) &&
-                            uri &&
-                            isValidHttpUrl(uri) ? (
+                                uri &&
+                                isValidHttpUrl(uri) ? (
                                 video && videoUrl ? (
                                     <video
                                         controls={false}
@@ -177,13 +177,13 @@ function Attribute(props) {
             <label>
                 {trait_type
                     ? trait_type
-                          .split("_")
-                          .map(
-                              (n) =>
-                                  n.charAt(0).toUpperCase() +
-                                  n.slice(1).toLowerCase()
-                          )
-                          .join(" ")
+                        .split("_")
+                        .map(
+                            (n) =>
+                                n.charAt(0).toUpperCase() +
+                                n.slice(1).toLowerCase()
+                        )
+                        .join(" ")
                     : "-"}
             </label>
             <p>
@@ -191,16 +191,23 @@ function Attribute(props) {
                     <img
                         alt="#"
                         style={{ marginRight: "4px", width: "29px" }}
-                        src={chainsConfig[value]?.img}
+                        src={
+                            chainsConfig[value]?.img ||
+                            chainsConfig[
+                                Object.keys(chainsConfig)?.find((key) =>
+                                    chainsConfig[key]?.variants?.includes(value)
+                                )
+                            ]?.img
+                        }
                     />
                 )}
                 {display_type === "date"
                     ? moment(new Date(value * 1000)).format("MM-DD-YYYY")
                     : display_type === "boolean"
-                    ? value === true
-                        ? "True"
-                        : "False"
-                    : value}
+                        ? value === true
+                            ? "True"
+                            : "False"
+                        : value}
             </p>
         </div>
     );

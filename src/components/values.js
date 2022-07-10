@@ -467,13 +467,14 @@ export const chainsConfig = {
     VeChain: {
         type: EVM,
         token: "VET",
-        image: VET,
+        img: VET,
         rpc: "https://sync-mainnet.veblocks.net",
         tnRpc: "https://sync-testnet.veblocks.net",
         chainId: 39,
         Chain: Chain.VECHAIN,
         tx: "https://explore-testnet.vechain.org/transactions/",
         testTx: "https://explore-testnet.vechain.org/transactions/",
+        variants: ["Vechain"]
     },
 };
 
