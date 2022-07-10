@@ -21,6 +21,7 @@ import ModalImage from "react-modal-image";
 import { parseNFT } from "../../wallet/nftParser";
 
 import { useDidUpdateEffect } from "../Settings/hooks";
+import Image from "./Image";
 
 export default function NFTcard({ nft, index, claimables }) {
     const dispatch = useDispatch();
@@ -28,7 +29,6 @@ export default function NFTcard({ nft, index, claimables }) {
     const search = useSelector((state) => state.general.NFTListSearch);
     const testnet = useSelector((state) => state.general.testNet);
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
-    const [imageErr, setImageErr] = useState(false);
     const [isVisible, setIsVisible] = useState();
     const localhost = window.location.hostname;
 
@@ -66,7 +66,6 @@ export default function NFTcard({ nft, index, claimables }) {
             callBackWhenObserver,
             options
         );
-
         const currentTarget = cardRef.current;
 
         if (currentTarget) observer.observe(currentTarget);
@@ -80,16 +79,10 @@ export default function NFTcard({ nft, index, claimables }) {
     useDidUpdateEffect(() => {
         if (isVisible) {
             if (!nft.dataLoaded) {
-                // await parseEachNFT(nft, index, testnet, claimables);
-
                 parseNFT(nft, index, testnet, claimables);
             }
         }
     }, [isVisible, nft]);
-
-    const handleZoomIn = () => {
-        console.log("zoom innnn");
-    };
 
     return (
         <>
@@ -111,46 +104,14 @@ export default function NFTcard({ nft, index, claimables }) {
                             }
                         >
                             <div className="nft__main">
-                                {nft.uri || imageErr ? (
-                                    nft.animation_url && nft.image ? (
-                                        <VideoAndImage
-                                            index={index}
-                                            videoUrl={nft.animation_url}
-                                            imageUrl={nft.image}
-                                        />
-                                    ) : nft.image &&
-                                      !nft.animation_url &&
-                                      !nft.imageFormat?.includes("mp4") ? (
-                                        <img
-                                            loading="lazy"
-                                            alt=""
-                                            onError={() => setImageErr(true)}
-                                            src={setupURI(nft.image)}
-                                        />
-                                    ) : (!nft.image && nft.animation_url) ||
-                                      nft.imageFormat?.includes("mp4") ? (
-                                        <video
-                                            controls={false}
-                                            playsInline={true}
-                                            autoPlay={true}
-                                            loop={true}
-                                            muted={true}
-                                            src={setupURI(
-                                                nft.animation_url || nft.image
-                                            )}
-                                        />
-                                    ) : (
-                                        [nft.animation_url, nft.image]?.length >
-                                            0 && (
-                                            <VideoOrImage
-                                                urls={[
-                                                    nft.animation_url,
-                                                    nft.image,
-                                                ]}
-                                                i={index}
-                                            />
-                                        )
-                                    )
+                                {nft.uri && nft.image && nft.animation_url ? (
+                                    <VideoAndImage
+                                        index={index}
+                                        videoUrl={nft.animation_url}
+                                        imageUrl={nft.image}
+                                    />
+                                ) : nft.image ? (
+                                    <Image nft={nft} />
                                 ) : (
                                     <BrockenUtlGridView />
                                 )}
@@ -177,6 +138,7 @@ export default function NFTcard({ nft, index, claimables }) {
                                     <ClaimableCard nft={nft} index={index} />
                                 )}
                             </div>
+                            {/* // ! */}
                             <div className="nft__footer">
                                 {localhost === "localhost" && (
                                     <span
