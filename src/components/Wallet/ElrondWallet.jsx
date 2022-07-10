@@ -84,7 +84,7 @@ export default function ElrondWallet({ wallet, close }) {
             style={getStyle()}
             onClick={() => handleConnect("Maiar Extension")}
             className="wllListItem"
-            data-wallet="Maiar Extension"
+            data-wallet="MaiarExtension"
         >
             <img src={Elrond} alt="Elrond Icon" />
             <p>Maiar Extension</p>
