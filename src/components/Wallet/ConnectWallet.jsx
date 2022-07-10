@@ -47,11 +47,11 @@ function ConnectWallet() {
 
     const connected =
         elrondAccount ||
-        tezosAccount ||
-        algorandAccount ||
-        evmAccount ||
-        tronAccount ||
-        account
+            tezosAccount ||
+            algorandAccount ||
+            evmAccount ||
+            tronAccount ||
+            account
             ? true
             : false;
 
@@ -79,9 +79,8 @@ function ConnectWallet() {
             });
             navigate(
                 testnet
-                    ? `/testnet/account${
-                          location.search ? location.search : ""
-                      }`
+                    ? `/testnet/account${location.search ? location.search : ""
+                    }`
                     : `/account${location.search ? location.search : ""}`
             );
             dispatch(setWrongNetwork(false));
@@ -106,8 +105,8 @@ function ConnectWallet() {
                     rpcUrls: chain.rpc,
                     blockExplorerUrls: [
                         chain.explorers &&
-                        chain.explorers.length > 0 &&
-                        chain.explorers[0].url
+                            chain.explorers.length > 0 &&
+                            chain.explorers[0].url
                             ? chain.explorers[0].url
                             : chain.infoURL,
                     ],
@@ -118,9 +117,8 @@ function ConnectWallet() {
                 });
                 navigate(
                     testnet
-                        ? `/testnet/account${
-                              location.search ? location.search : ""
-                          }`
+                        ? `/testnet/account${location.search ? location.search : ""
+                        }`
                         : `/account${location.search ? location.search : ""}`
                 );
             } catch (error) {
