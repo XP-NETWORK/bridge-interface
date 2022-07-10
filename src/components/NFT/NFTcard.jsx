@@ -115,6 +115,49 @@ export default function NFTcard({ nft, index, claimables }) {
                                 ) : (
                                     <BrockenUtlGridView />
                                 )}
+                                {/* { nft.uri || imageErr ? (
+                                    nft.animation_url && nft.image ? (
+                                        <VideoAndImage
+                                            index={index}
+                                            videoUrl={nft.animation_url}
+                                            imageUrl={nft.image}
+                                        />
+                                    ) : nft.image &&
+                                      !nft.animation_url &&
+                                      !nft.imageFormat?.includes("mp4") ? (
+                                        <img
+                                            loading="lazy"
+                                            alt=""
+                                            onError={() => setImageErr(true)}
+                                            src={setupURI(nft.image)}
+                                        />
+                                    ) : (!nft.image && nft.animation_url) ||
+                                      nft.imageFormat?.includes("mp4") ? (
+                                        <video
+                                            controls={false}
+                                            playsInline={true}
+                                            autoPlay={true}
+                                            loop={true}
+                                            muted={true}
+                                            src={setupURI(
+                                                nft.animation_url || nft.image
+                                            )}
+                                        />
+                                    ) : (
+                                        [nft.animation_url, nft.image]?.length >
+                                            0 && (
+                                            <VideoOrImage
+                                                urls={[
+                                                    nft.animation_url,
+                                                    nft.image,
+                                                ]}
+                                                i={index}
+                                            />
+                                        )
+                                    )
+                                ) : (
+                                    <BrockenUtlGridView />
+                                )} */}
                                 {!claimables && nft.whitelisted ? (
                                     !isSelected ? (
                                         <div className="nft-radio"></div>

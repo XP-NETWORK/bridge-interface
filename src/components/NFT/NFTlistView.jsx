@@ -1,6 +1,6 @@
 import {
-  setSelectedNFTList,
-  removeFromSelectedNFTList,
+    setSelectedNFTList,
+    removeFromSelectedNFTList,
 } from "../../store/reducers/generalSlice";
 import NFTdetails from "../NFT/NFTdetails";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,36 +13,41 @@ import { isWhiteListed } from "./NFTHelper";
 import NFTlistedCard from "./NFTlistedCard";
 
 function NFTlistView() {
-  const nfts = useSelector((state) => state.general.NFTList);
-  const search = useSelector((state) => state.general.NFTListSearch);
+    const nfts = useSelector((state) => state.general.NFTList);
+    const search = useSelector((state) => state.general.NFTListSearch);
+    const currentNFTs = useSelector((state) => state.general.currentNFTs);
 
-  return (
-    <div className="nftListBox nftListView">
-      <ul className="nftList">
-        {nfts?.length ? (
-          !search ? (
-            nfts.map((nft, index) => (
-              <NFTlistedCard
-                nft={nft}
-                index={index}
-                key={index + "listedview"}
-              />
-            ))
-          ) : (
-            nfts
-              .filter(
-                (nft, index) =>
-                  nft?.name?.includes(search ? search : "") ||
-                  nft?.native.owner?.includes(search ? search : "")
-              )
-              .map((nft, index) => <NFTlistedCard nft={nft} index={index} />)
-          )
-        ) : (
-          <NFTempty />
-        )}
-      </ul>
-    </div>
-  );
+    return (
+        <div className="nftListBox nftListView">
+            <ul className="nftList">
+                {nfts?.length ? (
+                    !search ? (
+                        currentNFTs.map((nft, index) => (
+                            <NFTlistedCard
+                                nft={nft}
+                                index={index}
+                                key={index + "listedview"}
+                            />
+                        ))
+                    ) : (
+                        nfts
+                            .filter(
+                                (nft, index) =>
+                                    nft?.name?.includes(search ? search : "") ||
+                                    nft?.native.owner?.includes(
+                                        search ? search : ""
+                                    )
+                            )
+                            .map((nft, index) => (
+                                <NFTlistedCard nft={nft} index={index} />
+                            ))
+                    )
+                ) : (
+                    <NFTempty />
+                )}
+            </ul>
+        </div>
+    );
 }
 
 export default NFTlistView;

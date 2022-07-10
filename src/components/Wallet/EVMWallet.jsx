@@ -125,7 +125,7 @@ export default function EVMWallet({ wallet, close }) {
             case "BitKeep":
                 deactivate();
                 connected = await connectBitKeep(from);
-                close();
+                connected && close();
                 if (connected && to) navigateToAccountRoute();
                 break;
             default:
@@ -159,7 +159,7 @@ export default function EVMWallet({ wallet, close }) {
         case "MetaMask":
             return (
                 <li
-                    style={from?.text === "Harmony" ? OFF : getStyle()}
+                    style={getStyle()}
                     onClick={() => connectHandler("MetaMask")}
                     className="wllListItem"
                     data-wallet="MetaMask"
@@ -214,7 +214,7 @@ export default function EVMWallet({ wallet, close }) {
                     style={from?.text === "Harmony" ? OFF : getStyle()}
                     onClick={() => connectHandler("BitKeep")}
                     className="wllListItem"
-                    data-wallet="MetaMask"
+                    data-wallet="BitKeep"
                 >
                     <img src={BitKeep} alt="BitKeep Icon" />
                     <p>BitKeep</p>

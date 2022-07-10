@@ -50,11 +50,11 @@ export default function NFTlistedCard({ nft, index }) {
     }
 
     useEffect(() => {
-        if (isVisible) {
-            if (!nft.dataLoaded) {
-                parseNFT(nft, index, testnet);
-            }
+        // if (isVisible) {
+        if (!nft.dataLoaded) {
+            parseNFT(nft, index, testnet);
         }
+        // }
     }, [isVisible, nft]);
 
     useEffect(() => {

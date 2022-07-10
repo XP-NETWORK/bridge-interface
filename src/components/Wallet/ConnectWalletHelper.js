@@ -92,21 +92,22 @@ const switchNetWork = async (from) => {
                 : chain.infoURL,
         ],
     };
-    window.bitkeep.ethereum &&
-        window.bitkeep.ethereum
-            .request({
+
+    window.bitkeep?.ethereum &&
+        window.bitkeep?.ethereum
+            ?.request({
                 method: "wallet_switchEthereumChain",
                 params,
             })
-            .then(() => {
+            ?.then(() => {
                 console.log("Network Switch Success");
             })
-            .catch((e) => {
+            ?.catch((e) => {
                 console.log(e);
             });
     // try {
     //     fromChainId = transfer16(from.chainId);
-    //     await window.bitkeep.ethereum.request({
+    //     await window.bitkeep?.ethereum?.request({
     //         method: "wallet_switchEthereumChain",
     //         params: fromChainId,
     //     });
@@ -132,7 +133,7 @@ const switchNetWork = async (from) => {
     // };
     //     try {
     //         fromChainId = transfer16(from.chainId);
-    //         window.bitkeep.ethereum.request({
+    //         window.bitkeep?.ethereum?.request({
     //             method: "wallet_addEthereumChain",
     //             params,
     //         });
@@ -145,13 +146,14 @@ const switchNetWork = async (from) => {
 export const connectBitKeep = async (from) => {
     let provider;
     const isInstallBikeep = () => {
-        return window.bitkeep && window.bitkeep.ethereum;
+        return window.bitkeep && window.bitkeep?.ethereum;
     };
     if (!isInstallBikeep) {
         window.location.href =
             "https://chrome.google.com/webstore/detail/bitkeep-bitcoin-crypto-wa/jiidiaalihmmhddjgbnbgdfflelocpak";
     } else {
-        provider = window.bitkeep.ethereum;
+        provider = window.bitkeep?.ethereum;
+        if (!provider) return;
         await provider.request({ method: "eth_requestAccounts" });
         const web3 = new Web3(provider);
         const address = await web3.eth.getAccounts();
