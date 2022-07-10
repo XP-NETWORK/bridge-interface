@@ -14,6 +14,8 @@ import VideoOrImage from "./VideoOrImage";
 import { useSelector } from "react-redux";
 
 function NFTdetails({ nftInf, claimables, details }) {
+
+
     const widget = new URLSearchParams(window.location.search).get("widget");
     const { name, description, attributes, uri, native } = nftInf;
     const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nftInf);
@@ -117,7 +119,7 @@ function NFTdetails({ nftInf, claimables, details }) {
                                 <label>Token ID</label>
                                 <p>{native.tokenId}</p>
                             </div>
-                            {minted && minted?.length > 0 ? (
+                            {/*minted && minted?.length > 0 ? false && (
                                 <div className="nftInfDesc nftInfBox">
                                     <label>Minted With</label>
                                     <p>{minted}</p>
@@ -129,21 +131,21 @@ function NFTdetails({ nftInf, claimables, details }) {
                                 </div>
                             ) : (
                                 <></>
-                            )}
+                            )*/}
                             {native.name && (
                                 <div className="nftInfDesc nftInfBox">
                                     <label>Collection Name</label>
-                                    <p>{native.name}</p>
+                                    <p>{nftInf.collectionName || native.name}</p>
                                 </div>
                             )}
                             <div className="nftInfDesc nftInfBox">
                                 <label>Symbol</label>
-                                <p>{native.symbol}</p>
+                                <p>{nftInf.symbol || native.symbol}</p>
                             </div>
-                            <div className="nftInfDesc nftInfBox">
+                            {description && <div className="nftInfDesc nftInfBox">
                                 <label>Description</label>
                                 <p>{description}</p>
-                            </div>
+                            </div>}
                             {attributes &&
                                 Array.isArray(attributes) &&
                                 attributes
