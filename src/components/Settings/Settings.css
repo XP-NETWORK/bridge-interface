@@ -1981,7 +1981,7 @@ li.blockChain_item .blockChainItem span {
   left: 50%;
   top: 120%;
   transform: translateX(-50%);
-  width: 700px;
+  max-width: 600px;
   padding: 0 16px 16px 16px;
 }
 
@@ -1990,6 +1990,8 @@ li.blockChain_item .blockChainItem span {
   color: #ffffff;
   display: flex;
   justify-content: space-between;
+  cursor: move;
+
 }
 
 .codeModal .header img {
@@ -2002,11 +2004,14 @@ li.blockChain_item .blockChainItem span {
   background-color: #272728;
   width: 100%;
   margin-top: 10px;
+  z-index: 100000;
 }
 
 .codeModal textarea {
   min-height: 300px;
   padding: 5px;
+  resize: vertical;
+  resize: horizontal;
 }
 
 .codeModal textarea:focus {
@@ -2058,3 +2063,4 @@ button.import {
 .ltm .show > .btn-primary.dropdown-toggle {
   color: rgb(17, 17, 17) !important;
 }
+

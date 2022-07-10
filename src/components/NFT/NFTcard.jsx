@@ -20,8 +20,8 @@ import zoomIn from "../../assets/img/icons/zoomInWhite.png";
 import ModalImage from "react-modal-image";
 import { parseNFT } from "../../wallet/nftParser";
 
-import { ReactComponent as CheckComp } from "../../assets/img/icons/blue_check-small.svg";
 import { useDidUpdateEffect } from "../Settings/hooks";
+import Image from "./Image";
 
 export default function NFTcard({ nft, index, claimables }) {
   const dispatch = useDispatch();
@@ -29,7 +29,6 @@ export default function NFTcard({ nft, index, claimables }) {
   const search = useSelector((state) => state.general.NFTListSearch);
   const testnet = useSelector((state) => state.general.testNet);
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
-  const [imageErr, setImageErr] = useState(false);
   const [isVisible, setIsVisible] = useState();
   const localhost = window.location.hostname;
 
@@ -63,8 +62,10 @@ export default function NFTcard({ nft, index, claimables }) {
   }
 
   useEffect(() => {
-    const observer = new IntersectionObserver(callBackWhenObserver, options);
-
+    const observer = new IntersectionObserver(
+      callBackWhenObserver,
+      options
+    );
     const currentTarget = cardRef.current;
 
     if (currentTarget) observer.observe(currentTarget);
@@ -78,16 +79,10 @@ export default function NFTcard({ nft, index, claimables }) {
   useDidUpdateEffect(() => {
     if (isVisible) {
       if (!nft.dataLoaded) {
-        // await parseEachNFT(nft, index, testnet, claimables);
-
         parseNFT(nft, index, testnet, claimables);
       }
     }
   }, [isVisible, nft]);
-
-  const handleZoomIn = () => {
-    console.log("zoom innnn");
-  };
 
   return (
     <>
@@ -102,52 +97,25 @@ export default function NFTcard({ nft, index, claimables }) {
                   ? addRemoveNFT(nft, index)
                   : undefined
               }
-              className={nft.whitelisted ? "nft__card--selected" : "nft__card"}
+              className={
+                nft.whitelisted
+                  ? "nft__card--selected"
+                  : "nft__card"
+              }
             >
               <div className="nft__main">
-                {!nft.uri && nft.animation_url && nft.image && (
-                  <VideoOrImage
-                    urls={[nft.animation_url, nft.image]}
-                    i={index}
+                {nft.uri && nft.image && nft.animation_url ? (
+                  <VideoAndImage
+                    index={index}
+                    videoUrl={nft.animation_url}
+                    imageUrl={nft.image}
                   />
-                )}
-                {nft.uri || imageErr ? (
-                  nft.animation_url && nft.image ? (
-                    <VideoAndImage
-                      index={index}
-                      videoUrl={nft.animation_url}
-                      imageUrl={nft.image}
-                    />
-                  ) : nft.image &&
-                    !nft.animation_url &&
-                    !nft.imageFormat?.includes("mp4") ? (
-                    <img
-                      loading="lazy"
-                      alt=""
-                      onError={() => setImageErr(true)}
-                      src={setupURI(nft.image)}
-                    />
-                  ) : (!nft.image && nft.animation_url) ||
-                    nft.imageFormat?.includes("mp4") ? (
-                    <video
-                      controls={false}
-                      playsInline={true}
-                      autoPlay={true}
-                      loop={true}
-                      muted={true}
-                      src={setupURI(nft.animation_url || nft.image)}
-                    />
-                  ) : (
-                    [nft.animation_url, nft.image]?.length > 0 && (
-                      <VideoOrImage
-                        urls={[nft.animation_url, nft.image]}
-                        i={index}
-                      />
-                    )
-                  )
+                ) : nft.image ? (
+                  <Image nft={nft} />
                 ) : (
                   <BrockenUtlGridView />
                 )}
+
                 {!claimables && nft.whitelisted ? (
                   !isSelected ? (
                     <div className="nft-radio"></div>
@@ -167,8 +135,11 @@ export default function NFTcard({ nft, index, claimables }) {
                   />
                 </div>
                 {!nft.whitelisted && <NotWhiteListed />}
-                {claimables && <ClaimableCard nft={nft} index={index} />}
+                {claimables && (
+                  <ClaimableCard nft={nft} index={index} />
+                )}
               </div>
+              {/* // ! */}
               <div className="nft__footer">
                 {localhost === "localhost" && (
                   <span
@@ -181,7 +152,9 @@ export default function NFTcard({ nft, index, claimables }) {
                   </span>
                 )}
                 <span className="nft-name">
-                  <span className="name">{nft.name || nft.native.name}</span>
+                  <span className="name">
+                    {nft.name || nft.native.name}
+                  </span>
                   <NFTdetails
                     details={setDetailsOn}
                     nftInf={nft}
@@ -189,7 +162,9 @@ export default function NFTcard({ nft, index, claimables }) {
                     claimables={claimables}
                   />
                 </span>
-                <span className="nft-number">{nft.native.tokenId}</span>
+                <span className="nft-number">
+                  {nft.native.tokenId}
+                </span>
               </div>
             </div>
           )}

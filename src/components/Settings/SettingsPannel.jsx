@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactDom from "react-dom";
 import { Modal } from "react-bootstrap";
 import { ReactComponent as UndoComp } from "./assets/img/undo.svg";
@@ -6,12 +6,19 @@ import { ReactComponent as RedoComp } from "./assets/img/undo.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { copyCode, checkRgbaIn } from "./helpers";
 import { setSettings } from "../../store/reducers/settingsSlice";
-
+import { dragElement } from "./helpers";
 import close from "./assets/img/icon/close_light.svg";
 
 const CodeModal = ({ children, mode, setMode, theme }) => {
+
+  const modal = useRef(null)
+
+  useEffect(() => {
+    dragElement(modal.current)
+  }, [])
+
   return (
-    <div className={`codeModal ${theme}`}>
+    <div className={`codeModal ${theme}`} ref={modal} id="codeModal">
       <div className="header">
         {mode[0].toUpperCase() + mode.substr(1)} code{" "}
         <img src={close} alt="close" onClick={() => setMode(null)} />

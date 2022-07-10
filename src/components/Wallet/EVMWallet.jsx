@@ -36,7 +36,7 @@ export default function EVMWallet({ wallet, close }) {
       : false;
 
   const navigateToAccountRoute = () => {
-    navigate(testnet ? `/testnet/account${location.search ? location.search : ""}` : `/account${location.search ? location.search : ""}`);
+    navigate(testnet ? `/testnet/account${window.location.search ? window.location.search : ""}` : `/account${window.location.search ? window.location.search : ""}`);
   };
 
   async function switchNetwork() {
