@@ -119,6 +119,7 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
           whitelisted,
         };
       } else {
+ 
         const dataLoaded = true;
         nftObj = {
           ...nft,

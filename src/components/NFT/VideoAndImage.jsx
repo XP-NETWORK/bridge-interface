@@ -13,7 +13,7 @@ export default function VideoAndImage({
     index,
     nft,
 }) {
-    console.log("index: ", index, videoUrl, imageUrl);
+
     const [play, setPlay] = useState(false);
     const [playHover, setPlayHover] = useState(null);
     const [pauseHover, setPauseHover] = useState(null);
@@ -31,6 +31,8 @@ export default function VideoAndImage({
                 break;
         }
     };
+
+
 
     return (
         <div className="play__container">

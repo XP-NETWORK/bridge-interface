@@ -22,9 +22,10 @@ function NFTdetails({ nftInf, claimables, details }) {
         setShow(false);
         details(false);
     };
-    const handleShow = () => {
+    const handleShow = (e) => {
         setShow(true);
         details(true);
+        e.stopPropagation();
     };
     const toKey = useSelector((state) => state.general.to.key);
     const fromKey = useSelector((state) => state.general.from.key);
@@ -71,7 +72,7 @@ function NFTdetails({ nftInf, claimables, details }) {
             >
                 <Modal.Header>
                     <Modal.Title>NFT Details</Modal.Title>
-                    <span className="CloseModal" onClick={handleClose}>
+                    <span className="CloseModal" onClick={() => handleClose()}>
                         <CloseComp className="svgWidget" alt="closeIcon" />
                     </span>
                 </Modal.Header>
