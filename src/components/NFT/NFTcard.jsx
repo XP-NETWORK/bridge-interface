@@ -31,6 +31,7 @@ export default function NFTcard({ nft, index, claimables }) {
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
     const [isVisible, setIsVisible] = useState();
     const localhost = window.location.hostname;
+    console.log("index: ", index, nft.image, nft.animation_url);
 
     const callBackWhenObserver = (entries) => {
         const [entry] = entries;
@@ -109,6 +110,7 @@ export default function NFTcard({ nft, index, claimables }) {
                                         index={index}
                                         videoUrl={nft.animation_url}
                                         imageUrl={nft.image}
+                                        nft={nft}
                                     />
                                 ) : nft.image ? (
                                     <Image nft={nft} />

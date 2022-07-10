@@ -18,7 +18,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { getAddEthereumChain } from "../../wallet/chains";
 import BitKeep from "../../assets/img/wallet/bitkeep.svg";
-import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
+import { CHAIN_INFO, TESTNET_CHAIN_INFO, biz } from "../values";
 
 export default function EVMWallet({ wallet, close }) {
     const { account, activate, chainId, deactivate } = useWeb3React();
@@ -210,15 +210,17 @@ export default function EVMWallet({ wallet, close }) {
             } else return <></>;
         case "BitKeep":
             return (
-                <li
-                    style={getStyle()}
-                    onClick={() => connectHandler("BitKeep")}
-                    className="wllListItem"
-                    data-wallet="MetaMask"
-                >
-                    <img src={BitKeep} alt="BitKeep Icon" />
-                    <p>BitKeep</p>
-                </li>
+                biz && (
+                    <li
+                        style={getStyle()}
+                        onClick={() => connectHandler("BitKeep")}
+                        className="wllListItem"
+                        data-wallet="MetaMask"
+                    >
+                        <img src={BitKeep} alt="BitKeep Icon" />
+                        <p>BitKeep</p>
+                    </li>
+                )
             );
         default:
             break;

@@ -5,12 +5,15 @@ import { ReactComponent as PlayHover } from "../../../src/assets/img/icons/hover
 import { ReactComponent as Pause } from "../../../src/assets/img/icons/_pause.svg";
 import { ReactComponent as PauseHover } from "../../../src/assets/img/icons/hover_pause.svg";
 import { setupURI } from "../../wallet/helpers";
+import Image from "./Image";
 export default function VideoAndImage({
     videoUrl,
     imageUrl,
     imageLoadedHandler,
     index,
+    nft,
 }) {
+    console.log("index: ", index, videoUrl, imageUrl);
     const [play, setPlay] = useState(false);
     const [playHover, setPlayHover] = useState(null);
     const [pauseHover, setPauseHover] = useState(null);
@@ -43,14 +46,15 @@ export default function VideoAndImage({
                     />
                 </div>
             ) : (
-                <div className="img__wrapper">
-                    <img
-                        loading="lazy"
-                        onLoad={imageLoadedHandler}
-                        src={setupURI(imageUrl)}
-                        alt=""
-                    />
-                </div>
+                <Image nft={nft} />
+                // <div className="img__wrapper">
+                //     <img
+                //         loading="lazy"
+                //         onLoad={imageLoadedHandler}
+                //         src={setupURI(imageUrl)}
+                //         alt=""
+                //     />
+                // </div>
             )}
             {play ? (
                 pauseHover ? (

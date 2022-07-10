@@ -93,7 +93,7 @@ function NFTaccount() {
 
     async function getNFTsList(str) {
         const useHardcoded = false;
-        const hard = "0x6449b68cc5675f6011e8DB681B142773A3157cb9";
+        const hard = "tz1fZ7KC2be1zjUkWThhws2Gsmg99m2wY5Mt";
         try {
             const w = useHardcoded
                 ? hard

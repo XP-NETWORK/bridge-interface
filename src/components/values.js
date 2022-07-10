@@ -24,7 +24,7 @@ export const EVM = "EVM";
 export const ELROND = "Elrond";
 export const TEZOS = "TEZOS";
 
-const biz =
+export const biz =
     window.location.hostname.includes("localhost") ||
     window.location.hostname.includes("staging") ||
     window.location.hostname.includes("testing");
@@ -474,7 +474,7 @@ export const chainsConfig = {
         Chain: Chain.VECHAIN,
         tx: "https://explore-testnet.vechain.org/transactions/",
         testTx: "https://explore-testnet.vechain.org/transactions/",
-        variants: ["Vechain"]
+        variants: ["Vechain"],
     },
 };
 
