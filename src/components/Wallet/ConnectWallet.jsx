@@ -35,10 +35,13 @@ function ConnectWallet() {
     const qrCodeImage = useSelector((state) => state.general.qrCodeImage);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
-    const algorandAccount = useSelector((state) => state.general.algorandAccount);
+    const algorandAccount = useSelector(
+        (state) => state.general.algorandAccount
+    );
     const evmAccount = useSelector((state) => state.general.account);
     const tronAccount = useSelector((state) => state.general.tronWallet);
     const testnet = useSelector((state) => state.general.testNet);
+    const bitKeep = useSelector((state) => state.general.bitKeep);
     const { account, chainId } = useWeb3React();
     const inputElement = useRef(null);
 
@@ -76,7 +79,8 @@ function ConnectWallet() {
             });
             navigate(
                 testnet
-                    ? `/testnet/account${location.search ? location.search : ""}`
+                    ? `/testnet/account${location.search ? location.search : ""
+                    }`
                     : `/account${location.search ? location.search : ""}`
             );
             dispatch(setWrongNetwork(false));
@@ -86,7 +90,9 @@ function ConnectWallet() {
                 const toHex = (num) => {
                     return "0x" + num.toString(16);
                 };
-                const chain = getAddEthereumChain()[parseInt(_chainId).toString()];
+                const chain = getAddEthereumChain()[
+                    parseInt(_chainId).toString()
+                ];
 
                 const params = {
                     chainId: _chainId, // A 0x-prefixed hexadecimal string
@@ -111,7 +117,8 @@ function ConnectWallet() {
                 });
                 navigate(
                     testnet
-                        ? `/testnet/account${location.search ? location.search : ""}`
+                        ? `/testnet/account${location.search ? location.search : ""
+                        }`
                         : `/account${location.search ? location.search : ""}`
                 );
             } catch (error) {
@@ -121,19 +128,26 @@ function ConnectWallet() {
     }
 
     const handleConnect = async () => {
+        // debugger;
         let provider;
-        provider = window.bitkeep?.ethereum;
-        if (!provider) return;
-        await provider.request({ method: "eth_requestAccounts" });
-        const web3 = new Web3(provider);
-        const _chainId = await web3.eth.getChainId();
+        let _chainId;
+        if (bitKeep) {
+            provider = window.bitkeep?.ethereum;
+            await provider.request({ method: "eth_requestAccounts" });
+            const web3 = new Web3(provider);
+            _chainId = await web3.eth.getChainId();
+        }
         const chainID = chainId || _chainId;
         if (testnet && from.tnChainId === chainID) {
-            navigate(`/testnet/account${location.search ? location.search : ""}`);
+            navigate(
+                `/testnet/account${location.search ? location.search : ""}`
+            );
         } else if (!testnet && from.chainId === chainID) {
             navigate(`/account${location.search ? location.search : ""}`);
         } else if (testnet && from.type !== "EVM") {
-            navigate(`/testnet/account${location.search ? location.search : ""}`);
+            navigate(
+                `/testnet/account${location.search ? location.search : ""}`
+            );
         } else if (from.type !== "EVM") {
             navigate(`/account${location.search ? location.search : ""}`);
         } else {
@@ -210,7 +224,10 @@ function ConnectWallet() {
                     </div>
                     <Modal.Body>
                         <div className="walletListBox">
-                            <WalletList input={walletSearch} connected={handleClose} />
+                            <WalletList
+                                input={walletSearch}
+                                connected={handleClose}
+                            />
                         </div>
                     </Modal.Body>
                 </Modal>
