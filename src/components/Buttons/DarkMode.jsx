@@ -8,6 +8,7 @@ export default function DarkMode() {
     const dispatch = useDispatch();
     const darkMode = useSelector((state) => state.general.darkMode);
     const body = document.getElementsByClassName("bridgeBody");
+    const burger = document.querySelector(".svgWidget");
 
     useEffect(() => {
         if (darkMode) {

@@ -34,3 +34,7 @@
     letter-spacing: 0.04em;
     color: #ececf1 !important;
 }
+
+.dark-mode .svgWidget path:first-child {
+    fill: #2d51d0;
+}

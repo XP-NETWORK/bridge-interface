@@ -66,7 +66,7 @@ function NavBar() {
                                         .classList.remove("show");
                                     toggleNavMenu(false);
                                 }}
-                            />{" "}
+                            />
                             <div
                                 className="navbaroverlay"
                                 onClick={() => {
