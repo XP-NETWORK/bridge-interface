@@ -48,7 +48,7 @@ export default function WalletConnectionModal() {
     return (
         <>
             <Modal.Header>
-                <Modal.Title>Connect Wallet</Modal.Title>=
+                <Modal.Title>Connect Wallet</Modal.Title>
                 <span className="CloseModal" onClick={handleClose}>
                     <div className="close-modal"></div>
                 </span>
