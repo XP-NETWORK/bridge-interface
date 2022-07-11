@@ -12,8 +12,8 @@ export default function VideoAndImage({
     imageLoadedHandler,
     index,
     nft,
+    onError,
 }) {
-
     const [play, setPlay] = useState(false);
     const [playHover, setPlayHover] = useState(null);
     const [pauseHover, setPauseHover] = useState(null);
@@ -32,8 +32,6 @@ export default function VideoAndImage({
         }
     };
 
-
-
     return (
         <div className="play__container">
             {play ? (
@@ -48,15 +46,7 @@ export default function VideoAndImage({
                     />
                 </div>
             ) : (
-                <Image nft={nft} />
-                // <div className="img__wrapper">
-                //     <img
-                //         loading="lazy"
-                //         onLoad={imageLoadedHandler}
-                //         src={setupURI(imageUrl)}
-                //         alt=""
-                //     />
-                // </div>
+                <Image nft={nft} onError={onError} />
             )}
             {play ? (
                 pauseHover ? (

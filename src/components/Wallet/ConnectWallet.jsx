@@ -42,10 +42,6 @@ function ConnectWallet() {
     const tronAccount = useSelector((state) => state.general.tronWallet);
     const testnet = useSelector((state) => state.general.testNet);
     const bitKeep = useSelector((state) => state.general.bitKeep);
-    console.log(
-        "🚀 ~ file: ConnectWallet.jsx ~ line 45 ~ ConnectWallet ~ bitKeep",
-        bitKeep
-    );
 
     const { account, chainId } = useWeb3React();
     const inputElement = useRef(null);
