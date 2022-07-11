@@ -21,7 +21,7 @@ export default function TezosWallet({ wallet, close }) {
     location.pathname === "/testnet/connect";
 
   const navigateToAccountRoute = () => {
-    navigate(testnet ? `/testnet/account` : `/account`);
+    navigate(testnet ? `/testnet/account${location.search ? location.search : ""}` : `/account${location.search ? location.search : ""}`);
   };
 
   const handleConnect = async (wallet) => {

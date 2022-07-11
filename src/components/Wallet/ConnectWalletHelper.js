@@ -146,9 +146,14 @@ export const connectBitKeep = async (from) => {
   const isInstallBikeep = () => {
     return window.bitkeep && window.bitkeep?.ethereum;
   };
-  if (!isInstallBikeep) {
-    window.location.href =
-      "https://chrome.google.com/webstore/detail/bitkeep-bitcoin-crypto-wa/jiidiaalihmmhddjgbnbgdfflelocpak";
+  if (!isInstallBikeep()) {
+ 
+  window.open(
+    "https://chrome.google.com/webstore/detail/bitkeep-bitcoin-crypto-wa/jiidiaalihmmhddjgbnbgdfflelocpak",
+    'bitkeep installer',
+    "width=500,height=500"
+    
+  )
   } else {
     provider = window.bitkeep?.ethereum;
     if (!provider) return;
@@ -325,6 +330,7 @@ export const onWalletConnect = async (activate, from, testnet) => {
     walletConnect.networkId = chainId;
     await activate(walletConnect, undefined, true);
     const account = await walletConnect.getAccount();
+    console.log(account, 'ad');
     store.dispatch(setAccount(account));
     store.dispatch(setOnWC(true));
     store.dispatch(setWC(walletConnect));

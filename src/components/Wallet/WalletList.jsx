@@ -198,26 +198,26 @@ export default function WalletList({ search, connected, input }) {
 
   const filteredWallets = input
     ? walletComponents
-        .sort((a, b) => b.order - a.order)
-        .filter((wallet) =>
-          wallet.name.toLowerCase().includes(input.toLowerCase())
-        )
+      .sort((a, b) => b.order - a.order)
+      .filter((wallet) =>
+        wallet.name.toLowerCase().includes(input.toLowerCase())
+      )
     : from
-    ? walletComponents.sort((e) => {
+      ? walletComponents.sort((e) => {
         if (from.text === "Harmony") return 2;
         else if (from.type === e.type) return -1;
       })
-    : walletComponents.sort((a, b) => a.order - b.order);
+      : walletComponents.sort((a, b) => a.order - b.order);
 
   return (
     <ul className="walletList scrollSty">
       {window.innerWidth < 600
         ? filteredWallets
-            .filter((wallet) => wallet.mobile)
-            .map((wallet) => wallet.Component)
+          .filter((wallet) => wallet.mobile)
+          .map((wallet) => wallet.Component)
         : filteredWallets
-            .filter((wallet) => wallet.desktop)
-            .map((wallet) => wallet.Component)}
+          .filter((wallet) => wallet.desktop)
+          .map((wallet) => wallet.Component)}
     </ul>
   );
 }

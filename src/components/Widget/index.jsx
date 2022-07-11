@@ -167,6 +167,10 @@ export default function Widget() {
   } = settings;
 
   useEffect(() => {
+
+  }, [])
+
+  useEffect(() => {
     //document.getElementById("poweredId")?.remove();
     //document.querySelectorAll(".poweredLogo").forEach((e) => e.remove());
     document.querySelectorAll(".poweredWRapper").forEach((e) => e.remove());
@@ -238,8 +242,7 @@ export default function Widget() {
 
       $style.innerHTML = `
 
-      ${
-        wsettings
+      ${wsettings
           ? `
           .modal-backdrop.show, .modal {
               width: calc(100% - ${collapsed ? "35" : "300"}px);
@@ -249,7 +252,7 @@ export default function Widget() {
       
       `
           : ""
-      }
+        }
 
       .setting_sidebar {
         font-size: 16px !important;
@@ -262,8 +265,7 @@ export default function Widget() {
 
       div#root {
       
-        overflow-y: ${
-          !location.pathname.includes("account") ? "hidden" : "auto"
+        overflow-y: ${!location.pathname.includes("account") ? "hidden" : "auto"
         };
       }
 
@@ -356,9 +358,8 @@ export default function Widget() {
 
       
         .swap-chain__btn{
-          display: ${
-            isFrom !== isTo && !wsettings ? "none" : "inline"
-          } !important;
+          display: ${isFrom !== isTo && !wsettings ? "none" : "inline"
+        } !important;
         }
         .seleDepat{
           pointer-events: ${isFrom && !wsettings ? "none" : "auto"};

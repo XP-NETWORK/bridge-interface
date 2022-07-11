@@ -17,7 +17,7 @@ export default function MaiarModal({
     const navigate = useNavigate();
 
     const navigateToAccountRoute = () => {
-        navigate(testnet ? `/testnet/account` : `/account`);
+        navigate(testnet ? `/testnet/account${window.location.search ? window.location.search : ""}` : `/account${window.location.search ? window.location.search : ""}`);
     };
 
     const walletConnectDeepLink =

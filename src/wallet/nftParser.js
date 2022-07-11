@@ -34,15 +34,25 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
   if (!claimable) {
     const [nftObject, wlListed] = await Promise.allSettled([
       (async () => {
-        const contract =
-          nft.native?.contract === nft.collectionIdent
-            ? nft.native?.contract
-            : nft.collectionIdent;
+
+        let chainId, tokenId, contract;
+
+        if (/(wnfts\.xp\.network|nft\.xp\.network)/.test(nft.uri)) {
+          const res = await axios(nft.uri)
+           const {data} = res
+           chainId = data.wrapped?.origin;
+           tokenId = data.wrapped?.tokenId;
+           contract = data.wrapped?.contract;
+        } else {
+          chainId = nft.native?.chainId
+           tokenId = nft.native?.tokenId
+           contract = nft.native?.contract
+        }
+
+
         const res = await axios
           .get(
-            `${cacheUrl}/nft/data?chainId=${nft.native?.chainId}&tokenId=${
-              nft.native?.tokenId
-            }&contract=${contract || nft.native?.contract}`,
+            `${cacheUrl}/nft/data?chainId=${chainId || nft.native?.chainId}&tokenId=${tokenId || nft.native?.tokenId}&contract=${contract ||  nft.native?.contract}`,
             {
               headers: { "Content-type": "application/json" },
               timeout: 5000,
@@ -110,6 +120,7 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
           whitelisted,
         };
       } else {
+ 
         const dataLoaded = true;
         nftObj = {
           ...nft,
