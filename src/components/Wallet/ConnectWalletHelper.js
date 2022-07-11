@@ -330,6 +330,7 @@ export const onWalletConnect = async (activate, from, testnet) => {
     walletConnect.networkId = chainId;
     await activate(walletConnect, undefined, true);
     const account = await walletConnect.getAccount();
+    console.log(account, 'ad');
     store.dispatch(setAccount(account));
     store.dispatch(setOnWC(true));
     store.dispatch(setWC(walletConnect));
