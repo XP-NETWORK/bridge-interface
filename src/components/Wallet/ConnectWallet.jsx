@@ -42,16 +42,21 @@ function ConnectWallet() {
     const tronAccount = useSelector((state) => state.general.tronWallet);
     const testnet = useSelector((state) => state.general.testNet);
     const bitKeep = useSelector((state) => state.general.bitKeep);
+    console.log(
+        "🚀 ~ file: ConnectWallet.jsx ~ line 45 ~ ConnectWallet ~ bitKeep",
+        bitKeep
+    );
+
     const { account, chainId } = useWeb3React();
     const inputElement = useRef(null);
 
     const connected =
         elrondAccount ||
-            tezosAccount ||
-            algorandAccount ||
-            evmAccount ||
-            tronAccount ||
-            account
+        tezosAccount ||
+        algorandAccount ||
+        evmAccount ||
+        tronAccount ||
+        account
             ? true
             : false;
 
@@ -79,8 +84,9 @@ function ConnectWallet() {
             });
             navigate(
                 testnet
-                    ? `/testnet/account${location.search ? location.search : ""
-                    }`
+                    ? `/testnet/account${
+                          location.search ? location.search : ""
+                      }`
                     : `/account${location.search ? location.search : ""}`
             );
             dispatch(setWrongNetwork(false));
@@ -105,8 +111,8 @@ function ConnectWallet() {
                     rpcUrls: chain.rpc,
                     blockExplorerUrls: [
                         chain.explorers &&
-                            chain.explorers.length > 0 &&
-                            chain.explorers[0].url
+                        chain.explorers.length > 0 &&
+                        chain.explorers[0].url
                             ? chain.explorers[0].url
                             : chain.infoURL,
                     ],
@@ -117,8 +123,9 @@ function ConnectWallet() {
                 });
                 navigate(
                     testnet
-                        ? `/testnet/account${location.search ? location.search : ""
-                        }`
+                        ? `/testnet/account${
+                              location.search ? location.search : ""
+                          }`
                         : `/account${location.search ? location.search : ""}`
                 );
             } catch (error) {
@@ -128,7 +135,7 @@ function ConnectWallet() {
     }
 
     const handleConnect = async () => {
-        // debugger;
+        debugger;
         let provider;
         let _chainId;
         if (bitKeep) {

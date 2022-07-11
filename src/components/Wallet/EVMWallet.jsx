@@ -12,6 +12,7 @@ import WalletConnect from "../../assets/img/wallet/WalletConnect 3.svg";
 import TrustWallet from "../../assets/img/wallet/TWT.svg";
 import {
     setAccount,
+    setBitKeep,
     setFrom,
     setMetaMask,
 } from "../../store/reducers/generalSlice";
@@ -126,7 +127,10 @@ export default function EVMWallet({ wallet, close }) {
                 deactivate();
                 connected = await connectBitKeep(from);
                 close();
-                if (connected && to) navigateToAccountRoute();
+                dispatch(setBitKeep(true));
+                if (connected && to) {
+                    navigateToAccountRoute();
+                }
                 break;
             default:
                 break;
