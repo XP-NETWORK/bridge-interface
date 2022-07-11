@@ -80,6 +80,15 @@
     height: 30px;
 }
 
+.secure-transaction {
+    /* margin-top: au; */
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+    color: #62718a;
+}
+
 .desktop__header {
     font-size: 14px;
     font-weight: 500;
