@@ -19,11 +19,15 @@ export default function WalletConnectionModal() {
     const inputElement = useRef(null);
 
     const handleClose = () => {
-        setShow(false);
-        setWalletSearch("");
-        dispatch(setAccountWalletModal(false));
-        if (qrCodeImage) {
-            dispatch(setQrCodeString(""));
+        if (!temporaryFrom) {
+            setShow(false);
+            setWalletSearch("");
+            dispatch(setAccountWalletModal(false));
+            if (qrCodeImage) {
+                dispatch(setQrCodeString(""));
+            }
+        } else {
+            window.location.reload();
         }
     };
 
@@ -34,12 +38,10 @@ export default function WalletConnectionModal() {
     return (
         <>
             <Modal.Header>
-                <Modal.Title>Connect Wallet</Modal.Title>
-                {!temporaryFrom && (
-                    <span className="CloseModal" onClick={handleClose}>
-                        <div className="close-modal"></div>
-                    </span>
-                )}
+                <Modal.Title>Connect Wallet</Modal.Title>=
+                <span className="CloseModal" onClick={handleClose}>
+                    <div className="close-modal"></div>
+                </span>
             </Modal.Header>
             <div className="wallet-search__container">
                 <input
