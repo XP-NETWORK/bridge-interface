@@ -25,8 +25,7 @@
 .dark-mode__toggle {
     width: 39px;
     height: 39px;
-    margin-top: 4px;
-    margin-right: 4px;
+    margin: 4px 4px 0 4px;
     background: #f7f8f9;
     border: 1px solid #ffffff;
     box-shadow: 0px 2px 4px rgb(102 106 116 / 25%);
@@ -38,8 +37,7 @@
 .light-mode__toggle {
     width: 39px;
     height: 39px;
-    margin-top: 4px;
-    margin-right: 4px;
+    margin: 4px 4px 0 4px;
     background: #303137;
     border: 1px solid #37383f;
     box-shadow: 0px 2px 4px rgb(102 106 116 / 25%);

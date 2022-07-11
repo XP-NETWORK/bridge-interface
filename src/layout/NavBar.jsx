@@ -41,7 +41,7 @@ function NavBar() {
 
     return (
         !widget && (
-            <header id="Header" className="dark-mode">
+            <header id="Header">
                 <Navbar expand="lg">
                     <LinkContainer to="/connect">
                         <Navbar.Brand>

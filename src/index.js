@@ -8,6 +8,7 @@ import store from "../src/store/store";
 import "./components/Widget/Widget.css";
 import "./components/Settings/Settings.css";
 import "./Global.css";
+import "./DarkMode.css";
 import "./Responsive.css";
 import App from "./App";
 import NavBar from "./layout/NavBar";

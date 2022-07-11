@@ -1,0 +1,36 @@
+.dark-mode {
+    color: #7f859b;
+    font-size: 16px;
+    line-height: 160%;
+    background-color: #101010;
+}
+
+/* ? Navbar */
+
+.dark-mode .navbar-connect {
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0em;
+    color: #7f859b;
+    padding: 10px 16px;
+    background: #303137;
+    border: 1px solid #37383f;
+    box-sizing: border-box;
+    border-radius: 52px;
+    cursor: pointer;
+    margin-left: 2px;
+}
+
+.dark-mode .navbar-brand div {
+    margin-top: 29px;
+    font-family: Montserrat;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.04em;
+    color: #ececf1 !important;
+}
