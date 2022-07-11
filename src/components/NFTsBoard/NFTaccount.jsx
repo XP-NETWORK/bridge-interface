@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Container } from "react-bootstrap";
 import NFTgridView from "../NFT/NFTgridView";
 import NFTlistView from "../NFT/NFTlistView";
@@ -79,6 +79,8 @@ function NFTaccount() {
         (state) => state.general.accountWalletModal
     );
     const prevWrappedEGold = usePrevious(wrappedEGold);
+    // const [balanceInterval, setBalanceInterval] = useState();
+    let balanceInterval = useRef(null);
 
     const [index, setIndex] = useState(0);
     const { library } = useWeb3React();
@@ -194,38 +196,46 @@ function NFTaccount() {
             }, 3000);
     };
 
-    const toShowSuccess = () => {
-        // return txnHashArr?.length ? true : false;
-        return true;
-    };
-
-    useEffect(async () => {
-        if (!nfts?.some((nft) => nft.dataLoaded)) {
-            await getNFTsList();
-        }
-        if (
-            algorandAccount &&
-            !algorandClaimables?.some((nft) => nft.dataLoaded)
-        ) {
-            await getAlgorandClaimables(algorandAccount);
-        }
+    useEffect(() => {
+        const checkIfDataLoaded = async () => {
+            if (!nfts?.some((nft) => nft.dataLoaded)) {
+                await getNFTsList();
+            }
+        };
+        checkIfDataLoaded();
+        const checkAlgorand = async () => {
+            if (
+                algorandAccount &&
+                !algorandClaimables?.some((nft) => nft.dataLoaded)
+            ) {
+                await getAlgorandClaimables(algorandAccount);
+            }
+        };
+        checkAlgorand();
         getBalance();
         if (from === "Elrond") {
             getWegldBalance();
         }
+        balanceInterval = setInterval(() => getBalance(), 5000);
+        return () => clearInterval(balanceInterval);
     }, []);
 
-    useEffect(async () => {
-        if (nfts && prevSelected !== from) {
-            await getNFTsList();
-        } else if (nfts && prevAccount !== account) {
-            await getNFTsList();
-        } else if (nfts && NFTSetToggler !== prevNFTSetToggler) {
-            await getNFTsList();
-        }
+    useEffect(() => {
+        clearInterval(balanceInterval);
+        const getNFTList = async () => {
+            if (nfts && prevSelected !== from) {
+                await getNFTsList();
+            } else if (nfts && prevAccount !== account) {
+                await getNFTsList();
+            } else if (nfts && NFTSetToggler !== prevNFTSetToggler) {
+                await getNFTsList();
+            }
+        };
+        getNFTList();
         getBalance();
-
+        balanceInterval = setInterval(() => getBalance(), 5000);
         dispatch(cleanSelectedNFTList());
+        return () => clearInterval(balanceInterval);
     }, [from, account, NFTSetToggler]);
 
     useEffect(() => {
