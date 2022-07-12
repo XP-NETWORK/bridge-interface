@@ -15,7 +15,16 @@ import { useSelector } from "react-redux";
 
 function NFTdetails({ nftInf, claimables, details }) {
     const widget = new URLSearchParams(window.location.search).get("widget");
-    const { name, description, attributes, uri, native, wrapped } = nftInf;
+    const {
+        name,
+        description,
+        attributes,
+        uri,
+        native,
+        wrapped,
+        image,
+        animation_url,
+    } = nftInf;
 
     const isOriginUriExist = attributes?.some((e) => {
         const values = Object.values(e);
@@ -33,7 +42,7 @@ function NFTdetails({ nftInf, claimables, details }) {
             (e) => CHAIN_INFO[e].nonce.toString() === wrapped.origin
         );
 
-    const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nftInf);
+    // const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nftInf);
     const [show, setShow] = useState(false);
     const handleClose = () => {
         setShow(false);
@@ -96,22 +105,20 @@ function NFTdetails({ nftInf, claimables, details }) {
                 <Modal.Body className="modalBody">
                     <div className="nftDetailBox">
                         <div className="nftDetImg">
-                            {(imageUrl || videoUrl) &&
+                            {(image || animation_url) &&
                             uri &&
                             isValidHttpUrl(uri) ? (
-                                video && videoUrl ? (
+                                animation_url ? (
                                     <video
                                         controls={false}
                                         playsInline={true}
                                         autoPlay={true}
                                         loop={true}
-                                        src={setupURI(videoUrl)}
+                                        src={setupURI(animation_url)}
                                     />
                                 ) : (
-                                    <img alt="NFTss" src={setupURI(imageUrl)} />
+                                    <img alt="NFTss" src={setupURI(image)} />
                                 )
-                            ) : ipfsArr.length ? (
-                                <VideoOrImage urls={ipfsArr} />
                             ) : (
                                 <div className="brocken-url">
                                     <img
