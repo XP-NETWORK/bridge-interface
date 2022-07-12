@@ -62,7 +62,6 @@ const settingsHoc = (Wrapped) => (props) => {
     selectedWallets,
     tooltipBg,
     tooltipColor,
-    showAlert,
     bridgeState,
     showLink,
     affiliationFees,

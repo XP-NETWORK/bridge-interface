@@ -89,6 +89,7 @@ export const initialState = {
   tooltipBg: "#1D212A",
   tooltipColor: "#ffffff",
   affiliationFees: 0,
+  affiliationWallet: '',
   showAlert: false,
   showLink: true,
   collapsed: false,
