@@ -14,7 +14,9 @@ import { power } from "../Settings/assets/power.js";
 import { withStyles } from "./hocs/withStyles";
 import { InitWidget } from "./hocs/init";
 
+import { compose } from "@reduxjs/toolkit";
 
+import WSettings from "../Settings";
 
 function Widget({ setState, widget, settings, wsettings }) {
 
@@ -116,8 +118,9 @@ function Widget({ setState, widget, settings, wsettings }) {
 
 
 
-  return <></>;
+  return <>
+    {wsettings && <WSettings />}</>;
 }
 
 
-export default InitWidget(withStyles(Widget))
+export default compose(InitWidget, withStyles)(Widget)  

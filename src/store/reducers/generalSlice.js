@@ -131,6 +131,9 @@ const generalSlice = createSlice({
         setWSettings(state, action) {
             state.wsettings = action.payload;
         },
+        setWid(state, action) {
+            state.wid = action.payload;
+        },
         setAccount(state, action) {
             state.account = action.payload;
         },
@@ -853,6 +856,7 @@ export const {
     setOnWC,
     setWC,
     setWidget,
+    setWid,
     setError,
     setBigNumFees,
     setTronPopUp,

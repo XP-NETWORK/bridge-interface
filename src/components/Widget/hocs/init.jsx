@@ -5,6 +5,7 @@ import { checkRgbaIn } from "../../Settings/helpers";
 import {
     setWidget,
     setWSettings,
+    setWid
 } from "../../../store/reducers/generalSlice";
 import { setSettings } from "../../../store/reducers/settingsSlice";
 import mobileBanner from "../../Settings/assets/img/mobileOnlyBanner.svg";
@@ -61,16 +62,22 @@ export const InitWidget = (Wrapped) => {
         return settings
     }
 
+    function initFormId(id) {
+
+
+
+    }
 
 
     return function CB() {
 
         const dispatch = useDispatch()
-        const { widget, wsettings, settings } = useSelector(
-            ({ general: { widget, wsettings, from, to }, settings }) => ({
+        const { widget, wsettings, settings, wid } = useSelector(
+            ({ general: { widget, wsettings, from, to, wid }, settings }) => ({
                 widget,
                 settings,
                 wsettings,
+                wid,
                 from,
                 to
             })
@@ -84,15 +91,32 @@ export const InitWidget = (Wrapped) => {
             const widget = p.get("widget") === "true" || wid;
             const wsettings = p.get("wsettings") === "true";
 
-            if (widget && wsettings && window.innerWidth <= 600) {
-                document.body.appendChild(overlay);
-                document.body.style.pointerEvents = "none";
+            if (widget) {
+
+                if (wsettings && window.innerWidth <= 600) {
+                    document.body.appendChild(overlay);
+                    document.body.style.pointerEvents = "none";
+                }
+
+                if (wsettings && window.innerWidth > 600) {
+                    dispatch(setWSettings(true));
+                    document.querySelector(".nftContainer").style = "margin-left: 300px";
+                }
+
+
+
+                dispatch(setWidget(true));
+                wid && dispatch(setWid(wid))
+                document.body.classList.add("widget");
+
+
             }
 
-            if (widget && wsettings && window.innerWidth > 600) {
-                dispatch(setWSettings(true));
-                document.querySelector(".nftContainer").style = "margin-left: 300px";
-            }
+        }, []);
+
+
+        useEffect(() => {
+
 
             if (widget && !wsettings) {
                 const { backgroundColor,
@@ -115,11 +139,11 @@ export const InitWidget = (Wrapped) => {
                     tooltipColor,
                     tooltipBg,
                     showLink,
-                    chains,
+                    selectedChains,
                     fromChain,
                     toChain,
-                    wallets,
-                    affiliationFees } = !wid ? initFromQuery() : () => ({})
+                    selectedWallets,
+                    affiliationFees } = !wid ? initFromQuery() : initFormId(wid)
 
                 dispatch(
                     setSettings({
@@ -132,8 +156,8 @@ export const InitWidget = (Wrapped) => {
                         btnColor: checkRgbaIn("#" + btnColor),
                         btnBackground: checkRgbaIn("#" + btnBackground),
                         btnRadius: btnRadius.replace(/\D/g, ""),
-                        selectedChains: chains.map((c) => (c === "Gnosis" ? "xDai" : c)),
-                        selectedWallets: wallets,
+                        selectedChains: selectedChains.map((c) => (c === "Gnosis" ? "xDai" : c)),
+                        selectedWallets,
                         cardBackground: checkRgbaIn("#" + cardBackground),
                         cardBackgroundBot: checkRgbaIn("#" + cardBackgroundBot),
                         cardColor: checkRgbaIn("#" + cardColor),
@@ -151,17 +175,13 @@ export const InitWidget = (Wrapped) => {
                     })
                 );
             } else {
-                const settings = localStorage.getItem("widgetSettings");
+                const settings = localStorage.getItem("widgetSettings"); //get from api
                 if (settings) {
                     dispatch(setSettings(JSON.parse(settings)));
                 }
             }
 
-            if (widget) {
-                dispatch(setWidget(true));
-                document.body.classList.add("widget");
-            }
-        }, []);
+        }, [widget, wsettings, wid])
 
 
 
