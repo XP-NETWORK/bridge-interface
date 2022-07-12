@@ -16,7 +16,7 @@ import { useLocation } from "react-router";
 import {ethers} from 'ethers';
 import { useWeb3React } from '@web3-react/core';
 import { InjectedMetaMask } from "../../metamask/conectors";
-import { getWidgetsById } from "../helpers";
+import { addNewUser, getWidgetsById } from "../helpers";
 
 
 //.nft-list__wrapper
@@ -161,13 +161,23 @@ export default function Widget() {
   }, []);
 
   useEffect(() => {
-    
-    let user = JSON.parse(getCookie("user"));
-    console.log("here",account,user.address );
-    if(account !== undefined && user.address !== undefined) {
-      if(account !== user.address){
-       window.history.go(-1);
+    let user = getCookie("user");
+    if(user === ""){
+      console.log("user didn't sign");
+      // if(currentSignature !== "")
+      // {
+      //   addNewUser(account,currentSignature)
+      // }
     }
+    else{
+      user = JSON.parse(getCookie("user"));
+      console.log("here",account,user.address );
+      if(account !== undefined && user.address !== undefined) {
+        if(account !== user.address){
+        window.history.go(-1);
+      }
+    }
+    
     }
   }, [account]);
 
@@ -1002,14 +1012,12 @@ export default function Widget() {
 
   const screenSize = useRef();
 
-
-  function setCookie(csignature, cvalue, exdays) {
+  function setCookie(cUser, cvalue, exdays) {
     const d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     let expires = "expires="+d.toUTCString();
-    document.cookie = csignature + "=" + cvalue + ";" + expires;
-    console.log("set sign to :",cvalue);
-    console.log("all cockies: ",document.cookie);
+    document.cookie = cUser + "=" + JSON.stringify(cvalue) + ";" + expires;
+    console.log("user :", cvalue);
   }
   
   function getCookie(csignature) {
@@ -1091,7 +1099,7 @@ export default function Widget() {
     verifySignature().then(function(signature) {
       console.log("thennnnn ",signature);
       if (signature != "" && signature != null && signature != undefined) {
-        setCookie("signature", signature, 365);
+        setCookie("user", { signature, account }, 31);
       }
     })
   // }

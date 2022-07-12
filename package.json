@@ -2,6 +2,7 @@
     "name": "xp-network-bridge",
     "version": "0.1.0",
     "private": true,
+    "license": "UNLICENCED",
     "dependencies": {
         "@airgap/beacon-sdk": "^2.3.9",
         "@elrondnetwork/erdjs": "=9.2.6",
