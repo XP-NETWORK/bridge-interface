@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import moment from "moment";
 import brockenurl from "../../assets/img/brockenurl.png";
-import Close from "../../assets/img/icons/close.svg";
+
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
-import INF from "../../assets/img/icons/Inf.svg";
+
 import { ReactComponent as INFComp } from "../../assets/img/icons/Inf.svg";
 import { setupURI } from "../../wallet/helpers";
 import { getFactory, isValidHttpUrl } from "../../wallet/helpers";
@@ -14,10 +14,25 @@ import VideoOrImage from "./VideoOrImage";
 import { useSelector } from "react-redux";
 
 function NFTdetails({ nftInf, claimables, details }) {
-
-
     const widget = new URLSearchParams(window.location.search).get("widget");
-    const { name, description, attributes, uri, native } = nftInf;
+    const { name, description, attributes, uri, native, wrapped } = nftInf;
+
+    const isOriginUriExist = attributes?.some((e) => {
+        const values = Object.values(e);
+        return values?.some((v) => v === "Original URI");
+    });
+    const isOriginChainExist = attributes?.some((e) => {
+        const values = Object.values(e);
+        return values?.some((v) => v === "Original Chain");
+    });
+
+    const original_uri = wrapped && wrapped.original_uri;
+    const origin =
+        wrapped &&
+        Object.keys(CHAIN_INFO).find(
+            (e) => CHAIN_INFO[e].nonce.toString() === wrapped.origin
+        );
+
     const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nftInf);
     const [show, setShow] = useState(false);
     const handleClose = () => {
@@ -82,8 +97,8 @@ function NFTdetails({ nftInf, claimables, details }) {
                     <div className="nftDetailBox">
                         <div className="nftDetImg">
                             {(imageUrl || videoUrl) &&
-                                uri &&
-                                isValidHttpUrl(uri) ? (
+                            uri &&
+                            isValidHttpUrl(uri) ? (
                                 video && videoUrl ? (
                                     <video
                                         controls={false}
@@ -119,6 +134,28 @@ function NFTdetails({ nftInf, claimables, details }) {
                                 <label>Token ID</label>
                                 <p>{native.tokenId}</p>
                             </div>
+                            {original_uri && !isOriginUriExist && (
+                                <div className="nftInfDesc nftInfBox">
+                                    <label>Original uri</label>
+                                    <p>{original_uri}</p>
+                                </div>
+                            )}
+                            {origin && !isOriginChainExist && (
+                                <div className="nftInfDesc nftInfBox">
+                                    <label>Original Chain</label>
+                                    <div style={{ display: "flex" }}>
+                                        <img
+                                            style={{
+                                                marginRight: "4px",
+                                                width: "29px",
+                                            }}
+                                            src={chainsConfig[origin]?.img}
+                                            alt={origin}
+                                        />
+                                        <p>{origin}</p>
+                                    </div>
+                                </div>
+                            )}
                             {/*minted && minted?.length > 0 ? false && (
                                 <div className="nftInfDesc nftInfBox">
                                     <label>Minted With</label>
@@ -135,17 +172,21 @@ function NFTdetails({ nftInf, claimables, details }) {
                             {native.name && (
                                 <div className="nftInfDesc nftInfBox">
                                     <label>Collection Name</label>
-                                    <p>{nftInf.collectionName || native.name}</p>
+                                    <p>
+                                        {nftInf.collectionName || native.name}
+                                    </p>
                                 </div>
                             )}
                             <div className="nftInfDesc nftInfBox">
                                 <label>Symbol</label>
                                 <p>{nftInf.symbol || native.symbol}</p>
                             </div>
-                            {description && <div className="nftInfDesc nftInfBox">
-                                <label>Description</label>
-                                <p>{description}</p>
-                            </div>}
+                            {description && (
+                                <div className="nftInfDesc nftInfBox">
+                                    <label>Description</label>
+                                    <p>{description}</p>
+                                </div>
+                            )}
                             {attributes &&
                                 Array.isArray(attributes) &&
                                 attributes
@@ -180,13 +221,13 @@ function Attribute(props) {
             <label>
                 {trait_type
                     ? trait_type
-                        .split("_")
-                        .map(
-                            (n) =>
-                                n.charAt(0).toUpperCase() +
-                                n.slice(1).toLowerCase()
-                        )
-                        .join(" ")
+                          .split("_")
+                          .map(
+                              (n) =>
+                                  n.charAt(0).toUpperCase() +
+                                  n.slice(1).toLowerCase()
+                          )
+                          .join(" ")
                     : "-"}
             </label>
             <p>
@@ -207,10 +248,10 @@ function Attribute(props) {
                 {display_type === "date"
                     ? moment(new Date(value * 1000)).format("MM-DD-YYYY")
                     : display_type === "boolean"
-                        ? value === true
-                            ? "True"
-                            : "False"
-                        : value}
+                    ? value === true
+                        ? "True"
+                        : "False"
+                    : value}
             </p>
         </div>
     );
