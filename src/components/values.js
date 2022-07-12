@@ -133,7 +133,7 @@ export const chains = [
     {
         type: "EVM",
         key: "xDai",
-        text: "xDai",
+        text: "Gnosis",
         value: "xDai",
         chainId: 100,
         order: 11,
