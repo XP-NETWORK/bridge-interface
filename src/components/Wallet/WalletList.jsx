@@ -12,6 +12,89 @@ import BitKeep from "../../assets/img/wallet/bitkeep.svg";
 
 export default function WalletList({ search, connected, input }) {
     const from = useSelector((state) => state.general.from);
+    const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
+
+    const sortWallet = (components) => {
+        let sortedWallets;
+        const evmWallets = components.filter((e) => e.type === "EVM");
+        const tezosWallets = components.filter((e) => e.type === "Tezos");
+        const elrondWallets = components.filter((e) => e.type === "Elrond");
+        const algodWallets = components.filter((e) => e.type === "Algorand");
+        const VeChainWallets = components.filter((e) => e.type === "VeChain");
+        const tronWallets = components.filter((e) => e.type === "Tron");
+        const usbWallet = components.filter((e) => e.type === "USB");
+
+        switch (temporaryFrom?.type || from?.type) {
+            case "EVM":
+                sortedWallets = [
+                    ...evmWallets,
+                    ...tezosWallets,
+                    ...elrondWallets,
+                    ...algodWallets,
+                    ...tronWallets,
+                    ...VeChainWallets,
+                    ...usbWallet,
+                ];
+                return sortedWallets;
+            case "Tezos":
+                sortedWallets = [
+                    ...tezosWallets,
+                    ...evmWallets,
+                    ...elrondWallets,
+                    ...algodWallets,
+                    ...tronWallets,
+                    ...VeChainWallets,
+                    ...usbWallet,
+                ];
+                return sortedWallets;
+            case "Elrond":
+                sortedWallets = [
+                    ...elrondWallets,
+                    ...evmWallets,
+                    ...tezosWallets,
+                    ...algodWallets,
+                    ...tronWallets,
+                    ...VeChainWallets,
+                    ...usbWallet,
+                ];
+                return sortedWallets;
+            case "Algorand":
+                sortedWallets = [
+                    ...algodWallets,
+                    ...evmWallets,
+                    ...elrondWallets,
+                    ...tezosWallets,
+                    ...tronWallets,
+                    ...VeChainWallets,
+                    ...usbWallet,
+                ];
+                return sortedWallets;
+            case "VeChain":
+                sortedWallets = [
+                    ...VeChainWallets,
+                    ...evmWallets,
+                    ...algodWallets,
+                    ...elrondWallets,
+                    ...tezosWallets,
+                    ...tronWallets,
+                    ...usbWallet,
+                ];
+                return sortedWallets;
+            case "Tron":
+                sortedWallets = [
+                    ...tronWallets,
+                    ...evmWallets,
+                    ...algodWallets,
+                    ...elrondWallets,
+                    ...tezosWallets,
+                    ...VeChainWallets,
+                    ...usbWallet,
+                ];
+                return sortedWallets;
+            default:
+                break;
+        }
+    };
 
     const walletComponents = [
         {
@@ -198,6 +281,7 @@ export default function WalletList({ search, connected, input }) {
             mobile: false,
             desktop: true,
             order: 13,
+            type: "USB",
         },
         {
             Component: <USBWallet key="wallet-index12" connected={connected} />,
@@ -205,8 +289,11 @@ export default function WalletList({ search, connected, input }) {
             mobile: false,
             desktop: true,
             order: 14,
+            type: "USB",
         },
     ];
+
+    sortWallet(walletComponents);
 
     const filteredWallets = input
         ? walletComponents
@@ -215,9 +302,7 @@ export default function WalletList({ search, connected, input }) {
                   wallet.name.toLowerCase().includes(input.toLowerCase())
               )
         : from
-        ? walletComponents.sort((e) => {
-              if (from.type === e.type) return -1;
-          })
+        ? sortWallet(walletComponents)
         : walletComponents.sort((a, b) => a.order - b.order);
 
     return (
