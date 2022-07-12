@@ -131,7 +131,6 @@ function ConnectWallet() {
     }
 
     const handleConnect = async () => {
-        debugger;
         let provider;
         let _chainId;
         if (bitKeep) {

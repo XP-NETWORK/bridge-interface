@@ -1,4 +1,4 @@
-import Etherium from "../assets/img/chain/Etherium.svg";
+import Ethereum from "../assets/img/chain/Etherium.svg";
 import Ton from "../assets/img/chain/ton.svg";
 import Elrond from "../assets/img/chain/Elrond.svg";
 import Binance from "../assets/img/chain/Binance.svg";
@@ -38,7 +38,7 @@ export const chains = [
         chainId: 1,
         tnChainId: 3,
         order: 5,
-        image: { avatar: true, src: Etherium },
+        image: { avatar: true, src: Ethereum },
         maintenance: false,
         testNet: true,
         mainnet: true,
@@ -133,7 +133,7 @@ export const chains = [
     {
         type: "EVM",
         key: "xDai",
-        text: "xDai",
+        text: "Gnosis",
         value: "xDai",
         chainId: 100,
         order: 11,
@@ -326,7 +326,7 @@ export const chainsConfig = {
     },
     Ethereum: {
         type: EVM,
-        img: Etherium,
+        img: Ethereum,
         chainId: 1,
         rpc: "https://mainnet.infura.io/v3/",
         tx: "https://etherscan.io/tx/",
