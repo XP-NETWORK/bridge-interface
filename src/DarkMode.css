@@ -35,6 +35,20 @@
     color: #ececf1 !important;
 }
 
-.dark-mode .svgWidget path:first-child {
-    fill: #2d51d0;
+.dark-mode .svgWidget g > rect:first-child {
+    fill: #303137;
+}
+.dark-mode .svgWidget g > rect:nth-child(2),
+.dark-mode .svgWidget g > rect:nth-child(3),
+.dark-mode .svgWidget g > rect:nth-child(4) {
+    fill: #ececf1;
+}
+.dark-mode .svgBurger g > rect:last-child {
+    stroke: #37383f;
+}
+.dark-mode .dropdown-menu {
+    background-color: #303137;
+}
+.dark-mode .dropdown-item {
+    color: #7f859b !important;
 }

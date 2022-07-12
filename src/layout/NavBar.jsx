@@ -207,7 +207,7 @@ function NavBar() {
                                                     }
                                                 ></div>{" "}
                                                 <HamburgerClose
-                                                    className="svgWidget"
+                                                    className="svgWidget svgBurger"
                                                     alt="burgerClose"
                                                     onClick={() =>
                                                         toggleNavMenu(
@@ -220,7 +220,7 @@ function NavBar() {
                                             </>
                                         ) : (
                                             <Hamburger
-                                                className="svgWidget"
+                                                className="svgWidget svgBurger"
                                                 alt="burger"
                                                 onClick={() =>
                                                     toggleNavMenu(
