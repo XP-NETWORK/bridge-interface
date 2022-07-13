@@ -51,6 +51,7 @@ export default function EVMWallet({ wallet, close }) {
                 method: "wallet_switchEthereumChain",
                 params: [{ chainId: _chainId }],
             });
+            changed = true;
         } catch (switchError) {
             if (switchError.code === 4902) {
                 try {

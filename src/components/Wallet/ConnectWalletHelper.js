@@ -230,12 +230,14 @@ export const connectAlgoSigner = async (testnet) => {
 
             store.dispatch(setAlgoSigner(true));
             store.dispatch(setAlgorandAccount(address));
+            return true;
         } catch (e) {
             console.error(e);
             return JSON.stringify(e, null, 2);
         }
     } else {
         console.log("Algo Signer not installed.");
+        return false;
     }
 };
 
