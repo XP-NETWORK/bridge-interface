@@ -20,6 +20,12 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setKeplrAccount(state, action) {
+            state.secretAccount = action.payload;
+        },
+        setKeplrWallet(state, action) {
+            state.keplrWallet = action.payload;
+        },
         setBitKeep(state, action) {
             state.bitKeep = action.payload;
         },
@@ -779,6 +785,8 @@ const generalSlice = createSlice({
 });
 
 export const {
+    setKeplrAccount,
+    setKeplrWallet,
     setBitKeep,
     setTemporaryFrom,
     setCheckWallet,

@@ -9,6 +9,7 @@ import VeChainWallet from "./VeChainWallet";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import BitKeep from "../../assets/img/wallet/bitkeep.svg";
+import CosmosWallet from "./CosmosWallet";
 
 export default function WalletList({ search, connected, input }) {
     const from = useSelector((state) => state.general.from);
@@ -271,6 +272,20 @@ export default function WalletList({ search, connected, input }) {
         },
         {
             Component: (
+                <CosmosWallet
+                    key="wallet-index-15"
+                    wallet={"Keplr"}
+                    close={connected}
+                />
+            ),
+            name: "Keplr",
+            type: "Cosmos",
+            mobile: "false",
+            desktop: "true",
+            order: 13,
+        },
+        {
+            Component: (
                 <USBWallet
                     wallet={"Ledger"}
                     key="wallet-index-11"
@@ -280,7 +295,7 @@ export default function WalletList({ search, connected, input }) {
             name: "Ledger",
             mobile: false,
             desktop: true,
-            order: 13,
+            order: 14,
             type: "USB",
         },
         {
@@ -288,7 +303,7 @@ export default function WalletList({ search, connected, input }) {
             name: "Trezor",
             mobile: false,
             desktop: true,
-            order: 14,
+            order: 15,
             type: "USB",
         },
     ];
