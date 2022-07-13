@@ -271,7 +271,7 @@ export const chains = [
         image: { avatar: true, src: CKB },
         maintenance: false,
         testNet: false,
-        mainnet: true,
+        mainnet: biz ? true : false,
         newChain: true,
     },
     {
