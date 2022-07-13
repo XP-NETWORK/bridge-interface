@@ -9,6 +9,13 @@ import {
 } from "../../../store/reducers/generalSlice";
 import { setSettings } from "../../../store/reducers/settingsSlice";
 import mobileBanner from "../../Settings/assets/img/mobileOnlyBanner.svg";
+import axios from 'axios';
+import { ethers } from 'ethers'
+
+import { initialState as initialWidget } from "../../../store/reducers/settingsSlice"
+
+
+const backend = 'https://xpnetwork-widget.herokuapp.com'
 
 //.nft-list__wrappera
 const mobileOnlyBanner = `
@@ -24,49 +31,86 @@ overlay.classList.add("bannerOverlay");
 
 overlay.innerHTML = mobileOnlyBanner;
 
+function initFromQuery() {
+    const p = new URLSearchParams(window.location.search);
+
+    const settings = {
+        backgroundColor: p.get("background"),
+        panelBackground: p.get("panelBackground"),
+        modalBackground: p.get("modalBackground"),
+        color: p.get("color"),
+        fontFamily: p.get("fontFamily"),
+        fontSize: p.get("fontSize"),
+        btnColor: p.get("btnColor"),
+        btnBackground: p.get("btnBackground"),
+        btnRadius: p.get("btnRadius"),
+        selectedChains: p.get("chains")?.split("-"),
+        selectedWallets: p.get("wallets")?.split("-"),
+        cardBackground: p.get("cardBackground"),
+        cardBackgroundBot: p.get("cardBackgroundBot"),
+        cardColor: p.get("cardColor"),
+        cardRadius: p.get("cardRadius"),
+        accentColor: p.get("accentColor"),
+        secondaryColor: p.get("secondaryColor"),
+        borderColor: p.get("borderColor"),
+        tooltipColor: p.get("tooltipColor"),
+        tooltipBg: p.get("tooltipBg"),
+        iconColor: p.get("iconColor"),
+        showLink: p.get("showLink"),
+        affiliationFees: p.get("affiliationFees"),
+        fromChain: p.get("from"),
+        toChain: p.get("to"),
+    }
+
+    return settings
+}
+
+async function initFormId(id) {
+
+    if (id === 'create' && window.ethereum) {
+
+        console.log('ds');
+
+        await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x4' }], // chainId must be in hexadecimal numbers
+        });
+
+        //const acc = await window.ethereum.send("eth_requestAccounts");
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const msg = "Please sign in order to see your widgets";
+        const [signature, address] = await Promise.all([signer.signMessage(msg), signer.getAddress()]);
+
+
+        console.log(signature, address);
+
+        const res = await axios.post(
+            `${backend}/addWidget`,
+            {
+                address,
+                signature,
+                widget: initialWidget,
+            }
+        ).catch((e) => ({}))
+
+
+        if (!res.data) { }//show error msg
+        return
+    }
+
+
+    const res = await axios.get(
+        `${backend}/getWidget?widgetId=${id}`).catch((e) => ({}))
+
+    return res?.data?.settings || initialWidget
+
+
+}
+
 
 export const InitWidget = (Wrapped) => {
 
-
-    function initFromQuery() {
-        const p = new URLSearchParams(window.location.search);
-
-        const settings = {
-            backgroundColor: p.get("background"),
-            panelBackground: p.get("panelBackground"),
-            modalBackground: p.get("modalBackground"),
-            color: p.get("color"),
-            fontFamily: p.get("fontFamily"),
-            fontSize: p.get("fontSize"),
-            btnColor: p.get("btnColor"),
-            btnBackground: p.get("btnBackground"),
-            btnRadius: p.get("btnRadius"),
-            selectedChains: p.get("chains")?.split("-"),
-            selectedWallets: p.get("wallets")?.split("-"),
-            cardBackground: p.get("cardBackground"),
-            cardBackgroundBot: p.get("cardBackgroundBot"),
-            cardColor: p.get("cardColor"),
-            cardRadius: p.get("cardRadius"),
-            accentColor: p.get("accentColor"),
-            secondaryColor: p.get("secondaryColor"),
-            borderColor: p.get("borderColor"),
-            tooltipColor: p.get("tooltipColor"),
-            tooltipBg: p.get("tooltipBg"),
-            iconColor: p.get("iconColor"),
-            showLink: p.get("showLink"),
-            affiliationFees: p.get("affiliationFees"),
-            fromChain: p.get("from"),
-            toChain: p.get("to"),
-        }
-
-        return settings
-    }
-
-    function initFormId(id) {
-
-
-
-    }
 
 
     return function CB() {
@@ -117,8 +161,20 @@ export const InitWidget = (Wrapped) => {
 
         useEffect(() => {
 
+            let settings;
 
-            if (widget && !wsettings) {
+            widget && (async () => {
+                if (!wsettings) {
+                    settings = wid ? await initFormId(wid) : initFromQuery()
+                } else {
+                    // const settings = localStorage.getItem("widgetSettings"); //get from api
+                    /*if (settings) {
+                        dispatch(setSettings(JSON.parse(settings)));
+                    }*/
+                    const widget = await initFormId(wid);
+                }
+
+
                 const { backgroundColor,
                     panelBackground,
                     modalBackground,
@@ -143,7 +199,7 @@ export const InitWidget = (Wrapped) => {
                     fromChain,
                     toChain,
                     selectedWallets,
-                    affiliationFees } = !wid ? initFromQuery() : initFormId(wid)
+                    affiliationFees } = settings
 
                 dispatch(
                     setSettings({
@@ -174,12 +230,8 @@ export const InitWidget = (Wrapped) => {
                         toChain: toChain,
                     })
                 );
-            } else {
-                const settings = localStorage.getItem("widgetSettings"); //get from api
-                if (settings) {
-                    dispatch(setSettings(JSON.parse(settings)));
-                }
-            }
+
+            })()
 
         }, [widget, wsettings, wid])
 

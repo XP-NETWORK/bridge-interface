@@ -14,16 +14,18 @@ import { debounce } from "../helpers";
 import { usePrevious } from "./hooks";
 
 import { checkRgbaOut } from "./helpers";
+import axios from "axios";
 
 const Web3Utils = require("web3-utils");
 const evms = chains.filter(c => c.type === "EVM").map(c => c.value);
 
 const settingsHoc = (Wrapped) => (props) => {
-  const { settings, widget, selectedNFTList } = useSelector(
-    ({ settings, general: { selectedNFTList, widget } }) => ({
+  const { settings, wid, widget, selectedNFTList } = useSelector(
+    ({ settings, general: { selectedNFTList, widget, wid } }) => ({
       settings,
       selectedNFTList,
       widget,
+      wid
     })
   );
 
@@ -285,8 +287,18 @@ const settingsHoc = (Wrapped) => (props) => {
       })
     );
 
-  const onSaveSettings = () => {
-    localStorage.setItem("widgetSettings", JSON.stringify(settings));
+  const onSaveSettings = async () => {
+    if (wid) {
+      await axios.patch("https://xpnetwork-widget.herokuapp.com/updateWidget", {
+      widgetId: wid,
+      settings
+    });
+    } else {
+      localStorage.setItem("widgetSettings", JSON.stringify(settings));
+    }
+
+    
+
     setCopied("saved");
 
     setTimeout(() => {
