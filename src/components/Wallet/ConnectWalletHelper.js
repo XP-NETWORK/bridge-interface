@@ -109,6 +109,7 @@ const switchNetWork = async (from) => {
 };
 
 export const connectKeplr = async (testnet, chain) => {
+    debugger;
     const chainId = testnet ? "pulsar-2" : "cosmoshub-4";
     if (window.keplr) {
         try {
