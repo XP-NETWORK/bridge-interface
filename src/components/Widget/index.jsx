@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Widget.css";
-import { setSettings } from "../../store/reducers/settingsSlice";
+
 import {
   setWidget,
   setWSettings,

@@ -289,10 +289,12 @@ const settingsHoc = (Wrapped) => (props) => {
 
   const onSaveSettings = async () => {
     if (wid) {
-      await axios.patch("https://xpnetwork-widget.herokuapp.com/updateWidget", {
+      const res = await axios.patch("https://xpnetwork-widget.herokuapp.com/updateWidget", {
       widgetId: wid,
       settings
     });
+
+    console.log(res.status)
     } else {
       localStorage.setItem("widgetSettings", JSON.stringify(settings));
     }

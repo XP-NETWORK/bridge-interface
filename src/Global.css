@@ -1700,6 +1700,12 @@ span.transPend {
     position: absolute;
     backdrop-filter: blur(15px);
     z-index: -1;
+
+}
+
+
+.widgetBlur {
+    backdrop-filter: blur(225px);
 }
 
 .modal-open .App::before {

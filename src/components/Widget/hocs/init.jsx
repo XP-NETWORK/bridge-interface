@@ -7,13 +7,13 @@ import {
     setWSettings,
     setWid
 } from "../../../store/reducers/generalSlice";
-import { setSettings } from "../../../store/reducers/settingsSlice";
+import { initialState, setSettings } from "../../../store/reducers/settingsSlice";
 import mobileBanner from "../../Settings/assets/img/mobileOnlyBanner.svg";
 import axios from 'axios';
 import { ethers } from 'ethers'
 
 import { initialState as initialWidget } from "../../../store/reducers/settingsSlice"
-
+import { useDidUpdateEffect } from '../../Settings/hooks';
 
 const backend = 'https://xpnetwork-widget.herokuapp.com'
 
@@ -103,7 +103,7 @@ async function initFormId(id) {
     const res = await axios.get(
         `${backend}/getWidget?widgetId=${id}`).catch((e) => ({}))
 
-    return res?.data?.settings || initialWidget
+    return res?.data?.settings;
 
 
 }
@@ -114,6 +114,8 @@ export const InitWidget = (Wrapped) => {
 
 
     return function CB() {
+
+
 
         const dispatch = useDispatch()
         const { widget, wsettings, settings, wid } = useSelector(
@@ -164,6 +166,9 @@ export const InitWidget = (Wrapped) => {
             let settings;
 
             widget && (async () => {
+
+                document.body.classList.add('modal-open', 'widgetBlur')
+
                 if (!wsettings) {
                     settings = wid ? await initFormId(wid) : initFromQuery()
                 } else {
@@ -171,7 +176,9 @@ export const InitWidget = (Wrapped) => {
                     /*if (settings) {
                         dispatch(setSettings(JSON.parse(settings)));
                     }*/
-                    const widget = await initFormId(wid);
+                    settings = await initFormId(wid);
+                    console.log(settings);
+
                 }
 
 
@@ -199,7 +206,7 @@ export const InitWidget = (Wrapped) => {
                     fromChain,
                     toChain,
                     selectedWallets,
-                    affiliationFees } = settings
+                    affiliationFees } = settings || initialWidget
 
                 dispatch(
                     setSettings({
@@ -208,16 +215,16 @@ export const InitWidget = (Wrapped) => {
                         modalBackground: checkRgbaIn("#" + modalBackground),
                         color: checkRgbaIn("#" + color),
                         fontFamily,
-                        fontSize: fontSize.replace(/\D/g, ""),
+                        fontSize: String(fontSize).replace(/\D/g, ""),
                         btnColor: checkRgbaIn("#" + btnColor),
                         btnBackground: checkRgbaIn("#" + btnBackground),
-                        btnRadius: btnRadius.replace(/\D/g, ""),
+                        btnRadius: String(btnRadius).replace(/\D/g, ""),
                         selectedChains: selectedChains.map((c) => (c === "Gnosis" ? "xDai" : c)),
                         selectedWallets,
                         cardBackground: checkRgbaIn("#" + cardBackground),
                         cardBackgroundBot: checkRgbaIn("#" + cardBackgroundBot),
                         cardColor: checkRgbaIn("#" + cardColor),
-                        cardRadius: cardRadius.replace(/\D/g, ""),
+                        cardRadius: String(cardRadius).replace(/\D/g, ""),
                         accentColor: checkRgbaIn("#" + accentColor),
                         secondaryColor: checkRgbaIn("#" + secondaryColor),
                         borderColor: checkRgbaIn("#" + borderColor),
@@ -231,13 +238,22 @@ export const InitWidget = (Wrapped) => {
                     })
                 );
 
+                setTimeout(() => document.body.classList.remove('modal-open', 'widgetBlur'), 1000)
+
             })()
 
         }, [widget, wsettings, wid])
 
+        useDidUpdateEffect(() => {
 
+            settings && console.log(settings)
 
+        }, [settings])
 
         return <Wrapped widget={widget} wsettings={wsettings} settings={settings} />
     }
-} 
+}
+
+
+//affiliation fee saves wrong
+//error when wid = undef
