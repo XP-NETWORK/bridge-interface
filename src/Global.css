@@ -878,6 +878,11 @@ li.nftSelecItem .Close:hover {
   align-items: center;
 }
 
+.nftInfBox p {
+    display: flex;
+    align-items: center;
+  }
+
 .nftInfBox label {
   color: #14161a;
   font-weight: 600;

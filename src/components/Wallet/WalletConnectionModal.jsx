@@ -4,14 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     setAccountWalletModal,
     setQrCodeString,
+    setTemporaryFrom,
     setWalletsModal,
 } from "../../store/reducers/generalSlice";
 import WalletList from "./WalletList";
 import { useDidUpdateEffect } from "../Settings/hooks";
+import { useNavigate } from "react-router-dom";
 
 export default function WalletConnectionModal() {
     const [walletSearch, setWalletSearch] = useState();
+    const navigate = useNavigate();
     const qrCodeImage = useSelector((state) => state.general.qrCodeImage);
+    const testnet = useSelector((state) => state.general.testNet);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
 
     const [show, setShow] = useState();
@@ -19,11 +23,21 @@ export default function WalletConnectionModal() {
     const inputElement = useRef(null);
 
     const handleClose = () => {
-        setShow(false);
-        setWalletSearch("");
-        dispatch(setAccountWalletModal(false));
-        if (qrCodeImage) {
-            dispatch(setQrCodeString(""));
+        if (!temporaryFrom) {
+            setShow(false);
+            setWalletSearch("");
+            dispatch(setAccountWalletModal(false));
+            if (qrCodeImage) {
+                dispatch(setQrCodeString(""));
+            }
+        } else {
+            dispatch(setTemporaryFrom(""));
+            dispatch(setAccountWalletModal(false));
+            if (testnet) {
+                navigate("/testnet/connect");
+            } else {
+                navigate("/connect");
+            }
         }
     };
 
@@ -35,11 +49,9 @@ export default function WalletConnectionModal() {
         <>
             <Modal.Header>
                 <Modal.Title>Connect Wallet</Modal.Title>
-                {!temporaryFrom && (
-                    <span className="CloseModal" onClick={handleClose}>
-                        <div className="close-modal"></div>
-                    </span>
-                )}
+                <span className="CloseModal" onClick={handleClose}>
+                    <div className="close-modal"></div>
+                </span>
             </Modal.Header>
             <div className="wallet-search__container">
                 <input

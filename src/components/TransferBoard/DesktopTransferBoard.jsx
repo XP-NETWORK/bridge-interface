@@ -8,6 +8,7 @@ import SelectedNFT from "../innercomponents/SelectedNFT";
 import SendFees from "./SendFees";
 import "./TransferBoard.css";
 import UnwrapWegld from "./UnwrapWegld.jsx";
+import SecureTX from "./SecureTX.jsx";
 
 export default function DesktopTransferBoard() {
     const nfts = useSelector((state) => state.general.NFTList);
@@ -24,6 +25,7 @@ export default function DesktopTransferBoard() {
                             <SendFees />
                             <ButtonToTransfer />
                             <UnwrapWegld />
+                            <SecureTX />
                         </>
                     ) : (
                         <Comment />

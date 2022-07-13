@@ -12,6 +12,7 @@ import video from "../assets/img/nav/vid.svg";
 import xpnet from "../assets/img/nav/xpnet.svg";
 import message from "../assets/img/nav/message.svg";
 import explorer from "../assets/img/nav/explorer.svg";
+import security from "../assets/img/nav/security.svg";
 import UserConnect from "../components/User/UserConnect";
 import { setShowVideo } from "../store/reducers/generalSlice";
 import { ReactComponent as Hamburger } from "../assets/img/nav/burger.svg";
@@ -142,6 +143,18 @@ function NavBar() {
                             <Nav.Link
                                 className="mob-link"
                                 target="_blank"
+                                href="http://docs-staging.xp.network.s3-website-eu-west-1.amazonaws.com/docs/Multibridge2.0/bridge_security/"
+                            >
+                                <div className="nav-link__icon">
+                                    <img src={security} alt="" />
+                                </div>
+                                <div className="nav-link__txt">
+                                    Bridge Security
+                                </div>
+                            </Nav.Link>
+                            <Nav.Link
+                                className="mob-link"
+                                target="_blank"
                                 href="https://docs.xp.network/"
                             >
                                 <div className="nav-link__icon">
@@ -260,6 +273,17 @@ function NavBar() {
                                                             </div>
                                                         </div>
                                                     )}
+                                                </div>
+                                            </div>
+                                        </Dropdown.Item>
+                                        <Dropdown.Item
+                                            href="http://docs-staging.xp.network.s3-website-eu-west-1.amazonaws.com/docs/Multibridge2.0/bridge_security/"
+                                            target="_blank"
+                                        >
+                                            <div className="drop-item">
+                                                <img src={security} alt="" />
+                                                <div className="drop-git">
+                                                    <span>Bridge Security</span>
                                                 </div>
                                             </div>
                                         </Dropdown.Item>

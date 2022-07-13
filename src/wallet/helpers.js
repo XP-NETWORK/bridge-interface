@@ -297,7 +297,7 @@ export const getFactory = async () => {
     // debugger
     const f = store.getState().general.factory;
     const testnet = store.getState().general.testNet;
-
+   
 
     if (f) return f;
     const testnetConfig = await ChainFactoryConfigs.TestNet();
