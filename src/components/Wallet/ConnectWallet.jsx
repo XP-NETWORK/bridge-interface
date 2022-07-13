@@ -69,6 +69,7 @@ function ConnectWallet() {
     const walletsModal = useSelector((state) => state.general.walletsModal);
 
     async function switchNetwork() {
+        debugger;
         const info = testnet
             ? TESTNET_CHAIN_INFO[from?.key]
             : CHAIN_INFO[from?.key];
@@ -131,6 +132,7 @@ function ConnectWallet() {
     }
 
     const handleConnect = async () => {
+        debugger;
         let provider;
         let _chainId;
         if (bitKeep) {
