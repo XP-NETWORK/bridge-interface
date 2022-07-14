@@ -279,10 +279,9 @@ export const transformToDate = (date) => {
 };
 
 export const getFactory = async () => {
-    // debugger
-    const f = store.getState().general.factory;
-    const testnet = store.getState().general.testNet;
-   
+  // debugger
+  const f = store.getState().general.factory;
+  const testnet = store.getState().general.testNet;
 
   if (f) return f;
   const testnetConfig = await ChainFactoryConfigs.TestNet();
@@ -346,6 +345,9 @@ export const handleChainFactory = async (someChain) => {
         return await factory.inner(Chain.GATECHAIN);
       case "VeChain":
         return await factory.inner(Chain.VECHAIN);
+      case "Godwoken":
+        return await factory.inner(Chain.GODWOKEN);
+
       default:
         return "";
     }

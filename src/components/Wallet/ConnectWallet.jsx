@@ -16,7 +16,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 import { useWeb3React } from "@web3-react/core";
 import { getAddEthereumChain } from "../../wallet/chains";
-import { ReactComponent as SearchComp } from "../../assets/img/icons/lupa.svg";
 import { useDidUpdateEffect } from "../Settings/hooks";
 import Web3 from "web3";
 
@@ -68,6 +67,7 @@ function ConnectWallet() {
   const walletsModal = useSelector((state) => state.general.walletsModal);
 
   async function switchNetwork() {
+    debugger;
     const info = testnet
       ? TESTNET_CHAIN_INFO[from?.key]
       : CHAIN_INFO[from?.key];
@@ -124,12 +124,15 @@ function ConnectWallet() {
   }
 
   const handleConnect = async () => {
+    debugger;
     let provider;
-    provider = window.bitkeep?.ethereum;
-    if (!provider) return;
-    await provider.request({ method: "eth_requestAccounts" });
-    const web3 = new Web3(provider);
-    const _chainId = await web3.eth.getChainId();
+    let _chainId;
+    if (bitKeep) {
+      provider = window.bitkeep?.ethereum;
+      await provider.request({ method: "eth_requestAccounts" });
+      const web3 = new Web3(provider);
+      _chainId = await web3.eth.getChainId();
+    }
     const chainID = chainId || _chainId;
     if (testnet && from.tnChainId === chainID) {
       navigate(`/testnet/account${location.search ? location.search : ""}`);
