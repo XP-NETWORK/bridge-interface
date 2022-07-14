@@ -1081,6 +1081,26 @@ function WSettings({
                         </div>
                       </div>
                     </div>
+                    <div className="typographyContainer">
+                      <div className="typo-sel font-size-sel">
+                        <h5>Associated wallet</h5>
+                        <div className="select_font">
+                          <div className="typo-sel header_color_select">
+                            <div className="cornerRadi">
+                              <div className="feesWrapper">
+                                <input
+                                  type="text"
+ 
+                                  value={settings.affiliationWallet}
+                                  onChange={(e) => deboucedSet(e.target.value, 'affiliationWallet')}
+                                />
+                               
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </Accordion.Body>
                 </Accordion.Item>
               </Accordion>

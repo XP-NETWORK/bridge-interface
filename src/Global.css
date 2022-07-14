@@ -879,9 +879,9 @@ li.nftSelecItem .Close:hover {
 }
 
 .nftInfBox p {
-    display: flex;
-    align-items: center;
-  }
+  display: flex;
+  align-items: center;
+}
 
 .nftInfBox label {
   color: #14161a;
@@ -1705,6 +1705,10 @@ span.transPend {
   position: absolute;
   backdrop-filter: blur(15px);
   z-index: -1;
+}
+
+.widgetBlur {
+  backdrop-filter: blur(225px);
 }
 
 .modal-open .App::before {

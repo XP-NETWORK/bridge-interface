@@ -26,7 +26,7 @@ import SuccessModal from "./components/Modals/Success/SuccessModal.jsx";
 import ConnectAlgorand from "./components/ConnectAlgorand";
 import { Modal } from "react-bootstrap";
 import Widget from "./components/Widget";
-import WSettings from "./components/Settings";
+
 
 function App() {
     const dispatch = useDispatch();
@@ -34,7 +34,7 @@ function App() {
     const [nftToOptIn, setNFTToOptIn] = useState();
     const [testnet, setTestnet] = useState();
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
-    const state = useSelector((state) => state.general);
+
 
   useEffect(() => {
     dispatch(setTestNet(window.location.href.indexOf("/testnet") > 0));
@@ -94,7 +94,7 @@ function App() {
 
     return (
         <div className={"App"}>
-              {state.wsettings && <WSettings />}
+      
             <ConnectAlgorand nftToOptIn={nftToOptIn} testnet={testnet} />
             <About />
             <Video />
