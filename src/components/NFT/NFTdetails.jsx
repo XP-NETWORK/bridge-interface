@@ -212,7 +212,8 @@ function NFTdetails({ nftInf, claimables, details }) {
 export default NFTdetails;
 
 function Attribute(props) {
-  const { trait_type, display_type, value } = props;
+  const { display_type, value } = props;
+  const trait_type = props.trait_type || props.name;
   if (trait_type === "Original Chain") {
   }
   return (
