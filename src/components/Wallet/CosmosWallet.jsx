@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import keplr from "../../assets/img/wallet/keplr.svg";
 import { connectKeplr } from "./ConnectWalletHelper";
 
@@ -8,9 +9,16 @@ export default function CosmosWallet({ wallet, close }) {
 
     const from = useSelector((state) => state.general.from);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
+    const testnet = useSelector((state) => state.general.testNet);
+    const navigate = useNavigate();
 
-    const onClickHandler = () => {
-        connectKeplr();
+    const navigateToAccountRoute = () => {
+        navigate(testnet ? `/testnet/account` : `/account`);
+    };
+
+    const onClickHandler = async () => {
+        const connected = await connectKeplr();
+        if (connected) navigateToAccountRoute();
         close();
     };
 

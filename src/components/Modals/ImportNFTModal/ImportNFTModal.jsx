@@ -19,6 +19,7 @@ export default function ImportNFTModal() {
     const account = useSelector((state) => state.general.account);
     const secretAccount = useSelector((state) => state.general.secretAccount);
     const nfts = useSelector((state) => state.general.NFTList);
+    const checkWallet = useSelector((state) => state.general.checkWallet);
 
     const [validContract, setValidContract] = useState(NaN);
     const [contract, setContract] = useState();
@@ -37,6 +38,14 @@ export default function ImportNFTModal() {
     const handleContractChange = (value) => {
         setContract(value);
         if (value.length !== 42) {
+            setValidContract(false);
+        } else setValidContract(true);
+    };
+
+    const handleSecretContractChanges = (value) => {
+        //secret1kj69tq5lxlu8vvpjtcltyu58v5476sma4sr9yk
+        setContract(value);
+        if (value.length !== 45 && value.includes("secret")) {
             setValidContract(false);
         } else setValidContract(true);
     };
@@ -102,9 +111,9 @@ export default function ImportNFTModal() {
             const factory = await getFactory();
             const secret = await factory.inner(Chain.SECRET);
             const secretNFTs = await secret.nftList(
-                "secret1erj4m9z544pwhllrjy9xj7a2enz9a9m9wyxjtk",
-                "MyViewingKey#1",
-                "secret1kj69tq5lxlu8vvpjtcltyu58v5476sma4sr9yk"
+                checkWallet || secretAccount,
+                tokenId,
+                contract
             );
             if (secretNFTs?.length > 0) {
                 secretNFTs.forEach((nft) => {
@@ -118,11 +127,6 @@ export default function ImportNFTModal() {
                     }
                 });
             }
-            // const secretNFTs = await secret.nftList(
-            //     secretAccount,
-            //     tokenId,
-            //     contract
-            // );
         } catch (error) {
             setError(error.message);
             setImportBlocked(false);
@@ -151,7 +155,7 @@ export default function ImportNFTModal() {
                     validForm={validForm}
                     OFF={OFF}
                     handleClose={handleClose}
-                    handleContractChange={handleContractChange}
+                    handleContractChange={handleSecretContractChanges}
                     handleImport={importSecretNFTS}
                 />
             ) : (

@@ -109,7 +109,7 @@ const switchNetWork = async (from) => {
 };
 
 export const connectKeplr = async (testnet, chain) => {
-    debugger;
+    // debugger;
     const chainId = testnet ? "pulsar-2" : "cosmoshub-4";
     if (window.keplr) {
         try {
@@ -119,11 +119,14 @@ export const connectKeplr = async (testnet, chain) => {
             const { address } = accounts[0];
             store.dispatch(setKeplrAccount(address));
             store.dispatch(setKeplrWallet(true));
+            return true;
         } catch (error) {
             console.error(error);
+            return false;
         }
     } else {
         store.dispatch(setError("Please install Keplr extension"));
+        return false;
     }
 };
 
