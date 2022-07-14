@@ -3487,7 +3487,25 @@ const allchains = [{
     "shortName": "ckb",
     "chainId": 71393,
     "networkId": 1
-}, {
+},
+{
+    "name": "Godwoken",
+    "chain": "CKB",
+    "network": "mainnet",
+    "icon": "godwoken",
+    "rpc": ["https://v1.mainnet.godwoken.io/rpc"],
+    "faucets": ["https://faucet.nervos.org/"],
+    "nativeCurrency": {
+        "name": "CKB",
+        "symbol": "CKB",
+        "decimals": 8
+    },
+    "infoURL": "https://github.com/nervosnetwork/godwoken",
+    "shortName": "ckb",
+    "chainId": 71402,
+    "networkId": 1
+},
+{
     "name": "Energy Web Volta Testnet",
     "chain": "Volta",
     "network": "testnet",

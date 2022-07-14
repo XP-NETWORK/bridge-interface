@@ -19,6 +19,7 @@ import Aurora from "../assets/img/chain/aurora.svg";
 import GT from "../assets/img/chain/GateChain.svg";
 import VET from "../assets/img/chain/Vechain.png";
 import { Chain } from "xp.network/dist/consts";
+import CKB from "../assets/img/chain/godwoken.svg";
 
 export const EVM = "EVM";
 export const ELROND = "Elrond";
@@ -265,11 +266,12 @@ export const chains = [
         key: "Godwoken",
         text: "Godwoken",
         value: "Godwoken",
+        chainId: 71402,
         order: 10,
-        image: { avatar: true, src: Aurora },
+        image: { avatar: true, src: CKB },
         maintenance: false,
         testNet: false,
-        mainnet: false,
+        mainnet: biz ? true : false,
         newChain: true,
     },
     {
@@ -476,6 +478,14 @@ export const chainsConfig = {
         testTx: "https://explore-testnet.vechain.org/transactions/",
         variants: ["Vechain"],
     },
+    Godwoken: {
+        type: EVM,
+        token: "CKB",
+        image: CKB,
+        chainId: 71402,
+        Chain: Chain.GODWOKEN,
+        tx: "https://gwscan.com/tx/",
+    },
 };
 
 export const coins = [
@@ -499,6 +509,7 @@ export const coins = [
     "AETH", //17
     "GT", //18
     "VET", //19
+    "CKB", //20
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -732,5 +743,13 @@ export const CHAIN_INFO = {
         rpc: "https://sync-testnet.veblocks.net",
         blockExplorerUrl: "https://explore.vechain.org/accounts/",
         testBlockExplorerUrls: "https://explore-testnet.vechain.org/accounts/",
+    },
+    Godwoken: {
+        native: coins[20],
+        nonce: 22,
+        decimals: 1e18,
+        chainId: 71402,
+        rpc: "https://v1.mainnet.godwoken.io/rpc",
+        blockExplorerUrl: "https://gwscan.com/account/",
     },
 };
