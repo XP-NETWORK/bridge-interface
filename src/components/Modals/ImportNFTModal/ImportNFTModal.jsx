@@ -17,7 +17,7 @@ export default function ImportNFTModal() {
     const dispatch = useDispatch();
     const from = useSelector((state) => state.general.from);
     const account = useSelector((state) => state.general.account);
-    const secretAccount = useSelector(state => state.general.secretAccount)
+    const secretAccount = useSelector((state) => state.general.secretAccount);
     const [validContract, setValidContract] = useState(NaN);
     const [contract, setContract] = useState();
     const [contractOnBlur, setContractOnBlur] = useState(false);
@@ -79,11 +79,30 @@ export default function ImportNFTModal() {
     const importSecretNFTS = async () => {
         try {
             const factory = await getFactory();
-        const secret = await factory.inner(Chain.SECRET);
-        const secretNFTS = await secret.nftList(secretAccount, tokenId, contract)
+            const secret = await factory.inner(Chain.SECRET);
+            const secretNFTs = await secret.nftList(
+                "secret1erj4m9z544pwhllrjy9xj7a2enz9a9m9wyxjtk",
+                "MyViewingKey#1",
+                "secret1kj69tq5lxlu8vvpjtcltyu58v5476sma4sr9yk"
+            );
+
+            if (secretNFTs?.length > 0) {
+                secretNFTs.forEach((nft) => {
+                    dispatch(addImportedNFTtoNFTlist(nft));
+                    dispatch(setImportModal(false));
+                });
+            }
+            // const secretNFTs = await secret.nftList(
+            //     secretAccount,
+            //     tokenId,
+            //     contract
+            // );
         } catch (error) {
-            
+            setError(error.message);
+            setImportBlocked(false);
+            console.error(error);
         }
+    };
 
     return (
         <>
@@ -107,7 +126,7 @@ export default function ImportNFTModal() {
                     OFF={OFF}
                     handleClose={handleClose}
                     handleContractChange={handleContractChange}
-                    handleImport={handleImport}
+                    handleImport={importSecretNFTS}
                 />
             ) : (
                 <EVMBody
@@ -129,4 +148,3 @@ export default function ImportNFTModal() {
         </>
     );
 }
-//42
