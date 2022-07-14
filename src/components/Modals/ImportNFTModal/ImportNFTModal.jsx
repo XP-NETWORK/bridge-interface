@@ -18,6 +18,8 @@ export default function ImportNFTModal() {
     const from = useSelector((state) => state.general.from);
     const account = useSelector((state) => state.general.account);
     const secretAccount = useSelector((state) => state.general.secretAccount);
+    const nfts = useSelector((state) => state.general.NFTList);
+
     const [validContract, setValidContract] = useState(NaN);
     const [contract, setContract] = useState();
     const [contractOnBlur, setContractOnBlur] = useState(false);
@@ -41,7 +43,6 @@ export default function ImportNFTModal() {
     //"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ";
     //"http://192.168.129.241:3000/nfts/nftCheck";
     const handleImport = async () => {
-        debugger;
         const baseURL = "https://indexnft.herokuapp.com/nfts/nftCheck";
         const _headers = {
             Accept: "*",
@@ -76,8 +77,28 @@ export default function ImportNFTModal() {
         }
     };
 
+    const isExist = (nft) => {
+        // debugger;
+        const isExist = nfts.some((e) => {
+            let exist;
+            const {
+                native: { contract, chainId, tokeId },
+            } = e;
+            if (
+                contract === nft.native.contract &&
+                chainId === nft.native.chainId &&
+                tokeId === nft.native.tokeId
+            ) {
+                exist = true;
+            }
+            return exist;
+        });
+        return isExist;
+    };
+
     const importSecretNFTS = async () => {
         try {
+            setImportBlocked(true);
             const factory = await getFactory();
             const secret = await factory.inner(Chain.SECRET);
             const secretNFTs = await secret.nftList(
@@ -85,11 +106,16 @@ export default function ImportNFTModal() {
                 "MyViewingKey#1",
                 "secret1kj69tq5lxlu8vvpjtcltyu58v5476sma4sr9yk"
             );
-
             if (secretNFTs?.length > 0) {
                 secretNFTs.forEach((nft) => {
-                    dispatch(addImportedNFTtoNFTlist(nft));
-                    dispatch(setImportModal(false));
+                    if (!isExist(nft)) {
+                        dispatch(addImportedNFTtoNFTlist(nft));
+                        dispatch(setImportModal(false));
+                        setImportBlocked(false);
+                    } else {
+                        setError("NFT exist in nft list");
+                        setImportBlocked(false);
+                    }
                 });
             }
             // const secretNFTs = await secret.nftList(

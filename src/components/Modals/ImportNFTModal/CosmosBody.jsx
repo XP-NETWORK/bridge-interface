@@ -51,11 +51,10 @@ export default function CosmosBody(props) {
                     <div className="import-nft__buttons">
                         <div
                             onClick={props.handleImport}
-                            // style={
-                            //     props.validForm && !props.importBlocked
-                            //         ? {}
-                            //         : props.OFF
-                            // }
+                            style={
+                                // props.validForm &&
+                                !props.importBlocked ? {} : props.OFF
+                            }
                             className="btn-import"
                         >
                             Import

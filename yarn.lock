@@ -18958,8 +18958,8 @@ xmlhttprequest@1.8.0:
   integrity sha512-58Im/U0mlVBLM38NdZjHyhuMtCqa61469k2YP/AaPbvCoV9aQGUpbJBj1QRm2ytRiVQBD/fsw7L2bJGDVQswBA==
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
-  version "3.0.10"
-  resolved "git+https://github.com/xp-network/xpjs#ba2d56c19bd3d7cee12ade1c77caafc9500f39f0"
+  version "3.0.14"
+  resolved "git+https://github.com/xp-network/xpjs#4b0191017993913943214c1e6e54c7118cf65df1"
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"
