@@ -12975,7 +12975,7 @@ next-tick@^1.1.0:
 
 "nft-parser@git+https://github.com/xp-network/nft-parser#bleeding-edge":
   version "0.2.0"
-  resolved "git+https://github.com/xp-network/nft-parser#cae3b691adfd800b7a711eff985b8232a1d94246"
+  resolved "git+https://github.com/xp-network/nft-parser#6e777bb7321ec0086e1b858b5a5b3e02cce55551"
   dependencies:
     "@taquito/taquito" "^13.0.0"
     "@types/node" "^17.0.35"
@@ -18959,7 +18959,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "3.0.10"
-  resolved "git+https://github.com/xp-network/xpjs#97af8f9bd3378a531e77cc83c259ecbf9dfd5d1b"
+  resolved "git+https://github.com/xp-network/xpjs#ba2d56c19bd3d7cee12ade1c77caafc9500f39f0"
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"

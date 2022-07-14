@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Container } from "react-bootstrap";
 import NFTgridView from "../NFT/NFTgridView";
 import NFTlistView from "../NFT/NFTlistView";
@@ -45,14 +45,14 @@ import NoApprovedNFT from "../Alerts/NoApprovedNFT";
 import { usePrevious } from "../Settings/hooks";
 import { chainsConfig } from "../values";
 import { useWeb3React } from "@web3-react/core";
-import UserConnect from "../User/UserConnect";
-import AccountModal from "../Modals/AccountModal/AccountModal";
-
 import ImportNFTButton from "../Buttons/ImportNFTButton";
 import BigNumber from "bignumber.js";
 import UnwrapWegld from "../TransferBoard/UnwrapWegld";
 import WalletConnectionModal from "../Wallet/WalletConnectionModal";
 import ChangeWalletModal from "../Modals/ChangeWallet/ChangeWalletModal";
+
+import UserConnect from "../User/UserConnect";
+import AccountModal from "../Modals/AccountModal/AccountModal";
 
 function NFTaccount() {
   const dispatch = useDispatch();
@@ -69,6 +69,7 @@ function NFTaccount() {
   );
   const tronWallet = useSelector((state) => state.general.tronWallet);
   const account = useSelector((state) => state.general.account);
+  const widget = useSelector((state) => state.general.widget);
   const prevAccount = usePrevious(account);
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
@@ -82,11 +83,19 @@ function NFTaccount() {
     (state) => state.general.accountWalletModal
   );
   const prevWrappedEGold = usePrevious(wrappedEGold);
-
-  const widget = useSelector((state) => state.general.widget);
+  // const [balanceInterval, setBalanceInterval] = useState();
+  let balanceInterval = useRef(null);
 
   const [index, setIndex] = useState(0);
   const { library } = useWeb3React();
+
+  //Anjelika - 0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE
+  //Anjelika elrond - erd1s89aq3s0z6mjfpx8s85zntlfywsvj5r8nzcdujw7mx53f9et9ezq9fnrws
+  //Dima. U - 0x6449b68cc5675f6011e8DB681B142773A3157cb9
+  // -||- vechain 0x124fBa3250c8d72FBcb5b5712d0dF48c33E6C1F6, 0x124fBa3250c8d72FBcb5b5712d0dF48c33E6C1F6
+  // Dima.B - 0x0d7df42014064a163DfDA404253fa9f6883b9187
+  //
+  // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
 
   async function getNFTsList(str) {
     const useHardcoded = false;
@@ -95,16 +104,16 @@ function NFTaccount() {
       const w = useHardcoded
         ? hard
         : type === "EVM" || type === "VeChain"
-          ? account
-          : type === "Tezos"
-            ? tezosAccount
-            : type === "Algorand"
-              ? algorandAccount
-              : type === "Elrond"
-                ? elrondAccount
-                : type === "Tron"
-                  ? tronWallet
-                  : undefined;
+        ? account
+        : type === "Tezos"
+        ? tezosAccount
+        : type === "Algorand"
+        ? algorandAccount
+        : type === "Elrond"
+        ? elrondAccount
+        : type === "Tron"
+        ? tronWallet
+        : undefined;
       await setNFTS(w, from, undefined, "account");
     } catch (error) {
       dispatch(setError(error.data ? error.data.message : error.message));
@@ -129,12 +138,8 @@ function NFTaccount() {
     if (elrondAccount && !prevWrappedEGold) {
       try {
         const factory = await getFactory();
-        const elronfFactory = await factory.inner(
-          chainsConfig[from].Chain
-        );
-        const weGoldBalance = await elronfFactory.wegldBalance(
-          elrondAccount
-        );
+        const elronfFactory = await factory.inner(chainsConfig[from].Chain);
+        const weGoldBalance = await elronfFactory.wegldBalance(elrondAccount);
         if (weGoldBalance) dispatch(setWrappedEGold(weGoldBalance));
       } catch (error) {
         console.error(error);
@@ -144,11 +149,7 @@ function NFTaccount() {
 
   const getBalance = async () => {
     let _account =
-      account ||
-      algorandAccount ||
-      tezosAccount ||
-      elrondAccount ||
-      tronWallet;
+      account || algorandAccount || tezosAccount || elrondAccount || tronWallet;
     const factory = await getFactory();
     const fromChain = await factory.inner(chainsConfig[from].Chain);
     let balance;
@@ -190,38 +191,46 @@ function NFTaccount() {
       }, 3000);
   };
 
-  const toShowSuccess = () => {
-    // return txnHashArr?.length ? true : false;
-    return true;
-  };
-
-  useEffect(async () => {
-    if (!nfts?.some((nft) => nft.dataLoaded)) {
-      await getNFTsList();
-    }
-    if (
-      algorandAccount &&
-      !algorandClaimables?.some((nft) => nft.dataLoaded)
-    ) {
-      await getAlgorandClaimables(algorandAccount);
-    }
+  useEffect(() => {
+    const checkIfDataLoaded = async () => {
+      if (!nfts?.some((nft) => nft.dataLoaded)) {
+        await getNFTsList();
+      }
+    };
+    checkIfDataLoaded();
+    const checkAlgorand = async () => {
+      if (
+        algorandAccount &&
+        !algorandClaimables?.some((nft) => nft.dataLoaded)
+      ) {
+        await getAlgorandClaimables(algorandAccount);
+      }
+    };
+    checkAlgorand();
     getBalance();
     if (from === "Elrond") {
       getWegldBalance();
     }
+    balanceInterval = setInterval(() => getBalance(), 5000);
+    return () => clearInterval(balanceInterval);
   }, []);
 
-  useEffect(async () => {
-    if (nfts && prevSelected !== from) {
-      await getNFTsList();
-    } else if (nfts && prevAccount !== account) {
-      await getNFTsList();
-    } else if (nfts && NFTSetToggler !== prevNFTSetToggler) {
-      await getNFTsList();
-    }
+  useEffect(() => {
+    clearInterval(balanceInterval);
+    const getNFTList = async () => {
+      if (nfts && prevSelected !== from) {
+        await getNFTsList();
+      } else if (nfts && prevAccount !== account) {
+        await getNFTsList();
+      } else if (nfts && NFTSetToggler !== prevNFTSetToggler) {
+        await getNFTsList();
+      }
+    };
+    getNFTList();
     getBalance();
-
+    balanceInterval = setInterval(() => getBalance(), 5000);
     dispatch(cleanSelectedNFTList());
+    return () => clearInterval(balanceInterval);
   }, [from, account, NFTSetToggler]);
 
   useEffect(() => {
@@ -230,35 +239,6 @@ function NFTaccount() {
     }
   }, [selectedNFTs, nfts]);
 
-  return (
-    <div className="NFTaccount">
-      <Modal
-        show={importModal}
-        animation={false}
-        className=" ChainModal import-nft__modal"
-      >
-        <ImportNFTModal />
-      </Modal>
-      <ChangeNetworkModal />
-      <UnsupportedNetwork />
-      <SelectNFTAler />
-      <PasteDestinationAlert />
-      <NoApprovedNFT />
-      <Container className="nftSlectContaine">
-        <ReturnBtn />
-        {widget && <UserConnect />}
-        {widget && window.innerWidth < 760 && <UserConnect mobile={true} />}
-        {widget && <AccountModal />}
-        <div className="row">
-          <div className="nftListCol col-lg-8">
-            <div className="nft_selectBox">
-              <NFTlistTop />
-              {NFTListView ? (
-                <NFTlistView />
-              ) : (
-                <NFTgridView scrollIndex={index} setIndex={setIndex} />
-              )}
-              {/* <div className="algo-claimable">
   return (
     <div className="NFTaccount">
       <Modal
@@ -284,6 +264,14 @@ function NFTaccount() {
       <NoApprovedNFT />
       <Container className="nftSlectContaine">
         <ReturnBtn />
+        {widget && (
+          <>
+            <UserConnect />
+            {window.innerWidth < 760 && <UserConnect mobile={true} />}
+            <AccountModal />
+          </>
+        )}
+
         <div className="row">
           <div className="nftListCol col-lg-8">
             <div className="nft_selectBox">
@@ -308,10 +296,7 @@ function NFTaccount() {
           <div className="mobile-col__header">
             <div>Your NFTs on</div>
             <Refresh />
-            <ChainSwitch
-              assignment={"from"}
-              func={handleFromChainSwitch}
-            />
+            <ChainSwitch assignment={"from"} func={handleFromChainSwitch} />
           </div>
           <div className="mobile-nfts__list">
             {!showNFTsSearch ? (
@@ -319,9 +304,7 @@ function NFTaccount() {
                 <SelectedNFTs
                   on={showSelected}
                   show={
-                    selectedNFTs.length > 0
-                      ? handleShowSelected
-                      : undefined
+                    selectedNFTs.length > 0 ? handleShowSelected : undefined
                   }
                   showSelected={showSelected}
                   setOff={setShowSelected}
@@ -331,21 +314,15 @@ function NFTaccount() {
                 )}
                 {nfts?.length > 0 && (
                   <div className="mobile-nfts__buttons">
-                    <SearchButton
-                      handleSearchTop={handleSearchTop}
-                    />
-                    {_from.type === "EVM" && (
-                      <ImportNFTButton />
-                    )}
+                    <SearchButton handleSearchTop={handleSearchTop} />
+                    {_from.type === "EVM" && <ImportNFTButton />}
                     <ViewButton />
                     <SelectClearAll />
                   </div>
                 )}
               </div>
             ) : (
-              <MobileNFTsSearch
-                handleSearchTop={handleSearchTop}
-              />
+              <MobileNFTsSearch handleSearchTop={handleSearchTop} />
             )}
             <div className="mobile-nfts__body">
               {!showSelected ? (

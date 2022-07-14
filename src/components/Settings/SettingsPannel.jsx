@@ -10,12 +10,11 @@ import { dragElement } from "./helpers";
 import close from "./assets/img/icon/close_light.svg";
 
 const CodeModal = ({ children, mode, setMode, theme }) => {
-
-  const modal = useRef(null)
+  const modal = useRef(null);
 
   useEffect(() => {
-    dragElement(modal.current)
-  }, [])
+    dragElement(modal.current);
+  }, []);
 
   return (
     <div className={`codeModal ${theme}`} ref={modal} id="codeModal">
@@ -32,11 +31,11 @@ const CodeModal = ({ children, mode, setMode, theme }) => {
 const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
   const dispatch = useDispatch();
 
-  const pannel = useRef(null)
+  const pannel = useRef(null);
 
   useEffect(() => {
-    pannel.current && dragElement(pannel.current)
-  }, [pannel.current])
+    pannel.current && dragElement(pannel.current);
+  }, [pannel.current]);
 
   const portalDiv = document.getElementById("settingsPanelContainer");
   const [mode, setMode] = useState(null);
@@ -112,11 +111,17 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
     );
   };
 
+  class XpnetWidget extends HTMLDivElement {}
+
   return (
     portalDiv &&
     ReactDom.createPortal(
       <>
-        <div className={`settingsPannel ${theme}`} ref={pannel} id="settingsPannel">
+        <div
+          className={`settingsPannel ${theme}`}
+          ref={pannel}
+          id="settingsPannel"
+        >
           {false && (
             <div className="arrows">
               <UndoComp className="controlArrow" />
@@ -130,6 +135,7 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
             <span>Export code</span>
           </button>
           <button
+            style={{ pointerEvents: "none", opacity: ".6" }}
             className="controlBtn withIcon import"
             onClick={() => setMode("import")}
           >
@@ -151,7 +157,8 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
                 </div>
                 <textarea
                   id="pannelIframe"
-                  value={`<iframe src='${iframeSrc}' frameborder='0'  width="100%" height="800px"></iframe>`}
+                  value={`<div style='width:100%;height:800px'><iframe src='${iframeSrc}' frameborder='0'  width="100%" height="100%" id="xpnetWidget"></iframe><script src='${window.location.origin}/wscript.js'></script></div>
+                  `}
                 ></textarea>
               </>
             )}

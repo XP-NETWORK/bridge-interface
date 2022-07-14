@@ -60,7 +60,7 @@ export default function UserConnect({ desktop, mobile }) {
 
   const getChain = async () => {
     let provider;
-    provider = window.bitkeep?.ethereum || window?.ethereum;
+    provider = window.bitkeep?.ethereum || window.ethereum;
     if (!provider) return;
     const web3 = new Web3(provider);
     const _chainId = await web3.eth.getChainId();
@@ -90,7 +90,6 @@ export default function UserConnect({ desktop, mobile }) {
     dispatch(setAccount(account));
     const chainConnected = await getChain();
     if (chainID && location.pathname.includes("/account")) {
-
       if (testnet) {
         if (
           !chainConnected?.testNet ||
@@ -104,7 +103,6 @@ export default function UserConnect({ desktop, mobile }) {
           dispatch(setFrom(chainConnected));
         }
       } else {
-        console.log(chainConnected);
         if (
           !chainConnected?.mainnet ||
           !chains.some((chain) => chain.chainId === chainID)
@@ -113,7 +111,6 @@ export default function UserConnect({ desktop, mobile }) {
         } else if (chainID === to.chainId) {
           dispatch(setUnsupportedNetwork(true));
         } else {
-
           dispatch(setUnsupportedNetwork(false));
           dispatch(setFrom(chainConnected));
         }
@@ -143,8 +140,9 @@ export default function UserConnect({ desktop, mobile }) {
   return (
     <div
       onClick={handleConnect}
-      className={`${walletAccount ? "navbar-connect connected" : "navbar-connect"
-        } ${mobile ? "xmobile_only" : "xdesktop_only"}`}
+      className={`${
+        walletAccount ? "navbar-connect connected" : "navbar-connect"
+      } ${mobile ? "xmobile_only" : "xdesktop_only"}`}
     >
       {walletAccount ? getAccountString() : "Connect Wallet"}
       {walletAccount && <Identicon account={walletAccount} />}

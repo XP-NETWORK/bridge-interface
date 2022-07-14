@@ -7,18 +7,20 @@ export const ReturnBtn = () => {
     wsettings: state.general.wsettings,
   }));
 
-
   return widget ? (
     <div className="returnBtn">
-      <button onClick={() => {
+      <button
+        onClick={() => {
+          const url = `/${window.location.search}`;
+          //widget && !wsettings
+          //</div>? `/connect${window.location.search}`
+          //: `/connect?widget=true&wsettings=true`;
 
-        const url =
-          widget && !wsettings
-            ? `/connect${window.location.search}`
-            : `/connect?widget=true&wsettings=true`;
-
-        window.open(url, "_self")
-      }}>{"< Back"}</button>
+          window.open(url, "_self");
+        }}
+      >
+        {"< Back"}
+      </button>
     </div>
   ) : null;
 };

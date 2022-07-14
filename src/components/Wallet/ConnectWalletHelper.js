@@ -90,17 +90,16 @@ const switchNetWork = async (from) => {
         : chain.infoURL,
     ],
   };
-
   window.bitkeep?.ethereum &&
     window.bitkeep?.ethereum
-      ?.request({
+      .request({
         method: "wallet_switchEthereumChain",
         params,
       })
-      ?.then(() => {
+      .then(() => {
         console.log("Network Switch Success");
       })
-      ?.catch((e) => {
+      .catch((e) => {
         console.log(e);
       });
   // try {
@@ -147,16 +146,13 @@ export const connectBitKeep = async (from) => {
     return window.bitkeep && window.bitkeep?.ethereum;
   };
   if (!isInstallBikeep()) {
- 
-  window.open(
-    "https://chrome.google.com/webstore/detail/bitkeep-bitcoin-crypto-wa/jiidiaalihmmhddjgbnbgdfflelocpak",
-    'bitkeep installer',
-    "width=500,height=500"
-    
-  )
+    window.open(
+      "https://chrome.google.com/webstore/detail/bitkeep-bitcoin-crypto-wa/jiidiaalihmmhddjgbnbgdfflelocpak",
+      "bitkeep installer",
+      "width=500,height=500"
+    );
   } else {
     provider = window.bitkeep?.ethereum;
-    if (!provider) return;
     await provider.request({ method: "eth_requestAccounts" });
     const web3 = new Web3(provider);
     const address = await web3.eth.getAccounts();
@@ -165,6 +161,7 @@ export const connectBitKeep = async (from) => {
       switchNetWork(from, true);
     } else {
       store.dispatch(setAccount(address[0]));
+      return true;
     }
   }
 };
@@ -231,12 +228,14 @@ export const connectAlgoSigner = async (testnet) => {
 
       store.dispatch(setAlgoSigner(true));
       store.dispatch(setAlgorandAccount(address));
+      return true;
     } catch (e) {
       console.error(e);
       return JSON.stringify(e, null, 2);
     }
   } else {
     console.log("Algo Signer not installed.");
+    return false;
   }
 };
 
@@ -330,7 +329,6 @@ export const onWalletConnect = async (activate, from, testnet) => {
     walletConnect.networkId = chainId;
     await activate(walletConnect, undefined, true);
     const account = await walletConnect.getAccount();
-    console.log(account, 'ad');
     store.dispatch(setAccount(account));
     store.dispatch(setOnWC(true));
     store.dispatch(setWC(walletConnect));

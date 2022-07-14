@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-
-
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 export const withStyles = (Wrapped) => (props) => {
-
-  const { widget, wsettings, settings } = props
+  const { widget, wsettings, settings } = props;
 
   const [chainsLengthEqauls2, setChainsLengthEqauls2] = useState(false);
   const [isFrom, setIsFrom] = useState(false);
@@ -43,7 +40,6 @@ export const withStyles = (Wrapped) => (props) => {
     toChain,
   } = settings;
 
-
   useEffect(() => {
     if (widget) {
       document.getElementById("bridgeSettings")?.remove();
@@ -51,12 +47,11 @@ export const withStyles = (Wrapped) => (props) => {
       $style.id = "bridgeSettings";
       document.head.appendChild($style);
 
-
-
       $style.innerHTML = `
     
-          ${wsettings
-          ? `
+          ${
+            wsettings
+              ? `
               .modal-backdrop.show, .modal {
                   width: calc(100% - ${collapsed ? "35" : "300"}px);
                   left: initial;
@@ -64,8 +59,8 @@ export const withStyles = (Wrapped) => (props) => {
               }
           
           `
-          : ""
-        }
+              : ""
+          }
     
           .setting_sidebar {
             font-size: 16px !important;
@@ -78,8 +73,9 @@ export const withStyles = (Wrapped) => (props) => {
     
           div#root {
           
-            overflow-y: ${!location.pathname.includes("account") ? "hidden" : "auto"
-        };
+            overflow-y: ${
+              !location.pathname.includes("account") ? "hidden" : "auto"
+            };
           }
     
           #root {
@@ -171,8 +167,9 @@ export const withStyles = (Wrapped) => (props) => {
     
           
             .swap-chain__btn{
-              display: ${isFrom !== isTo && !wsettings ? "none" : "inline"
-        } !important;
+              display: ${
+                isFrom !== isTo && !wsettings ? "none" : "inline"
+              } !important;
             }
             .seleDepat{
               pointer-events: ${isFrom && !wsettings ? "none" : "auto"};
@@ -390,14 +387,14 @@ export const withStyles = (Wrapped) => (props) => {
             }
     
             ${selectedChains
-          ?.map((chain) => `.nftChainItem[data-chain="${chain}"]`)
-          .join(", ")} {
+              ?.map((chain) => `.nftChainItem[data-chain="${chain}"]`)
+              .join(", ")} {
               display: flex;
             }
     
             ${selectedWallets
-          ?.map((wallet) => `li[data-wallet="${wallet}"]`)
-          .join(", ")} {
+              ?.map((wallet) => `li[data-wallet="${wallet}"]`)
+              .join(", ")} {
               display: flex;
             }
     
@@ -777,15 +774,18 @@ export const withStyles = (Wrapped) => (props) => {
             }
     
             `;
-
+      document.body.classList.remove("widgetBlur");
     }
-  }, [widget, settings, location, chainsLengthEqauls2, isFrom, isTo]);
+  }, [settings, location, chainsLengthEqauls2, isFrom, isTo]);
 
-
-
-  return <Wrapped {...props} setState={{
-    setChainsLengthEqauls2,
-    setIsFrom,
-    setIsTo
-  }} />
-}
+  return (
+    <Wrapped
+      {...props}
+      setState={{
+        setChainsLengthEqauls2,
+        setIsFrom,
+        setIsTo,
+      }}
+    />
+  );
+};

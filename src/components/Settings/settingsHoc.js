@@ -17,7 +17,7 @@ import { checkRgbaOut } from "./helpers";
 import axios from "axios";
 
 const Web3Utils = require("web3-utils");
-const evms = chains.filter(c => c.type === "EVM").map(c => c.value);
+const evms = chains.filter((c) => c.type === "EVM").map((c) => c.value);
 
 const settingsHoc = (Wrapped) => (props) => {
   const { settings, wid, widget, selectedNFTList } = useSelector(
@@ -25,7 +25,7 @@ const settingsHoc = (Wrapped) => (props) => {
       settings,
       selectedNFTList,
       widget,
-      wid
+      wid,
     })
   );
 
@@ -37,7 +37,6 @@ const settingsHoc = (Wrapped) => (props) => {
     key: "",
     val: "",
   });
-  //const [showLink, onToggleShow] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -72,7 +71,10 @@ const settingsHoc = (Wrapped) => (props) => {
     toChain,
   } = settings;
 
-  // console.log(settings);
+  const formatedFees = useMemo(
+    () => (affiliationFees ? +affiliationFees / 100 + 1 : 1),
+    [affiliationFees]
+  );
 
   const prevSelected = usePrevious(selectedChains);
 
@@ -96,10 +98,11 @@ const settingsHoc = (Wrapped) => (props) => {
   };
 
   useEffect(() => {
-    debounce(
-      (arg) => dispatch(setSettings(arg)),
-      1000
-    )({ ...settings, [debouncedAcc.key]: debouncedAcc.val });
+    debouncedAcc.key &&
+      debounce(
+        (arg) => dispatch(setSettings(arg)),
+        1000
+      )({ ...settings, [debouncedAcc.key]: debouncedAcc.val });
   }, [debouncedAcc]);
 
   useEffect(() => {
@@ -167,44 +170,56 @@ const settingsHoc = (Wrapped) => (props) => {
 
   const iframeSrc = useMemo(
     () =>
-      `${window.location.href
-        .replace("#", "")
-        .replace("wsettings=true", "")}background=${backgroundColor &&
-        checkRgbaOut(backgroundColor).split(
-          "#"
-        )[1]}&panelBackground=${panelBackground &&
-        checkRgbaOut(panelBackground).split(
-          "#"
-        )[1]}&modalBackground=${modalBackground &&
-        checkRgbaOut(modalBackground).split("#")[1]}&color=${color &&
-        checkRgbaOut(color).split("#")[1]}&fontSize=${fontSize &&
-        fontSize}&btnColor=${btnColor &&
-        checkRgbaOut(btnColor).split("#")[1]}&btnBackground=${btnBackground &&
-        checkRgbaOut(btnBackground).split("#")[1]}&btnRadius=${btnRadius &&
-        btnRadius}&fontFamily=${fontFamily &&
-        fontFamily}&chains=${selectedChains
-        .map((c) => (c === "xDai" ? "Gnosis" : c))
-        .join(
-          "-"
-        )}&from=${fromChain}&to=${toChain}&cardBackground=${cardBackground &&
-        checkRgbaOut(cardBackground).split(
-          "#"
-        )[1]}&cardBackgroundBot=${cardBackgroundBot &&
-        checkRgbaOut(cardBackgroundBot).split("#")[1]}&cardColor=${cardColor &&
-        checkRgbaOut(cardColor).split("#")[1]}&cardRadius=${cardRadius &&
-        cardRadius}&secondaryColor=${secondaryColor &&
-        checkRgbaOut(secondaryColor).split("#")[1]}&accentColor=${accentColor &&
-        checkRgbaOut(accentColor).split("#")[1]}&borderColor=${borderColor &&
-        checkRgbaOut(borderColor).split("#")[1]}&iconColor=${iconColor &&
-        checkRgbaOut(iconColor).split("#")[1]}&tooltipBg=${tooltipBg &&
-        checkRgbaOut(tooltipBg).split("#")[1]}&tooltipColor=${tooltipColor &&
-        checkRgbaOut(tooltipColor).split(
-          "#"
-        )[1]}&wallets=${selectedWallets.join("-")}&bridgeState=${JSON.stringify(
-        bridgeState
-      )}&showLink=${showLink}&affiliationFees=${
-        affiliationFees ? +affiliationFees / 100 + 1 : 1
-      }`,
+      wid
+        ? `${window.location.origin}?wid=${wid}`
+        : `${window.location.href
+            .replace("#", "")
+            .replace("wsettings=true", "")}background=${backgroundColor &&
+            checkRgbaOut(backgroundColor).split(
+              "#"
+            )[1]}&panelBackground=${panelBackground &&
+            checkRgbaOut(panelBackground).split(
+              "#"
+            )[1]}&modalBackground=${modalBackground &&
+            checkRgbaOut(modalBackground).split("#")[1]}&color=${color &&
+            checkRgbaOut(color).split("#")[1]}&fontSize=${fontSize &&
+            fontSize}&btnColor=${btnColor &&
+            checkRgbaOut(btnColor).split(
+              "#"
+            )[1]}&btnBackground=${btnBackground &&
+            checkRgbaOut(btnBackground).split("#")[1]}&btnRadius=${btnRadius &&
+            btnRadius}&fontFamily=${fontFamily &&
+            fontFamily}&chains=${selectedChains
+            .map((c) => (c === "xDai" ? "Gnosis" : c))
+            .join(
+              "-"
+            )}&from=${fromChain}&to=${toChain}&cardBackground=${cardBackground &&
+            checkRgbaOut(cardBackground).split(
+              "#"
+            )[1]}&cardBackgroundBot=${cardBackgroundBot &&
+            checkRgbaOut(cardBackgroundBot).split(
+              "#"
+            )[1]}&cardColor=${cardColor &&
+            checkRgbaOut(cardColor).split("#")[1]}&cardRadius=${cardRadius &&
+            cardRadius}&secondaryColor=${secondaryColor &&
+            checkRgbaOut(secondaryColor).split(
+              "#"
+            )[1]}&accentColor=${accentColor &&
+            checkRgbaOut(accentColor).split(
+              "#"
+            )[1]}&borderColor=${borderColor &&
+            checkRgbaOut(borderColor).split("#")[1]}&iconColor=${iconColor &&
+            checkRgbaOut(iconColor).split("#")[1]}&tooltipBg=${tooltipBg &&
+            checkRgbaOut(tooltipBg).split(
+              "#"
+            )[1]}&tooltipColor=${tooltipColor &&
+            checkRgbaOut(tooltipColor).split(
+              "#"
+            )[1]}&wallets=${selectedWallets.join(
+            "-"
+          )}&bridgeState=${JSON.stringify(
+            bridgeState
+          )}&showLink=${showLink}&affiliationFees=${formatedFees}`,
     [settings]
   );
 
@@ -255,15 +270,14 @@ const settingsHoc = (Wrapped) => (props) => {
         const removeWallets = [];
 
         for (let i = 0; i < difference.length; i++) {
-    
           const wallets = availability[difference[i]];
-          
+
           wallets && removeWallets.push(...wallets);
         }
-     
-       // if (selectedChains.every(c => !evms.includes(c))) {
-         // removMultiple(availability['Evms'])
-       // }
+
+        // if (selectedChains.every(c => !evms.includes(c))) {
+        // removMultiple(availability['Evms'])
+        // }
         removeWallets && removMultiple(removeWallets);
       } else {
         const addWallets = [];
@@ -274,10 +288,7 @@ const settingsHoc = (Wrapped) => (props) => {
         addWallets && addMultiple(addWallets);
       }
     }
-
-   
   }, [selectedChains]);
-
 
   const toggleShow = () =>
     dispatch(
@@ -288,18 +299,23 @@ const settingsHoc = (Wrapped) => (props) => {
     );
 
   const onSaveSettings = async () => {
+    const newSettings = {
+      ...settings,
+      affiliationFees: formatedFees,
+    };
     if (wid) {
-      const res = await axios.patch("https://xpnetwork-widget.herokuapp.com/updateWidget", {
-      widgetId: wid,
-      settings
-    });
+      const res = await axios.patch(
+        "https://xpnetwork-widget.herokuapp.com/updateWidget",
+        {
+          widgetId: wid,
+          settings: newSettings,
+        }
+      );
 
-    console.log(res.status)
+      console.log(res.status);
     } else {
-      localStorage.setItem("widgetSettings", JSON.stringify(settings));
+      localStorage.setItem("widgetSettings", JSON.stringify(newSettings));
     }
-
-    
 
     setCopied("saved");
 

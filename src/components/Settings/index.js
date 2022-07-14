@@ -404,7 +404,7 @@ function WSettings({
                             <li
                               key={i + "wallet"}
                               className={`blockChain_item ${
-                                !chain || selectedChains.includes(chain)
+                                !chain || selectedChains.includes(chain) || true
                                   ? ""
                                   : "inactive"
                               }`}
@@ -1090,11 +1090,14 @@ function WSettings({
                               <div className="feesWrapper">
                                 <input
                                   type="text"
- 
                                   value={settings.affiliationWallet}
-                                  onChange={(e) => deboucedSet(e.target.value, 'affiliationWallet')}
+                                  onChange={(e) =>
+                                    deboucedSet(
+                                      e.target.value,
+                                      "affiliationWallet"
+                                    )
+                                  }
                                 />
-                               
                               </div>
                             </div>
                           </div>

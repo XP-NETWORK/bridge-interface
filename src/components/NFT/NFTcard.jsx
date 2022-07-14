@@ -31,7 +31,7 @@ export default function NFTcard({ nft, index, claimables }) {
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
   const [isVisible, setIsVisible] = useState();
   const localhost = window.location.hostname;
-
+  const [imageErr, setImageErr] = useState(false);
 
   const callBackWhenObserver = (entries) => {
     const [entry] = entries;
@@ -63,10 +63,7 @@ export default function NFTcard({ nft, index, claimables }) {
   }
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      callBackWhenObserver,
-      options
-    );
+    const observer = new IntersectionObserver(callBackWhenObserver, options);
     const currentTarget = cardRef.current;
 
     if (currentTarget) observer.observe(currentTarget);
@@ -78,7 +75,6 @@ export default function NFTcard({ nft, index, claimables }) {
   }, [cardRef, options, search]);
 
   useDidUpdateEffect(() => {
-
     if (isVisible) {
       if (!nft.dataLoaded) {
         parseNFT(nft, index, testnet, claimables);
@@ -99,11 +95,7 @@ export default function NFTcard({ nft, index, claimables }) {
                   ? addRemoveNFT(nft, index)
                   : undefined
               }
-              className={
-                nft.whitelisted
-                  ? "nft__card--selected"
-                  : "nft__card"
-              }
+              className={nft.whitelisted ? "nft__card--selected" : "nft__card"}
             >
               <div className="nft__main">
                 {nft.uri && nft.image && nft.animation_url ? (
@@ -111,10 +103,11 @@ export default function NFTcard({ nft, index, claimables }) {
                     index={index}
                     videoUrl={nft.animation_url}
                     imageUrl={nft.image}
+                    onError={setImageErr}
                     nft={nft}
                   />
-                ) : nft.image ? (
-                  <Image nft={nft} />
+                ) : nft.image && !imageErr ? (
+                  <Image onError={setImageErr} nft={nft} index={index} />
                 ) : (
                   <BrockenUtlGridView />
                 )}
@@ -138,9 +131,7 @@ export default function NFTcard({ nft, index, claimables }) {
                   />
                 </div>
                 {!nft.whitelisted && <NotWhiteListed />}
-                {claimables && (
-                  <ClaimableCard nft={nft} index={index} />
-                )}
+                {claimables && <ClaimableCard nft={nft} index={index} />}
               </div>
               {/* // ! */}
               <div className="nft__footer">
@@ -155,9 +146,7 @@ export default function NFTcard({ nft, index, claimables }) {
                   </span>
                 )}
                 <span className="nft-name">
-                  <span className="name">
-                    {nft.name || nft.native.name}
-                  </span>
+                  <span className="name">{nft.name || nft.native.name}</span>
                   <NFTdetails
                     details={setDetailsOn}
                     nftInf={nft}
@@ -165,9 +154,7 @@ export default function NFTcard({ nft, index, claimables }) {
                     claimables={claimables}
                   />
                 </span>
-                <span className="nft-number">
-                  {nft.native.tokenId}
-                </span>
+                <span className="nft-number">{nft.native.tokenId}</span>
               </div>
             </div>
           )}

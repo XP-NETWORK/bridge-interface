@@ -34,25 +34,26 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
   if (!claimable) {
     const [nftObject, wlListed] = await Promise.allSettled([
       (async () => {
-
         let chainId, tokenId, contract;
 
         if (/(wnfts\.xp\.network|nft\.xp\.network)/.test(nft.uri)) {
-          const res = await axios(nft.uri)
-           const {data} = res
-           chainId = data.wrapped?.origin;
-           tokenId = data.wrapped?.tokenId;
-           contract = data.wrapped?.contract;
+          const res = await axios(nft.uri);
+          const { data } = res;
+          chainId = data.wrapped?.origin;
+          tokenId = data.wrapped?.tokenId;
+          contract = data.wrapped?.contract;
         } else {
-          chainId = nft.native?.chainId
-           tokenId = nft.native?.tokenId
-           contract = nft.native?.contract
+          chainId = nft.native?.chainId;
+          tokenId = nft.native?.tokenId;
+          contract = nft.native?.contract;
         }
-
 
         const res = await axios
           .get(
-            `${cacheUrl}/nft/data?chainId=${chainId || nft.native?.chainId}&tokenId=${tokenId || nft.native?.tokenId}&contract=${contract ||  nft.native?.contract}`,
+            `${cacheUrl}/nft/data?chainId=${chainId ||
+              nft.native?.chainId}&tokenId=${tokenId ||
+              nft.native?.tokenId}&contract=${contract ||
+              nft.native?.contract}`,
             {
               headers: { "Content-type": "application/json" },
               timeout: 5000,
@@ -65,7 +66,6 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
           res === "error"
         ) {
           const parsed = await nftGeneralParser(nft, account, whitelisted);
-
           return {
             data: parsed,
             toCache: true,
@@ -105,7 +105,9 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
                   },
                 }),
                 {
-                  headers: { "Content-type": "application/json" },
+                  headers: {
+                    "Content-type": "application/json",
+                  },
                 }
               );
           } catch (error) {
@@ -116,11 +118,11 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
         nftObj = {
           ...nft,
           ...data.metaData,
+          wrapped: data.wrapped,
           dataLoaded,
           whitelisted,
         };
       } else {
- 
         const dataLoaded = true;
         nftObj = {
           ...nft,

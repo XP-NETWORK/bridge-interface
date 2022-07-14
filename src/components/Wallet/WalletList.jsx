@@ -10,10 +10,91 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import BitKeep from "../../assets/img/wallet/bitkeep.svg";
 
-import { biz } from "../values";
-
 export default function WalletList({ search, connected, input }) {
   const from = useSelector((state) => state.general.from);
+  const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
+
+  const sortWallet = (components) => {
+    let sortedWallets;
+    const evmWallets = components.filter((e) => e.type === "EVM");
+    const tezosWallets = components.filter((e) => e.type === "Tezos");
+    const elrondWallets = components.filter((e) => e.type === "Elrond");
+    const algodWallets = components.filter((e) => e.type === "Algorand");
+    const VeChainWallets = components.filter((e) => e.type === "VeChain");
+    const tronWallets = components.filter((e) => e.type === "Tron");
+    const usbWallet = components.filter((e) => e.type === "USB");
+
+    switch (temporaryFrom?.type || from?.type) {
+      case "EVM":
+        sortedWallets = [
+          ...evmWallets,
+          ...tezosWallets,
+          ...elrondWallets,
+          ...algodWallets,
+          ...tronWallets,
+          ...VeChainWallets,
+          ...usbWallet,
+        ];
+        return sortedWallets;
+      case "Tezos":
+        sortedWallets = [
+          ...tezosWallets,
+          ...evmWallets,
+          ...elrondWallets,
+          ...algodWallets,
+          ...tronWallets,
+          ...VeChainWallets,
+          ...usbWallet,
+        ];
+        return sortedWallets;
+      case "Elrond":
+        sortedWallets = [
+          ...elrondWallets,
+          ...evmWallets,
+          ...tezosWallets,
+          ...algodWallets,
+          ...tronWallets,
+          ...VeChainWallets,
+          ...usbWallet,
+        ];
+        return sortedWallets;
+      case "Algorand":
+        sortedWallets = [
+          ...algodWallets,
+          ...evmWallets,
+          ...elrondWallets,
+          ...tezosWallets,
+          ...tronWallets,
+          ...VeChainWallets,
+          ...usbWallet,
+        ];
+        return sortedWallets;
+      case "VeChain":
+        sortedWallets = [
+          ...VeChainWallets,
+          ...evmWallets,
+          ...algodWallets,
+          ...elrondWallets,
+          ...tezosWallets,
+          ...tronWallets,
+          ...usbWallet,
+        ];
+        return sortedWallets;
+      case "Tron":
+        sortedWallets = [
+          ...tronWallets,
+          ...evmWallets,
+          ...algodWallets,
+          ...elrondWallets,
+          ...tezosWallets,
+          ...VeChainWallets,
+          ...usbWallet,
+        ];
+        return sortedWallets;
+      default:
+        break;
+    }
+  };
 
   const walletComponents = [
     {
@@ -65,7 +146,7 @@ export default function WalletList({ search, connected, input }) {
       name: "BitKeep",
       type: "EVM",
       mobile: false,
-      desktop: biz,
+      desktop: true,
       order: 3,
     },
     {
@@ -186,6 +267,7 @@ export default function WalletList({ search, connected, input }) {
       mobile: false,
       desktop: true,
       order: 13,
+      type: "USB",
     },
     {
       Component: <USBWallet key="wallet-index12" connected={connected} />,
@@ -193,31 +275,31 @@ export default function WalletList({ search, connected, input }) {
       mobile: false,
       desktop: true,
       order: 14,
+      type: "USB",
     },
   ];
 
+  sortWallet(walletComponents);
+
   const filteredWallets = input
     ? walletComponents
-      .sort((a, b) => b.order - a.order)
-      .filter((wallet) =>
-        wallet.name.toLowerCase().includes(input.toLowerCase())
-      )
+        .sort((a, b) => b.order - a.order)
+        .filter((wallet) =>
+          wallet.name.toLowerCase().includes(input.toLowerCase())
+        )
     : from
-      ? walletComponents.sort((e) => {
-        if (from.text === "Harmony") return 2;
-        else if (from.type === e.type) return -1;
-      })
-      : walletComponents.sort((a, b) => a.order - b.order);
+    ? sortWallet(walletComponents)
+    : walletComponents.sort((a, b) => a.order - b.order);
 
   return (
     <ul className="walletList scrollSty">
       {window.innerWidth < 600
         ? filteredWallets
-          .filter((wallet) => wallet.mobile)
-          .map((wallet) => wallet.Component)
+            .filter((wallet) => wallet.mobile)
+            .map((wallet) => wallet.Component)
         : filteredWallets
-          .filter((wallet) => wallet.desktop)
-          .map((wallet) => wallet.Component)}
+            .filter((wallet) => wallet.desktop)
+            .map((wallet) => wallet.Component)}
     </ul>
   );
 }

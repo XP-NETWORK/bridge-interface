@@ -2,14 +2,9 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Widget.css";
 
-import {
-  setWidget,
-  setWSettings,
-} from "../../store/reducers/generalSlice";
+import { setWidget, setWSettings } from "../../store/reducers/generalSlice";
 import { chains } from "../values";
 import { power } from "../Settings/assets/power.js";
-
-
 
 import { withStyles } from "./hocs/withStyles";
 import { InitWidget } from "./hocs/init";
@@ -19,18 +14,11 @@ import { compose } from "@reduxjs/toolkit";
 import WSettings from "../Settings";
 
 function Widget({ setState, widget, settings, wsettings }) {
-
-  const { NFTList } = useSelector(
-    ({ general: { NFTList } }) => ({
-      NFTList,
-    })
-  );
-
+  const { NFTList } = useSelector(({ general: { NFTList } }) => ({
+    NFTList,
+  }));
 
   const dispatch = useDispatch();
-
-
-
 
   useEffect(() => {
     //document.getElementById("poweredId")?.remove();
@@ -91,12 +79,9 @@ function Widget({ setState, widget, settings, wsettings }) {
     ) {
       setState.setIsTo(true);
     }
-  }, [widget, settings]);
-
-
+  }, [settings]);
 
   const screenSize = useRef();
-
 
   useEffect(() => {
     const handler = () => {
@@ -116,11 +101,7 @@ function Widget({ setState, widget, settings, wsettings }) {
     return () => window.removeEventListener("resize", handler);
   }, []);
 
-
-
-  return <>
-    {wsettings && <WSettings />}</>;
+  return <>{wsettings && <WSettings />}</>;
 }
 
-
-export default compose(InitWidget, withStyles)(Widget)  
+export default compose(InitWidget, withStyles)(Widget);

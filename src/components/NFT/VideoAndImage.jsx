@@ -7,90 +7,80 @@ import { ReactComponent as PauseHover } from "../../../src/assets/img/icons/hove
 import { setupURI } from "../../wallet/helpers";
 import Image from "./Image";
 export default function VideoAndImage({
-    videoUrl,
-    imageUrl,
-    imageLoadedHandler,
-    index,
-    nft,
+  videoUrl,
+  imageUrl,
+  imageLoadedHandler,
+  index,
+  nft,
+  onError,
 }) {
+  const [play, setPlay] = useState(false);
+  const [playHover, setPlayHover] = useState(null);
+  const [pauseHover, setPauseHover] = useState(null);
 
-    const [play, setPlay] = useState(false);
-    const [playHover, setPlayHover] = useState(null);
-    const [pauseHover, setPauseHover] = useState(null);
+  const playHolder = (e, str) => {
+    e.stopPropagation();
+    switch (str) {
+      case "play":
+        setPlay(true);
+        break;
+      case "pause":
+        setPlay(false);
+        break;
+      default:
+        break;
+    }
+  };
 
-    const playHolder = (e, str) => {
-        e.stopPropagation();
-        switch (str) {
-            case "play":
-                setPlay(true);
-                break;
-            case "pause":
-                setPlay(false);
-                break;
-            default:
-                break;
-        }
-    };
-
-
-
-    return (
-        <div className="play__container">
-            {play ? (
-                <div className="video__wrapper">
-                    <video
-                        src={setupURI(videoUrl)}
-                        controls={false}
-                        playsInline={true}
-                        autoPlay={true}
-                        loop={true}
-                        poster={imageUrl}
-                    />
-                </div>
-            ) : (
-                <Image nft={nft} />
-                // <div className="img__wrapper">
-                //     <img
-                //         loading="lazy"
-                //         onLoad={imageLoadedHandler}
-                //         src={setupURI(imageUrl)}
-                //         alt=""
-                //     />
-                // </div>
-            )}
-            {play ? (
-                pauseHover ? (
-                    <PauseHover
-                        onMouseEnter={() => setPauseHover(true)}
-                        onMouseLeave={() => setPauseHover(false)}
-                        className="video--toggle"
-                        onClick={(e) => playHolder(e, "pause")}
-                        video
-                    />
-                ) : (
-                    <Pause
-                        onMouseEnter={() => setPauseHover(true)}
-                        onMouseLeave={() => setPauseHover(false)}
-                        className="video--toggle"
-                        onClick={(e) => playHolder(e, "pause")}
-                        video
-                    />
-                )
-            ) : playHover ? (
-                <PlayHover
-                    onMouseEnter={() => setPlayHover(true)}
-                    onMouseLeave={() => setPlayHover(false)}
-                    className="image--toggle"
-                    onClick={(e) => playHolder(e, "play")}
-                />
-            ) : (
-                <Play
-                    onMouseEnter={() => setPlayHover(true)}
-                    onMouseLeave={() => setPlayHover(false)}
-                    className="image--toggle"
-                    onClick={(e) => playHolder(e, "play")}
-                />
-            )}
+  return (
+    <div className="play__container">
+      {play ? (
+        <div className="video__wrapper">
+          <video
+            src={setupURI(videoUrl)}
+            controls={false}
+            playsInline={true}
+            autoPlay={true}
+            loop={true}
+            poster={imageUrl}
+          />
         </div>
-    );
+      ) : (
+        <Image nft={nft} onError={onError} />
+      )}
+      {play ? (
+        pauseHover ? (
+          <PauseHover
+            onMouseEnter={() => setPauseHover(true)}
+            onMouseLeave={() => setPauseHover(false)}
+            className="video--toggle"
+            onClick={(e) => playHolder(e, "pause")}
+            video
+          />
+        ) : (
+          <Pause
+            onMouseEnter={() => setPauseHover(true)}
+            onMouseLeave={() => setPauseHover(false)}
+            className="video--toggle"
+            onClick={(e) => playHolder(e, "pause")}
+            video
+          />
+        )
+      ) : playHover ? (
+        <PlayHover
+          onMouseEnter={() => setPlayHover(true)}
+          onMouseLeave={() => setPlayHover(false)}
+          className="image--toggle"
+          onClick={(e) => playHolder(e, "play")}
+        />
+      ) : (
+        <Play
+          onMouseEnter={() => setPlayHover(true)}
+          onMouseLeave={() => setPlayHover(false)}
+          className="image--toggle"
+          onClick={(e) => playHolder(e, "play")}
+        />
+      )}
+    </div>
+  );
 }
