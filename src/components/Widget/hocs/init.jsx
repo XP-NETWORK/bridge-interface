@@ -18,7 +18,7 @@ import { ethers } from "ethers";
 import { initialState as initialWidget } from "../../../store/reducers/settingsSlice";
 import { inIframe } from "../../Settings/helpers";
 
-const backend = "https://xpnetwork-widget.herokuapp.com";
+export const widgetApi = "https://xpnetwork-widget.herokuapp.com";
 
 //.nft-list__wrappera
 const mobileOnlyBanner = `
@@ -87,7 +87,7 @@ async function initFormId(id) {
     ]);
 
     const res = await axios
-      .post(`${backend}/addWidget`, {
+      .post(`${widgetApi}/addWidget`, {
         address,
         signature,
         widget: initialWidget,
@@ -105,7 +105,7 @@ async function initFormId(id) {
   }
 
   const res = await axios
-    .get(`${backend}/getWidget?widgetId=${id}`)
+    .get(`${widgetApi}/getWidget?widgetId=${id}`)
     .catch((e) => ({}));
 
   return res?.data?.settings;

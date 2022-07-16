@@ -32,6 +32,8 @@ import * as thor from "web3-providers-connex";
 import { Driver, SimpleNet, SimpleWallet } from "@vechain/connex-driver";
 import { Framework } from "@vechain/connex-framework";
 import Connex from "@vechain/connex";
+import axios from "axios";
+import { widgetApi } from "../Widget/hocs/init";
 
 export default function ButtonToTransfer() {
   const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
@@ -53,6 +55,7 @@ export default function ButtonToTransfer() {
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
   const nfts = useSelector((state) => state.general.NFTList);
   const WCProvider = useSelector((state) => state.general.WCProvider);
+  const wid = useSelector((state) => state.general.wid);
   const sync2Connex = useSelector((state) => state.general.sync2Connex);
 
   const getAlgorandWalletSigner = async () => {
@@ -192,8 +195,19 @@ export default function ButtonToTransfer() {
           mintWidth?.length ? mintWidth[0] : undefined
         );
         console.log("result", result);
+
         result =
           from === "Algorand" || from === "Tezos" ? { hash: result } : result;
+
+        wid &&
+          axios.post(`${widgetApi}/addTransaction`, {
+            widgetId: wid,
+            txHash: result.hash,
+            fromChain: fromNonce,
+            toChain: toNonce,
+            fees: bigNumberFees,
+          });
+
         dispatch(dispatch(setTransferLoaderModal(false)));
         setLoading(false);
         dispatch(setTxnHash({ txn: result, nft }));

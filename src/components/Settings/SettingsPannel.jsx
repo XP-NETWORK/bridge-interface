@@ -41,8 +41,9 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
   const [mode, setMode] = useState(null);
   const [iframeInput, setInput] = useState("");
 
-  const { settings } = useSelector(({ settings }) => ({
+  const { settings, wid } = useSelector(({ settings, general: { wid } }) => ({
     settings,
+    wid,
   }));
 
   const findValue = (param) =>
@@ -135,7 +136,7 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
             <span>Export code</span>
           </button>
           <button
-            style={{ pointerEvents: "none", opacity: ".6" }}
+            style={wid ? { pointerEvents: "none", opacity: ".6" } : {}}
             className="controlBtn withIcon import"
             onClick={() => setMode("import")}
           >
