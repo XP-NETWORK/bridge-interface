@@ -9,6 +9,7 @@ import VeChainWallet from "./VeChainWallet";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import BitKeep from "../../assets/img/wallet/bitkeep.svg";
+import CosmosWallet from "./CosmosWallet";
 
 export default function WalletList({ search, connected, input }) {
     const from = useSelector((state) => state.general.from);
@@ -22,12 +23,14 @@ export default function WalletList({ search, connected, input }) {
         const algodWallets = components.filter((e) => e.type === "Algorand");
         const VeChainWallets = components.filter((e) => e.type === "VeChain");
         const tronWallets = components.filter((e) => e.type === "Tron");
+        const cosmosWallets = components.filter((e) => e.type === "Cosmos");
         const usbWallet = components.filter((e) => e.type === "USB");
 
         switch (temporaryFrom?.type || from?.type) {
             case "EVM":
                 sortedWallets = [
                     ...evmWallets,
+                    ...cosmosWallets,
                     ...tezosWallets,
                     ...elrondWallets,
                     ...algodWallets,
@@ -40,6 +43,7 @@ export default function WalletList({ search, connected, input }) {
                 sortedWallets = [
                     ...tezosWallets,
                     ...evmWallets,
+                    ...cosmosWallets,
                     ...elrondWallets,
                     ...algodWallets,
                     ...tronWallets,
@@ -51,6 +55,7 @@ export default function WalletList({ search, connected, input }) {
                 sortedWallets = [
                     ...elrondWallets,
                     ...evmWallets,
+                    ...cosmosWallets,
                     ...tezosWallets,
                     ...algodWallets,
                     ...tronWallets,
@@ -62,6 +67,7 @@ export default function WalletList({ search, connected, input }) {
                 sortedWallets = [
                     ...algodWallets,
                     ...evmWallets,
+                    ...cosmosWallets,
                     ...elrondWallets,
                     ...tezosWallets,
                     ...tronWallets,
@@ -73,6 +79,7 @@ export default function WalletList({ search, connected, input }) {
                 sortedWallets = [
                     ...VeChainWallets,
                     ...evmWallets,
+                    ...cosmosWallets,
                     ...algodWallets,
                     ...elrondWallets,
                     ...tezosWallets,
@@ -84,6 +91,7 @@ export default function WalletList({ search, connected, input }) {
                 sortedWallets = [
                     ...tronWallets,
                     ...evmWallets,
+                    ...cosmosWallets,
                     ...algodWallets,
                     ...elrondWallets,
                     ...tezosWallets,
@@ -91,6 +99,19 @@ export default function WalletList({ search, connected, input }) {
                     ...usbWallet,
                 ];
                 return sortedWallets;
+            case "Cosmos":
+                sortedWallets = [
+                    ...cosmosWallets,
+                    ...evmWallets,
+                    ...algodWallets,
+                    ...elrondWallets,
+                    ...tezosWallets,
+                    ...VeChainWallets,
+                    ...tronWallets,
+                    ...usbWallet,
+                ];
+                return sortedWallets;
+
             default:
                 break;
         }
@@ -271,6 +292,20 @@ export default function WalletList({ search, connected, input }) {
         },
         {
             Component: (
+                <CosmosWallet
+                    key="wallet-index-15"
+                    wallet={"Keplr"}
+                    close={connected}
+                />
+            ),
+            name: "Keplr",
+            type: "Cosmos",
+            mobile: "false",
+            desktop: "true",
+            order: 13,
+        },
+        {
+            Component: (
                 <USBWallet
                     wallet={"Ledger"}
                     key="wallet-index-11"
@@ -280,7 +315,7 @@ export default function WalletList({ search, connected, input }) {
             name: "Ledger",
             mobile: false,
             desktop: true,
-            order: 13,
+            order: 14,
             type: "USB",
         },
         {
@@ -288,12 +323,10 @@ export default function WalletList({ search, connected, input }) {
             name: "Trezor",
             mobile: false,
             desktop: true,
-            order: 14,
+            order: 15,
             type: "USB",
         },
     ];
-
-    sortWallet(walletComponents);
 
     const filteredWallets = input
         ? walletComponents

@@ -49,10 +49,12 @@ function NFTlistTop() {
                 </div>
                 <SelectedNFTs />
                 {from.type === "EVM" && nfts?.length < 1 && <ImportNFTButton />}
-                {nfts?.length > 0 && (
+                {(nfts?.length > 0 || from?.type === "Cosmos") && (
                     <div className="nftTopRIght">
                         <NFTSearch />
-                        {from.type === "EVM" && <ImportNFTButton />}
+                        {(from.type === "EVM" || from?.type === "Cosmos") && (
+                            <ImportNFTButton />
+                        )}
                         <ViewButton />
                         {onlyWhiteListedNFTs?.length === selectedNFTs?.length &&
                         selectedNFTs?.length ? (

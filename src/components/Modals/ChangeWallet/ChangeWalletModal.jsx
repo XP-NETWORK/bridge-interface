@@ -10,6 +10,8 @@ import {
     setConfirmMaiarMob,
     setElrondAccount,
     setFrom,
+    setKeplrAccount,
+    setKeplrWallet,
     setKukaiWallet,
     setMaiarProvider,
     setMetaMask,
@@ -52,6 +54,8 @@ export default function ChangeWalletModal() {
     const tronAccount = useSelector((state) => state.general.tronWallet);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
+    const secretAccount = useSelector((state) => state.general.secretAccount);
+
     const algorandAccount = useSelector(
         (state) => state.general.algorandAccount
     );
@@ -83,6 +87,8 @@ export default function ChangeWalletModal() {
                 return "Elrond";
             case tronAccount?.length > 0:
                 return "Tron";
+            case secretAccount?.length > 0:
+                return "Cosmos";
             default:
                 return undefined;
         }
@@ -152,6 +158,13 @@ export default function ChangeWalletModal() {
                 dispatch(setAlgorandAccount(""));
                 dispatch(setAlgorandClaimables([]));
                 dispatch(setMyAlgo(""));
+                dispatch(setChangeWallet(false));
+                chooseWalletModal();
+                dispatch(setNFTSetToggler());
+                break;
+            case "Cosmos":
+                dispatch(setKeplrWallet(""));
+                dispatch(setKeplrAccount(""));
                 dispatch(setChangeWallet(false));
                 chooseWalletModal();
                 dispatch(setNFTSetToggler());

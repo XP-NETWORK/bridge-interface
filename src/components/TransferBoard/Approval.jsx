@@ -26,6 +26,7 @@ import {
 import { algoConnector } from "../../wallet/connectors";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import Connex from "@vechain/connex";
+import { CHAIN_INFO } from "../values";
 
 function Approval(props) {
     const dispatch = useDispatch();
@@ -242,6 +243,16 @@ function Approval(props) {
                     )
                 );
                 const signer = await provider.getSigner(account);
+                const chain = await handleChainFactory(from.key);
+                selectedNFTList.forEach((nft, index) => {
+                    approveEach(nft, signer, chain, index);
+                });
+            } else if (from.type === "Cosmos") {
+                const signer = window.getOfflineSigner(
+                    testnet
+                        ? CHAIN_INFO[from.text].tnChainId
+                        : CHAIN_INFO[from.text].chainId
+                );
                 const chain = await handleChainFactory(from.key);
                 selectedNFTList.forEach((nft, index) => {
                     approveEach(nft, signer, chain, index);
