@@ -8,11 +8,19 @@ import {
 import { CHAIN_INFO } from "../../../components/values";
 import axios from "axios";
 import "./importNFTModal.css";
+import EVMBody from "./EVMBody";
+import CosmosBody from "./CosmosBody";
+import { getFactory } from "../../../wallet/helpers";
+import { Chain } from "xp.network";
 
 export default function ImportNFTModal() {
     const dispatch = useDispatch();
     const from = useSelector((state) => state.general.from);
     const account = useSelector((state) => state.general.account);
+    const secretAccount = useSelector((state) => state.general.secretAccount);
+    const nfts = useSelector((state) => state.general.NFTList);
+    const checkWallet = useSelector((state) => state.general.checkWallet);
+
     const [validContract, setValidContract] = useState(NaN);
     const [contract, setContract] = useState();
     const [contractOnBlur, setContractOnBlur] = useState(false);
@@ -33,10 +41,17 @@ export default function ImportNFTModal() {
             setValidContract(false);
         } else setValidContract(true);
     };
+
+    const handleSecretContractChanges = (value) => {
+        //secret1kj69tq5lxlu8vvpjtcltyu58v5476sma4sr9yk
+        setContract(value);
+        if (value.length !== 45 && value.includes("secret")) {
+            setValidContract(false);
+        } else setValidContract(true);
+    };
     //"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ";
     //"http://192.168.129.241:3000/nfts/nftCheck";
     const handleImport = async () => {
-        debugger;
         const baseURL = "https://indexnft.herokuapp.com/nfts/nftCheck";
         const _headers = {
             Accept: "*",
@@ -71,6 +86,54 @@ export default function ImportNFTModal() {
         }
     };
 
+    const isExist = (nft) => {
+        // debugger;
+        const isExist = nfts.some((e) => {
+            let exist;
+            const {
+                native: { contract, chainId, tokeId },
+            } = e;
+            if (
+                contract === nft.native.contract &&
+                chainId === nft.native.chainId &&
+                tokeId === nft.native.tokeId
+            ) {
+                exist = true;
+            }
+            return exist;
+        });
+        return isExist;
+    };
+
+    const importSecretNFTS = async () => {
+        try {
+            setImportBlocked(true);
+            const factory = await getFactory();
+            const secret = await factory.inner(Chain.SECRET);
+            const secretNFTs = await secret.nftList(
+                checkWallet || secretAccount,
+                tokenId,
+                contract
+            );
+            if (secretNFTs?.length > 0) {
+                secretNFTs.forEach((nft) => {
+                    if (!isExist(nft)) {
+                        dispatch(addImportedNFTtoNFTlist(nft));
+                        dispatch(setImportModal(false));
+                        setImportBlocked(false);
+                    } else {
+                        setError("NFT exist in nft list");
+                        setImportBlocked(false);
+                    }
+                });
+            }
+        } catch (error) {
+            setError(error.message);
+            setImportBlocked(false);
+            console.error(error);
+        }
+    };
+
     return (
         <>
             <Modal.Header className="border-0">
@@ -79,67 +142,39 @@ export default function ImportNFTModal() {
                     <div onClick={handleClose} className="close-modal"></div>
                 </span>
             </Modal.Header>
-            <Modal.Body className="import-nft__body">
-                {error && <div className="import-error">{error}</div>}
-                <div className="import-nft__form">
-                    <form action="">
-                        <div>
-                            <label htmlFor="contractAdd">
-                                1. Paste contract address
-                            </label>
-                            <input
-                                onBlur={() => setContractOnBlur(true)}
-                                onChange={(e) =>
-                                    handleContractChange(e.target.value)
-                                }
-                                type="text"
-                                id="contractAdd"
-                                name="contractAddress"
-                                placeholder="0x..."
-                                value={contract}
-                                className={
-                                    contractOnBlur && !validContract
-                                        ? "contract__input--invalid"
-                                        : "contract__input--valid"
-                                }
-                            />
-                            <div
-                                className={
-                                    contractOnBlur && !validContract
-                                        ? "contract--invalid"
-                                        : "contract--valid"
-                                }
-                            >
-                                Error contract address
-                            </div>
-                        </div>
-                        <div>
-                            <label htmlFor="tokeId">2. Paste Toked ID</label>
-                            <input
-                                onChange={(e) => setTokenId(e.target.value)}
-                                type="text"
-                                id="tokedId"
-                                name="tokenId"
-                                placeholder="Enter Token ID"
-                                value={tokenId}
-                            />
-                        </div>
-                        <div className="import-nft__buttons">
-                            <div
-                                onClick={handleImport}
-                                style={validForm && !importBlocked ? {} : OFF}
-                                className="btn-import"
-                            >
-                                Import
-                            </div>
-                            <div onClick={handleClose} className="btn-cancel">
-                                Cancel
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </Modal.Body>
+            {from?.type === "Cosmos" ? (
+                <CosmosBody
+                    validContract={validContract}
+                    contract={contract}
+                    contractOnBlur={contractOnBlur}
+                    setContractOnBlur={setContractOnBlur}
+                    tokenId={tokenId}
+                    setTokenId={setTokenId}
+                    importBlocked={importBlocked}
+                    error={error}
+                    validForm={validForm}
+                    OFF={OFF}
+                    handleClose={handleClose}
+                    handleContractChange={handleSecretContractChanges}
+                    handleImport={importSecretNFTS}
+                />
+            ) : (
+                <EVMBody
+                    validContract={validContract}
+                    contract={contract}
+                    contractOnBlur={contractOnBlur}
+                    setContractOnBlur={setContractOnBlur}
+                    tokenId={tokenId}
+                    setTokenId={setTokenId}
+                    importBlocked={importBlocked}
+                    error={error}
+                    validForm={validForm}
+                    OFF={OFF}
+                    handleClose={handleClose}
+                    handleContractChange={handleContractChange}
+                    handleImport={handleImport}
+                />
+            )}
         </>
     );
 }
-//42

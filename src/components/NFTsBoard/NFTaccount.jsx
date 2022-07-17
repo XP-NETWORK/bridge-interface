@@ -60,6 +60,7 @@ function NFTaccount() {
     const algorandAccount = useSelector((s) => s.general.algorandAccount);
     const NFTListView = useSelector((state) => state.general.NFTListView);
     const nfts = useSelector((state) => state.general.NFTList);
+
     const importModal = useSelector((state) => state.general.importModal);
     const algorandClaimables = useSelector(
         (state) => state.general.algorandClaimables
