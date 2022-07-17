@@ -56,6 +56,9 @@ export default function ButtonToTransfer() {
   const nfts = useSelector((state) => state.general.NFTList);
   const WCProvider = useSelector((state) => state.general.WCProvider);
   const wid = useSelector((state) => state.general.wid);
+  const affiliationFees = useSelector(({ settings }) =>
+    settings.affiliationFees ? +settings.affiliationFees / 100 + 1 : 1
+  );
   const sync2Connex = useSelector((state) => state.general.sync2Connex);
 
   const getAlgorandWalletSigner = async () => {
@@ -199,19 +202,20 @@ export default function ButtonToTransfer() {
         result =
           from === "Algorand" || from === "Tezos" ? { hash: result } : result;
 
-        wid &&
-          axios.post(`${widgetApi}/addTransaction`, {
-            widgetId: wid,
-            txHash: result.hash,
-            fromChain: fromNonce,
-            toChain: toNonce,
-            fees: bigNumberFees,
-          });
-
         dispatch(dispatch(setTransferLoaderModal(false)));
         setLoading(false);
         dispatch(setTxnHash({ txn: result, nft }));
       }
+
+      wid &&
+        axios.post(`${widgetApi}/addTransaction`, {
+          widgetId: wid,
+          txHash: result.hash,
+          fromChain: fromNonce,
+          toChain: toNonce,
+          fees: bigNumberFees,
+          extraFees: affiliationFees,
+        });
     } catch (err) {
       console.error(err);
       console.log("this is error in sendeach");
