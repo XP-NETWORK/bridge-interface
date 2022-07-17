@@ -48,11 +48,12 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
 
   const findValue = (param) =>
     iframeInput
-      ?.match(new RegExp(`(?<=${param}\=)(.*?)(?=(\&amp\;|\&|\'|\"))`))
+      ?.match(new RegExp(`(?<=${param}\=)(.*?)(?=(\&amp\;|\&|\'|\"|$))`))
       ?.at(0);
 
   const parseIframe = () => {
     if (!iframeInput) return;
+    console.log(findValue("affiliationFees"));
     dispatch(
       setSettings({
         btnRadius: Number(findValue("btnRadius")) || settings["btnRadius"],
@@ -106,8 +107,8 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
           ? Math.floor((Number(findValue("affiliationFees")) - 1) * 100)
           : settings["affiliationFees"],
         showLink: findValue("showLink") === "true" ? true : false,
-        fromChain: "",
-        toChain: "",
+        fromChain: findValue("from"),
+        toChain: findValue("to"),
       })
     );
   };
@@ -136,7 +137,6 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
             <span>Export code</span>
           </button>
           <button
-            style={wid ? { pointerEvents: "none", opacity: ".6" } : {}}
             className="controlBtn withIcon import"
             onClick={() => setMode("import")}
           >

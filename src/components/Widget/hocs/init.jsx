@@ -18,7 +18,11 @@ import { ethers } from "ethers";
 import { initialState as initialWidget } from "../../../store/reducers/settingsSlice";
 import { inIframe } from "../../Settings/helpers";
 
+import WService from "../wservice";
+
 export const widgetApi = "http://localhost:3030"; //"https://xpnetwork-widget.herokuapp.com";
+
+const wservice = WService();
 
 //.nft-list__wrappera
 const mobileOnlyBanner = `
@@ -77,46 +81,21 @@ async function initFormId(id) {
       params: [{ chainId: "0x4" }], // chainId must be in hexadecimal numbers
     });
 
-    //const acc = await window.ethereum.send("eth_requestAccounts");
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const msg = "Please sign in order to see your widgets";
-    const [signature, address] = await Promise.all([
-      signer.signMessage(msg),
-      signer.getAddress(),
-    ]);
+    const { signature, address } = await wservice.sign();
 
-    const res = await axios
-      .post(
-        `${widgetApi}/addWidget`,
-        {
-          address,
-          signature,
-          widget: initialWidget,
-        },
-        {
-          withCredentials: true,
-        }
-      )
-      .catch((e) => ({}));
+    const res = await wservice.add(address, signature, initialWidget);
 
-    if (!res?.data?.newWidget) {
+    if (!res?.newWidget) {
       return;
     } //show error msg
 
     return window.open(
-      `/${window.location.search.replace("create", res.data.newWidget?._id)}`,
+      `/${window.location.search.replace("create", res?.newWidget?._id)}`,
       "_self"
     );
   }
 
-  const res = await axios
-    .get(`${widgetApi}/getWidget?widgetId=${id}`, {
-      withCredentials: true,
-    })
-    .catch((e) => ({}));
-
-  return res?.data?.settings;
+  return (await wservice.get(id))?.settings;
 }
 
 const parentAccountChange = async (event) => {
