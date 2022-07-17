@@ -20,6 +20,7 @@ import GT from "../assets/img/chain/GateChain.svg";
 import VET from "../assets/img/chain/Vechain.png";
 import { Chain } from "xp.network/dist/consts";
 import SCRT from "../assets/img/chain/secret.svg";
+import CKB from "../assets/img/chain/godwoken.svg";
 
 export const EVM = "EVM";
 export const ELROND = "Elrond";
@@ -266,11 +267,12 @@ export const chains = [
         key: "Godwoken",
         text: "Godwoken",
         value: "Godwoken",
+        chainId: 71402,
         order: 10,
-        image: { avatar: true, src: Aurora },
+        image: { avatar: true, src: CKB },
         maintenance: false,
         testNet: false,
-        mainnet: false,
+        mainnet: biz ? true : false,
         newChain: true,
     },
     {
@@ -490,6 +492,7 @@ export const chainsConfig = {
         testTx: "https://explore-testnet.vechain.org/transactions/",
         variants: ["Vechain"],
     },
+
     Secret: {
         type: "Cosmos",
         token: "SCRT",
@@ -497,6 +500,15 @@ export const chainsConfig = {
         tnChainId: "pulsar-2",
         tnRpc: "https://pulsar-2.api.trivium.network:9091",
         Chain: Chain.SECRET,
+        },
+        
+    Godwoken: {
+        type: EVM,
+        token: "CKB",
+        image: CKB,
+        chainId: 71402,
+        Chain: Chain.GODWOKEN,
+        tx: "https://gwscan.com/tx/",
     },
 };
 
@@ -521,7 +533,9 @@ export const coins = [
     "AETH", //17
     "GT", //18
     "VET", //19
+    "CKB", //20
     "SCRT", //21
+
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -756,6 +770,7 @@ export const CHAIN_INFO = {
         blockExplorerUrl: "https://explore.vechain.org/accounts/",
         testBlockExplorerUrls: "https://explore-testnet.vechain.org/accounts/",
     },
+
     Secret: {
         native: coins[21],
         nonce: 0x18,
@@ -764,5 +779,13 @@ export const CHAIN_INFO = {
         decimals: 1e6,
         blockExplorerUrl: "https://atomscan.com/secret-network/",
         testBlockExplorerUrls: "https://chainofsecrets.org/testnet.html/",
+},
+    Godwoken: {
+        native: coins[20],
+        nonce: 22,
+        decimals: 1e18,
+        chainId: 71402,
+        rpc: "https://v1.mainnet.godwoken.io/rpc",
+        blockExplorerUrl: "https://gwscan.com/account/",
     },
 };
