@@ -19,8 +19,9 @@ import axios from "axios";
 import { widgetApi } from "../Widget/hocs/init";
 import { ethers } from "ethers";
 
-const Web3Utils = require("web3-utils");
-const evms = chains.filter((c) => c.type === "EVM").map((c) => c.value);
+import WService from "../Widget/wservice";
+
+const wservice = WService();
 
 const settingsHoc = (Wrapped) => (props) => {
   const { settings, wid, widget, selectedNFTList } = useSelector(
@@ -307,42 +308,10 @@ const settingsHoc = (Wrapped) => (props) => {
       affiliationFees: formatedFees,
     };
     if (wid) {
-      const res = await axios
-        .patch(
-          `${widgetApi}/updateWidget`,
-          {
-            widgetId: wid,
-            settings: newSettings,
-          },
-          {
-            withCredentials: true,
-          }
-        )
-        .catch(async (e) => {
-          console.log(e);
-          if (e.response.status === 403 && e.response.data === "no cookies") {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
-            const msg = "Please sign in order to see your widgets";
-            const [signature, address] = await Promise.all([
-              signer.signMessage(msg),
-              signer.getAddress(),
-            ]);
+      const res = await wservice.update(wid, newSettings);
 
-            await axios.patch(
-              `${widgetApi}/updateWidget`,
-              {
-                widgetId: wid,
-                settings: newSettings,
-                signature,
-                address,
-              },
-              {
-                withCredentials: true,
-              }
-            );
-          }
-        });
+      console.log(res);
+
       setCopied("saved");
     } else {
       localStorage.setItem("widgetSettings", JSON.stringify(newSettings));

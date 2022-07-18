@@ -74,13 +74,6 @@ function initFromQuery() {
 
 async function initFormId(id) {
   if (id === "create" && window.ethereum) {
-    console.log("ds");
-
-    await window.ethereum.request({
-      method: "wallet_switchEthereumChain",
-      params: [{ chainId: "0x4" }], // chainId must be in hexadecimal numbers
-    });
-
     const { signature, address } = await wservice.sign();
 
     const res = await wservice.add(address, signature, initialWidget);

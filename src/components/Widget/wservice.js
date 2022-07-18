@@ -13,13 +13,14 @@ class WService {
   }
 
   async get(id) {
-    return (await axios.get(`/getWidget?widgetId=${id}`).catch((e) => ({})))
-      ?.data;
+    return (
+      await this.axios.get(`/getWidget?widgetId=${id}`).catch((e) => ({}))
+    )?.data;
   }
 
   async add(address, signature, initialWidget) {
     return (
-      await axios
+      await this.axios
         .post(`/addWidget`, {
           address,
           signature,
@@ -31,6 +32,11 @@ class WService {
 
   async sign(msg) {
     if (window.ethereum) {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x4" }], // chainId must be in hexadecimal numbers
+      });
+
       const signer = this.provider.getSigner();
 
       const [signature, address] = await Promise.all([
@@ -41,6 +47,26 @@ class WService {
       return { signature, address };
     } else {
       alert("install metamask");
+    }
+  }
+
+  async update(wid, settings) {
+    try {
+      return await this.axios.patch(`/updateWidget`, {
+        widgetId: wid,
+        settings,
+      });
+    } catch (e) {
+      if (e.response.status === 403 && e.response.data === "no cookies") {
+        const { signature, address } = await this.sign();
+
+        return await axios.patch(`/updateWidget`, {
+          widgetId: wid,
+          settings,
+          signature,
+          address,
+        });
+      }
     }
   }
 }
