@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setFrom, setTo } from "../../store/reducers/generalSlice";
+import { setError, setFrom, setTo } from "../../store/reducers/generalSlice";
 import {
   setSettings,
   activeChains,
@@ -131,7 +131,9 @@ const settingsHoc = (Wrapped) => (props) => {
         dispatch(
           setSettings({
             ...settings,
-            showAlert: !canCheckout ? "chains" : false,
+            showAlert: !canCheckout
+              ? "You can't show less than two available chains"
+              : false,
             selectedChains: !canCheckout
               ? selectedChains
               : selectedChains.filter((chain) => chain !== val),
@@ -308,11 +310,23 @@ const settingsHoc = (Wrapped) => (props) => {
       affiliationFees: formatedFees,
     };
     if (wid) {
-      const res = await wservice.update(wid, newSettings);
+      try {
+        const res = await wservice.update(wid, newSettings);
 
-      console.log(res);
+        console.log(res);
 
-      setCopied("saved");
+        setCopied("saved");
+      } catch (e) {
+        if (e.response.status === 401) {
+          console.log("gu");
+          dispatch(
+            setSettings({
+              ...settings,
+              showAlert: "Erorr 401. Unauthorized",
+            })
+          );
+        }
+      }
     } else {
       localStorage.setItem("widgetSettings", JSON.stringify(newSettings));
       setCopied("saved");

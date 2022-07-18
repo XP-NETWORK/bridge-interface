@@ -101,9 +101,7 @@ function WSettings({
             onClose={handleAlert}
             dismissible
           >
-            <p style={{ marginTop: "15px" }}>
-              You can't show less than two available {showAlert}
-            </p>
+            <p style={{ marginTop: "15px" }}>{showAlert}</p>
           </Alert>
 
           <Alert

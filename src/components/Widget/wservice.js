@@ -2,7 +2,7 @@ import axios from "axios";
 import { ethers } from "ethers";
 
 class WService {
-  widgetApi = "http://localhost:3030"; //"https://xpnetwork-widget.herokuapp.com";
+  widgetApi = "https://xpnetwork-widget.herokuapp.com"; //"http://localhost:3030"; //"https://xpnetwork-widget.herokuapp.com";
   msg = "Please sign in order to see your widgets";
 
   constructor() {
@@ -60,7 +60,7 @@ class WService {
       if (e.response.status === 403 && e.response.data === "no cookies") {
         const { signature, address } = await this.sign();
 
-        return await axios.patch(`/updateWidget`, {
+        return await this.axios.patch(`/updateWidget`, {
           widgetId: wid,
           settings,
           signature,
@@ -68,6 +68,24 @@ class WService {
         });
       }
     }
+  }
+
+  async saveTrx({
+    wid,
+    result,
+    fromNonce,
+    toNonce,
+    bigNumberFees,
+    affiliationFees,
+  }) {
+    this.axios.post(`/addTransaction`, {
+      widgetId: wid,
+      txHash: result.hash,
+      fromChain: fromNonce,
+      toChain: toNonce,
+      fees: bigNumberFees,
+      extraFees: affiliationFees,
+    });
   }
 }
 

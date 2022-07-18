@@ -34,6 +34,9 @@ import { Framework } from "@vechain/connex-framework";
 import Connex from "@vechain/connex";
 import axios from "axios";
 import { widgetApi } from "../Widget/hocs/init";
+import WService from "../Widget/wservice";
+
+const wservice = WService();
 
 export default function ButtonToTransfer() {
   const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
@@ -208,13 +211,13 @@ export default function ButtonToTransfer() {
       }
 
       wid &&
-        axios.post(`${widgetApi}/addTransaction`, {
-          widgetId: wid,
-          txHash: result.hash,
-          fromChain: fromNonce,
-          toChain: toNonce,
-          fees: bigNumberFees,
-          extraFees: affiliationFees,
+        wservice.saveTrx({
+          wid,
+          result,
+          fromNonce,
+          toNonce,
+          bigNumberFees,
+          affiliationFees,
         });
     } catch (err) {
       console.error(err);

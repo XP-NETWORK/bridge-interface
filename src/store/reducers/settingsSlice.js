@@ -18,17 +18,13 @@ export const fonts = [
   "Ubuntu",
 ];
 
-
-
 export const chains = [...valuesChains]
   .filter((c) => c.mainnet || c.testNet || c.coming)
   .sort((a, b) => (a.coming && !b.coming ? 1 : -1));
 
 export const activeChains = [
-  ...chains.filter((chain) => !chain.maintenance ).map((c) => c.value),
+  ...chains.filter((chain) => !chain.maintenance).map((c) => c.value),
 ];
-
-
 
 export const newChains = ["Velas"];
 
@@ -40,12 +36,8 @@ export const availability = {
   Tron: ["TronLink"],
   Tezos: ["Beacon", "TempleWallet"],
   VeChain: ["Sync2"],
-  Evms: ["MetaMask", "WalletConnect", "TrustWallet"]
+  Evms: ["MetaMask", "WalletConnect", "TrustWallet"],
 };
-
-
-
-
 
 export const wallets = [
   "MetaMask",
@@ -89,7 +81,7 @@ export const initialState = {
   tooltipBg: "#1D212A",
   tooltipColor: "#ffffff",
   affiliationFees: 0,
-  affiliationWallet: '',
+  affiliationWallet: "",
   showAlert: false,
   showLink: true,
   collapsed: false,
