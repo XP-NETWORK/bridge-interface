@@ -20,7 +20,6 @@ function ClaimAlgorandNFT() {
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
   const dispatch = useDispatch();
 
-
   const getClaimable = async () => {
     const claimables = await setClaimablesAlgorand(algorandAccount, true);
 
