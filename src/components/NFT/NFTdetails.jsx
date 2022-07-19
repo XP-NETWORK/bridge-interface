@@ -68,7 +68,7 @@ function NFTdetails({ nftInf, claimables, details }) {
     const contract = native?.contract?.toLowerCase();
     const factory = await getFactory();
     try {
-      mintWidth = await factory.getVerifiedContracts(
+      mintWidth = await factory.getVerifiedContract(
         contract,
         toNonce,
         fromNonce
