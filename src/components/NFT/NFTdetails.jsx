@@ -83,7 +83,7 @@ function NFTdetails({ nftInf, claimables, details }) {
 
   useEffect(() => {
     if (!claimables) {
-      getMintedWith();
+      //getMintedWith();
     }
   }, []);
 

@@ -164,7 +164,8 @@ export default function ButtonToTransfer() {
           mintWidth = await factory.getVerifiedContract(
             contract,
             toNonce,
-            fromNonce
+            fromNonce,
+            "tokenId" in nft.native ? nft.native.tokenId.toString() : undefined
           );
         }
         toChain = await factory.inner(chainsConfig[to].Chain);
@@ -177,7 +178,7 @@ export default function ButtonToTransfer() {
           undefined,
           receiverAddress || receiver,
           bigNumberFees,
-          mintWidth?.length ? mintWidth[0] : undefined
+          Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
         );
         console.log("result", result);
         dispatch(dispatch(setTransferLoaderModal(false)));
@@ -193,9 +194,11 @@ export default function ButtonToTransfer() {
           mintWidth = await factory.getVerifiedContract(
             contract,
             toNonce,
-            fromNonce
+            fromNonce,
+            "tokenId" in nft.native ? nft.native.tokenId.toString() : undefined
           );
         }
+
         toChain = await factory.inner(chainsConfig[to].Chain);
         fromChain = await factory.inner(chainsConfig[from].Chain);
         result = await factory.transferNft(
@@ -205,7 +208,7 @@ export default function ButtonToTransfer() {
           signer,
           receiverAddress || receiver,
           bigNumberFees,
-          mintWidth?.length ? mintWidth[0] : undefined
+          Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
         );
         console.log("result", result);
         result =
