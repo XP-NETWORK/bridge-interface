@@ -6,9 +6,10 @@ class WService {
   msg = "Please sign in order to see your widgets";
 
   constructor() {
-    this.axios = axios;
-    this.axios.defaults.withCredentials = true;
-    this.axios.defaults.baseURL = this.widgetApi;
+    this.axios = axios.create({
+      baseURL: this.widgetApi,
+      withCredentials: true,
+    });
     this.provider = new ethers.providers.Web3Provider(window.ethereum);
   }
 
