@@ -59,7 +59,7 @@ export default function EVMWallet({ wallet, close }) {
       });
       changed = true;
     } catch (switchError) {
-      if (switchError.code === 4902) {
+      if (switchError.code === 4902 || switchError.code === -32603) {
         try {
           const chain = getAddEthereumChain()[parseInt(_chainId).toString()];
           const params = {
@@ -81,7 +81,7 @@ export default function EVMWallet({ wallet, close }) {
           };
           await window.ethereum.request({
             method: "wallet_addEthereumChain",
-            params: params,
+            params: [params, account],
           });
           changed = true;
         } catch (addError) {

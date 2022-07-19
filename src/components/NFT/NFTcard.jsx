@@ -7,9 +7,7 @@ import {
 import NFTdetails from "./NFTdetails";
 import { useSelector } from "react-redux";
 import { setupURI } from "../../wallet/helpers";
-import { isValidHttpUrl, parseEachNFT } from "../../wallet/helpers";
 import { isShown } from "./NFTHelper.js";
-import VideoOrImage from "./VideoOrImage";
 import VideoAndImage from "./VideoAndImage";
 import BrockenUtlGridView from "./BrockenUtlGridView";
 import "./NewNFT.css";
@@ -19,7 +17,6 @@ import NotWhiteListed from "./NotWhiteListed";
 import zoomIn from "../../assets/img/icons/zoomInWhite.png";
 import ModalImage from "react-modal-image";
 import { parseNFT } from "../../wallet/nftParser";
-
 import { useDidUpdateEffect } from "../Settings/hooks";
 import Image from "./Image";
 

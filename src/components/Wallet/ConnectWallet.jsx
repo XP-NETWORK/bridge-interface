@@ -35,6 +35,8 @@ function ConnectWallet() {
   const qrCodeImage = useSelector((state) => state.general.qrCodeImage);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
+  const secretAccount = useSelector((state) => state.general.secretAccount);
+
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
   const evmAccount = useSelector((state) => state.general.account);
   const tronAccount = useSelector((state) => state.general.tronWallet);
@@ -45,6 +47,7 @@ function ConnectWallet() {
   const inputElement = useRef(null);
 
   const connected =
+    secretAccount ||
     elrondAccount ||
     tezosAccount ||
     algorandAccount ||
@@ -67,7 +70,6 @@ function ConnectWallet() {
   const walletsModal = useSelector((state) => state.general.walletsModal);
 
   async function switchNetwork() {
-    debugger;
     const info = testnet
       ? TESTNET_CHAIN_INFO[from?.key]
       : CHAIN_INFO[from?.key];
@@ -124,7 +126,6 @@ function ConnectWallet() {
   }
 
   const handleConnect = async () => {
-    debugger;
     let provider;
     let _chainId;
     if (bitKeep) {

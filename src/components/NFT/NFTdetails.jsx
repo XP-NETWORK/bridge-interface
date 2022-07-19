@@ -26,14 +26,18 @@ function NFTdetails({ nftInf, claimables, details }) {
     animation_url,
   } = nftInf;
 
-  const isOriginUriExist = attributes?.some((e) => {
-    const values = Object.values(e);
-    return values?.some((v) => v === "Original URI");
-  });
-  const isOriginChainExist = attributes?.some((e) => {
-    const values = Object.values(e);
-    return values?.some((v) => v === "Original Chain");
-  });
+  const isOriginUriExist =
+    Array.isArray(attributes) &&
+    attributes?.some((e) => {
+      const values = Object.values(e);
+      return values?.some((v) => v === "Original URI");
+    });
+  const isOriginChainExist =
+    Array.isArray(attributes) &&
+    attributes?.some((e) => {
+      const values = Object.values(e);
+      return values?.some((v) => v === "Original Chain");
+    });
 
   const original_uri = wrapped && wrapped.original_uri;
   const origin =
@@ -64,7 +68,7 @@ function NFTdetails({ nftInf, claimables, details }) {
     const contract = native?.contract?.toLowerCase();
     const factory = await getFactory();
     try {
-      mintWidth = await factory.getVerifiedContracts(
+      mintWidth = await factory.getVerifiedContract(
         contract,
         toNonce,
         fromNonce

@@ -38,7 +38,9 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
 
         if (/(wnfts\.xp\.network|nft\.xp\.network)/.test(nft.uri)) {
           const res = await axios(nft.uri);
+
           const { data } = res;
+
           chainId = data.wrapped?.origin;
           tokenId = data.wrapped?.tokenId;
           contract = data.wrapped?.contract;

@@ -19,6 +19,7 @@ import Aurora from "../assets/img/chain/aurora.svg";
 import GT from "../assets/img/chain/GateChain.svg";
 import VET from "../assets/img/chain/Vechain.png";
 import { Chain } from "xp.network/dist/consts";
+import SCRT from "../assets/img/chain/secret.svg";
 import CKB from "../assets/img/chain/godwoken.svg";
 
 export const EVM = "EVM";
@@ -302,6 +303,19 @@ export const chains = [
     testNet: false,
     newChain: true,
   },
+  {
+    type: "Cosmos",
+    key: "Secret",
+    text: "Secret",
+    value: "Secret",
+    order: 0,
+    tnChainId: "pulsar-2",
+    image: { avatar: true, src: SCRT },
+    mainnet: false,
+    testNet: biz ? true : false,
+    test: false,
+    newChain: true,
+  },
 ];
 
 export const chainsConfig = {
@@ -478,6 +492,16 @@ export const chainsConfig = {
     testTx: "https://explore-testnet.vechain.org/transactions/",
     variants: ["Vechain"],
   },
+
+  Secret: {
+    type: "Cosmos",
+    token: "SCRT",
+    image: SCRT,
+    tnChainId: "pulsar-2",
+    tnRpc: "https://pulsar-2.api.trivium.network:9091",
+    Chain: Chain.SECRET,
+  },
+
   Godwoken: {
     type: EVM,
     token: "CKB",
@@ -510,6 +534,7 @@ export const coins = [
   "GT", //18
   "VET", //19
   "CKB", //20
+  "SCRT", //21
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -743,6 +768,16 @@ export const CHAIN_INFO = {
     rpc: "https://sync-testnet.veblocks.net",
     blockExplorerUrl: "https://explore.vechain.org/accounts/",
     testBlockExplorerUrls: "https://explore-testnet.vechain.org/accounts/",
+  },
+
+  Secret: {
+    native: coins[21],
+    nonce: 0x18,
+    chainId: "cosmoshub-4",
+    tnChainId: "pulsar-2",
+    decimals: 1e6,
+    blockExplorerUrl: "https://atomscan.com/secret-network/",
+    testBlockExplorerUrls: "https://chainofsecrets.org/testnet.html/",
   },
   Godwoken: {
     native: coins[20],

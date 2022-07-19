@@ -27,7 +27,10 @@ export default function UserConnect({ desktop, mobile }) {
   const WalletConnect = useSelector((state) => state.general.WalletConnect);
   const { account, chainId, active } = useWeb3React();
   const testnet = useSelector((state) => state.general.testNet);
+  const secretAccount = useSelector((state) => state.general.secretAccount);
+  const keplrWallet = useSelector((state) => state.general.keplrWallet);
   const walletAccount =
+    secretAccount ||
     account ||
     elrondAccount ||
     tezosAccount ||
