@@ -124,6 +124,13 @@ export default function ButtonToTransfer() {
         );
         const signer = await provider.getSigner(account);
         return signer;
+      } else if (from === "Secret") {
+        const signer = window.getOfflineSigner(
+          testnet
+            ? CHAIN_INFO[from.text].tnChainId
+            : CHAIN_INFO[from.text].chainId
+        );
+        return signer;
       } else {
         const provider = new ethers.providers.Web3Provider(
           WCProvider?.walletConnectProvider || window.ethereum
@@ -154,7 +161,7 @@ export default function ButtonToTransfer() {
         const wrapped = await factory.isWrappedNft(nft, fromNonce);
         let mintWidth;
         if (!wrapped) {
-          mintWidth = await factory.getVerifiedContracts(
+          mintWidth = await factory.getVerifiedContract(
             contract,
             toNonce,
             fromNonce
@@ -183,7 +190,7 @@ export default function ButtonToTransfer() {
         const wrapped = await factory.isWrappedNft(nft, fromNonce);
         let mintWidth;
         if (!wrapped) {
-          mintWidth = await factory.getVerifiedContracts(
+          mintWidth = await factory.getVerifiedContract(
             contract,
             toNonce,
             fromNonce
@@ -201,10 +208,8 @@ export default function ButtonToTransfer() {
           mintWidth?.length ? mintWidth[0] : undefined
         );
         console.log("result", result);
-
         result =
           from === "Algorand" || from === "Tezos" ? { hash: result } : result;
-
         dispatch(dispatch(setTransferLoaderModal(false)));
         setLoading(false);
         dispatch(setTxnHash({ txn: result, nft }));
