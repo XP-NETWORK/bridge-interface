@@ -35,8 +35,8 @@ export default function TransferredNft({ nft }) {
     for (const tx of txnHashArr) {
       if (
         nft.native.uri === tx.nftUri ||
-        String(nft.native["token_id"]) === String(tx.tokenId) ||
-        nft.native.tokenId === tx.tokenId
+        nft.native.tokenId === tx.tokenId ||
+        nft.native["token_id"] === tx.tokenId
       ) {
         if (txnStatus !== "Completed") setTxnStatus(tx?.status?.toLowerCase());
         setHashes({
