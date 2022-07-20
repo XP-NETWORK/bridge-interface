@@ -109,7 +109,9 @@ function NFTdetails({ nftInf, claimables, details }) {
         <Modal.Body className="modalBody">
           <div className="nftDetailBox">
             <div className="nftDetImg">
-              {(image || animation_url) && uri && isValidHttpUrl(uri) ? (
+              {(image || animation_url) &&
+              (uri || image) &&
+              isValidHttpUrl(uri || image) ? (
                 animation_url ? (
                   <video
                     controls={false}

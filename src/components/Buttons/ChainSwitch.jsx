@@ -33,7 +33,6 @@ export default function ChainSwitch({ assignment, func }) {
   const show = () => {
     switch (assignment) {
       case "from":
-        console.log("osha");
         return (
           <span
             // style={walletconnect || nonEVM ? OFF : {}}
