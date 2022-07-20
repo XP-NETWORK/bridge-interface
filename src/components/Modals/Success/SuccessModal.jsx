@@ -24,7 +24,6 @@ export default function SuccessModal() {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
-  console.log("🚀 ~ file: SuccessModal.jsx ~ line 11 ~ socket", socket);
 
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
