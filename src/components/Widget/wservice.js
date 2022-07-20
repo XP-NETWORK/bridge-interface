@@ -27,7 +27,10 @@ class WService {
           signature,
           widget: initialWidget,
         })
-        .catch((e) => ({}))
+        .catch((e) => {
+          alert("Fail on addWidget:" + e.message);
+          return {};
+        })
     ).data;
   }
 

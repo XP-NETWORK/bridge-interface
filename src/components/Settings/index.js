@@ -1114,10 +1114,10 @@ function WSettings({
 
               <div className="referalSwitch">
                 <button onClick={onSaveSettings} className="controlBtn">
-                  Save settings
+                  Save all settings
                 </button>
                 <button onClick={onResetSettings} className="controlBtn">
-                  Reset settings
+                  Reset all settings
                 </button>
               </div>
 
