@@ -198,6 +198,8 @@ export const InitWidget = (Wrapped) => {
             affiliationWallet,
           } = settings || initialWidget;
 
+          console.log(affiliationFees, " affiliationFees");
+
           dispatch(
             setSettings({
               backgroundColor: checkRgbaIn("#" + backgroundColor),
@@ -226,7 +228,7 @@ export const InitWidget = (Wrapped) => {
               showLink: showLink === "true" ? true : false,
               affiliationWallet,
               affiliationFees: affiliationFees
-                ? ((+affiliationFees - 1) * 100).toFixed(0)
+                ? ((+affiliationFees - 1) * 100).toFixed(1)
                 : 0,
               fromChain: fromChain,
               toChain: toChain,

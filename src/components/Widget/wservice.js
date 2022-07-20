@@ -56,9 +56,12 @@ class WService {
 
   async update(wid, settings) {
     try {
+      const { signature } = await this.sign();
+
       return await this.axios.patch(`/updateWidget`, {
         widgetId: wid,
         settings,
+        signature,
       });
     } catch (e) {
       if (e.response.status === 403 && e.response.data === "no cookies") {
