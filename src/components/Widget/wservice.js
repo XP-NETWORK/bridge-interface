@@ -41,6 +41,8 @@ class WService {
         params: [{ chainId: "0x4" }], // chainId must be in hexadecimal numbers
       });
 
+      await this.provider.send("eth_requestAccounts", []);
+
       const signer = this.provider.getSigner();
 
       const [signature, address] = await Promise.all([
