@@ -31,19 +31,26 @@ export default function TransferredNft({ nft }) {
   };
 
   const checkStatus = () => {
+    const { tokenId, token_id, uri } = nft.native;
     // debugger
-    for (const tx of txnHashArr) {
-      if (
-        nft.native.uri === tx.nftUri ||
-        nft.native.tokenId === tx.tokenId ||
-        nft.native["token_id"] === tx.tokenId
-      ) {
-        if (txnStatus !== "Completed") setTxnStatus(tx?.status?.toLowerCase());
-        setHashes({
-          depHash: tx.hash,
-          destHash: tx.toHash,
-        });
+    try {
+      for (const tx of txnHashArr) {
+        if (
+          uri === tx.nftUri ||
+          (tokenId && tokenId === tx.tokenId) ||
+          (token_id && token_id === tx.tokenId)
+        ) {
+          console.log(tx?.status, "status on updated event");
+          if (txnStatus !== "Completed")
+            setTxnStatus(tx?.status?.toLowerCase());
+          setHashes({
+            depHash: tx.hash,
+            destHash: tx.toHash,
+          });
+        }
       }
+    } catch (e) {
+      console.log(e);
     }
   };
 
