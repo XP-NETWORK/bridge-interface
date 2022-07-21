@@ -34,14 +34,22 @@ class WService {
     ).data;
   }
 
-  async sign(msg) {
+  async sign(msg, init) {
     if (window.ethereum) {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: "0x4" }], // chainId must be in hexadecimal numbers
       });
 
-      await this.provider.send("eth_requestAccounts", []);
+      init &&
+        (await window.ethereum.request({
+          method: "wallet_requestPermissions",
+          params: [
+            {
+              eth_accounts: {},
+            },
+          ],
+        }));
 
       const signer = this.provider.getSigner();
 

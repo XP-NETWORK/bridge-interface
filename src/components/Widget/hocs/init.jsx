@@ -74,7 +74,7 @@ function initFromQuery() {
 
 async function initFormId(id) {
   if (id === "create" && window.ethereum) {
-    const { signature, address } = await wservice.sign();
+    const { signature, address } = await wservice.sign(undefined, true);
 
     const res = await wservice.add(address, signature, initialWidget);
 

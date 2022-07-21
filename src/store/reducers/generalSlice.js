@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { isShown } from "../../components/NFT/NFTHelper";
+import { utils } from "ethers";
 
 const initialState = {
   step: 0,
@@ -91,7 +92,12 @@ const generalSlice = createSlice({
         createdAt,
       } = action.payload;
       state.txnHashArr = state.txnHashArr.map((e) => {
-        if (e.hash === fromHash) {
+        const hash =
+          e.hash?.type === "Buffer"
+            ? utils.hexlify(e.hash.data)?.replace(/^0x/, "")
+            : e.hash;
+        if (hash === fromHash) {
+          e.hash = hash;
           e.status = status;
           e.tokenId = tokenId;
           e.toHash = toHash;
