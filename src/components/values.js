@@ -28,7 +28,7 @@ export const TEZOS = "TEZOS";
 
 export const biz =
   window.location.hostname.includes("localhost") ||
-  //window.location.hostname.includes("staging") ||
+  window.location.hostname.includes("staging") ||
   window.location.hostname.includes("development");
 
 export const chains = [
