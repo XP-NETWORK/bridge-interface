@@ -6,10 +6,11 @@ import store from "../store/store";
 import { setEachNFT } from "../store/reducers/generalSlice";
 import { parseEachNFT } from "./helpers";
 
-//const pool = requestPool(5000);
+import CacheService from "../services/cacheService";
+import WhiteListedPool from "../services/whiteListedPool";
 
-const cacheUrl = `https://nft-cache.herokuapp.com`;
-//const cacheUrl = `http://localhost:3030`;
+const cache = CacheService();
+const whiteListedPool = WhiteListedPool();
 
 export const parseNFT = async (nft, index, testnet, claimable) => {
   const { uri } = nft;
@@ -50,18 +51,7 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
           contract = nft.native?.contract;
         }
 
-        const res = await axios
-          .get(
-            `${cacheUrl}/nft/data?chainId=${chainId ||
-              nft.native?.chainId}&tokenId=${tokenId ||
-              nft.native?.tokenId}&contract=${contract ||
-              nft.native?.contract}`,
-            {
-              headers: { "Content-type": "application/json" },
-              timeout: 5000,
-            }
-          )
-          .catch((e) => "error");
+        const res = await cache.get({ chainId, tokenId, contract }, nft);
 
         if (
           (res && res.data === "no NFT with that data was found") ||
@@ -79,7 +69,7 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
           };
         }
       })(),
-      !testnet ? isWhiteListed(from.text, nft) : true,
+      !testnet ? whiteListedPool.add(isWhiteListed)(from.text, nft) : true,
     ]);
 
     const nftObjectResponse =
@@ -97,21 +87,7 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
           try {
             !testnet &&
               whitelisted !== undefined &&
-              axios.post(
-                `${cacheUrl}/nft/add`,
-                JSON.stringify({
-                  ...data,
-                  metaData: {
-                    ...data.metaData,
-                    whitelisted,
-                  },
-                }),
-                {
-                  headers: {
-                    "Content-type": "application/json",
-                  },
-                }
-              );
+              cache.add(data, whitelisted);
           } catch (error) {
             console.error("nft-cache add: ", error);
           }

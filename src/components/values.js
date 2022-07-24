@@ -29,7 +29,7 @@ export const TEZOS = "TEZOS";
 export const biz =
   window.location.hostname.includes("localhost") ||
   window.location.hostname.includes("staging") ||
-  window.location.hostname.includes("testing");
+  window.location.hostname.includes("development");
 
 export const chains = [
   {
@@ -272,8 +272,8 @@ export const chains = [
     image: { avatar: true, src: CKB },
     maintenance: false,
     testNet: false,
-    mainnet: biz ? true : false,
-    newChain: true,
+    mainnet: biz,
+    newChain: biz,
   },
   {
     type: "EVM",
@@ -299,9 +299,9 @@ export const chains = [
     order: 5,
     image: { avatar: true, src: VET },
     maintenance: false,
-    mainnet: biz ? true : false,
+    mainnet: biz,
     testNet: false,
-    newChain: true,
+    newChain: biz,
   },
   {
     type: "Cosmos",
@@ -312,9 +312,9 @@ export const chains = [
     tnChainId: "pulsar-2",
     image: { avatar: true, src: SCRT },
     mainnet: false,
-    testNet: biz ? true : false,
+    testNet: biz,
     test: false,
-    newChain: true,
+    newChain: biz,
   },
 ];
 

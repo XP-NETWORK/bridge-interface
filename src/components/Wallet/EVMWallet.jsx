@@ -215,18 +215,17 @@ export default function EVMWallet({ wallet, close }) {
       } else return <></>;
     case "BitKeep":
       return (
-        biz && (
-          <li
-            style={getStyle()}
-            onClick={() => connectHandler("BitKeep")}
-            className="wllListItem"
-            data-wallet="MetaMask"
-          >
-            <img src={BitKeep} alt="BitKeep Icon" />
-            <p>BitKeep</p>
-          </li>
-        )
+        <li
+          style={getStyle()}
+          onClick={() => connectHandler("BitKeep")}
+          className="wllListItem"
+          data-wallet="MetaMask"
+        >
+          <img src={BitKeep} alt="BitKeep Icon" />
+          <p>BitKeep</p>
+        </li>
       );
+
     default:
       break;
   }

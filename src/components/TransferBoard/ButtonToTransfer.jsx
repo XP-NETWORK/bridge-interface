@@ -155,6 +155,9 @@ export default function ButtonToTransfer() {
     let fromChain;
     let result;
     try {
+      const tokenId =
+        nft.native && "tokenId" in nft.native && nft.native.tokenId.toString();
+
       if (from === "Tron") {
         factory = await getFactory();
         const contract = nftSmartContract.toLowerCase();
@@ -165,7 +168,7 @@ export default function ButtonToTransfer() {
             contract,
             toNonce,
             fromNonce,
-            "tokenId" in nft.native ? nft.native.tokenId.toString() : undefined
+            tokenId && !isNaN(Number(tokenId)) ? tokenId : undefined
           );
         }
         toChain = await factory.inner(chainsConfig[to].Chain);
@@ -195,7 +198,7 @@ export default function ButtonToTransfer() {
             contract,
             toNonce,
             fromNonce,
-            "tokenId" in nft.native ? nft.native.tokenId.toString() : undefined
+            tokenId && !isNaN(Number(tokenId)) ? tokenId : undefined
           );
         }
 
