@@ -14,7 +14,7 @@ pipeline {
       steps {
          withChecks('Setup') {
             sh 'rm -rf package-lock.json'
-            sh  'npm install'
+            sh  'yarn'
          }
       }
     }
@@ -22,7 +22,7 @@ pipeline {
 
         steps {
             withChecks('Build') {
-                sh 'npm run build'
+                sh 'yarn build'
             }
         }
 
