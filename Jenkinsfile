@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-     image 'node:16-buster'
+     image 'node:14-buster'
     }
   }
   environment {
@@ -13,8 +13,8 @@ pipeline {
     stage('Setup') {
       steps {
          withChecks('Setup') {
-            sh 'rm -rf yarn.lock'
-            sh  'yarn install --no-lockfile --prod --silent'
+            sh 'rm -rf package-lock.json'
+            sh  'npm install'
          }
       }
     }
@@ -22,7 +22,7 @@ pipeline {
 
         steps {
             withChecks('Build') {
-                sh 'yarn build'
+                sh 'npm run build'
             }
         }
 
