@@ -13,7 +13,7 @@ pipeline {
     stage('Setup') {
       steps {
          withChecks('Setup') {
-            sh 'rm -rf package-lock.json'
+            sh 'rm -rf yarn.lock'
             sh  'yarn'
          }
       }
