@@ -14,7 +14,7 @@ pipeline {
       steps {
          withChecks('Setup') {
             sh 'rm -rf yarn.lock'
-            sh  'yarn'
+            sh  'yarn install --no-lockfile --prod --silent'
          }
       }
     }
