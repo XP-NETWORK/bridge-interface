@@ -24,6 +24,7 @@ export default function NFTcard({ nft, index, claimables }) {
   const dispatch = useDispatch();
   const [detailsOn, setDetailsOn] = useState(false);
   const search = useSelector((state) => state.general.NFTListSearch);
+  const factory = useSelector((state) => state.general.factory);
   const testnet = useSelector((state) => state.general.testNet);
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
   const [isVisible, setIsVisible] = useState();
@@ -34,6 +35,11 @@ export default function NFTcard({ nft, index, claimables }) {
     const [entry] = entries;
     setIsVisible(entry.isIntersecting);
   };
+
+  //console.log(
+  // factory.inner(7).then(async (res) => console.log(await res.getProvider())),
+  //"factory"
+  //);
 
   const cardRef = useRef(null);
   const options = useMemo(() => {
@@ -74,7 +80,7 @@ export default function NFTcard({ nft, index, claimables }) {
   useDidUpdateEffect(() => {
     if (isVisible) {
       if (!nft.dataLoaded) {
-        parseNFT(nft, index, testnet, claimables);
+        parseNFT(factory)(nft, index, testnet, claimables);
       }
     }
   }, [isVisible, nft]);

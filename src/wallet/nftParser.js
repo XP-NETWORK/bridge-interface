@@ -12,7 +12,13 @@ import WhiteListedPool from "../services/whiteListedPool";
 const cache = CacheService();
 const whiteListedPool = WhiteListedPool();
 
-export const parseNFT = async (nft, index, testnet, claimable) => {
+/**
+ * 
+ * const erc7 = UserNftMinter__factory.connect(id.contract, provider);
+        ret.uri = await tryCatchUndef(() => erc7.tokenURI(id.tokenId));
+ */
+
+export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
   const { uri } = nft;
   let whitelisted = !testnet
     ? nft?.native?.contract === "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a"
@@ -57,7 +63,12 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
           (res && res.data === "no NFT with that data was found") ||
           res === "error"
         ) {
-          const parsed = await nftGeneralParser(nft, account, whitelisted);
+          const parsed = await nftGeneralParser(
+            nft,
+            account,
+            whitelisted,
+            factory
+          );
           return {
             data: parsed,
             toCache: true,

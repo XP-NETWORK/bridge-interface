@@ -35,6 +35,9 @@ import Connex from "@vechain/connex";
 
 export default function ButtonToTransfer() {
   const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
+  const kukaiWalletSigner = useSelector(
+    (state) => state.general.kukaiWalletSigner
+  );
   const receiver = useSelector((state) => state.general.receiver);
   const receiverAddress = convert(receiver);
   const approved = useSelector((state) => state.general.approved);
@@ -94,7 +97,7 @@ export default function ButtonToTransfer() {
     let signer;
     try {
       if (from === "Tezos") {
-        return templeSigner;
+        return templeSigner || kukaiWalletSigner;
       } else if (from === "Algorand") {
         signer = await getAlgorandWalletSigner();
         return signer;
