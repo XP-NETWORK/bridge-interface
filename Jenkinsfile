@@ -28,10 +28,30 @@ pipeline {
 
 
     }
-
-    stage('Production') {
+    
+    stage('Staging-Upload') {
+       when {
+        	branch 'staging'
+       }	
        steps {
-          withChecks('Production') {
+          withChecks('Staging-Upload') {
+              echo 'Staging' 
+              withAWS(region:"us-east-1", credentials: "7c7202fd-9de5-46ce-a20f-991c6eaabf8e") {
+                  s3Delete(bucket: 'test-bucket-replica', path:'**/*')
+                  s3Upload(bucket: 'test-bucket-replica', workingDir:'build', includePathPattern:'**/*');
+		  cfInvalidate(distribution:'E14U5LE27GP068', paths:['/*'], waitForCompletion: true)
+              }
+          }
+       }
+    }
+
+    stage('Main-Upload') {
+       when {
+        	branch 'main'
+       }
+       steps {
+          withChecks('Main-Upload') {
+              echo 'main'
               withAWS(region:"us-east-1", credentials: "7c7202fd-9de5-46ce-a20f-991c6eaabf8e") {
                   s3Delete(bucket: 'test-bucket-replica', path:'**/*')
                   s3Upload(bucket: 'test-bucket-replica', workingDir:'build', includePathPattern:'**/*');
