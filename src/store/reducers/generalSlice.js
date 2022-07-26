@@ -95,9 +95,12 @@ const generalSlice = createSlice({
         createdAt,
       } = action.payload;
       state.txnHashArr = state.txnHashArr.map((e) => {
+        console.log(e, "setTxnStatus");
         const hash =
-          e.hash?.hash?.type === "Buffer"
-            ? utils.hexlify(e.hash?.hash?.data)?.replace(/^0x/, "")
+          e.hash?.hash?.type === "Buffer" || e.hash?.hash?.buffer
+            ? utils
+                .hexlify(e.hash?.hash?.data || e.hash?.hash)
+                ?.replace(/^0x/, "")
             : e.hash;
         if (hash === fromHash) {
           e.hash = hash;
