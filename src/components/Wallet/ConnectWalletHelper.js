@@ -116,6 +116,7 @@ export const connectKeplr = async (testnet, chain) => {
       const offlineSigner = window.keplr.getOfflineSigner(chainId);
       const accounts = await offlineSigner.getAccounts();
       const { address } = accounts[0];
+      console.log(address, "address");
       store.dispatch(setKeplrAccount(address));
       store.dispatch(setKeplrWallet(true));
       return true;
