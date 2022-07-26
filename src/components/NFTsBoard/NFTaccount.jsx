@@ -1,17 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Container } from "react-bootstrap";
-import NFTgridView from "../NFT/NFTgridView";
-import NFTlistView from "../NFT/NFTlistView";
-import NFTlistTop from "./NFTlistTop";
+
 import { Modal } from "react-bootstrap";
 import ImportNFTModal from "../Modals/ImportNFTModal/ImportNFTModal";
 import {
   setBalance,
-  setChainModal,
-  setDepartureOrDestination,
   setError,
-  setSearchNFTList,
-  setSelectedNFTList,
   setWrappedEGold,
   cleanSelectedNFTList,
 } from "../../store/reducers/generalSlice";
@@ -24,19 +18,7 @@ import {
 import { ReturnBtn } from "../Settings/returnBtn";
 import DesktopTransferBoard from "../TransferBoard/DesktopTransferBoard";
 import MobileTransferBoard from "../TransferBoard/MobileTransferBoard";
-import MobileDestinationAddressBar from "../MobileOnly/MobileDestinationAddressBar";
 import "./NFTsBoard.css";
-import Refresh from "../Buttons/Refresh";
-import ChainSwitch from "../Buttons/ChainSwitch";
-import SelectedNFTs from "../Buttons/SelectedNFTs";
-import ViewButton from "../Buttons/ViewButton";
-import SelectClearAll from "../Buttons/SelectClearAll";
-import SelectedNFT from "../innercomponents/SelectedNFT";
-import SearchButton from "../Buttons/SearchButton";
-import MobileNFTsSearch from "../MobileOnly/MobileNFTsSearch";
-import Approval from "../TransferBoard/Approval";
-import SendFees from "../TransferBoard/SendFees";
-import ButtonToTransfer from "../TransferBoard/ButtonToTransfer";
 import ChangeNetworkModal from "../Modals/ChangeNetwork/ChangeNetworkModal";
 import UnsupportedNetwork from "../Modals/ChangeNetwork/UnsupportedNetwork";
 import SelectNFTAler from "../Alerts/SelectNFTAler";
@@ -44,12 +26,13 @@ import PasteDestinationAlert from "../Alerts/PasteDestinationAlert";
 import NoApprovedNFT from "../Alerts/NoApprovedNFT";
 import { usePrevious } from "../Settings/hooks";
 import { chainsConfig } from "../values";
-import { useWeb3React } from "@web3-react/core";
 import ImportNFTButton from "../Buttons/ImportNFTButton";
 
-import UnwrapWegld from "../TransferBoard/UnwrapWegld";
 import WalletConnectionModal from "../Wallet/WalletConnectionModal";
 import ChangeWalletModal from "../Modals/ChangeWallet/ChangeWalletModal";
+
+import NFTscreen from "./NFTscreen";
+import NFTmobileView from "./NFTmobileView";
 
 function NFTaccount() {
   const dispatch = useDispatch();
@@ -58,7 +41,6 @@ function NFTaccount() {
   const prevSelected = usePrevious(from);
   const type = useSelector((state) => state.general.from.type);
   const algorandAccount = useSelector((s) => s.general.algorandAccount);
-  const NFTListView = useSelector((state) => state.general.NFTListView);
   const nfts = useSelector((state) => state.general.NFTList);
 
   const importModal = useSelector((state) => state.general.importModal);
@@ -72,8 +54,6 @@ function NFTaccount() {
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
   const NFTSetToggler = useSelector((state) => state.general.NFTSetToggler);
   const prevNFTSetToggler = usePrevious(NFTSetToggler);
-  const [showSelected, setShowSelected] = useState(false);
-  const [showNFTsSearch, setNFTsSearch] = useState(false);
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
   const wrappedEGold = useSelector((state) => state.general.wrappedEGold);
   const accountWalletModal = useSelector(
@@ -82,9 +62,6 @@ function NFTaccount() {
   const prevWrappedEGold = usePrevious(wrappedEGold);
   // const [balanceInterval, setBalanceInterval] = useState();
   let balanceInterval = useRef(null);
-
-  const [index, setIndex] = useState(0);
-  const { library } = useWeb3React();
 
   //Anjelika - 0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE
   //Anjelika elrond - erd1s89aq3s0z6mjfpx8s85zntlfywsvj5r8nzcdujw7mx53f9et9ezq9fnrws
@@ -116,20 +93,6 @@ function NFTaccount() {
       dispatch(setError(error.data ? error.data.message : error.message));
     }
   }
-
-  const handleFromChainSwitch = () => {
-    dispatch(setDepartureOrDestination("departure"));
-    dispatch(setChainModal(true));
-  };
-
-  const handleShowSelected = () => {
-    setShowSelected(!showSelected);
-  };
-
-  const handleSearchTop = () => {
-    setNFTsSearch(!showNFTsSearch);
-    dispatch(setSearchNFTList(""));
-  };
 
   const getWegldBalance = async () => {
     if (elrondAccount && !prevWrappedEGold) {
@@ -231,12 +194,6 @@ function NFTaccount() {
     return () => clearInterval(balanceInterval);
   }, [from, account, NFTSetToggler]);
 
-  useEffect(() => {
-    if (selectedNFTs.length < 1) {
-      setShowSelected(false);
-    }
-  }, [selectedNFTs, nfts]);
-
   return (
     <div className="NFTaccount">
       <Modal
@@ -264,74 +221,12 @@ function NFTaccount() {
         <ReturnBtn />
         <div className="row">
           <div className="nftListCol col-lg-8">
-            <div className="nft_selectBox">
-              <NFTlistTop />
-              {NFTListView ? (
-                <NFTlistView />
-              ) : (
-                <NFTgridView scrollIndex={index} setIndex={setIndex} />
-              )}
-              {/* <div className="algo-claimable">
-                // TODO Algorand Claimable
-              </div> */}
-            </div>
+            <NFTscreen />
             <MobileTransferBoard />
           </div>
           <DesktopTransferBoard />
         </div>
-        <div className="mobile-col">
-          <div className="mobile-col__tittle">
-            <div>Send NFT</div>
-          </div>
-          <div className="mobile-col__header">
-            <div>Your NFTs on</div>
-            <Refresh />
-            <ChainSwitch assignment={"from"} func={handleFromChainSwitch} />
-          </div>
-          <div className="mobile-nfts__list">
-            {!showNFTsSearch ? (
-              <div className="mobile-nfts__header">
-                <SelectedNFTs
-                  on={showSelected}
-                  show={
-                    selectedNFTs.length > 0 ? handleShowSelected : undefined
-                  }
-                  showSelected={showSelected}
-                  setOff={setShowSelected}
-                />
-                {_from.type === "EVM" && nfts?.length < 1 && (
-                  <ImportNFTButton />
-                )}
-                {nfts?.length > 0 && (
-                  <div className="mobile-nfts__buttons">
-                    <SearchButton handleSearchTop={handleSearchTop} />
-                    {_from.type === "EVM" && <ImportNFTButton />}
-                    <ViewButton />
-                    <SelectClearAll />
-                  </div>
-                )}
-              </div>
-            ) : (
-              <MobileNFTsSearch handleSearchTop={handleSearchTop} />
-            )}
-            <div className="mobile-nfts__body">
-              {!showSelected ? (
-                NFTListView ? (
-                  <NFTlistView />
-                ) : (
-                  <NFTgridView />
-                )
-              ) : (
-                showSelected && <SelectedNFT />
-              )}
-            </div>
-          </div>
-          <MobileDestinationAddressBar />
-          <Approval />
-          <SendFees />
-          <ButtonToTransfer />
-          <UnwrapWegld />
-        </div>
+        <NFTmobileView selectedNFTs={selectedNFTs} _from={_from} nfts={nfts} />
       </Container>
     </div>
   );
