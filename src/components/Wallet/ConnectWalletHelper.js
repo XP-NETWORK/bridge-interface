@@ -40,6 +40,10 @@ import {
   setSync2,
   setSync2Connecx,
   setTempleWalletSigner,
+<<<<<<< HEAD
+=======
+  setKukaiWalletSigner,
+>>>>>>> 8b28867c339440bbed63cedac3153eb479ba90ad
   setKeplrAccount,
   setKeplrWallet,
 } from "../../store/reducers/generalSlice";
@@ -115,6 +119,10 @@ export const connectKeplr = async (testnet, chain) => {
       const offlineSigner = window.keplr.getOfflineSigner(chainId);
       const accounts = await offlineSigner.getAccounts();
       const { address } = accounts[0];
+<<<<<<< HEAD
+=======
+      console.log(address, "address");
+>>>>>>> 8b28867c339440bbed63cedac3153eb479ba90ad
       store.dispatch(setKeplrAccount(address));
       store.dispatch(setKeplrWallet(true));
       return true;
@@ -282,6 +290,11 @@ export const connectBeacon = async () => {
   try {
     const permissions = await wallet.client.requestPermissions();
     store.dispatch(setTezosAccount(permissions.address));
+<<<<<<< HEAD
+=======
+
+    store.dispatch(setKukaiWalletSigner(wallet));
+>>>>>>> 8b28867c339440bbed63cedac3153eb479ba90ad
     store.dispatch(setKukaiWallet(true));
     return true;
   } catch (error) {

@@ -3271,9 +3271,9 @@
     start-server-and-test "^1.14.0"
 
 "@solana/web3.js@^1.32.0", "@solana/web3.js@^1.36.0", "@solana/web3.js@^1.44.2":
-  version "1.50.0"
-  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.50.0.tgz#afc01b0fdeb86b571eefd243567a7dc9a281f236"
-  integrity sha512-9KCuF3QLHd/dkYlffYPSHPbPFaBKqiwwDqWR+C/z1CZZbQybu+NCydWvwHHqrrlG50wn15L/6zYLb5Tjr6tOkA==
+  version "1.50.1"
+  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.50.1.tgz#dae726a06267d1bcd88b1e3cd8ae44c709302dcf"
+  integrity sha512-1l9N/nS8pJEA2YibNT8wa072718O0/A1eKWE0+pdWC5wDGQgBNxZSLuv7Cq5Dcn46WsZ5J5ZstK89q8J/ZZaQA==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@ethersproject/sha2" "^5.5.0"
@@ -4043,9 +4043,9 @@
   integrity sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==
 
 "@types/node@*", "@types/node@>=12.12.47", "@types/node@>=13.7.0":
-  version "18.0.6"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.0.6.tgz#0ba49ac517ad69abe7a1508bc9b3a5483df9d5d7"
-  integrity sha512-/xUq6H2aQm261exT6iZTMifUySEt4GR5KX8eYyY+C4MSNPqSh9oNIP7tz2GLKTlFaiBbgZNxffoR3CVRG+cljw==
+  version "18.6.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.6.1.tgz#828e4785ccca13f44e2fb6852ae0ef11e3e20ba5"
+  integrity sha512-z+2vB6yDt1fNwKOeGbckpmirO+VBDuQqecXkgeIqDlaOtmKn6hPR/viQ8cxCfqLU4fTlvM3+YjM367TukWdxpg==
 
 "@types/node@10.12.18":
   version "10.12.18"
@@ -12995,7 +12995,7 @@ next-tick@^1.1.0:
 
 "nft-parser@git+https://github.com/xp-network/nft-parser#bleeding-edge":
   version "0.2.0"
-  resolved "git+https://github.com/xp-network/nft-parser#c8791efeab02745f7adf5988d34b2ae4e05dcaa9"
+  resolved "git+https://github.com/xp-network/nft-parser#08598b9ff4d51e787246ce529788c288bb1be7e3"
   dependencies:
     "@taquito/taquito" "^13.0.0"
     "@types/node" "^17.0.35"
@@ -13003,6 +13003,7 @@ next-tick@^1.1.0:
     bignumber.js "^9.0.2"
     cherio "^1.0.0-rc.2"
     typescript "^4.7.2"
+    xpnet-web3-contracts "git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#dist-erc1155"
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -19062,8 +19063,15 @@ xmlhttprequest@1.8.0:
     web3-providers-connex "^0.3.1"
     xpnet-web3-contracts "git+https://github.com/xp-network/XP.network-HECO-Migration#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
 
+"xpnet-web3-contracts@git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#dist-erc1155":
+  version "0.1.0"
+  resolved "git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
+  dependencies:
+    ethers "^5.5.4"
+
 "xpnet-web3-contracts@git+https://github.com/xp-network/XP.network-HECO-Migration#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f":
   version "0.1.0"
+  uid "65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
   resolved "git+https://github.com/xp-network/XP.network-HECO-Migration#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
   dependencies:
     ethers "^5.5.4"

@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import BitKeep from "../../assets/img/wallet/bitkeep.svg";
 import CosmosWallet from "./CosmosWallet";
+import { biz } from "../values";
 
 export default function WalletList({ search, connected, input }) {
   const from = useSelector((state) => state.general.from);
@@ -167,7 +168,11 @@ export default function WalletList({ search, connected, input }) {
       name: "BitKeep",
       type: "EVM",
       mobile: false,
+<<<<<<< HEAD
       desktop: true,
+=======
+      desktop: biz && !window.location.hostname.includes("staging"),
+>>>>>>> 8b28867c339440bbed63cedac3153eb479ba90ad
       order: 3,
     },
     {

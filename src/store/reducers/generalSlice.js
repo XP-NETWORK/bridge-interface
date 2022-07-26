@@ -45,6 +45,9 @@ const generalSlice = createSlice({
     setTempleWalletSigner(state, action) {
       state.templeSigner = action.payload;
     },
+    setKukaiWalletSigner(state, action) {
+      state.kukaiWalletSigner = action.payload;
+    },
     setBalance(state, action) {
       state.balance = action.payload;
     },
@@ -519,6 +522,7 @@ export const {
   setBalance,
   setWrappedEGold,
   setTempleWalletSigner,
+  setKukaiWalletSigner,
   setAccountWalletModal,
 } = generalSlice.actions;
 

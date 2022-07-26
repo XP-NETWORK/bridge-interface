@@ -46,7 +46,7 @@ import { usePrevious } from "../Settings/hooks";
 import { chainsConfig } from "../values";
 import { useWeb3React } from "@web3-react/core";
 import ImportNFTButton from "../Buttons/ImportNFTButton";
-import BigNumber from "bignumber.js";
+
 import UnwrapWegld from "../TransferBoard/UnwrapWegld";
 import WalletConnectionModal from "../Wallet/WalletConnectionModal";
 import ChangeWalletModal from "../Modals/ChangeWallet/ChangeWalletModal";
@@ -157,6 +157,7 @@ function NFTaccount() {
 
     !balance &&
       setTimeout(async () => {
+        console.log(_account);
         try {
           balance = factory
             ? await factory.balance(fromChain, _account)
