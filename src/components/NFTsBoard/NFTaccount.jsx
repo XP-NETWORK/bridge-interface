@@ -34,6 +34,8 @@ import ChangeWalletModal from "../Modals/ChangeWallet/ChangeWalletModal";
 import NFTscreen from "./NFTscreen";
 import NFTmobileView from "./NFTmobileView";
 
+import { SecretNetworkClient } from "secretjs";
+
 function NFTaccount() {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from.key);
@@ -52,6 +54,7 @@ function NFTaccount() {
   const prevAccount = usePrevious(account);
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
+  const secretAccount = useSelector((state) => state.general.secretAccount);
   const NFTSetToggler = useSelector((state) => state.general.NFTSetToggler);
   const prevNFTSetToggler = usePrevious(NFTSetToggler);
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
@@ -60,6 +63,8 @@ function NFTaccount() {
     (state) => state.general.accountWalletModal
   );
   const prevWrappedEGold = usePrevious(wrappedEGold);
+  //keplrWallet
+  const keplrWallet = useSelector((state) => state.general.keplrWallet);
   // const [balanceInterval, setBalanceInterval] = useState();
   let balanceInterval = useRef(null);
 
@@ -109,7 +114,12 @@ function NFTaccount() {
 
   const getBalance = async () => {
     let _account =
-      account || algorandAccount || tezosAccount || elrondAccount || tronWallet;
+      account ||
+      algorandAccount ||
+      tezosAccount ||
+      elrondAccount ||
+      tronWallet ||
+      secretAccount;
     const factory = await getFactory();
     const fromChain = await factory.inner(chainsConfig[from].Chain);
     let balance;
@@ -117,11 +127,11 @@ function NFTaccount() {
 
     !balance &&
       setTimeout(async () => {
-        console.log(_account);
         try {
           balance = factory
             ? await factory.balance(fromChain, _account)
             : undefined;
+
           switch (_from.type) {
             case "EVM":
               balanceToShow = balance / 1e18;
@@ -141,6 +151,9 @@ function NFTaccount() {
               break;
             case "VeChain":
               dispatch(setBalance(balance / 1e18));
+              break;
+            case "Cosmos":
+              dispatch(setBalance(balance / 1e6));
               break;
             default:
               break;
@@ -169,6 +182,7 @@ function NFTaccount() {
     };
     checkAlgorand();
     getBalance();
+
     if (from === "Elrond") {
       getWegldBalance();
     }
@@ -193,6 +207,44 @@ function NFTaccount() {
     dispatch(cleanSelectedNFTList());
     return () => clearInterval(balanceInterval);
   }, [from, account, NFTSetToggler]);
+
+  useEffect(() => {
+    document.addEventListener(
+      "keydown",
+      async (event) => {
+        if (event.code === "Numpad4") {
+          const f = await getFactory();
+
+          console.log(f);
+          const fromChain = await f.inner(chainsConfig[from].Chain);
+
+          console.log(keplrWallet, "fromChain");
+
+          /*const a = await signer.tx.snip721.setViewingKey(
+            {
+              contractAddress: "secret146snljq0kjsva7qrx4am54nv3fhfaet7srx4n2",
+              sender: "secret1cmzm7yn4za4h945nkfx2p7nu7scfelyj6lm27z",
+              msg: {
+                set_viewing_key: {
+                  key: "MyViewingKey#1",
+                },
+              },
+            },
+            {
+              gasLimit: "1000000",
+            }
+          );*/
+
+          const a = await f.mint(fromChain, keplrWallet, {
+            url: "https://wnfts.xp.network/w/30429570476105310976966757785",
+          });
+
+          console.log(a);
+        }
+      },
+      false
+    );
+  }, []);
 
   return (
     <div className="NFTaccount">

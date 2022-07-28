@@ -52,6 +52,7 @@ export default function ButtonToTransfer() {
   const algorandAccount = useSelector((s) => s.general.algorandAccount);
   const maiarProvider = useSelector((state) => state.general.maiarProvider);
   const templeSigner = useSelector((state) => state.general.templeSigner);
+  const keplrWallet = useSelector((state) => state.general.keplrWallet);
   const account = useSelector((state) => state.general.account);
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
   const nfts = useSelector((state) => state.general.NFTList);
@@ -96,7 +97,9 @@ export default function ButtonToTransfer() {
   const getSigner = async () => {
     let signer;
     try {
-      if (from === "Tezos") {
+      if (from === "Secret") {
+        return keplrWallet;
+      } else if (from === "Tezos") {
         return templeSigner || kukaiWalletSigner;
       } else if (from === "Algorand") {
         signer = await getAlgorandWalletSigner();
@@ -140,7 +143,7 @@ export default function ButtonToTransfer() {
 
   const sendEach = async (nft, index) => {
     // debugger;
-    const signer = from === "Tezos" ? templeSigner : await getSigner();
+    const signer = await getSigner();
     const toNonce = CHAIN_INFO[to].nonce;
     const fromNonce = CHAIN_INFO[from].nonce;
     const nftSmartContract = nft.native.contract;

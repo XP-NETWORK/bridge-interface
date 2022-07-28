@@ -50,6 +50,8 @@ import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { getAddEthereumChain } from "../../wallet/chains";
 import Web3 from "web3";
 
+import { SecretNetworkClient } from "secretjs";
+
 export const wallets = [
   "MetaMask",
   "WalletConnect",
@@ -109,16 +111,27 @@ const switchNetWork = async (from) => {
 
 export const connectKeplr = async (testnet, chain) => {
   // debugger;
+
+  console.log(chain);
   const chainId = testnet ? "pulsar-2" : "cosmoshub-4";
   if (window.keplr) {
     try {
       await window.keplr.enable(chainId);
       const offlineSigner = window.keplr.getOfflineSigner(chainId);
+      console.log(offlineSigner);
       const accounts = await offlineSigner.getAccounts();
+
       const { address } = accounts[0];
-      console.log(address, "address");
+
+      const signer = await SecretNetworkClient.create({
+        grpcWebUrl: chain.tnRpc,
+        chainId,
+        wallet: offlineSigner,
+        walletAddress: address,
+      });
+
       store.dispatch(setKeplrAccount(address));
-      store.dispatch(setKeplrWallet(true));
+      store.dispatch(setKeplrWallet(signer));
       return true;
     } catch (error) {
       console.error(error);
