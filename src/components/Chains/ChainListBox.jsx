@@ -86,19 +86,27 @@ export default function ChainListBox() {
     };
 
     const chainSelectHandler = async (chain) => {
+        debugger;
         if (departureOrDestination === "departure") {
             if (
                 chain.type === typeOfChainConnected() ||
                 !typeOfChainConnected()
             ) {
                 if (to?.text === chain.text) {
-                    dispatch(setTo(from));
-                    dispatch(setFrom(to));
-                } else {
-                    const switched = await switchNetwork(chain);
-                    if (switched) {
-                        dispatch(setFrom(chain));
+                    if (account) {
+                        const switched = await switchNetwork(from);
+                        if (switched) {
+                            dispatch(setTo(from));
+                            dispatch(setFrom(to));
+                        }
                     }
+                } else {
+                    if (account) {
+                        const switched = await switchNetwork(chain);
+                        if (switched) {
+                            dispatch(setFrom(chain));
+                        }
+                    } else dispatch(setFrom(chain));
                 }
                 handleClose();
             } else {
@@ -108,8 +116,13 @@ export default function ChainListBox() {
             }
         } else if (departureOrDestination === "destination") {
             if (from?.text === chain.text) {
-                dispatch(setTo(from));
-                dispatch(setFrom(to));
+                if (account) {
+                    const switched = await switchNetwork(to);
+                    if (switched) {
+                        dispatch(setTo(from));
+                        dispatch(setFrom(to));
+                    }
+                }
             } else {
                 dispatch(setTo(chain));
             }
