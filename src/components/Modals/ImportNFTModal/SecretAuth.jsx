@@ -117,7 +117,7 @@ const SecretAuth = ({ nfts, setLogdIn }) => {
     </div>
   );
 };
-
+//sdfsdfsdf
 export const withSecretAuth = (Wrapped) => (props) => {
   const [logdIn, setLogdIn] = useState(false);
   const { from, nfts } = useSelector(({ general: { from, NFTList } }) => ({
