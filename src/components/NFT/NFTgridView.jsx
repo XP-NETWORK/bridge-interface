@@ -4,9 +4,10 @@ import NFTempty from "../innercomponents/NFTempty";
 import Missing from "../innercomponents/Missing";
 import BigLoader from "../../components/innercomponents/BigLoader";
 import NFTcard from "./NFTcard";
-import {} from "../../wallet/helpers.js";
 
-function NFTgridView({ setIndex, scrollIndex }) {
+import { withSecretAuth } from "../Modals/ImportNFTModal/SecretAuth";
+
+function NFTgridView({ setIndex, scrollIndex, render }) {
     const nfts = useSelector((state) => state.general.NFTList);
     const algorandClaimables = useSelector(
         (state) => state.general.algorandClaimables
@@ -57,4 +58,4 @@ function NFTgridView({ setIndex, scrollIndex }) {
     );
 }
 
-export default NFTgridView;
+export default withSecretAuth(NFTgridView);

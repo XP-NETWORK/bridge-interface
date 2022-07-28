@@ -27,6 +27,7 @@ import { algoConnector } from "../../wallet/connectors";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import Connex from "@vechain/connex";
 import { CHAIN_INFO } from "../values";
+//import ChainService from "../../services/chains/chain";
 
 function Approval(props) {
   const dispatch = useDispatch();
@@ -52,6 +53,8 @@ function Approval(props) {
   const kukaiWalletSigner = useSelector(
     (state) => state.general.kukaiWalletSigner
   );
+
+  const keplrWallet = useSelector((state) => state.general.keplrWallet);
   const widget = useSelector((state) => state.general.widget);
   const sync2Connex = useSelector((state) => state.general.sync2Connex);
 
@@ -87,10 +90,12 @@ function Approval(props) {
   const approveEach = async (nft, signer, chain, index) => {
     const arr = new Array(index + 1).fill(0);
     const factory = await getFactory();
+    console.log(from);
     if (
       from.type !== "Elrond" &&
       from.type !== "Algorand" &&
-      from.type !== "Tezos"
+      from.type !== "Tezos" &&
+      from.type !== "Cosmos"
     ) {
       try {
         const { tokenId, contract, chainId } = nft.native;
@@ -119,6 +124,21 @@ function Approval(props) {
         } else console.log(error);
         // dispatch(setApproved(false))
         console.log(error);
+      }
+    } else if (from.type === "Cosmos") {
+      const signer = keplrWallet;
+      console.log(signer);
+      const factory = await getFactory();
+      const chain = await factory.inner(Chain.SECRET);
+
+      try {
+        const approve = await chain.preTransfer(signer, nft);
+
+        console.log(approve);
+        dispatch(updateApprovedNFTs(nft));
+        setFinishedApproving(arr);
+      } catch (e) {
+        console.log(e.message, "approve for cosmos");
       }
     } else if (from.type === "Algorand") {
       const c = await factory.inner(15);
