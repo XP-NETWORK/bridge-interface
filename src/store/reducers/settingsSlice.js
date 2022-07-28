@@ -20,6 +20,7 @@ export const fonts = [
 
 export const chains = [...valuesChains]
   .filter((c) => c.mainnet || c.testNet || c.coming)
+  .sort((a, b) => b.order - a.order)
   .sort((a, b) => (a.coming && !b.coming ? 1 : -1));
 
 export const activeChains = [
@@ -51,7 +52,9 @@ export const wallets = [
   "Beacon",
   "TempleWallet",
   "MaiarExtension",
-  ...(biz ? ["Sync2"] : []),
+  "Sync2",
+
+  //...(biz ? ["Sync2"] : []),
 
   //"Ledger",
   //"Trezor",
