@@ -102,7 +102,7 @@ const SecretAuth = ({ nfts, setLogdIn, refreshSecret, render }) => {
         </div>
     );
 };
-
+//sdfsdfsdf
 export const withSecretAuth = (Wrapped) => (props) => {
     const [logdIn, setLogdIn] = useState(false);
     const secretLoggedIn = useSelector((state) => state.general.secretLoggedIn);
