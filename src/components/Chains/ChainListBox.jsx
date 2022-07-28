@@ -23,8 +23,9 @@ import { useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { getAddEthereumChain } from "../../wallet/chains";
 import { useLocation } from "react-router-dom";
+import { switchNetwork } from "../../services/chains/evmSerive";
 
-export default function ChainListBox(props) {
+export default function ChainListBox() {
     const dispatch = useDispatch();
     const location = useLocation();
     const departureOrDestination = useSelector(
@@ -84,9 +85,7 @@ export default function ChainListBox(props) {
         }
     };
 
-    const chainSelectHandler = (chain) => {
-        // debugger;
-
+    const chainSelectHandler = async (chain) => {
         if (departureOrDestination === "departure") {
             if (
                 chain.type === typeOfChainConnected() ||
@@ -96,7 +95,10 @@ export default function ChainListBox(props) {
                     dispatch(setTo(from));
                     dispatch(setFrom(to));
                 } else {
-                    dispatch(setFrom(chain));
+                    const switched = await switchNetwork(chain);
+                    if (switched) {
+                        dispatch(setFrom(chain));
+                    }
                 }
                 handleClose();
             } else {
