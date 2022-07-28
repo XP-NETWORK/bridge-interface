@@ -12,6 +12,12 @@ import WhiteListedPool from "../services/whiteListedPool";
 const cache = CacheService();
 const whiteListedPool = WhiteListedPool();
 
+/**
+ * 
+ * const erc7 = UserNftMinter__factory.connect(id.contract, provider);
+        ret.uri = await tryCatchUndef(() => erc7.tokenURI(id.tokenId));
+ */
+
 export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
   const { uri } = nft;
   let whitelisted = !testnet

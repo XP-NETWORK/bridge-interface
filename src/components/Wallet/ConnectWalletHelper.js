@@ -40,10 +40,7 @@ import {
   setSync2,
   setSync2Connecx,
   setTempleWalletSigner,
-<<<<<<< HEAD
-=======
   setKukaiWalletSigner,
->>>>>>> 8b28867c339440bbed63cedac3153eb479ba90ad
   setKeplrAccount,
   setKeplrWallet,
 } from "../../store/reducers/generalSlice";
@@ -52,6 +49,8 @@ import { chainsConfig, CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { getAddEthereumChain } from "../../wallet/chains";
 import Web3 from "web3";
+
+import { SecretNetworkClient } from "secretjs";
 
 export const wallets = [
   "MetaMask",
@@ -112,19 +111,27 @@ const switchNetWork = async (from) => {
 
 export const connectKeplr = async (testnet, chain) => {
   // debugger;
+
+  console.log(chain);
   const chainId = testnet ? "pulsar-2" : "cosmoshub-4";
   if (window.keplr) {
     try {
       await window.keplr.enable(chainId);
       const offlineSigner = window.keplr.getOfflineSigner(chainId);
+      console.log(offlineSigner);
       const accounts = await offlineSigner.getAccounts();
+
       const { address } = accounts[0];
-<<<<<<< HEAD
-=======
-      console.log(address, "address");
->>>>>>> 8b28867c339440bbed63cedac3153eb479ba90ad
+
+      const signer = await SecretNetworkClient.create({
+        grpcWebUrl: chain.tnRpc,
+        chainId,
+        wallet: offlineSigner,
+        walletAddress: address,
+      });
+
       store.dispatch(setKeplrAccount(address));
-      store.dispatch(setKeplrWallet(true));
+      store.dispatch(setKeplrWallet(signer));
       return true;
     } catch (error) {
       console.error(error);
@@ -290,11 +297,8 @@ export const connectBeacon = async () => {
   try {
     const permissions = await wallet.client.requestPermissions();
     store.dispatch(setTezosAccount(permissions.address));
-<<<<<<< HEAD
-=======
 
     store.dispatch(setKukaiWalletSigner(wallet));
->>>>>>> 8b28867c339440bbed63cedac3153eb479ba90ad
     store.dispatch(setKukaiWallet(true));
     return true;
   } catch (error) {
