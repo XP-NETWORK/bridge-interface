@@ -393,11 +393,15 @@ export const connectMaiar = async () => {
 
 // Elrond blockchain connection ( Maiar Extension )
 export const connectMaiarExtension = async () => {
+    // debugger;
     const instance = ExtensionProvider.getInstance();
     try {
         await instance.init();
         await instance.login();
         const { account } = instance;
+        if (account?.name === "CanceledError") {
+            return false;
+        }
         store.dispatch(setOnMaiar(true));
         store.dispatch(setElrondAccount(account.address));
         store.dispatch(setMaiarProvider(instance));
