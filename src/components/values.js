@@ -488,7 +488,7 @@ export const chainsConfig = {
     tnRpc: "https://sync-testnet.veblocks.net",
     chainId: 39,
     Chain: Chain.VECHAIN,
-    tx: "https://explore-testnet.vechain.org/transactions/",
+    tx: "https://explore.vechain.org/transactions/",
     testTx: "https://explore-testnet.vechain.org/transactions/",
     variants: ["Vechain"],
   },
