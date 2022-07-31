@@ -8,6 +8,7 @@ import {
     setError,
     setWrappedEGold,
     cleanSelectedNFTList,
+    setUnwrappedEGold,
 } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -35,6 +36,7 @@ import NFTscreen from "./NFTscreen";
 import NFTmobileView from "./NFTmobileView";
 
 import { SecretNetworkClient } from "secretjs";
+import EGoldSuccess from "./../Modals/eGoldSuccess/EGoldSuccess";
 
 function NFTaccount() {
     const dispatch = useDispatch();
@@ -59,6 +61,7 @@ function NFTaccount() {
     const prevNFTSetToggler = usePrevious(NFTSetToggler);
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
     const wrappedEGold = useSelector((state) => state.general.wrappedEGold);
+    const unwrappedEGold = useSelector((state) => state.general.unwrappedEGold);
 
     const accountWalletModal = useSelector(
         (state) => state.general.accountWalletModal
@@ -266,6 +269,13 @@ function NFTaccount() {
                 className="ChainModal wallet-modal"
             >
                 <WalletConnectionModal />
+            </Modal>
+            <Modal
+                show={unwrappedEGold}
+                animation={false}
+                className="eGold-success ChainModal"
+            >
+                <EGoldSuccess />
             </Modal>
             <ChangeNetworkModal />
             <ChangeWalletModal />

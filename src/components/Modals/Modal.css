@@ -24,6 +24,16 @@
     margin: 0 auto;
 }
 
+.eGold-success__text {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 160%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #14161a;
+}
+
 .magnify {
     position: absolute;
     width: 20px;
