@@ -213,43 +213,42 @@ function NFTaccount() {
         return () => clearInterval(balanceInterval);
     }, [from, account, NFTSetToggler]);
 
-    useEffect(() => {
-        document.addEventListener(
-            "keydown",
-            async (event) => {
-                if (event.code === "Numpad4") {
-                    const f = await getFactory();
+    // useEffect(() => {
+    //     document.addEventListener(
+    //         "keydown",
+    //         async (event) => {
+    //             if (event.code === "Numpad4") {
+    //                 const f = await getFactory();
 
-                    console.log(f);
-                    const fromChain = await f.inner(chainsConfig[from].Chain);
+    //                 const fromChain = await f.inner(chainsConfig[from].Chain);
 
-                    console.log(keplrWallet, "fromChain");
+    //                 console.log(keplrWallet, "fromChain");
 
-                    // const a = await keplrWallet.tx.snip721.setViewingKey(
-                    //     {
-                    //         contractAddress:
-                    //             "secret146snljq0kjsva7qrx4am54nv3fhfaet7srx4n2",
-                    //         sender: secretAccount,
-                    //         msg: {
-                    //             set_viewing_key: {
-                    //                 key: "MyViewingKey#1",
-                    //             },
-                    //         },
-                    //     },
-                    //     {
-                    //         gasLimit: "1000000",
-                    //     }
-                    // );
+    //                 // const a = await keplrWallet.tx.snip721.setViewingKey(
+    //                 //     {
+    //                 //         contractAddress:
+    //                 //             "secret146snljq0kjsva7qrx4am54nv3fhfaet7srx4n2",
+    //                 //         sender: secretAccount,
+    //                 //         msg: {
+    //                 //             set_viewing_key: {
+    //                 //                 key: "MyViewingKey#1",
+    //                 //             },
+    //                 //         },
+    //                 //     },
+    //                 //     {
+    //                 //         gasLimit: "1000000",
+    //                 //     }
+    //                 // );
 
-                    // const a = await f.mint(fromChain, keplrWallet, {
-                    //     url:
-                    //         "https://wnfts.xp.network/w/30429570476105310976966757785",
-                    // });
-                }
-            },
-            false
-        );
-    }, []);
+    //                 // const a = await f.mint(fromChain, keplrWallet, {
+    //                 //     url:
+    //                 //         "https://wnfts.xp.network/w/30429570476105310976966757785",
+    //                 // });
+    //             }
+    //         },
+    //         false
+    //     );
+    // }, []);
 
     return (
         <div className="NFTaccount">
