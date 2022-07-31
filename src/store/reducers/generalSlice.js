@@ -49,6 +49,9 @@ const generalSlice = createSlice({
     setWrappedEGold(state, action) {
       state.wrappedEGold = action.payload;
     },
+    setUnwrappedEGold(state, action) {
+      state.unwrappedEGold = action.payload;
+    },
     setTempleWalletSigner(state, action) {
       state.templeSigner = action.payload;
     },
@@ -433,6 +436,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+  setUnwrappedEGold,
   setSecretLoggedIn,
   setKeplrAccount,
   setKeplrWallet,

@@ -14,6 +14,7 @@ import swap from "../../assets/img/icons/swapChain.svg";
 import { TESTNET_CHAIN_INFO, CHAIN_INFO } from "../values";
 import { useWeb3React } from "@web3-react/core";
 import { usePrevious } from "../Settings/hooks";
+import { switchNetwork } from "../../services/chains/evmSerive";
 
 export default function ChainSelectBox() {
     const dispatch = useDispatch();
@@ -74,23 +75,6 @@ export default function ChainSelectBox() {
         }
     };
 
-    async function switchNetwork(chain) {
-        const info = testnet
-            ? TESTNET_CHAIN_INFO[chain?.key]
-            : CHAIN_INFO[chain?.key];
-        const chainId = `0x${info.chainId.toString(16)}`;
-        try {
-            await window.ethereum.request({
-                method: "wallet_switchEthereumChain",
-                params: [{ chainId }],
-            });
-            return true;
-        } catch (error) {
-            console.log(error);
-            return false;
-        }
-    }
-
     const handleSwitch = async (e) => {
         // debugger
         e.preventDefault();
@@ -110,7 +94,7 @@ export default function ChainSelectBox() {
 
     return (
         <>
-            <ChainListBox />
+            <ChainListBox switchNetwork={switchNetwork} />
             <div className="chain-select__box">
                 Transfer NFTs
                 <br /> between blockchains

@@ -8,6 +8,7 @@ import {
     setError,
     setWrappedEGold,
     cleanSelectedNFTList,
+    setUnwrappedEGold,
 } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -35,6 +36,7 @@ import NFTscreen from "./NFTscreen";
 import NFTmobileView from "./NFTmobileView";
 
 import { SecretNetworkClient } from "secretjs";
+import EGoldSuccess from "./../Modals/eGoldSuccess/EGoldSuccess";
 
 function NFTaccount() {
     const dispatch = useDispatch();
@@ -59,6 +61,7 @@ function NFTaccount() {
     const prevNFTSetToggler = usePrevious(NFTSetToggler);
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
     const wrappedEGold = useSelector((state) => state.general.wrappedEGold);
+    const unwrappedEGold = useSelector((state) => state.general.unwrappedEGold);
 
     const accountWalletModal = useSelector(
         (state) => state.general.accountWalletModal
@@ -213,43 +216,42 @@ function NFTaccount() {
         return () => clearInterval(balanceInterval);
     }, [from, account, NFTSetToggler]);
 
-    useEffect(() => {
-        document.addEventListener(
-            "keydown",
-            async (event) => {
-                if (event.code === "Numpad4") {
-                    const f = await getFactory();
+    // useEffect(() => {
+    //     document.addEventListener(
+    //         "keydown",
+    //         async (event) => {
+    //             if (event.code === "Numpad4") {
+    //                 const f = await getFactory();
 
-                    console.log(f);
-                    const fromChain = await f.inner(chainsConfig[from].Chain);
+    //                 const fromChain = await f.inner(chainsConfig[from].Chain);
 
-                    console.log(keplrWallet, "fromChain");
+    //                 console.log(keplrWallet, "fromChain");
 
-                    // const a = await keplrWallet.tx.snip721.setViewingKey(
-                    //     {
-                    //         contractAddress:
-                    //             "secret146snljq0kjsva7qrx4am54nv3fhfaet7srx4n2",
-                    //         sender: secretAccount,
-                    //         msg: {
-                    //             set_viewing_key: {
-                    //                 key: "MyViewingKey#1",
-                    //             },
-                    //         },
-                    //     },
-                    //     {
-                    //         gasLimit: "1000000",
-                    //     }
-                    // );
+    //                 // const a = await keplrWallet.tx.snip721.setViewingKey(
+    //                 //     {
+    //                 //         contractAddress:
+    //                 //             "secret146snljq0kjsva7qrx4am54nv3fhfaet7srx4n2",
+    //                 //         sender: secretAccount,
+    //                 //         msg: {
+    //                 //             set_viewing_key: {
+    //                 //                 key: "MyViewingKey#1",
+    //                 //             },
+    //                 //         },
+    //                 //     },
+    //                 //     {
+    //                 //         gasLimit: "1000000",
+    //                 //     }
+    //                 // );
 
-                    // const a = await f.mint(fromChain, keplrWallet, {
-                    //     url:
-                    //         "https://wnfts.xp.network/w/30429570476105310976966757785",
-                    // });
-                }
-            },
-            false
-        );
-    }, []);
+    //                 // const a = await f.mint(fromChain, keplrWallet, {
+    //                 //     url:
+    //                 //         "https://wnfts.xp.network/w/30429570476105310976966757785",
+    //                 // });
+    //             }
+    //         },
+    //         false
+    //     );
+    // }, []);
 
     return (
         <div className="NFTaccount">
@@ -267,6 +269,13 @@ function NFTaccount() {
                 className="ChainModal wallet-modal"
             >
                 <WalletConnectionModal />
+            </Modal>
+            <Modal
+                show={unwrappedEGold}
+                animation={false}
+                className="eGold-success ChainModal"
+            >
+                <EGoldSuccess />
             </Modal>
             <ChangeNetworkModal />
             <ChangeWalletModal />
