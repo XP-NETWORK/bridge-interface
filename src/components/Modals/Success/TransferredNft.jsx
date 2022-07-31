@@ -80,7 +80,7 @@ export default function TransferredNft({ nft }) {
                     )}
                     <div className="transferred-nft-name">{name}</div>
                 </div>
-                {txnStatus === "Completed" && (
+                {(txnStatus === "completed" || txnStatus === "pending") && (
                     <a
                         href={`https://bridge-explorer.xp.network/tx/${txn?.hash}`}
                         rel="noreferrer"

@@ -37,6 +37,7 @@ function Approval(props) {
     const testnet = useSelector((state) => state.general.testNet);
     const account = useSelector((state) => state.general.account);
     const templeSigner = useSelector((state) => state.general.templeSigner);
+    const bitKeep = useSelector((state) => state.general.bitKeep);
     const algorandAccount = useSelector(
         (state) => state.general.algorandAccount
     );
@@ -247,10 +248,19 @@ function Approval(props) {
             setApprovedLoading(true);
             setFinishedApproving([]);
             if (from.type === "EVM") {
-                const provider = new ethers.providers.Web3Provider(
-                    WCProvider?.walletConnectProvider || window.ethereum
-                );
-                const signer = provider.getSigner(account);
+                let provider;
+                let signer;
+                if (bitKeep) {
+                    provider = new ethers.providers.Web3Provider(
+                        window.bitkeep.ethereum
+                    );
+                    signer = provider.getSigner(account);
+                } else {
+                    provider = new ethers.providers.Web3Provider(
+                        WCProvider?.walletConnectProvider || window.ethereum
+                    );
+                    signer = provider.getSigner(account);
+                }
                 const chain = await handleChainFactory(from.key);
                 selectedNFTList.forEach((nft, index) => {
                     approveEach(nft, signer, chain, index);
