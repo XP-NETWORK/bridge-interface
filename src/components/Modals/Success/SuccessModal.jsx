@@ -33,15 +33,17 @@ export default function SuccessModal() {
   const txnHashArr = useSelector((state) => state.general.txnHashArr);
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
   const testnet = useSelector((state) => state.general.testNet);
-  const address = account
-    ? account
-    : algorandAccount
-    ? algorandAccount
-    : elrondAccount
-    ? elrondAccount
-    : tronWallet
-    ? tronWallet
-    : "";
+  const secretAccount = useSelector((state) => state.general.secretAccount);
+  const tezosAccount = useSelector((state) => state.general.tezosAccount);
+
+  const address =
+    account ||
+    algorandAccount ||
+    elrondAccount ||
+    tronWallet ||
+    secretAccount ||
+    tezosAccount ||
+    "";
 
   const handleClose = () => {
     selectedNFTList.forEach((nft) => {
