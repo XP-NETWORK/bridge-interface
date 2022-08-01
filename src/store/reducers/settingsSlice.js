@@ -60,6 +60,12 @@ export const wallets = [
   //"Trezor",
 ];
 
+export const initialChainFees = {
+  chain: undefined,
+  extraFees: 0,
+  wallet: "",
+};
+
 export const initialState = {
   btnRadius: 9,
   fontSize: 16,
@@ -85,6 +91,7 @@ export const initialState = {
   tooltipColor: "#ffffff",
   affiliationFees: 0,
   affiliationWallet: "",
+  affiliationSettings: [initialChainFees],
   showAlert: false,
   showLink: true,
   collapsed: false,

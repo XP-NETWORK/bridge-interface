@@ -19,6 +19,12 @@ import "./Settings.css";
 import { ReactComponent as CollapseComp } from "./assets/img/collapse.svg";
 import { copyCode } from "./helpers";
 
+import { ChainSelect } from "./elements/chainSelect";
+
+import addItem from "./assets/img/icon/addItem.svg";
+
+import deleteIcon from "./assets/img/icon/delete.svg";
+
 function WSettings({
   settings,
   copied,
@@ -40,6 +46,7 @@ function WSettings({
   onSelectAll,
   onUnSelectAll,
   debouncedAcc,
+  chainFeesMethods,
 }) {
   const {
     backgroundColor,
@@ -67,6 +74,7 @@ function WSettings({
     theme,
     fromChain,
     toChain,
+    affiliationSettings,
   } = settings;
 
   const portalDiv = document.getElementById("settingsPortal");
@@ -273,51 +281,13 @@ function WSettings({
                             style={{ padding: "10px 30px" }}
                           >
                             From Chain (Locked):
-                            <Dropdown>
-                              <Dropdown.Toggle id="dropdown-basic">
-                                {fromChain === undefined
-                                  ? "None"
-                                  : fromChain !== ""
-                                  ? fromChain
-                                  : "Select Chain"}
-                              </Dropdown.Toggle>
-                              <Dropdown.Menu
-                                style={{ maxHeight: "300px", overflow: "auto" }}
-                                id="fromMenu"
-                              >
-                                <ul>
-                                  <li key={"none"}>
-                                    <span
-                                      className="dropdown-item"
-                                      // style={{ fontFamily: font }}
-                                      onClick={(e) => {
-                                        deboucedSet(undefined, "fromChain");
-                                      }}
-                                    >
-                                      None
-                                    </span>
-                                  </li>
-                                  {chains
-                                    .filter((chain) => chain.text !== toChain)
-                                    .map((chain, i) => (
-                                      <li key={i + "chain"}>
-                                        <span
-                                          className="dropdown-item"
-                                          // style={{ fontFamily: font }}
-                                          onClick={(e) => {
-                                            deboucedSet(
-                                              chain.text,
-                                              "fromChain"
-                                            );
-                                          }}
-                                        >
-                                          {chain.text}
-                                        </span>
-                                      </li>
-                                    ))}
-                                </ul>
-                              </Dropdown.Menu>
-                            </Dropdown>
+                            <ChainSelect
+                              setChain={(...args) =>
+                                args[0] !== toChain && deboucedSet(...args)
+                              }
+                              selectedChain={fromChain}
+                              mode={"fromChain"}
+                            />
                           </div>
                         </li>
                         <li>
@@ -326,47 +296,13 @@ function WSettings({
                             style={{ padding: "10px 30px" }}
                           >
                             To Chain (Locked):
-                            <Dropdown>
-                              <Dropdown.Toggle id="dropdown-basic">
-                                {toChain === undefined
-                                  ? "None"
-                                  : toChain !== ""
-                                  ? toChain
-                                  : "Select Chain"}
-                              </Dropdown.Toggle>
-                              <Dropdown.Menu
-                                style={{ maxHeight: "300px", overflow: "auto" }}
-                              >
-                                <ul>
-                                  <li key={"none"}>
-                                    <span
-                                      className="dropdown-item"
-                                      // style={{ fontFamily: font }}
-                                      onClick={(e) =>
-                                        deboucedSet(undefined, "toChain")
-                                      }
-                                    >
-                                      None
-                                    </span>
-                                  </li>
-                                  {chains
-                                    .filter((chain) => chain.text !== fromChain)
-                                    .map((chain, i) => (
-                                      <li key={i + "chain"}>
-                                        <span
-                                          className="dropdown-item"
-                                          // style={{ fontFamily: font }}
-                                          onClick={(e) =>
-                                            deboucedSet(chain.text, "toChain")
-                                          }
-                                        >
-                                          {chain.text}
-                                        </span>
-                                      </li>
-                                    ))}
-                                </ul>
-                              </Dropdown.Menu>
-                            </Dropdown>
+                            <ChainSelect
+                              setChain={(...args) =>
+                                args[0] !== fromChain && deboucedSet(...args)
+                              }
+                              selectedChain={toChain}
+                              mode={"toChain"}
+                            />
                           </div>
                         </li>
                       </ul>
@@ -1038,73 +974,102 @@ function WSettings({
               <Accordion defaultActiveKey="18">
                 <Accordion.Item eventKey="9">
                   <Accordion.Header>Affiliation Settings</Accordion.Header>
+
                   <Accordion.Body>
-                    <div className="typographyContainer">
-                      <div className="typo-sel font-size-sel">
-                        <h5>Extra gas fees</h5>
-                        <div className="select_font">
-                          <div className="typo-sel header_color_select">
-                            <div className="cornerRadi">
-                              <div className="feesWrapper">
-                                <input
-                                  type="number"
-                                  placeholder="0"
-                                  max={100}
-                                  min={0}
-                                  value={settings.affiliationFees}
-                                  onChange={(e) => {
-                                    if (e.target.value < 0)
-                                      return deboucedSet(
-                                        0,
-                                        "affiliationFees",
-                                        true
-                                      );
-                                    if (e.target.value > 100)
-                                      return deboucedSet(
-                                        100,
-                                        "affiliationFees",
-                                        true
-                                      );
-                                    deboucedSet(
-                                      e.target.value,
-                                      "affiliationFees",
-                                      true
-                                    );
-                                  }}
-                                />
-                                <span>%</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="typographyContainer">
-                      <div className="typo-sel font-size-sel">
-                        <h5>Associated wallet</h5>
-                        <div className="select_font">
-                          <div className="typo-sel header_color_select">
-                            <div className="cornerRadi">
-                              <div className="feesWrapper">
-                                <input
-                                  type="text"
-                                  value={settings.affiliationWallet}
-                                  onChange={(e) =>
-                                    deboucedSet(
-                                      e.target.value,
-                                      "affiliationWallet"
-                                    )
+                    {affiliationSettings.map((chainFees, i) => {
+                      return (
+                        <div
+                          key={"feeSet" + i}
+                          className="feeSettingsContainer"
+                        >
+                          <div className="typographyContainer">
+                            <div className="typo-sel font-size-sel">
+                              <h5>Extra gas fees</h5>
+                              <div className="feeSettingsWrapper">
+                                <div className="select_font">
+                                  <div className="typo-sel header_color_select">
+                                    <div className="cornerRadi">
+                                      <div className="feesWrapper">
+                                        <input
+                                          type="number"
+                                          placeholder="0"
+                                          max={100}
+                                          min={0}
+                                          value={chainFees.extraFees}
+                                          onChange={(e) =>
+                                            chainFeesMethods.updateChainFees(
+                                              i,
+                                              "extraFees",
+                                              e.target.value > 0
+                                                ? e.target.value < 100
+                                                  ? e.target.value
+                                                  : 100
+                                                : 0
+                                            )
+                                          }
+                                        />
+                                        <span>%</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <ChainSelect
+                                  setChain={(...args) =>
+                                    args[0] !== fromChain &&
+                                    deboucedSet(...args)
                                   }
+                                  selectedChain={chainFees.chain}
                                 />
                               </div>
                             </div>
                           </div>
+                          <div className="typographyContainer">
+                            <div className="typo-sel font-size-sel">
+                              <h5>Associated wallet</h5>
+                              <div className="select_font">
+                                <div className="typo-sel header_color_select">
+                                  <div className="cornerRadi">
+                                    <div className="feesWrapper">
+                                      <input
+                                        type="text"
+                                        value={chainFees.wallet}
+                                        onChange={(e) =>
+                                          chainFeesMethods.updateChainFees(
+                                            i,
+                                            "wallet",
+                                            e.target.value
+                                          )
+                                        }
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <img
+                            src={deleteIcon}
+                            alt=""
+                            className="deleteIcon"
+                            onClick={() => chainFeesMethods.deleteChainFees(i)}
+                          />
                         </div>
+                      );
+                    })}
+
+                    <div className="typographyContainer">
+                      <div
+                        className="addFeesWrapper"
+                        onClick={chainFeesMethods.addChainFees}
+                      >
+                        <img src={addItem} alt="addItem" />
+                        <span>Add gas fee</span>
                       </div>
                     </div>
                   </Accordion.Body>
                 </Accordion.Item>
               </Accordion>
+
               {false && (
                 <div className="referalSwitch" onClick={toggleShow}>
                   <input type="checkbox" checked={showLink} readOnly />

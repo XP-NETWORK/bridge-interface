@@ -8,6 +8,7 @@ import {
   initialState as initSettings,
   initialState,
   chains,
+  initialChainFees,
 } from "../../store/reducers/settingsSlice";
 import { comingSoonChains } from "../../store/reducers/settingsSlice";
 import { debounce } from "../helpers";
@@ -70,6 +71,7 @@ const settingsHoc = (Wrapped) => (props) => {
     bridgeState,
     showLink,
     affiliationFees,
+    affiliationSettings,
     panelBackground,
     fromChain,
     toChain,
@@ -367,6 +369,46 @@ const settingsHoc = (Wrapped) => (props) => {
     entity === "selectedChains" && setActiveChains(2);
   };
 
+  const addChainFees = () => {
+    dispatch(
+      setSettings({
+        ...settings,
+        affiliationSettings: [
+          ...settings.affiliationSettings,
+          initialChainFees,
+        ],
+      })
+    );
+  };
+
+  const deleteChainFees = (idx) => {
+    dispatch(
+      setSettings({
+        ...settings,
+        affiliationSettings: [
+          ...settings.affiliationSettings.slice(0, idx),
+          ...settings.affiliationSettings.slice(idx + 1),
+        ],
+      })
+    );
+  };
+
+  const updateChainFees = (idx, key, val) => {
+    dispatch(
+      setSettings({
+        ...settings,
+        affiliationSettings: [
+          ...settings.affiliationSettings.slice(0, idx),
+          {
+            ...settings.affiliationSettings[idx],
+            [key]: val,
+          },
+          ...settings.affiliationSettings.slice(idx + 1),
+        ],
+      })
+    );
+  };
+
   return (
     <Wrapped
       list={list}
@@ -389,6 +431,7 @@ const settingsHoc = (Wrapped) => (props) => {
       onSelectAll={onSelectAll}
       onUnSelectAll={onUnSelectAll}
       debouncedAcc={debouncedAcc}
+      chainFeesMethods={{ addChainFees, deleteChainFees, updateChainFees }}
     />
   );
 };

@@ -1244,10 +1244,10 @@ li.blockChain_item .select_nft input:checked + .selectNfticon {
 }
 
 .typo-sel h5 {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 160%;
   font-weight: normal;
-  color: #fff;
+  color: rgba(249, 250, 251, 1);
 
   padding: 12px 0 4px;
 }
@@ -1800,16 +1800,20 @@ li.blockChain_item .blockChainItem span {
 .feesWrapper {
   display: flex;
   align-items: center;
+  position: relative;
+  margin-right: 10px;
 }
 
 .feesWrapper input {
-  width: 80%;
-  margin-right: 15px;
 }
 
-.feesWrapper {
-  margin-bottom: 10px;
+.feesWrapper span {
+  position: absolute;
+  right: 35px;
+  color: rgb(219, 216, 216);
+  font-size: 14px;
 }
+
 .feesWrapper input:focus {
   outline: none;
 }
@@ -1949,7 +1953,7 @@ li.blockChain_item .blockChainItem span {
   padding: 0 16px 16px 16px;*/
 }
 
-.settingsPannel  button {
+.settingsPannel button {
   width: 130px;
 }
 
@@ -2004,7 +2008,6 @@ li.blockChain_item .blockChainItem span {
   display: flex;
   justify-content: space-between;
   cursor: move;
-
 }
 
 .codeModal .header img {
@@ -2019,14 +2022,12 @@ li.blockChain_item .blockChainItem span {
   margin-top: 10px;
   z-index: 100000;
   min-width: 400px;
-
 }
 
 .codeModal textarea {
   min-height: 200px;
   padding: 5px;
   resize: both;
-
 }
 
 .codeModal textarea:focus {
@@ -2079,3 +2080,101 @@ button.import {
   color: rgb(17, 17, 17) !important;
 }
 
+ul.chainSelector li.blockChainItem {
+  padding: 0 20px;
+}
+
+ul.chainSelector li.blockChainItem:hover {
+  background-color: #212529;
+}
+
+.ltm ul.chainSelector li.blockChainItem:hover {
+  background-color: #dbdee0;
+}
+
+.ltm ul.chainSelector li.blockChainItem span {
+  color: black;
+}
+
+.ltm .select_font #dropdown-basic {
+  background-color: #f0f3f5;
+  color: black;
+}
+
+ul.chainSelector li.blockChainItem .dropdown-item:hover {
+  background-color: unset;
+}
+
+.selectedChain {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.selectedChain img {
+  width: 22px;
+  height: 22px;
+}
+
+.selectedChain span {
+  margin-left: 10px;
+}
+
+.setting_sidebar #dropdown-basic {
+  position: relative;
+}
+
+.setting_sidebar .dropdown {
+  min-width: 80px;
+}
+
+.setting_sidebar .dropdown-toggle::after {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  left: unset !important;
+}
+
+.feeSettingsWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.feeSettingsWrapper .select_font {
+  width: 70%;
+}
+
+.addFeesWrapper {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  cursor: pointer;
+}
+
+.addFeesWrapper:hover span {
+  color: white;
+}
+
+.addFeesWrapper span {
+  margin-left: 8px;
+  color: rgba(249, 250, 251, 1);
+  font-size: 14px;
+}
+
+.feeSettingsContainer {
+  position: relative;
+}
+
+.feeSettingsContainer .deleteIcon {
+  position: absolute;
+  right: 20px;
+  bottom: 0;
+  width: 20px;
+  cursor: pointer;
+}
+
+.feeSettingsContainer .deleteIcon:hover {
+  filter: brightness(0.85);
+}
