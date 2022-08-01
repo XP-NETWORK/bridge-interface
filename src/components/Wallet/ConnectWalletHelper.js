@@ -73,10 +73,11 @@ const connector = new WalletConnect({
 });
 
 export const switchNetWork = async (from) => {
+    debugger;
     // let fromChainId;
     const chain = getAddEthereumChain()[parseInt(from.chainId).toString()];
     const params = {
-        chainId: from.chainID, // A 0x-prefixed hexadecimal string
+        chainId: from.chainId, // A 0x-prefixed hexadecimal string
         chainName: chain.name,
         nativeCurrency: {
             name: chain.nativeCurrency.name,
@@ -141,6 +142,7 @@ export const connectKeplr = async (testnet, chain) => {
 };
 
 export const connectBitKeep = async (from) => {
+    debugger;
     let provider;
     const isInstallBikeep = () => {
         return window.bitkeep && window.bitkeep?.ethereum;
