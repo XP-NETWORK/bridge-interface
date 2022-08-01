@@ -437,7 +437,7 @@ export const chainsConfig = {
     rpc: "https://mainnet-tezos.giganode.io/tx/",
     chainId: 0x12,
     Chain: Chain.TEZOS,
-    tx: "https://tzstats.com/tx/",
+    tx: "https://tezblock.io/transaction/",
   },
   Iotex: {
     type: EVM,

@@ -72,12 +72,7 @@ const connector = new WalletConnect({
   bridge: "https://bridge.walletconnect.org", // Required
 });
 
-const switchNetWork = async (from) => {
-  debugger;
-  const transfer16 = (val = 0) => {
-    val = isNaN(Number(val)) ? 1 : Number(val);
-    return "0x" + val.toString(16);
-  };
+export const switchNetWork = async (from) => {
   // let fromChainId;
   const chain = getAddEthereumChain()[parseInt(from.chainId).toString()];
   const params = {
@@ -396,11 +391,15 @@ export const connectMaiar = async () => {
 
 // Elrond blockchain connection ( Maiar Extension )
 export const connectMaiarExtension = async () => {
+  // debugger;
   const instance = ExtensionProvider.getInstance();
   try {
     await instance.init();
     await instance.login();
     const { account } = instance;
+    if (account?.name === "CanceledError") {
+      return false;
+    }
     store.dispatch(setOnMaiar(true));
     store.dispatch(setElrondAccount(account.address));
     store.dispatch(setMaiarProvider(instance));

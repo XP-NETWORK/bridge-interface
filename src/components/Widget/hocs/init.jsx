@@ -7,13 +7,8 @@ import {
   setWSettings,
   setWid,
 } from "../../../store/reducers/generalSlice";
-import {
-  initialState,
-  setSettings,
-} from "../../../store/reducers/settingsSlice";
+import { setSettings } from "../../../store/reducers/settingsSlice";
 import mobileBanner from "../../Settings/assets/img/mobileOnlyBanner.svg";
-import axios from "axios";
-import { ethers } from "ethers";
 
 import { initialState as initialWidget } from "../../../store/reducers/settingsSlice";
 import { inIframe } from "../../Settings/helpers";
@@ -76,14 +71,21 @@ async function initFormId(id) {
   if (id === "create" && window.ethereum) {
     const { signature, address } = await wservice.sign(undefined, true);
 
-    const res = await wservice.add(address, signature, initialWidget);
+    const res = await wservice.add(
+      address,
+      signature,
+      initialWidget,
+      new URLSearchParams(window.location.search).get("name")
+    );
 
     if (!res?.newWidget) {
       return;
     } //show error msg
 
     return window.open(
-      `/${window.location.search.replace("create", res?.newWidget?._id)}`,
+      `/${window.location.search
+        .replace("create", res?.newWidget?._id)
+        .replace(/\&name\=\S*/, "")}`,
       "_self"
     );
   }

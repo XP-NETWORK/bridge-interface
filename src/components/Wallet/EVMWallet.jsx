@@ -20,6 +20,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getAddEthereumChain } from "../../wallet/chains";
 import BitKeep from "../../assets/img/wallet/bitkeep.svg";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO, biz } from "../values";
+import { switchNetwork } from "../../services/chains/evmSerive";
 
 export default function EVMWallet({ wallet, close }) {
   const { account, activate, chainId, deactivate } = useWeb3React();
@@ -46,52 +47,52 @@ export default function EVMWallet({ wallet, close }) {
     );
   };
 
-  const switchNetwork = async () => {
-    let changed;
-    const info = testnet
-      ? TESTNET_CHAIN_INFO[from?.key]
-      : CHAIN_INFO[from?.key];
-    const _chainId = `0x${info.chainId.toString(16)}`;
-    try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: _chainId }],
-      });
-      changed = true;
-    } catch (switchError) {
-      if (switchError.code === 4902 || switchError.code === -32603) {
-        try {
-          const chain = getAddEthereumChain()[parseInt(_chainId).toString()];
-          const params = {
-            chainId: _chainId, // A 0x-prefixed hexadecimal string
-            chainName: chain.name,
-            nativeCurrency: {
-              name: chain.nativeCurrency.name,
-              symbol: chain.nativeCurrency.symbol, // 2-6 characters long
-              decimals: chain.nativeCurrency.decimals,
-            },
-            rpcUrls: chain.rpc,
-            blockExplorerUrls: [
-              chain.explorers &&
-              chain.explorers.length > 0 &&
-              chain.explorers[0].url
-                ? chain.explorers[0].url
-                : chain.infoURL,
-            ],
-          };
-          await window.ethereum.request({
-            method: "wallet_addEthereumChain",
-            params: [params, account],
-          });
-          changed = true;
-        } catch (addError) {
-          changed = false;
-        }
-      }
-      // handle other "switch" errors
-    }
-    return changed;
-  };
+  // const switchNetwork = async () => {
+  //   let changed;
+  //   const info = testnet
+  //     ? TESTNET_CHAIN_INFO[from?.key]
+  //     : CHAIN_INFO[from?.key];
+  //   const _chainId = `0x${info.chainId.toString(16)}`;
+  //   try {
+  //     await window.ethereum.request({
+  //       method: "wallet_switchEthereumChain",
+  //       params: [{ chainId: _chainId }],
+  //     });
+  //     changed = true;
+  //   } catch (switchError) {
+  //     if (switchError.code === 4902 || switchError.code === -32603) {
+  //       try {
+  //         const chain = getAddEthereumChain()[parseInt(_chainId).toString()];
+  //         const params = {
+  //           chainId: _chainId, // A 0x-prefixed hexadecimal string
+  //           chainName: chain.name,
+  //           nativeCurrency: {
+  //             name: chain.nativeCurrency.name,
+  //             symbol: chain.nativeCurrency.symbol, // 2-6 characters long
+  //             decimals: chain.nativeCurrency.decimals,
+  //           },
+  //           rpcUrls: chain.rpc,
+  //           blockExplorerUrls: [
+  //             chain.explorers &&
+  //             chain.explorers.length > 0 &&
+  //             chain.explorers[0].url
+  //               ? chain.explorers[0].url
+  //               : chain.infoURL,
+  //           ],
+  //         };
+  //         await window.ethereum.request({
+  //           method: "wallet_addEthereumChain",
+  //           params: [params, account],
+  //         });
+  //         changed = true;
+  //       } catch (addError) {
+  //         changed = false;
+  //       }
+  //     }
+  //     // handle other "switch" errors
+  //   }
+  //   return changed;
+  // };
 
   const connectHandler = async (wallet) => {
     let connected;
@@ -107,7 +108,7 @@ export default function EVMWallet({ wallet, close }) {
               window.ethereum?.chainId ||
               chainId !== `0x${from?.chainId.toString(16)}`
             ) {
-              const switched = await switchNetwork();
+              const switched = await switchNetwork(from);
               if (switched) navigateToAccountRoute();
             } else navigateToAccountRoute();
           }

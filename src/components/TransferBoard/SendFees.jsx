@@ -100,7 +100,11 @@ function SendFees() {
 
       dispatch(setBigNumFees(bigNum));
       let fees;
-      if (from.type === "Tron" || from.type === "Algorand") {
+      if (
+        from.type === "Tron" ||
+        from.type === "Algorand" ||
+        from.type === "Cosmos"
+      ) {
         fees = bigNum / 1e6;
       } else {
         fees = bigNum && (await Web3Utils.fromWei(String(bigNum), "ether"));
@@ -165,9 +169,10 @@ function SendFees() {
       <div className="fees__title">Fees</div>
       <div className="fees__bank">
         {balance && (
-          <span className="fees__balance">{`Balance: ${balance.toFixed(5)} ${
-            config?.token
-          }`}</span>
+          <span className="fees__balance">{`Balance: ${balance.toFixed(
+            5
+          )} ${config?.token || (from?.text === "Gnosis" && "Gnosis")}
+          `}</span>
         )}
         {loading ? (
           <LittleLoader />

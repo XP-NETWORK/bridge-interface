@@ -19,13 +19,14 @@ class WService {
     )?.data;
   }
 
-  async add(address, signature, initialWidget) {
+  async add(address, signature, initialWidget, widgetName) {
     return (
       await this.axios
         .post(`/addWidget`, {
           address,
           signature,
           widget: initialWidget,
+          widgetName,
         })
         .catch((e) => {
           alert("Fail on addWidget:" + e.message);

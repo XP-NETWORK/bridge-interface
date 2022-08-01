@@ -32,11 +32,10 @@ import * as thor from "web3-providers-connex";
 import { Driver, SimpleNet, SimpleWallet } from "@vechain/connex-driver";
 import { Framework } from "@vechain/connex-framework";
 import Connex from "@vechain/connex";
-import axios from "axios";
-import { widgetApi } from "../Widget/hocs/init";
-import WService from "../Widget/wservice";
 
-const wservice = WService();
+import Wservice from "../Widget/wservice";
+
+const wservice = Wservice();
 
 export default function ButtonToTransfer() {
   const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
@@ -57,15 +56,19 @@ export default function ButtonToTransfer() {
   const algorandAccount = useSelector((s) => s.general.algorandAccount);
   const maiarProvider = useSelector((state) => state.general.maiarProvider);
   const templeSigner = useSelector((state) => state.general.templeSigner);
+  const keplrWallet = useSelector((state) => state.general.keplrWallet);
   const account = useSelector((state) => state.general.account);
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
-  const nfts = useSelector((state) => state.general.NFTList);
+
   const WCProvider = useSelector((state) => state.general.WCProvider);
+
+  const bitKeep = useSelector((state) => state.general.bitKeep);
+
   const wid = useSelector((state) => state.general.wid);
+
   const affiliationFees = useSelector(({ settings }) =>
     settings.affiliationFees ? +settings.affiliationFees / 100 + 1 : 1
   );
-  const sync2Connex = useSelector((state) => state.general.sync2Connex);
 
   const getAlgorandWalletSigner = async () => {
     const base = new MyAlgoConnect();
@@ -105,7 +108,9 @@ export default function ButtonToTransfer() {
   const getSigner = async () => {
     let signer;
     try {
-      if (from === "Tezos") {
+      if (from === "Secret") {
+        return keplrWallet;
+      } else if (from === "Tezos") {
         return templeSigner || kukaiWalletSigner;
       } else if (from === "Algorand") {
         signer = await getAlgorandWalletSigner();
@@ -135,10 +140,17 @@ export default function ButtonToTransfer() {
         );
         return signer;
       } else {
-        const provider = new ethers.providers.Web3Provider(
-          WCProvider?.walletConnectProvider || window.ethereum
-        );
-        signer = provider.getSigner(account);
+        let provider;
+
+        if (bitKeep) {
+          provider = new ethers.providers.Web3Provider(window.bitkeep.ethereum);
+          signer = provider.getSigner(account);
+        } else {
+          provider = new ethers.providers.Web3Provider(
+            WCProvider?.walletConnectProvider || window.ethereum
+          );
+          signer = provider.getSigner(account);
+        }
         return signer;
       }
     } catch (error) {
@@ -149,8 +161,7 @@ export default function ButtonToTransfer() {
 
   const sendEach = async (nft, index) => {
     // debugger;
-    const signer =
-      from === "Tezos" ? templeSigner || kukaiWalletSigner : await getSigner();
+    const signer = await getSigner();
     const toNonce = CHAIN_INFO[to].nonce;
     const fromNonce = CHAIN_INFO[from].nonce;
     const nftSmartContract = nft.native.contract;
@@ -177,7 +188,7 @@ export default function ButtonToTransfer() {
         }
         toChain = await factory.inner(chainsConfig[to].Chain);
         fromChain = await factory.inner(chainsConfig[from].Chain);
-        console.log(bigNumberFees, "bigNumberFees");
+        // console.log(bigNumberFees, "bigNumberFees");
         result = await factory.transferNft(
           fromChain,
           toChain,

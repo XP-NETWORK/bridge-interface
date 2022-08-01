@@ -15,12 +15,19 @@ const initialState = {
   innerWidth: 0,
   alert: true,
   NFTListSearch: "",
+  refreshSecret: false,
 };
 
 const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
+    setSecretLoggedIn(state, action) {
+      state.secretLoggedIn = action.payload;
+    },
+    setRefreshSecret(state) {
+      state.refreshSecret = !state.refreshSecret;
+    },
     setKeplrAccount(state, action) {
       state.secretAccount = action.payload;
     },
@@ -41,6 +48,9 @@ const generalSlice = createSlice({
     },
     setWrappedEGold(state, action) {
       state.wrappedEGold = action.payload;
+    },
+    setUnwrappedEGold(state, action) {
+      state.unwrappedEGold = action.payload;
     },
     setTempleWalletSigner(state, action) {
       state.templeSigner = action.payload;
@@ -95,12 +105,9 @@ const generalSlice = createSlice({
         createdAt,
       } = action.payload;
       state.txnHashArr = state.txnHashArr.map((e) => {
-        console.log(e, "setTxnStatus");
         const hash =
-          e.hash?.hash?.type === "Buffer" || e.hash?.hash?.buffer
-            ? utils
-                .hexlify(e.hash?.hash?.data || e.hash?.hash)
-                ?.replace(/^0x/, "")
+          e.hash?.hash?.type === "Buffer"
+            ? utils.hexlify(e.hash?.hash?.data)?.replace(/^0x/, "")
             : e.hash;
         if (hash === fromHash) {
           e.hash = hash;
@@ -219,7 +226,11 @@ const generalSlice = createSlice({
     setTxnHash(state, action) {
       const { nft, txn } = action.payload;
       const { tokenId, contract, chainId } = nft.native;
-      state.txnHashArr = [...state.txnHashArr, action.payload.txn];
+      if (txn.hash?.hash?.type === "Buffer" || txn.hash?.hash?.buffer) {
+        txn.hash = utils.hexlify(txn.hash?.hash?.data).replace(/^0x/, "");
+      }
+
+      state.txnHashArr = [...state.txnHashArr, txn];
 
       state.selectedNFTList = state.selectedNFTList.map((n) => {
         const { native } = n;
@@ -422,12 +433,14 @@ const generalSlice = createSlice({
       state.importModal = action.payload;
     },
     addImportedNFTtoNFTlist(state, action) {
-      state.NFTList = [action.payload, ...state.NFTList];
+      state.NFTList = action.payload;
     },
   },
 });
 
 export const {
+  setUnwrappedEGold,
+  setSecretLoggedIn,
   setKeplrAccount,
   setKeplrWallet,
   setBitKeep,
@@ -527,6 +540,7 @@ export const {
   setTempleWalletSigner,
   setKukaiWalletSigner,
   setAccountWalletModal,
+  setRefreshSecret,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

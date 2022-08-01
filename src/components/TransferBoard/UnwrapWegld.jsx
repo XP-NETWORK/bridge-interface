@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setWrappedEGold } from "../../store/reducers/generalSlice";
+import {
+    setUnwrappedEGold,
+    setWrappedEGold,
+} from "../../store/reducers/generalSlice";
 import { getFactory } from "../../wallet/helpers";
 import { chainsConfig } from "../values";
 import { ExtensionProvider } from "@elrondnetwork/erdjs";
@@ -27,6 +30,7 @@ export default function UnwrapWegld() {
                 wrappedEGold
             );
             if (unwrapped) {
+                dispatch(setUnwrappedEGold(wrappedEGold));
                 dispatch(setWrappedEGold(""));
                 setUnwrapping(false);
             }
