@@ -22,11 +22,9 @@ const SecretAuth = ({ nfts, setLogdIn, refreshSecret, render }) => {
     const dispatch = useDispatch();
 
     const [importBlocked, setImportBlocked] = useState(false);
-    const [viewKey, setViewKey] = useState("MyViewingKey#1");
+    const [viewKey, setViewKey] = useState("");
     //MyViewingKey#1
-    const [contract, setContract] = useState(
-        "secret146snljq0kjsva7qrx4am54nv3fhfaet7srx4n2"
-    );
+    const [contract, setContract] = useState("");
     //secret146snljq0kjsva7qrx4am54nv3fhfaet7srx4n2
     /// const [error, setError] = useState("");
 

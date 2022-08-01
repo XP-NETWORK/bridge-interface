@@ -87,7 +87,7 @@ export default function ChainListBox() {
     };
 
     const chainSelectHandler = async (chain) => {
-        // debugger;
+        debugger;
         if (departureOrDestination === "departure") {
             if (
                 chain.type === typeOfChainConnected() ||

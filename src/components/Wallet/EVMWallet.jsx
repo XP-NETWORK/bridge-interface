@@ -140,13 +140,17 @@ export default function EVMWallet({ wallet, close }) {
     const getStyle = () => {
         // debugger;
         if (temporaryFrom?.type === "EVM") {
-            return {};
+            if (from?.text === "Harmony") {
+                return OFF;
+            } else return {};
         } else if (temporaryFrom && temporaryFrom?.type !== "EVM") {
             return OFF;
         } else if (!from) {
             return {};
         } else if (from && from.type === "EVM") {
-            return {};
+            if (from?.text === "Harmony") {
+                return OFF;
+            } else return {};
         } else if (
             (from.type === "EVM" && getMobOps() && window.innerWidth <= 600) ||
             (window.ethereum && window.innerWidth <= 600 && from.type === "EVM")
