@@ -250,7 +250,7 @@ function NavBar() {
                       </div>
                     </Dropdown.Item>
                     <Dropdown.Item
-                      href="http://docs-staging.xp.network.s3-website-eu-west-1.amazonaws.com/docs/Multibridge2.0/bridge_security/"
+                      href="https://docs.xp.network/docs/Multibridge2.0/bridge_security/"
                       target="_blank"
                     >
                       <div className="drop-item">
