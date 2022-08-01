@@ -94,7 +94,7 @@ export default function ChainListBox() {
                 !typeOfChainConnected()
             ) {
                 if (to?.text === chain.text) {
-                    if (account) {
+                    if (account || evmAccount) {
                         const switched = await switchNetwork(from);
                         if (switched) {
                             dispatch(setTo(from));
@@ -102,7 +102,7 @@ export default function ChainListBox() {
                         }
                     }
                 } else {
-                    if (account) {
+                    if (account || evmAccount) {
                         const switched = await switchNetwork(chain);
                         if (switched) {
                             dispatch(setFrom(chain));
@@ -117,7 +117,7 @@ export default function ChainListBox() {
             }
         } else if (departureOrDestination === "destination") {
             if (from?.text === chain.text) {
-                if (account) {
+                if (account || evmAccount) {
                     const switched = await switchNetwork(to);
                     if (switched) {
                         dispatch(setTo(from));

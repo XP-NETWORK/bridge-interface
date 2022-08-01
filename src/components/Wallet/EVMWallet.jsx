@@ -148,9 +148,7 @@ export default function EVMWallet({ wallet, close }) {
         } else if (!from) {
             return {};
         } else if (from && from.type === "EVM") {
-            if (from?.text === "Harmony") {
-                return OFF;
-            } else return {};
+            return {};
         } else if (
             (from.type === "EVM" && getMobOps() && window.innerWidth <= 600) ||
             (window.ethereum && window.innerWidth <= 600 && from.type === "EVM")
@@ -219,7 +217,7 @@ export default function EVMWallet({ wallet, close }) {
         case "BitKeep":
             return (
                 <li
-                    style={getStyle()}
+                    style={from?.text === "Harmony" ? OFF : getStyle()}
                     onClick={() => connectHandler("BitKeep")}
                     className="wllListItem"
                     data-wallet="MetaMask"
