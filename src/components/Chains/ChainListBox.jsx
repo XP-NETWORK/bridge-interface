@@ -46,6 +46,7 @@ export default function ChainListBox() {
     );
     const evmAccount = useSelector((state) => state.general.account);
     const tronAccount = useSelector((state) => state.general.tronWallet);
+    const Sync2 = useSelector((state) => state.general.Sync2);
     const { account } = useWeb3React();
     const testnet = useSelector((state) => state.general.testNet);
     const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
@@ -71,7 +72,7 @@ export default function ChainListBox() {
     const typeOfChainConnected = () => {
         switch (true) {
             case evmAccount?.length > 0:
-                return "EVM";
+                return Sync2 ? "VeChain" : "EVM";
             case algorandAccount?.length > 0:
                 return "Algorand";
             case tezosAccount?.length > 0:

@@ -26,6 +26,7 @@ export default function UserConnect({ desktop, mobile }) {
   const bitKeep = useSelector((state) => state.general.bitKeep);
   const WalletConnect = useSelector((state) => state.general.WalletConnect);
   const { account, chainId, active } = useWeb3React();
+
   const testnet = useSelector((state) => state.general.testNet);
   const secretAccount = useSelector((state) => state.general.secretAccount);
   const keplrWallet = useSelector((state) => state.general.keplrWallet);
@@ -61,78 +62,77 @@ export default function UserConnect({ desktop, mobile }) {
     }
   };
 
-  const getChain = async () => {
-    let provider;
-    provider = window.bitkeep?.ethereum || window.ethereum;
-    if (!provider) return;
-    const web3 = new Web3(provider);
-    const _chainId = await web3.eth.getChainId();
+  const getChain = async (id) => {
     if (testnet) {
-      console.log();
-      return chains.find(
-        (chain) => chain.tnChainId === chainId || chain.tnChainId === _chainId
-      );
+      return chains.find((chain) => chain.tnChainId === id);
     } else {
-      console.log();
-      return chains.find(
-        (chain) => chain.chainId === chainId || chain.tnChainId === _chainId
-      );
+      return chains.find((chain) => chain.chainId === id);
     }
   };
 
-  const handleChangeAccountOrChainId = async () => {
+  const handleChangeAccountOrChainId = async (hex) => {
     // debugger;
-    let provider;
-    let _chainId;
-    if (bitKeep) {
-      provider = window.bitkeep?.ethereum;
-      const web3 = new Web3(provider);
-      _chainId = await web3.eth.getChainId();
-    }
-    const chainID = _chainId || chainId;
-    dispatch(setAccount(account));
-    const chainConnected = await getChain();
-    if (chainID && location.pathname.includes("/account")) {
-      if (testnet) {
+    const hexToDecimal = (hex) => parseInt(hex, 16);
+    const decimal = hexToDecimal(hex);
+    const chainConnected = await getChain(decimal);
+
+    switch (true) {
+      case testnet:
         if (
           !chainConnected?.testNet ||
-          !chains.some((chain) => chain.tnChainId === chainID)
+          !chains.some((chain) => chain.tnChainId === decimal)
         ) {
           dispatch(setUnsupportedNetwork(true));
-        } else if (chainID === to.tnChainId) {
+        } else if (decimal === to.tnChainId) {
           dispatch(setUnsupportedNetwork(true));
         } else {
           dispatch(setUnsupportedNetwork(false));
           dispatch(setFrom(chainConnected));
         }
-      } else {
+        break;
+      default:
+        console.log("to: ", to);
         if (
           !chainConnected?.mainnet ||
-          !chains.some((chain) => chain.chainId === chainID)
+          !chains.some((chain) => chain?.chainId === decimal)
         ) {
           dispatch(setUnsupportedNetwork(true));
-        } else if (chainID === to.chainId) {
+        } else if (decimal === to.chainId) {
           dispatch(setUnsupportedNetwork(true));
         } else {
           dispatch(setUnsupportedNetwork(false));
           dispatch(setFrom(chainConnected));
         }
-      }
+        break;
     }
   };
 
-  window.bitkeep?.ethereum?.on("chainChanged", (chainId) => {
-    handleChangeAccountOrChainId();
-  });
-
-  window.bitkeep?.ethereum?.on("accountsChanged", (account) => {
-    handleChangeAccountOrChainId();
-  });
-
   useEffect(() => {
-    // debugger
-    handleChangeAccountOrChainId();
-  }, [chainId, account]);
+    if (bitKeep && _account) {
+      window.bitkeep?.ethereum?.on("chainChanged", (chainId) => {
+        handleChangeAccountOrChainId(chainId);
+      });
+
+      window.bitkeep?.ethereum?.on("accountsChanged", (account) => {
+        handleChangeAccountOrChainId();
+      });
+    } else {
+      if (account) {
+        window.ethereum.on("chainChanged", (chainId) => {
+          handleChangeAccountOrChainId(chainId);
+        });
+
+        window.ethereum.on("accountsChanged", (account) => {
+          handleChangeAccountOrChainId();
+        });
+      }
+    }
+  }, []);
+
+  // useEffect(() => {
+  //     // debugger
+  //     // handleChangeAccountOrChainId();
+  // }, [chainId, account]);
 
   useEffect(() => {
     if (!account && WalletConnect) {
