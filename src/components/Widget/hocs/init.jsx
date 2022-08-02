@@ -212,7 +212,7 @@ export const InitWidget = (Wrapped) => {
               btnColor: checkRgbaIn("#" + btnColor),
               btnBackground: checkRgbaIn("#" + btnBackground),
               btnRadius: String(btnRadius).replace(/\D/g, ""),
-              selectedChains: selectedChains.map((c) =>
+              selectedChains: selectedChains?.map((c) =>
                 c === "Gnosis" ? "xDai" : c
               ),
               selectedWallets,
@@ -231,7 +231,7 @@ export const InitWidget = (Wrapped) => {
               affiliationFees: affiliationFees
                 ? ((+affiliationFees - 1) * 100).toFixed(1)
                 : 0,
-              affiliationSettings: affiliationSettings.map((feeSetting) => ({
+              affiliationSettings: affiliationSettings?.map((feeSetting) => ({
                 ...feeSetting,
                 extraFees: feeSetting.extraFees
                   ? ((+feeSetting.extraFees - 1) * 100).toFixed(1)
