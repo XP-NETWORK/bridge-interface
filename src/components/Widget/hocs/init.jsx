@@ -198,9 +198,8 @@ export const InitWidget = (Wrapped) => {
             selectedWallets,
             affiliationFees,
             affiliationWallet,
+            affiliationSettings,
           } = settings || initialWidget;
-
-          console.log(affiliationFees, " affiliationFees");
 
           dispatch(
             setSettings({
@@ -232,16 +231,16 @@ export const InitWidget = (Wrapped) => {
               affiliationFees: affiliationFees
                 ? ((+affiliationFees - 1) * 100).toFixed(1)
                 : 0,
+              affiliationSettings: affiliationSettings.map((feeSetting) => ({
+                ...feeSetting,
+                extraFees: feeSetting.extraFees
+                  ? ((+feeSetting.extraFees - 1) * 100).toFixed(1)
+                  : 0,
+              })),
               fromChain: fromChain,
               toChain: toChain,
             })
           );
-
-          false &&
-            setTimeout(
-              () => document.body.classList.remove("modal-open", "widgetBlur"),
-              1000
-            );
         })();
     }, [widget, wsettings, wid]);
 

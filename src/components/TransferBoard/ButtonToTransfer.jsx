@@ -66,10 +66,12 @@ export default function ButtonToTransfer() {
 
   const wid = useSelector((state) => state.general.wid);
 
-  const affiliationFees = useSelector(({ settings }) =>
-    settings.affiliationFees ? +settings.affiliationFees / 100 + 1 : 1
+  const { affiliationFees, affiliationSettings } = useSelector(
+    ({ settings }) => ({
+      affiliationFees: settings.affiliationFees,
+      affiliationSettings: settings.affiliationSettings,
+    })
   );
-
   const getAlgorandWalletSigner = async () => {
     const base = new MyAlgoConnect();
     if (algorandWallet) {
@@ -243,7 +245,11 @@ export default function ButtonToTransfer() {
           fromNonce,
           toNonce,
           bigNumberFees,
-          affiliationFees,
+          affiliationFees: wservice.getFee(
+            from,
+            affiliationSettings,
+            affiliationFees
+          ),
         });
     } catch (err) {
       console.error(err);

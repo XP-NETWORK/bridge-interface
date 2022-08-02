@@ -13,6 +13,8 @@ import { compose } from "@reduxjs/toolkit";
 
 import WSettings from "../Settings";
 
+import { setFrom, setTo } from "../../store/reducers/generalSlice";
+
 function Widget({ setState, widget, settings, wsettings }) {
   const { NFTList } = useSelector(({ general: { NFTList } }) => ({
     NFTList,
@@ -35,27 +37,6 @@ function Widget({ setState, widget, settings, wsettings }) {
     }
   }, [widget, settings.color, NFTList]);
 
-  // useEffect(() => {
-  //   if (widget && !wsettings && settings.selectedChains.length === 2) {
-  //     setChainsLengthEqauls2(true);
-  //     console.log(chains.find((c) => c.text === settings.selectedChains[0]));
-  //     setTimeout(
-  //       () =>
-  //         dispatch(
-  //           setFrom(chains.find((c) => c.text === settings.selectedChains[1]))
-  //         ),
-  //       5
-  //     );
-  //     setTimeout(
-  //       () =>
-  //         dispatch(
-  //           setTo(chains.find((c) => c.text === settings.selectedChains[0]))
-  //         ),
-  //       7
-  //     );
-  //   }
-  // }, [widget]);
-
   useEffect(() => {
     if (
       widget &&
@@ -64,8 +45,12 @@ function Widget({ setState, widget, settings, wsettings }) {
       chains.find((c) => c.text === settings.toChain)
     ) {
       setState.setChainsLengthEqauls2(true);
+      setState.setIsFrom(true);
+      setState.setIsTo(true);
+      dispatch(setFrom(chains.find((c) => settings.fromChain === c.text)));
+      dispatch(setTo(chains.find((c) => settings.toChain === c.text)));
     }
-    if (
+    /*  if (
       widget &&
       !wsettings &&
       chains.find((c) => c.text === settings.fromChain)
@@ -78,8 +63,8 @@ function Widget({ setState, widget, settings, wsettings }) {
       chains.find((c) => c.text === settings.toChain)
     ) {
       setState.setIsTo(true);
-    }
-  }, [settings]);
+    }*/
+  }, [settings.fromChain, settings.toChain]);
 
   const screenSize = useRef();
 

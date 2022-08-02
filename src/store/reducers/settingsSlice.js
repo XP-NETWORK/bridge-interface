@@ -61,7 +61,7 @@ export const wallets = [
 ];
 
 export const initialChainFees = {
-  chain: undefined,
+  chain: "",
   extraFees: 0,
   wallet: "",
 };

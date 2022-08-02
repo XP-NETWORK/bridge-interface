@@ -109,7 +109,7 @@ function WSettings({
             onClose={handleAlert}
             dismissible
           >
-            <p style={{ marginTop: "15px" }}>{showAlert}</p>
+            <p style={{ marginTop: "10px" }}>{showAlert}</p>
           </Alert>
 
           <Alert
@@ -118,7 +118,7 @@ function WSettings({
             style={{ position: "absolute", zIndex: "9999", width: "100%" }}
             onClose={handleAlert}
           >
-            <p style={{ marginTop: "15px" }}>
+            <p style={{ marginTop: "10px" }}>
               {copied === "saved" ? "Saved" : "Copied"}!
             </p>
           </Alert>
@@ -283,7 +283,9 @@ function WSettings({
                             From Chain (Locked):
                             <ChainSelect
                               setChain={(...args) =>
-                                args[0] !== toChain && deboucedSet(...args)
+                                (args[0] === undefined ||
+                                  args[0] !== toChain) &&
+                                deboucedSet(...args)
                               }
                               selectedChain={fromChain}
                               mode={"fromChain"}
@@ -298,7 +300,9 @@ function WSettings({
                             To Chain (Locked):
                             <ChainSelect
                               setChain={(...args) =>
-                                args[0] !== fromChain && deboucedSet(...args)
+                                (args[0] === undefined ||
+                                  args[0] !== fromChain) &&
+                                deboucedSet(...args)
                               }
                               selectedChain={toChain}
                               mode={"toChain"}
@@ -976,7 +980,7 @@ function WSettings({
                   <Accordion.Header>Affiliation Settings</Accordion.Header>
 
                   <Accordion.Body>
-                    {affiliationSettings.map((chainFees, i) => {
+                    {affiliationSettings.map((chainFees, i, arr) => {
                       return (
                         <div
                           key={"feeSet" + i}
@@ -1015,8 +1019,12 @@ function WSettings({
                                 </div>
                                 <ChainSelect
                                   setChain={(...args) =>
-                                    args[0] !== fromChain &&
-                                    deboucedSet(...args)
+                                    !arr.find((c) => c.chain === args[0]) &&
+                                    chainFeesMethods.updateChainFees(
+                                      i,
+                                      "chain",
+                                      args[0]
+                                    )
                                   }
                                   selectedChain={chainFees.chain}
                                 />
@@ -1041,18 +1049,23 @@ function WSettings({
                                           )
                                         }
                                       />
+                                      <img
+                                        src={deleteIcon}
+                                        alt=""
+                                        className="deleteIcon"
+                                        onClick={() =>
+                                          chainFeesMethods.deleteChainFees(i)
+                                        }
+                                      />
                                     </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <img
-                            src={deleteIcon}
-                            alt=""
-                            className="deleteIcon"
-                            onClick={() => chainFeesMethods.deleteChainFees(i)}
-                          />
+                          {i < affiliationSettings.length - 1 && (
+                            <div className="separator"></div>
+                          )}
                         </div>
                       );
                     })}

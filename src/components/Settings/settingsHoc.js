@@ -82,6 +82,13 @@ const settingsHoc = (Wrapped) => (props) => {
     [affiliationFees]
   );
 
+  const formatedFeeSettings = useMemo(() => {
+    return affiliationSettings.map((feeSettings) => ({
+      ...feeSettings,
+      extraFees: feeSettings.extraFees ? +feeSettings.extraFees / 100 + 1 : 1,
+    }));
+  }, [affiliationSettings]);
+
   const prevSelected = usePrevious(selectedChains);
 
   const onClickEditor = () => {
@@ -310,21 +317,20 @@ const settingsHoc = (Wrapped) => (props) => {
     const newSettings = {
       ...settings,
       affiliationFees: formatedFees,
+      affiliationSettings: formatedFeeSettings,
     };
     if (wid) {
       try {
         const res = await wservice.update(wid, newSettings);
 
-        console.log(res);
-
         setCopied("saved");
       } catch (e) {
         if (e.response.status === 401) {
-          console.log("gu");
           dispatch(
             setSettings({
               ...settings,
-              showAlert: "Erorr 401. Unauthorized",
+              showAlert:
+                "Erorr 401. This account is not widget admin. Try change wallet",
             })
           );
         }

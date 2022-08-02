@@ -14,6 +14,10 @@ import { setOriginalFee } from "../../store/reducers/settingsSlice";
 import { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 
+import Wservice from "../Widget/wservice";
+
+const wservice = Wservice();
+
 function SendFees() {
   const dispatch = useDispatch();
   const balance = useSelector((state) => state.general.balance);
@@ -21,8 +25,11 @@ function SendFees() {
   const from = useSelector((state) => state.general.from);
   const account = useSelector((state) => state.general.account);
   const widget = useSelector((state) => state.general.widget);
-  const affiliationFees = useSelector(
-    (state) => state.settings.affiliationFees
+  const { affiliationFees, affiliationSettings } = useSelector(
+    ({ settings }) => ({
+      affiliationFees: settings.affiliationFees,
+      affiliationSettings: settings.affiliationSettings,
+    })
   );
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
   const isToEVM = useSelector((state) => state.general.to).type === "EVM";
@@ -86,14 +93,13 @@ function SendFees() {
       }
       let bigNum = fee ? fee.multipliedBy(1.1) : undefined; //.integerValue().toString(10) : undefined;
 
-      if (
-        bigNum &&
-        widget &&
-        affiliationFees &&
-        Number(affiliationFees) / 100 + 1 > 1
-      ) {
-        const feesMultiplier = Number(affiliationFees) / 100 + 1;
-        bigNum = bigNum.multipliedBy(feesMultiplier <= 2 ? feesMultiplier : 2);
+      if (widget) {
+        bigNum = wservice.calcExtraFees(
+          bigNum,
+          from,
+          affiliationSettings,
+          affiliationFees
+        );
       }
 
       bigNum = bigNum ? bigNum.integerValue().toString(10) : undefined;
@@ -141,7 +147,7 @@ function SendFees() {
     const s = setInterval(() => estimate(), 1000 * 30);
     setEstimateInterval(s);
     return () => clearInterval(s);
-  }, [selectedNFTList, affiliationFees]);
+  }, [selectedNFTList, affiliationFees, affiliationSettings]);
 
   useEffect(() => {
     clearInterval(estimateInterval);

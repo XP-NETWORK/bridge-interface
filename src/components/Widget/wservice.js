@@ -2,8 +2,9 @@ import axios from "axios";
 import { ethers } from "ethers";
 
 class WService {
-  widgetApi = "https://xpnetwork-widget.herokuapp.com"; //"http://localhost:3030"; //"https://xpnetwork-widget.herokuapp.com";
+  widgetApi = "https://xpnetwork-widget.herokuapp.com"; //"http://localhost:3030"; //"https://xpnetwork-widget.herokuapp.com";dsds
   msg = "Please sign in order to see your widgets";
+  maxExtraFees = 2;
 
   constructor() {
     this.axios = axios.create({
@@ -85,6 +86,9 @@ class WService {
           address,
         });
       }
+      if (e.response.status === 401) {
+        throw e;
+      }
     }
   }
 
@@ -102,8 +106,65 @@ class WService {
       fromChain: fromNonce,
       toChain: toNonce,
       fees: bigNumberFees,
-      extraFees: affiliationFees,
+      extraFees: String(affiliationFees),
     });
+  }
+
+  calcExtraFees(bigNum, from, affiliationSettings, affiliationFees) {
+    if (bigNum) {
+      if (affiliationSettings) {
+        const feeSetting = affiliationSettings.find(
+          ({ chain }) =>
+            chain.toLowerCase() === from.text.toLowerCase() ||
+            chain.toLowerCase() === from.key.toLowerCase() ||
+            chain.toLowerCase() === from.value.toLowerCase()
+        );
+
+        if (feeSetting) {
+          const feesMultiplier = Number(feeSetting.extraFees) / 100 + 1;
+          console.log(feesMultiplier);
+          if (feesMultiplier >= 1) {
+            return bigNum.multipliedBy(
+              feesMultiplier <= this.maxExtraFees
+                ? feesMultiplier
+                : this.maxExtraFees
+            );
+          }
+        }
+      }
+
+      if (affiliationFees) {
+        const feesMultiplier = Number(affiliationFees) / 100 + 1;
+        if (feesMultiplier >= 1) {
+          return bigNum.multipliedBy(
+            feesMultiplier <= this.maxExtraFees
+              ? feesMultiplier
+              : this.maxExtraFees
+          );
+        }
+      }
+    }
+    return bigNum;
+  }
+
+  getFee(from, affiliationSettings, affiliationFees) {
+    from = from === "xDai" ? "Gnosis" : from;
+
+    if (affiliationSettings && affiliationSettings.length) {
+      const feeSetting = affiliationSettings.find(
+        ({ chain }) => chain.toLowerCase() === from.toLowerCase()
+      );
+
+      if (feeSetting) {
+        return feeSetting.extraFees ? +feeSetting.extraFees / 100 + 1 : 1;
+      }
+    }
+
+    if (affiliationFees) {
+      return affiliationFees ? +affiliationFees / 100 + 1 : 1;
+    }
+
+    return 1.0;
   }
 }
 
