@@ -142,7 +142,7 @@ export const connectKeplr = async (testnet, chain) => {
 };
 
 export const connectBitKeep = async (from) => {
-    debugger;
+    // debugger;
     let provider;
     const isInstallBikeep = () => {
         return window.bitkeep && window.bitkeep?.ethereum;

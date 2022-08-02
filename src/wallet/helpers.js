@@ -6,6 +6,7 @@ import {
     setBigLoader,
     setEachClaimables,
     setEachNFT,
+    setError,
     setFactory,
     setNFTList,
     setPreloadNFTs,
@@ -402,6 +403,9 @@ export const getNFTS = async (wallet, from) => {
         }
     } catch (err) {
         console.log(err, "NFT Indexer error");
+        store.dispatch(
+            setError("NFT-Indexer is temporarily under maintenance")
+        );
         return [];
     }
 };

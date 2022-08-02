@@ -171,7 +171,7 @@ export default function WalletList({ search, connected, input }) {
             ),
             name: "BitKeep",
             type: "EVM",
-            mobile: false,
+            mobile: true,
             desktop: true,
             order: 3,
         },
