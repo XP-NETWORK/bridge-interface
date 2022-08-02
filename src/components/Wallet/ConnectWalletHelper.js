@@ -23,7 +23,6 @@ import {
     setOnMaiar,
     setElrondAccount,
     setMaiarProvider,
-    setReset,
     setError,
     setTronPopUp,
     setAlgoSigner,
@@ -37,15 +36,14 @@ import {
     setWC,
     setOnWC,
     setAccount,
-    setSync2,
     setSync2Connecx,
     setTempleWalletSigner,
     setKukaiWalletSigner,
     setKeplrAccount,
     setKeplrWallet,
+    setBitKeepPopUp,
 } from "../../store/reducers/generalSlice";
-import { useNavigate } from "react-router";
-import { chainsConfig, CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
+import { chainsConfig } from "../values";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { getAddEthereumChain } from "../../wallet/chains";
 import Web3 from "web3";
@@ -148,15 +146,20 @@ export const connectBitKeep = async (from) => {
         return window.bitkeep && window.bitkeep?.ethereum;
     };
     if (!isInstallBikeep()) {
-        window.open(
-            "https://chrome.google.com/webstore/detail/bitkeep-bitcoin-crypto-wa/jiidiaalihmmhddjgbnbgdfflelocpak",
-            "bitkeep installer",
-            "width=500,height=500"
-        );
+        if (window.innerWidth <= 600) {
+            store.dispatch(setBitKeepPopUp(true));
+        } else {
+            window.open(
+                "https://chrome.google.com/webstore/detail/bitkeep-bitcoin-crypto-wa/jiidiaalihmmhddjgbnbgdfflelocpak",
+                "bitkeep installer",
+                "width=500,height=500"
+            );
+        }
     } else {
         provider = window.bitkeep?.ethereum;
         await provider.request({ method: "eth_requestAccounts" });
         const web3 = new Web3(provider);
+
         const address = await web3.eth.getAccounts();
         const chainId = await web3.eth.getChainId();
         if (from && from?.chainId !== chainId) {
