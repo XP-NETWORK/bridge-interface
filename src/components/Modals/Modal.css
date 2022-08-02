@@ -123,6 +123,16 @@
     cursor: pointer;
 }
 
+.bitkeep__CloseModal {
+    position: absolute;
+    z-index: 1;
+    left: auto;
+    right: 28px;
+    top: 32px !important;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
 .algoSigner__accounts {
     margin-top: 18px;
     display: flex;

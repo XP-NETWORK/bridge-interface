@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-
+import popupicon from "../../../assets/img/icons/bitkeeppopup.png";
 import { setBitKeepPopUp } from "../../../store/reducers/generalSlice";
 import Close from "../../../assets/img/icons/close.svg";
 import CopyHover from "../../../assets/img/icons/CopyHover.svg";
@@ -11,7 +11,9 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import FileCopy from "../../../assets/img/icons/FileCopy.svg";
 
 export default function BitKeepModal() {
-    const handleClose = () => {};
+    const handleClose = () => {
+        setBitKeepPopUp(false);
+    };
     const [onHover, setOnHover] = useState();
     const [copied, setCopied] = useState();
     const bitKeepPopUp = useSelector((state) => state.general.bitKeepPopUp);
@@ -22,17 +24,22 @@ export default function BitKeepModal() {
     };
 
     return (
-        <Modal show={bitKeepPopUp} onHide={() => handleClose()}>
+        <Modal
+            className="bitkeep__popup"
+            show={bitKeepPopUp}
+            onHide={() => handleClose()}
+        >
             <Modal.Header className="border-0">
                 <div className="tron-PopUp__header">
                     <img
+                        style={{ width: "50%" }}
                         className="tron-PopUp__icon"
-                        src={bitKeepPopUp}
+                        src={popupicon}
                         alt=""
                     />
                     <Modal.Title>To continue bridging:</Modal.Title>
                     <span
-                        className="CloseModal"
+                        className="bitkeep__CloseModal"
                         onHide={() => dispatch(setBitKeepPopUp(false))}
                         onClick={() => dispatch(setBitKeepPopUp(false))}
                     >

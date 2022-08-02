@@ -80,7 +80,7 @@ export default function TransferredNft({ nft }) {
                     )}
                     <div className="transferred-nft-name">{name}</div>
                 </div>
-                {(txnStatus === "completed" || txnStatus === "pending") && (
+                {/* {(txnStatus === "completed" || txnStatus === "pending") && (
                     <a
                         href={`https://bridge-explorer.xp.network/tx/${txn?.hash}`}
                         rel="noreferrer"
@@ -89,52 +89,54 @@ export default function TransferredNft({ nft }) {
                     >
                         View tx
                     </a>
-                )}
+                )} */}
                 <TxStatus status={txn ? txnStatus : "processing"} />
             </div>
 
-            {/* <div className="transferred-nft-hashes">
-        <div className="chain-hash">
-          <span>{depText}:</span>
-          <a
-            target="_blank"
-            href={`${chainsConfig[from.key]?.tx}${hashes?.depHash ||
-              txn?.hash}`}
-          >
-            {txn?.hash
-              ? `${txn?.hash
-                  .toString()
-                  .substring(
-                    0,
-                    getSubstringValue() || 10
-                  )}...${txn?.hash
-                  .toString()
-                  .substring(txn?.hash.toString().length - 3)}`
-              : hashes.depHash
-              ? `${hashes?.depHash?.substring(
-                  0,
-                  getSubstringValue() || 10
-                )}...${hashes?.depHash?.substring(hashes?.depHash?.length - 3)}`
-              : "..."}
-          </a>
-        </div>
-        <div className="chain-hash">
-          <span>{desText}:</span>
-          <a
-            target="_blank"
-            href={`${chainsConfig[to.key]?.tx}${hashes?.destHash}`}
-          >
-            {hashes.destHash
-              ? `${hashes?.destHash?.substring(
-                  0,
-                  getSubstringValue() || 10
-                )}...${hashes?.destHash?.substring(
-                  hashes?.destHash?.length - 3
-                )}`
-              : "..."}
-          </a>
-        </div>
-      </div> */}
+            <div className="transferred-nft-hashes">
+                <div className="chain-hash">
+                    <span>{depText}:</span>
+                    <a
+                        target="_blank"
+                        href={`${chainsConfig[from.key]?.tx}${hashes?.depHash ||
+                            txn?.hash}`}
+                    >
+                        {txn?.hash
+                            ? `${txn?.hash
+                                  .toString()
+                                  .substring(
+                                      0,
+                                      getSubstringValue() || 10
+                                  )}...${txn?.hash
+                                  .toString()
+                                  .substring(txn?.hash.toString().length - 3)}`
+                            : hashes.depHash
+                            ? `${hashes?.depHash?.substring(
+                                  0,
+                                  getSubstringValue() || 10
+                              )}...${hashes?.depHash?.substring(
+                                  hashes?.depHash?.length - 3
+                              )}`
+                            : "..."}
+                    </a>
+                </div>
+                <div className="chain-hash">
+                    <span>{desText}:</span>
+                    <a
+                        target="_blank"
+                        href={`${chainsConfig[to.key]?.tx}${hashes?.destHash}`}
+                    >
+                        {hashes.destHash
+                            ? `${hashes?.destHash?.substring(
+                                  0,
+                                  getSubstringValue() || 10
+                              )}...${hashes?.destHash?.substring(
+                                  hashes?.destHash?.length - 3
+                              )}`
+                            : "..."}
+                    </a>
+                </div>
+            </div>
         </div>
     );
 }
