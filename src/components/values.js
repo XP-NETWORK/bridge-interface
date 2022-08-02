@@ -272,8 +272,8 @@ export const chains = [
         image: { avatar: true, src: CKB },
         maintenance: false,
         testNet: true,
-        mainnet: biz,
-        newChain: biz,
+        mainnet: true,
+        newChain: true,
     },
     {
         type: "EVM",
