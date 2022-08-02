@@ -26,6 +26,7 @@ import SuccessModal from "./components/Modals/Success/SuccessModal.jsx";
 import ConnectAlgorand from "./components/ConnectAlgorand";
 import { Modal } from "react-bootstrap";
 import Widget from "./components/Widget";
+import BitKeepModal from "./components/Modals/BitKeepModal/BitKeepModal";
 
 function App() {
   const dispatch = useDispatch();
@@ -101,6 +102,7 @@ function App() {
       </Modal>
       <TransferLoader />
       <TronConnectionErrMod />
+      <BitKeepModal />
       <ApproveLoader />
       <Error />
       <TronPopUp />

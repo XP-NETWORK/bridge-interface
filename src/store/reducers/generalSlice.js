@@ -22,6 +22,12 @@ const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
+    setTemporaryTo(state, action) {
+      state.temporaryTo = action.payload;
+    },
+    setBitKeepPopUp(state, action) {
+      state.bitKeepPopUp = action.payload;
+    },
     setSecretLoggedIn(state, action) {
       state.secretLoggedIn = action.payload;
     },
@@ -540,7 +546,9 @@ export const {
   setTempleWalletSigner,
   setKukaiWalletSigner,
   setAccountWalletModal,
+  setBitKeepPopUp,
   setRefreshSecret,
+  setTemporaryTo,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

@@ -50,6 +50,7 @@ export default function ChainListBox() {
     const { account } = useWeb3React();
     const testnet = useSelector((state) => state.general.testNet);
     const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
+    const bitKeep = useSelector((state) => state.general.bitKeep);
     const axios = require("axios");
 
     const checkValidators = async () => {
@@ -94,7 +95,11 @@ export default function ChainListBox() {
                 !typeOfChainConnected()
             ) {
                 if (to?.text === chain.text) {
-                    if (account) {
+                    if (to?.text === "Harmony" && bitKeep) {
+                        dispatch(setTemporaryFrom(chain));
+                        dispatch(setChangeWallet(true));
+                        handleClose();
+                    } else if (account || evmAccount) {
                         const switched = await switchNetwork(from);
                         if (switched) {
                             dispatch(setTo(from));
@@ -102,7 +107,7 @@ export default function ChainListBox() {
                         }
                     }
                 } else {
-                    if (account) {
+                    if (account || evmAccount) {
                         const switched = await switchNetwork(chain);
                         if (switched) {
                             dispatch(setFrom(chain));
@@ -117,7 +122,11 @@ export default function ChainListBox() {
             }
         } else if (departureOrDestination === "destination") {
             if (from?.text === chain.text) {
-                if (account) {
+                if (to?.text === "Harmony" && bitKeep) {
+                    dispatch(setTemporaryFrom(to));
+                    dispatch(setChangeWallet(true));
+                    handleClose();
+                } else if (account || evmAccount) {
                     const switched = await switchNetwork(to);
                     if (switched) {
                         dispatch(setTo(from));

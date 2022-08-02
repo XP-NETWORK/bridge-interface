@@ -9,7 +9,7 @@ import Tooltip from "../Modals/AccountModal/Tooltip";
 
 export default function Error() {
   const dispatch = useDispatch();
-  const URLToOptIn = useSelector(state => state.general.URLToOptIn)
+  const URLToOptIn = useSelector((state) => state.general.URLToOptIn);
   const handleClose = () => {
     dispatch(setError(false));
   };
@@ -30,21 +30,25 @@ export default function Error() {
           </span>
         </div>
       </Modal.Header>
-      <Modal.Body className="modalBody text-center" >
-        <div className="wrongNFT" style={{overflowWrap: "break-word"}}>
-          <p> {typeof error === "object" ? error?.message : error}</p>
-         
+      <Modal.Body className="modalBody text-center">
+        <div className="wrongNFT">
+          {typeof error === "object" ? error?.message : error}
         </div>
-        { URLToOptIn &&
+        {URLToOptIn && (
           <CopyToClipboard text={URLToOptIn}>
             <div className="opt-in__error">
               <div className="opt-in__body">
-                <div className="opt-in__text">Click on <a href={URLToOptIn} target="_blank" rel="noreferrer">LINK </a>
-                or send it to the receiver to opt-in the NFT.</div>
+                <div className="opt-in__text">
+                  Click on{" "}
+                  <a href={URLToOptIn} target="_blank" rel="noreferrer">
+                    LINK{" "}
+                  </a>
+                  or send it to the receiver to opt-in the NFT.
+                </div>
               </div>
             </div>
           </CopyToClipboard>
-        }
+        )}
       </Modal.Body>
     </Modal>
   );

@@ -171,8 +171,8 @@ export default function WalletList({ search, connected, input }) {
             ),
             name: "BitKeep",
             type: "EVM",
-            mobile: false,
-            desktop: biz && !window.location.hostname.includes("staging"),
+            mobile: true,
+            desktop: true,
             order: 3,
         },
         {

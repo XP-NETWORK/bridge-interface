@@ -142,7 +142,9 @@ export default function EVMWallet({ wallet, close }) {
   const getStyle = () => {
     // debugger;
     if (temporaryFrom?.type === "EVM") {
-      return {};
+      if (from?.text === "Harmony") {
+        return OFF;
+      } else return {};
     } else if (temporaryFrom && temporaryFrom?.type !== "EVM") {
       return OFF;
     } else if (!from) {
@@ -217,7 +219,11 @@ export default function EVMWallet({ wallet, close }) {
     case "BitKeep":
       return (
         <li
-          style={getStyle()}
+          style={
+            from?.text === "Harmony" || temporaryFrom?.text === "Harmony"
+              ? OFF
+              : getStyle()
+          }
           onClick={() => connectHandler("BitKeep")}
           className="wllListItem"
           data-wallet="MetaMask"

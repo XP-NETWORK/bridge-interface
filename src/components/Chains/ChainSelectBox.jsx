@@ -5,6 +5,8 @@ import {
   setChangeWallet,
   setKeplrAccount,
   setKeplrWallet,
+  setTemporaryFrom,
+  setTemporaryTo,
 } from "../../store/reducers/generalSlice";
 import { useSelector } from "react-redux";
 import SetDeparture from "./SetDeparture";
@@ -37,32 +39,51 @@ export default function ChainSelectBox() {
       switch (from.type) {
         case "EVM":
           if (account) {
+            dispatch(setTemporaryFrom(to));
+            dispatch(setTemporaryTo(from));
             dispatch(setChangeWallet(true));
           } else handleSwitch(e);
           break;
         case "Tron":
-          if (tronWallet) dispatch(setChangeWallet(true));
-          else handleSwitch(e);
+          if (tronWallet) {
+            dispatch(setTemporaryFrom(to));
+            dispatch(setTemporaryTo(from));
+            dispatch(setTo(""));
+            dispatch(setChangeWallet(true));
+          } else handleSwitch(e);
           break;
         case "Elrond":
-          if (elrondAccount) dispatch(setChangeWallet(true));
-          else handleSwitch(e);
+          if (elrondAccount) {
+            dispatch(setTemporaryFrom(to));
+            dispatch(setTemporaryTo(from));
+            dispatch(setChangeWallet(true));
+          } else handleSwitch(e);
           break;
         case "Tezos":
-          if (tezosAccount) dispatch(setChangeWallet(true));
-          else handleSwitch(e);
+          if (tezosAccount) {
+            dispatch(setTemporaryFrom(to));
+            dispatch(setTemporaryTo(from));
+            dispatch(setChangeWallet(true));
+          } else handleSwitch(e);
           break;
         case "VeChain":
-          if (account) dispatch(setChangeWallet(true));
-          else handleSwitch(e);
+          if (account) {
+            dispatch(setTemporaryFrom(to));
+            dispatch(setTemporaryTo(from));
+            dispatch(setChangeWallet(true));
+          } else handleSwitch(e);
           break;
         case "Algorand":
           if (algorandAccount) {
+            dispatch(setTemporaryFrom(to));
+            dispatch(setTemporaryTo(from));
             dispatch(setChangeWallet(true));
           } else handleSwitch(e);
           break;
         case "Cosmos":
           if (secretAccount) {
+            dispatch(setTemporaryFrom(to));
+            dispatch(setTemporaryTo(from));
             dispatch(setChangeWallet(true));
           } else handleSwitch(e);
           break;
