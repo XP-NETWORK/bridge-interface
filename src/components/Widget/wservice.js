@@ -7,6 +7,7 @@ class WService {
   maxExtraFees = 2;
 
   constructor() {
+    if (!window.ethereum) return;
     this.axios = axios.create({
       baseURL: this.widgetApi,
       withCredentials: true,
