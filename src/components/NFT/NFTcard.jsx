@@ -19,6 +19,7 @@ import ModalImage from "react-modal-image";
 import { parseNFT } from "../../wallet/nftParser";
 import { useDidUpdateEffect } from "../Settings/hooks";
 import Image from "./Image";
+import SFTMark from "./SFTMark";
 
 export default function NFTcard({ nft, index, claimables }) {
     const dispatch = useDispatch();
@@ -107,6 +108,7 @@ export default function NFTcard({ nft, index, claimables }) {
                                     : "nft__card"
                             }
                         >
+                            <SFTMark />
                             <div className="nft__main">
                                 {nft.uri && nft.image && nft.animation_url ? (
                                     <VideoAndImage
