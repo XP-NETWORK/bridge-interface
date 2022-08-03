@@ -135,7 +135,7 @@ export default function NFTcard({ nft, index, claimables }) {
                                 ) : (
                                     ""
                                 )}
-                                <div className="zoomDiv">
+                                {/* <div className="zoomDiv">
                                     <ModalImage
                                         className="zoomInBtn"
                                         small={zoomIn}
@@ -143,7 +143,7 @@ export default function NFTcard({ nft, index, claimables }) {
                                         hideDownload={true}
                                         hideZoom={true}
                                     />
-                                </div>
+                                </div> */}
                                 {!nft.whitelisted && <NotWhiteListed />}
                                 {claimables && (
                                     <ClaimableCard nft={nft} index={index} />

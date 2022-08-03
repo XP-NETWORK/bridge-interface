@@ -120,9 +120,9 @@
 .zoomInBtn {
     position: absolute;
     width: 24px;
-    height: 24px;
-    right: 12px;
-    top: 12px;
+    height: 24px !important;
+    right: 24px;
+    top: 24px;
     background: none;
     border: none;
 }

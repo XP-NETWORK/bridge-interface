@@ -843,6 +843,7 @@ li.nftSelecItem .Close:hover {
 }
 
 .nftDetImg {
+    position: relative;
     flex-shrink: 0;
     height: 300px;
     display: flex;
@@ -854,7 +855,7 @@ li.nftSelecItem .Close:hover {
 
 .nftDetImg img,
 .nftDetImg video {
-    height: 60%;
+    height: 100%;
     border-radius: 16px;
 }
 
@@ -876,7 +877,7 @@ li.nftSelecItem .Close:hover {
 .nftInfBox p {
     display: flex;
     align-items: center;
-  }
+}
 
 .nftInfBox label {
     color: #14161a;
@@ -908,6 +909,7 @@ li.nftSelecItem .Close:hover {
 
 .nftDetailBox {
     display: flex;
+    justify-content: space-evenly;
     padding-top: 10px;
     flex-wrap: wrap;
     padding-bottom: 10px;
@@ -915,7 +917,7 @@ li.nftSelecItem .Close:hover {
 
 .nftDetImg {
     flex-shrink: 0;
-    width: 50%;
+    max-width: 50%;
     padding: 0 15px 0 30px;
 }
 

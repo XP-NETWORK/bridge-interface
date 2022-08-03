@@ -232,7 +232,10 @@ const generalSlice = createSlice({
         setTxnHash(state, action) {
             const { nft, txn } = action.payload;
             const { tokenId, contract, chainId } = nft.native;
-            if (txn.hash?.hash?.type === "Buffer" || txn.hash?.hash?.buffer) {
+            if (
+                (txn.hash?.hash?.type === "Buffer" || txn.hash?.hash?.buffer) &&
+                txn
+            ) {
                 txn.hash = utils
                     .hexlify(txn.hash?.hash?.data)
                     .replace(/^0x/, "");

@@ -141,10 +141,6 @@ function NFTaccount() {
                         ? await factory.balance(fromChain, _account)
                         : undefined;
 
-                    console.log(
-                        "🚀 ~ file: NFTaccount.jsx ~ line 141 ~ setTimeout ~ balance",
-                        balance
-                    );
                     switch (_from.type) {
                         case "EVM":
                             balanceToShow = balance / 1e18;
