@@ -272,7 +272,7 @@ export const chains = [
         image: { avatar: true, src: CKB },
         maintenance: false,
         testNet: true,
-        mainnet: true,
+        mainnet: biz || window.location.hostname.includes("testing"),
         newChain: true,
     },
     {
