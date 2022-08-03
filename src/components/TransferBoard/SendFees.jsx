@@ -16,6 +16,10 @@ import { useWeb3React } from "@web3-react/core";
 function SendFees() {
     const dispatch = useDispatch();
     const balance = useSelector((state) => state.general.balance);
+    console.log(
+        "🚀 ~ file: SendFees.jsx ~ line 19 ~ SendFees ~ balance",
+        balance
+    );
     const to = useSelector((state) => state.general.to);
     const from = useSelector((state) => state.general.from);
     const account = useSelector((state) => state.general.account);
@@ -147,11 +151,13 @@ function SendFees() {
         <div className="fees">
             <div className="fees__title">Fees</div>
             <div className="fees__bank">
-                {balance && (
+                {balance ? (
                     <span className="fees__balance">{`Balance: ${balance.toFixed(
                         5
                     )} ${config?.token ||
                         (from?.text === "Gnosis" && "Gnosis")}`}</span>
+                ) : (
+                    `Balance: 0 ${config?.token}`
                 )}
                 {loading ? (
                     <LittleLoader />

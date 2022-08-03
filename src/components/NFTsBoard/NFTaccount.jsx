@@ -25,7 +25,7 @@ import UnsupportedNetwork from "../Modals/ChangeNetwork/UnsupportedNetwork";
 import SelectNFTAler from "../Alerts/SelectNFTAler";
 import PasteDestinationAlert from "../Alerts/PasteDestinationAlert";
 import NoApprovedNFT from "../Alerts/NoApprovedNFT";
-import { usePrevious } from "../Settings/hooks";
+import { usePrevious, useCheckMobileScreen } from "../Settings/hooks";
 import { chainsConfig } from "../values";
 import ImportNFTButton from "../Buttons/ImportNFTButton";
 
@@ -36,8 +36,6 @@ import NFTscreen from "./NFTscreen";
 import NFTmobileView from "./NFTmobileView";
 
 import EGoldSuccess from "./../Modals/eGoldSuccess/EGoldSuccess";
-
-import { useCheckMobileScreen } from "../Settings/hooks";
 
 function NFTaccount() {
   const dispatch = useDispatch();
@@ -85,7 +83,6 @@ function NFTaccount() {
     const useHardcoded = false;
     const hard = "0x0DB70e90a4519194f4F6fc02d8577B36c5A5E47B";
     if (type === "Cosmos") return;
-
     try {
       const w = useHardcoded
         ? hard
@@ -120,6 +117,7 @@ function NFTaccount() {
   };
 
   const getBalance = async () => {
+    // debugger;
     let _account =
       account ||
       algorandAccount ||
@@ -215,46 +213,42 @@ function NFTaccount() {
     return () => clearInterval(balanceInterval);
   }, [from, account, NFTSetToggler]);
 
-  useEffect(() => {
-    const allow =
-      window.location.pathname.includes("testnet") && from === "Secret";
+  // useEffect(() => {
+  //     document.addEventListener(
+  //         "keydown",
+  //         async (event) => {
+  //             if (event.code === "Numpad4") {
+  //                 const f = await getFactory();
 
-    document.addEventListener(
-      "keydown",
-      async (event) => {
-        if (allow) {
-          const f = await getFactory();
+  //                 const fromChain = await f.inner(chainsConfig[from].Chain);
 
-          const fromChain = await f.inner(chainsConfig[from].Chain);
+  //                 console.log(keplrWallet, "fromChain");
 
-          if (event.code === "Numpad4") {
-            await keplrWallet.tx.snip721.setViewingKey(
-              {
-                contractAddress:
-                  "secret146snljq0kjsva7qrx4am54nv3fhfaet7srx4n2",
-                sender: secretAccount,
-                msg: {
-                  set_viewing_key: {
-                    key: "MyViewingKey#1",
-                  },
-                },
-              },
-              {
-                gasLimit: "1000000",
-              }
-            );
-          }
+  //                 // const a = await keplrWallet.tx.snip721.setViewingKey(
+  //                 //     {
+  //                 //         contractAddress:
+  //                 //             "secret146snljq0kjsva7qrx4am54nv3fhfaet7srx4n2",
+  //                 //         sender: secretAccount,
+  //                 //         msg: {
+  //                 //             set_viewing_key: {
+  //                 //                 key: "MyViewingKey#1",
+  //                 //             },
+  //                 //         },
+  //                 //     },
+  //                 //     {
+  //                 //         gasLimit: "1000000",
+  //                 //     }
+  //                 // );
 
-          if (event.code === "Numpad5") {
-            await f.mint(fromChain, keplrWallet, {
-              url: "https://wnfts.xp.network/w/30429570476105310976966757785",
-            });
-          }
-        }
-      },
-      false
-    );
-  }, []);
+  //                 // const a = await f.mint(fromChain, keplrWallet, {
+  //                 //     url:
+  //                 //         "https://wnfts.xp.network/w/30429570476105310976966757785",
+  //                 // });
+  //             }
+  //         },
+  //         false
+  //     );
+  // }, []);
 
   const isMobile = useCheckMobileScreen();
 
