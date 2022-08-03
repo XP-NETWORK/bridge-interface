@@ -173,6 +173,15 @@ const generalSlice = createSlice({
         setSelectedNFTList(state, action) {
             state.selectedNFTList = [...state.selectedNFTList, action.payload];
         },
+        updateAmountInSelectedNFTList(state, action) {
+            const { index, amount } = action.payload;
+            state.selectedNFTList = state.selectedNFTList.map((e, i) => {
+                if (i === index) {
+                    e.toTransfer = Number(amount);
+                }
+                return e;
+            });
+        },
         cleanSelectedNFTList(state, action) {
             state.selectedNFTList = [];
         },
@@ -450,6 +459,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+    updateAmountInSelectedNFTList,
     setUnwrappedEGold,
     setSecretLoggedIn,
     setKeplrAccount,
