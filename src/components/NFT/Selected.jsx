@@ -32,13 +32,15 @@ export default function Selected({ index, nft }) {
             <span className="nfts-item__name">
                 {nft.data?.name || nft.name || nft.native.name}
             </span>
-            <input
-                className="sft-amount__input"
-                type="text"
-                placeholder="Enter amount"
-                value={amount}
-                onChange={handleAmountChange}
-            />
+            {nft.native.amount && (
+                <input
+                    className="sft-amount__input"
+                    type="text"
+                    placeholder="Enter amount"
+                    value={amount}
+                    onChange={handleAmountChange}
+                />
+            )}
             <span
                 onClick={() => handleRemove(nft)}
                 className="selected-nfts__delete"
