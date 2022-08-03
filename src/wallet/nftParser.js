@@ -20,6 +20,18 @@ const whiteListedPool = WhiteListedPool();
 
 export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
   const { uri } = nft;
+
+  nft = {
+    ...nft,
+    ...(nft?.native?.contract &&
+      nft?.collectionIdent && {
+        collectionIdent:
+          nft.native.contract === nft.collectionIdent
+            ? nft.collectionIdent
+            : nft.native.contract,
+      }),
+  };
+
   let whitelisted = !testnet
     ? nft?.native?.contract === "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a"
       ? false
@@ -54,7 +66,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
         } else {
           chainId = nft.native?.chainId;
           tokenId = nft.native?.tokenId;
-          contract = nft.native?.contract;
+          contract = nft.collectionIdent;
         }
 
         const res = await cache.get({ chainId, tokenId, contract }, nft);

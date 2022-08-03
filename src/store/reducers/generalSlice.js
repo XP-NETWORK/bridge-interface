@@ -2,6 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { isShown } from "../../components/NFT/NFTHelper";
 import { utils } from "ethers";
 
+export const initialSecretCred = {
+  contract: "",
+  viewKey: "",
+};
+
 const initialState = {
   step: 0,
   selectedNFTList: [],
@@ -16,6 +21,7 @@ const initialState = {
   alert: true,
   NFTListSearch: "",
   refreshSecret: false,
+  secretCred: initialSecretCred,
 };
 
 const generalSlice = createSlice({
@@ -37,6 +43,15 @@ const generalSlice = createSlice({
     setKeplrAccount(state, action) {
       state.secretAccount = action.payload;
     },
+<<<<<<< HEAD
+=======
+    setSecretCred(state, action) {
+      state.secretCred = {
+        contract: action.payload.contract,
+        viewKey: action.payload.viewKey,
+      };
+    },
+>>>>>>> new-ui
     setKeplrWallet(state, action) {
       state.keplrWallet = action.payload;
     },
@@ -230,11 +245,17 @@ const generalSlice = createSlice({
         : [];
     },
     setTxnHash(state, action) {
-      const { nft, txn } = action.payload;
+      let { nft, txn } = action.payload;
       const { tokenId, contract, chainId } = nft.native;
-      if (txn.hash?.hash?.type === "Buffer" || txn.hash?.hash?.buffer) {
-        txn.hash = utils.hexlify(txn.hash?.hash?.data).replace(/^0x/, "");
-      }
+
+      txn = {
+        ...txn,
+        hash: txn.hash || txn.transactionHash,
+      };
+
+      //if (txn.hash?.hash?.type === "Buffer" || txn.hash?.hash?.buffer && txn.hash?.hash?.data) {
+      // txn.hash = utils.hexlify(txn.hash?.hash?.data).replace(/^0x/, "");
+      // }
 
       state.txnHashArr = [...state.txnHashArr, txn];
 
@@ -549,6 +570,7 @@ export const {
   setBitKeepPopUp,
   setRefreshSecret,
   setTemporaryTo,
+  setSecretCred,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

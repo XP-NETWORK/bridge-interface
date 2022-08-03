@@ -19,6 +19,10 @@ export default function Refresh() {
     bigLoader,
     testNet,
     secretAccount,
+<<<<<<< HEAD
+=======
+    secretLoggedIn,
+>>>>>>> new-ui
   } = useSelector((state) => state.general);
   const dispatch = useDispatch();
 
@@ -38,16 +42,27 @@ export default function Refresh() {
   };
 
   const refreshSecret = () => {
+<<<<<<< HEAD
     dispatch(setBigLoader(true));
     dispatch(setRefreshSecret());
+=======
+    if (secretLoggedIn) {
+      dispatch(setBigLoader(true));
+      dispatch(setRefreshSecret());
+    }
+>>>>>>> new-ui
   };
 
   return (
     <span
       className={bigLoader ? "refresh-button--disabled" : "refresh-button"}
       onClick={secretAccount ? refreshSecret : refresh}
+<<<<<<< HEAD
     >
       <RefreshComp className="svgWidget" />
     </span>
+=======
+    ></span>
+>>>>>>> new-ui
   );
 }

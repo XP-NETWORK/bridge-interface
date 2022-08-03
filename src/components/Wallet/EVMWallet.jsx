@@ -159,6 +159,20 @@ export default function EVMWallet({ wallet, close }) {
     } else return OFF;
   };
 
+  const isUnsupportedBitKeepChain = () => {
+    const chain = from || temporaryFrom;
+    if (chain) {
+      switch (from.text) {
+        case "Godwoken":
+          return true;
+        case "Harmony":
+          return true;
+        default:
+          return false;
+      }
+    }
+  };
+
   useEffect(() => {
     if (account) dispatch(setAccount(account));
   }, [account]);
@@ -219,11 +233,7 @@ export default function EVMWallet({ wallet, close }) {
     case "BitKeep":
       return (
         <li
-          style={
-            from?.text === "Harmony" || temporaryFrom?.text === "Harmony"
-              ? OFF
-              : getStyle()
-          }
+          style={isUnsupportedBitKeepChain() ? OFF : getStyle()}
           onClick={() => connectHandler("BitKeep")}
           className="wllListItem"
           data-wallet="MetaMask"

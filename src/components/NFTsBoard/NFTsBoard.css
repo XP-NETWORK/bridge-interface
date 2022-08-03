@@ -311,6 +311,49 @@
   color: #14161a;
   font-family: "Inter";
 }
+.secretContainer .nftListBox {
+  position: relative;
+}
+
+.secretContainer .nftListBox {
+  padding-top: 55px;
+}
+
+.secretContainer .nft-list__wrapper {
+  padding-top: 15px;
+}
+
+.scretPannelWrap {
+  padding: 0 10px;
+
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 12;
+}
+
+.scretPannel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background: rgba(243, 243, 246, 1);
+  border-radius: 12px;
+}
+
+.scretPannel p {
+  margin-bottom: 0;
+  font-size: 14px;
+  font-family: Inter, sans-serif;
+}
+
+.scretPannel a {
+  color: #395feb;
+}
+
+.scretPannel button {
+}
 
 .fieldsWrapper input {
   width: 100%;

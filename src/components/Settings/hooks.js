@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 export function usePrevious(value) {
   // The ref object is a generic container whose current property is mutable ...
@@ -19,4 +19,20 @@ export const useDidUpdateEffect = (func, deps) => {
     if (didMount.current) func();
     else didMount.current = true;
   }, deps);
+};
+
+export const useCheckMobileScreen = () => {
+  const [width, setWidth] = useState(window.innerWidth);
+  const handleWindowSizeChange = () => {
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
+
+  return width <= 768;
 };

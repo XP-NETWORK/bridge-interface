@@ -107,7 +107,7 @@ export const connectKeplr = async (testnet, chain) => {
   // debugger;
 
   console.log(chain);
-  const chainId = testnet ? "pulsar-2" : "cosmoshub-4";
+  const chainId = testnet ? "pulsar-2" : "secret-4";
   if (window.keplr) {
     try {
       await window.keplr.enable(chainId);

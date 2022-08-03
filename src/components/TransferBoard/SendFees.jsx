@@ -174,11 +174,12 @@ function SendFees() {
     <div className="fees">
       <div className="fees__title">Fees</div>
       <div className="fees__bank">
-        {balance && (
+        {balance ? (
           <span className="fees__balance">{`Balance: ${balance.toFixed(
             5
-          )} ${config?.token || (from?.text === "Gnosis" && "Gnosis")}
-          `}</span>
+          )} ${config?.token || (from?.text === "Gnosis" && "Gnosis")}`}</span>
+        ) : (
+          `Balance: 0 ${config?.token}`
         )}
         {loading ? (
           <LittleLoader />
