@@ -1,6 +1,7 @@
 import { TESTNET_CHAIN_INFO, CHAIN_INFO } from "../../components/values";
 import ChainService from "./chain";
 import store from "../../store/store";
+import { getFactory } from "../../wallet/helpers";
 
 export async function switchNetwork(chain) {
     const {
