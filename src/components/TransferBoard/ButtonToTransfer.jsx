@@ -32,6 +32,7 @@ import * as thor from "web3-providers-connex";
 import { Driver, SimpleNet, SimpleWallet } from "@vechain/connex-driver";
 import { Framework } from "@vechain/connex-framework";
 import Connex from "@vechain/connex";
+import Web3 from "web3";
 
 export default function ButtonToTransfer() {
     const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
@@ -154,7 +155,6 @@ export default function ButtonToTransfer() {
     };
 
     const sendEach = async (nft, index) => {
-        // debugger;
         const signer = await getSigner();
         const toNonce = CHAIN_INFO[to].nonce;
         const fromNonce = CHAIN_INFO[from].nonce;
@@ -194,7 +194,7 @@ export default function ButtonToTransfer() {
                     bigNumberFees,
                     Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
                 );
-                console.log("result", result);
+                console.debug("Transfer result: ", result);
                 dispatch(dispatch(setTransferLoaderModal(false)));
                 setLoading(false);
                 dispatch(setTxnHash({ txn: result, nft }));
