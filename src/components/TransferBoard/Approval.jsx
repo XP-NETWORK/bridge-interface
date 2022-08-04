@@ -318,10 +318,11 @@ function Approval(props) {
 
     const onClickHandler = async () => {
         // debugger
-        const isSC = await checkIfReceiverIsSmartContract();
-        if (isSC) {
-            dispatch(setReceiverIsSmartContractAddress(true));
-        } else if (!receiver) {
+        // const isSC = await checkIfReceiverIsSmartContract();
+        // if (isSC) {
+        //     dispatch(setReceiverIsSmartContractAddress(true));
+        // } else
+        if (!receiver) {
             dispatch(setPasteDestinationAlert(true));
         } else if (selectedNFTList.length < 1) {
             dispatch(setSelectNFTAlert(true));
