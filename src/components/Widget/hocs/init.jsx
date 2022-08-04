@@ -166,9 +166,7 @@ export const InitWidget = (Wrapped) => {
           if (!wsettings) {
             settings = wid ? await initFormId(wid) : initFromQuery();
           } else {
-            settings = wid
-              ? await initFormId(wid)
-              : JSON.parse(localStorage.getItem("widgetSettings"));
+            settings = wid && (await initFormId(wid));
           }
 
           const {
