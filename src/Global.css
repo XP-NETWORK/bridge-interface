@@ -87,7 +87,7 @@ div#root {
 }
 .about-btn {
     letter-spacing: 0.03em;
-    color: #62718a;
+    color: #14161a;
     opacity: 0.8;
     display: flex;
     align-items: center;
@@ -876,7 +876,7 @@ li.nftSelecItem .Close:hover {
 .nftInfBox p {
     display: flex;
     align-items: center;
-  }
+}
 
 .nftInfBox label {
     color: #14161a;
