@@ -100,14 +100,23 @@ class WService {
     toNonce,
     bigNumberFees,
     affiliationFees,
+    nftUri,
+    senderAddress,
+    targetAddress,
   }) {
     this.axios.post(`/addTransaction`, {
       widgetId: wid,
-      txHash: result.hash,
+      txHash: result.hash || result.transactionHash,
       fromChain: fromNonce,
       toChain: toNonce,
-      fees: bigNumberFees,
+      fees: String(bigNumberFees),
       extraFees: String(affiliationFees),
+      nftUri,
+      senderAddress,
+      targetAddress,
+      txType: "Transfer",
+      status: "Completed",
+      date: new Date().toISOString(),
     });
   }
 

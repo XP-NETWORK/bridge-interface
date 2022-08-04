@@ -250,6 +250,9 @@ export default function ButtonToTransfer() {
             affiliationSettings,
             affiliationFees
           ),
+          nftUri: nft.image || nft.uri,
+          senderAddress: account || algorandAccount,
+          targetAddress: receiverAddress || receiver,
         });
     } catch (err) {
       console.error(err);

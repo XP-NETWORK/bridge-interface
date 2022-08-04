@@ -2152,7 +2152,15 @@ ul.chainSelector li.blockChainItem .dropdown-item:hover {
   display: flex;
   align-items: center;
   margin: 15px 0;
+}
+
+.addFeesWrapper span {
   cursor: pointer;
+}
+
+.addFeesWrapper.default {
+  margin: 0;
+  padding: 10px 0;
 }
 
 .addFeesWrapper:hover span {
@@ -2176,8 +2184,9 @@ ul.chainSelector li.blockChainItem .dropdown-item:hover {
 
 .feesWrapper .deleteIcon {
   position: absolute;
-  right: -20px;
-  bottom: 0px;
+  right: -18px;
+  bottom: 50%;
+  transform: translateY(50%);
   width: 20px;
   cursor: pointer;
 }

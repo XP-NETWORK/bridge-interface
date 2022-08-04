@@ -1,6 +1,11 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setError, setFrom, setTo } from "../../store/reducers/generalSlice";
+import {
+  setAlert,
+  setError,
+  setFrom,
+  setTo,
+} from "../../store/reducers/generalSlice";
 import {
   setSettings,
   activeChains,
@@ -83,7 +88,7 @@ const settingsHoc = (Wrapped) => (props) => {
   );
 
   const formatedFeeSettings = useMemo(() => {
-    return affiliationSettings.map((feeSettings) => ({
+    return affiliationSettings?.map((feeSettings) => ({
       ...feeSettings,
       extraFees: feeSettings.extraFees ? +feeSettings.extraFees / 100 + 1 : 1,
     }));

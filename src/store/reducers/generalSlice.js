@@ -43,15 +43,12 @@ const generalSlice = createSlice({
     setKeplrAccount(state, action) {
       state.secretAccount = action.payload;
     },
-<<<<<<< HEAD
-=======
     setSecretCred(state, action) {
       state.secretCred = {
         contract: action.payload.contract,
         viewKey: action.payload.viewKey,
       };
     },
->>>>>>> new-ui
     setKeplrWallet(state, action) {
       state.keplrWallet = action.payload;
     },

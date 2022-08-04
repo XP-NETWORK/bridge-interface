@@ -999,18 +999,22 @@ function WSettings({
                                           placeholder="0"
                                           max={100}
                                           min={0}
-                                          value={chainFees.extraFees}
-                                          onChange={(e) =>
+                                          value={Number(
+                                            chainFees.extraFees - 0
+                                          ).toString()}
+                                          onChange={(e) => {
+                                            const val = e.target.value;
+
                                             chainFeesMethods.updateChainFees(
                                               i,
                                               "extraFees",
-                                              e.target.value > 0
-                                                ? e.target.value < 100
-                                                  ? e.target.value
+                                              val > 0
+                                                ? val < 100
+                                                  ? val
                                                   : 100
                                                 : 0
-                                            )
-                                          }
+                                            );
+                                          }}
                                         />
                                         <span>%</span>
                                       </div>
@@ -1027,6 +1031,9 @@ function WSettings({
                                     )
                                   }
                                   selectedChain={chainFees.chain}
+                                  hideChains={affiliationSettings.map(
+                                    (s) => s.chain
+                                  )}
                                 />
                               </div>
                             </div>
@@ -1072,11 +1079,14 @@ function WSettings({
 
                     <div className="typographyContainer">
                       <div
-                        className="addFeesWrapper"
-                        onClick={chainFeesMethods.addChainFees}
+                        className={`addFeesWrapper ${
+                          !affiliationSettings.length ? "default" : ""
+                        }`}
                       >
                         <img src={addItem} alt="addItem" />
-                        <span>Add gas fee</span>
+                        <span onClick={chainFeesMethods.addChainFees}>
+                          Add gas fee & wallet
+                        </span>
                       </div>
                     </div>
                   </Accordion.Body>

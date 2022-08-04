@@ -3,7 +3,7 @@ import { Dropdown } from "react-bootstrap";
 
 import { chains } from "../../../store/reducers/settingsSlice";
 
-export const ChainSelect = ({ setChain, selectedChain, mode }) => {
+export const ChainSelect = ({ setChain, selectedChain, mode, hideChains }) => {
   const chainObj = chains.find(
     (c) =>
       c.text === selectedChain ||
@@ -43,6 +43,9 @@ export const ChainSelect = ({ setChain, selectedChain, mode }) => {
           </li>
           {chains
             .filter((chain) => !mode || chain.text !== selectedChain)
+            .filter(
+              (chain) => !hideChains || hideChains.indexOf(chain.text) === -1
+            )
             .map((chain, i) => (
               <li key={i + "chain"} className="blockChainItem">
                 <img src={chain.image.src} alt={chain.value} />
