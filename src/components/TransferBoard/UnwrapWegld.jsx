@@ -22,6 +22,14 @@ export default function UnwrapWegld() {
         setUnwrapping(true);
         try {
             const signer = maiarProvider || ExtensionProvider.getInstance();
+            console.log(
+                "🚀 ~ file: UnwrapWegld.jsx ~ line 25 ~ unwrapWegld ~ signer",
+                signer
+            );
+            console.log(
+                "🚀 ~ file: UnwrapWegld.jsx ~ line 44 ~ unwrapWegld ~ wrappedEGold",
+                wrappedEGold
+            );
             const factory = await getFactory();
             const elronfFactory = await factory.inner(
                 chainsConfig[from.text].Chain

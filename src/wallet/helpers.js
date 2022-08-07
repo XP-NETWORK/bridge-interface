@@ -16,12 +16,37 @@ import io from "socket.io-client";
 import { isWhiteListed } from "./../components/NFT/NFTHelper";
 import requestPool from "./requestPool";
 import { nftGeneralParser } from "nft-parser/dist/src/index";
+import { utils } from "ethers";
+
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
 const testnet = window.location.href.includes("testnet");
 const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/";
 const base64 = require("base-64");
 
-const pool = requestPool(5000);
+export const convertTransactionHash = (txn) => {
+    let convertedTxn;
+    switch (true) {
+        case txn.hash?.hash instanceof Uint8Array:
+            convertedTxn = txn.hash = utils
+                .hexlify(txn.hash?.hash)
+                .replace(/^0x/, "");
+            break;
+        case txn.hash?.hash?.data instanceof Uint8Array:
+            convertedTxn = utils
+                .hexlify(txn.hash?.hash?.data)
+                ?.replace(/^0x/, "");
+            break;
+        case txn.hash?.hash?.type === "Buffer":
+            convertedTxn = utils
+                .hexlify(txn.hash?.hash?.data)
+                ?.replace(/^0x/, "");
+            break;
+        default:
+            convertedTxn = txn.hash;
+            break;
+    }
+    return convertedTxn;
+};
 
 export const socket = io(testnet ? testnetSocketUrl : socketUrl, {
     path: "/socket.io",

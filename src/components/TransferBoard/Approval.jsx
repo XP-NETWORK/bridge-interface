@@ -37,6 +37,7 @@ function Approval(props) {
     const [finishedApproving, setFinishedApproving] = useState([]);
     const [approvedLoading, setApprovedLoading] = useState();
     const from = useSelector((state) => state.general.from);
+    const to = useSelector((state) => state.general.to);
     const testnet = useSelector((state) => state.general.testNet);
     const account = useSelector((state) => state.general.account);
     const templeSigner = useSelector((state) => state.general.templeSigner);
@@ -70,7 +71,7 @@ function Approval(props) {
 
     const checkIfReceiverIsSmartContract = async () => {
         let isSC;
-        const type = from?.type;
+        const type = to?.type;
         if (type === "Elrond" || type === "EVM")
             isSC = await checkIfSmartContract(from.nonce, receiver);
         return isSC;

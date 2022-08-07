@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { isShown } from "../../components/NFT/NFTHelper";
 import { utils } from "ethers";
+import { convertTransactionHash } from "../../wallet/helpers";
 
 export const initialSecretCred = {
     contract: "",
@@ -125,12 +126,40 @@ const generalSlice = createSlice({
                 nftUri,
                 createdAt,
             } = action.payload;
+            console.log(
+                "🚀 ~ file: generalSlice.js ~ line 128 ~ setTxnStatus ~ fromHash",
+                fromHash
+            );
             state.txnHashArr = state.txnHashArr.map((e) => {
-                const hash =
+                console.log(
+                    "Array.isArray(e.hash?.hash): ",
+                    Array.isArray(e.hash?.hash),
+                    "Array.isArray(e.hash?.hash?.data): ",
+                    Array.isArray(e.hash?.hash?.data),
+                    "e.hash?.hash?.type === buffer :",
                     e.hash?.hash?.type === "Buffer"
-                        ? utils.hexlify(e.hash?.hash?.data)?.replace(/^0x/, "")
-                        : e.hash;
+                );
+                let hash;
+                switch (true) {
+                    case Array.isArray(e.hash?.hash):
+                        hash = utils.hexlify(e.hash?.hash)?.replace(/^0x/, "");
+                        break;
+                    case Array.isArray(e.hash?.hash?.data):
+                        hash = utils
+                            .hexlify(e.hash?.hash?.data)
+                            ?.replace(/^0x/, "");
+                        break;
+                    case e.hash?.hash?.type === "Buffer":
+                        hash = utils
+                            .hexlify(e.hash?.hash?.data)
+                            ?.replace(/^0x/, "");
+                        break;
+                    default:
+                        hash = e.hash;
+                        break;
+                }
                 if (hash === fromHash) {
+                    console.log("BOOOOOOOOOOOOOM");
                     e.hash = hash;
                     e.status = status;
                     e.tokenId = tokenId;
@@ -246,24 +275,19 @@ const generalSlice = createSlice({
         },
         setTxnHash(state, action) {
             let { nft, txn } = action.payload;
+
             const { tokenId, contract, chainId } = nft.native;
 
             txn = {
                 ...txn,
                 hash: txn.hash || txn.transactionHash,
             };
+            const test = convertTransactionHash(txn);
 
-            if (
-                (txn.hash?.hash?.type === "Buffer" || txn.hash?.hash?.buffer) &&
-                txn.hash?.hash?.data
-            ) {
-                txn.hash = utils
-                    .hexlify(txn.hash?.hash?.data)
-                    .replace(/^0x/, "");
+            if (txn.hash?.hash instanceof Uint8Array) {
+                txn.hash = utils.hexlify(txn.hash?.hash).replace(/^0x/, "");
             }
-
             state.txnHashArr = [...state.txnHashArr, txn];
-
             state.selectedNFTList = state.selectedNFTList.map((n) => {
                 const { native } = n;
                 if (

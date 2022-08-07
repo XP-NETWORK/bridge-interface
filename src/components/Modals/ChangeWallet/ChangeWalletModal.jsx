@@ -16,7 +16,6 @@ import {
     setMaiarProvider,
     setMetaMask,
     setMyAlgo,
-    setNFTSetToggler,
     setOnMaiar,
     setOnWC,
     setQrCodeString,
@@ -121,7 +120,7 @@ export default function ChangeWalletModal() {
                 dispatch(setChangeWallet(false));
                 deactivate();
                 chooseWalletModal();
-                dispatch(setNFTSetToggler());
+                // dispatch(setNFTSetToggler());
                 if (temporaryTo) setTempTo();
                 break;
             case "Tron":
@@ -129,7 +128,7 @@ export default function ChangeWalletModal() {
                 dispatch(setTronLink(""));
                 handleSwitch();
                 chooseWalletModal();
-                dispatch(setNFTSetToggler());
+                // dispatch(setNFTSetToggler());
                 if (temporaryTo) setTempTo();
                 break;
             case "Elrond":
@@ -141,7 +140,7 @@ export default function ChangeWalletModal() {
                 dispatch(setConfirmMaiarMob(""));
                 dispatch(setChangeWallet(false));
                 chooseWalletModal();
-                dispatch(setNFTSetToggler());
+                // dispatch(setNFTSetToggler());
                 if (temporaryTo) setTempTo();
                 break;
             case "Tezos":
@@ -150,7 +149,7 @@ export default function ChangeWalletModal() {
                 dispatch(setTempleWallet(""));
                 dispatch(setChangeWallet(false));
                 chooseWalletModal();
-                dispatch(setNFTSetToggler());
+                // dispatch(setNFTSetToggler());
                 if (temporaryTo) setTempTo();
                 break;
             case "VeChain":
@@ -160,7 +159,7 @@ export default function ChangeWalletModal() {
                 dispatch(setAccount(""));
                 dispatch(setChangeWallet(false));
                 chooseWalletModal();
-                dispatch(setNFTSetToggler());
+                // dispatch(setNFTSetToggler());
                 if (temporaryTo) setTempTo();
                 break;
             case "Algorand":
@@ -170,7 +169,7 @@ export default function ChangeWalletModal() {
                 dispatch(setMyAlgo(""));
                 dispatch(setChangeWallet(false));
                 chooseWalletModal();
-                dispatch(setNFTSetToggler());
+                // dispatch(setNFTSetToggler());
                 if (temporaryTo) setTempTo();
                 break;
             case "Cosmos":
@@ -178,7 +177,7 @@ export default function ChangeWalletModal() {
                 dispatch(setKeplrAccount(""));
                 dispatch(setChangeWallet(false));
                 chooseWalletModal();
-                dispatch(setNFTSetToggler());
+                // dispatch(setNFTSetToggler());s
                 if (temporaryTo) setTempTo();
                 break;
             default:

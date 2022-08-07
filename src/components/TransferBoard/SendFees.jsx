@@ -16,10 +16,7 @@ import { useWeb3React } from "@web3-react/core";
 function SendFees() {
     const dispatch = useDispatch();
     const balance = useSelector((state) => state.general.balance);
-    console.log(
-        "🚀 ~ file: SendFees.jsx ~ line 19 ~ SendFees ~ balance",
-        balance
-    );
+
     const to = useSelector((state) => state.general.to);
     const from = useSelector((state) => state.general.from);
     const account = useSelector((state) => state.general.account);
