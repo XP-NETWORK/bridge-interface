@@ -126,19 +126,8 @@ const generalSlice = createSlice({
                 nftUri,
                 createdAt,
             } = action.payload;
-            console.log(
-                "🚀 ~ file: generalSlice.js ~ line 128 ~ setTxnStatus ~ fromHash",
-                fromHash
-            );
+
             state.txnHashArr = state.txnHashArr.map((e) => {
-                console.log(
-                    "Array.isArray(e.hash?.hash): ",
-                    Array.isArray(e.hash?.hash),
-                    "Array.isArray(e.hash?.hash?.data): ",
-                    Array.isArray(e.hash?.hash?.data),
-                    "e.hash?.hash?.type === buffer :",
-                    e.hash?.hash?.type === "Buffer"
-                );
                 let hash;
                 switch (true) {
                     case Array.isArray(e.hash?.hash):
@@ -159,7 +148,6 @@ const generalSlice = createSlice({
                         break;
                 }
                 if (hash === fromHash) {
-                    console.log("BOOOOOOOOOOOOOM");
                     e.hash = hash;
                     e.status = status;
                     e.tokenId = tokenId;

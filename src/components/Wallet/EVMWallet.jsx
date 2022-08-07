@@ -21,13 +21,17 @@ import { getAddEthereumChain } from "../../wallet/chains";
 import BitKeep from "../../assets/img/wallet/bitkeep.svg";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO, biz } from "../values";
 import { switchNetwork } from "../../services/chains/evmSerive";
+import { setSigner } from "../../store/reducers/signersSlice";
+import { ethers } from "ethers";
 
 export default function EVMWallet({ wallet, close }) {
-    const { account, activate, chainId, deactivate } = useWeb3React();
+    const { account, activate, chainId, deactivate, library } = useWeb3React();
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
+    const WCProvider = useSelector((state) => state.general.WCProvider);
+
     const testnet = useSelector((state) => state.general.testNet);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -172,7 +176,14 @@ export default function EVMWallet({ wallet, close }) {
     };
 
     useEffect(() => {
-        if (account) dispatch(setAccount(account));
+        if (account) {
+            const provider = new ethers.providers.Web3Provider(
+                WCProvider?.walletConnectProvider || window.ethereum
+            );
+            const signer = provider.getSigner(account);
+            dispatch(setSigner(signer));
+            dispatch(setAccount(account));
+        }
     }, [account]);
 
     switch (wallet) {

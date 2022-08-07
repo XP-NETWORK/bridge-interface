@@ -23,6 +23,22 @@ const testnet = window.location.href.includes("testnet");
 const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/";
 const base64 = require("base-64");
 
+export const isApproved = async (c, nft) => {
+    debugger;
+    const {
+        signers: { signer },
+    } = store.getState();
+    const factory = await getFactory();
+    const chain = await factory.inner(c);
+    let isApproved;
+    try {
+        isApproved = await chain.isApprovedForMinter(nft, signer);
+    } catch (error) {
+        console.log(error);
+    }
+    return isApproved;
+};
+
 export const convertTransactionHash = (txn) => {
     let convertedTxn;
     switch (true) {
