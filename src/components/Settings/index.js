@@ -223,7 +223,7 @@ function WSettings({
                               c.mainnet ||
                               c.testNet
                           )
-                          .map((chain, i) => (
+                          ?.map((chain, i) => (
                             <li
                               key={i}
                               className="blockChain_item"
@@ -333,7 +333,7 @@ function WSettings({
                         >
                           Unselect all
                         </button>
-                        {wallets.map((wallet, i) => {
+                        {wallets?.map((wallet, i) => {
                           const chain = Object.keys(availability).find((key) =>
                             availability[key].includes(wallet)
                           );
@@ -980,7 +980,7 @@ function WSettings({
                   <Accordion.Header>Affiliation Settings</Accordion.Header>
 
                   <Accordion.Body>
-                    {affiliationSettings.map((chainFees, i, arr) => {
+                    {affiliationSettings?.map((chainFees, i, arr) => {
                       return (
                         <div
                           key={"feeSet" + i}
@@ -1031,7 +1031,7 @@ function WSettings({
                                     )
                                   }
                                   selectedChain={chainFees.chain}
-                                  hideChains={affiliationSettings.map(
+                                  hideChains={affiliationSettings?.map(
                                     (s) => s.chain
                                   )}
                                 />
@@ -1070,7 +1070,7 @@ function WSettings({
                               </div>
                             </div>
                           </div>
-                          {i < affiliationSettings.length - 1 && (
+                          {i < affiliationSettings?.length - 1 && (
                             <div className="separator"></div>
                           )}
                         </div>
@@ -1080,7 +1080,7 @@ function WSettings({
                     <div className="typographyContainer">
                       <div
                         className={`addFeesWrapper ${
-                          !affiliationSettings.length ? "default" : ""
+                          !affiliationSettings?.length ? "default" : ""
                         }`}
                       >
                         <img src={addItem} alt="addItem" />

@@ -18,7 +18,7 @@ import {
 } from "../../store/reducers/generalSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getAddEthereumChain } from "../../wallet/chains";
-import BitKeep from "../../assets/img/wallet/bitkeep.svg";
+import BitKeep from "../../assets/img/wallet/Bitkeep.svg";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO, biz } from "../values";
 import { switchNetwork } from "../../services/chains/evmSerive";
 

@@ -578,12 +578,19 @@ export const withStyles = (Wrapped) => (props) => {
               box-shadow: none;
             
             }
+
+            ::-webkit-scrollbar-corner {
+              background: rgba(0,0,0,0);
+            }
     
             .nftSelectBox, .modal-content {
               border: 1px solid ${borderColor ? borderColor : ""} !important;
               filter: unset;
               opacity: 1;
-          
+            }
+
+            .nftSelectBox {
+              backdrop-filter: unset;
             }
             
              .modal-header {

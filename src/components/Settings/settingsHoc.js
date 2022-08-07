@@ -385,7 +385,7 @@ const settingsHoc = (Wrapped) => (props) => {
       setSettings({
         ...settings,
         affiliationSettings: [
-          ...settings.affiliationSettings,
+          ...(settings.affiliationSettings || []),
           initialChainFees,
         ],
       })
