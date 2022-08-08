@@ -3,10 +3,11 @@ import { useDispatch } from "react-redux";
 import {
     setSelectedNFTList,
     removeFromSelectedNFTList,
+    updateApprovedNFTs,
 } from "../../store/reducers/generalSlice";
 import NFTdetails from "./NFTdetails";
 import { useSelector } from "react-redux";
-import { setupURI } from "../../wallet/helpers";
+import { isApproved, setupURI } from "../../wallet/helpers";
 import { isShown } from "./NFTHelper.js";
 import VideoAndImage from "./VideoAndImage";
 import BrockenUtlGridView from "./BrockenUtlGridView";
@@ -25,8 +26,12 @@ export default function NFTcard({ nft, index, claimables }) {
     const [detailsOn, setDetailsOn] = useState(false);
     const search = useSelector((state) => state.general.NFTListSearch);
     const factory = useSelector((state) => state.general.factory);
+    const from = useSelector((state) => state.general.from);
     const testnet = useSelector((state) => state.general.testNet);
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
+    const approvedNFTList = useSelector(
+        (state) => state.general.approvedNFTList
+    );
     const [isVisible, setIsVisible] = useState();
     const localhost = window.location.hostname;
     const [imageErr, setImageErr] = useState(false);
@@ -57,8 +62,20 @@ export default function NFTcard({ nft, index, claimables }) {
             n.native.chainId === nft.native.chainId
     )[0];
 
-    function addRemoveNFT(chosen) {
+    async function addRemoveNFT(chosen) {
         if (!isSelected) {
+            const { tokenId, contract, chainId } = chosen.native;
+            const isInApprovedNFTs = approvedNFTList.filter(
+                (n) =>
+                    n.native.tokenId === tokenId &&
+                    n.native.contract === contract &&
+                    chainId === n.native.chainId
+            )[0];
+            if (!isInApprovedNFTs) {
+                const isApprovedForMinter = await isApproved(from.nonce, nft);
+                if (isApprovedForMinter) dispatch(updateApprovedNFTs(chosen));
+            }
+
             dispatch(setSelectedNFTList(chosen));
         } else {
             dispatch(removeFromSelectedNFTList(nft));

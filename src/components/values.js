@@ -311,7 +311,7 @@ export const chains = [
         key: "VeChain",
         text: "VeChain",
         value: "VeChain",
-        nonce: 0x18,
+        nonce: 0x19,
         tnChainId: 39,
         chainId: undefined,
         order: -3,
