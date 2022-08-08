@@ -106,11 +106,15 @@ class WService {
   }) {
     this.axios.post(`/addTransaction`, {
       widgetId: wid,
-      txHash: result.hash || result.transactionHash,
+      txHash:
+        fromNonce === 2
+          ? result.hash?.hash?.toString()
+          : result.hash || result.transactionHash,
       fromChain: fromNonce,
       toChain: toNonce,
       fees: String(bigNumberFees),
-      extraFees: String(affiliationFees),
+      extraFees: String(affiliationFees?.coef),
+      affiliationWallet: affiliationFees?.wallet || "",
       nftUri,
       senderAddress,
       targetAddress,
@@ -157,7 +161,7 @@ class WService {
     return bigNum;
   }
 
-  getFee(from, affiliationSettings, affiliationFees) {
+  getFee(from, affiliationSettings, affiliationFees, affiliationWallet) {
     from = from === "xDai" ? "Gnosis" : from;
 
     if (affiliationSettings && affiliationSettings.length) {
@@ -166,15 +170,24 @@ class WService {
       );
 
       if (feeSetting) {
-        return feeSetting.extraFees ? +feeSetting.extraFees / 100 + 1 : 1;
+        return {
+          coef: feeSetting.extraFees ? +feeSetting.extraFees / 100 + 1 : 1,
+          wallet: feeSetting.wallet,
+        };
       }
     }
 
     if (affiliationFees) {
-      return affiliationFees ? +affiliationFees / 100 + 1 : 1;
+      return {
+        coef: affiliationFees ? +affiliationFees / 100 + 1 : 1,
+        wallet: affiliationWallet,
+      };
     }
 
-    return 1.0;
+    return {
+      coef: 1.0,
+      wallet: affiliationWallet,
+    };
   }
 }
 

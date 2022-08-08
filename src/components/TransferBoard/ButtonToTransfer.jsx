@@ -66,12 +66,15 @@ export default function ButtonToTransfer() {
 
   const wid = useSelector((state) => state.general.wid);
 
-  const { affiliationFees, affiliationSettings } = useSelector(
-    ({ settings }) => ({
-      affiliationFees: settings.affiliationFees,
-      affiliationSettings: settings.affiliationSettings,
-    })
-  );
+  const {
+    affiliationFees,
+    affiliationWallet,
+    affiliationSettings,
+  } = useSelector(({ settings }) => ({
+    affiliationFees: settings.affiliationFees,
+    affiliationWallet: settings.affiliationWallet,
+    affiliationSettings: settings.affiliationSettings,
+  }));
   const getAlgorandWalletSigner = async () => {
     const base = new MyAlgoConnect();
     if (algorandWallet) {
@@ -249,7 +252,8 @@ export default function ButtonToTransfer() {
           affiliationFees: wservice.getFee(
             from,
             affiliationSettings,
-            affiliationFees
+            affiliationFees,
+            affiliationWallet
           ),
           nftUri: nft.image || nft.uri,
           senderAddress: account || algorandAccount,
