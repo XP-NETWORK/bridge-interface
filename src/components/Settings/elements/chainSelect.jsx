@@ -11,6 +11,8 @@ export const ChainSelect = ({ setChain, selectedChain, mode, hideChains }) => {
       c.value === selectedChain
   );
 
+  console.log(hideChains, "hideChains");
+
   return (
     <Dropdown>
       <Dropdown.Toggle id="dropdown-basic">

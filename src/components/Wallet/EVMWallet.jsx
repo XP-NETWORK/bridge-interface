@@ -18,7 +18,7 @@ import {
 } from "../../store/reducers/generalSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getAddEthereumChain } from "../../wallet/chains";
-import BitKeep from "../../assets/img/wallet/Bitkeep.svg";
+import { ReactComponent as BitKeep } from "../../assets/img/wallet/Bitkeep.svg";
 import { CHAIN_INFO, TESTNET_CHAIN_INFO, biz } from "../values";
 import { switchNetwork } from "../../services/chains/evmSerive";
 
@@ -238,7 +238,8 @@ export default function EVMWallet({ wallet, close }) {
           className="wllListItem"
           data-wallet="MetaMask"
         >
-          <img src={BitKeep} alt="BitKeep Icon" />
+          <BitKeep alt="BitKeep Icon" />
+
           <p>BitKeep</p>
         </li>
       );

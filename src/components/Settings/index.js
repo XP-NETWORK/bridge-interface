@@ -1031,9 +1031,19 @@ function WSettings({
                                     )
                                   }
                                   selectedChain={chainFees.chain}
-                                  hideChains={affiliationSettings?.map(
-                                    (s) => s.chain
-                                  )}
+                                  hideChains={[
+                                    ...affiliationSettings?.map((s) => s.chain),
+                                    ...chains
+                                      .filter(
+                                        (c) =>
+                                          selectedChains.indexOf(
+                                            c.text === "Gnosis"
+                                              ? "xDai"
+                                              : c.text
+                                          ) === -1
+                                      )
+                                      .map((c) => c.text),
+                                  ]}
                                 />
                               </div>
                             </div>
