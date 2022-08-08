@@ -239,6 +239,7 @@ export default function ButtonToTransfer() {
       }
 
       wid &&
+        !testnet &&
         wservice.saveTrx({
           wid,
           result,
