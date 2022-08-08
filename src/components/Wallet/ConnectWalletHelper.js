@@ -7,6 +7,8 @@ import QRCodeModal from "@walletconnect/qrcode-modal";
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
+import * as thor from "web3-providers-connex";
+
 import {
     WalletConnectProvider,
     ProxyProvider,
@@ -227,6 +229,20 @@ export const connectSync2 = async (testnet) => {
         .then((result) => {
             account = result?.annex?.signer;
         });
+    const provider = thor.ethers.modifyProvider(
+        new ethers.providers.Web3Provider(
+            new thor.ConnexProvider({
+                connex: new Connex({
+                    node: testnet
+                        ? "https://testnet.veblocks.net/"
+                        : "https://sync-mainnet.veblocks.net",
+                    network: testnet ? "test" : "main",
+                }),
+            })
+        )
+    );
+    const signer = await provider.getSigner(account);
+    store.dispatch(setSigner(signer));
     return account;
 };
 
