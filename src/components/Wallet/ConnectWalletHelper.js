@@ -132,6 +132,7 @@ export const connectKeplr = async (testnet, chain) => {
 
             store.dispatch(setKeplrAccount(address));
             store.dispatch(setKeplrWallet(signer));
+            store.dispatch(setSigner(signer));
             return true;
         } catch (error) {
             console.error(error);
