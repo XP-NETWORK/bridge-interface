@@ -42,6 +42,7 @@ function Approval(props) {
     const account = useSelector((state) => state.general.account);
     const templeSigner = useSelector((state) => state.general.templeSigner);
     const bitKeep = useSelector((state) => state.general.bitKeep);
+    const signer = useSelector((state) => state.signers.signer);
     const algorandAccount = useSelector(
         (state) => state.general.algorandAccount
     );
@@ -69,15 +70,8 @@ function Approval(props) {
     const widget = useSelector((state) => state.general.widget);
     const sync2Connex = useSelector((state) => state.general.sync2Connex);
 
-    const checkIfReceiverIsSmartContract = async () => {
-        let isSC;
-        const type = to?.type;
-        if (type === "Elrond" || type === "EVM")
-            isSC = await checkIfSmartContract(from.nonce, receiver);
-        return isSC;
-    };
-
     const getAlgorandWalletSigner = async () => {
+        // debugger;
         const base = new MyAlgoConnect();
         if (algorandWallet) {
             try {

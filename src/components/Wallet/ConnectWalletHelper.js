@@ -54,6 +54,7 @@ import Web3 from "web3";
 
 import { SecretNetworkClient } from "secretjs";
 import { setSigner } from "../../store/reducers/signersSlice";
+import { getFactory } from "../../wallet/helpers";
 
 export const wallets = [
     "MetaMask",
@@ -256,9 +257,14 @@ export const connectAlgoSigner = async (testnet) => {
                 ledger: testnet ? "TestNet" : "MainNet",
             });
             const { address } = algo[0];
-
             store.dispatch(setAlgoSigner(true));
             store.dispatch(setAlgorandAccount(address));
+            const signer = {
+                address: address,
+                AlgoSigner: window.AlgoSigner,
+                ledger: testnet ? "TestNet" : "MainNet",
+            };
+            store.dispatch(setSigner(signer));
             return true;
         } catch (e) {
             console.error(e);
@@ -337,11 +343,23 @@ export const connectBeacon = async () => {
     }
 };
 
+const getMyAlgoSigner = async (base, algorandAccount) => {
+    const factory = await getFactory();
+    const inner = await factory.inner(15);
+    const signer = inner.myAlgoSigner(base, algorandAccount);
+    return signer;
+};
+
 export const connectMyAlgo = async () => {
     const myAlgoConnect = new MyAlgoConnect();
     try {
         const accountsSharedByUser = await myAlgoConnect.connect();
+        const signer = await getMyAlgoSigner(
+            myAlgoConnect,
+            accountsSharedByUser[0].address
+        );
         store.dispatch(setAlgorandAccount(accountsSharedByUser[0].address));
+        store.dispatch(setSigner(signer));
         store.dispatch(setMyAlgo(true));
         return true;
     } catch (error) {
