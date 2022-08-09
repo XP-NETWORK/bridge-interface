@@ -42,6 +42,7 @@ export default function Pagination() {
                 </div>
                 {pageNumbers.map((e, index) => (
                     <div
+                        onClick={() => setSelectedPage(index + 1)}
                         className={
                             selectedPage === index + 1
                                 ? "page-selector--selected"
