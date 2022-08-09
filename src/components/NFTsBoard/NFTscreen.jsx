@@ -9,6 +9,7 @@ import Pagination from "./Pagination";
 
 const NFTscreen = () => {
     const NFTListView = useSelector((state) => state.general.NFTListView);
+    const nfts = useSelector((state) => state.general.NFTList);
 
     const [index, setIndex] = useState(0);
 
@@ -20,7 +21,7 @@ const NFTscreen = () => {
             ) : (
                 <NFTgridView scrollIndex={index} setIndex={setIndex} />
             )}
-            <Pagination />
+            {nfts && <Pagination />}
         </div>
     );
 };

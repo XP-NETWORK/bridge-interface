@@ -9,6 +9,11 @@ import { withSecretAuth } from "../Modals/ImportNFTModal/SecretAuth";
 
 function NFTgridView({ setIndex, scrollIndex, render, secretRender }) {
     const nfts = useSelector((state) => state.general.NFTList);
+    const currentsNFTs = useSelector((state) => state.pagination.currentsNFTs);
+    console.log(
+        "🚀 ~ file: NFTgridView.jsx ~ line 13 ~ NFTgridView ~ currentsNFTs",
+        currentsNFTs
+    );
     const algorandClaimables = useSelector(
         (state) => state.general.algorandClaimables
     );
@@ -26,7 +31,7 @@ function NFTgridView({ setIndex, scrollIndex, render, secretRender }) {
                 <BigLoader />
             ) : (
                 <div
-                    style={nfts?.length > 0 ? auto : {}}
+                    style={currentsNFTs?.length > 0 ? auto : {}}
                     className="nft-list__wrapper"
                 >
                     {algorandClaimables &&
@@ -38,8 +43,8 @@ function NFTgridView({ setIndex, scrollIndex, render, secretRender }) {
                                 claimables={true}
                             />
                         ))}
-                    {nfts?.length
-                        ? nfts?.map((nft, index) => (
+                    {currentsNFTs?.length
+                        ? currentsNFTs?.map((nft, index) => (
                               <NFTcard
                                   nft={nft}
                                   index={index}
@@ -48,7 +53,8 @@ function NFTgridView({ setIndex, scrollIndex, render, secretRender }) {
                           ))
                         : (!algorandClaimables ||
                               algorandClaimables?.length < 1) && <NFTempty />}
-                    {nfts?.length > 0 && nfts?.length < nftsPlace
+                    {currentsNFTs?.length > 0 &&
+                    currentsNFTs?.length < nftsPlace
                         ? placeholders.map((n, index) => (
                               <Missing key={`missing-${index}-component`} />
                           ))

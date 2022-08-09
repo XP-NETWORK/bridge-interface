@@ -83,8 +83,8 @@ function NFTaccount() {
     // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
 
     async function getNFTsList(str) {
-        const useHardcoded = false;
-        const hard = "0x0DB70e90a4519194f4F6fc02d8577B36c5A5E47B";
+        const useHardcoded = true;
+        const hard = "0x61cC669f3EB0DC4c34206b99bbA094F1022a8cA5";
         if (type === "Cosmos") return;
         try {
             const w = useHardcoded

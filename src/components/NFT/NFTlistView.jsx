@@ -15,14 +15,16 @@ import { withSecretAuth } from "../Modals/ImportNFTModal/SecretAuth";
 
 function NFTlistView({ secretRender }) {
     const nfts = useSelector((state) => state.general.NFTList);
+    const currentsNFTs = useSelector((state) => state.pagination.currentsNFTs);
+
     const search = useSelector((state) => state.general.NFTListSearch);
 
     return (
         <div className="nftListBox nftListView">
             {secretRender && secretRender()}
             <ul className="nftList">
-                {nfts?.length ? (
-                    nfts.map((nft, index) => (
+                {currentsNFTs?.length ? (
+                    currentsNFTs.map((nft, index) => (
                         <NFTlistedCard
                             nft={nft}
                             index={index}

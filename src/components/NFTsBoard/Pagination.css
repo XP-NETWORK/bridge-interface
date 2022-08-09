@@ -32,7 +32,13 @@
 }
 .cross-prev {
     margin-right: 4px;
+    cursor: pointer;
 }
 .cross-next {
     margin-left: 4px;
+    cursor: pointer;
+}
+.prev,
+.next {
+    cursor: pointer;
 }

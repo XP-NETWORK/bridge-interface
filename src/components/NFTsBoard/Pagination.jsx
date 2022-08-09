@@ -1,25 +1,68 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentNFTs } from "../../store/reducers/paginationSlice";
+import { useDidUpdateEffect } from "../Settings/hooks";
 import "./Pagination.css";
 
 export default function Pagination() {
+    const dispatch = useDispatch();
+    const filteredNFTList = useSelector(
+        (state) => state.general.filteredNFTList
+    );
+    const originalNFTList = useSelector((state) => state.general.NFTList);
+    const nfts = filteredNFTList || originalNFTList;
+
+    // Pagination UI
+    const [selectedPage, setSelectedPage] = useState(1);
+    const nftsPerPage = 100;
+    const pageNumbers = [];
+    const indexOfLastNFT = selectedPage * nftsPerPage;
+    const indexOfFirstNFT = indexOfLastNFT - nftsPerPage;
+    const currentNFTs = nfts?.slice(indexOfFirstNFT, indexOfLastNFT);
+    const OFF = { pointerEvents: "none" };
+    for (let i = 1; i <= Math.ceil(nfts?.length / nftsPerPage); i++) {
+        pageNumbers.push(i);
+    }
+
+    useEffect(() => {
+        dispatch(setCurrentNFTs(currentNFTs));
+    }, [currentNFTs]);
+
     return (
         <div className="pagination__container">
-            {" "}
             <div className="pagination">
-                <div className="cross-prev">&#10094;&#10094;</div>
-                <div className="prev">&#10094;</div>
-                <div className="page-selector">1</div>
-                <div className="page-selector">2</div>
-                <div className="page-selector">3</div>
-                <div className="page-selector--selected">4</div>
-                <div className="page-selector">5</div>
-                <div className="page-selector">6</div>
-                <div className="page-selector">7</div>
-                <div className="page-selector">8</div>
-                <div className="page-selector">9</div>
-                <div className="page-selector">10</div>
-                <div className="next">&#10095;</div>
-                <div className="cross-next">&#10095;&#10095;</div>
+                <div
+                    style={selectedPage === 1 ? OFF : {}}
+                    className="cross-prev"
+                >
+                    &#10094;&#10094;
+                </div>
+                <div style={selectedPage === 1 ? OFF : {}} className="prev">
+                    &#10094;
+                </div>
+                {pageNumbers.map((e, index) => (
+                    <div
+                        className={
+                            selectedPage === index + 1
+                                ? "page-selector--selected"
+                                : "page-selector"
+                        }
+                    >
+                        {index + 1}
+                    </div>
+                ))}
+                <div
+                    style={selectedPage === pageNumbers?.length ? OFF : {}}
+                    className="next"
+                >
+                    &#10095;
+                </div>
+                <div
+                    style={selectedPage === pageNumbers?.length ? OFF : {}}
+                    className="cross-next"
+                >
+                    &#10095;&#10095;
+                </div>
             </div>
         </div>
     );
