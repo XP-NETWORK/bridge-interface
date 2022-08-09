@@ -1,7 +1,7 @@
 import axios from "axios";
 
 class CacheService {
-  cacheApi = "https://nft-cache.herokuapp.com";
+  cacheApi = "http://localhost:3030"; //"https://nft-cache.herokuapp.com";
 
   constructor() {
     this.axios = axios.create({
@@ -14,23 +14,43 @@ class CacheService {
   }
 
   async get({ chainId, tokenId, contract }, nft) {
-    return await axios
-      .get(
-        `${this.cacheApi}/nft/data?chainId=${chainId ||
-          nft.native?.chainId}&tokenId=${tokenId ||
-          nft.native?.tokenId}&contract=${contract || nft.native?.contract}`
-      )
-      .catch((e) => "error");
+    return axios.get(
+      `${this.cacheApi}/nft/data?chainId=${chainId ||
+        nft.native?.chainId}&tokenId=${tokenId ||
+        nft.native?.tokenId}&contract=${contract || nft.native?.contract}`
+    );
   }
 
-  async add(data, whitelisted) {
-    axios.post(`${this.cacheApi}/nft/add`, {
-      ...data,
-      metaData: {
-        ...data.metaData,
+  async add(nft, account, whitelisted) {
+    return axios
+      .post(`${this.cacheApi}/nft/add`, {
+        nft,
+        account,
         whitelisted,
-      },
-    });
+      })
+      .then((res) => res.data);
+  }
+
+  async unwrap(nft) {
+    if (/(wnfts\.xp\.network|nft\.xp\.network)/.test(nft.uri)) {
+      try {
+        const res = await axios(nft.uri);
+
+        const { data } = res;
+
+        return {
+          chainId: data.wrapped?.origin,
+          tokenId: data.wrapped?.tokenId,
+          contract: data.wrapped?.contract,
+        };
+      } catch (e) {}
+    }
+
+    return {
+      chainId: nft.native?.chainId,
+      tokenId: nft.native?.tokenId,
+      contract: nft.collectionIdent,
+    };
   }
 }
 
