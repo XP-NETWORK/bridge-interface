@@ -16,9 +16,16 @@ const paginationSlice = createSlice({
                 return n;
             });
         },
+        setScrollToggler(state) {
+            state.scrollToggler = !state.scrollToggler;
+        },
     },
 });
 
-export const { setCurrentNFTs, setEachNFT } = paginationSlice.actions;
+export const {
+    setCurrentNFTs,
+    setEachNFT,
+    setScrollToggler,
+} = paginationSlice.actions;
 
 export default paginationSlice.reducer;

@@ -1,7 +1,10 @@
 import { ReturnCode } from "@elrondnetwork/erdjs/out";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentNFTs } from "../../store/reducers/paginationSlice";
+import {
+    setCurrentNFTs,
+    setScrollToggler,
+} from "../../store/reducers/paginationSlice";
 import { useDidUpdateEffect } from "../Settings/hooks";
 import "./Pagination.css";
 
@@ -26,7 +29,6 @@ export default function Pagination() {
     }
 
     useEffect(() => {
-        console.log("useEffect: ", currentNFTs);
         dispatch(setCurrentNFTs(currentNFTs));
     }, [currentNFTs]);
 
@@ -63,6 +65,7 @@ export default function Pagination() {
             default:
                 break;
         }
+        dispatch(setScrollToggler());
     };
 
     return (

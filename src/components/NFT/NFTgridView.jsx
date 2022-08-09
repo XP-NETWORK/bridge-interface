@@ -10,10 +10,10 @@ import { withSecretAuth } from "../Modals/ImportNFTModal/SecretAuth";
 function NFTgridView({ setIndex, scrollIndex, render, secretRender }) {
     const nfts = useSelector((state) => state.general.NFTList);
     const currentsNFTs = useSelector((state) => state.pagination.currentsNFTs);
-    console.log(
-        "🚀 ~ file: NFTgridView.jsx ~ line 13 ~ NFTgridView ~ currentsNFTs",
-        currentsNFTs
+    const scrollToggler = useSelector(
+        (state) => state.pagination.scrollToggler
     );
+    const wrapper = useRef(null);
     const algorandClaimables = useSelector(
         (state) => state.general.algorandClaimables
     );
@@ -24,6 +24,10 @@ function NFTgridView({ setIndex, scrollIndex, render, secretRender }) {
     const auto = { overflowX: "auto" };
     const loader = useSelector((state) => state.general.bigLoader);
 
+    useEffect(() => {
+        wrapper?.current?.scrollTo(0, 0);
+    }, [scrollToggler]);
+
     return (
         <div className="nftListBox">
             {secretRender && secretRender()}
@@ -31,6 +35,7 @@ function NFTgridView({ setIndex, scrollIndex, render, secretRender }) {
                 <BigLoader />
             ) : (
                 <div
+                    ref={wrapper}
                     style={currentsNFTs?.length > 0 ? auto : {}}
                     className="nft-list__wrapper"
                 >

@@ -38,7 +38,17 @@
     margin-left: 4px;
     cursor: pointer;
 }
-.prev,
-.next {
+.prev {
+    margin-right: 4px;
     cursor: pointer;
+}
+.next {
+    margin-left: 4px;
+    cursor: pointer;
+}
+.cross-next:hover,
+.next:hover,
+.cross-prev:hover,
+.prev:hover {
+    color: #14161a !important;
 }
