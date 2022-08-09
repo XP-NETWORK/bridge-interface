@@ -5,6 +5,7 @@ import NFTlistView from "../NFT/NFTlistView";
 import NFTlistTop from "./NFTlistTop";
 
 import { useDispatch, useSelector } from "react-redux";
+import Pagination from "./Pagination";
 
 const NFTscreen = () => {
     const NFTListView = useSelector((state) => state.general.NFTListView);
@@ -19,9 +20,7 @@ const NFTscreen = () => {
             ) : (
                 <NFTgridView scrollIndex={index} setIndex={setIndex} />
             )}
-            {/* <div className="algo-claimable">
-      // TODO Algorand Claimable
-    </div> */}
+            <Pagination />
         </div>
     );
 };
