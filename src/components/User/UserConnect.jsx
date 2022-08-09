@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import Web3 from "web3";
+import { ethers } from "ethers";
 import {
     setAccount,
     setAccountModal,
@@ -10,6 +11,7 @@ import {
     setUnsupportedNetwork,
     setWalletsModal,
 } from "../../store/reducers/generalSlice";
+import { setSigner } from "../../store/reducers/signersSlice";
 import { setNFTS } from "../../wallet/helpers";
 import { chains } from "../values";
 import Identicon from "./Identicon";
@@ -22,6 +24,7 @@ export default function UserConnect({ desktop, mobile }) {
     const algorandAccount = useSelector(
         (state) => state.general.algorandAccount
     );
+    const WCProvider = useSelector((state) => state.general.WCProvider);
     const _account = useSelector((state) => state.general.account);
     const innerWidth = useSelector((state) => state.general.innerWidth);
     const tronWallet = useSelector((state) => state.general.tronWallet);
@@ -134,10 +137,15 @@ export default function UserConnect({ desktop, mobile }) {
         }
     }, []);
 
-    // useEffect(() => {
-    //     // debugger
-    //     // handleChangeAccountOrChainId();
-    // }, [chainId, account]);
+    useEffect(() => {
+        if (account) {
+            const provider = new ethers.providers.Web3Provider(
+                WCProvider?.walletConnectProvider || window.ethereum
+            );
+            const signer = provider.getSigner(account);
+            dispatch(setSigner(signer));
+        }
+    }, [chainId]);
 
     useEffect(() => {
         if (!account && WalletConnect) {

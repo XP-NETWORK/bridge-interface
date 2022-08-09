@@ -24,7 +24,7 @@ const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/";
 const base64 = require("base-64");
 
 export const isApproved = async (c, nft) => {
-    debugger;
+    // debugger;
     const {
         signers: { signer },
     } = store.getState();
@@ -417,7 +417,10 @@ export const handleChainFactory = async (someChain) => {
 };
 
 export const getNFTS = async (wallet, from) => {
-    const { checkWallet } = store.getState().general;
+    console.log("🚀 ~ file: helpers.js ~ line 420 ~ getNFTS ~ from", from);
+    console.log("🚀 ~ file: helpers.js ~ line 420 ~ getNFTS ~ wallet", wallet);
+
+    const { checkWallet, NFTList } = store.getState().general;
     const factory = await getFactory();
     const chain = await factory.inner(chainsConfig[from].Chain);
     try {
@@ -445,9 +448,11 @@ export const getNFTS = async (wallet, from) => {
         }
     } catch (err) {
         console.log(err, "NFT Indexer error");
-        store.dispatch(
-            setError("NFT-Indexer is temporarily under maintenance")
-        );
+        if (!NFTList) {
+            store.dispatch(
+                setError("NFT-Indexer is temporarily under maintenance")
+            );
+        }
         return [];
     }
 };

@@ -9,6 +9,7 @@ import {
     setWrappedEGold,
     cleanSelectedNFTList,
     setUnwrappedEGold,
+    setNFTList,
 } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -25,7 +26,11 @@ import UnsupportedNetwork from "../Modals/ChangeNetwork/UnsupportedNetwork";
 import SelectNFTAler from "../Alerts/SelectNFTAler";
 import PasteDestinationAlert from "../Alerts/PasteDestinationAlert";
 import NoApprovedNFT from "../Alerts/NoApprovedNFT";
-import { usePrevious, useCheckMobileScreen } from "../Settings/hooks";
+import {
+    usePrevious,
+    useCheckMobileScreen,
+    useDidUpdateEffect,
+} from "../Settings/hooks";
 import { chainsConfig } from "../values";
 import ImportNFTButton from "../Buttons/ImportNFTButton";
 
@@ -61,14 +66,12 @@ function NFTaccount() {
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
     const wrappedEGold = useSelector((state) => state.general.wrappedEGold);
     const unwrappedEGold = useSelector((state) => state.general.unwrappedEGold);
+    const NFTListSearch = useSelector((state) => state.general.NFTListSearch);
 
     const accountWalletModal = useSelector(
         (state) => state.general.accountWalletModal
     );
     const prevWrappedEGold = usePrevious(wrappedEGold);
-    //keplrWallet
-    const keplrWallet = useSelector((state) => state.general.keplrWallet);
-    // const [balanceInterval, setBalanceInterval] = useState();
     let balanceInterval = useRef(null);
 
     //Anjelika - 0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE
@@ -224,44 +227,17 @@ function NFTaccount() {
         return () => clearInterval(balanceInterval);
     }, [from, account, NFTSetToggler]);
 
-    // useEffect(() => {
-    //     document.addEventListener(
-    //         "keydown",
-    //         async (event) => {
-    //             if (event.code === "Numpad4") {
-    //                 const f = await getFactory();
-
-    //                 const fromChain = await f.inner(chainsConfig[from].Chain);
-
-    //                 console.log(keplrWallet, "fromChain");
-
-    //                 // const a = await keplrWallet.tx.snip721.setViewingKey(
-    //                 //     {
-    //                 //         contractAddress:
-    //                 //             "secret146snljq0kjsva7qrx4am54nv3fhfaet7srx4n2",
-    //                 //         sender: secretAccount,
-    //                 //         msg: {
-    //                 //             set_viewing_key: {
-    //                 //                 key: "MyViewingKey#1",
-    //                 //             },
-    //                 //         },
-    //                 //     },
-    //                 //     {
-    //                 //         gasLimit: "1000000",
-    //                 //     }
-    //                 // );
-
-    //                 // const a = await f.mint(fromChain, keplrWallet, {
-    //                 //     url:
-    //                 //         "https://wnfts.xp.network/w/30429570476105310976966757785",
-    //                 // });
-    //             }
-    //         },
-    //         false
-    //     );
-    // }, []);
-
     const isMobile = useCheckMobileScreen();
+
+    // useDidUpdateEffect(() => {
+    // const filteredNFTs = nfts.filter(
+    //     (e) =>
+    //         e.name?.includes(NFTListSearch) ||
+    //         e.native.name?.includes(NFTListSearch) ||
+    //         e.description?.includes(NFTListSearch)
+    // );
+    // dispatch(setNFTList(filteredNFTs));
+    // }, [NFTListSearch]);
 
     return (
         <div className="NFTaccount">

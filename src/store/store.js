@@ -1,5 +1,6 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import generalSlice from "./reducers/generalSlice";
+import paginationSlice from "./reducers/paginationSlice";
 import settingSlice from "./reducers/settingsSlice";
 import signersSlice from "./reducers/signersSlice";
 import sliderSlice from "./reducers/sliderSlice";
@@ -17,6 +18,7 @@ export default configureStore({
         settings: settingSlice,
         slider: sliderSlice,
         signers: signersSlice,
+        pagination: paginationSlice,
         transferResults: transferResultsSlice,
     },
     middleware,

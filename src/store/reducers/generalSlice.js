@@ -29,6 +29,9 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setFilteredNFTSList(state, action) {
+            state.filteredNFTList = action.payload;
+        },
         setReceiverIsSmartContractAddress(state, action) {
             state.receiverIsSmartContract = action.payload;
         },
@@ -483,6 +486,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+    setFilteredNFTSList,
     setUnwrappedEGold,
     setReceiverIsSmartContractAddress,
     setSecretLoggedIn,

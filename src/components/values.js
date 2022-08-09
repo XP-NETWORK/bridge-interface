@@ -542,7 +542,7 @@ export const coins = [
     "MATIC", // 5
     "FTM", // 6
     "TRX", // 7
-    "CELO", // 8
+    "ALGO", // 8
     "ONE", // 9
     "ONG", // 10
     "XDAI", //11
