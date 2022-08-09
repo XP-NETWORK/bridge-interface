@@ -28,12 +28,12 @@ export default function NFTSearch() {
     // }, [searchInput]);
 
     const handleSearch = (e) => {
-        const search = e.target.value;
+        const search = e.target.value.toLowerCase();
         const filteredNFTs = nfts.filter(
             (e) =>
-                e.name?.includes(search) ||
-                e.native.name?.includes(search) ||
-                e.description?.includes(search)
+                e.name?.toLowerCase().includes(search) ||
+                e.native.name?.toLowerCase().includes(search) ||
+                e.description?.toLowerCase().includes(search)
         );
         dispatch(setSearchNFTList(search));
         dispatch(setFilteredNFTSList(filteredNFTs));

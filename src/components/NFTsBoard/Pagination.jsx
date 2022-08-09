@@ -1,3 +1,4 @@
+import { ReturnCode } from "@elrondnetwork/erdjs/out";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentNFTs } from "../../store/reducers/paginationSlice";
@@ -25,40 +26,89 @@ export default function Pagination() {
     }
 
     useEffect(() => {
+        console.log("useEffect: ", currentNFTs);
         dispatch(setCurrentNFTs(currentNFTs));
     }, [currentNFTs]);
+
+    const showScope = (index) => {
+        const after = 10 - (selectedPage % 10);
+        const before = 10 - after;
+
+        if (index >= selectedPage - before && index <= selectedPage + after)
+            return true;
+    };
+
+    const handleClick = (action, page) => {
+        // debugger;
+        switch (action) {
+            case "cross-prev":
+                if (selectedPage - 10 < 1) {
+                    setSelectedPage(1);
+                } else setSelectedPage(selectedPage - 10);
+                break;
+            case "prev":
+                setSelectedPage(selectedPage - 1);
+                break;
+            case "cross-next":
+                if (selectedPage + 10 > pageNumbers.length) {
+                    setSelectedPage(pageNumbers.length);
+                } else setSelectedPage(selectedPage + 10);
+                break;
+            case "next":
+                setSelectedPage(selectedPage + 1);
+                break;
+            case "page-selector":
+                setSelectedPage(page);
+                break;
+            default:
+                break;
+        }
+    };
 
     return (
         <div className="pagination__container">
             <div className="pagination">
                 <div
+                    onClick={() => handleClick("cross-prev")}
                     style={selectedPage === 1 ? OFF : {}}
                     className="cross-prev"
                 >
                     &#10094;&#10094;
                 </div>
-                <div style={selectedPage === 1 ? OFF : {}} className="prev">
+                <div
+                    onClick={() => handleClick("prev")}
+                    style={selectedPage === 1 ? OFF : {}}
+                    className="prev"
+                >
                     &#10094;
                 </div>
-                {pageNumbers.map((e, index) => (
-                    <div
-                        onClick={() => setSelectedPage(index + 1)}
-                        className={
-                            selectedPage === index + 1
-                                ? "page-selector--selected"
-                                : "page-selector"
-                        }
-                    >
-                        {index + 1}
-                    </div>
-                ))}
+                {pageNumbers.map((e, index) => {
+                    const page = index + 1;
+                    return showScope(page) ? (
+                        <div
+                            onClick={() => handleClick("page-selector", page)}
+                            style={selectedPage === page ? OFF : {}}
+                            className={
+                                selectedPage === page
+                                    ? "page-selector--selected"
+                                    : "page-selector"
+                            }
+                        >
+                            {page}
+                        </div>
+                    ) : (
+                        ""
+                    );
+                })}
                 <div
+                    onClick={() => handleClick("next")}
                     style={selectedPage === pageNumbers?.length ? OFF : {}}
                     className="next"
                 >
                     &#10095;
                 </div>
                 <div
+                    onClick={() => handleClick("cross-next")}
                     style={selectedPage === pageNumbers?.length ? OFF : {}}
                     className="cross-next"
                 >
