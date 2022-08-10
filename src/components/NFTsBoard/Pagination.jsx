@@ -67,7 +67,10 @@ export default function Pagination() {
     };
 
     return (
-        <div className="pagination__container">
+        <div
+            style={originalNFTList?.length > 100 ? {} : { display: "none" }}
+            className="pagination__container"
+        >
             <div className="pagination">
                 <div
                     onClick={() => handleClick("cross-prev")}
