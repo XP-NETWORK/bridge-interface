@@ -5,6 +5,7 @@ import {
     cleanSelectedNFTList,
     setChainModal,
     setDepartureOrDestination,
+    setWhitelistedNFTs,
 } from "../../store/reducers/generalSlice";
 import { useSelector } from "react-redux";
 import { setNFTS } from "../../wallet/helpers";
@@ -16,12 +17,14 @@ import SelectedNFTs from "../Buttons/SelectedNFTs";
 import ViewButton from "../Buttons/ViewButton";
 import { ReactComponent as Check } from "../../assets/img/icons/gray_check.svg";
 import ImportNFTButton from "../Buttons/ImportNFTButton";
+import { useEffect } from "react";
 
 function NFTlistTop() {
     const dispatch = useDispatch();
     const nfts = useSelector((state) => state.general.NFTList);
+    const currentsNFTs = useSelector((state) => state.general.currentsNFTs);
     const from = useSelector((state) => state.general.from);
-    const onlyWhiteListedNFTs = nfts?.filter((n) => n.whitelisted);
+    const onlyWhiteListedNFTs = currentsNFTs?.filter((n) => n.whitelisted);
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
 
@@ -56,7 +59,7 @@ function NFTlistTop() {
                             <ImportNFTButton />
                         )}
                         <ViewButton />
-                        {onlyWhiteListedNFTs?.length === selectedNFTs?.length &&
+                        {/* {onlyWhiteListedNFTs?.length === selectedNFTs?.length &&
                         selectedNFTs?.length ? (
                             <div
                                 className="delete-all"
@@ -67,13 +70,13 @@ function NFTlistTop() {
                             </div>
                         ) : (
                             <div
-                                style={nfts ? {} : OFF}
+                                style={currentsNFTs ? {} : OFF}
                                 onClick={() => dispatch(allSelected())}
                                 className="select-all"
                             >
                                 <Check className="svgWidget" />
                             </div>
-                        )}
+                        )} */}
                     </div>
                 )}
             </div>

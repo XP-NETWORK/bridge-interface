@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { CHAIN_INFO } from "../values";
+import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 import { chainsConfig } from "../values";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { algoConnector } from "../../wallet/connectors";
@@ -33,6 +33,7 @@ import { Driver, SimpleNet, SimpleWallet } from "@vechain/connex-driver";
 import { Framework } from "@vechain/connex-framework";
 import Connex from "@vechain/connex";
 import Web3 from "web3";
+import { getFromDomain } from "../../services/resolution";
 
 export default function ButtonToTransfer() {
     const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
@@ -44,6 +45,7 @@ export default function ButtonToTransfer() {
     const approved = useSelector((state) => state.general.approved);
     const testnet = useSelector((state) => state.general.testNet);
     const to = useSelector((state) => state.general.to.key);
+    const _to = useSelector((state) => state.general.to);
     const from = useSelector((state) => state.general.from.key);
     const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
     const [loading, setLoading] = useState();
@@ -159,6 +161,7 @@ export default function ButtonToTransfer() {
         const toNonce = CHAIN_INFO[to].nonce;
         const fromNonce = CHAIN_INFO[from].nonce;
         const nftSmartContract = nft.native.contract;
+        const unstoppabledomain = await getFromDomain(receiver, _to);
         let factory;
         let toChain;
         let fromChain;
@@ -221,7 +224,7 @@ export default function ButtonToTransfer() {
                     toChain,
                     nft,
                     signer,
-                    receiverAddress || receiver,
+                    receiverAddress || unstoppabledomain || receiver,
                     bigNumberFees,
                     Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
                 );
@@ -268,7 +271,7 @@ export default function ButtonToTransfer() {
         }
     };
 
-    const sendAllNFTs = () => {
+    const sendAllNFTs = async () => {
         if (!receiver) {
             dispatch(setPasteDestinationAlert(true));
         } else if (selectedNFTList.length < 1) {

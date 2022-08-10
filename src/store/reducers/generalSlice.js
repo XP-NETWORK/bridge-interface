@@ -14,6 +14,7 @@ const initialState = {
     NFTListView: false,
     approvedNFTList: [],
     nftsToWhitelist: [],
+    whitelistedNFTS: [],
     txnHashArr: [],
     fees: 0,
     currentTx: 0,
@@ -29,6 +30,9 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setFilteredNFTSList(state, action) {
+            state.filteredNFTList = action.payload;
+        },
         setReceiverIsSmartContractAddress(state, action) {
             state.receiverIsSmartContract = action.payload;
         },
@@ -91,7 +95,7 @@ const generalSlice = createSlice({
         },
         setEachNFT(state, action) {
             const { nftObj, index } = action.payload;
-            state.NFTList = state.NFTList.map((n, i) => {
+            state.currentsNFTs = state.currentsNFTs.map((n, i) => {
                 if (i === index) n = nftObj;
                 return n;
             });
@@ -222,13 +226,14 @@ const generalSlice = createSlice({
         setSearchNFTList(state, action) {
             state.NFTListSearch = action.payload;
         },
-        allSelected(state) {
-            const nfts = JSON.parse(JSON.stringify(state.NFTList));
-            const onlyWhiteListedAndNotHidden = nfts
-                .filter((n) => n.whitelisted)
-                .filter((n) => isShown(state.NFTListSearch, n));
+        setCurrentNFTs(state, action) {
+            state.currentsNFTs = action.payload;
+        },
 
-            state.selectedNFTList = onlyWhiteListedAndNotHidden;
+        allSelected(state) {
+            state.selectedNFTList = state.currentsNFTs.filter(
+                (n) => n.whitelisted
+            );
         },
         setNFTsListView(state) {
             state.NFTListView = !state.NFTListView;
@@ -483,6 +488,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+    setFilteredNFTSList,
     setUnwrappedEGold,
     setReceiverIsSmartContractAddress,
     setSecretLoggedIn,
@@ -583,6 +589,7 @@ export const {
     setWrappedEGold,
     setTempleWalletSigner,
     setKukaiWalletSigner,
+    setCurrentNFTs,
     setAccountWalletModal,
     setBitKeepPopUp,
     setRefreshSecret,

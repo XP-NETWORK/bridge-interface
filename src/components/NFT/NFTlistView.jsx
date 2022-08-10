@@ -1,6 +1,6 @@
 import {
-  setSelectedNFTList,
-  removeFromSelectedNFTList,
+    setSelectedNFTList,
+    removeFromSelectedNFTList,
 } from "../../store/reducers/generalSlice";
 import NFTdetails from "../NFT/NFTdetails";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,37 +14,29 @@ import NFTlistedCard from "./NFTlistedCard";
 import { withSecretAuth } from "../Modals/ImportNFTModal/SecretAuth";
 
 function NFTlistView({ secretRender }) {
-  const nfts = useSelector((state) => state.general.NFTList);
-  const search = useSelector((state) => state.general.NFTListSearch);
+    const nfts = useSelector((state) => state.general.NFTList);
+    const currentsNFTs = useSelector((state) => state.general.currentsNFTs);
 
-  return (
-    <div className="nftListBox nftListView">
-      {secretRender && secretRender()}
-      <ul className="nftList">
-        {nfts?.length ? (
-          !search ? (
-            nfts.map((nft, index) => (
-              <NFTlistedCard
-                nft={nft}
-                index={index}
-                key={index + "listedview"}
-              />
-            ))
-          ) : (
-            nfts
-              .filter(
-                (nft, index) =>
-                  nft?.name?.includes(search ? search : "") ||
-                  nft?.native.owner?.includes(search ? search : "")
-              )
-              .map((nft, index) => <NFTlistedCard nft={nft} index={index} />)
-          )
-        ) : (
-          <NFTempty />
-        )}
-      </ul>
-    </div>
-  );
+    const search = useSelector((state) => state.general.NFTListSearch);
+
+    return (
+        <div className="nftListBox nftListView">
+            {secretRender && secretRender()}
+            <ul className="nftList">
+                {currentsNFTs?.length ? (
+                    currentsNFTs.map((nft, index) => (
+                        <NFTlistedCard
+                            nft={nft}
+                            index={index}
+                            key={index + "listedview"}
+                        />
+                    ))
+                ) : (
+                    <NFTempty />
+                )}
+            </ul>
+        </div>
+    );
 }
 
 export default withSecretAuth(NFTlistView);
