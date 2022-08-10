@@ -1134,6 +1134,10 @@ span.statComp img {
 .wrongNFT {
     padding: 24px;
     color: #14161a;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 300px;
+    word-break: break-all;
 }
 
 .nftListView span.NFTInf {
