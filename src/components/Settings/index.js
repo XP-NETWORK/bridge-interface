@@ -363,9 +363,7 @@ function WSettings({
                                   src={
                                     wallet === "AlgoSigner"
                                       ? require(`./assets/img/wallets/${wallet}.png`)
-                                          .default
                                       : require(`./assets/img/wallets/${wallet}.svg`)
-                                          .default
                                   }
                                   alt={wallet}
                                 />
