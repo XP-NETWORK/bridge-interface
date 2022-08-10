@@ -50,6 +50,7 @@ function NFTaccount() {
     const type = useSelector((state) => state.general.from.type);
     const algorandAccount = useSelector((s) => s.general.algorandAccount);
     const nfts = useSelector((state) => state.general.NFTList);
+    const currentsNFTs = useSelector((state) => state.general.currentsNFTs);
 
     const importModal = useSelector((state) => state.general.importModal);
     const algorandClaimables = useSelector(
@@ -282,7 +283,7 @@ function NFTaccount() {
                     <NFTmobileView
                         selectedNFTs={selectedNFTs}
                         _from={_from}
-                        nfts={nfts}
+                        nfts={currentsNFTs}
                     />
                 )}
             </Container>

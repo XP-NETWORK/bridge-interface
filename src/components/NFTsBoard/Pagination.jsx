@@ -1,10 +1,8 @@
 import { ReturnCode } from "@elrondnetwork/erdjs/out";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    setCurrentNFTs,
-    setScrollToggler,
-} from "../../store/reducers/paginationSlice";
+import { setCurrentNFTs } from "../../store/reducers/generalSlice";
+import { setScrollToggler } from "../../store/reducers/paginationSlice";
 import { useDidUpdateEffect } from "../Settings/hooks";
 import "./Pagination.css";
 
@@ -30,7 +28,7 @@ export default function Pagination() {
 
     useEffect(() => {
         dispatch(setCurrentNFTs(currentNFTs));
-    }, [currentNFTs]);
+    }, [selectedPage]);
 
     const showScope = (index) => {
         const after = 10 - (selectedPage % 10);

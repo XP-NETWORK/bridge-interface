@@ -41,11 +41,6 @@ export default function NFTcard({ nft, index, claimables }) {
         setIsVisible(entry.isIntersecting);
     };
 
-    //console.log(
-    // factory.inner(7).then(async (res) => console.log(await res.getProvider())),
-    //"factory"
-    //);
-
     const cardRef = useRef(null);
     const options = useMemo(() => {
         return {
@@ -71,12 +66,11 @@ export default function NFTcard({ nft, index, claimables }) {
                     n.native.contract === contract &&
                     chainId === n.native.chainId
             )[0];
+            dispatch(setSelectedNFTList(chosen));
             if (!isInApprovedNFTs) {
                 const isApprovedForMinter = await isApproved(from.nonce, nft);
                 if (isApprovedForMinter) dispatch(updateApprovedNFTs(chosen));
             }
-
-            dispatch(setSelectedNFTList(chosen));
         } else {
             dispatch(removeFromSelectedNFTList(nft));
         }

@@ -15,7 +15,7 @@ import { withSecretAuth } from "../Modals/ImportNFTModal/SecretAuth";
 
 function NFTlistView({ secretRender }) {
     const nfts = useSelector((state) => state.general.NFTList);
-    const currentsNFTs = useSelector((state) => state.pagination.currentsNFTs);
+    const currentsNFTs = useSelector((state) => state.general.currentsNFTs);
 
     const search = useSelector((state) => state.general.NFTListSearch);
 

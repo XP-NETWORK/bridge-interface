@@ -20,8 +20,9 @@ import ImportNFTButton from "../Buttons/ImportNFTButton";
 function NFTlistTop() {
     const dispatch = useDispatch();
     const nfts = useSelector((state) => state.general.NFTList);
+    const currentsNFTs = useSelector((state) => state.general.currentsNFTs);
     const from = useSelector((state) => state.general.from);
-    const onlyWhiteListedNFTs = nfts?.filter((n) => n.whitelisted);
+    const onlyWhiteListedNFTs = currentsNFTs?.filter((n) => n.whitelisted);
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
 
@@ -67,7 +68,7 @@ function NFTlistTop() {
                             </div>
                         ) : (
                             <div
-                                style={nfts ? {} : OFF}
+                                style={currentsNFTs ? {} : OFF}
                                 onClick={() => dispatch(allSelected())}
                                 className="select-all"
                             >

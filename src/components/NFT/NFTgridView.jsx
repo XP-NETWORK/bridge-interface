@@ -9,7 +9,7 @@ import { withSecretAuth } from "../Modals/ImportNFTModal/SecretAuth";
 
 function NFTgridView({ setIndex, scrollIndex, render, secretRender }) {
     const nfts = useSelector((state) => state.general.NFTList);
-    const currentsNFTs = useSelector((state) => state.pagination.currentsNFTs);
+    const currentsNFTs = useSelector((state) => state.general.currentsNFTs);
     const scrollToggler = useSelector(
         (state) => state.pagination.scrollToggler
     );
@@ -19,7 +19,11 @@ function NFTgridView({ setIndex, scrollIndex, render, secretRender }) {
     );
     const nftsPlace = window.innerWidth <= 600 ? 2 : 6;
     const placeholders = new Array(
-        nfts ? (nftsPlace - nfts.length >= 0 ? nftsPlace - nfts.length : 0) : 0
+        currentsNFTs
+            ? currentsNFTs - currentsNFTs.length >= 0
+                ? nftsPlace - currentsNFTs.length
+                : 0
+            : 0
     ).fill(0);
     const auto = { overflowX: "auto" };
     const loader = useSelector((state) => state.general.bigLoader);

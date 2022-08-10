@@ -94,7 +94,7 @@ const generalSlice = createSlice({
         },
         setEachNFT(state, action) {
             const { nftObj, index } = action.payload;
-            state.NFTList = state.NFTList.map((n, i) => {
+            state.currentsNFTs = state.currentsNFTs.map((n, i) => {
                 if (i === index) n = nftObj;
                 return n;
             });
@@ -225,9 +225,14 @@ const generalSlice = createSlice({
         setSearchNFTList(state, action) {
             state.NFTListSearch = action.payload;
         },
+        setCurrentNFTs(state, action) {
+            state.currentsNFTs = action.payload;
+        },
+
         allSelected(state) {
-            debugger;
-            state.selectedNFTList = state.NFTList.filter((n) => n.whitelisted);
+            state.selectedNFTList = state.currentsNFTs.filter(
+                (n) => n.whitelisted
+            );
         },
         setNFTsListView(state) {
             state.NFTListView = !state.NFTListView;
@@ -583,6 +588,7 @@ export const {
     setWrappedEGold,
     setTempleWalletSigner,
     setKukaiWalletSigner,
+    setCurrentNFTs,
     setAccountWalletModal,
     setBitKeepPopUp,
     setRefreshSecret,

@@ -3,7 +3,7 @@ import { isWhiteListed } from "./../components/NFT/NFTHelper";
 import axios from "axios";
 import { nftGeneralParser } from "nft-parser/dist/src/index";
 import store from "../store/store";
-import { setEachNFT } from "../store/reducers/paginationSlice";
+import { setEachNFT } from "../store/reducers/generalSlice";
 import { parseEachNFT } from "./helpers";
 
 import CacheService from "../services/cacheService";
@@ -42,7 +42,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
         appId: nft.appId || undefined,
     };
     const {
-        general: { from, NFTList, account },
+        general: { from, currentsNFTs, account },
     } = store.getState();
 
     if (!claimable) {
@@ -137,9 +137,9 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
         }
 
         if (
-            !NFTList[index]?.dataLoaded ||
-            !NFTList[index]?.image ||
-            !NFTList[index]?.animation_url
+            !currentsNFTs[index]?.dataLoaded ||
+            !currentsNFTs[index]?.image ||
+            !currentsNFTs[index]?.animation_url
         ) {
             store.dispatch(setEachNFT({ nftObj, index }));
         }

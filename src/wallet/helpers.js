@@ -120,7 +120,7 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
         uri = `https://treatdao.com/api/nft/${nft.native.tokenId}`;
     }
     const {
-        general: { from, NFTList, account },
+        general: { from, currentsNFTs, account },
     } = store.getState();
     let whitelisted;
 
@@ -201,9 +201,9 @@ export const parseEachNFT = async (nft, index, testnet, claimables) => {
     ) {
         store.dispatch(setEachClaimables({ nftObj, index }));
     } else if (
-        !NFTList[index]?.dataLoaded ||
-        !NFTList[index]?.image ||
-        !NFTList[index]?.animation_url
+        !currentsNFTs[index]?.dataLoaded ||
+        !currentsNFTs[index]?.image ||
+        !currentsNFTs[index]?.animation_url
     ) {
         store.dispatch(setEachNFT({ nftObj, index }));
     }
