@@ -2,6 +2,9 @@ import axios from "axios";
 
 class CacheService {
   cacheApi = "http://localhost:3030"; //"https://nft-cache.herokuapp.com";
+  retryInterval = 6000;
+  totalTry = 6;
+  retryStatues = [429];
 
   constructor() {
     this.axios = axios.create({
@@ -14,21 +17,38 @@ class CacheService {
   }
 
   async get({ chainId, tokenId, contract }, nft) {
-    return axios.get(
-      `${this.cacheApi}/nft/data?chainId=${chainId ||
-        nft.native?.chainId}&tokenId=${tokenId ||
-        nft.native?.tokenId}&contract=${contract || nft.native?.contract}`
-    );
+    return axios
+      .get(
+        `${this.cacheApi}/nft/data?chainId=${chainId ||
+          nft.native?.chainId}&tokenId=${tokenId ||
+          nft.native?.tokenId}&contract=${contract || nft.native?.contract}`
+      )
+      .catch(() => ({ data: null }));
   }
 
-  async add(nft, account, whitelisted) {
+  async add(nft, account, whitelisted, times = 1) {
     return axios
       .post(`${this.cacheApi}/nft/add`, {
         nft,
         account,
         whitelisted,
       })
-      .then((res) => res.data);
+      .then(async (res) => {
+        if (
+          this.retryStatues.includes(res.data?.errorStatus) &&
+          times < this.totalTry
+        ) {
+          await new Promise((resolve) =>
+            setTimeout(
+              () => resolve(""),
+              this.retryInterval + (this.retryInterval * times) / 5
+            )
+          );
+          return this.add(nft, account, whitelisted, times++);
+        } else {
+          return res.data;
+        }
+      });
   }
 
   async unwrap(nft) {

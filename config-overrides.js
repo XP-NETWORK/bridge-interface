@@ -1,29 +1,6 @@
-const path = require("path");
-const fs = require("fs");
 const webpack = require("webpack");
 
-const rewireBabelLoader = require("react-app-rewire-babel-loader");
-
-const appDirectory = fs.realpathSync(process.cwd());
-const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
-
 module.exports = function override(webpackConfig) {
-  webpackConfig.module.rules.push({
-    test: /\.mjs$/,
-    include: /node_modules/,
-    type: "javascript/auto",
-  });
-
-  webpackConfig = rewireBabelLoader.include(
-    webpackConfig,
-    resolveApp("node_modules/@dfinity")
-  );
-
-  webpackConfig = rewireBabelLoader.include(
-    webpackConfig,
-    resolveApp("node_modules/tonweb")
-  );
-
   webpackConfig.resolve.fallback = {
     url: require.resolve("url"),
     querystring: false,
@@ -37,6 +14,8 @@ module.exports = function override(webpackConfig) {
     buffer: require.resolve("buffer"),
     stream: require.resolve("stream-browserify"),
   };
+
+  webpackConfig.ignoreWarnings = [/Failed to parse source map/];
 
   webpackConfig.plugins.push(
     new webpack.ProvidePlugin({
