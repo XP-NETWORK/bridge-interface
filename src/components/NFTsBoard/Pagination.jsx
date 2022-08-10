@@ -90,6 +90,7 @@ export default function Pagination() {
                     const page = index + 1;
                     return showScope(page) ? (
                         <div
+                            key={`Button ${index + 1}`}
                             onClick={() => handleClick("page-selector", page)}
                             style={selectedPage === page ? OFF : {}}
                             className={
