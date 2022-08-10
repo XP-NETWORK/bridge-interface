@@ -14,6 +14,7 @@ const initialState = {
     NFTListView: false,
     approvedNFTList: [],
     nftsToWhitelist: [],
+    whitelistedNFTS: [],
     txnHashArr: [],
     fees: 0,
     currentTx: 0,

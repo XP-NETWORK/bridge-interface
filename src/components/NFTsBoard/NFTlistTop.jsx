@@ -5,6 +5,7 @@ import {
     cleanSelectedNFTList,
     setChainModal,
     setDepartureOrDestination,
+    setWhitelistedNFTs,
 } from "../../store/reducers/generalSlice";
 import { useSelector } from "react-redux";
 import { setNFTS } from "../../wallet/helpers";
@@ -16,6 +17,7 @@ import SelectedNFTs from "../Buttons/SelectedNFTs";
 import ViewButton from "../Buttons/ViewButton";
 import { ReactComponent as Check } from "../../assets/img/icons/gray_check.svg";
 import ImportNFTButton from "../Buttons/ImportNFTButton";
+import { useEffect } from "react";
 
 function NFTlistTop() {
     const dispatch = useDispatch();
@@ -57,7 +59,7 @@ function NFTlistTop() {
                             <ImportNFTButton />
                         )}
                         <ViewButton />
-                        {onlyWhiteListedNFTs?.length === selectedNFTs?.length &&
+                        {/* {onlyWhiteListedNFTs?.length === selectedNFTs?.length &&
                         selectedNFTs?.length ? (
                             <div
                                 className="delete-all"
@@ -74,7 +76,7 @@ function NFTlistTop() {
                             >
                                 <Check className="svgWidget" />
                             </div>
-                        )}
+                        )} */}
                     </div>
                 )}
             </div>

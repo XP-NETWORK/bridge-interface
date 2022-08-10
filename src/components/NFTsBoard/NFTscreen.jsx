@@ -21,7 +21,7 @@ const NFTscreen = () => {
             ) : (
                 <NFTgridView scrollIndex={index} setIndex={setIndex} />
             )}
-            {nfts?.length > 0 && <Pagination />}
+            {nfts?.length > 100 && <Pagination />}
         </div>
     );
 };
