@@ -14,7 +14,7 @@ const cache = CacheService();
 const whiteListedPool = WhiteListedPool();
 const evm = EvmSerivce();
 
-
+const restrict = ["nft.weedcommerce.info"];
 
 export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
   const { uri } = nft;
@@ -72,7 +72,11 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
 
         return nftData;
       })(),
-      !testnet ? whiteListedPool.add(isWhiteListed)(from.text, nft) : true,
+      !testnet
+        ? !restrict.some((r) => nft?.uri?.includes(r))
+          ? whiteListedPool.add(isWhiteListed)(from.text, nft)
+          : false
+        : true,
     ]);
 
     const nftData = nftRes.status === "fulfilled" ? nftRes.value : undefined;
