@@ -36,11 +36,9 @@ export default function TransferredNft({ nft }) {
         const { tokenId, token_id, uri } = nft.native;
         try {
             for (const tx of txnHashArr) {
-                console.log(
-                    "🚀 ~ file: TransferredNft.jsx ~ line 39 ~ checkStatus ~ tx",
-                    tx
-                );
-                if (
+                if (tx === "failed") {
+                    setTxnStatus("failed");
+                } else if (
                     uri === tx.nftUri ||
                     (tokenId && tokenId === tx.tokenId) ||
                     (token_id && token_id === tx.tokenId)

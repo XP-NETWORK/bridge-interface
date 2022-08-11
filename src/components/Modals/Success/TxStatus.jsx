@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import processing from "../../../assets/img/icons/processing.svg";
 import pending from "../../../assets/img/icons/Pending.svg";
 import complete from "../../../assets/img/icons/completed.svg";
+import failed from "../../../assets/img/icons/Failed.svg";
 
 export default function TxStatus({ status }) {
     const [dots, setDots] = useState("");
@@ -22,9 +23,22 @@ export default function TxStatus({ status }) {
 
     const showStatus = () => {
         switch (status) {
-            case "processing":
+            case "failed":
                 return (
                     <div className="tx-status failed">
+                        <div className="tx-icon">
+                            <img
+                                style={{ height: "18px" }}
+                                src={failed}
+                                alt=""
+                            />
+                        </div>
+                        <div className="tx-txt">Failed</div>
+                    </div>
+                );
+            case "processing":
+                return (
+                    <div className="tx-status processing">
                         <div className="tx-icon">
                             <img
                                 style={{ height: "18px" }}
