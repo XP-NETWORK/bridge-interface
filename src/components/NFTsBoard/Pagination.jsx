@@ -30,8 +30,6 @@ export default function Pagination() {
         dispatch(setCurrentNFTs(currentNFTs));
     }, [selectedPage, originalNFTList]);
 
-    useEffect(() => {}, [originalNFTList]);
-
     const showScope = (index) => {
         const after = 10 - (selectedPage % 10);
         const before = 10 - after;
@@ -92,6 +90,7 @@ export default function Pagination() {
                     const page = index + 1;
                     return showScope(page) ? (
                         <div
+                            key={`Button ${index + 1}`}
                             onClick={() => handleClick("page-selector", page)}
                             style={selectedPage === page ? OFF : {}}
                             className={
