@@ -54,7 +54,8 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
           if (testnet) throw new Error("Testnet exception");
           nftData = (await cache.get({ chainId, tokenId, contract }, nft)).data;
         } catch (e) {
-          nftData = await nftGeneralParser(nft, account, whitelisted);
+          if (!cache.isRestricted(nft.uri))
+            nftData = await nftGeneralParser(nft, account, whitelisted);
         }
 
         if (nftData === "no NFT with that data was found") {
@@ -73,7 +74,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
         return nftData;
       })(),
       !testnet
-        ? !restrict.some((r) => nft?.uri?.includes(r))
+        ? !cache.isRestricted(nft.uri)
           ? whiteListedPool.add(isWhiteListed)(from.text, nft)
           : false
         : true,
@@ -84,6 +85,8 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
     whitelisted =
       whitelistedRes.status === "fulfilled" ? whitelistedRes.value : undefined;
 
+    console.log(nftData, whitelisted);
+
     if (!nftData) return;
 
     nftObj = {
@@ -92,6 +95,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
       wrapped: nftData.wrapped,
       dataLoaded: true,
       whitelisted,
+      restricted: cache.isRestricted(nft.uri),
     };
 
     if (
