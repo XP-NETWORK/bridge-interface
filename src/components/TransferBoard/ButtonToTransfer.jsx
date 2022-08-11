@@ -172,7 +172,6 @@ export default function ButtonToTransfer() {
                 nft.native &&
                 "tokenId" in nft.native &&
                 nft.native.tokenId.toString();
-
             if (from === "Tron") {
                 factory = await getFactory();
                 const contract = nftSmartContract.toLowerCase();
@@ -243,6 +242,9 @@ export default function ButtonToTransfer() {
             setLoading(false);
             dispatch(dispatch(setTransferLoaderModal(false)));
             const { data, message } = err;
+            if (txnHashArr.length) {
+                dispatch(setTxnHash({ txn: "failed", nft }));
+            }
             if (message) {
                 if (
                     message.includes("User cant pay the bills") ||
@@ -268,9 +270,6 @@ export default function ButtonToTransfer() {
             } else {
                 dispatch(setError(err.data ? err.data.message : err.message));
             }
-            // if (txnHashArr.length) {
-            dispatch(setTxnHash({ txn: undefined, nft }));
-            // }
             return;
         }
     };
