@@ -197,7 +197,7 @@ export default function ButtonToTransfer() {
                     bigNumberFees,
                     Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
                 );
-                // console.debug("Transfer result: ", result);
+                console.debug("Transfer result: ", result, "index: ", index);
                 dispatch(dispatch(setTransferLoaderModal(false)));
                 setLoading(false);
                 dispatch(setTxnHash({ txn: result, nft }));
