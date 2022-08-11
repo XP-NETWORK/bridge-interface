@@ -1,24 +1,28 @@
 pipeline {
   agent {
     docker {
-     image 'node:14-buster'
+     image 'node:16.13-buster'
+     args '-u root:root'
     }
   }
   environment {
-    CI = 'false'
     HOME = '.'
-    npm_config_cache = 'npm-cache'
   }
   stages {
     stage('Setup') {
-      steps {      
-            sh 'rm -rf package-lock.json'
-            sh  'npm install'
+      steps {
+          script {
+              try{
+                sh 'npm install -g react-app-rewired'
+                sh 'yarn'
+       
+              }catch(Exception e){} 
+          }
       }
     }
     stage('Build') {
         steps {
-                sh 'npm run build'
+                sh 'yarn build'
         }
     }
     
