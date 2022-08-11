@@ -28,7 +28,7 @@ export default function Pagination() {
 
     useEffect(() => {
         dispatch(setCurrentNFTs(currentNFTs));
-    }, [selectedPage]);
+    }, [selectedPage, originalNFTList]);
 
     const showScope = (index) => {
         const after = 10 - (selectedPage % 10);
