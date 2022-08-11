@@ -268,9 +268,9 @@ export default function ButtonToTransfer() {
             } else {
                 dispatch(setError(err.data ? err.data.message : err.message));
             }
-            if (txnHashArr.length) {
-                dispatch(setTxnHash({ txn: undefined, nft }));
-            }
+            // if (txnHashArr.length) {
+            dispatch(setTxnHash({ txn: undefined, nft }));
+            // }
             return;
         }
     };
