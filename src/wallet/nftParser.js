@@ -14,8 +14,6 @@ const cache = CacheService();
 const whiteListedPool = WhiteListedPool();
 const evm = EvmSerivce();
 
-const restrict = ["nft.weedcommerce.info"];
-
 export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
   const { uri } = nft;
 
@@ -54,8 +52,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
           if (testnet) throw new Error("Testnet exception");
           nftData = (await cache.get({ chainId, tokenId, contract }, nft)).data;
         } catch (e) {
-          if (!cache.isRestricted(nft.uri))
-            nftData = await nftGeneralParser(nft, account, whitelisted);
+          // nftData = await nftGeneralParser(nft, account, whitelisted);
         }
 
         if (nftData === "no NFT with that data was found") {
@@ -76,7 +73,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
       !testnet
         ? !cache.isRestricted(nft.uri)
           ? whiteListedPool.add(isWhiteListed)(from.text, nft)
-          : false
+          : true
         : true,
     ]);
 
@@ -84,8 +81,6 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
 
     whitelisted =
       whitelistedRes.status === "fulfilled" ? whitelistedRes.value : undefined;
-
-    console.log(nftData, whitelisted);
 
     if (!nftData) return;
 
@@ -95,8 +90,9 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
       wrapped: nftData.wrapped,
       dataLoaded: true,
       whitelisted,
-      restricted: cache.isRestricted(nft.uri),
     };
+    console.log(nftObj);
+    if (cache.isRestricted(nftObj?.image)) nft = cache.preventRestricted(nft);
 
     if (
       !NFTList[index]?.dataLoaded ||

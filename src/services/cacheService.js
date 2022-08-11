@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const en = new TextEncoder();
+
 class CacheService {
   cacheApi = "http://localhost:3030"; //"https://nft-cache-testing.herokuapp.com"; //"http://localhost:3030"; //"https://nft-cache.herokuapp.com";
   retryInterval = 6000;
@@ -28,6 +30,18 @@ class CacheService {
   }
 
   async add(nft, account, whitelisted, times = 1) {
+    if (this.isRestricted(nft.uri)) {
+      const encoded = "custom_encoded64:" + en.encode(nft.uri);
+      nft = {
+        ...nft,
+        uri: encoded,
+        native: {
+          ...nft.native,
+          ...(nft.native.uri ? { uri: encoded } : {}),
+        },
+      };
+    }
+
     return axios
       .post(`${this.cacheApi}/nft/add`, {
         nft,
@@ -75,6 +89,13 @@ class CacheService {
   }
 
   isRestricted = (url) => this.forceCache.some((r) => url?.includes(r));
+
+  preventRestricted = (nft) => ({
+    ...nft,
+    image: "",
+    animation_url: "",
+    uri: "",
+  });
 }
 
 export default () => new CacheService();
