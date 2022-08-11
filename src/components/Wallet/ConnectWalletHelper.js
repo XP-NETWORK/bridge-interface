@@ -65,7 +65,8 @@ export const wallets = [
   "Ledger",
   "Trezor",
 ];
-const { to, modalError } = store.getState();
+const { to, modalError, general } = store.getState();
+
 const connector = new WalletConnect({
   bridge: "https://bridge.walletconnect.org", // Required
 });
@@ -170,11 +171,17 @@ export const connectBitKeep = async (from) => {
 };
 
 export const connectMetaMask = async (activate, from, to) => {
+  const store1 = store.getState();
   // debugger;
   try {
     if (!window.ethereum && window.innerWidth <= 600) {
-      const link = `https://metamask.app.link/dapp/${window.location.host}?to=${to}&from=${from}/`;
-      window.open(link);
+      if (store1.general.widget) {
+        window.parent.postMessage("From Widget: Open MetaMask", "*");
+        return;
+      } else {
+        const link = `https://metamask.app.link/dapp/${window.location.host}?to=${to}&from=${from}/`;
+        window.open(link);
+      }
     }
     await activate(injected);
     store.dispatch(setMetaMask(true));

@@ -68,6 +68,7 @@ function initFromQuery() {
 }
 
 async function initFormId(id) {
+  console.log(new URLSearchParams(window.location.search));
   if (id === "create" && window.ethereum) {
     const { signature, address } = await wservice.sign(undefined, true);
 

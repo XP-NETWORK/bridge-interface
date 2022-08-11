@@ -17,7 +17,7 @@ class WService {
 
   async get(id) {
     return (
-      await this.axios.get(`/getWidget?widgetId=${id}`).catch((e) => ({}))
+      await this.axios?.get(`/getWidget?widgetId=${id}`).catch((e) => ({}))
     )?.data;
   }
 
