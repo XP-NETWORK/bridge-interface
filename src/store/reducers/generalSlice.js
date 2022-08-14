@@ -22,6 +22,7 @@ const initialState = {
   NFTListSearch: "",
   refreshSecret: false,
   secretCred: initialSecretCred,
+  wconnect: false,
 };
 
 const generalSlice = createSlice({
@@ -177,6 +178,9 @@ const generalSlice = createSlice({
     },
     setWSettings(state, action) {
       state.wsettings = action.payload;
+    },
+    setWConnect(state, action) {
+      state.wconnect = action.payload;
     },
     setAccount(state, action) {
       state.account = action.payload;
@@ -568,6 +572,7 @@ export const {
   setRefreshSecret,
   setTemporaryTo,
   setSecretCred,
+  setWConnect,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

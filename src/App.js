@@ -28,6 +28,8 @@ import { Modal } from "react-bootstrap";
 import Widget from "./components/Widget";
 import BitKeepModal from "./components/Modals/BitKeepModal/BitKeepModal";
 
+import { withConnect } from "./components/Widget/hocs/withConnect";
+
 function App() {
   const dispatch = useDispatch();
   const axios = require("axios");
@@ -113,4 +115,4 @@ function App() {
   );
 }
 
-export default App;
+export default withConnect(App);
