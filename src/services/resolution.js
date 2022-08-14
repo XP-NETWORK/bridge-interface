@@ -1,6 +1,7 @@
 //import Resolution from "@unstoppabledomains/resolution";
 import axios from "axios";
 import { CHAIN_INFO } from "../components/values";
+import { convertOne1 } from "../wallet/helpers";
 
 //const resolution = new Resolution();
 
@@ -19,6 +20,8 @@ const endings = [
 export const getFromDomain = async (domain, to) => {
     const { type, key } = to;
     const currency = CHAIN_INFO[key].native;
+    const dotExist = domain.lastIndexOf(".");
+    if (dotExist === -1) return;
     const ending = domain.slice(domain.lastIndexOf("."), domain.length);
     const isUnstoppableDomain = endings.some((e) => e === ending);
     let address;
@@ -33,6 +36,10 @@ export const getFromDomain = async (domain, to) => {
                 break;
             case "FTM":
                 address = multicoinAddresses[currency]["ERC20"];
+                break;
+            case "ONE":
+                const add = multicoinAddresses[currency]["ERC20"];
+                address = convertOne1(add);
                 break;
             default:
                 address = addresses[currency];
