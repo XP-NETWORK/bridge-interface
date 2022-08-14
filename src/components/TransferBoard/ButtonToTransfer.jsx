@@ -157,12 +157,55 @@ export default function ButtonToTransfer() {
         }
     };
 
+    const unstoppabledomainSwitch = (unstoppabledomain) => {
+        let stop;
+        if (unstoppabledomain) {
+            switch (unstoppabledomain) {
+                case "undefined":
+                    dispatch(
+                        setError(
+                            "Your domain does not explicitly support the chain you selected."
+                        )
+                    );
+                    dispatch(dispatch(setTransferLoaderModal(false)));
+                    setLoading(false);
+                    stop = true;
+                    break;
+                case "notEVM":
+                    dispatch(
+                        setError(
+                            "Domain names are currently not supported for Non-EVM chains."
+                        )
+                    );
+                    dispatch(dispatch(setTransferLoaderModal(false)));
+                    setLoading(false);
+                    stop = true;
+                    break;
+                case "invalid":
+                    dispatch(
+                        setError(
+                            "Domain does not exist. Please, check the spelling."
+                        )
+                    );
+                    dispatch(dispatch(setTransferLoaderModal(false)));
+                    setLoading(false);
+                    stop = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+        return stop;
+    };
+
     const sendEach = async (nft, index) => {
         const signer = await getSigner();
         const toNonce = CHAIN_INFO[to].nonce;
         const fromNonce = CHAIN_INFO[from].nonce;
         const nftSmartContract = nft.native.contract;
         const unstoppabledomain = await getFromDomain(receiver, _to);
+        const stop = unstoppabledomainSwitch(unstoppabledomain);
+        if (stop) return;
         let factory;
         let toChain;
         let fromChain;
