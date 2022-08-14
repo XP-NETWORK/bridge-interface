@@ -31,7 +31,10 @@ export default function Error() {
                 </div>
             </Modal.Header>
             <Modal.Body className="modalBody text-center">
-                <div className="wrongNFT">
+                <div
+                    style={error?.length > 30 ? { fontSize: "11px" } : {}}
+                    className="wrongNFT"
+                >
                     {typeof error === "object" ? error?.message : error}
                 </div>
                 {URLToOptIn && (

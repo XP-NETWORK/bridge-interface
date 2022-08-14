@@ -270,14 +270,13 @@ const generalSlice = createSlice({
             let { nft, txn } = action.payload;
 
             const { tokenId, contract, chainId } = nft.native;
-
-            txn = {
-                ...txn,
-                hash: txn.hash || txn.transactionHash,
-            };
-            const test = convertTransactionHash(txn);
-
-            if (txn.hash?.hash instanceof Uint8Array) {
+            if (typeof txn === "object") {
+                txn = {
+                    ...txn,
+                    hash: txn.hash || txn.transactionHash,
+                };
+            }
+            if (txn && txn?.hash?.hash instanceof Uint8Array) {
                 txn.hash = utils.hexlify(txn.hash?.hash).replace(/^0x/, "");
             }
             state.txnHashArr = [...state.txnHashArr, txn];
