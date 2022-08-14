@@ -19,6 +19,9 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "@vechain/connex": "^2.0.9",
+    "@vechain/connex-driver": "^2.0.10",
+    "@vechain/connex-framework": "^2.0.10",
+    "@vechain/ethers": "^4.0.27-5",
     "@walletconnect/client": "^1.7.0",
     "@walletconnect/qrcode-modal": "^1.7.5",
     "@walletconnect/web3-provider": "^1.7.7",
@@ -56,6 +59,7 @@
     "stream-http": "^3.2.0",
     "url": "^0.11.0",
     "web3": "^1.7.3",
+    "web3-providers-connex": "^0.7.4",
     "web3-utils": "^1.6.0",
     "web3modal": "^1.9.6",
     "xp.network": "git+https://github.com/xp-network/xpjs#bleeding-edge"
