@@ -3,7 +3,7 @@ import axios from "axios";
 const en = new TextEncoder();
 
 class CacheService {
-  cacheApi = "http://localhost:3030"; //"https://nft-cache-testing.herokuapp.com"; //"http://localhost:3030"; //"https://nft-cache.herokuapp.com";
+  cacheApi = "https://nft-cache-testing.herokuapp.com"; //"https://nft-cache-testing.herokuapp.com"; //"http://localhost:3030"; //"https://nft-cache.herokuapp.com";
   retryInterval = 6000;
   totalTry = 6;
   retryStatues = [429];

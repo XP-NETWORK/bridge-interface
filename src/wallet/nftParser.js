@@ -8,7 +8,6 @@ import { parseEachNFT } from "./helpers";
 import CacheService from "../services/cacheService";
 import WhiteListedPool from "../services/whiteListedPool";
 import EvmSerivce from "../services/chains/evm";
-import { Err } from "@elrondnetwork/erdjs/out";
 
 const cache = CacheService();
 const whiteListedPool = WhiteListedPool();
@@ -52,7 +51,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
           if (testnet) throw new Error("Testnet exception");
           nftData = (await cache.get({ chainId, tokenId, contract }, nft)).data;
         } catch (e) {
-          // nftData = await nftGeneralParser(nft, account, whitelisted);
+          nftData = await nftGeneralParser(nft, account, whitelisted);
         }
 
         if (nftData === "no NFT with that data was found") {
@@ -91,7 +90,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
       dataLoaded: true,
       whitelisted,
     };
-    console.log(nftObj);
+
     if (cache.isRestricted(nftObj?.image)) nft = cache.preventRestricted(nft);
 
     if (
