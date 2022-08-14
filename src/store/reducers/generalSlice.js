@@ -13,6 +13,7 @@ const initialState = {
   NFTListView: false,
   approvedNFTList: [],
   nftsToWhitelist: [],
+  whitelistedNFTS: [],
   txnHashArr: [],
   fees: 0,
   currentTx: 0,
@@ -29,6 +30,12 @@ const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
+    setFilteredNFTSList(state, action) {
+      state.filteredNFTList = action.payload;
+    },
+    setReceiverIsSmartContractAddress(state, action) {
+      state.receiverIsSmartContract = action.payload;
+    },
     setTemporaryTo(state, action) {
       state.temporaryTo = action.payload;
     },
@@ -123,11 +130,23 @@ const generalSlice = createSlice({
         nftUri,
         createdAt,
       } = action.payload;
+
       state.txnHashArr = state.txnHashArr.map((e) => {
-        const hash =
-          e.hash?.hash?.type === "Buffer"
-            ? utils.hexlify(e.hash?.hash?.data)?.replace(/^0x/, "")
-            : e.hash;
+        let hash;
+        switch (true) {
+          case Array.isArray(e.hash?.hash):
+            hash = utils.hexlify(e.hash?.hash)?.replace(/^0x/, "");
+            break;
+          case Array.isArray(e.hash?.hash?.data):
+            hash = utils.hexlify(e.hash?.hash?.data)?.replace(/^0x/, "");
+            break;
+          case e.hash?.hash?.type === "Buffer":
+            hash = utils.hexlify(e.hash?.hash?.data)?.replace(/^0x/, "");
+            break;
+          default:
+            hash = e.hash;
+            break;
+        }
         if (hash === fromHash) {
           e.hash = hash;
           e.status = status;
@@ -209,6 +228,9 @@ const generalSlice = createSlice({
     setSearchNFTList(state, action) {
       state.NFTListSearch = action.payload;
     },
+    setCurrentNFTs(state, action) {
+      state.currentsNFTs = action.payload;
+    },
     allSelected(state) {
       const nfts = JSON.parse(JSON.stringify(state.NFTList));
       const onlyWhiteListedAndNotHidden = nfts
@@ -247,19 +269,18 @@ const generalSlice = createSlice({
     },
     setTxnHash(state, action) {
       let { nft, txn } = action.payload;
+
       const { tokenId, contract, chainId } = nft.native;
-
-      txn = {
-        ...txn,
-        hash: txn.hash || txn.transactionHash,
-      };
-
-      //if (txn.hash?.hash?.type === "Buffer" || txn.hash?.hash?.buffer && txn.hash?.hash?.data) {
-      // txn.hash = utils.hexlify(txn.hash?.hash?.data).replace(/^0x/, "");
-      // }
-
+      if (typeof txn === "object") {
+        txn = {
+          ...txn,
+          hash: txn.hash || txn.transactionHash,
+        };
+      }
+      if (txn && txn?.hash?.hash instanceof Uint8Array) {
+        txn.hash = utils.hexlify(txn.hash?.hash).replace(/^0x/, "");
+      }
       state.txnHashArr = [...state.txnHashArr, txn];
-
       state.selectedNFTList = state.selectedNFTList.map((n) => {
         const { native } = n;
         if (
@@ -467,7 +488,9 @@ const generalSlice = createSlice({
 });
 
 export const {
+  setFilteredNFTSList,
   setUnwrappedEGold,
+  setReceiverIsSmartContractAddress,
   setSecretLoggedIn,
   setKeplrAccount,
   setKeplrWallet,
@@ -573,6 +596,7 @@ export const {
   setTemporaryTo,
   setSecretCred,
   setWConnect,
+  setCurrentNFTs,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
