@@ -17,6 +17,7 @@ import { isWhiteListed } from "./../components/NFT/NFTHelper";
 import requestPool from "./requestPool";
 import { nftGeneralParser } from "nft-parser/dist/src/index";
 import { utils } from "ethers";
+import { setIsEmpty } from "../store/reducers/paginationSlice";
 
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
 const testnet = window.location.href.includes("testnet");
@@ -417,9 +418,6 @@ export const handleChainFactory = async (someChain) => {
 };
 
 export const getNFTS = async (wallet, from) => {
-    console.log("🚀 ~ file: helpers.js ~ line 420 ~ getNFTS ~ from", from);
-    console.log("🚀 ~ file: helpers.js ~ line 420 ~ getNFTS ~ wallet", wallet);
-
     const { checkWallet, NFTList } = store.getState().general;
     const factory = await getFactory();
     const chain = await factory.inner(chainsConfig[from].Chain);
@@ -442,6 +440,11 @@ export const getNFTS = async (wallet, from) => {
                     return true;
                 }
             });
+            if (allNFTs.length < 1) {
+                store.dispatch(setIsEmpty(true));
+            } else {
+                store.dispatch(setIsEmpty(false));
+            }
             return allNFTs;
         } catch (err) {
             return [];

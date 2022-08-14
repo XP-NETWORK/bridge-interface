@@ -12,23 +12,34 @@ export default function Pagination() {
         (state) => state.general.filteredNFTList
     );
     const originalNFTList = useSelector((state) => state.general.NFTList);
+    const empty = useSelector((state) => state.pagination.empty);
+
+    const from = useSelector((state) => state.general.from);
     const nfts = filteredNFTList || originalNFTList;
 
     // Pagination UI
     const [selectedPage, setSelectedPage] = useState(1);
+
     const nftsPerPage = 100;
     const pageNumbers = [];
     const indexOfLastNFT = selectedPage * nftsPerPage;
     const indexOfFirstNFT = indexOfLastNFT - nftsPerPage;
     const currentNFTs = nfts?.slice(indexOfFirstNFT, indexOfLastNFT);
     const OFF = { pointerEvents: "none" };
+
     for (let i = 1; i <= Math.ceil(nfts?.length / nftsPerPage); i++) {
         pageNumbers.push(i);
     }
 
     useEffect(() => {
         dispatch(setCurrentNFTs(currentNFTs));
-    }, [selectedPage, originalNFTList]);
+    }, [selectedPage, originalNFTList, filteredNFTList]);
+
+    useEffect(() => {
+        if (empty) {
+            dispatch(setCurrentNFTs([]));
+        }
+    }, [empty]);
 
     const showScope = (index) => {
         const after = 10 - (selectedPage % 10);
