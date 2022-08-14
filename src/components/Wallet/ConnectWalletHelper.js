@@ -7,12 +7,16 @@ import QRCodeModal from "@walletconnect/qrcode-modal";
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
+import * as thor from "web3-providers-connex";
+
 import {
   WalletConnectProvider,
   ProxyProvider,
   ExtensionProvider,
 } from "@elrondnetwork/erdjs";
 import QRCode from "qrcode";
+import { ethers } from "ethers";
+
 import {
   setTronWallet,
   setConfirmMaiarMob,
@@ -49,6 +53,8 @@ import { getAddEthereumChain } from "../../wallet/chains";
 import Web3 from "web3";
 
 import { SecretNetworkClient } from "secretjs";
+import { setSigner } from "../../store/reducers/signersSlice";
+import { getFactory } from "../../wallet/helpers";
 
 export const wallets = [
   "MetaMask",
@@ -72,7 +78,6 @@ const connector = new WalletConnect({
 });
 
 export const switchNetWork = async (from) => {
-  debugger;
   // let fromChainId;
   const chain = getAddEthereumChain()[parseInt(from.chainId).toString()];
   const params = {
@@ -127,6 +132,7 @@ export const connectKeplr = async (testnet, chain) => {
 
       store.dispatch(setKeplrAccount(address));
       store.dispatch(setKeplrWallet(signer));
+      store.dispatch(setSigner(signer));
       return true;
     } catch (error) {
       console.error(error);
@@ -136,6 +142,12 @@ export const connectKeplr = async (testnet, chain) => {
     store.dispatch(setError("Please install Keplr extension"));
     return false;
   }
+};
+
+const setBitKeepSigner = (account) => {
+  const provider = new ethers.providers.Web3Provider(window.bitkeep.ethereum);
+  const signer = provider.getSigner(account);
+  store.dispatch(setSigner(signer));
 };
 
 export const connectBitKeep = async (from) => {
@@ -158,13 +170,13 @@ export const connectBitKeep = async (from) => {
     provider = window.bitkeep?.ethereum;
     await provider.request({ method: "eth_requestAccounts" });
     const web3 = new Web3(provider);
-
     const address = await web3.eth.getAccounts();
     const chainId = await web3.eth.getChainId();
     if (from && from?.chainId !== chainId) {
       switchNetWork(from, true);
     } else {
       store.dispatch(setAccount(address[0]));
+      setBitKeepSigner(address[0]);
       return true;
     }
   }
@@ -173,6 +185,7 @@ export const connectBitKeep = async (from) => {
 export const connectMetaMask = async (activate, from, to) => {
   const store1 = store.getState();
   // debugger;
+
   try {
     if (!window.ethereum && window.innerWidth <= 600) {
       if (store1.general.widget) {
@@ -185,6 +198,7 @@ export const connectMetaMask = async (activate, from, to) => {
     }
     await activate(injected);
     store.dispatch(setMetaMask(true));
+
     return true;
   } catch (ex) {
     store.dispatch(setError(ex));
@@ -223,6 +237,20 @@ export const connectSync2 = async (testnet) => {
     .then((result) => {
       account = result?.annex?.signer;
     });
+  const provider = thor.ethers.modifyProvider(
+    new ethers.providers.Web3Provider(
+      new thor.ConnexProvider({
+        connex: new Connex({
+          node: testnet
+            ? "https://testnet.veblocks.net/"
+            : "https://sync-mainnet.veblocks.net",
+          network: testnet ? "test" : "main",
+        }),
+      })
+    )
+  );
+  const signer = await provider.getSigner(account);
+  store.dispatch(setSigner(signer));
   return account;
 };
 
@@ -235,9 +263,14 @@ export const connectAlgoSigner = async (testnet) => {
         ledger: testnet ? "TestNet" : "MainNet",
       });
       const { address } = algo[0];
-
       store.dispatch(setAlgoSigner(true));
       store.dispatch(setAlgorandAccount(address));
+      const signer = {
+        address: address,
+        AlgoSigner: window.AlgoSigner,
+        ledger: testnet ? "TestNet" : "MainNet",
+      };
+      store.dispatch(setSigner(signer));
       return true;
     } catch (e) {
       console.error(e);
@@ -284,6 +317,7 @@ export const connectTempleWallet = async () => {
     const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
     await wallet.connect("mainnet");
     store.dispatch(setTempleWalletSigner(wallet));
+    store.dispatch(setSigner(wallet));
     const tezos = wallet.toTezos();
     const accountPkh = await tezos.wallet.pkh();
     store.dispatch(setTezosAccount(accountPkh));
@@ -306,6 +340,7 @@ export const connectBeacon = async () => {
     store.dispatch(setTezosAccount(permissions.address));
 
     store.dispatch(setKukaiWalletSigner(wallet));
+    store.dispatch(setSigner(wallet));
     store.dispatch(setKukaiWallet(true));
     return true;
   } catch (error) {
@@ -314,11 +349,23 @@ export const connectBeacon = async () => {
   }
 };
 
+const getMyAlgoSigner = async (base, algorandAccount) => {
+  const factory = await getFactory();
+  const inner = await factory.inner(15);
+  const signer = inner.myAlgoSigner(base, algorandAccount);
+  return signer;
+};
+
 export const connectMyAlgo = async () => {
   const myAlgoConnect = new MyAlgoConnect();
   try {
     const accountsSharedByUser = await myAlgoConnect.connect();
+    const signer = await getMyAlgoSigner(
+      myAlgoConnect,
+      accountsSharedByUser[0].address
+    );
     store.dispatch(setAlgorandAccount(accountsSharedByUser[0].address));
+    store.dispatch(setSigner(signer));
     store.dispatch(setMyAlgo(true));
     return true;
   } catch (error) {
@@ -362,6 +409,7 @@ const onClientConnect = (maiarProvider) => {
       store.dispatch(setElrondAccount(add));
 
       store.dispatch(setMaiarProvider(maiarProvider));
+      store.dispatch(setSigner(maiarProvider));
       store.dispatch(setOnMaiar(true));
       store.dispatch(setStep(2));
     },
@@ -415,6 +463,7 @@ export const connectMaiarExtension = async () => {
     store.dispatch(setOnMaiar(true));
     store.dispatch(setElrondAccount(account.address));
     store.dispatch(setMaiarProvider(instance));
+    store.dispatch(setSigner(instance));
     return true;
   } catch (err) {
     window.open("https://getmaiar.com/defi", "_blank");

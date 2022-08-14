@@ -3,57 +3,67 @@ import { Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Search } from "../../assets/img/icons/Search.svg";
 import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
-import { setSearchNFTList } from "../../store/reducers/generalSlice";
+import {
+    setFilteredNFTSList,
+    setNFTList,
+    setSearchNFTList,
+} from "../../store/reducers/generalSlice";
 import { debounce } from "../helpers";
 
 export default function NFTSearch() {
-  const dispatch = useDispatch();
-  const widget = useSelector((state) => state.general.widget);
-  const [openSearch, setOpen] = useState(false);
-  const [searchInput, setInput] = useState("");
+    const dispatch = useDispatch();
+    const widget = useSelector((state) => state.general.widget);
+    const nfts = useSelector((state) => state.general.NFTList);
+    const NFTListSearch = useSelector((state) => state.general.NFTListSearch);
+    const currentNFTs = useSelector((state) => state.general.currentNFTs);
+    const [openSearch, setOpen] = useState(false);
+    const [searchInput, setInput] = useState("");
 
-  const debounced = useCallback(
-    debounce((value) => dispatch(setSearchNFTList(value)), 700),
-    []
-  );
+    const handleSearch = (e) => {
+        const search = e.target.value.toLowerCase();
+        let filteredNFTs = nfts.filter(
+            (e) =>
+                e.name?.toLowerCase().includes(search) ||
+                e.native.name?.toLowerCase().includes(search) ||
+                e.description?.toLowerCase().includes(search)
+        );
+        dispatch(setSearchNFTList(search));
+        dispatch(setFilteredNFTSList(filteredNFTs));
+    };
 
-  useEffect(() => {
-    debounced(searchInput);
-  }, [searchInput]);
-
-  return (
-    <div className="search-dropdown">
-      {openSearch ? (
-        <div className="serchInputConatainer">
-          <Search className="svgWidget decorIcon" />
-          <input
-            type="text"
-            className="serchInput"
-            onChange={(e) => setInput(e.target.value)}
-            value={searchInput}
-          />{" "}
-          <div
-            id="SearchDrop"
-            className="CloseIcon"
-            onClick={() => {
-              setInput("");
-              setOpen(false);
-            }}
-          >
-            <Close className="svgWidget " />
-          </div>{" "}
+    return (
+        <div className="search-dropdown">
+            {openSearch ? (
+                <div className="serchInputConatainer">
+                    <Search className="svgWidget decorIcon" />
+                    <input
+                        type="text"
+                        className="serchInput"
+                        onChange={handleSearch}
+                        value={NFTListSearch}
+                    />{" "}
+                    <div
+                        id="SearchDrop"
+                        className="CloseIcon"
+                        onClick={() => {
+                            setInput("");
+                            setOpen(false);
+                        }}
+                    >
+                        <Close className="svgWidget " />
+                    </div>{" "}
+                </div>
+            ) : (
+                <div
+                    id="SearchDrop"
+                    className="SearchDrop"
+                    onClick={() => setOpen(true)}
+                >
+                    <Search className="svgWidget " />
+                </div>
+            )}
         </div>
-      ) : (
-        <div
-          id="SearchDrop"
-          className="SearchDrop"
-          onClick={() => setOpen(true)}
-        >
-          <Search className="svgWidget " />
-        </div>
-      )}
-    </div>
-  );
+    );
 }
 
 /**

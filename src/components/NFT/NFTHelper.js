@@ -106,8 +106,9 @@ export const isShown = (search, nft) =>
     ?.toString()
     .toLowerCase()
     .includes(search?.toLowerCase()) ||
+  nft?.name?.toLowerCase()?.includes(search?.toLowerCase()) ||
   nft?.native?.owner?.includes(search?.toLowerCase()) ||
-  nft?.native?.name?.toLowerCase().includes(search?.toLowerCase()) ||
+  nft?.native?.name?.toLowerCase()?.includes(search?.toLowerCase()) ||
   nft?.native?.meta?.token?.metadata?.collectionName
     ?.toLowerCase()
     .includes(search?.toLowerCase()) ||

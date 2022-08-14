@@ -1,7 +1,13 @@
 import axios from "axios";
 
+const en = new TextEncoder();
+
 class CacheService {
-  cacheApi = "https://nft-cache.herokuapp.com";
+  cacheApi = "https://nft-cache-testing.herokuapp.com"; //"https://nft-cache-testing.herokuapp.com"; //"http://localhost:3030"; //"https://nft-cache.herokuapp.com";
+  retryInterval = 6000;
+  totalTry = 6;
+  retryStatues = [429];
+  forceCache = ["nft.weedcommerce.info"];
 
   constructor() {
     this.axios = axios.create({
@@ -14,24 +20,82 @@ class CacheService {
   }
 
   async get({ chainId, tokenId, contract }, nft) {
-    return await axios
+    return axios
       .get(
         `${this.cacheApi}/nft/data?chainId=${chainId ||
           nft.native?.chainId}&tokenId=${tokenId ||
           nft.native?.tokenId}&contract=${contract || nft.native?.contract}`
       )
-      .catch((e) => "error");
+      .catch(() => ({ data: null }));
   }
 
-  async add(data, whitelisted) {
-    axios.post(`${this.cacheApi}/nft/add`, {
-      ...data,
-      metaData: {
-        ...data.metaData,
+  async add(nft, account, whitelisted, times = 1) {
+    if (this.isRestricted(nft.uri)) {
+      const encoded = "custom_encoded64:" + en.encode(nft.uri);
+      nft = {
+        ...nft,
+        uri: encoded,
+        native: {
+          ...nft.native,
+          ...(nft.native.uri ? { uri: encoded } : {}),
+        },
+      };
+    }
+
+    return axios
+      .post(`${this.cacheApi}/nft/add`, {
+        nft,
+        account,
         whitelisted,
-      },
-    });
+      })
+      .then(async (res) => {
+        if (
+          this.retryStatues.includes(res.data?.errorStatus) &&
+          times < this.totalTry
+        ) {
+          await new Promise((resolve) =>
+            setTimeout(
+              () => resolve(""),
+              this.retryInterval + (this.retryInterval * times) / 5
+            )
+          );
+          return this.add(nft, account, whitelisted, times++);
+        } else {
+          return res.data;
+        }
+      });
   }
+
+  async unwrap(nft) {
+    if (/(wnfts\.xp\.network|nft\.xp\.network)/.test(nft.uri)) {
+      try {
+        const res = await axios(nft.uri);
+
+        const { data } = res;
+
+        return {
+          chainId: data.wrapped?.origin,
+          tokenId: data.wrapped?.tokenId,
+          contract: data.wrapped?.contract,
+        };
+      } catch (e) {}
+    }
+
+    return {
+      chainId: nft.native?.chainId,
+      tokenId: nft.native?.tokenId,
+      contract: nft.collectionIdent,
+    };
+  }
+
+  isRestricted = (url) => this.forceCache.some((r) => url?.includes(r));
+
+  preventRestricted = (nft) => ({
+    ...nft,
+    image: "",
+    animation_url: "",
+    uri: "",
+  });
 }
 
 export default () => new CacheService();

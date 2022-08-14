@@ -3,16 +3,9 @@ import React, { useState } from "react";
 import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { chainsConfig, CHAIN_INFO } from "../values";
-import {
-  getFactory,
-  handleChainFactory,
-  setClaimablesAlgorand,
-  setNFTS,
-} from "../../wallet/helpers";
+import { getFactory, handleChainFactory } from "../../wallet/helpers";
 import { setBigNumFees } from "../../store/reducers/generalSlice";
-import { setOriginalFee } from "../../store/reducers/settingsSlice";
 import { useEffect } from "react";
-import { useWeb3React } from "@web3-react/core";
 
 import Wservice from "../Widget/wservice";
 

@@ -48,6 +48,7 @@ import ImportNFTButton from "../Buttons/ImportNFTButton";
 import UnwrapWegld from "../TransferBoard/UnwrapWegld";
 import WalletConnectionModal from "../Wallet/WalletConnectionModal";
 import ChangeWalletModal from "../Modals/ChangeWallet/ChangeWalletModal";
+import Pagination from "./Pagination";
 
 const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
     const dispatch = useDispatch();
@@ -129,6 +130,7 @@ const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
                     )}
                 </div>
             </div>
+            <Pagination />
             <MobileDestinationAddressBar />
             <Approval />
             <SendFees />

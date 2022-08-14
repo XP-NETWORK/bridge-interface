@@ -1,12 +1,13 @@
 import { useEffect, useState, useMemo, useRef } from "react";
 import { useDispatch } from "react-redux";
 import {
-    setSelectedNFTList,
-    removeFromSelectedNFTList,
+  setSelectedNFTList,
+  removeFromSelectedNFTList,
+  updateApprovedNFTs,
 } from "../../store/reducers/generalSlice";
 import NFTdetails from "./NFTdetails";
 import { useSelector } from "react-redux";
-import { setupURI } from "../../wallet/helpers";
+import { isApproved, setupURI } from "../../wallet/helpers";
 import { isShown } from "./NFTHelper.js";
 import VideoAndImage from "./VideoAndImage";
 import BrockenUtlGridView from "./BrockenUtlGridView";
@@ -21,165 +22,157 @@ import { useDidUpdateEffect } from "../Settings/hooks";
 import Image from "./Image";
 
 export default function NFTcard({ nft, index, claimables }) {
-    const dispatch = useDispatch();
-    const [detailsOn, setDetailsOn] = useState(false);
-    const search = useSelector((state) => state.general.NFTListSearch);
-    const factory = useSelector((state) => state.general.factory);
-    const testnet = useSelector((state) => state.general.testNet);
-    const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
-    const [isVisible, setIsVisible] = useState();
-    const localhost = window.location.hostname;
-    const [imageErr, setImageErr] = useState(false);
+  const dispatch = useDispatch();
+  const [detailsOn, setDetailsOn] = useState(false);
+  const search = useSelector((state) => state.general.NFTListSearch);
+  const factory = useSelector((state) => state.general.factory);
+  const from = useSelector((state) => state.general.from);
+  const testnet = useSelector((state) => state.general.testNet);
+  const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
+  const approvedNFTList = useSelector((state) => state.general.approvedNFTList);
+  const [isVisible, setIsVisible] = useState();
+  const localhost = window.location.hostname;
+  const [imageErr, setImageErr] = useState(false);
 
-    const callBackWhenObserver = (entries) => {
-        const [entry] = entries;
-        setIsVisible(entry.isIntersecting);
+  const callBackWhenObserver = (entries) => {
+    const [entry] = entries;
+    setIsVisible(entry.isIntersecting);
+  };
+
+  const cardRef = useRef(null);
+  const options = useMemo(() => {
+    return {
+      root: null,
+      tootMargin: "0px",
+      threshold: 0.3,
     };
+  }, []);
 
-    //console.log(
-    // factory.inner(7).then(async (res) => console.log(await res.getProvider())),
-    //"factory"
-    //);
+  let isSelected = selectedNFTs.filter(
+    (n) =>
+      n.native.tokenId === nft.native.tokenId &&
+      n.native.contract === nft.native.contract &&
+      n.native.chainId === nft.native.chainId
+  )[0];
 
-    const cardRef = useRef(null);
-    const options = useMemo(() => {
-        return {
-            root: null,
-            tootMargin: "0px",
-            threshold: 0.3,
-        };
-    }, []);
-
-    let isSelected = selectedNFTs.filter(
+  async function addRemoveNFT(chosen) {
+    if (!isSelected) {
+      const { tokenId, contract, chainId } = chosen.native;
+      const isInApprovedNFTs = approvedNFTList.filter(
         (n) =>
-            n.native.tokenId === nft.native.tokenId &&
-            n.native.contract === nft.native.contract &&
-            n.native.chainId === nft.native.chainId
-    )[0];
-
-    function addRemoveNFT(chosen) {
-        if (!isSelected) {
-            dispatch(setSelectedNFTList(chosen));
-        } else {
-            dispatch(removeFromSelectedNFTList(nft));
-        }
+          n.native.tokenId === tokenId &&
+          n.native.contract === contract &&
+          chainId === n.native.chainId
+      )[0];
+      dispatch(setSelectedNFTList(chosen));
+      if (!isInApprovedNFTs) {
+        const isApprovedForMinter = await isApproved(from.nonce, nft);
+        if (isApprovedForMinter) dispatch(updateApprovedNFTs(chosen));
+      }
+    } else {
+      dispatch(removeFromSelectedNFTList(nft));
     }
+  }
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            callBackWhenObserver,
-            options
-        );
-        const currentTarget = cardRef.current;
+  useEffect(() => {
+    const observer = new IntersectionObserver(callBackWhenObserver, options);
+    const currentTarget = cardRef.current;
 
-        if (currentTarget) observer.observe(currentTarget);
-        return () => {
-            if (currentTarget) {
-                observer.unobserve(currentTarget);
+    if (currentTarget) observer.observe(currentTarget);
+    return () => {
+      if (currentTarget) {
+        observer.unobserve(currentTarget);
+      }
+    };
+  }, [cardRef, options, search]);
+
+  useDidUpdateEffect(() => {
+    if (isVisible) {
+      if (!nft.dataLoaded) {
+        parseNFT(factory)(nft, index, testnet, claimables);
+      }
+    }
+  }, [isVisible, nft]);
+
+  return (
+    <>
+      {/* {isShown(search, nft, index) ? ( */}
+      <div className={`nft-box__wrapper`} ref={cardRef}>
+        {!nft?.dataLoaded ? (
+          <Preload />
+        ) : (
+          <div
+            onClick={() =>
+              nft.whitelisted && !detailsOn && !claimables
+                ? addRemoveNFT(nft, index)
+                : undefined
             }
-        };
-    }, [cardRef, options, search]);
+            className={nft.whitelisted ? "nft__card--selected" : "nft__card"}
+          >
+            <div className="nft__main">
+              {nft.uri && nft.image && nft.animation_url ? (
+                <VideoAndImage
+                  index={index}
+                  videoUrl={nft.animation_url}
+                  imageUrl={nft.image}
+                  onError={setImageErr}
+                  nft={nft}
+                />
+              ) : nft.image && !imageErr ? (
+                <Image onError={setImageErr} nft={nft} index={index} />
+              ) : (
+                <BrockenUtlGridView />
+              )}
 
-    useDidUpdateEffect(() => {
-        if (isVisible) {
-            if (!nft.dataLoaded) {
-                parseNFT(factory)(nft, index, testnet, claimables);
-            }
-        }
-    }, [isVisible, nft]);
+              {!claimables && nft.whitelisted ? (
+                !isSelected ? (
+                  <div className="nft-radio"></div>
+                ) : (
+                  <div className="nft-radio--selected"></div>
+                )
+              ) : (
+                ""
+              )}
+              <div className="zoomDiv">
+                <ModalImage
+                  className="zoomInBtn"
+                  small={zoomIn}
+                  large={setupURI(nft.image)}
+                  hideDownload={true}
+                  hideZoom={true}
+                />
+              </div>
+              {!nft.whitelisted && <NotWhiteListed />}
 
-    return (
-        <>
-            {isShown(search, nft, index) ? (
-                <div className={`nft-box__wrapper`} ref={cardRef}>
-                    {!nft?.dataLoaded ? (
-                        <Preload />
-                    ) : (
-                        <div
-                            onClick={() =>
-                                nft.whitelisted && !detailsOn && !claimables
-                                    ? addRemoveNFT(nft, index)
-                                    : undefined
-                            }
-                            className={
-                                nft.whitelisted
-                                    ? "nft__card--selected"
-                                    : "nft__card"
-                            }
-                        >
-                            <div className="nft__main">
-                                {nft.uri && nft.image && nft.animation_url ? (
-                                    <VideoAndImage
-                                        index={index}
-                                        videoUrl={nft.animation_url}
-                                        imageUrl={nft.image}
-                                        onError={setImageErr}
-                                        nft={nft}
-                                    />
-                                ) : nft.image && !imageErr ? (
-                                    <Image
-                                        onError={setImageErr}
-                                        nft={nft}
-                                        index={index}
-                                    />
-                                ) : (
-                                    <BrockenUtlGridView />
-                                )}
-
-                                {!claimables && nft.whitelisted ? (
-                                    !isSelected ? (
-                                        <div className="nft-radio"></div>
-                                    ) : (
-                                        <div className="nft-radio--selected"></div>
-                                    )
-                                ) : (
-                                    ""
-                                )}
-                                <div className="zoomDiv">
-                                    <ModalImage
-                                        className="zoomInBtn"
-                                        small={zoomIn}
-                                        large={setupURI(nft.image)}
-                                        hideDownload={true}
-                                        hideZoom={true}
-                                    />
-                                </div>
-                                {!nft.whitelisted && <NotWhiteListed />}
-                                {claimables && (
-                                    <ClaimableCard nft={nft} index={index} />
-                                )}
-                            </div>
-                            {/* // ! */}
-                            <div className="nft__footer">
-                                {localhost === "localhost" && (
-                                    <span
-                                        style={{
-                                            fontSize: "10px",
-                                            color: "red",
-                                        }}
-                                    >
-                                        index: {index}
-                                    </span>
-                                )}
-                                <span className="nft-name">
-                                    <span className="name">
-                                        {nft.name || nft.native.name}
-                                    </span>
-                                    <NFTdetails
-                                        details={setDetailsOn}
-                                        nftInf={nft}
-                                        index={index}
-                                        claimables={claimables}
-                                    />
-                                </span>
-                                <span className="nft-number">
-                                    {nft.native.tokenId}
-                                </span>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            ) : null}
-        </>
-    );
+              {claimables && <ClaimableCard nft={nft} index={index} />}
+            </div>
+            {/* // ! */}
+            <div className="nft__footer">
+              {localhost === "localhost" && (
+                <span
+                  style={{
+                    fontSize: "10px",
+                    color: "red",
+                  }}
+                >
+                  index: {index}
+                </span>
+              )}
+              <span className="nft-name">
+                <span className="name">{nft.name || nft.native.name}</span>
+                <NFTdetails
+                  details={setDetailsOn}
+                  nftInf={nft}
+                  index={index}
+                  claimables={claimables}
+                />
+              </span>
+              <span className="nft-number">{nft.native.tokenId}</span>
+            </div>
+          </div>
+        )}
+      </div>
+      {/* ) : null} */}
+    </>
+  );
 }
