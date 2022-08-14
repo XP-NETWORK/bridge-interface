@@ -1,6 +1,12 @@
 import { UserNftMinter__factory } from "xpnet-web3-contracts";
 import { chains } from "../../components/values";
 
+import { ethers } from "ethers";
+
+const { Driver, SimpleNet } = require("@vechain/connex-driver");
+const { Framework } = require("@vechain/connex-framework");
+const thor = require("web3-providers-connex");
+
 class EvmContract {
   providers = {};
   chainPrams;
@@ -27,6 +33,41 @@ class EvmContract {
             console.log(e);
             return nft.uri;
           });
+
+          return {
+            ...nft,
+            uri,
+          };
+        } catch (e) {
+          console.log(e);
+        }
+      }
+
+      if (chain.type === "VeChain") {
+        try {
+          if (!this.vechProv) {
+            const net = new SimpleNet("https://vethor-node.vechain.com");
+            const driver = await Driver.connect(net);
+
+            const pro = thor.ethers.modifyProvider(
+              new ethers.providers.Web3Provider(
+                new thor.ConnexProvider({ connex: new Framework(driver) })
+              )
+            );
+            const vechProv = thor.ethers.modifyProvider(pro);
+
+            if (vechProv) {
+              this.vechProv = vechProv;
+            }
+          }
+
+          const instance = new ethers.Contract(
+            nft.collectionIdent,
+            UserNftMinter__factory.abi,
+            this.vechProv
+          );
+
+          const uri = await instance.tokenURI(nft.native.tokenId);
 
           return {
             ...nft,
