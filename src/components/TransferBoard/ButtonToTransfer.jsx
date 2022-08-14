@@ -40,6 +40,7 @@ export default function ButtonToTransfer() {
     const kukaiWalletSigner = useSelector(
         (state) => state.general.kukaiWalletSigner
     );
+    const txnHashArr = useSelector((state) => state.general.txnHashArr);
     const receiver = useSelector((state) => state.general.receiver);
     const receiverAddress = convert(receiver);
     const approved = useSelector((state) => state.general.approved);
@@ -156,12 +157,55 @@ export default function ButtonToTransfer() {
         }
     };
 
+    const unstoppabledomainSwitch = (unstoppabledomain) => {
+        let stop;
+        if (unstoppabledomain) {
+            switch (unstoppabledomain) {
+                case "undefined":
+                    dispatch(
+                        setError(
+                            "Your domain does not explicitly support the chain you selected."
+                        )
+                    );
+                    dispatch(dispatch(setTransferLoaderModal(false)));
+                    setLoading(false);
+                    stop = true;
+                    break;
+                case "notEVM":
+                    dispatch(
+                        setError(
+                            "Domain names are currently not supported for Non-EVM chains."
+                        )
+                    );
+                    dispatch(dispatch(setTransferLoaderModal(false)));
+                    setLoading(false);
+                    stop = true;
+                    break;
+                case "invalid":
+                    dispatch(
+                        setError(
+                            "Domain does not exist. Please, check the spelling."
+                        )
+                    );
+                    dispatch(dispatch(setTransferLoaderModal(false)));
+                    setLoading(false);
+                    stop = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+        return stop;
+    };
+
     const sendEach = async (nft, index) => {
         const signer = await getSigner();
         const toNonce = CHAIN_INFO[to].nonce;
         const fromNonce = CHAIN_INFO[from].nonce;
         const nftSmartContract = nft.native.contract;
         const unstoppabledomain = await getFromDomain(receiver, _to);
+        const stop = unstoppabledomainSwitch(unstoppabledomain);
+        if (stop) return;
         let factory;
         let toChain;
         let fromChain;
@@ -171,7 +215,6 @@ export default function ButtonToTransfer() {
                 nft.native &&
                 "tokenId" in nft.native &&
                 nft.native.tokenId.toString();
-
             if (from === "Tron") {
                 factory = await getFactory();
                 const contract = nftSmartContract.toLowerCase();
@@ -197,7 +240,7 @@ export default function ButtonToTransfer() {
                     bigNumberFees,
                     Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
                 );
-                console.debug("Transfer result: ", result);
+                console.debug("Transfer result: ", result, "index: ", index);
                 dispatch(dispatch(setTransferLoaderModal(false)));
                 setLoading(false);
                 dispatch(setTxnHash({ txn: result, nft }));
@@ -228,7 +271,7 @@ export default function ButtonToTransfer() {
                     bigNumberFees,
                     Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
                 );
-                console.log("result", result);
+                // console.log("result", result);
                 result =
                     from === "Algorand" || from === "Tezos"
                         ? { hash: result }
@@ -238,11 +281,13 @@ export default function ButtonToTransfer() {
                 dispatch(setTxnHash({ txn: result, nft }));
             }
         } catch (err) {
-            console.error(err);
-            console.log("this is error in sendeach");
+            console.error("This is error in sendeach: ", err);
             setLoading(false);
             dispatch(dispatch(setTransferLoaderModal(false)));
-            const { data, message, error } = err;
+            const { data, message } = err;
+            if (txnHashArr.length) {
+                dispatch(setTxnHash({ txn: "failed", nft }));
+            }
             if (message) {
                 if (
                     message.includes("User cant pay the bills") ||
@@ -265,8 +310,9 @@ export default function ButtonToTransfer() {
                         setError(err.data ? err.data.message : err.message)
                     );
                 return;
-            } else
+            } else {
                 dispatch(setError(err.data ? err.data.message : err.message));
+            }
             return;
         }
     };

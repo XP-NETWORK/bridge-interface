@@ -34,6 +34,9 @@
     font-size: 12px;
     font-weight: 400;
     line-height: 17px;
+    width: 64px;
+}
+.failed .tx-txn {
     width: 70px;
 }
 .tx-icon img {
@@ -64,8 +67,11 @@
 .completed {
     color: #10b67a;
 }
-.failed {
+.processing {
     color: #6d7a92;
+}
+.failed {
+    color: #c23165;
 }
 .txn-processing__inf {
     width: 20px;

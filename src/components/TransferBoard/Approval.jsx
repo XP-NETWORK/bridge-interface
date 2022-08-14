@@ -30,8 +30,6 @@ import MyAlgoConnect from "@randlabs/myalgo-connect";
 import Connex from "@vechain/connex";
 import { CHAIN_INFO } from "../values";
 import Web3 from "web3";
-import { getFromDomain } from "../../services/resolution";
-//import ChainService from "../../services/chains/chain";
 
 function Approval(props) {
     const dispatch = useDispatch();

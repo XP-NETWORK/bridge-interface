@@ -66,7 +66,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build --max_old_space_size=8096",
+   "build": "react-app-rewired build --max_old_space_size=1024",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "predeploy": "npm run build",
