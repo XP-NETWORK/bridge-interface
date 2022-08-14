@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { isShown } from "../../components/NFT/NFTHelper";
 import { utils } from "ethers";
+import { convertTransactionHash } from "../../wallet/helpers";
 
 export const initialSecretCred = {
   contract: "",
@@ -23,7 +24,6 @@ const initialState = {
   NFTListSearch: "",
   refreshSecret: false,
   secretCred: initialSecretCred,
-  wconnect: false,
 };
 
 const generalSlice = createSlice({
@@ -95,7 +95,7 @@ const generalSlice = createSlice({
     },
     setEachNFT(state, action) {
       const { nftObj, index } = action.payload;
-      state.NFTList = state.NFTList.map((n, i) => {
+      state.currentsNFTs = state.currentsNFTs.map((n, i) => {
         if (i === index) n = nftObj;
         return n;
       });
@@ -231,13 +231,9 @@ const generalSlice = createSlice({
     setCurrentNFTs(state, action) {
       state.currentsNFTs = action.payload;
     },
-    allSelected(state) {
-      const nfts = JSON.parse(JSON.stringify(state.NFTList));
-      const onlyWhiteListedAndNotHidden = nfts
-        .filter((n) => n.whitelisted)
-        .filter((n) => isShown(state.NFTListSearch, n));
 
-      state.selectedNFTList = onlyWhiteListedAndNotHidden;
+    allSelected(state) {
+      state.selectedNFTList = state.currentsNFTs.filter((n) => n.whitelisted);
     },
     setNFTsListView(state) {
       state.NFTListView = !state.NFTListView;
@@ -307,7 +303,6 @@ const generalSlice = createSlice({
         ...initialState,
         widget: state.widget,
         wsettings: state.wsettings,
-        //account: state.account
       };
     },
     setElrondAccount(state, action) {
@@ -568,7 +563,6 @@ export const {
   setOnWC,
   setWC,
   setWidget,
-  setWid,
   setError,
   setBigNumFees,
   setTronPopUp,
@@ -590,13 +584,14 @@ export const {
   setWrappedEGold,
   setTempleWalletSigner,
   setKukaiWalletSigner,
+  setCurrentNFTs,
   setAccountWalletModal,
   setBitKeepPopUp,
   setRefreshSecret,
   setTemporaryTo,
   setSecretCred,
+  setWid,
   setWConnect,
-  setCurrentNFTs,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

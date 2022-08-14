@@ -51,6 +51,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
           if (testnet) throw new Error("Testnet exception");
           nftData = (await cache.get({ chainId, tokenId, contract }, nft)).data;
         } catch (e) {
+          console.log(e.message);
           nftData = await nftGeneralParser(nft, account, whitelisted);
         }
 
@@ -91,7 +92,8 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
       whitelisted,
     };
 
-    if (cache.isRestricted(nftObj?.image)) nft = cache.preventRestricted(nft);
+    if (cache.isRestricted(nftObj?.image))
+      nftObj = cache.preventRestricted(nftObj);
 
     if (
       !NFTList[index]?.dataLoaded ||
