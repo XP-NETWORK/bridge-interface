@@ -15,7 +15,7 @@ export default function NFTSearch() {
     const widget = useSelector((state) => state.general.widget);
     const nfts = useSelector((state) => state.general.NFTList);
     const NFTListSearch = useSelector((state) => state.general.NFTListSearch);
-    const currentNFTs = useSelector((state) => state.general.currentNFTs);
+    const currentNFTs = useSelector((state) => state.general.currentsNFTs);
     const [openSearch, setOpen] = useState(false);
     const [searchInput, setInput] = useState("");
 
