@@ -16520,6 +16520,16 @@ web3-providers-connex@^0.3.1:
     thor-devkit "^2.0.4"
     web3 "^1.7.1"
 
+web3-providers-connex@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/web3-providers-connex/-/web3-providers-connex-0.7.4.tgz#9cfe5413ef85fb28a65b1bdfb8a7a37faa10d3ba"
+  integrity sha512-vsuyvYJkF2vqbRlm3CUSAVraRz++shs6p5WzNf1LpL7cQjsZY8Cwf+kICedmmNes9Q/4J3nCUau8YHbYJ0Ws9A==
+  dependencies:
+    "@vechain/connex-types" "^2.0.2"
+    eventemitter3 "^4.0.4"
+    thor-devkit "^2.0.4"
+    web3-utils "^1.7.3"
+
 web3-providers-http@1.7.5:
   version "1.7.5"
   resolved "https://registry.yarnpkg.com/web3-providers-http/-/web3-providers-http-1.7.5.tgz#144bb0c29007d1b766bafb0e20f80be050c7aa80"
@@ -16557,7 +16567,7 @@ web3-shh@1.7.5:
     web3-core-subscriptions "1.7.5"
     web3-net "1.7.5"
 
-web3-utils@1.7.5, web3-utils@^1.6.0:
+web3-utils@1.7.5, web3-utils@^1.6.0, web3-utils@^1.7.3:
   version "1.7.5"
   resolved "https://registry.yarnpkg.com/web3-utils/-/web3-utils-1.7.5.tgz#081a952ac6e0322e25ac97b37358a43c7372ef6a"
   integrity sha512-9AqNOziQky4wNQadEwEfHiBdOZqopIHzQQVzmvvv6fJwDSMhP+khqmAZC7YTiGjs0MboyZ8tWNivqSO1699XQw==

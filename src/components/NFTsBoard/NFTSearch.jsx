@@ -15,21 +15,13 @@ export default function NFTSearch() {
     const widget = useSelector((state) => state.general.widget);
     const nfts = useSelector((state) => state.general.NFTList);
     const NFTListSearch = useSelector((state) => state.general.NFTListSearch);
+    const currentNFTs = useSelector((state) => state.general.currentNFTs);
     const [openSearch, setOpen] = useState(false);
     const [searchInput, setInput] = useState("");
 
-    // const debounced = useCallback(
-    //     debounce((value) => dispatch(setSearchNFTList(value)), 700),
-    //     []
-    // );
-
-    // useEffect(() => {
-    //     debounced(searchInput);
-    // }, [searchInput]);
-
     const handleSearch = (e) => {
         const search = e.target.value.toLowerCase();
-        const filteredNFTs = nfts.filter(
+        let filteredNFTs = nfts.filter(
             (e) =>
                 e.name?.toLowerCase().includes(search) ||
                 e.native.name?.toLowerCase().includes(search) ||

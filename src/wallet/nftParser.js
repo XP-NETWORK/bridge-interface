@@ -8,13 +8,10 @@ import { parseEachNFT } from "./helpers";
 import CacheService from "../services/cacheService";
 import WhiteListedPool from "../services/whiteListedPool";
 import EvmSerivce from "../services/chains/evm";
-import { Err } from "@elrondnetwork/erdjs/out";
 
 const cache = CacheService();
 const whiteListedPool = WhiteListedPool();
 const evm = EvmSerivce();
-
-const restrict = ["nft.weedcommerce.info"];
 
 export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
   const { uri } = nft;
@@ -73,9 +70,9 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
         return nftData;
       })(),
       !testnet
-        ? !restrict.some((r) => nft?.uri?.includes(r))
+        ? !cache.isRestricted(nft.uri)
           ? whiteListedPool.add(isWhiteListed)(from.text, nft)
-          : false
+          : true
         : true,
     ]);
 
@@ -93,6 +90,8 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
       dataLoaded: true,
       whitelisted,
     };
+
+    if (cache.isRestricted(nftObj?.image)) nft = cache.preventRestricted(nft);
 
     if (
       !NFTList[index]?.dataLoaded ||

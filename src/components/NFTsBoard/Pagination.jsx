@@ -14,8 +14,11 @@ export default function Pagination() {
     const originalNFTList = useSelector((state) => state.general.NFTList);
     const empty = useSelector((state) => state.pagination.empty);
 
-    const from = useSelector((state) => state.general.from);
     const nfts = filteredNFTList || originalNFTList;
+    console.log(
+        "🚀 ~ file: Pagination.jsx ~ line 18 ~ Pagination ~ filteredNFTList",
+        filteredNFTList
+    );
 
     // Pagination UI
     const [selectedPage, setSelectedPage] = useState(1);
