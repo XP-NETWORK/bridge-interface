@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { connectHashpack } from "./ConnectWalletHelper";
+import { hethers } from "@hashgraph/hethers";
 
 export default function HederaWallet({ wallet, close }) {
     const from = useSelector((state) => state.general.from);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
+    const testnet = useSelector((state) => state.general.testNet);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
 
     const getStyle = () => {
         switch (true) {
+            case testnet:
+                return {};
+            case !testnet:
+                return OFF;
             case temporaryFrom?.type === "Hedera" || from?.type === "Hedera":
                 return {};
             case !temporaryFrom && !from:

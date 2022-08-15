@@ -9,6 +9,7 @@ import { BeaconWallet } from "@taquito/beacon-wallet";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import * as thor from "web3-providers-connex";
 import { HashConnect } from "hashconnect";
+import { hethers } from "@hashgraph/hethers";
 
 import {
     WalletConnectProvider,
@@ -79,12 +80,14 @@ const { to, modalError } = store.getState();
 
 const hashConnect = new HashConnect(true);
 
-hashConnect.pairingEvent.once((pairingData) => {
+hashConnect.pairingEvent.once(async (pairingData) => {
+    debugger;
     const {
         accountIds,
         metadata: { name },
     } = pairingData;
-    store.dispatch(setHederaAccount(accountIds[0]));
+    const address = await hethers.utils.getAddressFromAccount(accountIds[0]);
+    store.dispatch(setHederaAccount(address));
     store.dispatch(setHederaWallet(name));
 });
 
@@ -105,6 +108,7 @@ export const connectHashpack = async () => {
         const initData = await hashConnect.init(appMetadata, "testnet", false);
         const { pairingString } = initData;
         await hashConnect.connectToLocalWallet(pairingString, appMetadata);
+
         return true;
     } catch (error) {
         console.log("connectHashpack error: ", error);
