@@ -8,8 +8,7 @@ Parsing steps to adding new blockchain to ui
 -   [x] [1. Add chain to values](#1-add-the-chain-to-values)
 -   [x] [2. ChainSelectBox](#2-ChainSelectBox-component)
 -   [x] [3. Create new component for wallet like EVMWallet](#3-Create-new-wallet-component-and-all-environment-for-connection)
-
-3. Create new component for wallet like EVMWallet
+-   [x] [4. Setup nft-indexer for this chain](#4-Setup-nft-indexer-for-this-chain)
 
 ### 1. Add chain to values:
 
@@ -122,7 +121,7 @@ const switchChains = (e) => {
 
 [WalletList](https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Wallet/WalletList.jsx)
 
-## Setup wallet connection in ConnectWalletHelper:
+## Setup wallet connection in ConnectWalletHelper
 
 [ConnectWalletHelper](https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Wallet/ConnectWalletHelper.js)
 
@@ -130,3 +129,19 @@ const switchChains = (e) => {
 
 [UserAccount](https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/User/UserConnect.jsx)
 [accountmodal](https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Modals/AccountModal/AccountModal.jsx)
+
+## Make sure the account added in ConnectWallet component to switch routes when wallet connected
+
+[ConnectWallet](https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Wallet/ConnectWallet.jsx)
+
+### 4 Setup nft-indexer for this chain
+
+## Add chain to handleChainFactory (make sure xpjs updated and includes current chain consts)
+
+[handleChainFactory](https://github.com/XP-NETWORK/bridge-interface/blob/3ec577417b74d26833309771ae9bc85de0379944/src/wallet/helpers.js#L365)
+
+# Add current account to getNFTsList and Refresh functions
+
+[getNFTsList](https://github.com/XP-NETWORK/bridge-interface/blob/3ec577417b74d26833309771ae9bc85de0379944/src/components/NFTsBoard/NFTaccount.jsx#L86)
+
+[Refresh](https://github.com/XP-NETWORK/bridge-interface/blob/3ec577417b74d26833309771ae9bc85de0379944/src/components/Buttons/Refresh.jsx#L25)

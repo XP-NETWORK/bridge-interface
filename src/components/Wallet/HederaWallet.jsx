@@ -5,6 +5,7 @@ import { connectHashpack } from "./ConnectWalletHelper";
 export default function HederaWallet({ wallet, close }) {
     const from = useSelector((state) => state.general.from);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
+    const hederaAccount = useSelector((state) => state.general.hederaAccount);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
 
     const getStyle = () => {
@@ -19,10 +20,9 @@ export default function HederaWallet({ wallet, close }) {
     };
 
     const connectHandler = async (wallet) => {
-        let connected;
         switch (wallet) {
             case "Hashpack":
-                connected = await connectHashpack();
+                const connected = await connectHashpack();
                 if (connected) close();
                 break;
             default:

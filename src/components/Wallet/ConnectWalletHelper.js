@@ -77,10 +77,6 @@ export const wallets = [
 ];
 const { to, modalError } = store.getState();
 
-const connector = new WalletConnect({
-    bridge: "https://bridge.walletconnect.org", // Required
-});
-
 const hashConnect = new HashConnect(true);
 
 hashConnect.pairingEvent.once((pairingData) => {
@@ -105,29 +101,14 @@ export const connectHashpack = async () => {
         icon: "%PUBLIC_URL%/favicon.ico",
     };
 
-    // try {
-    const initData = await hashConnect.init(appMetadata, "testnet", false);
-    const { pairingString, topic } = initData;
-    const request = {
-        network: "testnet",
-        multiAccount: true,
-    };
-
-    await hashConnect.connectToLocalWallet(pairingString, appMetadata);
-
-    // const accounts = await hashConnect.requestAdditionalAccounts(
-    //     initData.topic,
-    //     "testnet",
-    //     true
-    // );
-    // console.log(
-    //     "🚀 ~ file: ConnectWalletHelper.js ~ line 107 ~ connectHashpack ~ accounts",
-    //     accounts
-    // );
-
-    // } catch (error) {
-    //     console.log(error);
-    // }
+    try {
+        const initData = await hashConnect.init(appMetadata, "testnet", false);
+        const { pairingString } = initData;
+        await hashConnect.connectToLocalWallet(pairingString, appMetadata);
+        return true;
+    } catch (error) {
+        console.log("connectHashpack error: ", error);
+    }
 };
 
 export const switchNetWork = async (from) => {

@@ -61,6 +61,7 @@ function NFTaccount() {
     const prevAccount = usePrevious(account);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
+    const hederaAccount = useSelector((state) => state.general.hederaAccount);
     const secretAccount = useSelector((state) => state.general.secretAccount);
     const NFTSetToggler = useSelector((state) => state.general.NFTSetToggler);
     const prevNFTSetToggler = usePrevious(NFTSetToggler);
@@ -100,6 +101,8 @@ function NFTaccount() {
                 ? elrondAccount
                 : type === "Tron"
                 ? tronWallet
+                : type === "Hedera"
+                ? hederaAccount
                 : undefined;
             await setNFTS(w, from, undefined, "account");
         } catch (error) {

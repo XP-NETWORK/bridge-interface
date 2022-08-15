@@ -408,7 +408,8 @@ export const handleChainFactory = async (someChain) => {
                 return await factory.inner(Chain.GODWOKEN);
             case "Secret":
                 return await factory.inner(Chain.SECRET);
-
+            case "Hedera":
+                return await factory.innner(Chain.HEDERA);
             default:
                 return "";
         }
@@ -418,6 +419,7 @@ export const handleChainFactory = async (someChain) => {
 };
 
 export const getNFTS = async (wallet, from) => {
+    debugger;
     const { checkWallet, NFTList } = store.getState().general;
     const factory = await getFactory();
     const chain = await factory.inner(chainsConfig[from].Chain);
