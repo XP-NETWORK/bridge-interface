@@ -521,6 +521,7 @@ export const chainsConfig = {
     chainId: "secret-4",
     tx: "https://atomscan.com/secret-network/transactions/",
     tnRpc: "https://pulsar-2.api.trivium.network:9091",
+    rpc: "https://secret-4.api.trivium.network:9091",
     Chain: Chain.SECRET,
   },
 

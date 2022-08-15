@@ -121,7 +121,7 @@ export const connectKeplr = async (testnet, chain) => {
       const { address } = accounts[0];
 
       const signer = await SecretNetworkClient.create({
-        grpcWebUrl: chain.tnRpc,
+        grpcWebUrl: testnet ? chain.tnRpc : chain.rpc,
         chainId,
         wallet: offlineSigner,
         walletAddress: address,
