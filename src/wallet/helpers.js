@@ -418,8 +418,23 @@ export const handleChainFactory = async (someChain) => {
     }
 };
 
-export const getNFTS = async (wallet, from) => {
+export const mintForTestNet = async (from, signer) => {
     debugger;
+    const factory = await getFactory();
+    const chain = await factory.inner(chainsConfig[from].Chain);
+    const uri = { uri: "https://meta.polkamon.com/meta?id=10001852306" };
+    const contract = { contract: "0x0000000000000000000000000000000002da3c1d" };
+    try {
+        console.log(signer);
+        const mint = await chain.mintNft(signer, { contract, uri });
+        return mint;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getNFTS = async (wallet, from) => {
+    // debugger;
     const { checkWallet, NFTList } = store.getState().general;
     const factory = await getFactory();
     const chain = await factory.inner(chainsConfig[from].Chain);

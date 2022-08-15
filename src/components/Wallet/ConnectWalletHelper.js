@@ -84,11 +84,19 @@ hashConnect.pairingEvent.once(async (pairingData) => {
     debugger;
     const {
         accountIds,
+        topic,
         metadata: { name },
     } = pairingData;
     const address = await hethers.utils.getAddressFromAccount(accountIds[0]);
+    const provider = hashConnect.getProvider("testnet", topic, accountIds[0]);
+    console.log(
+        "🚀 ~ file: ConnectWalletHelper.js ~ line 92 ~ hashConnect.pairingEvent.once ~ provider",
+        provider
+    );
+    const signer = hashConnect.getSigner(provider);
     store.dispatch(setHederaAccount(address));
     store.dispatch(setHederaWallet(name));
+    store.dispatch(setSigner(signer));
 });
 
 hashConnect.foundExtensionEvent.once((walletMetadata) => {
@@ -108,7 +116,6 @@ export const connectHashpack = async () => {
         const initData = await hashConnect.init(appMetadata, "testnet", false);
         const { pairingString } = initData;
         await hashConnect.connectToLocalWallet(pairingString, appMetadata);
-
         return true;
     } catch (error) {
         console.log("connectHashpack error: ", error);

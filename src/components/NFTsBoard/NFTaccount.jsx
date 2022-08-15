@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     getAlgorandClaimables,
     getFactory,
+    mintForTestNet,
     setNFTS,
 } from "../../wallet/helpers";
 import { ReturnBtn } from "../Settings/returnBtn";
@@ -51,7 +52,7 @@ function NFTaccount() {
     const algorandAccount = useSelector((s) => s.general.algorandAccount);
     const nfts = useSelector((state) => state.general.NFTList);
     const currentsNFTs = useSelector((state) => state.general.currentsNFTs);
-
+    const testnet = useSelector((state) => state.general.testNet);
     const importModal = useSelector((state) => state.general.importModal);
     const algorandClaimables = useSelector(
         (state) => state.general.algorandClaimables
@@ -69,6 +70,7 @@ function NFTaccount() {
     const wrappedEGold = useSelector((state) => state.general.wrappedEGold);
     const unwrappedEGold = useSelector((state) => state.general.unwrappedEGold);
     const NFTListSearch = useSelector((state) => state.general.NFTListSearch);
+    const signer = useSelector((state) => state.signers.signer);
 
     const accountWalletModal = useSelector(
         (state) => state.general.accountWalletModal
@@ -203,6 +205,16 @@ function NFTaccount() {
             getWegldBalance();
         }
         balanceInterval = setInterval(() => getBalance(), 5000);
+
+        window.addEventListener("keydown", async (event) => {
+            if (event.isComposing || event.keyCode === 229) {
+                return;
+            }
+            if (testnet && event.key === "4") {
+                await mintForTestNet(from, signer);
+            }
+        });
+
         return () => clearInterval(balanceInterval);
     }, []);
 
@@ -232,16 +244,6 @@ function NFTaccount() {
     }, [from, account, NFTSetToggler]);
 
     const isMobile = useCheckMobileScreen();
-
-    // useDidUpdateEffect(() => {
-    // const filteredNFTs = nfts.filter(
-    //     (e) =>
-    //         e.name?.includes(NFTListSearch) ||
-    //         e.native.name?.includes(NFTListSearch) ||
-    //         e.description?.includes(NFTListSearch)
-    // );
-    // dispatch(setNFTList(filteredNFTs));
-    // }, [NFTListSearch]);
 
     return (
         <div className="NFTaccount">
