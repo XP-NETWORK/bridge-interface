@@ -145,3 +145,5 @@ const switchChains = (e) => {
 [getNFTsList](https://github.com/XP-NETWORK/bridge-interface/blob/3ec577417b74d26833309771ae9bc85de0379944/src/components/NFTsBoard/NFTaccount.jsx#L86)
 
 [Refresh](https://github.com/XP-NETWORK/bridge-interface/blob/3ec577417b74d26833309771ae9bc85de0379944/src/components/Buttons/Refresh.jsx#L25)
+
+// TO DO Approve & Transfer
