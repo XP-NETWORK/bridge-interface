@@ -21,6 +21,7 @@ import VET from "../assets/img/chain/Vechain.png";
 import { Chain } from "xp.network/dist/consts";
 import SCRT from "../assets/img/chain/secret.svg";
 import CKB from "../assets/img/chain/godwoken.svg";
+import HBAR from "../assets/img/chain/Hedera.svg";
 
 export const EVM = "EVM";
 export const ELROND = "Elrond";
@@ -335,6 +336,17 @@ export const chains = [
         test: false,
         newChain: biz,
     },
+    {
+        type: "Hedera",
+        key: "Hedera",
+        text: "Hedera",
+        nonce: 0x1d,
+        order: 0,
+        image: { avatar: true, src: HBAR },
+        testNet: true,
+        mainnet: false,
+        newChain: true,
+    },
 ];
 
 export const chainsConfig = {
@@ -531,6 +543,14 @@ export const chainsConfig = {
         tx: "https://gwscan.com/tx/",
         testTxn: "https://v1.testnet.gwscan.com/tx",
     },
+    Hedera: {
+        type: "Hedera",
+        token: "HBAR",
+        image: HBAR,
+        Chain: Chain.HEDERA,
+        tx: "https://hashscan.io/#/mainnet/transaction",
+        testTxn: "https://hashscan.io/#/testnet/transaction",
+    },
 };
 
 export const coins = [
@@ -556,6 +576,7 @@ export const coins = [
     "VET", //19
     "CKB", //20
     "SCRT", //21
+    "HBAR", //22
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -604,6 +625,7 @@ export const TESTNET_CHAIN_INFO = {
         nonce: 22,
         chainId: 71401,
     },
+    Hedera: 0x1d,
 };
 
 export const CHAIN_INFO = {
@@ -814,5 +836,12 @@ export const CHAIN_INFO = {
         rpc: "https://v1.mainnet.godwoken.io/rpc",
         blockExplorerUrl: "https://gwscan.com/account/",
         testBlockExplorerUrls: "https://v1.testnet.gwscan.com/account",
+    },
+    Hedera: {
+        native: coins[22],
+        nonce: 0x1d,
+        decimals: 1e6,
+        blockExplorerUrl: "https://hashscan.io/#/mainnet/account",
+        testBlockExplorerUrls: "https://hashscan.io/#/testnet/account",
     },
 };
