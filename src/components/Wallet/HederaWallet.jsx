@@ -1,7 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { connectHashpack } from "./ConnectWalletHelper";
 
-export default function HederaWallet({ wallet }) {
+export default function HederaWallet({ wallet, close }) {
     const from = useSelector((state) => state.general.from);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -17,12 +18,24 @@ export default function HederaWallet({ wallet }) {
         }
     };
 
+    const connectHandler = async (wallet) => {
+        let connected;
+        switch (wallet) {
+            case "Hashpack":
+                connected = await connectHashpack();
+                if (connected) close();
+                break;
+            default:
+                break;
+        }
+    };
+
     switch (wallet) {
         case "Hashpack":
             return (
                 <li
                     style={getStyle()}
-                    // onClick={() => connectHandler("MetaMask")}
+                    onClick={() => connectHandler("Hashpack")}
                     className="wllListItem"
                     data-wallet="Hashpack"
                 >

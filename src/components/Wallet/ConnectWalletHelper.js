@@ -8,6 +8,7 @@ import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import * as thor from "web3-providers-connex";
+import { HashConnect } from "hashconnect";
 
 import {
     WalletConnectProvider,
@@ -46,6 +47,8 @@ import {
     setKeplrAccount,
     setKeplrWallet,
     setBitKeepPopUp,
+    setHederaAccount,
+    setHederaWallet,
 } from "../../store/reducers/generalSlice";
 import { chainsConfig } from "../values";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
@@ -70,11 +73,62 @@ export const wallets = [
     "Maiar Extension",
     "Ledger",
     "Trezor",
+    "Hashpack",
 ];
 const { to, modalError } = store.getState();
+
 const connector = new WalletConnect({
     bridge: "https://bridge.walletconnect.org", // Required
 });
+
+const hashConnect = new HashConnect(true);
+
+hashConnect.pairingEvent.once((pairingData) => {
+    const {
+        accountIds,
+        metadata: { name },
+    } = pairingData;
+    store.dispatch(setHederaAccount(accountIds[0]));
+    store.dispatch(setHederaWallet(name));
+});
+
+hashConnect.foundExtensionEvent.once((walletMetadata) => {
+    // hashPackWalletMetaData = walletMetadata;
+});
+
+export const connectHashpack = async () => {
+    debugger;
+    let appMetadata = {
+        name: "XP.NETWORK Cross-Chain NFT Bridge",
+        description:
+            "Seamlessly move assets between chains | The first multichain NFT bridge to connect all major Blockchains into one ecosystem",
+        icon: "%PUBLIC_URL%/favicon.ico",
+    };
+
+    // try {
+    const initData = await hashConnect.init(appMetadata, "testnet", false);
+    const { pairingString, topic } = initData;
+    const request = {
+        network: "testnet",
+        multiAccount: true,
+    };
+
+    await hashConnect.connectToLocalWallet(pairingString, appMetadata);
+
+    // const accounts = await hashConnect.requestAdditionalAccounts(
+    //     initData.topic,
+    //     "testnet",
+    //     true
+    // );
+    // console.log(
+    //     "🚀 ~ file: ConnectWalletHelper.js ~ line 107 ~ connectHashpack ~ accounts",
+    //     accounts
+    // );
+
+    // } catch (error) {
+    //     console.log(error);
+    // }
+};
 
 export const switchNetWork = async (from) => {
     // let fromChainId;

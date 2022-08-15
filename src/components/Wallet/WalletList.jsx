@@ -350,7 +350,7 @@ export default function WalletList({ search, connected, input }) {
             type: "USB",
         },
         {
-            Component: <HederaWallet wallet={"Hashpack"} />,
+            Component: <HederaWallet close={connected} wallet={"Hashpack"} />,
             name: "Hashpack",
             mobile: false,
             desktop: true,
@@ -358,7 +358,7 @@ export default function WalletList({ search, connected, input }) {
             type: "Hedera",
         },
         {
-            Component: <HederaWallet wallet={"Blade"} />,
+            Component: <HederaWallet close={connected} wallet={"Blade"} />,
             name: "Blade",
             mobile: false,
             desktop: true,

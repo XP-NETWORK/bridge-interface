@@ -35,7 +35,6 @@ export default function ChainSelectBox() {
     const testnet = useSelector((state) => state.general.testNet);
 
     const switchChains = (e) => {
-        // debugger;
         if (from.type !== to.type) {
             switch (from.type) {
                 case "Hedera":

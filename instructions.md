@@ -120,21 +120,4 @@ const switchChains = (e) => {
 
 ## Add component to WalletList
 
-[WalletList](https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Wallet/WalletList.jsx) components
-
-1. Values
-    <!-- To add values for arrays:
-    chains
-    chainsConfig
-    coins
-    TESTNET_CHAIN_INFO (for testnet)
-    CHAIN_INFO (for mainnet) -->
-2. ChainSelectBox
-    <!-- Add chain to switch Chains function for ability to swap chains between themselves -->
-3. Create new component for wallet like EVMWallet
-    <!-- Switch rendering
-    Create styles to show only when departure is undefined or only when supported chains are selected -->
-4. WalletList
-    <!-- Add component to:
-    walletComponents
-    sortWallet -->
+[WalletList](https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Wallet/WalletList.jsx)
