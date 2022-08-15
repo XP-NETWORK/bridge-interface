@@ -114,19 +114,11 @@ const switchChains = (e) => {
 
 ### 3 Create new wallet component
 
-<center>
-
 ## EVM wallet example
-
-<center>
 
 [evmwallet]: (https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Wallet/EVMWallet.jsx)
 
-<center>
-
 ## Add component to WalletList
-
-<center>
 
 [WalletList]:(https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Wallet/WalletList.jsx) components
 
