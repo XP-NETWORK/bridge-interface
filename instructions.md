@@ -116,11 +116,11 @@ const switchChains = (e) => {
 
 ## EVM wallet example
 
-[evmwallet]: (https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Wallet/EVMWallet.jsx)
+[EVMWallet](https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Wallet/EVMWallet.jsx)
 
 ## Add component to WalletList
 
-[WalletList]:(https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Wallet/WalletList.jsx) components
+[WalletList](https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Wallet/WalletList.jsx) components
 
 1. Values
     <!-- To add values for arrays:
