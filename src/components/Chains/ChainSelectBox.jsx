@@ -42,6 +42,7 @@ export default function ChainSelectBox() {
                     if (account) {
                         //TODO
                     } else handleSwitch(e);
+                    break;
                 case "EVM":
                     if (account) {
                         dispatch(setTemporaryFrom(to));

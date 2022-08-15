@@ -6,10 +6,14 @@ Parsing steps to adding new blockchain to ui
 <br />
 
 -   [x] [1. Add chain to values](#1-add-the-chain-to-values)
+-   [x] [2. ChainSelectBox](#2-ChainSelectBox-component)
+-   [x] [3. Create new component for wallet like EVMWallet](#3-Create-new-component-for-wallet-like-EVMWallet)
+
+3. Create new component for wallet like EVMWallet
 
 ### 1. Add chain to values:
 
-// <hr/><br/>
+<hr/><br/>
 
 <center>
 
@@ -76,6 +80,40 @@ export const CHAIN_INFO = {
 };
 ```
 
+### 2. ChainSelectBox component:
+
+<center>
+
+## Add chain to switch Chains function for ability to swap chains between themselves
+
+</center>
+
+<br/>
+
+```javascript
+const switchChains = (e) => {
+    if (from.type !== to.type) {
+        switch (from.type) {
+            case "EVM":
+                if (account) {
+                    dispatch(setTemporaryFrom(to));
+                    dispatch(setTemporaryTo(from));
+                    dispatch(setChangeWallet(true));
+                } else handleSwitch(e);
+                break;
+            default:
+                break;
+        }
+    } else {
+        handleSwitch(e);
+    }
+};
+```
+
+<br/>
+
+### 3 Create new component for wallet Like [EVMWallet]:(:(https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Wallet/EVMWallet.jsx)) and add to [WalletList]:(https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Wallet/WalletList.jsx) component
+
 1. Values
     <!-- To add values for arrays:
     chains
@@ -92,7 +130,3 @@ export const CHAIN_INFO = {
     <!-- Add component to:
     walletComponents
     sortWallet -->
-
-```
-
-```
