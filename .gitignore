@@ -6,4 +6,3 @@ yarn-error.log
 **/build.zip
 .DS_Store
 .env
-instructions.md

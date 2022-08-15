@@ -132,6 +132,7 @@ export default function WalletList({ search, connected, input }) {
                     ...tronWallets,
                     ...usbWallet,
                 ];
+                return sortedWallets;
             default:
                 break;
         }

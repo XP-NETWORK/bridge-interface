@@ -38,6 +38,10 @@ export default function ChainSelectBox() {
         // debugger;
         if (from.type !== to.type) {
             switch (from.type) {
+                case "Hedera":
+                    if (account) {
+                        //TODO
+                    } else handleSwitch(e);
                 case "EVM":
                     if (account) {
                         dispatch(setTemporaryFrom(to));

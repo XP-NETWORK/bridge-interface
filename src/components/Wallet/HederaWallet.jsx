@@ -8,7 +8,7 @@ export default function HederaWallet({ wallet }) {
 
     const getStyle = () => {
         switch (true) {
-            case temporaryFrom === "Hedere" || from === "Hedere":
+            case temporaryFrom?.type === "Hedera" || from?.type === "Hedera":
                 return {};
             case !temporaryFrom && !from:
                 return {};
