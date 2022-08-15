@@ -94,6 +94,10 @@ hashConnect.pairingEvent.once(async (pairingData) => {
         provider
     );
     const signer = hashConnect.getSigner(provider);
+    console.log(
+        "🚀 ~ file: ConnectWalletHelper.js ~ line 97 ~ hashConnect.pairingEvent.once ~ signer",
+        signer
+    );
     store.dispatch(setHederaAccount(address));
     store.dispatch(setHederaWallet(name));
     store.dispatch(setSigner(signer));

@@ -132,6 +132,7 @@ function NFTaccount() {
     const getBalance = async () => {
         // debugger;
         let _account =
+            hederaAccount ||
             account ||
             algorandAccount ||
             tezosAccount ||
@@ -171,6 +172,9 @@ function NFTaccount() {
                             dispatch(setBalance(balance / 1e18));
                             break;
                         case "Cosmos":
+                            dispatch(setBalance(balance / 1e6));
+                            break;
+                        case "Hedera":
                             dispatch(setBalance(balance / 1e6));
                             break;
                         default:

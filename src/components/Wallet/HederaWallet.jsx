@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { connectHashpack } from "./ConnectWalletHelper";
 import { hethers } from "@hashgraph/hethers";
+import hashpack from "../../assets/img/wallet/hashpack.svg";
 
 export default function HederaWallet({ wallet, close }) {
     const from = useSelector((state) => state.general.from);
@@ -45,7 +46,11 @@ export default function HederaWallet({ wallet, close }) {
                     className="wllListItem"
                     data-wallet="Hashpack"
                 >
-                    {/* <img src={MetaMask} alt="MetaMask Icon" /> */}
+                    <img
+                        style={{ width: "28px" }}
+                        src={hashpack}
+                        alt="Hashpack Icon"
+                    />
                     <p>Hashpack</p>
                 </li>
             );
