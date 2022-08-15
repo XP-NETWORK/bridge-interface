@@ -7,7 +7,7 @@ Parsing steps to adding new blockchain to ui
 
 -   [x] [1. Add chain to values](#1-add-the-chain-to-values)
 -   [x] [2. ChainSelectBox](#2-ChainSelectBox-component)
--   [x] [3. Create new component for wallet like EVMWallet](#3-Create-new-wallet-component)
+-   [x] [3. Create new component for wallet like EVMWallet](#3-Create-new-wallet-component-and-all-environment-for-connection)
 
 3. Create new component for wallet like EVMWallet
 
@@ -112,7 +112,7 @@ const switchChains = (e) => {
 
 <br/>
 
-### 3 Create new wallet component
+### 3 Create new wallet component and all environment for connection
 
 ## EVM wallet example
 
@@ -121,3 +121,12 @@ const switchChains = (e) => {
 ## Add component to WalletList
 
 [WalletList](https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Wallet/WalletList.jsx)
+
+## Setup wallet connection in ConnectWalletHelper:
+
+[ConnectWalletHelper](https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Wallet/ConnectWalletHelper.js)
+
+## Add received account and wallet name to UserAccount and AccountModal
+
+[UserAccount](https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/User/UserConnect.jsx)
+[accountmodal](https://github.com/XP-NETWORK/bridge-interface/blob/new-ui/src/components/Modals/AccountModal/AccountModal.jsx)

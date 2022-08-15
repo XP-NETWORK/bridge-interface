@@ -31,7 +31,7 @@ const generalSlice = createSlice({
     initialState,
     reducers: {
         setHederaWallet(state, action) {
-            state.hashPack = action.payload;
+            state.hederaWallet = action.payload;
         },
         setHederaAccount(state, action) {
             state.hederaAccount = action.payload;
