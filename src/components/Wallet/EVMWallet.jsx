@@ -143,7 +143,7 @@ export default function EVMWallet({ wallet, close }) {
 
     const getStyle = () => {
         // debugger;
-        if (temporaryFrom?.type === "EVM") {
+        if (temporaryFrom?.type === "EVM" || temporaryFrom?.type === "Skale") {
             if (from?.text === "Harmony") {
                 return OFF;
             } else return {};
@@ -151,11 +151,15 @@ export default function EVMWallet({ wallet, close }) {
             return OFF;
         } else if (!from) {
             return {};
-        } else if (from && from.type === "EVM") {
+        } else if (from && (from.type === "EVM" || from.type === "Skale")) {
             return {};
         } else if (
-            (from.type === "EVM" && getMobOps() && window.innerWidth <= 600) ||
-            (window.ethereum && window.innerWidth <= 600 && from.type === "EVM")
+            ((from.type === "EVM" || from.type === "Skale") &&
+                getMobOps() &&
+                window.innerWidth <= 600) ||
+            (window.ethereum &&
+                window.innerWidth <= 600 &&
+                (from.type === "EVM" || from.type === "Skale"))
         ) {
             return {};
         } else return OFF;

@@ -19,7 +19,9 @@ export default function WalletList({ search, connected, input }) {
 
     const sortWallet = (components) => {
         let sortedWallets;
-        const evmWallets = components.filter((e) => e.type === "EVM");
+        const evmWallets = components.filter(
+            (e) => e.type === "EVM" || e.type === "Skale"
+        );
         const tezosWallets = components.filter((e) => e.type === "Tezos");
         const elrondWallets = components.filter((e) => e.type === "Elrond");
         const algodWallets = components.filter((e) => e.type === "Algorand");
@@ -31,6 +33,19 @@ export default function WalletList({ search, connected, input }) {
 
         switch (temporaryFrom?.type || from?.type) {
             case "EVM":
+                sortedWallets = [
+                    ...evmWallets,
+                    ...hederaWallets,
+                    ...cosmosWallets,
+                    ...tezosWallets,
+                    ...elrondWallets,
+                    ...algodWallets,
+                    ...tronWallets,
+                    ...VeChainWallets,
+                    ...usbWallet,
+                ];
+                return sortedWallets;
+            case "Skale":
                 sortedWallets = [
                     ...evmWallets,
                     ...hederaWallets,
