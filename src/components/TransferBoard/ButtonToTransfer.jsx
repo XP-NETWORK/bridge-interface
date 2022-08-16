@@ -66,6 +66,9 @@ export default function ButtonToTransfer() {
     const sync2Connex = useSelector((state) => state.general.sync2Connex);
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const hederaSigner = useSelector((state) => state.signers.signer);
+    const chainConfig = useSelector(
+        (state) => state.signers.chainFactoryConfig
+    );
     const getAlgorandWalletSigner = async () => {
         const base = new MyAlgoConnect();
         if (algorandWallet) {
@@ -227,6 +230,13 @@ export default function ButtonToTransfer() {
                         fromNonce,
                         tokenId && !isNaN(Number(tokenId)) ? tokenId : undefined
                     );
+                }
+                if (mintWidth.length < 1 && from.type === "Secret") {
+                    const contractAddress =
+                        chainConfig?.secretParams?.bridge?.contractAddress;
+                    const codeHash =
+                        chainConfig?.secretParams?.bridge?.codeHash;
+                    mintWidth = `${contractAddress}${codeHash}`;
                 }
                 toChain = await factory.inner(chainsConfig[to].Chain);
                 fromChain = await factory.inner(chainsConfig[from].Chain);

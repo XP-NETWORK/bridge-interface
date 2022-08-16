@@ -18,6 +18,7 @@ import requestPool from "./requestPool";
 import { nftGeneralParser } from "nft-parser/dist/src/index";
 import { utils } from "ethers";
 import { setIsEmpty } from "../store/reducers/paginationSlice";
+import { setChainFactoryConfig } from "../store/reducers/signersSlice";
 
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
 const testnet = window.location.href.includes("testnet");
@@ -337,14 +338,14 @@ export const transformToDate = (date) => {
 };
 
 export const getFactory = async () => {
-    // debugger
+    // debugger;
     const f = store.getState().general.factory;
     const testnet = store.getState().general.testNet;
 
     if (f) return f;
     const testnetConfig = await ChainFactoryConfigs.TestNet();
     const mainnetConfig = await ChainFactoryConfigs.MainNet();
-
+    store.dispatch(setChainFactoryConfig(mainnetConfig || testnetConfig));
     if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
         mainnetConfig.tronParams.provider = window.tronWeb;
     }
