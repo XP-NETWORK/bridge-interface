@@ -30,7 +30,7 @@ class CacheService {
   }
 
   async add(nft, account, whitelisted, times = 1) {
-    if (this.isRestricted(nft.uri)) {
+    /* if (this.isRestricted(nft.uri)) {
       const encoded = "custom_encoded64:" + en.encode(nft.uri);
       nft = {
         ...nft,
@@ -40,7 +40,7 @@ class CacheService {
           ...(nft.native.uri ? { uri: encoded } : {}),
         },
       };
-    }
+    }*/
 
     return axios
       .post(`${this.cacheApi}/nft/add`, {

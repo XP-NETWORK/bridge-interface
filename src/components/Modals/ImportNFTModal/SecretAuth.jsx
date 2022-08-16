@@ -48,6 +48,7 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
         secretCred.viewKey,
         secretCred.contract
       );
+      console.log(secretNFTs);
       dispatch(addImportedNFTtoNFTlist(secretNFTs));
 
       setLogdIn(true);

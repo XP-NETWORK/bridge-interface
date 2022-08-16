@@ -91,7 +91,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
       whitelisted,
     };
 
-    if (cache.isRestricted(nftObj?.image)) nft = cache.preventRestricted(nft);
+    //if (cache.isRestricted(nftObj?.image)) nft = cache.preventRestricted(nft);
 
     if (
       !NFTList[index]?.dataLoaded ||
