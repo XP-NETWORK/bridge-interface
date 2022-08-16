@@ -65,7 +65,7 @@ export default function ButtonToTransfer() {
     const WCProvider = useSelector((state) => state.general.WCProvider);
     const sync2Connex = useSelector((state) => state.general.sync2Connex);
     const bitKeep = useSelector((state) => state.general.bitKeep);
-    const hederaSigner = useState((state) => state.signer.signer);
+    const hederaSigner = useSelector((state) => state.signers.signer);
     const getAlgorandWalletSigner = async () => {
         const base = new MyAlgoConnect();
         if (algorandWallet) {

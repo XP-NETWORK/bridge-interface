@@ -12,18 +12,19 @@ export default function HederaWallet({ wallet, close }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
 
     const getStyle = () => {
-        switch (true) {
-            case testnet:
-                return {};
-            case !testnet:
-                return OFF;
-            case temporaryFrom?.type === "Hedera" || from?.type === "Hedera":
-                return {};
-            case !temporaryFrom && !from:
-                return {};
-            default:
-                return OFF;
-        }
+        // switch (true) {
+        //     case testnet:
+        //         return {};
+        //     case !testnet:
+        //         return OFF;
+        //     case temporaryFrom?.type === "Hedera" || from?.type === "Hedera":
+        //         return {};
+        //     case !temporaryFrom && !from:
+        //         return {};
+        //     default:
+        //         return OFF;
+        // }
+        return { display: "none" };
     };
 
     const connectHandler = async (wallet) => {
