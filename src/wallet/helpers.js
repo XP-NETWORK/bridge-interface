@@ -18,6 +18,7 @@ import requestPool from "./requestPool";
 import { nftGeneralParser } from "nft-parser/dist/src/index";
 import { utils } from "ethers";
 import { setIsEmpty } from "../store/reducers/paginationSlice";
+import { setChainFactoryConfig } from "../store/reducers/signersSlice";
 
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
 const testnet = window.location.href.includes("testnet");
@@ -337,14 +338,14 @@ export const transformToDate = (date) => {
 };
 
 export const getFactory = async () => {
-    // debugger
+    // debugger;
     const f = store.getState().general.factory;
     const testnet = store.getState().general.testNet;
 
     if (f) return f;
     const testnetConfig = await ChainFactoryConfigs.TestNet();
     const mainnetConfig = await ChainFactoryConfigs.MainNet();
-
+    store.dispatch(setChainFactoryConfig(mainnetConfig || testnetConfig));
     if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
         mainnetConfig.tronParams.provider = window.tronWeb;
     }
@@ -408,7 +409,10 @@ export const handleChainFactory = async (someChain) => {
                 return await factory.inner(Chain.GODWOKEN);
             case "Secret":
                 return await factory.inner(Chain.SECRET);
-
+            case "Hedera":
+                return await factory.innner(Chain.HEDERA);
+            case "Skale":
+                return await factory.inner(Chain.SKALE);
             default:
                 return "";
         }
@@ -417,7 +421,23 @@ export const handleChainFactory = async (someChain) => {
     }
 };
 
+export const mintForTestNet = async (from, signer) => {
+    debugger;
+    const factory = await getFactory();
+    const chain = await factory.inner(chainsConfig[from].Chain);
+    try {
+        const mint = await chain.mintNft(signer, {
+            contract: "0x5d437362976c68D6504AD043a8dc4dcc9915A7D5",
+            uri: "https://meta.polkamon.com/meta?id=10001852306",
+        });
+        return mint;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export const getNFTS = async (wallet, from) => {
+    // debugger;
     const { checkWallet, NFTList } = store.getState().general;
     const factory = await getFactory();
     const chain = await factory.inner(chainsConfig[from].Chain);

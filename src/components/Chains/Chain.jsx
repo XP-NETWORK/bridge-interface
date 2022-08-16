@@ -36,7 +36,9 @@ export default function Chain(props) {
     const algoStyle = {};
 
     const getStyle = () => {
-        if (
+        if (text === "Hedera") {
+            return { display: "none" };
+        } else if (
             maintenance ||
             maintenance ||
             (location.pathname.includes("testnet")

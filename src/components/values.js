@@ -21,6 +21,8 @@ import VET from "../assets/img/chain/Vechain.png";
 import { Chain } from "xp.network/dist/consts";
 import SCRT from "../assets/img/chain/secret.svg";
 import CKB from "../assets/img/chain/godwoken.svg";
+import HBAR from "../assets/img/chain/Hedera.svg";
+import SFUEL from "../assets/img/chain/SFUEL.svg";
 
 export const EVM = "EVM";
 export const ELROND = "Elrond";
@@ -328,13 +330,34 @@ export const chains = [
     value: "Secret",
     nonce: 0x18,
     order: 0,
-    chainId: "secret-4",
     tnChainId: "pulsar-2",
     image: { avatar: true, src: SCRT },
     mainnet: biz,
     testNet: biz,
     test: false,
     newChain: biz,
+  },
+  {
+    type: "Hedera",
+    key: "Hedera",
+    text: "Hedera",
+    nonce: 0x1d,
+    order: 0,
+    image: { avatar: true, src: HBAR },
+    testNet: true,
+    mainnet: false,
+    newChain: true,
+  },
+  {
+    type: "Skale",
+    key: "Skale",
+    text: "Skale",
+    once: 0x1e,
+    order: 0,
+    image: { avatar: true, src: SFUEL },
+    testNet: true,
+    mainnet: false,
+    newChain: true,
   },
 ];
 
@@ -518,10 +541,7 @@ export const chainsConfig = {
     token: "SCRT",
     image: SCRT,
     tnChainId: "pulsar-2",
-    chainId: "secret-4",
-    tx: "https://atomscan.com/secret-network/transactions/",
     tnRpc: "https://pulsar-2.api.trivium.network:9091",
-    rpc: "https://secret-4.api.trivium.network:9091",
     Chain: Chain.SECRET,
   },
 
@@ -535,8 +555,26 @@ export const chainsConfig = {
     tx: "https://gwscan.com/tx/",
     testTxn: "https://v1.testnet.gwscan.com/tx",
   },
+  Hedera: {
+    type: "Hedera",
+    token: "HBAR",
+    image: HBAR,
+    Chain: Chain.HEDERA,
+    tx: "https://hashscan.io/#/mainnet/transaction",
+    testTxn: "https://hashscan.io/#/testnet/transaction",
+  },
+  Skale: {
+    type: "Skale",
+    token: "sFUEL",
+    image: SFUEL,
+    Chain: Chain.SKALE,
+    tx: "",
+    testTxn:
+      "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/tx",
+  },
 };
-
+// ?        chainId: 1564830818,
+// tnChainId: 0x4a393bf89c676,
 export const coins = [
   "eGLD", // 0
   "HT", // 1
@@ -560,6 +598,8 @@ export const coins = [
   "VET", //19
   "CKB", //20
   "SCRT", //21
+  "HBAR", //22
+  "SFUEL", //23
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -607,6 +647,11 @@ export const TESTNET_CHAIN_INFO = {
   Godwoken: {
     nonce: 22,
     chainId: 71401,
+  },
+  Hedera: { nonce: 0x1d },
+  Skale: {
+    nonce: 0x1e,
+    chainId: 0x4a393bf89c676,
   },
 };
 
@@ -806,7 +851,7 @@ export const CHAIN_INFO = {
     tnChainId: "pulsar-2",
     chainId: "secret-4",
     decimals: 1e6,
-    blockExplorerUrls: "https://atomscan.com/secret-network/accounts/",
+    blockExplorerUrl: "https://atomscan.com/secret-network/",
     testBlockExplorerUrls: "https://chainofsecrets.org/testnet.html/",
   },
   Godwoken: {
@@ -818,5 +863,22 @@ export const CHAIN_INFO = {
     rpc: "https://v1.mainnet.godwoken.io/rpc",
     blockExplorerUrl: "https://gwscan.com/account/",
     testBlockExplorerUrls: "https://v1.testnet.gwscan.com/account",
+  },
+  Hedera: {
+    native: coins[22],
+    nonce: 0x1d,
+    decimals: 1e6,
+    blockExplorerUrl: "https://hashscan.io/#/mainnet/account",
+    testBlockExplorerUrls: "https://hashscan.io/#/testnet/account",
+  },
+  Skale: {
+    native: coins[23],
+    none: 0x1e,
+    decimals: 1e18,
+    chainId: 1564830818,
+    tnChainId: 0x4a393bf89c676,
+    blockExplorerUrl: "",
+    testBlockExplorerUrls:
+      "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/address",
   },
 };

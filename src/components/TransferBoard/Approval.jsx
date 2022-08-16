@@ -41,7 +41,7 @@ function Approval(props) {
     const account = useSelector((state) => state.general.account);
     const templeSigner = useSelector((state) => state.general.templeSigner);
     const bitKeep = useSelector((state) => state.general.bitKeep);
-    const signer = useSelector((state) => state.signers.signer);
+    const hederaSigner = useSelector((state) => state.signers.signer);
     const algorandAccount = useSelector(
         (state) => state.general.algorandAccount
     );
@@ -268,6 +268,11 @@ function Approval(props) {
                 const chain = await handleChainFactory(from.key);
                 selectedNFTList.forEach((nft, index) => {
                     approveEach(nft, signer, chain, index);
+                });
+            } else if (from.type === "Hedera") {
+                const chain = await handleChainFactory(from.key);
+                selectedNFTList.forEach((nft, index) => {
+                    approveEach(nft, hederaSigner, chain, index);
                 });
             } else if (from.type === "VeChain") {
                 const provider = thor.ethers.modifyProvider(
