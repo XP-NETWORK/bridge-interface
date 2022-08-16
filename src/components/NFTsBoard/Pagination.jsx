@@ -32,6 +32,7 @@ export default function Pagination() {
 
     useEffect(() => {
         dispatch(setCurrentNFTs(currentNFTs));
+        setSelectedPage(1);
     }, [selectedPage, originalNFTList, filteredNFTList]);
 
     useEffect(() => {
