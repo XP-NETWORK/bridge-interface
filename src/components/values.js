@@ -22,6 +22,7 @@ import { Chain } from "xp.network/dist/consts";
 import SCRT from "../assets/img/chain/secret.svg";
 import CKB from "../assets/img/chain/godwoken.svg";
 import HBAR from "../assets/img/chain/Hedera.svg";
+import SFUEL from "../assets/img/chain/SFUEL.svg";
 
 export const EVM = "EVM";
 export const ELROND = "Elrond";
@@ -347,6 +348,17 @@ export const chains = [
         mainnet: false,
         newChain: true,
     },
+    {
+        type: "Skale",
+        key: "Skale",
+        text: "Skale",
+        once: 0x1e,
+        order: 0,
+        image: { avatar: true, src: SFUEL },
+        testNet: true,
+        mainnet: false,
+        newChain: true,
+    },
 ];
 
 export const chainsConfig = {
@@ -551,8 +563,18 @@ export const chainsConfig = {
         tx: "https://hashscan.io/#/mainnet/transaction",
         testTxn: "https://hashscan.io/#/testnet/transaction",
     },
+    Skale: {
+        type: "Skale",
+        token: "sFUEL",
+        image: SFUEL,
+        Chain: Chain.SKALE,
+        tx: "",
+        testTxn:
+            "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/tx",
+    },
 };
-
+// ?        chainId: 1564830818,
+// tnChainId: 0x4a393bf89c676,
 export const coins = [
     "eGLD", // 0
     "HT", // 1
@@ -577,6 +599,7 @@ export const coins = [
     "CKB", //20
     "SCRT", //21
     "HBAR", //22
+    "SFUEL", //23
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -625,7 +648,11 @@ export const TESTNET_CHAIN_INFO = {
         nonce: 22,
         chainId: 71401,
     },
-    Hedera: 0x1d,
+    Hedera: { nonce: 0x1d },
+    Skale: {
+        nonce: 0x1e,
+        chainId: 0x4a393bf89c676,
+    },
 };
 
 export const CHAIN_INFO = {
@@ -843,5 +870,15 @@ export const CHAIN_INFO = {
         decimals: 1e6,
         blockExplorerUrl: "https://hashscan.io/#/mainnet/account",
         testBlockExplorerUrls: "https://hashscan.io/#/testnet/account",
+    },
+    Skale: {
+        native: coins[23],
+        none: 0x1e,
+        decimals: 1e18,
+        chainId: 1564830818,
+        tnChainId: 0x4a393bf89c676,
+        blockExplorerUrl: "",
+        testBlockExplorerUrls:
+            "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/address",
     },
 };

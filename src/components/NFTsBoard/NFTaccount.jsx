@@ -93,7 +93,7 @@ function NFTaccount() {
         try {
             const w = useHardcoded
                 ? hard
-                : type === "EVM" || type === "VeChain"
+                : type === "EVM" || type === "VeChain" || type === "Skale"
                 ? account
                 : type === "Tezos"
                 ? tezosAccount

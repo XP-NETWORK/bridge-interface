@@ -410,6 +410,8 @@ export const handleChainFactory = async (someChain) => {
                 return await factory.inner(Chain.SECRET);
             case "Hedera":
                 return await factory.innner(Chain.HEDERA);
+            case "Skale":
+                return await factory.inner(Chain.SKALE);
             default:
                 return "";
         }
@@ -422,11 +424,11 @@ export const mintForTestNet = async (from, signer) => {
     debugger;
     const factory = await getFactory();
     const chain = await factory.inner(chainsConfig[from].Chain);
-    const uri = { uri: "https://meta.polkamon.com/meta?id=10001852306" };
-    const contract = { contract: "0x0000000000000000000000000000000002da3c1d" };
     try {
-        console.log(signer);
-        const mint = await chain.mintNft(signer, { contract, uri });
+        const mint = await chain.mintNft(signer, {
+            contract: "0x5d437362976c68D6504AD043a8dc4dcc9915A7D5",
+            uri: "https://meta.polkamon.com/meta?id=10001852306",
+        });
         return mint;
     } catch (error) {
         console.log(error);
