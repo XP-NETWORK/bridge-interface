@@ -35,9 +35,13 @@ export default function ChainSelectBox() {
     const testnet = useSelector((state) => state.general.testNet);
 
     const switchChains = (e) => {
-        // debugger;
         if (from.type !== to.type) {
             switch (from.type) {
+                case "Hedera":
+                    if (account) {
+                        //TODO
+                    } else handleSwitch(e);
+                    break;
                 case "EVM":
                     if (account) {
                         dispatch(setTemporaryFrom(to));

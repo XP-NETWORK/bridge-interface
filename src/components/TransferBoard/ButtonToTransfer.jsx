@@ -65,7 +65,7 @@ export default function ButtonToTransfer() {
     const WCProvider = useSelector((state) => state.general.WCProvider);
     const sync2Connex = useSelector((state) => state.general.sync2Connex);
     const bitKeep = useSelector((state) => state.general.bitKeep);
-
+    const hederaSigner = useSelector((state) => state.signers.signer);
     const getAlgorandWalletSigner = async () => {
         const base = new MyAlgoConnect();
         if (algorandWallet) {
@@ -266,7 +266,7 @@ export default function ButtonToTransfer() {
                     fromChain,
                     toChain,
                     nft,
-                    signer,
+                    from === "Hedera" ? hederaSigner : signer,
                     receiverAddress || unstoppabledomain || receiver,
                     bigNumberFees,
                     Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
