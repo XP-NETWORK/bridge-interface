@@ -15,14 +15,7 @@ import {
     cleanSelectedNFTList,
 } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    getAlgorandClaimables,
-    getFactory,
-    setNFTS,
-} from "../../wallet/helpers";
-import { ReturnBtn } from "../Settings/returnBtn";
-import DesktopTransferBoard from "../TransferBoard/DesktopTransferBoard";
-import MobileTransferBoard from "../TransferBoard/MobileTransferBoard";
+
 import MobileDestinationAddressBar from "../MobileOnly/MobileDestinationAddressBar";
 import "./NFTsBoard.css";
 import Refresh from "../Buttons/Refresh";
@@ -30,24 +23,15 @@ import ChainSwitch from "../Buttons/ChainSwitch";
 import SelectedNFTs from "../Buttons/SelectedNFTs";
 import ViewButton from "../Buttons/ViewButton";
 import SelectClearAll from "../Buttons/SelectClearAll";
-import SelectedNFT from "../innercomponents/SelectedNFT";
+import SelectedNFT from "../NFT/SelectedNFTs";
 import SearchButton from "../Buttons/SearchButton";
 import MobileNFTsSearch from "../MobileOnly/MobileNFTsSearch";
 import Approval from "../TransferBoard/Approval";
 import SendFees from "../TransferBoard/SendFees";
 import ButtonToTransfer from "../TransferBoard/ButtonToTransfer";
-import ChangeNetworkModal from "../Modals/ChangeNetwork/ChangeNetworkModal";
-import UnsupportedNetwork from "../Modals/ChangeNetwork/UnsupportedNetwork";
-import SelectNFTAler from "../Alerts/SelectNFTAler";
-import PasteDestinationAlert from "../Alerts/PasteDestinationAlert";
-import NoApprovedNFT from "../Alerts/NoApprovedNFT";
-import { usePrevious } from "../Settings/hooks";
-import { chainsConfig } from "../values";
 import ImportNFTButton from "../Buttons/ImportNFTButton";
 
 import UnwrapWegld from "../TransferBoard/UnwrapWegld";
-import WalletConnectionModal from "../Wallet/WalletConnectionModal";
-import ChangeWalletModal from "../Modals/ChangeWallet/ChangeWalletModal";
 import Pagination from "./Pagination";
 
 const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {

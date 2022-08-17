@@ -4,7 +4,7 @@ import Approval from "../TransferBoard/Approval.jsx";
 import ButtonToTransfer from "./ButtonToTransfer";
 import Comment from "../innercomponents/Comment";
 import DestinationChain from "../innercomponents/DestinationChain";
-import SelectedNFT from "../innercomponents/SelectedNFT";
+import SelectedNFT from "../NFT/SelectedNFTs";
 import SendFees from "./SendFees";
 import "./TransferBoard.css";
 import UnwrapWegld from "./UnwrapWegld.jsx";

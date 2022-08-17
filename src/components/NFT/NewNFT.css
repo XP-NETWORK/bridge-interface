@@ -29,7 +29,29 @@
     overflow: hidden;
     display: flex;
     justify-content: center;
-    position: relative;
+    /* position: relative; */
+}
+.sft__mark {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    z-index: 1;
+    width: 66px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 5px;
+    gap: 8px;
+}
+.sft__amount {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 126%;
+    color: #14161a;
 }
 .nft__footer {
     height: 64px;
@@ -120,9 +142,9 @@
 .zoomInBtn {
     position: absolute;
     width: 24px;
-    height: 24px;
-    right: 12px;
-    top: 12px;
+    height: 24px !important;
+    right: 24px;
+    top: 24px;
     background: none;
     border: none;
 }
@@ -351,6 +373,7 @@
     display: flex;
     overflow: hidden;
     position: relative;
+    min-width: 40px;
 }
 
 .not-whitelisted__img-cover {
