@@ -17,6 +17,11 @@ module.exports = function override(webpackConfig) {
 
   webpackConfig.ignoreWarnings = [/Failed to parse source map/];
 
+  /* webpackConfig.resolve.alias = {
+    ...webpackConfig.resolve.alias,
+    "@hashgraph/proto": "@hashgraph/proto/lib/proto.js",
+  };*/
+
   webpackConfig.plugins.push(
     new webpack.ProvidePlugin({
       process: "process/browser",
