@@ -19,7 +19,9 @@ export default function Pagination() {
 
   const nftsPerPage = 100;
   const pageNumbers = [];
-
+  const indexOfLastNFT = selectedPage * nftsPerPage;
+  const indexOfFirstNFT = indexOfLastNFT - nftsPerPage;
+  const currentNFTs = nfts?.slice(indexOfFirstNFT, indexOfLastNFT);
   const OFF = { pointerEvents: "none" };
 
   for (let i = 1; i <= Math.ceil(nfts?.length / nftsPerPage); i++) {
@@ -27,12 +29,12 @@ export default function Pagination() {
   }
 
   useEffect(() => {
-    const indexOfLastNFT = selectedPage * nftsPerPage;
-    const indexOfFirstNFT = indexOfLastNFT - nftsPerPage;
-    const currentNFTs = nfts?.slice(indexOfFirstNFT, indexOfLastNFT);
     dispatch(setCurrentNFTs(currentNFTs));
-    //setSelectedPage(1);
   }, [selectedPage, originalNFTList, filteredNFTList]);
+
+  useDidUpdateEffect(() => {
+    setSelectedPage(1);
+  }, [filteredNFTList]);
 
   useEffect(() => {
     if (empty) {
