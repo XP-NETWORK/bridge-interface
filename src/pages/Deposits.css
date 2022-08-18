@@ -108,7 +108,6 @@
     align-items: center;
     gap: 12px;
 }
-
 .title .claim {
     margin-left: auto;
     background: #e4e7f3;
@@ -120,4 +119,67 @@
     align-items: center;
     color: #395feb;
     padding: 4px 8px;
+}
+.staker__form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.staker__amount input {
+    width: 330px;
+    height: 44px;
+    background: #ffffff;
+    border: 1px solid #e0e4eb;
+    border-radius: 40px;
+    outline: none;
+    padding: 16px;
+}
+.staker__form label {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 160%;
+    color: #14161a;
+}
+.staker__duration .dropdown {
+    width: 200px;
+    height: 44px;
+    background: #ffffff;
+    border: 1px solid #e0e4eb;
+    border-radius: 40px;
+}
+.staker__duration .dropdown .btn {
+    background-color: unset;
+    color: #000000;
+    position: absolute;
+    right: 16px;
+    top: 11px;
+}
+.staker__duration .dropdown-menu {
+    left: -172px !important;
+    top: 5px !important;
+    width: 200px;
+}
+.staker__discount input {
+    width: 199px;
+    height: 40px;
+    background: #fff;
+    border-radius: 40px;
+    border: 1px solid #e0e4eb;
+    outline: none;
+    padding: 16px;
+}
+.staker__buttons {
+    margin-top: auto;
+    margin-bottom: 2px;
+}
+.staker__btn {
+    width: 174px;
+    height: 40px;
+    background: #395feb;
+    border-radius: 40px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
 }
