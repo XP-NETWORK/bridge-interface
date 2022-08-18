@@ -1,0 +1,123 @@
+.deposit__container {
+    width: 1000px;
+    margin: 26px auto 0 auto;
+}
+.deposit__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+.deposit__title {
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 120%;
+    color: #14161a;
+}
+.deposit__subtitle {
+    max-width: 365px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 180%;
+    text-align: center;
+    color: #1b2135;
+    opacity: 0.8;
+}
+.balance {
+    grid-area: balance;
+}
+.locked {
+    grid-area: locked;
+}
+.discount {
+    grid-area: discount;
+    position: relative;
+}
+.discount-bg {
+    position: absolute;
+    top: -6px;
+    right: 0;
+    filter: grayscale();
+    opacity: 0.6;
+}
+.balance,
+.locked {
+    background: #fdfdfd;
+    border: 2px solid #ffffff;
+    border-radius: 16px;
+    padding: 22px 24px;
+    height: 165px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.discount {
+    background: linear-gradient(110.71deg, #395feb 36.28%, #3d4f8f 102.53%);
+    border: 2px solid #ffffff;
+    border-radius: 16px;
+    padding: 22px 24px;
+    height: 165px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.staker {
+    grid-area: staker;
+}
+.deposit__body {
+    display: grid;
+    grid-template-areas:
+        "balance locked discount"
+        "staker staker staker";
+    gap: 24px;
+    margin-top: 50px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.deposit__body .title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 126%;
+    color: #000000;
+}
+.deposit__body .xpnet,
+.deposit__body .percent {
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 126%;
+    color: #000000;
+}
+.transactions,
+.usd {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 126%;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    opacity: 0.7;
+}
+.discount .title,
+.discount .percent,
+.discount .transactions {
+    color: #ececf1 !important;
+}
+.title {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 12px;
+}
+
+.title .claim {
+    margin-left: auto;
+    background: #e4e7f3;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 126%;
+    display: flex;
+    align-items: center;
+    color: #395feb;
+    padding: 4px 8px;
+}

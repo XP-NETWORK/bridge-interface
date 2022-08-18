@@ -5,13 +5,13 @@ import NFTsuccess from "../components/Modals/Success/NFTsuccess";
 import { Routes, Route } from "react-router-dom";
 import ConnectWallet from "./ConnectWallet";
 import ProtectedRoute from "../pages/ProtectedRoute";
+import Deposits from "./Deposits";
 
 function XpBridge() {
     const testnet = useSelector((state) => state.general.testNet);
 
     return (
         <div className="nftContainer">
-            {/* { algorandClaimables && algorandClaimables.length > 0 && <Transactionhistory /> } */}
             <Routes>
                 <Route path="/" element={<ConnectWallet />} />
                 <Route path="/testnet" element={<ConnectWallet />} />
@@ -23,6 +23,7 @@ function XpBridge() {
                         components={<NFTaccount />}
                     />
                 </Route>
+                <Route path="/deposits" element={<Deposits />} />
             </Routes>
             {/* <NFTsuccess /> */}
         </div>
