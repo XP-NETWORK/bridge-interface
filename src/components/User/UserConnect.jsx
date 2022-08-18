@@ -31,10 +31,6 @@ export default function UserConnect({ desktop, mobile }) {
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const WalletConnect = useSelector((state) => state.general.WalletConnect);
     const { account, chainId, active } = useWeb3React();
-    console.log(
-        "🚀 ~ file: UserConnect.jsx ~ line 34 ~ UserConnect ~ account",
-        account
-    );
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
     const testnet = useSelector((state) => state.general.testNet);
     const secretAccount = useSelector((state) => state.general.secretAccount);

@@ -307,7 +307,7 @@ export default function ButtonToTransfer() {
                           bigNumberFees,
                           Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
                       ));
-                // console.log("result", result);
+                console.log("Result: ", result);
                 result =
                     from === "Algorand" || from === "Tezos"
                         ? { hash: result }

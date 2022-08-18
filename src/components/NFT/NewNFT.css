@@ -43,13 +43,13 @@
     border-radius: 6px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     padding: 6px 5px;
-    gap: 8px;
+    gap: 2px;
 }
 .sft__amount {
     font-weight: 500;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 126%;
     color: #14161a;
 }

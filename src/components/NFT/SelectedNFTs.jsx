@@ -37,7 +37,7 @@ function SelectedNFTs() {
             <ul className="selected-nfts__body">
                 {_selectedNFTs
                     ? _selectedNFTs.map((nft, index) => (
-                          <Selected index={index} nft={nft} />
+                          <Selected key={index} index={index} nft={nft} />
                           //   <li
                           //       key={`selected-nft-${index}`}
                           //       onClick={() => handleRemove(nft)}
