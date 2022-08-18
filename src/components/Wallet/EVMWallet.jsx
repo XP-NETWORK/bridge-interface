@@ -16,10 +16,8 @@ import {
     setFrom,
     setMetaMask,
 } from "../../store/reducers/generalSlice";
-import { useLocation, useNavigate } from "react-router-dom";
-import { getAddEthereumChain } from "../../wallet/chains";
+import { useNavigate } from "react-router-dom";
 import BitKeep from "../../assets/img/wallet/bitkeep.svg";
-import { CHAIN_INFO, TESTNET_CHAIN_INFO, biz } from "../values";
 import { switchNetwork } from "../../services/chains/evmSerive";
 import { setSigner } from "../../store/reducers/signersSlice";
 import { ethers } from "ethers";

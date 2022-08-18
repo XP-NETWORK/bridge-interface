@@ -422,7 +422,6 @@ export const handleChainFactory = async (someChain) => {
 };
 
 export const mintForTestNet = async (from, signer) => {
-    debugger;
     const factory = await getFactory();
     const chain = await factory.inner(chainsConfig[from].Chain);
     try {

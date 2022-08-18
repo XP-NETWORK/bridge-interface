@@ -218,7 +218,7 @@ export const chains = [
         image: { avatar: true, src: Velas },
         newChain: false,
         maintenance: false,
-        testNet: false,
+        testNet: true,
         mainnet: true,
     },
     {
@@ -242,11 +242,12 @@ export const chains = [
         value: "Iotex",
         nonce: 0x14,
         chainId: 4689,
+        tnChainId: 0x1252,
         order: 13,
         image: { avatar: true, src: Iotex },
         coming: false,
         maintenance: false,
-        testNet: false,
+        testNet: true,
         mainnet: true,
     },
     {
@@ -488,6 +489,7 @@ export const chainsConfig = {
         token: "IOTX",
         rpc: "https://babel-api.mainnet.iotex.io",
         chainId: 4689,
+        tnChainId: 0x1252,
         Chain: Chain.IOTEX,
         tx: "https://iotexscan.io/tx/",
     },
@@ -653,6 +655,14 @@ export const TESTNET_CHAIN_INFO = {
         nonce: 0x1e,
         chainId: 0x4a393bf89c676,
     },
+    Iotex: {
+        nonce: 0x14,
+        chainId: 0x1252,
+    },
+    Velas: {
+        nonce: 19,
+        chainId: 0x6f,
+    },
 };
 
 export const CHAIN_INFO = {
@@ -790,6 +800,7 @@ export const CHAIN_INFO = {
         decimals: 1e18,
         rpc: "https://velasnode.quigon.com/velas",
         chainId: 106,
+        tnChainId: 0x6f,
         contract: "",
         blockExplorerUrls: "https://evmexplorer.velas.com/address/",
         testBlockExplorerUrls: "https://explorer.testnet.velas.com/address",
@@ -810,6 +821,7 @@ export const CHAIN_INFO = {
         decimals: 1e18,
         rpc: "https://babel-api.mainnet.iotex.io",
         chainId: 4689,
+        tnChainId: 0x1252,
         contract: "",
         blockExplorerUrls: "https://iotexscan.io/address/",
         testBlockExplorerUrls: "https://testnet.iotexscan.io/",

@@ -229,6 +229,15 @@ const generalSlice = createSlice({
                     )
             );
         },
+        setSelectedNFTAmount(state, action) {
+            const { amount, index } = action.payload;
+            state.selectedNFTList = state.selectedNFTList.map((e, i) => {
+                if (i === index) {
+                    e.amountToTransfer = amount;
+                }
+                return e;
+            });
+        },
         setSearchNFTList(state, action) {
             state.NFTListSearch = action.payload;
         },
@@ -602,6 +611,7 @@ export const {
     setRefreshSecret,
     setTemporaryTo,
     setSecretCred,
+    setSelectedNFTAmount,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
