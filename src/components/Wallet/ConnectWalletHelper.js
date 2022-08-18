@@ -8,6 +8,8 @@ import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import * as thor from "web3-providers-connex";
+import { HashConnect } from "hashconnect";
+import { hethers } from "@hashgraph/hethers";
 
 import {
   WalletConnectProvider,
@@ -46,6 +48,8 @@ import {
   setKeplrAccount,
   setKeplrWallet,
   setBitKeepPopUp,
+  setHederaAccount,
+  setHederaWallet,
 } from "../../store/reducers/generalSlice";
 import { chainsConfig } from "../values";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
@@ -70,12 +74,57 @@ export const wallets = [
   "Maiar Extension",
   "Ledger",
   "Trezor",
+  "Hashpack",
 ];
-const { to, modalError, general } = store.getState();
+const { to, modalError } = store.getState();
 
-const connector = new WalletConnect({
-  bridge: "https://bridge.walletconnect.org", // Required
+const hashConnect = new HashConnect(true);
+
+hashConnect.pairingEvent.once(async (pairingData) => {
+  debugger;
+  const {
+    accountIds,
+    topic,
+    metadata: { name },
+  } = pairingData;
+  const address = await hethers.utils.getAddressFromAccount(accountIds[0]);
+  const provider = hashConnect.getProvider("testnet", topic, accountIds[0]);
+  console.log(
+    "🚀 ~ file: ConnectWalletHelper.js ~ line 92 ~ hashConnect.pairingEvent.once ~ provider",
+    provider
+  );
+  const signer = hashConnect.getSigner(provider);
+  console.log(
+    "🚀 ~ file: ConnectWalletHelper.js ~ line 97 ~ hashConnect.pairingEvent.once ~ signer",
+    signer
+  );
+  store.dispatch(setHederaAccount(address));
+  store.dispatch(setHederaWallet(name));
+  store.dispatch(setSigner(signer));
 });
+
+hashConnect.foundExtensionEvent.once((walletMetadata) => {
+  // hashPackWalletMetaData = walletMetadata;
+});
+
+export const connectHashpack = async () => {
+  debugger;
+  let appMetadata = {
+    name: "XP.NETWORK Cross-Chain NFT Bridge",
+    description:
+      "Seamlessly move assets between chains | The first multichain NFT bridge to connect all major Blockchains into one ecosystem",
+    icon: "%PUBLIC_URL%/favicon.ico",
+  };
+
+  try {
+    const initData = await hashConnect.init(appMetadata, "testnet", false);
+    const { pairingString } = initData;
+    await hashConnect.connectToLocalWallet(pairingString, appMetadata);
+    return true;
+  } catch (error) {
+    console.log("connectHashpack error: ", error);
+  }
+};
 
 export const switchNetWork = async (from) => {
   // let fromChainId;
@@ -113,7 +162,7 @@ export const connectKeplr = async (testnet, chain) => {
   // debugger;
 
   console.log(chain);
-  const chainId = testnet ? "pulsar-2" : "secret-4";
+  const chainId = testnet ? chain.tnChainId : chain.chainId;
   if (window.keplr) {
     try {
       await window.keplr.enable(chainId);
@@ -124,7 +173,7 @@ export const connectKeplr = async (testnet, chain) => {
       const { address } = accounts[0];
 
       const signer = await SecretNetworkClient.create({
-        grpcWebUrl: chain.tnRpc,
+        grpcWebUrl: testnet ? chain.tnRpc : chain.rpc,
         chainId,
         wallet: offlineSigner,
         walletAddress: address,

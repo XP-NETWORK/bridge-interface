@@ -43,6 +43,7 @@ function ConnectWallet() {
     );
     const evmAccount = useSelector((state) => state.general.account);
     const tronAccount = useSelector((state) => state.general.tronWallet);
+    const hederaAccount = useSelector((state) => state.general.hederaAccount);
     const testnet = useSelector((state) => state.general.testNet);
     const bitKeep = useSelector((state) => state.general.bitKeep);
 
@@ -50,6 +51,7 @@ function ConnectWallet() {
     const inputElement = useRef(null);
 
     const connected =
+        hederaAccount ||
         secretAccount ||
         elrondAccount ||
         tezosAccount ||

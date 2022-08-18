@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { chains as valuesChains } from "../../components/values";
-import BigNumber from "bignumber.js";
 import { biz } from "../../components/values";
 
 export const fonts = [
@@ -19,7 +18,7 @@ export const fonts = [
 ];
 
 export const chains = [...valuesChains]
-  .filter((c) => c.mainnet || c.testNet || c.coming)
+  .filter((c) => c.mainnet || c.coming)
   .sort((a, b) => b.order - a.order)
   .sort((a, b) => (a.coming && !b.coming ? 1 : -1));
 
@@ -53,6 +52,7 @@ export const wallets = [
   "TempleWallet",
   "MaiarExtension",
   "Sync2",
+  "Keplr",
 
   //...(biz ? ["Sync2"] : []),
 

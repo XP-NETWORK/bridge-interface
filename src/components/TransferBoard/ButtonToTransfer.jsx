@@ -82,6 +82,10 @@ export default function ButtonToTransfer() {
 
     const wid = useSelector((state) => state.general.wid);
 
+    const hederaSigner = useSelector((state) => state.signers.signer);
+    const chainConfig = useSelector(
+        (state) => state.signers.chainFactoryConfig
+    );
     const getAlgorandWalletSigner = async () => {
         const base = new MyAlgoConnect();
         if (algorandWallet) {
@@ -244,6 +248,13 @@ export default function ButtonToTransfer() {
                         tokenId && !isNaN(Number(tokenId)) ? tokenId : undefined
                     );
                 }
+                if (mintWidth.length < 1 && from.type === "Secret") {
+                    const contractAddress =
+                        chainConfig?.secretParams?.bridge?.contractAddress;
+                    const codeHash =
+                        chainConfig?.secretParams?.bridge?.codeHash;
+                    mintWidth = `${contractAddress}${codeHash}`;
+                }
                 toChain = await factory.inner(chainsConfig[to].Chain);
                 fromChain = await factory.inner(chainsConfig[from].Chain);
                 // console.log(bigNumberFees, "bigNumberFees");
@@ -282,7 +293,7 @@ export default function ButtonToTransfer() {
                     fromChain,
                     toChain,
                     nft,
-                    signer,
+                    from === "Hedera" ? hederaSigner : signer,
                     receiverAddress || unstoppabledomain || receiver,
                     bigNumberFees,
                     Array.isArray(mintWidth) ? mintWidth[0] : mintWidth

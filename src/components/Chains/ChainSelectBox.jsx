@@ -33,67 +33,71 @@ export default function ChainSelectBox() {
   const tronWallet = useSelector((state) => state.general.tronWallet);
   const testnet = useSelector((state) => state.general.testNet);
 
-  const switchChains = (e) => {
-    // debugger;
-    if (from.type !== to.type) {
-      switch (from.type) {
-        case "EVM":
-          if (account) {
-            dispatch(setTemporaryFrom(to));
-            dispatch(setTemporaryTo(from));
-            dispatch(setChangeWallet(true));
-          } else handleSwitch(e);
-          break;
-        case "Tron":
-          if (tronWallet) {
-            dispatch(setTemporaryFrom(to));
-            dispatch(setTemporaryTo(from));
-            dispatch(setTo(""));
-            dispatch(setChangeWallet(true));
-          } else handleSwitch(e);
-          break;
-        case "Elrond":
-          if (elrondAccount) {
-            dispatch(setTemporaryFrom(to));
-            dispatch(setTemporaryTo(from));
-            dispatch(setChangeWallet(true));
-          } else handleSwitch(e);
-          break;
-        case "Tezos":
-          if (tezosAccount) {
-            dispatch(setTemporaryFrom(to));
-            dispatch(setTemporaryTo(from));
-            dispatch(setChangeWallet(true));
-          } else handleSwitch(e);
-          break;
-        case "VeChain":
-          if (account) {
-            dispatch(setTemporaryFrom(to));
-            dispatch(setTemporaryTo(from));
-            dispatch(setChangeWallet(true));
-          } else handleSwitch(e);
-          break;
-        case "Algorand":
-          if (algorandAccount) {
-            dispatch(setTemporaryFrom(to));
-            dispatch(setTemporaryTo(from));
-            dispatch(setChangeWallet(true));
-          } else handleSwitch(e);
-          break;
-        case "Cosmos":
-          if (secretAccount) {
-            dispatch(setTemporaryFrom(to));
-            dispatch(setTemporaryTo(from));
-            dispatch(setChangeWallet(true));
-          } else handleSwitch(e);
-          break;
-        default:
-          break;
-      }
-    } else {
-      handleSwitch(e);
-    }
-  };
+    const switchChains = (e) => {
+        if (from.type !== to.type) {
+            switch (from.type) {
+                case "Hedera":
+                    if (account) {
+                        //TODO
+                    } else handleSwitch(e);
+                    break;
+                case "EVM":
+                    if (account) {
+                        dispatch(setTemporaryFrom(to));
+                        dispatch(setTemporaryTo(from));
+                        dispatch(setChangeWallet(true));
+                    } else handleSwitch(e);
+                    break;
+                case "Tron":
+                    if (tronWallet) {
+                        dispatch(setTemporaryFrom(to));
+                        dispatch(setTemporaryTo(from));
+                        dispatch(setTo(""));
+                        dispatch(setChangeWallet(true));
+                    } else handleSwitch(e);
+                    break;
+                case "Elrond":
+                    if (elrondAccount) {
+                        dispatch(setTemporaryFrom(to));
+                        dispatch(setTemporaryTo(from));
+                        dispatch(setChangeWallet(true));
+                    } else handleSwitch(e);
+                    break;
+                case "Tezos":
+                    if (tezosAccount) {
+                        dispatch(setTemporaryFrom(to));
+                        dispatch(setTemporaryTo(from));
+                        dispatch(setChangeWallet(true));
+                    } else handleSwitch(e);
+                    break;
+                case "VeChain":
+                    if (account) {
+                        dispatch(setTemporaryFrom(to));
+                        dispatch(setTemporaryTo(from));
+                        dispatch(setChangeWallet(true));
+                    } else handleSwitch(e);
+                    break;
+                case "Algorand":
+                    if (algorandAccount) {
+                        dispatch(setTemporaryFrom(to));
+                        dispatch(setTemporaryTo(from));
+                        dispatch(setChangeWallet(true));
+                    } else handleSwitch(e);
+                    break;
+                case "Cosmos":
+                    if (secretAccount) {
+                        dispatch(setTemporaryFrom(to));
+                        dispatch(setTemporaryTo(from));
+                        dispatch(setChangeWallet(true));
+                    } else handleSwitch(e);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            handleSwitch(e);
+        }
+    };
 
   const handleSwitch = async (e) => {
     // debugger
