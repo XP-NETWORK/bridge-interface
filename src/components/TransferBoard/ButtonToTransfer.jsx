@@ -271,7 +271,10 @@ export default function ButtonToTransfer() {
                         tokenId && !isNaN(Number(tokenId)) ? tokenId : undefined
                     );
                 }
-                if (_from.type === "EVM" || _from.type === "Elrond") {
+                if (
+                    (_from.type === "EVM" || _from.type === "Elrond") &&
+                    !testnet
+                ) {
                     if (mintWidth?.length < 1 || !mintWidth) {
                         dispatch(setError("An error has occurred"));
                         dispatch(dispatch(setTransferLoaderModal(false)));
