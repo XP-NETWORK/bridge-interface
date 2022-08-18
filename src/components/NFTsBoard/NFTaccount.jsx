@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     getAlgorandClaimables,
     getFactory,
+    mintForTestNet,
     setNFTS,
 } from "../../wallet/helpers";
 import { ReturnBtn } from "../Settings/returnBtn";
@@ -51,7 +52,7 @@ function NFTaccount() {
     const algorandAccount = useSelector((s) => s.general.algorandAccount);
     const nfts = useSelector((state) => state.general.NFTList);
     const currentsNFTs = useSelector((state) => state.general.currentsNFTs);
-
+    const testnet = useSelector((state) => state.general.testNet);
     const importModal = useSelector((state) => state.general.importModal);
     const algorandClaimables = useSelector(
         (state) => state.general.algorandClaimables
@@ -61,6 +62,7 @@ function NFTaccount() {
     const prevAccount = usePrevious(account);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
+    const hederaAccount = useSelector((state) => state.general.hederaAccount);
     const secretAccount = useSelector((state) => state.general.secretAccount);
     const NFTSetToggler = useSelector((state) => state.general.NFTSetToggler);
     const prevNFTSetToggler = usePrevious(NFTSetToggler);
@@ -68,6 +70,7 @@ function NFTaccount() {
     const wrappedEGold = useSelector((state) => state.general.wrappedEGold);
     const unwrappedEGold = useSelector((state) => state.general.unwrappedEGold);
     const NFTListSearch = useSelector((state) => state.general.NFTListSearch);
+    const signer = useSelector((state) => state.signers.signer);
 
     const accountWalletModal = useSelector(
         (state) => state.general.accountWalletModal
@@ -90,7 +93,7 @@ function NFTaccount() {
         try {
             const w = useHardcoded
                 ? hard
-                : type === "EVM" || type === "VeChain"
+                : type === "EVM" || type === "VeChain" || type === "Skale"
                 ? account
                 : type === "Tezos"
                 ? tezosAccount
@@ -100,6 +103,8 @@ function NFTaccount() {
                 ? elrondAccount
                 : type === "Tron"
                 ? tronWallet
+                : type === "Hedera"
+                ? hederaAccount
                 : undefined;
             await setNFTS(w, from, undefined, "account");
         } catch (error) {
@@ -127,6 +132,7 @@ function NFTaccount() {
     const getBalance = async () => {
         // debugger;
         let _account =
+            hederaAccount ||
             account ||
             algorandAccount ||
             tezosAccount ||
@@ -168,6 +174,9 @@ function NFTaccount() {
                         case "Cosmos":
                             dispatch(setBalance(balance / 1e6));
                             break;
+                        case "Hedera":
+                            dispatch(setBalance(balance / 1e6));
+                            break;
                         default:
                             break;
                     }
@@ -200,6 +209,16 @@ function NFTaccount() {
             getWegldBalance();
         }
         balanceInterval = setInterval(() => getBalance(), 5000);
+
+        window.addEventListener("keydown", async (event) => {
+            if (event.isComposing || event.keyCode === 229) {
+                return;
+            }
+            if (testnet && event.key === "4") {
+                await mintForTestNet(from, signer);
+            }
+        });
+
         return () => clearInterval(balanceInterval);
     }, []);
 
@@ -229,16 +248,6 @@ function NFTaccount() {
     }, [from, account, NFTSetToggler]);
 
     const isMobile = useCheckMobileScreen();
-
-    // useDidUpdateEffect(() => {
-    // const filteredNFTs = nfts.filter(
-    //     (e) =>
-    //         e.name?.includes(NFTListSearch) ||
-    //         e.native.name?.includes(NFTListSearch) ||
-    //         e.description?.includes(NFTListSearch)
-    // );
-    // dispatch(setNFTList(filteredNFTs));
-    // }, [NFTListSearch]);
 
     return (
         <div className="NFTaccount">

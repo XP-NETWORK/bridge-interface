@@ -44,7 +44,10 @@ export default function AccountModal() {
     const tronLink = useSelector((state) => state.general.tronLink);
     const templeWallet = useSelector((state) => state.general.templeWallet);
     const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
+    const hederaWallet = useSelector((state) => state.general.hederaWallet);
+    const hederaAccount = useSelector((state) => state.general.hederaAccount);
     const currentAccount =
+        hederaAccount ||
         account ||
         elrondAccount ||
         algorandAccount ||
@@ -69,7 +72,9 @@ export default function AccountModal() {
         else if (templeWallet) return "Temple Wallet";
         else if (kukaiWallet) return "Beacon";
         else if (Keplr) return "Keplr";
-        else if (WalletConnect)
+        else if (hederaWallet) {
+            return hederaWallet === "HashPack" ? "HashPack" : "Blade";
+        } else if (WalletConnect)
             return `${WCProvider.walletConnectProvider.signer.connection.wc._peerMeta.name} (WalletConnect)`;
     };
 

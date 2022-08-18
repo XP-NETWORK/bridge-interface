@@ -50,6 +50,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
         try {
           if (testnet) throw new Error("Testnet exception");
           nftData = (await cache.get({ chainId, tokenId, contract }, nft)).data;
+          if (!nftData) throw new Error("No data exc");
         } catch (e) {
           nftData = await nftGeneralParser(nft, account, whitelisted);
         }
@@ -62,7 +63,9 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
             nft = await evm.getUri(nft, nft.collectionIdent);
           }
 
-          nftData = await cache.add(nft, account, whitelisted);
+          nftData = !nft.metaData
+            ? await cache.add(nft, account, whitelisted)
+            : nft.metaData;
 
           if (nftData === "That nft is already caching") return undefined;
         }
@@ -81,17 +84,15 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
     whitelisted =
       whitelistedRes.status === "fulfilled" ? whitelistedRes.value : undefined;
 
-    if (!nftData) return;
-
     nftObj = {
       ...nft,
-      ...(nftData.metaData || nftData),
-      wrapped: nftData.wrapped,
+      ...(nftData?.metaData || nftData),
+      wrapped: nftData?.wrapped,
       dataLoaded: true,
       whitelisted,
     };
 
-    if (cache.isRestricted(nftObj?.image)) nft = cache.preventRestricted(nft);
+    //if (cache.isRestricted(nftObj?.image)) nft = cache.preventRestricted(nft);
 
     if (
       !NFTList[index]?.dataLoaded ||

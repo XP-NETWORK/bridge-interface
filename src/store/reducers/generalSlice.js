@@ -30,6 +30,12 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setHederaWallet(state, action) {
+            state.hederaWallet = action.payload;
+        },
+        setHederaAccount(state, action) {
+            state.hederaAccount = action.payload;
+        },
         setFilteredNFTSList(state, action) {
             state.filteredNFTList = action.payload;
         },
@@ -487,6 +493,8 @@ const generalSlice = createSlice({
 });
 
 export const {
+    setHederaAccount,
+    setHederaWallet,
     setFilteredNFTSList,
     setUnwrappedEGold,
     setReceiverIsSmartContractAddress,

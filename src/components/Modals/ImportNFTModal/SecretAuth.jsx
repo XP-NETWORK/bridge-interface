@@ -43,11 +43,25 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
       setImportBlocked(true);
       const factory = await getFactory();
       const secret = await factory.inner(Chain.SECRET);
-      const secretNFTs = await secret.nftList(
+      let secretNFTs = await secret.nftList(
         checkWallet || secretAccount,
         secretCred.viewKey,
         secretCred.contract
       );
+
+      secretNFTs = secretNFTs.map((nft) => ({
+        ...nft,
+        metaData: !nft?.uri
+          ? {
+              ...nft?.metaData,
+              image: nft?.metaData?.media[0]?.url,
+              imageFormat: nft?.metaData?.media[0]?.extension,
+            }
+          : null,
+      }));
+
+      console.log(secretNFTs);
+
       dispatch(addImportedNFTtoNFTlist(secretNFTs));
 
       setLogdIn(true);

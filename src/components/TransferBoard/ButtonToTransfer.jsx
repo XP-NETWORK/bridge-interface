@@ -5,6 +5,8 @@ import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 import { chainsConfig } from "../values";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { algoConnector } from "../../wallet/connectors";
+import BigNumber from "bignumber.js";
+
 import {
     getFactory,
     setClaimablesAlgorand,
@@ -48,6 +50,7 @@ export default function ButtonToTransfer() {
     const to = useSelector((state) => state.general.to.key);
     const _to = useSelector((state) => state.general.to);
     const from = useSelector((state) => state.general.from.key);
+    const _from = useSelector((state) => state.general.from);
     const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
     const [loading, setLoading] = useState();
     const dispatch = useDispatch();
@@ -65,7 +68,10 @@ export default function ButtonToTransfer() {
     const WCProvider = useSelector((state) => state.general.WCProvider);
     const sync2Connex = useSelector((state) => state.general.sync2Connex);
     const bitKeep = useSelector((state) => state.general.bitKeep);
-
+    const hederaSigner = useSelector((state) => state.signers.signer);
+    const chainConfig = useSelector(
+        (state) => state.signers.chainFactoryConfig
+    );
     const getAlgorandWalletSigner = async () => {
         const base = new MyAlgoConnect();
         if (algorandWallet) {
@@ -228,9 +234,15 @@ export default function ButtonToTransfer() {
                         tokenId && !isNaN(Number(tokenId)) ? tokenId : undefined
                     );
                 }
+                if (mintWidth.length < 1 && from.type === "Secret") {
+                    const contractAddress =
+                        chainConfig?.secretParams?.bridge?.contractAddress;
+                    const codeHash =
+                        chainConfig?.secretParams?.bridge?.codeHash;
+                    mintWidth = `${contractAddress}${codeHash}`;
+                }
                 toChain = await factory.inner(chainsConfig[to].Chain);
                 fromChain = await factory.inner(chainsConfig[from].Chain);
-                // console.log(bigNumberFees, "bigNumberFees");
                 result = await factory.transferNft(
                     fromChain,
                     toChain,
@@ -245,7 +257,7 @@ export default function ButtonToTransfer() {
                 setLoading(false);
                 dispatch(setTxnHash({ txn: result, nft }));
             } else {
-                // debugger
+                debugger;
                 factory = await getFactory();
                 const contract =
                     nft.collectionIdent || nftSmartContract.toLowerCase();
@@ -259,18 +271,39 @@ export default function ButtonToTransfer() {
                         tokenId && !isNaN(Number(tokenId)) ? tokenId : undefined
                     );
                 }
-
+                if (_from.type === "EVM" || _from.type === "Elrond") {
+                    if (mintWidth?.length < 1 || !mintWidth) {
+                        dispatch(setError("An error has occurred"));
+                        dispatch(dispatch(setTransferLoaderModal(false)));
+                        setLoading(false);
+                        if (txnHashArr.length) {
+                            dispatch(setTxnHash({ txn: "failed", nft }));
+                        }
+                        return;
+                    }
+                }
                 toChain = await factory.inner(chainsConfig[to].Chain);
                 fromChain = await factory.inner(chainsConfig[from].Chain);
-                result = await factory.transferNft(
-                    fromChain,
-                    toChain,
-                    nft,
-                    signer,
-                    receiverAddress || unstoppabledomain || receiver,
-                    bigNumberFees,
-                    Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
-                );
+                nft.native.amount
+                    ? (result = await factory.transferSft(
+                          fromChain,
+                          toChain,
+                          nft,
+                          from === "Hedera" ? hederaSigner : signer,
+                          receiverAddress || unstoppabledomain || receiver,
+                          new BigNumber(nft.amountToTransfer),
+                          bigNumberFees,
+                          Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
+                      ))
+                    : (result = await factory.transferNft(
+                          fromChain,
+                          toChain,
+                          nft,
+                          from === "Hedera" ? hederaSigner : signer,
+                          receiverAddress || unstoppabledomain || receiver,
+                          bigNumberFees,
+                          Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
+                      ));
                 // console.log("result", result);
                 result =
                     from === "Algorand" || from === "Tezos"

@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import BitKeep from "../../assets/img/wallet/bitkeep.svg";
 import CosmosWallet from "./CosmosWallet";
 import { biz } from "../values";
+import HederaWallet from "./HederaWallet";
 
 export default function WalletList({ search, connected, input }) {
     const from = useSelector((state) => state.general.from);
@@ -18,7 +19,9 @@ export default function WalletList({ search, connected, input }) {
 
     const sortWallet = (components) => {
         let sortedWallets;
-        const evmWallets = components.filter((e) => e.type === "EVM");
+        const evmWallets = components.filter(
+            (e) => e.type === "EVM" || e.type === "Skale"
+        );
         const tezosWallets = components.filter((e) => e.type === "Tezos");
         const elrondWallets = components.filter((e) => e.type === "Elrond");
         const algodWallets = components.filter((e) => e.type === "Algorand");
@@ -26,11 +29,26 @@ export default function WalletList({ search, connected, input }) {
         const tronWallets = components.filter((e) => e.type === "Tron");
         const cosmosWallets = components.filter((e) => e.type === "Cosmos");
         const usbWallet = components.filter((e) => e.type === "USB");
+        const hederaWallets = components.filter((e) => e.type === "Hedera");
 
         switch (temporaryFrom?.type || from?.type) {
             case "EVM":
                 sortedWallets = [
                     ...evmWallets,
+                    ...hederaWallets,
+                    ...cosmosWallets,
+                    ...tezosWallets,
+                    ...elrondWallets,
+                    ...algodWallets,
+                    ...tronWallets,
+                    ...VeChainWallets,
+                    ...usbWallet,
+                ];
+                return sortedWallets;
+            case "Skale":
+                sortedWallets = [
+                    ...evmWallets,
+                    ...hederaWallets,
                     ...cosmosWallets,
                     ...tezosWallets,
                     ...elrondWallets,
@@ -44,6 +62,7 @@ export default function WalletList({ search, connected, input }) {
                 sortedWallets = [
                     ...tezosWallets,
                     ...evmWallets,
+                    ...hederaWallets,
                     ...cosmosWallets,
                     ...elrondWallets,
                     ...algodWallets,
@@ -56,6 +75,7 @@ export default function WalletList({ search, connected, input }) {
                 sortedWallets = [
                     ...elrondWallets,
                     ...evmWallets,
+                    ...hederaWallets,
                     ...cosmosWallets,
                     ...tezosWallets,
                     ...algodWallets,
@@ -68,6 +88,7 @@ export default function WalletList({ search, connected, input }) {
                 sortedWallets = [
                     ...algodWallets,
                     ...evmWallets,
+                    ...hederaWallets,
                     ...cosmosWallets,
                     ...elrondWallets,
                     ...tezosWallets,
@@ -80,6 +101,7 @@ export default function WalletList({ search, connected, input }) {
                 sortedWallets = [
                     ...VeChainWallets,
                     ...evmWallets,
+                    ...hederaWallets,
                     ...cosmosWallets,
                     ...algodWallets,
                     ...elrondWallets,
@@ -92,6 +114,7 @@ export default function WalletList({ search, connected, input }) {
                 sortedWallets = [
                     ...tronWallets,
                     ...evmWallets,
+                    ...hederaWallets,
                     ...cosmosWallets,
                     ...algodWallets,
                     ...elrondWallets,
@@ -104,6 +127,7 @@ export default function WalletList({ search, connected, input }) {
                 sortedWallets = [
                     ...cosmosWallets,
                     ...evmWallets,
+                    ...hederaWallets,
                     ...algodWallets,
                     ...elrondWallets,
                     ...tezosWallets,
@@ -112,7 +136,18 @@ export default function WalletList({ search, connected, input }) {
                     ...usbWallet,
                 ];
                 return sortedWallets;
-
+            case "Hedera":
+                sortedWallets = [
+                    ...hederaWallets,
+                    ...evmWallets,
+                    ...algodWallets,
+                    ...elrondWallets,
+                    ...tezosWallets,
+                    ...VeChainWallets,
+                    ...tronWallets,
+                    ...usbWallet,
+                ];
+                return sortedWallets;
             default:
                 break;
         }
@@ -320,12 +355,30 @@ export default function WalletList({ search, connected, input }) {
             type: "USB",
         },
         {
-            Component: <USBWallet key="wallet-index12" connected={connected} />,
+            Component: (
+                <USBWallet key="wallet-index-12" connected={connected} />
+            ),
             name: "Trezor",
             mobile: false,
             desktop: true,
             order: 15,
             type: "USB",
+        },
+        {
+            Component: <HederaWallet close={connected} wallet={"Hashpack"} />,
+            name: "Hashpack",
+            mobile: false,
+            desktop: true,
+            order: 16,
+            type: "Hedera",
+        },
+        {
+            Component: <HederaWallet close={connected} wallet={"Blade"} />,
+            name: "Blade",
+            mobile: false,
+            desktop: true,
+            order: 16,
+            type: "Hedera",
         },
     ];
 
