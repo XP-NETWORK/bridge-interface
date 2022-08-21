@@ -542,6 +542,7 @@ export const chainsConfig = {
     image: SCRT,
     tnChainId: "pulsar-2",
     chainId: "secret-4",
+    tx: "https://atomscan.com/secret-network/transactions/",
     rpc: "https://secret-4.api.trivium.network:9091",
     tnRpc: "https://pulsar-2.api.trivium.network:9091",
     Chain: Chain.SECRET,
@@ -855,14 +856,14 @@ export const CHAIN_INFO = {
     blockExplorerUrl: "https://explore.vechain.org/accounts/",
     testBlockExplorerUrls: "https://explore-testnet.vechain.org/accounts/",
   },
-
   Secret: {
     native: coins[21],
     nonce: 0x18,
     chainId: "secret-4",
     tnChainId: "pulsar-2",
     decimals: 1e6,
-    blockExplorerUrl: "https://atomscan.com/secret-network/",
+    blockExplorerUrl: "https://atomscan.com/secret-network/accounts/",
+    blockExplorerUrls: "https://atomscan.com/secret-network/accounts/",
     testBlockExplorerUrls: "https://chainofsecrets.org/testnet.html/",
   },
   Godwoken: {
