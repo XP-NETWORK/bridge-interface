@@ -1,4 +1,13 @@
 (() => {
+  function openMetaMaskUrl(url) {
+    const a = document.createElement("a");
+    a.href = url;
+    a.target = "_self";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
   const widget = document.getElementById("xpnetWidget");
 
   const url = widget?.getAttribute("src")?.split("?");
@@ -24,10 +33,10 @@
         msg[0] === "From Widget: Open MetaMask" &&
         url[0]?.includes(ev.origin)
       ) {
-        const link = `https://metamask.app.link/dapp/${
-          `${url[0]}/${msg[1]}` /*window.location.origin*/
-        }`;
-        window.open(link);
+        const link = `dapp://${`${url[0].replace(/^https?\:\/\//, "")}/${
+          msg[1]
+        }`}`;
+        openMetaMaskUrl(link);
       }
     },
     false

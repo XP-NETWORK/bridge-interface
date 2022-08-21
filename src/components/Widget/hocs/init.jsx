@@ -15,8 +15,6 @@ import { inIframe } from "../../Settings/helpers";
 
 import WService from "../wservice";
 
-export const widgetApi = "http://localhost:3030"; //"https://xpnetwork-widget.herokuapp.com";
-
 const wservice = WService();
 
 //.nft-list__wrappera
@@ -68,7 +66,6 @@ function initFromQuery() {
 }
 
 async function initFormId(id) {
-  console.log(new URLSearchParams(window.location.search));
   if (id === "create" && window.ethereum) {
     const { signature, address } = await wservice.sign(undefined, true);
 
@@ -131,6 +128,7 @@ export const InitWidget = (Wrapped) => {
     );
 
     useEffect(() => {
+      console.log("grishay");
       const p = new URLSearchParams(window.location.search);
       const wid = p.get("wid");
       const widget = p.get("widget") === "true" || wid;
@@ -148,6 +146,7 @@ export const InitWidget = (Wrapped) => {
         }
 
         dispatch(setWidget(true));
+        console.log(wid, "wid");
         wid && dispatch(setWid(wid));
         document.body.classList.add("widget");
 

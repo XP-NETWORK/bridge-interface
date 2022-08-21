@@ -7,11 +7,12 @@ class WService {
   maxExtraFees = 2;
 
   constructor() {
-    if (!window.ethereum) return;
+    //if (!window.ethereum && window.innerWidth > 601) return;
     this.axios = axios.create({
       baseURL: this.widgetApi,
       withCredentials: true,
     });
+    if (!window.ethereum) return;
     this.provider = new ethers.providers.Web3Provider(window.ethereum);
   }
 

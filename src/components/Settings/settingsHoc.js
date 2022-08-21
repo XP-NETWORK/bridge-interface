@@ -22,9 +22,6 @@ import { usePrevious } from "./hooks";
 import { checkRgbaOut } from "./helpers";
 import axios from "axios";
 
-import { widgetApi } from "../Widget/hocs/init";
-import { ethers } from "ethers";
-
 import WService from "../Widget/wservice";
 
 const wservice = WService();

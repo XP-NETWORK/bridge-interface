@@ -224,12 +224,12 @@ function ButtonToTransfer({ setTxForWidget }) {
             fromNonce,
             tokenId && !isNaN(Number(tokenId)) ? tokenId : undefined
           );
-        }
-        if (mintWidth.length < 1 && from.type === "Secret") {
-          const contractAddress =
-            chainConfig?.secretParams?.bridge?.contractAddress;
-          const codeHash = chainConfig?.secretParams?.bridge?.codeHash;
-          mintWidth = `${contractAddress}${codeHash}`;
+          if (mintWidth.length < 1 && from.type === "Secret") {
+            const contractAddress =
+              chainConfig?.secretParams?.bridge?.contractAddress;
+            const codeHash = chainConfig?.secretParams?.bridge?.codeHash;
+            mintWidth = `${contractAddress}${codeHash}`;
+          }
         }
         toChain = await factory.inner(chainsConfig[to].Chain);
         fromChain = await factory.inner(chainsConfig[from].Chain);
@@ -259,40 +259,48 @@ function ButtonToTransfer({ setTxForWidget }) {
             fromNonce,
             tokenId && !isNaN(Number(tokenId)) ? tokenId : undefined
           );
-        }
-        if (_from.type === "EVM" || _from.type === "Elrond") {
-          if (mintWidth?.length < 1 || !mintWidth) {
-            dispatch(setError("An error has occurred"));
-            dispatch(dispatch(setTransferLoaderModal(false)));
-            setLoading(false);
-            if (txnHashArr.length) {
-              dispatch(setTxnHash({ txn: "failed", nft }));
+          if (
+            (_from.type === "EVM" || _from.type === "Elrond") &&
+            _to.type !== "Secret"
+          ) {
+            if (mintWidth?.length < 1 || !mintWidth) {
+              dispatch(
+                setError(
+                  "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection"
+                )
+              );
+              dispatch(dispatch(setTransferLoaderModal(false)));
+              setLoading(false);
+              if (txnHashArr.length) {
+                dispatch(setTxnHash({ txn: "failed", nft }));
+              }
+              return;
             }
-            return;
           }
         }
         toChain = await factory.inner(chainsConfig[to].Chain);
         fromChain = await factory.inner(chainsConfig[from].Chain);
-        nft.native.amount
-          ? (result = await factory.transferSft(
-              fromChain,
-              toChain,
-              nft,
-              from === "Hedera" ? hederaSigner : signer,
-              receiverAddress || unstoppabledomain || receiver,
-              new BigNumber(nft.amountToTransfer),
-              bigNumberFees,
-              Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
-            ))
-          : (result = await factory.transferNft(
-              fromChain,
-              toChain,
-              nft,
-              from === "Hedera" ? hederaSigner : signer,
-              receiverAddress || unstoppabledomain || receiver,
-              bigNumberFees,
-              Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
-            ));
+        // nft.native.amount
+        // ? (result = await factory.transferSft(
+        //       fromChain,
+        //       toChain,
+        //       nft,
+        //       from === "Hedera" ? hederaSigner : signer,
+        //       receiverAddress || unstoppabledomain || receiver,
+        //       new BigNumber(nft.amountToTransfer),
+        //       bigNumberFees,
+        //       Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
+        //   ))
+        // :
+        result = await factory.transferNft(
+          fromChain,
+          toChain,
+          nft,
+          from === "Hedera" ? hederaSigner : signer,
+          receiverAddress || unstoppabledomain || receiver,
+          bigNumberFees,
+          Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
+        );
         // console.log("result", result);
         result =
           from === "Algorand" || from === "Tezos" ? { hash: result } : result;
