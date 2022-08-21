@@ -1,6 +1,7 @@
 import xpnetInterface from "./artifacts/XPToken.json";
 import xpBridgeInterface from "./artifacts/xpBridgeDescount.json";
 import { ethers } from "ethers";
+import Web3 from "web3";
 const Contract = require("web3-eth-contract");
 
 const xpnet = "0x8cf8238abf7b933bf8bb5ea2c7e4be101c11de2a";
@@ -22,6 +23,21 @@ const createXpBridgeContract = (provider) => {
         );
     }
     return contract;
+};
+
+export const checkXpNetBalance = async (provider, address) => {
+    const contract = createXpNetContract(provider);
+    let weiBalance;
+    try {
+        weiBalance = await contract.methods.balanceOf(address).call();
+        const balance = parseInt(Web3.utils.fromWei(weiBalance, "ether"));
+        console.log(
+            "🚀 ~ file: deposits.js ~ line 32 ~ checkXpNetBalance ~ balance",
+            balance
+        );
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 export const approve = async (provider) => {

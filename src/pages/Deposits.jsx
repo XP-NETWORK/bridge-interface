@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setDepositWalletModal } from "../store/reducers/discountSlice";
 import DiscountWalletModal from "../components/Deposits/DiscountWalletModal";
 import { printContract } from "../services/deposits";
+import Balance from "../components/Deposits/Balance";
+import Locked from "../components/Deposits/Locked";
 
 export default function Deposits() {
     const walletsModal = useSelector((state) => state.discount.walletModal);
@@ -37,23 +39,8 @@ export default function Deposits() {
                 </div>
             </div>
             <div className="deposit__body">
-                <div className="balance">
-                    <div className="title">
-                        <img src={diamond} alt="" className="balance-icon" />
-                        <span>Your XPNET Balance</span>
-                    </div>
-                    <div className="xpnet">15,896 XPNET</div>
-                    <div className="usd">150 USD</div>
-                </div>
-                <div className="locked">
-                    <div className="title">
-                        <img src={lock} alt="" className="locked-icon" />
-                        <span>Locked XPNETs</span>
-                        {/* <span className="claim">Claim</span> */}
-                    </div>
-                    <div className="xpnet">7,680 XPNET</div>
-                    <div className="usd">64 USD</div>
-                </div>
+                <Balance />
+                <Locked />
                 <div className="discount">
                     <img className="discount-bg" src={ICON} alt="" />
                     <div className="title">
