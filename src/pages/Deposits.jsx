@@ -9,10 +9,12 @@ import info from "../assets/img/icons/info_blue.svg";
 import oil from "../assets/img/icons/oil.svg";
 import xpnet from "../assets/img/icons/XPNET.svg";
 import { useSelector } from "react-redux";
+import { printContract } from "../services/discount";
 
 export default function Deposits() {
     const innerWidth = useSelector((state) => state.general.innerWidth);
     const [duration, setDuration] = useState("3 months");
+    const [amount, setAmount] = useState();
 
     const handleDurationSelect = (d) => {
         switch (d) {
@@ -32,6 +34,15 @@ export default function Deposits() {
                 break;
         }
     };
+
+    const handleInputChange = (e) => {
+        const amount = Number(e.target.value);
+        if (e.target.validity.valid) {
+            setAmount(amount);
+        } else setAmount("");
+    };
+
+    printContract();
 
     return (
         <div className="deposit__container">
@@ -80,6 +91,7 @@ export default function Deposits() {
                             <br />
                             <div className="staker__amount__input">
                                 <input
+                                    pattern="[0-9]*"
                                     placeholder={
                                         innerWidth < 380
                                             ? "MIN 1500"
@@ -87,7 +99,9 @@ export default function Deposits() {
                                     }
                                     type="text"
                                     name="amount"
+                                    value={amount}
                                     id="amount"
+                                    onChange={(e) => handleInputChange(e)}
                                 />
                                 <div className="xpnet-icon">
                                     <img src={xpnet} alt="" />
