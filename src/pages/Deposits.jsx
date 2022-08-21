@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Deposits.css";
 import diamond from "../assets/img/icons/diamond.svg";
 import lock from "../assets/img/icons/lockon.svg";
@@ -6,8 +6,33 @@ import percent from "../assets/img/icons/percent.svg";
 import { Dropdown } from "react-bootstrap";
 import ICON from "../assets/img/icons/ICON.png";
 import info from "../assets/img/icons/info_blue.svg";
+import oil from "../assets/img/icons/oil.svg";
+import xpnet from "../assets/img/icons/XPNET.svg";
+import { useSelector } from "react-redux";
 
 export default function Deposits() {
+    const innerWidth = useSelector((state) => state.general.innerWidth);
+    const [duration, setDuration] = useState("3 months");
+
+    const handleDurationSelect = (d) => {
+        switch (d) {
+            case "3":
+                setDuration("3 months");
+                break;
+            case "6":
+                setDuration("6 months");
+                break;
+            case "9":
+                setDuration("9 months");
+                break;
+            case "12":
+                setDuration("1 year");
+                break;
+            default:
+                break;
+        }
+    };
+
     return (
         <div className="deposit__container">
             <div className="deposit__header">
@@ -46,31 +71,53 @@ export default function Deposits() {
                 </div>
                 <div className="staker">
                     <div className="staker__title">
-                        <img src="#" alt="" />
+                        <img src={oil} alt="" />
                         <span>Lock XPNET</span>
                     </div>
                     <form className="staker__form">
                         <div className="staker__amount">
                             <label for="amount">Enter amount</label>
                             <br />
-                            <input type="text" name="amount" id="amount" />
+                            <div className="staker__amount__input">
+                                <input
+                                    placeholder={
+                                        innerWidth < 380
+                                            ? "MIN 1500"
+                                            : "MIN lock requirement 1500"
+                                    }
+                                    type="text"
+                                    name="amount"
+                                    id="amount"
+                                />
+                                <div className="xpnet-icon">
+                                    <img src={xpnet} alt="" />
+                                    <span>XPNET</span>
+                                </div>
+                            </div>
                         </div>
                         <div className="staker__duration">
                             <label for="duration">Select locked duration</label>
                             <br />
-                            <Dropdown alignLeft title="Dropdown right">
+                            <Dropdown
+                                onSelect={(e) => handleDurationSelect(e)}
+                                alignLeft
+                                title="Dropdown right"
+                            >
+                                <div className="dropdown__place-holder">
+                                    {duration}
+                                </div>
                                 <Dropdown.Toggle></Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item eventKey="option-1">
+                                    <Dropdown.Item eventKey="3">
                                         3 months
                                     </Dropdown.Item>
-                                    <Dropdown.Item eventKey="option-2">
+                                    <Dropdown.Item eventKey="6">
                                         6 months
                                     </Dropdown.Item>
-                                    <Dropdown.Item eventKey="option-3">
+                                    <Dropdown.Item eventKey="9">
                                         9 months
                                     </Dropdown.Item>
-                                    <Dropdown.Item eventKey="option-4">
+                                    <Dropdown.Item eventKey="12">
                                         1 year
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
@@ -79,7 +126,12 @@ export default function Deposits() {
                         <div className="staker__discount">
                             <label for="discount">Discount </label>
                             <br />
-                            <input type="text" id="discount" name="discount" />
+                            <input
+                                disabled
+                                type="text"
+                                id="discount"
+                                name="discount"
+                            />
                         </div>
                         <div className="staker__buttons">
                             <div className="staker__btn">Approve</div>
@@ -90,6 +142,7 @@ export default function Deposits() {
                     <div className="staker__information">
                         <div className="info__header">
                             <img src={info} alt="" />
+                            {/* <span className="info__icon">i</span> */}
                             <span>INFORMATION </span>
                         </div>
                         <div className="info__text">

@@ -69,6 +69,16 @@
     border-radius: 16px;
     padding: 24px;
 }
+.staker__title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 126%;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    gap: 12px;
+    margin-bottom: 12px;
+}
 .deposit__body {
     display: grid;
     grid-template-areas:
@@ -130,6 +140,8 @@
     align-items: center;
     gap: 12px;
 }
+.staker__amount {
+}
 .staker__amount input {
     width: 330px;
     height: 44px;
@@ -138,6 +150,29 @@
     border-radius: 40px;
     outline: none;
     padding: 16px;
+}
+.staker__amount__input {
+    position: relative;
+}
+.staker__amount input::placeholder {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 126%;
+    letter-spacing: 0.03em;
+    color: #14161a;
+    opacity: 0.6;
+}
+
+.xpnet-icon {
+    position: absolute;
+    position: absolute;
+    top: 50%;
+    right: -22px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #14161a;
 }
 .staker__form label {
     font-weight: 400;
@@ -164,6 +199,18 @@
     top: 5px !important;
     width: 200px;
 }
+.dropdown__place-holder {
+    position: absolute;
+    top: 30%;
+    padding-left: 16px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 126%;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.03em;
+    color: #14161a;
+}
 .staker__discount input {
     width: 199px;
     height: 40px;
@@ -172,6 +219,7 @@
     border: 1px solid #e0e4eb;
     outline: none;
     padding: 16px;
+    background: #f3f3f6;
 }
 .staker__buttons {
     margin-top: auto;
@@ -199,6 +247,16 @@
     justify-content: flex-start;
     align-items: center;
     gap: 8px;
+}
+.info__icon {
+    width: 16px;
+    height: 16px;
+    background: #235ef5;
+    border-radius: 50%;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .info__text {
     margin-top: 18px;
@@ -289,6 +347,10 @@
     .staker__amount,
     .staker__duration,
     .staker__discount {
+        width: 100%;
+    }
+    .staker__duration .dropdown-menu {
+        left: 16px !important;
         width: 100%;
     }
 }
