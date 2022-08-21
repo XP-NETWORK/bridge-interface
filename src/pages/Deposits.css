@@ -64,6 +64,10 @@
 }
 .staker {
     grid-area: staker;
+    background: #fdfdfd;
+    border: 2px solid #ffffff;
+    border-radius: 16px;
+    padding: 24px;
 }
 .deposit__body {
     display: grid;
@@ -124,6 +128,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
 }
 .staker__amount input {
     width: 330px;
@@ -171,6 +176,7 @@
 .staker__buttons {
     margin-top: auto;
     margin-bottom: 2px;
+    justify-content: flex-end;
 }
 .staker__btn {
     width: 174px;
@@ -182,4 +188,129 @@
     justify-content: center;
     align-items: center;
     margin-top: auto;
+}
+.info__header {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 120%;
+    letter-spacing: 0.03em;
+    color: #222222;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+}
+.info__text {
+    margin-top: 18px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 26px;
+    color: #222222;
+}
+@media screen and (max-width: 1000px) {
+    .deposit__container {
+        width: unset;
+        margin: 26px 10px 0 10px;
+    }
+    .deposit__body {
+        /* grid-template-areas:
+            "balance "
+            "locked "
+            "discount"
+            "staker"; */
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .balance,
+    .locked,
+    .discount,
+    .staker__amount,
+    .staker__duration,
+    .staker__discount {
+        width: 30%;
+    }
+    .locked,
+    .discount,
+    .balance {
+        padding: 3vh 2vw;
+    }
+    .staker__form {
+        flex-wrap: wrap;
+    }
+    .staker__buttons {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 22px;
+        margin-bottom: 12px;
+    }
+    .staker__duration .dropdown {
+        width: unset;
+    }
+    .staker__discount input,
+    .staker__amount input {
+        width: 100%;
+    }
+    .xpnet,
+    .percent {
+        font-size: 3vw !important;
+    }
+    .deposit__body .title {
+        font-size: 1.5vw !important;
+        gap: 2px;
+    }
+}
+
+@media screen and (max-width: 570px) {
+    .deposit__body {
+        flex-direction: column;
+        align-items: center;
+    }
+    .locked,
+    .discount,
+    .balance {
+        width: 100%;
+        padding: 22px 25px;
+    }
+    .deposit__body .title {
+        font-size: 3vw !important;
+        gap: 14px;
+    }
+    .xpnet,
+    .percent {
+        font-size: 18px !important;
+    }
+    .deposit__body .title img {
+    }
+    .staker__form {
+        flex-direction: column;
+    }
+    .staker__amount,
+    .staker__duration,
+    .staker__discount {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 425px) {
+    .deposit__title {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 150%;
+    }
+    .deposit__subtitle {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 160%;
+    }
+    .deposit__body {
+        margin-top: 32px;
+        gap: 12px;
+    }
+    .staker__buttons {
+        margin: 22px 0 20px 0;
+    }
+    .staker__btn {
+        width: 100%;
+    }
 }

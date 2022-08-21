@@ -5,6 +5,7 @@ import lock from "../assets/img/icons/lockon.svg";
 import percent from "../assets/img/icons/percent.svg";
 import { Dropdown } from "react-bootstrap";
 import ICON from "../assets/img/icons/ICON.png";
+import info from "../assets/img/icons/info_blue.svg";
 
 export default function Deposits() {
     return (
@@ -88,7 +89,7 @@ export default function Deposits() {
                     <hr />
                     <div className="staker__information">
                         <div className="info__header">
-                            <img src="#" alt="" />
+                            <img src={info} alt="" />
                             <span>INFORMATION </span>
                         </div>
                         <div className="info__text">
