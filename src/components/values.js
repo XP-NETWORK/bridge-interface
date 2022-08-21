@@ -425,6 +425,16 @@ export const chainsConfig = {
     Chain: Chain.XDAI,
     // chainData: ChainData.xDai
   },
+  Gnosis: {
+    type: EVM,
+    token: "XDAI",
+    img: Gnosis,
+    tx: "https://blockscout.com/xdai/mainnet/tx/",
+    chainId: 100,
+    rpc: "https://elronode.xp.network/xdai",
+    Chain: Chain.XDAI,
+    // chainData: ChainData.xDai
+  },
   Fantom: {
     type: EVM,
     token: "FTM",
