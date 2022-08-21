@@ -4,9 +4,12 @@ import oil from "../../assets/img/icons/oil.svg";
 import { Dropdown } from "react-bootstrap";
 import info from "../../assets/img/icons/info_blue.svg";
 import xpnet from "../../assets/img/icons/XPNET.svg";
+import { approve } from "../../services/deposits";
 
 export default function Staker() {
     const innerWidth = useSelector((state) => state.general.innerWidth);
+    const signer = useSelector((state) => state.signers.signer);
+
     const [amount, setAmount] = useState();
     const [duration, setDuration] = useState("3 months");
 
@@ -27,6 +30,10 @@ export default function Staker() {
             default:
                 break;
         }
+    };
+
+    const approveHandler = async () => {
+        // approve(signer.provider);
     };
 
     const handleInputChange = (e) => {
@@ -90,7 +97,9 @@ export default function Staker() {
                     <input disabled type="text" id="discount" name="discount" />
                 </div>
                 <div className="staker__buttons">
-                    <div className="staker__btn">Approve</div>
+                    <div onClick={approveHandler} className="staker__btn">
+                        Approve
+                    </div>
                     {/* <div className="staker__btn">Lock</div> */}
                 </div>
             </form>

@@ -198,6 +198,7 @@
     left: -172px !important;
     top: 5px !important;
     width: 200px;
+    inset: unset;
 }
 .dropdown__place-holder {
     position: absolute;
@@ -236,6 +237,7 @@
     justify-content: center;
     align-items: center;
     margin-top: auto;
+    cursor: pointer;
 }
 .info__header {
     font-weight: 500;

@@ -6,17 +6,19 @@ import ICON from "../assets/img/icons/ICON.png";
 import Staker from "../components/Deposits/Staker";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import WalletList from "../components/Wallet/WalletList";
 import { setDepositWalletModal } from "../store/reducers/discountSlice";
 import DiscountWalletModal from "../components/Deposits/DiscountWalletModal";
+import { printContract } from "../services/deposits";
 
 export default function Deposits() {
     const walletsModal = useSelector((state) => state.discount.walletModal);
+    const signer = useSelector((state) => state.signers.signer);
     const dispatch = useDispatch();
 
     const handleClose = () => {
         dispatch(setDepositWalletModal(false));
     };
+
     return (
         <div className="deposit__container">
             <Modal
@@ -47,7 +49,7 @@ export default function Deposits() {
                     <div className="title">
                         <img src={lock} alt="" className="locked-icon" />
                         <span>Locked XPNETs</span>
-                        <span className="claim">Claim</span>
+                        {/* <span className="claim">Claim</span> */}
                     </div>
                     <div className="xpnet">7,680 XPNET</div>
                     <div className="usd">64 USD</div>
