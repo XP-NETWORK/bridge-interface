@@ -366,6 +366,8 @@ export const handleChainFactory = async (someChain) => {
         return await factory.inner(Chain.ALGORAND);
       case "xDai":
         return await factory.inner(Chain.XDAI);
+      case "Gnosis":
+        return await factory.inner(Chain.XDAI);
       case "Solana":
         return await factory.inner(Chain.SOLANA);
       case "Cardano":

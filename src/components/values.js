@@ -776,6 +776,16 @@ export const CHAIN_INFO = {
     blockExplorerUrls: "https://blockscout.com/xdai/mainnet/address",
     testBlockExplorerUrls: "https://blockscout.com/xdai/testnet/address/",
   },
+  Gnosis: {
+    native: coins[11],
+    nonce: 14,
+    decimals: 1e18,
+    rpcUrl: "https://rpc.xdaichain.com/",
+    chainId: 100,
+    contract: "0xdceB7a6b2d2cC149aA74E049231c94D072eDF3E8",
+    blockExplorerUrls: "https://blockscout.com/xdai/mainnet/address",
+    testBlockExplorerUrls: "https://blockscout.com/xdai/testnet/address/",
+  },
   Fuse: {
     native: coins[12],
     nonce: 16,
