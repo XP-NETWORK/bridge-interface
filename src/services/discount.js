@@ -14,10 +14,3 @@ const provider = new JsonRpcProvider(
 Contract.setProvider(provider);
 const xpNetCntract = new Contract(xpnetInterface, xpnet);
 const xpBridgeContract = new Contract(xpBridgeInterface, xpBridgeDiscount);
-export const printContract = () => {
-    console.log(
-        "🚀 ~ file: discount.js ~ line 17",
-        xpNetCntract,
-        xpBridgeContract
-    );
-};
