@@ -238,7 +238,10 @@ export const connectMetaMask = async (activate, from, to) => {
   try {
     if (!window.ethereum && window.innerWidth <= 600) {
       if (store1.general.widget) {
-        window.parent.postMessage("From Widget: Open MetaMask", "*");
+        window.parent.postMessage(
+          `From Widget: Open MetaMask###${window.location.search}`,
+          "*"
+        );
         return;
       } else {
         const link = `https://metamask.app.link/dapp/${window.location.host}?to=${to}&from=${from}/`;

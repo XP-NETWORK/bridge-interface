@@ -37,6 +37,7 @@ export const availability = {
   Tezos: ["Beacon", "TempleWallet"],
   VeChain: ["Sync2"],
   Evms: ["MetaMask", "WalletConnect", "TrustWallet"],
+  Secret: ["Keplr"],
 };
 
 export const wallets = [
@@ -52,7 +53,7 @@ export const wallets = [
   "TempleWallet",
   "MaiarExtension",
   "Sync2",
-  "Keplr",
+  ...(biz ? ["Keplr"] : []),
 
   //...(biz ? ["Sync2"] : []),
 
