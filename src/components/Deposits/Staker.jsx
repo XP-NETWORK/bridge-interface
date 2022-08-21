@@ -8,10 +8,9 @@ import { approve } from "../../services/deposits";
 
 export default function Staker() {
     const innerWidth = useSelector((state) => state.general.innerWidth);
-    const signer = useSelector((state) => state.signers.signer);
-
     const [amount, setAmount] = useState();
     const [duration, setDuration] = useState("3 months");
+    const [error, setError] = useState(false);
 
     const handleDurationSelect = (d) => {
         switch (d) {
@@ -37,10 +36,21 @@ export default function Staker() {
     };
 
     const handleInputChange = (e) => {
-        const amount = Number(e.target.value);
-        if (e.target.validity.valid) {
-            setAmount(amount);
-        } else setAmount("");
+        switch (e.type) {
+            case "change":
+                const num = Number(e.target.value);
+                if (e.target.validity.valid) {
+                    setAmount(num);
+                } else setAmount("");
+                break;
+            case "blur":
+                if (amount < 1500) {
+                    setError(true);
+                } else setError(false);
+                break;
+            default:
+                break;
+        }
     };
 
     return (
@@ -55,6 +65,7 @@ export default function Staker() {
                     <br />
                     <div className="staker__amount__input">
                         <input
+                            style={error ? { borderColor: "#C6354A" } : {}}
                             pattern="[0-9]*"
                             placeholder={
                                 innerWidth < 380
@@ -65,12 +76,23 @@ export default function Staker() {
                             name="amount"
                             value={amount}
                             id="amount"
-                            onChange={(e) => handleInputChange(e)}
+                            onChange={handleInputChange}
+                            onBlur={handleInputChange}
                         />
                         <div className="xpnet-icon">
                             <img src={xpnet} alt="" />
                             <span>XPNET</span>
                         </div>
+                    </div>
+                    <div
+                        style={
+                            error
+                                ? { visibility: "visible" }
+                                : { visibility: "hidden" }
+                        }
+                        className="error"
+                    >
+                        The minimum amount is 1500 XPNET
                     </div>
                 </div>
                 <div className="staker__duration">

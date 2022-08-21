@@ -69,6 +69,9 @@
     border-radius: 16px;
     padding: 24px;
 }
+.staker hr {
+    margin: unset;
+}
 .staker__title {
     font-weight: 500;
     font-size: 14px;
@@ -139,8 +142,18 @@
     justify-content: space-between;
     align-items: center;
     gap: 12px;
+    margin-bottom: 48px;
 }
 .staker__amount {
+    position: relative;
+}
+.staker__amount .error {
+    position: absolute;
+    bottom: -30px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 160%;
+    color: #c6354a;
 }
 .staker__amount input {
     width: 330px;
@@ -154,6 +167,15 @@
 .staker__amount__input {
     position: relative;
 }
+.staker__amount__input .error {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 160%;
+    display: flex;
+    align-items: center;
+    color: #c6354a !important;
+    margin: 6px 0 20px 0;
+}
 .staker__amount input::placeholder {
     font-weight: 400;
     font-size: 14px;
@@ -165,8 +187,7 @@
 
 .xpnet-icon {
     position: absolute;
-    position: absolute;
-    top: 50%;
+    top: 55%;
     right: -22px;
     transform: translate(-50%, -50%);
     display: flex;
@@ -239,6 +260,9 @@
     margin-top: auto;
     cursor: pointer;
 }
+.staker__information {
+    margin-top: 20px;
+}
 .info__header {
     font-weight: 500;
     font-size: 12px;
@@ -273,11 +297,6 @@
         margin: 26px 10px 0 10px;
     }
     .deposit__body {
-        /* grid-template-areas:
-            "balance "
-            "locked "
-            "discount"
-            "staker"; */
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
@@ -311,6 +330,9 @@
     .staker__discount input,
     .staker__amount input {
         width: 100%;
+    }
+    .staker__amount .error {
+        font-size: 1.5vw;
     }
     .xpnet,
     .percent {
@@ -346,10 +368,20 @@
     .staker__form {
         flex-direction: column;
     }
+    .staker__amount {
+        margin-bottom: 20px;
+    }
     .staker__amount,
     .staker__duration,
     .staker__discount {
         width: 100%;
+    }
+    .staker__amount .error {
+        font-size: 14px;
+        line-height: 160%;
+        display: flex;
+        align-items: center;
+        color: #c6354a;
     }
     .staker__duration .dropdown-menu {
         left: 16px !important;
