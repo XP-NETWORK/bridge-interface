@@ -1,6 +1,4 @@
 import "./Deposits.css";
-import diamond from "../assets/img/icons/diamond.svg";
-import lock from "../assets/img/icons/lockon.svg";
 import percent from "../assets/img/icons/percent.svg";
 import ICON from "../assets/img/icons/ICON.png";
 import Staker from "../components/Deposits/Staker";
@@ -8,13 +6,11 @@ import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { setDepositWalletModal } from "../store/reducers/discountSlice";
 import DiscountWalletModal from "../components/Deposits/DiscountWalletModal";
-import { printContract } from "../services/deposits";
 import Balance from "../components/Deposits/Balance";
 import Locked from "../components/Deposits/Locked";
 
 export default function Deposits() {
     const walletsModal = useSelector((state) => state.discount.walletModal);
-    const signer = useSelector((state) => state.signers.signer);
     const dispatch = useDispatch();
 
     const handleClose = () => {

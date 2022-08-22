@@ -6,6 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import ConnectWallet from "./ConnectWallet";
 import ProtectedRoute from "../pages/ProtectedRoute";
 import Deposits from "./Deposits";
+import PageNotFound from "./PageNotFound";
 
 function XpBridge() {
     const testnet = useSelector((state) => state.general.testNet);
@@ -24,6 +25,7 @@ function XpBridge() {
                     />
                 </Route>
                 <Route path="/deposits" element={<Deposits />} />
+                <Route path="*" element={<PageNotFound />} />
             </Routes>
             {/* <NFTsuccess /> */}
         </div>

@@ -40,16 +40,26 @@ export const checkXpNetBalance = async (provider, address) => {
     }
 };
 
-export const approve = async (provider) => {
+export const approve = async (provider, account) => {
+    debugger;
     let contract;
     if (provider) {
         contract = createXpNetContract(provider);
     }
     try {
-        const approved = await contract?.methods.approve(
-            xpBridgeDiscount,
-            "10000000000000000000000000000000000000000000000000"
+        console.log(
+            "🚀 ~ file: deposits.js ~ line 48 ~ approve ~ contract",
+            contract
         );
+        await contract.methods
+            .approve(xpBridgeDiscount, "1000000000000000000000000000000000000")
+            .send({ from: account })
+            .then(function(receipt) {
+                console.log(
+                    "🚀 ~ file: deposits.js ~ line 58 ~ .then ~ receipt",
+                    receipt
+                );
+            });
     } catch (error) {
         console.log(error);
     }

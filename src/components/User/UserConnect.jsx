@@ -60,9 +60,6 @@ export default function UserConnect({ desktop, mobile }) {
                 } else if (walletAccount) dispatch(setAccountModal(true));
                 break;
         }
-        if (!walletAccount) {
-            dispatch(setWalletsModal(true));
-        } else if (walletAccount) dispatch(setAccountModal(true));
     };
 
     const getAccountString = () => {

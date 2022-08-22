@@ -8,6 +8,8 @@ import { approve } from "../../services/deposits";
 
 export default function Staker() {
     const innerWidth = useSelector((state) => state.general.innerWidth);
+    const account = useSelector((state) => state.general.account);
+    const signer = useSelector((state) => state.signers.signer);
     const [amount, setAmount] = useState();
     const [duration, setDuration] = useState("3 months");
     const [error, setError] = useState(false);
@@ -32,7 +34,7 @@ export default function Staker() {
     };
 
     const approveHandler = async () => {
-        // approve(signer.provider);
+        approve(signer.provider, account);
     };
 
     const handleInputChange = (e) => {
