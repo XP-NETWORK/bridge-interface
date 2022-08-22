@@ -8,6 +8,7 @@ import { setDepositWalletModal } from "../store/reducers/discountSlice";
 import DiscountWalletModal from "../components/Deposits/DiscountWalletModal";
 import Balance from "../components/Deposits/Balance";
 import Locked from "../components/Deposits/Locked";
+import Discount from "../components/Deposits/Discount";
 
 export default function Deposits() {
     const walletsModal = useSelector((state) => state.discount.walletModal);
@@ -37,15 +38,7 @@ export default function Deposits() {
             <div className="deposit__body">
                 <Balance />
                 <Locked />
-                <div className="discount">
-                    <img className="discount-bg" src={ICON} alt="" />
-                    <div className="title">
-                        <img src={percent} alt="" className="discount-icon" />
-                        <span>Discount</span>
-                    </div>
-                    <div className="percent">12%</div>
-                    <div className="transactions">50 transactions</div>
-                </div>
+                <Discount />
                 <Staker />
             </div>
         </div>

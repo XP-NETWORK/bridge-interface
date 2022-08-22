@@ -113,7 +113,7 @@ export default function Staker() {
                         The minimum amount is 1500 XPNET
                     </div>
                 </div>
-                <div className="staker__duration">
+                {/* <div className="staker__duration">
                     <label for="duration">Select locked duration</label>
                     <br />
                     <Dropdown
@@ -130,7 +130,7 @@ export default function Staker() {
                             <Dropdown.Item eventKey="12">1 year</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
-                </div>
+                </div> */}
                 <div className="staker__discount">
                     <label for="discount">Discount </label>
                     <br />

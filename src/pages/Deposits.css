@@ -146,6 +146,13 @@
 }
 .staker__amount {
     position: relative;
+    width: 35%;
+}
+.staker__discount {
+    width: 20%;
+}
+.staker__buttons {
+    width: 18%;
 }
 .staker__amount .error {
     position: absolute;
@@ -156,7 +163,7 @@
     color: #c6354a;
 }
 .staker__amount input {
-    width: 330px;
+    width: 420px;
     height: 44px;
     background: #ffffff;
     border: 1px solid #e0e4eb;
@@ -188,7 +195,7 @@
 .xpnet-icon {
     position: absolute;
     top: 55%;
-    right: -22px;
+    right: -110px;
     transform: translate(-50%, -50%);
     display: flex;
     align-items: center;
@@ -234,7 +241,7 @@
     color: #14161a;
 }
 .staker__discount input {
-    width: 199px;
+    width: 290px;
     height: 40px;
     background: #fff;
     border-radius: 40px;

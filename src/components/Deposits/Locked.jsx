@@ -9,8 +9,8 @@ export default function Locked() {
                 <span>Locked XPNETs</span>
                 {/* <span className="claim">Claim</span> */}
             </div>
-            <div className="xpnet">7,680 XPNET</div>
-            <div className="usd">64 USD</div>
+            <div className="xpnet">0.00 XPNET</div>
+            <div className="usd">0.00 USD</div>
         </div>
     );
 }
