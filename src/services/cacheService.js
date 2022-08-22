@@ -78,15 +78,28 @@ class CacheService {
 
         const { data } = res;
 
+        const tokenId = data.wrapped?.token_id || data.wrapped?.tokenId;
+
         return {
+          nft: {
+            ...nft,
+            collectionIdent: data.wrapped?.contract,
+            uri: data.wrapped?.original_uri,
+            native: {
+              ...nft.native,
+              chainId: data.wrapped?.origin,
+              tokenId,
+            },
+          },
           chainId: data.wrapped?.origin,
-          tokenId: data.wrapped?.tokenId,
+          tokenId,
           contract: data.wrapped?.contract,
         };
       } catch (e) {}
     }
 
     return {
+      nft,
       chainId: nft.native?.chainId,
       tokenId: nft.native?.tokenId,
       contract: nft.collectionIdent,
