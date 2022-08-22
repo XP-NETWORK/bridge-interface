@@ -138,8 +138,6 @@ function Approval(props) {
       const factory = await getFactory();
       const chain = await factory.inner(Chain.SECRET);
 
-      console.log(chain, "chain1");
-
       try {
         const approve = await chain.preTransfer(signer, nft);
 
@@ -147,6 +145,7 @@ function Approval(props) {
         setFinishedApproving(arr);
       } catch (e) {
         console.log(e.message, "approve for cosmos");
+        //dispatch(updateApprovedNFTs(nft));
         dispatch(setApproveLoader(false));
         dispatch(setError(e.message));
       }
