@@ -28,41 +28,28 @@ const createXpBridgeContract = (provider) => {
 export const checkXpNetBalance = async (provider, address) => {
     const contract = createXpNetContract(provider);
     let weiBalance;
-    try {
-        weiBalance = await contract.methods.balanceOf(address).call();
-        const balance = parseInt(Web3.utils.fromWei(weiBalance, "ether"));
-        console.log(
-            "🚀 ~ file: deposits.js ~ line 32 ~ checkXpNetBalance ~ balance",
-            balance
-        );
-    } catch (error) {
-        console.log(error);
-    }
+    weiBalance = await contract.methods.balanceOf(address).call();
+    const balance = parseInt(Web3.utils.fromWei(weiBalance, "ether"));
+    console.log(
+        "🚀 ~ file: deposits.js ~ line 32 ~ checkXpNetBalance ~ balance",
+        balance
+    );
 };
 
 export const approve = async (provider, account) => {
-    debugger;
     let contract;
+    let approved;
     if (provider) {
         contract = createXpNetContract(provider);
     }
-    try {
-        console.log(
-            "🚀 ~ file: deposits.js ~ line 48 ~ approve ~ contract",
-            contract
-        );
-        await contract.methods
-            .approve(xpBridgeDiscount, "1000000000000000000000000000000000000")
-            .send({ from: account })
-            .then(function(receipt) {
-                console.log(
-                    "🚀 ~ file: deposits.js ~ line 58 ~ .then ~ receipt",
-                    receipt
-                );
-            });
-    } catch (error) {
-        console.log(error);
-    }
+    await contract.methods
+        .approve(xpnet, "1000000000000000000000000000000000000")
+        .send({ from: account })
+        .then((receipt) => {
+            approved = receipt;
+        })
+        .catch((error) => console.log(error));
+    return approved;
 };
 
 export const deposit = async () => {

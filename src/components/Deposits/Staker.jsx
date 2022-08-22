@@ -1,18 +1,24 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import oil from "../../assets/img/icons/oil.svg";
 import { Dropdown } from "react-bootstrap";
 import info from "../../assets/img/icons/info_blue.svg";
 import xpnet from "../../assets/img/icons/XPNET.svg";
 import { approve } from "../../services/deposits";
+import { useWeb3React } from "@web3-react/core";
+import { setApproveLoader } from "../../store/reducers/generalSlice";
+import { setDepositAlert } from "../../store/reducers/discountSlice";
 
 export default function Staker() {
     const innerWidth = useSelector((state) => state.general.innerWidth);
     const account = useSelector((state) => state.general.account);
-    const signer = useSelector((state) => state.signers.signer);
+    const dispatch = useDispatch();
     const [amount, setAmount] = useState();
     const [duration, setDuration] = useState("3 months");
     const [error, setError] = useState(false);
+    const [approved, setApproved] = useState(false);
+    const { library } = useWeb3React();
+    const OFF = { opacity: 0.6 };
 
     const handleDurationSelect = (d) => {
         switch (d) {
@@ -34,7 +40,16 @@ export default function Staker() {
     };
 
     const approveHandler = async () => {
-        approve(signer.provider, account);
+        if (!account) {
+            dispatch(setDepositAlert(true));
+            return;
+        }
+        dispatch(setApproveLoader(true));
+        const approved = await approve(library._provider, account);
+        if (approved) {
+            setApproved(true);
+            dispatch(setApproveLoader(false));
+        }
     };
 
     const handleInputChange = (e) => {
@@ -120,11 +135,14 @@ export default function Staker() {
                     <br />
                     <input disabled type="text" id="discount" name="discount" />
                 </div>
-                <div className="staker__buttons">
-                    <div onClick={approveHandler} className="staker__btn">
-                        Approve
-                    </div>
-                    {/* <div className="staker__btn">Lock</div> */}
+                <div style={account ? {} : OFF} className="staker__buttons">
+                    {!approved ? (
+                        <div onClick={approveHandler} className="staker__btn">
+                            Approve
+                        </div>
+                    ) : (
+                        <div className="staker__btn">Lock</div>
+                    )}
                 </div>
             </form>
             <hr />
