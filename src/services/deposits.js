@@ -5,7 +5,7 @@ import Web3 from "web3";
 const Contract = require("web3-eth-contract");
 
 const xpnet = "0x8cf8238abf7b933bf8bb5ea2c7e4be101c11de2a";
-const xpBridgeDiscount = "0xf88870607a62c1b86aD672d994C067bfA2BF2C30";
+const xpBridgeDiscount = "0x2c61dfDB80666e005D1888ca1811027fcf21833a";
 
 const createXpNetContract = (provider) => {
     Contract.setProvider(provider);
@@ -30,10 +30,7 @@ export const checkXpNetBalance = async (provider, address) => {
     let weiBalance;
     weiBalance = await contract.methods.balanceOf(address).call();
     const balance = parseInt(Web3.utils.fromWei(weiBalance, "ether"));
-    console.log(
-        "🚀 ~ file: deposits.js ~ line 32 ~ checkXpNetBalance ~ balance",
-        balance
-    );
+    return balance;
 };
 
 export const approve = async (provider, account) => {
@@ -43,7 +40,7 @@ export const approve = async (provider, account) => {
         contract = createXpNetContract(provider);
     }
     await contract.methods
-        .approve(xpnet, "1000000000000000000000000000000000000")
+        .approve(xpBridgeDiscount, "1000000000000000000000000000000000000")
         .send({ from: account })
         .then((receipt) => {
             approved = receipt;

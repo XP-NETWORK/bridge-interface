@@ -19,6 +19,7 @@ export default function Staker() {
     const [approved, setApproved] = useState(false);
     const { library } = useWeb3React();
     const OFF = { opacity: 0.6 };
+    const token = new URLSearchParams(window.location.search).get("token");
 
     const handleDurationSelect = (d) => {
         switch (d) {

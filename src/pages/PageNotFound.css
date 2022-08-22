@@ -3,4 +3,52 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+.page-nt-found__img {
+    max-width: 250px;
+    margin-bottom: 36px;
+}
+.page-nt-found__header {
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 120%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #14161a;
+}
+.page-nt-found__txt {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #141619;
+    margin: 16px 0 8px 0;
+}
+.page-nt-found__back-btn {
+    margin-top: 16px;
+    margin-bottom: 26px;
+    color: #fff;
+    width: 139px;
+    height: 40px;
+    background: #235ef5;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.page-nt-found__back-btn:hover {
+    color: #fff;
+}
+.page-nt-found__help-btn a {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 126%;
+    color: #14161a;
+    cursor: pointer;
+}
+.page-nt-found__help-btn a:hover,
+.page-nt-found__help-btn a:active {
+    color: #14161a;
 }
