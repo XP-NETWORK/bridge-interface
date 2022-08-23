@@ -3,9 +3,10 @@ import { useSelector } from "react-redux";
 import lock from "../../assets/img/icons/lockon.svg";
 import { checkXpNetLocked } from "../../services/deposits";
 
-export default function Locked({ xpNetPrice, locked }) {
+export default function Locked({ xpNetPrice, locked, loader }) {
     return (
         <div className="locked">
+            {loader && <div className="deposit__body__loader"></div>}
             <div className="title">
                 <img src={lock} alt="" className="locked-icon" />
                 <span>Locked XPNETs</span>

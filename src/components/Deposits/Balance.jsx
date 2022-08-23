@@ -6,7 +6,7 @@ import Web3 from "web3";
 import diamond from "../../assets/img/icons/diamond.svg";
 import { checkXpNetBalance } from "../../services/deposits";
 
-export default function Balance({ xpNetPrice }) {
+export default function Balance({ xpNetPrice, loader }) {
     const account = useSelector((state) => state.general.account);
     const { library } = useWeb3React();
     const [balance, setBalance] = useState();
@@ -32,6 +32,7 @@ export default function Balance({ xpNetPrice }) {
 
     return (
         <div className="balance">
+            {loader && <div className="deposit__body__loader"></div>}
             <div className="title">
                 <img src={diamond} alt="" className="balance-icon" />
                 <span>Your XPNET Balance</span>

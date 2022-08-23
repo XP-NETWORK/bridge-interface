@@ -20,16 +20,19 @@ export default function Deposits() {
     const [locked, setLocked] = useState();
     const [discountLeftUsd, setDiscountLeftUsd] = useState();
     const account = useSelector((state) => state.general.account);
+    const [loader, setLoader] = useState(false);
 
     const handleClose = () => {
         dispatch(setDepositWalletModal(false));
     };
 
     useEffect(() => {
+        account && setLoader(true);
         const checkLocked = async () => {
             const data = await checkXpNetLocked(account);
             setLocked(data?.totalDepositsXp);
             setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25));
+            setLoader(false);
         };
         account && checkLocked();
         const checkPrice = async () => {
@@ -57,9 +60,13 @@ export default function Deposits() {
                 </div>
             </div>
             <div className="deposit__body">
-                <Balance xpNetPrice={xpNetPrice} />
-                <Locked xpNetPrice={xpNetPrice} locked={locked} />
-                <Discount txns={discountLeftUsd} />
+                <Balance xpNetPrice={xpNetPrice} loader={loader} />
+                <Locked
+                    xpNetPrice={xpNetPrice}
+                    locked={locked}
+                    loader={loader}
+                />
+                <Discount txns={discountLeftUsd} loader={loader} />
                 <Staker xpNetPrice={xpNetPrice} />
             </div>
         </div>
