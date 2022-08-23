@@ -6,23 +6,13 @@ import Web3 from "web3";
 import diamond from "../../assets/img/icons/diamond.svg";
 import { checkXpNetBalance } from "../../services/deposits";
 
-export default function Balance() {
+export default function Balance({ xpNetPrice }) {
     const account = useSelector((state) => state.general.account);
     const { library } = useWeb3React();
     const [balance, setBalance] = useState();
-    const [xpNetPrice, setXpNetPrice] = useState();
+    // const [xpNetPrice, setXpNetPrice] = useState();
 
     useEffect(() => {
-        const checkXpNetPrice = async () => {
-            try {
-                const currentPrice = await axios.get(
-                    "https://api.xp.network/current-price"
-                );
-                setXpNetPrice(currentPrice.data);
-            } catch (error) {
-                console.log(error);
-            }
-        };
         const checkBalance = async () => {
             if (library) {
                 try {
@@ -36,7 +26,7 @@ export default function Balance() {
                 }
             }
         };
-        checkXpNetPrice();
+
         checkBalance();
     }, [account]);
 

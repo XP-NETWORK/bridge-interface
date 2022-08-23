@@ -9,14 +9,36 @@ import DiscountWalletModal from "../components/Deposits/DiscountWalletModal";
 import Balance from "../components/Deposits/Balance";
 import Locked from "../components/Deposits/Locked";
 import Discount from "../components/Deposits/Discount";
+import { useEffect, useState } from "react";
+import { checkXpNetLocked, checkXpNetPrice } from "../services/deposits";
 
 export default function Deposits() {
     const walletsModal = useSelector((state) => state.discount.walletModal);
     const dispatch = useDispatch();
+    const [xpNetPrice, setXpNetPrice] = useState();
+    const [locked, setLocked] = useState();
+    const [discountLeftUsd, setDiscountLeftUsd] = useState();
+    const account = useSelector((state) => state.general.account);
 
     const handleClose = () => {
         dispatch(setDepositWalletModal(false));
     };
+
+    useEffect(() => {
+        const checkLocked = async () => {
+            const { totalDepositsXp, discountLeftUsd } = await checkXpNetLocked(
+                account
+            );
+            setLocked(totalDepositsXp);
+            setDiscountLeftUsd(Math.round(discountLeftUsd / 0.25));
+        };
+        account && checkLocked();
+        const checkPrice = async () => {
+            const currentPrice = await checkXpNetPrice();
+            setXpNetPrice(currentPrice);
+        };
+        checkPrice();
+    }, [account]);
 
     return (
         <div className="deposit__container">
@@ -36,10 +58,10 @@ export default function Deposits() {
                 </div>
             </div>
             <div className="deposit__body">
-                <Balance />
-                <Locked />
-                <Discount />
-                <Staker />
+                <Balance xpNetPrice={xpNetPrice} />
+                <Locked xpNetPrice={xpNetPrice} locked={locked} />
+                <Discount txns={discountLeftUsd} />
+                <Staker xpNetPrice={xpNetPrice} />
             </div>
         </div>
     );

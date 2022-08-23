@@ -9,36 +9,36 @@ import { useWeb3React } from "@web3-react/core";
 import { setApproveLoader } from "../../store/reducers/generalSlice";
 import { setDepositAlert } from "../../store/reducers/discountSlice";
 
-export default function Staker() {
+export default function Staker({ xpNetPrice }) {
     const innerWidth = useSelector((state) => state.general.innerWidth);
     const account = useSelector((state) => state.general.account);
     const dispatch = useDispatch();
     const [amount, setAmount] = useState();
-    const [duration, setDuration] = useState("3 months");
+    // const [duration, setDuration] = useState("3 months");
     const [error, setError] = useState(false);
     const [approved, setApproved] = useState(false);
     const { library } = useWeb3React();
     const OFF = { opacity: 0.6 };
     const token = new URLSearchParams(window.location.search).get("token");
 
-    const handleDurationSelect = (d) => {
-        switch (d) {
-            case "3":
-                setDuration("3 months");
-                break;
-            case "6":
-                setDuration("6 months");
-                break;
-            case "9":
-                setDuration("9 months");
-                break;
-            case "12":
-                setDuration("1 year");
-                break;
-            default:
-                break;
-        }
-    };
+    // const handleDurationSelect = (d) => {
+    //     switch (d) {
+    //         case "3":
+    //             setDuration("3 months");
+    //             break;
+    //         case "6":
+    //             setDuration("6 months");
+    //             break;
+    //         case "9":
+    //             setDuration("9 months");
+    //             break;
+    //         case "12":
+    //             setDuration("1 year");
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // };
 
     const approveHandler = async () => {
         if (!account) {
@@ -134,7 +134,19 @@ export default function Staker() {
                 <div className="staker__discount">
                     <label for="discount">Discount </label>
                     <br />
-                    <input disabled type="text" id="discount" name="discount" />
+                    <input
+                        placeholder={
+                            amount >= 1500 &&
+                            `${(
+                                ((amount * xpNetPrice) / 0.25) * 0.01 +
+                                amount * xpNetPrice
+                            ).toFixed(3)} USD`
+                        }
+                        disabled
+                        type="text"
+                        id="discount"
+                        name="discount"
+                    />
                 </div>
                 <div style={account ? {} : OFF} className="staker__buttons">
                     {!approved ? (
