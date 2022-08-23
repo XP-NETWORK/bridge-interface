@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { chainsConfig, CHAIN_INFO } from "../values";
@@ -27,7 +27,12 @@ function SendFees() {
   const [estimateInterval, setEstimateInterval] = useState();
   const [loading, setLoading] = useState(false);
 
+  const feesReqInterval = useRef(null);
+
   async function estimate() {
+    console.log(selectedNFTList);
+
+    setLoading(true);
     let fact;
     let fee;
     try {
@@ -48,37 +53,36 @@ function SendFees() {
           : account;
 
       fact = await getFactory();
-      if (selectedNFTList.length) {
-        if (to === "Tron") {
-          fee =
-            from === "BSC"
-              ? new BigNumber("100000000000000000")
-              : from === "Polygon"
-              ? new BigNumber("23200000000000000000")
-              : from === "Ethereum"
-              ? new BigNumber("14952490000000000")
-              : from === "Algorand"
-              ? new BigNumber("32160950300000000000")
-              : from === "Elrond"
-              ? new BigNumber("239344350000000000")
-              : from === "Avalanche"
-              ? new BigNumber("529683610000000000")
-              : from === "xDai"
-              ? new BigNumber("56645012600000000000")
-              : from === "Fuse"
-              ? new BigNumber("95352570490000000000")
-              : "";
-        } else {
-          try {
-            fee = await fact.estimateFees(
-              fromChain,
-              toChain,
-              selectedNFTList[0],
-              wallet
-            );
-          } catch (error) {
-            console.error(error);
-          }
+
+      if (to === "Tron") {
+        fee =
+          from === "BSC"
+            ? new BigNumber("100000000000000000")
+            : from === "Polygon"
+            ? new BigNumber("23200000000000000000")
+            : from === "Ethereum"
+            ? new BigNumber("14952490000000000")
+            : from === "Algorand"
+            ? new BigNumber("32160950300000000000")
+            : from === "Elrond"
+            ? new BigNumber("239344350000000000")
+            : from === "Avalanche"
+            ? new BigNumber("529683610000000000")
+            : from === "xDai"
+            ? new BigNumber("56645012600000000000")
+            : from === "Fuse"
+            ? new BigNumber("95352570490000000000")
+            : "";
+      } else {
+        try {
+          fee = await fact.estimateFees(
+            fromChain,
+            toChain,
+            selectedNFTList[0],
+            wallet
+          );
+        } catch (error) {
+          console.error(error);
         }
       }
 
@@ -88,7 +92,9 @@ function SendFees() {
             .integerValue()
             .toString(10)
         : undefined;
+
       dispatch(setBigNumFees(bigNum));
+
       let fees;
       if (
         from.type === "Tron" ||
@@ -103,6 +109,7 @@ function SendFees() {
     } catch (error) {
       console.log(error.data ? error.data.message : error.message);
     }
+    setLoading(false);
   }
 
   function getNumToFix() {
@@ -121,24 +128,22 @@ function SendFees() {
   const config = chainsConfig[from?.text];
 
   useEffect(() => {
-    if (selectedNFTList.length > 0) {
-      (async () => {
-        setLoading(true);
-        await estimate();
-        setLoading(false);
-      })();
-    } else setFees("0");
-    const s = setInterval(() => estimate(), 1000 * 30);
-    setEstimateInterval(s);
-    return () => clearInterval(s);
-  }, [selectedNFTList]);
+    if (!selectedNFTList.length) {
+      setFees("0");
+      return clearInterval(feesReqInterval.current);
+    }
+
+    estimate();
+    feesReqInterval.current = setInterval(() => estimate(), 1000 * 10);
+    return () => clearInterval(feesReqInterval.current);
+  }, [selectedNFTList, to]);
 
   useEffect(() => {
-    clearInterval(estimateInterval);
+    /* clearInterval(estimateInterval);
     estimate();
     const s = setInterval(() => estimate(), 1000 * 30);
     setEstimateInterval(s);
-    return () => clearInterval(s);
+    return () => clearInterval(s);*/
   }, [to]);
 
   return (
