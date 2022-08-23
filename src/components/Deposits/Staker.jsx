@@ -162,7 +162,7 @@ export default function Staker({ xpNetPrice }) {
                         </div>
                     ) : (
                         <div onClick={depositHandler} className="staker__btn">
-                            Lock
+                            Deposit
                         </div>
                     )}
                 </div>
