@@ -24,7 +24,7 @@ import { switchNetwork } from "../../services/chains/evmSerive";
 import { setSigner } from "../../store/reducers/signersSlice";
 import { ethers } from "ethers";
 
-export default function EVMWallet({ wallet, close }) {
+export default function EVMWallet({ wallet, close, discount }) {
     const { account, activate, chainId, deactivate, library } = useWeb3React();
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector((state) => state.general.from);
@@ -245,15 +245,17 @@ export default function EVMWallet({ wallet, close }) {
             } else return <></>;
         case "BitKeep":
             return (
-                <li
-                    style={isUnsupportedBitKeepChain() ? OFF : getStyle()}
-                    onClick={() => connectHandler("BitKeep")}
-                    className="wllListItem"
-                    data-wallet="MetaMask"
-                >
-                    <img src={BitKeep} alt="BitKeep Icon" />
-                    <p>BitKeep</p>
-                </li>
+                !discount && (
+                    <li
+                        style={isUnsupportedBitKeepChain() ? OFF : getStyle()}
+                        onClick={() => connectHandler("BitKeep")}
+                        className="wllListItem"
+                        data-wallet="MetaMask"
+                    >
+                        <img src={BitKeep} alt="BitKeep Icon" />
+                        <p>BitKeep</p>
+                    </li>
+                )
             );
 
         default:

@@ -14,7 +14,7 @@ import { biz } from "../values";
 import HederaWallet from "./HederaWallet";
 import { useLocation } from "react-router-dom";
 
-export default function WalletList({ search, connected, input }) {
+export default function WalletList({ search, connected, input, discount }) {
     const from = useSelector((state) => state.general.from);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
     const location = useLocation();
@@ -34,7 +34,7 @@ export default function WalletList({ search, connected, input }) {
         const usbWallet = components.filter((e) => e.type === "USB");
         const hederaWallets = components.filter((e) => e.type === "Hedera");
 
-        if (location.pathname === "/deposits") {
+        if (discount) {
             sortedWallets = [...evmWallets];
             return;
         }
@@ -210,6 +210,7 @@ export default function WalletList({ search, connected, input }) {
                     wallet={"BitKeep"}
                     key="wallet-index-1-bitkeep"
                     close={connected}
+                    discount={discount}
                 />
             ),
             name: "BitKeep",

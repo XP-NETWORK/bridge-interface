@@ -6,8 +6,7 @@ import axios from "axios";
 const Contract = require("web3-eth-contract");
 
 const xpnet = "0x8cf8238abf7b933bf8bb5ea2c7e4be101c11de2a";
-const xpBridgeDiscount = "0x2c61dfDB80666e005D1888ca1811027fcf21833a";
-const baseUrl = " https://bridge-discount-server.herokuapp.com/api";
+const xpBridgeDiscount = "0x2c61dfdb80666e005d1888ca1811027fcf21833a";
 
 const createXpNetContract = (provider) => {
     Contract.setProvider(provider);
@@ -16,14 +15,9 @@ const createXpNetContract = (provider) => {
 };
 
 const createXpBridgeContract = (provider) => {
+    Contract.setProvider(provider);
     let contract;
-    if (provider) {
-        contract = new ethers.Contract(
-            xpBridgeDiscount,
-            xpBridgeInterface.abi,
-            provider
-        );
-    }
+    contract = new Contract(xpBridgeInterface.abi, xpBridgeDiscount);
     return contract;
 };
 
@@ -47,12 +41,30 @@ export const approve = async (provider, account) => {
         .then((receipt) => {
             approved = receipt;
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            console.log(error);
+            return false;
+        });
     return approved;
 };
 
-export const deposit = async () => {
-    //todo
+export const deposit = async (provider, address, num) => {
+    debugger;
+    let deposited;
+    const weiValue = Web3.utils.toWei(num.toString(), "ether");
+    const contract = await createXpBridgeContract(provider);
+    if (contract) {
+        try {
+            const deposit = await contract.methods
+                .deposit(weiValue)
+                .send({ from: address });
+            deposited = deposit;
+        } catch (error) {
+            console.log(error);
+            deposited = false;
+        }
+    }
+    return deposited;
 };
 
 export const checkXpNetPrice = async () => {

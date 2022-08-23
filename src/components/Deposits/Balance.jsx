@@ -40,7 +40,9 @@ export default function Balance({ xpNetPrice }) {
                 {!balance ? "0.00 XPNET" : `${balance?.toFixed(2)} XPNET`}
             </div>
             <div className="usd">
-                {balance ? `${(balance * xpNetPrice).toFixed(2)} USD` : "0 USD"}
+                {balance
+                    ? `${(balance * xpNetPrice).toFixed(3)} USD`
+                    : "0.00 USD"}
             </div>
         </div>
     );

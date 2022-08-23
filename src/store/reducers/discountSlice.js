@@ -12,9 +12,16 @@ const discountSlice = createSlice({
         setDepositAlert(state, action) {
             state.depositAlert = action.payload;
         },
+        setSpend(state, action) {
+            state.spend = action.payload;
+        },
     },
 });
 
-export const { setDepositWalletModal, setDepositAlert } = discountSlice.actions;
+export const {
+    setDepositWalletModal,
+    setDepositAlert,
+    setSpend,
+} = discountSlice.actions;
 
 export default discountSlice.reducer;

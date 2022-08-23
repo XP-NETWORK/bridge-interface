@@ -14,6 +14,7 @@ import { checkXpNetLocked, checkXpNetPrice } from "../services/deposits";
 
 export default function Deposits() {
     const walletsModal = useSelector((state) => state.discount.walletModal);
+    const spend = useSelector((state) => state.discount.spend);
     const dispatch = useDispatch();
     const [xpNetPrice, setXpNetPrice] = useState();
     const [locked, setLocked] = useState();
@@ -26,11 +27,9 @@ export default function Deposits() {
 
     useEffect(() => {
         const checkLocked = async () => {
-            const { totalDepositsXp, discountLeftUsd } = await checkXpNetLocked(
-                account
-            );
-            setLocked(totalDepositsXp);
-            setDiscountLeftUsd(Math.round(discountLeftUsd / 0.25));
+            const data = await checkXpNetLocked(account);
+            setLocked(data?.totalDepositsXp);
+            setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25));
         };
         account && checkLocked();
         const checkPrice = async () => {
@@ -38,7 +37,7 @@ export default function Deposits() {
             setXpNetPrice(currentPrice);
         };
         checkPrice();
-    }, [account]);
+    }, [account, spend]);
 
     return (
         <div className="deposit__container">
@@ -53,8 +52,8 @@ export default function Deposits() {
             <div className="deposit__header">
                 <div className="deposit__title">XPNET deposit program</div>
                 <div className="deposit__subtitle">
-                    Delegate XPNET to validators to earn discounts for your
-                    bridging transactions.
+                    Delegate XPNET to earn discounts for your bridging
+                    transactions.
                 </div>
             </div>
             <div className="deposit__body">

@@ -21,7 +21,7 @@ export default function DiscountWalletModal({ handleClose }) {
                     <div className="close-modal"></div>
                 </span>
             </Modal.Header>
-            <div className="wallet-search__container">
+            {/* <div className="wallet-search__container">
                 <input
                     ref={inputElement}
                     onChange={(e) => setWalletSearch(e.target.value)}
@@ -31,10 +31,14 @@ export default function DiscountWalletModal({ handleClose }) {
                     placeholder="Search"
                 />
                 <div className="magnify"></div>
-            </div>
+            </div> */}
             <Modal.Body>
                 <div className="walletListBox">
-                    <WalletList input={walletSearch} connected={handleClose} />
+                    <WalletList
+                        discount={true}
+                        input={walletSearch}
+                        connected={handleClose}
+                    />
                 </div>
             </Modal.Body>
         </div>

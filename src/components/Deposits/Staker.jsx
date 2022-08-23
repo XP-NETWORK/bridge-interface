@@ -4,7 +4,7 @@ import oil from "../../assets/img/icons/oil.svg";
 import { Dropdown } from "react-bootstrap";
 import info from "../../assets/img/icons/info_blue.svg";
 import xpnet from "../../assets/img/icons/XPNET.svg";
-import { approve } from "../../services/deposits";
+import { approve, deposit } from "../../services/deposits";
 import { useWeb3React } from "@web3-react/core";
 import { setApproveLoader } from "../../store/reducers/generalSlice";
 import { setDepositAlert } from "../../store/reducers/discountSlice";
@@ -50,7 +50,11 @@ export default function Staker({ xpNetPrice }) {
         if (approved) {
             setApproved(true);
             dispatch(setApproveLoader(false));
-        }
+        } else dispatch(setApproveLoader(false));
+    };
+
+    const depositHandler = async () => {
+        deposit(library._provider, account, amount);
     };
 
     const handleInputChange = (e) => {
@@ -148,13 +152,18 @@ export default function Staker({ xpNetPrice }) {
                         name="discount"
                     />
                 </div>
-                <div style={account ? {} : OFF} className="staker__buttons">
+                <div
+                    style={!account || amount < 1500 || !amount ? OFF : {}}
+                    className="staker__buttons"
+                >
                     {!approved ? (
                         <div onClick={approveHandler} className="staker__btn">
                             Approve
                         </div>
                     ) : (
-                        <div className="staker__btn">Lock</div>
+                        <div onClick={depositHandler} className="staker__btn">
+                            Lock
+                        </div>
                     )}
                 </div>
             </form>

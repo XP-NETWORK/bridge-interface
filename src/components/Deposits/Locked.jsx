@@ -15,7 +15,9 @@ export default function Locked({ xpNetPrice, locked }) {
                 {locked ? `${locked?.toFixed(2)} XPNET` : "0.00 XPNET"}
             </div>
             <div className="usd">
-                {locked > 0 && xpNetPrice ? `${xpNetPrice} USD` : "0.00 USD"}
+                {locked > 0 && xpNetPrice
+                    ? `${(locked * xpNetPrice)?.toFixed(3)} USD`
+                    : "0.00 USD"}
             </div>
         </div>
     );
