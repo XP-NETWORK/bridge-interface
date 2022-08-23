@@ -290,10 +290,15 @@
     color: rgba(20, 22, 26, 1);
     text-align: center;
 }
+.withSecret__btns {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
 
 .secretAuth .transfer-button {
     width: 130px;
-    margin: 0 auto;
+    margin: unset;
 }
 
 .secretAuth h3 {
