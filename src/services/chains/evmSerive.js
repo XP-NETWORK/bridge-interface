@@ -2,10 +2,12 @@ import { TESTNET_CHAIN_INFO, CHAIN_INFO } from "../../components/values";
 import ChainService from "./chain";
 import store from "../../store/store";
 import { getFactory } from "../../wallet/helpers";
+import { allchains, getAddEthereumChain } from "../../wallet/chains";
 
 export async function switchNetwork(chain) {
+    debugger;
     const {
-        general: { testNet, bitKeep },
+        general: { testNet, bitKeep, from },
     } = store.getState();
 
     const info = testNet
@@ -17,7 +19,7 @@ export async function switchNetwork(chain) {
             try {
                 await window.bitkeep.ethereum.request({
                     method: "wallet_switchEthereumChain",
-                    params: [{ chainId }],
+                    params: [{ chainId: chainId }],
                 });
                 return true;
             } catch (error) {
@@ -32,9 +34,13 @@ export async function switchNetwork(chain) {
                 });
                 return true;
             } catch (error) {
+                const c = testNet ? chain?.tnChainId : chain?.chainId;
+                await window.ethereum.request({
+                    method: "wallet_switchEthereumChain",
+                    params: [{ chainId: c }],
+                });
                 console.log(error);
                 return false;
             }
-            break;
     }
 }
