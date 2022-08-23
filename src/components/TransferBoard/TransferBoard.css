@@ -129,6 +129,7 @@
     font-size: 14px;
     gap: 4px;
 }
+
 .selected-nfts-item:hover {
     background: #ececf1;
 }

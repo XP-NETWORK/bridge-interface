@@ -15,19 +15,20 @@ export default function Selected({ index, nft }) {
     const handleRemove = (nft) => {
         dispatch(removeFromSelectedNFTList(nft));
     };
-
     const handleInput = (e, index) => {
         // debugger;
         const amount = Number(e.target.value);
         if (e.target.validity.valid) {
             const selected = { amount, index };
             setAmount(e.target.value);
+            // if (amount > 25) setLimited(true);
+            // else setLimited(false);
             dispatch(setSelectedNFTAmount(selected));
         } else setAmount("");
     };
 
     return (
-        <li key={`selected-nft-${index}`} className="selected-nfts-item">
+        <li key={`selected-nft-${index}`} className={"selected-nfts-item"}>
             <ListedView nft={nft} key={`nft-n-${index}`} />
             <span className="nfts-item__name">
                 {nft.data?.name || nft.name || nft.native.name}
