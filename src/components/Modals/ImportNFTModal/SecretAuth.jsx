@@ -1,21 +1,16 @@
 import React, { useState } from "react";
-import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setImportModal,
   addImportedNFTtoNFTlist,
   setError,
-  setNFTList,
   setBigLoader,
   setSecretLoggedIn,
   setSecretCred,
   initialSecretCred,
+  cleanSelectedNFTList,
 } from "../../../store/reducers/generalSlice";
 import { CHAIN_INFO } from "../../values";
-import axios from "axios";
 import "./importNFTModal.css";
-import EVMBody from "./EVMBody";
-import CosmosBody from "./CosmosBody";
 import { getFactory } from "../../../wallet/helpers";
 import { Chain } from "xp.network";
 import { useDidUpdateEffect, useCheckMobileScreen } from "../../Settings/hooks";
@@ -24,7 +19,7 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
   const dispatch = useDispatch();
 
   const [importBlocked, setImportBlocked] = useState(false);
-
+  const signer = useSelector((state) => state.signers.signer);
   //MyViewingKey#1
 
   //secret146snljq0kjsva7qrx4am54nv3fhfaet7srx4n2
@@ -59,9 +54,6 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
             }
           : null,
       }));
-
-      console.log(secretNFTs);
-
       dispatch(addImportedNFTtoNFTlist(secretNFTs));
 
       setLogdIn(true);
@@ -72,6 +64,10 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
     setImportBlocked(false);
     dispatch(setBigLoader(false));
   };
+
+  // const checkFunc = async () => {
+  //     await signer.tx.snip721();
+  // };
 
   useDidUpdateEffect(() => {
     fetchSecretNfts();
@@ -157,6 +153,7 @@ const SecretContractPannel = () => {
         <div
           className="clear-selected"
           onClick={() => {
+            dispatch(cleanSelectedNFTList());
             dispatch(setSecretCred(initialSecretCred));
             dispatch(setSecretLoggedIn(false));
           }}

@@ -6,7 +6,6 @@ import { chainsConfig } from "../values";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { algoConnector } from "../../wallet/connectors";
 import BigNumber from "bignumber.js";
-import { withWidget } from "../Widget/hocs/withWidget";
 
 import {
   getFactory,
@@ -38,7 +37,9 @@ import Connex from "@vechain/connex";
 import Web3 from "web3";
 import { getFromDomain } from "../../services/resolution";
 
-function ButtonToTransfer({ setTxForWidget }) {
+import { withWidget } from "../Widget/hocs/withWidget";
+
+export default withWidget(function ButtonToTransfer({ setTxForWidget }) {
   const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
   const kukaiWalletSigner = useSelector(
     (state) => state.general.kukaiWalletSigner
@@ -308,7 +309,6 @@ function ButtonToTransfer({ setTxForWidget }) {
         setLoading(false);
         dispatch(setTxnHash({ txn: result, nft }));
       }
-
       setTxForWidget({
         result,
         fromNonce,
@@ -371,6 +371,4 @@ function ButtonToTransfer({ setTxForWidget }) {
       {loading ? "Processing" : "Send"}
     </div>
   );
-}
-
-export default withWidget(ButtonToTransfer);
+});

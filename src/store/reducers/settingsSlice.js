@@ -26,7 +26,7 @@ export const activeChains = [
   ...chains.filter((chain) => !chain.maintenance).map((c) => c.value),
 ];
 
-export const newChains = ["Velas"];
+export const newChains = ["Godwoken"];
 
 export const comingSoonChains = ["Cardano", "Solana", "TON"];
 

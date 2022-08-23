@@ -159,8 +159,6 @@ export const switchNetWork = async (from) => {
 };
 
 export const connectKeplr = async (testnet, chain) => {
-  // debugger;
-
   console.log(chain);
   const chainId = testnet ? chain.tnChainId : chain.chainId;
   if (window.keplr) {
@@ -177,6 +175,7 @@ export const connectKeplr = async (testnet, chain) => {
         chainId,
         wallet: offlineSigner,
         walletAddress: address,
+        encryptionUtils: window.getEnigmaUtils(chain),
       });
 
       store.dispatch(setKeplrAccount(address));
@@ -243,10 +242,10 @@ export const connectMetaMask = async (activate, from, to) => {
           "*"
         );
         return;
-      } else {
-        const link = `https://metamask.app.link/dapp/${window.location.host}?to=${to}&from=${from}/`;
-        window.open(link);
       }
+
+      const link = `https://metamask.app.link/dapp/${window.location.host}?to=${to}&from=${from}/`;
+      window.open(link);
     }
     await activate(injected);
     store.dispatch(setMetaMask(true));

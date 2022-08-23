@@ -155,7 +155,7 @@ export const withStyles = (Wrapped) => (props) => {
             
             }
     
-            .selChain:hover {
+            .selChain:hove {
               background: ${panelBackground ? panelBackground : ""};
               filter: brightness(105%);
             }
@@ -206,7 +206,7 @@ export const withStyles = (Wrapped) => (props) => {
             
     
     
-            .approval, .fees, .selected-nfts-item, .nftListed:hover, .mobile-destination__address input, .mobile-search-input__box input.serchInput, .selected-nfts__button, .success-info-box, .chain-switch, .destination__address input, .navbar-connect:hover, .import-nft__form input[type="text"]{
+            .approval, .fees, .scretPannel, .fieldsWrapper input, .selected-nfts-item, .nftListed:hover, .mobile-destination__address input, .mobile-search-input__box input.serchInput, .selected-nfts__button, .success-info-box, .chain-switch, .destination__address input, .navbar-connect:hover, .import-nft__form input[type="text"]{
               background: ${panelBackground ? panelBackground : ""};
               filter: brightness(94%);
             }
@@ -216,7 +216,7 @@ export const withStyles = (Wrapped) => (props) => {
               filter: brightness(92%);
             }
     
-            .mobile-destination__address input:focus {
+            .mobile-destination__address input:focus, .fieldsWrapper input, .nftListBox.withSecret, .change-view__button, .SearchDrop, .CloseIcon {
               outline:none;
               border-color: ${borderColor ? borderColor : ""};
             }
