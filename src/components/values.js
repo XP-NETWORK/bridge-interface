@@ -286,11 +286,11 @@ export const chains = [
     value: "Godwoken",
     nonce: 22,
     chainId: 71402,
-    order: 10,
+    order: -100,
     image: { avatar: true, src: CKB },
     maintenance: false,
     testNet: true,
-    mainnet: biz || window.location.hostname.includes("testing"),
+    mainnet: true,
     newChain: true,
   },
   {
@@ -884,6 +884,7 @@ export const CHAIN_INFO = {
     tnChainId: 71401,
     rpc: "https://v1.mainnet.godwoken.io/rpc",
     blockExplorerUrl: "https://gwscan.com/account/",
+    blockExplorerUrls: "https://gwscan.com/account/",
     testBlockExplorerUrls: "https://v1.testnet.gwscan.com/account",
   },
   Hedera: {

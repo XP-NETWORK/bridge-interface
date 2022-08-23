@@ -43,7 +43,9 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
   if (!claimable) {
     const [nftRes, whitelistedRes] = await Promise.allSettled([
       (async () => {
-        const { chainId, tokenId, contract } = await cache.unwrap(nft);
+        const unwraped = await cache.unwrap(nft);
+
+        const { chainId, tokenId, contract } = unwraped;
 
         let nftData;
 
@@ -63,9 +65,9 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
             nft = await evm.getUri(nft, nft.collectionIdent);
           }
 
-          nftData = !nft.metaData
-            ? await cache.add(nft, account, whitelisted)
-            : nft.metaData;
+          console.log(unwraped.nft);
+
+          nftData = await cache.add(unwraped.nft, account, whitelisted);
 
           if (nftData === "That nft is already caching") return undefined;
         }
