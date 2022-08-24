@@ -71,7 +71,7 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
             setImportBlocked(true);
             const factory = await getFactory();
             const secret = await factory.inner(Chain.SECRET);
-            const created = await secret.createViewingKey(
+            const created = await secret.setViewingKey(
                 checkWallet || secretAccount,
                 secretCred.viewKey,
                 secretCred.contract
