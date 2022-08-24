@@ -14,10 +14,13 @@ import "./importNFTModal.css";
 import { getFactory } from "../../../wallet/helpers";
 import { Chain } from "xp.network";
 import { useDidUpdateEffect, useCheckMobileScreen } from "../../Settings/hooks";
+import vk from "../../../assets//img/icons/vkey.svg";
+import SecretContractsDropdown from "../../Dropdowns/SecretContractsDropdown";
 
 const SecretAuth = ({ setLogdIn, refreshSecret }) => {
     const dispatch = useDispatch();
     const off = { opacity: 0.6, pointerEvents: "none" };
+    const [toggle, setToggle] = useState("show");
 
     const [importBlocked, setImportBlocked] = useState(false);
     const signer = useSelector((state) => state.signers.signer);
@@ -35,6 +38,8 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
     );
 
     const fetchSecretNfts = async () => {
+        if (!secretCred.viewKey || !secretCred.contract) return;
+
         try {
             setImportBlocked(true);
             const factory = await getFactory();
@@ -102,9 +107,18 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
         setImportBlocked(false);
     };
 
-    // const checkFunc = async () => {
-    //     await signer.tx.snip721();
-    // };
+    const hadleSelectToggle = (btn) => {
+        switch (btn) {
+            case "set":
+                setToggle("set");
+                break;
+            case "show":
+                setToggle("show");
+                break;
+            default:
+                break;
+        }
+    };
 
     useDidUpdateEffect(() => {
         fetchSecretNfts();
@@ -118,20 +132,40 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
                     Your assets are protected. Please enter contract address and
                     viewing key below.
                 </p>
-                <div className="fieldsWrapper">
-                    <input
-                        type="text"
-                        placeholder="Paste contract address"
-                        value={secretCred.contract}
-                        onChange={(e) =>
-                            dispatch(
-                                setSecretCred({
-                                    ...secretCred,
-                                    contract: e.target.value,
-                                })
-                            )
+                <div className="secret-toggle">
+                    <div
+                        onClick={() => hadleSelectToggle("show")}
+                        className={
+                            toggle === "show" ? "show--selected" : "show"
                         }
-                    />
+                    >
+                        Show assents
+                    </div>
+                    <div
+                        onClick={() => hadleSelectToggle("set")}
+                        className={toggle === "set" ? "set--selected" : "set"}
+                    >
+                        Set V-Key
+                    </div>
+                </div>
+                <div className="fieldsWrapper">
+                    <div className="contract-input__wrapper">
+                        <input
+                            disabled={toggle === "set" ? true : false}
+                            type="text"
+                            placeholder="Paste contract address"
+                            value={secretCred.contract}
+                            onChange={(e) =>
+                                dispatch(
+                                    setSecretCred({
+                                        ...secretCred,
+                                        contract: e.target.value,
+                                    })
+                                )
+                            }
+                        />
+                        {toggle === "set" && <SecretContractsDropdown />}
+                    </div>
                     <div className="inputWrapper">
                         <input
                             type="text"
@@ -146,34 +180,39 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
                                 )
                             }
                         />
+                        <img className="vkey-icon" src={vk} alt="" />
                     </div>
                 </div>
                 <div
                     style={secretCred.contract && secretCred.viewKey ? {} : off}
                     className="withSecret__btns"
                 >
-                    <div
-                        className="transfer-button"
-                        onClick={fetchSecretNfts}
-                        style={
-                            !importBlocked
-                                ? {}
-                                : { opacity: 0.6, pointerEvents: "none" }
-                        }
-                    >
-                        Show assets
-                    </div>
-                    <div
-                        className="transfer-button"
-                        onClick={createViewingKey}
-                        style={
-                            !importBlocked
-                                ? {}
-                                : { opacity: 0.6, pointerEvents: "none" }
-                        }
-                    >
-                        Create V-Key
-                    </div>
+                    {toggle === "show" && (
+                        <div
+                            className="transfer-button"
+                            onClick={fetchSecretNfts}
+                            style={
+                                !importBlocked
+                                    ? {}
+                                    : { opacity: 0.6, pointerEvents: "none" }
+                            }
+                        >
+                            Show assets
+                        </div>
+                    )}
+                    {toggle === "set" && (
+                        <div
+                            className="transfer-button"
+                            onClick={createViewingKey}
+                            style={
+                                !importBlocked
+                                    ? {}
+                                    : { opacity: 0.6, pointerEvents: "none" }
+                            }
+                        >
+                            Create V-Key
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
