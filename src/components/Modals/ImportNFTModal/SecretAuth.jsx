@@ -72,17 +72,17 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
             const factory = await getFactory();
             const secret = await factory.inner(Chain.SECRET);
             const created = await secret.setViewingKey(
-                checkWallet || secretAccount,
-                secretCred.viewKey,
-                secretCred.contract
+                signer,
+                secretCred.contract,
+                secretCred.viewKey
             );
+            console.log("Viewing Key was created: ", created);
             if (created) {
                 let secretNFTs = await secret.nftList(
                     checkWallet || secretAccount,
                     secretCred.viewKey,
                     secretCred.contract
                 );
-
                 secretNFTs = secretNFTs.map((nft) => ({
                     ...nft,
                     metaData: !nft?.uri
