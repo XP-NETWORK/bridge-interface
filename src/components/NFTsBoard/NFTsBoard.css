@@ -290,6 +290,14 @@
     color: rgba(20, 22, 26, 1);
     text-align: center;
 }
+.secretAuth .inputWrapper input:first-child {
+    position: relative;
+}
+.secretAuth .inputWrapper ::after {
+    top: 0;
+    position: absolute;
+    content: "sss";
+}
 .withSecret__btns {
     display: flex;
     justify-content: center;
