@@ -214,7 +214,6 @@ export default function ButtonToTransfer() {
                 tokenId && !isNaN(Number(tokenId)) ? tokenId : undefined
             );
         }
-        debugger;
         try {
             switch (true) {
                 case from === "Tron":
