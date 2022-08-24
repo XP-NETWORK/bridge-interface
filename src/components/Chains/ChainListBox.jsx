@@ -26,30 +26,34 @@ import { useLocation } from "react-router-dom";
 import { switchNetwork } from "../../services/chains/evmSerive";
 
 export default function ChainListBox() {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const departureOrDestination = useSelector(
-    (state) => state.general.departureOrDestination
-  );
-  const chainSearch = useSelector((state) => state.general.chainSearch);
-  const from = useSelector((state) => state.general.from);
-  const to = useSelector((state) => state.general.to);
-  const globalTestnet = useSelector((state) => state.general.testNet);
-  const show = useSelector((state) => state.general.showChainModal);
-  const switchChain = useSelector((state) => state.general.switchDestination);
-  const [fromChains, setFromChains] = useState(chains);
-  const [toChains, setToChains] = useState(chains);
-  const elrondAccount = useSelector((state) => state.general.elrondAccount);
-  const tezosAccount = useSelector((state) => state.general.tezosAccount);
-  const algorandAccount = useSelector((state) => state.general.algorandAccount);
-  const evmAccount = useSelector((state) => state.general.account);
-  const tronAccount = useSelector((state) => state.general.tronWallet);
-  const Sync2 = useSelector((state) => state.general.Sync2);
-  const { account } = useWeb3React();
-  const testnet = useSelector((state) => state.general.testNet);
-  const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
-  const bitKeep = useSelector((state) => state.general.bitKeep);
-  const axios = require("axios");
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const departureOrDestination = useSelector(
+        (state) => state.general.departureOrDestination
+    );
+    const chainSearch = useSelector((state) => state.general.chainSearch);
+    const from = useSelector((state) => state.general.from);
+
+    const to = useSelector((state) => state.general.to);
+    const globalTestnet = useSelector((state) => state.general.testNet);
+    const show = useSelector((state) => state.general.showChainModal);
+    const switchChain = useSelector((state) => state.general.switchDestination);
+    const [fromChains, setFromChains] = useState(chains);
+    const [toChains, setToChains] = useState(chains);
+    const elrondAccount = useSelector((state) => state.general.elrondAccount);
+    const tezosAccount = useSelector((state) => state.general.tezosAccount);
+    const algorandAccount = useSelector(
+        (state) => state.general.algorandAccount
+    );
+    const evmAccount = useSelector((state) => state.general.account);
+    const tronAccount = useSelector((state) => state.general.tronWallet);
+    const Sync2 = useSelector((state) => state.general.Sync2);
+    const { account } = useWeb3React();
+    const testnet = useSelector((state) => state.general.testNet);
+    const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
+    const bitKeep = useSelector((state) => state.general.bitKeep);
+    const axios = require("axios");
+
 
   const checkValidators = async () => {
     let res;
@@ -84,21 +88,39 @@ export default function ChainListBox() {
         return undefined;
     }
   };
-
-  const chainSelectHandler = async (chain) => {
-    // debugger;
-    if (departureOrDestination === "departure") {
-      if (chain.type === typeOfChainConnected() || !typeOfChainConnected()) {
-        if (to?.text === chain.text) {
-          if (to?.text === "Harmony" && bitKeep) {
-            dispatch(setTemporaryFrom(chain));
-            dispatch(setChangeWallet(true));
-            handleClose();
-          } else if (account || evmAccount) {
-            const switched = await switchNetwork(from);
-            if (switched) {
-              dispatch(setTo(from));
-              dispatch(setFrom(to));
+  
+    const chainSelectHandler = async (chain) => {
+        debugger;
+        if (departureOrDestination === "departure") {
+            if (
+                chain.type === typeOfChainConnected() ||
+                !typeOfChainConnected()
+            ) {
+                if (to?.text === chain.text) {
+                    if (to?.text === "Harmony" && bitKeep) {
+                        dispatch(setTemporaryFrom(chain));
+                        dispatch(setChangeWallet(true));
+                        handleClose();
+                    } else if (account || evmAccount) {
+                        const switched = await switchNetwork(from);
+                        if (switched) {
+                            dispatch(setTo(from));
+                            dispatch(setFrom(to));
+                        }
+                    }
+                } else {
+                    if (account || evmAccount) {
+                        const switched = await switchNetwork(chain);
+                        if (switched) {
+                            dispatch(setFrom(chain));
+                        }
+                    } else dispatch(setFrom(chain));
+                }
+                handleClose();
+            } else {
+                dispatch(setTemporaryFrom(chain));
+                dispatch(setChangeWallet(true));
+                handleClose();
             }
           }
         } else {
