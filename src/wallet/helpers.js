@@ -1,5 +1,6 @@
 import { AppConfigs, ChainFactory, ChainFactoryConfigs } from "xp.network";
 import { Chain, Config } from "xp.network/dist/consts";
+import { isWhiteListed } from "../components/NFT/NFTHelper";
 import { chainsConfig, CHAIN_INFO } from "../components/values";
 import {
   setAlgorandClaimables,
@@ -13,7 +14,7 @@ import {
 } from "../store/reducers/generalSlice";
 import store from "../store/store";
 import io from "socket.io-client";
-import { isWhiteListed } from "./../components/NFT/NFTHelper";
+
 import requestPool from "./requestPool";
 import { nftGeneralParser } from "nft-parser/dist/src/index";
 import { utils } from "ethers";
@@ -27,15 +28,20 @@ const base64 = require("base-64");
 
 export const isApproved = async (c, nft) => {
   // debugger;
+
   const {
     signers: { signer },
   } = store.getState();
   const factory = await getFactory();
   const chain = await factory.inner(c);
-  console.log(chain, "chain");
+
   let isApproved;
+
   try {
-    isApproved = await chain.isApprovedForMinter(nft, signer);
+    isApproved =
+      c === 24
+        ? await chain.isApprovedForMinter(signer, nft)
+        : await chain.isApprovedForMinter(nft, signer);
   } catch (error) {
     console.log(error);
   }

@@ -36,11 +36,12 @@ export async function switchNetwork(chain) {
             } catch (error) {
                 const c = testNet ? chain?.tnChainId : chain?.chainId;
                 await window.ethereum.request({
-                    method: "wallet_switchEthereumChain",
+                    method: "wallet_addEthereumChain",
                     params: [{ chainId: c }],
                 });
                 console.log(error);
                 return false;
             }
     }
+
 }

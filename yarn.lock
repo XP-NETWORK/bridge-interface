@@ -3274,11 +3274,6 @@
   resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.0.0.tgz#d5e38bfbdaba174805a4e649f13be9a9ed3351ae"
   integrity sha512-DZVbtY62kc3kkBtMHqwCOfXrT/hnoORy5BJ4+HU1IR59X0KWAOqsfzQPcUl/lQLlG7qXbe/fZ3r/emxtAl+sqg==
 
-"@noble/secp256k1@1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@noble/secp256k1/-/secp256k1-1.5.2.tgz#40399e4fba54f588fda14fc03a4499044fdcab24"
-  integrity sha512-5mzA40W2q55VCRuC9XzmkiEnODdY0c5a7qsK2QcOfI5/MuVQyBaWGQyE6YOEF7kDwp+tDVWGsCDVJUME+wsWWw==
-
 "@noble/secp256k1@1.6.3":
   version "1.6.3"
   resolved "https://registry.yarnpkg.com/@noble/secp256k1/-/secp256k1-1.6.3.tgz#7eed12d9f4404b416999d0c87686836c4c5c9b94"
@@ -4545,9 +4540,9 @@
   integrity sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==
 
 "@types/node@*", "@types/node@>=12.12.47", "@types/node@>=13.7.0":
-  version "18.7.9"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.9.tgz#180bfc495c91dc62573967edf047e15dbdce1491"
-  integrity sha512-0N5Y1XAdcl865nDdjbO0m3T6FdmQ4ijE89/urOHLREyTXbpMWbSafx9y7XIsgWGtwUP2iYTinLyyW3FatAxBLQ==
+  version "18.7.11"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.11.tgz#486e72cfccde88da24e1f23ff1b7d8bfb64e6250"
+  integrity sha512-KZhFpSLlmK/sdocfSAjqPETTMd0ug6HIMIAwkwUpU79olnZdQtMxpQP+G1wDzCH7na+FltSIhbaZuKdwZ8RDrw==
 
 "@types/node@10.12.18":
   version "10.12.18"
@@ -13945,25 +13940,6 @@ protobufjs@6.10.2:
     "@types/node" "^13.7.0"
     long "^4.0.0"
 
-protobufjs@6.11.2:
-  version "6.11.2"
-  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-6.11.2.tgz#de39fabd4ed32beaa08e9bb1e30d08544c1edf8b"
-  integrity sha512-4BQJoPooKJl2G9j3XftkIXjoC9C0Av2NOrWmbLWT1vH32GcSUHjM0Arra6UfTsVyfMAuFzaLucXn1sadxJydAw==
-  dependencies:
-    "@protobufjs/aspromise" "^1.1.2"
-    "@protobufjs/base64" "^1.1.2"
-    "@protobufjs/codegen" "^2.0.4"
-    "@protobufjs/eventemitter" "^1.1.0"
-    "@protobufjs/fetch" "^1.1.0"
-    "@protobufjs/float" "^1.0.2"
-    "@protobufjs/inquire" "^1.1.0"
-    "@protobufjs/path" "^1.1.2"
-    "@protobufjs/pool" "^1.1.0"
-    "@protobufjs/utf8" "^1.1.0"
-    "@types/long" "^4.0.1"
-    "@types/node" ">=13.7.0"
-    long "^4.0.0"
-
 protobufjs@6.11.3, protobufjs@^6.10.2, protobufjs@^6.11.2, protobufjs@^6.11.3:
   version "6.11.3"
   resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-6.11.3.tgz#637a527205a35caa4f3e2a9a4a13ddffe0e7af74"
@@ -15072,32 +15048,10 @@ secp256k1@^4.0.1, secp256k1@^4.0.2:
     node-addon-api "^2.0.0"
     node-gyp-build "^4.2.0"
 
-secretjs@1.3.0-beta.1:
-  version "1.3.0-beta.1"
-  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.3.0-beta.1.tgz#a432082f8e1d582997a4d09abd47be6688db7d88"
-  integrity sha512-g0NgleCWvKKzQg3uFygbV8S39VXTXHHzENdCjtp/PrMHB1aXA64hEMUjcZTJrXyLEe1NC2gTZksPnYgAhFA/vg==
-  dependencies:
-    "@cosmjs/encoding" "0.27.1"
-    "@cosmjs/math" "0.27.1"
-    "@improbable-eng/grpc-web" "0.15.0"
-    "@improbable-eng/grpc-web-node-http-transport" "0.15.0"
-    "@noble/hashes" "1.0.0"
-    "@noble/secp256k1" "1.5.2"
-    bech32 "2.0.0"
-    bignumber.js "9.0.2"
-    bip32 "2.0.6"
-    bip39 "3.0.4"
-    curve25519-js "0.0.4"
-    is-gzip "2.0.0"
-    miscreant "0.3.2"
-    pako "2.0.4"
-    protobufjs "6.11.2"
-    secure-random "1.1.2"
-
-secretjs@^1.3.0-beta.1:
-  version "1.3.0-beta.23"
-  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.3.0-beta.23.tgz#b956d2479cc6b06c1fed3623ae19a8ba7c540f8a"
-  integrity sha512-zXL0t1h68it1+77+kobAq4JcIWV7EUtHfP2W2Vpc9MpAGLUeJ5XgfSNs6uO4IYq7viIEL7idTTls/7ljWBb8xw==
+secretjs@=1.3.0-beta.25:
+  version "1.3.0-beta.25"
+  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.3.0-beta.25.tgz#d3aced17bccc6da46e68ab64f846d51bb9ea6b49"
+  integrity sha512-fHTMGtHGP7aEVBD1142xTb2k7547misrnCs+EKMZN+CCr+fl1PZdEVX4r3MjC+qRpQIMgwVVXJZr4EUNwN7u3A==
   dependencies:
     "@cosmjs/encoding" "0.27.1"
     "@cosmjs/math" "0.27.1"
@@ -17739,7 +17693,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "3.0.14"
-  resolved "git+https://github.com/xp-network/xpjs#52b533de8c07c29fe18e77b6058485e6f079870f"
+  resolved "git+https://github.com/xp-network/xpjs#5763f39fce61942664a5c9c77bf8432cae6fdbab"
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"
@@ -17769,7 +17723,7 @@ xmlhttprequest@1.8.0:
     google-protobuf "^3.20.1"
     js-base64 "^3.6.1"
     near-api-js "^0.45.1"
-    secretjs "^1.3.0-beta.1"
+    secretjs "=1.3.0-beta.25"
     socket.io-client "^4.1.3"
     tonweb "^0.0.43"
     tonweb-mnemonic "^1.0.1"

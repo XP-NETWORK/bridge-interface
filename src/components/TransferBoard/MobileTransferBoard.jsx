@@ -7,6 +7,8 @@ import ButtonToTransfer from "./ButtonToTransfer";
 import SelectedNFT from "../innercomponents/SelectedNFT";
 import SendFees from "./SendFees";
 
+import { useCheckMobileScreen } from "../Settings/hooks";
+
 export default function MobileTransferBoard() {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from.key);
@@ -16,6 +18,8 @@ export default function MobileTransferBoard() {
   const account = useSelector((state) => state.general.account);
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
+
+  const mobile = useCheckMobileScreen();
 
   async function getNFTsList() {
     const useHardcoded = false;
@@ -45,7 +49,7 @@ export default function MobileTransferBoard() {
       <SelectedNFT />
       <Approval getNft={getNFTsList} />
       <div className="nftSendBtn disenable">
-        <SendFees />
+        {mobile && <SendFees />}
         <ButtonToTransfer />
       </div>
     </div>
