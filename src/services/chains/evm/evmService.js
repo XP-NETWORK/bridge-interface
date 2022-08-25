@@ -102,7 +102,7 @@ export const transferNFTFromEVM = async ({
                     mw
                 );
                 break;
-            case !mintWith && !testnet:
+            case !wrapped && !mintWith && !testnet:
                 store.dispatch(
                     setError(
                         "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection"
@@ -126,12 +126,9 @@ export const transferNFTFromEVM = async ({
                 );
                 break;
         }
-        console.log("Transfer result: ", result, "index: ", index);
-        store.dispatch(setTxnHash({ txn: result, nft }));
     } catch (error) {
         console.log(error);
     }
-    store.dispatch(setTransferLoaderModal(false));
     return result ? true : false;
 };
 
@@ -174,6 +171,6 @@ const transfer = async (
                 return result;
         }
     } catch (error) {
-        console.log(error);
+        store.dispatch(setError(error));
     }
 };
