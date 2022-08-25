@@ -255,7 +255,12 @@ export default function ButtonToTransfer() {
                 console.debug("Transfer result: ", result, "index: ", index);
                 dispatch(dispatch(setTransferLoaderModal(false)));
                 setLoading(false);
-                dispatch(setTxnHash({ txn: result, nft }));
+                dispatch(
+                    setTxnHash({
+                        txn: Array.isArray(result) ? result[0].result : result,
+                        nft,
+                    })
+                );
             } else {
                 debugger;
                 factory = await getFactory();
@@ -294,7 +299,11 @@ export default function ButtonToTransfer() {
                           nft,
                           from === "Hedera" ? hederaSigner : signer,
                           receiverAddress || unstoppabledomain || receiver,
-                          new BigNumber(nft.amountToTransfer),
+                          new BigNumber(
+                              nft.amountToTransfer > 40
+                                  ? 40
+                                  : nft.amountToTransfer
+                          ),
                           bigNumberFees,
                           Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
                       ))

@@ -283,17 +283,30 @@ const generalSlice = createSlice({
         },
         setTxnHash(state, action) {
             let { nft, txn } = action.payload;
-
             const { tokenId, contract, chainId } = nft.native;
-            if (typeof txn === "object") {
-                txn = {
-                    ...txn,
-                    hash: txn.hash || txn.transactionHash,
-                };
+            switch (true) {
+                case Array.isArray(txn):
+                    txn = {
+                        ...txn[0],
+                        hash: txn[0].hash || txn[0].transactionHash,
+                    };
+                    break;
+                case typeof txn === "object":
+                    txn = {
+                        ...txn,
+                        hash: txn.hash || txn.transactionHash,
+                    };
+                    break;
+                case txn && txn?.hash?.hash instanceof Uint8Array:
+                    txn.hash = utils.hexlify(txn.hash?.hash).replace(/^0x/, "");
+                    break;
+                case typeof txn === "string":
+                    txn = { hash: txn };
+                    break;
+                default:
+                    break;
             }
-            if (txn && txn?.hash?.hash instanceof Uint8Array) {
-                txn.hash = utils.hexlify(txn.hash?.hash).replace(/^0x/, "");
-            }
+
             state.txnHashArr = [...state.txnHashArr, txn];
             state.selectedNFTList = state.selectedNFTList.map((n) => {
                 const { native } = n;
