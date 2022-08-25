@@ -65,8 +65,6 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
             nft = await evm.getUri(nft, nft.collectionIdent);
           }
 
-          console.log(unwraped.nft);
-
           nftData = await cache.add(unwraped.nft, account, whitelisted);
 
           if (nftData === "That nft is already caching") return undefined;
