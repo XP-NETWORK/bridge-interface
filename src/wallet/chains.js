@@ -5073,7 +5073,6 @@ export const allchains = [
             symbol: "SFUEL",
             decimals: 18,
         },
-        // infoURL: "https://aurora.dev",
         shortName: "skale",
         chainId: 1564830818,
     },
