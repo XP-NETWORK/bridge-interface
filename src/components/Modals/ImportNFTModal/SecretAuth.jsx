@@ -154,7 +154,11 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
                             disabled={toggle === "set" ? true : false}
                             type="text"
                             placeholder="Paste contract address"
-                            value={secretCred.contract}
+                            value={
+                                secretCred.contract.length > 0
+                                    ? `${secretCred.contract.slice(0, 34)}...`
+                                    : secretCred.contract
+                            }
                             onChange={(e) =>
                                 dispatch(
                                     setSecretCred({

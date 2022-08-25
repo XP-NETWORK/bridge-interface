@@ -341,6 +341,12 @@
     top: 12px;
     right: 18px;
 }
+.secret__dropdown .dropdown-menu {
+    width: 352px;
+    filter: none;
+    top: -4px !important;
+    right: -18px !important;
+}
 .secret__dropdown .btn-primary {
     color: unset !important;
     background-color: unset !important;
