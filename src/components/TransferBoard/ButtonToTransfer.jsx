@@ -22,6 +22,7 @@ import {
 import * as thor from "web3-providers-connex";
 import Connex from "@vechain/connex";
 import { getFromDomain } from "../../services/resolution";
+import { transferNFTFromEVM } from "../../services/chains/evm/evmService";
 
 export default function ButtonToTransfer() {
     const kukaiWalletSigner = useSelector(
@@ -216,6 +217,24 @@ export default function ButtonToTransfer() {
         }
         try {
             switch (true) {
+                case _from.type === "EVM":
+                    result = await transferNFTFromEVM(
+                        _to,
+                        _from,
+                        nft,
+                        from === "Hedera" ? hederaSigner : signer,
+                        receiverAddress || unstoppabledomain || receiver,
+                        bigNumberFees,
+                        index,
+                        txnHashArr,
+                        chainConfig,
+                        testnet
+                    );
+                    console.log(
+                        "🚀 ~ file: ButtonToTransfer.jsx ~ line 222 ~ sendEach ~ result",
+                        result
+                    );
+                    break;
                 case from === "Tron":
                     result = await factory.transferNft(
                         fromChain,
@@ -294,7 +313,7 @@ export default function ButtonToTransfer() {
                         from === "Algorand" || from === "Tezos"
                             ? { hash: result }
                             : result;
-                    dispatch(dispatch(setTransferLoaderModal(false)));
+                    dispatch(setTransferLoaderModal(false));
                     setLoading(false);
                     dispatch(setTxnHash({ txn: result, nft }));
                     break;

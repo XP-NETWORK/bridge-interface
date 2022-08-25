@@ -13,7 +13,7 @@ import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg
 import { useLocation, useNavigate } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import icon from "../../../assets/img/icons/book.svg";
-import { switchNetwork } from "../../../services/chains/evmSerive";
+import { switchNetwork } from "../../../services/chains/evm/evmService";
 
 export default function UnsupportedNetwork() {
     const handleClose = () => {

@@ -3,8 +3,6 @@ import axios from "axios";
 import { CHAIN_INFO } from "../components/values";
 import { convertOne1 } from "../wallet/helpers";
 
-//const resolution = new Resolution();
-
 const endings = [
     ".crypto",
     ".nft",
@@ -61,22 +59,3 @@ const fetchData = async (domain) => {
         console.log(error);
     }
 };
-
-// const resolve = (domain, currency) => {
-//     let add;
-//     resolution
-//         .addr(domain, currency)
-//         .then((address) => (add = address))
-//         .catch(console.error);
-//     return add;
-// };
-
-// function resolveMultiChain(domain, currency, chain) {
-//     debugger;
-//     let add;
-//     resolution
-//         .multiChainAddr(domain, currency, chain)
-//         .then((address) => (add = address))
-//         .catch(console.error);
-//     return add;
-// }

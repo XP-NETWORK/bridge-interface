@@ -21,9 +21,8 @@ import ChainSearch from "../Chains/ChainSearch";
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
 import { useWeb3React } from "@web3-react/core";
-import { getAddEthereumChain } from "../../wallet/chains";
 import { useLocation } from "react-router-dom";
-import { switchNetwork } from "../../services/chains/evmSerive";
+import { switchNetwork } from "../../services/chains/evm/evmService";
 
 export default function ChainListBox() {
     const dispatch = useDispatch();
