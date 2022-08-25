@@ -345,7 +345,6 @@ export const transformToDate = (date) => {
 };
 
 export const getFactory = async () => {
-    // debugger;
     const f = store.getState().general.factory;
     const testnet = store.getState().general.testNet;
 
@@ -353,9 +352,9 @@ export const getFactory = async () => {
     const testnetConfig = await ChainFactoryConfigs.TestNet();
     const mainnetConfig = await ChainFactoryConfigs.MainNet();
     store.dispatch(setChainFactoryConfig(mainnetConfig || testnetConfig));
-    if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
-        mainnetConfig.tronParams.provider = window.tronWeb;
-    }
+    // if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
+    //     mainnetConfig.tronParams.provider = window.tronWeb;
+    // }
     const factory = ChainFactory(
         testnet ? AppConfigs.TestNet() : AppConfigs.MainNet(),
         testnet ? testnetConfig : mainnetConfig

@@ -12,47 +12,7 @@ import {
 } from "../../../store/reducers/generalSlice";
 import BigNumber from "bignumber.js";
 
-export async function switchNetwork(chain) {
-    const {
-        general: { testNet, bitKeep, from },
-    } = store.getState();
-
-    const info = testNet
-        ? TESTNET_CHAIN_INFO[chain?.key]
-        : CHAIN_INFO[chain?.key];
-    const chainId = `0x${info.chainId.toString(16)}`;
-    switch (true) {
-        case bitKeep:
-            try {
-                await window.bitkeep.ethereum.request({
-                    method: "wallet_switchEthereumChain",
-                    params: [{ chainId: chainId }],
-                });
-                return true;
-            } catch (error) {
-                console.log(error);
-                return false;
-            }
-        default:
-            try {
-                await window.ethereum.request({
-                    method: "wallet_switchEthereumChain",
-                    params: [{ chainId }],
-                });
-                return true;
-            } catch (error) {
-                const c = testNet ? chain?.tnChainId : chain?.chainId;
-                await window.ethereum.request({
-                    method: "wallet_addEthereumChain",
-                    params: [{ chainId: c }],
-                });
-                console.log(error);
-                return false;
-            }
-    }
-}
-
-export const transferNFTFromEVM = async ({
+export const transferNFTFromCosmos = async ({
     to,
     from,
     nft,
@@ -64,7 +24,6 @@ export const transferNFTFromEVM = async ({
     chainConfig,
     testnet,
 }) => {
-    debugger;
     const factory = await getFactory();
     const toChain = await factory.inner(chainsConfig[to.text].Chain);
     const fromChain = await factory.inner(chainsConfig[from.text].Chain);
@@ -87,21 +46,6 @@ export const transferNFTFromEVM = async ({
     let result;
     try {
         switch (true) {
-            case to.type === "Cosmos" && !mintWith:
-                const contractAddress =
-                    chainConfig?.secretParams?.bridge?.contractAddress;
-                const codeHash = chainConfig?.secretParams?.bridge?.codeHash;
-                let mw = `${contractAddress},${codeHash}`;
-                result = await factory.transferNft(
-                    fromChain,
-                    toChain,
-                    nft,
-                    signer,
-                    receiver,
-                    fee,
-                    mw
-                );
-                break;
             case !mintWith && !testnet:
                 store.dispatch(
                     setError(
@@ -149,18 +93,7 @@ const transfer = async (
     let result;
     try {
         switch (true) {
-            case amount > 0:
-                result = await factory.transferSft(
-                    fromChain,
-                    toChain,
-                    nft,
-                    signer,
-                    receiver,
-                    new BigNumber(amount),
-                    fee,
-                    mintWith
-                );
-                return result;
+            case !amount:
             default:
                 result = await factory.transferNft(
                     fromChain,
