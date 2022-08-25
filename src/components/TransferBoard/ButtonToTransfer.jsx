@@ -1,44 +1,29 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
+import { CHAIN_INFO } from "../values";
 import { chainsConfig } from "../values";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { algoConnector } from "../../wallet/connectors";
-import BigNumber from "bignumber.js";
 
-import {
-    getFactory,
-    setClaimablesAlgorand,
-    checkIfOne1,
-    convertOne1,
-    convert,
-} from "../../wallet/helpers";
-import { BeaconWallet } from "@taquito/beacon-wallet";
-import { TempleWallet } from "@temple-wallet/dapp";
+import { getFactory, convert } from "../../wallet/helpers";
 import { ExtensionProvider } from "@elrondnetwork/erdjs/out";
 import { ethers } from "ethers";
 import {
     setError,
-    setNFTsToWhitelist,
     setNoApprovedNFTAlert,
     setTransferLoaderModal,
     setTxnHash,
-    setURLToOptIn,
 } from "../../store/reducers/generalSlice";
 import {
     setPasteDestinationAlert,
     setSelectNFTAlert,
 } from "../../store/reducers/generalSlice";
 import * as thor from "web3-providers-connex";
-import { Driver, SimpleNet, SimpleWallet } from "@vechain/connex-driver";
-import { Framework } from "@vechain/connex-framework";
 import Connex from "@vechain/connex";
-import Web3 from "web3";
 import { getFromDomain } from "../../services/resolution";
 
 export default function ButtonToTransfer() {
-    const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
     const kukaiWalletSigner = useSelector(
         (state) => state.general.kukaiWalletSigner
     );
@@ -64,9 +49,7 @@ export default function ButtonToTransfer() {
     const selectedNFTList = useSelector(
         (state) => state.general.selectedNFTList
     );
-    const nfts = useSelector((state) => state.general.NFTList);
     const WCProvider = useSelector((state) => state.general.WCProvider);
-    const sync2Connex = useSelector((state) => state.general.sync2Connex);
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const hederaSigner = useSelector((state) => state.signers.signer);
     const chainConfig = useSelector(
@@ -212,76 +195,82 @@ export default function ButtonToTransfer() {
         const unstoppabledomain = await getFromDomain(receiver, _to);
         const stop = unstoppabledomainSwitch(unstoppabledomain);
         if (stop) return;
-        let factory;
-        let toChain;
-        let fromChain;
+        const factory = await getFactory();
+        const wrapped = await factory.isWrappedNft(nft, fromNonce);
+        const contract = nftSmartContract.toLowerCase();
+        const tokenId =
+            nft.native &&
+            "tokenId" in nft.native &&
+            nft.native.tokenId.toString();
+        const toChain = await factory.inner(chainsConfig[to].Chain);
+        const fromChain = await factory.inner(chainsConfig[from].Chain);
         let result;
+        let mintWidth;
+        if (!wrapped) {
+            mintWidth = await factory.getVerifiedContract(
+                contract,
+                toNonce,
+                fromNonce,
+                tokenId && !isNaN(Number(tokenId)) ? tokenId : undefined
+            );
+        }
         try {
-            const tokenId =
-                nft.native &&
-                "tokenId" in nft.native &&
-                nft.native.tokenId.toString();
-            if (from === "Tron") {
-                factory = await getFactory();
-                const contract = nftSmartContract.toLowerCase();
-                const wrapped = await factory.isWrappedNft(nft, fromNonce);
-                let mintWidth;
-                if (!wrapped) {
-                    mintWidth = await factory.getVerifiedContract(
-                        contract,
-                        toNonce,
-                        fromNonce,
-                        tokenId && !isNaN(Number(tokenId)) ? tokenId : undefined
-                    );
-                }
-                if (mintWidth.length < 1 && from.type === "Secret") {
-                    const contractAddress =
-                        chainConfig?.secretParams?.bridge?.contractAddress;
-                    const codeHash =
-                        chainConfig?.secretParams?.bridge?.codeHash;
-                    mintWidth = `${contractAddress}${codeHash}`;
-                }
-                toChain = await factory.inner(chainsConfig[to].Chain);
-                fromChain = await factory.inner(chainsConfig[from].Chain);
-                result = await factory.transferNft(
-                    fromChain,
-                    toChain,
-                    nft,
-                    undefined,
-                    receiverAddress || receiver,
-                    bigNumberFees,
-                    Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
-                );
-                console.debug("Transfer result: ", result, "index: ", index);
-                dispatch(dispatch(setTransferLoaderModal(false)));
-                setLoading(false);
-                dispatch(
-                    setTxnHash({
-                        txn: Array.isArray(result) ? result[0].result : result,
+            switch (true) {
+                case from === "Tron":
+                    result = await factory.transferNft(
+                        fromChain,
+                        toChain,
                         nft,
-                    })
-                );
-            } else {
-                debugger;
-                factory = await getFactory();
-                const contract =
-                    nft.collectionIdent || nftSmartContract.toLowerCase();
-                const wrapped = await factory.isWrappedNft(nft, fromNonce);
-                let mintWidth;
-                if (!wrapped) {
-                    mintWidth = await factory.getVerifiedContract(
-                        contract,
-                        toNonce,
-                        fromNonce,
-                        tokenId && !isNaN(Number(tokenId)) ? tokenId : undefined
+                        undefined,
+                        receiverAddress || receiver,
+                        bigNumberFees,
+                        Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
                     );
-                }
-                if (
-                    (_from.type === "EVM" || _from.type === "Elrond") &&
-                    !testnet
-                ) {
+                    console.debug(
+                        "Transfer result: ",
+                        result,
+                        "index: ",
+                        index
+                    );
+                    dispatch(dispatch(setTransferLoaderModal(false)));
+                    setLoading(false);
+                    dispatch(setTxnHash({ txn: result, nft }));
+                    break;
+                case !wrapped && _to.type === "Cosmos":
+                    if (!mintWidth) {
+                        const contractAddress =
+                            chainConfig?.secretParams?.bridge?.contractAddress;
+                        const codeHash =
+                            chainConfig?.secretParams?.bridge?.codeHash;
+                        let mw = `${contractAddress},${codeHash}`;
+                        result = await factory.transferNft(
+                            fromChain,
+                            toChain,
+                            nft,
+                            from === "Hedera" ? hederaSigner : signer,
+                            receiverAddress || unstoppabledomain || receiver,
+                            bigNumberFees,
+                            mw
+                        );
+                        console.debug(
+                            "Transfer result: ",
+                            result,
+                            "index: ",
+                            index
+                        );
+                        dispatch(dispatch(setTransferLoaderModal(false)));
+                        setLoading(false);
+                        dispatch(setTxnHash({ txn: result, nft }));
+                    }
+                    break;
+                case !wrapped &&
+                    (_from.type === "EVM" || _from.type === "Elrond"):
                     if (mintWidth?.length < 1 || !mintWidth) {
-                        dispatch(setError("An error has occurred"));
+                        dispatch(
+                            setError(
+                                "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection"
+                            )
+                        );
                         dispatch(dispatch(setTransferLoaderModal(false)));
                         setLoading(false);
                         if (txnHashArr.length) {
@@ -289,42 +278,31 @@ export default function ButtonToTransfer() {
                         }
                         return;
                     }
-                }
-                toChain = await factory.inner(chainsConfig[to].Chain);
-                fromChain = await factory.inner(chainsConfig[from].Chain);
-                nft.native.amount
-                    ? (result = await factory.transferSft(
-                          fromChain,
-                          toChain,
-                          nft,
-                          from === "Hedera" ? hederaSigner : signer,
-                          receiverAddress || unstoppabledomain || receiver,
-                          new BigNumber(
-                              nft.amountToTransfer > 40
-                                  ? 40
-                                  : nft.amountToTransfer
-                          ),
-                          bigNumberFees,
-                          Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
-                      ))
-                    : (result = await factory.transferNft(
-                          fromChain,
-                          toChain,
-                          nft,
-                          from === "Hedera" ? hederaSigner : signer,
-                          receiverAddress || unstoppabledomain || receiver,
-                          bigNumberFees,
-                          Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
-                      ));
-                console.log("Result: ", result);
-                result =
-                    from === "Algorand" || from === "Tezos"
-                        ? { hash: result }
-                        : result;
-                dispatch(dispatch(setTransferLoaderModal(false)));
-                setLoading(false);
-                dispatch(setTxnHash({ txn: result, nft }));
+                    break;
+                default:
+                    result = await factory.transferNft(
+                        fromChain,
+                        toChain,
+                        nft,
+                        from === "Hedera" ? hederaSigner : signer,
+                        receiverAddress || unstoppabledomain || receiver,
+                        bigNumberFees,
+                        Array.isArray(mintWidth) ? mintWidth[0] : mintWidth
+                    );
+                    console.log("result", result);
+                    result =
+                        from === "Algorand" || from === "Tezos"
+                            ? { hash: result }
+                            : result;
+                    dispatch(dispatch(setTransferLoaderModal(false)));
+                    setLoading(false);
+                    dispatch(setTxnHash({ txn: result, nft }));
+                    break;
             }
+            console.debug("Transfer result: ", result, "index: ", index);
+            dispatch(dispatch(setTransferLoaderModal(false)));
+            setLoading(false);
+            dispatch(setTxnHash({ txn: result, nft }));
         } catch (err) {
             console.error("This is error in sendeach: ", err);
             setLoading(false);

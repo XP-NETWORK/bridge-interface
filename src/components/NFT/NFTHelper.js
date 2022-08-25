@@ -120,27 +120,30 @@ export const isShown = (search, nft) =>
     .includes(search?.toLowerCase());
 
 export const isWhiteListed = async (from, nft) => {
-  // debugger
-  let whitelisted;
-  const chainNonce = CHAIN_INFO[from].nonce;
+  try {
+    let whitelisted;
+    const chainNonce = CHAIN_INFO[from].nonce;
 
-  const factory = await getFactory();
-  const inner = await factory.inner(chainNonce);
-  if (inner) {
-    try {
-      whitelisted = await factory.checkWhitelist(inner, nft);
-    } catch (error) {
-      whitelisted = await new Promise((resolve, reject) => {
-        setTimeout(async () => {
-          const status = await isWhiteListed(from.text, nft).catch(() =>
-            reject(undefined)
-          );
-          resolve(status);
-        }, 4000);
-      });
+    const factory = await getFactory().catch((e) => console.log(e));
+    const inner = await factory.inner(chainNonce).catch((e) => console.log(e));
+    if (inner) {
+      try {
+        whitelisted = await factory.checkWhitelist(inner, nft);
+      } catch (error) {
+        whitelisted = await new Promise((resolve, reject) => {
+          setTimeout(async () => {
+            const status = await isWhiteListed(from.text, nft).catch(() =>
+              reject(undefined)
+            );
+            resolve(status);
+          }, 4000);
+        });
 
-      console.error("isWhiteListed: ", error);
+        console.error("isWhiteListed: ", error);
+      }
     }
+    return whitelisted;
+  } catch (e) {
+    console.log(e);
   }
-  return whitelisted;
 };

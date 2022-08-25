@@ -109,6 +109,7 @@ export default function ChainListBox() {
                 } else {
                     if (account || evmAccount) {
                         const switched = await switchNetwork(chain);
+
                         if (switched) {
                             dispatch(setFrom(chain));
                         }

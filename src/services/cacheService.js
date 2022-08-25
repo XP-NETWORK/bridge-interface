@@ -1,9 +1,7 @@
 import axios from "axios";
 
-const en = new TextEncoder();
-
 class CacheService {
-  cacheApi = "https://nft-cache-testing.herokuapp.com"; //"https://nft-cache-testing.herokuapp.com"; //"http://localhost:3030"; //"https://nft-cache.herokuapp.com";
+  cacheApi = "https://nft-cache.herokuapp.com"; //"https://nft-cache-testing.herokuapp.com"; //"http://localhost:3030"; //"https://nft-cache.herokuapp.com";
   retryInterval = 6000;
   totalTry = 6;
   retryStatues = [429];
@@ -20,13 +18,20 @@ class CacheService {
   }
 
   async get({ chainId, tokenId, contract }, nft) {
-    return axios
-      .get(
-        `${this.cacheApi}/nft/data?chainId=${chainId ||
-          nft.native?.chainId}&tokenId=${tokenId ||
-          nft.native?.tokenId}&contract=${contract || nft.native?.contract}`
-      )
-      .catch(() => ({ data: null }));
+    try {
+      return axios
+        .get(
+          `${this.cacheApi}/nft/data?chainId=${chainId ||
+            nft.native?.chainId}&tokenId=${tokenId ||
+            nft.native?.tokenId}&contract=${contract || nft.native?.contract}`,
+          {
+            timeout: 5000,
+          }
+        )
+        .catch(() => ({ data: null }));
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async add(nft, account, whitelisted, times = 1) {
@@ -73,15 +78,28 @@ class CacheService {
 
         const { data } = res;
 
+        const tokenId = data.wrapped?.token_id || data.wrapped?.tokenId;
+
         return {
+          nft: {
+            ...nft,
+            collectionIdent: data.wrapped?.contract,
+            uri: data.wrapped?.original_uri,
+            native: {
+              ...nft.native,
+              chainId: data.wrapped?.origin,
+              tokenId,
+            },
+          },
           chainId: data.wrapped?.origin,
-          tokenId: data.wrapped?.tokenId,
+          tokenId,
           contract: data.wrapped?.contract,
         };
       } catch (e) {}
     }
 
     return {
+      nft,
       chainId: nft.native?.chainId,
       tokenId: nft.native?.tokenId,
       contract: nft.collectionIdent,

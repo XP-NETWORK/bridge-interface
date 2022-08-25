@@ -7,6 +7,8 @@ import SelectedNFT from "../NFT/SelectedNFTs";
 
 import SendFees from "./SendFees";
 
+import { useCheckMobileScreen } from "../Settings/hooks";
+
 export default function MobileTransferBoard() {
     const dispatch = useDispatch();
     const type = useSelector((state) => state.general.from.type);
@@ -37,8 +39,8 @@ export default function MobileTransferBoard() {
         } catch (error) {
             dispatch(setError(error.data ? error.data.message : error.message));
         }
-    }
 
+    }
     return (
         <div className="mobileOnly">
             <SelectedNFT />
@@ -49,4 +51,5 @@ export default function MobileTransferBoard() {
             </div>
         </div>
     );
+
 }

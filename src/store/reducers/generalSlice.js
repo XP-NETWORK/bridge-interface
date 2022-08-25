@@ -4,138 +4,138 @@ import { utils } from "ethers";
 import { convertTransactionHash } from "../../wallet/helpers";
 
 export const initialSecretCred = {
-    contract: "",
-    viewKey: "",
+  contract: "",
+  viewKey: "",
 };
 
 const initialState = {
-    step: 0,
-    selectedNFTList: [],
-    NFTListView: false,
-    approvedNFTList: [],
-    nftsToWhitelist: [],
-    whitelistedNFTS: [],
-    txnHashArr: [],
-    fees: 0,
-    currentTx: 0,
-    bigLoader: true,
-    innerWidth: 0,
-    alert: true,
-    NFTListSearch: "",
-    refreshSecret: false,
-    secretCred: initialSecretCred,
+  step: 0,
+  selectedNFTList: [],
+  NFTListView: false,
+  approvedNFTList: [],
+  nftsToWhitelist: [],
+  whitelistedNFTS: [],
+  txnHashArr: [],
+  fees: 0,
+  currentTx: 0,
+  bigLoader: true,
+  innerWidth: 0,
+  alert: true,
+  NFTListSearch: "",
+  refreshSecret: false,
+  secretCred: initialSecretCred,
 };
 
 const generalSlice = createSlice({
-    name: "general",
-    initialState,
-    reducers: {
-        setHederaWallet(state, action) {
-            state.hederaWallet = action.payload;
-        },
-        setHederaAccount(state, action) {
-            state.hederaAccount = action.payload;
-        },
-        setFilteredNFTSList(state, action) {
-            state.filteredNFTList = action.payload;
-        },
-        setReceiverIsSmartContractAddress(state, action) {
-            state.receiverIsSmartContract = action.payload;
-        },
-        setTemporaryTo(state, action) {
-            state.temporaryTo = action.payload;
-        },
-        setBitKeepPopUp(state, action) {
-            state.bitKeepPopUp = action.payload;
-        },
-        setSecretLoggedIn(state, action) {
-            state.secretLoggedIn = action.payload;
-        },
-        setRefreshSecret(state) {
-            state.refreshSecret = !state.refreshSecret;
-        },
-        setKeplrAccount(state, action) {
-            state.secretAccount = action.payload;
-        },
-        setSecretCred(state, action) {
-            state.secretCred = {
-                contract: action.payload.contract,
-                viewKey: action.payload.viewKey,
-            };
-        },
-        setKeplrWallet(state, action) {
-            state.keplrWallet = action.payload;
-        },
-        setBitKeep(state, action) {
-            state.bitKeep = action.payload;
-        },
-        setTemporaryFrom(state, action) {
-            state.temporaryFrom = action.payload;
-        },
-        setAccountWalletModal(state, action) {
-            state.accountWalletModal = action.payload;
-        },
-        setCheckWallet(state, action) {
-            state.checkWallet = action.payload;
-        },
-        setWrappedEGold(state, action) {
-            state.wrappedEGold = action.payload;
-        },
-        setUnwrappedEGold(state, action) {
-            state.unwrappedEGold = action.payload;
-        },
-        setTempleWalletSigner(state, action) {
-            state.templeSigner = action.payload;
-        },
-        setKukaiWalletSigner(state, action) {
-            state.kukaiWalletSigner = action.payload;
-        },
-        setBalance(state, action) {
-            state.balance = action.payload;
-        },
-        setNFTSetToggler(state) {
-            state.NFTSetToggler = !state.NFTSetToggler;
-        },
-        setGitLatestCommit(state, action) {
-            state.gitLatestCommit = action.payload;
-        },
-        setEachNFT(state, action) {
-            const { nftObj, index } = action.payload;
-            state.currentsNFTs = state.currentsNFTs.map((n, i) => {
-                if (i === index) n = nftObj;
-                return n;
-            });
-        },
-        setEachClaimables(state, action) {
-            const { nftObj, index } = action.payload;
-            state.algorandClaimables = state.algorandClaimables.map((n, i) => {
-                if (i === index) n = nftObj;
-                return n;
-            });
-        },
-        setPreloadNFTs(state, action) {
-            state.preloadNFTs = action.payload;
-        },
-        setAlert(state, action) {
-            state.alert = action.payload;
-        },
-        setNFTSelectAlert(state, action) {
-            state.NFTselectAlert = action.payload;
-        },
-        setDestinationAlert(state, action) {
-            state.destinationAlert = action.payload;
-        },
-        setTxnStatus(state, action) {
-            if (!action.payload) return;
-            const {
-                status,
-                fromHash,
-                tokenId,
-                toHash,
-                initialTokenId,
-                nftUri,
-                createdAt,
-            } = action.payload;
+  name: "general",
+  initialState,
+  reducers: {
+    setHederaWallet(state, action) {
+      state.hederaWallet = action.payload;
+    },
+    setHederaAccount(state, action) {
+      state.hederaAccount = action.payload;
+    },
+    setFilteredNFTSList(state, action) {
+      state.filteredNFTList = action.payload;
+    },
+    setReceiverIsSmartContractAddress(state, action) {
+      state.receiverIsSmartContract = action.payload;
+    },
+    setTemporaryTo(state, action) {
+      state.temporaryTo = action.payload;
+    },
+    setBitKeepPopUp(state, action) {
+      state.bitKeepPopUp = action.payload;
+    },
+    setSecretLoggedIn(state, action) {
+      state.secretLoggedIn = action.payload;
+    },
+    setRefreshSecret(state) {
+      state.refreshSecret = !state.refreshSecret;
+    },
+    setKeplrAccount(state, action) {
+      state.secretAccount = action.payload;
+    },
+    setSecretCred(state, action) {
+      state.secretCred = {
+        contract: action.payload.contract,
+        viewKey: action.payload.viewKey,
+      };
+    },
+    setKeplrWallet(state, action) {
+      state.keplrWallet = action.payload;
+    },
+    setBitKeep(state, action) {
+      state.bitKeep = action.payload;
+    },
+    setTemporaryFrom(state, action) {
+      state.temporaryFrom = action.payload;
+    },
+    setAccountWalletModal(state, action) {
+      state.accountWalletModal = action.payload;
+    },
+    setCheckWallet(state, action) {
+      state.checkWallet = action.payload;
+    },
+    setWrappedEGold(state, action) {
+      state.wrappedEGold = action.payload;
+    },
+    setUnwrappedEGold(state, action) {
+      state.unwrappedEGold = action.payload;
+    },
+    setTempleWalletSigner(state, action) {
+      state.templeSigner = action.payload;
+    },
+    setKukaiWalletSigner(state, action) {
+      state.kukaiWalletSigner = action.payload;
+    },
+    setBalance(state, action) {
+      state.balance = action.payload;
+    },
+    setNFTSetToggler(state) {
+      state.NFTSetToggler = !state.NFTSetToggler;
+    },
+    setGitLatestCommit(state, action) {
+      state.gitLatestCommit = action.payload;
+    },
+    setEachNFT(state, action) {
+      const { nftObj, index } = action.payload;
+      state.currentsNFTs = state.currentsNFTs.map((n, i) => {
+        if (i === index) n = nftObj;
+        return n;
+      });
+    },
+    setEachClaimables(state, action) {
+      const { nftObj, index } = action.payload;
+      state.algorandClaimables = state.algorandClaimables.map((n, i) => {
+        if (i === index) n = nftObj;
+        return n;
+      });
+    },
+    setPreloadNFTs(state, action) {
+      state.preloadNFTs = action.payload;
+    },
+    setAlert(state, action) {
+      state.alert = action.payload;
+    },
+    setNFTSelectAlert(state, action) {
+      state.NFTselectAlert = action.payload;
+    },
+    setDestinationAlert(state, action) {
+      state.destinationAlert = action.payload;
+    },
+    setTxnStatus(state, action) {
+      if (!action.payload) return;
+      const {
+        status,
+        fromHash,
+        tokenId,
+        toHash,
+        initialTokenId,
+        nftUri,
+        createdAt,
+      } = action.payload;
 
             state.txnHashArr = state.txnHashArr.map((e) => {
                 let hash;
@@ -511,7 +511,9 @@ const generalSlice = createSlice({
         addImportedNFTtoNFTlist(state, action) {
             state.NFTList = action.payload;
         },
+
     },
+  },
 });
 
 export const {
