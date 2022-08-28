@@ -7,12 +7,26 @@ class CacheService {
     retryStatues = [429];
     forceCache = ["nft.weedcommerce.info"];
 
-    constructor() {
-        this.axios = axios.create({
-            baseURL: this.widgetApi,
-            headers: {
-                "Content-type": "application/json",
-            },
+  constructor() {
+    this.axios = axios.create({
+      baseURL: this.widgetApi,
+      headers: {
+        "Content-type": "application/json",
+      },
+      timeout: 5000,
+    });
+  }
+
+  async get({ chainId, tokenId, contract }, nft) {
+    try {
+      return axios
+        .get(
+          `${this.cacheApi}/nft/data?chainId=${chainId ||
+            nft.native?.chainId}&tokenId=${tokenId ||
+            nft.native?.tokenId}&contract=${encodeURIComponent(contract) ||
+            encodeURIComponent(nft.native?.contract)}`,
+          {
+
             timeout: 5000,
         });
     }
