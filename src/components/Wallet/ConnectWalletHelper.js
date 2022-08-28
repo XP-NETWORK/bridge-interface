@@ -159,15 +159,13 @@ export const switchNetWork = async (from) => {
 };
 
 export const connectKeplr = async (testnet, chain) => {
-  // debugger;
-
   console.log(chain);
   const chainId = testnet ? chain.tnChainId : chain.chainId;
   if (window.keplr) {
     try {
       await window.keplr.enable(chainId);
       const offlineSigner = window.keplr.getOfflineSigner(chainId);
-      console.log(offlineSigner);
+
       const accounts = await offlineSigner.getAccounts();
 
       const { address } = accounts[0];
@@ -177,6 +175,7 @@ export const connectKeplr = async (testnet, chain) => {
         chainId,
         wallet: offlineSigner,
         walletAddress: address,
+        //encryptionUtils: window.getEnigmaUtils(chain),
       });
 
       store.dispatch(setKeplrAccount(address));

@@ -229,6 +229,15 @@ const generalSlice = createSlice({
                     )
             );
         },
+        setSelectedNFTAmount(state, action) {
+            const { amount, index } = action.payload;
+            state.selectedNFTList = state.selectedNFTList.map((e, i) => {
+                if (i === index) {
+                    e.amountToTransfer = amount;
+                }
+                return e;
+            });
+        },
         setSearchNFTList(state, action) {
             state.NFTListSearch = action.payload;
         },
@@ -274,17 +283,30 @@ const generalSlice = createSlice({
         },
         setTxnHash(state, action) {
             let { nft, txn } = action.payload;
-
             const { tokenId, contract, chainId } = nft.native;
-            if (typeof txn === "object") {
-                txn = {
-                    ...txn,
-                    hash: txn.hash || txn.transactionHash,
-                };
+            switch (true) {
+                case Array.isArray(txn):
+                    txn = {
+                        ...txn[0],
+                        hash: txn[0].hash || txn[0].transactionHash,
+                    };
+                    break;
+                case typeof txn === "object":
+                    txn = {
+                        ...txn,
+                        hash: txn.hash || txn.transactionHash,
+                    };
+                    break;
+                case txn && txn?.hash?.hash instanceof Uint8Array:
+                    txn.hash = utils.hexlify(txn.hash?.hash).replace(/^0x/, "");
+                    break;
+                case typeof txn === "string":
+                    txn = { hash: txn };
+                    break;
+                default:
+                    break;
             }
-            if (txn && txn?.hash?.hash instanceof Uint8Array) {
-                txn.hash = utils.hexlify(txn.hash?.hash).replace(/^0x/, "");
-            }
+
             state.txnHashArr = [...state.txnHashArr, txn];
             state.selectedNFTList = state.selectedNFTList.map((n) => {
                 const { native } = n;
@@ -357,7 +379,30 @@ const generalSlice = createSlice({
             state.WCProvider = action.payload;
         },
         setError(state, action) {
-            state.error = action.payload;
+            debugger;
+            if (action.payload) {
+                const { err, data, message } = action.payload;
+                switch (true) {
+                    case typeof data === "object":
+                        if (
+                            data.message?.includes("User cant pay the bills") ||
+                            data.message?.includes(
+                                "insufficient funds for transfer"
+                            )
+                        )
+                            state.error = `You don't have enough funds to pay the fees`;
+                        else state.error = data.message || err.message;
+                        break;
+                    case err:
+                        state.error = err.data.message || err.message;
+                        break;
+                    default:
+                        if (message?.includes("User cant pay the bills"))
+                            state.error = `You don't have enough funds to pay the fees`;
+                        else state.error = message;
+                        break;
+                }
+            } else state.error = false;
         },
         setTronPopUp(state, action) {
             state.tronPopUp = action.payload;
@@ -602,6 +647,7 @@ export const {
     setRefreshSecret,
     setTemporaryTo,
     setSecretCred,
+    setSelectedNFTAmount,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

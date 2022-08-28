@@ -144,6 +144,7 @@ export default function SuccessModal() {
                                     }
                                     target="_blank"
                                     className="success-hash"
+                                    rel="noreferrer"
                                 >
                                     {getTX()
                                         ? `${getTX().substring(
@@ -181,6 +182,7 @@ export default function SuccessModal() {
                             href={getExplorer() || "#"}
                             className="success-hash"
                             target="_blank"
+                            rel="noreferrer"
                         >
                             {address
                                 ? `${address.substring(
@@ -207,6 +209,7 @@ export default function SuccessModal() {
                                 CHAIN_INFO[to?.text]?.blockExplorerUrls
                             }${receiver}`}
                             target="_blank"
+                            rel="noreferrer"
                         >
                             {receiver
                                 ? `${receiver.substring(

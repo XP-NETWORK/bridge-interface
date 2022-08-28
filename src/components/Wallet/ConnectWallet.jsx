@@ -8,17 +8,14 @@ import {
     setShowVideo,
     setTemporaryFrom,
     setWalletsModal,
-    setWrongNetwork,
 } from "../../store/reducers/generalSlice";
 import MaiarModal from "../MaiarModal";
 import WalletList from "./WalletList";
 import { useNavigate, useLocation } from "react-router-dom";
-import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
 import { useWeb3React } from "@web3-react/core";
-import { getAddEthereumChain } from "../../wallet/chains";
 import { useDidUpdateEffect } from "../Settings/hooks";
 import Web3 from "web3";
-import { switchNetwork } from "../../services/chains/evmSerive";
+import { switchNetwork } from "../../services/chains/evm/evmService";
 
 function ConnectWallet() {
     const navigate = useNavigate();

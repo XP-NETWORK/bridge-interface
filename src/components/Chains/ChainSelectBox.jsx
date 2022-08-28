@@ -13,10 +13,8 @@ import SetDeparture from "./SetDeparture";
 import SetDestination from "./SetDestination";
 import ChainListBox from "./ChainListBox";
 import swap from "../../assets/img/icons/swapChain.svg";
-import { TESTNET_CHAIN_INFO, CHAIN_INFO } from "../values";
-import { useWeb3React } from "@web3-react/core";
 import { usePrevious } from "../Settings/hooks";
-import { switchNetwork } from "../../services/chains/evmSerive";
+import { switchNetwork } from "../../services/chains/evm/evmService";
 
 export default function ChainSelectBox() {
     const dispatch = useDispatch();

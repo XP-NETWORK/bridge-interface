@@ -30,6 +30,7 @@ import MyAlgoConnect from "@randlabs/myalgo-connect";
 import Connex from "@vechain/connex";
 import { CHAIN_INFO } from "../values";
 import Web3 from "web3";
+import BigNumber from "bignumber.js";
 
 function Approval(props) {
   const dispatch = useDispatch();
@@ -113,6 +114,7 @@ function Approval(props) {
         )[0];
         if (!isInApprovedNFTs) {
           try {
+            console.log(nft, "nft");
             const ap = await chain.approveForMinter(nft, signer);
             dispatch(updateApprovedNFTs(nft));
             setFinishedApproving(arr);
@@ -136,12 +138,8 @@ function Approval(props) {
 
       const factory = await getFactory();
       const chain = await factory.inner(Chain.SECRET);
-
-      console.log(chain, "chain1");
-
       try {
-        const approve = await chain.preTransfer(signer, nft);
-
+        const approve = await chain.preTransfer(signer, nft, new BigNumber(0));
         dispatch(updateApprovedNFTs(nft));
         setFinishedApproving(arr);
       } catch (e) {
@@ -303,6 +301,7 @@ function Approval(props) {
     // if (isSC) {
     //     dispatch(setReceiverIsSmartContractAddress(true));
     // } else
+
     if (!receiver) {
       dispatch(setPasteDestinationAlert(true));
     } else if (selectedNFTList.length < 1) {
