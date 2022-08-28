@@ -1,8 +1,4 @@
-import {
-    TESTNET_CHAIN_INFO,
-    CHAIN_INFO,
-    chainsConfig,
-} from "../../../components/values.js";
+import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
 import { getFactory } from "../../../wallet/helpers";
 import {
@@ -10,7 +6,6 @@ import {
     setTransferLoaderModal,
     setTxnHash,
 } from "../../../store/reducers/generalSlice";
-import BigNumber from "bignumber.js";
 
 export const transferNFTFromElrond = async ({
     to,
@@ -47,7 +42,7 @@ export const transferNFTFromElrond = async ({
     let result;
     try {
         switch (true) {
-            case !mintWith && !testnet:
+            case !wrapped && !mintWith && !testnet:
                 store.dispatch(
                     setError(
                         "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection"

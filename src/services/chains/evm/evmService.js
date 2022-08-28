@@ -5,16 +5,12 @@ import {
 } from "../../../components/values.js";
 import store from "../../../store/store.js";
 import { getFactory } from "../../../wallet/helpers";
-import {
-    setError,
-    setTransferLoaderModal,
-    setTxnHash,
-} from "../../../store/reducers/generalSlice";
+import { setError, setTxnHash } from "../../../store/reducers/generalSlice";
 import BigNumber from "bignumber.js";
 
 export async function switchNetwork(chain) {
     const {
-        general: { testNet, bitKeep, from },
+        general: { testNet, bitKeep },
     } = store.getState();
 
     const info = testNet
@@ -64,7 +60,6 @@ export const transferNFTFromEVM = async ({
     chainConfig,
     testnet,
 }) => {
-    debugger;
     const factory = await getFactory();
     const toChain = await factory.inner(chainsConfig[to.text].Chain);
     const fromChain = await factory.inner(chainsConfig[from.text].Chain);
@@ -85,50 +80,47 @@ export const transferNFTFromEVM = async ({
         );
     }
     let result;
-    try {
-        switch (true) {
-            case to.type === "Cosmos" && !mintWith:
-                const contractAddress =
-                    chainConfig?.secretParams?.bridge?.contractAddress;
-                const codeHash = chainConfig?.secretParams?.bridge?.codeHash;
-                let mw = `${contractAddress},${codeHash}`;
-                result = await factory.transferNft(
-                    fromChain,
-                    toChain,
-                    nft,
-                    signer,
-                    receiver,
-                    fee,
-                    mw
-                );
-                break;
-            case !wrapped && !mintWith && !testnet:
-                store.dispatch(
-                    setError(
-                        "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection"
-                    )
-                );
-                if (txnHashArr.length) {
-                    store.dispatch(setTxnHash({ txn: "failed", nft }));
-                }
-                break;
-            default:
-                result = await transfer(
-                    fromChain,
-                    toChain,
-                    nft,
-                    signer,
-                    receiver,
-                    amountToTransfer,
-                    fee,
-                    mintWith,
-                    factory
-                );
-                break;
-        }
-    } catch (error) {
-        console.log(error);
+    switch (true) {
+        case to.type === "Cosmos" && !mintWith && !wrapped:
+            const contractAddress =
+                chainConfig?.secretParams?.bridge?.contractAddress;
+            const codeHash = chainConfig?.secretParams?.bridge?.codeHash;
+            let mw = `${contractAddress},${codeHash}`;
+            result = await factory.transferNft(
+                fromChain,
+                toChain,
+                nft,
+                signer,
+                receiver,
+                fee,
+                mw
+            );
+            break;
+        case !wrapped && !mintWith && !testnet:
+            store.dispatch(
+                setError(
+                    "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection"
+                )
+            );
+            if (txnHashArr[0]) {
+                store.dispatch(setTxnHash({ txn: "failed", nft }));
+            }
+            break;
+        default:
+            result = await transfer(
+                fromChain,
+                toChain,
+                nft,
+                signer,
+                receiver,
+                amountToTransfer,
+                fee,
+                mintWith,
+                factory
+            );
+            break;
     }
+
     return result ? true : false;
 };
 

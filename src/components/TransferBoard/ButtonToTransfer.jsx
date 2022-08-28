@@ -199,7 +199,6 @@ export default function ButtonToTransfer() {
         const stop = unstoppabledomainSwitch(unstoppabledomain);
         if (stop) return;
         let result;
-        let txnError;
         const params = {
             to: _to,
             from: _from,

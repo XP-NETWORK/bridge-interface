@@ -379,21 +379,29 @@ const generalSlice = createSlice({
             state.WCProvider = action.payload;
         },
         setError(state, action) {
-            const { err, data, message } = action.payload;
-            switch (true) {
-                case data:
-                    if (data.message.includes("User cant pay the bills"))
-                        state.error = `You don't have enough funds to pay the fees`;
-                    else state.error = data.message || err.message;
-                    break;
-                case err:
-                    state.error = err.data.message || err.message;
-                    break;
-                default:
-                    if (message.includes("User cant pay the bills"))
-                        state.error = `You don't have enough funds to pay the fees`;
-                    break;
-            }
+            debugger;
+            if (action.payload) {
+                const { err, data, message } = action.payload;
+                switch (true) {
+                    case typeof data === "object":
+                        if (
+                            data.message?.includes("User cant pay the bills") ||
+                            data.message?.includes(
+                                "insufficient funds for transfer"
+                            )
+                        )
+                            state.error = `You don't have enough funds to pay the fees`;
+                        else state.error = data.message || err.message;
+                        break;
+                    case err:
+                        state.error = err.data.message || err.message;
+                        break;
+                    default:
+                        if (message?.includes("User cant pay the bills"))
+                            state.error = `You don't have enough funds to pay the fees`;
+                        break;
+                }
+            } else state.error = false;
         },
         setTronPopUp(state, action) {
             state.tronPopUp = action.payload;
