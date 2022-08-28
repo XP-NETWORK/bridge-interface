@@ -23,7 +23,8 @@ class CacheService {
         .get(
           `${this.cacheApi}/nft/data?chainId=${chainId ||
             nft.native?.chainId}&tokenId=${tokenId ||
-            nft.native?.tokenId}&contract=${contract || nft.native?.contract}`,
+            nft.native?.tokenId}&contract=${encodeURIComponent(contract) ||
+            encodeURIComponent(nft.native?.contract)}`,
           {
             timeout: 5000,
           }

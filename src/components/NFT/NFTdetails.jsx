@@ -219,7 +219,7 @@ export default NFTdetails;
 
 function Attribute(props) {
   const { display_type, value } = props;
-  const trait_type = props.trait_type || props.name;
+  const trait_type = props.trait_type || props.name || props.label;
   if (trait_type === "Original Chain") {
   }
   return (
