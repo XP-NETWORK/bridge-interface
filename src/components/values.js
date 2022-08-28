@@ -359,7 +359,7 @@ export const chains = [
         chainId: 1564830818,
         tnChainId: 1305754875840118,
         image: { avatar: true, src: SFUEL },
-        testNet: false,
+        testNet: true,
         mainnet: false,
         newChain: true,
     },
