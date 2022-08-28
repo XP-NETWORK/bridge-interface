@@ -1,17 +1,9 @@
-export const getAddEthereumChain = (testnet) => {
-    let o;
-    if (testnet) {
-        o = allchains.reduce(
-            (obj, item) => Object.assign(obj, { [item.tnChainId]: item }),
-            {}
-        );
-    } else {
-        o = allchains.reduce(
+export const getAddEthereumChain = (testnet, chainId) => {
+    let o = allchains.reduce(
             (obj, item) => Object.assign(obj, { [item.chainId]: item }),
             {}
         );
-    }
-    return o;
+    return o
 };
 
 export const allchains = [
@@ -5077,18 +5069,14 @@ export const allchains = [
         chainId: 1564830818,
     },
     {
-        name: "Skale Testnet",
-        chain: "SFUEL",
-        network: "testnet",
+        chainId: 1305754875840118,
+        chainName: "Skale Testnet",
         rpc: ["https://staging-v2.skalenodes.com/v1/rapping-zuben-elakrab"],
-        faucets: [],
         nativeCurrency: {
             name: "SFUEL",
             symbol: "SFUEL",
             decimals: 18,
         },
-        shortName: "skale",
-        tnChainId: 1305754875840118,
     },
     {
         name: "Aurora MainNet",
