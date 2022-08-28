@@ -1,66 +1,47 @@
 import axios from "axios";
 
+const en = new TextEncoder();
+
 class CacheService {
-    cacheApi = "https://nft-cache.herokuapp.com"; //"https://nft-cache-testing.herokuapp.com"; //"http://localhost:3030"; //"https://nft-cache.herokuapp.com";
+    cacheApi = "https://nft-cache-testing.herokuapp.com"; //"https://nft-cache-testing.herokuapp.com"; //"http://localhost:3030"; //"https://nft-cache.herokuapp.com";
     retryInterval = 6000;
     totalTry = 6;
     retryStatues = [429];
     forceCache = ["nft.weedcommerce.info"];
 
-  constructor() {
-    this.axios = axios.create({
-      baseURL: this.widgetApi,
-      headers: {
-        "Content-type": "application/json",
-      },
-      timeout: 5000,
-    });
-  }
-
-  async get({ chainId, tokenId, contract }, nft) {
-    try {
-      return axios
-        .get(
-          `${this.cacheApi}/nft/data?chainId=${chainId ||
-            nft.native?.chainId}&tokenId=${tokenId ||
-            nft.native?.tokenId}&contract=${encodeURIComponent(contract) ||
-            encodeURIComponent(nft.native?.contract)}`,
-          {
-
+    constructor() {
+        this.axios = axios.create({
+            baseURL: this.widgetApi,
+            headers: {
+                "Content-type": "application/json",
+            },
             timeout: 5000,
         });
     }
 
     async get({ chainId, tokenId, contract }, nft) {
-        try {
-            return axios
-                .get(
-                    `${this.cacheApi}/nft/data?chainId=${chainId ||
-                        nft.native?.chainId}&tokenId=${tokenId ||
-                        nft.native?.tokenId}&contract=${contract ||
-                        nft.native?.contract}`,
-                    {
-                        timeout: 5000,
-                    }
-                )
-                .catch(() => ({ data: null }));
-        } catch (e) {
-            console.log(e);
-        }
+        return axios
+            .get(
+                `${this.cacheApi}/nft/data?chainId=${chainId ||
+                    nft.native?.chainId}&tokenId=${tokenId ||
+                    nft.native?.tokenId}&contract=${contract ||
+                    nft.native?.contract}`
+            )
+            .catch(() => ({ data: null }));
     }
 
     async add(nft, account, whitelisted, times = 1) {
-        /* if (this.isRestricted(nft.uri)) {
-      const encoded = "custom_encoded64:" + en.encode(nft.uri);
-      nft = {
-        ...nft,
-        uri: encoded,
-        native: {
-          ...nft.native,
-          ...(nft.native.uri ? { uri: encoded } : {}),
-        },
-      };
-    }*/
+        if (this.isRestricted(nft.uri)) {
+            const encoded = "custom_encoded64:" + en.encode(nft.uri);
+            nft = {
+                ...nft,
+                uri: encoded,
+                native: {
+                    ...nft.native,
+                    ...(nft.native.uri ? { uri: encoded } : {}),
+                },
+            };
+        }
 
         return axios
             .post(`${this.cacheApi}/nft/add`, {
@@ -94,28 +75,15 @@ class CacheService {
 
                 const { data } = res;
 
-                const tokenId = data.wrapped?.token_id || data.wrapped?.tokenId;
-
                 return {
-                    nft: {
-                        ...nft,
-                        collectionIdent: data.wrapped?.contract,
-                        uri: data.wrapped?.original_uri,
-                        native: {
-                            ...nft.native,
-                            chainId: data.wrapped?.origin,
-                            tokenId,
-                        },
-                    },
                     chainId: data.wrapped?.origin,
-                    tokenId,
+                    tokenId: data.wrapped?.tokenId,
                     contract: data.wrapped?.contract,
                 };
             } catch (e) {}
         }
 
         return {
-            nft,
             chainId: nft.native?.chainId,
             tokenId: nft.native?.tokenId,
             contract: nft.collectionIdent,
