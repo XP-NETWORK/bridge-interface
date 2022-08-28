@@ -880,7 +880,7 @@ export const CHAIN_INFO = {
         chainId: 74,
         tnChainId: 39,
         rpc: "https://sync-testnet.veblocks.net",
-        blockExplorerUrl: "https://explore.vechain.org/accounts/",
+        blockExplorerUrls: "https://explore.vechain.org/accounts/",
         testBlockExplorerUrls: "https://explore-testnet.vechain.org/accounts/",
     },
     Secret: {

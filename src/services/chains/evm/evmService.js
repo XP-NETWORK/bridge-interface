@@ -121,7 +121,7 @@ export const transferNFTFromEVM = async ({
             break;
     }
 
-    return result ? true : false;
+    return result || false;
 };
 
 const transfer = async (

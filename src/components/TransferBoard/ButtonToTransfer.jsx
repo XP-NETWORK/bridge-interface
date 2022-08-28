@@ -237,7 +237,9 @@ export default function ButtonToTransfer() {
             default:
                 break;
         }
-        dispatch(setTxnHash({ txn: result || "failed", nft }));
+        if (txnHashArr[0] && !result) {
+            dispatch(setTxnHash({ txn: "failed", nft }));
+        } else if (result) dispatch(setTxnHash({ txn: result, nft }));
         setLoading(false);
         dispatch(setTransferLoaderModal(false));
     };
