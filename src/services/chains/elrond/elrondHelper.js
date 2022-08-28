@@ -1,11 +1,7 @@
 import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
 import { getFactory } from "../../../wallet/helpers";
-import {
-    setError,
-    setTransferLoaderModal,
-    setTxnHash,
-} from "../../../store/reducers/generalSlice";
+import { setError, setTxnHash } from "../../../store/reducers/generalSlice";
 
 export const transferNFTFromElrond = async ({
     to,
@@ -19,7 +15,6 @@ export const transferNFTFromElrond = async ({
     chainConfig,
     testnet,
 }) => {
-    debugger;
     const factory = await getFactory();
     const toChain = await factory.inner(chainsConfig[to.text].Chain);
     const fromChain = await factory.inner(chainsConfig[from.text].Chain);
@@ -40,39 +35,32 @@ export const transferNFTFromElrond = async ({
         );
     }
     let result;
-    try {
-        switch (true) {
-            case !wrapped && !mintWith && !testnet:
-                store.dispatch(
-                    setError(
-                        "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection"
-                    )
-                );
-                if (txnHashArr.length) {
-                    store.dispatch(setTxnHash({ txn: "failed", nft }));
-                }
-                break;
-            default:
-                result = await transfer(
-                    fromChain,
-                    toChain,
-                    nft,
-                    signer,
-                    receiver,
-                    amountToTransfer,
-                    fee,
-                    mintWith,
-                    factory
-                );
-                break;
-        }
-        console.log("Transfer result: ", result, "index: ", index);
-        store.dispatch(setTxnHash({ txn: result, nft }));
-    } catch (error) {
-        console.log(error);
+    switch (true) {
+        case !wrapped && !mintWith && !testnet:
+            store.dispatch(
+                setError(
+                    "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection"
+                )
+            );
+            if (txnHashArr[0]) {
+                store.dispatch(setTxnHash({ txn: "failed", nft }));
+            }
+            break;
+        default:
+            result = await transfer(
+                fromChain,
+                toChain,
+                nft,
+                signer,
+                receiver,
+                amountToTransfer,
+                fee,
+                mintWith,
+                factory
+            );
+            break;
     }
-    store.dispatch(setTransferLoaderModal(false));
-    return result ? true : false;
+    return result || false;
 };
 
 const transfer = async (
@@ -89,7 +77,6 @@ const transfer = async (
     let result;
     try {
         switch (true) {
-            case !amount:
             default:
                 result = await factory.transferNft(
                     fromChain,
@@ -103,6 +90,6 @@ const transfer = async (
                 return result;
         }
     } catch (error) {
-        console.log(error);
+        store.dispatch(setError(error));
     }
 };

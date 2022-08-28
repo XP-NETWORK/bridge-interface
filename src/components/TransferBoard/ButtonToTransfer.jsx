@@ -211,7 +211,7 @@ export default function ButtonToTransfer() {
             chainConfig,
             testnet,
         };
-
+        debugger;
         switch (_from.type) {
             case "EVM":
                 result = await transferNFTFromEVM(params);
@@ -237,8 +237,7 @@ export default function ButtonToTransfer() {
             default:
                 break;
         }
-        if (txnHashArr[0])
-            dispatch(setTxnHash({ txn: result || "failed", nft }));
+        dispatch(setTxnHash({ txn: result || "failed", nft }));
         setLoading(false);
         dispatch(setTransferLoaderModal(false));
     };

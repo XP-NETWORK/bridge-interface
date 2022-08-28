@@ -399,6 +399,7 @@ const generalSlice = createSlice({
                     default:
                         if (message?.includes("User cant pay the bills"))
                             state.error = `You don't have enough funds to pay the fees`;
+                        else state.error = message;
                         break;
                 }
             } else state.error = false;
