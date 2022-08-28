@@ -31,11 +31,9 @@ export default function UserConnect({ desktop, mobile }) {
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const WalletConnect = useSelector((state) => state.general.WalletConnect);
     const { account, chainId, active } = useWeb3React();
-    const hederaWallet = useSelector((state) => state.general.hederaWallet);
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
     const testnet = useSelector((state) => state.general.testNet);
     const secretAccount = useSelector((state) => state.general.secretAccount);
-    const keplrWallet = useSelector((state) => state.general.keplrWallet);
     const walletAccount =
         hederaAccount ||
         secretAccount ||
@@ -45,7 +43,6 @@ export default function UserConnect({ desktop, mobile }) {
         algorandAccount ||
         tronWallet ||
         _account;
-    const location = useLocation();
 
     const handleConnect = () => {
         if (!walletAccount) {
@@ -153,6 +150,7 @@ export default function UserConnect({ desktop, mobile }) {
         if (!account && WalletConnect) {
             active !== undefined && window.location.reload();
         }
+        dispatch(setAccount(account));
     }, [active]);
 
     return (
