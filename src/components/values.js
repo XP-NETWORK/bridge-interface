@@ -334,7 +334,7 @@ export const chains = [
         order: 0,
         tnChainId: "pulsar-2",
         image: { avatar: true, src: SCRT },
-        mainnet: true,
+        mainnet: biz,
         testNet: biz,
         test: false,
         newChain: biz,
@@ -671,7 +671,7 @@ export const TESTNET_CHAIN_INFO = {
     Hedera: { nonce: 0x1d },
     Skale: {
         nonce: 0x1e,
-        chainId: 0x4a393bf89c676,
+        chainId: 1305754875840118,
     },
     Iotex: {
         nonce: 0x14,
@@ -916,7 +916,7 @@ export const CHAIN_INFO = {
         none: 0x1e,
         decimals: 1e18,
         chainId: 1564830818,
-        tnChainId: 0x4a393bf89c676,
+        tnChainId: 1305754875840118,
         blockExplorerUrl: "",
         testBlockExplorerUrls:
             "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/address",
