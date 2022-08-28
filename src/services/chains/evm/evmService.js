@@ -7,12 +7,21 @@ import store from "../../../store/store.js";
 import { getFactory } from "../../../wallet/helpers";
 import { setError, setTxnHash } from "../../../store/reducers/generalSlice";
 import BigNumber from "bignumber.js";
+import { getAddEthereumChain } from "../../../wallet/chains.js";
 
 export async function switchNetwork(chain) {
+    debugger;
     const {
         general: { testNet, bitKeep },
     } = store.getState();
 
+    const id = (testNet ? chain.tnChainId : chain.chainId).toString();
+    const paramsArr = getAddEthereumChain(testNet, id);
+    const params = paramsArr[id];
+    const copyParams = {
+        ...params,
+        chainId: String(params.chainId),
+    };
     const info = testNet
         ? TESTNET_CHAIN_INFO[chain?.key]
         : CHAIN_INFO[chain?.key];
@@ -37,10 +46,10 @@ export async function switchNetwork(chain) {
                 });
                 return true;
             } catch (error) {
-                const c = testNet ? chain?.tnChainId : chain?.chainId;
+                // const c = testNet ? chain?.tnChainId : chain?.chainId;
                 await window.ethereum.request({
                     method: "wallet_addEthereumChain",
-                    params: [{ chainId: c }],
+                    params: [copyParams],
                 });
                 console.log(error);
                 return false;
