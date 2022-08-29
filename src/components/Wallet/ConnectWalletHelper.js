@@ -252,43 +252,8 @@ export const connectMetaMask = async (activate, from, to) => {
     }
 };
 
-export const connectVeChainThor = async (testnet) => {
-    // debugger;
-    let account;
-    const connex = new Connex(
-        testnet
-            ? {
-                  node: "https://testnet.veblocks.net/",
-                  network: "test",
-              }
-            : {
-                  node: "https://sync-mainnet.veblocks.net",
-                  network: "main",
-              }
-    );
-
-    // store.dispatch(setSync2Connecx(client));
-    const vendor = new Connex.Vendor(testnet ? "test" : "main");
-    console.log(
-        "🚀 ~ file: ConnectWalletHelper.js ~ line 272 ~ connectVeChainThor ~ vendor",
-        vendor
-    );
-    await vendor
-        .sign("cert", {
-            purpose: "identification",
-            payload: {
-                type: "text",
-                content: "sign certificate to continue bridging",
-            },
-        })
-        // .link("https://connex.vecha.in/{certid}")
-        .request()
-        .then((result) => {
-            account = result?.annex?.signer;
-        });
-};
-
 export const connectSync2 = async (testnet) => {
+    debugger;
     let account;
     const client = new Connex(
         testnet
@@ -302,8 +267,8 @@ export const connectSync2 = async (testnet) => {
               }
     );
     store.dispatch(setSync2Connecx(client));
-    const vendor = new Connex(testnet ? "test" : "main");
-    await vendor
+    const connex = new Connex(testnet ? "test" : "main");
+    await connex.vendor
         .sign("cert", {
             purpose: "identification",
             payload: {

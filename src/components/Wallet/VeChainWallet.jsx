@@ -36,10 +36,6 @@ export default function VeChainWallet({ close, wallet }) {
         let account;
         setConnecting(true);
         switch (w) {
-            case "VeChainThor":
-                account = await connectVeChainThor(testnet);
-                break;
-
             default:
                 account = await connectSync2(testnet);
                 if (account) setConnecting(false);
