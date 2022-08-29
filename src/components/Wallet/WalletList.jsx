@@ -326,6 +326,21 @@ export default function WalletList({ search, connected, input }) {
             desktop: true,
             order: 12,
         },
+
+        {
+            Component: (
+                <VeChainWallet
+                    key="wallet-index-14"
+                    wallet={"VeChainThor"}
+                    close={connected}
+                />
+            ),
+            name: "VeChainThor",
+            type: "VeChain",
+            mobile: true,
+            desktop: false,
+            order: 13,
+        },
         {
             Component: (
                 <CosmosWallet
@@ -338,7 +353,7 @@ export default function WalletList({ search, connected, input }) {
             type: "Cosmos",
             mobile: "false",
             desktop: "true",
-            order: 13,
+            order: 14,
         },
         {
             Component: (
@@ -351,7 +366,7 @@ export default function WalletList({ search, connected, input }) {
             name: "Ledger",
             mobile: false,
             desktop: true,
-            order: 14,
+            order: 15,
             type: "USB",
         },
         {
@@ -361,7 +376,7 @@ export default function WalletList({ search, connected, input }) {
             name: "Trezor",
             mobile: false,
             desktop: true,
-            order: 15,
+            order: 16,
             type: "USB",
         },
         {
@@ -369,7 +384,7 @@ export default function WalletList({ search, connected, input }) {
             name: "Hashpack",
             mobile: false,
             desktop: true,
-            order: 16,
+            order: 17,
             type: "Hedera",
         },
         {
@@ -377,7 +392,7 @@ export default function WalletList({ search, connected, input }) {
             name: "Blade",
             mobile: false,
             desktop: true,
-            order: 16,
+            order: 18,
             type: "Hedera",
         },
     ];
