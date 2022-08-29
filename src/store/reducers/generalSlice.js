@@ -379,7 +379,6 @@ const generalSlice = createSlice({
             state.WCProvider = action.payload;
         },
         setError(state, action) {
-            debugger;
             if (action.payload) {
                 const { err, data, message } = action.payload;
                 switch (true) {
