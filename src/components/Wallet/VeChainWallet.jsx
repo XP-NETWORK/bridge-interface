@@ -12,6 +12,8 @@ import thorIcon from "../../assets/img/wallet/Thor.svg";
 import { isMobile } from "react-device-detect";
 
 export default function VeChainWallet({ close, wallet }) {
+    const userAgent = navigator.userAgent;
+    const isVeChainThor = userAgent.match(/vechainthorwallet|vechain|thor/);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
@@ -80,15 +82,17 @@ export default function VeChainWallet({ close, wallet }) {
 
         default:
             return (
-                <li
-                    style={getStyle()}
-                    onClick={handleConnect}
-                    className="wllListItem"
-                    data-wallet="Sync2"
-                >
-                    <img src={Sync2} alt="Sync2" />
-                    <p>Sync2</p>
-                </li>
+                !isVeChainThor && (
+                    <li
+                        style={getStyle()}
+                        onClick={handleConnect}
+                        className="wllListItem"
+                        data-wallet="Sync2"
+                    >
+                        <img src={Sync2} alt="Sync2" />
+                        <p>Sync2</p>
+                    </li>
+                )
             );
     }
 }

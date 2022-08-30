@@ -51,6 +51,8 @@ export default function ChainListBox() {
     const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const axios = require("axios");
+    const userAgent = navigator.userAgent;
+    const isVeChainThor = userAgent.match(/vechainthorwallet|vechain|thor/);
 
     const checkValidators = async () => {
         let res;
