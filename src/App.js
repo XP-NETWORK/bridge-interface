@@ -28,7 +28,7 @@ import { Modal } from "react-bootstrap";
 import Widget from "./components/Widget";
 import BitKeepModal from "./components/Modals/BitKeepModal/BitKeepModal";
 import VeChainThorModal from "./components/Modals/VeChainThorModal/VeChainThorModal";
-
+import DepositAlert from "./components/Alerts/DepositAlert";
 function App() {
     const dispatch = useDispatch();
     const axios = require("axios");
@@ -110,12 +110,14 @@ function App() {
             <TransferLoader />
             <TronConnectionErrMod />
             <BitKeepModal />
+
             <VeChainThorModal />
             <ApproveLoader />
             <Error />
             <TronPopUp />
             <XpBridge />
             <Alert />
+            <DepositAlert />
         </div>
     );
 }

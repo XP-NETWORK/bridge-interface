@@ -10,7 +10,8 @@ import docs from "../assets/img/nav/doc_icon.svg";
 import github from "../assets/img/nav/github.svg";
 import video from "../assets/img/nav/vid.svg";
 import xpnet from "../assets/img/nav/xpnet.svg";
-import message from "../assets/img/nav/message.svg";
+import message from "../assets/img/nav/helper.svg";
+import deposits from "../assets/img/nav/deposites.svg";
 import explorer from "../assets/img/nav/explorer.svg";
 import security from "../assets/img/nav/security.svg";
 import UserConnect from "../components/User/UserConnect";
@@ -123,6 +124,18 @@ function NavBar() {
                                 </div>
                                 <div className="nav-link__txt">Explorer</div>
                             </Nav.Link> */}
+                            {/* {!testnet && (
+                                <LinkContainer to={"deposits"}>
+                                    <Nav.Link>
+                                        <div className="nav-link__icon">
+                                            <img src={deposits} alt="" />
+                                        </div>
+                                        <div className="nav-link__txt">
+                                            Deposits
+                                        </div>
+                                    </Nav.Link>
+                                </LinkContainer>
+                            )} */}
                             <Nav.Link
                                 target="_blank"
                                 href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"

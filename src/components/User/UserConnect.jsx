@@ -15,6 +15,7 @@ import { setSigner } from "../../store/reducers/signersSlice";
 import { setNFTS } from "../../wallet/helpers";
 import { chains } from "../values";
 import Identicon from "./Identicon";
+import { setDepositWalletModal } from "../../store/reducers/discountSlice";
 
 export default function UserConnect({ desktop, mobile }) {
     const dispatch = useDispatch();
@@ -45,9 +46,19 @@ export default function UserConnect({ desktop, mobile }) {
         _account;
 
     const handleConnect = () => {
-        if (!walletAccount) {
-            dispatch(setWalletsModal(true));
-        } else if (walletAccount) dispatch(setAccountModal(true));
+        // debugger;
+        switch (location.pathname) {
+            case "/deposits":
+                if (!walletAccount) {
+                    dispatch(setDepositWalletModal(true));
+                } else if (walletAccount) dispatch(setAccountModal(true));
+                break;
+            default:
+                if (!walletAccount) {
+                    dispatch(setWalletsModal(true));
+                } else if (walletAccount) dispatch(setAccountModal(true));
+                break;
+        }
     };
 
     const getAccountString = () => {
@@ -98,7 +109,6 @@ export default function UserConnect({ desktop, mobile }) {
                 }
                 break;
             default:
-                console.log("to: ", to);
                 if (
                     !chainConnected?.mainnet ||
                     !chains.some((chain) => chain?.chainId === decimal)

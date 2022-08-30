@@ -12,12 +12,15 @@ import BitKeep from "../../assets/img/wallet/bitkeep.svg";
 import CosmosWallet from "./CosmosWallet";
 import { biz } from "../values";
 import HederaWallet from "./HederaWallet";
+import { useLocation } from "react-router-dom";
 
-export default function WalletList({ search, connected, input }) {
+export default function WalletList({ search, connected, input, discount }) {
     const from = useSelector((state) => state.general.from);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
+    const location = useLocation();
 
     const sortWallet = (components) => {
+        debugger;
         let sortedWallets;
         const evmWallets = components.filter(
             (e) => e.type === "EVM" || e.type === "Skale"
@@ -30,6 +33,11 @@ export default function WalletList({ search, connected, input }) {
         const cosmosWallets = components.filter((e) => e.type === "Cosmos");
         const usbWallet = components.filter((e) => e.type === "USB");
         const hederaWallets = components.filter((e) => e.type === "Hedera");
+
+        if (discount) {
+            sortedWallets = [...evmWallets];
+            return;
+        }
 
         switch (temporaryFrom?.type || from?.type) {
             case "EVM":
@@ -202,6 +210,7 @@ export default function WalletList({ search, connected, input }) {
                     wallet={"BitKeep"}
                     key="wallet-index-1-bitkeep"
                     close={connected}
+                    discount={discount}
                 />
             ),
             name: "BitKeep",
@@ -397,6 +406,10 @@ export default function WalletList({ search, connected, input }) {
         },
     ];
 
+    // const evmWallets = walletComponents.filter(
+    //     (e) => e.type === "EVM" || e.type === "Skale"
+    // );
+
     const filteredWallets = input
         ? walletComponents
               .sort((a, b) => b.order - a.order)
@@ -407,15 +420,37 @@ export default function WalletList({ search, connected, input }) {
         ? sortWallet(walletComponents)
         : walletComponents.sort((a, b) => a.order - b.order);
 
-    return (
-        <ul className="walletList scrollSty">
-            {window.innerWidth < 600
-                ? filteredWallets
-                      .filter((wallet) => wallet.mobile)
-                      .map((wallet) => wallet.Component)
-                : filteredWallets
-                      .filter((wallet) => wallet.desktop)
-                      .map((wallet) => wallet.Component)}
-        </ul>
-    );
+    switch (location.pathname) {
+        case "/deposits":
+            return (
+                <ul className="walletList scrollSty">
+                    {window.innerWidth < 600
+                        ? walletComponents
+                              .filter(
+                                  (e) => e.type === "EVM" || e.type === "Skale"
+                              )
+                              .filter((wallet) => wallet.mobile)
+                              .map((wallet) => wallet.Component)
+                        : walletComponents
+                              .filter(
+                                  (e) => e.type === "EVM" || e.type === "Skale"
+                              )
+                              .filter((wallet) => wallet.desktop)
+                              .map((wallet) => wallet.Component)}
+                </ul>
+            );
+
+        default:
+            return (
+                <ul className="walletList scrollSty">
+                    {window.innerWidth < 600
+                        ? filteredWallets
+                              .filter((wallet) => wallet.mobile)
+                              .map((wallet) => wallet.Component)
+                        : filteredWallets
+                              .filter((wallet) => wallet.desktop)
+                              .map((wallet) => wallet.Component)}
+                </ul>
+            );
+    }
 }

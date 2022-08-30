@@ -20,7 +20,7 @@ const initialState = {
     currentTx: 0,
     bigLoader: true,
     innerWidth: 0,
-    alert: true,
+    alert: false,
     NFTListSearch: "",
     refreshSecret: false,
     secretCred: initialSecretCred,
