@@ -42,7 +42,6 @@ import {
     setWC,
     setOnWC,
     setAccount,
-    setSync2Connecx,
     setTempleWalletSigner,
     setKukaiWalletSigner,
     setKeplrAccount,
@@ -50,6 +49,8 @@ import {
     setBitKeepPopUp,
     setHederaAccount,
     setHederaWallet,
+    setVeChainThorModal,
+    setSync2Connex,
 } from "../../store/reducers/generalSlice";
 import { chainsConfig } from "../values";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
@@ -161,7 +162,6 @@ export const switchNetWork = async (from) => {
 };
 
 export const connectKeplr = async (testnet, chain) => {
-    console.log(chain);
     const chainId = testnet ? chain.tnChainId : chain.chainId;
     if (window.keplr) {
         try {
@@ -252,8 +252,47 @@ export const connectMetaMask = async (activate, from, to) => {
     }
 };
 
+export const connectVeChainThor = async (testnet) => {
+    let account;
+    let connex;
+    const userAgent = navigator.userAgent;
+
+    if (userAgent.match(/vechainthorwallet|vechain|thor/)) {
+        connex = new Connex(
+            testnet
+                ? {
+                      node: "https://testnet.veblocks.net/",
+                      network: "test",
+                  }
+                : {
+                      node: "https://sync-mainnet.veblocks.net",
+                      network: "main",
+                  }
+        );
+        await connex.vendor
+            .sign("cert", {
+                purpose: "identification",
+                payload: {
+                    type: "text",
+                    content: "sign certificate to continue bridging",
+                },
+            })
+            .request()
+            .then((result) => {
+                account = result?.annex?.signer;
+            });
+    } else store.dispatch(setVeChainThorModal(true));
+
+    const provider = thor.ethers.modifyProvider(
+        new ethers.providers.Web3Provider(new thor.ConnexProvider({ connex }))
+    );
+    const signer = await provider.getSigner(account);
+    store.dispatch(setSync2Connex(connex));
+    store.dispatch(setSigner(signer));
+    return account;
+};
+
 export const connectSync2 = async (testnet) => {
-    debugger;
     let account;
     const client = new Connex(
         testnet
@@ -266,7 +305,7 @@ export const connectSync2 = async (testnet) => {
                   network: "main",
               }
     );
-    store.dispatch(setSync2Connecx(client));
+    store.dispatch(setSync2Connex(client));
     const connex = new Connex(testnet ? "test" : "main");
     await connex.vendor
         .sign("cert", {

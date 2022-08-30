@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import Sync2 from "../../assets/img/wallet/Sync2_.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { connectSync2, connectVeChainThor } from "./ConnectWalletHelper";
-import { setFrom, setSync2 } from "../../store/reducers/generalSlice";
+import {
+    setFrom,
+    setSync2,
+    setVeChainThorModal,
+} from "../../store/reducers/generalSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import thorIcon from "../../assets/img/wallet/Thor.svg";
+import { isMobile } from "react-device-detect";
 
 export default function VeChainWallet({ close, wallet }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -12,6 +17,7 @@ export default function VeChainWallet({ close, wallet }) {
     const to = useSelector((state) => state.general.to);
     const testnet = useSelector((state) => state.general.testNet);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [connecting, setConnecting] = useState("");
@@ -36,6 +42,13 @@ export default function VeChainWallet({ close, wallet }) {
         let account;
         setConnecting(true);
         switch (w) {
+            case "VeChainThor":
+                account = await connectVeChainThor(testnet);
+                dispatch(setSync2(account));
+                close();
+                if (temporaryFrom) dispatch(setFrom(temporaryFrom));
+                if (to) navigateToAccountRoute();
+                break;
             default:
                 account = await connectSync2(testnet);
                 if (account) setConnecting(false);
@@ -51,6 +64,7 @@ export default function VeChainWallet({ close, wallet }) {
         case "VeChainThor":
             return (
                 <li
+                    style={isMobile ? getStyle() : OFF}
                     className="wllListItem"
                     data-wallet="VeChainThor"
                     onClick={() => handleConnect("VeChainThor")}

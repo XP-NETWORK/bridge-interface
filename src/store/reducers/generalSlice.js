@@ -30,6 +30,9 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setVeChainThorModal(state, action) {
+            state.veChainThorModal = action.payload;
+        },
         setHederaWallet(state, action) {
             state.hederaWallet = action.payload;
         },
@@ -521,7 +524,7 @@ const generalSlice = createSlice({
             state.account = action.payload;
             state.Sync2 = true;
         },
-        setSync2Connecx(state, action) {
+        setSync2Connex(state, action) {
             state.sync2Connex = action.payload;
         },
         setChangeWallet(state, action) {
@@ -537,6 +540,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+    setVeChainThorModal,
     setHederaAccount,
     setHederaWallet,
     setFilteredNFTSList,
@@ -558,7 +562,7 @@ export const {
     setURLToOptIn,
     setAlgoAccountToClaim,
     setSync2,
-    setSync2Connecx,
+    setSync2Connex,
     removeFromClaimables,
     setEachClaimables,
     setEachNFT,
