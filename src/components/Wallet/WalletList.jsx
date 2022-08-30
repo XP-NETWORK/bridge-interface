@@ -20,7 +20,6 @@ export default function WalletList({ search, connected, input, discount }) {
     const location = useLocation();
 
     const sortWallet = (components) => {
-        debugger;
         let sortedWallets;
         const evmWallets = components.filter(
             (e) => e.type === "EVM" || e.type === "Skale"
