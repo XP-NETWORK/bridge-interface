@@ -622,12 +622,11 @@ export const checkMintWith = async (from, to, contract, tokenId) => {
     const factory = await getFactory();
     const fromNonce = CHAIN_INFO[from.text].nonce;
     const toNonce = CHAIN_INFO[to.text].nonce;
-    debugger;
     const mintWith = await factory.getVerifiedContract(
         contract,
         toNonce,
         fromNonce,
         tokenId
     );
-    console.log({ mintWith });
+    return mintWith;
 };

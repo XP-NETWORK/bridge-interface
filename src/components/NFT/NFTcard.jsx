@@ -32,6 +32,8 @@ export default function NFTcard({ nft, index, claimables }) {
     const [isVisible, setIsVisible] = useState();
     const localhost = window.location.hostname;
     const [imageErr, setImageErr] = useState(false);
+    const whitelisted = nft.whitelisted;
+    const [verifiedContract, setVerifiedContract] = useState();
 
     const callBackWhenObserver = (entries) => {
         const [entry] = entries;
@@ -83,19 +85,19 @@ export default function NFTcard({ nft, index, claimables }) {
                 parseNFT(factory)(nft, index, testnet, claimables);
             }
         }
+        const mw = async () => {
+            const mintWith = await checkMintWith(
+                from,
+                to,
+                nft.native.contract,
+                nft.native.tokenId
+            );
+            if (mintWith) setVerifiedContract(true);
+        };
+        if (whitelisted && (from.type === "EVM" || from.type === "Elrond")) {
+            mw();
+        } else setVerifiedContract(true);
     }, [isVisible, nft]);
-
-    // useEffect(() => {
-    //     debugger;
-    //     if (nft.whitelisted) {
-    //         checkMintWith(
-    //             from,
-    //             to,
-    //             nft.native.contract,
-    //             nft.native.tokenId.toString()
-    //         );
-    //     }
-    // }, []);
 
     return (
         <>
@@ -148,7 +150,9 @@ export default function NFTcard({ nft, index, claimables }) {
                                     ""
                                 )}
 
-                                {!nft.whitelisted && <NotWhiteListed />}
+                                {(!nft.whitelisted || !verifiedContract) && (
+                                    <NotWhiteListed />
+                                )}
                                 {claimables && (
                                     <ClaimableCard nft={nft} index={index} />
                                 )}
