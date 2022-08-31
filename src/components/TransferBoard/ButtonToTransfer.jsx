@@ -241,20 +241,24 @@ export default withWidget(function ButtonToTransfer({
     }
     if (txnHashArr[0] && !result) {
       dispatch(setTxnHash({ txn: "failed", nft }));
-    } else if (result) dispatch(setTxnHash({ txn: result, nft }));
+    } else if (result) {
+      console.log(result);
+      setTxForWidget({
+        result,
+        fromNonce: _from.nonce,
+        toNonce: _to.nonce,
+        bigNumberFees,
+        from,
+        nft,
+        senderAddress: account || algorandAccount,
+        targetAddress: receiverAddress || unstoppabledomain || receiver,
+      });
+
+      dispatch(setTxnHash({ txn: result, nft }));
+    }
+
     setLoading(false);
     dispatch(setTransferLoaderModal(false));
-
-    setTxForWidget({
-      result,
-      fromNonce: _from.nonce,
-      toNonce: _to.nonce,
-      bigNumberFees,
-      from,
-      nft,
-      senderAddress: account || algorandAccount,
-      targetAddress: receiverAddress || unstoppabledomain || receiver,
-    });
   };
 
   const sendAllNFTs = async () => {

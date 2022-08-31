@@ -64,13 +64,14 @@ export const transferNFTFromEVM = async ({
   nft,
   signer,
   receiver,
-  fee,
+  bigNumberFees,
   index,
   txnHashArr,
   chainConfig,
   testnet,
   extraFees,
 }) => {
+  console.log(bigNumberFees, "fee");
   const factory = await getFactory();
   const toChain = await factory.inner(chainsConfig[to.text].Chain);
   const fromChain = await factory.inner(chainsConfig[from.text].Chain);
@@ -104,7 +105,7 @@ export const transferNFTFromEVM = async ({
         nft,
         signer,
         receiver,
-        fee,
+        bigNumberFees,
         mw
       );
       break;
@@ -126,7 +127,7 @@ export const transferNFTFromEVM = async ({
         signer,
         receiver,
         amountToTransfer,
-        fee,
+        bigNumberFees,
         mintWith,
         factory,
         extraFees
