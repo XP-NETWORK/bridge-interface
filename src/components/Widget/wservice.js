@@ -115,7 +115,7 @@ class WService {
       toChain: toNonce,
       fees: String(bigNumberFees),
       extraFees: String(affiliationFees?.coef),
-      affiliationWallet: affiliationFees?.wallet || "",
+      affiliationWallet: affiliationFees?.wallet || "none",
       nftUri,
       senderAddress,
       targetAddress,
@@ -163,20 +163,31 @@ class WService {
   }
 
   getFee(from, affiliationSettings, affiliationFees, affiliationWallet) {
+    if (!from)
+      return {
+        coef: 1,
+        wallet: "",
+      };
+
     from = from === "xDai" ? "Gnosis" : from;
 
     if (affiliationSettings && affiliationSettings.length) {
       const feeSetting = affiliationSettings.find(
-        ({ chain }) => chain.toLowerCase() === from.toLowerCase()
+        ({ chain }) => chain?.toLowerCase() === from?.toLowerCase()
       );
 
+      console.log(feeSetting, "feeSetting");
+
       if (feeSetting) {
+        console.log(feeSetting.extraFees, "feeSetting.extraFees");
         return {
           coef: feeSetting.extraFees ? +feeSetting.extraFees / 100 + 1 : 1,
           wallet: feeSetting.wallet,
         };
       }
     }
+
+    console.log(affiliationFees, "affiliationFees");
 
     if (affiliationFees) {
       return {

@@ -31,7 +31,10 @@ import { transferNFTFromAlgorand } from "../../services/chains/algorand/algorand
 
 import { withWidget } from "../Widget/hocs/withWidget";
 
-export default withWidget(function ButtonToTransfer({ setTxForWidget }) {
+export default withWidget(function ButtonToTransfer({
+  setTxForWidget,
+  getExtraFee,
+}) {
   const kukaiWalletSigner = useSelector(
     (state) => state.general.kukaiWalletSigner
   );
@@ -200,12 +203,14 @@ export default withWidget(function ButtonToTransfer({ setTxForWidget }) {
       signer: from.text === "Hedera" ? hederaSigner : signer,
       receiver: receiverAddress || unstoppabledomain || receiver,
       bigNumberFees,
-      index,
       txnHashArr,
       chainConfig,
       testnet,
+      extraFees: getExtraFee(from),
     };
-    debugger;
+
+    console.log(params, "params");
+
     switch (_from.type) {
       case "EVM":
         result = await transferNFTFromEVM(params);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import BigNumber from "bignumber.js";
 import wservice from "../wservice";
 
 const ws = wservice();
@@ -18,7 +18,20 @@ export const withWidget = (Wrapped) => (props) => {
     affiliationSettings: settings.affiliationSettings,
   }));
 
-  const wid = useSelector((state) => state.general.wid);
+  const wid = useSelector((state) => state.widget.wid);
+
+  const getExtraFee = (from) => {
+    const coef = ws.getFee(
+      from,
+      affiliationSettings,
+      affiliationFees,
+      affiliationWallet
+    ).coef;
+
+    if (wid && coef > 1) {
+      return new BigNumber(coef);
+    }
+  };
 
   const setTxForWidget = (tx) => {
     if (tx && wid && !testnet) {
@@ -51,5 +64,11 @@ export const withWidget = (Wrapped) => (props) => {
     }
   };
 
-  return <Wrapped {...props} setTxForWidget={setTxForWidget} />;
+  return (
+    <Wrapped
+      {...props}
+      setTxForWidget={setTxForWidget}
+      getExtraFee={getExtraFee}
+    />
+  );
 };
