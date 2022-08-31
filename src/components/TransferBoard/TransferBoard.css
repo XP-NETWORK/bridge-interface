@@ -124,17 +124,36 @@
     display: flex;
     align-items: center;
     min-height: 44px;
-    gap: 12px;
-    padding: 6px 17.5px 6px 8px;
+    padding: 6px 4px 6px 8px;
     cursor: pointer;
     font-size: 14px;
+    gap: 4px;
 }
+
 .selected-nfts-item:hover {
     background: #ececf1;
 }
-.selected-nfts__delete {
+.nft-item__input {
+    width: 105px;
+    height: 32px;
+    background: #ffffff;
+    border: 1px solid #e0e4eb;
+    border-radius: 40px;
     margin-left: auto;
-    max-width: 18px;
+    outline: none;
+    padding: 6.5px 12px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 160%;
+    color: rgba(98, 113, 138, 0.6);
+}
+.nfts-item__name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.selected-nfts__delete {
+    min-width: 18px;
     visibility: hidden;
 }
 .selected-nfts-item:hover .selected-nfts__delete {

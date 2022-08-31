@@ -7,7 +7,7 @@ import { parseEachNFT } from "./helpers";
 
 import CacheService from "../services/cacheService";
 import WhiteListedPool from "../services/whiteListedPool";
-import EvmSerivce from "../services/chains/evm";
+import EvmSerivce from "../services/chains/evm/evm";
 
 const cache = CacheService();
 const whiteListedPool = WhiteListedPool();
@@ -65,8 +65,6 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
             evm.init(factory);
             nft = await evm.getUri(nft, nft.collectionIdent);
           }
-
-          console.log(unwraped.nft);
 
           nftData = await cache.add(unwraped.nft, account, whitelisted);
 

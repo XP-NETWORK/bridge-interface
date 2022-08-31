@@ -27,14 +27,10 @@ import WService from "../Widget/wservice";
 const wservice = WService();
 
 const settingsHoc = (Wrapped) => (props) => {
-  const { settings, wid, widget, selectedNFTList } = useSelector(
-    ({ settings, general: { selectedNFTList, widget, wid } }) => ({
-      settings,
-      selectedNFTList,
-      widget,
-      wid,
-    })
-  );
+  const { settings, wid } = useSelector(({ settings, widget: { wid } }) => ({
+    settings,
+    wid,
+  }));
 
   const [copied, setCopied] = useState(false);
   const [activeChainsNumber, setActiveChains] = useState(activeChains.length);

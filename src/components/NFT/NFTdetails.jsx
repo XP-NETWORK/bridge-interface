@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import moment from "moment";
 import brockenurl from "../../assets/img/brockenurl.png";
+import ModalImage from "react-modal-image";
+import zoomIn from "../../assets/img/icons/zoomInWhite.png";
 
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 
@@ -14,7 +16,6 @@ import VideoOrImage from "./VideoOrImage";
 import { useSelector } from "react-redux";
 
 function NFTdetails({ nftInf, claimables, details }) {
-  const widget = new URLSearchParams(window.location.search).get("widget");
   const {
     name,
     description,
@@ -109,6 +110,14 @@ function NFTdetails({ nftInf, claimables, details }) {
         <Modal.Body className="modalBody">
           <div className="nftDetailBox">
             <div className="nftDetImg">
+              <ModalImage
+                className="zoomInBtn"
+                small={zoomIn}
+                large={setupURI(image)}
+                hideDownload={true}
+                hideZoom={true}
+              />
+
               {(image || animation_url) &&
               (uri || image) &&
               isValidHttpUrl(uri || image) ? (
@@ -219,7 +228,7 @@ export default NFTdetails;
 
 function Attribute(props) {
   const { display_type, value } = props;
-  const trait_type = props.trait_type || props.name;
+  const trait_type = props.trait_type || props.name || props.label;
   if (trait_type === "Original Chain") {
   }
   return (

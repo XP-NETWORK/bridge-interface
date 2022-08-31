@@ -17,35 +17,30 @@ import { chains } from "../values";
 import Identicon from "./Identicon";
 
 export default function UserConnect({ desktop, mobile }) {
-    const dispatch = useDispatch();
-    const to = useSelector((state) => state.general.to);
-    const elrondAccount = useSelector((state) => state.general.elrondAccount);
-    const tezosAccount = useSelector((state) => state.general.tezosAccount);
-    const algorandAccount = useSelector(
-        (state) => state.general.algorandAccount
-    );
-    const WCProvider = useSelector((state) => state.general.WCProvider);
-    const _account = useSelector((state) => state.general.account);
-    const innerWidth = useSelector((state) => state.general.innerWidth);
-    const tronWallet = useSelector((state) => state.general.tronWallet);
-    const bitKeep = useSelector((state) => state.general.bitKeep);
-    const WalletConnect = useSelector((state) => state.general.WalletConnect);
-    const { account, chainId, active } = useWeb3React();
-    const hederaWallet = useSelector((state) => state.general.hederaWallet);
-    const hederaAccount = useSelector((state) => state.general.hederaAccount);
-    const testnet = useSelector((state) => state.general.testNet);
-    const secretAccount = useSelector((state) => state.general.secretAccount);
-    const keplrWallet = useSelector((state) => state.general.keplrWallet);
-    const walletAccount =
-        hederaAccount ||
-        secretAccount ||
-        account ||
-        elrondAccount ||
-        tezosAccount ||
-        algorandAccount ||
-        tronWallet ||
-        _account;
-    const location = useLocation();
+  const dispatch = useDispatch();
+  const to = useSelector((state) => state.general.to);
+  const elrondAccount = useSelector((state) => state.general.elrondAccount);
+  const tezosAccount = useSelector((state) => state.general.tezosAccount);
+  const algorandAccount = useSelector((state) => state.general.algorandAccount);
+  const WCProvider = useSelector((state) => state.general.WCProvider);
+  const _account = useSelector((state) => state.general.account);
+  const innerWidth = useSelector((state) => state.general.innerWidth);
+  const tronWallet = useSelector((state) => state.general.tronWallet);
+  const bitKeep = useSelector((state) => state.general.bitKeep);
+  const WalletConnect = useSelector((state) => state.general.WalletConnect);
+  const { account, chainId, active } = useWeb3React();
+  const hederaAccount = useSelector((state) => state.general.hederaAccount);
+  const testnet = useSelector((state) => state.general.testNet);
+  const secretAccount = useSelector((state) => state.general.secretAccount);
+  const walletAccount =
+    hederaAccount ||
+    secretAccount ||
+    account ||
+    elrondAccount ||
+    tezosAccount ||
+    algorandAccount ||
+    tronWallet ||
+    _account;
 
   const handleConnect = () => {
     if (!walletAccount) {
@@ -150,6 +145,7 @@ export default function UserConnect({ desktop, mobile }) {
     if (!account && WalletConnect) {
       active !== undefined && window.location.reload();
     }
+    dispatch(setAccount(account));
   }, [active]);
 
   return (

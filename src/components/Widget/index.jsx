@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Widget.css";
 
-import { setWidget, setWSettings } from "../../store/reducers/generalSlice";
+import { setWidget, setWSettings } from "../../store/reducers/widgetSlice";
 import { chains } from "../values";
 import { power } from "../Settings/assets/power.js";
 

@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ReactComponent as MetaIcon } from "../../../assets/img/wallet/MetaMask.svg";
 import "../Widget.css";
-import { setWConnect } from "../../../store/reducers/generalSlice";
+
 import Wservice from "../wservice";
 import { initialState as initialWidget } from "../../../store/reducers/settingsSlice";
 import mobileBanner from "../../Settings/assets/img/mobileOnlyBanner.svg";

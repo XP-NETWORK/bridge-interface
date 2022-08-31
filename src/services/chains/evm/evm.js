@@ -1,5 +1,5 @@
 import { UserNftMinter__factory } from "xpnet-web3-contracts";
-import { chains } from "../../components/values";
+import { chains } from "../../../components/values";
 
 import { ethers } from "ethers";
 

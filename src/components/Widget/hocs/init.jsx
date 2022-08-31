@@ -6,7 +6,7 @@ import {
   setWidget,
   setWSettings,
   setWid,
-} from "../../../store/reducers/generalSlice";
+} from "../../../store/reducers/widgetSlice";
 import { setSettings } from "../../../store/reducers/settingsSlice";
 import mobileBanner from "../../Settings/assets/img/mobileOnlyBanner.svg";
 
@@ -117,7 +117,11 @@ export const InitWidget = (Wrapped) => {
   return function CB() {
     const dispatch = useDispatch();
     const { widget, wsettings, settings, wid } = useSelector(
-      ({ general: { widget, wsettings, from, to, wid }, settings }) => ({
+      ({
+        general: { from, to },
+        settings,
+        widget: { widget, wsettings, wid },
+      }) => ({
         widget,
         settings,
         wsettings,

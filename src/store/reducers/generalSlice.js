@@ -27,115 +27,115 @@ const initialState = {
 };
 
 const generalSlice = createSlice({
-    name: "general",
-    initialState,
-    reducers: {
-        setHederaWallet(state, action) {
-            state.hederaWallet = action.payload;
-        },
-        setHederaAccount(state, action) {
-            state.hederaAccount = action.payload;
-        },
-        setFilteredNFTSList(state, action) {
-            state.filteredNFTList = action.payload;
-        },
-        setReceiverIsSmartContractAddress(state, action) {
-            state.receiverIsSmartContract = action.payload;
-        },
-        setTemporaryTo(state, action) {
-            state.temporaryTo = action.payload;
-        },
-        setBitKeepPopUp(state, action) {
-            state.bitKeepPopUp = action.payload;
-        },
-        setSecretLoggedIn(state, action) {
-            state.secretLoggedIn = action.payload;
-        },
-        setRefreshSecret(state) {
-            state.refreshSecret = !state.refreshSecret;
-        },
-        setKeplrAccount(state, action) {
-            state.secretAccount = action.payload;
-        },
-        setSecretCred(state, action) {
-            state.secretCred = {
-                contract: action.payload.contract,
-                viewKey: action.payload.viewKey,
-            };
-        },
-        setKeplrWallet(state, action) {
-            state.keplrWallet = action.payload;
-        },
-        setBitKeep(state, action) {
-            state.bitKeep = action.payload;
-        },
-        setTemporaryFrom(state, action) {
-            state.temporaryFrom = action.payload;
-        },
-        setAccountWalletModal(state, action) {
-            state.accountWalletModal = action.payload;
-        },
-        setCheckWallet(state, action) {
-            state.checkWallet = action.payload;
-        },
-        setWrappedEGold(state, action) {
-            state.wrappedEGold = action.payload;
-        },
-        setUnwrappedEGold(state, action) {
-            state.unwrappedEGold = action.payload;
-        },
-        setTempleWalletSigner(state, action) {
-            state.templeSigner = action.payload;
-        },
-        setKukaiWalletSigner(state, action) {
-            state.kukaiWalletSigner = action.payload;
-        },
-        setBalance(state, action) {
-            state.balance = action.payload;
-        },
-        setNFTSetToggler(state) {
-            state.NFTSetToggler = !state.NFTSetToggler;
-        },
-        setGitLatestCommit(state, action) {
-            state.gitLatestCommit = action.payload;
-        },
-        setEachNFT(state, action) {
-            const { nftObj, index } = action.payload;
-            state.currentsNFTs = state.currentsNFTs.map((n, i) => {
-                if (i === index) n = nftObj;
-                return n;
-            });
-        },
-        setEachClaimables(state, action) {
-            const { nftObj, index } = action.payload;
-            state.algorandClaimables = state.algorandClaimables.map((n, i) => {
-                if (i === index) n = nftObj;
-                return n;
-            });
-        },
-        setPreloadNFTs(state, action) {
-            state.preloadNFTs = action.payload;
-        },
-        setAlert(state, action) {
-            state.alert = action.payload;
-        },
-        setNFTSelectAlert(state, action) {
-            state.NFTselectAlert = action.payload;
-        },
-        setDestinationAlert(state, action) {
-            state.destinationAlert = action.payload;
-        },
-        setTxnStatus(state, action) {
-            if (!action.payload) return;
-            const {
-                status,
-                fromHash,
-                tokenId,
-                toHash,
-                initialTokenId,
-                nftUri,
-                createdAt,
-            } = action.payload;
+  name: "general",
+  initialState,
+  reducers: {
+    setHederaWallet(state, action) {
+      state.hederaWallet = action.payload;
+    },
+    setHederaAccount(state, action) {
+      state.hederaAccount = action.payload;
+    },
+    setFilteredNFTSList(state, action) {
+      state.filteredNFTList = action.payload;
+    },
+    setReceiverIsSmartContractAddress(state, action) {
+      state.receiverIsSmartContract = action.payload;
+    },
+    setTemporaryTo(state, action) {
+      state.temporaryTo = action.payload;
+    },
+    setBitKeepPopUp(state, action) {
+      state.bitKeepPopUp = action.payload;
+    },
+    setSecretLoggedIn(state, action) {
+      state.secretLoggedIn = action.payload;
+    },
+    setRefreshSecret(state) {
+      state.refreshSecret = !state.refreshSecret;
+    },
+    setKeplrAccount(state, action) {
+      state.secretAccount = action.payload;
+    },
+    setSecretCred(state, action) {
+      state.secretCred = {
+        contract: action.payload.contract,
+        viewKey: action.payload.viewKey,
+      };
+    },
+    setKeplrWallet(state, action) {
+      state.keplrWallet = action.payload;
+    },
+    setBitKeep(state, action) {
+      state.bitKeep = action.payload;
+    },
+    setTemporaryFrom(state, action) {
+      state.temporaryFrom = action.payload;
+    },
+    setAccountWalletModal(state, action) {
+      state.accountWalletModal = action.payload;
+    },
+    setCheckWallet(state, action) {
+      state.checkWallet = action.payload;
+    },
+    setWrappedEGold(state, action) {
+      state.wrappedEGold = action.payload;
+    },
+    setUnwrappedEGold(state, action) {
+      state.unwrappedEGold = action.payload;
+    },
+    setTempleWalletSigner(state, action) {
+      state.templeSigner = action.payload;
+    },
+    setKukaiWalletSigner(state, action) {
+      state.kukaiWalletSigner = action.payload;
+    },
+    setBalance(state, action) {
+      state.balance = action.payload;
+    },
+    setNFTSetToggler(state) {
+      state.NFTSetToggler = !state.NFTSetToggler;
+    },
+    setGitLatestCommit(state, action) {
+      state.gitLatestCommit = action.payload;
+    },
+    setEachNFT(state, action) {
+      const { nftObj, index } = action.payload;
+      state.currentsNFTs = state.currentsNFTs.map((n, i) => {
+        if (i === index) n = nftObj;
+        return n;
+      });
+    },
+    setEachClaimables(state, action) {
+      const { nftObj, index } = action.payload;
+      state.algorandClaimables = state.algorandClaimables.map((n, i) => {
+        if (i === index) n = nftObj;
+        return n;
+      });
+    },
+    setPreloadNFTs(state, action) {
+      state.preloadNFTs = action.payload;
+    },
+    setAlert(state, action) {
+      state.alert = action.payload;
+    },
+    setNFTSelectAlert(state, action) {
+      state.NFTselectAlert = action.payload;
+    },
+    setDestinationAlert(state, action) {
+      state.destinationAlert = action.payload;
+    },
+    setTxnStatus(state, action) {
+      if (!action.payload) return;
+      const {
+        status,
+        fromHash,
+        tokenId,
+        toHash,
+        initialTokenId,
+        nftUri,
+        createdAt,
+      } = action.payload;
 
       state.txnHashArr = state.txnHashArr.map((e) => {
         let hash;
@@ -195,18 +195,6 @@ const generalSlice = createSlice({
     setMetaMask(state, action) {
       state.MetaMask = action.payload;
     },
-    setWidget(state, action) {
-      state.widget = action.payload;
-    },
-    setWid(state, action) {
-      state.wid = action.payload;
-    },
-    setWSettings(state, action) {
-      state.wsettings = action.payload;
-    },
-    setWConnect(state, action) {
-      state.wconnect = action.payload;
-    },
     setAccount(state, action) {
       state.account = action.payload;
     },
@@ -230,6 +218,15 @@ const generalSlice = createSlice({
             n.native.chainId === chainId
           )
       );
+    },
+    setSelectedNFTAmount(state, action) {
+      const { amount, index } = action.payload;
+      state.selectedNFTList = state.selectedNFTList.map((e, i) => {
+        if (i === index) {
+          e.amountToTransfer = amount;
+        }
+        return e;
+      });
     },
     setSearchNFTList(state, action) {
       state.NFTListSearch = action.payload;
@@ -271,17 +268,30 @@ const generalSlice = createSlice({
     },
     setTxnHash(state, action) {
       let { nft, txn } = action.payload;
-
       const { tokenId, contract, chainId } = nft.native;
-      if (typeof txn === "object") {
-        txn = {
-          ...txn,
-          hash: txn.hash || txn.transactionHash,
-        };
+      switch (true) {
+        case Array.isArray(txn):
+          txn = {
+            ...txn[0],
+            hash: txn[0].hash || txn[0].transactionHash,
+          };
+          break;
+        case typeof txn === "object":
+          txn = {
+            ...txn,
+            hash: txn.hash || txn.transactionHash,
+          };
+          break;
+        case txn && txn?.hash?.hash instanceof Uint8Array:
+          txn.hash = utils.hexlify(txn.hash?.hash).replace(/^0x/, "");
+          break;
+        case typeof txn === "string":
+          txn = { hash: txn };
+          break;
+        default:
+          break;
       }
-      if (txn && txn?.hash?.hash instanceof Uint8Array) {
-        txn.hash = utils.hexlify(txn.hash?.hash).replace(/^0x/, "");
-      }
+
       state.txnHashArr = [...state.txnHashArr, txn];
       state.selectedNFTList = state.selectedNFTList.map((n) => {
         const { native } = n;
@@ -307,8 +317,9 @@ const generalSlice = createSlice({
     setReset(state) {
       return {
         ...initialState,
-        widget: state.widget,
-        wsettings: state.wsettings,
+        //widget: state.widget,
+        //wsettings: state.wsettings,
+        //account: state.account
       };
     },
     setElrondAccount(state, action) {
@@ -353,7 +364,28 @@ const generalSlice = createSlice({
       state.WCProvider = action.payload;
     },
     setError(state, action) {
-      state.error = action.payload;
+      debugger;
+      if (action.payload) {
+        const { err, data, message } = action.payload;
+        switch (true) {
+          case typeof data === "object":
+            if (
+              data.message?.includes("User cant pay the bills") ||
+              data.message?.includes("insufficient funds for transfer")
+            )
+              state.error = `You don't have enough funds to pay the fees`;
+            else state.error = data.message || err.message;
+            break;
+          case err:
+            state.error = err.data.message || err.message;
+            break;
+          default:
+            if (message?.includes("User cant pay the bills"))
+              state.error = `You don't have enough funds to pay the fees`;
+            else state.error = message;
+            break;
+        }
+      } else state.error = false;
     },
     setTronPopUp(state, action) {
       state.tronPopUp = action.payload;
@@ -489,117 +521,115 @@ const generalSlice = createSlice({
 });
 
 export const {
-    setHederaAccount,
-    setHederaWallet,
-    setFilteredNFTSList,
-    setUnwrappedEGold,
-    setReceiverIsSmartContractAddress,
-    setSecretLoggedIn,
-    setKeplrAccount,
-    setKeplrWallet,
-    setBitKeep,
-    setTemporaryFrom,
-    setCheckWallet,
-    addImportedNFTtoNFTlist,
-    setImportModal,
-    setNFTSetToggler,
-    setChangeWallet,
-    setNoApprovedNFTAlert,
-    setPasteDestinationAlert,
-    setSelectNFTAlert,
-    setURLToOptIn,
-    setAlgoAccountToClaim,
-    setSync2,
-    setSync2Connecx,
-    removeFromClaimables,
-    setEachClaimables,
-    setEachNFT,
-    setUnsupportedNetwork,
-    setPreloadNFTs,
-    setAlert,
-    setTxnStatus,
-    setInnerWidth,
-    updateNFTs,
-    setTempleWallet,
-    setKukaiWallet,
-    setTezosAccount,
-    setTestNet,
-    setGetFeaturedModal,
-    setTransactionStep,
-    setValidatorsInf,
-    setTransferLoaderModal,
-    toggleNFTInfo,
-    removeFromNotWhiteListed,
-    setNFTsToWhitelist,
-    setReset,
-    setTo,
-    claimAlgorandPopup,
-    setAlgorandClaimables,
-    setFrom,
-    setChainModal,
-    setDepartureOrDestination,
-    setChainSearch,
-    setStep,
-    setAccount,
-    setMetaMask,
-    setNFTList,
-    setFactory,
-    setSelectedNFTList,
-    cleanSelectedNFTList,
-    removeFromSelectedNFTList,
-    setSearchNFTList,
-    allSelected,
-    setNFTsListView,
-    updateApprovedNFTs,
-    setApproved,
-    setReceiver,
-    setTxnHash,
-    setWrongNetwork,
-    setMetaMaskActive,
-    setElrondAccount,
-    removeAlgorandClaimable,
-    setMaiarProvider,
-    setOnMaiar,
-    connectAlgorandWalletClaim,
-    setTronWallet,
-    setConfirmMaiarMob,
-    setSwitchDestination,
-    setAccountModal,
-    setBigLoader,
-    setApproveLoader,
-    setTronLink,
-    setOnWC,
-    setWC,
-    setWidget,
-    setError,
-    setBigNumFees,
-    setTronPopUp,
-    setTronLoginError,
-    setTrustWallet,
-    setAlgoSigner,
-    setAlgorandAccount,
-    setShowAbout,
-    setShowVideo,
-    setAlgorandWallet,
-    setMyAlgo,
-    cleanTxnHashArr,
-    setQrCodeString,
-    setQrImage,
-    setWSettings,
-    setWConnect,
-    setWid,
-    setWalletsModal,
-    setGitLatestCommit,
-    setBalance,
-    setWrappedEGold,
-    setTempleWalletSigner,
-    setKukaiWalletSigner,
-    setCurrentNFTs,
-    setAccountWalletModal,
-    setBitKeepPopUp,
-    setRefreshSecret,
-    setTemporaryTo,
-    setSecretCred,
+  setHederaAccount,
+  setHederaWallet,
+  setFilteredNFTSList,
+  setUnwrappedEGold,
+  setReceiverIsSmartContractAddress,
+  setSecretLoggedIn,
+  setKeplrAccount,
+  setKeplrWallet,
+  setBitKeep,
+  setTemporaryFrom,
+  setCheckWallet,
+  addImportedNFTtoNFTlist,
+  setImportModal,
+  setNFTSetToggler,
+  setChangeWallet,
+  setNoApprovedNFTAlert,
+  setPasteDestinationAlert,
+  setSelectNFTAlert,
+  setURLToOptIn,
+  setAlgoAccountToClaim,
+  setSync2,
+  setSync2Connecx,
+  removeFromClaimables,
+  setEachClaimables,
+  setEachNFT,
+  setUnsupportedNetwork,
+  setPreloadNFTs,
+  setAlert,
+  setTxnStatus,
+  setInnerWidth,
+  updateNFTs,
+  setTempleWallet,
+  setKukaiWallet,
+  setTezosAccount,
+  setTestNet,
+  setGetFeaturedModal,
+  setTransactionStep,
+  setValidatorsInf,
+  setTransferLoaderModal,
+  toggleNFTInfo,
+  removeFromNotWhiteListed,
+  setNFTsToWhitelist,
+  setReset,
+  setTo,
+  claimAlgorandPopup,
+  setAlgorandClaimables,
+  setFrom,
+  setChainModal,
+  setDepartureOrDestination,
+  setChainSearch,
+  setStep,
+  setAccount,
+  setMetaMask,
+  setNFTList,
+  setFactory,
+  setSelectedNFTList,
+  cleanSelectedNFTList,
+  removeFromSelectedNFTList,
+  setSearchNFTList,
+  allSelected,
+  setNFTsListView,
+  updateApprovedNFTs,
+  setApproved,
+  setReceiver,
+  setTxnHash,
+  setWrongNetwork,
+  setMetaMaskActive,
+  setElrondAccount,
+  removeAlgorandClaimable,
+  setMaiarProvider,
+  setOnMaiar,
+  connectAlgorandWalletClaim,
+  setTronWallet,
+  setConfirmMaiarMob,
+  setSwitchDestination,
+  setAccountModal,
+  setBigLoader,
+  setApproveLoader,
+  setTronLink,
+  setOnWC,
+  setWC,
+  setError,
+  setBigNumFees,
+  setTronPopUp,
+  setTronLoginError,
+  setTrustWallet,
+  setAlgoSigner,
+  setAlgorandAccount,
+  setShowAbout,
+  setShowVideo,
+  setAlgorandWallet,
+  setMyAlgo,
+  cleanTxnHashArr,
+  setQrCodeString,
+  setQrImage,
+  setWSettings,
+  setWalletsModal,
+  setGitLatestCommit,
+  setBalance,
+  setWrappedEGold,
+  setTempleWalletSigner,
+  setKukaiWalletSigner,
+  setCurrentNFTs,
+  setAccountWalletModal,
+  setBitKeepPopUp,
+  setRefreshSecret,
+  setTemporaryTo,
+  setSecretCred,
+  setSelectedNFTAmount,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

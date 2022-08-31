@@ -165,7 +165,6 @@ export const connectKeplr = async (testnet, chain) => {
     try {
       await window.keplr.enable(chainId);
       const offlineSigner = window.keplr.getOfflineSigner(chainId);
-      console.log(offlineSigner);
       const accounts = await offlineSigner.getAccounts();
 
       const { address } = accounts[0];
@@ -175,7 +174,7 @@ export const connectKeplr = async (testnet, chain) => {
         chainId,
         wallet: offlineSigner,
         walletAddress: address,
-        encryptionUtils: window.getEnigmaUtils(chain),
+        //encryptionUtils: window.getEnigmaUtils(chain),
       });
 
       store.dispatch(setKeplrAccount(address));
@@ -236,7 +235,7 @@ export const connectMetaMask = async (activate, from, to) => {
 
   try {
     if (!window.ethereum && window.innerWidth <= 600) {
-      if (store1.general.widget) {
+      if (store1.widget.widget) {
         window.parent.postMessage(
           `From Widget: Open MetaMask###${window.location.search}`,
           "*"

@@ -25,6 +25,7 @@ export default function Refresh() {
     const dispatch = useDispatch();
 
     const refresh = async () => {
+        // debugger;
         if (!bigLoader || !nfts) {
             let w;
             if (from.type === "EVM" || from.type === "VeChain") w = account;

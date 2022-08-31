@@ -8,8 +8,11 @@ import ProtectedRoute from "../pages/ProtectedRoute";
 
 function XpBridge() {
   const testnet = useSelector((state) => state.general.testNet);
-  const widget = useSelector((state) => state.general.widget);
-  const wsettings = useSelector((state) => state.general.wsettings);
+
+  const { widget, wsettings } = useSelector(({ widget }) => ({
+    widget: widget.widget,
+    wsettings: widget.wsettings,
+  }));
 
   return (
     <div className="nftContainer">

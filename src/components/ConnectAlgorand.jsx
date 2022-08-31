@@ -104,7 +104,7 @@ function ConnectAlgorand({ nftToOptIn, testnet }) {
     };
 
     const optIn = async () => {
-        debugger;
+        // debugger;
         dispatch(setTransferLoaderModal(true));
         const factory = await getFactory();
         const algorand = await factory.inner(15);
