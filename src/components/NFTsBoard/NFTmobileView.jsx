@@ -33,6 +33,7 @@ import ImportNFTButton from "../Buttons/ImportNFTButton";
 
 import UnwrapWegld from "../TransferBoard/UnwrapWegld";
 import Pagination from "./Pagination";
+import ChainListBox from "../Chains/ChainListBox";
 
 const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
     const dispatch = useDispatch();
@@ -70,6 +71,7 @@ const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
             <div className="mobile-col__header">
                 <div>Your NFTs on</div>
                 <Refresh />
+                <ChainListBox />
                 <ChainSwitch assignment={"from"} func={handleFromChainSwitch} />
             </div>
             <div className="mobile-nfts__list">

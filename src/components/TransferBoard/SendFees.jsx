@@ -3,9 +3,15 @@ import React, { useState, useRef } from "react";
 import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { chainsConfig, CHAIN_INFO } from "../values";
-import { getFactory, handleChainFactory } from "../../wallet/helpers";
+import {
+  getFactory,
+  handleChainFactory,
+  setClaimablesAlgorand,
+  setNFTS,
+} from "../../wallet/helpers";
 import { setBigNumFees } from "../../store/reducers/generalSlice";
 import { useEffect } from "react";
+import { useWeb3React } from "@web3-react/core";
 
 import Wservice from "../Widget/wservice";
 
@@ -14,16 +20,10 @@ const wservice = Wservice();
 function SendFees() {
   const dispatch = useDispatch();
   const balance = useSelector((state) => state.general.balance);
+
   const to = useSelector((state) => state.general.to);
   const from = useSelector((state) => state.general.from);
   const account = useSelector((state) => state.general.account);
-  const widget = useSelector((state) => state.widget.widget);
-  const { affiliationFees, affiliationSettings } = useSelector(
-    ({ settings }) => ({
-      affiliationFees: settings.affiliationFees,
-      affiliationSettings: settings.affiliationSettings,
-    })
-  );
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
   const isToEVM = useSelector((state) => state.general.to).type === "EVM";
   const [fees, setFees] = useState("");
@@ -33,8 +33,16 @@ function SendFees() {
 
   const feesReqInterval = useRef(null);
 
+  const widget = useSelector((state) => state.widget.widget);
+  const { affiliationFees, affiliationSettings } = useSelector(
+    ({ settings }) => ({
+      affiliationFees: settings.affiliationFees,
+      affiliationSettings: settings.affiliationSettings,
+    })
+  );
+
   async function estimate() {
-    console.log(selectedNFTList);
+    // console.log(selectedNFTList);
 
     setLoading(true);
     let fact;
@@ -89,7 +97,8 @@ function SendFees() {
           console.error(error);
         }
       }
-      let bigNum = fee ? fee.multipliedBy(1.1) : undefined; //.integerValue().toString(10) : undefined;
+
+      let bigNum = fee ? fee.multipliedBy(1.1) : undefined;
 
       if (widget) {
         bigNum = wservice.calcExtraFees(
@@ -147,13 +156,21 @@ function SendFees() {
     return () => clearInterval(feesReqInterval.current);
   }, [selectedNFTList, to]);
 
+  useEffect(() => {
+    /* clearInterval(estimateInterval);
+    estimate();
+    const s = setInterval(() => estimate(), 1000 * 30);
+    setEstimateInterval(s);
+    return () => clearInterval(s);*/
+  }, [to]);
+
   return (
     <div className="fees">
       <div className="fees__title">Fees</div>
       <div className="fees__bank">
         {balance ? (
           <span className="fees__balance">{`Balance: ${balance.toFixed(
-            5
+            3
           )} ${config?.token || (from?.text === "Gnosis" && "Gnosis")}`}</span>
         ) : (
           `Balance: 0 ${config?.token}`
@@ -166,7 +183,7 @@ function SendFees() {
               ? from.key === "Tezos"
                 ? new BigNumber(fees).multipliedBy(1e12).toString()
                 : fees?.toFixed(getNumToFix(fees))
-              : "0"}{" "}
+              : "0"}
             {config?.token}
           </span>
         )}
@@ -176,3 +193,23 @@ function SendFees() {
 }
 
 export default SendFees;
+
+/**
+ * 
+ * 
+ *    let bigNum = fee ? fee.multipliedBy(1.1) : undefined; //.integerValue().toString(10) : undefined;
+
+      if (widget) {
+        bigNum = wservice.calcExtraFees(
+          bigNum,
+          from,
+          affiliationSettings,
+          affiliationFees
+        );
+      }
+
+      bigNum = bigNum ? bigNum.integerValue().toString(10) : undefined;
+
+      dispatch(setBigNumFees(bigNum));
+
+ */

@@ -35,7 +35,7 @@ export const availability = {
   Elrond: ["Maiar", "MaiarExtension"],
   Tron: ["TronLink"],
   Tezos: ["Beacon", "TempleWallet"],
-  VeChain: ["Sync2"],
+  VeChain: ["Sync2", "VeChainThor"],
   Evms: ["MetaMask", "WalletConnect", "TrustWallet"],
   Secret: ["Keplr"],
 };
@@ -53,6 +53,7 @@ export const wallets = [
   "TempleWallet",
   "MaiarExtension",
   "Sync2",
+  "VeChainThor",
   ...(biz ? ["Keplr"] : []),
 
   //...(biz ? ["Sync2"] : []),

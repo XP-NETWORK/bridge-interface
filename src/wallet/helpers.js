@@ -435,7 +435,8 @@ export const mintForTestNet = async (from, signer) => {
     try {
         const mint = await chain.mintNft(signer, {
             contract: "0x5d437362976c68D6504AD043a8dc4dcc9915A7D5",
-            uri: "https://meta.polkamon.com/meta?id=10001852306",
+            uri:
+                "https://smartplace.barter.company/uploads/images/whatsapp_image_2022-01-23_at_3.35.15_pm.jpeg",
         });
         return mint;
     } catch (error) {
@@ -615,4 +616,17 @@ export const convert = (address) => {
         return convertOne1(address);
     }
     // else if(checkIfIo1(address)) return convertIo1(address)
+};
+
+export const checkMintWith = async (from, to, contract, tokenId) => {
+    const factory = await getFactory();
+    const fromNonce = CHAIN_INFO[from.text].nonce;
+    const toNonce = CHAIN_INFO[to.text].nonce;
+    const mintWith = await factory.getVerifiedContract(
+        contract,
+        toNonce,
+        fromNonce,
+        tokenId
+    );
+    return mintWith;
 };

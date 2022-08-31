@@ -61,6 +61,7 @@ function Approval(props) {
   );
 
   const keplrWallet = useSelector((state) => state.general.keplrWallet);
+
   const sync2Connex = useSelector((state) => state.general.sync2Connex);
 
   const getAlgorandWalletSigner = async () => {
@@ -129,16 +130,14 @@ function Approval(props) {
         if (error.data) {
           console.log(error.data.message);
         } else console.log(error);
-        // dispatch(setApproved(false))
         console.log(error);
       }
     } else if (from.type === "Cosmos") {
       const signer = keplrWallet;
-
       const factory = await getFactory();
       const chain = await factory.inner(Chain.SECRET);
       try {
-        const approve = await chain.preTransfer(signer, nft, new BigNumber(0));
+        await chain.preTransfer(signer, nft, new BigNumber(0));
         dispatch(updateApprovedNFTs(nft));
         setFinishedApproving(arr);
       } catch (e) {
@@ -150,7 +149,7 @@ function Approval(props) {
       const c = await factory.inner(15);
       const signer = await getAlgorandWalletSigner();
       try {
-        const approve = await c.preTransfer(signer, nft, bigNumberFees);
+        await c.preTransfer(signer, nft, bigNumberFees);
       } catch (error) {
         console.log(error);
         dispatch(setApproveLoader(false));
@@ -160,24 +159,9 @@ function Approval(props) {
       setFinishedApproving(arr);
     } else if (from.text === "Tezos") {
       try {
-        // if (kukaiWallet) {
-        //     const factory = await getFactory();
-        //     const chain = await factory.inner(Chain.TEZOS);
-        //     const wallet = new BeaconWallet({
-        //         name: "XP.NETWORK Cross-Chain NFT Bridge",
-        //     });
-        //     const swap = await chain.preTransfer(wallet, nft);
-        //     dispatch(updateApprovedNFTs(nft));
-        //     setFinishedApproving(arr);
-        // } else {
         const factory = await getFactory();
         const chain = await factory.inner(Chain.TEZOS);
-        // const signer = new TempleWallet("My Super DApp");
-        // await signer.connect("mainnet");
-        const swap = await chain.preTransfer(
-          templeSigner || kukaiWalletSigner,
-          nft
-        );
+        await chain.preTransfer(templeSigner || kukaiWalletSigner, nft);
         dispatch(updateApprovedNFTs(nft));
         setFinishedApproving(arr);
         // }
@@ -191,8 +175,7 @@ function Approval(props) {
       }
     } else if (from.type === "VeChain") {
       try {
-        const factory = await getFactory();
-        const swap = await chain.preTransfer(signer, nft, bigNumberFees);
+        await chain.preTransfer(signer, nft, bigNumberFees);
 
         dispatch(updateApprovedNFTs(nft));
         setFinishedApproving(arr);
@@ -205,7 +188,6 @@ function Approval(props) {
         console.log(error);
       }
     } else {
-      // debugger
       try {
         const factory = await getFactory();
         const chain = await factory.inner(Chain.ELROND);
@@ -228,68 +210,96 @@ function Approval(props) {
 
   // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
   const approveAllNFTs = async () => {
+    debugger;
     if (!approvedLoading) {
       dispatch(setApproveLoader(true));
       setApprovedLoading(true);
       setFinishedApproving([]);
-      if (from.type === "EVM") {
-        let provider;
-        let signer;
-        if (bitKeep) {
-          provider = new ethers.providers.Web3Provider(window.bitkeep.ethereum);
-          signer = provider.getSigner(account);
-        } else {
-          provider = new ethers.providers.Web3Provider(
-            WCProvider?.walletConnectProvider || window.ethereum
+      // let provider;
+      let signer;
+      let chain;
+      switch (from.type) {
+        case "EVM":
+          if (bitKeep) {
+            const provider = new ethers.providers.Web3Provider(
+              window.bitkeep.ethereum
+            );
+            signer = provider.getSigner(account);
+          } else {
+            const provider = new ethers.providers.Web3Provider(
+              WCProvider?.walletConnectProvider || window.ethereum
+            );
+            signer = provider.getSigner(account);
+          }
+          chain = await handleChainFactory(from.key);
+          selectedNFTList.forEach((nft, index) => {
+            approveEach(nft, signer, chain, index);
+          });
+          break;
+        case "Skale":
+          if (bitKeep) {
+            const provider = new ethers.providers.Web3Provider(
+              window.bitkeep.ethereum
+            );
+            signer = provider.getSigner(account);
+          } else {
+            const provider = new ethers.providers.Web3Provider(
+              WCProvider?.walletConnectProvider || window.ethereum
+            );
+            signer = provider.getSigner(account);
+          }
+          chain = await handleChainFactory(from.key);
+          selectedNFTList.forEach((nft, index) => {
+            approveEach(nft, signer, chain, index);
+          });
+          break;
+        case "Hedera":
+          chain = await handleChainFactory(from.key);
+          selectedNFTList.forEach((nft, index) => {
+            approveEach(nft, hederaSigner, chain, index);
+          });
+          break;
+        case "VeChain":
+          const provider = thor.ethers.modifyProvider(
+            new ethers.providers.Web3Provider(
+              new thor.ConnexProvider({
+                connex: new Connex({
+                  node: testnet
+                    ? "https://testnet.veblocks.net/"
+                    : "https://sync-mainnet.veblocks.net",
+                  network: testnet ? "test" : "main",
+                }),
+              })
+            )
           );
-          signer = provider.getSigner(account);
-        }
-        const chain = await handleChainFactory(from.key);
-        selectedNFTList.forEach((nft, index) => {
-          approveEach(nft, signer, chain, index);
-        });
-      } else if (from.type === "Hedera") {
-        const chain = await handleChainFactory(from.key);
-        selectedNFTList.forEach((nft, index) => {
-          approveEach(nft, hederaSigner, chain, index);
-        });
-      } else if (from.type === "VeChain") {
-        const provider = thor.ethers.modifyProvider(
-          new ethers.providers.Web3Provider(
-            new thor.ConnexProvider({
-              connex: new Connex({
-                node: testnet
-                  ? "https://testnet.veblocks.net/"
-                  : "https://sync-mainnet.veblocks.net",
-                network: testnet ? "test" : "main",
-              }),
-            })
-          )
-        );
-        const signer = await provider.getSigner(account);
-        const chain = await handleChainFactory(from.key);
-        selectedNFTList.forEach((nft, index) => {
-          approveEach(nft, signer, chain, index);
-        });
-      } else if (from.type === "Cosmos") {
-        const signer = window.getOfflineSigner(
-          testnet
-            ? CHAIN_INFO[from.text].tnChainId
-            : CHAIN_INFO[from.text].chainId
-        );
-        const chain = await handleChainFactory(from.key);
-        selectedNFTList.forEach((nft, index) => {
-          approveEach(nft, signer, chain, index);
-        });
-      } else if (from.type === "Tron") {
-        setFinishedApproving(selectedNFTList);
-        selectedNFTList.forEach((nft, index) => {
-          dispatch(updateApprovedNFTs(nft));
-        });
-      } else {
-        selectedNFTList.forEach((nft, index) => {
-          approveEach(nft, undefined, undefined, index);
-        });
+          signer = await provider.getSigner(account);
+          chain = await handleChainFactory(from.key);
+          selectedNFTList.forEach((nft, index) => {
+            approveEach(nft, signer, chain, index);
+          });
+          break;
+        case "Cosmos":
+          signer = window.getOfflineSigner(
+            testnet
+              ? CHAIN_INFO[from.text].tnChainId
+              : CHAIN_INFO[from.text].chainId
+          );
+          chain = await handleChainFactory(from.key);
+          selectedNFTList.forEach((nft, index) => {
+            approveEach(nft, signer, chain, index);
+          });
+          break;
+        case "Tron":
+          setFinishedApproving(selectedNFTList);
+          selectedNFTList.forEach((nft, index) => {
+            dispatch(updateApprovedNFTs(nft));
+          });
+          break;
+        default:
+          selectedNFTList.forEach((nft, index) => {
+            approveEach(nft, undefined, undefined, index);
+          });
+          break;
       }
     }
   };

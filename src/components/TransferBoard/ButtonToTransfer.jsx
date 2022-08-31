@@ -228,6 +228,9 @@ export default withWidget(function ButtonToTransfer({ setTxForWidget }) {
       case "VeChain":
         result = await transferNFTFromEVM(params);
         break;
+      case "Skale":
+        result = await transferNFTFromEVM(params);
+        break;
       default:
         break;
     }

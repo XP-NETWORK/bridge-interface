@@ -157,6 +157,10 @@ function NFTaccount() {
               balanceToShow = balance / 1e18;
               dispatch(setBalance(Number(balanceToShow)));
               break;
+            case "Skale":
+              balanceToShow = balance / 1e18;
+              dispatch(setBalance(Number(balanceToShow)));
+              break;
             case "Tezos":
               dispatch(setBalance(balance / 1e6));
               break;

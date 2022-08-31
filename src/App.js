@@ -30,6 +30,8 @@ import BitKeepModal from "./components/Modals/BitKeepModal/BitKeepModal";
 
 import { withConnect } from "./components/Widget/hocs/withConnect";
 
+import VeChainThorModal from "./components/Modals/VeChainThorModal/VeChainThorModal";
+import DepositAlert from "./components/Alerts/DepositAlert";
 function App() {
   const dispatch = useDispatch();
   const axios = require("axios");
@@ -105,12 +107,15 @@ function App() {
       <TransferLoader />
       <TronConnectionErrMod />
       <BitKeepModal />
+
+      <VeChainThorModal />
       <ApproveLoader />
       <Error />
       <TronPopUp />
-      <Widget />
       <XpBridge />
+      <Widget />
       <Alert />
+      <DepositAlert />
     </div>
   );
 }
