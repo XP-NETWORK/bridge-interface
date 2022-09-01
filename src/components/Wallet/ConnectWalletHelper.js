@@ -51,6 +51,7 @@ import {
   setHederaWallet,
   setVeChainThorModal,
   setSync2Connex,
+  setRedirectModal,
 } from "../../store/reducers/generalSlice";
 import { chainsConfig } from "../values";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
@@ -159,7 +160,7 @@ export const switchNetWork = async (from) => {
       });
 };
 
-export const connectKeplr = async (testnet, chain) => {
+export const connectKeplr = async (testnet, chain, wallet, isMobile) => {
   const chainId = testnet ? chain.tnChainId : chain.chainId;
   if (window.keplr) {
     try {
@@ -187,7 +188,9 @@ export const connectKeplr = async (testnet, chain) => {
       return false;
     }
   } else {
-    store.dispatch(setError("Please install Keplr extension"));
+    if (isMobile) {
+      store.dispatch(setRedirectModal("Fina"));
+    } else store.dispatch(setError("Please install Keplr extension"));
     return false;
   }
 };
@@ -206,7 +209,7 @@ export const connectBitKeep = async (from) => {
   };
   if (!isInstallBikeep()) {
     if (window.innerWidth <= 600) {
-      store.dispatch(setBitKeepPopUp(true));
+      store.dispatch(setRedirectModal("BitKeep"));
     } else {
       window.open(
         "https://chrome.google.com/webstore/detail/bitkeep-bitcoin-crypto-wa/jiidiaalihmmhddjgbnbgdfflelocpak",
@@ -259,7 +262,6 @@ export const connectMetaMask = async (activate, from, to) => {
     return false;
   }
 };
-
 export const connectVeChainThor = async (testnet) => {
   let account;
   let connex;
@@ -289,7 +291,7 @@ export const connectVeChainThor = async (testnet) => {
       .then((result) => {
         account = result?.annex?.signer;
       });
-  } else store.dispatch(setVeChainThorModal(true));
+  } else store.dispatch(setRedirectModal("VeChainThor"));
 
   const provider = thor.ethers.modifyProvider(
     new ethers.providers.Web3Provider(new thor.ConnexProvider({ connex }))

@@ -203,6 +203,7 @@ export default withWidget(function ButtonToTransfer({
       signer: from.text === "Hedera" ? hederaSigner : signer,
       receiver: receiverAddress || unstoppabledomain || receiver,
       fee: bigNumberFees,
+      index,
       txnHashArr,
       chainConfig,
       testnet,

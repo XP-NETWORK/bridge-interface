@@ -38,6 +38,10 @@
         }`}`;
         openMetaMaskUrl(link);
       }
+
+      /*if (msg[0] === "From Widget: Open VeChainThor") {
+        const link = 
+      }*/
     },
     false
   );

@@ -353,6 +353,16 @@ export default function WalletList({ search, connected, input, discount }) {
     },
     {
       Component: (
+        <CosmosWallet key="wallet-index-15" wallet={"Fina"} close={connected} />
+      ),
+      name: "Fina",
+      type: "Cosmos",
+      mobile: true,
+      desktop: false,
+      order: 14,
+    },
+    {
+      Component: (
         <USBWallet
           wallet={"Ledger"}
           key="wallet-index-11"

@@ -26,12 +26,11 @@ import SuccessModal from "./components/Modals/Success/SuccessModal.jsx";
 import ConnectAlgorand from "./components/ConnectAlgorand";
 import { Modal } from "react-bootstrap";
 import Widget from "./components/Widget";
-import BitKeepModal from "./components/Modals/BitKeepModal/BitKeepModal";
 
 import { withConnect } from "./components/Widget/hocs/withConnect";
 
-import VeChainThorModal from "./components/Modals/VeChainThorModal/VeChainThorModal";
 import DepositAlert from "./components/Alerts/DepositAlert";
+import RedirectModal from "./components/Modals/Redirect/RedirectModal";
 function App() {
   const dispatch = useDispatch();
   const axios = require("axios");
@@ -106,9 +105,9 @@ function App() {
       </Modal>
       <TransferLoader />
       <TronConnectionErrMod />
-      <BitKeepModal />
-
-      <VeChainThorModal />
+      {/* <BitKeepModal /> */}
+      <RedirectModal />
+      {/* <VeChainThorModal /> */}
       <ApproveLoader />
       <Error />
       <TronPopUp />

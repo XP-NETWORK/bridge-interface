@@ -2219,3 +2219,6 @@ ul.chainSelector li.blockChainItem .dropdown-item:hover {
 .alert-danger {
   border-left: 3px solid rgb(240, 30, 30);
 }
+
+.tron-modal_address {
+}
