@@ -30,6 +30,9 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setRedirectModal(state, action) {
+            state.redirectModal = action.payload;
+        },
         setVeChainThorModal(state, action) {
             state.veChainThorModal = action.payload;
         },
@@ -540,6 +543,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+    setRedirectModal,
     setVeChainThorModal,
     setHederaAccount,
     setHederaWallet,
