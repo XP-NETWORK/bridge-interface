@@ -202,7 +202,7 @@ export default withWidget(function ButtonToTransfer({
       nft,
       signer: from.text === "Hedera" ? hederaSigner : signer,
       receiver: receiverAddress || unstoppabledomain || receiver,
-      bigNumberFees,
+      fee: bigNumberFees,
       txnHashArr,
       chainConfig,
       testnet,

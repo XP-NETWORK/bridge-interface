@@ -9,7 +9,8 @@ import {
 } from "../../store/reducers/generalSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import thorIcon from "../../assets/img/wallet/Thor.svg";
-import { isMobile } from "react-device-detect";
+import { useCheckMobileScreen } from "../Settings/hooks";
+// import { isMobile } from "react-device-detect";
 
 export default function VeChainWallet({ close, wallet }) {
   const userAgent = navigator.userAgent;
@@ -23,6 +24,8 @@ export default function VeChainWallet({ close, wallet }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [connecting, setConnecting] = useState("");
+
+  const isMobile = useCheckMobileScreen();
 
   const getStyle = () => {
     if (temporaryFrom?.type === "VeChain") {

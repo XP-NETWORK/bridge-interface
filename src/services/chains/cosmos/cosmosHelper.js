@@ -52,7 +52,8 @@ export const transferNFTFromCosmos = async ({
             );
             break;
     }
-    return result ? true : false;
+    if (result) result.tx = result.transactionHash;
+    return result || false;
 };
 
 const transfer = async (
