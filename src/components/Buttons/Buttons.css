@@ -1,8 +1,7 @@
-
-.select-all{
+.select-all {
     width: 40px;
     height: 40px;
-    background: #F6F6F8;
+    background: #f6f6f8;
     border: 1px solid white;
     border-radius: 50%;
     box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
@@ -11,25 +10,22 @@
     display: flex;
 }
 
-
-.select-all svg, .delete-all svg {
+.select-all svg,
+.delete-all svg {
     margin: auto;
 }
 
-
-
-.select-all:hover svg path, .delete-all:hover svg path,  .delete-all svg path {
-    fill: #395FEB;
+.select-all:hover svg path,
+.delete-all:hover svg path,
+.delete-all svg path {
+    fill: #395feb;
     opacity: 1;
 }
 
-
-
-
-.delete-all{
+.delete-all {
     width: 40px;
     height: 40px;
-    background: #F6F6F8;
+    background: #f6f6f8;
     border: 1px solid white;
     border-radius: 50%;
     box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
@@ -39,10 +35,12 @@
     display: flex;
 }
 
-.change-view__button, .SearchDrop, .CloseIcon{
+.change-view__button,
+.SearchDrop,
+.CloseIcon {
     width: 40px;
     height: 40px;
-    background: #F6F6F8;
+    background: #f6f6f8;
     border: 1px solid white;
     border-radius: 50%;
     box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
@@ -64,25 +62,27 @@
     transform: translateY(-50%);
 }
 
-.SearchDrop, .CloseIcon {
+.SearchDrop,
+.CloseIcon {
     display: flex;
 }
 
-.SearchDrop svg, .CloseIcon svg{
+.SearchDrop svg,
+.CloseIcon svg {
     margin: auto;
     transform: translate(8%, -8%);
 }
 
-.CloseIcon svg{
+.CloseIcon svg {
     transform: translate(5%, -17%);
 }
 
-.chain-switch{
+.chain-switch {
     display: flex;
     align-items: center;
     height: 40px;
-    background: #F7F8F9;
-    color: #14161A;
+    background: #f7f8f9;
+    color: #14161a;
     border: 1px solid white;
     font-family: Inter;
     font-size: 14px;
@@ -106,9 +106,9 @@
     margin-left: 6px;
     margin-right: 9px;
 }
-.chain-switch:hover .arrow-down::before{
+.chain-switch:hover .arrow-down::before {
     position: absolute;
-    top: 0; 
+    top: 0;
     content: "";
     width: 10px;
     height: 10px;
@@ -116,23 +116,22 @@
     background-repeat: no-repeat;
     background-position: center;
 }
-.refresh-button{
+.refresh-button {
     width: 40px;
     height: 40px;
-    background: #F6F6F8;
-    border: 1px solid #FFFFFF;
+    background: #f6f6f8;
+    border: 1px solid #ffffff;
     box-sizing: border-box;
     box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
     border-radius: 168px;
     cursor: pointer;
     position: relative;
-
 }
-.refresh-button--disabled{
+.refresh-button--disabled {
     width: 40px;
     height: 40px;
-    background: #F6F6F8;
-    border: 1px solid #FFFFFF;
+    background: #f6f6f8;
+    border: 1px solid #ffffff;
     box-sizing: border-box;
     box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
     border-radius: 168px;
@@ -140,7 +139,8 @@
     opacity: 0.6;
     position: relative;
 }
-.refresh-button::after, .refresh-button--disabled::after{
+.refresh-button::after,
+.refresh-button--disabled::after {
     position: absolute;
     content: "";
     top: 8px;
@@ -150,7 +150,8 @@
     background-image: url(../../assets/img/refresh.svg);
     background-repeat: no-repeat;
 }
-.refresh-button:hover::after, .refresh-button--disabled:hover:after{
+.refresh-button:hover::after,
+.refresh-button--disabled:hover:after {
     position: absolute;
     content: "";
     top: 8px;
@@ -160,33 +161,36 @@
     background-image: url("../../assets/img/icons/blue_refresh.svg");
     background-repeat: no-repeat;
 }
-.search-button{
+.search-button {
     width: 40px;
     height: 40px;
-    background: #F6F6F8;
-    border: 1px solid #FFFFFF;
+    background: #f6f6f8;
+    border: 1px solid #ffffff;
     box-sizing: border-box;
     box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
     border-radius: 168px;
     cursor: pointer;
+    position: relative;
 }
-.search-button:after{
+.search__icon {
     position: absolute;
-    content: "";
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 40px;
     height: 40px;
     background-image: url("../../assets/img/icons/Search.svg");
     background-position: center;
     background-repeat: no-repeat;
 }
-.selected-nfts__button{
+.selected-nfts__button {
     display: flex;
     gap: 6px;
     align-items: center;
     justify-content: space-between;
     height: 40px;
-    background: #F6F6F8;
-    border: 1px solid #FFFFFF;
+    background: #f6f6f8;
+    border: 1px solid #ffffff;
     box-sizing: border-box;
     box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
     border-radius: 168px;
@@ -194,21 +198,21 @@
     cursor: pointer;
     min-width: 114px;
 }
-.selected-nfts__title{
-    color: #14161A;
+.selected-nfts__title {
+    color: #14161a;
     font-family: Inter;
     font-size: 14px;
     font-weight: 500;
     line-height: 18px;
 }
-.selected-nfts__selected{
-    color: #395FEB;
+.selected-nfts__selected {
+    color: #395feb;
 }
-.close__btn{
+.close__btn {
     position: relative;
     min-width: 40px;
     height: 40px;
-    background: #F6F6F8;
+    background: #f6f6f8;
     box-sizing: border-box;
     border-radius: 168px;
     cursor: pointer;
@@ -218,9 +222,8 @@
     transform: unset;
 }
 
-
 @media screen and (min-width: 426px) {
-    .selected-nfts__button{
+    .selected-nfts__button {
         display: none;
     }
 }
