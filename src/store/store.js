@@ -1,4 +1,5 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import discountSlice from "./reducers/discountSlice";
 import generalSlice from "./reducers/generalSlice";
 import paginationSlice from "./reducers/paginationSlice";
 import settingSlice from "./reducers/settingsSlice";
@@ -15,6 +16,7 @@ const middleware = [
 export default configureStore({
     reducer: {
         general: generalSlice,
+        discount: discountSlice,
         settings: settingSlice,
         slider: sliderSlice,
         signers: signersSlice,

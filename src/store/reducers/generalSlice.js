@@ -20,7 +20,7 @@ const initialState = {
     currentTx: 0,
     bigLoader: true,
     innerWidth: 0,
-    alert: true,
+    alert: false,
     NFTListSearch: "",
     refreshSecret: false,
     secretCred: initialSecretCred,
@@ -30,6 +30,12 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setRedirectModal(state, action) {
+            state.redirectModal = action.payload;
+        },
+        setVeChainThorModal(state, action) {
+            state.veChainThorModal = action.payload;
+        },
         setHederaWallet(state, action) {
             state.hederaWallet = action.payload;
         },
@@ -379,7 +385,6 @@ const generalSlice = createSlice({
             state.WCProvider = action.payload;
         },
         setError(state, action) {
-            debugger;
             if (action.payload) {
                 const { err, data, message } = action.payload;
                 switch (true) {
@@ -522,7 +527,7 @@ const generalSlice = createSlice({
             state.account = action.payload;
             state.Sync2 = true;
         },
-        setSync2Connecx(state, action) {
+        setSync2Connex(state, action) {
             state.sync2Connex = action.payload;
         },
         setChangeWallet(state, action) {
@@ -538,6 +543,8 @@ const generalSlice = createSlice({
 });
 
 export const {
+    setRedirectModal,
+    setVeChainThorModal,
     setHederaAccount,
     setHederaWallet,
     setFilteredNFTSList,
@@ -559,7 +566,7 @@ export const {
     setURLToOptIn,
     setAlgoAccountToClaim,
     setSync2,
-    setSync2Connecx,
+    setSync2Connex,
     removeFromClaimables,
     setEachClaimables,
     setEachNFT,

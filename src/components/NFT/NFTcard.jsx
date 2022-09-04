@@ -6,7 +6,6 @@ import {
 } from "../../store/reducers/generalSlice";
 import NFTdetails from "./NFTdetails";
 import { useSelector } from "react-redux";
-import { setupURI } from "../../wallet/helpers";
 import { isShown } from "./NFTHelper.js";
 import VideoAndImage from "./VideoAndImage";
 import BrockenUtlGridView from "./BrockenUtlGridView";
@@ -14,33 +13,32 @@ import "./NewNFT.css";
 import Preload from "./Preload";
 import ClaimableCard from "./ClaimableCard";
 import NotWhiteListed from "./NotWhiteListed";
-import zoomIn from "../../assets/img/icons/zoomInWhite.png";
-import ModalImage from "react-modal-image";
+
 import { parseNFT } from "../../wallet/nftParser";
 import { useDidUpdateEffect } from "../Settings/hooks";
 import Image from "./Image";
 import SFTMark from "./SFTMark";
+import { checkMintWith } from "../../wallet/helpers";
 
 export default function NFTcard({ nft, index, claimables }) {
     const dispatch = useDispatch();
     const [detailsOn, setDetailsOn] = useState(false);
     const search = useSelector((state) => state.general.NFTListSearch);
     const factory = useSelector((state) => state.general.factory);
+    const from = useSelector((state) => state.general.from);
+    const to = useSelector((state) => state.general.to);
     const testnet = useSelector((state) => state.general.testNet);
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
     const [isVisible, setIsVisible] = useState();
     const localhost = window.location.hostname;
     const [imageErr, setImageErr] = useState(false);
+    const whitelisted = nft.whitelisted;
+    const [verifiedContract, setVerifiedContract] = useState();
 
     const callBackWhenObserver = (entries) => {
         const [entry] = entries;
         setIsVisible(entry.isIntersecting);
     };
-
-    //console.log(
-    // factory.inner(7).then(async (res) => console.log(await res.getProvider())),
-    //"factory"
-    //);
 
     const cardRef = useRef(null);
     const options = useMemo(() => {
@@ -87,6 +85,18 @@ export default function NFTcard({ nft, index, claimables }) {
                 parseNFT(factory)(nft, index, testnet, claimables);
             }
         }
+        const mw = async () => {
+            const mintWith = await checkMintWith(
+                from,
+                to,
+                nft.native.contract,
+                nft.native.tokenId
+            );
+            if (mintWith) setVerifiedContract(true);
+        };
+        if (whitelisted && (from.type === "EVM" || from.type === "Elrond")) {
+            mw();
+        } else setVerifiedContract(true);
     }, [isVisible, nft]);
 
     return (
@@ -140,7 +150,9 @@ export default function NFTcard({ nft, index, claimables }) {
                                     ""
                                 )}
 
-                                {!nft.whitelisted && <NotWhiteListed />}
+                                {(!nft.whitelisted || !verifiedContract) && (
+                                    <NotWhiteListed />
+                                )}
                                 {claimables && (
                                     <ClaimableCard nft={nft} index={index} />
                                 )}

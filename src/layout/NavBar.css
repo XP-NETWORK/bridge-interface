@@ -145,7 +145,7 @@
     color: #14161a;
 }
 .nav-link:hover {
-    background: #ececf1;
+    background: #fff;
     border-radius: 76px;
 }
 .nav-link--selected {
@@ -156,7 +156,7 @@
 }
 
 .active {
-    background: #ececf1;
+    background: #fff;
     border-radius: 76px;
 }
 .navbar-connect {
