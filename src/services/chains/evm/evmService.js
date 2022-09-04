@@ -10,7 +10,6 @@ import BigNumber from "bignumber.js";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
 
 export async function switchNetwork(chain) {
-    debugger;
     const {
         general: { testNet, bitKeep },
     } = store.getState();
@@ -56,6 +55,8 @@ export async function switchNetwork(chain) {
             }
     }
 }
+
+export const approveForEVM = async () => {};
 
 export const transferNFTFromEVM = async ({
     to,

@@ -51,6 +51,8 @@ export default function ChainListBox() {
     const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const axios = require("axios");
+    const userAgent = navigator.userAgent;
+    const isVeChainThor = userAgent.match(/vechainthorwallet|vechain|thor/);
 
     const checkValidators = async () => {
         let res;
@@ -87,18 +89,20 @@ export default function ChainListBox() {
     };
 
     const chainSelectHandler = async (chain) => {
-        // debugger;
         if (departureOrDestination === "departure") {
             if (
                 chain.type === typeOfChainConnected() ||
                 !typeOfChainConnected()
             ) {
-                if (to?.text === chain.text) {
+                if (to && to?.text === chain.text) {
                     if (to?.text === "Harmony" && bitKeep) {
                         dispatch(setTemporaryFrom(chain));
                         dispatch(setChangeWallet(true));
                         handleClose();
-                    } else if (account || evmAccount) {
+                    } else if (
+                        (account || evmAccount) &&
+                        from.text !== "VeChain"
+                    ) {
                         const switched = await switchNetwork(from);
                         if (switched) {
                             dispatch(setTo(from));
@@ -106,7 +110,7 @@ export default function ChainListBox() {
                         }
                     }
                 } else {
-                    if (account || evmAccount) {
+                    if ((account || evmAccount) && chain.text !== "VeChain") {
                         const switched = await switchNetwork(chain);
 
                         if (switched) {

@@ -21,7 +21,7 @@ import {
     setQrCodeString,
     setQrImage,
     setSync2,
-    setSync2Connecx,
+    setSync2Connex,
     setTempleWallet,
     setTemporaryFrom,
     setTezosAccount,
@@ -35,8 +35,7 @@ import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg
 import { Modal } from "react-bootstrap";
 import icon from "../../../assets/img/icons/book.svg";
 import { useWeb3React } from "@web3-react/core";
-import { getAddEthereumChain } from "../../../wallet/chains";
-import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../../values";
+
 import { useLocation } from "react-router-dom";
 
 export default function ChangeWalletModal() {
@@ -154,7 +153,7 @@ export default function ChangeWalletModal() {
                 break;
             case "VeChain":
                 // debugger;
-                dispatch(setSync2Connecx(""));
+                dispatch(setSync2Connex(""));
                 dispatch(setSync2(""));
                 dispatch(setAccount(""));
                 dispatch(setChangeWallet(false));

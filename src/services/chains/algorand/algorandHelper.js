@@ -1,11 +1,7 @@
 import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
 import { getFactory } from "../../../wallet/helpers";
-import {
-    setError,
-    setTransferLoaderModal,
-    setTxnHash,
-} from "../../../store/reducers/generalSlice";
+import { setError } from "../../../store/reducers/generalSlice";
 
 export const transferNFTFromAlgorand = async ({
     to,

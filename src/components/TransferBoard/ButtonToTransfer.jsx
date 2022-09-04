@@ -211,7 +211,6 @@ export default function ButtonToTransfer() {
             chainConfig,
             testnet,
         };
-        debugger;
         switch (_from.type) {
             case "EVM":
                 result = await transferNFTFromEVM(params);
@@ -232,6 +231,9 @@ export default function ButtonToTransfer() {
                 result = await transferNFTFromCosmos(params);
                 break;
             case "VeChain":
+                result = await transferNFTFromEVM(params);
+                break;
+            case "Skale":
                 result = await transferNFTFromEVM(params);
                 break;
             default:

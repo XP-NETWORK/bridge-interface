@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
+    setAlert,
     setCheckWallet,
     setQrCodeString,
     setShowAbout,
@@ -173,7 +174,7 @@ function ConnectWallet() {
                         ? !connected
                             ? setShow(true)
                             : handleConnect()
-                        : undefined
+                        : dispatch(setAlert(true))
                 }
                 className={
                     from && to
