@@ -10,6 +10,7 @@ import MyAlgoConnect from "@randlabs/myalgo-connect";
 import * as thor from "web3-providers-connex";
 import { HashConnect } from "hashconnect";
 import { hethers } from "@hashgraph/hethers";
+import { inIframe } from "../Settings/helpers";
 
 import {
   WalletConnectProvider,
@@ -266,8 +267,20 @@ export const connectVeChainThor = async (testnet) => {
   let account;
   let connex;
   const userAgent = navigator.userAgent;
+  const store1 = store.getState();
 
   if (userAgent.match(/vechainthorwallet|vechain|thor/)) {
+    if (store1.widget.widget && inIframe()) {
+      const {
+        general: { to, from },
+      } = store1;
+      return window.open(
+        window.location.origin +
+          window.location.search +
+          `&to=${to.text}&from=${from.text}`
+      );
+    }
+
     connex = new Connex(
       testnet
         ? {
@@ -317,6 +330,7 @@ export const connectSync2 = async (testnet) => {
   );
   store.dispatch(setSync2Connex(client));
   const connex = new Connex(testnet ? "test" : "main");
+
   await connex.vendor
     .sign("cert", {
       purpose: "identification",
