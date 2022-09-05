@@ -1,6 +1,6 @@
 import Connex from "@vechain/connex";
 import { TempleWallet } from "@temple-wallet/dapp";
-import { injected, algoConnector } from "../../wallet/connectors";
+import { injected, algoConnector, web3Modal } from "../../wallet/connectors";
 import store from "../../store/store";
 
 import { TezosToolkit } from "@taquito/taquito";
@@ -124,6 +124,15 @@ export const connectHashpack = async () => {
         return true;
     } catch (error) {
         console.log("connectHashpack error: ", error);
+    }
+};
+
+export const connectUnstoppable = async (close) => {
+    try {
+        const provider = await web3Modal.connect();
+        return provider.selectedAddress;
+    } catch (error) {
+        console.log(error);
     }
 };
 

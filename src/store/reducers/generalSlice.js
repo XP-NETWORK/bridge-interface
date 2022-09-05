@@ -30,6 +30,9 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setUnstoppableDomains(state, action) {
+            state.unstoppableDomains = action.payload;
+        },
         setRedirectModal(state, action) {
             state.redirectModal = action.payload;
         },
@@ -543,6 +546,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+    setUnstoppableDomains,
     setRedirectModal,
     setVeChainThorModal,
     setHederaAccount,

@@ -419,7 +419,7 @@ export default function WalletList({ search, connected, input, discount }) {
             type: "Hedera",
         },
         {
-            Component: <Unscopables />,
+            Component: <Unscopables close={connected} />,
             name: "Unscopables",
             mobile: true,
             desktop: true,

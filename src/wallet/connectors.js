@@ -15,10 +15,8 @@ export const algoConnector = new WalletConnect({
 });
 
 export const uauthOptions = {
-    clientID: "uauth_client_id",
+    clientID: "f909d011-195c-4688-92b4-2cab4c550dcc",
     redirectUri: "http://localhost:3000",
-
-    // Must include both the openid and wallet scopes.
     scope: "openid wallet",
 };
 
@@ -33,16 +31,9 @@ export const providerOptions = {
         },
     },
     "custom-uauth": {
-        // The UI Assets
         display: UAuthWeb3Modal.display,
-
-        // The Connector
         connector: UAuthWeb3Modal.connector,
-
-        // The SPA libary
         package: UAuthSPA,
-
-        // The SPA libary options
         options: uauthOptions,
     },
 };

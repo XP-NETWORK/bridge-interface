@@ -35,7 +35,9 @@ function ConnectWallet() {
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
     const secretAccount = useSelector((state) => state.general.secretAccount);
-
+    const unstoppableDomains = useSelector(
+        (state) => state.general.unstoppableDomains
+    );
     const algorandAccount = useSelector(
         (state) => state.general.algorandAccount
     );
@@ -129,6 +131,7 @@ function ConnectWallet() {
     // }
 
     const handleConnect = async () => {
+        // debugger;
         let provider;
         let _chainId;
         if (bitKeep) {
@@ -138,7 +141,9 @@ function ConnectWallet() {
             _chainId = await web3.eth.getChainId();
         }
         const chainID = chainId || _chainId;
-        if (testnet && from.tnChainId === chainID) {
+        if (unstoppableDomains) {
+            navigate(`/account${location.search ? location.search : ""}`);
+        } else if (testnet && from.tnChainId === chainID) {
             navigate(
                 `/testnet/account${location.search ? location.search : ""}`
             );
