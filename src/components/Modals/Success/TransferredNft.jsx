@@ -15,7 +15,6 @@ export default function TransferredNft({ nft }) {
     const algorandAccount = useSelector(
         (state) => state.general.algorandAccount
     );
-    const dispatch = useDispatch();
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
     const [txnStatus, setTxnStatus] = useState("pending");
     const [hashes, setHashes] = useState({

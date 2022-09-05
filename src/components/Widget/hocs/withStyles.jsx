@@ -72,10 +72,14 @@ export const withStyles = (Wrapped) => (props) => {
           }
     
           div#root {
+
+            
           
             overflow-y: ${
               !location.pathname.includes("account") ? "hidden" : "auto"
             };
+
+
           }
     
           #root {
