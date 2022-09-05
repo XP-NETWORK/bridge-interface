@@ -326,7 +326,7 @@ export default function WalletList({ search, connected, input, discount }) {
     {
       Component: (
         <VeChainWallet
-          key="wallet-index-14"
+          key="wallet-index-17"
           wallet={"VeChainThor"}
           close={connected}
         />
@@ -353,7 +353,7 @@ export default function WalletList({ search, connected, input, discount }) {
     },
     {
       Component: (
-        <CosmosWallet key="wallet-index-15" wallet={"Fina"} close={connected} />
+        <CosmosWallet key="wallet-index-16" wallet={"Fina"} close={connected} />
       ),
       name: "Fina",
       type: "Cosmos",

@@ -240,7 +240,7 @@ export const connectMetaMask = async (activate, from, to) => {
 
   try {
     if (!window.ethereum && window.innerWidth <= 600) {
-      if (store1.widget.widget) {
+      if (store1.widget.widget && inIframe()) {
         window.parent.postMessage(
           `From Widget: Open MetaMask###${window.location.search}`,
           "*"
