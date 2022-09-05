@@ -166,14 +166,16 @@ function SendFees() {
                     <LittleLoader />
                 ) : (
                     <span>
-                        {fees && fees > 0
-                            ? from.key === "Tezos"
-                                ? new BigNumber(fees)
-                                      .multipliedBy(1e12)
-                                      .toString()
-                                : fees?.toFixed(getNumToFix(fees))
-                            : "0"}
-                        {config?.token}
+                        {`${
+                            fees && fees > 0
+                                ? from.key === "Tezos"
+                                    ? new BigNumber(fees)
+                                          .multipliedBy(1e12)
+                                          .toString()
+                                    : fees?.toFixed(getNumToFix(fees))
+                                : "0"
+                        }
+                        ${config?.token}`}
                     </span>
                 )}
             </div>
