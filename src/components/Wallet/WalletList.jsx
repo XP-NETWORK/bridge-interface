@@ -13,6 +13,7 @@ import CosmosWallet from "./CosmosWallet";
 import { biz } from "../values";
 import HederaWallet from "./HederaWallet";
 import { useLocation } from "react-router-dom";
+import Unscopables from "./Unscopables";
 
 export default function WalletList({ search, connected, input, discount }) {
     const from = useSelector((state) => state.general.from);
@@ -366,7 +367,7 @@ export default function WalletList({ search, connected, input, discount }) {
         {
             Component: (
                 <CosmosWallet
-                    key="wallet-index-15"
+                    key="wallet-index-16"
                     wallet={"Fina"}
                     close={connected}
                 />
@@ -416,6 +417,14 @@ export default function WalletList({ search, connected, input, discount }) {
             desktop: true,
             order: 18,
             type: "Hedera",
+        },
+        {
+            Component: <Unscopables />,
+            name: "Unscopables",
+            mobile: true,
+            desktop: true,
+            order: 19,
+            type: "Unscopables§",
         },
     ];
 

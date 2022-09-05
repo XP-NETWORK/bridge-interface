@@ -2,14 +2,16 @@ import Connex from "@vechain/connex";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { injected, algoConnector } from "../../wallet/connectors";
 import store from "../../store/store";
-import WalletConnect from "@walletconnect/client";
-import QRCodeModal from "@walletconnect/qrcode-modal";
+
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import * as thor from "web3-providers-connex";
 import { HashConnect } from "hashconnect";
 import { hethers } from "@hashgraph/hethers";
+import UAuth from "@uauth/js";
+import { InjectedConnector } from "@web3-react/injected-connector";
+import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 
 import {
     WalletConnectProvider,
@@ -54,13 +56,18 @@ import {
     setRedirectModal,
 } from "../../store/reducers/generalSlice";
 import { chainsConfig } from "../values";
-import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { getAddEthereumChain } from "../../wallet/chains";
 import Web3 from "web3";
 
 import { SecretNetworkClient } from "secretjs";
 import { setSigner } from "../../store/reducers/signersSlice";
 import { getFactory } from "../../wallet/helpers";
+
+const uauth = new UAuth({
+    clientID: "f909d011-195c-4688-92b4-2cab4c550dcc",
+    redirectUri: "http://localhost:5000/callback",
+    scope: "openid wallet",
+});
 
 export const wallets = [
     "MetaMask",
@@ -83,7 +90,6 @@ const { to, modalError } = store.getState();
 const hashConnect = new HashConnect(true);
 
 hashConnect.pairingEvent.once(async (pairingData) => {
-    debugger;
     const {
         accountIds,
         topic,
@@ -91,15 +97,9 @@ hashConnect.pairingEvent.once(async (pairingData) => {
     } = pairingData;
     const address = await hethers.utils.getAddressFromAccount(accountIds[0]);
     const provider = hashConnect.getProvider("testnet", topic, accountIds[0]);
-    console.log(
-        "🚀 ~ file: ConnectWalletHelper.js ~ line 92 ~ hashConnect.pairingEvent.once ~ provider",
-        provider
-    );
+
     const signer = hashConnect.getSigner(provider);
-    console.log(
-        "🚀 ~ file: ConnectWalletHelper.js ~ line 97 ~ hashConnect.pairingEvent.once ~ signer",
-        signer
-    );
+
     store.dispatch(setHederaAccount(address));
     store.dispatch(setHederaWallet(name));
     store.dispatch(setSigner(signer));
@@ -110,7 +110,6 @@ hashConnect.foundExtensionEvent.once((walletMetadata) => {
 });
 
 export const connectHashpack = async () => {
-    debugger;
     let appMetadata = {
         name: "XP.NETWORK Cross-Chain NFT Bridge",
         description:
