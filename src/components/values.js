@@ -979,9 +979,11 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     chainId: 1564830818,
     tnChainId: 1305754875840118,
-    blockExplorerUrl: "",
+    blockExplorerUrl: "https://expedition.dev/address/",
     testBlockExplorerUrls:
       "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/address",
+    addrQuery:
+      "?rpcUrl=https://mainnet.skalenodes.com/v1/honorable-steel-rasalhague",
   },
   Moonbeam: {
     native: coins[24],
