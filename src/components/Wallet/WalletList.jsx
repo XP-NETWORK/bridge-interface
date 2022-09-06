@@ -421,7 +421,7 @@ export default function WalletList({ search, connected, input, discount }) {
         {
             Component: <Unscopables close={connected} />,
             name: "Unscopables",
-            mobile: true,
+            mobile: false,
             desktop: true,
             order: 19,
             type: "Unscopables§",
