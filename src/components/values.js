@@ -632,7 +632,7 @@ export const chainsConfig = {
     tnChainId: 1305754875840118,
     tx: "",
     testTx:
-      "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/tx",
+      "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/tx/",
   },
 };
 // ?        chainId: 1564830818,
@@ -960,13 +960,13 @@ export const CHAIN_INFO = {
   },
   Skale: {
     native: coins[23],
-    none: 0x1e,
+    nonce: 0x1e,
     decimals: 1e18,
     chainId: 1564830818,
     tnChainId: 1305754875840118,
     blockExplorerUrl: "",
     testBlockExplorerUrls:
-      "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/address",
+      "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/address/",
   },
   Moonbeam: {
     native: coins[24],

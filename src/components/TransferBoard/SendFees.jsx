@@ -30,9 +30,6 @@ function SendFees() {
   const feesReqInterval = useRef(null);
 
   async function estimate() {
-    // console.log(selectedNFTList);
-
-    //setLoading(true);
     let fact;
     let fee;
     try {
@@ -81,8 +78,6 @@ function SendFees() {
             selectedNFTList[0],
             wallet
           );
-
-          console.log(fee);
         } catch (error) {
           console.error(error);
         }
@@ -135,6 +130,7 @@ function SendFees() {
       setFees("0");
       return clearInterval(feesReqInterval.current);
     }
+    setLoading(true);
 
     estimate();
     feesReqInterval.current = setInterval(() => estimate(), 1000 * 10);

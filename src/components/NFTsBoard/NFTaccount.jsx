@@ -249,19 +249,6 @@ function NFTaccount() {
 
   const isMobile = useCheckMobileScreen();
 
-  useEffect(() => {
-    const x = async (event) => {
-      if (testnet && event.key === "i") {
-        const factory = await getFactory();
-        console.log(factory);
-      }
-    };
-
-    window.addEventListener("keydown", x);
-
-    return () => window.removeEventListener("keydown", x);
-  }, []);
-
   return (
     <div className="NFTaccount">
       <Modal
