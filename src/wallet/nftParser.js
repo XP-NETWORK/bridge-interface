@@ -47,6 +47,8 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
 
         const { chainId, tokenId, contract } = unwraped;
 
+        //console.log({ chainId, tokenId, contract });
+
         let nftData;
 
         try {

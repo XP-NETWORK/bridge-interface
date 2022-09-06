@@ -243,7 +243,6 @@ export default withWidget(function ButtonToTransfer({
     if (txnHashArr[0] && !result) {
       dispatch(setTxnHash({ txn: "failed", nft }));
     } else if (result) {
-      console.log(result);
       setTxForWidget({
         result,
         fromNonce: _from.nonce,

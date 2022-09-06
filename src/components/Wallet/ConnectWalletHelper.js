@@ -84,7 +84,6 @@ const { to, modalError } = store.getState();
 const hashConnect = new HashConnect(true);
 
 hashConnect.pairingEvent.once(async (pairingData) => {
-  debugger;
   const {
     accountIds,
     topic,
@@ -111,7 +110,6 @@ hashConnect.foundExtensionEvent.once((walletMetadata) => {
 });
 
 export const connectHashpack = async () => {
-  debugger;
   let appMetadata = {
     name: "XP.NETWORK Cross-Chain NFT Bridge",
     description:
@@ -330,7 +328,6 @@ export const connectSync2 = async (testnet) => {
   );
   store.dispatch(setSync2Connex(client));
   const connex = new Connex(testnet ? "test" : "main");
-
   await connex.vendor
     .sign("cert", {
       purpose: "identification",

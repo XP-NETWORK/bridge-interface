@@ -421,6 +421,10 @@ export const handleChainFactory = async (someChain) => {
                 return await factory.innner(Chain.HEDERA);
             case "Skale":
                 return await factory.inner(Chain.SKALE);
+            case "Abeychain":
+                return await factory.inner(Chain.ABEYCHAIN);
+            case "Moonbeam":
+                return await factory.inner(Chain.MOONBEAM);
             default:
                 return "";
         }
@@ -432,11 +436,11 @@ export const handleChainFactory = async (someChain) => {
 export const mintForTestNet = async (from, signer) => {
     const factory = await getFactory();
     const chain = await factory.inner(chainsConfig[from].Chain);
+    const uri = await prompt();
     try {
         const mint = await chain.mintNft(signer, {
-            contract: "0x5d437362976c68D6504AD043a8dc4dcc9915A7D5",
-            uri:
-                "https://smartplace.barter.company/uploads/images/whatsapp_image_2022-01-23_at_3.35.15_pm.jpeg",
+            contract: "0x34933A5958378e7141AA2305Cdb5cDf514896035",
+            uri,
         });
         return mint;
     } catch (error) {

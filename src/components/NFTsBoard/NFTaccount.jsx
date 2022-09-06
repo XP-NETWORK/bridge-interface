@@ -42,6 +42,8 @@ import NFTscreen from "./NFTscreen";
 import NFTmobileView from "./NFTmobileView";
 
 import EGoldSuccess from "./../Modals/eGoldSuccess/EGoldSuccess";
+import { checkXpNetLocked } from "../../services/deposits";
+import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 
 import UserConnect from "../User/UserConnect";
 import AccountModal from "../Modals/AccountModal/AccountModal";
@@ -192,6 +194,16 @@ function NFTaccount() {
       }, 3000);
   };
 
+  // useDidUpdateEffect(() => {
+  //     const checkLocked = async () => {
+  //         const data = await checkXpNetLocked(account);
+  //         dispatch(
+  //             setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25))
+  //         );
+  //     };
+  //     account && checkLocked();
+  // }, [account]);
+
   useEffect(() => {
     const checkIfDataLoaded = async () => {
       if (!nfts?.some((nft) => nft.dataLoaded)) {
@@ -249,6 +261,11 @@ function NFTaccount() {
     getBalance();
     balanceInterval = setInterval(() => getBalance(), 5000);
     dispatch(cleanSelectedNFTList());
+    const checkLocked = async () => {
+      const data = await checkXpNetLocked(account);
+      dispatch(setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25)));
+    };
+    account && checkLocked();
     return () => clearInterval(balanceInterval);
   }, [from, account, NFTSetToggler]);
 

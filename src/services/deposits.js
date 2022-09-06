@@ -49,7 +49,6 @@ export const approve = async (provider, account) => {
 };
 
 export const deposit = async (provider, address, num) => {
-    debugger;
     let deposited;
     const weiValue = Web3.utils.toWei(num.toString(), "ether");
     const contract = await createXpBridgeContract(provider);

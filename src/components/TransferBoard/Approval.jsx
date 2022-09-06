@@ -62,8 +62,6 @@ function Approval(props) {
 
   const keplrWallet = useSelector((state) => state.general.keplrWallet);
 
-  const sync2Connex = useSelector((state) => state.general.sync2Connex);
-
   const getAlgorandWalletSigner = async () => {
     // debugger;
     const base = new MyAlgoConnect();
@@ -137,11 +135,13 @@ function Approval(props) {
       const factory = await getFactory();
       const chain = await factory.inner(Chain.SECRET);
       try {
-        await chain.preTransfer(signer, nft, new BigNumber(0));
+        const result = await chain.preTransfer(signer, nft, new BigNumber(0));
+        alert("Boom", result);
         dispatch(updateApprovedNFTs(nft));
         setFinishedApproving(arr);
       } catch (e) {
         console.log(e.message, "approve for cosmos");
+        alert(e.message);
         dispatch(setApproveLoader(false));
         dispatch(setError(e.message));
       }
