@@ -10,6 +10,7 @@ import BigNumber from "bignumber.js";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
 
 export async function switchNetwork(chain) {
+    // debugger;
     const {
         general: { testNet, bitKeep },
     } = store.getState();

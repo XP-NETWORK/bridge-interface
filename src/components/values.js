@@ -23,6 +23,8 @@ import SCRT from "../assets/img/chain/secret.svg";
 import CKB from "../assets/img/chain/godwoken.svg";
 import HBAR from "../assets/img/chain/Hedera.svg";
 import SFUEL from "../assets/img/chain/SFUEL.svg";
+import Moon from "../assets/img/chain/Moonbeam.svg";
+import Abey from "../assets/img/chain/Abey.svg";
 
 export const EVM = "EVM";
 export const ELROND = "Elrond";
@@ -311,6 +313,34 @@ export const chains = [
         newChain: false,
     },
     {
+        type: "EVM",
+        key: "Moonbeam",
+        text: "Moonbeam",
+        value: "Moonbeam",
+        nonce: 0x20,
+        order: -6,
+        chainId: 1284,
+        tnChainId: 1287,
+        image: { avatar: true, src: Moon },
+        testNet: true,
+        mainnet: false,
+        newChain: true,
+    },
+    {
+        type: "EVM",
+        key: "Abeychain",
+        text: "Abeychain",
+        value: "Abeychain",
+        nonce: 0x21,
+        order: -5,
+        chainId: 179,
+        tnChainId: 178,
+        image: { avatar: true, src: Abey },
+        testNet: true,
+        mainnet: false,
+        newChain: true,
+    },
+    {
         type: "VeChain",
         key: "VeChain",
         text: "VeChain",
@@ -334,7 +364,7 @@ export const chains = [
         order: 0,
         tnChainId: "pulsar-2",
         image: { avatar: true, src: SCRT },
-        mainnet: true,
+        mainnet: biz,
         testNet: biz,
         test: false,
         newChain: biz,
@@ -571,15 +601,27 @@ export const chainsConfig = {
         tnChainId: 0x116e9,
         Chain: Chain.GODWOKEN,
         tx: "https://gwscan.com/tx/",
-        testTxn: "https://v1.testnet.gwscan.com/tx",
+        testTx: "https://v1.testnet.gwscan.com/tx",
+    },
+    Moonbeam: {
+        type: EVM,
+        token: "GLMR",
+        image: Moon,
+        chainId: 1284,
+        tnChainId: 1287,
+        Chain: Chain.MOONBEAM,
+        tx: "https://moonscan.io/tx/",
+        testTx: "https://moonbase.moonscan.io/tx/",
+        //rpc: "https://rpc.api.moonbase.moonbeam.network",
+        tnRpc: "https://rpc.api.moonbase.moonbeam.network",
     },
     Hedera: {
         type: "Hedera",
         token: "HBAR",
         image: HBAR,
         Chain: Chain.HEDERA,
-        tx: "https://hashscan.io/#/mainnet/transaction",
-        testTxn: "https://hashscan.io/#/testnet/transaction",
+        tx: "https://hashscan.io/#/mainnet/transaction/",
+        testTx: "https://hashscan.io/#/testnet/transaction/",
     },
     Skale: {
         type: "Skale",
@@ -589,8 +631,18 @@ export const chainsConfig = {
         chainId: 1564830818,
         tnChainId: 1305754875840118,
         tx: "",
-        testTxn:
-            "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/tx",
+        testTx:
+            "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/tx/",
+    },
+    Abeychain: {
+        type: "EVM",
+        token: "ABEY",
+        image: Abey,
+        Chain: Chain.ABEYCHAIN,
+        tnChainId: 178,
+        chainId: 179,
+        tx: "https://scan.abeychain.com/tx/",
+        testTx: "https://testnet-explorer.abeychain.com/tx/",
     },
 };
 // ?        chainId: 1564830818,
@@ -620,6 +672,8 @@ export const coins = [
     "SCRT", //21
     "HBAR", //22
     "SFUEL", //23
+    "GLMR", //24
+    "ABEY", //25
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -668,6 +722,10 @@ export const TESTNET_CHAIN_INFO = {
         nonce: 22,
         chainId: 0x116e9,
     },
+    Moonbeam: {
+        nonce: 32,
+        chainId: 1287,
+    },
     Hedera: { nonce: 0x1d },
     Skale: {
         nonce: 0x1e,
@@ -680,6 +738,10 @@ export const TESTNET_CHAIN_INFO = {
     Velas: {
         nonce: 19,
         chainId: 0x6f,
+    },
+    Abeychain: {
+        nonce: 33,
+        chainId: 178,
     },
 };
 
@@ -920,5 +982,25 @@ export const CHAIN_INFO = {
         blockExplorerUrl: "",
         testBlockExplorerUrls:
             "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/address",
+    },
+    Moonbeam: {
+        native: coins[24],
+        nonce: 0x20,
+        decimals: 1e18,
+        chainId: 1284,
+        tnChainId: 1287,
+        rpc: "https://rpc.api.moonbase.moonbeam.network",
+        blockExplorerUrl: "https://moonbeam.moonscan.io/address/",
+        blockExplorerUrls: "https://moonbeam.moonscan.io/address/",
+        testBlockExplorerUrls: "https://moonbase.moonscan.io/address/",
+    },
+    Abeychain: {
+        native: coins[25],
+        none: 0x21,
+        decimals: 1e18,
+        chainId: 179,
+        tnChainId: 178,
+        blockExplorerUrl: "https://testnet-explorer.abeychain.com/address/",
+        testBlockExplorerUrl: "https://scan.abeychain.com/address/",
     },
 };
