@@ -18,14 +18,21 @@ export async function switchNetwork(chain) {
 
     const id = (testNet ? chain.tnChainId : chain.chainId).toString();
     const paramsArr = getAddEthereumChain(testNet, id);
+    console.log(paramsArr, "paramsArr");
     const params = paramsArr[id];
+    console.log(params, "params");
     const copyParams = {
-        ...params,
-        chainId: String(params.chainId),
+        chainName: params.name,
+        chainId: `0x${params.chainId.toString(16)}`,
+        nativeCurrency: params.nativeCurrency,
+        rpcUrls: params.rpcUrls,
     };
+
     const info = testNet
         ? TESTNET_CHAIN_INFO[chain?.key]
         : CHAIN_INFO[chain?.key];
+
+    console.log(copyParams, "info");
     const chainId = `0x${info.chainId.toString(16)}`;
     switch (true) {
         case bitKeep:
@@ -48,6 +55,7 @@ export async function switchNetwork(chain) {
                 return true;
             } catch (error) {
                 // const c = testNet ? chain?.tnChainId : chain?.chainId;
+                console.log("birma");
                 await window.ethereum.request({
                     method: "wallet_addEthereumChain",
                     params: [copyParams],
