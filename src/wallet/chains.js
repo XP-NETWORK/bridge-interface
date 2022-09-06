@@ -8,6 +8,16 @@ export const getAddEthereumChain = (testnet, chainId) => {
 
 export const allchains = [
     {
+        chainName: "Moonbeam Testnet",
+        rpc: ["https://rpc.api.moonbase.moonbeam.network"],
+        chainId: 1284,
+    },
+    {
+        chainName: "Moonbeam Mainnet",
+        rpc: ["https://rpc.api.moonbeam.network"],
+        chainId: 1287,
+    },
+    {
         chainName: "Abeychain Mainnet",
         rpc: ["https://rpc.abeychain.com"],
         chainId: 0xb3,
