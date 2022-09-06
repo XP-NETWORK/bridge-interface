@@ -8,6 +8,7 @@ import { getFactory } from "../../../wallet/helpers";
 import { setError, setTxnHash } from "../../../store/reducers/generalSlice";
 import BigNumber from "bignumber.js";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
+import { patchRealizedDiscount } from "../../deposits.js";
 
 export async function switchNetwork(chain) {
     // debugger;
@@ -70,7 +71,9 @@ export const transferNFTFromEVM = async ({
     txnHashArr,
     chainConfig,
     testnet,
+    discountLeftUsd,
 }) => {
+    fee = discountLeftUsd ? fee - fee * 0.25 : fee;
     const factory = await getFactory();
     const toChain = await factory.inner(chainsConfig[to.text].Chain);
     const fromChain = await factory.inner(chainsConfig[from.text].Chain);
@@ -81,6 +84,9 @@ export const transferNFTFromEVM = async ({
         native: { contract, tokenId },
         amountToTransfer,
     } = nft;
+    const {
+        general: { account },
+    } = store.getState();
     let mintWith;
     if (!wrapped) {
         mintWith = await factory.getVerifiedContract(
@@ -131,7 +137,7 @@ export const transferNFTFromEVM = async ({
             );
             break;
     }
-
+    if (result) patchRealizedDiscount(account, fee * 0.25);
     return result || false;
 };
 

@@ -16,6 +16,7 @@ export const transferNFTFromTran = async ({
     txnHashArr,
     chainConfig,
     testnet,
+    discountLeftUsd,
 }) => {
     debugger;
     const factory = await getFactory();
