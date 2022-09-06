@@ -57,7 +57,6 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
           if (!nftData) throw new Error("No data exc");
         } catch (e) {
           nftData = await nftGeneralParser(nft, account, whitelisted);
-          console.log(nftData);
         }
 
         if (nftData === "no NFT with that data was found") {
