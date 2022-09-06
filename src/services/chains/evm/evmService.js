@@ -10,6 +10,7 @@ import BigNumber from "bignumber.js";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
 
 export async function switchNetwork(chain) {
+  // debugger;
   const {
     general: { testNet, bitKeep },
   } = store.getState();
@@ -20,8 +21,10 @@ export async function switchNetwork(chain) {
   const params = paramsArr[id];
   console.log(params, "params");
   const copyParams = {
-    ...params,
+    chainName: params.name,
     chainId: `0x${params.chainId.toString(16)}`,
+    nativeCurrency: params.nativeCurrency,
+    rpcUrls: params.rpcUrls,
   };
 
   const info = testNet

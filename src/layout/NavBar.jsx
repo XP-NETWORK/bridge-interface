@@ -124,18 +124,18 @@ function NavBar() {
                                 </div>
                                 <div className="nav-link__txt">Explorer</div>
                             </Nav.Link> */}
-                            {/* {!testnet && (
-                                <LinkContainer to={"deposits"}>
+                            {!testnet && (
+                                <LinkContainer to={"discounts"}>
                                     <Nav.Link>
                                         <div className="nav-link__icon">
                                             <img src={deposits} alt="" />
                                         </div>
                                         <div className="nav-link__txt">
-                                            Deposits
+                                            Discounts
                                         </div>
                                     </Nav.Link>
                                 </LinkContainer>
-                            )} */}
+                            )}
                             <Nav.Link
                                 target="_blank"
                                 href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"

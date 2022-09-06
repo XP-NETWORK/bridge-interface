@@ -364,7 +364,7 @@ export const chains = [
     order: 0,
     tnChainId: "pulsar-2",
     image: { avatar: true, src: SCRT },
-    mainnet: biz,
+    mainnet: true,
     testNet: biz,
     test: false,
     newChain: biz,
@@ -592,7 +592,6 @@ export const chainsConfig = {
     tnRpc: "https://pulsar-2.api.trivium.network:9091",
     Chain: Chain.SECRET,
   },
-
   Godwoken: {
     type: EVM,
     token: "CKB",
@@ -620,8 +619,8 @@ export const chainsConfig = {
     token: "HBAR",
     image: HBAR,
     Chain: Chain.HEDERA,
-    tx: "https://hashscan.io/#/mainnet/transaction",
-    testTx: "https://hashscan.io/#/testnet/transaction",
+    tx: "https://hashscan.io/#/mainnet/transaction/",
+    testTx: "https://hashscan.io/#/testnet/transaction/",
   },
   Skale: {
     type: "Skale",
@@ -636,9 +635,18 @@ export const chainsConfig = {
     txQuery:
       "?rpcUrl=https://mainnet.skalenodes.com/v1/honorable-steel-rasalhague",
   },
+  Abeychain: {
+    type: "EVM",
+    token: "ABEY",
+    image: Abey,
+    Chain: Chain.ABEYCHAIN,
+    tnChainId: 178,
+    chainId: 179,
+    tx: "https://scan.abeychain.com/tx/",
+    testTx: "https://testnet-explorer.abeychain.com/tx/",
+  },
 };
-// ?        chainId: 1564830818,
-// tnChainId: 0x4a393bf89c676,
+
 export const coins = [
   "eGLD", // 0
   "HT", // 1
@@ -663,8 +671,9 @@ export const coins = [
   "CKB", //20
   "SCRT", //21
   "HBAR", //22
-  "SFUEL", //23
+  "SKL", //23
   "GLMR", //24
+  "ABEY", //25
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -729,6 +738,10 @@ export const TESTNET_CHAIN_INFO = {
   Velas: {
     nonce: 19,
     chainId: 0x6f,
+  },
+  Abeychain: {
+    nonce: 33,
+    chainId: 178,
   },
 };
 
@@ -968,7 +981,7 @@ export const CHAIN_INFO = {
     tnChainId: 1305754875840118,
     blockExplorerUrl: "",
     testBlockExplorerUrls:
-      "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/address/",
+      "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/address",
   },
   Moonbeam: {
     native: coins[24],
@@ -980,5 +993,14 @@ export const CHAIN_INFO = {
     blockExplorerUrl: "https://moonbeam.moonscan.io/address/",
     blockExplorerUrls: "https://moonbeam.moonscan.io/address/",
     testBlockExplorerUrls: "https://moonbase.moonscan.io/address/",
+  },
+  Abeychain: {
+    native: coins[25],
+    none: 0x21,
+    decimals: 1e18,
+    chainId: 179,
+    tnChainId: 178,
+    blockExplorerUrl: "https://testnet-explorer.abeychain.com/address/",
+    testBlockExplorerUrl: "https://scan.abeychain.com/address/",
   },
 };

@@ -4,7 +4,10 @@ import ICON from "../assets/img/icons/ICON.png";
 import Staker from "../components/Deposits/Staker";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { setDepositWalletModal } from "../store/reducers/discountSlice";
+import {
+    setDepositWalletModal,
+    setDiscountLeftUsd,
+} from "../store/reducers/discountSlice";
 import DiscountWalletModal from "../components/Deposits/DiscountWalletModal";
 import Balance from "../components/Deposits/Balance";
 import Locked from "../components/Deposits/Locked";
@@ -14,11 +17,14 @@ import { checkXpNetLocked, checkXpNetPrice } from "../services/deposits";
 
 export default function Deposits() {
     const walletsModal = useSelector((state) => state.discount.walletModal);
+    const discountLeftUsd = useSelector(
+        (state) => state.discount.discountLeftUsd
+    );
     const spend = useSelector((state) => state.discount.spend);
     const dispatch = useDispatch();
     const [xpNetPrice, setXpNetPrice] = useState();
     const [locked, setLocked] = useState();
-    const [discountLeftUsd, setDiscountLeftUsd] = useState();
+    // const [discountLeftUsd, setDiscountLeftUsd] = useState();
     const account = useSelector((state) => state.general.account);
     const [loader, setLoader] = useState(false);
 
@@ -31,7 +37,9 @@ export default function Deposits() {
         const checkLocked = async () => {
             const data = await checkXpNetLocked(account);
             setLocked(data?.totalDepositsXp);
-            setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25));
+            dispatch(
+                setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25))
+            );
             setLoader(false);
         };
         account && checkLocked();
@@ -53,7 +61,7 @@ export default function Deposits() {
                 <DiscountWalletModal handleClose={handleClose} />
             </Modal>
             <div className="deposit__header">
-                <div className="deposit__title">XPNET deposit program</div>
+                <div className="deposit__title">XPNET discount program</div>
                 <div className="deposit__subtitle">
                     Delegate XPNET to earn discounts for your bridging
                     transactions.
