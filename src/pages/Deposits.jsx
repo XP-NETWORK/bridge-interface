@@ -53,7 +53,7 @@ export default function Deposits() {
                 <DiscountWalletModal handleClose={handleClose} />
             </Modal>
             <div className="deposit__header">
-                <div className="deposit__title">XPNET deposit program</div>
+                <div className="deposit__title">XPNET discount program</div>
                 <div className="deposit__subtitle">
                     Delegate XPNET to earn discounts for your bridging
                     transactions.
