@@ -27,21 +27,19 @@
   window.addEventListener(
     "message",
     (ev) => {
-      const msg = ev?.data?.split("###");
+      if (typeof ev?.data === "string" || ev?.data instanceof String) {
+        const msg = ev?.data?.split("###");
 
-      if (
-        msg[0] === "From Widget: Open MetaMask" &&
-        url[0]?.includes(ev.origin)
-      ) {
-        const link = `dapp://${`${url[0].replace(/^https?\:\/\//, "")}/${
-          msg[1]
-        }`}`;
-        openMetaMaskUrl(link);
+        if (
+          msg[0] === "From Widget: Open MetaMask" &&
+          url[0]?.includes(ev.origin)
+        ) {
+          const link = `dapp://${`${url[0].replace(/^https?\:\/\//, "")}/${
+            msg[1]
+          }`}`;
+          openMetaMaskUrl(link);
+        }
       }
-
-      /*if (msg[0] === "From Widget: Open VeChainThor") {
-        const link = 
-      }*/
     },
     false
   );
