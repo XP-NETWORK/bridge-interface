@@ -15,10 +15,14 @@ const discountSlice = createSlice({
         setSpend(state, action) {
             state.spend = action.payload;
         },
+        setDiscountLeftUsd(state, action) {
+            state.discountLeftUsd = action.payload;
+        },
     },
 });
 
 export const {
+    setDiscountLeftUsd,
     setDepositWalletModal,
     setDepositAlert,
     setSpend,
