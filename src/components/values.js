@@ -22,7 +22,7 @@ import { Chain } from "xp.network/dist/consts";
 import SCRT from "../assets/img/chain/secret.svg";
 import CKB from "../assets/img/chain/godwoken.svg";
 import HBAR from "../assets/img/chain/Hedera.svg";
-import SFUEL from "../assets/img/chain/SFUEL.svg";
+import SKL from "../assets/img/chain/SFUEL.svg";
 import Moon from "../assets/img/chain/Moonbeam.svg";
 import Abey from "../assets/img/chain/Abey.svg";
 
@@ -388,9 +388,9 @@ export const chains = [
     order: 0,
     chainId: 1564830818,
     tnChainId: 1305754875840118,
-    image: { avatar: true, src: SFUEL },
+    image: { avatar: true, src: SKL },
     testNet: true,
-    mainnet: false,
+    mainnet: true,
     newChain: true,
   },
 ];
@@ -625,14 +625,16 @@ export const chainsConfig = {
   },
   Skale: {
     type: "Skale",
-    token: "sFUEL",
-    image: SFUEL,
+    token: "SKL",
+    image: SKL,
     Chain: Chain.SKALE,
     chainId: 1564830818,
     tnChainId: 1305754875840118,
-    tx: "",
+    tx: "https://expedition.dev/block/",
     testTx:
       "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/tx/",
+    txQuery:
+      "?rpcUrl=https://mainnet.skalenodes.com/v1/honorable-steel-rasalhague",
   },
 };
 // ?        chainId: 1564830818,
