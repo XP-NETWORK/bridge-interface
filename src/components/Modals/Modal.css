@@ -357,6 +357,109 @@
     align-items: center;
 }
 
+.use-discount__modal .modal-dialog {
+    max-width: 320px;
+    margin-top: 20vh;
+}
+
+.use-discount__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 150%;
+
+    color: #14161a;
+}
+
+.use-discount-close {
+    cursor: pointer;
+}
+
+.use-discount__subtitle {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 160%;
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #14161a;
+
+    max-width: 210px;
+
+    margin: 0 auto;
+}
+
+.use-discount__body {
+    padding: 0 30px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.use-discount__info {
+    padding: 12px 16px;
+    background: #ececf1;
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+.use-discount__line {
+    height: 1px;
+    width: 100%;
+    background-color: #fff;
+}
+.use-discount__percent,
+.use-discount__available {
+    display: flex;
+    justify-content: space-between;
+
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 160%;
+
+    color: #14161a;
+}
+
+.use-discount__btns {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+
+    margin-top: 32px;
+}
+
+.use-discount__btns span {
+    padding: 10px 0;
+
+    min-width: 120px;
+
+    color: #14161a;
+    background: #ececf1;
+    border-radius: 66px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.use-discount__btns span:nth-child(2) {
+    background: #3e64ed;
+    color: #fff;
+}
+
 @media screen and (max-width: 501px) {
     .copy-tooltip:hover .copy-tooltip__text {
         font-size: 10px;

@@ -2029,8 +2029,7 @@ span.closeBox:hover svg path {
 .lds-ellipsis {
     display: inline-block;
     position: relative;
-    width: 30px;
-    height: 30px;
+    width: 40px;
     transform: scale(0.4);
 }
 .lds-ellipsis div {

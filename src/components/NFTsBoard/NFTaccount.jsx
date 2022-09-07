@@ -43,7 +43,11 @@ import NFTmobileView from "./NFTmobileView";
 
 import EGoldSuccess from "./../Modals/eGoldSuccess/EGoldSuccess";
 import { checkXpNetLocked } from "../../services/deposits";
-import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
+import {
+    setDiscountLeftUsd,
+    setDiscountOn,
+} from "../../store/reducers/discountSlice";
+import UseDiscountModal from "../Modals/UseDiscount/UseDiscountModal";
 
 function NFTaccount() {
     const dispatch = useDispatch();
@@ -59,6 +63,9 @@ function NFTaccount() {
     const algorandClaimables = useSelector(
         (state) => state.general.algorandClaimables
     );
+    const discountLeftUsd = useSelector(
+        (state) => state.discount.discountLeftUsd
+    );
     const tronWallet = useSelector((state) => state.general.tronWallet);
     const account = useSelector((state) => state.general.account);
     const prevAccount = usePrevious(account);
@@ -73,7 +80,7 @@ function NFTaccount() {
     const unwrappedEGold = useSelector((state) => state.general.unwrappedEGold);
     const NFTListSearch = useSelector((state) => state.general.NFTListSearch);
     const signer = useSelector((state) => state.signers.signer);
-
+    const discountOn = useSelector((state) => state.discount.discountOn);
     const accountWalletModal = useSelector(
         (state) => state.general.accountWalletModal
     );
@@ -295,6 +302,13 @@ function NFTaccount() {
                 className="eGold-success ChainModal"
             >
                 <EGoldSuccess />
+            </Modal>
+            <Modal
+                className="use-discount__modal"
+                onHide={() => dispatch(setDiscountOn(false))}
+                show={discountOn}
+            >
+                <UseDiscountModal />
             </Modal>
             <ChangeNetworkModal />
             <ChangeWalletModal />

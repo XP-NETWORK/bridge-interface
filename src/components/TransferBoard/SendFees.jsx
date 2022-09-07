@@ -12,6 +12,8 @@ import {
 import { setBigNumFees } from "../../store/reducers/generalSlice";
 import { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
+import DiscountRlzBtn from "./DiscountRlzBtn";
+import Fee from "./Fee";
 
 function SendFees() {
     const dispatch = useDispatch();
@@ -25,8 +27,9 @@ function SendFees() {
     );
     const isToEVM = useSelector((state) => state.general.to).type === "EVM";
     const [fees, setFees] = useState("");
+    const [feeForTotal, setFeeForTotal] = useState();
     const Web3Utils = require("web3-utils");
-    const [estimateInterval, setEstimateInterval] = useState();
+
     const [loading, setLoading] = useState(false);
     const discountLeftUsd = useSelector(
         (state) => state.discount.discountLeftUsd
@@ -110,7 +113,10 @@ function SendFees() {
                     (await Web3Utils.fromWei(String(bigNum), "ether"));
             }
 
-            fees && setFees(+(fees * selectedNFTList.length));
+            if (fees) {
+                setFees(fees * selectedNFTList.length);
+                setFeeForTotal(fees);
+            }
         } catch (error) {
             console.log(error.data ? error.data.message : error.message);
         }
@@ -162,8 +168,22 @@ function SendFees() {
     }, [to]);
 
     return (
-        <div className="fees">
-            <div className="fees__title">Fees</div>
+        <div className="checkout">
+            <div className="checkout__balance checkout-row">
+                <span>Balance: </span>
+                {balance ? (
+                    <span>{`${balance.toFixed(3)} ${config?.token ||
+                        (from?.text === "Gnosis" && "Gnosis")}`}</span>
+                ) : (
+                    `0 ${config?.token}`
+                )}
+            </div>
+            <div className="checkout__fees checkout-row">
+                <span>Fees</span>
+                <span>{loading ? <LittleLoader /> : <Fee fees={fees} />}</span>
+            </div>
+            {discountLeftUsd && <DiscountRlzBtn fees={feeForTotal} />}
+            {/* <div className="fees__title">Fees</div>
             <div className="fees__bank">
                 {balance ? (
                     <span className="fees__balance">{`Balance: ${balance.toFixed(
@@ -188,10 +208,10 @@ function SendFees() {
                         }
                         ${config?.token} 
                         `}
-                        {/* ${discountLeftUsd && showDiscount(fees).toFixed(2)} */}
+                        ${discountLeftUsd && showDiscount(fees).toFixed(2)}
                     </span>
                 )}
-            </div>
+            </div> */}
         </div>
     );
 }

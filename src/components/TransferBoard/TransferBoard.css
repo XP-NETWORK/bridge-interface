@@ -260,17 +260,55 @@
 .approveBtn input:checked + label .checkCircle:after {
     /* background-image: url(../../assets/img/icons/CheckGreen.svg);*/
 }
-.fees {
+.checkout {
     margin: 5px 0;
     background: #f3f3f6;
     border-radius: 8px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
+
     color: #14161a;
-    height: 62px;
+
     padding: 16px;
     font-size: 14px;
+}
+.checkout .checkout-row {
+    height: 30px;
+}
+.checkout__balance {
+    margin-left: auto;
+    color: #62718a;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 160%;
+}
+.checkout__fees,
+.checkout__discount,
+.checkout__total {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.checkout__discount__btns {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #fff;
+    padding: 8px;
+    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 126%;
+    color: #395feb;
+    cursor: pointer;
+    gap: 8px;
+}
+.checkout__discount__btns span:nth-child(2) {
+    margin-right: auto;
 }
 .mobile-col .transfer-button {
     margin: 10px 5px;
