@@ -216,6 +216,7 @@ export const chains = [
     value: "Velas",
     nonce: 19,
     chainId: 106,
+    tnChainId: 0x6f,
     order: 14,
     image: { avatar: true, src: Velas },
     newChain: false,
@@ -514,8 +515,10 @@ export const chainsConfig = {
     token: "VLX",
     rpc: "https://velasnode.quigon.com/velas",
     chainId: 106,
+    tnChainId: 0x6f,
     Chain: Chain.VELAS,
     tx: "https://evmexplorer.velas.com/tx/",
+    testTx: "https://explorer.testnet.velas.com/tx/",
   },
   Tezos: {
     type: TEZOS,

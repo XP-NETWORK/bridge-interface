@@ -176,7 +176,7 @@ const transfer = async (
           nft,
           signer,
           receiver,
-          fee,
+          undefined,
           mintWith
         );
         return result;

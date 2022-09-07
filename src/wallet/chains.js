@@ -254,6 +254,33 @@ export const allchains = [
   },
 
   {
+    name: "Velas EVM Testnet",
+    chain: "Velas",
+    network: "mainnet",
+    icon: "velas",
+    rpcUrls: ["https://explorer.testnet.velas.com/rpc"],
+    faucets: [],
+    nativeCurrency: {
+      name: "Velas",
+      symbol: "VLX",
+      decimals: 18,
+    },
+    infoURL: "https://velas.com",
+    shortName: "vlx",
+    chainId: 0x6f,
+    networkId: 106,
+    explorers: [
+      {
+        name: "Velas Explorer",
+        url: "https://evmexplorer.velas.com",
+        standard: "EIP3091",
+      },
+    ],
+  },
+
+  //0x6f
+
+  {
     name: "Fuse Mainnet",
     chain: "FUSE",
     network: "mainnet",
