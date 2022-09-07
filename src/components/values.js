@@ -365,7 +365,7 @@ export const chains = [
     order: 0,
     tnChainId: "pulsar-2",
     image: { avatar: true, src: SCRT },
-    mainnet: true,
+    mainnet: biz,
     testNet: biz,
     test: false,
     newChain: biz,
@@ -391,7 +391,7 @@ export const chains = [
     tnChainId: 1305754875840118,
     image: { avatar: true, src: SKL },
     testNet: true,
-    mainnet: true,
+    mainnet: biz,
     newChain: true,
   },
 ];
