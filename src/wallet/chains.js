@@ -159,6 +159,24 @@ export const allchains = [
   },
 
   {
+    name: "BSC Mainnet",
+    chain: "BSC",
+    network: "Chapel",
+    rpcUrls: [
+      "https://bsc-dataseed2.defibit.io",
+      "https://bsc-dataseed1.binance.org",
+      "https://bsc-dataseed.binance.org",
+    ],
+    faucets: ["https://testnet.binance.org/faucet-smart"],
+    nativeCurrency: {
+      name: "Binance Chain Token",
+      symbol: "BNB",
+      decimals: 18,
+    },
+    chainId: 56,
+  },
+
+  {
     name: "Binance Smart Chain Testnet",
     chain: "BSC",
     network: "Chapel",

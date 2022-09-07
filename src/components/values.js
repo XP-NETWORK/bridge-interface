@@ -382,7 +382,7 @@ export const chains = [
     newChain: true,
   },
   {
-    type: "Skale",
+    type: "EVM",
     key: "Skale",
     text: "Skale",
     once: 0x1e,

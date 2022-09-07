@@ -260,10 +260,6 @@ export default function ButtonToTransfer() {
           sendEach(selectedNFTList[index], index);
         }
       }
-
-      //selectedNFTList.forEach((nft, index) => {
-      // sendEach(nft, index);
-      //});
     }
   };
 
