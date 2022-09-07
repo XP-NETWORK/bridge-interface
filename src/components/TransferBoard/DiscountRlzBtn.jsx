@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import diamon from "../../assets/img/icons/bluediamond.svg";
 import { setDiscountOn } from "../../store/reducers/discountSlice";
@@ -9,17 +9,25 @@ import Fee from "./Fee";
 export default function DiscountRlzBtn({ fees }) {
     const dispatch = useDispatch();
     const useDiscount = useSelector((state) => state.discount.useDiscount);
-    const [total, setTotal] = useState();
-    console.log(
-        "🚀 ~ file: DiscountRlzBtn.jsx ~ line 13 ~ DiscountRlzBtn ~ total",
-        total
-    );
+    const [total, setTotal] = useState(0);
 
     const selectedNFTList = useSelector(
         (state) => state.general.selectedNFTList
     );
 
-    useDidUpdateEffect(() => {
+    const fee = () => {
+        // debugger;
+        let temp = Number(new BigNumber(fees));
+        switch (true) {
+            case selectedNFTList.length > 0:
+                return temp * selectedNFTList.length - total;
+
+            default:
+                return temp - temp * 0.25;
+        }
+    };
+
+    useEffect(() => {
         // debugger;
         let total = 0;
         let temp = Number(new BigNumber(fees));
@@ -29,7 +37,7 @@ export default function DiscountRlzBtn({ fees }) {
             });
         }
         setTotal(total);
-    }, [selectedNFTList]);
+    }, [selectedNFTList, fees]);
 
     const handleClick = () => {
         dispatch(setDiscountOn(true));
@@ -48,12 +56,7 @@ export default function DiscountRlzBtn({ fees }) {
             </div>
             <div className="checkout__total checkout-row">
                 <span>Total</span>
-                <Fee
-                    fees={
-                        Number(new BigNumber(fees) * selectedNFTList.length) -
-                        total
-                    }
-                />
+                <Fee fees={fee()} />
             </div>
         </>
     );
