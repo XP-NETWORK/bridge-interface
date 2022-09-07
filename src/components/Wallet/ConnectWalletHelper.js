@@ -319,6 +319,7 @@ export const connectSync2 = async (testnet) => {
     .then((result) => {
       account = result?.annex?.signer;
     });
+
   const provider = thor.ethers.modifyProvider(
     new ethers.providers.Web3Provider(
       new thor.ConnexProvider({
