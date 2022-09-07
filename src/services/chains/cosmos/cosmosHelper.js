@@ -14,8 +14,8 @@ export const transferNFTFromCosmos = async ({
     txnHashArr,
     chainConfig,
     testnet,
+    discountLeftUsd,
 }) => {
-    debugger;
     const factory = await getFactory();
     const toChain = await factory.inner(chainsConfig[to.text].Chain);
     const fromChain = await factory.inner(chainsConfig[from.text].Chain);

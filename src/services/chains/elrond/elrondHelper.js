@@ -14,6 +14,7 @@ export const transferNFTFromElrond = async ({
     txnHashArr,
     chainConfig,
     testnet,
+    discountLeftUsd,
 }) => {
     const factory = await getFactory();
     const toChain = await factory.inner(chainsConfig[to.text].Chain);
