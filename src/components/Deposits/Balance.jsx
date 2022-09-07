@@ -10,7 +10,7 @@ export default function Balance({ xpNetPrice, loader }) {
     const account = useSelector((state) => state.general.account);
     const { library } = useWeb3React();
     const [balance, setBalance] = useState();
-    // const [xpNetPrice, setXpNetPrice] = useState();
+    const { chainId } = useWeb3React();
 
     useEffect(() => {
         const checkBalance = async () => {
@@ -28,7 +28,7 @@ export default function Balance({ xpNetPrice, loader }) {
         };
 
         checkBalance();
-    }, [account]);
+    }, [account, chainId]);
 
     return (
         <div className="balance">

@@ -419,10 +419,6 @@ export default function WalletList({ search, connected, input, discount }) {
         },
     ];
 
-    // const evmWallets = walletComponents.filter(
-    //     (e) => e.type === "EVM" || e.type === "Skale"
-    // );
-
     const filteredWallets = input
         ? walletComponents
               .sort((a, b) => b.order - a.order)
@@ -434,7 +430,7 @@ export default function WalletList({ search, connected, input, discount }) {
         : walletComponents.sort((a, b) => a.order - b.order);
 
     switch (location.pathname) {
-        case "/deposits":
+        case "/discounts":
             return (
                 <ul className="walletList scrollSty">
                     {window.innerWidth < 600

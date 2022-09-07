@@ -11,30 +11,29 @@ import { getAddEthereumChain } from "../../../wallet/chains.js";
 import { checkXpNetLocked, patchRealizedDiscount } from "../../deposits.js";
 import { setDiscountLeftUsd } from "../../../store/reducers/discountSlice.js";
 
-export async function switchNetwork(chain) {
+export async function switchNetwork(chain, viaDiscount) {
     // debugger;
     const {
         general: { testNet, bitKeep },
     } = store.getState();
 
-    const id = (testNet ? chain.tnChainId : chain.chainId).toString();
+    let id = (testNet ? chain?.tnChainId : chain?.chainId)?.toString();
     const paramsArr = getAddEthereumChain(testNet, id);
-    console.log(paramsArr, "paramsArr");
+
     const params = paramsArr[id];
-    console.log(params, "params");
+
     const copyParams = {
-        chainName: params.name,
-        chainId: `0x${params.chainId.toString(16)}`,
-        nativeCurrency: params.nativeCurrency,
-        rpcUrls: params.rpcUrls,
+        chainName: params?.name,
+        chainId: `0x${params?.chainId?.toString(16)}`,
+        nativeCurrency: params?.nativeCurrency,
+        rpcUrls: params?.rpcUrls,
     };
 
     const info = testNet
         ? TESTNET_CHAIN_INFO[chain?.key]
         : CHAIN_INFO[chain?.key];
 
-    console.log(copyParams, "info");
-    const chainId = `0x${info.chainId.toString(16)}`;
+    const chainId = viaDiscount ? "0x38" : `0x${info.chainId.toString(16)}`;
     switch (true) {
         case bitKeep:
             try {
