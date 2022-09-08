@@ -23,7 +23,7 @@ export default function DiscountRlzBtn({ fees }) {
                 return temp * selectedNFTList.length - total;
 
             default:
-                return temp - temp * 0.25;
+                return temp - temp * 0.4;
         }
     };
 
@@ -33,7 +33,7 @@ export default function DiscountRlzBtn({ fees }) {
         let temp = Number(new BigNumber(fees));
         if (selectedNFTList.length > 0) {
             selectedNFTList.forEach(() => {
-                total += temp * 0.25;
+                total += temp * 0.4;
             });
         }
         setTotal(total);

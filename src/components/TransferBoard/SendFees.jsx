@@ -122,16 +122,6 @@ function SendFees() {
         }
         setLoading(false);
     }
-
-    const showDiscount = (fee) => {
-        switch (true) {
-            case discountLeftUsd > 0:
-                return fee - fee * 0.25;
-            default:
-                return fee;
-        }
-    };
-
     function getNumToFix() {
         // debugger
         let num = 1;
@@ -183,35 +173,6 @@ function SendFees() {
                 <span>{loading ? <LittleLoader /> : <Fee fees={fees} />}</span>
             </div>
             {discountLeftUsd && <DiscountRlzBtn fees={feeForTotal} />}
-            {/* <div className="fees__title">Fees</div>
-            <div className="fees__bank">
-                {balance ? (
-                    <span className="fees__balance">{`Balance: ${balance.toFixed(
-                        3
-                    )} ${config?.token ||
-                        (from?.text === "Gnosis" && "Gnosis")}`}</span>
-                ) : (
-                    `Balance: 0 ${config?.token}`
-                )}
-                {loading ? (
-                    <LittleLoader />
-                ) : (
-                    <span>
-                        {`${
-                            fees && fees > 0
-                                ? from.key === "Tezos"
-                                    ? new BigNumber(fees)
-                                          .multipliedBy(1e12)
-                                          .toString()
-                                    : fees?.toFixed(getNumToFix(fees))
-                                : "0"
-                        }
-                        ${config?.token} 
-                        `}
-                        ${discountLeftUsd && showDiscount(fees).toFixed(2)}
-                    </span>
-                )}
-            </div> */}
         </div>
     );
 }
