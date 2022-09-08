@@ -567,7 +567,7 @@ export const connectTronlink = async () => {
         });
 
         if (!accounts) {
-          store.dispatch(setTronLoginError("loggedOut"))``;
+          store.dispatch(setTronLoginError("loggedOut"));
         }
       } catch (err) {
         console.log(err);
@@ -577,7 +577,13 @@ export const connectTronlink = async () => {
       }
 
       if (window.tronLink && window.tronWeb.defaultAddress.base58) {
+        console.log(window.tronLink);
         const publicAddress = window.tronWeb.defaultAddress.base58;
+        const factory = await getFactory();
+        await factory
+          .setProvider(9, window.tronWeb)
+          .catch((e) => console.log(e, "e"));
+
         store.dispatch(setTronWallet(publicAddress));
         store.dispatch(setTronLink(true));
         return true;
