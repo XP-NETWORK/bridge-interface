@@ -81,7 +81,7 @@ export const transferNFTFromEVM = async ({
     testnet,
     useDiscount,
 }) => {
-    fee = useDiscount ? fee - fee * 0.25 : fee;
+    fee = useDiscount ? fee - fee * 0.4 : fee;
     const factory = await getFactory();
     const toChain = await factory.inner(chainsConfig[to.text].Chain);
     const fromChain = await factory.inner(chainsConfig[from.text].Chain);
@@ -146,10 +146,10 @@ export const transferNFTFromEVM = async ({
             break;
     }
     if (result && useDiscount) {
-        patchRealizedDiscount(account, fee * 0.25);
+        patchRealizedDiscount(account, fee * 0.4);
         const data = await checkXpNetLocked(account);
         store.dispatch(
-            setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25))
+            setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.4))
         );
     }
     return result || false;
