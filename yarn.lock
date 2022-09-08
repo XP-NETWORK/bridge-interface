@@ -4569,10 +4569,10 @@
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.5.tgz#1001cc5e6a3704b83c236027e77f2f58ea010f40"
   integrity sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==
 
-"@types/node@*", "@types/node@>=12.12.47", "@types/node@>=13.7.0":
-  version "18.7.15"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.15.tgz#20ae1ec80c57ee844b469f968a1cd511d4088b29"
-  integrity sha512-XnjpaI8Bgc3eBag2Aw4t2Uj/49lLBSStHWfqKvIuXD7FIrZyMLWp8KuAFHAqxMZYTF9l08N1ctUn9YNybZJVmQ==
+"@types/node@*":
+  version "18.7.16"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.16.tgz#0eb3cce1e37c79619943d2fd903919fc30850601"
+  integrity sha512-EQHhixfu+mkqHMZl1R2Ovuvn47PUw18azMJOTwSZr9/fhzHNGXAJ0ma0dayRVchprpCj0Kc1K1xKoWaATWF1qg==
 
 "@types/node@10.12.18":
   version "10.12.18"
@@ -4583,6 +4583,11 @@
   version "11.11.6"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.11.6.tgz#df929d1bb2eee5afdda598a41930fe50b43eaa6a"
   integrity sha512-Exw4yUWMBXM3X+8oqzJNRqZSwUAaS4+7NdvHqQuFi/d+synz++xmX3QIf+BFqneW8N31R8Ky+sikfZUXq07ggQ==
+
+"@types/node@>=12.12.47", "@types/node@>=13.7.0":
+  version "18.7.15"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.15.tgz#20ae1ec80c57ee844b469f968a1cd511d4088b29"
+  integrity sha512-XnjpaI8Bgc3eBag2Aw4t2Uj/49lLBSStHWfqKvIuXD7FIrZyMLWp8KuAFHAqxMZYTF9l08N1ctUn9YNybZJVmQ==
 
 "@types/node@^10.3.2":
   version "10.17.60"
@@ -17813,13 +17818,13 @@ xmlhttprequest@1.8.0:
 
 "xpnet-web3-contracts@git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#dist-erc1155":
   version "0.1.0"
+  uid "65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
   resolved "git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
   dependencies:
     ethers "^5.5.4"
 
 "xpnet-web3-contracts@git+https://github.com/xp-network/XP.network-HECO-Migration#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f":
   version "0.1.0"
-  uid "65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
   resolved "git+https://github.com/xp-network/XP.network-HECO-Migration#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
   dependencies:
     ethers "^5.5.4"
