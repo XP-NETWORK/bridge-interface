@@ -423,7 +423,7 @@ export default function WalletList({ search, connected, input, discount }) {
             name: "Unscopables",
             mobile: false,
             desktop: true,
-            order: 19,
+            order: 14,
             type: "Unscopables§",
         },
     ];
