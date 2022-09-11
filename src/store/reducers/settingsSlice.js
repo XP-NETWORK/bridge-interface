@@ -36,7 +36,7 @@ export const availability = {
   Tron: ["TronLink"],
   Tezos: ["Beacon", "TempleWallet"],
   VeChain: ["Sync2", "VeChainThor"],
-  Evms: ["MetaMask", "WalletConnect", "TrustWallet"],
+  Evms: ["MetaMask", "WalletConnect", "TrustWallet", "BitKeep"],
   Secret: ["Keplr"],
 };
 
