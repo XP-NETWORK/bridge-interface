@@ -217,6 +217,7 @@ export const chains = [
     value: "Velas",
     nonce: 19,
     chainId: 106,
+    tnChainId: 0x6f,
     order: 14,
     image: { avatar: true, src: Velas },
     newChain: false,
@@ -382,7 +383,7 @@ export const chains = [
     newChain: true,
   },
   {
-    type: "Skale",
+    type: "EVM",
     key: "Skale",
     text: "Skale",
     once: 0x1e,
@@ -391,7 +392,11 @@ export const chains = [
     tnChainId: 1305754875840118,
     image: { avatar: true, src: SKL },
     testNet: true,
+<<<<<<< HEAD
     mainnet: false,
+=======
+    mainnet: biz,
+>>>>>>> temporary
     newChain: true,
   },
 ];
@@ -515,8 +520,10 @@ export const chainsConfig = {
     token: "VLX",
     rpc: "https://velasnode.quigon.com/velas",
     chainId: 106,
+    tnChainId: 0x6f,
     Chain: Chain.VELAS,
     tx: "https://evmexplorer.velas.com/tx/",
+    testTx: "https://explorer.testnet.velas.com/tx/",
   },
   Tezos: {
     type: TEZOS,

@@ -12,6 +12,10 @@ import { debounce } from "../helpers";
 
 export default function NFTSearch() {
   const dispatch = useDispatch();
+<<<<<<< HEAD
+=======
+  const widget = useSelector((state) => state.general.widget);
+>>>>>>> temporary
   const nfts = useSelector((state) => state.general.NFTList);
   const NFTListSearch = useSelector((state) => state.general.NFTListSearch);
   const [openSearch, setOpen] = useState(false);
@@ -23,8 +27,16 @@ export default function NFTSearch() {
       (e) =>
         e.name?.toLowerCase().includes(search) ||
         e.native.name?.toLowerCase().includes(search) ||
+<<<<<<< HEAD
         e.description?.toLowerCase().includes(search)
     );
+=======
+        e.description?.toLowerCase().includes(search) ||
+        e.collectionIdent?.toLowerCase() === search.toLowerCase()
+    );
+
+    console.log(filteredNFTs);
+>>>>>>> temporary
     dispatch(setSearchNFTList(search));
     dispatch(setFilteredNFTSList(filteredNFTs));
   };
@@ -44,7 +56,12 @@ export default function NFTSearch() {
             id="SearchDrop"
             className="CloseIcon"
             onClick={() => {
+<<<<<<< HEAD
               setInput("");
+=======
+              dispatch(setSearchNFTList(""));
+              dispatch(setFilteredNFTSList(nfts));
+>>>>>>> temporary
               setOpen(false);
             }}
           >

@@ -77,7 +77,11 @@ function NFTaccount() {
   const NFTListSearch = useSelector((state) => state.general.NFTListSearch);
   const signer = useSelector((state) => state.signers.signer);
 
+<<<<<<< HEAD
   const widget = useSelector((state) => state.widget.widget);
+=======
+  const checkWallet = useSelector((state) => state.general.checkWallet);
+>>>>>>> temporary
 
   const accountWalletModal = useSelector(
     (state) => state.general.accountWalletModal
@@ -135,6 +139,10 @@ function NFTaccount() {
   const getBalance = async () => {
     // debugger;
     let _account =
+<<<<<<< HEAD
+=======
+      checkWallet ||
+>>>>>>> temporary
       hederaAccount ||
       account ||
       algorandAccount ||
@@ -153,6 +161,7 @@ function NFTaccount() {
           balance = factory
             ? await factory.balance(fromChain, _account)
             : undefined;
+<<<<<<< HEAD
 
           switch (_from.type) {
             case "EVM":
@@ -222,21 +231,107 @@ function NFTaccount() {
     checkAlgorand();
     getBalance();
 
+=======
+
+          switch (_from.type) {
+            case "EVM":
+              balanceToShow = balance / 1e18;
+              dispatch(setBalance(Number(balanceToShow)));
+              break;
+            case "Skale":
+              balanceToShow = balance / 1e18;
+              dispatch(setBalance(Number(balanceToShow)));
+              break;
+            case "Tezos":
+              dispatch(setBalance(balance / 1e6));
+              break;
+            case "Tron":
+              dispatch(setBalance(balance / 1e6));
+              break;
+            case "Algorand":
+              dispatch(setBalance(balance / 1e6));
+              break;
+            case "Elrond":
+              dispatch(setBalance(balance / 1e18));
+              break;
+            case "VeChain":
+              dispatch(setBalance(balance / 1e18));
+              break;
+            case "Cosmos":
+              dispatch(setBalance(balance / 1e6));
+              break;
+            case "Hedera":
+              dispatch(setBalance(balance / 1e6));
+              break;
+            default:
+              break;
+          }
+          return balance;
+        } catch (error) {
+          console.log(error);
+        }
+      }, 3000);
+  };
+
+  // useDidUpdateEffect(() => {
+  //     const checkLocked = async () => {
+  //         const data = await checkXpNetLocked(account);
+  //         dispatch(
+  //             setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25))
+  //         );
+  //     };
+  //     account && checkLocked();
+  // }, [account]);
+
+  useEffect(() => {
+    const checkIfDataLoaded = async () => {
+      if (!nfts?.some((nft) => nft.dataLoaded)) {
+        await getNFTsList();
+      }
+    };
+    checkIfDataLoaded();
+    const checkAlgorand = async () => {
+      if (
+        algorandAccount &&
+        !algorandClaimables?.some((nft) => nft.dataLoaded)
+      ) {
+        await getAlgorandClaimables(algorandAccount);
+      }
+    };
+    checkAlgorand();
+    getBalance();
+
+>>>>>>> temporary
     if (from === "Elrond") {
       getWegldBalance();
     }
     balanceInterval = setInterval(() => getBalance(), 5000);
 
+<<<<<<< HEAD
     window.addEventListener("keydown", async (event) => {
+=======
+    const keyHandler = async (event) => {
+>>>>>>> temporary
       if (event.isComposing || event.keyCode === 229) {
         return;
       }
       if (testnet && event.key === "4") {
         await mintForTestNet(from, signer);
       }
+<<<<<<< HEAD
     });
 
     return () => clearInterval(balanceInterval);
+=======
+    };
+
+    window.addEventListener("keydown", keyHandler);
+
+    return () => {
+      clearInterval(balanceInterval);
+      window.removeEventListener("keydown", keyHandler);
+    };
+>>>>>>> temporary
   }, []);
 
   useEffect(() => {
@@ -303,6 +398,7 @@ function NFTaccount() {
       <NoApprovedNFT />
       <Container className="nftSlectContaine">
         <ReturnBtn />
+<<<<<<< HEAD
         {widget && (
           <>
             <UserConnect />
@@ -310,6 +406,8 @@ function NFTaccount() {
             <AccountModal />
           </>
         )}
+=======
+>>>>>>> temporary
         <div className="row">
           <div className="nftListCol col-lg-8">
             {!isMobile && <NFTscreen />}

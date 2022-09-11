@@ -86,6 +86,19 @@ export default function ChainListBox() {
     }
   };
 
+  /*useEffect(() => {
+   const keyHandler = async (event) => {
+      console.log(fromChains);
+      if (show && fromChains.length === 1 && event.key === "Enter") {
+        dispatch(setFrom(fromChains[0]));
+      }
+    };
+
+    window.addEventListener("keydown", keyHandler);
+
+    return () => window.removeEventListener("keydown", keyHandler);
+  }, []);*/
+
   const chainSelectHandler = async (chain) => {
     if (departureOrDestination === "departure") {
       if (chain.type === typeOfChainConnected() || !typeOfChainConnected()) {

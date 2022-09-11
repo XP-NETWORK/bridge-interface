@@ -3748,9 +3748,9 @@
     start-server-and-test "^1.14.0"
 
 "@solana/web3.js@^1.32.0", "@solana/web3.js@^1.36.0", "@solana/web3.js@^1.44.2":
-  version "1.56.2"
-  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.56.2.tgz#5212e8b147ebc216ea5a7aa99d5b555ebe41f9bd"
-  integrity sha512-ByWfNA8H/1EB4g0749uhkQ0zZZAQealzRmmT3UMIv3xe0DeHwnrzQUavBtAlHNMrKqLHu8kd+XtPci6zreMjjA==
+  version "1.59.1"
+  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.59.1.tgz#05ac572f11663cb8a718546e14b16aa4578cbc0b"
+  integrity sha512-8oviL9tRFZW3k/11rcIv4noBSKe8zCHcZApFNs4W6suA7umCmRBgrFtuf5/nMVTRrf0JNuXjDyWRAFAu92ZsUQ==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@noble/ed25519" "^1.7.0"
@@ -3764,7 +3764,6 @@
     buffer "6.0.1"
     fast-stable-stringify "^1.0.0"
     jayson "^3.4.4"
-    js-sha3 "^0.8.0"
     node-fetch "2"
     rpc-websockets "^7.5.0"
     superstruct "^0.14.2"
@@ -4571,9 +4570,9 @@
   integrity sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==
 
 "@types/node@*", "@types/node@>=12.12.47", "@types/node@>=13.7.0":
-  version "18.7.15"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.15.tgz#20ae1ec80c57ee844b469f968a1cd511d4088b29"
-  integrity sha512-XnjpaI8Bgc3eBag2Aw4t2Uj/49lLBSStHWfqKvIuXD7FIrZyMLWp8KuAFHAqxMZYTF9l08N1ctUn9YNybZJVmQ==
+  version "18.7.16"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.16.tgz#0eb3cce1e37c79619943d2fd903919fc30850601"
+  integrity sha512-EQHhixfu+mkqHMZl1R2Ovuvn47PUw18azMJOTwSZr9/fhzHNGXAJ0ma0dayRVchprpCj0Kc1K1xKoWaATWF1qg==
 
 "@types/node@10.12.18":
   version "10.12.18"
@@ -5524,9 +5523,9 @@ algorand-walletconnect-qrcode-modal@^1.6.1:
     qrcode "1.4.4"
 
 algosdk@^1.15.0-beta.1:
-  version "1.19.1"
-  resolved "https://registry.yarnpkg.com/algosdk/-/algosdk-1.19.1.tgz#81bfb8bc99bd31720c45f6e3083fa835d547375c"
-  integrity sha512-RBp6ihU1jX6OgPRstqskZmnLN4KmG+ZstFADiy0gYOYCy2xPoyKP5sTrf5DW8JECP5IIJi0azxsWgpPQjzJYaA==
+  version "1.20.0"
+  resolved "https://registry.yarnpkg.com/algosdk/-/algosdk-1.20.0.tgz#e699fa3b5c658b6cc87cf4bfbfd1b0c72727e7e6"
+  integrity sha512-KKfSIIdQTgdj3rKaYGLu3n16KC5obx0n+6XvlwAhyGxqG1K5bCJ9F1zbblhCE9aKEv+buNR23Lw6hXGQ54PA1A==
   dependencies:
     algo-msgpack-with-bigint "^2.1.1"
     buffer "^6.0.2"
@@ -17770,7 +17769,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "3.0.14"
-  resolved "git+https://github.com/xp-network/xpjs#7eb2a9d5a7094b050f57980747d8f6ec49a97f34"
+  resolved "git+https://github.com/xp-network/xpjs#b92d2fb33607614c162d8c784e8b70352b03bf77"
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"

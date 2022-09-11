@@ -159,6 +159,24 @@ export const allchains = [
   },
 
   {
+    name: "BSC Mainnet",
+    chain: "BSC",
+    network: "Chapel",
+    rpcUrls: [
+      "https://bsc-dataseed2.defibit.io",
+      "https://bsc-dataseed1.binance.org",
+      "https://bsc-dataseed.binance.org",
+    ],
+    faucets: ["https://testnet.binance.org/faucet-smart"],
+    nativeCurrency: {
+      name: "Binance Chain Token",
+      symbol: "BNB",
+      decimals: 18,
+    },
+    chainId: 56,
+  },
+
+  {
     name: "Binance Smart Chain Testnet",
     chain: "BSC",
     network: "Chapel",
@@ -252,6 +270,33 @@ export const allchains = [
       },
     ],
   },
+
+  {
+    name: "Velas EVM Testnet",
+    chain: "Velas",
+    network: "mainnet",
+    icon: "velas",
+    rpcUrls: ["https://explorer.testnet.velas.com/rpc"],
+    faucets: [],
+    nativeCurrency: {
+      name: "Velas",
+      symbol: "VLX",
+      decimals: 18,
+    },
+    infoURL: "https://velas.com",
+    shortName: "vlx",
+    chainId: 0x6f,
+    networkId: 106,
+    explorers: [
+      {
+        name: "Velas Explorer",
+        url: "https://evmexplorer.velas.com",
+        standard: "EIP3091",
+      },
+    ],
+  },
+
+  //0x6f
 
   {
     name: "Fuse Mainnet",

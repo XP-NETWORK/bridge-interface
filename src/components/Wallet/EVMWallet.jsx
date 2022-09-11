@@ -167,8 +167,9 @@ export default function EVMWallet({ wallet, close, discount }) {
 
   const isUnsupportedBitKeepChain = () => {
     const chain = from || temporaryFrom;
+
     if (chain) {
-      switch (from.text) {
+      switch (from?.text) {
         case "Godwoken":
           return true;
         case "Harmony":

@@ -62,6 +62,7 @@ export default withWidget(function ButtonToTransfer({
   const bitKeep = useSelector((state) => state.general.bitKeep);
   const hederaSigner = useSelector((state) => state.signers.signer);
   const chainConfig = useSelector((state) => state.signers.chainFactoryConfig);
+  const discountLeftUsd = useSelector((state) => state.discount.discount);
   const getAlgorandWalletSigner = async () => {
     const base = new MyAlgoConnect();
     if (algorandWallet) {
@@ -110,20 +111,20 @@ export default withWidget(function ButtonToTransfer({
       } else if (from === "Elrond")
         return maiarProvider || ExtensionProvider.getInstance();
       else if (from === "VeChain") {
-        const provider = thor.ethers.modifyProvider(
-          new ethers.providers.Web3Provider(
-            new thor.ConnexProvider({
-              connex: new Connex({
-                node: testnet
-                  ? "https://testnet.veblocks.net/"
-                  : "https://sync-mainnet.veblocks.net",
-                network: testnet ? "test" : "main",
-              }),
-            })
-          )
-        );
-        const signer = await provider.getSigner(account);
-        return signer;
+        /*const provider = thor.ethers.modifyProvider(
+                    new ethers.providers.Web3Provider(
+                        new thor.ConnexProvider({
+                            connex: new Connex({
+                                node: testnet
+                                    ? "https://testnet.veblocks.net/"
+                                    : "https://sync-mainnet.veblocks.net",
+                                network: testnet ? "test" : "main",
+                            }),
+                        })
+                    )
+                );
+                const signer = await provider.getSigner(account);*/
+        return hederaSigner;
       } else if (from === "Secret") {
         const signer = window.getOfflineSigner(
           testnet
@@ -207,7 +208,11 @@ export default withWidget(function ButtonToTransfer({
       txnHashArr,
       chainConfig,
       testnet,
+<<<<<<< HEAD
       extraFees: getExtraFee(from),
+=======
+      discountLeftUsd,
+>>>>>>> temporary
     };
 
     console.log(params, "params");
@@ -243,6 +248,7 @@ export default withWidget(function ButtonToTransfer({
     if (txnHashArr[0] && !result) {
       dispatch(setTxnHash({ txn: "failed", nft }));
     } else if (result) {
+<<<<<<< HEAD
       setTxForWidget({
         result,
         fromNonce: _from.nonce,
@@ -257,6 +263,10 @@ export default withWidget(function ButtonToTransfer({
       dispatch(setTxnHash({ txn: result, nft }));
     }
 
+=======
+      dispatch(setTxnHash({ txn: result, nft }));
+    }
+>>>>>>> temporary
     setLoading(false);
     dispatch(setTransferLoaderModal(false));
   };
@@ -271,9 +281,14 @@ export default withWidget(function ButtonToTransfer({
     } else if (!loading && approved) {
       setLoading(true);
       dispatch(setTransferLoaderModal(true));
-      selectedNFTList.forEach((nft, index) => {
-        sendEach(nft, index);
-      });
+
+      for (let index = 0; index < selectedNFTList.length; index++) {
+        if (from === "VeChain") {
+          await sendEach(selectedNFTList[index], index);
+        } else {
+          sendEach(selectedNFTList[index], index);
+        }
+      }
     }
   };
 

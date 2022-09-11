@@ -92,3 +92,14 @@ export const checkXpNetLocked = async (account) => {
         }
     }
 };
+
+export const patchRealizedDiscount = async (account, realized) => {
+    try {
+        const response = await axios.patch(
+            `https://bridge-discount-server.herokuapp.com/api/relization?address=${account}=${realized}`
+        );
+        console.log(response);
+    } catch (error) {
+        console.log(error);
+    }
+};
