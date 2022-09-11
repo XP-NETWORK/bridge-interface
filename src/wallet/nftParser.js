@@ -69,7 +69,10 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
 
           nftData = await cache.add(unwraped.nft, account, whitelisted);
 
-          if (nftData === "That nft is already caching") return undefined;
+          if (
+            /(That nft is already caching|key parameter missing)/.test(nftData)
+          )
+            return undefined;
         }
 
         return nftData;

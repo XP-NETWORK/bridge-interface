@@ -28,6 +28,9 @@ import { Modal } from "react-bootstrap";
 import Widget from "./components/Widget";
 import DepositAlert from "./components/Alerts/DepositAlert";
 import RedirectModal from "./components/Modals/Redirect/RedirectModal";
+
+import { ChainFabric } from "./services/chains";
+
 function App() {
   const dispatch = useDispatch();
   const axios = require("axios");

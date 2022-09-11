@@ -492,12 +492,13 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 };
 
 export const getAlgorandClaimables = async (account) => {
+  const { checkWallet, NFTList } = store.getState().general;
   // debugger;
   const hard = "2RKU6NQ3T36B42NJHUO27WTUCS3BOBM7YTAMGQNHPP2CAAUVO2LLMYW5EE";
   let claimables;
   const factory = await getFactory();
   try {
-    claimables = await factory.claimableAlgorandNfts(account);
+    claimables = await factory.claimableAlgorandNfts(checkWallet || account);
     console.log(claimables, "claimables");
     store.dispatch(setAlgorandClaimables(claimables));
   } catch (error) {

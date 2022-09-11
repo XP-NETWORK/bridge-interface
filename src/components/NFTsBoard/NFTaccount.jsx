@@ -74,6 +74,8 @@ function NFTaccount() {
   const NFTListSearch = useSelector((state) => state.general.NFTListSearch);
   const signer = useSelector((state) => state.signers.signer);
 
+  const checkWallet = useSelector((state) => state.general.checkWallet);
+
   const accountWalletModal = useSelector(
     (state) => state.general.accountWalletModal
   );
@@ -130,6 +132,7 @@ function NFTaccount() {
   const getBalance = async () => {
     // debugger;
     let _account =
+      checkWallet ||
       hederaAccount ||
       account ||
       algorandAccount ||
