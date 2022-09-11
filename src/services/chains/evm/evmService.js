@@ -107,7 +107,7 @@ export const transferNFTFromEVM = async ({
   }
 
   let result;
-
+  console.log(to.key);
   switch (true) {
     case to.type === "Cosmos" && !mintWith && !wrapped:
       const contractAddress =
@@ -124,7 +124,7 @@ export const transferNFTFromEVM = async ({
         mw
       );
       break;
-    case !wrapped && !mintWith && !testnet:
+    case !wrapped && !mintWith && !testnet && to.key === "Elrond":
       store.dispatch(
         setError({
           message:

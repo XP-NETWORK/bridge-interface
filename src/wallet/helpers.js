@@ -459,7 +459,11 @@ export const getNFTS = async (wallet, from) => {
   } catch (err) {
     console.log(err, "NFT Indexer error");
     if (!NFTList) {
-      store.dispatch(setError("NFT-Indexer is temporarily under maintenance"));
+      store.dispatch(
+        setError({
+          message: "NFT-Indexer is temporarily under maintenance",
+        })
+      );
     }
     return [];
   }
