@@ -378,6 +378,7 @@ const generalSlice = createSlice({
     setError(state, action) {
       if (action.payload) {
         const { err, data, message } = action.payload;
+
         switch (true) {
           case typeof data === "object":
             if (

@@ -88,6 +88,7 @@ export const transferNFTFromEVM = async ({
   const fromNonce = CHAIN_INFO[from.text].nonce;
   const toNonce = CHAIN_INFO[to.text].nonce;
   const wrapped = await factory.isWrappedNft(nft, fromNonce);
+
   const {
     native: { contract, tokenId },
     amountToTransfer,
@@ -104,6 +105,7 @@ export const transferNFTFromEVM = async ({
       tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
     );
   }
+
   let result;
 
   switch (true) {
@@ -124,9 +126,10 @@ export const transferNFTFromEVM = async ({
       break;
     case !wrapped && !mintWith && !testnet:
       store.dispatch(
-        setError(
-          "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection"
-        )
+        setError({
+          message:
+            "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection",
+        })
       );
       if (txnHashArr[0]) {
         store.dispatch(setTxnHash({ txn: "failed", nft }));

@@ -63,6 +63,7 @@ export default withWidget(function ButtonToTransfer({
   const hederaSigner = useSelector((state) => state.signers.signer);
   const chainConfig = useSelector((state) => state.signers.chainFactoryConfig);
   const discountLeftUsd = useSelector((state) => state.discount.discount);
+
   const getAlgorandWalletSigner = async () => {
     const base = new MyAlgoConnect();
     if (algorandWallet) {
@@ -158,9 +159,10 @@ export default withWidget(function ButtonToTransfer({
       switch (unstoppabledomain) {
         case "undefined":
           dispatch(
-            setError(
-              "Your domain does not explicitly support the chain you selected."
-            )
+            setError({
+              message:
+                "Your domain does not explicitly support the chain you selected.",
+            })
           );
           dispatch(dispatch(setTransferLoaderModal(false)));
           setLoading(false);
@@ -168,9 +170,10 @@ export default withWidget(function ButtonToTransfer({
           break;
         case "notEVM":
           dispatch(
-            setError(
-              "Domain names are currently not supported for Non-EVM chains."
-            )
+            setError({
+              message:
+                "Domain names are currently not supported for Non-EVM chains.",
+            })
           );
           dispatch(dispatch(setTransferLoaderModal(false)));
           setLoading(false);
@@ -178,7 +181,9 @@ export default withWidget(function ButtonToTransfer({
           break;
         case "invalid":
           dispatch(
-            setError("Domain does not exist. Please, check the spelling.")
+            setError({
+              message: "Domain does not exist. Please, check the spelling.",
+            })
           );
           dispatch(dispatch(setTransferLoaderModal(false)));
           setLoading(false);
@@ -208,14 +213,9 @@ export default withWidget(function ButtonToTransfer({
       txnHashArr,
       chainConfig,
       testnet,
-<<<<<<< HEAD
-      extraFees: getExtraFee(from),
-=======
       discountLeftUsd,
->>>>>>> temporary
+      extraFees: getExtraFee(from),
     };
-
-    console.log(params, "params");
 
     switch (_from.type) {
       case "EVM":
@@ -248,7 +248,6 @@ export default withWidget(function ButtonToTransfer({
     if (txnHashArr[0] && !result) {
       dispatch(setTxnHash({ txn: "failed", nft }));
     } else if (result) {
-<<<<<<< HEAD
       setTxForWidget({
         result,
         fromNonce: _from.nonce,
@@ -263,10 +262,6 @@ export default withWidget(function ButtonToTransfer({
       dispatch(setTxnHash({ txn: result, nft }));
     }
 
-=======
-      dispatch(setTxnHash({ txn: result, nft }));
-    }
->>>>>>> temporary
     setLoading(false);
     dispatch(setTransferLoaderModal(false));
   };

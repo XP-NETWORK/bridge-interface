@@ -84,7 +84,6 @@ function App() {
       }
     }
     localStorage.removeItem("walletconnect");
-<<<<<<< HEAD
     // debugger
     axios
       .get("https://xpvitaldata.herokuapp.com/last-commit")
@@ -98,22 +97,6 @@ function App() {
       });
   }, []);
 
-=======
-
-    // debugger
-    axios
-      .get("https://xpvitaldata.herokuapp.com/last-commit")
-      .then((response) => {
-        const d = transformToDate(response.data);
-        dispatch(setGitLatestCommit(d));
-      })
-      .catch(function(error) {
-        // handle error
-        console.log(error);
-      });
-  }, []);
-
->>>>>>> temporary
   return (
     <div className={"App"}>
       <ConnectAlgorand nftToOptIn={nftToOptIn} testnet={testnet} />
@@ -132,10 +115,7 @@ function App() {
       <Error />
       <TronPopUp />
       <XpBridge />
-<<<<<<< HEAD
       <Widget />
-=======
->>>>>>> temporary
       <Alert />
       <DepositAlert />
     </div>

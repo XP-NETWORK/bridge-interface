@@ -189,7 +189,12 @@ export const connectKeplr = async (testnet, chain, wallet, isMobile) => {
   } else {
     if (isMobile) {
       store.dispatch(setRedirectModal("Fina"));
-    } else store.dispatch(setError("Please install Keplr extension"));
+    } else
+      store.dispatch(
+        setError({
+          message: "Please install Keplr extension",
+        })
+      );
     return false;
   }
 };

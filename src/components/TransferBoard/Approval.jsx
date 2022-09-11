@@ -61,11 +61,8 @@ function Approval(props) {
   );
 
   const keplrWallet = useSelector((state) => state.general.keplrWallet);
-<<<<<<< HEAD
-=======
   const widget = useSelector((state) => state.general.widget);
   const sync2Connex = useSelector((state) => state.general.sync2Connex);
->>>>>>> temporary
 
   const getAlgorandWalletSigner = async () => {
     // debugger;
@@ -117,10 +114,6 @@ function Approval(props) {
         )[0];
         if (!isInApprovedNFTs) {
           try {
-<<<<<<< HEAD
-            console.log(nft, "nft");
-=======
->>>>>>> temporary
             const ap = await chain.approveForMinter(nft, signer);
             dispatch(updateApprovedNFTs(nft));
             setFinishedApproving(arr);
@@ -218,10 +211,6 @@ function Approval(props) {
 
   // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
   const approveAllNFTs = async () => {
-<<<<<<< HEAD
-    debugger;
-=======
->>>>>>> temporary
     if (!approvedLoading) {
       dispatch(setApproveLoader(true));
       setApprovedLoading(true);
@@ -285,67 +274,6 @@ function Approval(props) {
           );
           signer = await provider.getSigner(account);
           chain = await handleChainFactory(from.key);
-<<<<<<< HEAD
-          selectedNFTList.forEach((nft, index) => {
-            approveEach(nft, signer, chain, index);
-          });
-          break;
-        case "Cosmos":
-          signer = window.getOfflineSigner(
-            testnet
-              ? CHAIN_INFO[from.text].tnChainId
-              : CHAIN_INFO[from.text].chainId
-          );
-          chain = await handleChainFactory(from.key);
-          selectedNFTList.forEach((nft, index) => {
-            approveEach(nft, signer, chain, index);
-          });
-          break;
-        case "Tron":
-          setFinishedApproving(selectedNFTList);
-          selectedNFTList.forEach((nft, index) => {
-            dispatch(updateApprovedNFTs(nft));
-          });
-          break;
-        default:
-          selectedNFTList.forEach((nft, index) => {
-            approveEach(nft, undefined, undefined, index);
-          });
-          break;
-      }
-    }
-  };
-
-  const onClickHandler = async () => {
-    // debugger
-    // const isSC = await checkIfReceiverIsSmartContract();
-    // if (isSC) {
-    //     dispatch(setReceiverIsSmartContractAddress(true));
-    // } else
-
-    if (!receiver) {
-      dispatch(setPasteDestinationAlert(true));
-    } else if (selectedNFTList.length < 1) {
-      dispatch(setSelectNFTAlert(true));
-    } else if (!bigNumberFees) {
-      console.log("no fees need to estimate");
-    } else {
-      approveAllNFTs();
-    }
-  };
-
-  // sdsdfsddsfsdf
-  useEffect(() => {
-    if (
-      finishedApproving.length === selectedNFTList.length &&
-      approvedLoading
-    ) {
-      setApprovedLoading(false);
-      dispatch(setApproveLoader(false));
-      setFinishedApproving([]);
-    }
-
-=======
 
           for (let index = 0; index < selectedNFTList.length; index++) {
             await approveEach(selectedNFTList[index], signer, chain, index);
@@ -406,7 +334,6 @@ function Approval(props) {
       setFinishedApproving([]);
     }
 
->>>>>>> temporary
     if (selectedNFTList.length > 0) {
       dispatch(setApproved(isALLNFTsApproved()));
     } else {

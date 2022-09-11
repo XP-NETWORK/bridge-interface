@@ -392,11 +392,7 @@ export const chains = [
     tnChainId: 1305754875840118,
     image: { avatar: true, src: SKL },
     testNet: true,
-<<<<<<< HEAD
-    mainnet: false,
-=======
     mainnet: biz,
->>>>>>> temporary
     newChain: true,
   },
 ];
