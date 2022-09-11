@@ -299,6 +299,8 @@ export const withStyles = (Wrapped) => (props) => {
             .chain-switch {
               box-shadow: none;
             }
+
+           
     
     
             .chain-switch, .nonftAcc h2, .nonftAcc span {
@@ -364,7 +366,7 @@ export const withStyles = (Wrapped) => (props) => {
                 font-size: ${fontSize ? fontSize * 0.87 + "px" : ""}
             }
     
-            #collecSlideCont, #footer, #aboutnft, #tttt, #Header, #alertb, .get-featured, .slider__wrapper, .stickers   {
+            #collecSlideCont, #footer, #aboutnft, #tttt, #Header, #alertb, .get-featured, .slider__wrapper, .stickers, .refresh-button::after, .refresh-button--disabled::after{
                 display:none;
             }
     
@@ -634,7 +636,7 @@ export const withStyles = (Wrapped) => (props) => {
               border-color:  ${borderColor ? borderColor : ""} !important;
             }
           
-            .import-nft-button {
+            .import-nft-button, .refresh-button  {
               display: flex;
               justify-content: center;
               align-items: center;
@@ -650,7 +652,7 @@ export const withStyles = (Wrapped) => (props) => {
               display: flex;
               justify-content: center;
               align-items: center;
-              j
+           
             }
     
             .wllListItem:hover {

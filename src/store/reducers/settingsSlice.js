@@ -42,7 +42,7 @@ export const availability = {
 
 export const wallets = [
   "MetaMask",
-  ...(biz ? ["BitKeep"] : []),
+  "BitKeep",
   "WalletConnect",
   "TrustWallet",
   "MyAlgo",

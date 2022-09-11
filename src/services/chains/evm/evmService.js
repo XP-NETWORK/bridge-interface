@@ -124,7 +124,10 @@ export const transferNFTFromEVM = async ({
         mw
       );
       break;
-    case !wrapped && !mintWith && !testnet && to.key === "Elrond":
+    case !wrapped &&
+      !mintWith &&
+      !testnet &&
+      (to.key === "Elrond" || to.type === "EVM"):
       store.dispatch(
         setError({
           message:

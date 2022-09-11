@@ -386,6 +386,7 @@ export const chains = [
     type: "EVM",
     key: "Skale",
     text: "Skale",
+    value: "Skale",
     once: 0x1e,
     order: 0,
     chainId: 1564830818,
