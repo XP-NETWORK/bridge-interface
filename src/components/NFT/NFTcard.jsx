@@ -112,7 +112,7 @@ export default function NFTcard({ nft, index, claimables }) {
           >
             {nft.native.amount && <SFTMark amount={nft?.native.amount} />}
             <div className="nft__main">
-              {nft.uri && nft.image && nft.animation_url ? (
+              {nft.uri && (nft.image || nft.animation_url) ? (
                 <VideoAndImage
                   index={index}
                   videoUrl={nft.animation_url}
