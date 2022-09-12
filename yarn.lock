@@ -3297,9 +3297,9 @@
   integrity sha512-/kSXhY692qiV1MXu6EeOZvg5nECLclxNXcKCxJ3cXQgYuRymRHpdx/t7JXfsK+JLjwA1e1c1/SBrlQYpusC29Q==
 
 "@noble/ed25519@^1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@noble/ed25519/-/ed25519-1.7.0.tgz#583ac38340a479314b9e348d4572101ed9492f9d"
-  integrity sha512-LeAxFK0+181zQOhOUuKE8Jnd3duzYhDNd3iCLxpmzA5K+e4I1FdbrK3Ot0ZHBwZMeRD/6EojyUfTbpHZ+hkQHg==
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@noble/ed25519/-/ed25519-1.7.1.tgz#6899660f6fbb97798a6fbd227227c4589a454724"
+  integrity sha512-Rk4SkJFaXZiznFyC/t77Q0NKS4FL7TLJJsVG2V2oiEq3kJVeTdxysEe/yRWSpnWMe808XRDJ+VFh5pt/FN5plw==
 
 "@noble/hashes@1.0.0":
   version "1.0.0"
@@ -3311,10 +3311,15 @@
   resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.1.2.tgz#e9e035b9b166ca0af657a7848eb2718f0f22f183"
   integrity sha512-KYRCASVTv6aeUi1tsF8/vpyR7zpfs3FUzy2Jqm+MU+LmUKhQ0y2FpfwqkCcxSg2ua4GALJd8k2R76WxwZGbQpA==
 
-"@noble/secp256k1@1.6.3", "@noble/secp256k1@^1.6.3":
+"@noble/secp256k1@1.6.3":
   version "1.6.3"
   resolved "https://registry.yarnpkg.com/@noble/secp256k1/-/secp256k1-1.6.3.tgz#7eed12d9f4404b416999d0c87686836c4c5c9b94"
   integrity sha512-T04e4iTurVy7I8Sw4+c5OSN9/RkPlo1uKxAomtxQNLq8j1uPAqnsqG1bqvY3Jv7c13gyr6dui0zmh/I3+f/JaQ==
+
+"@noble/secp256k1@^1.6.3":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@noble/secp256k1/-/secp256k1-1.7.0.tgz#d15357f7c227e751d90aa06b05a0e5cf993ba8c1"
+  integrity sha512-kbacwGSsH/CTout0ZnZWxnW1B+jH/7r/WAAKLBtrRJ/+CUH7lgmQzl3GTrQua3SGKWNSDsS6lmjnDpIJ5Dxyaw==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -7307,7 +7312,7 @@ crypto-es@^1.2.7:
 
 "crypto-exchange-rate@git+https://github.com/xp-network/exchange-rate#master-dist":
   version "1.0.0"
-  resolved "git+https://github.com/xp-network/exchange-rate#8e87b6c98ee57df76edace5f6ccfa879e952d2ac"
+  resolved "git+https://github.com/xp-network/exchange-rate#644adac9e4a60351a9963b61a287e9c8f887217a"
   dependencies:
     axios "^0.21.1"
 
@@ -10634,9 +10639,9 @@ is-buffer@~1.1.6:
   integrity sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==
 
 is-callable@^1.1.3, is-callable@^1.1.4, is-callable@^1.2.4:
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/is-callable/-/is-callable-1.2.4.tgz#47301d58dd0259407865547853df6d61fe471945"
-  integrity sha512-nsuwtxZfMX67Oryl9LCQ+upnC0Z0BgpwntpS89m1H/TLF0zNfzfLMV/9Wa/6MZsj0acpEjAO0KF1xT6ZdLl95w==
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/is-callable/-/is-callable-1.2.5.tgz#6123e0b1fef5d7591514b371bb018204892f1a2b"
+  integrity sha512-ZIWRujF6MvYGkEuHMYtFRkL2wAtFw89EHfKlXrkPkjQZZRWeh9L1q3SV13NIfHnqxugjLvAOkEHx9mb1zcMnEw==
 
 is-core-module@^2.8.1, is-core-module@^2.9.0:
   version "2.10.0"
@@ -17741,13 +17746,13 @@ xmlhttprequest@1.8.0:
 
 "xpnet-web3-contracts@git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#dist-erc1155":
   version "0.1.0"
-  uid "65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
   resolved "git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
   dependencies:
     ethers "^5.5.4"
 
 "xpnet-web3-contracts@git+https://github.com/xp-network/XP.network-HECO-Migration#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f":
   version "0.1.0"
+  uid "65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
   resolved "git+https://github.com/xp-network/XP.network-HECO-Migration#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
   dependencies:
     ethers "^5.5.4"

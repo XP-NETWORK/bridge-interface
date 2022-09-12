@@ -33,7 +33,8 @@ export const TEZOS = "TEZOS";
 export const biz =
   window.location.hostname.includes("localhost") ||
   window.location.hostname.includes("staging") ||
-  window.location.hostname.includes("development");
+  window.location.hostname.includes("development") ||
+  window.location.hostname.includes("10.0.0.4");
 
 export const chains = [
   {

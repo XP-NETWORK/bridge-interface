@@ -101,7 +101,7 @@ function App() {
       <About />
       <Video />
       <TechnicalSupport />
-      <Modal animation={false} className="success-modal" show={toShowSuccess()}>
+      <Modal animation={null} className="success-modal" show={toShowSuccess()}>
         <SuccessModal />
       </Modal>
       <TransferLoader />

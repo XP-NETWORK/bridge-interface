@@ -278,7 +278,7 @@ function NFTaccount() {
     <div className="NFTaccount">
       <Modal
         show={importModal}
-        animation={false}
+        animation={null}
         className=" ChainModal import-nft__modal"
       >
         <ImportNFTModal />
@@ -286,14 +286,14 @@ function NFTaccount() {
       <Modal
         show={accountWalletModal}
         // onHide={handleClose}
-        animation={false}
+        animation={null}
         className="ChainModal wallet-modal"
       >
         <WalletConnectionModal />
       </Modal>
       <Modal
         show={unwrappedEGold}
-        animation={false}
+        animation={null}
         className="eGold-success ChainModal"
       >
         <EGoldSuccess />
