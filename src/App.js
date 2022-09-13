@@ -96,7 +96,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    false && (async () => {
+    /*false && (async () => {
       const bridge = await Bridge().init();
 
       const chain = await bridge.getChain({
@@ -105,7 +105,7 @@ function App() {
       });
 
       console.log(chain);
-    })();
+    })();*/
   }, []);
 
   return (

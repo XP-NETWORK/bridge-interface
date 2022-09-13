@@ -37,7 +37,10 @@ export const transferNFTFromElrond = async ({
   }
   let result;
   switch (true) {
-    case !wrapped && !mintWith && !testnet && to.type === "EVM":
+    case !wrapped &&
+      !mintWith &&
+      !testnet &&
+      (to.type === "EVM" || to.type === "VeChain"):
       store.dispatch(
         setError({
           message:
