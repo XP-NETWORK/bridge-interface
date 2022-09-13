@@ -419,9 +419,6 @@ export const mintForTestNet = async (from, signer) => {
   const chain = await factory.inner(chainsConfig[from].Chain);
   const uri = await prompt();
 
-  const p = ethers.getDefaultProvider(
-    "https://mainnet.skalenodes.com/v1/honorable-steel-rasalhague"
-  );
   //
   /*console.log(
     await p.getTransaction(
@@ -432,13 +429,10 @@ export const mintForTestNet = async (from, signer) => {
   return;*/
   try {
     const mint = await chain.mintNft(signer, {
-      contract: "0x0F00f81162ABC95Ee6741a802A1218C67C42e714",
+      contract: "0x34933A5958378e7141AA2305Cdb5cDf514896035",
       uri,
     });
 
-    console.log(mint, "mint");
-    const x = await p.waitForTransaction(mint.hash);
-    console.log(x, "x");
     return mint;
   } catch (error) {
     console.log(error);

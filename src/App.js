@@ -97,6 +97,19 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    /*false && (async () => {
+      const bridge = await Bridge().init();
+
+      const chain = await bridge.getChain({
+        type: "Cosmos",
+        key: "Secret",
+      });
+
+      console.log(chain);
+    })();*/
+  }, []);
+
   return (
     <div className={"App"}>
       <ConnectAlgorand nftToOptIn={nftToOptIn} testnet={testnet} />

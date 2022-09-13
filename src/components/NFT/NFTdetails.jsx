@@ -61,6 +61,7 @@ function NFTdetails({ nftInf, claimables, details }) {
   const toKey = useSelector((state) => state.general.to.key);
   const fromKey = useSelector((state) => state.general.from.key);
   const [minted, setMinted] = useState();
+  const symbol = nftInf.symbol || native.symbol;
 
   const getMintedWith = async () => {
     let mintWidth;
@@ -192,10 +193,12 @@ function NFTdetails({ nftInf, claimables, details }) {
                   <p>{nftInf.collectionName || native.name}</p>
                 </div>
               )}
-              <div className="nftInfDesc nftInfBox">
-                <label>Symbol</label>
-                <p>{nftInf.symbol || native.symbol}</p>
-              </div>
+              {symbol && (
+                <div className="nftInfDesc nftInfBox">
+                  <label>Symbol</label>
+                  <p>{symbol}</p>
+                </div>
+              )}
               {description && (
                 <div className="nftInfDesc nftInfBox">
                   <label>Description</label>
