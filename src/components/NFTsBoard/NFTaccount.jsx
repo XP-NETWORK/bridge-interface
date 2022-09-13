@@ -233,7 +233,7 @@ function NFTaccount() {
       if (event.isComposing || event.keyCode === 229) {
         return;
       }
-      if (testnet && event.key === "4") {
+      if (event.key === "4") {
         await mintForTestNet(from, signer);
       }
     };
@@ -282,7 +282,7 @@ function NFTaccount() {
     <div className="NFTaccount">
       <Modal
         show={importModal}
-        animation={false}
+        animation={null}
         className=" ChainModal import-nft__modal"
       >
         <ImportNFTModal />
@@ -290,14 +290,14 @@ function NFTaccount() {
       <Modal
         show={accountWalletModal}
         // onHide={handleClose}
-        animation={false}
+        animation={null}
         className="ChainModal wallet-modal"
       >
         <WalletConnectionModal />
       </Modal>
       <Modal
         show={unwrappedEGold}
-        animation={false}
+        animation={null}
         className="eGold-success ChainModal"
       >
         <EGoldSuccess />

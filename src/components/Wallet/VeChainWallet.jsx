@@ -63,6 +63,7 @@ export default function VeChainWallet({ close, wallet }) {
       default:
         account = await connectSync2(testnet);
         if (account) setConnecting(false);
+
         dispatch(setSync2(account));
         close();
         if (temporaryFrom) dispatch(setFrom(temporaryFrom));

@@ -634,7 +634,8 @@ export const chainsConfig = {
     Chain: Chain.SKALE,
     chainId: 1564830818,
     tnChainId: 1305754875840118,
-    tx: "https://expedition.dev/block/",
+    tx:
+      "https://honorable-steel-rasalhague.explorer.mainnet.skalenodes.com/tx/",
     testTx:
       "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/tx/",
     txQuery:
@@ -984,7 +985,8 @@ export const CHAIN_INFO = {
     decimals: 1e18,
     chainId: 1564830818,
     tnChainId: 1305754875840118,
-    blockExplorerUrl: "https://expedition.dev/address/",
+    blockExplorerUrl:
+      "https://honorable-steel-rasalhague.explorer.mainnet.skalenodes.com/address/",
     testBlockExplorerUrls:
       "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/address",
     addrQuery:

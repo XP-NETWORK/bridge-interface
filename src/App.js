@@ -32,7 +32,7 @@ import { withConnect } from "./components/Widget/hocs/withConnect";
 import DepositAlert from "./components/Alerts/DepositAlert";
 import RedirectModal from "./components/Modals/Redirect/RedirectModal";
 
-import { ChainFabric } from "./services/chains";
+//import Bridge from "./services/bridge";
 
 function App() {
   const dispatch = useDispatch();
@@ -103,7 +103,7 @@ function App() {
       <About />
       <Video />
       <TechnicalSupport />
-      <Modal animation={false} className="success-modal" show={toShowSuccess()}>
+      <Modal animation={null} className="success-modal" show={toShowSuccess()}>
         <SuccessModal />
       </Modal>
       <TransferLoader />

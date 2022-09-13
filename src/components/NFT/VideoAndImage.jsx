@@ -4,6 +4,7 @@ import { ReactComponent as Play } from "../../../src/assets/img/icons/_play.svg"
 import { ReactComponent as PlayHover } from "../../../src/assets/img/icons/hover_play.svg";
 import { ReactComponent as Pause } from "../../../src/assets/img/icons/_pause.svg";
 import { ReactComponent as PauseHover } from "../../../src/assets/img/icons/hover_pause.svg";
+import { ReactComponent as Sound } from "../../../src/assets/img/icons/sound.svg";
 import { setupURI } from "../../wallet/helpers";
 import Image from "./Image";
 export default function VideoAndImage({
@@ -14,18 +15,19 @@ export default function VideoAndImage({
   nft,
   onError,
 }) {
-  const [play, setPlay] = useState(false);
+  const [play, setPlay] = useState(Boolean(videoUrl));
   const [playHover, setPlayHover] = useState(null);
   const [pauseHover, setPauseHover] = useState(null);
+  const [mute, setMute] = useState(false);
 
   const playHolder = (e, str) => {
     e.stopPropagation();
     switch (str) {
       case "play":
-        setPlay(true);
+        !nft.image ? setMute(!mute) : setPlay(true);
         break;
       case "pause":
-        setPlay(false);
+        !nft.image ? setMute(!mute) : setPlay(false);
         break;
       default:
         break;
@@ -42,6 +44,7 @@ export default function VideoAndImage({
             playsInline={true}
             autoPlay={true}
             loop={true}
+            muted={!mute}
             poster={imageUrl}
           />
         </div>
@@ -57,7 +60,7 @@ export default function VideoAndImage({
             onClick={(e) => playHolder(e, "pause")}
             video
           />
-        ) : (
+        ) : nft.image ? (
           <Pause
             onMouseEnter={() => setPauseHover(true)}
             onMouseLeave={() => setPauseHover(false)}
@@ -65,21 +68,31 @@ export default function VideoAndImage({
             onClick={(e) => playHolder(e, "pause")}
             video
           />
+        ) : (
+          <Sound
+            alt="sound"
+            className="video--toggle sound"
+            onClick={(e) => playHolder(e, "pause")}
+          />
         )
       ) : playHover ? (
-        <PlayHover
-          onMouseEnter={() => setPlayHover(true)}
-          onMouseLeave={() => setPlayHover(false)}
-          className="image--toggle"
-          onClick={(e) => playHolder(e, "play")}
-        />
+        !nft.image && (
+          <PlayHover
+            onMouseEnter={() => setPlayHover(true)}
+            onMouseLeave={() => setPlayHover(false)}
+            className="image--toggle"
+            onClick={(e) => playHolder(e, "play")}
+          />
+        )
       ) : (
-        <Play
-          onMouseEnter={() => setPlayHover(true)}
-          onMouseLeave={() => setPlayHover(false)}
-          className="image--toggle"
-          onClick={(e) => playHolder(e, "play")}
-        />
+        !nft.image && (
+          <Play
+            onMouseEnter={() => setPlayHover(true)}
+            onMouseLeave={() => setPlayHover(false)}
+            className="image--toggle"
+            onClick={(e) => playHolder(e, "play")}
+          />
+        )
       )}
     </div>
   );

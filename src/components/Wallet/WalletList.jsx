@@ -18,7 +18,6 @@ export default function WalletList({ search, connected, input, discount }) {
   const from = useSelector((state) => state.general.from);
   const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
   const wsettings = useSelector((state) => state.widget.wsettings);
-  console.log(wsettings, "wsettings");
   const location = useLocation();
 
   const sortWallet = (components) => {
@@ -326,7 +325,7 @@ export default function WalletList({ search, connected, input, discount }) {
     {
       Component: (
         <VeChainWallet
-          key="wallet-index-17"
+          key="wallet-index-14"
           wallet={"VeChainThor"}
           close={connected}
         />
@@ -334,7 +333,7 @@ export default function WalletList({ search, connected, input, discount }) {
       name: "VeChainThor",
       type: "VeChain",
       mobile: true,
-      desktop: wsettings,
+      desktop: false,
       order: 13,
     },
     {
@@ -353,7 +352,7 @@ export default function WalletList({ search, connected, input, discount }) {
     },
     {
       Component: (
-        <CosmosWallet key="wallet-index-16" wallet={"Fina"} close={connected} />
+        <CosmosWallet key="wallet-index-17" wallet={"Fina"} close={connected} />
       ),
       name: "Fina",
       type: "Cosmos",
@@ -384,7 +383,13 @@ export default function WalletList({ search, connected, input, discount }) {
       type: "USB",
     },
     {
-      Component: <HederaWallet close={connected} wallet={"Hashpack"} />,
+      Component: (
+        <HederaWallet
+          key="wallet-index-122"
+          close={connected}
+          wallet={"Hashpack"}
+        />
+      ),
       name: "Hashpack",
       mobile: false,
       desktop: true,
@@ -392,7 +397,13 @@ export default function WalletList({ search, connected, input, discount }) {
       type: "Hedera",
     },
     {
-      Component: <HederaWallet close={connected} wallet={"Blade"} />,
+      Component: (
+        <HederaWallet
+          key="wallet-index-123"
+          close={connected}
+          wallet={"Blade"}
+        />
+      ),
       name: "Blade",
       mobile: false,
       desktop: true,

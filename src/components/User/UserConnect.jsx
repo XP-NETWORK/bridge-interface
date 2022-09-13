@@ -156,7 +156,8 @@ export default function UserConnect({ desktop, mobile }) {
     if (!account && WalletConnect) {
       active !== undefined && window.location.reload();
     }
-    dispatch(setAccount(account));
+
+    account && dispatch(setAccount(account));
   }, [active]);
 
   return (

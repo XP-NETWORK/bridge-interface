@@ -687,6 +687,22 @@
   position: absolute;
 }
 
+.video--toggle.sound {
+  width: 20px;
+  transform: translateX(-100%);
+  box-shadow: 1px 1px 10px 2px rgb(0 0 0 / 50%);
+  border-radius: unset;
+}
+
+.video--toggle.sound:hover {
+  filter: brightness(90%);
+}
+
+.video--toggle.sound path {
+  stroke: #cec6c6;
+  fill: #cec6c6;
+}
+
 .listed__skeleton {
   height: 42px;
   display: flex;
@@ -879,7 +895,7 @@
   }
 }
 .img-component__wrapper img {
-  height: 100%;
+  width: auto;
 }
 .img-component__wrapper,
 .img-component__wrapper--loading {

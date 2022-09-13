@@ -251,7 +251,7 @@ export const connectMetaMask = async (activate, from, to) => {
         return;
       }
 
-      const link = `https://metamask.app.link/dapp/${window.location.host}?to=${to}&from=${from}/`;
+      const link = `dapp://${window.location.host}?to=${to}&from=${from}/`;
       window.open(link);
     }
     await activate(injected);

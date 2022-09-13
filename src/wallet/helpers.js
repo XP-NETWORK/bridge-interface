@@ -1,4 +1,5 @@
 import { AppConfigs, ChainFactory, ChainFactoryConfigs } from "xp.network";
+
 import { Chain, Config } from "xp.network/dist/consts";
 import { isWhiteListed } from "../components/NFT/NFTHelper";
 import { chainsConfig, CHAIN_INFO } from "../components/values";
@@ -17,7 +18,7 @@ import io from "socket.io-client";
 
 import requestPool from "./requestPool";
 import { nftGeneralParser } from "nft-parser/dist/src/index";
-import { utils } from "ethers";
+import { ethers, utils } from "ethers";
 import { setIsEmpty } from "../store/reducers/paginationSlice";
 import { setChainFactoryConfig } from "../store/reducers/signersSlice";
 
@@ -417,11 +418,27 @@ export const mintForTestNet = async (from, signer) => {
   const factory = await getFactory();
   const chain = await factory.inner(chainsConfig[from].Chain);
   const uri = await prompt();
+
+  const p = ethers.getDefaultProvider(
+    "https://mainnet.skalenodes.com/v1/honorable-steel-rasalhague"
+  );
+  //
+  /*console.log(
+    await p.getTransaction(
+      "0xecdcc5a3769d036ad01b85c345219df0749e68ddb85d66c06a64c0a70ca891cd"
+    )
+  );
+
+  return;*/
   try {
     const mint = await chain.mintNft(signer, {
-      contract: "0x34933A5958378e7141AA2305Cdb5cDf514896035",
+      contract: "0x0F00f81162ABC95Ee6741a802A1218C67C42e714",
       uri,
     });
+
+    console.log(mint, "mint");
+    const x = await p.waitForTransaction(mint.hash);
+    console.log(x, "x");
     return mint;
   } catch (error) {
     console.log(error);

@@ -7,8 +7,8 @@ import {
 import { Modal } from "react-bootstrap";
 import Close from "../../../assets/img/icons/close.svg";
 import CopyHover from "../../../assets/img/icons/CopyHover.svg";
-import copyTT from "../../../assets/img/icons/copytoclip.svg";
-import copiedIcon from "../../../assets/img/icons/copiedtoclip.svg";
+import { ReactComponent as CopyTT } from "../../../assets/img/icons/copytoclip.svg";
+import { ReactComponent as CopiedIcon } from "../../../assets/img/icons/copiedtoclip.svg";
 import FileCopy from "../../../assets/img/icons/FileCopy.svg";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import vechainframe from "../../../assets/img/icons/vechainframe.svg";
@@ -96,8 +96,8 @@ export default function RedirectModal() {
         <div className="tron-modal__link">
           <div className="link__items">
             <div className="tron-modal_address">{text}</div>
-            {onHover && <img className="copyTronTT" src={copyTT} />}
-            {copied && <img className="copyTronTTc" src={copiedIcon} />}
+            {onHover && <CopyTT className="svgWidget copyTronTT" />}
+            {copied && <CopiedIcon className="svgWidget copyTronTTc" />}
             <CopyToClipboard text={link}>
               <div className="tron-modal__copyIcon">
                 <img

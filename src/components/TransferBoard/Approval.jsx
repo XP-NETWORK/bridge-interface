@@ -32,7 +32,7 @@ import { CHAIN_INFO } from "../values";
 import Web3 from "web3";
 import BigNumber from "bignumber.js";
 
-function Approval(props) {
+function Approval() {
   const dispatch = useDispatch();
   const [finishedApproving, setFinishedApproving] = useState([]);
   const [approvedLoading, setApprovedLoading] = useState();
@@ -40,6 +40,7 @@ function Approval(props) {
   const to = useSelector((state) => state.general.to);
   const testnet = useSelector((state) => state.general.testNet);
   const account = useSelector((state) => state.general.account);
+  console.log(account, "accountaccount");
   const templeSigner = useSelector((state) => state.general.templeSigner);
   const bitKeep = useSelector((state) => state.general.bitKeep);
   const hederaSigner = useSelector((state) => state.signers.signer);
@@ -193,7 +194,7 @@ function Approval(props) {
         const factory = await getFactory();
         const chain = await factory.inner(Chain.ELROND);
         const signer = maiarProvider || ExtensionProvider.getInstance();
-        console.log("inst", signer instanceof WalletConnectProvider);
+
         const swap = await chain.preTransfer(signer, nft, bigNumberFees);
 
         dispatch(updateApprovedNFTs(nft));

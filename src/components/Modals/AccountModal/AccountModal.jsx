@@ -117,7 +117,7 @@ export default function AccountModal() {
                   window.open(
                     widget && !wsettings
                       ? `/connect${window.location.search}`
-                      : `/connect?widget=true&wsettings=true`,
+                      : `/connect${window.location.search}`,
                     "_self"
                   )
               : () => window.location.reload()
