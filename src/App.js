@@ -29,7 +29,7 @@ import Widget from "./components/Widget";
 import DepositAlert from "./components/Alerts/DepositAlert";
 import RedirectModal from "./components/Modals/Redirect/RedirectModal";
 
-import { ChainFabric } from "./services/chains";
+//import Bridge from "./services/bridge";
 
 function App() {
   const dispatch = useDispatch();
@@ -93,6 +93,19 @@ function App() {
         // handle error
         console.log(error);
       });
+  }, []);
+
+  useEffect(() => {
+    false && (async () => {
+      const bridge = await Bridge().init();
+
+      const chain = await bridge.getChain({
+        type: "Cosmos",
+        key: "Secret",
+      });
+
+      console.log(chain);
+    })();
   }, []);
 
   return (

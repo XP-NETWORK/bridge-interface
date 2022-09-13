@@ -6,35 +6,25 @@ import {
   ChainFactoryConfigs,
 } from "xp.network";
 
+import BigNumber from "bignumber.js";
+
 class AbstractChain {
   chain;
 
-  constructor({ chain }) {
-    this.chainParams = chain;
+  constructor({ chainParams, nonce, chain, bridge }) {
+    this.chainParams = chainParams;
+    this.nonce = nonce;
+    this.chain = chain;
+    this.bridge = bridge;
   }
 
-  async init(isTestnet, signer) {
+  async setSigner(signer) {
     try {
-      if (!signer) throw new Error("shit fucks");
-      const config = !isTestnet
-        ? await ChainFactoryConfigs.MainNet()
-        : await ChainFactoryConfigs.TestNet();
-
-      const chain = ChainFactory(
-        isTestnet ? AppConfigs.TestNet() : AppConfigs.MainNet(),
-        config
-      );
-
-      const nonce = ChainNonce[this.chainParams?.key?.toUpperCase()];
-
-      if (!nonce) throw new Error("Cant find chain by key");
-      this.nonce = nonce;
-      this.chain = await chain.inner(nonce);
-      if (!this.chain) throw new Error("Cant get inner object of chain");
+      if (!signer) throw new Error("no signer");
       this.signer = signer;
       return this;
     } catch (e) {
-      console.log(e, "error in chain init");
+      console.log(e, "error in setSigner");
       throw e;
     }
   }
@@ -49,14 +39,91 @@ class AbstractChain {
     }
   }
 
-  send(nfts) {}
+  async estimate(toChain, nft, acc) {
+    //TODO
+    /*if (toTronFees) {
+      return toTronFees
+    }*/
+    try {
+      const res = await this.bridge.estimateFees(
+        this.chain,
+        toChain.chain,
+        nft,
+        acc
+      );
 
-  approve(nfts) {}
+      const fees =
+        res &&
+        res
+          .multipliedBy(1.1)
+          .integerValue()
+          .toString(10);
+
+      const decimals = CHAIN_INFO.get(this.nonce)?.decimals;
+
+      return {
+        fees,
+        formatedFees: fees.dividedBy(decimals).toNumber(),
+      };
+    } catch (e) {
+      console.log(e.message || e, "in estimate");
+      return {
+        fees: "",
+        formatedFees: 0,
+      };
+    }
+  }
+
+  async sendAsset(args) {
+    if (!this.signer) throw new Error("No signer for ", this.chainParams.text);
+    let result;
+    const { nft, toChain, receiver, fee, mintWith } = args;
+    if (nft.amount > 0) {
+      result = await this.bridge.transferSft(
+        this.chain,
+        toChain.chain,
+        nft,
+        this.signer,
+        receiver,
+        new BigNumber(nft.amount),
+        fee,
+        mintWith
+      );
+    } else {
+      result = await this.bridge.transferNft(
+        this.chain,
+        toChain.chain,
+        nft,
+        this.signer,
+        receiver,
+        fee,
+        mintWith
+      );
+    }
+    return result;
+  }
+
+  async approve(nfts) {
+    if (!this.signer) throw new Error("No signer for ", this.chainParams.text);
+  }
 }
 
 class EVM extends AbstractChain {
   constructor(params) {
     super(params);
+  }
+
+  async send(nfts, toChain, receiver, fee, mintWith) {
+    for (let index = 0; index < nfts.length; index++) {
+      const args = {
+        nft: nfts[index],
+        toChain,
+        receiver,
+        fee,
+        mintWith,
+      };
+      const result = await super.sendAsset(args);
+    }
   }
 }
 
@@ -104,40 +171,4 @@ class Cosmos extends AbstractChain {
   }
 }
 
-export const ChainFabric = (chain) => {
-  const params = {
-    chain,
-  };
-
-  switch (chain.type) {
-    case "EVM":
-      return new EVM(params);
-    case "Tron":
-      return new Tron(params);
-    case "Elrond":
-      return new Elrond(params);
-    case "Algorand":
-      return new Algorand(params);
-    case "Tezos":
-      return new Tezos(params);
-    case "VeChain":
-      return new VeChain(params);
-    case "Cosmos":
-      return new Cosmos(params);
-    default:
-      throw new Error("unsuported chain");
-  }
-};
-
-false &&
-  (async () => {
-    const chain = await ChainFabric({
-      type: "Cosmos",
-      key: "Secret",
-    }).init(false, window.ethereum);
-
-    const bal = await chain.balance(
-      "secret1ugsxn37pxee06zyenvqv6y68mgdq0dehqc8sy9"
-    );
-    console.log(bal, "bal");
-  })();
+export default { EVM, Elrond, Tron, Algorand, Tezos, VeChain, Cosmos };

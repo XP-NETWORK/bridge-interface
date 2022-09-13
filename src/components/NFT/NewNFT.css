@@ -895,7 +895,7 @@
   }
 }
 .img-component__wrapper img {
-  height: 100%;
+  width: auto;
 }
 .img-component__wrapper,
 .img-component__wrapper--loading {

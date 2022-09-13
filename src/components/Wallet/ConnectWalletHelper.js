@@ -240,7 +240,8 @@ export const connectMetaMask = async (activate, from, to) => {
   // debugger;
   try {
     if (!window.ethereum && window.innerWidth <= 600) {
-      const link = `https://metamask.app.link/dapp/${window.location.host}?to=${to}&from=${from}/`;
+      const link = `dapp://${window.location.host}?to=${to}&from=${from}/`;
+
       window.open(link);
     }
     await activate(injected);

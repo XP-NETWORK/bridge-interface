@@ -229,7 +229,7 @@ function NFTaccount() {
       if (event.isComposing || event.keyCode === 229) {
         return;
       }
-      if (testnet && event.key === "4") {
+      if (event.key === "4") {
         await mintForTestNet(from, signer);
       }
     };
