@@ -228,7 +228,6 @@ function Approval(props) {
 
     // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
     const approveAllNFTs = async () => {
-        debugger;
         if (!approvedLoading) {
             dispatch(setApproveLoader(true));
             setApprovedLoading(true);

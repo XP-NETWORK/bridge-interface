@@ -158,9 +158,10 @@ export default function ButtonToTransfer() {
             switch (unstoppabledomain) {
                 case "undefined":
                     dispatch(
-                        setError(
-                            "Your domain does not explicitly support the chain you selected."
-                        )
+                        setError({
+                            err:
+                                "Your domain does not explicitly support the chain you selected.",
+                        })
                     );
                     dispatch(dispatch(setTransferLoaderModal(false)));
                     setLoading(false);
@@ -168,9 +169,10 @@ export default function ButtonToTransfer() {
                     break;
                 case "notEVM":
                     dispatch(
-                        setError(
-                            "Domain names are currently not supported for Non-EVM chains."
-                        )
+                        setError({
+                            arr:
+                                "Domain names are currently not supported for Non-EVM chains.",
+                        })
                     );
                     dispatch(dispatch(setTransferLoaderModal(false)));
                     setLoading(false);
@@ -178,9 +180,10 @@ export default function ButtonToTransfer() {
                     break;
                 case "invalid":
                     dispatch(
-                        setError(
-                            "Domain does not exist. Please, check the spelling."
-                        )
+                        setError({
+                            err:
+                                "Domain does not exist. Please, check the spelling.",
+                        })
                     );
                     dispatch(dispatch(setTransferLoaderModal(false)));
                     setLoading(false);
@@ -194,6 +197,7 @@ export default function ButtonToTransfer() {
     };
 
     const sendEach = async (nft, index) => {
+        debugger;
         const signer = await getSigner();
         const unstoppabledomain = await getFromDomain(receiver, _to);
         const stop = unstoppabledomainSwitch(unstoppabledomain);

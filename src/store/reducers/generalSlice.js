@@ -388,6 +388,7 @@ const generalSlice = createSlice({
             state.WCProvider = action.payload;
         },
         setError(state, action) {
+            // debugger;
             if (action.payload) {
                 const { err, data, message } = action.payload;
                 switch (true) {
@@ -401,8 +402,11 @@ const generalSlice = createSlice({
                             state.error = `You don't have enough funds to pay the fees`;
                         else state.error = data.message || err.message;
                         break;
-                    case err:
-                        state.error = err.data.message || err.message;
+                    case typeof err === "string":
+                        state.error = err;
+                        break;
+                    case typeof err == "object":
+                        state.error = err.data.message || err.message || err;
                         break;
                     default:
                         if (message?.includes("User cant pay the bills"))
