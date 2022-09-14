@@ -185,13 +185,13 @@ export const chains = [
     mainnet: false,
   },
   {
-    type: "EVM",
+    type: "TON",
     key: "TON",
     text: "TON",
     value: "TON",
     chainId: undefined,
     order: 22,
-    coming: true,
+    coming: false,
     image: { avatar: true, src: Ton },
     maintenance: false,
     testNet: false,
@@ -386,7 +386,6 @@ export const chains = [
     type: "EVM",
     key: "Skale",
     text: "Skale",
-    value: "Skale",
     once: 0x1e,
     order: 0,
     chainId: 1564830818,
@@ -409,7 +408,9 @@ export const chainsConfig = {
   Ton: {
     type: EVM,
     img: Ton,
-    Chain: Chain.HECO,
+    Chain: Chain.TON,
+    testTx: "https://testnet.tonscan.org/tx/",
+    tx: "https://tonscan.org/tx/",
   },
   Tron: {
     type: "TRON",
@@ -749,6 +750,9 @@ export const TESTNET_CHAIN_INFO = {
     nonce: 33,
     chainId: 178,
   },
+  TON: {
+    none: 0x1b,
+  },
 };
 
 export const CHAIN_INFO = {
@@ -763,10 +767,10 @@ export const CHAIN_INFO = {
     native: coins[1],
     chainId: 256,
     rpcUrl: "https://http-testnet.hecochain.com",
-    decimals: 1e18,
+    decimals: 1e9,
     contract: "0x1247a6cB7aA2c90C6B9eF96AE3E7b269139BE06b",
-    blockExplorerUrls: "https://testnet.hecoinfo.com/address",
-    testBlockExplorerUrls: "https://testnet-explorer.elrond.com/address",
+    blockExplorerUrls: "https://tonscan.org/address/",
+    testBlockExplorerUrls: "https://testnet.tonscan.org/address/",
   },
   BSC: {
     nonce: 4,

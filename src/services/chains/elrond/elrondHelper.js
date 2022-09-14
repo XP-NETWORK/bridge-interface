@@ -23,13 +23,14 @@ export const transferNFTFromElrond = async ({
   const toNonce = CHAIN_INFO[to.text].nonce;
   const wrapped = await factory.isWrappedNft(nft, fromNonce);
   const {
-    native: { contract, tokenId },
+    native: { tokenId },
     amountToTransfer,
+    collectionIdent,
   } = nft;
   let mintWith;
   if (!wrapped) {
     mintWith = await factory.getVerifiedContract(
-      contract,
+      collectionIdent,
       toNonce,
       fromNonce,
       tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
