@@ -3,7 +3,7 @@ import axios from "axios";
 import { CHAIN_INFO } from "../components/values";
 import { convertOne1 } from "../wallet/helpers";
 import store from "../store/store";
-import { setAccount } from "../store/reducers/generalSlice";
+import { setAccount, setReceiver } from "../store/reducers/generalSlice";
 
 const endings = [
     ".crypto",
@@ -48,7 +48,7 @@ export const getFromDomain = async (domain, to) => {
     } else {
         return "invalid";
     }
-    if (address) store.dispatch(setAccount(address));
+    if (address) store.dispatch(setReceiver(address));
     return address || "undefined";
 };
 
