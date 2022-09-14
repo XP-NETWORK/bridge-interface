@@ -22,7 +22,9 @@ import { Chain } from "xp.network/dist/consts";
 import SCRT from "../assets/img/chain/secret.svg";
 import CKB from "../assets/img/chain/godwoken.svg";
 import HBAR from "../assets/img/chain/Hedera.svg";
-import SFUEL from "../assets/img/chain/SFUEL.svg";
+import SKL from "../assets/img/chain/SFUEL.svg";
+import Moon from "../assets/img/chain/Moonbeam.svg";
+import Abey from "../assets/img/chain/Abey.svg";
 
 export const EVM = "EVM";
 export const ELROND = "Elrond";
@@ -31,7 +33,8 @@ export const TEZOS = "TEZOS";
 export const biz =
     window.location.hostname.includes("localhost") ||
     window.location.hostname.includes("staging") ||
-    window.location.hostname.includes("development");
+    window.location.hostname.includes("development") ||
+    window.location.hostname.includes("10.0.0.4");
 
 export const chains = [
     {
@@ -182,13 +185,13 @@ export const chains = [
         mainnet: false,
     },
     {
-        type: "EVM",
+        type: "TON",
         key: "TON",
         text: "TON",
         value: "TON",
         chainId: undefined,
         order: 22,
-        coming: true,
+        coming: false,
         image: { avatar: true, src: Ton },
         maintenance: false,
         testNet: false,
@@ -214,6 +217,7 @@ export const chains = [
         value: "Velas",
         nonce: 19,
         chainId: 106,
+        tnChainId: 0x6f,
         order: 14,
         image: { avatar: true, src: Velas },
         newChain: false,
@@ -311,6 +315,34 @@ export const chains = [
         newChain: false,
     },
     {
+        type: "EVM",
+        key: "Moonbeam",
+        text: "Moonbeam",
+        value: "Moonbeam",
+        nonce: 0x20,
+        order: -6,
+        chainId: 1284,
+        tnChainId: 1287,
+        image: { avatar: true, src: Moon },
+        testNet: true,
+        mainnet: false,
+        newChain: true,
+    },
+    {
+        type: "EVM",
+        key: "Abeychain",
+        text: "Abeychain",
+        value: "Abeychain",
+        nonce: 0x21,
+        order: -5,
+        chainId: 179,
+        tnChainId: 178,
+        image: { avatar: true, src: Abey },
+        testNet: true,
+        mainnet: false,
+        newChain: true,
+    },
+    {
         type: "VeChain",
         key: "VeChain",
         text: "VeChain",
@@ -351,16 +383,16 @@ export const chains = [
         newChain: true,
     },
     {
-        type: "Skale",
+        type: "EVM",
         key: "Skale",
         text: "Skale",
         once: 0x1e,
         order: 0,
         chainId: 1564830818,
         tnChainId: 1305754875840118,
-        image: { avatar: true, src: SFUEL },
+        image: { avatar: true, src: SKL },
         testNet: true,
-        mainnet: false,
+        mainnet: biz,
         newChain: true,
     },
 ];
@@ -376,7 +408,9 @@ export const chainsConfig = {
     Ton: {
         type: EVM,
         img: Ton,
-        Chain: Chain.HECO,
+        Chain: Chain.TON,
+        testTx: "https://testnet.tonscan.org/tx/",
+        tx: "https://tonscan.org/tx/",
     },
     Tron: {
         type: "TRON",
@@ -484,8 +518,10 @@ export const chainsConfig = {
         token: "VLX",
         rpc: "https://velasnode.quigon.com/velas",
         chainId: 106,
+        tnChainId: 0x6f,
         Chain: Chain.VELAS,
         tx: "https://evmexplorer.velas.com/tx/",
+        testTx: "https://explorer.testnet.velas.com/tx/",
     },
     Tezos: {
         type: TEZOS,
@@ -562,7 +598,6 @@ export const chainsConfig = {
         tnRpc: "https://pulsar-2.api.trivium.network:9091",
         Chain: Chain.SECRET,
     },
-
     Godwoken: {
         type: EVM,
         token: "CKB",
@@ -571,30 +606,54 @@ export const chainsConfig = {
         tnChainId: 0x116e9,
         Chain: Chain.GODWOKEN,
         tx: "https://gwscan.com/tx/",
-        testTxn: "https://v1.testnet.gwscan.com/tx",
+        testTx: "https://v1.testnet.gwscan.com/tx",
+    },
+    Moonbeam: {
+        type: EVM,
+        token: "GLMR",
+        image: Moon,
+        chainId: 1284,
+        tnChainId: 1287,
+        Chain: Chain.MOONBEAM,
+        tx: "https://moonscan.io/tx/",
+        testTx: "https://moonbase.moonscan.io/tx/",
+        //rpc: "https://rpc.api.moonbase.moonbeam.network",
+        tnRpc: "https://rpc.api.moonbase.moonbeam.network",
     },
     Hedera: {
         type: "Hedera",
         token: "HBAR",
         image: HBAR,
         Chain: Chain.HEDERA,
-        tx: "https://hashscan.io/#/mainnet/transaction",
-        testTxn: "https://hashscan.io/#/testnet/transaction",
+        tx: "https://hashscan.io/#/mainnet/transaction/",
+        testTx: "https://hashscan.io/#/testnet/transaction/",
     },
     Skale: {
         type: "Skale",
-        token: "sFUEL",
-        image: SFUEL,
+        token: "SKL",
+        image: SKL,
         Chain: Chain.SKALE,
         chainId: 1564830818,
         tnChainId: 1305754875840118,
-        tx: "",
-        testTxn:
-            "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/tx",
+        tx:
+            "https://honorable-steel-rasalhague.explorer.mainnet.skalenodes.com/tx/",
+        testTx:
+            "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/tx/",
+        txQuery:
+            "?rpcUrl=https://mainnet.skalenodes.com/v1/honorable-steel-rasalhague",
+    },
+    Abeychain: {
+        type: "EVM",
+        token: "ABEY",
+        image: Abey,
+        Chain: Chain.ABEYCHAIN,
+        tnChainId: 178,
+        chainId: 179,
+        tx: "https://scan.abeychain.com/tx/",
+        testTx: "https://testnet-explorer.abeychain.com/tx/",
     },
 };
-// ?        chainId: 1564830818,
-// tnChainId: 0x4a393bf89c676,
+
 export const coins = [
     "eGLD", // 0
     "HT", // 1
@@ -619,7 +678,9 @@ export const coins = [
     "CKB", //20
     "SCRT", //21
     "HBAR", //22
-    "SFUEL", //23
+    "SKL", //23
+    "GLMR", //24
+    "ABEY", //25
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -668,6 +729,10 @@ export const TESTNET_CHAIN_INFO = {
         nonce: 22,
         chainId: 0x116e9,
     },
+    Moonbeam: {
+        nonce: 32,
+        chainId: 1287,
+    },
     Hedera: { nonce: 0x1d },
     Skale: {
         nonce: 0x1e,
@@ -680,6 +745,13 @@ export const TESTNET_CHAIN_INFO = {
     Velas: {
         nonce: 19,
         chainId: 0x6f,
+    },
+    Abeychain: {
+        nonce: 33,
+        chainId: 178,
+    },
+    TON: {
+        none: 0x1b,
     },
 };
 
@@ -695,10 +767,10 @@ export const CHAIN_INFO = {
         native: coins[1],
         chainId: 256,
         rpcUrl: "https://http-testnet.hecochain.com",
-        decimals: 1e18,
+        decimals: 1e9,
         contract: "0x1247a6cB7aA2c90C6B9eF96AE3E7b269139BE06b",
-        blockExplorerUrls: "https://testnet.hecoinfo.com/address",
-        testBlockExplorerUrls: "https://testnet-explorer.elrond.com/address",
+        blockExplorerUrls: "https://tonscan.org/address/",
+        testBlockExplorerUrls: "https://testnet.tonscan.org/address/",
     },
     BSC: {
         nonce: 4,
@@ -913,12 +985,35 @@ export const CHAIN_INFO = {
     },
     Skale: {
         native: coins[23],
-        none: 0x1e,
+        nonce: 0x1e,
         decimals: 1e18,
         chainId: 1564830818,
         tnChainId: 1305754875840118,
-        blockExplorerUrl: "",
+        blockExplorerUrl:
+            "https://honorable-steel-rasalhague.explorer.mainnet.skalenodes.com/address/",
         testBlockExplorerUrls:
             "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/address",
+        addrQuery:
+            "?rpcUrl=https://mainnet.skalenodes.com/v1/honorable-steel-rasalhague",
+    },
+    Moonbeam: {
+        native: coins[24],
+        nonce: 0x20,
+        decimals: 1e18,
+        chainId: 1284,
+        tnChainId: 1287,
+        rpc: "https://rpc.api.moonbase.moonbeam.network",
+        blockExplorerUrl: "https://moonbeam.moonscan.io/address/",
+        blockExplorerUrls: "https://moonbeam.moonscan.io/address/",
+        testBlockExplorerUrls: "https://moonbase.moonscan.io/address/",
+    },
+    Abeychain: {
+        native: coins[25],
+        none: 0x21,
+        decimals: 1e18,
+        chainId: 179,
+        tnChainId: 178,
+        blockExplorerUrl: "https://testnet-explorer.abeychain.com/address/",
+        testBlockExplorerUrl: "https://scan.abeychain.com/address/",
     },
 };

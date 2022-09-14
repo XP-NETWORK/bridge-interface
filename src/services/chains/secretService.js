@@ -7,7 +7,7 @@ class SecretService extends ChainService {
 
     try {
       const approve = await chain.preTransfer(signer, nft);
-      console.log(approve);
+
       return;
     } catch (e) {
       console.log(e.message, "approve for cosmos");

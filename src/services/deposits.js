@@ -49,7 +49,6 @@ export const approve = async (provider, account) => {
 };
 
 export const deposit = async (provider, address, num) => {
-    debugger;
     let deposited;
     const weiValue = Web3.utils.toWei(num.toString(), "ether");
     const contract = await createXpBridgeContract(provider);
@@ -91,5 +90,16 @@ export const checkXpNetLocked = async (account) => {
             console.log(error);
             return;
         }
+    }
+};
+
+export const patchRealizedDiscount = async (account, realized) => {
+    try {
+        const response = await axios.patch(
+            `https://bridge-discount-server.herokuapp.com/api/relization?address=${account}=${realized}`
+        );
+        console.log(response);
+    } catch (error) {
+        console.log(error);
     }
 };
