@@ -138,7 +138,7 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
             onClick={() => hadleSelectToggle("show")}
             className={toggle === "show" ? "show--selected" : "show"}
           >
-            Show assents
+            Show assets
           </div>
           <div
             onClick={() => hadleSelectToggle("set")}
