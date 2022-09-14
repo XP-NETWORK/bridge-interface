@@ -153,9 +153,10 @@ export default function ButtonToTransfer() {
       switch (unstoppabledomain) {
         case "undefined":
           dispatch(
-            setError(
-              "Your domain does not explicitly support the chain you selected."
-            )
+            setError({
+              message:
+                "Your domain does not explicitly support the chain you selected.",
+            })
           );
           dispatch(dispatch(setTransferLoaderModal(false)));
           setLoading(false);
@@ -163,9 +164,10 @@ export default function ButtonToTransfer() {
           break;
         case "notEVM":
           dispatch(
-            setError(
-              "Domain names are currently not supported for Non-EVM chains."
-            )
+            setError({
+              message:
+                "Domain names are currently not supported for Non-EVM chains.",
+            })
           );
           dispatch(dispatch(setTransferLoaderModal(false)));
           setLoading(false);
@@ -173,7 +175,9 @@ export default function ButtonToTransfer() {
           break;
         case "invalid":
           dispatch(
-            setError("Domain does not exist. Please, check the spelling.")
+            setError({
+              message: "Domain does not exist. Please, check the spelling.",
+            })
           );
           dispatch(dispatch(setTransferLoaderModal(false)));
           setLoading(false);

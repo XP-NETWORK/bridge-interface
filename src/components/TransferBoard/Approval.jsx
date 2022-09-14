@@ -114,7 +114,6 @@ function Approval(props) {
         )[0];
         if (!isInApprovedNFTs) {
           try {
-            console.log(nft, "nft");
             const ap = await chain.approveForMinter(nft, signer);
             dispatch(updateApprovedNFTs(nft));
             setFinishedApproving(arr);

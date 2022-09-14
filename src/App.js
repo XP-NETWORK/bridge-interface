@@ -28,6 +28,9 @@ import { Modal } from "react-bootstrap";
 import Widget from "./components/Widget";
 import DepositAlert from "./components/Alerts/DepositAlert";
 import RedirectModal from "./components/Modals/Redirect/RedirectModal";
+
+//import Bridge from "./services/bridge";
+
 function App() {
   const dispatch = useDispatch();
   const axios = require("axios");
@@ -92,13 +95,26 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    /*false && (async () => {
+      const bridge = await Bridge().init();
+
+      const chain = await bridge.getChain({
+        type: "Cosmos",
+        key: "Secret",
+      });
+
+      console.log(chain);
+    })();*/
+  }, []);
+
   return (
     <div className={"App"}>
       <ConnectAlgorand nftToOptIn={nftToOptIn} testnet={testnet} />
       <About />
       <Video />
       <TechnicalSupport />
-      <Modal animation={false} className="success-modal" show={toShowSuccess()}>
+      <Modal animation={null} className="success-modal" show={toShowSuccess()}>
         <SuccessModal />
       </Modal>
       <TransferLoader />

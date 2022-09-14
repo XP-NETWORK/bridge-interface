@@ -104,7 +104,6 @@ export default function EVMWallet({ wallet, close, discount }) {
               window.ethereum?.chainId ||
               chainId !== `0x${from?.chainId.toString(16)}`
             ) {
-              console.log(from, "from");
               const switched = await switchNetwork(from);
               if (switched) navigateToAccountRoute();
             } else navigateToAccountRoute();
@@ -162,8 +161,9 @@ export default function EVMWallet({ wallet, close, discount }) {
 
   const isUnsupportedBitKeepChain = () => {
     const chain = from || temporaryFrom;
+
     if (chain) {
-      switch (from.text) {
+      switch (from?.text) {
         case "Godwoken":
           return true;
         case "Harmony":

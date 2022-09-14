@@ -18,9 +18,9 @@ export async function switchNetwork(chain) {
 
   const id = (testNet ? chain.tnChainId : chain.chainId).toString();
   const paramsArr = getAddEthereumChain(testNet, id);
-  console.log(paramsArr, "paramsArr");
+
   const params = paramsArr[id];
-  console.log(params, "params");
+
   const copyParams = {
     chainName: params.name,
     chainId: `0x${params.chainId.toString(16)}`,
@@ -32,7 +32,6 @@ export async function switchNetwork(chain) {
     ? TESTNET_CHAIN_INFO[chain?.key]
     : CHAIN_INFO[chain?.key];
 
-  console.log(copyParams, "info");
   const chainId = `0x${info.chainId.toString(16)}`;
   switch (true) {
     case bitKeep:
@@ -88,6 +87,7 @@ export const transferNFTFromEVM = async ({
   const fromNonce = CHAIN_INFO[from.text].nonce;
   const toNonce = CHAIN_INFO[to.text].nonce;
   const wrapped = await factory.isWrappedNft(nft, fromNonce);
+
   const {
     native: { contract, tokenId },
     amountToTransfer,
@@ -104,7 +104,9 @@ export const transferNFTFromEVM = async ({
       tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
     );
   }
+
   let result;
+  console.log(to.key);
   switch (true) {
     case to.type === "Cosmos" && !mintWith && !wrapped:
       const contractAddress =
@@ -121,11 +123,15 @@ export const transferNFTFromEVM = async ({
         mw
       );
       break;
-    case !wrapped && !mintWith && !testnet:
+    case !wrapped &&
+      !mintWith &&
+      !testnet &&
+      (to.key === "Elrond" || to.type === "EVM"):
       store.dispatch(
-        setError(
-          "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection"
-        )
+        setError({
+          message:
+            "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection",
+        })
       );
       if (txnHashArr[0]) {
         store.dispatch(setTxnHash({ txn: "failed", nft }));

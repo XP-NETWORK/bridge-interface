@@ -188,7 +188,12 @@ export const connectKeplr = async (testnet, chain, wallet, isMobile) => {
   } else {
     if (isMobile) {
       store.dispatch(setRedirectModal("Fina"));
-    } else store.dispatch(setError("Please install Keplr extension"));
+    } else
+      store.dispatch(
+        setError({
+          message: "Please install Keplr extension",
+        })
+      );
     return false;
   }
 };
@@ -235,7 +240,8 @@ export const connectMetaMask = async (activate, from, to) => {
   // debugger;
   try {
     if (!window.ethereum && window.innerWidth <= 600) {
-      const link = `https://metamask.app.link/dapp/${window.location.host}?to=${to}&from=${from}/`;
+      const link = `dapp://${window.location.host}?to=${to}&from=${from}/`;
+
       window.open(link);
     }
     await activate(injected);
@@ -567,7 +573,7 @@ export const connectTronlink = async () => {
         });
 
         if (!accounts) {
-          store.dispatch(setTronLoginError("loggedOut"))``;
+          store.dispatch(setTronLoginError("loggedOut"));
         }
       } catch (err) {
         console.log(err);
@@ -577,7 +583,13 @@ export const connectTronlink = async () => {
       }
 
       if (window.tronLink && window.tronWeb.defaultAddress.base58) {
+        console.log(window.tronLink);
         const publicAddress = window.tronWeb.defaultAddress.base58;
+        const factory = await getFactory();
+        await factory
+          .setProvider(9, window.tronWeb)
+          .catch((e) => console.log(e, "e"));
+
         store.dispatch(setTronWallet(publicAddress));
         store.dispatch(setTronLink(true));
         return true;

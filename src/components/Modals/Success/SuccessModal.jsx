@@ -86,11 +86,18 @@ export default function SuccessModal() {
   };
 
   useEffect(() => {
+    //alert(`success modal ${getTX().toString()}:${socket.connected}`);
     socket.on("incomingEvent", async (e) => {
+      /* if (e.fromChain === "24" || e.fromChainName === "SECRET") {
+        alert(e.fromHash);
+      }*/
       dispatch(setTxnStatus(e));
       console.log("Incoming Event: ", e);
     });
     socket.on("updateEvent", async (e) => {
+      /*if (e.fromChain === "24" || e.fromChainName === "SECRET") {
+        alert(e.toHash);
+      }*/
       dispatch(setTxnStatus(e));
       console.log("Update Event: ", e);
     });
