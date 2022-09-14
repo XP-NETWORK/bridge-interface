@@ -82,7 +82,7 @@ export default function NFTcard({ nft, index, claimables }) {
         parseNFT(factory)(nft, index, testnet, claimables);
       }
     }
-    const mw = async () => {
+    /* const mw = async () => {
       const mintWith = await checkMintWith(
         from,
         to,
@@ -93,7 +93,7 @@ export default function NFTcard({ nft, index, claimables }) {
     };
     if (whitelisted && (from.type === "EVM" || from.type === "Elrond")) {
       mw();
-    } else setVerifiedContract(true);
+    } else setVerifiedContract(true);*/
   }, [isVisible, nft]);
 
   return (
@@ -136,7 +136,7 @@ export default function NFTcard({ nft, index, claimables }) {
                 ""
               )}
 
-              {(!nft.whitelisted || !verifiedContract) && <NotWhiteListed />}
+              {!nft.whitelisted /*|| !verifiedContract*/ && <NotWhiteListed />}
               {claimables && <ClaimableCard nft={nft} index={index} />}
             </div>
             {/* // ! */}
