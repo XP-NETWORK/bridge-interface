@@ -65,7 +65,7 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
 
       setLogdIn(true);
     } catch (error) {
-      dispatch(setError(error.message));
+      dispatch(setError({ message: error.message }));
       console.log(error);
     }
     setImportBlocked(false);

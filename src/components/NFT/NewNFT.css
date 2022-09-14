@@ -896,10 +896,12 @@
 }
 .img-component__wrapper img {
   width: auto;
+  height: 100%;
 }
 .img-component__wrapper,
 .img-component__wrapper--loading {
   position: relative;
+  height: 100%;
 }
 .img-component__loader {
   position: absolute;

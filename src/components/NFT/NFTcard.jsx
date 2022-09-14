@@ -20,6 +20,8 @@ import Image from "./Image";
 import SFTMark from "./SFTMark";
 import { checkMintWith } from "../../wallet/helpers";
 
+import OnlyVideo from "./OnlyVideo";
+
 export default function NFTcard({ nft, index, claimables }) {
   const dispatch = useDispatch();
   const [detailsOn, setDetailsOn] = useState(false);
@@ -112,7 +114,7 @@ export default function NFTcard({ nft, index, claimables }) {
           >
             {nft.native.amount && <SFTMark amount={nft?.native.amount} />}
             <div className="nft__main">
-              {nft.uri && (nft.image || nft.animation_url) ? (
+              {nft.uri && nft.image && nft.animation_url ? (
                 <VideoAndImage
                   index={index}
                   videoUrl={nft.animation_url}
@@ -122,6 +124,8 @@ export default function NFTcard({ nft, index, claimables }) {
                 />
               ) : nft.image && !imageErr ? (
                 <Image onError={setImageErr} nft={nft} index={index} />
+              ) : !nft.image && nft.animation_url ? (
+                <OnlyVideo videoUrl={nft.animation_url} />
               ) : (
                 <BrockenUtlGridView />
               )}
