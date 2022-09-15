@@ -141,7 +141,7 @@ function Approval(props) {
         setFinishedApproving(arr);
       } catch (e) {
         console.log(e.message, "approve for cosmos");
-        alert(e.message);
+
         dispatch(setApproveLoader(false));
         dispatch(setError(e.message));
       }

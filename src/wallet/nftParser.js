@@ -2,7 +2,7 @@ import { isWhiteListed } from "./../components/NFT/NFTHelper";
 import axios from "axios";
 import { nftGeneralParser } from "nft-parser/dist/src/index";
 import store from "../store/store";
-import { setEachNFT } from "../store/reducers/generalSlice";
+import { setEachNFT, setEachClaimables } from "../store/reducers/generalSlice";
 import { parseEachNFT } from "./helpers";
 
 import CacheService from "../services/cacheService";
@@ -107,6 +107,23 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
       store.dispatch(setEachNFT({ nftObj, index }));
     }
   } else {
-    await parseEachNFT(nft, index, testnet, claimable);
+    const unwraped = await cache.unwrap(nft);
+
+    const { chainId, tokenId, contract } = unwraped;
+    const claimableData = (await cache.get({ chainId, tokenId, contract }, nft))
+      .data;
+
+    store.dispatch(
+      setEachClaimables({
+        nftObj: {
+          ...nft,
+          ...claimableData,
+          native: {},
+          dataLoaded: true,
+          whitelisted: true,
+        },
+        index,
+      })
+    );
   }
 };
