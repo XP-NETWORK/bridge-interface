@@ -1,6 +1,8 @@
 //import Resolution from "@unstoppabledomains/resolution";
 import axios from "axios";
 import { CHAIN_INFO } from "../components/values";
+import { setReceiver } from "../store/reducers/generalSlice";
+import store from "../store/store";
 import { convertOne1 } from "../wallet/helpers";
 
 const endings = [
@@ -46,6 +48,7 @@ export const getFromDomain = async (domain, to) => {
     } else {
         return "invalid";
     }
+    store.dispatch(setReceiver(address));
     return address || "undefined";
 };
 

@@ -15,7 +15,7 @@ export default function VideoAndImage({
   nft,
   onError,
 }) {
-  const [play, setPlay] = useState(Boolean(videoUrl));
+  const [play, setPlay] = useState(false);
   const [playHover, setPlayHover] = useState(null);
   const [pauseHover, setPauseHover] = useState(null);
   const [mute, setMute] = useState(false);
@@ -24,10 +24,10 @@ export default function VideoAndImage({
     e.stopPropagation();
     switch (str) {
       case "play":
-        !nft.image ? setMute(!mute) : setPlay(true);
+        setPlay(true);
         break;
       case "pause":
-        !nft.image ? setMute(!mute) : setPlay(false);
+        setPlay(false);
         break;
       default:
         break;
@@ -60,7 +60,7 @@ export default function VideoAndImage({
             onClick={(e) => playHolder(e, "pause")}
             video
           />
-        ) : nft.image ? (
+        ) : (
           <Pause
             onMouseEnter={() => setPauseHover(true)}
             onMouseLeave={() => setPauseHover(false)}
@@ -68,31 +68,21 @@ export default function VideoAndImage({
             onClick={(e) => playHolder(e, "pause")}
             video
           />
-        ) : (
-          <Sound
-            alt="sound"
-            className="video--toggle sound"
-            onClick={(e) => playHolder(e, "pause")}
-          />
         )
       ) : playHover ? (
-        !nft.image && (
-          <PlayHover
-            onMouseEnter={() => setPlayHover(true)}
-            onMouseLeave={() => setPlayHover(false)}
-            className="image--toggle"
-            onClick={(e) => playHolder(e, "play")}
-          />
-        )
+        <PlayHover
+          onMouseEnter={() => setPlayHover(true)}
+          onMouseLeave={() => setPlayHover(false)}
+          className="image--toggle"
+          onClick={(e) => playHolder(e, "play")}
+        />
       ) : (
-        !nft.image && (
-          <Play
-            onMouseEnter={() => setPlayHover(true)}
-            onMouseLeave={() => setPlayHover(false)}
-            className="image--toggle"
-            onClick={(e) => playHolder(e, "play")}
-          />
-        )
+        <Play
+          onMouseEnter={() => setPlayHover(true)}
+          onMouseLeave={() => setPlayHover(false)}
+          className="image--toggle"
+          onClick={(e) => playHolder(e, "play")}
+        />
       )}
     </div>
   );

@@ -65,7 +65,7 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
 
       setLogdIn(true);
     } catch (error) {
-      dispatch(setError(error.message));
+      dispatch(setError({ message: error.message }));
       console.log(error);
     }
     setImportBlocked(false);
@@ -138,7 +138,7 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
             onClick={() => hadleSelectToggle("show")}
             className={toggle === "show" ? "show--selected" : "show"}
           >
-            Show assents
+            Show assets
           </div>
           <div
             onClick={() => hadleSelectToggle("set")}

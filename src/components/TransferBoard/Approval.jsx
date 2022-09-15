@@ -138,7 +138,6 @@ function Approval() {
       const chain = await factory.inner(Chain.SECRET);
       try {
         const result = await chain.preTransfer(signer, nft, new BigNumber(0));
-        alert("Boom", result);
         dispatch(updateApprovedNFTs(nft));
         setFinishedApproving(arr);
       } catch (e) {
