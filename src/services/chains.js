@@ -6,6 +6,9 @@ import {
   ChainFactoryConfigs,
 } from "xp.network";
 
+import {getTronFees} from './chainUtils/tronUtil'
+import { calcFees } from "./chainUtils";
+
 import BigNumber from "bignumber.js";
 
 class AbstractChain {
@@ -40,31 +43,23 @@ class AbstractChain {
   }
 
   async estimate(toChain, nft, acc) {
-    //TODO
-    /*if (toTronFees) {
-      return toTronFees
-    }*/
+
+    console.log(toChain);
+   
+    if (toChain.getNonce() === 9) {
+      return calcFees(getTronFees(this.chainParams.key), this.nonce)
+    }
+
     try {
       const res = await this.bridge.estimateFees(
         this.chain,
-        toChain.chain,
+        toChain,
         nft,
         acc
       );
 
-      const fees =
-        res &&
-        res
-          .multipliedBy(1.1)
-          .integerValue()
-          .toString(10);
+     return calcFees(res, this.nonce)
 
-      const decimals = CHAIN_INFO.get(this.nonce)?.decimals;
-
-      return {
-        fees,
-        formatedFees: fees.dividedBy(decimals).toNumber(),
-      };
     } catch (e) {
       console.log(e.message || e, "in estimate");
       return {
@@ -141,6 +136,8 @@ class Tron extends AbstractChain {
   constructor(params) {
     super(params);
   }
+
+
 }
 
 class Algorand extends AbstractChain {

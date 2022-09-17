@@ -9,17 +9,17 @@ export const getAddEthereumChain = (testnet, chainId) => {
 export const allchains = [
   {
     chainName: "Moonbeam Testnet",
-    rpcUrls: ["https://rpcUrls.api.moonbase.moonbeam.network"],
+    rpcUrls: ["https://rpc.api.moonbase.moonbeam.network"],
     chainId: 1284,
   },
   {
     chainName: "Moonbeam Mainnet",
-    rpcUrls: ["https://rpcUrls.api.moonbeam.network"],
+    rpcUrls: ["https://rpc.api.moonbeam.network"],
     chainId: 1287,
   },
   {
     chainName: "Abeychain Mainnet",
-    rpcUrls: ["https://rpcUrls.abeychain.com"],
+    rpcUrls: ["https://rpc.abeychain.com"],
     chainId: 0xb3,
   },
   {
@@ -212,9 +212,9 @@ export const allchains = [
     chain: "XDAI",
     network: "mainnet",
     rpcUrls: [
-      "https://rpcUrls.xdaichain.com",
+      "https://rpc.xdaichain.com",
       "https://xdai.poanetwork.dev",
-      "wss://rpcUrls.xdaichain.com/wss",
+      "wss://rpc.xdaichain.com/wss",
       "wss://xdai.poanetwork.dev/wss",
       "http://xdai.poanetwork.dev",
       "https://dai.poa.network",
@@ -249,8 +249,8 @@ export const allchains = [
     network: "mainnet",
     icon: "velas",
     rpcUrls: [
-      "https://evmexplorer.velas.com/rpcUrls",
-      "https://explorer.velas.com/rpcUrls",
+      "https://evmexplorer.velas.com/rpc",
+      "https://explorer.velas.com/rpc",
     ],
     faucets: [],
     nativeCurrency: {
@@ -302,7 +302,7 @@ export const allchains = [
     name: "Fuse Mainnet",
     chain: "FUSE",
     network: "mainnet",
-    rpcUrls: ["https://rpcUrls.fuse.io"],
+    rpcUrls: ["https://rpc.fuse.io"],
     faucets: [],
     nativeCurrency: {
       name: "Fuse",
@@ -320,12 +320,12 @@ export const allchains = [
     chain: "Polygon",
     network: "mainnet",
     rpcUrls: [
-      "https://polygon-rpcUrls.com/",
-      "https://rpcUrls-mainnet.matic.network",
+      "https://polygon-rpc.com/",
+      "https://rpc-mainnet.matic.network",
       "https://matic-mainnet.chainstacklabs.com",
-      "https://rpcUrls-mainnet.maticvigil.com",
-      "https://rpcUrls-mainnet.matic.quiknode.pro",
-      "https://matic-mainnet-full-rpcUrls.bwarelabs.com",
+      "https://rpc-mainnet.maticvigil.com",
+      "https://rpc-mainnet.matic.quiknode.pro",
+      "https://matic-mainnet-full-rpc.bwarelabs.com",
     ],
     faucets: [],
     nativeCurrency: {
@@ -351,7 +351,7 @@ export const allchains = [
     name: "Fantom Opera",
     chain: "FTM",
     network: "mainnet",
-    rpcUrls: ["https://rpcUrls.ftm.tools"],
+    rpcUrls: ["https://rpc.ftm.tools"],
     faucets: ["https://free-online-app.com/faucet-for-eth-evm-chains/"],
     nativeCurrency: {
       name: "Fantom",
@@ -394,7 +394,7 @@ export const allchains = [
     name: "Fantom Testnet",
     chain: "FTM",
     network: "testnet",
-    rpcUrls: ["https://rpcUrls.testnet.fantom.network"],
+    rpcUrls: ["https://rpc.testnet.fantom.network"],
     faucets: ["https://faucet.fantom.network"],
     nativeCurrency: {
       name: "Fantom",
@@ -491,7 +491,7 @@ export const allchains = [
     name: "Athereum",
     chain: "ATH",
     network: "athereum",
-    rpcUrls: ["https://ava.network:21015/ext/evm/rpcUrls"],
+    rpcUrls: ["https://ava.network:21015/ext/evm/rpc"],
     faucets: ["http://athfaucet.ava.network//?address=${ADDRESS}"],
     nativeCurrency: {
       name: "Athereum Ether",
@@ -507,7 +507,7 @@ export const allchains = [
     name: "Avalanche Fuji Testnet",
     chain: "AVAX",
     network: "testnet",
-    rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpcUrls"],
+    rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpc"],
     faucets: ["https://faucet.avax-test.network/"],
     nativeCurrency: {
       name: "Avalanche",
@@ -530,7 +530,7 @@ export const allchains = [
     name: "Avalanche Mainnet",
     chain: "AVAX",
     network: "mainnet",
-    rpcUrls: ["https://api.avax.network/ext/bc/C/rpcUrls"],
+    rpcUrls: ["https://api.avax.network/ext/bc/C/rpc"],
     faucets: ["https://free-online-app.com/faucet-for-eth-evm-chains/"],
     nativeCurrency: {
       name: "Avalanche",
@@ -812,7 +812,7 @@ export const allchains = [
     chain: "CKB",
     network: "mainnet",
     icon: "godwoken",
-    rpcUrls: ["https://v1.mainnet.godwoken.io/rpcUrls"],
+    rpcUrls: ["https://v1.mainnet.godwoken.io/rpc"],
     faucets: ["https://faucet.nervos.org/"],
     nativeCurrency: {
       name: "CKB",
@@ -829,8 +829,8 @@ export const allchains = [
     chain: "Volta",
     network: "testnet",
     rpcUrls: [
-      "https://volta-rpcUrls.energyweb.org",
-      "wss://volta-rpcUrls.energyweb.org/ws",
+      "https://volta-rpc.energyweb.org",
+      "wss://volta-rpc.energyweb.org/ws",
     ],
     faucets: ["https://voltafaucet.energyweb.org"],
     nativeCurrency: {
@@ -865,8 +865,8 @@ export const allchains = [
     //network: "testnet",
     rpcUrls: [
       "https://matic-mumbai.chainstacklabs.com",
-      "https://rpcUrls-mumbai.maticvigil.com",
-      "https://matic-testnet-archive-rpcUrls.bwarelabs.com",
+      "https://rpc-mumbai.maticvigil.com",
+      "https://matic-testnet-archive-rpc.bwarelabs.com",
     ],
     //faucets: ["https://faucet.polygon.technology/"],
     nativeCurrency: {
@@ -1372,7 +1372,7 @@ export const allchains = [
     chain: "Alaya",
     network: "testnet",
     rpcUrls: [
-      "https://devnetopenapi.alaya.network/rpcUrls",
+      "https://devnetopenapi.alaya.network/rpc",
       "wss://devnetopenapi.alaya.network/ws",
     ],
     faucets: [
@@ -1401,7 +1401,7 @@ export const allchains = [
     chain: "PlatON",
     network: "testnet",
     rpcUrls: [
-      "https://devnetopenapi.platon.network/rpcUrls",
+      "https://devnetopenapi.platon.network/rpc",
       "wss://devnetopenapi.platon.network/ws",
     ],
     faucets: [
@@ -1429,7 +1429,7 @@ export const allchains = [
     name: "ARTIS sigma1",
     chain: "ARTIS",
     network: "sigma1",
-    rpcUrls: ["https://rpcUrls.sigma1.artis.network"],
+    rpcUrls: ["https://rpc.sigma1.artis.network"],
     faucets: [],
     nativeCurrency: {
       name: "ARTIS sigma1 Ether",
@@ -1446,7 +1446,7 @@ export const allchains = [
     name: "ARTIS Testnet tau1",
     chain: "ARTIS",
     network: "tau1",
-    rpcUrls: ["https://rpcUrls.tau1.artis.network"],
+    rpcUrls: ["https://rpc.tau1.artis.network"],
     faucets: [],
     nativeCurrency: {
       name: "ARTIS tau1 Ether",
@@ -1463,7 +1463,7 @@ export const allchains = [
     chain: "Sparta",
     network: "testnet",
     icon: "polis",
-    rpcUrls: ["https://sparta-rpcUrls.polis.tech"],
+    rpcUrls: ["https://sparta-rpc.polis.tech"],
     faucets: ["https://faucet.polis.tech"],
     nativeCurrency: {
       name: "tPolis",
@@ -1480,7 +1480,7 @@ export const allchains = [
     chain: "Olympus",
     network: "mainnet",
     icon: "polis",
-    rpcUrls: ["https://rpcUrls.polis.tech"],
+    rpcUrls: ["https://rpc.polis.tech"],
     faucets: ["https://faucet.polis.tech"],
     nativeCurrency: {
       name: "Polis",
@@ -1505,7 +1505,7 @@ export const allchains = [
       decimals: 18,
     },
     rpcUrls: [
-      "https://rinkeby.arbitrum.io/rpcUrls",
+      "https://rinkeby.arbitrum.io/rpc",
       "wss://rinkeby.arbitrum.io/ws",
     ],
     faucets: [],
@@ -1566,7 +1566,7 @@ export const allchains = [
     name: "Etho Protocol",
     chain: "ETHO",
     network: "mainnet",
-    rpcUrls: ["https://rpcUrls.ether1.org"],
+    rpcUrls: ["https://rpc.ether1.org"],
     faucets: [],
     nativeCurrency: {
       name: "Etho Protocol",
@@ -1590,7 +1590,7 @@ export const allchains = [
     name: "Xerom",
     chain: "XERO",
     network: "mainnet",
-    rpcUrls: ["https://rpcUrls.xerom.org"],
+    rpcUrls: ["https://rpc.xerom.org"],
     faucets: [],
     nativeCurrency: {
       name: "Xerom Ether",
@@ -1623,7 +1623,7 @@ export const allchains = [
     name: "PepChain Churchill",
     chain: "PEP",
     network: "testnet",
-    rpcUrls: ["https://churchill-rpcUrls.pepchain.io"],
+    rpcUrls: ["https://churchill-rpc.pepchain.io"],
     faucets: [],
     nativeCurrency: {
       name: "PepChain Churchill Ether",
@@ -1655,7 +1655,7 @@ export const allchains = [
     name: "quarkblockchain",
     chain: "QKI",
     network: "mainnet",
-    rpcUrls: ["https://hz.rpcUrls.qkiscan.cn", "https://jp.rpcUrls.qkiscan.io"],
+    rpcUrls: ["https://hz.rpc.qkiscan.cn", "https://jp.rpc.qkiscan.io"],
     faucets: [],
     nativeCurrency: {
       name: "quarkblockchain Native Token",
@@ -1671,7 +1671,7 @@ export const allchains = [
     name: "Auxilium Network Mainnet",
     chain: "AUX",
     network: "mainnet",
-    rpcUrls: ["https://rpcUrls.auxilium.global"],
+    rpcUrls: ["https://rpc.auxilium.global"],
     faucets: [],
     nativeCurrency: {
       name: "Auxilium coin",
@@ -1786,7 +1786,7 @@ export const allchains = [
     chain: "OLT",
     network: "mainnet",
     icon: "oneledger",
-    rpcUrls: ["https://mainnet-rpcUrls.oneledger.network"],
+    rpcUrls: ["https://mainnet-rpc.oneledger.network"],
     faucets: [],
     nativeCurrency: {
       name: "OLT",
@@ -1809,7 +1809,7 @@ export const allchains = [
     name: "IPOS Network",
     chain: "IPOS",
     network: "mainnet",
-    rpcUrls: ["https://rpcUrls.iposlab.com", "https://rpc2.iposlab.com"],
+    rpcUrls: ["https://rpc.iposlab.com", "https://rpc2.iposlab.com"],
     faucets: [],
     nativeCurrency: {
       name: "IPOS Network Ether",
@@ -2056,7 +2056,7 @@ export const allchains = [
     chain: "OLT",
     network: "testnet",
     icon: "oneledger",
-    rpcUrls: ["https://frankenstein-rpcUrls.oneledger.network"],
+    rpcUrls: ["https://frankenstein-rpc.oneledger.network"],
     faucets: ["https://frankenstein-faucet.oneledger.network"],
     nativeCurrency: {
       name: "OLT",
