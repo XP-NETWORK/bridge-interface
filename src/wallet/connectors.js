@@ -16,7 +16,7 @@ export const algoConnector = new WalletConnect({
 
 export const uauthOptions = {
     clientID: "f909d011-195c-4688-92b4-2cab4c550dcc",
-    redirectUri: "http://localhost:3000",
+    redirectUri: "https://temporary.bridge.xp.network",
     scope: "openid wallet",
 };
 
