@@ -194,7 +194,6 @@ function Approval(props) {
         const signer = maiarProvider || ExtensionProvider.getInstance();
         console.log("inst", signer instanceof WalletConnectProvider);
         const swap = await chain.preTransfer(signer, nft, bigNumberFees);
-
         dispatch(updateApprovedNFTs(nft));
         setFinishedApproving(arr);
       } catch (error) {
@@ -207,6 +206,7 @@ function Approval(props) {
       }
     }
   };
+
 
   // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
   const approveAllNFTs = async () => {

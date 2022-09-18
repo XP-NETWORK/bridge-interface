@@ -4,6 +4,8 @@ import { CHAIN_INFO } from "../components/values";
 import { setReceiver } from "../store/reducers/generalSlice";
 import store from "../store/store";
 import { convertOne1 } from "../wallet/helpers";
+import store from "../store/store";
+import { setAccount, setReceiver } from "../store/reducers/generalSlice";
 
 const endings = [
     ".crypto",
@@ -48,7 +50,8 @@ export const getFromDomain = async (domain, to) => {
     } else {
         return "invalid";
     }
-    store.dispatch(setReceiver(address));
+    if (address) store.dispatch(setReceiver(address));
+
     return address || "undefined";
 };
 

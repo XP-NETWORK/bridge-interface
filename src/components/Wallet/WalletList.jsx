@@ -13,6 +13,7 @@ import CosmosWallet from "./CosmosWallet";
 import { biz } from "../values";
 import HederaWallet from "./HederaWallet";
 import { useLocation } from "react-router-dom";
+import Unscopables from "./Unscopables";
 
 export default function WalletList({ search, connected, input, discount }) {
   const from = useSelector((state) => state.general.from);
@@ -321,95 +322,98 @@ export default function WalletList({ search, connected, input, discount }) {
       order: 12,
     },
 
-    {
-      Component: (
-        <VeChainWallet
-          key="wallet-index-14"
-          wallet={"VeChainThor"}
-          close={connected}
-        />
-      ),
-      name: "VeChainThor",
-      type: "VeChain",
-      mobile: true,
-      desktop: false,
-      order: 13,
-    },
-    {
-      Component: (
-        <CosmosWallet
-          key="wallet-index-15"
-          wallet={"Keplr"}
-          close={connected}
-        />
-      ),
-      name: "Keplr",
-      type: "Cosmos",
-      mobile: "false",
-      desktop: "true",
-      order: 14,
-    },
-    {
-      Component: (
-        <CosmosWallet key="wallet-index-17" wallet={"Fina"} close={connected} />
-      ),
-      name: "Fina",
-      type: "Cosmos",
-      mobile: true,
-      desktop: false,
-      order: 14,
-    },
-    {
-      Component: (
-        <USBWallet
-          wallet={"Ledger"}
-          key="wallet-index-11"
-          connected={connected}
-        />
-      ),
-      name: "Ledger",
-      mobile: false,
-      desktop: true,
-      order: 15,
-      type: "USB",
-    },
-    {
-      Component: <USBWallet key="wallet-index-12" connected={connected} />,
-      name: "Trezor",
-      mobile: false,
-      desktop: true,
-      order: 16,
-      type: "USB",
-    },
-    {
-      Component: (
-        <HederaWallet
-          key="wallet-index-122"
-          close={connected}
-          wallet={"Hashpack"}
-        />
-      ),
-      name: "Hashpack",
-      mobile: false,
-      desktop: true,
-      order: 17,
-      type: "Hedera",
-    },
-    {
-      Component: (
-        <HederaWallet
-          key="wallet-index-123"
-          close={connected}
-          wallet={"Blade"}
-        />
-      ),
-      name: "Blade",
-      mobile: false,
-      desktop: true,
-      order: 18,
-      type: "Hedera",
-    },
-  ];
+        {
+            Component: (
+                <VeChainWallet
+                    key="wallet-index-14"
+                    wallet={"VeChainThor"}
+                    close={connected}
+                />
+            ),
+            name: "VeChainThor",
+            type: "VeChain",
+            mobile: true,
+            desktop: false,
+            order: 13,
+        },
+        {
+            Component: (
+                <CosmosWallet
+                    key="wallet-index-15"
+                    wallet={"Keplr"}
+                    close={connected}
+                />
+            ),
+            name: "Keplr",
+            type: "Cosmos",
+            mobile: "false",
+            desktop: "true",
+            order: 14,
+        },
+        {
+            Component: (
+                <CosmosWallet
+                    key="wallet-index-16"
+                    wallet={"Fina"}
+                    close={connected}
+                />
+            ),
+            name: "Fina",
+            type: "Cosmos",
+            mobile: true,
+            desktop: false,
+            order: 14,
+        },
+        {
+            Component: (
+                <USBWallet
+                    wallet={"Ledger"}
+                    key="wallet-index-11"
+                    connected={connected}
+                />
+            ),
+            name: "Ledger",
+            mobile: false,
+            desktop: true,
+            order: 15,
+            type: "USB",
+        },
+        {
+            Component: (
+                <USBWallet key="wallet-index-12" connected={connected} />
+            ),
+            name: "Trezor",
+            mobile: false,
+            desktop: true,
+            order: 16,
+            type: "USB",
+        },
+        {
+            Component: <HederaWallet close={connected} wallet={"Hashpack"} />,
+            name: "Hashpack",
+            mobile: false,
+            desktop: true,
+            order: 17,
+            type: "Hedera",
+        },
+        {
+            Component: <HederaWallet close={connected} wallet={"Blade"} />,
+            name: "Blade",
+            mobile: false,
+            desktop: true,
+            order: 18,
+            type: "Hedera",
+        },
+        {
+            Component: <Unscopables close={connected} />,
+            name: "Unscopables",
+            mobile: false,
+            desktop: true,
+            order: 14,
+            type: "Unscopables§",
+        },
+    ];
+
 
   // const evmWallets = walletComponents.filter(
   //     (e) => e.type === "EVM" || e.type === "Skale"

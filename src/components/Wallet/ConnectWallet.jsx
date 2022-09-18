@@ -19,29 +19,34 @@ import Web3 from "web3";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 
 function ConnectWallet() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const dispatch = useDispatch();
-  const [walletSearch, setWalletSearch] = useState();
-  const hardcoded = new URLSearchParams(window.location.search).get(
-    "checkWallet"
-  );
-  dispatch(setCheckWallet(hardcoded));
-  const from = useSelector((state) => state.general.from);
-  const to = useSelector((state) => state.general.to);
-  const [show, setShow] = useState();
-  const qrCodeString = useSelector((state) => state.general.qrCodeString);
-  const qrCodeImage = useSelector((state) => state.general.qrCodeImage);
-  const elrondAccount = useSelector((state) => state.general.elrondAccount);
-  const tezosAccount = useSelector((state) => state.general.tezosAccount);
-  const secretAccount = useSelector((state) => state.general.secretAccount);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const dispatch = useDispatch();
+    const [walletSearch, setWalletSearch] = useState();
+    const hardcoded = new URLSearchParams(window.location.search).get(
+        "checkWallet"
+    );
+    dispatch(setCheckWallet(hardcoded));
+    const from = useSelector((state) => state.general.from);
+    const to = useSelector((state) => state.general.to);
+    const [show, setShow] = useState();
+    const qrCodeString = useSelector((state) => state.general.qrCodeString);
+    const qrCodeImage = useSelector((state) => state.general.qrCodeImage);
+    const elrondAccount = useSelector((state) => state.general.elrondAccount);
+    const tezosAccount = useSelector((state) => state.general.tezosAccount);
+    const secretAccount = useSelector((state) => state.general.secretAccount);
+    const unstoppableDomains = useSelector(
+        (state) => state.general.unstoppableDomains
+    );
+    const algorandAccount = useSelector(
+        (state) => state.general.algorandAccount
+    );
+    const evmAccount = useSelector((state) => state.general.account);
+    const tronAccount = useSelector((state) => state.general.tronWallet);
+    const hederaAccount = useSelector((state) => state.general.hederaAccount);
+    const testnet = useSelector((state) => state.general.testNet);
+    const bitKeep = useSelector((state) => state.general.bitKeep);
 
-  const algorandAccount = useSelector((state) => state.general.algorandAccount);
-  const evmAccount = useSelector((state) => state.general.account);
-  const tronAccount = useSelector((state) => state.general.tronWallet);
-  const hederaAccount = useSelector((state) => state.general.hederaAccount);
-  const testnet = useSelector((state) => state.general.testNet);
-  const bitKeep = useSelector((state) => state.general.bitKeep);
 
   const { account, chainId } = useWeb3React();
   const inputElement = useRef(null);
@@ -94,37 +99,36 @@ function ConnectWallet() {
   //       };
   //       const chain = getAddEthereumChain()[parseInt(_chainId).toString()];
 
-  //       const params = {
-  //         chainId: _chainId, // A 0x-prefixed hexadecimal string
-  //         chainName: chain.name,
-  //         nativeCurrency: {
-  //           name: chain.nativeCurrency.name,
-  //           symbol: chain.nativeCurrency.symbol, // 2-6 characters long
-  //           decimals: chain.nativeCurrency.decimals,
-  //         },
-  //         rpcUrls: chain.rpc,
-  //         blockExplorerUrls: [
-  //           chain.explorers &&
-  //           chain.explorers.length > 0 &&
-  //           chain.explorers[0].url
-  //             ? chain.explorers[0].url
-  //             : chain.infoURL,
-  //         ],
-  //       };
-  //       await window.ethereum.request({
-  //         method: "wallet_addEthereumChain",
-  //         params: [params, account],
-  //       });
-  //       navigate(
-  //         testnet
-  //           ? `/testnet/account${location.search ? location.search : ""}`
-  //           : `/account${location.search ? location.search : ""}`
-  //       );
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // }
+    const handleConnect = async () => {
+        // debugger;
+        let provider;
+        let _chainId;
+        if (bitKeep) {
+            provider = window.bitkeep?.ethereum;
+            await provider.request({ method: "eth_requestAccounts" });
+            const web3 = new Web3(provider);
+            _chainId = await web3.eth.getChainId();
+        }
+        const chainID = chainId || _chainId;
+        if (unstoppableDomains) {
+            navigate(`/account${location.search ? location.search : ""}`);
+        } else if (testnet && from.tnChainId === chainID) {
+            navigate(
+                `/testnet/account${location.search ? location.search : ""}`
+            );
+        } else if (!testnet && from.chainId === chainID) {
+            navigate(`/account${location.search ? location.search : ""}`);
+        } else if (testnet && from.type !== "EVM") {
+            navigate(
+                `/testnet/account${location.search ? location.search : ""}`
+            );
+        } else if (from.type !== "EVM") {
+            navigate(`/account${location.search ? location.search : ""}`);
+        } else {
+            switchNetwork(from);
+        }
+    };
+
 
   const handleConnect = async () => {
     let provider;
