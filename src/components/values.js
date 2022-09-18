@@ -339,7 +339,7 @@ export const chains = [
         tnChainId: 178,
         image: { avatar: true, src: Abey },
         testNet: true,
-        mainnet: true,
+        mainnet: false,
         newChain: true,
     },
     {
