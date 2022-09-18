@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Modal } from "react-bootstrap";
 import moment from "moment";
 import brockenurl from "../../assets/img/brockenurl.png";
@@ -89,6 +89,19 @@ function NFTdetails({ nftInf, claimables, details }) {
       //getMintedWith();
     }
   }, []);
+
+  const attrs = useMemo(
+    () =>
+      attributes.map((attr) =>
+        attr.key
+          ? {
+              ...attr,
+              trait_type: attr.key,
+            }
+          : attr
+      ),
+    [attributes]
+  );
 
   return (
     <>
@@ -206,9 +219,9 @@ function NFTdetails({ nftInf, claimables, details }) {
                   <p>{description}</p>
                 </div>
               )}
-              {attributes &&
-                Array.isArray(attributes) &&
-                attributes
+              {attrs &&
+                Array.isArray(attrs) &&
+                attrs
                   .filter(
                     (n) =>
                       typeof n.value === "string" || typeof n.value === "number"
