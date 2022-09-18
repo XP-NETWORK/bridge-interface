@@ -13,6 +13,7 @@ import CosmosWallet from "./CosmosWallet";
 import { biz } from "../values";
 import HederaWallet from "./HederaWallet";
 import { useLocation } from "react-router-dom";
+import Unscopables from "./Unscopables";
 
 export default function WalletList({ search, connected, input, discount }) {
   const from = useSelector((state) => state.general.from);
@@ -352,7 +353,7 @@ export default function WalletList({ search, connected, input, discount }) {
     },
     {
       Component: (
-        <CosmosWallet key="wallet-index-17" wallet={"Fina"} close={connected} />
+        <CosmosWallet key="wallet-index-16" wallet={"Fina"} close={connected} />
       ),
       name: "Fina",
       type: "Cosmos",
@@ -383,13 +384,7 @@ export default function WalletList({ search, connected, input, discount }) {
       type: "USB",
     },
     {
-      Component: (
-        <HederaWallet
-          key="wallet-index-122"
-          close={connected}
-          wallet={"Hashpack"}
-        />
-      ),
+      Component: <HederaWallet close={connected} wallet={"Hashpack"} />,
       name: "Hashpack",
       mobile: false,
       desktop: true,
@@ -397,19 +392,21 @@ export default function WalletList({ search, connected, input, discount }) {
       type: "Hedera",
     },
     {
-      Component: (
-        <HederaWallet
-          key="wallet-index-123"
-          close={connected}
-          wallet={"Blade"}
-        />
-      ),
+      Component: <HederaWallet close={connected} wallet={"Blade"} />,
       name: "Blade",
       mobile: false,
       desktop: true,
       order: 18,
       type: "Hedera",
     },
+    // {
+    //     Component: <Unscopables close={connected} />,
+    //     name: "Unscopables",
+    //     mobile: false,
+    //     desktop: true,
+    //     order: 14,
+    //     type: "Unscopables§",
+    // },
   ];
 
   // const evmWallets = walletComponents.filter(

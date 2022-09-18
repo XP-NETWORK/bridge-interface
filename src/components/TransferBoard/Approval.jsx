@@ -142,7 +142,7 @@ function Approval() {
         setFinishedApproving(arr);
       } catch (e) {
         console.log(e.message, "approve for cosmos");
-        alert(e.message);
+
         dispatch(setApproveLoader(false));
         dispatch(setError(e.message));
       }
@@ -195,7 +195,6 @@ function Approval() {
         const signer = maiarProvider || ExtensionProvider.getInstance();
 
         const swap = await chain.preTransfer(signer, nft, bigNumberFees);
-
         dispatch(updateApprovedNFTs(nft));
         setFinishedApproving(arr);
       } catch (error) {
@@ -208,6 +207,7 @@ function Approval() {
       }
     }
   };
+
 
   // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
   const approveAllNFTs = async () => {

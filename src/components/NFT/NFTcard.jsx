@@ -53,9 +53,9 @@ export default function NFTcard({ nft, index, claimables }) {
 
   let isSelected = selectedNFTs.filter(
     (n) =>
-      n.native.tokenId === nft.native.tokenId &&
-      n.native.contract === nft.native.contract &&
-      n.native.chainId === nft.native.chainId
+      n.native.tokenId === nft.native?.tokenId &&
+      n.native.contract === nft.native?.contract &&
+      n.native.chainId === nft.native?.chainId
   )[0];
 
   function addRemoveNFT(chosen) {
@@ -88,8 +88,8 @@ export default function NFTcard({ nft, index, claimables }) {
       const mintWith = await checkMintWith(
         from,
         to,
-        nft.native.contract,
-        nft.native.tokenId
+        nft.native?.contract,
+        nft.native?.tokenId
       );
       if (mintWith) setVerifiedContract(true);
     };
@@ -112,7 +112,7 @@ export default function NFTcard({ nft, index, claimables }) {
             }
             className={nft.whitelisted ? "nft__card--selected" : "nft__card"}
           >
-            {nft.native.amount && <SFTMark amount={nft?.native.amount} />}
+            {nft.native?.amount && <SFTMark amount={nft?.native.amount} />}
             <div className="nft__main">
               {nft.uri && nft.image && nft.animation_url ? (
                 <VideoAndImage
@@ -156,7 +156,7 @@ export default function NFTcard({ nft, index, claimables }) {
                 </span>
               )}
               <span className="nft-name">
-                <span className="name">{nft.name || nft.native.name}</span>
+                <span className="name">{nft.name || nft.native?.name}</span>
                 <NFTdetails
                   details={setDetailsOn}
                   nftInf={nft}
@@ -164,7 +164,7 @@ export default function NFTcard({ nft, index, claimables }) {
                   claimables={claimables}
                 />
               </span>
-              <span className="nft-number">{nft.native.tokenId}</span>
+              <span className="nft-number">{nft.native?.tokenId}</span>
             </div>
           </div>
         )}

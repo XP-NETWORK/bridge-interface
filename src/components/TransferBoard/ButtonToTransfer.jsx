@@ -153,6 +153,7 @@ export default withWidget(function ButtonToTransfer({
     }
   };
 
+
   const unstoppabledomainSwitch = (unstoppabledomain) => {
     let stop;
     if (unstoppabledomain) {

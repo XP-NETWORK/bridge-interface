@@ -325,7 +325,7 @@ export const chains = [
     tnChainId: 1287,
     image: { avatar: true, src: Moon },
     testNet: true,
-    mainnet: false,
+    mainnet: biz,
     newChain: true,
   },
   {
@@ -751,7 +751,7 @@ export const TESTNET_CHAIN_INFO = {
     chainId: 178,
   },
   TON: {
-    none: 0x1b,
+    nonce: 0x1b,
   },
 };
 
@@ -1009,7 +1009,7 @@ export const CHAIN_INFO = {
   },
   Abeychain: {
     native: coins[25],
-    none: 0x21,
+    nonce: 0x21,
     decimals: 1e18,
     chainId: 179,
     tnChainId: 178,

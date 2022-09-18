@@ -1,9 +1,8 @@
 import Connex from "@vechain/connex";
 import { TempleWallet } from "@temple-wallet/dapp";
-import { injected, algoConnector } from "../../wallet/connectors";
+import { injected, algoConnector, web3Modal } from "../../wallet/connectors";
 import store from "../../store/store";
-import WalletConnect from "@walletconnect/client";
-import QRCodeModal from "@walletconnect/qrcode-modal";
+
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
@@ -11,6 +10,9 @@ import * as thor from "web3-providers-connex";
 import { HashConnect } from "hashconnect";
 import { hethers } from "@hashgraph/hethers";
 import { inIframe } from "../Settings/helpers";
+import UAuth from "@uauth/js";
+import { InjectedConnector } from "@web3-react/injected-connector";
+import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 
 import {
   WalletConnectProvider,
@@ -55,7 +57,6 @@ import {
   setRedirectModal,
 } from "../../store/reducers/generalSlice";
 import { chainsConfig } from "../values";
-import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { getAddEthereumChain } from "../../wallet/chains";
 import Web3 from "web3";
 
@@ -91,15 +92,8 @@ hashConnect.pairingEvent.once(async (pairingData) => {
   } = pairingData;
   const address = await hethers.utils.getAddressFromAccount(accountIds[0]);
   const provider = hashConnect.getProvider("testnet", topic, accountIds[0]);
-  console.log(
-    "🚀 ~ file: ConnectWalletHelper.js ~ line 92 ~ hashConnect.pairingEvent.once ~ provider",
-    provider
-  );
   const signer = hashConnect.getSigner(provider);
-  console.log(
-    "🚀 ~ file: ConnectWalletHelper.js ~ line 97 ~ hashConnect.pairingEvent.once ~ signer",
-    signer
-  );
+
   store.dispatch(setHederaAccount(address));
   store.dispatch(setHederaWallet(name));
   store.dispatch(setSigner(signer));
@@ -124,6 +118,15 @@ export const connectHashpack = async () => {
     return true;
   } catch (error) {
     console.log("connectHashpack error: ", error);
+  }
+};
+
+export const connectUnstoppable = async (close) => {
+  try {
+    const provider = await web3Modal.connect();
+    return provider.selectedAddress;
+  } catch (error) {
+    console.log(error);
   }
 };
 

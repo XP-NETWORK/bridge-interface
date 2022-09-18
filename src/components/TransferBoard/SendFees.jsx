@@ -93,7 +93,7 @@ function SendFees() {
             wallet
           );
         } catch (error) {
-          console.error(error);
+          console.log(error.data ? error.data.message : error.message);
         }
       }
 

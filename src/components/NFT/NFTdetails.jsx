@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Modal } from "react-bootstrap";
 import moment from "moment";
 import brockenurl from "../../assets/img/brockenurl.png";
@@ -61,7 +61,7 @@ function NFTdetails({ nftInf, claimables, details }) {
   const toKey = useSelector((state) => state.general.to.key);
   const fromKey = useSelector((state) => state.general.from.key);
   const [minted, setMinted] = useState();
-  const symbol = nftInf.symbol || native.symbol;
+  const symbol = nftInf.symbol || native?.symbol;
 
   const getMintedWith = async () => {
     let mintWidth;
@@ -88,6 +88,19 @@ function NFTdetails({ nftInf, claimables, details }) {
       //getMintedWith();
     }
   }, []);
+
+  const attrs = useMemo(
+    () =>
+      attributes?.map((attr) =>
+        attr?.key
+          ? {
+              ...attr,
+              trait_type: attr?.key,
+            }
+          : attr
+      ),
+    [attributes]
+  );
 
   return (
     <>
@@ -150,7 +163,7 @@ function NFTdetails({ nftInf, claimables, details }) {
               </div>
               <div className="nftToken nftInfBox">
                 <label>Token ID</label>
-                <p>{native.tokenId}</p>
+                <p>{native?.tokenId}</p>
               </div>
               {original_uri && !isOriginUriExist && (
                 <div className="nftInfDesc nftInfBox">
@@ -187,10 +200,10 @@ function NFTdetails({ nftInf, claimables, details }) {
                             ) : (
                                 <></>
                             )*/}
-              {native.name && (
+              {native?.name && (
                 <div className="nftInfDesc nftInfBox">
                   <label>Collection Name</label>
-                  <p>{nftInf.collectionName || native.name}</p>
+                  <p>{nftInf.collectionName || native?.name}</p>
                 </div>
               )}
               {symbol && (
@@ -205,9 +218,9 @@ function NFTdetails({ nftInf, claimables, details }) {
                   <p>{description}</p>
                 </div>
               )}
-              {attributes &&
-                Array.isArray(attributes) &&
-                attributes
+              {attrs &&
+                Array.isArray(attrs) &&
+                attrs
                   .filter(
                     (n) =>
                       typeof n.value === "string" || typeof n.value === "number"
