@@ -7,15 +7,7 @@ import { ReactComponent as PauseHover } from "../../../src/assets/img/icons/hove
 import { ReactComponent as Sound } from "../../../src/assets/img/icons/sound.svg";
 import { setupURI } from "../../wallet/helpers";
 import Image from "./Image";
-export default function VideoAndImage({
-  videoUrl,
-  imageUrl,
-  imageLoadedHandler,
-  index,
-  nft,
-  onError,
-}) {
-  const [play, setPlay] = useState(false);
+export default function VideoAndImage({ videoUrl }) {
   const [playHover, setPlayHover] = useState(null);
   const [pauseHover, setPauseHover] = useState(null);
   const [mute, setMute] = useState(false);
@@ -24,10 +16,10 @@ export default function VideoAndImage({
     e.stopPropagation();
     switch (str) {
       case "play":
-        setPlay(true);
+        setMute(true);
         break;
       case "pause":
-        setPlay(false);
+        setMute(false);
         break;
       default:
         break;
@@ -36,7 +28,7 @@ export default function VideoAndImage({
 
   return (
     <div className="play__container">
-      {play ? (
+      {
         <div className="video__wrapper">
           <video
             src={setupURI(videoUrl)}
@@ -45,13 +37,10 @@ export default function VideoAndImage({
             autoPlay={true}
             loop={true}
             muted={!mute}
-            poster={imageUrl}
           />
         </div>
-      ) : (
-        <Image nft={nft} onError={onError} />
-      )}
-      {play ? (
+      }
+      {mute ? (
         pauseHover ? (
           <PauseHover
             onMouseEnter={() => setPauseHover(true)}

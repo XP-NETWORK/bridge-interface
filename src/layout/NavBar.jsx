@@ -124,19 +124,21 @@ function NavBar() {
                                 </div>
                                 <div className="nav-link__txt">Explorer</div>
                             </Nav.Link> */}
-                            {/* {!testnet && (
-                                <LinkContainer to={"deposits"}>
+                            {/*!testnet && (
+                                <LinkContainer to={"discounts"}>
                                     <Nav.Link>
                                         <div className="nav-link__icon">
                                             <img src={deposits} alt="" />
                                         </div>
                                         <div className="nav-link__txt">
-                                            Deposits
+                                            Discounts
                                         </div>
                                     </Nav.Link>
                                 </LinkContainer>
-                            )} */}
-                            <Nav.Link
+                            )*/}
+                            <a
+                                rel="noreferrer"
+                                className="nav-link help-center"
                                 target="_blank"
                                 href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"
                             >
@@ -144,7 +146,7 @@ function NavBar() {
                                     <img src={message} alt="" />
                                 </div>
                                 <div className="nav-link__txt">Help Center</div>
-                            </Nav.Link>
+                            </a>
                             <Nav.Link
                                 className="mob-link"
                                 target="_blank"

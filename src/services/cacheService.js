@@ -89,6 +89,7 @@ class CacheService {
             native: {
               ...nft.native,
               chainId: data.wrapped?.origin,
+              contract: data.wrapped?.contract,
               tokenId,
             },
           },

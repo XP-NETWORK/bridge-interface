@@ -44,11 +44,18 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
             setImportBlocked(true);
             const factory = await getFactory();
             const secret = await factory.inner(Chain.SECRET);
+
             let secretNFTs = await secret.nftList(
                 checkWallet || secretAccount,
                 secretCred.viewKey,
                 secretCred.contract
             );
+
+            // let secretNFTs = await secret.nftList(
+            //     "secret1dazpkyxaj9eau9ej0fv266vdaaxtgn9nhak6ad",
+            //     secretCred.viewKey,
+            //     secretCred.contract
+            // );
 
             secretNFTs = secretNFTs.map((nft) => ({
                 ...nft,
@@ -64,7 +71,7 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
 
             setLogdIn(true);
         } catch (error) {
-            dispatch(setError(error.message));
+            dispatch(setError({ message: error.message }));
             console.log(error);
         }
         setImportBlocked(false);
@@ -139,7 +146,7 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
                             toggle === "show" ? "show--selected" : "show"
                         }
                     >
-                        Show assents
+                        Show assets
                     </div>
                     <div
                         onClick={() => hadleSelectToggle("set")}

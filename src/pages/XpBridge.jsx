@@ -24,7 +24,7 @@ function XpBridge() {
                         components={<NFTaccount />}
                     />
                 </Route>
-                <Route path="/deposits" element={<Deposits />} />
+                <Route path="/discounts" element={<Deposits />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
             {/* <NFTsuccess /> */}
