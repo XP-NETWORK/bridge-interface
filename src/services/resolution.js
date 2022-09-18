@@ -1,11 +1,9 @@
 //import Resolution from "@unstoppabledomains/resolution";
 import axios from "axios";
 import { CHAIN_INFO } from "../components/values";
-import { setReceiver } from "../store/reducers/generalSlice";
+import { setReceiver, setAccount } from "../store/reducers/generalSlice";
 import store from "../store/store";
 import { convertOne1 } from "../wallet/helpers";
-import store from "../store/store";
-import { setAccount, setReceiver } from "../store/reducers/generalSlice";
 
 const endings = [
     ".crypto",

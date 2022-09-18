@@ -4,26 +4,26 @@ import { utils } from "ethers";
 import { convertTransactionHash } from "../../wallet/helpers";
 
 export const initialSecretCred = {
-  contract: "",
-  viewKey: "",
+    contract: "",
+    viewKey: "",
 };
 
 const initialState = {
-  step: 0,
-  selectedNFTList: [],
-  NFTListView: false,
-  approvedNFTList: [],
-  nftsToWhitelist: [],
-  whitelistedNFTS: [],
-  txnHashArr: [],
-  fees: 0,
-  currentTx: 0,
-  bigLoader: true,
-  innerWidth: 0,
-  alert: false,
-  NFTListSearch: "",
-  refreshSecret: false,
-  secretCred: initialSecretCred,
+    step: 0,
+    selectedNFTList: [],
+    NFTListView: false,
+    approvedNFTList: [],
+    nftsToWhitelist: [],
+    whitelistedNFTS: [],
+    txnHashArr: [],
+    fees: 0,
+    currentTx: 0,
+    bigLoader: true,
+    innerWidth: 0,
+    alert: false,
+    NFTListSearch: "",
+    refreshSecret: false,
+    secretCred: initialSecretCred,
 };
 
 const generalSlice = createSlice({
@@ -146,137 +146,176 @@ const generalSlice = createSlice({
                 createdAt,
             } = action.payload;
 
-    allSelected(state) {
-      state.selectedNFTList = state.currentsNFTs.filter((n) => n.whitelisted);
-    },
-    setNFTsListView(state) {
-      state.NFTListView = !state.NFTListView;
-    },
-    clearApprovedNFTs(state, action) {
-      state.approvedNFTList = [];
-    },
-    updateApprovedNFTs(state, action) {
-      const { tokenId, contract, chainId } = action.payload.native;
-      const isInApprovedNFTs = state.approvedNFTList.filter(
-        (n) =>
-          n.native.tokenId === tokenId &&
-          n.native.contract === contract &&
-          chainId === n.native.chainId
-      )[0];
-      if (!isInApprovedNFTs)
-        state.approvedNFTList = [...state.approvedNFTList, action.payload];
-    },
-    setApproved(state, action) {
-      state.approved = action.payload;
-    },
-    setReceiver(state, action) {
-      state.receiver = action.payload;
-    },
-    cleanTxnHashArr(state) {
-      state.txnHashArr = state.txnHashArr?.initialState
-        ? state.txnHashArr?.initialState
-        : [];
-    },
-    setTxnHash(state, action) {
-      let { nft, txn } = action.payload;
-      const { tokenId, contract, chainId } = nft.native;
-      switch (true) {
-        case Array.isArray(txn):
-          txn = {
-            ...txn[0],
-            hash: txn[0].hash || txn[0].transactionHash,
-          };
-          break;
-        case typeof txn === "object":
-          txn = {
-            ...txn,
-            hash: txn.hash || txn.transactionHash,
-          };
-          break;
-        case txn && txn?.hash?.hash instanceof Uint8Array:
-          txn.hash = utils.hexlify(txn.hash?.hash).replace(/^0x/, "");
-          break;
-        case typeof txn === "string":
-          txn = { hash: txn };
-          break;
-        default:
-          break;
-      }
+            state.txnHashArr = state.txnHashArr.map((e) => {
+                let hash;
+                switch (true) {
+                    case Array.isArray(e.hash?.hash):
+                        hash = utils.hexlify(e.hash?.hash)?.replace(/^0x/, "");
+                        break;
+                    case Array.isArray(e.hash?.hash?.data):
+                        hash = utils
+                            .hexlify(e.hash?.hash?.data)
+                            ?.replace(/^0x/, "");
+                        break;
+                    case e.hash?.hash?.type === "Buffer":
+                        hash = utils
+                            .hexlify(e.hash?.hash?.data)
+                            ?.replace(/^0x/, "");
+                        break;
+                    default:
+                        hash = e.hash;
+                        break;
+                }
+                if (hash === fromHash) {
+                    e.hash = hash;
+                    e.status = status;
+                    e.tokenId = tokenId;
+                    e.toHash = toHash;
+                    e.nftUri = nftUri;
+                    e.trxDate = createdAt;
+                    e.initialTokenId = initialTokenId;
+                }
+                return e;
+            });
+        },
+        setWalletsModal(state, action) {
+            state.walletsModal = action.payload;
+        },
+        setQrCodeString(state, action) {
+            state.qrCodeString = action.payload;
+        },
+        setQrImage(state, action) {
+            state.qrCodeImage = action.payload;
+        },
+        setTo(state, action) {
+            state.to = action.payload;
+        },
+        setFrom(state, action) {
+            state.from = action.payload;
+        },
+        setChainModal(state, action) {
+            state.showChainModal = action.payload;
+        },
+        setDepartureOrDestination(state, action) {
+            state.departureOrDestination = action.payload;
+        },
+        setChainSearch(state, action) {
+            state.chainSearch = action.payload;
+        },
+        setStep(state, action) {
+            state.step = action.payload;
+        },
+        setMetaMask(state, action) {
+            state.MetaMask = action.payload;
+        },
+        setWidget(state, action) {
+            state.widget = action.payload;
+        },
+        setWSettings(state, action) {
+            state.wsettings = action.payload;
+        },
+        setAccount(state, action) {
+            state.account = action.payload;
+        },
+        //!!!!!!!
+        setNFTList(state, action) {
+            state.NFTList = action.payload;
+        },
+        setSelectedNFTList(state, action) {
+            state.selectedNFTList = [...state.selectedNFTList, action.payload];
+        },
+        cleanSelectedNFTList(state, action) {
+            state.selectedNFTList = [];
+        },
+        removeFromSelectedNFTList(state, action) {
+            const { tokenId, contract, chainId } = action.payload.native;
+            state.selectedNFTList = state.selectedNFTList.filter(
+                (n) =>
+                    !(
+                        n.native.tokenId === tokenId &&
+                        n.native.contract === contract &&
+                        n.native.chainId === chainId
+                    )
+            );
+        },
+        setSelectedNFTAmount(state, action) {
+            const { amount, index } = action.payload;
+            state.selectedNFTList = state.selectedNFTList.map((e, i) => {
+                if (i === index) {
+                    e.amountToTransfer = amount;
+                }
+                return e;
+            });
+        },
+        setSearchNFTList(state, action) {
+            state.NFTListSearch = action.payload;
+        },
+        setCurrentNFTs(state, action) {
+            state.currentsNFTs = action.payload;
+        },
 
-      state.txnHashArr = [...state.txnHashArr, txn];
-      state.selectedNFTList = state.selectedNFTList.map((n) => {
-        const { native } = n;
-        if (
-          native.tokenId === tokenId &&
-          native.contract === contract &&
-          native.chainId === chainId
-        ) {
-          n.txn = txn;
-        }
-        return n;
-      });
-    },
-    setWrongNetwork(state, action) {
-      state.wrongNetwork = action.payload;
-    },
-    setUnsupportedNetwork(state, action) {
-      state.unsupportedNetwork = action.payload;
-    },
-    setMetaMaskActive(state, action) {
-      state.metaMaskActive = action.payload;
-    },
-    setReset(state) {
-      return {
-        ...initialState,
-        widget: state.widget,
-        wsettings: state.wsettings,
-        //account: state.account
-      };
-    },
-    setElrondAccount(state, action) {
-      state.elrondAccount = action.payload;
-    },
-    setMaiarProvider(state, action) {
-      state.maiarProvider = action.payload;
-    },
-    removeAlgorandClaimable(state, action) {
-      state.algorandClaimables = state.algorandClaimables.filter(
-        (n) => n.nftId !== action.payload
-      );
-    },
-    setOnMaiar(state, action) {
-      state.onMaiar = action.payload;
-    },
-    setTronWallet(state, action) {
-      state.tronWallet = action.payload;
-    },
-    setConfirmMaiarMob(state, action) {
-      state.confirmMaiarMob = action.payload;
-    },
-    setSwitchDestination(state, action) {
-      state.switchDestination = action.payload;
-    },
-    setAccountModal(state, action) {
-      state.accountModal = action.payload;
-    },
-    setBigLoader(state, action) {
-      state.bigLoader = action.payload;
-    },
-    setApproveLoader(state, action) {
-      state.approveLoader = action.payload;
-    },
-    setTronLink(state, action) {
-      state.tronLink = action.payload;
-    },
-    setOnWC(state, action) {
-      state.WalletConnect = action.payload;
-    },
-    setWC(state, action) {
-      state.WCProvider = action.payload;
-    },
-    setError(state, action) {
-      if (action.payload) {
-        const { err, data, message } = action.payload;
+        allSelected(state) {
+            state.selectedNFTList = state.currentsNFTs.filter(
+                (n) => n.whitelisted
+            );
+        },
+        setNFTsListView(state) {
+            state.NFTListView = !state.NFTListView;
+        },
+        clearApprovedNFTs(state, action) {
+            state.approvedNFTList = [];
+        },
+        updateApprovedNFTs(state, action) {
+            const { tokenId, contract, chainId } = action.payload.native;
+            const isInApprovedNFTs = state.approvedNFTList.filter(
+                (n) =>
+                    n.native.tokenId === tokenId &&
+                    n.native.contract === contract &&
+                    chainId === n.native.chainId
+            )[0];
+            if (!isInApprovedNFTs)
+                state.approvedNFTList = [
+                    ...state.approvedNFTList,
+                    action.payload,
+                ];
+        },
+        setApproved(state, action) {
+            state.approved = action.payload;
+        },
+        setReceiver(state, action) {
+            state.receiver = action.payload;
+        },
+        cleanTxnHashArr(state) {
+            state.txnHashArr = state.txnHashArr?.initialState
+                ? state.txnHashArr?.initialState
+                : [];
+        },
+        setTxnHash(state, action) {
+            let { nft, txn } = action.payload;
+            const { tokenId, contract, chainId } = nft.native;
+            switch (true) {
+                case Array.isArray(txn):
+                    txn = {
+                        ...txn[0],
+                        hash: txn[0].hash || txn[0].transactionHash,
+                    };
+                    break;
+                case typeof txn === "object":
+                    txn = {
+                        ...txn,
+                        hash: txn.hash || txn.transactionHash,
+                    };
+                    break;
+                case txn && txn?.hash?.hash instanceof Uint8Array:
+                    txn.hash = utils.hexlify(txn.hash?.hash).replace(/^0x/, "");
+                    break;
+                case typeof txn === "string":
+                    txn = { hash: txn };
+                    break;
+                default:
+                    break;
+            }
+
             state.txnHashArr = [...state.txnHashArr, txn];
             state.selectedNFTList = state.selectedNFTList.map((n) => {
                 const { native } = n;
@@ -349,9 +388,9 @@ const generalSlice = createSlice({
             state.WCProvider = action.payload;
         },
         setError(state, action) {
-            // debugger;
             if (action.payload) {
                 const { err, data, message } = action.payload;
+
                 switch (true) {
                     case typeof data === "object":
                         if (
@@ -363,11 +402,8 @@ const generalSlice = createSlice({
                             state.error = `You don't have enough funds to pay the fees`;
                         else state.error = data.message || err.message;
                         break;
-                    case typeof err === "string":
-                        state.error = err;
-                        break;
-                    case typeof err == "object":
-                        state.error = err.data.message || err.message || err;
+                    case err:
+                        state.error = err.data.message || err.message;
                         break;
                     default:
                         if (message?.includes("User cant pay the bills"))
@@ -508,7 +544,6 @@ const generalSlice = createSlice({
             state.NFTList = action.payload;
         },
     },
-  },
 });
 
 export const {
@@ -625,7 +660,6 @@ export const {
     setTemporaryTo,
     setSecretCred,
     setSelectedNFTAmount,
-
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
