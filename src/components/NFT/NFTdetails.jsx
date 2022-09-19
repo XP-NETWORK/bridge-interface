@@ -161,7 +161,7 @@ function NFTdetails({ nftInf, claimables, details }) {
             <div className="nftDetIg">
               <div className="nftName nftInfBox">
                 <label>Name</label>
-                <p>{name}</p>
+                <p>{name || native?.name}</p>
               </div>
               <div className="nftToken nftInfBox">
                 <label>Token ID</label>

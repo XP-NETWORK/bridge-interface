@@ -60,8 +60,6 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
         }
 
         if (nftData === "no NFT with that data was found") {
-          console.log(`caching Nft ${nft?.native?.name}`);
-
           if (!nft.uri) {
             evm.init(factory);
             nft = await evm.getUri(nft, nft.collectionIdent);

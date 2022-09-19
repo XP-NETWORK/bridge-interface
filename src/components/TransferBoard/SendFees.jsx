@@ -34,7 +34,6 @@ function SendFees() {
 
     const feesReqInterval = useRef(null);
     async function estimate() {
-        // debugger;
         let fact;
         let fee;
         try {
