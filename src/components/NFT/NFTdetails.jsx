@@ -92,6 +92,7 @@ function NFTdetails({ nftInf, claimables, details }) {
 
   const attrs = useMemo(
     () =>
+      Array.isArray(attributes) &&
       attributes?.map((attr) =>
         attr?.key
           ? {
