@@ -103,6 +103,11 @@
     width: 28px;
     border-radius: 5px;
 }
+
+.nftChainListBox {
+    position: relative;
+}
+
 .nftChainList {
     list-style: none;
     max-height: 364px;
