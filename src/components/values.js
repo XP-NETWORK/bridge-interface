@@ -25,6 +25,7 @@ import HBAR from "../assets/img/chain/Hedera.svg";
 import SKL from "../assets/img/chain/SFUEL.svg";
 import Moon from "../assets/img/chain/Moonbeam.svg";
 import Abey from "../assets/img/chain/Abey.svg";
+import Caduceus from "../assets/img/chain/caduceus.svg";
 
 export const EVM = "EVM";
 export const ELROND = "Elrond";
@@ -402,20 +403,20 @@ export const chains = [
         // newChain: true,
         coming: true,
     },
-    // {
-    //     type: "EVM",
-    //     key: "Caduceus",
-    //     text: "Caduceus",
-    //     nonce: 30,
-    //     order: 0,
-    //     chainId: 1564830818,
-    //     tnChainId: 1305754875840118,
-    //     image: { avatar: true, src: SKL },
-    //     testNet: false,
-    //     mainnet: false,
-    //     // newChain: true,
-    //     coming: true,
-    // },
+    {
+        type: "EVM",
+        key: "Caduceus",
+        text: "Caduceus",
+        nonce: 30,
+        order: 0,
+        chainId: 1564830818,
+        tnChainId: 1305754875840118,
+        image: { avatar: true, src: Caduceus },
+        testNet: false,
+        mainnet: false,
+        // newChain: true,
+        coming: true,
+    },
 ];
 
 export const chainsConfig = {
