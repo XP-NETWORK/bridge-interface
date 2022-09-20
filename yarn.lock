@@ -4487,9 +4487,9 @@
     start-server-and-test "^1.14.0"
 
 "@solana/web3.js@^1.32.0", "@solana/web3.js@^1.36.0", "@solana/web3.js@^1.44.2":
-  version "1.62.0"
-  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.62.0.tgz#8fef9fd443217161ddc25e701f603222047bc520"
-  integrity sha512-rHnqJR5ECooUp8egurP9Qi1SKI1Q3pbF2ZkaHbEmFsSjBsyEe+Qqxa5h+7ueylqApYyk0zawnxz83y4kdrlNIA==
+  version "1.62.1"
+  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.62.1.tgz#b0f98a033086016741fd6335548e92262964ac48"
+  integrity sha512-ylkYM7u3dmTrBDQ1rkHF9kQTkKO+C7TqUvTJ0CfAFKUkQhDLsK2JUARdhkhERmJRqou0kSNmPd1x78IMg+FdTw==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@noble/ed25519" "^1.7.0"
@@ -18866,7 +18866,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "3.0.14"
-  resolved "git+https://github.com/xp-network/xpjs#f9e74c85d03a5be6d36861a5360450f0e7e069b4"
+  resolved "git+https://github.com/xp-network/xpjs#b8d08e243798e7947f93b5051bf03a7ae3c5c2da"
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"
@@ -18911,13 +18911,13 @@ xmlhttprequest@1.8.0:
 
 "xpnet-web3-contracts@git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#dist-erc1155":
   version "0.1.0"
-  uid "65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
   resolved "git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
   dependencies:
     ethers "^5.5.4"
 
 "xpnet-web3-contracts@git+https://github.com/xp-network/XP.network-HECO-Migration#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f":
   version "0.1.0"
+  uid "65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
   resolved "git+https://github.com/xp-network/XP.network-HECO-Migration#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
   dependencies:
     ethers "^5.5.4"

@@ -103,6 +103,7 @@
 
 .nft-box__wrapper {
     position: relative;
+    max-height: 270px;
 }
 
 .listed-view__not-whitelisted {
