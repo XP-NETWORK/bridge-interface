@@ -29,6 +29,7 @@ export default function EVMWallet({ wallet, close, discount }) {
   const to = useSelector((state) => state.general.to);
   const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
   const WCProvider = useSelector((state) => state.general.WCProvider);
+  const query = window.location.search || "";
 
   const testnet = useSelector((state) => state.general.testNet);
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ export default function EVMWallet({ wallet, close, discount }) {
       : false;
 
   const navigateToAccountRoute = () => {
-    navigate(testnet ? `/testnet/account` : `/account`);
+    navigate(testnet ? `/testnet/account${query}` : `/account${query}`);
   };
 
   // const switchNetwork = async () => {
