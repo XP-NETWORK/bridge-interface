@@ -164,6 +164,11 @@ export default function ChainListBox() {
     useEffect(() => {
         // debugger;
         let filteredChains = chains;
+        if (chainSearch && departureOrDestination === "departure") {
+            filteredChains = chains.filter((chain) =>
+                chain.text.toLowerCase().includes(chainSearch.toLowerCase())
+            );
+        }
         const withNew = filteredChains
             .filter((chain) => chain.newChain)
             .sort((a, b) => a.order - b.order);
@@ -185,11 +190,11 @@ export default function ChainListBox() {
             ...withMaintenance,
             ...withComing,
         ];
-        if (chainSearch && departureOrDestination === "departure") {
-            sorted = chains.filter((chain) =>
-                chain.text.toLowerCase().includes(chainSearch.toLowerCase())
-            );
-        }
+        // if (chainSearch && departureOrDestination === "departure") {
+        //     sorted = chains.filter((chain) =>
+        //         chain.text.toLowerCase().includes(chainSearch.toLowerCase())
+        //     );
+        // }
         if (
             location.pathname === "/connect" ||
             location.pathname === "/testnet/connect" ||
@@ -215,6 +220,11 @@ export default function ChainListBox() {
 
     useEffect(() => {
         let filteredChains = chains;
+        if (chainSearch && departureOrDestination === "destination") {
+            filteredChains = chains.filter((chain) =>
+                chain.text.toLowerCase().includes(chainSearch.toLowerCase())
+            );
+        }
         const withNew = filteredChains
             .filter((chain) => chain.newChain)
             .sort((a, b) => a.order - b.order);
@@ -236,11 +246,11 @@ export default function ChainListBox() {
             ...withMaintenance,
             ...withComing,
         ];
-        if (chainSearch && departureOrDestination === "destination") {
-            sorted = chains.filter((chain) =>
-                chain.text.toLowerCase().includes(chainSearch.toLowerCase())
-            );
-        }
+        // if (chainSearch && departureOrDestination === "destination") {
+        //     sorted = chains.filter((chain) =>
+        //         chain.text.toLowerCase().includes(chainSearch.toLowerCase())
+        //     );
+        // }
         if (
             location.pathname === "/connect" ||
             location.pathname === "/testnet/connect" ||
