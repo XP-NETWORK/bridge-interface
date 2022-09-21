@@ -17,7 +17,12 @@ export const fonts = [
   "Ubuntu",
 ];
 
-export const chains = [...valuesChains]
+export const chains = [
+  ...valuesChains.map((c) => ({
+    ...c,
+    value: c.value || c.text,
+  })),
+]
   .filter((c) => c.mainnet || c.coming)
   .sort((a, b) => b.order - a.order)
   .sort((a, b) => (a.coming && !b.coming ? 1 : -1));
