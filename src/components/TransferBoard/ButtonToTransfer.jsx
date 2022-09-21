@@ -240,7 +240,6 @@ export default function ButtonToTransfer() {
     if (txnHashArr[0] && !result) {
       dispatch(setTxnHash({ txn: "failed", nft }));
     } else if (result) {
-      console.log(result, "result");
       dispatch(setTxnHash({ txn: result, nft }));
     }
     setLoading(false);

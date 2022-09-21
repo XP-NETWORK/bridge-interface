@@ -35,9 +35,6 @@ export default function TransferredNft({ nft, testnet }) {
 
     const t = tokenId || token_id;
 
-    console.log(t, "t");
-    console.log(txnHashArr);
-
     try {
       for (const tx of txnHashArr) {
         if (tx === "failed") {
@@ -49,6 +46,7 @@ export default function TransferredNft({ nft, testnet }) {
         ) {
           if (txnStatus !== "Completed")
             setTxnStatus(tx?.status?.toLowerCase());
+
           setHashes({
             depHash: tx.hash,
             destHash: tx.toHash,

@@ -2,6 +2,7 @@ import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
 import { getFactory } from "../../../wallet/helpers";
 import { setError, setTxnHash } from "../../../store/reducers/generalSlice";
+import { ethers } from "ethers";
 
 export const transferNFTFromElrond = async ({
   to,
@@ -93,7 +94,10 @@ const transfer = async (
           fee,
           mintWith
         );
-        return result;
+
+        return ethers.utils.hexlify(result.hash?.hash)?.replace(/^0x/, "");
+
+      // utils.hexlify(e.hash?.hash)?.replace(/^0x/, "");;
     }
   } catch (error) {
     store.dispatch(setError(error));
