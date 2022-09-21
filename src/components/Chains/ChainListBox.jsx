@@ -48,14 +48,12 @@ export default function ChainListBox() {
     const tronAccount = useSelector((state) => state.general.tronWallet);
     const Sync2 = useSelector((state) => state.general.Sync2);
     const { account } = useWeb3React();
-    const testnet = useSelector((state) => state.general.testNet);
     const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const axios = require("axios");
-    const userAgent = navigator.userAgent;
-    const isVeChainThor = userAgent.match(/vechainthorwallet|vechain|thor/);
     const nftChainListRef = useRef(null);
-    const [reached, setReached] = useState();
+
+    const [reached, setReached] = useState(false);
 
     const checkValidators = async () => {
         let res;
@@ -92,12 +90,18 @@ export default function ChainListBox() {
     };
 
     const handleScroll = (e) => {
-        if (nftChainListRef.current) {
-            const { scrollTop } = nftChainListRef.current;
-            setReached(false);
-            if (scrollTop > 1310) {
+        const {
+            scrollTop,
+            scrollHeight,
+            clientHeight,
+        } = nftChainListRef.current;
+        if (nftChainListRef?.current) {
+            if (
+                Math.ceil(scrollTop) + clientHeight === scrollHeight ||
+                Math.ceil(scrollTop) - 1 + clientHeight === scrollHeight
+            ) {
                 setReached(true);
-            }
+            } else setReached(false);
         }
     };
 
@@ -158,7 +162,7 @@ export default function ChainListBox() {
     };
 
     useEffect(() => {
-        // debugger
+        // debugger;
         let filteredChains = chains;
         const withNew = filteredChains
             .filter((chain) => chain.newChain)
@@ -187,12 +191,14 @@ export default function ChainListBox() {
             );
         }
         if (
-            location.pathname === "connect" ||
+            location.pathname === "/connect" ||
             location.pathname === "/testnet/connect" ||
             location.pathname === "/"
         ) {
             setFromChains(sorted.filter((e) => e.text !== to?.text));
         } else setFromChains(sorted);
+        if (sorted.length <= 5) setReached(true);
+        return () => setReached(false);
     }, [
         elrondAccount,
         tezosAccount,
@@ -208,7 +214,6 @@ export default function ChainListBox() {
     }, [validatorsInfo]);
 
     useEffect(() => {
-        // debugger
         let filteredChains = chains;
         const withNew = filteredChains
             .filter((chain) => chain.newChain)
@@ -237,7 +242,7 @@ export default function ChainListBox() {
             );
         }
         if (
-            location.pathname === "connect" ||
+            location.pathname === "/connect" ||
             location.pathname === "/testnet/connect" ||
             location.pathname === "/"
         ) {
@@ -245,6 +250,8 @@ export default function ChainListBox() {
         } else {
             setToChains(sorted);
         }
+        if (sorted.length <= 5) setReached(true);
+        return () => setReached(false);
     }, [from, chainSearch, departureOrDestination]);
 
     useEffect(() => {
