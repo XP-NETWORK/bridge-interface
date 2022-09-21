@@ -12,6 +12,7 @@ export default function TezosWallet({ wallet, close }) {
   const testnet = useSelector((state) => state.general.testNet);
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
+  const query = window.location.search || "";
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -21,7 +22,7 @@ export default function TezosWallet({ wallet, close }) {
     location.pathname === "/testnet/connect";
 
   const navigateToAccountRoute = () => {
-    navigate(testnet ? `/testnet/account${location.search ? location.search : ""}` : `/account${location.search ? location.search : ""}`);
+    navigate(testnet ? `/testnet/account${query}` : `/account${query}`);
   };
 
   const handleConnect = async (wallet) => {

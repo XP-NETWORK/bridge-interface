@@ -17,6 +17,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useDidUpdateEffect } from "../Settings/hooks";
 import Web3 from "web3";
 import { switchNetwork } from "../../services/chains/evm/evmService";
+import { fetchData } from "../../services/resolution";
 
 function ConnectWallet() {
     const navigate = useNavigate();
@@ -74,30 +75,6 @@ function ConnectWallet() {
 
     const walletsModal = useSelector((state) => state.general.walletsModal);
 
-    // async function switchNetwork() {
-    //   const info = testnet
-    //     ? TESTNET_CHAIN_INFO[from?.key]
-    //     : CHAIN_INFO[from?.key];
-    //   const _chainId = `0x${info.chainId.toString(16)}`;
-    //   try {
-    //     const success = await window.ethereum.request({
-    //       method: "wallet_switchEthereumChain",
-    //       params: [{ chainId: _chainId }],
-    //     });
-    //     navigate(
-    //       testnet
-    //         ? `/testnet/account${location.search ? location.search : ""}`
-    //         : `/account${location.search ? location.search : ""}`
-    //     );
-    //     dispatch(setWrongNetwork(false));
-    //   } catch (error) {
-    //     console.log(error);
-    //     try {
-    //       const toHex = (num) => {
-    //         return "0x" + num.toString(16);
-    //       };
-    //       const chain = getAddEthereumChain()[parseInt(_chainId).toString()];
-
     const handleConnect = async () => {
         // debugger;
         let provider;
@@ -138,6 +115,12 @@ function ConnectWallet() {
     useDidUpdateEffect(() => {
         inputElement?.current?.focus();
     }, [show, walletsModal]);
+
+    useDidUpdateEffect(() => {
+        if (unstoppableDomains) {
+            const domain = JSON.parse(localStorage.username).value;
+        }
+    }, [unstoppableDomains]);
 
     return (
         <div>

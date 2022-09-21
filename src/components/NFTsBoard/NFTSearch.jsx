@@ -14,12 +14,13 @@ export default function NFTSearch() {
   const dispatch = useDispatch();
 
   const nfts = useSelector((state) => state.general.NFTList);
+  const currentNfts = useSelector((state) => state.general.currentsNFTs);
   const NFTListSearch = useSelector((state) => state.general.NFTListSearch);
   const [openSearch, setOpen] = useState(false);
 
   const handleSearch = (e) => {
     const search = e.target.value.toLowerCase();
-    let filteredNFTs = nfts.filter(
+    let filteredNFTs = currentNfts.filter(
       (e) =>
         e.name?.toLowerCase().includes(search) ||
         e.native.name?.toLowerCase().includes(search) ||

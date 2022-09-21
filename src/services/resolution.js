@@ -53,7 +53,7 @@ export const getFromDomain = async (domain, to) => {
     return address || "undefined";
 };
 
-const fetchData = async (domain) => {
+export const fetchData = async (domain) => {
     const baseURL = "https://unstoppabledomains.com/api/v1/";
 
     try {

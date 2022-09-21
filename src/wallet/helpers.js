@@ -371,7 +371,7 @@ export const getFac = async () => {
 };
 
 export const handleChainFactory = async (someChain) => {
-    debugger;
+    // debugger;
     const factory = await getFactory();
     try {
         switch (someChain) {

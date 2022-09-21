@@ -39,14 +39,10 @@ export default function VeChainWallet({ close, wallet }) {
     } else return OFF;
   };
 
-  const query = window.location.search;
+  const query = window.location.search || "";
 
   const navigateToAccountRoute = () => {
-    navigate(
-      testnet
-        ? `/testnet/account${query ? query : ""}`
-        : `/account${query ? query : ""}`
-    );
+    navigate(testnet ? `/testnet/account${query}` : `/account${query}`);
   };
 
   const handleConnect = async (w) => {
@@ -63,7 +59,6 @@ export default function VeChainWallet({ close, wallet }) {
       default:
         account = await connectSync2(testnet);
         if (account) setConnecting(false);
-
         dispatch(setSync2(account));
         close();
         if (temporaryFrom) dispatch(setFrom(temporaryFrom));

@@ -91,6 +91,7 @@ function NFTdetails({ nftInf, claimables, details }) {
 
   const attrs = useMemo(
     () =>
+      Array.isArray(attributes) &&
       attributes?.map((attr) =>
         attr?.key
           ? {
@@ -159,7 +160,7 @@ function NFTdetails({ nftInf, claimables, details }) {
             <div className="nftDetIg">
               <div className="nftName nftInfBox">
                 <label>Name</label>
-                <p>{name}</p>
+                <p>{name || native?.name}</p>
               </div>
               <div className="nftToken nftInfBox">
                 <label>Token ID</label>
@@ -244,7 +245,12 @@ export default NFTdetails;
 
 function Attribute(props) {
   const { display_type, value } = props;
-  const trait_type = props.trait_type || props.name || props.label || props.key;
+  const trait_type =
+    props.trait_type ||
+    props.name ||
+    props.label ||
+    props.key ||
+    props.attribute;
   if (trait_type === "Original Chain") {
   }
   return (

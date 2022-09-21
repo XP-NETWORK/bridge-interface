@@ -119,9 +119,9 @@ function Approval() {
             dispatch(updateApprovedNFTs(nft));
             setFinishedApproving(arr);
           } catch (err) {
-            console.log(arr, err);
+            console.log(err);
             setFinishedApproving(arr);
-            dispatch(setError(err.data ? err.data.message : err.message));
+            dispatch(setError(err));
           }
         }
       } catch (error) {
@@ -129,7 +129,9 @@ function Approval() {
         dispatch(setError(error));
         if (error.data) {
           console.log(error.data.message);
+          dispatch(setError(error.data.message));
         } else console.log(error);
+        dispatch(setError(error));
         console.log(error);
       }
     } else if (from.type === "Cosmos") {
@@ -142,7 +144,6 @@ function Approval() {
         setFinishedApproving(arr);
       } catch (e) {
         console.log(e.message, "approve for cosmos");
-
         dispatch(setApproveLoader(false));
         dispatch(setError(e.message));
       }
@@ -207,7 +208,6 @@ function Approval() {
       }
     }
   };
-
 
   // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
   const approveAllNFTs = async () => {

@@ -36,18 +36,6 @@ class CacheService {
   }
 
   async add(nft, account, whitelisted, times = 1) {
-    /* if (this.isRestricted(nft.uri)) {
-      const encoded = "custom_encoded64:" + en.encode(nft.uri);
-      nft = {
-        ...nft,
-        uri: encoded,
-        native: {
-          ...nft.native,
-          ...(nft.native.uri ? { uri: encoded } : {}),
-        },
-      };
-    }*/
-
     return axios
       .post(`${this.cacheApi}/nft/add`, {
         nft,
@@ -79,23 +67,35 @@ class CacheService {
 
         const { data } = res;
 
-        const tokenId = data.wrapped?.token_id || data.wrapped?.tokenId;
+        let tokenId = data.wrapped?.token_id || data.wrapped?.tokenId;
+        const sourceToken = data.wrapped?.source_token_id;
+
+        if (
+          data.wrapped?.origin === "2" &&
+          tokenId.split("-").length < 3 &&
+          sourceToken
+        ) {
+          tokenId = tokenId + `-${sourceToken}`;
+        }
+        const contract =
+          data.wrapped?.contract || data.wrapped?.source_mint_ident;
 
         return {
           nft: {
             ...nft,
-            collectionIdent: data.wrapped?.contract,
+            collectionIdent: contract,
             uri: data.wrapped?.original_uri,
             native: {
               ...nft.native,
               chainId: data.wrapped?.origin,
-              contract: data.wrapped?.contract,
+              contract,
               tokenId,
+              uri: data.wrapped?.original_uri,
             },
           },
           chainId: data.wrapped?.origin,
           tokenId,
-          contract: data.wrapped?.contract,
+          contract,
         };
       } catch (e) {}
     }

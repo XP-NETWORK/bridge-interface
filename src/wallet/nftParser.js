@@ -45,25 +45,25 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
       (async () => {
         const unwraped = await cache.unwrap(nft);
 
-        const { chainId, tokenId, contract } = unwraped;
-
-        //console.log({ chainId, tokenId, contract });
+        const {
+          chainId,
+          tokenId,
+          contract,
+          nft: { native },
+        } = unwraped;
+        const originChain = native.chainId;
 
         let nftData;
 
         try {
           if (testnet) throw new Error("Testnet exception");
           nftData = (await cache.get({ chainId, tokenId, contract }, nft)).data;
-          console.log(nftData, "nftData");
           if (!nftData) throw new Error("No data exc");
         } catch (e) {
-          console.log(e.message);
           nftData = await nftGeneralParser(nft, account, whitelisted);
         }
 
         if (nftData === "no NFT with that data was found") {
-          console.log(`caching Nft ${nft?.native?.name}`);
-
           if (!nft.uri) {
             evm.init(factory);
             nft = await evm.getUri(nft, nft.collectionIdent);
@@ -77,7 +77,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
             return undefined;
         }
 
-        return nftData;
+        return { ...nftData, originChain };
       })(),
       !testnet
         ? !cache.isRestricted(nft.uri)

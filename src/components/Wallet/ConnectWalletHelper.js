@@ -124,7 +124,7 @@ export const connectHashpack = async () => {
 export const connectUnstoppable = async (close) => {
   try {
     const provider = await web3Modal.connect();
-    return provider.selectedAddress;
+    return provider.sendAsync();
   } catch (error) {
     console.log(error);
   }
