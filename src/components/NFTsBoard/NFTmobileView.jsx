@@ -97,7 +97,7 @@ const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
                                 />
                                 {_from.type === "EVM" && <ImportNFTButton />}
                                 <ViewButton />
-                                <SelectClearAll />
+                                {/* <SelectClearAll /> */}
                             </div>
                         )}
                     </div>
