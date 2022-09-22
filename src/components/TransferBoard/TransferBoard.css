@@ -317,7 +317,11 @@
     margin: 10px auto 56px auto;
 }
 
-@media screen and (max-width: 425px) {
+.play__container {
+    width: 100%;
+}
+
+@media screen and (max-width: 650px) {
     .approval__inf:hover::before {
         bottom: 30px;
         left: -190px;

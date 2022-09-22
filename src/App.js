@@ -29,7 +29,8 @@ import Widget from "./components/Widget";
 import DepositAlert from "./components/Alerts/DepositAlert";
 import RedirectModal from "./components/Modals/Redirect/RedirectModal";
 
-//import Bridge from "./services/bridge";
+import Bridge from "./services/bridge";
+import { ethers } from "ethers";
 
 function App() {
   const dispatch = useDispatch();

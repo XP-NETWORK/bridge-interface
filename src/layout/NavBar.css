@@ -159,6 +159,9 @@
     background: #fff;
     border-radius: 76px;
 }
+.help-center .active {
+    background-color: none !important;
+}
 .navbar-connect {
     height: 39px;
     display: flex;

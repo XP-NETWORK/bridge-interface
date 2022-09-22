@@ -61,7 +61,8 @@
     background-color: white;
 }
 
-.ChainModal .CloseModal {
+.ChainModal .modal-body {
+    padding-bottom: 44px;
 }
 
 .close-modal {

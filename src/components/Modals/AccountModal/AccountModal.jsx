@@ -30,6 +30,9 @@ export default function AccountModal() {
     const [copyIconHover, setCopyIconHover] = useState();
     const [copied, setCopied] = useState();
     const from = useSelector((state) => state.general.from);
+    const unstoppableDomains = useSelector(
+        (state) => state.general.unstoppableDomains
+    );
 
     const tronWallet = useSelector((state) => state.general.tronWallet);
     const algorandAccount = useSelector(
@@ -64,6 +67,7 @@ export default function AccountModal() {
 
     const connectedWith = () => {
         if (MetaMask) return "MetaMask";
+        else if (unstoppableDomains) return "Unstoppable Domains";
         else if (onMaiar) return "Maiar Wallet";
         else if (trustWallet) return "Trust Wallet";
         else if (algorandWallet) return "Algorand Wallet";

@@ -32,7 +32,7 @@ import { CHAIN_INFO } from "../values";
 import Web3 from "web3";
 import BigNumber from "bignumber.js";
 
-function Approval(props) {
+function Approval() {
   const dispatch = useDispatch();
   const [finishedApproving, setFinishedApproving] = useState([]);
   const [approvedLoading, setApprovedLoading] = useState();
@@ -118,9 +118,9 @@ function Approval(props) {
             dispatch(updateApprovedNFTs(nft));
             setFinishedApproving(arr);
           } catch (err) {
-            console.log(arr, err);
+            console.log(err);
             setFinishedApproving(arr);
-            dispatch(setError(err.data ? err.data.message : err.message));
+            dispatch(setError(err));
           }
         }
       } catch (error) {
@@ -128,7 +128,9 @@ function Approval(props) {
         dispatch(setError(error));
         if (error.data) {
           console.log(error.data.message);
+          dispatch(setError(error.data.message));
         } else console.log(error);
+        dispatch(setError(error));
         console.log(error);
       }
     } else if (from.type === "Cosmos") {
@@ -137,12 +139,10 @@ function Approval(props) {
       const chain = await factory.inner(Chain.SECRET);
       try {
         const result = await chain.preTransfer(signer, nft, new BigNumber(0));
-        alert("Boom", result);
         dispatch(updateApprovedNFTs(nft));
         setFinishedApproving(arr);
       } catch (e) {
         console.log(e.message, "approve for cosmos");
-        alert(e.message);
         dispatch(setApproveLoader(false));
         dispatch(setError(e.message));
       }
@@ -195,7 +195,6 @@ function Approval(props) {
         const signer = maiarProvider || ExtensionProvider.getInstance();
         console.log("inst", signer instanceof WalletConnectProvider);
         const swap = await chain.preTransfer(signer, nft, bigNumberFees);
-
         dispatch(updateApprovedNFTs(nft));
         setFinishedApproving(arr);
       } catch (error) {
