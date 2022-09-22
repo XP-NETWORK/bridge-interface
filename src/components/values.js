@@ -329,8 +329,8 @@ export const chains = [
     image: { avatar: true, src: Moon },
     testNet: true,
     mainnet: biz,
-    newChain: true,
-    // coming: true,
+    newChain: biz,
+    coming: !biz,
   },
   {
     type: "EVM",
@@ -344,8 +344,8 @@ export const chains = [
     image: { avatar: true, src: Abey },
     testNet: true,
     mainnet: biz,
-    newChain: true,
-    // coming: true,
+    newChain: biz,
+    coming: !biz,
   },
   {
     type: "VeChain",
@@ -374,8 +374,8 @@ export const chains = [
     mainnet: biz,
     testNet: biz,
     test: false,
-    newChain: true,
-    // coming: true,
+    newChain: biz,
+    coming: !biz,
   },
   {
     type: "Hedera",
@@ -400,8 +400,8 @@ export const chains = [
     image: { avatar: true, src: SKL },
     testNet: true,
     mainnet: biz,
-    newChain: true,
-    coming: false,
+    newChain: biz,
+    coming: !biz,
   },
   {
     type: "EVM",
