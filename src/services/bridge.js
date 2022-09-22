@@ -66,19 +66,52 @@ class Bridge {
   }
 }
 
-/*(async () => {
 
-    const bridge = Bridge.init()
+
+
+
+
+false && (async () => {
+
+  const nft = {
+    uri: "https://ipfs.moralis.io:2053/ipfs/QmUyGiGSRK56Pz9XizhiXp6ABfUimm8TVHJ3n3HA7NNwSN/30",
+    native: {
+        chainId: "7",
+        tokenId: "30",
+        contract: "0xa36251C995D8376B6FCf9964eed79E62706b4723",
+        owner: "0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE",
+        uri: "https://ipfs.moralis.io:2053/ipfs/QmUyGiGSRK56Pz9XizhiXp6ABfUimm8TVHJ3n3HA7NNwSN/30",
+        symbol: "NANO",
+        name: "Nano Paint",
+        contractType: "ERC1155"
+    },
+    collectionIdent: "0xa36251C995D8376B6FCf9964eed79E62706b4723"}
+  
+  // const nftObj = JSON.parse(nft)
+
+   //console.log(nftObj);
+
+    const bridge = await new Bridge().init()
+
+
 
     const chain = await bridge.getChain({
-      type: "Cosmos",
-      key: "Secret",
+      type: "EVM",
+      key: "Fuse",
     });
 
-    const bal = await chain.balance(
-      "secret1ugsxn37pxee06zyenvqv6y68mgdq0dehqc8sy9"
-    );
-    console.log(bal, "bal");
-  })();*/
+    const to = await bridge.getChain({
+      type: "Tron",
+      key: "Tron",
+    });
+
+  
+
+    const estim = await chain.estimate(to.chain, nft, '0x6449b68cc5675f6011e8DB681B142773A3157cb9')
+
+    console.log(estim);
+
+    
+  })();
 
 export default (isTestnet) => new Bridge(isTestnet);

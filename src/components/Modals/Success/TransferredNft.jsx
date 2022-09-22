@@ -32,17 +32,21 @@ export default function TransferredNft({ nft, testnet }) {
 
   const checkStatus = () => {
     const { tokenId, token_id, uri } = nft.native;
+
+    const t = tokenId || token_id;
+
     try {
       for (const tx of txnHashArr) {
         if (tx === "failed") {
           setTxnStatus("failed");
         } else if (
           uri === tx.nftUri ||
-          (tokenId && tokenId === tx.tokenId) ||
-          (token_id && token_id === tx.tokenId)
+          t === tx.tokenId ||
+          (from.type === "Elrond" && new RegExp(`^${tx.tokenId}`).test(t))
         ) {
           if (txnStatus !== "Completed")
             setTxnStatus(tx?.status?.toLowerCase());
+
           setHashes({
             depHash: tx.hash,
             destHash: tx.toHash,

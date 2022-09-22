@@ -123,7 +123,7 @@ export const transferNFTFromEVM = async ({
         mw
       );
       break;
-    case !wrapped &&
+    /*case !wrapped &&
       !mintWith &&
       !testnet &&
       (to.key === "Elrond" || to.type === "EVM"):
@@ -136,7 +136,7 @@ export const transferNFTFromEVM = async ({
       if (txnHashArr[0]) {
         store.dispatch(setTxnHash({ txn: "failed", nft }));
       }
-      break;
+      break;*/
     default:
       result = await transfer(
         fromChain,
