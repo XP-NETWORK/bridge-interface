@@ -349,7 +349,7 @@ function NavBar() {
                                                 </div>
                                             </div>
                                         </Dropdown.Item>
-                                        {/* <Dropdown.Item
+                                        <Dropdown.Item
                                             href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"
                                             target="_blank"
                                         >
@@ -359,7 +359,7 @@ function NavBar() {
                                                     Help Center
                                                 </div>
                                             </div>
-                                        </Dropdown.Item> */}
+                                        </Dropdown.Item>
                                     </div>
                                 </Dropdown.Menu>
                             </Dropdown>
