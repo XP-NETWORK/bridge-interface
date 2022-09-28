@@ -535,14 +535,12 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 export const getAlgorandClaimables = async (account) => {
     const { checkWallet, NFTList } = store.getState().general;
     // debugger;
-    const hard = "2RKU6NQ3T36B42NJHUO27WTUCS3BOBM7YTAMGQNHPP2CAAUVO2LLMYW5EE";
     let claimables;
     const factory = await getFactory();
     try {
         claimables = await factory.claimableAlgorandNfts(
             checkWallet || account
         );
-        console.log(claimables, "claimables");
         store.dispatch(setAlgorandClaimables(claimables));
     } catch (error) {
         console.error(error);
@@ -628,11 +626,6 @@ export const convertOne1 = (address) => {
     return ethAddr;
 };
 
-// export const convertIo1 = (address) => {
-//   const addr = from(address)
-//   return addr.stringEth()
-// }
-
 export const convert = (address) => {
     // debugger
     if (checkIfOne1(address)) {
@@ -652,4 +645,30 @@ export const checkMintWith = async (from, to, contract, tokenId) => {
         tokenId
     );
     return mintWith;
+};
+
+export const saveForSearch = async (address, chain, data) => {
+    const baseUrl = "https://server-bridge.herokuapp.com/saveUser";
+    const body = {
+        address,
+        chain,
+        data,
+    };
+
+    try {
+        const response = await axios.post(baseUrl, body);
+        console.log(response);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getSearched = async (address, searched, nonce) => {
+    const url = `https://server-bridge.herokuapp.com/nft?address=${address}&nft=${searched}&chain=${nonce}`;
+    try {
+        const response = await axios.get(url);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
 };

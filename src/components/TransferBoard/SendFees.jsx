@@ -187,7 +187,7 @@ function SendFees() {
                         }
                         ${config?.token} 
                         `}
-                        {/* ${discountLeftUsd && showDiscount(fees).toFixed(2)} */}
+                        ${discountLeftUsd && showDiscount(fees).toFixed(2)}
                     </span>
                 )}
             </div>

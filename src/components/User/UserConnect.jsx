@@ -49,7 +49,7 @@ export default function UserConnect({ desktop, mobile }) {
     const handleConnect = () => {
         // debugger;
         switch (location.pathname) {
-            case "/deposits":
+            case "/discounts":
                 if (!walletAccount) {
                     dispatch(setDepositWalletModal(true));
                 } else if (walletAccount) dispatch(setAccountModal(true));
