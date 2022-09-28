@@ -653,3 +653,16 @@ export const checkMintWith = async (from, to, contract, tokenId) => {
     );
     return mintWith;
 };
+
+export const errorToLog = async (error) => {
+    debugger;
+    try {
+        const response = await axios.post(
+            "http://localhost:5656/log/error",
+            error
+        );
+        console.log("Log", response);
+    } catch (error) {
+        console.log(error);
+    }
+};
