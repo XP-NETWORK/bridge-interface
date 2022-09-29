@@ -647,7 +647,6 @@ export const checkMintWith = async (from, to, contract, tokenId) => {
     return mintWith;
 };
 
-
 export const saveForSearch = async (address, chain, data) => {
     const baseUrl = "https://server-bridge.herokuapp.com/saveUser";
     const body = {
@@ -671,6 +670,8 @@ export const getSearched = async (address, searched, nonce) => {
         return response.data;
     } catch (error) {
         console.log(error);
+    }
+};
 
 export const errorToLog = async (error) => {
     debugger;
@@ -684,6 +685,5 @@ export const errorToLog = async (error) => {
         console.log("Log", response);
     } catch (e) {
         console.log(e);
-
     }
 };
