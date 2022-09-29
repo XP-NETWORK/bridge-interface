@@ -15,7 +15,7 @@ import deposits from "../assets/img/nav/deposites.svg";
 import explorer from "../assets/img/nav/explorer.svg";
 import security from "../assets/img/nav/security.svg";
 import UserConnect from "../components/User/UserConnect";
-import { setShowVideo } from "../store/reducers/generalSlice";
+import { setSearchNFTList, setShowVideo } from "../store/reducers/generalSlice";
 import { ReactComponent as Hamburger } from "../assets/img/nav/burger.svg";
 import { ReactComponent as HamburgerClose } from "../assets/img/nav/burger_close.svg";
 import React, { useEffect, useState } from "react";
@@ -38,6 +38,7 @@ function NavBar() {
       dispatch(cleanSelectedNFTList());
       dispatch(setReceiver(""));
     }
+    dispatch(setSearchNFTList(""));
   }, [loc]);
 
   return (

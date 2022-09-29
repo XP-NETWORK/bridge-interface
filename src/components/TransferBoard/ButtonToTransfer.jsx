@@ -195,7 +195,6 @@ export default withWidget(function ButtonToTransfer({
     }
     return stop;
   };
-
   const sendEach = async (nft, index) => {
     const signer = await getSigner();
     const unstoppabledomain = await getFromDomain(receiver, _to);

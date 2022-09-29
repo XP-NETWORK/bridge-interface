@@ -8,7 +8,6 @@ import USBWallet from "./USBWallet";
 import VeChainWallet from "./VeChainWallet";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-
 import CosmosWallet from "./CosmosWallet";
 import { biz } from "../values";
 import HederaWallet from "./HederaWallet";
@@ -18,7 +17,6 @@ import Unscopables from "./Unscopables";
 export default function WalletList({ search, connected, input, discount }) {
   const from = useSelector((state) => state.general.from);
   const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
-  const wsettings = useSelector((state) => state.widget.wsettings);
   const location = useLocation();
 
   const sortWallet = (components) => {

@@ -4,11 +4,7 @@ import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
 import { Chain } from "xp.network/dist/consts";
 import { ethers } from "ethers";
 import * as thor from "web3-providers-connex";
-import {
-  WalletConnectProvider,
-  ProxyProvider,
-  ExtensionProvider,
-} from "@elrondnetwork/erdjs";
+import { WalletConnectProvider, ExtensionProvider } from "@elrondnetwork/erdjs";
 import {
   updateApprovedNFTs,
   setApproved,
@@ -16,20 +12,17 @@ import {
   setError,
   setSelectNFTAlert,
   setPasteDestinationAlert,
-  setReceiverIsSmartContractAddress,
 } from "../../store/reducers/generalSlice";
 import {
-  checkIfSmartContract,
+  errorToLog,
   getFactory,
   handleChainFactory,
   isALLNFTsApproved,
 } from "../../wallet/helpers";
-// import { ExtensionProvider } from "@elrondnetwork/erdjs";
 import { algoConnector } from "../../wallet/connectors";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import Connex from "@vechain/connex";
 import { CHAIN_INFO } from "../values";
-import Web3 from "web3";
 import BigNumber from "bignumber.js";
 
 function Approval() {
@@ -40,7 +33,6 @@ function Approval() {
   const to = useSelector((state) => state.general.to);
   const testnet = useSelector((state) => state.general.testNet);
   const account = useSelector((state) => state.general.account);
-  console.log(account, "accountaccount");
   const templeSigner = useSelector((state) => state.general.templeSigner);
   const bitKeep = useSelector((state) => state.general.bitKeep);
   const hederaSigner = useSelector((state) => state.signers.signer);
@@ -55,18 +47,30 @@ function Approval() {
 
   const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
   const algorandWallet = useSelector((state) => state.general.AlgorandWallet);
+  const tezosAccount = useSelector((state) => state.general.tezosAccount);
+
   const MyAlgo = useSelector((state) => state.general.MyAlgo);
   const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
   const kukaiWalletSigner = useSelector(
     (state) => state.general.kukaiWalletSigner
   );
-
   const keplrWallet = useSelector((state) => state.general.keplrWallet);
-  const widget = useSelector((state) => state.general.widget);
-  const sync2Connex = useSelector((state) => state.general.sync2Connex);
+  const elrondAccount = useSelector((state) => state.general.elrondAccount);
+  const secretAccount = useSelector((state) => state.general.secretAccount);
+  const hederaAccount = useSelector((state) => state.general.hederaAccount);
+
+  const wallet = () => {
+    return (
+      account ||
+      algorandAccount ||
+      tezosAccount ||
+      elrondAccount ||
+      secretAccount ||
+      hederaAccount
+    );
+  };
 
   const getAlgorandWalletSigner = async () => {
-    // debugger;
     const base = new MyAlgoConnect();
     if (algorandWallet) {
       try {
@@ -98,116 +102,211 @@ function Approval() {
   const approveEach = async (nft, signer, chain, index) => {
     const arr = new Array(index + 1).fill(0);
     const factory = await getFactory();
-
-    if (
-      from.type !== "Elrond" &&
-      from.type !== "Algorand" &&
-      from.type !== "Tezos" &&
-      from.type !== "Cosmos"
-    ) {
-      try {
-        const { tokenId, contract, chainId } = nft.native;
-        const isInApprovedNFTs = approvedNFTList.filter(
-          (n) =>
-            n.native.tokenId === tokenId &&
-            n.native.contract === contract &&
-            chainId === n.native.chainId
-        )[0];
-        if (!isInApprovedNFTs) {
-          try {
-            const ap = await chain.approveForMinter(nft, signer);
+    const { tokenId, contract, chainId } = nft.native;
+    const isInApprovedNFTs = approvedNFTList.filter(
+      (n) =>
+        n.native.tokenId === tokenId &&
+        n.native.contract === contract &&
+        chainId === n.native.chainId
+    )[0];
+    try {
+      switch (from.type) {
+        case "EVM":
+          if (!isInApprovedNFTs) {
+            await chain.approveForMinter(nft, signer);
             dispatch(updateApprovedNFTs(nft));
             setFinishedApproving(arr);
-          } catch (err) {
-            console.log(err);
-            setFinishedApproving(arr);
-            dispatch(setError(err));
           }
-        }
-      } catch (error) {
-        setFinishedApproving(arr);
-        dispatch(setError(error));
-        if (error.data) {
-          console.log(error.data.message);
-          dispatch(setError(error.data.message));
-        } else console.log(error);
-        dispatch(setError(error));
-        console.log(error);
+          break;
+        case "Cosmos":
+          await chain.preTransfer(keplrWallet, nft, new BigNumber(0));
+          dispatch(updateApprovedNFTs(nft));
+          setFinishedApproving(arr);
+          break;
+        case "Algorand":
+          const c = await factory.inner(15);
+          await c.preTransfer(
+            await getAlgorandWalletSigner(),
+            nft,
+            bigNumberFees
+          );
+          dispatch(updateApprovedNFTs(nft));
+          setFinishedApproving(arr);
+          break;
+        case "Tezos":
+          const tezos = await factory.inner(Chain.TEZOS);
+          await tezos.preTransfer(templeSigner || kukaiWalletSigner, nft);
+          dispatch(updateApprovedNFTs(nft));
+          setFinishedApproving(arr);
+          break;
+        case "VeChain":
+          await chain.preTransfer(signer, nft, bigNumberFees);
+          dispatch(updateApprovedNFTs(nft));
+          setFinishedApproving(arr);
+          break;
+        case "Elrond":
+          const elrond = await factory.inner(Chain.ELROND);
+          await elrond.preTransfer(
+            maiarProvider || ExtensionProvider.getInstance(),
+            nft,
+            bigNumberFees
+          );
+          dispatch(updateApprovedNFTs(nft));
+          setFinishedApproving(arr);
+          break;
+        default:
+          break;
       }
-    } else if (from.type === "Cosmos") {
-      const signer = keplrWallet;
-      const factory = await getFactory();
-      const chain = await factory.inner(Chain.SECRET);
-      try {
-        const result = await chain.preTransfer(signer, nft, new BigNumber(0));
-        dispatch(updateApprovedNFTs(nft));
-        setFinishedApproving(arr);
-      } catch (e) {
-        console.log(e.message, "approve for cosmos");
-        dispatch(setApproveLoader(false));
-        dispatch(setError(e.message));
-      }
-    } else if (from.type === "Algorand") {
-      const c = await factory.inner(15);
-      const signer = await getAlgorandWalletSigner();
-      try {
-        await c.preTransfer(signer, nft, bigNumberFees);
-      } catch (error) {
-        console.log(error);
-        dispatch(setApproveLoader(false));
-        dispatch(setError(error.message));
-      }
-      dispatch(updateApprovedNFTs(nft));
+    } catch (error) {
       setFinishedApproving(arr);
-    } else if (from.text === "Tezos") {
-      try {
-        const factory = await getFactory();
-        const chain = await factory.inner(Chain.TEZOS);
-        await chain.preTransfer(templeSigner || kukaiWalletSigner, nft);
-        dispatch(updateApprovedNFTs(nft));
-        setFinishedApproving(arr);
-        // }
-      } catch (error) {
-        setFinishedApproving(arr);
-        dispatch(setError(error.data ? error.data.message : error.message));
-        if (error.data) {
-          console.log(error.data.message);
-        } else console.log(error);
-        console.log(error);
-      }
-    } else if (from.type === "VeChain") {
-      try {
-        await chain.preTransfer(signer, nft, bigNumberFees);
+      dispatch(setError(error));
+      const date = new Date();
+      const logBody = {
+        type: "Approve",
+        walletAddress: wallet(),
+        time: date.toString(),
+        fromChain: from.text,
+        toChain: to.text,
+        message: error,
+      };
 
-        dispatch(updateApprovedNFTs(nft));
-        setFinishedApproving(arr);
-      } catch (error) {
-        setFinishedApproving(arr);
-        dispatch(setError(error.data ? error.data.message : error.message));
-        if (error.data) {
-          console.log(error.data.message);
-        } else console.log(error);
-        console.log(error);
-      }
-    } else {
-      try {
-        const factory = await getFactory();
-        const chain = await factory.inner(Chain.ELROND);
-        const signer = maiarProvider || ExtensionProvider.getInstance();
-
-        const swap = await chain.preTransfer(signer, nft, bigNumberFees);
-        dispatch(updateApprovedNFTs(nft));
-        setFinishedApproving(arr);
-      } catch (error) {
-        setFinishedApproving(arr);
-        dispatch(setError(error.data ? error.data.message : error.message));
-        if (error.data) {
-          console.error(error.data.message);
-        } else console.error(error);
-        console.error(error);
-      }
+      errorToLog(logBody);
+      if (error.data) {
+        console.log(error.data.message);
+        dispatch(setError(error.data.message));
+      } else console.log(error);
+      dispatch(setError(error));
+      console.log(error);
     }
   };
+
+  // const approveEach = async (nft, signer, chain, index) => {
+  //     const arr = new Array(index + 1).fill(0);
+  //     const factory = await getFactory();
+
+  //     if (
+  //         from.type !== "Elrond" &&
+  //         from.type !== "Algorand" &&
+  //         from.type !== "Tezos" &&
+  //         from.type !== "Cosmos"
+  //     ) {
+  //         try {
+  //             const { tokenId, contract, chainId } = nft.native;
+  //             const isInApprovedNFTs = approvedNFTList.filter(
+  //                 (n) =>
+  //                     n.native.tokenId === tokenId &&
+  //                     n.native.contract === contract &&
+  //                     chainId === n.native.chainId
+  //             )[0];
+  //             if (!isInApprovedNFTs) {
+  //                 try {
+  //                     const ap = await chain.approveForMinter(nft, signer);
+  //                     dispatch(updateApprovedNFTs(nft));
+  //                     setFinishedApproving(arr);
+  //                 } catch (err) {
+  //                     console.log(err);
+  //                     setFinishedApproving(arr);
+  //                     dispatch(setError(err));
+  //                 }
+  //             }
+  //         } catch (error) {
+  //             setFinishedApproving(arr);
+  //             dispatch(setError(error));
+  //             if (error.data) {
+  //                 console.log(error.data.message);
+  //                 dispatch(setError(error.data.message));
+  //             } else console.log(error);
+  //             dispatch(setError(error));
+  //             console.log(error);
+  //         }
+  //     } else if (from.type === "Cosmos") {
+  //         const signer = keplrWallet;
+  //         const factory = await getFactory();
+  //         const chain = await factory.inner(Chain.SECRET);
+  //         try {
+  //             const result = await chain.preTransfer(
+  //                 signer,
+  //                 nft,
+  //                 new BigNumber(0)
+  //             );
+  //             dispatch(updateApprovedNFTs(nft));
+  //             setFinishedApproving(arr);
+  //         } catch (e) {
+  //             console.log(e.message, "approve for cosmos");
+  //             dispatch(setApproveLoader(false));
+  //             dispatch(setError(e.message));
+  //         }
+  //     } else if (from.type === "Algorand") {
+  //         const c = await factory.inner(15);
+  //         const signer = await getAlgorandWalletSigner();
+  //         try {
+  //             await c.preTransfer(signer, nft, bigNumberFees);
+  //         } catch (error) {
+  //             console.log(error);
+  //             dispatch(setApproveLoader(false));
+  //             dispatch(setError(error.message));
+  //         }
+  //         dispatch(updateApprovedNFTs(nft));
+  //         setFinishedApproving(arr);
+  //     } else if (from.text === "Tezos") {
+  //         try {
+  //             const factory = await getFactory();
+  //             const chain = await factory.inner(Chain.TEZOS);
+  //             await chain.preTransfer(templeSigner || kukaiWalletSigner, nft);
+  //             dispatch(updateApprovedNFTs(nft));
+  //             setFinishedApproving(arr);
+  //             // }
+  //         } catch (error) {
+  //             setFinishedApproving(arr);
+  //             dispatch(
+  //                 setError(error.data ? error.data.message : error.message)
+  //             );
+  //             if (error.data) {
+  //                 console.log(error.data.message);
+  //             } else console.log(error);
+  //             console.log(error);
+  //         }
+  //     } else if (from.type === "VeChain") {
+  //         try {
+  //             await chain.preTransfer(signer, nft, bigNumberFees);
+
+  //             dispatch(updateApprovedNFTs(nft));
+  //             setFinishedApproving(arr);
+  //         } catch (error) {
+  //             setFinishedApproving(arr);
+  //             dispatch(
+  //                 setError(error.data ? error.data.message : error.message)
+  //             );
+  //             if (error.data) {
+  //                 console.log(error.data.message);
+  //             } else console.log(error);
+  //             console.log(error);
+  //         }
+  //     } else {
+  //         try {
+  //             const factory = await getFactory();
+  //             const chain = await factory.inner(Chain.ELROND);
+  //             const signer = maiarProvider || ExtensionProvider.getInstance();
+  //             console.log("inst", signer instanceof WalletConnectProvider);
+  //             const swap = await chain.preTransfer(
+  //                 signer,
+  //                 nft,
+  //                 bigNumberFees
+  //             );
+  //             dispatch(updateApprovedNFTs(nft));
+  //             setFinishedApproving(arr);
+  //         } catch (error) {
+  //             setFinishedApproving(arr);
+  //             dispatch(
+  //                 setError(error.data ? error.data.message : error.message)
+  //             );
+  //             if (error.data) {
+  //                 console.error(error.data.message);
+  //             } else console.error(error);
+  //             console.error(error);
+  //         }
+  //     }
+  // };
 
   // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
   const approveAllNFTs = async () => {

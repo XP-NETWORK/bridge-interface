@@ -4,6 +4,7 @@ import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { chainsConfig, CHAIN_INFO } from "../values";
 import {
+  errorToLog,
   getFactory,
   handleChainFactory,
   setClaimablesAlgorand,
@@ -32,6 +33,12 @@ function SendFees() {
   const discountLeftUsd = useSelector(
     (state) => state.discount.discountLeftUsd
   );
+  const keplrWallet = useSelector((state) => state.general.keplrWallet);
+  const elrondAccount = useSelector((state) => state.general.elrondAccount);
+  const secretAccount = useSelector((state) => state.general.secretAccount);
+  const hederaAccount = useSelector((state) => state.general.hederaAccount);
+  const algorandAccount = useSelector((state) => state.general.algorandAccount);
+  const tezosAccount = useSelector((state) => state.general.tezosAccount);
 
   const widget = useSelector((state) => state.widget.widget);
   const { affiliationFees, affiliationSettings } = useSelector(
@@ -41,9 +48,20 @@ function SendFees() {
     })
   );
 
-  const feesReqInterval = useRef(null);
+  const wallet = () => {
+    return (
+      account ||
+      algorandAccount ||
+      tezosAccount ||
+      elrondAccount ||
+      secretAccount ||
+      hederaAccount
+    );
+  };
 
+  const feesReqInterval = useRef(null);
   async function estimate() {
+    const date = new Date();
     let fact;
     let fee;
     try {
@@ -93,7 +111,16 @@ function SendFees() {
             wallet
           );
         } catch (error) {
-          console.log(error.data ? error.data.message : error.message);
+          console.error(error);
+          const errBody = {
+            type: "Estimate",
+            walletAddress: wallet(),
+            time: date.toString(),
+            fromChain: from.text,
+            toChain: to.text,
+            message: error,
+          };
+          errorToLog(errBody);
         }
       }
 
@@ -125,6 +152,15 @@ function SendFees() {
 
       fees && setFees(+(fees * selectedNFTList.length));
     } catch (error) {
+      const errBody = {
+        type: "Estimate",
+        walletAddress: wallet(),
+        time: date.toString(),
+        fromChain: from.text,
+        toChain: to.text,
+        message: error,
+      };
+      errorToLog(errBody);
       console.log(error.data ? error.data.message : error.message);
     }
     setLoading(false);

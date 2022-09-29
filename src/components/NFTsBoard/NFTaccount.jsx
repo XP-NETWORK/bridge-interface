@@ -10,12 +10,14 @@ import {
   cleanSelectedNFTList,
   setUnwrappedEGold,
   setNFTList,
+  setSearchNFTList,
 } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAlgorandClaimables,
   getFactory,
   mintForTestNet,
+  saveForSearch,
   setNFTS,
 } from "../../wallet/helpers";
 import { ReturnBtn } from "../Settings/returnBtn";
@@ -32,7 +34,7 @@ import {
   useCheckMobileScreen,
   useDidUpdateEffect,
 } from "../Settings/hooks";
-import { chainsConfig } from "../values";
+import { chains, chainsConfig } from "../values";
 import ImportNFTButton from "../Buttons/ImportNFTButton";
 
 import WalletConnectionModal from "../Wallet/WalletConnectionModal";
@@ -196,15 +198,31 @@ function NFTaccount() {
       }, 3000);
   };
 
-  // useDidUpdateEffect(() => {
-  //     const checkLocked = async () => {
-  //         const data = await checkXpNetLocked(account);
-  //         dispatch(
-  //             setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25))
-  //         );
-  //     };
-  //     account && checkLocked();
-  // }, [account]);
+  useDidUpdateEffect(() => {
+    const checkLocked = async () => {
+      const data = await checkXpNetLocked(account);
+      dispatch(setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25)));
+    };
+    account && checkLocked();
+  }, [account]);
+
+  const saveNFTsForSearch = async () => {
+    const _account =
+      checkWallet ||
+      hederaAccount ||
+      account ||
+      algorandAccount ||
+      tezosAccount ||
+      elrondAccount ||
+      tronWallet ||
+      secretAccount;
+    const chain = chains.find((e) => e.key === from);
+    await saveForSearch(_account, chain.nonce, nfts);
+  };
+
+  useDidUpdateEffect(() => {
+    if (nfts.length > 0) saveNFTsForSearch();
+  }, [nfts]);
 
   useEffect(() => {
     const checkIfDataLoaded = async () => {

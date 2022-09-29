@@ -4,7 +4,7 @@ import {
   chainsConfig,
 } from "../../../components/values.js";
 import store from "../../../store/store.js";
-import { getFactory } from "../../../wallet/helpers";
+import { errorToLog, getFactory } from "../../../wallet/helpers";
 import { setError, setTxnHash } from "../../../store/reducers/generalSlice";
 import BigNumber from "bignumber.js";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
@@ -54,7 +54,7 @@ export async function switchNetwork(chain) {
         return true;
       } catch (error) {
         // const c = testNet ? chain?.tnChainId : chain?.chainId;
-
+        console.log("birma");
         await window.ethereum.request({
           method: "wallet_addEthereumChain",
           params: [copyParams],
@@ -107,7 +107,7 @@ export const transferNFTFromEVM = async ({
   }
 
   let result;
-  console.log(to.key);
+
   switch (true) {
     case to.type === "Cosmos" && !mintWith && !wrapped:
       const contractAddress =
@@ -125,19 +125,19 @@ export const transferNFTFromEVM = async ({
       );
       break;
     /*case !wrapped &&
-      !mintWith &&
-      !testnet &&
-      (to.key === "Elrond" || to.type === "EVM"):
-      store.dispatch(
-        setError({
-          message:
-            "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection",
-        })
-      );
-      if (txnHashArr[0]) {
-        store.dispatch(setTxnHash({ txn: "failed", nft }));
-      }
-      break;*/
+    !mintWith &&
+    !testnet &&
+    (to.key === "Elrond" || to.type === "EVM"):
+    store.dispatch(
+      setError({
+        message:
+          "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection",
+      })
+    );
+    if (txnHashArr[0]) {
+      store.dispatch(setTxnHash({ txn: "failed", nft }));
+    }
+    break;*/
     default:
       result = await transfer(
         fromChain,
@@ -149,7 +149,8 @@ export const transferNFTFromEVM = async ({
         fee,
         mintWith,
         factory,
-        extraFees
+        extraFees,
+        account
       );
       break;
   }
@@ -167,9 +168,13 @@ const transfer = async (
   fee,
   mintWith,
   factory,
-  extraFees
+  extraFees,
+  account
 ) => {
   let result;
+  const {
+    general: { from, to },
+  } = store.getState();
   try {
     switch (true) {
       case amount > 0:
@@ -200,5 +205,15 @@ const transfer = async (
     }
   } catch (error) {
     store.dispatch(setError(error));
+    const date = new Date();
+    const errBogy = {
+      type: "Transfer",
+      walletAddress: account,
+      time: date.toString(),
+      fromChain: from.text,
+      toChain: to.text,
+      message: error,
+    };
+    errorToLog(errBogy);
   }
 };
