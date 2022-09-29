@@ -64,6 +64,12 @@ import { SecretNetworkClient } from "secretjs";
 import { setSigner } from "../../store/reducers/signersSlice";
 import { getFactory } from "../../wallet/helpers";
 
+const uauth = new UAuth({
+  clientID: "f909d011-195c-4688-92b4-2cab4c550dcc",
+  redirectUri: "http://localhost:5000/callback",
+  scope: "openid wallet",
+});
+
 export const wallets = [
   "MetaMask",
   "WalletConnect",
@@ -246,16 +252,26 @@ export const connectMetaMask = async (activate, from, to) => {
 
   try {
     if (!window.ethereum && window.innerWidth <= 600) {
+      let timer;
       if (store1.widget.widget && inIframe()) {
         window.parent.postMessage(
           `From Widget: Open MetaMask###${window.location.search}`,
           "*"
         );
-        return;
+        window.addEventListener("message", (event) => {
+          if (event.data?.type === "redirectFromTop" && event.data?.status) {
+            timer && clearTimeout(timer);
+          }
+        });
       }
 
-      const link = `dapp://${window.location.host}?to=${to}&from=${from}/`;
-      window.open(link);
+      const link = `dapp://${window.location.host}${window.location.search}`;
+
+      timer = setTimeout(() => {
+        window.open(link);
+      }, 1000);
+
+      return;
     }
     await activate(injected);
     store.dispatch(setMetaMask(true));

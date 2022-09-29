@@ -38,6 +38,13 @@
             msg[1]
           }`}`;
           openMetaMaskUrl(link);
+          widget?.contentWindow?.postMessage(
+            {
+              type: "redirectFromTop",
+              status: true,
+            },
+            url[0]
+          );
         }
       }
     },

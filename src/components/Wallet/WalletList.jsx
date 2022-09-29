@@ -326,7 +326,7 @@ export default function WalletList({ search, connected, input, discount }) {
     {
       Component: (
         <VeChainWallet
-          key="wallet-index-14"
+          key="wallet-index-144"
           wallet={"VeChainThor"}
           close={connected}
         />

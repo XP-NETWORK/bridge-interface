@@ -366,7 +366,7 @@ export const withStyles = (Wrapped) => (props) => {
                 font-size: ${fontSize ? fontSize * 0.87 + "px" : ""}
             }
     
-            #collecSlideCont, #footer, #aboutnft, #tttt, #Header, #alertb, .get-featured, .slider__wrapper, .stickers, .refresh-button::after, .refresh-button--disabled::after{
+            #collecSlideCont, #footer, .audited__wrapper, #aboutnft, #tttt, #Header, #alertb, .get-featured, .slider__wrapper, .stickers, .refresh-button::after, .refresh-button--disabled::after{
                 display:none;
             }
     

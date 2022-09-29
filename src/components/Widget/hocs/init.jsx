@@ -93,7 +93,7 @@ async function initFormId(id) {
 
 const parentAccountChange = async (event) => {
   if (event.data?.type === "ethAddress" && window.ethereum) {
-    const parentAddress = event.data.address;
+    const parentAddress = event.data?.address;
     console.log(parentAddress);
     if (!parentAddress) return;
     const accounts = await window.ethereum.request({
