@@ -1992,6 +1992,10 @@ span.closeBox:hover svg path {
   margin: 0 8px;
 }
 
+.secretAuth .contract-input__wrapper input {
+  padding-right: 35px;
+}
+
 .get-featured:hover {
   filter: brightness(2.5);
   color: white;

@@ -647,6 +647,7 @@ export const checkMintWith = async (from, to, contract, tokenId) => {
     return mintWith;
 };
 
+
 export const saveForSearch = async (address, chain, data) => {
     const baseUrl = "https://server-bridge.herokuapp.com/saveUser";
     const body = {
@@ -670,5 +671,19 @@ export const getSearched = async (address, searched, nonce) => {
         return response.data;
     } catch (error) {
         console.log(error);
+
+export const errorToLog = async (error) => {
+    debugger;
+
+    try {
+        const response = await axios.post(
+            "https://bridge-error-logs.herokuapp.com/log/error",
+            error,
+            { "Access-Control-Allow-Origin": "http://localhost:3000" }
+        );
+        console.log("Log", response);
+    } catch (e) {
+        console.log(e);
+
     }
 };
