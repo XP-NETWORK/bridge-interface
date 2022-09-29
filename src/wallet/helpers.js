@@ -658,7 +658,7 @@ export const errorToLog = async (error) => {
     debugger;
     try {
         const response = await axios.post(
-            "http://localhost:5656/log/error",
+            "https://bridge-error-logs.herokuapp.com/log/error",
             error
         );
         console.log("Log", response);
