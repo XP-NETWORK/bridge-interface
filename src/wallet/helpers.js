@@ -662,7 +662,7 @@ export const errorToLog = async (error) => {
             error
         );
         console.log("Log", response);
-    } catch (error) {
-        console.log(error);
+    } catch (e) {
+        console.log(e);
     }
 };

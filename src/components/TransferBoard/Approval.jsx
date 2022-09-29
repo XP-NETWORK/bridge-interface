@@ -77,7 +77,7 @@ function Approval() {
     };
 
     const getAlgorandWalletSigner = async () => {
-        // debugger;
+        debugger;
         const base = new MyAlgoConnect();
         if (algorandWallet) {
             try {
@@ -141,7 +141,8 @@ function Approval() {
                     setFinishedApproving(arr);
                     break;
                 case "Tezos":
-                    await chain.preTransfer(
+                    const tezos = await factory.inner(Chain.TEZOS);
+                    await tezos.preTransfer(
                         templeSigner || kukaiWalletSigner,
                         nft
                     );
