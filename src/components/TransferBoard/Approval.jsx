@@ -155,7 +155,8 @@ function Approval() {
                     setFinishedApproving(arr);
                     break;
                 case "Elrond":
-                    await chain.preTransfer(
+                    const elrond = await factory.inner(Chain.ELROND);
+                    await elrond.preTransfer(
                         maiarProvider || ExtensionProvider.getInstance(),
                         nft,
                         bigNumberFees
@@ -169,15 +170,15 @@ function Approval() {
         } catch (error) {
             setFinishedApproving(arr);
             dispatch(setError(error));
-            const logBody = {
-                type: "Approve",
-                walletAddress: wallet(),
-                fromChain: from.text,
-                toChain: to.text,
-                message: error,
-            };
+            // const logBody = {
+            //     type: "Approve",
+            //     walletAddress: wallet(),
+            //     fromChain: from.text,
+            //     toChain: to.text,
+            //     message: error,
+            // };
 
-            errorToLog(logBody);
+            // errorToLog(logBody);
             if (error.data) {
                 console.log(error.data.message);
                 dispatch(setError(error.data.message));
