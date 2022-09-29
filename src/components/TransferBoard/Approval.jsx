@@ -77,7 +77,6 @@ function Approval() {
     };
 
     const getAlgorandWalletSigner = async () => {
-        debugger;
         const base = new MyAlgoConnect();
         if (algorandWallet) {
             try {
@@ -170,9 +169,11 @@ function Approval() {
         } catch (error) {
             setFinishedApproving(arr);
             dispatch(setError(error));
+            const date = new Date();
             const logBody = {
                 type: "Approve",
                 walletAddress: wallet(),
+                time: date.toString(),
                 fromChain: from.text,
                 toChain: to.text,
                 message: error,

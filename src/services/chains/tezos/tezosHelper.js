@@ -1,6 +1,6 @@
 import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
-import { getFactory } from "../../../wallet/helpers";
+import { errorToLog, getFactory } from "../../../wallet/helpers";
 import { setError, setTxnHash } from "../../../store/reducers/generalSlice";
 
 export const transferNFTFromTezos = async ({
@@ -65,6 +65,9 @@ const transfer = async (
     mintWith,
     factory
 ) => {
+    const {
+        general: { tezosAccount, to },
+    } = store.getState();
     let result;
     try {
         switch (true) {
@@ -83,6 +86,16 @@ const transfer = async (
         }
     } catch (error) {
         store.dispatch(setError(error));
+        const date = new Date();
+        const errBogy = {
+            type: "Transfer",
+            walletAddress: tezosAccount,
+            time: date.toString(),
+            fromChain: "Tezos",
+            toChain: to.key,
+            message: error,
+        };
+        errorToLog(errBogy);
         return false;
     }
 };

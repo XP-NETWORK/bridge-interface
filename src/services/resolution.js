@@ -54,7 +54,7 @@ export const getFromDomain = async (domain, to) => {
 };
 
 export const fetchData = async (domain) => {
-    const baseURL = "https://resolve.unstoppabledomains.com/domains/";
+    const baseURL = "https://unstoppabledomains.com/api/v1/";
 
     try {
         const { data } = await axios.get(`${baseURL}${domain}`);

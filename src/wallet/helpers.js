@@ -657,7 +657,7 @@ export const saveForSearch = async (address, chain, data) => {
 
     try {
         const response = await axios.post(baseUrl, body);
-        console.log(response);
+        // console.log(response);
     } catch (error) {
         console.log(error);
     }
@@ -675,7 +675,6 @@ export const getSearched = async (address, searched, nonce) => {
 
 export const errorToLog = async (error) => {
     debugger;
-
     try {
         const response = await axios.post(
             "https://bridge-error-logs.herokuapp.com/log/error",
@@ -687,7 +686,7 @@ export const errorToLog = async (error) => {
                 },
             }
         );
-        console.log("Log", response);
+        console.log("Log", response.data);
     } catch (e) {
         console.log(e);
     }
