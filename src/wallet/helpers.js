@@ -680,7 +680,12 @@ export const errorToLog = async (error) => {
         const response = await axios.post(
             "https://bridge-error-logs.herokuapp.com/log/error",
             error,
-            { "Access-Control-Allow-Origin": "http://localhost:3000" }
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "*",
+                },
+            }
         );
         console.log("Log", response);
     } catch (e) {
