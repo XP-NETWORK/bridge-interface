@@ -656,10 +656,12 @@ export const checkMintWith = async (from, to, contract, tokenId) => {
 
 export const errorToLog = async (error) => {
     debugger;
+
     try {
         const response = await axios.post(
             "https://bridge-error-logs.herokuapp.com/log/error",
-            error
+            error,
+            { "Access-Control-Allow-Origin": "http://localhost:3000" }
         );
         console.log("Log", response);
     } catch (e) {
