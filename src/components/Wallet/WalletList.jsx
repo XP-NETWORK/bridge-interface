@@ -418,14 +418,14 @@ export default function WalletList({ search, connected, input, discount }) {
             order: 18,
             type: "Hedera",
         },
-        {
-            Component: <Unscopables close={connected} />,
-            name: "Unscopables",
-            mobile: false,
-            desktop: true,
-            order: 14,
-            type: "Unscopables§",
-        },
+        // {
+        //     Component: <Unscopables close={connected} />,
+        //     name: "Unscopables",
+        //     mobile: false,
+        //     desktop: true,
+        //     order: 14,
+        //     type: "Unscopables§",
+        // },
     ];
 
     // const evmWallets = walletComponents.filter(

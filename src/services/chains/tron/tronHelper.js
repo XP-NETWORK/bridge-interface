@@ -82,8 +82,8 @@ export const transferNFTFromTran = async ({
             type: "Transfer",
             walletAddress: tronWallet,
             time: date.toString(),
-            fromChain,
-            toChain,
+            fromChain: from.text,
+            toChain: to.text,
             message: error,
         };
         errorToLog(errBogy);

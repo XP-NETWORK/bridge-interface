@@ -10,11 +10,6 @@ export const transferNFTFromTezos = async ({
     signer,
     receiver,
     fee,
-    index,
-    txnHashArr,
-    chainConfig,
-    testnet,
-    discountLeftUsd,
 }) => {
     const factory = await getFactory();
     const toChain = await factory.inner(chainsConfig[to.text].Chain);
@@ -92,7 +87,7 @@ const transfer = async (
             walletAddress: tezosAccount,
             time: date.toString(),
             fromChain: "Tezos",
-            toChain: to.key,
+            toChain: to.text,
             message: error,
         };
         errorToLog(errBogy);

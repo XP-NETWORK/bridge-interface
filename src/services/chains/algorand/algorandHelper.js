@@ -1,6 +1,6 @@
 import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
-import { getFactory } from "../../../wallet/helpers";
+import { errorToLog, getFactory } from "../../../wallet/helpers";
 import { setError } from "../../../store/reducers/generalSlice";
 
 export const transferNFTFromAlgorand = async ({
@@ -10,11 +10,6 @@ export const transferNFTFromAlgorand = async ({
     signer,
     receiver,
     fee,
-    index,
-    txnHashArr,
-    chainConfig,
-    testnet,
-    discountLeftUsd,
 }) => {
     const factory = await getFactory();
     const toChain = await factory.inner(chainsConfig[to.text].Chain);
@@ -47,7 +42,8 @@ export const transferNFTFromAlgorand = async ({
                 amountToTransfer,
                 fee,
                 mintWith,
-                factory
+                factory,
+                to
             );
             break;
     }
@@ -63,9 +59,13 @@ const transfer = async (
     amount,
     fee,
     mintWith,
-    factory
+    factory,
+    to
 ) => {
     let result;
+    const {
+        general: { algorandAccount },
+    } = store.getState();
     try {
         switch (true) {
             case !amount:
@@ -83,6 +83,16 @@ const transfer = async (
         }
     } catch (error) {
         store.dispatch(setError(error));
+        const date = new Date();
+        const errBogy = {
+            type: "Transfer",
+            walletAddress: algorandAccount,
+            time: date.toString(),
+            fromChain: "Algorand",
+            toChain: to.text,
+            message: error,
+        };
+        errorToLog(errBogy);
         return false;
     }
 };
