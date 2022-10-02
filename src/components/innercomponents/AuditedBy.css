@@ -1,0 +1,46 @@
+.audited__wrapper {
+    width: 1024px;
+    margin: 24px auto 0 auto;
+    display: flex;
+    justify-content: flex-end;
+}
+.audited {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    gap: 10px;
+}
+.audited__title {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 126%;
+    letter-spacing: 0.03em;
+    color: #62718a;
+}
+.audited__stickers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+@media only screen and (max-width: 1024px) {
+    .audited__wrapper {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .audited__wrapper {
+        max-width: 390px;
+        justify-content: center;
+    }
+}
+@media only screen and (max-width: 375px) {
+    .audited__wrapper {
+        max-width: calc(100% - 20px);
+        justify-content: center;
+    }
+    .audited__stickers {
+        max-width: 290px;
+    }
+}

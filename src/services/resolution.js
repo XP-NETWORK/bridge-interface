@@ -29,20 +29,21 @@ export const getFromDomain = async (domain, to) => {
         return "notEVM";
     } else if (isUnstoppableDomain && type === "EVM") {
         const data = await fetchData(domain);
-        const { multicoinAddresses, addresses } = data;
+        const { records } = data;
         switch (currency) {
             case "MATIC":
-                address = multicoinAddresses[currency][currency];
+                address = records[`crypto.MATIC.version.ERC20.address`];
                 break;
             case "FTM":
-                address = multicoinAddresses[currency]["ERC20"];
+                address = records[currency][`crypto.FTM.version.ERC20.address`];
                 break;
             case "ONE":
-                const add = multicoinAddresses[currency]["ERC20"];
+                const add =
+                    records[currency][`crypto.ONE.version.ERC20.address`];
                 address = convertOne1(add);
                 break;
             default:
-                address = addresses[currency];
+                address = records[`crypto.${currency}.address`];
                 break;
         }
     } else {
@@ -54,10 +55,18 @@ export const getFromDomain = async (domain, to) => {
 };
 
 export const fetchData = async (domain) => {
-    const baseURL = "https://unstoppabledomains.com/api/v1/";
+    var config = {
+        method: "get",
+        url:
+            "https://resolve.unstoppabledomains.com/domains/rodiong-xpnetwork.blockchain",
+        headers: {
+            Authorization: `Bearer ${process.env.REACT_APP_UNSTOP_BARER}`,
+        },
+    };
 
     try {
-        const { data } = await axios.get(`${baseURL}${domain}`);
+        const { data } = await axios(config);
+
         return data;
     } catch (error) {
         console.log(error);
