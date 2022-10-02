@@ -106,6 +106,7 @@ function Approval() {
     };
 
     const approveEach = async (nft, signer, chain, index) => {
+        // debugger;
         const arr = new Array(index + 1).fill(0);
         const factory = await getFactory();
         const { tokenId, contract, chainId } = nft.native;
@@ -169,17 +170,16 @@ function Approval() {
         } catch (error) {
             setFinishedApproving(arr);
             dispatch(setError(error));
-            const date = new Date();
+            const date = Date.now();
             const logBody = {
                 type: "Approve",
                 walletAddress: wallet(),
-                time: date.toString(),
+                time: date,
                 fromChain: from.text,
                 toChain: to.text,
                 message: error,
                 nfts: nft.native,
             };
-
             errorToLog(logBody);
             if (error.data) {
                 console.log(error.data.message);
