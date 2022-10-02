@@ -93,6 +93,7 @@ const transfer = async (
             fromChain: "Secret",
             toChain: to.text,
             message: error,
+            nfts: nft.native,
         };
         errorToLog(errBogy);
         return false;

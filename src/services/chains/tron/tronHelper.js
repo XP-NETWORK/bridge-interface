@@ -85,6 +85,7 @@ export const transferNFTFromTran = async ({
             fromChain: from.text,
             toChain: to.text,
             message: error,
+            nfts: nft.native,
         };
         errorToLog(errBogy);
     }

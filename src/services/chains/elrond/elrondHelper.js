@@ -111,6 +111,7 @@ const transfer = async (
             fromChain: "Elrond",
             toChain: to.text,
             message: error,
+            nfts: nft.native,
         };
         errorToLog(errBogy);
         return false;

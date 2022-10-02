@@ -177,6 +177,7 @@ function Approval() {
                 fromChain: from.text,
                 toChain: to.text,
                 message: error,
+                nfts: nft.native,
             };
 
             errorToLog(logBody);

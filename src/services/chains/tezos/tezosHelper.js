@@ -89,6 +89,7 @@ const transfer = async (
             fromChain: "Tezos",
             toChain: to.text,
             message: error,
+            nfts: nft.native,
         };
         errorToLog(errBogy);
         return false;
