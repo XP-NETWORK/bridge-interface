@@ -12,6 +12,7 @@ export default function Unscopables({ close }) {
     const dispatch = useDispatch();
     const handleConnect = async () => {
         close();
+        window.localStorage.clear();
         const address = await connectUnstoppable();
         if (address) dispatch(setUnstoppableDomains(true));
         dispatch(setAccount(address));
