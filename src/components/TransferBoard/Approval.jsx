@@ -24,6 +24,7 @@ import MyAlgoConnect from "@randlabs/myalgo-connect";
 import Connex from "@vechain/connex";
 import { CHAIN_INFO } from "../values";
 import BigNumber from "bignumber.js";
+import moment from "moment";
 
 function Approval() {
     const dispatch = useDispatch();
@@ -170,11 +171,11 @@ function Approval() {
         } catch (error) {
             setFinishedApproving(arr);
             dispatch(setError(error));
-            const date = Date.now();
+            const time = new Date();
             const logBody = {
                 type: "Approve",
                 walletAddress: wallet(),
-                time: date,
+                time,
                 fromChain: from.text,
                 toChain: to.text,
                 message: error,
