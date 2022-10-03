@@ -115,7 +115,6 @@ function App() {
 
     return (
         <div className={"App"}>
-            {/* <ErrorBoundary FallbackComponent={OurFallbackComponent}> */}
             <ConnectAlgorand nftToOptIn={nftToOptIn} testnet={testnet} />
             <About />
             <Video />
@@ -138,7 +137,6 @@ function App() {
             <XpBridge />
             <Alert />
             <DepositAlert />
-            {/* </ErrorBoundary> */}
         </div>
     );
 }

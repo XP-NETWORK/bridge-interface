@@ -51,6 +51,7 @@ export default function WalletList({ search, connected, input, discount }) {
                     ...tronWallets,
                     ...VeChainWallets,
                     ...usbWallet,
+                    Unscopables,
                 ];
                 return sortedWallets;
             case "Skale":
@@ -421,10 +422,10 @@ export default function WalletList({ search, connected, input, discount }) {
         {
             Component: <Unscopables close={connected} />,
             name: "Unscopables",
-            mobile: false,
+            mobile: true,
             desktop: true,
             order: 14,
-            type: "Unscopables§",
+            type: "EVM",
         },
     ];
 
