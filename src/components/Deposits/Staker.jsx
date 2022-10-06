@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import oil from "../../assets/img/icons/oil.svg";
-import { Dropdown } from "react-bootstrap";
 import info from "../../assets/img/icons/info_blue.svg";
 import xpnet from "../../assets/img/icons/XPNET.svg";
 import { approve, deposit } from "../../services/deposits";
@@ -20,25 +19,6 @@ export default function Staker({ xpNetPrice }) {
     const { library } = useWeb3React();
     const OFF = { opacity: 0.6 };
     const token = new URLSearchParams(window.location.search).get("token");
-
-    // const handleDurationSelect = (d) => {
-    //     switch (d) {
-    //         case "3":
-    //             setDuration("3 months");
-    //             break;
-    //         case "6":
-    //             setDuration("6 months");
-    //             break;
-    //         case "9":
-    //             setDuration("9 months");
-    //             break;
-    //         case "12":
-    //             setDuration("1 year");
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // };
 
     const approveHandler = async () => {
         if (!account) {
@@ -117,24 +97,7 @@ export default function Staker({ xpNetPrice }) {
                         The minimum amount is 1500 XPNET
                     </div>
                 </div>
-                {/* <div className="staker__duration">
-                    <label for="duration">Select locked duration</label>
-                    <br />
-                    <Dropdown
-                        onSelect={(e) => handleDurationSelect(e)}
-                        alignLeft
-                        title="Dropdown right"
-                    >
-                        <div className="dropdown__place-holder">{duration}</div>
-                        <Dropdown.Toggle></Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item eventKey="3">3 months</Dropdown.Item>
-                            <Dropdown.Item eventKey="6">6 months</Dropdown.Item>
-                            <Dropdown.Item eventKey="9">9 months</Dropdown.Item>
-                            <Dropdown.Item eventKey="12">1 year</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </div> */}
+
                 <div className="staker__discount">
                     <label for="discount">Discount </label>
                     <br />
@@ -175,10 +138,19 @@ export default function Staker({ xpNetPrice }) {
                     <span>INFORMATION </span>
                 </div>
                 <div className="info__text">
-                    You may not see your cross-chain transaction due to
-                    unpredictable glitches on different blockchain network and
-                    the decentralized nature of XP.NETWORK protocol. Please be
-                    patient and follow the instructions 💙
+                    After locking XPNET every transaction will be discounted
+                    automatically for 40% by subtracting 75 XPNETs from your
+                    locked amount.
+                    <br />
+                    Want to get more XPNET?
+                    <br />
+                    <a href="https://www.coinbase.com/how-to-buy/xp-network">
+                        https://www.coinbase.com/how-to-buy/xp-network
+                    </a>
+                    <br />
+                    <a href="https://www.binance.com/en/how-to-buy/xp-network">
+                        https://www.binance.com/en/how-to-buy/xp-network
+                    </a>
                 </div>
             </div>
         </div>

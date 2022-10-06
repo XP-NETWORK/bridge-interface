@@ -61,7 +61,11 @@ export default function ButtonToTransfer() {
     const chainConfig = useSelector(
         (state) => state.signers.chainFactoryConfig
     );
-    const discountLeftUsd = useSelector((state) => state.discount.discount);
+    const discountLeftUsd = useSelector(
+        (state) => state.discount.discountLeftUsd
+    );
+    const useDiscount = useSelector((state) => state.discount.useDiscount);
+
     const getAlgorandWalletSigner = async () => {
         const base = new MyAlgoConnect();
         if (algorandWallet) {
@@ -215,6 +219,7 @@ export default function ButtonToTransfer() {
             chainConfig,
             testnet,
             discountLeftUsd,
+            useDiscount,
         };
         switch (_from.type) {
             case "EVM":

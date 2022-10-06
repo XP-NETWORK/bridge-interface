@@ -318,12 +318,15 @@
         flex-wrap: wrap;
         justify-content: space-between;
     }
+    .staker__amount {
+        width: 55%;
+    }
+    .staker__discount {
+        width: 35%;
+    }
     .balance,
     .locked,
-    .discount,
-    .staker__amount,
-    .staker__duration,
-    .staker__discount {
+    .discount {
         width: 30%;
     }
     .locked,
@@ -358,6 +361,9 @@
     .deposit__body .title {
         font-size: 1.5vw !important;
         gap: 2px;
+    }
+    .xpnet-icon {
+        right: -25px;
     }
 }
 

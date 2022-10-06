@@ -33,12 +33,10 @@ export default function WalletList({ search, connected, input, discount }) {
         const cosmosWallets = components.filter((e) => e.type === "Cosmos");
         const usbWallet = components.filter((e) => e.type === "USB");
         const hederaWallets = components.filter((e) => e.type === "Hedera");
-
         if (discount) {
             sortedWallets = [...evmWallets];
-            return;
+            return sortedWallets;
         }
-
         switch (temporaryFrom?.type || from?.type) {
             case "EVM":
                 sortedWallets = [
@@ -439,7 +437,7 @@ export default function WalletList({ search, connected, input, discount }) {
               .filter((wallet) =>
                   wallet.name.toLowerCase().includes(input.toLowerCase())
               )
-        : from
+        : from || discount
         ? sortWallet(walletComponents)
         : walletComponents.sort((a, b) => a.order - b.order);
 
