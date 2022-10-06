@@ -4,7 +4,6 @@ import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { chainsConfig, CHAIN_INFO } from "../values";
 import {
-    errorToLog,
     getFactory,
     handleChainFactory,
     setClaimablesAlgorand,
@@ -13,6 +12,8 @@ import {
 import { setBigNumFees } from "../../store/reducers/generalSlice";
 import { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
+import DiscountRlzBtn from "./DiscountRlzBtn";
+import Fee from "./Fee";
 
 function SendFees() {
     const dispatch = useDispatch();
@@ -26,35 +27,17 @@ function SendFees() {
     );
     const isToEVM = useSelector((state) => state.general.to).type === "EVM";
     const [fees, setFees] = useState("");
+    const [feeForTotal, setFeeForTotal] = useState();
     const Web3Utils = require("web3-utils");
-    const [estimateInterval, setEstimateInterval] = useState();
+
     const [loading, setLoading] = useState(false);
     const discountLeftUsd = useSelector(
         (state) => state.discount.discountLeftUsd
     );
-    const keplrWallet = useSelector((state) => state.general.keplrWallet);
-    const elrondAccount = useSelector((state) => state.general.elrondAccount);
-    const secretAccount = useSelector((state) => state.general.secretAccount);
-    const hederaAccount = useSelector((state) => state.general.hederaAccount);
-    const algorandAccount = useSelector(
-        (state) => state.general.algorandAccount
-    );
-    const tezosAccount = useSelector((state) => state.general.tezosAccount);
-
-    const wallet = () => {
-        return (
-            account ||
-            algorandAccount ||
-            tezosAccount ||
-            elrondAccount ||
-            secretAccount ||
-            hederaAccount
-        );
-    };
 
     const feesReqInterval = useRef(null);
+
     async function estimate() {
-        const date = new Date();
         let fact;
         let fee;
         try {
@@ -105,15 +88,6 @@ function SendFees() {
                     );
                 } catch (error) {
                     console.error(error);
-                    const errBody = {
-                        type: "Estimate",
-                        walletAddress: wallet(),
-                        time: date.toString(),
-                        fromChain: from.text,
-                        toChain: to.text,
-                        message: error,
-                    };
-                    errorToLog(errBody);
                 }
             }
 
@@ -139,32 +113,15 @@ function SendFees() {
                     (await Web3Utils.fromWei(String(bigNum), "ether"));
             }
 
-            fees && setFees(+(fees * selectedNFTList.length));
+            if (fees) {
+                setFees(fees * selectedNFTList.length);
+                setFeeForTotal(fees);
+            }
         } catch (error) {
-            const errBody = {
-                type: "Estimate",
-                walletAddress: wallet(),
-                time: date.toString(),
-                fromChain: from.text,
-                toChain: to.text,
-                message: error,
-                nfts: selectedNFTList,
-            };
-            errorToLog(errBody);
             console.log(error.data ? error.data.message : error.message);
         }
         setLoading(false);
     }
-
-    const showDiscount = (fee) => {
-        switch (true) {
-            case discountLeftUsd > 0:
-                return fee - fee * 0.25;
-            default:
-                return fee;
-        }
-    };
-
     function getNumToFix() {
         // debugger
         let num = 1;
@@ -201,36 +158,21 @@ function SendFees() {
     }, [to]);
 
     return (
-        <div className="fees">
-            <div className="fees__title">Fees</div>
-            <div className="fees__bank">
+        <div className="checkout">
+            <div className="checkout__balance checkout-row">
+                <span>Balance: </span>
                 {balance ? (
-                    <span className="fees__balance">{`Balance: ${balance.toFixed(
-                        3
-                    )} ${config?.token ||
+                    <span>{`${balance.toFixed(3)} ${config?.token ||
                         (from?.text === "Gnosis" && "Gnosis")}`}</span>
                 ) : (
-                    `Balance: 0 ${config?.token}`
-                )}
-                {loading ? (
-                    <LittleLoader />
-                ) : (
-                    <span>
-                        {`${
-                            fees && fees > 0
-                                ? from.key === "Tezos"
-                                    ? new BigNumber(fees)
-                                          .multipliedBy(1e12)
-                                          .toString()
-                                    : fees?.toFixed(getNumToFix(fees))
-                                : "0"
-                        }
-                        ${config?.token} 
-                        `}
-                        {/* ${discountLeftUsd && showDiscount(fees).toFixed(2)} */}
-                    </span>
+                    `0 ${config?.token}`
                 )}
             </div>
+            <div className="checkout__fees checkout-row">
+                <span>Fees</span>
+                <span>{loading ? <LittleLoader /> : <Fee fees={fees} />}</span>
+            </div>
+            {discountLeftUsd && <DiscountRlzBtn fees={feeForTotal} />}
         </div>
     );
 }
