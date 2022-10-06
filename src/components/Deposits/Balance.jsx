@@ -1,33 +1,40 @@
 import { useWeb3React } from "@web3-react/core";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Web3 from "web3";
 import diamond from "../../assets/img/icons/diamond.svg";
+import { switchNetwork } from "../../services/chains/evm/evmService";
 import { checkXpNetBalance } from "../../services/deposits";
+import { chains } from "../values";
 
 export default function Balance({ xpNetPrice, loader }) {
     const account = useSelector((state) => state.general.account);
     const { library } = useWeb3React();
     const [balance, setBalance] = useState();
-    // const [xpNetPrice, setXpNetPrice] = useState();
+    let balanceInterval = useRef(null);
+
+    const checkBalance = async () => {
+        if (library) {
+            try {
+                const num = await checkXpNetBalance(library._provider, account);
+                setBalance(num);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    };
 
     useEffect(() => {
-        const checkBalance = async () => {
-            if (library) {
-                try {
-                    const num = await checkXpNetBalance(
-                        library._provider,
-                        account
-                    );
-                    setBalance(num);
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-        };
-
-        checkBalance();
+        if (account && window.ethereum?.chainId === "0x38") {
+            checkBalance();
+            balanceInterval = setInterval(() => checkBalance(), 5000);
+        } else if (account) {
+            switchNetwork(chains.find((e) => e.text === "BSC"));
+            checkBalance();
+            balanceInterval = setInterval(() => checkBalance(), 5000);
+        }
+        return () => clearInterval(balanceInterval);
     }, [account]);
 
     return (
