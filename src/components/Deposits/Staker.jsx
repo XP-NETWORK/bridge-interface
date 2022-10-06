@@ -165,12 +165,20 @@ export default function Staker({ xpNetPrice }) {
                     <br />
                     Want to get more XPNET?
                     <br />
-                    <a href="https://www.coinbase.com/how-to-buy/xp-network">
-                        https://www.coinbase.com/how-to-buy/xp-network
+                    <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href="https://www.coinbase.com/how-to-buy/xp-network"
+                    >
+                        https://www.coinbase.com
                     </a>
                     <br />
-                    <a href="https://www.binance.com/en/how-to-buy/xp-network">
-                        https://www.binance.com/en/how-to-buy/xp-network
+                    <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href="https://www.binance.com/en/how-to-buy/xp-network"
+                    >
+                        https://www.binance.com
                     </a>
                 </div>
             </div>
