@@ -19,7 +19,7 @@ export default function Staker({ xpNetPrice }) {
     const [error, setError] = useState(false);
     const [approved, setApproved] = useState(false);
     const { library } = useWeb3React();
-    const OFF = { opacity: 0.6 };
+    const OFF = { opacity: 0.6, pointerEvents: "none" };
     const token = new URLSearchParams(window.location.search).get("token");
 
     const approveHandler = async () => {
