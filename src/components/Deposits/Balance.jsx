@@ -1,18 +1,22 @@
 import { useWeb3React } from "@web3-react/core";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Web3 from "web3";
 import diamond from "../../assets/img/icons/diamond.svg";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import { checkXpNetBalance } from "../../services/deposits";
+import { setXpNetBalance } from "../../store/reducers/discountSlice";
 import { chains } from "../values";
 
 export default function Balance({ xpNetPrice, loader }) {
+    const dispatch = useDispatch();
     const [innerLoader, setInnerLoader] = useState(false);
     const account = useSelector((state) => state.general.account);
     const { library } = useWeb3React();
     const [balance, setBalance] = useState();
+
+    const xpNetBalance = useSelector((state) => state.discount.xpNetBalance);
     let balanceInterval = useRef(null);
 
     const checkBalance = async () => {
@@ -21,6 +25,7 @@ export default function Balance({ xpNetPrice, loader }) {
             try {
                 const num = await checkXpNetBalance(library._provider, account);
                 setBalance(num);
+                dispatch(setXpNetBalance(num));
                 setInnerLoader(false);
             } catch (error) {
                 console.log(error);

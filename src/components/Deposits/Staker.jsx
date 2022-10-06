@@ -7,13 +7,15 @@ import { approve, deposit } from "../../services/deposits";
 import { useWeb3React } from "@web3-react/core";
 import { setApproveLoader } from "../../store/reducers/generalSlice";
 import { setDepositAlert } from "../../store/reducers/discountSlice";
+import { useDidUpdateEffect } from "../Settings/hooks";
 
 export default function Staker({ xpNetPrice }) {
     const innerWidth = useSelector((state) => state.general.innerWidth);
     const account = useSelector((state) => state.general.account);
     const dispatch = useDispatch();
     const [amount, setAmount] = useState();
-    // const [duration, setDuration] = useState("3 months");
+    const xpNetBalance = useSelector((state) => state.discount.xpNetBalance);
+
     const [error, setError] = useState(false);
     const [approved, setApproved] = useState(false);
     const { library } = useWeb3React();
@@ -43,10 +45,15 @@ export default function Staker({ xpNetPrice }) {
                 const num = Number(e.target.value);
                 if (e.target.validity.valid) {
                     setAmount(num);
+                    if (amount >= 1500) setError(false);
+                    else if (num > xpNetBalance) {
+                        setError(true);
+                    }
                 } else setAmount("");
                 break;
             case "blur":
-                if (amount < 1500) {
+                if (num > xpNetBalance) setError(true);
+                else if (amount < 1500) {
                     setError(true);
                 } else setError(false);
                 break;
@@ -54,6 +61,11 @@ export default function Staker({ xpNetPrice }) {
                 break;
         }
     };
+
+    useDidUpdateEffect(() => {
+        if (amount > xpNetBalance) setError(true);
+        else if (amount && amount < 1500) setError(true);
+    }, [xpNetBalance]);
 
     return (
         <div className="staker">
@@ -94,7 +106,9 @@ export default function Staker({ xpNetPrice }) {
                         }
                         className="error"
                     >
-                        The minimum amount is 1500 XPNET
+                        {amount > xpNetBalance
+                            ? "Amount is greater than XPNET balance"
+                            : "The minimum amount is 1500 XPNET"}
                     </div>
                 </div>
 

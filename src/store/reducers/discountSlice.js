@@ -24,10 +24,14 @@ const discountSlice = createSlice({
         setUseDiscount(state, action) {
             state.useDiscount = action.payload;
         },
+        setXpNetBalance(state, action) {
+            state.xpNetBalance = action.payload;
+        },
     },
 });
 
 export const {
+    setXpNetBalance,
     setUseDiscount,
     setDiscountOn,
     setDiscountLeftUsd,
