@@ -9,28 +9,32 @@ import { checkXpNetBalance } from "../../services/deposits";
 import { chains } from "../values";
 
 export default function Balance({ xpNetPrice, loader }) {
+    const [innerLoader, setInnerLoader] = useState(false);
     const account = useSelector((state) => state.general.account);
     const { library } = useWeb3React();
     const [balance, setBalance] = useState();
     let balanceInterval = useRef(null);
 
     const checkBalance = async () => {
+        // debugger;
         if (library) {
             try {
                 const num = await checkXpNetBalance(library._provider, account);
                 setBalance(num);
+                setInnerLoader(false);
             } catch (error) {
                 console.log(error);
             }
         }
     };
 
-    useEffect(() => {
+    useEffect(async () => {
         if (account && window.ethereum?.chainId === "0x38") {
             checkBalance();
             balanceInterval = setInterval(() => checkBalance(), 5000);
         } else if (account) {
-            switchNetwork(chains.find((e) => e.text === "BSC"));
+            if (!balance) setInnerLoader(true);
+            await switchNetwork(chains.find((e) => e.text === "BSC"));
             checkBalance();
             balanceInterval = setInterval(() => checkBalance(), 5000);
         }
@@ -39,7 +43,9 @@ export default function Balance({ xpNetPrice, loader }) {
 
     return (
         <div className="balance">
-            {loader && <div className="deposit__body__loader"></div>}
+            {(loader || innerLoader) && (
+                <div className="deposit__body__loader"></div>
+            )}
             <div className="title">
                 <img src={diamond} alt="" className="balance-icon" />
                 <span>Your XPNET Balance</span>
