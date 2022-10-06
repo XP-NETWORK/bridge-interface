@@ -291,6 +291,24 @@
     cursor: pointer;
     margin-top: 10px;
 }
+.checkout__discount__btns {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #fff;
+    padding: 8px;
+    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 126%;
+    color: #395feb;
+    cursor: pointer;
+    gap: 8px;
+}
+.checkout__discount__btns span:nth-child(2) {
+    margin-right: auto;
+}
 .transfer-button--disabled,
 .transfer-button {
     border: 1px solid #395feb;
