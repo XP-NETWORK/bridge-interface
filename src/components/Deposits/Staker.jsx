@@ -130,7 +130,14 @@ export default function Staker({ xpNetPrice }) {
                     />
                 </div>
                 <div
-                    style={!account || amount < 1500 || !amount ? OFF : {}}
+                    style={
+                        !account ||
+                        amount < 1500 ||
+                        !amount ||
+                        amount > xpNetBalance
+                            ? OFF
+                            : {}
+                    }
                     className="staker__buttons"
                 >
                     {!approved ? (
