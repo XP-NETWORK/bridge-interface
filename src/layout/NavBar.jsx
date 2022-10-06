@@ -125,7 +125,7 @@ function NavBar() {
                                 </div>
                                 <div className="nav-link__txt">Explorer</div>
                             </Nav.Link> */}
-                            {/*!testnet && (
+                            {!testnet && (
                                 <LinkContainer to={"discounts"}>
                                     <Nav.Link>
                                         <div className="nav-link__icon">
@@ -136,7 +136,7 @@ function NavBar() {
                                         </div>
                                     </Nav.Link>
                                 </LinkContainer>
-                            )*/}
+                            )}
                             <a
                                 rel="noreferrer"
                                 className="nav-link help-center"
