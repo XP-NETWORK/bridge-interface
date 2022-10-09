@@ -170,7 +170,7 @@ export default function Staker({ xpNetPrice }) {
                         rel="noreferrer"
                         href="https://www.coinbase.com/how-to-buy/xp-network"
                     >
-                        https://www.coinbase.com
+                        www.coinbase.com
                     </a>
                     <br />
                     <a
@@ -178,7 +178,7 @@ export default function Staker({ xpNetPrice }) {
                         rel="noreferrer"
                         href="https://www.binance.com/en/how-to-buy/xp-network"
                     >
-                        https://www.binance.com
+                        www.binance.com
                     </a>
                 </div>
             </div>

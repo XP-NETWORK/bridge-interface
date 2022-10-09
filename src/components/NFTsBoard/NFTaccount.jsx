@@ -48,6 +48,7 @@ import { checkXpNetLocked } from "../../services/deposits";
 import {
     setDiscountLeftUsd,
     setDiscountOn,
+    setUseDiscount,
 } from "../../store/reducers/discountSlice";
 import UseDiscountModal from "../Modals/UseDiscount/UseDiscountModal";
 
@@ -300,6 +301,7 @@ function NFTaccount() {
             );
         };
         account && checkLocked();
+        dispatch(setUseDiscount(false));
         return () => clearInterval(balanceInterval);
     }, [from, account, NFTSetToggler]);
 

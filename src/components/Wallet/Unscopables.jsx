@@ -12,10 +12,6 @@ import { useLocation } from "react-router-dom";
 export default function Unscopables({ close }) {
     const dispatch = useDispatch();
     const location = useLocation();
-    console.log(
-        "🚀 ~ file: Unscopables.jsx ~ line 15 ~ Unscopables ~ location",
-        location
-    );
 
     const handleConnect = async () => {
         close();

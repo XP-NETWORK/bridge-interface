@@ -2,8 +2,10 @@ import React from "react";
 import "./PageNotFound.css";
 import image from "../assets/img/404.png";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function PageNotFound() {
+    const testnet = useSelector((state) => state.general.testNet);
     return (
         <div className="page-nt-found">
             <div className="page-nt-found__img">
@@ -14,7 +16,10 @@ export default function PageNotFound() {
             <div className="page-nt-found__txt">
                 The page you are looking for is not available.
             </div>
-            <Link to={"/account"} className="page-nt-found__back-btn">
+            <Link
+                to={testnet ? "/testnet" : "/"}
+                className="page-nt-found__back-btn"
+            >
                 Home
             </Link>
             <div className="page-nt-found__help-btn">

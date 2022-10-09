@@ -18,6 +18,10 @@ import { useDidUpdateEffect } from "../Settings/hooks";
 import Web3 from "web3";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import { fetchData } from "../../services/resolution";
+import {
+    setDiscountOn,
+    setUseDiscount,
+} from "../../store/reducers/discountSlice";
 
 function ConnectWallet() {
     const navigate = useNavigate();
@@ -121,6 +125,10 @@ function ConnectWallet() {
             const domain = JSON.parse(localStorage.username).value;
         }
     }, [unstoppableDomains]);
+
+    useEffect(() => {
+        dispatch(setUseDiscount(false));
+    }, []);
 
     return (
         <div>

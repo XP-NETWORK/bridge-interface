@@ -510,7 +510,6 @@ const onClientConnect = (maiarProvider) => {
             store.dispatch(setMaiarProvider(maiarProvider));
             store.dispatch(setSigner(maiarProvider));
             store.dispatch(setOnMaiar(true));
-            store.dispatch(setStep(2));
         },
         onClientLogout: async () => {
             store.dispatch(setQrCodeString(""));
@@ -526,9 +525,13 @@ const generateQR = async (text) => {
     }
 };
 // Elrond blockchain connection ( Maiar )
-export const connectMaiar = async () => {
+export const connectMaiar = async (testnet) => {
     // debugger
-    const provider = new ProxyProvider("https://gateway.elrond.com");
+    const provider = new ProxyProvider(
+        testnet
+            ? "https://devnet-gateway.elrond.com"
+            : "https://gateway.elrond.com"
+    );
     const maiarProvider = new WalletConnectProvider(
         provider,
         "https://bridge.walletconnect.org/"

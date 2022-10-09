@@ -42,7 +42,8 @@ function App() {
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
 
     useEffect(() => {
-        dispatch(setTestNet(window.location.href.indexOf("/testnet") > 0));
+        const test = window.location.href.indexOf("/testnet") > 0;
+        dispatch(setTestNet(test));
     });
 
     const toShowSuccess = () => {
