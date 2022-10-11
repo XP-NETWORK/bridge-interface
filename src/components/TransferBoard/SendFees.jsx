@@ -100,7 +100,6 @@ function SendFees() {
                 : undefined;
 
             dispatch(setBigNumFees(bigNum));
-            patchRealizedDiscount(account, bigNum);
             let fees;
             if (
                 from.type === "Tron" ||

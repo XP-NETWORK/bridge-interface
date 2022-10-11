@@ -4,6 +4,7 @@ import { BigNumber, ethers } from "ethers";
 import Web3 from "web3";
 import axios from "axios";
 const Contract = require("web3-eth-contract");
+const Web3Utils = require("web3-utils");
 
 const xpnet = "0x8cf8238abf7b933bf8bb5ea2c7e4be101c11de2a";
 const xpBridgeDiscount = "0x2c61dfdb80666e005d1888ca1811027fcf21833a";
@@ -93,20 +94,28 @@ export const checkXpNetLocked = async (account) => {
     }
 };
 
-export const patchRealizedDiscount = async (account, realized) => {
+export const patchRealizedDiscount = async (realized) => {
     debugger;
     const xpPrice = await checkXpNetPrice();
 
-    console.log({ realized });
-    const bg = BigNumber.from(realized.toString());
-    const num = Number(bg * xpPrice);
-    try {
-        const response = await axios.patch(
-            `https://bridge-discount-server.herokuapp.com/api/relization?address=${account}&realizedUsd=${realized *
-                xpPrice}`
-        );
-        console.log("patchRealizedDiscount: ", response);
-    } catch (error) {
-        console.log(error);
-    }
+    // console.log({ realized });
+    // // const bg = BigNumber.from(realized);
+    const num = Web3Utils.fromWei(String(realized), "ether") * xpPrice;
+    // try {
+    //     const response = await axios.patch(
+    //         `https://bridge-discount-server.herokuapp.com/api/relization?address=${account}&realizedUsd=${num}`
+    //     );
+    //     console.log("patchRealizedDiscount: ", response);
+    // } catch (error) {
+    //     console.log(error);
+    // }
+
+    var config = {
+        method: "patch",
+        url: `https://bridge-discount-server.herokuapp.com/api/relization?address=0xf4D88DA352D702d8578af1f36D44b2381941f4aF&realizedUsd=0.1`,
+    };
+
+    axios(config).then(function(response) {
+        console.log(JSON.stringify(response.data));
+    });
 };
