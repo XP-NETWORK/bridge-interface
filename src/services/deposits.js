@@ -94,7 +94,7 @@ export const checkXpNetLocked = async (account) => {
     }
 };
 
-export const patchRealizedDiscount = async (realized) => {
+export const patchRealizedDiscount = async (account, realized) => {
     debugger;
     const xpPrice = await checkXpNetPrice();
 
@@ -112,7 +112,7 @@ export const patchRealizedDiscount = async (realized) => {
 
     var config = {
         method: "patch",
-        url: `https://bridge-discount-server.herokuapp.com/api/relization?address=0xf4D88DA352D702d8578af1f36D44b2381941f4aF&realizedUsd=0.1`,
+        url: `https://bridge-discount-server.herokuapp.com/api/relization?address=${account}&realizedUsd=${num}`,
     };
 
     axios(config).then(function(response) {
