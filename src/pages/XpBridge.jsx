@@ -17,7 +17,7 @@ function XpBridge() {
                 <Route path="/" element={<ConnectWallet />} />
                 <Route path="/testnet" element={<ConnectWallet />} />
                 <Route path="/connect" element={<ConnectWallet />} />
-                {/* <Route path="/testnet" element={<ConnectWallet />} /> */}
+                {/* <Route path="/testnet/connect" element={<ConnectWallet />} /> */}
                 <Route element={<ProtectedRoute />}>
                     <Route
                         path={testnet ? "/testnet/account" : "/account"}

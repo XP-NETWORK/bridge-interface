@@ -45,9 +45,7 @@ function NavBar() {
         !widget && (
             <header id="Header">
                 <Navbar expand="lg">
-                    <LinkContainer
-                        to={testnet ? "/testnet/connect" : "/connect"}
-                    >
+                    <LinkContainer to={testnet ? "/testnet" : "/connect"}>
                         <Navbar.Brand>
                             <img src={Logo} alt="Xp Network" />
                             <div>MULTICHAIN NFT BRIDGE</div>

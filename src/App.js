@@ -33,6 +33,7 @@ import Bridge from "./services/bridge";
 import { ethers } from "ethers";
 import ErrorBoundary from "./layout/ErrorBoundary";
 import OurFallbackComponent from "./layout/OurFallbackComponent";
+import { patchRealizedDiscount } from "./services/deposits";
 
 function App() {
     const dispatch = useDispatch();

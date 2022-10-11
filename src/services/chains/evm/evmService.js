@@ -81,7 +81,6 @@ export const transferNFTFromEVM = async ({
     discountLeftUsd,
     useDiscount,
 }) => {
-    debugger;
     fee = discountLeftUsd && useDiscount ? fee - fee * 0.4 : fee;
     const factory = await getFactory();
     const toChain = await factory.inner(chainsConfig[to.text].Chain);
@@ -154,7 +153,7 @@ export const transferNFTFromEVM = async ({
             );
             break;
     }
-    if (result) patchRealizedDiscount(account, fee * 0.25);
+    if (result) patchRealizedDiscount(account, fee * 0.4);
     return result || false;
 };
 

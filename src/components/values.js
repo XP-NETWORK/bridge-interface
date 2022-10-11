@@ -89,7 +89,7 @@ export const chains = [
         order: 9,
         image: { avatar: true, src: Elrond },
         maintenance: false,
-        testNet: false,
+        testNet: true,
         mainnet: true,
     },
     {

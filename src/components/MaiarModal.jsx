@@ -13,10 +13,11 @@ export default function MaiarModal({
 }) {
     const walletsModal = useSelector((state) => state.general.walletsModal);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
-    const testnet = useSelector((state) => state.general.testnet);
+    const testnet = useSelector((state) => state.general.testNet);
     const navigate = useNavigate();
 
     const navigateToAccountRoute = () => {
+        debugger;
         navigate(testnet ? `/testnet/account` : `/account`);
     };
 

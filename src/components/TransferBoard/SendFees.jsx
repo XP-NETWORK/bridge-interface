@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 import DiscountRlzBtn from "./DiscountRlzBtn";
 import Fee from "./Fee";
+import { patchRealizedDiscount } from "../../services/deposits";
 
 function SendFees() {
     const dispatch = useDispatch();
@@ -99,7 +100,7 @@ function SendFees() {
                 : undefined;
 
             dispatch(setBigNumFees(bigNum));
-
+            patchRealizedDiscount(account, bigNum);
             let fees;
             if (
                 from.type === "Tron" ||

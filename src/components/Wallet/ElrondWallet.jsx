@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Elrond from "../../assets/img/wallet/Elrond.svg";
 import Maiar from "../../assets/img/wallet/Maiar.svg";
 import { connectMaiar, connectMaiarExtension } from "./ConnectWalletHelper";
-import { algoConnector } from "../../wallet/connectors";
 import {
     setAlgorandAccount,
     setAlgorandWallet,
@@ -28,7 +27,7 @@ export default function ElrondWallet({ wallet, close }) {
     const handleConnect = async (wallet) => {
         switch (wallet) {
             case "Maiar":
-                connectMaiar(testnet);
+                await connectMaiar(testnet);
                 break;
             case "Maiar Extension":
                 const connected = await connectMaiarExtension();
@@ -43,20 +42,6 @@ export default function ElrondWallet({ wallet, close }) {
     const navigateToAccountRoute = () => {
         navigate(testnet ? `/testnet/account${query}` : `/account${query}`);
     };
-
-    // useEffect(() => {
-    //     algoConnector.on("connect", (error, payload) => {
-    //         if (error) {
-    //             throw error;
-    //         }
-    //         const { accounts } = payload.params[0];
-    //         if (accounts) {
-    //             dispatch(setAlgorandWallet(true));
-    //             dispatch(setAlgorandAccount(accounts[0]));
-    //             if (to) navigateToAccountRoute();
-    //         }
-    //     });
-    // }, []);
 
     const getStyle = () => {
         if (temporaryFrom?.type === "Elrond") {

@@ -1,6 +1,6 @@
 import xpnetInterface from "./artifacts/XPToken.json";
 import xpBridgeInterface from "./artifacts/xpBridgeDescount.json";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import Web3 from "web3";
 import axios from "axios";
 const Contract = require("web3-eth-contract");
@@ -95,11 +95,17 @@ export const checkXpNetLocked = async (account) => {
 
 export const patchRealizedDiscount = async (account, realized) => {
     debugger;
+    const xpPrice = await checkXpNetPrice();
+
+    console.log({ realized });
+    const bg = BigNumber.from(realized.toString());
+    const num = Number(bg * xpPrice);
     try {
         const response = await axios.patch(
-            `https://bridge-discount-server.herokuapp.com/api/relization?address=${account}&realizedUsd=${realized}`
+            `https://bridge-discount-server.herokuapp.com/api/relization?address=${account}&realizedUsd=${realized *
+                xpPrice}`
         );
-        console.log(response);
+        console.log("patchRealizedDiscount: ", response);
     } catch (error) {
         console.log(error);
     }
