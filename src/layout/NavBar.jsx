@@ -24,6 +24,7 @@ import {
     cleanSelectedNFTList,
     setReceiver,
 } from "../store/reducers/generalSlice";
+import { biz } from "../components/values";
 
 function NavBar() {
     const widget = useSelector((state) => state.general.widget);
@@ -125,7 +126,7 @@ function NavBar() {
                                 </div>
                                 <div className="nav-link__txt">Explorer</div>
                             </Nav.Link> */}
-                            {!testnet && (
+                            {!testnet && biz && (
                                 <LinkContainer to={"discounts"}>
                                     <Nav.Link>
                                         <div className="nav-link__icon">

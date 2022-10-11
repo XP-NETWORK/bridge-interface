@@ -402,7 +402,7 @@ export const chains = [
         testNet: true,
         mainnet: biz,
         newChain: biz,
-        coming: !biz,
+        coming: false,
     },
     {
         type: "EVM",
