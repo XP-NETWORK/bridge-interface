@@ -114,6 +114,8 @@ function SendFees() {
             }
 
             if (fees) {
+                // !!
+                // patchRealizedDiscount(account, fee, from);
                 setFees(fees * selectedNFTList.length);
                 setFeeForTotal(fees);
             }

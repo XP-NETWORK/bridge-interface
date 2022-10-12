@@ -94,25 +94,15 @@ export const checkXpNetLocked = async (account) => {
     }
 };
 
-export const patchRealizedDiscount = async (account, realized) => {
-    debugger;
-    const xpPrice = await checkXpNetPrice();
-
-    // console.log({ realized });
-    // // const bg = BigNumber.from(realized);
-    const num = Web3Utils.fromWei(String(realized), "ether") * xpPrice;
-    // try {
-    //     const response = await axios.patch(
-    //         `https://bridge-discount-server.herokuapp.com/api/relization?address=${account}&realizedUsd=${num}`
-    //     );
-    //     console.log("patchRealizedDiscount: ", response);
-    // } catch (error) {
-    //     console.log(error);
-    // }
+export const patchRealizedDiscount = async (account, fee, from) => {
+    // debugger;
+    const discount = fee * 0.4;
+    const cryptoRealized = Web3Utils.fromWei(String(discount), "ether");
+    const { chainId } = from;
 
     var config = {
         method: "patch",
-        url: `https://bridge-discount-server.herokuapp.com/api/relization?address=${account}&realizedUsd=${num}`,
+        url: `https://bridge-discount-server.herokuapp.com/api/relization?address=${account}&realized=${cryptoRealized}&chain=${chainId}`,
     };
 
     axios(config).then(function(response) {

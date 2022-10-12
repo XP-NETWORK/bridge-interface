@@ -35,7 +35,7 @@ export default function Deposits() {
     const checkLocked = async () => {
         const data = await checkXpNetLocked(account);
         setLocked(data?.totalDepositsXp);
-        dispatch(setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25)));
+        dispatch(setDiscountLeftUsd(Math.floor(data.discountLeftTrx)));
         setLoader(false);
     };
 

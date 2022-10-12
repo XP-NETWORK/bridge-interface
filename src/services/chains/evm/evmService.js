@@ -153,7 +153,7 @@ export const transferNFTFromEVM = async ({
             );
             break;
     }
-    if (result) patchRealizedDiscount(account, fee * 0.4);
+    if (result) patchRealizedDiscount(account, fee, fromChain);
     return result || false;
 };
 
