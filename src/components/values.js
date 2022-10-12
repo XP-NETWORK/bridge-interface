@@ -397,7 +397,7 @@ export const chains = [
         nonce: 30,
         order: 0,
         chainId: 1564830818,
-        tnChainId: 1305754875840118,
+        tnChainId: 0x63e1ef9,
         image: { avatar: true, src: SKL },
         testNet: true,
         mainnet: biz,
@@ -772,7 +772,7 @@ export const TESTNET_CHAIN_INFO = {
     Hedera: { nonce: 0x1d },
     Skale: {
         nonce: 0x1e,
-        chainId: 1305754875840118,
+        chainId: 0x63e1ef9,
     },
     Iotex: {
         nonce: 0x14,

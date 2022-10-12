@@ -11,7 +11,7 @@ import { getAddEthereumChain } from "../../../wallet/chains.js";
 import { patchRealizedDiscount } from "../../deposits.js";
 
 export async function switchNetwork(chain) {
-    // debugger;
+    debugger;
     const {
         general: { testNet, bitKeep },
     } = store.getState();
