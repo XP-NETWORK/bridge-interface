@@ -95,14 +95,13 @@ export const checkXpNetLocked = async (account) => {
 };
 
 export const patchRealizedDiscount = async (account, fee, from) => {
-    // debugger;
     const discount = fee * 0.4;
     const cryptoRealized = Web3Utils.fromWei(String(discount), "ether");
-    const { chainId } = from;
+    const { nonce } = from;
 
     var config = {
         method: "patch",
-        url: `https://bridge-discount-server.herokuapp.com/api/relization?address=${account}&realized=${cryptoRealized}&chain=${chainId}`,
+        url: `https://bridge-discount-server.herokuapp.com/api/relization?address=${account}&realized=${cryptoRealized}&chain=${nonce}`,
     };
 
     axios(config).then(function(response) {
