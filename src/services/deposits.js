@@ -94,10 +94,9 @@ export const checkXpNetLocked = async (account) => {
     }
 };
 
-export const patchRealizedDiscount = async (account, fee, from) => {
+export const patchRealizedDiscount = async (account, fee, nonce) => {
     const discount = fee * 0.4;
     const cryptoRealized = Web3Utils.fromWei(String(discount), "ether");
-    const { nonce } = from;
 
     var config = {
         method: "patch",

@@ -159,9 +159,8 @@ export default function Staker({ xpNetPrice }) {
                     <span>INFORMATION </span>
                 </div>
                 <div className="info__text">
-                    After locking XPNET every transaction will be discounted
-                    automatically for 40% by subtracting 75 XPNETs from your
-                    locked amount.
+                    After locking XPNET you will have an option to enjoy 40%
+                    discount for each $0.25 you spent on XPNET.
                     <br />
                     Want to get more XPNET?
                     <br />
