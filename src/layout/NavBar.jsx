@@ -24,6 +24,7 @@ import {
   cleanSelectedNFTList,
   setReceiver,
 } from "../store/reducers/generalSlice";
+import { biz } from "../components/values";
 
 function NavBar() {
   const widget = useSelector((state) => state.widget.widget);
@@ -114,7 +115,7 @@ function NavBar() {
                                 </div>
                                 <div className="nav-link__txt">Explorer</div>
                             </Nav.Link> */}
-              {/*!testnet && (
+              {!testnet && biz && (
                 <LinkContainer to={"discounts"}>
                   <Nav.Link>
                     <div className="nav-link__icon">
@@ -123,7 +124,7 @@ function NavBar() {
                     <div className="nav-link__txt">Discounts</div>
                   </Nav.Link>
                 </LinkContainer>
-              )*/}
+              )}
               <Nav.Link
                 target="_blank"
                 href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"

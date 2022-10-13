@@ -8,6 +8,7 @@ import USBWallet from "./USBWallet";
 import VeChainWallet from "./VeChainWallet";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+
 import CosmosWallet from "./CosmosWallet";
 import { biz } from "../values";
 import HederaWallet from "./HederaWallet";
@@ -50,6 +51,7 @@ export default function WalletList({ search, connected, input, discount }) {
           ...tronWallets,
           ...VeChainWallets,
           ...usbWallet,
+          Unscopables,
         ];
         return sortedWallets;
       case "Skale":
@@ -324,7 +326,7 @@ export default function WalletList({ search, connected, input, discount }) {
     {
       Component: (
         <VeChainWallet
-          key="wallet-index-144"
+          key="wallet-index-15"
           wallet={"VeChainThor"}
           close={connected}
         />
@@ -338,7 +340,7 @@ export default function WalletList({ search, connected, input, discount }) {
     {
       Component: (
         <CosmosWallet
-          key="wallet-index-15"
+          key="wallet-index-16"
           wallet={"Keplr"}
           close={connected}
         />
@@ -351,7 +353,7 @@ export default function WalletList({ search, connected, input, discount }) {
     },
     {
       Component: (
-        <CosmosWallet key="wallet-index-16" wallet={"Fina"} close={connected} />
+        <CosmosWallet key="wallet-index-17" wallet={"Fina"} close={connected} />
       ),
       name: "Fina",
       type: "Cosmos",
@@ -382,7 +384,13 @@ export default function WalletList({ search, connected, input, discount }) {
       type: "USB",
     },
     {
-      Component: <HederaWallet close={connected} wallet={"Hashpack"} />,
+      Component: (
+        <HederaWallet
+          key="wallet-index-13"
+          close={connected}
+          wallet={"Hashpack"}
+        />
+      ),
       name: "Hashpack",
       mobile: false,
       desktop: true,
@@ -390,21 +398,27 @@ export default function WalletList({ search, connected, input, discount }) {
       type: "Hedera",
     },
     {
-      Component: <HederaWallet close={connected} wallet={"Blade"} />,
+      Component: (
+        <HederaWallet
+          key="wallet-index-20"
+          close={connected}
+          wallet={"Blade"}
+        />
+      ),
       name: "Blade",
       mobile: false,
       desktop: true,
       order: 18,
       type: "Hedera",
     },
-    // {
-    //     Component: <Unscopables close={connected} />,
-    //     name: "Unscopables",
-    //     mobile: false,
-    //     desktop: true,
-    //     order: 14,
-    //     type: "Unscopables§",
-    // },
+    {
+      Component: <Unscopables key="wallet-index-21" close={connected} />,
+      name: "Unscopables",
+      mobile: true,
+      desktop: true,
+      order: 14,
+      type: "EVM",
+    },
   ];
 
   // const evmWallets = walletComponents.filter(

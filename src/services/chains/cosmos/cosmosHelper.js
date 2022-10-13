@@ -1,6 +1,6 @@
 import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
-import { getFactory } from "../../../wallet/helpers";
+import { errorToLog, getFactory } from "../../../wallet/helpers";
 import { setError } from "../../../store/reducers/generalSlice";
 
 export const transferNFTFromCosmos = async ({
@@ -10,11 +10,6 @@ export const transferNFTFromCosmos = async ({
     signer,
     receiver,
     fee,
-    index,
-    txnHashArr,
-    chainConfig,
-    testnet,
-    discountLeftUsd,
 }) => {
     const factory = await getFactory();
     const toChain = await factory.inner(chainsConfig[to.text].Chain);
@@ -48,7 +43,8 @@ export const transferNFTFromCosmos = async ({
                 amountToTransfer,
                 fee,
                 mintWith,
-                factory
+                factory,
+                to
             );
             break;
     }
@@ -65,9 +61,13 @@ const transfer = async (
     amount,
     fee,
     mintWith,
-    factory
+    factory,
+    to
 ) => {
     let result;
+    const {
+        general: { secretAccount },
+    } = store.getState();
     try {
         switch (true) {
             case !amount:
@@ -85,5 +85,17 @@ const transfer = async (
         }
     } catch (error) {
         store.dispatch(setError(error));
+        const date = new Date();
+        const errBogy = {
+            type: "Transfer",
+            walletAddress: secretAccount,
+            time: date.toString(),
+            fromChain: "Secret",
+            toChain: to.text,
+            message: error,
+            nfts: nft.native,
+        };
+        errorToLog(errBogy);
+        return false;
     }
 };

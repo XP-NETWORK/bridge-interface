@@ -111,7 +111,6 @@ function SendFees() {
             wallet
           );
         } catch (error) {
-          console.error(error);
           const errBody = {
             type: "Estimate",
             walletAddress: wallet(),
@@ -119,8 +118,10 @@ function SendFees() {
             fromChain: from.text,
             toChain: to.text,
             message: error,
+            nfts: selectedNFTList,
           };
           errorToLog(errBody);
+          console.log(error.data ? error.data.message : error.message);
         }
       }
 
