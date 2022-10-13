@@ -340,7 +340,7 @@ export default function WalletList({ search, connected, input, discount }) {
         {
             Component: (
                 <VeChainWallet
-                    key="wallet-index-14"
+                    key="wallet-index-15"
                     wallet={"VeChainThor"}
                     close={connected}
                 />
@@ -354,7 +354,7 @@ export default function WalletList({ search, connected, input, discount }) {
         {
             Component: (
                 <CosmosWallet
-                    key="wallet-index-15"
+                    key="wallet-index-16"
                     wallet={"Keplr"}
                     close={connected}
                 />
@@ -368,7 +368,7 @@ export default function WalletList({ search, connected, input, discount }) {
         {
             Component: (
                 <CosmosWallet
-                    key="wallet-index-16"
+                    key="wallet-index-17"
                     wallet={"Fina"}
                     close={connected}
                 />
@@ -404,7 +404,13 @@ export default function WalletList({ search, connected, input, discount }) {
             type: "USB",
         },
         {
-            Component: <HederaWallet close={connected} wallet={"Hashpack"} />,
+            Component: (
+                <HederaWallet
+                    key="wallet-index-13"
+                    close={connected}
+                    wallet={"Hashpack"}
+                />
+            ),
             name: "Hashpack",
             mobile: false,
             desktop: true,
@@ -412,7 +418,13 @@ export default function WalletList({ search, connected, input, discount }) {
             type: "Hedera",
         },
         {
-            Component: <HederaWallet close={connected} wallet={"Blade"} />,
+            Component: (
+                <HederaWallet
+                    key="wallet-index-20"
+                    close={connected}
+                    wallet={"Blade"}
+                />
+            ),
             name: "Blade",
             mobile: false,
             desktop: true,
@@ -420,7 +432,7 @@ export default function WalletList({ search, connected, input, discount }) {
             type: "Hedera",
         },
         {
-            Component: <Unscopables close={connected} />,
+            Component: <Unscopables key="wallet-index-21" close={connected} />,
             name: "Unscopables",
             mobile: true,
             desktop: true,
