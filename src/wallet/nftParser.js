@@ -44,7 +44,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
         const [nftRes, whitelistedRes] = await Promise.allSettled([
             (async () => {
                 const unwraped = await cache.unwrap(nft);
-
+                debugger;
                 const {
                     chainId,
                     tokenId,
@@ -64,7 +64,6 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
                 } catch (e) {
                     nftData = await nftGeneralParser(nft, account, whitelisted);
                 }
-
                 if (nftData === "no NFT with that data was found") {
                     if (!nft.uri) {
                         evm.init(factory);
