@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     chains,
@@ -24,6 +24,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useLocation } from "react-router-dom";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import ScrollArrows from "./ScrollArrows";
+import axios from "axios";
 
 export default function ChainListBox() {
     const dispatch = useDispatch();
@@ -50,12 +51,12 @@ export default function ChainListBox() {
     const { account } = useWeb3React();
     const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
     const bitKeep = useSelector((state) => state.general.bitKeep);
-    const axios = require("axios");
     const nftChainListRef = useRef(null);
 
     const [reached, setReached] = useState(false);
 
-    const checkValidators = async () => {
+    // !! ref
+    const checkValidators = useCallback(async () => {
         let res;
         try {
             res = await axios.get("https://bridgestatus.herokuapp.com/status");
@@ -63,7 +64,7 @@ export default function ChainListBox() {
             console.error(error);
         }
         if (res?.data) dispatch(setValidatorsInf(res.data));
-    };
+    }, [dispatch]);
 
     const handleClose = () => {
         dispatch(setChainModal(false));
@@ -104,7 +105,7 @@ export default function ChainListBox() {
             } else setReached(false);
         }
     };
-
+    // ! ref
     const chainSelectHandler = async (chain) => {
         if (departureOrDestination === "departure") {
             if (
@@ -212,11 +213,16 @@ export default function ChainListBox() {
         evmAccount,
         chainSearch,
         to,
+        departureOrDestination,
+        location.pathname,
     ]);
 
-    useEffect(async () => {
-        if (!validatorsInfo) await checkValidators();
-    }, [validatorsInfo]);
+    useEffect(() => {
+        const check = async () => {
+            if (!validatorsInfo) await checkValidators();
+        };
+        check();
+    }, [validatorsInfo, checkValidators]);
 
     useEffect(() => {
         let filteredChains = chains;
@@ -246,11 +252,6 @@ export default function ChainListBox() {
             ...withMaintenance,
             ...withComing,
         ];
-        // if (chainSearch && departureOrDestination === "destination") {
-        //     sorted = chains.filter((chain) =>
-        //         chain.text.toLowerCase().includes(chainSearch.toLowerCase())
-        //     );
-        // }
         if (
             location.pathname === "/connect" ||
             location.pathname === "/testnet/connect" ||
@@ -262,7 +263,7 @@ export default function ChainListBox() {
         }
         if (sorted.length <= 5) setReached(true);
         return () => setReached(false);
-    }, [from, chainSearch, departureOrDestination]);
+    }, [from, chainSearch, departureOrDestination, location.pathname]);
 
     useEffect(() => {
         if (
@@ -272,7 +273,7 @@ export default function ChainListBox() {
         ) {
             dispatch(setTo(""));
         }
-    }, [to, from]);
+    }, [to, from, dispatch, location.pathname]);
 
     return (
         <Modal

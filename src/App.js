@@ -1,35 +1,31 @@
 import { useEffect, useState } from "react";
+
 import XpBridge from "./pages/XpBridge";
-import { useDispatch, useSelector } from "react-redux";
-import {
-    setFrom,
-    setTestNet,
-    setTo,
-    setInnerWidth,
-    setGitLatestCommit,
-    connectAlgorandWalletClaim,
-} from "./store/reducers/generalSlice";
 import ApproveLoader from "./components/innercomponents/ApproveLoader";
 import Error from "./components/innercomponents/Error";
 import TronPopUp from "./components/innercomponents/TronPopUp";
-import { chains } from "./components/values";
 import About from "./components/innercomponents/About";
 import Video from "./components/innercomponents/Video";
-import { transformToDate } from "./wallet/helpers";
 import TechnicalSupport from "./components/innercomponents/TechnicalSupport";
 import TransferLoader from "./components/innercomponents/TransferLoader";
 import TronConnectionErrMod from "./components/Modals/TronModals/TronConnectionErrMod.jsx";
-import "./components/Modals/Modal.css";
 import Alert from "./components/Alerts/Alert.jsx";
 import SuccessModal from "./components/Modals/Success/SuccessModal.jsx";
 import ConnectAlgorand from "./components/Modals/AlgorandModal/ConnectAlgorand";
-import { Modal } from "react-bootstrap";
 import DepositAlert from "./components/Alerts/DepositAlert";
 import RedirectModal from "./components/Modals/Redirect/RedirectModal";
+import axios from "axios";
+import * as generalSlice from "./store/reducers/generalSlice";
+import { useDispatch, useSelector } from "react-redux";
+
+import { transformToDate } from "./wallet/helpers";
+import { chains } from "./components/values";
+
+import { Modal } from "react-bootstrap";
+import "./components/Modals/Modal.css";
 
 function App() {
     const dispatch = useDispatch();
-    const axios = require("axios");
     const [nftToOptIn, setNFTToOptIn] = useState();
     const [testnet, setTestnet] = useState();
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
@@ -41,7 +37,7 @@ function App() {
 
     useEffect(() => {
         // debugger
-        dispatch(setInnerWidth(window.innerWidth));
+        dispatch(generalSlice.setInnerWidth(window.innerWidth));
         const algoToOpt = new URLSearchParams(window.location.search).get(
             "to_opt-in"
         );
@@ -52,17 +48,18 @@ function App() {
         const test = new URLSearchParams(window.location.search).get("testnet");
         setTestnet(test);
         if (algoToOpt && nftToOptIn && test) {
-            dispatch(connectAlgorandWalletClaim(true));
+            dispatch(generalSlice.connectAlgorandWalletClaim(true));
         }
         const from = new URLSearchParams(window.location.search).get("from");
         const to = new URLSearchParams(window.location.search).get("to");
+
         if (from !== to) {
             if (from) {
                 const fromChain = chains.filter(
                     (n) => n.text === from.replace("/", "")
                 )[0];
                 if (fromChain) {
-                    dispatch(setFrom(fromChain));
+                    dispatch(generalSlice.setFrom(fromChain));
                 }
             }
             if (to) {
@@ -70,10 +67,11 @@ function App() {
                     (n) => n.text === to.replace("/", "")
                 )[0];
                 if (toChain) {
-                    dispatch(setTo(toChain));
+                    dispatch(generalSlice.setTo(toChain));
                 }
             }
         }
+
         localStorage.removeItem("walletconnect");
 
         // debugger
@@ -81,7 +79,7 @@ function App() {
             .get("https://xpvitaldata.herokuapp.com/last-commit")
             .then((response) => {
                 const d = transformToDate(response.data);
-                dispatch(setGitLatestCommit(d));
+                dispatch(generalSlice.setGitLatestCommit(d));
             })
             .catch(function(error) {
                 // handle error
@@ -90,7 +88,11 @@ function App() {
     }, []);
 
     useEffect(() => {
-        dispatch(setTestNet(window.location.href.indexOf("/testnet") > 0));
+        dispatch(
+            generalSlice.setTestNet(
+                window.location.href.indexOf("/testnet") > 0
+            )
+        );
     }, []);
 
     return (

@@ -11,12 +11,10 @@ import {
 } from "../../../store/reducers/generalSlice";
 import { DetectOutsideClick } from "../../../components/helpers";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { CHAIN_INFO } from "../../../components/values";
-import { getAddEthereumChain } from "../../../wallet/chains";
+
 import Tooltip from "./Tooltip";
 
 export default function AccountModal() {
-    const widget = new URLSearchParams(window.location.search).get("widget");
     const dispatch = useDispatch();
     const account = useSelector((state) => state.general.account);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
@@ -27,9 +25,6 @@ export default function AccountModal() {
     const trustWallet = useSelector((state) => state.general.trustWallet);
     const onMaiar = useSelector((state) => state.general.onMaiar);
     const show = useSelector((state) => state.general.accountModal);
-    const [copyIconHover, setCopyIconHover] = useState();
-    const [copied, setCopied] = useState();
-    const from = useSelector((state) => state.general.from);
     const unstoppableDomains = useSelector(
         (state) => state.general.unstoppableDomains
     );
@@ -85,6 +80,7 @@ export default function AccountModal() {
     DetectOutsideClick(accountModal, () =>
         setTimeout(() => handleClose(), 100)
     );
+    // ! ref
     return show ? (
         <div
             ref={accountModal}
@@ -98,7 +94,7 @@ export default function AccountModal() {
                     <div className="close-modal"></div>
                 </span>
             </div>
-            <p className="">{connectedWith()}</p>
+            <p>{connectedWith()}</p>
 
             <CopyToClipboard text={currentAccount}>
                 <div className="account-modal__account">

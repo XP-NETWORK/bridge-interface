@@ -33,11 +33,9 @@ export default function Chain(props) {
         setChainStatus(checkIfLive(chainKey, validatorsInfo));
     }, [validatorsInfo]);
 
-    const algoStyle = {};
-
+    // !! ref
     const getStyle = () => {
         if (
-            maintenance ||
             maintenance ||
             (location.pathname.includes("testnet")
                 ? false

@@ -121,7 +121,6 @@ function ConnectAlgorand({ nftToOptIn, testnet }) {
             }
         } catch (error) {
             console.log(error);
-            console.trace();
             dispatch(setTransferLoaderModal(false));
         }
         dispatch(setTransferLoaderModal(false));

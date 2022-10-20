@@ -12,10 +12,7 @@ export default class ErrorBoundary extends Component {
         return { hasError: true };
     }
 
-    componentDidCatch(error, errorInfo) {
-        // You can also log the error to an error reporting service
-        console.log("errrrr", error);
-    }
+    componentDidCatch(error, errorInfo) {}
 
     render() {
         if (this.state.hasError) {
