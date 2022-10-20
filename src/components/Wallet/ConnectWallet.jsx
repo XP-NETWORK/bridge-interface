@@ -10,7 +10,7 @@ import {
     setTemporaryFrom,
     setWalletsModal,
 } from "../../store/reducers/generalSlice";
-import MaiarModal from "../MaiarModal";
+import MaiarModal from "../Modals/MaiarModal/MaiarModal";
 import WalletList from "./WalletList";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";

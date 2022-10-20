@@ -12,7 +12,6 @@ import video from "../assets/img/nav/vid.svg";
 import xpnet from "../assets/img/nav/xpnet.svg";
 import message from "../assets/img/nav/helper.svg";
 import deposits from "../assets/img/nav/deposites.svg";
-import explorer from "../assets/img/nav/explorer.svg";
 import security from "../assets/img/nav/security.svg";
 import UserConnect from "../components/User/UserConnect";
 import { setSearchNFTList, setShowVideo } from "../store/reducers/generalSlice";

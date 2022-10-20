@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Modal } from "react-bootstrap";
-import { ReactComponent as Close } from "../assets/img/icons/close.svg";
-import AlgoSignerIcon from "../assets/img/wallet/Algo Signer.png";
+import { ReactComponent as Close } from "../../../assets/img/icons/close.svg";
+import AlgoSignerIcon from "../../../assets/img/wallet/Algo Signer.png";
 import { useDispatch, useSelector } from "react-redux";
 import {
     setAlgoSigner,
@@ -11,15 +11,15 @@ import {
     setAlgorandWallet,
     setAlgoAccountToClaim,
     setTransferLoaderModal,
-} from "../store/reducers/generalSlice";
-import { algoConnector } from "../wallet/connectors";
+} from "../../../store/reducers/generalSlice";
+import { algoConnector } from "../../../wallet/connectors";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
-import AlgorandIcon from "../assets/img/algorandwallet.svg";
-import MyAlgoBlue from "../assets/img/wallet/MyAlgoBlue.svg";
+import AlgorandIcon from "../../../assets/img/algorandwallet.svg";
+import MyAlgoBlue from "../../../assets/img/wallet/MyAlgoBlue.svg";
 import axios from "axios";
-import { getFactory } from "../wallet/helpers";
-import store from "../store/store";
-import { setSigner } from "../store/reducers/signersSlice";
+import { getFactory } from "../../../wallet/helpers";
+import store from "../../../store/store";
+import { setSigner } from "../../../store/reducers/signersSlice";
 
 function ConnectAlgorand({ nftToOptIn, testnet }) {
     const dispatch = useDispatch();

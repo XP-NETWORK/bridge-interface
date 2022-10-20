@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Image, Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as Close } from "../assets/img/icons/close.svg";
+import { ReactComponent as Close } from "../../../assets/img/icons/close.svg";
 
 export default function MaiarModal({
     strQR,

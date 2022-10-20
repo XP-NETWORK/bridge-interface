@@ -1,4 +1,3 @@
-import MaiarModal from "../MaiarModal";
 import EVMWallet from "./EVMWallet";
 import TezosWallet from "./TezosWallet";
 import AlgorandWallet from "./AlgorandWallet";
@@ -7,10 +6,9 @@ import ElrondWallet from "./ElrondWallet";
 import USBWallet from "./USBWallet";
 import VeChainWallet from "./VeChainWallet";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import BitKeep from "../../assets/img/wallet/bitkeep.svg";
+
 import CosmosWallet from "./CosmosWallet";
-import { biz } from "../values";
+
 import HederaWallet from "./HederaWallet";
 import { useLocation } from "react-router-dom";
 import Unscopables from "./Unscopables";

@@ -5,7 +5,6 @@ import {
     setFrom,
     setTestNet,
     setTo,
-    setValidatorsInf,
     setInnerWidth,
     setGitLatestCommit,
     connectAlgorandWalletClaim,
@@ -23,16 +22,10 @@ import TronConnectionErrMod from "./components/Modals/TronModals/TronConnectionE
 import "./components/Modals/Modal.css";
 import Alert from "./components/Alerts/Alert.jsx";
 import SuccessModal from "./components/Modals/Success/SuccessModal.jsx";
-import ConnectAlgorand from "./components/ConnectAlgorand";
+import ConnectAlgorand from "./components/Modals/AlgorandModal/ConnectAlgorand";
 import { Modal } from "react-bootstrap";
-import Widget from "./components/Widget";
 import DepositAlert from "./components/Alerts/DepositAlert";
 import RedirectModal from "./components/Modals/Redirect/RedirectModal";
-
-import Bridge from "./services/bridge";
-import { ethers } from "ethers";
-import ErrorBoundary from "./layout/ErrorBoundary";
-import OurFallbackComponent from "./layout/OurFallbackComponent";
 
 function App() {
     const dispatch = useDispatch();
@@ -40,10 +33,6 @@ function App() {
     const [nftToOptIn, setNFTToOptIn] = useState();
     const [testnet, setTestnet] = useState();
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
-
-    useEffect(() => {
-        dispatch(setTestNet(window.location.href.indexOf("/testnet") > 0));
-    });
 
     const toShowSuccess = () => {
         return txnHashArr?.length ? true : false;
@@ -101,16 +90,7 @@ function App() {
     }, []);
 
     useEffect(() => {
-        /*false && (async () => {
-      const bridge = await Bridge().init();
-
-      const chain = await bridge.getChain({
-        type: "Cosmos",
-        key: "Secret",
-      });
-
-      console.log(chain);
-    })();*/
+        dispatch(setTestNet(window.location.href.indexOf("/testnet") > 0));
     }, []);
 
     return (
@@ -128,9 +108,7 @@ function App() {
             </Modal>
             <TransferLoader />
             <TronConnectionErrMod />
-            {/* <BitKeepModal /> */}
             <RedirectModal />
-            {/* <VeChainThorModal /> */}
             <ApproveLoader />
             <Error />
             <TronPopUp />

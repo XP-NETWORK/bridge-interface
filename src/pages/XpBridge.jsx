@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import NFTaccount from "../components/NFTsBoard/NFTaccount";
-import NFTsuccess from "../components/Modals/Success/NFTsuccess";
+
 import { Routes, Route } from "react-router-dom";
 import ConnectWallet from "./ConnectWallet";
 import ProtectedRoute from "../pages/ProtectedRoute";
@@ -27,7 +27,6 @@ function XpBridge() {
                 <Route path="/discounts" element={<Deposits />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
-            {/* <NFTsuccess /> */}
         </div>
     );
 }
