@@ -12,6 +12,7 @@ import CosmosWallet from "./CosmosWallet";
 import HederaWallet from "./HederaWallet";
 import { useLocation } from "react-router-dom";
 import Unscopables from "./Unscopables";
+import TONWallet from "./TONWallet";
 
 export default function WalletList({ search, connected, input, discount }) {
     const from = useSelector((state) => state.general.from);
@@ -437,6 +438,16 @@ export default function WalletList({ search, connected, input, discount }) {
             order: 14,
             type: "EVM",
         },
+        // {
+        //     Component: (
+        //         <TONWallet wallet={"TONWallet"} key="" close={connected} />
+        //     ),
+        //     name: "TON Wallet",
+        //     mobile: false,
+        //     desktop: true,
+        //     order: 19,
+        //     type: "TON",
+        // },
     ];
 
     // const evmWallets = walletComponents.filter(

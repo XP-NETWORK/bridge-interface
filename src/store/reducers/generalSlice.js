@@ -544,6 +544,12 @@ const generalSlice = createSlice({
         addImportedNFTtoNFTlist(state, action) {
             state.NFTList = action.payload;
         },
+        setTonWallet(state, action) {
+            state.TonWallet = action.payload;
+        },
+        setTonAccount(state, action) {
+            state.tonAccount = action.payload;
+        },
     },
 });
 
@@ -661,6 +667,8 @@ export const {
     setTemporaryTo,
     setSecretCred,
     setSelectedNFTAmount,
+    setTonAccount,
+    setTonWallet,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

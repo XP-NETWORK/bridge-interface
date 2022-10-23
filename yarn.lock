@@ -17457,6 +17457,20 @@ tonweb@^0.0.43:
     node-fetch "2.6.7"
     tweetnacl "1.0.3"
 
+tonweb@^0.0.57:
+  version "0.0.57"
+  resolved "https://registry.yarnpkg.com/tonweb/-/tonweb-0.0.57.tgz#f18c44525690d74b81cd248453d5769c872a068a"
+  integrity sha512-/kqRn3/H1nw2bJ68uOtvwkOj6/9EgYaYpMYAXs93I2pLdJZxVKNwTuZ7weGKVmrn9tOt/nCNooq3OAZDSAVUSg==
+  dependencies:
+    "@ledgerhq/hw-transport-web-ble" "5.48.0"
+    "@ledgerhq/hw-transport-webhid" "5.48.0"
+    "@ledgerhq/hw-transport-webusb" "5.48.0"
+    bn.js "5.1.1"
+    ethjs-unit "0.1.6"
+    isomorphic-webcrypto "2.3.8"
+    node-fetch "2.6.7"
+    tweetnacl "1.0.3"
+
 tough-cookie@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-4.0.0.tgz#d822234eeca882f991f0f908824ad2622ddbece4"
