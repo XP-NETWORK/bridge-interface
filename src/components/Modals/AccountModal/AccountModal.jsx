@@ -1,18 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import NftSelect from "../../../assets/img/nftselect.svg";
-import Close from "../../../assets/img/icons/close.svg";
-import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg";
-import FileCopy from "../../../assets/img/icons/FileCopy.svg";
-import CopyHover from "../../../assets/img/icons/CopyHover.svg";
+
 import { useSelector, useDispatch } from "react-redux";
-import {
-    setAccountModal,
-    setReset,
-} from "../../../store/reducers/generalSlice";
-import { DetectOutsideClick } from "../../../components/helpers";
+import { setAccountModal } from "../../../store/reducers/generalSlice";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import Tooltip from "./Tooltip";
+import { DetectOutsideClick } from "./accountModalHelper";
 
 export default function AccountModal() {
     const dispatch = useDispatch();

@@ -8,7 +8,7 @@ import {
     setNFTList,
     setSearchNFTList,
 } from "../../store/reducers/generalSlice";
-import { debounce } from "../helpers";
+// import { debounce } from "../helpers";
 import { getSearched } from "../../wallet/helpers";
 import { chains } from "../values";
 
