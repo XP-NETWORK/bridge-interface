@@ -1,16 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, React } from "react";
 import { Image, Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Close } from "../../../assets/img/icons/close.svg";
+import PropTypes from "prop-types";
 
-export default function MaiarModal({
-    strQR,
-    qrCodeString,
-    show,
-    handleClose,
-    setShow,
-}) {
+export default function MaiarModal({ strQR, qrCodeString, show, handleClose }) {
     const walletsModal = useSelector((state) => state.general.walletsModal);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const testnet = useSelector((state) => state.general.testnet);
@@ -68,3 +63,9 @@ export default function MaiarModal({
         </>
     );
 }
+MaiarModal.propTypes = {
+    strQR: PropTypes.string,
+    qrCodeString: PropTypes.string,
+    show: PropTypes.any,
+    handleClose: PropTypes.any,
+};

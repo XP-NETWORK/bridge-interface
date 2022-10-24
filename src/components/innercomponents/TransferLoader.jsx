@@ -1,7 +1,6 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
-import Close from "../../assets/img/icons/close.svg";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import "./TransferLoader.css";
 
 export default function TransferLoader() {

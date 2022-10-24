@@ -1,10 +1,25 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-export default function EVMBody(props) {
+export default function EVMBody({
+    error,
+    tokenId,
+    handleImport,
+    handleClose,
+    validForm,
+    importBlocked,
+    validContract,
+    setTokenId,
+    setContractOnBlur,
+    contract,
+    contractOnBlur,
+    handleContractChange,
+}) {
+    const OFF = { opacity: 0.6, pointerEvents: "none" };
     return (
         <Modal.Body className="import-nft__body">
-            {props.error && <div className="import-error">{props.error}</div>}
+            {error && <div className="import-error">{error}</div>}
             <div className="import-nft__form">
                 <form action="">
                     <div>
@@ -12,24 +27,24 @@ export default function EVMBody(props) {
                             1. Paste contract address
                         </label>
                         <input
-                            onBlur={() => props.setContractOnBlur(true)}
+                            onBlur={() => setContractOnBlur(true)}
                             onChange={(e) =>
-                                props.handleContractChange(e.target.value)
+                                handleContractChange(e.target.value)
                             }
                             type="text"
                             id="contractAdd"
                             name="contractAddress"
                             placeholder="0x..."
-                            value={props.contract}
+                            value={contract}
                             className={
-                                props.contractOnBlur && !props.validContract
+                                contractOnBlur && !validContract
                                     ? "contract__input--invalid"
                                     : "contract__input--valid"
                             }
                         />
                         <div
                             className={
-                                props.contractOnBlur && !props.validContract
+                                contractOnBlur && validContract
                                     ? "contract--invalid"
                                     : "contract--valid"
                             }
@@ -40,27 +55,23 @@ export default function EVMBody(props) {
                     <div>
                         <label htmlFor="tokeId">2. Paste Toked ID</label>
                         <input
-                            onChange={(e) => props.setTokenId(e.target.value)}
+                            onChange={(e) => setTokenId(e.target.value)}
                             type="text"
                             id="tokedId"
                             name="tokenId"
                             placeholder="Enter Token ID"
-                            value={props.tokenId}
+                            value={tokenId}
                         />
                     </div>
                     <div className="import-nft__buttons">
                         <div
-                            onClick={props.handleImport}
-                            style={
-                                props.validForm && !props.importBlocked
-                                    ? {}
-                                    : props.OFF
-                            }
+                            onClick={handleImport}
+                            style={validForm && !importBlocked ? {} : OFF}
                             className="btn-import"
                         >
                             Import
                         </div>
-                        <div onClick={props.handleClose} className="btn-cancel">
+                        <div onClick={handleClose} className="btn-cancel">
                             Cancel
                         </div>
                     </div>
@@ -69,3 +80,17 @@ export default function EVMBody(props) {
         </Modal.Body>
     );
 }
+EVMBody.propTypes = {
+    error: PropTypes.string,
+    tokenId: PropTypes.string,
+    handleImport: PropTypes.any,
+    handleClose: PropTypes.any,
+    validForm: PropTypes.bool,
+    importBlocked: PropTypes.bool,
+    validContract: PropTypes.bool,
+    setTokenId: PropTypes.any,
+    setContractOnBlur: PropTypes.any,
+    contract: PropTypes.string,
+    contractOnBlur: PropTypes.string,
+    handleContractChange: PropTypes.any,
+};

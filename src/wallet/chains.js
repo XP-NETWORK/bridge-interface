@@ -1,4 +1,4 @@
-export const getAddEthereumChain = (testnet, chainId) => {
+export const getAddEthereumChain = () => {
     let o = allchains.reduce(
         (obj, item) => Object.assign(obj, { [item.chainId]: item }),
         {}

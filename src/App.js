@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, React } from "react";
 
 import XpBridge from "./pages/XpBridge";
 import ApproveLoader from "./components/innercomponents/ApproveLoader";
@@ -32,7 +32,7 @@ function App() {
 
     const toShowSuccess = () => {
         return txnHashArr?.length ? true : false;
-        return true;
+        // return true;
     };
 
     useEffect(() => {

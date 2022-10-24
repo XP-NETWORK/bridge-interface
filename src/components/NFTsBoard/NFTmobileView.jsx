@@ -1,18 +1,12 @@
-import { useEffect, useRef, useState } from "react";
-import { Container } from "react-bootstrap";
+import { useEffect, useState, React } from "react";
 import NFTgridView from "../NFT/NFTgridView";
 import NFTlistView from "../NFT/NFTlistView";
+import PropTypes from "prop-types";
 
-import { Modal } from "react-bootstrap";
-import ImportNFTModal from "../Modals/ImportNFTModal/ImportNFTModal";
 import {
-    setBalance,
     setChainModal,
     setDepartureOrDestination,
-    setError,
     setSearchNFTList,
-    setWrappedEGold,
-    cleanSelectedNFTList,
 } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -22,7 +16,6 @@ import Refresh from "../Buttons/Refresh";
 import ChainSwitch from "../Buttons/ChainSwitch";
 import SelectedNFTs from "../Buttons/SelectedNFTs";
 import ViewButton from "../Buttons/ViewButton";
-import SelectClearAll from "../Buttons/SelectClearAll";
 import SelectedNFT from "../NFT/SelectedNFTs";
 import SearchButton from "../Buttons/SearchButton";
 import MobileNFTsSearch from "../MobileOnly/MobileNFTsSearch";
@@ -124,6 +117,12 @@ const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
             <UnwrapWegld />
         </div>
     );
+};
+
+NFTmobileView.propTypes = {
+    selectedNFTs: PropTypes.array,
+    _from: PropTypes.object,
+    nfts: PropTypes.array,
 };
 
 export default NFTmobileView;

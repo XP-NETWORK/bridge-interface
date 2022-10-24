@@ -1,11 +1,7 @@
 import { chainsConfig, CHAIN_INFO } from "../../../components/values";
 import { errorToLog, getFactory } from "../../../wallet/helpers";
 import store from "../../../store/store.js";
-import {
-    setError,
-    setTransferLoaderModal,
-    setTxnHash,
-} from "../../../store/reducers/generalSlice";
+import { setError } from "../../../store/reducers/generalSlice";
 
 export const transferNFTFromTran = async ({
     to,
@@ -13,11 +9,7 @@ export const transferNFTFromTran = async ({
     nft,
     receiver,
     fee,
-    index,
-    txnHashArr,
     chainConfig,
-    testnet,
-    discountLeftUsd,
 }) => {
     const factory = await getFactory();
     const toChain = await factory.inner(chainsConfig[to.text].Chain);
@@ -49,10 +41,7 @@ export const transferNFTFromTran = async ({
     try {
         switch (true) {
             case to.type === "Cosmos":
-                const contractAddress =
-                    chainConfig?.secretParams?.bridge?.contractAddress;
-                const codeHash = chainConfig?.secretParams?.bridge?.codeHash;
-                mintWith = `${contractAddress},${codeHash}`;
+                mintWith = `${chainConfig?.secretParams?.bridge?.contractAddress},${chainConfig?.secretParams?.bridge?.codeHash}`;
                 result = await factory.transferNft(
                     fromChain,
                     toChain,

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 import lock from "../../assets/img/icons/lockon.svg";
-import { checkXpNetLocked } from "../../services/deposits";
+import PropTypes from "prop-types";
 
 export default function Locked({ xpNetPrice, locked, loader }) {
     return (
@@ -23,3 +22,8 @@ export default function Locked({ xpNetPrice, locked, loader }) {
         </div>
     );
 }
+Locked.propTypes = {
+    xpNetPrice: PropTypes.number,
+    locked: PropTypes.number,
+    loader: PropTypes.bool,
+};

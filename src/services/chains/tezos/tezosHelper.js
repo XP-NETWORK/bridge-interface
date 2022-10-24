@@ -1,7 +1,7 @@
 import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
 import { errorToLog, getFactory } from "../../../wallet/helpers";
-import { setError, setTxnHash } from "../../../store/reducers/generalSlice";
+import { setError } from "../../../store/reducers/generalSlice";
 
 export const transferNFTFromTezos = async ({
     to,

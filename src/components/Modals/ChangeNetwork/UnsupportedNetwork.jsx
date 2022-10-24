@@ -1,17 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, React } from "react";
 import { Modal } from "react-bootstrap";
-import { CHAIN_INFO, TESTNET_CHAIN_INFO, chains } from "../../values";
 import { useSelector } from "react-redux";
-import { getAddEthereumChain } from "../../../wallet/chains";
 import { useDispatch } from "react-redux";
-import {
-    setUnsupportedNetwork,
-    setWrongNetwork,
-} from "../../../store/reducers/generalSlice";
+import { setUnsupportedNetwork } from "../../../store/reducers/generalSlice";
 import ChangeNetworkLoader from "../../innercomponents/ChangeNetworkLoader";
 import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useWeb3React } from "@web3-react/core";
 import icon from "../../../assets/img/icons/book.svg";
 import { switchNetwork } from "../../../services/chains/evm/evmService";
 
@@ -20,22 +13,20 @@ export default function UnsupportedNetwork() {
         dispatch(setUnsupportedNetwork(false));
     };
     const from = useSelector((state) => state.general.from);
-    const to = useSelector((state) => state.general.to);
     const showWrong = useSelector((state) => state.general.wrongNetwork);
-    const account = useSelector((state) => state.general.account);
     const dispatch = useDispatch();
-    const [loader, setLoader] = useState(false);
+    const [loader] = useState(false);
     const testnet = useSelector((state) => state.general.testNet);
     const unsupportedNetwork = useSelector(
         (state) => state.general.unsupportedNetwork
     );
-    const location = useLocation();
-    const { chainId } = useWeb3React();
+    // const location = useLocation();
+    // const { chainId } = useWeb3React();
 
-    const forbidden =
-        chainId === to?.chainId &&
-        (location.pathname === "/account" ||
-            location.pathname === "/testnet/account");
+    // const forbidden =
+    //     chainId === to?.chainId &&
+    //     (location.pathname === "/account" ||
+    //         location.pathname === "/testnet/account");
 
     // async function switchNetwork() {
     //   // debugger
@@ -126,7 +117,8 @@ export default function UnsupportedNetwork() {
                         <div className="switchingAcc">
                             <ChangeNetworkLoader />
                             <p className="">
-                                "Switching to" {testnet ? "TestNet" : "Mainnet"}
+                                `&quot;`Switching to`&quot;`{" "}
+                                {testnet ? "TestNet" : "Mainnet"}
                             </p>
                             <p className="">Follow instructions in MetaMask</p>
                         </div>

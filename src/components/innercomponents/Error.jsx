@@ -1,11 +1,10 @@
 import React from "react";
-import { Modal, Image } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
 import { setError } from "../../store/reducers/generalSlice";
 import ERR from "../../assets/img/icons/ERROR.svg";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import Tooltip from "../Modals/AccountModal/Tooltip";
 
 export default function Error() {
     const dispatch = useDispatch();
@@ -21,11 +20,7 @@ export default function Error() {
                 <div style={{ display: "flex", flexDirection: "column" }}>
                     <img style={{ margin: "30px" }} alt="" src={ERR} />
                     <Modal.Title>An error has occured</Modal.Title>
-                    <span
-                        className="CloseModal"
-                        onHide={handleClose}
-                        onClick={handleClose}
-                    >
+                    <span className="CloseModal" onClick={handleClose}>
                         <Close className="svgWidget" />
                     </span>
                 </div>

@@ -1,10 +1,6 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, React } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    chains,
-    CHAIN_INFO,
-    TESTNET_CHAIN_INFO,
-} from "../../components/values";
+import { chains } from "../../components/values";
 import {
     setChainModal,
     setDepartureOrDestination,
@@ -90,7 +86,7 @@ export default function ChainListBox() {
         }
     };
 
-    const handleScroll = (e) => {
+    const handleScroll = () => {
         const {
             scrollTop,
             scrollHeight,

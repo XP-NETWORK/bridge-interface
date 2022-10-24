@@ -1,36 +1,41 @@
 import React, { useState } from "react";
-import { setupURI } from "../../wallet/helpers";
 import brokenUrl from "../../assets/img/brockenurl.png";
 import BrockenUtlGridView from "./BrockenUtlGridView";
 
+export default function VideoOrImage({ urls, i }) {
+    const [tryVideo, setTryVideo] = useState(false);
+    const [urlIndex, setUrlIndex] = useState(0);
+    const [noURL, setNoURL] = useState(false);
 
+    const imgError = (e) => {
+        setTryVideo(true);
+    };
 
-export default function VideoOrImage({ urls, i}) {
+    const videoError = (e) => {
+        if (urlIndex < urls.length) {
+            setUrlIndex(urlIndex + 1);
+            setTryVideo(false);
+        }
+    };
 
-
-
-    const [tryVideo, setTryVideo] = useState(false)
-    const [urlIndex, setUrlIndex] = useState(0)
-    const [noURL, setNoURL] = useState(false)
-
-    const imgError = e => {
-        setTryVideo(true)
-    }
-
-  const videoError = e => {
-      if(urlIndex < urls.length){
-          setUrlIndex(urlIndex + 1)
-          setTryVideo(false)
-      }
-  }
-
-  return (
-      tryVideo ? 
-
-      <video onError={e => videoError(e)} controls={false} playsInline={true} autoPlay={true} loop={true} alt="video" src={noURL ? brokenUrl : setupURI(urls[urlIndex])} />
-      :setupURI(urls[urlIndex]) === undefined ?
-      <BrockenUtlGridView />
-      :<img loading="lazy" onError={e => imgError(e)} alt="nft" src={setupURI(urls[urlIndex])} />
-
-  );
+    return tryVideo ? (
+        <video
+            onError={(e) => videoError(e)}
+            controls={false}
+            playsInline={true}
+            autoPlay={true}
+            loop={true}
+            alt="video"
+            src={noURL ? brokenUrl : urls[urlIndex]}
+        />
+    ) : urls[urlIndex] === undefined ? (
+        <BrockenUtlGridView />
+    ) : (
+        <img
+            loading="lazy"
+            onError={(e) => imgError(e)}
+            alt="nft"
+            src={urls[urlIndex]}
+        />
+    );
 }

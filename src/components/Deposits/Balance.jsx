@@ -1,10 +1,9 @@
 import { useWeb3React } from "@web3-react/core";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import Web3 from "web3";
 import diamond from "../../assets/img/icons/diamond.svg";
 import { checkXpNetBalance } from "../../services/deposits";
+import PropTypes from "prop-types";
 
 export default function Balance({ xpNetPrice, loader }) {
     const account = useSelector((state) => state.general.account);
@@ -48,3 +47,8 @@ export default function Balance({ xpNetPrice, loader }) {
         </div>
     );
 }
+
+Balance.propTypes = {
+    xpNetPrice: PropTypes.number,
+    loader: PropTypes.bool,
+};

@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import icon from "../../assets/img/wallet/unstoppable.svg";
 import { connectUnstoppable } from "./ConnectWalletHelper";
-import UAuth from "@uauth/js";
 import { useDispatch, useSelector } from "react-redux";
 import {
     setAccount,
     setUnstoppableDomains,
 } from "../../store/reducers/generalSlice";
+import PropTypes from "prop-types";
 
 export default function Unscopables({ close }) {
     const dispatch = useDispatch();
@@ -45,3 +45,6 @@ export default function Unscopables({ close }) {
         </li>
     );
 }
+Unscopables.propTypes = {
+    close: PropTypes.any,
+};

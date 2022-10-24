@@ -1,16 +1,14 @@
+import React from "react";
 import { Modal } from "react-bootstrap";
-import Close from "../../../assets/img/icons/close.svg";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import TransferredNft from "./TransferredNft";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import ConnectAlgorand from "../AlgorandModal/ConnectAlgorand";
-import { useEffect, useState } from "react";
-import { setNFTS, socket } from "../../../wallet/helpers";
+import { useEffect } from "react";
+import { socket } from "../../../wallet/helpers";
 
 import {
     cleanTxnHashArr,
-    connectAlgorandWalletClaim,
     removeFromSelectedNFTList,
     setNFTSetToggler,
     setTxnStatus,

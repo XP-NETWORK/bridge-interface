@@ -1,9 +1,7 @@
 import { isWhiteListed } from "./../components/NFT/NFTHelper";
-import axios from "axios";
 import { nftGeneralParser } from "nft-parser/dist/src/index";
 import store from "../store/store";
 import { setEachNFT, setEachClaimables } from "../store/reducers/generalSlice";
-import { parseEachNFT } from "./helpers";
 
 import CacheService from "../services/cacheService";
 import WhiteListedPool from "../services/whiteListedPool";
@@ -44,7 +42,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
         const [nftRes, whitelistedRes] = await Promise.allSettled([
             (async () => {
                 const unwraped = await cache.unwrap(nft);
-                debugger;
+                // debugger;
                 const {
                     chainId,
                     tokenId,

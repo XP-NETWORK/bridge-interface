@@ -2,21 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     removeAlgorandClaimable,
-    removeFromClaimables,
     setApproveLoader,
     setNFTSetToggler,
     setTransferLoaderModal,
 } from "../../store/reducers/generalSlice";
-import {
-    getAlgorandClaimables,
-    getFactory,
-    setClaimablesAlgorand,
-    setNFTS,
-} from "../../wallet/helpers";
+import { getFactory } from "../../wallet/helpers";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { algoConnector } from "../../wallet/connectors.js";
+import PropTypes from "prop-types";
 
-export default function ClaimableCard({ nft, index }) {
+export default function ClaimableCard({ nft }) {
     const dispatch = useDispatch();
     const algorandAccount = useSelector(
         (state) => state.general.algorandAccount
@@ -147,3 +142,6 @@ export default function ClaimableCard({ nft, index }) {
         </div>
     );
 }
+ClaimableCard.propTypes = {
+    nft: PropTypes.object,
+};

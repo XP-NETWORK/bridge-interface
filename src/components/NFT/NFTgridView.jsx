@@ -1,14 +1,12 @@
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import NFTempty from "../innercomponents/NFTempty";
 import Missing from "../innercomponents/Missing";
 import BigLoader from "../../components/innercomponents/BigLoader";
 import NFTcard from "./NFTcard";
-
 import { withSecretAuth } from "../Modals/ImportNFTModal/SecretAuth";
 
-function NFTgridView({ setIndex, scrollIndex, render, secretRender }) {
-    const nfts = useSelector((state) => state.general.NFTList);
+function NFTgridView() {
     const currentsNFTs = useSelector((state) => state.general.currentsNFTs);
     const scrollToggler = useSelector(
         (state) => state.pagination.scrollToggler
@@ -34,7 +32,6 @@ function NFTgridView({ setIndex, scrollIndex, render, secretRender }) {
 
     return (
         <div className="nftListBox">
-            {secretRender && secretRender()}
             {loader ? (
                 <BigLoader />
             ) : (
