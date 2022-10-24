@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import oil from "../../assets/img/icons/oil.svg";
-import { Dropdown } from "react-bootstrap";
 import info from "../../assets/img/icons/info_blue.svg";
 import xpnet from "../../assets/img/icons/XPNET.svg";
 import { approve, deposit } from "../../services/deposits";
 import { useWeb3React } from "@web3-react/core";
 import { setApproveLoader } from "../../store/reducers/generalSlice";
 import { setDepositAlert } from "../../store/reducers/discountSlice";
+import PropTypes from "prop-types";
 
 export default function Staker({ xpNetPrice }) {
     const innerWidth = useSelector((state) => state.general.innerWidth);
@@ -19,26 +19,7 @@ export default function Staker({ xpNetPrice }) {
     const [approved, setApproved] = useState(false);
     const { library } = useWeb3React();
     const OFF = { opacity: 0.6 };
-    const token = new URLSearchParams(window.location.search).get("token");
-
-    // const handleDurationSelect = (d) => {
-    //     switch (d) {
-    //         case "3":
-    //             setDuration("3 months");
-    //             break;
-    //         case "6":
-    //             setDuration("6 months");
-    //             break;
-    //         case "9":
-    //             setDuration("9 months");
-    //             break;
-    //         case "12":
-    //             setDuration("1 year");
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // };
+    // const token = new URLSearchParams(window.location.search).get("token");
 
     const approveHandler = async () => {
         if (!account) {
@@ -60,9 +41,9 @@ export default function Staker({ xpNetPrice }) {
     const handleInputChange = (e) => {
         switch (e.type) {
             case "change":
-                const num = Number(e.target.value);
+                // const num = Number(e.target.value);
                 if (e.target.validity.valid) {
-                    setAmount(num);
+                    setAmount(Number(e.target.value));
                 } else setAmount("");
                 break;
             case "blur":
@@ -83,7 +64,7 @@ export default function Staker({ xpNetPrice }) {
             </div>
             <form className="staker__form">
                 <div className="staker__amount">
-                    <label for="amount">Enter amount</label>
+                    <label htmlFor="amount">Enter amount</label>
                     <br />
                     <div className="staker__amount__input">
                         <input
@@ -136,7 +117,7 @@ export default function Staker({ xpNetPrice }) {
                     </Dropdown>
                 </div> */}
                 <div className="staker__discount">
-                    <label for="discount">Discount </label>
+                    <label htmlFor="discount">Discount </label>
                     <br />
                     <input
                         placeholder={
@@ -184,3 +165,6 @@ export default function Staker({ xpNetPrice }) {
         </div>
     );
 }
+Staker.propTypes = {
+    xpNetPrice: PropTypes.number,
+};

@@ -1,3 +1,4 @@
+/* eslint-disable valid-typeof */
 import Connex from "@vechain/connex";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { injected, algoConnector, web3Modal } from "../../wallet/connectors";
@@ -9,11 +10,9 @@ import MyAlgoConnect from "@randlabs/myalgo-connect";
 import * as thor from "web3-providers-connex";
 import { HashConnect } from "hashconnect";
 import { hethers } from "@hashgraph/hethers";
-import UAuth from "@uauth/js";
-import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import TonWeb from "tonweb";
-import tonMnemonic from "tonweb-mnemonic";
+// import tonMnemonic from "tonweb-mnemonic";
 
 import {
     WalletConnectProvider,
@@ -50,10 +49,8 @@ import {
     setKukaiWalletSigner,
     setKeplrAccount,
     setKeplrWallet,
-    setBitKeepPopUp,
     setHederaAccount,
     setHederaWallet,
-    setVeChainThorModal,
     setSync2Connex,
     setRedirectModal,
 } from "../../store/reducers/generalSlice";
@@ -64,12 +61,6 @@ import Web3 from "web3";
 import { SecretNetworkClient } from "secretjs";
 import { setSigner } from "../../store/reducers/signersSlice";
 import { getFactory } from "../../wallet/helpers";
-
-const uauth = new UAuth({
-    clientID: "f909d011-195c-4688-92b4-2cab4c550dcc",
-    redirectUri: "http://localhost:5000/callback",
-    scope: "openid wallet",
-});
 
 export const wallets = [
     "MetaMask",
@@ -87,7 +78,7 @@ export const wallets = [
     "Trezor",
     "Hashpack",
 ];
-const { to, modalError } = store.getState();
+const { modalError } = store.getState();
 
 const hashConnect = new HashConnect(true);
 
@@ -106,9 +97,9 @@ hashConnect.pairingEvent.once(async (pairingData) => {
     store.dispatch(setSigner(signer));
 });
 
-hashConnect.foundExtensionEvent.once((walletMetadata) => {
-    // hashPackWalletMetaData = walletMetadata;
-});
+// hashConnect.foundExtensionEvent.once((walletMetadata) => {
+//     // hashPackWalletMetaData = walletMetadata;
+// });
 
 export const connectHashpack = async () => {
     let appMetadata = {
@@ -129,7 +120,7 @@ export const connectHashpack = async () => {
 };
 
 export const createKeyPairTonWallet = async () => {
-    debugger;
+    // debugger
     // 1. Use tonweb-mnemonic to generate random 24 words which determine the secret key.
     // These words will be compatible with TON wallet applications, i.e. using them you will be able to import your account into third-party applications.
 
@@ -137,7 +128,7 @@ export const createKeyPairTonWallet = async () => {
 };
 
 export const createWallet = async () => {
-    debugger;
+    // debugger;
     const keyPair = await createKeyPairTonWallet();
     const tonweb = new TonWeb();
 
@@ -168,7 +159,7 @@ export const createWallet = async () => {
     // Then when you want to send Toncoins from wallet to someone else - along with this first outgoing transfer, the deployment of the wallet smart contract will happen automatically.
 };
 
-export const connectUnstoppable = async (close) => {
+export const connectUnstoppable = async () => {
     try {
         const provider = await web3Modal.connect();
         return provider.sendAsync();

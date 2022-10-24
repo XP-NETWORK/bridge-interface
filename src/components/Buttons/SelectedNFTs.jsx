@@ -1,6 +1,7 @@
-import { useSelector } from "react-redux";
+import { useSelector, React } from "react-redux";
+import PropTypes from "prop-types";
 
-export default function SelectedNFTs({ show, showSelected, setOff, on }) {
+export default function SelectedNFTs({ show, on }) {
     const selected = useSelector((state) => state.general.selectedNFTList);
 
     return (
@@ -14,3 +15,8 @@ export default function SelectedNFTs({ show, showSelected, setOff, on }) {
         </div>
     );
 }
+
+SelectedNFTs.propTypes = {
+    show: PropTypes.bool,
+    on: PropTypes.bool,
+};

@@ -1,5 +1,7 @@
 import React from "react";
 import icon from "../../assets/img/icons/Search.svg";
+import PropTypes from "prop-types";
+
 export default function SearchButton({ handleSearchTop }) {
     return (
         <div onClick={handleSearchTop} className="search-button">
@@ -7,3 +9,7 @@ export default function SearchButton({ handleSearchTop }) {
         </div>
     );
 }
+
+SearchButton.propTypes = {
+    handleSearchTop: PropTypes.any.isRequired,
+};
