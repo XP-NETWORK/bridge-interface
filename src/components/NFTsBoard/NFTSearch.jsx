@@ -1,11 +1,9 @@
-import { useState, useCallback, useEffect } from "react";
-import { Dropdown } from "react-bootstrap";
+import { useState, React } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Search } from "../../assets/img/icons/Search.svg";
 import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
 import {
     setFilteredNFTSList,
-    setNFTList,
     setSearchNFTList,
 } from "../../store/reducers/generalSlice";
 // import { debounce } from "../helpers";
@@ -14,10 +12,7 @@ import { chains } from "../values";
 
 export default function NFTSearch() {
     const dispatch = useDispatch();
-    const widget = useSelector((state) => state.general.widget);
     const nfts = useSelector((state) => state.general.NFTList);
-    const currentNfts = useSelector((state) => state.general.currentsNFTs);
-    const NFTListSearch = useSelector((state) => state.general.NFTListSearch);
     const [openSearch, setOpen] = useState(false);
     const [searchInput, setInput] = useState("");
 

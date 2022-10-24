@@ -8,9 +8,9 @@ import zoomIn from "../../assets/img/icons/zoomInWhite.png";
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 
 import { ReactComponent as INFComp } from "../../assets/img/icons/Inf.svg";
-import { getFactory, isValidHttpUrl } from "../../wallet/helpers";
+import { isValidHttpUrl } from "../../wallet/helpers";
 import { chainsConfig, CHAIN_INFO } from "../values";
-import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
 
 function NFTdetails({ nftInf, claimables, details }) {
     const {
@@ -55,9 +55,7 @@ function NFTdetails({ nftInf, claimables, details }) {
         details(true);
         e.stopPropagation();
     };
-    const toKey = useSelector((state) => state.general.to.key);
-    const fromKey = useSelector((state) => state.general.from.key);
-    const [minted, setMinted] = useState();
+
     const symbol = nftInf.symbol || native?.symbol;
 
     // const getMintedWith = async () => {
@@ -243,19 +241,23 @@ function NFTdetails({ nftInf, claimables, details }) {
         </>
     );
 }
-
+NFTdetails.propTypes = {
+    nftInf: PropTypes.object,
+    claimables: PropTypes.bool,
+    details: PropTypes.any,
+};
 export default NFTdetails;
 
 function Attribute(props) {
     const { display_type, value } = props;
+
     const trait_type =
         props.trait_type ||
         props.name ||
         props.label ||
         props.key ||
         props.attribute;
-    if (trait_type === "Original Chain") {
-    }
+
     return (
         <div className="nftToken nftInfBox">
             <label>
@@ -296,3 +298,12 @@ function Attribute(props) {
         </div>
     );
 }
+Attribute.propTypes = {
+    trait_type: PropTypes.any,
+    name: PropTypes.any,
+    label: PropTypes.any,
+    key: PropTypes.any,
+    attribute: PropTypes.any,
+    display_type: PropTypes.any,
+    value: PropTypes.any,
+};

@@ -263,7 +263,7 @@ function NavBar() {
                                     </div>
                                 </DropdownToggle>
                                 <Dropdown.Menu>
-                                    <div onClick={(e) => toggleNavMenu(false)}>
+                                    <div onClick={() => toggleNavMenu(false)}>
                                         {/* <Dropdown.Item
                                             href="https://bridge-explorer.xp.network/"
                                             target="-blank"

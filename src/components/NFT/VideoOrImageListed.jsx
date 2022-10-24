@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import BrokenUrlListedView from "./BrokenUrlListedView";
+import PropTypes from "prop-types";
 
-export default function VideoOrImage({ urls, i }) {
+export default function VideoOrImage({ urls }) {
     const [tryVideo, setTryVideo] = useState(false);
     const [urlIndex, setUrlIndex] = useState(0);
 
@@ -32,3 +33,6 @@ export default function VideoOrImage({ urls, i }) {
         <img onError={(e) => imgError(e)} alt="nft" src={urls[urlIndex]} />
     );
 }
+VideoOrImage.propTypes = {
+    urls: PropTypes.array,
+};

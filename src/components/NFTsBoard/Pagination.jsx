@@ -1,4 +1,3 @@
-import { ReturnCode } from "@elrondnetwork/erdjs/out";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentNFTs } from "../../store/reducers/generalSlice";

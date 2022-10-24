@@ -1,6 +1,5 @@
 import React from "react";
 import image from "../assets/img/404.png";
-import { Link } from "react-router-dom";
 import "./FallbackComponent.css";
 
 export default function OurFallbackComponent() {

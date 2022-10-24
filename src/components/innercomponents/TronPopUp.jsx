@@ -38,7 +38,7 @@ export default function TronPopUp() {
                 </div>
                 <span
                     className="CloseModal"
-                    onHide={() => dispatch(setTronPopUp(false))}
+                    // onHide={() => dispatch(setTronPopUp(false))}
                     onClick={() => dispatch(setTronPopUp(false))}
                 >
                     <img src={Close} alt="" />

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { React, useRef, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -17,7 +17,6 @@ import { useWeb3React } from "@web3-react/core";
 import { useDidUpdateEffect } from "../Settings/hooks";
 import Web3 from "web3";
 import { switchNetwork } from "../../services/chains/evm/evmService";
-import { fetchData } from "../../services/resolution";
 
 function ConnectWallet() {
     const navigate = useNavigate();
@@ -116,11 +115,11 @@ function ConnectWallet() {
         inputElement?.current?.focus();
     }, [show, walletsModal]);
 
-    useDidUpdateEffect(() => {
-        if (unstoppableDomains) {
-            const domain = JSON.parse(localStorage.username).value;
-        }
-    }, [unstoppableDomains]);
+    // useDidUpdateEffect(() => {
+    //     if (unstoppableDomains) {
+    //         const domain = JSON.parse(localStorage.username).value;
+    //     }
+    // }, [unstoppableDomains]);
 
     return (
         <div>

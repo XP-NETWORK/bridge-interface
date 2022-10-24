@@ -23,7 +23,6 @@ export default function ImportNFTModal() {
     const [error, setError] = useState("");
     const validForm = contract?.length === 42 && tokenId;
     const chainNonce = CHAIN_INFO[from.text].nonce;
-    const OFF = { opacity: 0.6, pointerEvents: "none" };
 
     const handleClose = () => {
         dispatch(setImportModal(false));
@@ -74,7 +73,7 @@ export default function ImportNFTModal() {
     };
 
     return (
-        <>
+        <div>
             <Modal.Header className="border-0">
                 <Modal.Title>Import NFT</Modal.Title>
                 <span className="CloseModal">
@@ -91,11 +90,11 @@ export default function ImportNFTModal() {
                 importBlocked={importBlocked}
                 error={error}
                 validForm={validForm}
-                OFF={OFF}
+                // OFF={OFF}
                 handleClose={handleClose}
                 handleContractChange={handleContractChange}
                 handleImport={handleImport}
             />
-        </>
+        </div>
     );
 }

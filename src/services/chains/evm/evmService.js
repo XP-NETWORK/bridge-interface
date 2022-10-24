@@ -5,7 +5,7 @@ import {
 } from "../../../components/values.js";
 import store from "../../../store/store.js";
 import { errorToLog, getFactory } from "../../../wallet/helpers";
-import { setError, setTxnHash } from "../../../store/reducers/generalSlice";
+import { setError } from "../../../store/reducers/generalSlice";
 import BigNumber from "bignumber.js";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
 import { patchRealizedDiscount } from "../../deposits.js";
@@ -74,10 +74,7 @@ export const transferNFTFromEVM = async ({
     signer,
     receiver,
     fee,
-    index,
-    txnHashArr,
     chainConfig,
-    testnet,
     discountLeftUsd,
 }) => {
     fee = discountLeftUsd ? fee - fee * 0.25 : fee;
@@ -109,10 +106,6 @@ export const transferNFTFromEVM = async ({
 
     switch (true) {
         case to.type === "Cosmos" && !mintWith && !wrapped:
-            const contractAddress =
-                chainConfig?.secretParams?.bridge?.contractAddress;
-            const codeHash = chainConfig?.secretParams?.bridge?.codeHash;
-            let mw = `${contractAddress},${codeHash}`;
             result = await factory.transferNft(
                 fromChain,
                 toChain,
@@ -120,7 +113,7 @@ export const transferNFTFromEVM = async ({
                 signer,
                 receiver,
                 fee,
-                mw
+                `${chainConfig?.secretParams?.bridge?.contractAddress},${chainConfig?.secretParams?.bridge?.codeHash}`
             );
             break;
         /*case !wrapped &&

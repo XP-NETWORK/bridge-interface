@@ -7,6 +7,7 @@ import {
 import ListedView from "./ListedView";
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 import Close from "../../assets/img/icons/close.svg";
+import PropTypes from "prop-types";
 
 export default function Selected({ index, nft }) {
     const widget = useSelector((state) => state.general.widget);
@@ -57,3 +58,7 @@ export default function Selected({ index, nft }) {
         </li>
     );
 }
+Selected.propTypes = {
+    index: PropTypes.string,
+    nft: PropTypes.object,
+};

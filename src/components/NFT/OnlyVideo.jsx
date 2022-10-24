@@ -4,6 +4,8 @@ import { ReactComponent as Play } from "../../../src/assets/img/icons/_play.svg"
 import { ReactComponent as PlayHover } from "../../../src/assets/img/icons/hover_play.svg";
 import { ReactComponent as Pause } from "../../../src/assets/img/icons/_pause.svg";
 import { ReactComponent as PauseHover } from "../../../src/assets/img/icons/hover_pause.svg";
+import PropTypes from "prop-types";
+
 export default function VideoAndImage({ videoUrl }) {
     const [playHover, setPlayHover] = useState(null);
     const [pauseHover, setPauseHover] = useState(null);
@@ -73,3 +75,6 @@ export default function VideoAndImage({ videoUrl }) {
         </div>
     );
 }
+VideoAndImage.propTypes = {
+    videoUrl: PropTypes.string,
+};

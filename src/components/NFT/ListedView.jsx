@@ -3,29 +3,14 @@ import React from "react";
 import BrokenUrlListedView from "./BrokenUrlListedView";
 import VideoOrImageListed from "./VideoOrImageListed";
 import VideoAndImage from "./VideoAndImage";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 
-export default function ListedView({ nft, addRemoveNFT, index }) {
+export default function ListedView({ nft, index }) {
     // const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nft)
 
     const OFF = { pointerEvents: "none" };
     const [brocken, setBrocken] = useState(false);
-    const [verifiedContract, setVerifiedContract] = useState();
-
-    useEffect(() => {
-        /* const mw = async () => {
-            const mintWith = await checkMintWith(
-                from,
-                to,
-                nft.native.contract,
-                nft.native.tokenId
-            );
-            if (mintWith) setVerifiedContract(true);
-        };
-        if (whitelisted && (from.type === "EVM" || from.type === "Elrond")) {
-            mw();
-        } else setVerifiedContract(true);*/
-    }, [nft]);
 
     return (
         <div
@@ -57,9 +42,14 @@ export default function ListedView({ nft, addRemoveNFT, index }) {
             ) : (
                 <BrokenUrlListedView />
             )}
-            {(!nft.whitelisted || !verifiedContract) && (
+            {!nft.whitelisted && (
                 <div className="not-whitelisted__img-cover"></div>
             )}
         </div>
     );
 }
+ListedView.propTypes = {
+    nft: PropTypes.object,
+    addRemoveNFT: PropTypes.any,
+    index: PropTypes.string,
+};
