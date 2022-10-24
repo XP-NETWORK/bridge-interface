@@ -9,17 +9,11 @@ import { CHAIN_INFO } from "../../../components/values";
 import axios from "axios";
 import "./importNFTModal.css";
 import EVMBody from "./EVMBody";
-import CosmosBody from "./CosmosBody";
-import { getFactory } from "../../../wallet/helpers";
-import { Chain } from "xp.network";
 
 export default function ImportNFTModal() {
     const dispatch = useDispatch();
     const from = useSelector((state) => state.general.from);
     const account = useSelector((state) => state.general.account);
-    const secretAccount = useSelector((state) => state.general.secretAccount);
-    const nfts = useSelector((state) => state.general.NFTList);
-    const checkWallet = useSelector((state) => state.general.checkWallet);
 
     const [validContract, setValidContract] = useState(NaN);
     const [contract, setContract] = useState();

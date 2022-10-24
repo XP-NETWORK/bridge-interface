@@ -79,8 +79,8 @@ export default function AccountModal() {
         <div
             ref={accountModal}
             className="accountBox"
-            show={show}
-            onHide={handleClose}
+            // show={show}
+            // onHide={handleClose}
         >
             <div className="accountTit">
                 Account{" "}
@@ -104,9 +104,6 @@ export default function AccountModal() {
                 </div>
             </CopyToClipboard>
             <div className="accountBtn">
-                {/* <button onClick={() => switchNetwork()} className="changeBtn disabled">
-          Change Network
-        </button> */}
                 <button
                     onClick={() => window.location.reload()}
                     className="changeBtn"
