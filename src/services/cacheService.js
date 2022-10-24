@@ -1,11 +1,19 @@
 import axios from "axios";
 
 class CacheService {
+<<<<<<< HEAD
     cacheApi = "https://nft-cache.herokuapp.com"; //"https://nft-cache-testing.herokuapp.com"; //"http://localhost:3030"; //"https://nft-cache.herokuapp.com";
     retryInterval = 6000;
     totalTry = 6;
     retryStatues = [429];
     forceCache = ["nft.weedcommerce.info"];
+=======
+  cacheApi = "https://nft-cache.herokuapp.com"; //"https://nft-cache-testing.herokuapp.com"; //"http://localhost:3030"; //"https://nft-cache.herokuapp.com";
+  retryInterval = 6000;
+  totalTry = 6;
+  retryStatues = [429];
+  forceCache = ["nft.weedcommerce.info", "tritonpass"];
+>>>>>>> 094373b4 (add dager site)
 
     constructor() {
         this.axios = axios.create({
