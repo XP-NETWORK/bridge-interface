@@ -4631,6 +4631,16 @@
   resolved "https://registry.yarnpkg.com/@tokenizer/token/-/token-0.3.0.tgz#fe98a93fe789247e998c75e74e9c7c63217aa276"
   integrity sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==
 
+"@tonapps/tonconnect-server@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@tonapps/tonconnect-server/-/tonconnect-server-0.1.1.tgz#e2e01a32e69d044185b0b8864d0b9b75402fdf0a"
+  integrity sha512-t1zakZddk69ustMWVuTUftUQ3ioKgIPQNJgg024NpRVtI0L1xO+/OFGxy6DpVzjC/o5niVNyUbGyzR83lgH0lg==
+  dependencies:
+    create-hmac "^1.1.7"
+    tonweb "^0.0.38"
+    tweetnacl "^1.0.3"
+    tweetnacl-util "^0.15.1"
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
@@ -17123,6 +17133,20 @@ tonweb-mnemonic@^1.0.1:
   dependencies:
     tweetnacl "^1.0.3"
 
+tonweb@^0.0.38:
+  version "0.0.38"
+  resolved "https://registry.yarnpkg.com/tonweb/-/tonweb-0.0.38.tgz#0f30f42ca38ca5cc9666687f4f87279259ff6767"
+  integrity sha512-553K+0LmsZcdhw+1SyGqlkMsncKjrgAe+88bKqhQ5b//G56mZc1KLvFKhpUQSR1GQZn54xpzZVqGZKhHiZK6vA==
+  dependencies:
+    "@ledgerhq/hw-transport-web-ble" "5.48.0"
+    "@ledgerhq/hw-transport-webhid" "5.48.0"
+    "@ledgerhq/hw-transport-webusb" "5.48.0"
+    bn.js "5.1.1"
+    ethjs-unit "0.1.6"
+    isomorphic-webcrypto "2.3.8"
+    node-fetch "2.6.7"
+    tweetnacl "1.0.3"
+
 tonweb@^0.0.57:
   version "0.0.57"
   resolved "https://registry.yarnpkg.com/tonweb/-/tonweb-0.0.57.tgz#f18c44525690d74b81cd248453d5769c872a068a"
@@ -17267,6 +17291,11 @@ tunnel-agent@^0.6.0:
   integrity sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==
   dependencies:
     safe-buffer "^5.0.1"
+
+tweetnacl-util@^0.15.1:
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/tweetnacl-util/-/tweetnacl-util-0.15.1.tgz#b80fcdb5c97bcc508be18c44a4be50f022eea00b"
+  integrity sha512-RKJBIj8lySrShN4w6i/BonWp2Z/uxwC3h4y7xsRrpP59ZboCd0GpEVsOnMDYLMmKBpYhb5TgHzZXy7wTfYFBRw==
 
 tweetnacl@1.0.3, tweetnacl@^1.0.1, tweetnacl@^1.0.3:
   version "1.0.3"
@@ -18716,7 +18745,6 @@ xmlhttprequest@1.8.0:
 
 "xpnet-web3-contracts@git+https://github.com/xp-network/XP.network-HECO-Migration#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f":
   version "0.1.0"
-  uid "65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
   resolved "git+https://github.com/xp-network/XP.network-HECO-Migration#65b3d13fb814ec8d8c4ea847c5915d763c0fec6f"
   dependencies:
     ethers "^5.5.4"

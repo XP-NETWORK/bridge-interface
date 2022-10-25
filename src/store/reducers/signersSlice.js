@@ -12,9 +12,16 @@ const signersSlice = createSlice({
         setChainFactoryConfig(state, action) {
             state.chainFactoryConfig = action.payload;
         },
+        setWalletAddress(state, action) {
+            state.walletAddress = action.payload;
+        },
     },
 });
 
-export const { setSigner, setChainFactoryConfig } = signersSlice.actions;
+export const {
+    setSigner,
+    setChainFactoryConfig,
+    setWalletAddress,
+} = signersSlice.actions;
 
 export default signersSlice.reducer;
