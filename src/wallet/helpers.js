@@ -142,7 +142,10 @@ export const getFactory = async () => {
     if (f) return f;
     const testnetConfig = await ChainFactoryConfigs.TestNet();
     const mainnetConfig = await ChainFactoryConfigs.MainNet();
-    store.dispatch(setChainFactoryConfig(mainnetConfig || testnetConfig));
+    // const stagingConfig = await  ChainFactoryConfigs.Staging();
+    store.dispatch(
+        setChainFactoryConfig(testnet ? testnetConfig : mainnetConfig)
+    );
     // if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
     //     mainnetConfig.tronParams.provider = window.tronWeb;
     // }
