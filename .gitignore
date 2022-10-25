@@ -6,5 +6,4 @@ yarn-error.log
 **/build.zip
 .DS_Store
 .env
-.eslintrc.json
 .prettierre.json
