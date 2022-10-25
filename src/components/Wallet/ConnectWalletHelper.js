@@ -128,7 +128,8 @@ export const createKeyPairTonWallet = async () => {
 };
 
 export const createWallet = async () => {
-    // debugger;
+    // eslint-disable-next-line no-debugger
+    debugger;
     const keyPair = await createKeyPairTonWallet();
     const tonweb = new TonWeb();
 

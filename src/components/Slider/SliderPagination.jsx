@@ -52,5 +52,5 @@ export default function SliderPagination({ index }) {
     );
 }
 SliderPagination.propTypes = {
-    index: PropTypes.string,
+    index: PropTypes.number,
 };

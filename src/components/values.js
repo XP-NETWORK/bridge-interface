@@ -443,7 +443,7 @@ export const chainsConfig = {
         testTx: "https://testnet.algoexplorer.io/",
     },
     Ton: {
-        type: EVM,
+        type: "TON",
         img: Ton,
         Chain: Chain.TON,
         testTx: "https://testnet.tonscan.org/tx/",
