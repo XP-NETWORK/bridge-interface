@@ -90,8 +90,32 @@ function NFTaccount() {
     async function getNFTsList() {
         const useHardcoded = false;
         const hard = "0x85C25cb6e5C648117E33EF2e2Fbd93067D18b529";
+
         if (type === "Cosmos") return;
         try {
+            switch (type) {
+                case "EVM":
+                    break;
+                case "Cosmos":
+                    return;
+                case "Tezos":
+                    break;
+                case "Algorand":
+                    break;
+                case "Elrond":
+                    break;
+                case "Tron":
+                    break;
+                case "VeChain":
+                    break;
+                case "Skale":
+                    break;
+                // case "Hedera":
+                //     break;
+                default:
+                    break;
+            }
+
             const w = useHardcoded
                 ? hard
                 : type === "EVM" || type === "VeChain" || type === "Skale"
