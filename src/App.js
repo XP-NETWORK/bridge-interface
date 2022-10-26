@@ -88,11 +88,10 @@ function App() {
     }, []);
 
     useEffect(() => {
-        dispatch(
-            generalSlice.setTestNet(
-                window.location.href.indexOf("/testnet") > 0
-            )
-        );
+        if (window.location.href.includes("/staging"))
+            dispatch(generalSlice.setStaging(true));
+        else if (window.location.href.includes("/testnet"))
+            dispatch(generalSlice.setTestNet(true));
     }, []);
 
     return (

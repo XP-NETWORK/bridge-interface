@@ -99,7 +99,7 @@ Chain.propTypes = {
     filteredChain: PropTypes.any,
     chainSelectHandler: PropTypes.any,
     text: PropTypes.string,
-    image: PropTypes.string,
+    image: PropTypes.object,
     coming: PropTypes.bool,
     newChain: PropTypes.bool,
     chainKey: PropTypes.string,

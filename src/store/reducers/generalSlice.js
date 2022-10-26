@@ -28,6 +28,9 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setStaging(state, action) {
+            state.staging = action.payload;
+        },
         setUnstoppableDomains(state, action) {
             state.unstoppableDomains = action.payload;
         },
@@ -667,6 +670,7 @@ export const {
     setSelectedNFTAmount,
     setTonAccount,
     setTonWallet,
+    setStaging,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

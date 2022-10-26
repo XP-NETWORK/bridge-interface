@@ -103,6 +103,8 @@ export default function ChainListBox() {
     };
     // ! ref
     const chainSelectHandler = async (chain) => {
+        // eslint-disable-next-line no-debugger
+        debugger;
         if (departureOrDestination === "departure") {
             if (
                 chain.type === typeOfChainConnected() ||

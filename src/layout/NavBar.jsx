@@ -24,10 +24,13 @@ import {
     setReceiver,
 } from "../store/reducers/generalSlice";
 import { biz } from "../components/values";
+import Network from "./Network";
 
 function NavBar() {
     const widget = useSelector((state) => state.general.widget);
     const testnet = useSelector((state) => state.general.testNet);
+    // const staging = useSelector((state) => state.general.staging);
+
     const date = useSelector((state) => state.general.gitLatestCommit);
     const [navMenuOpen, toggleNavMenu] = useState(false);
     const dispatch = useDispatch();
@@ -51,9 +54,7 @@ function NavBar() {
                         <Navbar.Brand>
                             <img src={Logo} alt="Xp Network" />
                             <div>MULTICHAIN NFT BRIDGE</div>
-                            {testnet && (
-                                <span className="testnet">TestNet</span>
-                            )}
+                            <Network />
                         </Navbar.Brand>
                     </LinkContainer>
                     {/* <UserConnect desktop={true} /> */}
