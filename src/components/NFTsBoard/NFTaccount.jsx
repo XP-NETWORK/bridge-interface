@@ -92,30 +92,32 @@ function NFTaccount() {
         const hard = "0x85C25cb6e5C648117E33EF2e2Fbd93067D18b529";
 
         if (type === "Cosmos") return;
+        let walletAccount;
         try {
-            switch (type) {
-                case "EVM":
-                    break;
-                case "Cosmos":
-                    return;
-                case "Tezos":
-                    break;
-                case "Algorand":
-                    break;
-                case "Elrond":
-                    break;
-                case "Tron":
-                    break;
-                case "VeChain":
-                    break;
-                case "Skale":
-                    break;
-                // case "Hedera":
-                //     break;
-                default:
-                    break;
-            }
-
+            //     switch (type) {
+            //         case "EVM":
+            //             walletAccount = account
+            //             break;
+            //         case "Cosmos":
+            //             return;
+            //         case "Tezos":
+            //             break;
+            //         case "Algorand":
+            //             break;
+            //         case "Elrond":
+            //             break;
+            //         case "Tron":
+            //             break;
+            //         case "VeChain":
+            //             break;
+            //         case "Skale":
+            //             break;
+            //         // case "Hedera":
+            //         //     break;
+            //         default:
+            //             break;
+            //     }
+            await setNFTS(walletAccount, from, undefined, "account");
             const w = useHardcoded
                 ? hard
                 : type === "EVM" || type === "VeChain" || type === "Skale"
