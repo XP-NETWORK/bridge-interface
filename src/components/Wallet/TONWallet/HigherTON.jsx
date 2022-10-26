@@ -5,8 +5,11 @@ import {
     setTonWallet,
 } from "../../../store/reducers/generalSlice";
 import { setWalletAddress } from "../../../store/reducers/signersSlice";
-import { createWallet } from "../ConnectWalletHelper";
-import { connectTonHub, connectTonKeeper } from "./TonConnectors";
+import {
+    connectTonHub,
+    connectTonKeeper,
+    connectTonWallet,
+} from "./TonConnectors";
 
 export default function HigherTON(OriginalComponent) {
     //
@@ -33,10 +36,10 @@ export default function HigherTON(OriginalComponent) {
                 case "TonWallet":
                     break;
                 case "TonKeeper":
-                    styles.display = "none";
+                    // styles.display = "none";
                     break;
                 case "TonHub":
-                    styles.display = "none";
+                    // styles.display = "none";
                     break;
                 default:
                     break;
@@ -48,7 +51,7 @@ export default function HigherTON(OriginalComponent) {
             let account;
             switch (wallet) {
                 case "TonWallet":
-                    account = await createWallet();
+                    account = await connectTonWallet();
                     break;
                 case "TonKeeper":
                     await connectTonKeeper();

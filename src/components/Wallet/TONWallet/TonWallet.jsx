@@ -18,7 +18,7 @@ function TonWallet({ styles, connectWallet }) {
             data-wallet="TON Wallet"
         >
             <img style={{ width: "28px" }} src={TON} alt="" />
-            <p>TON Keeper</p>
+            <p>TON Wallet</p>
         </li>
     );
 }

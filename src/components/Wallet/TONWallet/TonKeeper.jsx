@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import HigherTON from "./HigherTON";
 
-// import TON from "../../../assets/img/chain/ton.svg";
+import tonkeeper from "../../../assets/img/wallet/tonkeeper.svg";
 
 function TonKeeper({ styles, connectWallet }) {
     const connectHandler = () => {
@@ -17,7 +17,7 @@ function TonKeeper({ styles, connectWallet }) {
             className="wllListItem"
             data-wallet="Tonkeeper"
         >
-            <img style={{ width: "28px" }} src="#" alt="" />
+            <img style={{ width: "28px" }} src={tonkeeper} alt="" />
             <p>Tonkeeper</p>
         </li>
     );

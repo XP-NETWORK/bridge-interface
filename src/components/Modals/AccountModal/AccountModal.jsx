@@ -29,6 +29,7 @@ export default function AccountModal() {
     );
     const MyAlgo = useSelector((state) => state.general.MyAlgo);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
+    const tonAccount = useSelector((state) => state.general.tonAccount);
     const secretAccount = useSelector((state) => state.general.secretAccount);
 
     const WalletConnect = useSelector((state) => state.general.WalletConnect);
@@ -39,6 +40,7 @@ export default function AccountModal() {
     const hederaWallet = useSelector((state) => state.general.hederaWallet);
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
     const currentAccount =
+        tonAccount ||
         hederaAccount ||
         account ||
         elrondAccount ||

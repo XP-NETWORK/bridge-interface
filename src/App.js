@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from "react";
-import { TonhubConnectProvider } from "react-ton-x";
+// import { TonhubConnectProvider } from "react-ton-x";
 import XpBridge from "./pages/XpBridge";
 import ApproveLoader from "./components/innercomponents/ApproveLoader";
 import Error from "./components/innercomponents/Error";
@@ -18,23 +18,19 @@ import axios from "axios";
 import * as generalSlice from "./store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-import useLocalStorage from "react-use-localstorage";
-
 import { transformToDate } from "./wallet/helpers";
 import { chains } from "./components/values";
 
 import { Modal } from "react-bootstrap";
 import "./components/Modals/Modal.css";
+import TonQeCodeModal from "./components/Modals/TonModal/TonQeCodeModal";
 
 function App() {
     const dispatch = useDispatch();
     const [nftToOptIn, setNFTToOptIn] = useState();
     const [testnet, setTestnet] = useState();
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
-    const [connectionState, setConnectionState] = useLocalStorage(
-        "connection",
-        { type: "initing" }
-    );
+    const tonQRCodeModal = useSelector((state) => state.tonStore.qrCode);
 
     const toShowSuccess = () => {
         return txnHashArr?.length ? true : false;
@@ -103,35 +99,29 @@ function App() {
 
     return (
         <div className={"App"}>
-            <TonhubConnectProvider
-                network={testnet ? "mainnet" : "mainnet"}
-                name="XP.Network"
-                url="https://bridge.xp.network/"
-                debug={false}
-                connectionState={connectionState}
-                setConnectionState={setConnectionState}
+            <ConnectAlgorand nftToOptIn={nftToOptIn} testnet={testnet} />
+            <About />
+            <Video />
+            <TechnicalSupport />
+            <Modal
+                animation={null}
+                className="success-modal"
+                show={toShowSuccess()}
             >
-                <ConnectAlgorand nftToOptIn={nftToOptIn} testnet={testnet} />
-                <About />
-                <Video />
-                <TechnicalSupport />
-                <Modal
-                    animation={null}
-                    className="success-modal"
-                    show={toShowSuccess()}
-                >
-                    <SuccessModal />
-                </Modal>
-                <TransferLoader />
-                <TronConnectionErrMod />
-                <RedirectModal />
-                <ApproveLoader />
-                <Error />
-                <TronPopUp />
-                <XpBridge />
-                <Alert />
-                <DepositAlert />
-            </TonhubConnectProvider>
+                <SuccessModal />
+            </Modal>
+            <Modal show={tonQRCodeModal}>
+                <TonQeCodeModal />
+            </Modal>
+            <TransferLoader />
+            <TronConnectionErrMod />
+            <RedirectModal />
+            <ApproveLoader />
+            <Error />
+            <TronPopUp />
+            <XpBridge />
+            <Alert />
+            <DepositAlert />
         </div>
     );
 }
