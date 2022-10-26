@@ -195,11 +195,11 @@ export const chains = [
         chainId: undefined,
         order: 22,
         nonce: 27,
-        coming: true,
+        coming: false,
         image: { avatar: true, src: Ton },
         maintenance: false,
         testNet: false,
-        mainnet: false,
+        mainnet: true,
     },
     {
         type: "EVM",
