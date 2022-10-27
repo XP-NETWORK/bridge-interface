@@ -16,13 +16,7 @@ export default function TechnicalSupport() {
     }
 
     return nftsToWhitelist.length ? (
-        <Modal
-            className="ts-modal"
-            animation={false}
-            size="sm"
-            show={nftsToWhitelist}
-            onHide={() => handleClose()}
-        >
+        <>
             <Modal.Header className="border-0">
                 <span className="close-ts-modal" onClick={() => handleClose()}>
                     <Close className="svgWidget" />
@@ -50,7 +44,7 @@ export default function TechnicalSupport() {
                     Technical Support &#10143;
                 </a>
             </Modal.Body>
-        </Modal>
+        </>
     ) : (
         ""
     );

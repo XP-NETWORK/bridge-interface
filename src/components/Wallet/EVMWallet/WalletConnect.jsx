@@ -1,8 +1,9 @@
 import React from "react";
 import icon from "../../../assets/img/wallet/WalletConnect.svg";
 import PropTypes from "prop-types";
+import HigherEVM from "./HigherEVM";
 
-export default function WalletConnect({ styles, connectWallet }) {
+function WalletConnect({ styles, connectWallet }) {
     return (
         <li
             style={styles()}
@@ -19,3 +20,4 @@ WalletConnect.propTypes = {
     styles: PropTypes.func,
     connectWallet: PropTypes.func,
 };
+export default HigherEVM(WalletConnect);

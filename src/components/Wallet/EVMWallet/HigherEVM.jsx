@@ -122,21 +122,6 @@ export default function HigherEVM(OriginalComponent) {
             } else return OFF;
         };
 
-        // const isUnsupportedBitKeepChain = () => {
-        //     const chain = from || temporaryFrom;
-
-        //     if (chain) {
-        //         switch (from?.text) {
-        //             case "Godwoken":
-        //                 return true;
-        //             case "Harmony":
-        //                 return true;
-        //             default:
-        //                 return false;
-        //         }
-        //     }
-        // };
-
         return (
             <OriginalComponent
                 connectWallet={connectHandler}

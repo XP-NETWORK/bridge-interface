@@ -1,8 +1,8 @@
 import React from "react";
 import icon from "../../../assets/img/wallet/MetaMask.svg";
 import PropTypes from "prop-types";
-
-export default function MetaMask({ styles, connectWallet }) {
+import HigherEVM from "./HigherEVM";
+function MetaMask({ styles, connectWallet }) {
     return (
         <li
             style={styles()}
@@ -19,3 +19,4 @@ MetaMask.propTypes = {
     styles: PropTypes.func,
     connectWallet: PropTypes.func,
 };
+export default HigherEVM(MetaMask);

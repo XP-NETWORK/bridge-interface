@@ -1,21 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
+import HigherEVM from "./HigherEVM";
+import { useSelector } from "react-redux";
 
-export default function BitKeep({ styles, connectWallet }) {
+function BitKeep({ styles, connectWallet }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
-
+    const from = useSelector((state) => state.general.from);
+    const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
     const isUnsupportedBitKeepChain = () => {
-        // const chain = from || temporaryFrom;
-        // if (chain) {
-        //     switch (from?.text) {
-        //         case "Godwoken":
-        //             return true;
-        //         case "Harmony":
-        //             return true;
-        //         default:
-        //             return false;
-        //     }
-        // }
+        const chain = from || temporaryFrom;
+
+        if (chain) {
+            switch (from?.text) {
+                case "Godwoken":
+                    return true;
+                case "Harmony":
+                    return true;
+                default:
+                    return false;
+            }
+        }
     };
 
     return (
@@ -34,3 +38,4 @@ BitKeep.propTypes = {
     styles: PropTypes.func,
     connectWallet: PropTypes.func,
 };
+export default HigherEVM(BitKeep);

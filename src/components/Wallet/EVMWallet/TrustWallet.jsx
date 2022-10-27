@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import HigherEVM from "./HigherEVM";
 
-export default function TrustWallet({ styles, connectWallet }) {
+function TrustWallet({ styles, connectWallet }) {
     return (
         <li
             onClick={() => connectWallet("TrustWallet")}
@@ -18,3 +19,4 @@ TrustWallet.propTypes = {
     styles: PropTypes.func,
     connectWallet: PropTypes.func,
 };
+export default HigherEVM(TrustWallet);

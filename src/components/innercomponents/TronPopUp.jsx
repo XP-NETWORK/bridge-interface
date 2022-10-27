@@ -7,26 +7,20 @@ import FileCopy from "../../assets/img/icons/FileCopy.svg";
 import CopyHover from "../../assets/img/icons/CopyHover.svg";
 import copyTT from "../../assets/img/icons/copytoclip.svg";
 import copiedIcon from "../../assets/img/icons/copiedtoclip.svg";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setTronPopUp } from "../../store/reducers/generalSlice";
 
 export default function TronPopUp() {
     const [onHover, setOnHover] = useState();
     const [copied, setCopied] = useState();
-    const tronPopUp = useSelector((state) => state.general.tronPopUp);
     const dispatch = useDispatch();
     const copy = () => {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
 
-    function handleClose() {
-        dispatch(setTronPopUp(false));
-    }
-
     return (
-        <Modal show={tronPopUp} onHide={() => handleClose()}>
+        <>
             <Modal.Header className="border-0">
                 <div className="tron-PopUp__header">
                     <img
@@ -77,6 +71,6 @@ export default function TronPopUp() {
                     </div>
                 </div>
             </Modal.Body>
-        </Modal>
+        </>
     );
 }

@@ -1,24 +1,18 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
 import { setShowVideo } from "../../store/reducers/generalSlice";
 
 export default function Video() {
     const dispatch = useDispatch();
-    const video = useSelector((state) => state.general.video);
 
     function handleClose() {
         dispatch(setShowVideo(false));
     }
 
     return (
-        <Modal
-            animation={false}
-            show={video}
-            onHide={() => handleClose()}
-            className="video__modal"
-        >
+        <>
             <Modal.Header className="border-0">
                 <div className="tron-PopUp__header">
                     <Modal.Title>Learn how to use NFT bridge</Modal.Title>
@@ -38,6 +32,6 @@ export default function Video() {
                     ></iframe>
                 </div>
             </Modal.Body>
-        </Modal>
+        </>
     );
 }
