@@ -27,8 +27,9 @@ export const isApproved = async (c, nft) => {
 
     const {
         signers: { signer },
+        general: { factory },
     } = store.getState();
-    const factory = await getFactory();
+
     const chain = await factory.inner(c);
 
     let isApproved;
@@ -135,15 +136,47 @@ export const transformToDate = (date) => {
     return tm;
 };
 
-export const getFactory = async () => {
-    // eslint-disable-next-line no-debugger
-    debugger;
-    const f = store.getState().general.factory;
-    const {
-        general: { testnet, staging },
-    } = store.getState();
+// export const getFactory = async () => {
+//     // eslint-disable-next-line no-debugger
+//     // debugger;
+//     const f = store.getState().general.factory;
+//     const {
+//         general: { testnet, staging },
+//     } = store.getState();
 
-    if (f) return f;
+//     if (f) return f;
+//     const testnetConfig = testnet
+//         ? await ChainFactoryConfigs.TestNet()
+//         : undefined;
+//     const stagingConfig = staging
+//         ? await ChainFactoryConfigs.Staging()
+//         : undefined;
+//     const mainnetConfig =
+//         !testnetConfig && !testnetConfig
+//             ? await ChainFactoryConfigs.MainNet()
+//             : undefined;
+//     store.dispatch(
+//         setChainFactoryConfig(stagingConfig || mainnetConfig || testnetConfig)
+//     );
+//     // if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
+//     //     mainnetConfig.tronParams.provider = window.tronWeb;
+//     // }
+//     const factory = ChainFactory(
+//         testnet
+//             ? AppConfigs.TestNet()
+//             : staging
+//             ? AppConfigs.Staging()
+//             : AppConfigs.MainNet(),
+//         testnet ? testnetConfig : staging ? stagingConfig : mainnetConfig
+//     );
+//     store.dispatch(setFactory(factory));
+//     return factory;
+// };
+
+export const getAndSetFactory = async (testnet, staging) => {
+    // eslint-disable-next-line no-debugger
+    // debugger;
+
     const testnetConfig = testnet
         ? await ChainFactoryConfigs.TestNet()
         : undefined;
@@ -154,12 +187,7 @@ export const getFactory = async () => {
         !testnetConfig && !testnetConfig
             ? await ChainFactoryConfigs.MainNet()
             : undefined;
-    store.dispatch(
-        setChainFactoryConfig(stagingConfig || mainnetConfig || testnetConfig)
-    );
-    // if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
-    //     mainnetConfig.tronParams.provider = window.tronWeb;
-    // }
+
     const factory = ChainFactory(
         testnet
             ? AppConfigs.TestNet()
@@ -169,6 +197,9 @@ export const getFactory = async () => {
         testnet ? testnetConfig : staging ? stagingConfig : mainnetConfig
     );
     store.dispatch(setFactory(factory));
+    store.dispatch(
+        setChainFactoryConfig(stagingConfig || mainnetConfig || testnetConfig)
+    );
     return factory;
 };
 
@@ -180,7 +211,8 @@ export const getFactory = async () => {
 
 export const handleChainFactory = async (someChain) => {
     // debugger;
-    const factory = await getFactory();
+    const { factory } = store.getState().general;
+
     try {
         switch (someChain) {
             case "Ethereum":
@@ -244,7 +276,7 @@ export const handleChainFactory = async (someChain) => {
 };
 
 export const mintForTestNet = async (from, signer) => {
-    const factory = await getFactory();
+    const { factory } = store.getState().general;
     const chain = await factory.inner(chainsConfig[from].Chain);
     const uri = await prompt();
 
@@ -271,8 +303,7 @@ export const mintForTestNet = async (from, signer) => {
 export const getNFTS = async (wallet, from) => {
     // eslint-disable-next-line no-debugger
     debugger;
-    const { checkWallet, NFTList } = store.getState().general;
-    const factory = await getFactory();
+    const { checkWallet, NFTList, factory } = store.getState().general;
     const chain = await factory.inner(chainsConfig[from].Chain);
     try {
         let response;
@@ -316,17 +347,17 @@ export const getNFTS = async (wallet, from) => {
 };
 
 export const checkIfSmartContract = async (c, address) => {
-    const factory = await getFactory();
+    const { factory } = store.getState().general;
     const chain = await factory.inner(c);
     const isSC = await chain.isContractAddress(address);
     return isSC;
 };
 
 export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
+    const { factory } = store.getState().general;
     let claimables;
     try {
         if (algorandAccount && algorandAccount.length > 50) {
-            const factory = await getFactory();
             claimables = await factory.claimableAlgorandNfts(algorandAccount);
             console.log(claimables, "claimablesNFT");
             if (claimables && claimables.length > 0) {
@@ -342,10 +373,9 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 };
 
 export const getAlgorandClaimables = async (account) => {
-    const { checkWallet } = store.getState().general;
+    const { checkWallet, factory } = store.getState().general;
     // debugger;
     let claimables;
-    const factory = await getFactory();
     try {
         claimables = await factory.claimableAlgorandNfts(
             checkWallet || account
@@ -444,7 +474,7 @@ export const convert = (address) => {
 };
 
 export const checkMintWith = async (from, to, contract, tokenId) => {
-    const factory = await getFactory();
+    const { factory } = store.getState().general;
     const fromNonce = CHAIN_INFO[from.text].nonce;
     const toNonce = CHAIN_INFO[to.text].nonce;
     const mintWith = await factory.getVerifiedContract(

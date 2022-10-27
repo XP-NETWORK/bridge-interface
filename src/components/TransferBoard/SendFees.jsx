@@ -3,11 +3,7 @@ import React, { useState, useRef } from "react";
 import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { chainsConfig } from "../values";
-import {
-    errorToLog,
-    getFactory,
-    handleChainFactory,
-} from "../../wallet/helpers";
+import { errorToLog, handleChainFactory } from "../../wallet/helpers";
 import { setBigNumFees } from "../../store/reducers/generalSlice";
 import { useEffect } from "react";
 
@@ -26,6 +22,7 @@ function SendFees() {
     const Web3Utils = require("web3-utils");
     const [loading, setLoading] = useState(false);
 
+    const factory = useSelector((state) => state.general.factory);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const secretAccount = useSelector((state) => state.general.secretAccount);
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
@@ -48,7 +45,6 @@ function SendFees() {
     const feesReqInterval = useRef(null);
     async function estimate() {
         const date = new Date();
-        let fact;
         let fee;
         try {
             const fromChain = await handleChainFactory(from.text);
@@ -66,8 +62,6 @@ function SendFees() {
                     : from === "Tezos" && isToEVM
                     ? "0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6"
                     : account;
-
-            fact = await getFactory();
 
             if (to === "Tron") {
                 fee =
@@ -90,7 +84,7 @@ function SendFees() {
                         : "";
             } else {
                 try {
-                    fee = await fact.estimateFees(
+                    fee = await factory.estimateFees(
                         fromChain,
                         toChain,
                         selectedNFTList[0],

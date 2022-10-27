@@ -18,7 +18,7 @@ import axios from "axios";
 import * as generalSlice from "./store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-import { transformToDate } from "./wallet/helpers";
+import { getAndSetFactory, transformToDate } from "./wallet/helpers";
 import { chains } from "./components/values";
 
 import { Modal } from "react-bootstrap";
@@ -90,10 +90,18 @@ function App() {
     }, []);
 
     useEffect(() => {
-        if (window.location.href.includes("/staging"))
+        let network;
+        if (window.location.href.includes("/staging")) {
+            network = "staging";
             dispatch(generalSlice.setStaging(true));
-        else if (window.location.href.includes("/testnet"))
+        } else if (window.location.href.includes("/testnet")) {
+            network = "testnet";
             dispatch(generalSlice.setTestNet(true));
+        }
+        const saveFactory = async () => {
+            await getAndSetFactory(network);
+        };
+        saveFactory();
     }, []);
 
     return (

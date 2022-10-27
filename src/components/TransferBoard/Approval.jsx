@@ -16,7 +16,6 @@ import {
 } from "../../store/reducers/generalSlice";
 import {
     errorToLog,
-    getFactory,
     handleChainFactory,
     isALLNFTsApproved,
 } from "../../wallet/helpers";
@@ -50,7 +49,7 @@ function Approval() {
     const receiver = useSelector((state) => state.general.receiver);
     const WCProvider = useSelector((state) => state.general.WCProvider);
     const maiarProvider = useSelector((state) => state.general.maiarProvider);
-
+    const factory = useSelector((state) => state.general.factory);
     const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
     const algorandWallet = useSelector((state) => state.general.AlgorandWallet);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
@@ -79,7 +78,6 @@ function Approval() {
         const base = new MyAlgoConnect();
         if (algorandWallet) {
             try {
-                const factory = await getFactory();
                 const inner = await factory.inner(15);
                 const signer = await inner.walletConnectSigner(
                     algoConnector,
@@ -90,7 +88,6 @@ function Approval() {
                 console.log(error.message);
             }
         } else if (MyAlgo) {
-            const factory = await getFactory();
             const inner = await factory.inner(15);
             const signer = inner.myAlgoSigner(base, algorandAccount);
             return signer;
@@ -107,7 +104,6 @@ function Approval() {
     const approveEach = async (nft, signer, chain, index) => {
         // debugger;
         const arr = new Array(index + 1).fill(0);
-        const factory = await getFactory();
         const { tokenId, contract, chainId } = nft.native;
         const isInApprovedNFTs = approvedNFTList.filter(
             (n) =>

@@ -15,7 +15,7 @@ import MyAlgoConnect from "@randlabs/myalgo-connect";
 import AlgorandIcon from "../../../assets/img/algorandwallet.svg";
 import MyAlgoBlue from "../../../assets/img/wallet/MyAlgoBlue.svg";
 import axios from "axios";
-import { getFactory } from "../../../wallet/helpers";
+// import { getFactory } from "../../../wallet/helpers";
 import PropTypes from "prop-types";
 
 function ConnectAlgorand({ nftToOptIn, testnet }) {
@@ -25,7 +25,7 @@ function ConnectAlgorand({ nftToOptIn, testnet }) {
     const handleClose = () => {
         dispatch(connectAlgorandWalletClaim(false));
     };
-
+    const factory = useSelector((state) => state.general.factory);
     const connectClaimAlgorand = useSelector(
         (state) => state.general.connectClaimAlgorand
     );
@@ -103,7 +103,6 @@ function ConnectAlgorand({ nftToOptIn, testnet }) {
     const optIn = async () => {
         // debugger;
         dispatch(setTransferLoaderModal(true));
-        const factory = await getFactory();
         const algorand = await factory.inner(15);
         // const accounts = await window.AlgoSigner.accounts({ledger:"TestNet"})
         const signer = {

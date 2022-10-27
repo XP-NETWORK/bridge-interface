@@ -1,4 +1,4 @@
-import { getFactory } from "../../wallet/helpers";
+import store from "../../store/store";
 import { CHAIN_INFO } from "../values";
 const supportedVideoFormats = [".mp4", ".ogg", ".webm", ".avi"];
 const supportedImageFormats = [
@@ -119,11 +119,13 @@ export const isShown = (search, nft) =>
         .includes(search?.toLowerCase());
 
 export const isWhiteListed = async (from, nft) => {
+    const {
+        general: { factory },
+    } = store.getState();
     try {
         let whitelisted;
         const chainNonce = CHAIN_INFO[from].nonce;
 
-        const factory = await getFactory().catch((e) => console.log(e));
         const inner = await factory
             .inner(chainNonce)
             .catch((e) => console.log(e));

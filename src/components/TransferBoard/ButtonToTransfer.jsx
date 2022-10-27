@@ -5,7 +5,7 @@ import { CHAIN_INFO } from "../values";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { algoConnector } from "../../wallet/connectors";
 
-import { getFactory, convert } from "../../wallet/helpers";
+import { convert } from "../../wallet/helpers";
 import { ExtensionProvider } from "@elrondnetwork/erdjs/out";
 import { ethers } from "ethers";
 import {
@@ -39,6 +39,7 @@ export default function ButtonToTransfer() {
     const from = useSelector((state) => state.general.from.key);
     const _from = useSelector((state) => state.general.from);
     const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
+    const factory = useSelector((state) => state.general.factory);
     const [loading, setLoading] = useState();
     const dispatch = useDispatch();
     const algorandWallet = useSelector((state) => state.general.AlgorandWallet);
@@ -61,7 +62,6 @@ export default function ButtonToTransfer() {
         const base = new MyAlgoConnect();
         if (algorandWallet) {
             try {
-                const factory = await getFactory();
                 const inner = await factory.inner(15);
                 const signer = await inner.walletConnectSigner(
                     algoConnector,
@@ -78,7 +78,6 @@ export default function ButtonToTransfer() {
                 );
             }
         } else if (MyAlgo) {
-            const factory = await getFactory();
             const inner = await factory.inner(15);
             const signer = inner.myAlgoSigner(base, algorandAccount);
             return signer;

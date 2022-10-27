@@ -59,7 +59,6 @@ import Web3 from "web3";
 
 import { SecretNetworkClient } from "secretjs";
 import { setSigner } from "../../store/reducers/signersSlice";
-import { getFactory } from "../../wallet/helpers";
 
 export const wallets = [
     "MetaMask",
@@ -442,7 +441,9 @@ export const connectBeacon = async () => {
 };
 
 const getMyAlgoSigner = async (base, algorandAccount) => {
-    const factory = await getFactory();
+    const {
+        general: { factory },
+    } = store.getState();
     const inner = await factory.inner(15);
     const signer = inner.myAlgoSigner(base, algorandAccount);
     return signer;
@@ -566,6 +567,9 @@ export const connectMaiarExtension = async () => {
 
 // Tron blockchain connection ( TronLink )
 export const connectTronlink = async () => {
+    const {
+        general: { factory },
+    } = store.getState();
     if (window.innerWidth <= 600 && !window.tronWeb) {
         store.dispatch(setTronPopUp(true));
     } else {
@@ -588,7 +592,7 @@ export const connectTronlink = async () => {
             if (window.tronLink && window.tronWeb.defaultAddress.base58) {
                 console.log(window.tronLink);
                 const publicAddress = window.tronWeb.defaultAddress.base58;
-                const factory = await getFactory();
+
                 await factory
                     .setProvider(9, window.tronWeb)
                     .catch((e) => console.log(e, "e"));
