@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     connectAlgorandWalletClaim,
     removeFromNotWhiteListed,
+    setRedirectModal,
     setShowAbout,
     setShowVideo,
+    setTronLoginError,
     setTronPopUp,
 } from "../../store/reducers/generalSlice";
 import TonQeCodeModal from "./TonModal/TonQeCodeModal";
@@ -15,6 +17,10 @@ import ConnectAlgorand from "./AlgorandModal/ConnectAlgorand";
 import SuccessModal from "./Success/SuccessModal";
 import TechnicalSupport from "../innercomponents/TechnicalSupport";
 import TransferLoader from "../innercomponents/TransferLoader";
+import TronConnectionErrMod from "./TronModals/TronConnectionErrMod";
+import RedirectModal from "./Redirect/RedirectModal";
+import "../ApproveLoader/Planet.css";
+import Error from "../innercomponents/Error";
 
 export default function Modals() {
     const dispatch = useDispatch();
@@ -33,7 +39,14 @@ export default function Modals() {
     const transferModalLoader = useSelector(
         (state) => state.general.transferModalLoader
     );
+    const error = useSelector((state) => state.general.error);
+    const tronError = useSelector((state) => state.general.tronLoginError);
+    const redirectModal = useSelector((state) => state.general.redirectModal);
+    const loader = useSelector((state) => state.general.approveLoader);
 
+    const handleCloseRedirectModal = () => {
+        dispatch(setRedirectModal(false));
+    };
     function closeAboutModal() {
         dispatch(setShowAbout(false));
     }
@@ -53,6 +66,9 @@ export default function Modals() {
     function handleTronClose() {
         dispatch(setTronPopUp(false));
     }
+    const closeTronLoginError = () => {
+        dispatch(setTronLoginError(undefined));
+    };
 
     return (
         <>
@@ -111,6 +127,38 @@ export default function Modals() {
                 size="sm"
             >
                 <TransferLoader />
+            </Modal>
+            <Modal
+                className="tron-connection-error"
+                animation={false}
+                size="sm"
+                show={tronError}
+                onHide={closeTronLoginError}
+            >
+                <TronConnectionErrMod />
+            </Modal>
+            <Modal
+                className="bitkeep__popup"
+                show={redirectModal}
+                onHide={handleCloseRedirectModal}
+            >
+                <RedirectModal />
+            </Modal>
+            <Modal
+                className="approve-modal"
+                style={{
+                    overflow: "hidden",
+                }}
+                show={loader}
+            >
+                <div className="content">
+                    <div className="clip">
+                        <p>Approving</p>
+                    </div>
+                </div>
+            </Modal>
+            <Modal show={error} className="error__modal">
+                <Error />
             </Modal>
         </>
     );

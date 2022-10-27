@@ -1,11 +1,7 @@
 import { useEffect, React } from "react";
 import XpBridge from "./pages/XpBridge";
-import ApproveLoader from "./components/innercomponents/ApproveLoader";
-import Error from "./components/innercomponents/Error";
-import TronConnectionErrMod from "./components/Modals/TronModals/TronConnectionErrMod.jsx";
 import Alert from "./components/Alerts/Alert.jsx";
 import DepositAlert from "./components/Alerts/DepositAlert";
-import RedirectModal from "./components/Modals/Redirect/RedirectModal";
 import axios from "axios";
 import * as generalSlice from "./store/reducers/generalSlice";
 import { useDispatch } from "react-redux";
@@ -78,10 +74,6 @@ function App() {
     return (
         <div className={"App"}>
             <Modals />
-            <TronConnectionErrMod />
-            <RedirectModal />
-            <ApproveLoader />
-            <Error />
             <XpBridge />
             <Alert />
             <DepositAlert />

@@ -15,7 +15,7 @@ export default function Error() {
     const error = useSelector((state) => state.general.error);
 
     return (
-        <Modal show={error} className="error__modal">
+        <>
             <Modal.Header animation={false} className="border-0">
                 <div style={{ display: "flex", flexDirection: "column" }}>
                     <img style={{ margin: "30px" }} alt="" src={ERR} />
@@ -53,6 +53,6 @@ export default function Error() {
                     </CopyToClipboard>
                 )}
             </Modal.Body>
-        </Modal>
+        </>
     );
 }
