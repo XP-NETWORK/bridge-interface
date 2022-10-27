@@ -4,15 +4,15 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Close } from "../../../assets/img/icons/close.svg";
 import PropTypes from "prop-types";
+import { getRightPath } from "../../../wallet/helpers";
 
 export default function MaiarModal({ strQR, qrCodeString, show, handleClose }) {
     const walletsModal = useSelector((state) => state.general.walletsModal);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
-    const testnet = useSelector((state) => state.general.testnet);
     const navigate = useNavigate();
 
     const navigateToAccountRoute = () => {
-        navigate(testnet ? `/testnet/account` : `/account`);
+        navigate(getRightPath());
     };
 
     const walletConnectDeepLink =

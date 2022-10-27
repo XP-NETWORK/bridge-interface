@@ -22,6 +22,7 @@ import { switchNetwork } from "../../services/chains/evm/evmService";
 import { setSigner } from "../../store/reducers/signersSlice";
 import { ethers } from "ethers";
 import PropTypes from "prop-types";
+import { getRightPath } from "../../wallet/helpers";
 
 export default function EVMWallet({ wallet, close, discount }) {
     const { account, activate, chainId, deactivate } = useWeb3React();
@@ -30,9 +31,10 @@ export default function EVMWallet({ wallet, close, discount }) {
     const to = useSelector((state) => state.general.to);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
     const WCProvider = useSelector((state) => state.general.WCProvider);
-    const query = window.location.search || "";
+    // const query = window.location.search || "";
 
     const testnet = useSelector((state) => state.general.testNet);
+    // const staging = useSelector((state) => state.general.staging);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -42,7 +44,7 @@ export default function EVMWallet({ wallet, close, discount }) {
             : false;
 
     const navigateToAccountRoute = () => {
-        navigate(testnet ? `/testnet/account${query}` : `/account${query}`);
+        navigate(getRightPath());
     };
 
     // const switchNetwork = async () => {

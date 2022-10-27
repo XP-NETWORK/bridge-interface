@@ -3,7 +3,6 @@ import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
     setAlert,
-    setCheckWallet,
     setQrCodeString,
     setShowAbout,
     setShowVideo,
@@ -17,6 +16,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useDidUpdateEffect } from "../Settings/hooks";
 import Web3 from "web3";
 import { switchNetwork } from "../../services/chains/evm/evmService";
+import { getRightPath } from "../../wallet/helpers";
 
 function ConnectWallet() {
     const navigate = useNavigate();
@@ -43,7 +43,8 @@ function ConnectWallet() {
     const tonAccount = useSelector((state) => state.general.tonAccount);
 
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
-    const testnet = useSelector((state) => state.general.testNet);
+    // const testnet = useSelector((state) => state.general.testNet);
+    // const staging = useSelector((state) => state.general.staging);
     const bitKeep = useSelector((state) => state.general.bitKeep);
 
     const { account, chainId } = useWeb3React();
@@ -75,7 +76,8 @@ function ConnectWallet() {
     const walletsModal = useSelector((state) => state.general.walletsModal);
 
     const handleConnect = async () => {
-        // debugger;
+        // eslint-disable-next-line no-debugger
+        debugger;
         let provider;
         let _chainId;
         if (bitKeep) {
@@ -85,23 +87,47 @@ function ConnectWallet() {
             _chainId = await web3.eth.getChainId();
         }
         const chainID = chainId || _chainId;
-        if (unstoppableDomains) {
-            navigate(`/account${location.search ? location.search : ""}`);
-        } else if (testnet && from.tnChainId === chainID) {
-            navigate(
-                `/testnet/account${location.search ? location.search : ""}`
-            );
-        } else if (!testnet && from.chainId === chainID) {
-            navigate(`/account${location.search ? location.search : ""}`);
-        } else if (testnet && from.type !== "EVM") {
-            navigate(
-                `/testnet/account${location.search ? location.search : ""}`
-            );
-        } else if (from.type !== "EVM") {
-            navigate(`/account${location.search ? location.search : ""}`);
-        } else {
-            switchNetwork(from);
+
+        switch (true) {
+            case unstoppableDomains:
+                navigate(`/account${location.search ? location.search : ""}`);
+                break;
+            case from.tnChainId === chainID:
+                navigate(
+                    `${getRightPath()}${location.search ? location.search : ""}`
+                );
+                break;
+            case from.chainId === chainID:
+                navigate(
+                    `${getRightPath()}${location.search ? location.search : ""}`
+                );
+                break;
+            case from.type !== "EVM":
+                navigate(
+                    `${getRightPath()}${location.search ? location.search : ""}`
+                );
+                break;
+            default:
+                switchNetwork(from);
+                break;
         }
+        // if (unstoppableDomains) {
+        //     navigate(`/account${location.search ? location.search : ""}`);
+        // } else if (testnet && from.tnChainId === chainID) {
+        //     navigate(
+        //         `/testnet/account${location.search ? location.search : ""}`
+        //     );
+        // } else if (!testnet && from.chainId === chainID) {
+        //     navigate(`/account${location.search ? location.search : ""}`);
+        // } else if (testnet && from.type !== "EVM") {
+        //     navigate(
+        //         `/testnet/account${location.search ? location.search : ""}`
+        //     );
+        // } else if (from.type !== "EVM") {
+        //     navigate(`/account${location.search ? location.search : ""}`);
+        // } else {
+        //     switchNetwork(from);
+        // }
     };
 
     function handleAboutClick() {

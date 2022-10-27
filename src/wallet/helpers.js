@@ -136,29 +136,47 @@ export const transformToDate = (date) => {
 };
 
 export const getFactory = async () => {
+    // eslint-disable-next-line no-debugger
+    debugger;
     const f = store.getState().general.factory;
-    const testnet = store.getState().general.testNet;
+    const {
+        general: { testnet, staging },
+    } = store.getState();
 
     if (f) return f;
-    const testnetConfig = await ChainFactoryConfigs.TestNet();
-    const mainnetConfig = await ChainFactoryConfigs.MainNet();
-    store.dispatch(setChainFactoryConfig(mainnetConfig || testnetConfig));
+    const testnetConfig = testnet
+        ? await ChainFactoryConfigs.TestNet()
+        : undefined;
+    const stagingConfig = staging
+        ? await ChainFactoryConfigs.Staging()
+        : undefined;
+    const mainnetConfig =
+        !testnetConfig && !testnetConfig
+            ? await ChainFactoryConfigs.MainNet()
+            : undefined;
+    store.dispatch(
+        setChainFactoryConfig(stagingConfig || mainnetConfig || testnetConfig)
+    );
     // if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
     //     mainnetConfig.tronParams.provider = window.tronWeb;
     // }
     const factory = ChainFactory(
-        testnet ? AppConfigs.TestNet() : AppConfigs.MainNet(),
-        testnet ? testnetConfig : mainnetConfig
+        testnet
+            ? AppConfigs.TestNet()
+            : staging
+            ? AppConfigs.Staging()
+            : AppConfigs.MainNet(),
+        testnet ? testnetConfig : staging ? stagingConfig : mainnetConfig
     );
     store.dispatch(setFactory(factory));
     return factory;
 };
 
-export const getFac = async () => {
-    const mainnetConfig = ChainFactoryConfigs.MainNet();
-    const factory = ChainFactory(AppConfigs.MainNet(), mainnetConfig);
-    return factory;
-};
+// export const getFac = async () => {
+//     const mainnetConfig = ChainFactoryConfigs.MainNet();
+//     const factory = ChainFactory(AppConfigs.MainNet(), mainnetConfig);
+//     return factory;
+// };
 
 export const handleChainFactory = async (someChain) => {
     // debugger;
@@ -479,5 +497,19 @@ export const errorToLog = async (error) => {
         console.log("Log", response.data);
     } catch (e) {
         console.log(e);
+    }
+};
+
+export const getRightPath = () => {
+    const {
+        general: { testNet, staging },
+    } = store.getState();
+    switch (true) {
+        case testNet:
+            return "/testnet/account";
+        case staging:
+            return "/staging/account";
+        default:
+            return "/account";
     }
 };
