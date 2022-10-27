@@ -665,7 +665,7 @@ export const chainsConfig = {
         testTx: "https://hashscan.io/#/testnet/transaction/",
     },
     Skale: {
-        type: "Skale",
+        type: "EVM",
         token: "SKL",
         image: SKL,
         Chain: Chain.SKALE,

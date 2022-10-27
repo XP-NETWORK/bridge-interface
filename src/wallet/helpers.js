@@ -173,33 +173,27 @@ export const transformToDate = (date) => {
 //     return factory;
 // };
 
-export const getAndSetFactory = async (testnet, staging) => {
+export const getAndSetFactory = async (network) => {
     // eslint-disable-next-line no-debugger
-    // debugger;
-
-    const testnetConfig = testnet
-        ? await ChainFactoryConfigs.TestNet()
-        : undefined;
-    const stagingConfig = staging
-        ? await ChainFactoryConfigs.Staging()
-        : undefined;
-    const mainnetConfig =
-        !testnetConfig && !testnetConfig
-            ? await ChainFactoryConfigs.MainNet()
-            : undefined;
-
-    const factory = ChainFactory(
-        testnet
-            ? AppConfigs.TestNet()
-            : staging
-            ? AppConfigs.Staging()
-            : AppConfigs.MainNet(),
-        testnet ? testnetConfig : staging ? stagingConfig : mainnetConfig
-    );
+    debugger;
+    let config;
+    let factory;
+    switch (network) {
+        case "testnet":
+            config = await ChainFactoryConfigs.TestNet();
+            factory = await ChainFactory(AppConfigs.TestNet(), config);
+            break;
+        case "staging":
+            config = await ChainFactoryConfigs.Staging();
+            factory = await ChainFactory(AppConfigs.Staging(), config);
+            break;
+        default:
+            config = await ChainFactoryConfigs.MainNet();
+            factory = await ChainFactory(AppConfigs.MainNet(), config);
+            break;
+    }
     store.dispatch(setFactory(factory));
-    store.dispatch(
-        setChainFactoryConfig(stagingConfig || mainnetConfig || testnetConfig)
-    );
+    store.dispatch(setChainFactoryConfig(config));
     return factory;
 };
 
