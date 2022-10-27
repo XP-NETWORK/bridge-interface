@@ -109,6 +109,7 @@ function NFTaccount() {
                 : undefined;
             await setNFTS(w, from, undefined, "account");
         } catch (error) {
+            console.log(error);
             dispatch(setError(error.data ? error.data.message : error.message));
         }
     }

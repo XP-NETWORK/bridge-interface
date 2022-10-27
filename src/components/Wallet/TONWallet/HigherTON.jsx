@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     setTonAccount,
     setTonWallet,
+    setWalletsModal,
 } from "../../../store/reducers/generalSlice";
 import { setWalletAddress } from "../../../store/reducers/signersSlice";
 import {
@@ -19,17 +20,23 @@ export default function HigherTON(OriginalComponent) {
         const dispatch = useDispatch();
         const { from, temporaryFrom } = useSelector((state) => state.general);
 
-        const ifTypesTon = () => {
-            return (
-                (from && from === "TON") ||
-                (temporaryFrom && temporaryFrom === "TON") ||
-                (!from && !temporaryFrom)
-            );
+        const ifTypeIsTonOrNotSelected = () => {
+            switch (true) {
+                case !from && !temporaryFrom:
+                    return true;
+                case temporaryFrom && temporaryFrom?.type === "TON":
+                    return true;
+                case from && from?.type === "TON":
+                    return true;
+                default:
+                    return false;
+            }
         };
 
         const getStyles = (wallet) => {
             let styles = {
-                pointerEvents: ifTypesTon() ? "" : "none",
+                pointerEvents: ifTypeIsTonOrNotSelected() ? "" : "none",
+                opacity: ifTypeIsTonOrNotSelected() ? "" : "0.6",
             };
 
             switch (wallet) {
@@ -65,6 +72,7 @@ export default function HigherTON(OriginalComponent) {
             dispatch(setTonAccount(account));
             dispatch(setWalletAddress(account));
             dispatch(setTonWallet(true));
+            dispatch(setWalletsModal(false));
         };
 
         return (

@@ -442,7 +442,7 @@ export const chainsConfig = {
         tx: "https://algoexplorer.io/tx/",
         testTx: "https://testnet.algoexplorer.io/",
     },
-    Ton: {
+    TON: {
         type: "TON",
         img: Ton,
         Chain: Chain.TON,

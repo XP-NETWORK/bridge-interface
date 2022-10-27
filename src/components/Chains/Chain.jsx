@@ -36,7 +36,6 @@ export default function Chain(props) {
     // !! ref
     const getStyle = () => {
         if (
-            maintenance ||
             (location.pathname.includes("testnet")
                 ? false
                 : !checkIfLive(chainKey, validatorsInfo)) ||
@@ -99,7 +98,7 @@ Chain.propTypes = {
     filteredChain: PropTypes.any,
     chainSelectHandler: PropTypes.any,
     text: PropTypes.string,
-    image: PropTypes.string,
+    image: PropTypes.object,
     coming: PropTypes.bool,
     newChain: PropTypes.bool,
     chainKey: PropTypes.string,
