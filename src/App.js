@@ -2,11 +2,14 @@ import { useEffect, React } from "react";
 import XpBridge from "./pages/XpBridge";
 import Alert from "./components/Alerts/Alert.jsx";
 import DepositAlert from "./components/Alerts/DepositAlert";
-import axios from "axios";
 import * as generalSlice from "./store/reducers/generalSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { getAndSetFactory, transformToDate } from "./wallet/helpers";
+import {
+    fetchXPUpdate,
+    getAndSetFactory,
+    transformToDate,
+} from "./wallet/helpers";
 import { chains } from "./components/values";
 
 import "./components/Modals/Modal.css";
@@ -14,14 +17,14 @@ import Modals from "./components/Modals/Modals";
 
 function App() {
     const dispatch = useDispatch();
+    const factory = useSelector((state) => state.general.factory);
 
     useEffect(() => {
         // debugger
+        localStorage.removeItem("walletconnect");
         dispatch(generalSlice.setInnerWidth(window.innerWidth));
-
         const from = new URLSearchParams(window.location.search).get("from");
         const to = new URLSearchParams(window.location.search).get("to");
-
         if (from !== to) {
             if (from) {
                 const fromChain = chains.filter(
@@ -40,20 +43,10 @@ function App() {
                 }
             }
         }
-
-        localStorage.removeItem("walletconnect");
-
-        // debugger
-        axios
-            .get("https://xpvitaldata.herokuapp.com/last-commit")
-            .then((response) => {
-                const d = transformToDate(response.data);
-                dispatch(generalSlice.setGitLatestCommit(d));
-            })
-            .catch(function(error) {
-                // handle error
-                console.log(error);
-            });
+        fetchXPUpdate().then((data) => {
+            const d = transformToDate(data);
+            dispatch(generalSlice.setGitLatestCommit(d));
+        });
     }, []);
 
     useEffect(() => {
@@ -68,7 +61,7 @@ function App() {
         const saveFactory = async () => {
             await getAndSetFactory(network);
         };
-        saveFactory();
+        if (!factory) saveFactory();
     }, []);
 
     return (

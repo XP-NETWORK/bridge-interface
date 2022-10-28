@@ -17,6 +17,9 @@ export default function SecretContractsDropdown() {
                     <Dropdown.Item eventKey="secret16zcej6asqrtfq08u3fdjhs03zpl7lgy7q32eps">
                         Default contract
                     </Dropdown.Item>
+                    <Dropdown.Item eventKey="secret1t0g8tvc0tyvpwdsdc5zepa9j2ptr3vfte26qhu">
+                        Alex contract
+                    </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
         </div>

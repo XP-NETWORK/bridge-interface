@@ -73,35 +73,6 @@ export const convertTransactionHash = (txn) => {
 export const socket = io(testnet ? testnetSocketUrl : socketUrl, {
     path: "/socket.io",
 });
-// const { Harmony } = require("@harmony-js/core");
-// const axios = require("axios");
-
-// export const setupURI = (uri) => {
-//     // debugger
-//     if (uri) {
-//         if (uri.includes("https://ipfs.io")) {
-//             return uri;
-//         } else if (uri && uri.includes("ipfs://")) {
-//             return "https://ipfs.io/" + uri.replace(":/", "");
-//         } else if (uri && uri.includes("https://ipfs.io")) {
-//             return uri;
-//         } else if (
-//             uri &&
-//             (uri.includes("data:image/") || uri.includes("data:application/"))
-//         ) {
-//             return uri;
-//         } else {
-//             if (uri) return uri.replace("http://", "https://");
-//         }
-//     }
-//     return uri;
-// };
-
-// const Rookie = async (nft) => {
-//     let uri = nft.uri;
-//     const { data } = await axios.get(setupURI(uri));
-//     return data;
-// };
 
 export const isALLNFTsApproved = () => {
     const { selectedNFTList, approvedNFTList } = store.getState().general;
@@ -126,52 +97,25 @@ export const isALLNFTsApproved = () => {
 export const transformToDate = (date) => {
     const dateObj = new Date(date);
     const month = dateObj.toLocaleDateString("en-US", {
-        month: "short", //month: window.innerWidth > 480 ? "long" : "short",
+        month: "short",
         day: "numeric",
     });
     const year = dateObj.getFullYear();
-    // const day = month.replace(/^\D+/g, "");
-
     const tm = month + ", " + year;
     return tm;
 };
 
-// export const getFactory = async () => {
-//     // eslint-disable-next-line no-debugger
-//     // debugger;
-//     const f = store.getState().general.factory;
-//     const {
-//         general: { testnet, staging },
-//     } = store.getState();
-
-//     if (f) return f;
-//     const testnetConfig = testnet
-//         ? await ChainFactoryConfigs.TestNet()
-//         : undefined;
-//     const stagingConfig = staging
-//         ? await ChainFactoryConfigs.Staging()
-//         : undefined;
-//     const mainnetConfig =
-//         !testnetConfig && !testnetConfig
-//             ? await ChainFactoryConfigs.MainNet()
-//             : undefined;
-//     store.dispatch(
-//         setChainFactoryConfig(stagingConfig || mainnetConfig || testnetConfig)
-//     );
-//     // if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
-//     //     mainnetConfig.tronParams.provider = window.tronWeb;
-//     // }
-//     const factory = ChainFactory(
-//         testnet
-//             ? AppConfigs.TestNet()
-//             : staging
-//             ? AppConfigs.Staging()
-//             : AppConfigs.MainNet(),
-//         testnet ? testnetConfig : staging ? stagingConfig : mainnetConfig
-//     );
-//     store.dispatch(setFactory(factory));
-//     return factory;
-// };
+export const fetchXPUpdate = () => {
+    return axios
+        .get("https://xpvitaldata.herokuapp.com/last-commit")
+        .then((response) => {
+            return response.data;
+        })
+        .catch(function(error) {
+            // handle error
+            console.log(error);
+        });
+};
 
 export const getAndSetFactory = async (network) => {
     // eslint-disable-next-line no-debugger
@@ -196,12 +140,6 @@ export const getAndSetFactory = async (network) => {
     store.dispatch(setChainFactoryConfig(config));
     return factory;
 };
-
-// export const getFac = async () => {
-//     const mainnetConfig = ChainFactoryConfigs.MainNet();
-//     const factory = ChainFactory(AppConfigs.MainNet(), mainnetConfig);
-//     return factory;
-// };
 
 export const handleChainFactory = async (someChain) => {
     // debugger;
@@ -274,14 +212,6 @@ export const mintForTestNet = async (from, signer) => {
     const chain = await factory.inner(chainsConfig[from].Chain);
     const uri = await prompt();
 
-    //
-    /*console.log(
-    await p.getTransaction(
-      "0xecdcc5a3769d036ad01b85c345219df0749e68ddb85d66c06a64c0a70ca891cd"
-    )
-  );
-
-  return;*/
     try {
         const mint = await chain.mintNft(signer, {
             contract: "0x34933A5958378e7141AA2305Cdb5cDf514896035",
@@ -401,49 +331,6 @@ export function isValidHttpUrl(string) {
     }
     return url.protocol === "http:" || url.protocol === "https:";
 }
-
-export const getTronNFTs = async (wallet) => {
-    const res = await axios.get(
-        `https://apilist.tronscan.org/api/account/tokens?address=${wallet}&start=0&limit=500&hidden=0&show=3&sortType=0&sortBy=0`
-    );
-    const { total, data } = res.data;
-
-    if (total > 0) {
-        const tokens = [];
-        for await (let nft of data) {
-            const { tokenId, balance, tokenName, tokenAbbr } = nft;
-            const contract = await window.tronWeb.contract().at(tokenId);
-            const array = new Array(parseInt(balance)).fill(0).map((n, i) => i);
-            for await (let index of array) {
-                try {
-                    const token = await contract
-                        .tokenOfOwnerByIndex(wallet, index)
-                        .call();
-                    const uri = await contract
-                        .tokenURI(parseInt(token._hex))
-                        .call();
-                    const t = {
-                        uri,
-                        native: {
-                            chainId: "9",
-                            contract: tokenId,
-                            contractType: "ERC721",
-                            name: tokenName,
-                            symbol: tokenAbbr,
-                            tokenId: parseInt(token._hex),
-                            uri,
-                        },
-                    };
-                    tokens.push(t);
-                } catch (err) {
-                    console.log(err);
-                }
-            }
-        }
-        return tokens;
-    }
-    return [];
-};
 
 export const checkIfOne1 = (address) => {
     return address?.slice(0, 4) === "one1" ? true : false;

@@ -372,11 +372,11 @@ export const chains = [
         order: 0,
         tnChainId: "pulsar-2",
         image: { avatar: true, src: SCRT },
-        mainnet: biz,
+        mainnet: true,
         testNet: biz,
         test: false,
         newChain: biz,
-        coming: !biz,
+        coming: false,
     },
     {
         type: "Hedera",

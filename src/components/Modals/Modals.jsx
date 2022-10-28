@@ -33,9 +33,7 @@ export default function Modals() {
         (state) => state.general.connectClaimAlgorand
     );
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
-    const nftsToWhitelist = useSelector(
-        (state) => state.general.nftsToWhitelist
-    );
+
     const transferModalLoader = useSelector(
         (state) => state.general.transferModalLoader
     );
@@ -106,19 +104,15 @@ export default function Modals() {
             >
                 <SuccessModal />
             </Modal>
-            {nftsToWhitelist.length ? (
-                <Modal
-                    className="ts-modal"
-                    animation={false}
-                    size="sm"
-                    show={nftsToWhitelist}
-                    onHide={closeSupportModal}
-                >
-                    <TechnicalSupport />
-                </Modal>
-            ) : (
-                ""
-            )}
+            <Modal
+                className="ts-modal"
+                animation={false}
+                size="sm"
+                show={false}
+                onHide={closeSupportModal}
+            >
+                <TechnicalSupport />
+            </Modal>
             <Modal show={tronPopUp} onHide={handleTronClose}></Modal>
             <Modal
                 className="transfer-loader-modal"

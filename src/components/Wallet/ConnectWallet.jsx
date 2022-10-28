@@ -23,7 +23,7 @@ function ConnectWallet() {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
-    const [walletSearch, setWalletSearch] = useState();
+    const [walletSearch, setWalletSearch] = useState("");
 
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);

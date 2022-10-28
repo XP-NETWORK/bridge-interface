@@ -11,7 +11,6 @@ const initialState = {
     selectedNFTList: [],
     NFTListView: false,
     approvedNFTList: [],
-    nftsToWhitelist: [],
     whitelistedNFTS: [],
     txnHashArr: [],
     fees: 0,
@@ -464,9 +463,7 @@ const generalSlice = createSlice({
         setMyAlgo(state, action) {
             state.MyAlgo = action.payload;
         },
-        setNFTsToWhitelist(state, action) {
-            state.nftsToWhitelist = [...state.nftsToWhitelist, action.payload];
-        },
+
         removeFromNotWhiteListed(state) {
             state.nftsToWhitelist.shift();
         },
@@ -599,7 +596,6 @@ export const {
     setTransferLoaderModal,
     toggleNFTInfo,
     removeFromNotWhiteListed,
-    setNFTsToWhitelist,
     setReset,
     setTo,
     claimAlgorandPopup,
