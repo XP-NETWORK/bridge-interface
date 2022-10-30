@@ -227,6 +227,7 @@ export default function ButtonToTransfer() {
                 break;
             case "Cosmos":
                 result = await transferNFTFromCosmos(params);
+                ``;
                 break;
             case "VeChain":
                 result = await transferNFTFromEVM(params);
