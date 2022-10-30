@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import Web3 from "web3";
 import RedClose from "../../assets/img/icons/RedClose.svg";
 import {
   setDepartureOrDestination,
@@ -13,7 +12,6 @@ import ChainSwitch from "../Buttons/ChainSwitch";
 function DestinationChain() {
   const alert = useSelector((state) => state.general.pasteDestinationAlert);
   const to = useSelector((state) => state.general.to);
-  const bitKeep = useSelector((state) => state.general.bitKeep);
 
   const dispatch = useDispatch();
   const receiver = useSelector((state) => state.general.receiver);

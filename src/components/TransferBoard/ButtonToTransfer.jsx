@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { CHAIN_INFO } from "../values";
-import { chainsConfig } from "../values";
+
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { algoConnector } from "../../wallet/connectors";
 
@@ -19,8 +18,6 @@ import {
   setPasteDestinationAlert,
   setSelectNFTAlert,
 } from "../../store/reducers/generalSlice";
-import * as thor from "web3-providers-connex";
-import Connex from "@vechain/connex";
 import { getFromDomain } from "../../services/resolution";
 import { transferNFTFromEVM } from "../../services/chains/evm/evmService";
 import { transferNFTFromTran } from "../../services/chains/tron/tronHelper";
@@ -43,7 +40,6 @@ export default withWidget(function ButtonToTransfer({
   const receiverAddress = convert(receiver);
   const approved = useSelector((state) => state.general.approved);
   const testnet = useSelector((state) => state.general.testNet);
-  const to = useSelector((state) => state.general.to.key);
   const _to = useSelector((state) => state.general.to);
   const from = useSelector((state) => state.general.from.key);
   const _from = useSelector((state) => state.general.from);
@@ -126,13 +122,6 @@ export default withWidget(function ButtonToTransfer({
                 );
                 const signer = await provider.getSigner(account);*/
         return hederaSigner;
-      } else if (from === "Secret") {
-        const signer = window.getOfflineSigner(
-          testnet
-            ? CHAIN_INFO[from.text].tnChainId
-            : CHAIN_INFO[from.text].chainId
-        );
-        return signer;
       } else {
         let provider;
 

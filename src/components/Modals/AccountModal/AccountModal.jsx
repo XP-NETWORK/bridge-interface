@@ -1,19 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import NftSelect from "../../../assets/img/nftselect.svg";
-import Close from "../../../assets/img/icons/close.svg";
-import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg";
-import FileCopy from "../../../assets/img/icons/FileCopy.svg";
-import CopyHover from "../../../assets/img/icons/CopyHover.svg";
+
 import { useSelector, useDispatch } from "react-redux";
-import {
-  setAccountModal,
-  setReset,
-} from "../../../store/reducers/generalSlice";
-import { DetectOutsideClick } from "../../../components/helpers";
+import { setAccountModal } from "../../../store/reducers/generalSlice";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { CHAIN_INFO } from "../../../components/values";
-import { getAddEthereumChain } from "../../../wallet/chains";
+
 import Tooltip from "./Tooltip";
+import { DetectOutsideClick } from "./accountModalHelper";
 
 export default function AccountModal() {
   const dispatch = useDispatch();
@@ -26,9 +19,6 @@ export default function AccountModal() {
   const trustWallet = useSelector((state) => state.general.trustWallet);
   const onMaiar = useSelector((state) => state.general.onMaiar);
   const show = useSelector((state) => state.general.accountModal);
-  const [copyIconHover, setCopyIconHover] = useState();
-  const [copied, setCopied] = useState();
-  const from = useSelector((state) => state.general.from);
   const unstoppableDomains = useSelector(
     (state) => state.general.unstoppableDomains
   );
@@ -85,12 +75,13 @@ export default function AccountModal() {
   };
 
   DetectOutsideClick(accountModal, () => setTimeout(() => handleClose(), 100));
+  // ! ref
   return show ? (
     <div
       ref={accountModal}
       className="accountBox"
-      show={show}
-      onHide={handleClose}
+      // show={show}
+      // onHide={handleClose}
     >
       <div className="accountTit">
         Account{" "}
@@ -98,7 +89,7 @@ export default function AccountModal() {
           <div className="close-modal"></div>
         </span>
       </div>
-      <p className="">{connectedWith()}</p>
+      <p>{connectedWith()}</p>
 
       <CopyToClipboard text={currentAccount}>
         <div className="account-modal__account">
@@ -111,9 +102,6 @@ export default function AccountModal() {
         </div>
       </CopyToClipboard>
       <div className="accountBtn">
-        {/* <button onClick={() => switchNetwork()} className="changeBtn disabled">
-          Change Network
-        </button> */}
         <button
           onClick={
             widget

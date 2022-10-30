@@ -1,10 +1,11 @@
+/* eslint-disable no-case-declarations */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
 import { Chain } from "xp.network/dist/consts";
 import { ethers } from "ethers";
 import * as thor from "web3-providers-connex";
-import { WalletConnectProvider, ExtensionProvider } from "@elrondnetwork/erdjs";
+import { ExtensionProvider } from "@elrondnetwork/erdjs";
 import {
   updateApprovedNFTs,
   setApproved,
@@ -41,7 +42,6 @@ function Approval() {
   const approvedNFTList = useSelector((state) => state.general.approvedNFTList);
   const approved = useSelector((state) => state.general.approved);
   const receiver = useSelector((state) => state.general.receiver);
-  const OFF = { opacity: 0.6, pointerEvents: "none" };
   const WCProvider = useSelector((state) => state.general.WCProvider);
   const maiarProvider = useSelector((state) => state.general.maiarProvider);
 
@@ -50,7 +50,6 @@ function Approval() {
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
 
   const MyAlgo = useSelector((state) => state.general.MyAlgo);
-  const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
   const kukaiWalletSigner = useSelector(
     (state) => state.general.kukaiWalletSigner
   );
@@ -100,6 +99,7 @@ function Approval() {
   };
 
   const approveEach = async (nft, signer, chain, index) => {
+    // debugger;
     const arr = new Array(index + 1).fill(0);
     const factory = await getFactory();
     const { tokenId, contract, chainId } = nft.native;
@@ -160,16 +160,16 @@ function Approval() {
     } catch (error) {
       setFinishedApproving(arr);
       dispatch(setError(error));
-      const date = new Date();
+      const time = new Date();
       const logBody = {
         type: "Approve",
         walletAddress: wallet(),
-        time: date.toString(),
+        time,
         fromChain: from.text,
         toChain: to.text,
         message: error,
+        nfts: nft.native,
       };
-
       errorToLog(logBody);
       if (error.data) {
         console.log(error.data.message);
@@ -391,7 +391,7 @@ function Approval() {
           break;
         case "Tron":
           setFinishedApproving(selectedNFTList);
-          selectedNFTList.forEach((nft, index) => {
+          selectedNFTList.forEach((nft) => {
             dispatch(updateApprovedNFTs(nft));
           });
           break;

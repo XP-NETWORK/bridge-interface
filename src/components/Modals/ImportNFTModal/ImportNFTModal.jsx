@@ -9,17 +9,11 @@ import { CHAIN_INFO } from "../../../components/values";
 import axios from "axios";
 import "./importNFTModal.css";
 import EVMBody from "./EVMBody";
-import CosmosBody from "./CosmosBody";
-import { getFactory } from "../../../wallet/helpers";
-import { Chain } from "xp.network";
 
 export default function ImportNFTModal() {
     const dispatch = useDispatch();
     const from = useSelector((state) => state.general.from);
     const account = useSelector((state) => state.general.account);
-    const secretAccount = useSelector((state) => state.general.secretAccount);
-    const nfts = useSelector((state) => state.general.NFTList);
-    const checkWallet = useSelector((state) => state.general.checkWallet);
 
     const [validContract, setValidContract] = useState(NaN);
     const [contract, setContract] = useState();
@@ -29,7 +23,6 @@ export default function ImportNFTModal() {
     const [error, setError] = useState("");
     const validForm = contract?.length === 42 && tokenId;
     const chainNonce = CHAIN_INFO[from.text].nonce;
-    const OFF = { opacity: 0.6, pointerEvents: "none" };
 
     const handleClose = () => {
         dispatch(setImportModal(false));
@@ -80,7 +73,7 @@ export default function ImportNFTModal() {
     };
 
     return (
-        <>
+        <div>
             <Modal.Header className="border-0">
                 <Modal.Title>Import NFT</Modal.Title>
                 <span className="CloseModal">
@@ -97,11 +90,11 @@ export default function ImportNFTModal() {
                 importBlocked={importBlocked}
                 error={error}
                 validForm={validForm}
-                OFF={OFF}
+                // OFF={OFF}
                 handleClose={handleClose}
                 handleContractChange={handleContractChange}
                 handleImport={handleImport}
             />
-        </>
+        </div>
     );
 }

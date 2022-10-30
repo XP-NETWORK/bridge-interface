@@ -1,37 +1,17 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 import { connectHashpack } from "./ConnectWalletHelper";
-import { hethers } from "@hashgraph/hethers";
 import hashpack from "../../assets/img/wallet/hashpack.svg";
+import PropTypes from "prop-types";
 
 export default function HederaWallet({ wallet, close }) {
-    const from = useSelector((state) => state.general.from);
-    const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
-    const hederaAccount = useSelector((state) => state.general.hederaAccount);
-    const testnet = useSelector((state) => state.general.testNet);
-    const OFF = { opacity: 0.6, pointerEvents: "none" };
-
     const getStyle = () => {
-        // switch (true) {
-        //     case testnet:
-        //         return {};
-        //     case !testnet:
-        //         return OFF;
-        //     case temporaryFrom?.type === "Hedera" || from?.type === "Hedera":
-        //         return {};
-        //     case !temporaryFrom && !from:
-        //         return {};
-        //     default:
-        //         return OFF;
-        // }
         return { display: "none" };
     };
 
     const connectHandler = async (wallet) => {
         switch (wallet) {
             case "Hashpack":
-                const connected = await connectHashpack();
-                if (connected) close();
+                if (await connectHashpack()) close();
                 break;
             default:
                 break;
@@ -69,3 +49,7 @@ export default function HederaWallet({ wallet, close }) {
             );
     }
 }
+HederaWallet.propTypes = {
+    close: PropTypes.any,
+    wallet: PropTypes.string,
+};

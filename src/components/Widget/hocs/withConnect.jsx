@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { ReactComponent as MetaIcon } from "../../../assets/img/wallet/MetaMask.svg";
 import "../Widget.css";
 
@@ -23,8 +23,6 @@ overlay.classList.add("bannerOverlay");
 overlay.innerHTML = mobileOnlyBanner;
 
 const Connect = () => {
-  const dispatch = useDispatch();
-
   return (
     <div className="connectWalletCompDiv">
       <label className="connectWalletLabel">Connect your wallet </label>
@@ -48,7 +46,7 @@ const Connect = () => {
           return window.open(
             `/${window.location.search
               .replace("create", res?.newWidget?._id)
-              .replace(/\&name\=\S*/, "")}`,
+              .replace(/&name=\S*/, "")}`,
             "_self"
           );
           //dispatch(setWConnect(true));
@@ -61,33 +59,34 @@ const Connect = () => {
   );
 };
 
-export const withConnect = (App) => () => {
-  const { wconnect } = useSelector(({ general: { wconnect } }) => ({
-    wconnect,
-  }));
+export const withConnect = (App) =>
+  function Callback() {
+    const { wconnect } = useSelector(({ general: { wconnect } }) => ({
+      wconnect,
+    }));
 
-  const p = new URLSearchParams(window.location.search);
+    const p = new URLSearchParams(window.location.search);
 
-  const widget = p.get("widget");
-  const wsettings = p.get("wsettings");
-  const wid = p.get("wid");
+    const widget = p.get("widget");
+    const wsettings = p.get("wsettings");
+    const wid = p.get("wid");
 
-  if (wsettings && window.innerWidth <= 600) {
-    document.body.appendChild(overlay);
-    document.body.style.pointerEvents = "none";
-  }
+    if (wsettings && window.innerWidth <= 600) {
+      document.body.appendChild(overlay);
+      document.body.style.pointerEvents = "none";
+    }
 
-  if (wsettings && widget && !wconnect && wid === "create") {
-    document.body.classList.remove("widgetBlur");
-  }
+    if (wsettings && widget && !wconnect && wid === "create") {
+      document.body.classList.remove("widgetBlur");
+    }
 
-  return (
-    <>
-      {!wconnect && widget && wsettings && wid === "create" ? (
-        <Connect />
-      ) : (
-        <App />
-      )}
-    </>
-  );
-};
+    return (
+      <>
+        {!wconnect && widget && wsettings && wid === "create" ? (
+          <Connect />
+        ) : (
+          <App />
+        )}
+      </>
+    );
+  };

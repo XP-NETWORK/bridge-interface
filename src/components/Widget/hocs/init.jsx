@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { checkRgbaIn } from "../../Settings/helpers";
 
@@ -83,7 +83,7 @@ async function initFormId(id) {
     return window.open(
       `/${window.location.search
         .replace("create", res?.newWidget?._id)
-        .replace(/\&name\=\S*/, "")}`,
+        .replace(/&name=\S*/, "")}`,
       "_self"
     );
   }

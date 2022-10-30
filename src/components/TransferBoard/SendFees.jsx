@@ -2,17 +2,15 @@ import BigNumber from "bignumber.js";
 import React, { useState, useRef } from "react";
 import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useDispatch, useSelector } from "react-redux";
-import { chainsConfig, CHAIN_INFO } from "../values";
+import { chainsConfig } from "../values";
 import {
   errorToLog,
   getFactory,
   handleChainFactory,
-  setClaimablesAlgorand,
-  setNFTS,
 } from "../../wallet/helpers";
 import { setBigNumFees } from "../../store/reducers/generalSlice";
 import { useEffect } from "react";
-import { useWeb3React } from "@web3-react/core";
+
 import Wservice from "../Widget/wservice";
 
 const wservice = Wservice();
@@ -28,12 +26,9 @@ function SendFees() {
   const isToEVM = useSelector((state) => state.general.to).type === "EVM";
   const [fees, setFees] = useState("");
   const Web3Utils = require("web3-utils");
-  const [estimateInterval, setEstimateInterval] = useState();
+
   const [loading, setLoading] = useState(false);
-  const discountLeftUsd = useSelector(
-    (state) => state.discount.discountLeftUsd
-  );
-  const keplrWallet = useSelector((state) => state.general.keplrWallet);
+
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
   const secretAccount = useSelector((state) => state.general.secretAccount);
   const hederaAccount = useSelector((state) => state.general.hederaAccount);
@@ -166,15 +161,6 @@ function SendFees() {
     }
     setLoading(false);
   }
-
-  const showDiscount = (fee) => {
-    switch (true) {
-      case discountLeftUsd > 0:
-        return fee - fee * 0.25;
-      default:
-        return fee;
-    }
-  };
 
   function getNumToFix() {
     // debugger

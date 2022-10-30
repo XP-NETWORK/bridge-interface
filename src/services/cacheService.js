@@ -5,7 +5,7 @@ class CacheService {
   retryInterval = 6000;
   totalTry = 6;
   retryStatues = [429];
-  forceCache = ["nft.weedcommerce.info"];
+  forceCache = ["nft.weedcommerce.info", "tritonpass"];
 
   constructor() {
     this.axios = axios.create({
@@ -97,7 +97,9 @@ class CacheService {
           tokenId,
           contract,
         };
-      } catch (e) {}
+      } catch (e) {
+        console.log(e);
+      }
     }
 
     return {

@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, React } from "react";
 import { Modal } from "react-bootstrap";
 import moment from "moment";
 import brockenurl from "../../assets/img/brockenurl.png";
@@ -8,12 +8,9 @@ import zoomIn from "../../assets/img/icons/zoomInWhite.png";
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 
 import { ReactComponent as INFComp } from "../../assets/img/icons/Inf.svg";
-import { setupURI } from "../../wallet/helpers";
-import { getFactory, isValidHttpUrl } from "../../wallet/helpers";
+import { isValidHttpUrl } from "../../wallet/helpers";
 import { chainsConfig, CHAIN_INFO } from "../values";
-import { getUrl } from "./NFTHelper";
-import VideoOrImage from "./VideoOrImage";
-import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
 
 function NFTdetails({ nftInf, claimables, details }) {
   const {
@@ -58,30 +55,28 @@ function NFTdetails({ nftInf, claimables, details }) {
     details(true);
     e.stopPropagation();
   };
-  const toKey = useSelector((state) => state.general.to.key);
-  const fromKey = useSelector((state) => state.general.from.key);
-  const [minted, setMinted] = useState();
+
   const symbol = nftInf.symbol || native?.symbol;
 
-  const getMintedWith = async () => {
-    let mintWidth;
-    const toNonce = CHAIN_INFO[toKey].nonce;
-    const fromNonce = CHAIN_INFO[fromKey].nonce;
-    const contract = native?.contract?.toLowerCase();
-    const factory = await getFactory();
-    try {
-      mintWidth = await factory.getVerifiedContract(
-        contract,
-        toNonce,
-        fromNonce
-      );
-    } catch (error) {
-      console.log(error);
-    }
-    if (mintWidth) {
-      setMinted(mintWidth);
-    }
-  };
+  // const getMintedWith = async () => {
+  //     let mintWidth;
+  //     const toNonce = CHAIN_INFO[toKey].nonce;
+  //     const fromNonce = CHAIN_INFO[fromKey].nonce;
+  //     const contract = native?.contract?.toLowerCase();
+  //     const factory = await getFactory();
+  //     try {
+  //         mintWidth = await factory.getVerifiedContract(
+  //             contract,
+  //             toNonce,
+  //             fromNonce
+  //         );
+  //     } catch (error) {
+  //         console.log(error);
+  //     }
+  //     if (mintWidth) {
+  //         setMinted(mintWidth);
+  //     }
+  // };
 
   useEffect(() => {
     if (!claimables) {
@@ -128,7 +123,7 @@ function NFTdetails({ nftInf, claimables, details }) {
               <ModalImage
                 className="zoomInBtn"
                 small={zoomIn}
-                large={setupURI(image)}
+                large={image}
                 hideDownload={true}
                 hideZoom={true}
               />
@@ -142,10 +137,10 @@ function NFTdetails({ nftInf, claimables, details }) {
                     playsInline={true}
                     autoPlay={true}
                     loop={true}
-                    src={setupURI(animation_url)}
+                    src={animation_url}
                   />
                 ) : (
-                  <img alt="NFTss" src={setupURI(image)} />
+                  <img alt="NFTss" src={image} />
                 )
               ) : (
                 <div className="brocken-url">
@@ -240,19 +235,23 @@ function NFTdetails({ nftInf, claimables, details }) {
     </>
   );
 }
-
+NFTdetails.propTypes = {
+  nftInf: PropTypes.object,
+  claimables: PropTypes.bool,
+  details: PropTypes.any,
+};
 export default NFTdetails;
 
 function Attribute(props) {
   const { display_type, value } = props;
+
   const trait_type =
     props.trait_type ||
     props.name ||
     props.label ||
     props.key ||
     props.attribute;
-  if (trait_type === "Original Chain") {
-  }
+
   return (
     <div className="nftToken nftInfBox">
       <label>
@@ -289,3 +288,12 @@ function Attribute(props) {
     </div>
   );
 }
+Attribute.propTypes = {
+  trait_type: PropTypes.any,
+  name: PropTypes.any,
+  label: PropTypes.any,
+  key: PropTypes.any,
+  attribute: PropTypes.any,
+  display_type: PropTypes.any,
+  value: PropTypes.any,
+};

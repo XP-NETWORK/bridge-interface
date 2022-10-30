@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useState, useMemo, useRef, React } from "react";
 import { useDispatch } from "react-redux";
 import {
     setSelectedNFTList,
@@ -12,6 +12,7 @@ import "./NewNFT.css";
 import Preload from "./Preload";
 import ClaimableCard from "./ClaimableCard";
 import NotWhiteListed from "./NotWhiteListed";
+import PropTypes from "prop-types";
 
 import { parseNFT } from "../../wallet/nftParser";
 import { useDidUpdateEffect } from "../Settings/hooks";
@@ -188,3 +189,8 @@ export default function NFTcard({ nft, index, claimables }) {
         </>
     );
 }
+NFTcard.propTypes = {
+    nft: PropTypes.object,
+    index: PropTypes.string,
+    claimables: PropTypes.bool,
+};

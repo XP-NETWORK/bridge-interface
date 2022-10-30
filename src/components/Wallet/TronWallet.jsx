@@ -2,8 +2,9 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { connectTronlink } from "./ConnectWalletHelper";
 import Tron from "../../assets/img/wallet/TronLink.svg";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { setFrom } from "../../store/reducers/generalSlice";
+import PropTypes from "prop-types";
 
 export default function TronWallet({ close }) {
     const from = useSelector((state) => state.general.from);
@@ -13,11 +14,6 @@ export default function TronWallet({ close }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const location = useLocation();
-    const truePathname =
-        location.pathname === "/" ||
-        location.pathname === "/connect" ||
-        location.pathname === "/testnet/connect";
 
     const connectHandler = async () => {
         const connected = await connectTronlink();
@@ -51,3 +47,6 @@ export default function TronWallet({ close }) {
         </li>
     );
 }
+TronWallet.propTypes = {
+    close: PropTypes.any,
+};

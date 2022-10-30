@@ -8,9 +8,9 @@ import AlgorandWalletIcon from "../../assets/img/wallet/AlgorandWallet.svg";
 import MyAlgoBlue from "../../assets/img/wallet/MyAlgoBlue.svg";
 import AlgoSignerIcon from "../../assets/img/wallet/Algo Signer.png";
 import { useDispatch, useSelector } from "react-redux";
-import { id } from "ethers/lib/utils";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { setFrom } from "../../store/reducers/generalSlice";
+import PropTypes from "prop-types";
 
 export default function AlgorandWallet({ wallet, close }) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -20,11 +20,6 @@ export default function AlgorandWallet({ wallet, close }) {
   const testnet = useSelector((state) => state.general.testNet);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
-  const truePathname =
-    location.pathname === "/" ||
-    location.pathname === "/connect" ||
-    location.pathname === "/testnet/connect";
 
   const navigateToAccountRoute = () => {
     navigate(
@@ -107,3 +102,4 @@ export default function AlgorandWallet({ wallet, close }) {
     </li>
   );
 }
+AlgorandWallet.propTypes = { wallet: PropTypes.string, close: PropTypes.any };

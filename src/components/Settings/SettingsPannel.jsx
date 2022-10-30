@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactDom from "react-dom";
-import { Modal } from "react-bootstrap";
+
 import { ReactComponent as UndoComp } from "./assets/img/undo.svg";
-import { ReactComponent as RedoComp } from "./assets/img/undo.svg";
+
 import { useSelector, useDispatch } from "react-redux";
 import { copyCode, checkRgbaIn } from "./helpers";
 import { setSettings } from "../../store/reducers/settingsSlice";
 import { dragElement } from "./helpers";
 import close from "./assets/img/icon/close_light.svg";
+
+import PropTypes from "prop-types";
 
 const CodeModal = ({ children, mode, setMode, theme }) => {
   const modal = useRef(null);
@@ -41,14 +43,14 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
   const [mode, setMode] = useState(null);
   const [iframeInput, setInput] = useState("");
 
-  const { settings, wid } = useSelector(({ settings, general: { wid } }) => ({
+  const { settings } = useSelector(({ settings, general: { wid } }) => ({
     settings,
     wid,
   }));
 
   const findValue = (param) =>
     iframeInput
-      ?.match(new RegExp(`(?<=${param}\=)(.*?)(?=(\&amp\;|\&|\'|\"|$))`))
+      ?.match(new RegExp(`(?<=${param}=)(.*?)(?=(&amp;|&|'|"|$))`))
       ?.at(0);
 
   const parseIframe = () => {
@@ -112,8 +114,6 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
       })
     );
   };
-
-  class XpnetWidget extends HTMLDivElement {}
 
   return (
     portalDiv &&
@@ -183,6 +183,13 @@ const SettingsPannel = ({ theme, iframeSrc, setCopied }) => {
       portalDiv
     )
   );
+};
+
+CodeModal.propTypes = {
+  children: PropTypes.any,
+  mode: PropTypes.string,
+  setMode: PropTypes.func,
+  theme: PropTypes.string,
 };
 
 export default SettingsPannel;

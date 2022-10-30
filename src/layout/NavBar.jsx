@@ -12,7 +12,6 @@ import video from "../assets/img/nav/vid.svg";
 import xpnet from "../assets/img/nav/xpnet.svg";
 import message from "../assets/img/nav/helper.svg";
 import deposits from "../assets/img/nav/deposites.svg";
-import explorer from "../assets/img/nav/explorer.svg";
 import security from "../assets/img/nav/security.svg";
 import UserConnect from "../components/User/UserConnect";
 import { setSearchNFTList, setShowVideo } from "../store/reducers/generalSlice";
@@ -125,7 +124,9 @@ function NavBar() {
                   </Nav.Link>
                 </LinkContainer>
               )}
-              <Nav.Link
+              <a
+                rel="noreferrer"
+                className="nav-link help-center"
                 target="_blank"
                 href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"
               >
@@ -133,7 +134,7 @@ function NavBar() {
                   <img src={message} alt="" />
                 </div>
                 <div className="nav-link__txt">Help Center</div>
-              </Nav.Link>
+              </a>
               <Nav.Link
                 className="mob-link"
                 target="_blank"
@@ -233,7 +234,7 @@ function NavBar() {
                   </div>
                 </DropdownToggle>
                 <Dropdown.Menu>
-                  <div onClick={(e) => toggleNavMenu(false)}>
+                  <div onClick={() => toggleNavMenu(false)}>
                     {/* <Dropdown.Item
                                             href="https://bridge-explorer.xp.network/"
                                             target="-blank"

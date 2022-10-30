@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import Close from "../assets/img/icons/close.svg";
 import Wrong from "../assets/img/Wrong.svg";
-import { CHAIN_INFO, TESTNET_CHAIN_INFO } from "../components/values";
+
 import { useSelector } from "react-redux";
-import { getAddEthereumChain } from "../wallet/chains";
-import { useDispatch } from "react-redux";
-import { setWrongNetwork } from "../store/reducers/generalSlice";
+
 import ChangeNetworkLoader from "./innercomponents/ChangeNetworkLoader";
 
 import { ReactComponent as CloseComp } from "../assets/img/icons/close.svg";
@@ -18,9 +16,8 @@ function NFTworng() {
   };
   const from = useSelector((state) => state.general.from);
   const showWrong = useSelector((state) => state.general.wrongNetwork);
-  const account = useSelector((state) => state.general.account);
-  const dispatch = useDispatch();
-  const [loader, setLoader] = useState(false);
+
+  const [loader] = useState(false);
   const testnet = useSelector((state) => state.general.testNet);
   const widget = useSelector((state) => state.widget.widget);
 
@@ -114,7 +111,7 @@ function NFTworng() {
               <div className="switchingAcc">
                 <ChangeNetworkLoader />
                 <p className="">
-                  "Switching to" {testnet ? "TestNet" : "Mainnet"}
+                  Switching to {testnet ? "TestNet" : "Mainnet"}
                 </p>
                 <p className="">Follow instructions in MetaMask</p>
               </div>

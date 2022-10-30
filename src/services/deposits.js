@@ -1,6 +1,5 @@
 import xpnetInterface from "./artifacts/XPToken.json";
 import xpBridgeInterface from "./artifacts/xpBridgeDescount.json";
-import { ethers } from "ethers";
 import Web3 from "web3";
 import axios from "axios";
 const Contract = require("web3-eth-contract");

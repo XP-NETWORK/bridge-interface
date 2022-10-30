@@ -1,10 +1,9 @@
+import React from "react";
 import { useDispatch } from "react-redux";
 import {
   setTo,
   setFrom,
   setChangeWallet,
-  setKeplrAccount,
-  setKeplrWallet,
   setTemporaryFrom,
   setTemporaryTo,
 } from "../../store/reducers/generalSlice";
@@ -12,17 +11,12 @@ import { useSelector } from "react-redux";
 import SetDeparture from "./SetDeparture";
 import SetDestination from "./SetDestination";
 import ChainListBox from "./ChainListBox";
-import swap from "../../assets/img/icons/swapChain.svg";
 import { ReactComponent as SwapComp } from "../../assets/img/icons/swapChain.svg";
-import { TESTNET_CHAIN_INFO, CHAIN_INFO } from "../values";
-import { useWeb3React } from "@web3-react/core";
-import { usePrevious } from "../Settings/hooks";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 
 export default function ChainSelectBox() {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
-  const prevSelected = usePrevious(from);
   const to = useSelector((state) => state.general.to);
   const account = useSelector((state) => state.general.account);
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
@@ -31,7 +25,6 @@ export default function ChainSelectBox() {
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
   const tronWallet = useSelector((state) => state.general.tronWallet);
-  const testnet = useSelector((state) => state.general.testNet);
 
   const switchChains = (e) => {
     if (from.type !== to.type) {

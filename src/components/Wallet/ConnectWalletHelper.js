@@ -10,8 +10,6 @@ import * as thor from "web3-providers-connex";
 import { HashConnect } from "hashconnect";
 import { hethers } from "@hashgraph/hethers";
 import { inIframe } from "../Settings/helpers";
-import UAuth from "@uauth/js";
-import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 
 import {
@@ -49,10 +47,8 @@ import {
   setKukaiWalletSigner,
   setKeplrAccount,
   setKeplrWallet,
-  setBitKeepPopUp,
   setHederaAccount,
   setHederaWallet,
-  setVeChainThorModal,
   setSync2Connex,
   setRedirectModal,
 } from "../../store/reducers/generalSlice";
@@ -63,12 +59,6 @@ import Web3 from "web3";
 import { SecretNetworkClient } from "secretjs";
 import { setSigner } from "../../store/reducers/signersSlice";
 import { getFactory } from "../../wallet/helpers";
-
-const uauth = new UAuth({
-  clientID: "f909d011-195c-4688-92b4-2cab4c550dcc",
-  redirectUri: "http://localhost:5000/callback",
-  scope: "openid wallet",
-});
 
 export const wallets = [
   "MetaMask",
@@ -86,7 +76,7 @@ export const wallets = [
   "Trezor",
   "Hashpack",
 ];
-const { to, modalError } = store.getState();
+const { modalError } = store.getState();
 
 const hashConnect = new HashConnect(true);
 
@@ -105,7 +95,7 @@ hashConnect.pairingEvent.once(async (pairingData) => {
   store.dispatch(setSigner(signer));
 });
 
-hashConnect.foundExtensionEvent.once((walletMetadata) => {
+hashConnect.foundExtensionEvent.once(() => {
   // hashPackWalletMetaData = walletMetadata;
 });
 
@@ -127,7 +117,7 @@ export const connectHashpack = async () => {
   }
 };
 
-export const connectUnstoppable = async (close) => {
+export const connectUnstoppable = async () => {
   try {
     const provider = await web3Modal.connect();
     return provider.sendAsync();
@@ -246,7 +236,7 @@ export const connectBitKeep = async (from) => {
   }
 };
 
-export const connectMetaMask = async (activate, from, to) => {
+export const connectMetaMask = async (activate) => {
   const store1 = store.getState();
   // debugger;
 
@@ -385,7 +375,7 @@ export const connectSync2 = async (testnet) => {
 
 // Algorand blockchain connection ( AlgoSigner )
 export const connectAlgoSigner = async (testnet) => {
-  if (typeof window.AlgoSigner !== undefined) {
+  if (typeof window.AlgoSigner !== "undefined") {
     try {
       await window.AlgoSigner.connect();
       const algo = await window.AlgoSigner.accounts({

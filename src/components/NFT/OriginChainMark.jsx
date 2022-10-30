@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export default function OriginChainMark({ icon }) {
     return (
@@ -7,3 +8,7 @@ export default function OriginChainMark({ icon }) {
         </div>
     );
 }
+
+OriginChainMark.propTypes = {
+    icon: PropTypes.string,
+};

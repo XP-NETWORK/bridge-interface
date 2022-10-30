@@ -3,6 +3,8 @@ import { Dropdown } from "react-bootstrap";
 
 import { chains } from "../../../store/reducers/settingsSlice";
 
+import PropTypes from "prop-types";
+
 export const ChainSelect = ({ setChain, selectedChain, mode, hideChains }) => {
   const chainObj = chains.find(
     (c) =>
@@ -17,6 +19,7 @@ export const ChainSelect = ({ setChain, selectedChain, mode, hideChains }) => {
         {selectedChain ? (
           <div className="selectedChain">
             <img src={chainObj?.image?.src} alt={""} />
+            SliderPagination
             {mode && (
               <span className="selectedChainItem">{chainObj?.text}</span>
             )}
@@ -34,7 +37,7 @@ export const ChainSelect = ({ setChain, selectedChain, mode, hideChains }) => {
             <span
               className="dropdown-item"
               // style={{ fontFamily: font }}
-              onClick={(e) => {
+              onClick={() => {
                 setChain(undefined, mode); //deboucedSet(undefined, "fromChain");
               }}
             >
@@ -51,7 +54,7 @@ export const ChainSelect = ({ setChain, selectedChain, mode, hideChains }) => {
                 <img src={chain.image.src} alt={chain.value} />
                 <span
                   className="dropdown-item"
-                  onClick={(e) => {
+                  onClick={() => {
                     setChain(chain.text, mode);
                   }}
                 >
@@ -63,4 +66,11 @@ export const ChainSelect = ({ setChain, selectedChain, mode, hideChains }) => {
       </Dropdown.Menu>
     </Dropdown>
   );
+};
+
+ChainSelect.propTypes = {
+  selectedChain: PropTypes.string,
+  setChain: PropTypes.func,
+  hideChains: PropTypes.array,
+  mode: PropTypes.string,
 };

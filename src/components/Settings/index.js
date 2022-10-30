@@ -10,7 +10,6 @@ import ThemeSwitch from "./themeSwitch";
 import {
   chains,
   wallets,
-  newChains,
   availability,
   fonts,
 } from "../../store/reducers/settingsSlice";
@@ -45,7 +44,6 @@ function WSettings({
   onResetSettings,
   onSelectAll,
   onUnSelectAll,
-  debouncedAcc,
   chainFeesMethods,
 }) {
   const {
@@ -56,12 +54,10 @@ function WSettings({
     fontSize,
     btnColor,
     btnBackground,
-    btnRadius,
     fontFamily,
     cardBackground,
     cardBackgroundBot,
     cardColor,
-    cardRadius,
     accentColor,
     secondaryColor,
     selectedChains,
@@ -267,11 +263,6 @@ function WSettings({
                                 ) : (
                                   ""
                                 )}
-                                {false && newChains.includes(chain.value) ? (
-                                  <span>new</span>
-                                ) : (
-                                  ""
-                                )}
                               </div>
                             </li>
                           ))}
@@ -342,7 +333,7 @@ function WSettings({
                             <li
                               key={i + "wallet"}
                               className={`blockChain_item ${
-                                !chain || selectedChains.includes(chain) || true
+                                !chain || selectedChains.includes(chain)
                                   ? ""
                                   : "inactive"
                               }`}
@@ -584,7 +575,7 @@ function WSettings({
                                         className="dropdown-item"
                                         href="#"
                                         style={{ fontFamily: font }}
-                                        onClick={(e) =>
+                                        onClick={() =>
                                           deboucedSet(font, "fontFamily")
                                         }
                                       >
@@ -622,7 +613,7 @@ function WSettings({
                                     <a
                                       className="dropdown-item"
                                       href="#"
-                                      onClick={(e) =>
+                                      onClick={() =>
                                         deboucedSet("28", "fontSize")
                                       }
                                     >
@@ -633,7 +624,7 @@ function WSettings({
                                     <a
                                       className="dropdown-item"
                                       href="#"
-                                      onClick={(e) =>
+                                      onClick={() =>
                                         deboucedSet("22", "fontSize")
                                       }
                                     >
@@ -644,7 +635,7 @@ function WSettings({
                                     <a
                                       className="dropdown-item"
                                       href="#"
-                                      onClick={(e) =>
+                                      onClick={() =>
                                         deboucedSet("16", "fontSize")
                                       }
                                     >
@@ -1030,7 +1021,9 @@ function WSettings({
                                   }
                                   selectedChain={chainFees.chain}
                                   hideChains={[
-                                    ...affiliationSettings?.map((s) => s.chain),
+                                    ...(affiliationSettings?.map(
+                                      (s) => s.chain
+                                    ) || []),
                                     ...chains
                                       .filter(
                                         (c) =>
@@ -1160,6 +1153,7 @@ function WSettings({
                 href="https://xp.network/"
                 target={"_blank"}
                 className="power_by"
+                rel="noreferrer"
               >
                 <img src={power} alt="XP.Network" />
               </a>

@@ -2,7 +2,6 @@ import { useWeb3React } from "@web3-react/core";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import Web3 from "web3";
 import { ethers } from "ethers";
 import {
   setAccount,
@@ -12,12 +11,12 @@ import {
   setWalletsModal,
 } from "../../store/reducers/generalSlice";
 import { setSigner } from "../../store/reducers/signersSlice";
-import { setNFTS } from "../../wallet/helpers";
 import { chains } from "../values";
 import Identicon from "./Identicon";
 import { setDepositWalletModal } from "../../store/reducers/discountSlice";
+import PropTypes from "prop-types";
 
-export default function UserConnect({ desktop, mobile }) {
+export default function UserConnect({ mobile }) {
   const dispatch = useDispatch();
   const to = useSelector((state) => state.general.to);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
@@ -126,7 +125,7 @@ export default function UserConnect({ desktop, mobile }) {
         handleChangeAccountOrChainId(chainId);
       });
 
-      window.bitkeep?.ethereum?.on("accountsChanged", (account) => {
+      window.bitkeep?.ethereum?.on("accountsChanged", () => {
         handleChangeAccountOrChainId();
       });
     } else {
@@ -135,7 +134,7 @@ export default function UserConnect({ desktop, mobile }) {
           handleChangeAccountOrChainId(chainId);
         });
 
-        window.ethereum.on("accountsChanged", (account) => {
+        window.ethereum.on("accountsChanged", () => {
           handleChangeAccountOrChainId();
         });
       }
@@ -156,8 +155,7 @@ export default function UserConnect({ desktop, mobile }) {
     if (!account && WalletConnect) {
       active !== undefined && window.location.reload();
     }
-
-    account && dispatch(setAccount(account));
+    dispatch(setAccount(account));
   }, [active]);
 
   return (
@@ -172,3 +170,7 @@ export default function UserConnect({ desktop, mobile }) {
     </div>
   );
 }
+UserConnect.propTypes = {
+  desktop: PropTypes.bool,
+  mobile: PropTypes.bool,
+};

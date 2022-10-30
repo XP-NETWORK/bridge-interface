@@ -1,7 +1,7 @@
 //import Resolution from "@unstoppabledomains/resolution";
 import axios from "axios";
 import { CHAIN_INFO } from "../components/values";
-import { setReceiver, setAccount } from "../store/reducers/generalSlice";
+import { setReceiver } from "../store/reducers/generalSlice";
 import store from "../store/store";
 import { convertOne1 } from "../wallet/helpers";
 
@@ -38,9 +38,9 @@ export const getFromDomain = async (domain, to) => {
                 address = records[currency][`crypto.FTM.version.ERC20.address`];
                 break;
             case "ONE":
-                const add =
-                    records[currency][`crypto.ONE.version.ERC20.address`];
-                address = convertOne1(add);
+                address = convertOne1(
+                    records[currency][`crypto.ONE.version.ERC20.address`]
+                );
                 break;
             default:
                 address = records[`crypto.${currency}.address`];
@@ -54,7 +54,7 @@ export const getFromDomain = async (domain, to) => {
     return address || "undefined";
 };
 
-export const fetchData = async (domain) => {
+export const fetchData = async () => {
     var config = {
         method: "get",
         url:

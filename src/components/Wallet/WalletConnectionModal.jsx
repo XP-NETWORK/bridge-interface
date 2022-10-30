@@ -5,10 +5,8 @@ import {
     setAccountWalletModal,
     setQrCodeString,
     setTemporaryFrom,
-    setWalletsModal,
 } from "../../store/reducers/generalSlice";
 import WalletList from "./WalletList";
-import { useDidUpdateEffect } from "../Settings/hooks";
 import { useNavigate } from "react-router-dom";
 
 export default function WalletConnectionModal() {
@@ -18,13 +16,11 @@ export default function WalletConnectionModal() {
     const testnet = useSelector((state) => state.general.testNet);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
 
-    const [show, setShow] = useState();
     const dispatch = useDispatch();
     const inputElement = useRef(null);
 
     const handleClose = () => {
         if (!temporaryFrom) {
-            setShow(false);
             setWalletSearch("");
             dispatch(setAccountWalletModal(false));
             if (qrCodeImage) {

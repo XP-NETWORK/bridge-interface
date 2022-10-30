@@ -1,16 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import Sync2 from "../../assets/img/wallet/Sync2_.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { connectSync2, connectVeChainThor } from "./ConnectWalletHelper";
-import {
-  setFrom,
-  setSync2,
-  setVeChainThorModal,
-} from "../../store/reducers/generalSlice";
-import { useLocation, useNavigate } from "react-router-dom";
+import { setFrom, setSync2 } from "../../store/reducers/generalSlice";
+import { useNavigate } from "react-router-dom";
 import thorIcon from "../../assets/img/wallet/Thor.svg";
 import { useCheckMobileScreen } from "../Settings/hooks";
-// import { isMobile } from "react-device-detect";
+import PropTypes from "prop-types";
 
 export default function VeChainWallet({ close, wallet }) {
   const userAgent = navigator.userAgent;
@@ -23,7 +19,6 @@ export default function VeChainWallet({ close, wallet }) {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [connecting, setConnecting] = useState("");
 
   const isMobile = useCheckMobileScreen();
 
@@ -47,7 +42,6 @@ export default function VeChainWallet({ close, wallet }) {
 
   const handleConnect = async (w) => {
     let account;
-    setConnecting(true);
     switch (w) {
       case "VeChainThor":
         account = await connectVeChainThor(testnet);
@@ -58,7 +52,6 @@ export default function VeChainWallet({ close, wallet }) {
         break;
       default:
         account = await connectSync2(testnet);
-        if (account) setConnecting(false);
         dispatch(setSync2(account));
         close();
         if (temporaryFrom) dispatch(setFrom(temporaryFrom));
@@ -97,3 +90,7 @@ export default function VeChainWallet({ close, wallet }) {
       );
   }
 }
+VeChainWallet.propTypes = {
+  close: PropTypes.any,
+  wallet: PropTypes.string,
+};

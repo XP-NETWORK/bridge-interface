@@ -1,7 +1,9 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setImportModal } from "../../store/reducers/generalSlice";
 import { ReactComponent as ImportNft } from "../../assets/img/icons/import.svg";
+
+import { useSelector } from "react-redux";
 
 export default function ImportNFTButton() {
   const dispatch = useDispatch();

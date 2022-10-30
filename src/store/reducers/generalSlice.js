@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { isShown } from "../../components/NFT/NFTHelper";
 import { utils } from "ethers";
-import { convertTransactionHash } from "../../wallet/helpers";
 
 export const initialSecretCred = {
     contract: "",
@@ -225,7 +223,7 @@ const generalSlice = createSlice({
         setSelectedNFTList(state, action) {
             state.selectedNFTList = [...state.selectedNFTList, action.payload];
         },
-        cleanSelectedNFTList(state, action) {
+        cleanSelectedNFTList(state) {
             state.selectedNFTList = [];
         },
         removeFromSelectedNFTList(state, action) {
@@ -263,7 +261,7 @@ const generalSlice = createSlice({
         setNFTsListView(state) {
             state.NFTListView = !state.NFTListView;
         },
-        clearApprovedNFTs(state, action) {
+        clearApprovedNFTs(state) {
             state.approvedNFTList = [];
         },
         updateApprovedNFTs(state, action) {
@@ -544,6 +542,12 @@ const generalSlice = createSlice({
         addImportedNFTtoNFTlist(state, action) {
             state.NFTList = action.payload;
         },
+        setTonWallet(state, action) {
+            state.TonWallet = action.payload;
+        },
+        setTonAccount(state, action) {
+            state.tonAccount = action.payload;
+        },
     },
 });
 
@@ -661,6 +665,8 @@ export const {
     setTemporaryTo,
     setSecretCred,
     setSelectedNFTAmount,
+    setTonAccount,
+    setTonWallet,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

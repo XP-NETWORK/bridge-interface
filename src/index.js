@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -15,9 +15,7 @@ import Footer from "./layout/Footer";
 import { Web3ReactProvider } from "@web3-react/core";
 import Web3 from "web3";
 import { BrowserRouter } from "react-router-dom";
-import BackGround from "./components/MultiBG/BackGround";
 import ErrorBoundary from "./layout/ErrorBoundary";
-import OurFallbackComponent from "./layout/OurFallbackComponent";
 
 function getLibrary(provider) {
   return new Web3(provider);

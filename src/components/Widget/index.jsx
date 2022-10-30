@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Widget.css";
 
-import { setWidget, setWSettings } from "../../store/reducers/widgetSlice";
+import { setWSettings } from "../../store/reducers/widgetSlice";
 import { chains } from "../values";
 import { power } from "../Settings/assets/power.js";
 
@@ -14,6 +14,8 @@ import { compose } from "@reduxjs/toolkit";
 import WSettings from "../Settings";
 
 import { setFrom, setTo } from "../../store/reducers/generalSlice";
+
+import PropTypes from "prop-types";
 
 function Widget({ setState, widget, settings, wsettings }) {
   const { NFTList } = useSelector(({ general: { NFTList } }) => ({
@@ -88,5 +90,12 @@ function Widget({ setState, widget, settings, wsettings }) {
 
   return <>{wsettings && <WSettings />}</>;
 }
+
+Widget.propTypes = {
+  setState: PropTypes.any,
+  widget: PropTypes.bool,
+  settings: PropTypes.any,
+  wsettings: PropTypes.bool,
+};
 
 export default compose(InitWidget, withStyles)(Widget);

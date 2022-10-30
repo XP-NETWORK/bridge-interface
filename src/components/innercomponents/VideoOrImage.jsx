@@ -1,28 +1,35 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { setupURI } from "../../wallet/helpers";
-
+import PropTypes from "prop-types";
 export default function VideoOrImage({ urls }) {
+    const [tryVideo, setTryVideo] = useState(false);
+    const [urlIndex, setUrlIndex] = useState(0);
 
-    const [tryVideo, setTryVideo] = useState(false)
-    const [urlIndex, setUrlIndex] = useState(0)
+    const imgError = () => {
+        setTryVideo(true);
+    };
 
-    
-    const imgError = e => {
-        setTryVideo(true)
-    }
-
-    const videoError = e => {
-        if(urlIndex < urls.length){
-            setUrlIndex(urlIndex + 1)
-            setTryVideo(false)
+    const videoError = () => {
+        if (urlIndex < urls.length) {
+            setUrlIndex(urlIndex + 1);
+            setTryVideo(false);
         }
-    }
+    };
 
-  return (
-      tryVideo ? 
-      <video onError={e => videoError(e)} controls={false} playsInline={true} autoPlay={true} loop={true} alt="video" src={setupURI(urls[urlIndex])} />
-      : 
-      <img onError={e => imgError(e)} alt="image" src={setupURI(urls[urlIndex])} />
-  );
+    return tryVideo ? (
+        <video
+            onError={(e) => videoError(e)}
+            controls={false}
+            playsInline={true}
+            autoPlay={true}
+            loop={true}
+            alt="video"
+            src={urls[urlIndex]}
+        />
+    ) : (
+        <img onError={(e) => imgError(e)} alt="image" src={urls[urlIndex]} />
+    );
 }
+
+VideoOrImage.propTypes = {
+    urls: PropTypes.array,
+};

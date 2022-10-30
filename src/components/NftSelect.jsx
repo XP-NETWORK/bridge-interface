@@ -1,15 +1,16 @@
-import ConnectWallet from "./Wallet/ConnectWallet"
-import ChainSelectBox from "./Chains/ChainSelectBox"
+import React from "react";
+import ConnectWallet from "./Wallet/ConnectWallet";
+import ChainSelectBox from "./Chains/ChainSelectBox";
 
 function NftSelect() {
     return (
         <div className="NftSelect">
             <div className="nftSlectArea">
                 <ChainSelectBox />
-                <ConnectWallet/>
+                <ConnectWallet />
             </div>
         </div>
-    )
+    );
 }
 
-export default NftSelect
+export default NftSelect;

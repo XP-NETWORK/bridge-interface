@@ -4,7 +4,7 @@ import {
   setBigLoader,
   setRefreshSecret,
 } from "../../store/reducers/generalSlice";
-import { getAlgorandClaimables, setNFTS } from "../../wallet/helpers";
+import { setNFTS } from "../../wallet/helpers";
 import { ReactComponent as RefreshComp } from "../../assets/img/refresh.svg";
 
 export default function Refresh() {
@@ -25,7 +25,6 @@ export default function Refresh() {
   const dispatch = useDispatch();
 
   const refresh = async () => {
-    // debugger;
     if (!bigLoader || !nfts) {
       let w;
       if (
@@ -41,9 +40,6 @@ export default function Refresh() {
       else if (from.type === "Hedera") w = hederaAccount;
 
       await setNFTS(w, from.key, testNet, "refresh");
-      // if(from.type === "Algorand"){
-      //   await getAlgorandClaimables(algorandAccount)
-      // }
     }
   };
 

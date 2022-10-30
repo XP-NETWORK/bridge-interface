@@ -1,8 +1,7 @@
-import { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
 import { setDepositAlert } from "../../store/reducers/discountSlice";
-import { setAlert, setSelectNFTAlert } from "../../store/reducers/generalSlice";
 
 function DepositAlert() {
     const dispatch = useDispatch();

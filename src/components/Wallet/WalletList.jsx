@@ -1,4 +1,4 @@
-import MaiarModal from "../MaiarModal";
+import React from "react";
 import EVMWallet from "./EVMWallet";
 import TezosWallet from "./TezosWallet";
 import AlgorandWallet from "./AlgorandWallet";
@@ -7,15 +7,16 @@ import ElrondWallet from "./ElrondWallet";
 import USBWallet from "./USBWallet";
 import VeChainWallet from "./VeChainWallet";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import PropTypes from "prop-types";
 
 import CosmosWallet from "./CosmosWallet";
-import { biz } from "../values";
+
 import HederaWallet from "./HederaWallet";
 import { useLocation } from "react-router-dom";
 import Unscopables from "./Unscopables";
+// import TONWallet from "./TONWallet";
 
-export default function WalletList({ search, connected, input, discount }) {
+export default function WalletList({ connected, input, discount }) {
   const from = useSelector((state) => state.general.from);
   const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
   const location = useLocation();
@@ -419,6 +420,16 @@ export default function WalletList({ search, connected, input, discount }) {
       order: 14,
       type: "EVM",
     },
+    // {
+    //     Component: (
+    //         <TONWallet wallet={"TONWallet"} key="" close={connected} />
+    //     ),
+    //     name: "TON Wallet",
+    //     mobile: false,
+    //     desktop: true,
+    //     order: 19,
+    //     type: "TON",
+    // },
   ];
 
   // const evmWallets = walletComponents.filter(
@@ -465,3 +476,9 @@ export default function WalletList({ search, connected, input, discount }) {
       );
   }
 }
+//  WalletList({ search, connected, input })
+WalletList.propTypes = {
+  connected: PropTypes.any,
+  discount: PropTypes.bool,
+  input: PropTypes.string,
+};

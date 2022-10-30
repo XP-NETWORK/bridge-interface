@@ -21,9 +21,10 @@ import BitKeep from "../../assets/img/wallet/Bitkeep.svg";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import { setSigner } from "../../store/reducers/signersSlice";
 import { ethers } from "ethers";
+import PropTypes from "prop-types";
 
 export default function EVMWallet({ wallet, close, discount }) {
-  const { account, activate, chainId, deactivate, library } = useWeb3React();
+  const { account, activate, chainId, deactivate } = useWeb3React();
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
@@ -246,7 +247,7 @@ export default function EVMWallet({ wallet, close, discount }) {
             style={isUnsupportedBitKeepChain() ? OFF : getStyle()}
             onClick={() => connectHandler("BitKeep")}
             className="wllListItem"
-            data-wallet="BitKeep"
+            data-wallet="MetaMask"
           >
             <img src={BitKeep} alt="BitKeep Icon" />
             <p>BitKeep</p>
@@ -258,3 +259,8 @@ export default function EVMWallet({ wallet, close, discount }) {
       break;
   }
 }
+EVMWallet.propTypes = {
+  close: PropTypes.any,
+  wallet: PropTypes.string,
+  discount: PropTypes.bool,
+};

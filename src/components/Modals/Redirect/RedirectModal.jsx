@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setRedirectModal,
-  setVeChainThorModal,
-} from "../../../store/reducers/generalSlice";
+import { setRedirectModal } from "../../../store/reducers/generalSlice";
 import { Modal } from "react-bootstrap";
 import Close from "../../../assets/img/icons/close.svg";
 import CopyHover from "../../../assets/img/icons/CopyHover.svg";
@@ -21,9 +18,6 @@ export default function RedirectModal() {
   const [copied, setCopied] = useState();
   const redirectModal = useSelector((state) => state.general.redirectModal);
   const widget = useSelector((state) => state.widget.widget);
-  const handleClose = () => {
-    dispatch(setRedirectModal(false));
-  };
 
   const copy = () => {
     setCopied(true);
@@ -66,7 +60,7 @@ export default function RedirectModal() {
     <Modal
       className="bitkeep__popup"
       show={redirectModal}
-      onHide={() => handleClose()}
+      //onHide={() => handleClose()}
     >
       <Modal.Header className="border-0">
         <div className="tron-PopUp__header">
@@ -79,7 +73,7 @@ export default function RedirectModal() {
           <Modal.Title>To continue bridging:</Modal.Title>
           <span
             className="bitkeep__CloseModal"
-            onHide={() => dispatch(setRedirectModal(false))}
+            // onHide={() => dispatch(setRedirectModal(false))}
             onClick={() => dispatch(setRedirectModal(false))}
           >
             <img src={Close} alt="" />

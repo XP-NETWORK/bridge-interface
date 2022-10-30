@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, React } from "react";
 import { Container } from "react-bootstrap";
 
 import { Modal } from "react-bootstrap";
@@ -8,9 +8,6 @@ import {
   setError,
   setWrappedEGold,
   cleanSelectedNFTList,
-  setUnwrappedEGold,
-  setNFTList,
-  setSearchNFTList,
 } from "../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -35,7 +32,6 @@ import {
   useDidUpdateEffect,
 } from "../Settings/hooks";
 import { chains, chainsConfig } from "../values";
-import ImportNFTButton from "../Buttons/ImportNFTButton";
 
 import WalletConnectionModal from "../Wallet/WalletConnectionModal";
 import ChangeWalletModal from "../Modals/ChangeWallet/ChangeWalletModal";
@@ -76,10 +72,8 @@ function NFTaccount() {
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
   const wrappedEGold = useSelector((state) => state.general.wrappedEGold);
   const unwrappedEGold = useSelector((state) => state.general.unwrappedEGold);
-  const NFTListSearch = useSelector((state) => state.general.NFTListSearch);
   const signer = useSelector((state) => state.signers.signer);
 
-  const widget = useSelector((state) => state.widget.widget);
   const checkWallet = useSelector((state) => state.general.checkWallet);
 
   const accountWalletModal = useSelector(
@@ -87,6 +81,8 @@ function NFTaccount() {
   );
   const prevWrappedEGold = usePrevious(wrappedEGold);
   let balanceInterval = useRef(null);
+
+  const widget = useSelector((state) => state.widget.widget);
 
   //Anjelika - 0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE
   //Anjelika elrond - erd1s89aq3s0z6mjfpx8s85zntlfywsvj5r8nzcdujw7mx53f9et9ezq9fnrws
@@ -96,7 +92,7 @@ function NFTaccount() {
   //
   // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
 
-  async function getNFTsList(str) {
+  async function getNFTsList() {
     const useHardcoded = false;
     const hard = "0x85C25cb6e5C648117E33EF2e2Fbd93067D18b529";
     if (type === "Cosmos") return;
@@ -355,3 +351,13 @@ function NFTaccount() {
 }
 
 export default NFTaccount;
+
+/** const widget = useSelector((state) => state.widget.widget);
+ *   {widget && (
+          <>
+            <UserConnect />
+            {window.innerWidth < 760 && <UserConnect mobile={true} />}
+            <AccountModal />
+          </>
+        )}
+ */

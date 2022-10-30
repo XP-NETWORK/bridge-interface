@@ -1,53 +1,60 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+
 import { useLocation } from "react-router-dom";
 
-export const withStyles = (Wrapped) => (props) => {
-  const { widget, wsettings, settings } = props;
+import PropTypes from "prop-types";
 
-  const [chainsLengthEqauls2, setChainsLengthEqauls2] = useState(false);
-  const [isFrom, setIsFrom] = useState(false);
-  const [isTo, setIsTo] = useState(false);
+export const withStyles = (Wrapped) =>
+  function CallBack(props) {
+    CallBack.propTypes = {
+      widget: PropTypes.bool,
+      wsettings: PropTypes.bool,
+      settings: PropTypes.any,
+    };
 
-  const location = useLocation();
+    const { widget, wsettings, settings } = props;
 
-  const {
-    backgroundColor,
-    panelBackground,
-    modalBackground,
-    color,
-    fontFamily,
-    fontSize,
-    btnColor,
-    btnBackground,
-    btnRadius,
-    selectedChains,
-    selectedWallets,
-    cardBackground,
-    cardBackgroundBot,
-    cardColor,
-    cardRadius,
-    accentColor,
-    secondaryColor,
-    borderColor,
-    iconColor,
-    tooltipColor,
-    tooltipBg,
-    wallets,
-    showLink,
-    collapsed,
-    fromChain,
-    toChain,
-  } = settings;
+    const [chainsLengthEqauls2, setChainsLengthEqauls2] = useState(false);
+    const [isFrom, setIsFrom] = useState(false);
+    const [isTo, setIsTo] = useState(false);
 
-  useEffect(() => {
-    if (widget) {
-      document.getElementById("bridgeSettings")?.remove();
-      const $style = document.createElement("style");
-      $style.id = "bridgeSettings";
-      document.head.appendChild($style);
+    const location = useLocation();
 
-      $style.innerHTML = `
+    const {
+      backgroundColor,
+      panelBackground,
+      modalBackground,
+      color,
+      fontFamily,
+      fontSize,
+      btnColor,
+      btnBackground,
+      btnRadius,
+      selectedChains,
+      selectedWallets,
+      cardBackground,
+      cardBackgroundBot,
+      cardColor,
+      cardRadius,
+      accentColor,
+      secondaryColor,
+      borderColor,
+      iconColor,
+      tooltipColor,
+      tooltipBg,
+
+      showLink,
+      collapsed,
+    } = settings;
+
+    useEffect(() => {
+      if (widget) {
+        document.getElementById("bridgeSettings")?.remove();
+        const $style = document.createElement("style");
+        $style.id = "bridgeSettings";
+        document.head.appendChild($style);
+
+        $style.innerHTML = `
     
           ${
             wsettings
@@ -177,6 +184,11 @@ export const withStyles = (Wrapped) => (props) => {
             }
             .seleDepat{
               pointer-events: ${isFrom && !wsettings ? "none" : "auto"};
+            }
+
+            .seleDepat:hover, .selChain.seleDesti:hover {
+              background: ${panelBackground && panelBackground};
+              filter: brightness(112%);
             }
             .seleDesti{
               pointer-events: ${isTo && !wsettings ? "none" : "auto"};
@@ -787,18 +799,18 @@ export const withStyles = (Wrapped) => (props) => {
             }
     
             `;
-      document.body.classList.remove("widgetBlur");
-    }
-  }, [settings, location, chainsLengthEqauls2, isFrom, isTo]);
+        document.body.classList.remove("widgetBlur");
+      }
+    }, [settings, location, chainsLengthEqauls2, isFrom, isTo]);
 
-  return (
-    <Wrapped
-      {...props}
-      setState={{
-        setChainsLengthEqauls2,
-        setIsFrom,
-        setIsTo,
-      }}
-    />
-  );
-};
+    return (
+      <Wrapped
+        {...props}
+        setState={{
+          setChainsLengthEqauls2,
+          setIsFrom,
+          setIsTo,
+        }}
+      />
+    );
+  };
