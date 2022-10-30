@@ -70,7 +70,7 @@ export default function Modals() {
 
     return (
         <>
-            <Modal show={tonQRCodeModal}>
+            <Modal className="ton-modal__connect" show={tonQRCodeModal}>
                 <TonQeCodeModal />
             </Modal>
             <Modal

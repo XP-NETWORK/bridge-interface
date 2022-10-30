@@ -250,12 +250,18 @@ export const getNFTS = async (wallet, from) => {
         const unique = {};
         try {
             const allNFTs = response.filter((n) => {
-                const { tokenId, contract, chainId } = n.native;
-                if (unique[`${tokenId}_${contract.toLowerCase()}_${chainId}`]) {
+                const { tokenId, contract, chainId, address } = n.native;
+                if (
+                    unique[
+                        `${tokenId}_${contract?.toLowerCase() ||
+                            address?.toLowerCase()}_${chainId}`
+                    ]
+                ) {
                     return false;
                 } else {
                     unique[
-                        `${tokenId}_${contract.toLowerCase()}_${chainId}`
+                        `${tokenId}_${contract?.toLowerCase() ||
+                            address?.toLowerCase()}_${chainId}`
                     ] = true;
                     return true;
                 }

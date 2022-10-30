@@ -1,10 +1,14 @@
 import { TonhubConnector } from "ton-x";
 // import WalletConnect from "@walletconnect/client";
-import QRCodeModal from "@walletconnect/qrcode-modal";
-import WalletConnect from "@walletconnect/client";
+// import QRCodeModal from "@walletconnect/qrcode-modal";
+// import WalletConnect from "@walletconnect/client";
 import { TonConnectServer, AuthRequestTypes } from "@tonapps/tonconnect-server";
 import store from "../../../store/store";
-import { setQRCodeModal, setTonKeeperResponse } from "./tonStore";
+import {
+    setQRCodeModal,
+    setTonHubSession,
+    setTonKeeperResponse,
+} from "./tonStore";
 import TonWeb from "tonweb";
 import { setSigner } from "../../../store/reducers/signersSlice";
 
@@ -13,11 +17,13 @@ const tonconnect = new TonConnectServer({
     staticSecret,
 });
 
+var connector;
+
 export const connectTonKeeper = async () => {
     // eslint-disable-next-line no-debugger
     debugger;
-    const { location } = document;
-    const connectLink = `https://app.tonkeeper.com/ton-login/${location.host}`;
+    // const { location } = document;
+    const connectLink = `https://app.tonkeeper.com/ton-login/bridge.xp.network`;
     try {
         const response = tonconnect.createRequest({
             image_url:
@@ -50,64 +56,56 @@ export const awaitReadiness = async (session) => {
 };
 
 export const connectTonHub = async (testnet) => {
-    // eslint-disable-next-line no-debugger
-    debugger;
-    // const TONHUB_TIMEOUT = 5 * 60 * 1000;
-    const connector = new TonhubConnector({
+    connector = new TonhubConnector({
         network: testnet ? "sandbox" : "mainnet",
-    }); //Set network "sandbox" for testnet
-    const { location } = document;
-    const url = `${location.protocol}/${location.host}`;
+    });
+    // eslint-disable-next-line no-debugger
+    // const TONHUB_TIMEOUT = 5 * 60 * 1000;
+    //Set network "sandbox" for testnet
+    // const { location } = document;
+    // const url = `${location.protocol}/${location.host}`;
 
     let session = await connector.createNewSession({
         name: "XP.NETWORK Cross-Chain NFT Bridge",
-        url,
+        url: "https://bridge.xp.network",
     });
+    store.dispatch(setTonHubSession(session));
+    store.dispatch(setQRCodeModal(true));
 
     // const sessionId = session.id;
     // const sessionSeed = session.seed;
+};
 
-    try {
-        const wcConnector = new WalletConnect({
-            connector,
-            bridge: "https://bridge.walletconnect.org", // Required
-            qrcodeModal: QRCodeModal,
-            qrcode: true,
-            session,
-            sessionId: session.id,
-        });
+export const awaitTonHubReady = async () => {
+    // eslint-disable-next-line no-debugger
+    const { tonHubSession } = store.getState().tonStore;
+    const newSession = await connector.awaitSessionReady(
+        tonHubSession.id,
+        1 * 60 * 1000
+    ); // 5 min timeout
 
-        wcConnector.createSession();
-
-        //     // const sessionSeed = session.seed;
-        //     // const sessionLink = session.link;
-        //     session = await wcConnector.awaitSessionReady(sessionId, 5 * 60 * 1000);
-        //     if (session.state === "revoked" || session.state === "expired") {
-        //         // Handle revoked or expired session
-        //     } else if (session.state === "ready") {
-        //         // Handle session
-        //         const walletConfig = session.walletConfig;
-
-        //         // You need to persist this values to work with this connection:
-        //         // * sessionId
-        //         // * sessionSeed
-        //         // * walletConfig
-
-        //         // You can check signed wallet config on backend using TonhubConnector.verifyWalletConfig.
-        //         // walletConfig is cryptographically signed for specific session and other parameters
-        //         // you can safely use it as authentication proof without the need to sign something.
-        //         const correctConfig = TonhubConnector.verifyWalletConfig(
-        //             sessionId,
-        //             walletConfig
-        //         );
-        //         console.log(correctConfig);
-        //         // ...
-        //     } else {
-        //         throw new Error("Impossible");
-        //     }
-    } catch (error) {
-        console.log("Ton Hub:", error);
+    if (newSession.state === "revoked" || newSession.state === "expired") {
+        // Handle revoked or expired session
+    } else if (newSession.state === "ready") {
+        // Handle session
+        // const walletConfig = newSession.wallet.walletConfig;
+        // You need to persist this values to work with this connection:
+        // * sessionId
+        // * sessionSeed
+        // * walletConfig
+        // You can check signed wallet config on backend using TonhubConnector.verifyWalletConfig.
+        // walletConfig is cryptographically signed for specific session and other parameters
+        // you can safely use it as authentication proof without the need to sign something.
+        // const correctConfig = TonhubConnector.verifyWalletConfig(
+        //     tonHubSession.id,
+        //     walletConfig
+        // );
+        // console.log({ correctConfig });
+        // ...
+    } else {
+        throw new Error("Impossible");
     }
+    return newSession;
 };
 
 const createKeyPairTonWallet = async () => {
