@@ -62,6 +62,7 @@ function Approval() {
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const secretAccount = useSelector((state) => state.general.secretAccount);
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
+    const checkWallet = useSelector((state) => state.general.checkWallet);
 
     const wallet = () => {
         return (
@@ -185,134 +186,6 @@ function Approval() {
         }
     };
 
-    // const approveEach = async (nft, signer, chain, index) => {
-    //     const arr = new Array(index + 1).fill(0);
-    //     const factory = await getFactory();
-
-    //     if (
-    //         from.type !== "Elrond" &&
-    //         from.type !== "Algorand" &&
-    //         from.type !== "Tezos" &&
-    //         from.type !== "Cosmos"
-    //     ) {
-    //         try {
-    //             const { tokenId, contract, chainId } = nft.native;
-    //             const isInApprovedNFTs = approvedNFTList.filter(
-    //                 (n) =>
-    //                     n.native.tokenId === tokenId &&
-    //                     n.native.contract === contract &&
-    //                     chainId === n.native.chainId
-    //             )[0];
-    //             if (!isInApprovedNFTs) {
-    //                 try {
-    //                     const ap = await chain.approveForMinter(nft, signer);
-    //                     dispatch(updateApprovedNFTs(nft));
-    //                     setFinishedApproving(arr);
-    //                 } catch (err) {
-    //                     console.log(err);
-    //                     setFinishedApproving(arr);
-    //                     dispatch(setError(err));
-    //                 }
-    //             }
-    //         } catch (error) {
-    //             setFinishedApproving(arr);
-    //             dispatch(setError(error));
-    //             if (error.data) {
-    //                 console.log(error.data.message);
-    //                 dispatch(setError(error.data.message));
-    //             } else console.log(error);
-    //             dispatch(setError(error));
-    //             console.log(error);
-    //         }
-    //     } else if (from.type === "Cosmos") {
-    //         const signer = keplrWallet;
-    //         const factory = await getFactory();
-    //         const chain = await factory.inner(Chain.SECRET);
-    //         try {
-    //             const result = await chain.preTransfer(
-    //                 signer,
-    //                 nft,
-    //                 new BigNumber(0)
-    //             );
-    //             dispatch(updateApprovedNFTs(nft));
-    //             setFinishedApproving(arr);
-    //         } catch (e) {
-    //             console.log(e.message, "approve for cosmos");
-    //             dispatch(setApproveLoader(false));
-    //             dispatch(setError(e.message));
-    //         }
-    //     } else if (from.type === "Algorand") {
-    //         const c = await factory.inner(15);
-    //         const signer = await getAlgorandWalletSigner();
-    //         try {
-    //             await c.preTransfer(signer, nft, bigNumberFees);
-    //         } catch (error) {
-    //             console.log(error);
-    //             dispatch(setApproveLoader(false));
-    //             dispatch(setError(error.message));
-    //         }
-    //         dispatch(updateApprovedNFTs(nft));
-    //         setFinishedApproving(arr);
-    //     } else if (from.text === "Tezos") {
-    //         try {
-    //             const factory = await getFactory();
-    //             const chain = await factory.inner(Chain.TEZOS);
-    //             await chain.preTransfer(templeSigner || kukaiWalletSigner, nft);
-    //             dispatch(updateApprovedNFTs(nft));
-    //             setFinishedApproving(arr);
-    //             // }
-    //         } catch (error) {
-    //             setFinishedApproving(arr);
-    //             dispatch(
-    //                 setError(error.data ? error.data.message : error.message)
-    //             );
-    //             if (error.data) {
-    //                 console.log(error.data.message);
-    //             } else console.log(error);
-    //             console.log(error);
-    //         }
-    //     } else if (from.type === "VeChain") {
-    //         try {
-    //             await chain.preTransfer(signer, nft, bigNumberFees);
-
-    //             dispatch(updateApprovedNFTs(nft));
-    //             setFinishedApproving(arr);
-    //         } catch (error) {
-    //             setFinishedApproving(arr);
-    //             dispatch(
-    //                 setError(error.data ? error.data.message : error.message)
-    //             );
-    //             if (error.data) {
-    //                 console.log(error.data.message);
-    //             } else console.log(error);
-    //             console.log(error);
-    //         }
-    //     } else {
-    //         try {
-    //             const factory = await getFactory();
-    //             const chain = await factory.inner(Chain.ELROND);
-    //             const signer = maiarProvider || ExtensionProvider.getInstance();
-    //             console.log("inst", signer instanceof WalletConnectProvider);
-    //             const swap = await chain.preTransfer(
-    //                 signer,
-    //                 nft,
-    //                 bigNumberFees
-    //             );
-    //             dispatch(updateApprovedNFTs(nft));
-    //             setFinishedApproving(arr);
-    //         } catch (error) {
-    //             setFinishedApproving(arr);
-    //             dispatch(
-    //                 setError(error.data ? error.data.message : error.message)
-    //             );
-    //             if (error.data) {
-    //                 console.error(error.data.message);
-    //             } else console.error(error);
-    //             console.error(error);
-    //         }
-    //     }
-    // };
-
     // Since approveForMinter returns a Promise it's a good idea to await it which requires an async function
     const approveAllNFTs = async () => {
         if (!approvedLoading) {
@@ -419,12 +292,6 @@ function Approval() {
     };
 
     const onClickHandler = async () => {
-        // debugger
-        // const isSC = await checkIfReceiverIsSmartContract();
-        // if (isSC) {
-        //     dispatch(setReceiverIsSmartContractAddress(true));
-        // } else
-
         if (!receiver) {
             dispatch(setPasteDestinationAlert(true));
         } else if (selectedNFTList.length < 1) {
@@ -487,7 +354,9 @@ function Approval() {
                         style={
                             // !receiver
                             //   ? { pointerEvents: "none", opacity: "0.6" }
-                            approved ? { pointerEvents: "none" } : {}
+                            approved || checkWallet
+                                ? { pointerEvents: "none" }
+                                : {}
                         }
                         onClick={bigNumberFees ? onClickHandler : undefined}
                         htmlFor="approveCheck"

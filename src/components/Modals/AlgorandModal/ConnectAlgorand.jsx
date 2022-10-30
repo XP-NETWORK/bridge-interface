@@ -9,7 +9,6 @@ import {
     connectAlgorandWalletClaim,
     setMyAlgo,
     setAlgoAccountToClaim,
-    setTransferLoaderModal,
 } from "../../../store/reducers/generalSlice";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import AlgorandIcon from "../../../assets/img/algorandwallet.svg";
@@ -26,7 +25,6 @@ function ConnectAlgorand() {
     const handleClose = () => {
         dispatch(connectAlgorandWalletClaim(false));
     };
-    const factory = useSelector((state) => state.general.factory);
 
     const algorandAccountToOptIn = useSelector(
         (state) => state.general.algorandAccountToClaim
@@ -67,27 +65,27 @@ function ConnectAlgorand() {
         dispatch(setAlgoAccountToClaim(account["address"]));
     };
 
-    const optIn = async () => {
-        // debugger;
-        dispatch(setTransferLoaderModal(true));
-        const algorand = await factory.inner(15);
-        // const accounts = await window.AlgoSigner.accounts({ledger:"TestNet"})
-        const signer = {
-            address: algorandAccountToOptIn,
-            algoSigner: window.AlgoSigner,
-            ledger: testnet ? "TestNet" : "MainNet",
-        };
-        try {
-            const optin = await algorand.optInNft(signer, toOptIn);
-            if (optin) {
-                handleClose();
-            }
-        } catch (error) {
-            console.log(error);
-            dispatch(setTransferLoaderModal(false));
-        }
-        dispatch(setTransferLoaderModal(false));
-    };
+    // const optIn = async () => {
+    //     // debugger;
+    //     dispatch(setTransferLoaderModal(true));
+    //     const algorand = await factory.inner(15);
+    //     // const accounts = await window.AlgoSigner.accounts({ledger:"TestNet"})
+    //     const signer = {
+    //         address: algorandAccountToOptIn,
+    //         algoSigner: window.AlgoSigner,
+    //         ledger: testnet ? "TestNet" : "MainNet",
+    //     };
+    //     try {
+    //         const optin = await algorand.optInNft(signer, toOptIn);
+    //         if (optin) {
+    //             handleClose();
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //         dispatch(setTransferLoaderModal(false));
+    //     }
+    //     dispatch(setTransferLoaderModal(false));
+    // };
 
     useEffect(() => {
         const algoToOpt = new URLSearchParams(window.location.search).get(
@@ -217,7 +215,7 @@ function ConnectAlgorand() {
                                     Skip for now
                                 </div>
                                 <div
-                                    onClick={optIn}
+                                    // onClick={optIn}
                                     className="algo-opt-in__button"
                                 >
                                     Opt-in NFT

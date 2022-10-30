@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, React } from "react";
+import { useEffect, useRef, React } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { chains } from "../../components/values";
 import {
@@ -8,7 +8,6 @@ import {
     setFrom,
     setChainSearch,
     setSwitchDestination,
-    setValidatorsInf,
     setChangeWallet,
     setTemporaryFrom,
 } from "../../store/reducers/generalSlice";
@@ -20,7 +19,6 @@ import { useWeb3React } from "@web3-react/core";
 import { useLocation } from "react-router-dom";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import ScrollArrows from "./ScrollArrows";
-import axios from "axios";
 
 export default function ChainListBox() {
     const dispatch = useDispatch();
@@ -45,22 +43,10 @@ export default function ChainListBox() {
     const tronAccount = useSelector((state) => state.general.tronWallet);
     const Sync2 = useSelector((state) => state.general.Sync2);
     const { account } = useWeb3React();
-    const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const nftChainListRef = useRef(null);
 
     const [reached, setReached] = useState(false);
-
-    // !! ref
-    const checkValidators = useCallback(async () => {
-        let res;
-        try {
-            res = await axios.get("https://bridgestatus.herokuapp.com/status");
-        } catch (error) {
-            console.error(error);
-        }
-        if (res?.data) dispatch(setValidatorsInf(res.data));
-    }, [dispatch]);
 
     const handleClose = () => {
         dispatch(setChainModal(false));
@@ -215,12 +201,12 @@ export default function ChainListBox() {
         location.pathname,
     ]);
 
-    useEffect(() => {
-        const check = async () => {
-            if (!validatorsInfo) await checkValidators();
-        };
-        check();
-    }, [validatorsInfo, checkValidators]);
+    // useEffect(() => {
+    //     const check = async () => {
+    //         if (!validatorsInfo) await checkValidators();
+    //     };
+    //     check();
+    // }, [validatorsInfo, checkValidators]);
 
     useEffect(() => {
         let filteredChains = chains;

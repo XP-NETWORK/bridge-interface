@@ -6,6 +6,7 @@ import * as generalSlice from "./store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
+    checkValidators,
     fetchXPUpdate,
     getAndSetFactory,
     transformToDate,
@@ -47,6 +48,15 @@ function App() {
             const d = transformToDate(data);
             dispatch(generalSlice.setGitLatestCommit(d));
         });
+        checkValidators().then((data) => {
+            dispatch(generalSlice.setValidatorsInf(data));
+        });
+        const validatorsInt = setInterval(() => {
+            checkValidators().then((data) => {
+                dispatch(generalSlice.setValidatorsInf(data));
+            });
+        }, 10000);
+        return () => clearInterval(validatorsInt);
     }, []);
 
     useEffect(() => {
@@ -62,6 +72,10 @@ function App() {
             await getAndSetFactory(network);
         };
         if (!factory) saveFactory();
+        const hardcoded = new URLSearchParams(window.location.search).get(
+            "checkWallet"
+        );
+        dispatch(generalSlice.setCheckWallet(hardcoded));
     }, []);
 
     return (

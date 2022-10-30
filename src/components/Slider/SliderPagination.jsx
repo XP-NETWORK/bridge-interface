@@ -17,20 +17,19 @@ export default function SliderPagination({ index }) {
     };
 
     useEffect(() => {
-        let tm;
         if (step === index) {
             if (width < 100) {
-                tm = setTimeout(() => setWidth(width + 0.1), 3);
+                setTimeout(() => setWidth(width + 0.1), 3);
             } else if (width >= 100 && step + 1 < length) {
                 setWidth(0);
-                tm = setTimeout(() => dispatch(setStep(step + 1)));
+                setTimeout(() => dispatch(setStep(step + 1)));
             } else {
                 setWidth(0);
                 dispatch(setStep(0));
             }
         }
         // if (location.pathname !== "/" && location.pathname !== "/connect")
-        return () => clearTimeout(tm);
+        // return () => clearTimeout(tm);
     });
 
     useEffect(() => {

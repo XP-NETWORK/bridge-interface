@@ -29,9 +29,9 @@ export default function Modals() {
     const tonQRCodeModal = useSelector((state) => state.tonStore.qrCode);
     const show = useSelector((state) => state.general.about);
     const video = useSelector((state) => state.general.video);
-    const connectClaimAlgorand = useSelector(
-        (state) => state.general.connectClaimAlgorand
-    );
+    // const connectClaimAlgorand = useSelector(
+    //     (state) => state.general.connectClaimAlgorand
+    // );
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
 
     const transferModalLoader = useSelector(
@@ -90,7 +90,7 @@ export default function Modals() {
                 <Video />
             </Modal>
             <Modal
-                show={connectClaimAlgorand}
+                show={false}
                 onHide={closeAlgorandClaimModal}
                 animation="false"
                 className="ChainModal"

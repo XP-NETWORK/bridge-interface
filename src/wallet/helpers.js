@@ -117,9 +117,21 @@ export const fetchXPUpdate = () => {
         });
 };
 
+export const checkValidators = () => {
+    return axios
+        .get("https://bridgestatus.herokuapp.com/status")
+        .then((response) => {
+            return response.data;
+        })
+        .catch(function(error) {
+            // handle error
+            console.log(error);
+        });
+};
+
 export const getAndSetFactory = async (network) => {
     // eslint-disable-next-line no-debugger
-    debugger;
+    // debugger;
     let config;
     let factory;
     switch (network) {

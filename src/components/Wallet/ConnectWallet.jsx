@@ -1,9 +1,9 @@
-import { React, useEffect, useRef, useState } from "react";
+import { React, useRef, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
     setAlert,
-    setCheckWallet,
+    // setCheckWallet,
     setQrCodeString,
     setShowAbout,
     setShowVideo,
@@ -142,18 +142,12 @@ function ConnectWallet() {
         inputElement?.current?.focus();
     }, [show, walletsModal]);
 
-    useEffect(() => {
-        const hardcoded = new URLSearchParams(window.location.search).get(
-            "checkWallet"
-        );
-        dispatch(setCheckWallet(hardcoded));
-    }, []);
-
-    // useDidUpdateEffect(() => {
-    //     if (unstoppableDomains) {
-    //         const domain = JSON.parse(localStorage.username).value;
-    //     }
-    // }, [unstoppableDomains]);
+    // useEffect(() => {
+    //     const hardcoded = new URLSearchParams(window.location.search).get(
+    //         "checkWallet"
+    //     );
+    //     dispatch(setCheckWallet(hardcoded));
+    // }, []);
 
     return (
         <div>

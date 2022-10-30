@@ -36,9 +36,6 @@ const generalSlice = createSlice({
         setRedirectModal(state, action) {
             state.redirectModal = action.payload;
         },
-        setVeChainThorModal(state, action) {
-            state.veChainThorModal = action.payload;
-        },
         setHederaWallet(state, action) {
             state.hederaWallet = action.payload;
         },
@@ -48,15 +45,11 @@ const generalSlice = createSlice({
         setFilteredNFTSList(state, action) {
             state.filteredNFTList = action.payload;
         },
-        setReceiverIsSmartContractAddress(state, action) {
-            state.receiverIsSmartContract = action.payload;
-        },
+
         setTemporaryTo(state, action) {
             state.temporaryTo = action.payload;
         },
-        setBitKeepPopUp(state, action) {
-            state.bitKeepPopUp = action.payload;
-        },
+
         setSecretLoggedIn(state, action) {
             state.secretLoggedIn = action.payload;
         },
@@ -451,12 +444,7 @@ const generalSlice = createSlice({
         setAlgorandClaimables(state, action) {
             state.algorandClaimables = action.payload;
         },
-        removeFromClaimables(state, action) {
-            const { index } = action.payload;
-            state.algorandClaimables = state.algorandClaimables.filter(
-                (n, i) => i !== index
-            );
-        },
+
         setAlgorandWallet(state, action) {
             state.AlgorandWallet = action.payload;
         },
@@ -491,32 +479,13 @@ const generalSlice = createSlice({
         setTestNet(state, action) {
             state.testNet = action.payload;
         },
-        updateNFTs(state, action) {
-            const { whitelisted, nft } = action.payload;
-            const actionContract = nft.native.contract;
-            const actionOwner = nft.native.owner;
-            const actionTokenId = nft.native.tokenId;
-            const nfts = JSON.parse(JSON.stringify(state.NFTList));
-            nfts.forEach((n, index) => {
-                const { contract, owner, tokenId } = n.native;
-                if (
-                    contract === actionContract &&
-                    owner === actionOwner &&
-                    tokenId === actionTokenId
-                ) {
-                    state.NFTList[index].whitelisted = whitelisted;
-                }
-            });
-        },
         setInnerWidth(state, action) {
             state.innerWidth = action.payload;
         },
         setAlgoAccountToClaim(state, action) {
             state.algorandAccountToClaim = action.payload;
         },
-        setURLToOptIn(state, action) {
-            state.URLToOptIn = action.payload;
-        },
+
         setSelectNFTAlert(state, action) {
             state.selectNFTAlert = action.payload;
         },
@@ -554,12 +523,10 @@ const generalSlice = createSlice({
 export const {
     setUnstoppableDomains,
     setRedirectModal,
-    setVeChainThorModal,
     setHederaAccount,
     setHederaWallet,
     setFilteredNFTSList,
     setUnwrappedEGold,
-    setReceiverIsSmartContractAddress,
     setSecretLoggedIn,
     setKeplrAccount,
     setKeplrWallet,
@@ -573,11 +540,9 @@ export const {
     setNoApprovedNFTAlert,
     setPasteDestinationAlert,
     setSelectNFTAlert,
-    setURLToOptIn,
     setAlgoAccountToClaim,
     setSync2,
     setSync2Connex,
-    removeFromClaimables,
     setEachClaimables,
     setEachNFT,
     setUnsupportedNetwork,
@@ -585,7 +550,6 @@ export const {
     setAlert,
     setTxnStatus,
     setInnerWidth,
-    updateNFTs,
     setTempleWallet,
     setKukaiWallet,
     setTezosAccount,
@@ -659,7 +623,6 @@ export const {
     setKukaiWalletSigner,
     setCurrentNFTs,
     setAccountWalletModal,
-    setBitKeepPopUp,
     setRefreshSecret,
     setTemporaryTo,
     setSecretCred,
