@@ -799,9 +799,9 @@ export const CHAIN_INFO = {
         blockExplorerUrls: "https://explorer.elrond.com/address/",
     },
     TON: {
-        nonce: 3,
+        nonce: 0x1b,
         native: coins[1],
-        chainId: 256,
+        // chainId: 256,
         rpcUrl: "https://http-testnet.hecochain.com",
         decimals: 1e9,
         contract: "0x1247a6cB7aA2c90C6B9eF96AE3E7b269139BE06b",

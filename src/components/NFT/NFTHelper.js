@@ -119,6 +119,8 @@ export const isShown = (search, nft) =>
         .includes(search?.toLowerCase());
 
 export const isWhiteListed = async (from, nft) => {
+    // eslint-disable-next-line no-debugger
+    // debugger;
     const {
         general: { factory },
     } = store.getState();

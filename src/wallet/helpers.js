@@ -238,7 +238,7 @@ export const mintForTestNet = async (from, signer) => {
 
 export const getNFTS = async (wallet, from) => {
     // eslint-disable-next-line no-debugger
-    debugger;
+    // debugger;
     const { checkWallet, NFTList, factory } = store.getState().general;
     const chain = await factory.inner(chainsConfig[from].Chain);
     try {

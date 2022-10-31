@@ -39,11 +39,20 @@ export default function HigherTON(OriginalComponent) {
                 opacity: ifTypeIsTonOrNotSelected() ? "" : "0.6",
             };
 
+            // const tonSigner = ton.tonKpWrapper(
+            //     await TonMnemonic.mnemonicToKeyPair(
+            //       "alex alex alex alex alex".split(
+            //         " "
+            //       )
+            //     )
+            //   );
+
             switch (wallet) {
                 case "TonWallet":
+                    // styles.display = "none";
                     break;
                 case "TonKeeper":
-                    // styles.display = "none";
+                    styles.display = "none";
                     break;
                 case "TonHub":
                     // styles.display = "none";

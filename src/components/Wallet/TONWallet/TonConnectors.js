@@ -3,6 +3,7 @@ import { TonhubConnector } from "ton-x";
 // import QRCodeModal from "@walletconnect/qrcode-modal";
 // import WalletConnect from "@walletconnect/client";
 import { TonConnectServer, AuthRequestTypes } from "@tonapps/tonconnect-server";
+import tonMnemonic from "tonweb-mnemonic";
 import store from "../../../store/store";
 import {
     setQRCodeModal,
@@ -10,7 +11,7 @@ import {
     setTonKeeperResponse,
 } from "./tonStore";
 import TonWeb from "tonweb";
-import { setSigner } from "../../../store/reducers/signersSlice";
+// import { setSigner } from "../../../store/reducers/signersSlice";
 
 const staticSecret = process.env.REACT_APP_TONCONNECT_SECRET;
 const tonconnect = new TonConnectServer({
@@ -23,7 +24,7 @@ export const connectTonKeeper = async () => {
     // eslint-disable-next-line no-debugger
     debugger;
     // const { location } = document;
-    const connectLink = `https://app.tonkeeper.com/ton-login/bridge.xp.network`;
+    const connectLink = `bridge.xp.network/tonconnect`;
     try {
         const response = tonconnect.createRequest({
             image_url:
@@ -59,11 +60,6 @@ export const connectTonHub = async (testnet) => {
     connector = new TonhubConnector({
         network: testnet ? "sandbox" : "mainnet",
     });
-    // eslint-disable-next-line no-debugger
-    // const TONHUB_TIMEOUT = 5 * 60 * 1000;
-    //Set network "sandbox" for testnet
-    // const { location } = document;
-    // const url = `${location.protocol}/${location.host}`;
 
     let session = await connector.createNewSession({
         name: "XP.NETWORK Cross-Chain NFT Bridge",
@@ -71,80 +67,97 @@ export const connectTonHub = async (testnet) => {
     });
     store.dispatch(setTonHubSession(session));
     store.dispatch(setQRCodeModal(true));
-
-    // const sessionId = session.id;
-    // const sessionSeed = session.seed;
 };
 
 export const awaitTonHubReady = async () => {
     // eslint-disable-next-line no-debugger
+    // debugger;
     const { tonHubSession } = store.getState().tonStore;
     const newSession = await connector.awaitSessionReady(
         tonHubSession.id,
         1 * 60 * 1000
-    ); // 5 min timeout
+    );
 
-    if (newSession.state === "revoked" || newSession.state === "expired") {
-        // Handle revoked or expired session
-    } else if (newSession.state === "ready") {
-        // Handle session
-        // const walletConfig = newSession.wallet.walletConfig;
-        // You need to persist this values to work with this connection:
-        // * sessionId
-        // * sessionSeed
-        // * walletConfig
-        // You can check signed wallet config on backend using TonhubConnector.verifyWalletConfig.
-        // walletConfig is cryptographically signed for specific session and other parameters
-        // you can safely use it as authentication proof without the need to sign something.
-        // const correctConfig = TonhubConnector.verifyWalletConfig(
-        //     tonHubSession.id,
-        //     walletConfig
-        // );
-        // console.log({ correctConfig });
-        // ...
-    } else {
-        throw new Error("Impossible");
+    try {
+        if (newSession.state === "revoked" || newSession.state === "expired") {
+            // Handle revoked or expired session
+        } else if (newSession.state === "ready") {
+            // Handle session
+            const walletConfig = newSession.wallet.walletConfig;
+            // You need to persist this values to work with this connection:
+            // * sessionId
+            // * sessionSeed
+            // * walletConfig
+            // You can check signed wallet config on backend using TonhubConnector.verifyWalletConfig.
+            // walletConfig is cryptographically signed for specific session and other parameters
+            // you can safely use it as authentication proof without the need to sign something.
+            const correctConfig = TonhubConnector.verifyWalletConfig(
+                tonHubSession.id,
+                walletConfig
+            );
+            console.log({ correctConfig });
+            // ...
+        } else {
+            throw new Error("Impossible");
+        }
+    } catch (error) {
+        console.log(error);
+        return false;
     }
     return newSession;
 };
 
-const createKeyPairTonWallet = async () => {
-    // debugger
-    // 1. Use tonweb-mnemonic to generate random 24 words which determine the secret key.
-    // These words will be compatible with TON wallet applications, i.e. using them you will be able to import your account into third-party applications.
+// const createKeyPairTonWallet = async () => {
+//     mnemonic
+//     // debugger
+//     // 1. Use tonweb-mnemonic to generate random 24 words which determine the secret key.
+//     // These words will be compatible with TON wallet applications, i.e. using them you will be able to import your account into third-party applications.
 
-    return TonWeb.utils.nacl.sign.keyPair();
-};
+//     return TonWeb.utils.nacl.sign.keyPair();
+// };
 
 export const connectTonWallet = async () => {
-    // eslint-disable-next-line no-debugger
-    debugger;
-    const keyPair = await createKeyPairTonWallet();
+    console.log();
     const tonweb = new TonWeb();
-
-    // There are standard wallet smart contracts that everyone uses.
-    // There are several versions, at the moment wallet v3R2 is default.
-
-    const WalletClass = tonweb.wallet.all.v3R2;
-
-    const wallet = new WalletClass(tonweb.provider, {
-        publicKey: keyPair.publicKey,
-    });
-    store.dispatch(setSigner(wallet));
-
-    // Wallet address depends on key pair and smart contract code.
-    // So for different versions of the smart contract you will get a different address, although the key pair is the same.
-    // Let's get the wallet address (offline operation):
-
-    /** @type {Address} */
+    const seed = await tonMnemonic(staticSecret);
+    const keyPair = TonWeb.utils.nacl.sign.keyPair.fromSeed(seed);
+    const publicKey = keyPair.publicKey;
+    const wallet = tonweb.wallet.create({ publicKey });
     const address = await wallet.getAddress();
-
-    // The address can be displayed in different formats
-    // More on https://ton.org/docs/#/howto/step-by-step?id=_1-smart-contract-addresses
-
-    const account = address.toString(true, true, true); // print address in default format. In 99% of cases this format is used in UI applications.
-    return account;
-    // We did everything offline and there is no our wallet smart contract on the network yet.
-    // To deploy it, we first need to send Toncoins to the address.
-    // Then when you want to send Toncoins from wallet to someone else - along with this first outgoing transfer, the deployment of the wallet smart contract will happen automatically.
+    const nonBounceableAddress = address.toString(true, true, false);
+    console.log({ nonBounceableAddress });
+    console.log(await tonweb);
 };
+
+// export const connectTonWallet = async () => {
+//     // eslint-disable-next-line no-debugger
+//     debugger;
+//     const keyPair = await createKeyPairTonWallet();
+//     const tonweb = new TonWeb();
+
+//     // There are standard wallet smart contracts that everyone uses.
+//     // There are several versions, at the moment wallet v3R2 is default.
+
+//     const WalletClass = tonweb.wallet.all.v3R2;
+
+//     const wallet = new WalletClass(tonweb.provider, {
+//         publicKey: keyPair.publicKey,
+//     });
+//     store.dispatch(setSigner(wallet));
+
+//     // Wallet address depends on key pair and smart contract code.
+//     // So for different versions of the smart contract you will get a different address, although the key pair is the same.
+//     // Let's get the wallet address (offline operation):
+
+//     /** @type {Address} */
+//     const address = await wallet.getAddress();
+
+//     // The address can be displayed in different formats
+//     // More on https://ton.org/docs/#/howto/step-by-step?id=_1-smart-contract-addresses
+
+//     const account = address.toString(true, true, true); // print address in default format. In 99% of cases this format is used in UI applications.
+//     return account;
+//     // We did everything offline and there is no our wallet smart contract on the network yet.
+//     // To deploy it, we first need to send Toncoins to the address.
+//     // Then when you want to send Toncoins from wallet to someone else - along with this first outgoing transfer, the deployment of the wallet smart contract will happen automatically.
+// };

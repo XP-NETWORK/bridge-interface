@@ -365,6 +365,7 @@
     display: flex;
     align-items: center;
     color: #14161a;
+    font-size: 13px;
 }
 .ton-modal__connect .CloseModal {
     top: 13%;

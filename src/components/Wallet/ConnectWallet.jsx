@@ -78,7 +78,7 @@ function ConnectWallet() {
 
     const handleConnect = async () => {
         // eslint-disable-next-line no-debugger
-        debugger;
+        // debugger;
         let provider;
         let _chainId;
         if (bitKeep) {

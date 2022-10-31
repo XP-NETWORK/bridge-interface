@@ -25,6 +25,7 @@ import { transferNFTFromTezos } from "../../services/chains/tezos/tezosHelper";
 import { transferNFTFromCosmos } from "../../services/chains/cosmos/cosmosHelper";
 import { transferNFTFromElrond } from "../../services/chains/elrond/elrondHelper";
 import { transferNFTFromAlgorand } from "../../services/chains/algorand/algorandHelper";
+import { transferNFTFromTON } from "../../services/chains/ton/tonHelper";
 
 export default function ButtonToTransfer() {
     const kukaiWalletSigner = useSelector(
@@ -58,6 +59,8 @@ export default function ButtonToTransfer() {
         (state) => state.signers.chainFactoryConfig
     );
     const discountLeftUsd = useSelector((state) => state.discount.discount);
+    const signerSigner = useSelector((state) => state.signers.signer);
+
     const getAlgorandWalletSigner = async () => {
         const base = new MyAlgoConnect();
         if (algorandWallet) {
@@ -94,7 +97,8 @@ export default function ButtonToTransfer() {
     const getSigner = async () => {
         let signer;
         try {
-            if (from === "Tezos") {
+            if (from === "TON") return signerSigner;
+            else if (from === "Tezos") {
                 return templeSigner || kukaiWalletSigner;
             } else if (from === "Algorand") {
                 signer = await getAlgorandWalletSigner();
@@ -232,6 +236,9 @@ export default function ButtonToTransfer() {
                 break;
             case "Skale":
                 result = await transferNFTFromEVM(params);
+                break;
+            case "TON":
+                result = await transferNFTFromTON(params);
                 break;
             default:
                 break;

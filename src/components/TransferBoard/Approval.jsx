@@ -35,7 +35,7 @@ function Approval() {
     const account = useSelector((state) => state.general.account);
     const templeSigner = useSelector((state) => state.general.templeSigner);
     const bitKeep = useSelector((state) => state.general.bitKeep);
-    const hederaSigner = useSelector((state) => state.signers.signer);
+    const signerSigner = useSelector((state) => state.signers.signer);
     const algorandAccount = useSelector(
         (state) => state.general.algorandAccount
     );
@@ -103,13 +103,15 @@ function Approval() {
     };
 
     const approveEach = async (nft, signer, chain, index) => {
-        // debugger;
+        // eslint-disable-next-line no-debugger
+        debugger;
         const arr = new Array(index + 1).fill(0);
-        const { tokenId, contract, chainId } = nft.native;
+        const { tokenId, contract, address, chainId } = nft.native;
         const isInApprovedNFTs = approvedNFTList.filter(
             (n) =>
                 n.native.tokenId === tokenId &&
-                n.native.contract === contract &&
+                (n.native.contract === contract ||
+                    n.native.address === address) &&
                 chainId === n.native.chainId
         )[0];
         try {
@@ -157,6 +159,12 @@ function Approval() {
                         nft,
                         bigNumberFees
                     );
+                    dispatch(updateApprovedNFTs(nft));
+                    setFinishedApproving(arr);
+                    break;
+                case "TON":
+                    const ton = await factory.inner(Chain.TON);
+                    await ton.preTransfer(signerSigner, nft, bigNumberFees);
                     dispatch(updateApprovedNFTs(nft));
                     setFinishedApproving(arr);
                     break;
@@ -230,12 +238,12 @@ function Approval() {
                         approveEach(nft, signer, chain, index);
                     });
                     break;
-                case "Hedera":
-                    chain = await handleChainFactory(from.key);
-                    selectedNFTList.forEach((nft, index) => {
-                        approveEach(nft, hederaSigner, chain, index);
-                    });
-                    break;
+                // case "Hedera":
+                //     chain = await handleChainFactory(from.key);
+                //     selectedNFTList.forEach((nft, index) => {
+                //         approveEach(nft, hederaSigner, chain, index);
+                //     });
+                //     break;
                 case "VeChain":
                     const provider = thor.ethers.modifyProvider(
                         new ethers.providers.Web3Provider(
@@ -282,6 +290,13 @@ function Approval() {
                         dispatch(updateApprovedNFTs(nft));
                     });
                     break;
+                case "TON":
+                    setFinishedApproving(selectedNFTList);
+                    selectedNFTList.forEach((nft, index) => {
+                        approveEach(nft, signerSigner, chain, index);
+                        dispatch(updateApprovedNFTs(nft));
+                    });
+                    break;
                 default:
                     selectedNFTList.forEach((nft, index) => {
                         approveEach(nft, undefined, undefined, index);
@@ -296,9 +311,11 @@ function Approval() {
             dispatch(setPasteDestinationAlert(true));
         } else if (selectedNFTList.length < 1) {
             dispatch(setSelectNFTAlert(true));
-        } else if (!bigNumberFees) {
-            console.log("no fees need to estimate");
-        } else {
+        }
+        // else if (!bigNumberFees) {
+        //     console.log("no fees need to estimate");
+        // }
+        else {
             approveAllNFTs();
         }
     };
@@ -358,7 +375,8 @@ function Approval() {
                                 ? { pointerEvents: "none" }
                                 : {}
                         }
-                        onClick={bigNumberFees ? onClickHandler : undefined}
+                        // onClick={!bigNumberFees ? onClickHandler : undefined}
+                        onClick={onClickHandler}
                         htmlFor="approveCheck"
                     >
                         <span className="checkCircle"></span>

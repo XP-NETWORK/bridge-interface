@@ -27,6 +27,9 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setConnectedWallet(state, action) {
+            state.connectedWallet = action.payload;
+        },
         setStaging(state, action) {
             state.staging = action.payload;
         },
@@ -521,6 +524,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+    setConnectedWallet,
     setUnstoppableDomains,
     setRedirectModal,
     setHederaAccount,

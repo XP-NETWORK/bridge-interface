@@ -33,6 +33,9 @@ export default function AccountModal() {
     const secretAccount = useSelector((state) => state.general.secretAccount);
 
     const WalletConnect = useSelector((state) => state.general.WalletConnect);
+    const connectedWallet = useSelector(
+        (state) => state.general.connectedWallet
+    );
     const WCProvider = useSelector((state) => state.general.WCProvider);
     const tronLink = useSelector((state) => state.general.tronLink);
     const templeWallet = useSelector((state) => state.general.templeWallet);
@@ -58,6 +61,7 @@ export default function AccountModal() {
 
     const connectedWith = () => {
         if (MetaMask) return "MetaMask";
+        if (connectedWallet) return connectedWallet;
         else if (unstoppableDomains) return "Unstoppable Domains";
         else if (onMaiar) return "Maiar Wallet";
         else if (trustWallet) return "Trust Wallet";
