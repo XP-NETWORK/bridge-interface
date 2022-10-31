@@ -4,107 +4,126 @@ import { TonhubConnector } from "ton-x";
 // import WalletConnect from "@walletconnect/client";
 import { TonConnectServer, AuthRequestTypes } from "@tonapps/tonconnect-server";
 import tonMnemonic from "tonweb-mnemonic";
+
 import store from "../../../store/store";
 import {
-    setQRCodeModal,
-    setTonHubSession,
-    setTonKeeperResponse,
+  setQRCodeModal,
+  setTonHubSession,
+  setTonKeeperResponse,
 } from "./tonStore";
+
 import TonWeb from "tonweb";
 // import { setSigner } from "../../../store/reducers/signersSlice";
 
 const staticSecret = process.env.REACT_APP_TONCONNECT_SECRET;
-const tonconnect = new TonConnectServer({
+const tonconnect =
+  false &&
+  new TonConnectServer({
     staticSecret,
-});
+  });
 
 var connector;
 
 export const connectTonKeeper = async () => {
-    // eslint-disable-next-line no-debugger
-    debugger;
-    // const { location } = document;
-    const connectLink = `bridge.xp.network/tonconnect`;
-    try {
-        const response = tonconnect.createRequest({
-            image_url:
-                "https://ddejfvww7sqtk.cloudfront.net/images/landing/ton-nft-tegro-dog/avatar/image_d0315e1461.jpg",
-            callback_url: connectLink,
-            items: [
-                {
-                    type: AuthRequestTypes.ADDRESS,
-                    required: true,
-                },
-                {
-                    type: AuthRequestTypes.OWNERSHIP,
-                    required: true,
-                },
-            ],
-        });
-        store.dispatch(setTonKeeperResponse(response));
-        store.dispatch(setQRCodeModal(true));
-        return response;
-    } catch (error) {
-        console.log(error);
-    }
+  // eslint-disable-next-line no-debugger
+  debugger;
+  // const { location } = document;
+  const connectLink = `bridge.xp.network/tonconnect`;
+  try {
+    const response = tonconnect.createRequest({
+      image_url:
+        "https://ddejfvww7sqtk.cloudfront.net/images/landing/ton-nft-tegro-dog/avatar/image_d0315e1461.jpg",
+      callback_url: connectLink,
+      items: [
+        {
+          type: AuthRequestTypes.ADDRESS,
+          required: true,
+        },
+        {
+          type: AuthRequestTypes.OWNERSHIP,
+          required: true,
+        },
+      ],
+    });
+    store.dispatch(setTonKeeperResponse(response));
+    store.dispatch(setQRCodeModal(true));
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const awaitReadiness = async (session) => {
-    // eslint-disable-next-line no-debugger
-    debugger;
-    const response = tonconnect.decodeResponse(session);
-    console.log(response);
+  // eslint-disable-next-line no-debugger
+  debugger;
+  const response = tonconnect.decodeResponse(session);
+  console.log(response);
 };
 
 export const connectTonHub = async (testnet) => {
-    connector = new TonhubConnector({
-        network: testnet ? "sandbox" : "mainnet",
-    });
+  connector = new TonhubConnector({
+    network: testnet ? "sandbox" : "mainnet",
+  });
 
-    let session = await connector.createNewSession({
-        name: "XP.NETWORK Cross-Chain NFT Bridge",
-        url: "https://bridge.xp.network",
-    });
-    store.dispatch(setTonHubSession(session));
-    store.dispatch(setQRCodeModal(true));
+  let session = await connector.createNewSession({
+    name: "XP.NETWORK Cross-Chain NFT Bridge",
+    url: "https://bridge.xp.network",
+  });
+  store.dispatch(setTonHubSession(session));
+  store.dispatch(setQRCodeModal(true));
 };
 
 export const awaitTonHubReady = async () => {
-    // eslint-disable-next-line no-debugger
-    // debugger;
-    const { tonHubSession } = store.getState().tonStore;
-    const newSession = await connector.awaitSessionReady(
-        tonHubSession.id,
-        1 * 60 * 1000
-    );
+  // eslint-disable-next-line no-debugger
+  // debugger;
+  const { tonHubSession } = store.getState().tonStore;
+  const newSession = await connector.awaitSessionReady(
+    tonHubSession.id,
+    1 * 60 * 1000
+  );
 
-    try {
-        if (newSession.state === "revoked" || newSession.state === "expired") {
-            // Handle revoked or expired session
-        } else if (newSession.state === "ready") {
-            // Handle session
-            const walletConfig = newSession.wallet.walletConfig;
-            // You need to persist this values to work with this connection:
-            // * sessionId
-            // * sessionSeed
-            // * walletConfig
-            // You can check signed wallet config on backend using TonhubConnector.verifyWalletConfig.
-            // walletConfig is cryptographically signed for specific session and other parameters
-            // you can safely use it as authentication proof without the need to sign something.
-            const correctConfig = TonhubConnector.verifyWalletConfig(
-                tonHubSession.id,
-                walletConfig
-            );
-            console.log({ correctConfig });
-            // ...
-        } else {
-            throw new Error("Impossible");
+  try {
+    if (newSession.state === "revoked" || newSession.state === "expired") {
+      // Handle revoked or expired session
+    } else if (newSession.state === "ready") {
+      // Handle session
+      const walletConfig = newSession.wallet;
+      // You need to persist this values to work with this connection:
+      // * sessionId
+      // * sessionSeed
+      // * walletConfig
+      // You can check signed wallet config on backend using TonhubConnector.verifyWalletConfig.
+      // walletConfig is cryptographically signed for specific session and other parameters
+      // you can safely use it as authentication proof without the need to sign something.
+
+      TonhubConnector.verifyWalletConfig(tonHubSession.id, walletConfig);
+
+      console.log(walletConfig);
+      const pk = walletConfig.walletConfig.split("pk=")[1].split(",")[0];
+
+      var enc = new TextEncoder();
+
+      const wallet = new TonWeb.Wallets.all.v3R2(
+        new TonWeb.HttpProvider("https://toncenter.com/api/v2/jsonRPC"),
+        {
+          publicKey: enc.encode(pk),
+          wc: 0,
         }
-    } catch (error) {
-        console.log(error);
-        return false;
+      );
+      console.log(wallet);
+      return {
+        signer: wallet,
+        address: walletConfig.address,
+      };
+      // ...
+    } else {
+      throw new Error("Impossible");
     }
-    return newSession;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+  //return newSession;
 };
 
 // const createKeyPairTonWallet = async () => {
@@ -117,16 +136,16 @@ export const awaitTonHubReady = async () => {
 // };
 
 export const connectTonWallet = async () => {
-    console.log();
-    const tonweb = new TonWeb();
-    const seed = await tonMnemonic(staticSecret);
-    const keyPair = TonWeb.utils.nacl.sign.keyPair.fromSeed(seed);
-    const publicKey = keyPair.publicKey;
-    const wallet = tonweb.wallet.create({ publicKey });
-    const address = await wallet.getAddress();
-    const nonBounceableAddress = address.toString(true, true, false);
-    console.log({ nonBounceableAddress });
-    console.log(await tonweb);
+  const tonweb = new TonWeb();
+
+  const seed = await tonMnemonic(staticSecret);
+  const keyPair = TonWeb.utils.nacl.sign.keyPair.fromSeed(seed);
+  const publicKey = keyPair.publicKey;
+  const wallet = tonweb.wallet.create({ publicKey });
+  const address = await wallet.getAddress();
+  const nonBounceableAddress = address.toString(true, true, false);
+  console.log({ nonBounceableAddress });
+  console.log(await tonweb);
 };
 
 // export const connectTonWallet = async () => {
