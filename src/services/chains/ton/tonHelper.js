@@ -14,7 +14,7 @@ export const transferNFTFromTON = async ({
 }) => {
   console.log("🚀 ~ file: tonHelper.js ~ line 15 ~ signer", signer);
   // eslint-disable-next-line no-debugger
-  debugger;
+
   const {
     general: { factory },
   } = store.getState();
@@ -106,7 +106,7 @@ const transfer = async (
           fromChain,
           toChain,
           nft,
-          { wallet: signer.provider },
+          signer,
           receiver,
           new BigNumber("600000000"),
           mintWith

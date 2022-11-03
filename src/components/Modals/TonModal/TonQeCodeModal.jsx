@@ -3,13 +3,16 @@ import { QRCode } from "react-qrcode-logo";
 import { useDispatch, useSelector } from "react-redux";
 import { awaitTonHubReady } from "../../Wallet/TONWallet/TonConnectors";
 import tonkeeper from "../../../assets/img/wallet/tonkeeper.svg";
-import { setSigner } from "../../../store/reducers/signersSlice";
+//import { setSigner } from "../../../store/reducers/signersSlice";
 import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
 import { Modal } from "react-bootstrap";
 import {
   setConnectedWallet,
   setTonAccount,
+  setTonWallet,
 } from "../../../store/reducers/generalSlice";
+
+import { setSigner } from "../../../store/reducers/signersSlice";
 
 export default function TonQeCodeModal() {
   let interval = useRef();
@@ -18,20 +21,45 @@ export default function TonQeCodeModal() {
     (state) => state.tonStore.tonKeeperResponse
   );
   const tonHubSession = useSelector((state) => state.tonStore.tonHubSession);
+  const factory = useSelector((state) => state.general.factory);
+  const signer = useSelector((state) => state.signers.signer);
 
-  useEffect(() => {
-    let session;
+  useEffect(async () => {
+    //let session;
     try {
-      interval = setInterval(async () => {
-        if (tonHubSession) {
+      /*session = await new Promise((resolve) => {
+        interval = setInterval(async () => {
           session = await awaitTonHubReady();
-          dispatch(setSigner(session.signer));
-          dispatch(setQRCodeModal(false));
-          dispatch(setTonAccount(session.address));
-          dispatch(setConnectedWallet("TonHub"));
-        }
-        if (session) clearInterval(interval);
-      }, 1000);
+          console.log(session, "session");
+          if (session) {
+            clearInterval(interval);
+            resolve(session);
+          }
+        }, 1000);
+      });*/
+
+      const session = await awaitTonHubReady();
+
+      console.log(session);
+
+      const fromChain = await factory.inner(27);
+
+      const wrappedSigner = fromChain.tonHubWrapper({
+        wallet: signer,
+        config: {
+          seed: tonHubSession.seed,
+          appPublicKey: session.config.appPublicKey,
+          address: session.address,
+        },
+      });
+
+      console.log(wrappedSigner);
+
+      dispatch(setSigner(wrappedSigner));
+      dispatch(setTonWallet(session));
+      dispatch(setQRCodeModal(false));
+      dispatch(setTonAccount(session.address));
+      dispatch(setConnectedWallet("TonHub"));
     } catch (error) {
       clearInterval(interval);
       console.log(error);

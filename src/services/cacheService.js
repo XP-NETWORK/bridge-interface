@@ -118,6 +118,20 @@ class CacheService {
     animation_url: "",
     uri: "",
   });
+
+  parseUniqueNft(nft, whitelisted) {
+    if ("saleContractAddress" in nft.native) {
+      return {
+        ...nft,
+        metaData: {
+          image: nft.native?.image,
+          name: nft.native?.name,
+        },
+        dataLoaded: true,
+        whitelisted,
+      };
+    } else return false;
+  }
 }
 
 export default () => new CacheService();

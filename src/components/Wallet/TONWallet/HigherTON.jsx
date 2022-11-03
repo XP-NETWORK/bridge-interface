@@ -1,96 +1,108 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    setTonAccount,
-    setTonWallet,
-    setWalletsModal,
+  setTonAccount,
+  setTonWallet,
+  setWalletsModal,
 } from "../../../store/reducers/generalSlice";
-import { setWalletAddress } from "../../../store/reducers/signersSlice";
 import {
-    connectTonHub,
-    connectTonKeeper,
-    connectTonWallet,
+  setSigner,
+  setWalletAddress,
+} from "../../../store/reducers/signersSlice";
+import {
+  connectTonHub,
+  connectTonKeeper,
+  connectTonWallet,
 } from "./TonConnectors";
 
 export default function HigherTON(OriginalComponent) {
+  //
+  return function updatedComponent() {
     //
-    const updatedComponent = () => {
-        //
 
-        const dispatch = useDispatch();
-        const { from, temporaryFrom } = useSelector((state) => state.general);
+    const dispatch = useDispatch();
+    const { from, temporaryFrom } = useSelector((state) => state.general);
+    const factory = useSelector((state) => state.general.factory);
 
-        const ifTypeIsTonOrNotSelected = () => {
-            switch (true) {
-                case !from && !temporaryFrom:
-                    return true;
-                case temporaryFrom && temporaryFrom?.type === "TON":
-                    return true;
-                case from && from?.type === "TON":
-                    return true;
-                default:
-                    return false;
-            }
-        };
-
-        const getStyles = (wallet) => {
-            let styles = {
-                pointerEvents: ifTypeIsTonOrNotSelected() ? "" : "none",
-                opacity: ifTypeIsTonOrNotSelected() ? "" : "0.6",
-            };
-
-            // const tonSigner = ton.tonKpWrapper(
-            //     await TonMnemonic.mnemonicToKeyPair(
-            //       "alex alex alex alex alex".split(
-            //         " "
-            //       )
-            //     )
-            //   );
-
-            switch (wallet) {
-                case "TonWallet":
-                    // styles.display = "none";
-                    break;
-                case "TonKeeper":
-                    styles.display = "none";
-                    break;
-                case "TonHub":
-                    // styles.display = "none";
-                    break;
-                default:
-                    break;
-            }
-            return styles;
-        };
-
-        const connectWallet = async (wallet) => {
-            let account;
-            switch (wallet) {
-                case "TonWallet":
-                    account = await connectTonWallet();
-                    break;
-                case "TonKeeper":
-                    await connectTonKeeper();
-                    break;
-                case "TonHub":
-                    await connectTonHub();
-                    break;
-                default:
-                    break;
-            }
-            dispatch(setTonAccount(account));
-            dispatch(setWalletAddress(account));
-            dispatch(setTonWallet(true));
-            dispatch(setWalletsModal(false));
-        };
-
-        return (
-            <OriginalComponent
-                styles={getStyles}
-                connectWallet={connectWallet}
-            />
-        );
+    const ifTypeIsTonOrNotSelected = () => {
+      switch (true) {
+        case !from && !temporaryFrom:
+          return true;
+        case temporaryFrom && temporaryFrom?.type === "TON":
+          return true;
+        case from && from?.type === "TON":
+          return true;
+        default:
+          return false;
+      }
     };
 
-    return updatedComponent;
+    const getStyles = (wallet) => {
+      let styles = {
+        pointerEvents: ifTypeIsTonOrNotSelected() ? "" : "none",
+        opacity: ifTypeIsTonOrNotSelected() ? "" : "0.6",
+      };
+
+      // const tonSigner = ton.tonKpWrapper(
+      //     await TonMnemonic.mnemonicToKeyPair(
+      //       "alex alex alex alex alex".split(
+      //         " "
+      //       )
+      //     )
+      //   );
+
+      switch (wallet) {
+        case "TonWallet":
+          // styles.display = "none";
+          break;
+        case "TonKeeper":
+          styles.display = "none";
+          break;
+        case "TonHub":
+          // styles.display = "none";
+          break;
+        default:
+          break;
+      }
+      return styles;
+    };
+
+    const connectWallet = async (wallet) => {
+      let account;
+      let signer;
+      switch (wallet) {
+        case "TonWallet": {
+          account = await connectTonWallet();
+
+          const fromChain = await factory.inner(27);
+
+          signer = fromChain.tonWalletWrapper({
+            wallet: account.signer,
+            config: {
+              address: account.address,
+            },
+          });
+
+          break;
+        }
+        case "TonKeeper":
+          await connectTonKeeper();
+          break;
+        case "TonHub":
+          await connectTonHub();
+          break;
+        default:
+          break;
+      }
+      dispatch(setTonAccount(account.address));
+      dispatch(setWalletAddress(account.address));
+      dispatch(setSigner(signer));
+      dispatch(setTonWallet(true));
+      dispatch(setWalletsModal(false));
+    };
+
+    return (
+      <OriginalComponent styles={getStyles} connectWallet={connectWallet} />
+    );
+  };
 }

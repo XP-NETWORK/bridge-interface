@@ -127,7 +127,7 @@ function NFTaccount() {
         default:
           break;
       }
-      console.log(walletAccount, "walletAccount");
+
       await setNFTS(walletAccount, from, undefined, "account");
     } catch (error) {
       console.log(error);
@@ -157,7 +157,8 @@ function NFTaccount() {
       tezosAccount ||
       elrondAccount ||
       tronWallet ||
-      secretAccount;
+      secretAccount ||
+      tonAccount;
 
     const fromChain = await factory.inner(chainsConfig[from].Chain);
     let balance;
@@ -199,6 +200,9 @@ function NFTaccount() {
               break;
             case "Hedera":
               dispatch(setBalance(balance / 1e6));
+              break;
+            case "TON":
+              dispatch(setBalance(balance / 1e9));
               break;
             default:
               break;

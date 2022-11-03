@@ -1,9 +1,5 @@
 import { TonhubConnector } from "ton-x";
-// import WalletConnect from "@walletconnect/client";
-// import QRCodeModal from "@walletconnect/qrcode-modal";
-// import WalletConnect from "@walletconnect/client";
 import { TonConnectServer, AuthRequestTypes } from "@tonapps/tonconnect-server";
-import tonMnemonic from "tonweb-mnemonic";
 
 import store from "../../../store/store";
 import {
@@ -12,8 +8,7 @@ import {
   setTonKeeperResponse,
 } from "./tonStore";
 
-import TonWeb from "tonweb";
-// import { setSigner } from "../../../store/reducers/signersSlice";
+import { setSigner } from "../../../store/reducers/signersSlice";
 
 const staticSecret = process.env.REACT_APP_TONCONNECT_SECRET;
 const tonconnect =
@@ -26,7 +21,7 @@ var connector;
 
 export const connectTonKeeper = async () => {
   // eslint-disable-next-line no-debugger
-  debugger;
+
   // const { location } = document;
   const connectLink = `bridge.xp.network/tonconnect`;
   try {
@@ -55,7 +50,7 @@ export const connectTonKeeper = async () => {
 
 export const awaitReadiness = async (session) => {
   // eslint-disable-next-line no-debugger
-  debugger;
+
   const response = tonconnect.decodeResponse(session);
   console.log(response);
 };
@@ -69,6 +64,8 @@ export const connectTonHub = async (testnet) => {
     name: "XP.NETWORK Cross-Chain NFT Bridge",
     url: "https://bridge.xp.network",
   });
+
+  store.dispatch(setSigner(connector));
   store.dispatch(setTonHubSession(session));
   store.dispatch(setQRCodeModal(true));
 };
@@ -98,21 +95,8 @@ export const awaitTonHubReady = async () => {
 
       TonhubConnector.verifyWalletConfig(tonHubSession.id, walletConfig);
 
-      console.log(walletConfig);
-      const pk = walletConfig.walletConfig.split("pk=")[1].split(",")[0];
-
-      var enc = new TextEncoder();
-
-      const wallet = new TonWeb.Wallets.all.v3R2(
-        new TonWeb.HttpProvider("https://toncenter.com/api/v2/jsonRPC"),
-        {
-          publicKey: enc.encode(pk),
-          wc: 0,
-        }
-      );
-      console.log(wallet);
       return {
-        signer: wallet,
+        config: walletConfig,
         address: walletConfig.address,
       };
       // ...
@@ -136,7 +120,19 @@ export const awaitTonHubReady = async () => {
 // };
 
 export const connectTonWallet = async () => {
-  const tonweb = new TonWeb();
+  if (window.ton) {
+    const ton = window.ton;
+    const address = (await ton.send("ton_requestWallets"))?.at(0)?.address;
+    if (address) {
+      return {
+        address,
+        signer: ton,
+      };
+    }
+  } else {
+    alert("You have to install tonWallet extension");
+  }
+  /*const tonweb = new TonWeb();
 
   const seed = await tonMnemonic(staticSecret);
   const keyPair = TonWeb.utils.nacl.sign.keyPair.fromSeed(seed);
@@ -145,7 +141,7 @@ export const connectTonWallet = async () => {
   const address = await wallet.getAddress();
   const nonBounceableAddress = address.toString(true, true, false);
   console.log({ nonBounceableAddress });
-  console.log(await tonweb);
+  console.log(await tonweb);*/
 };
 
 // export const connectTonWallet = async () => {
