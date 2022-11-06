@@ -13,10 +13,14 @@ import {
   connectTonHub,
   connectTonKeeper,
   connectTonWallet,
+  awaitTonHubReady,
 } from "./TonConnectors";
-import { setQRCodeModal, setTonKeeperResponse } from "./tonStore";
+import { setQRCodeModal, setTonKeeperSession } from "./tonStore";
+
+import { getRightPath } from "../../../wallet/helpers";
 
 import store from "../../../store/store";
+import { useNavigate } from "react-router";
 
 export default function HigherTON(OriginalComponent) {
   //
@@ -24,7 +28,8 @@ export default function HigherTON(OriginalComponent) {
     //
 
     const dispatch = useDispatch();
-    const { from, temporaryFrom } = useSelector((state) => state.general);
+    const navigate = useNavigate();
+    const { from, to, temporaryFrom } = useSelector((state) => state.general);
     const factory = useSelector((state) => state.general.factory);
 
     const ifTypeIsTonOrNotSelected = () => {
@@ -46,23 +51,12 @@ export default function HigherTON(OriginalComponent) {
         opacity: ifTypeIsTonOrNotSelected() ? "" : "0.6",
       };
 
-      // const tonSigner = ton.tonKpWrapper(
-      //     await TonMnemonic.mnemonicToKeyPair(
-      //       "alex alex alex alex alex".split(
-      //         " "
-      //       )
-      //     )
-      //   );
-
       switch (wallet) {
         case "TonWallet":
-          // styles.display = "none";
           break;
         case "TonKeeper":
-          // styles.display = "none";
           break;
         case "TonHub":
-          // styles.display = "none";
           break;
         default:
           break;
@@ -93,7 +87,7 @@ export default function HigherTON(OriginalComponent) {
             wallet: {
               send: (deepLink) => {
                 store.dispatch(
-                  setTonKeeperResponse({
+                  setTonKeeperSession({
                     message: "Approve TON transaction",
                     deepLink,
                   })
@@ -107,10 +101,21 @@ export default function HigherTON(OriginalComponent) {
           });
 
           break;
-        case "TonHub":
-          await connectTonHub();
+        case "TonHub": {
+          signer = await connectTonHub();
+          account = await awaitTonHubReady();
+
+          signer = fromChain.tonHubWrapper({
+            wallet: signer,
+            config: {
+              seed: account.seed,
+              appPublicKey: account.config.appPublicKey,
+              address: account.address,
+            },
+          });
 
           break;
+        }
         default:
           break;
       }
@@ -120,6 +125,10 @@ export default function HigherTON(OriginalComponent) {
       dispatch(setTonWallet(true));
       dispatch(setWalletsModal(false));
       dispatch(setQRCodeModal(false));
+
+      if (from && to) {
+        navigate(getRightPath("TON"));
+      }
     };
 
     return (

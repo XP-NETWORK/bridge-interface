@@ -109,7 +109,7 @@ const transfer = async (
           nft,
           signer,
           receiver,
-          new BigNumber("600000000"),
+          new BigNumber(fee),
           mintWith
         );
         return result;
@@ -131,3 +131,7 @@ const transfer = async (
 
   store.dispatch(setQRCodeModal(false));
 };
+
+/****
+ * te6cckEBAgEAjwABZV/MPRQAAAAAAAAAAIAe4sTnltCMuiRBlmFtHmE2XI/GoQbKgwBGRBXvIEvIIKEIwTtqkAEArgcAKjB4NDdCZjBkYWU2ZTkyZTQ5YTNjOTVlNWIwYzcxNDIyODkxRDVjZDRGRTB4MmQ2OTA3ZGYzMTZENTk2MGU5MDY0NDEyYTcxODEwQTdjOUQ4ZjRjN2VzKPU=
+ */
