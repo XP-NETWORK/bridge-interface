@@ -25,6 +25,7 @@ export default function TonQeCodeModal() {
   const signer = useSelector((state) => state.signers.signer);
 
   useEffect(async () => {
+    if (tonKeeperResponse) return;
     //let session;
     try {
       /*session = await new Promise((resolve) => {
@@ -72,7 +73,9 @@ export default function TonQeCodeModal() {
     <>
       <Modal.Header className="border-0">
         <div className="tron-PopUp__header">
-          <Modal.Title>Connect TonHub</Modal.Title>
+          <Modal.Title>
+            {tonKeeperResponse?.message || "Connect TonHub"}
+          </Modal.Title>
           <span
             className="CloseModal"
             onClick={() => dispatch(setQRCodeModal(false))}
@@ -80,7 +83,10 @@ export default function TonQeCodeModal() {
             <div className="close-modal"></div>
           </span>
           <ol>
-            <li>Open Tonhub application</li>
+            <li>
+              Open {tonKeeperResponse?.message ? "TonKeeper" : "TonHub"}{" "}
+              application
+            </li>
             <li>
               Touch{" "}
               <b>
@@ -112,7 +118,9 @@ export default function TonQeCodeModal() {
         className="ton-qrcode"
         value={
           tonKeeperResponse
-            ? `https://app.tonkeeper.com/ton-login/${tonKeeperResponse?.v1.callback_url}/tk/?id=${tonKeeperResponse?.v1.session}/init`
+            ? tonKeeperResponse.deepLink
+              ? tonKeeperResponse.deepLink
+              : `https://app.tonkeeper.com/ton-login/support-bot-xp.herokuapp.com/tk?userId=${tonKeeperResponse.userId}`
             : tonHubSession?.link
         }
         size={256}

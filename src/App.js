@@ -32,7 +32,7 @@ function App() {
     );
 
     const trxs = await ton.provider.getTransactions(
-      "EQBABLUFRe95jzxV8E_XzTsLtK-3eggjs5eVXviA4VLY0UMW",
+      "EQCllgpGmqhhjcrfLoQ7ozsKufa2KFeU3it3f8hn9tG_pDgz",
       20
     );
 

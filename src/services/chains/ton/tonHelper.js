@@ -2,6 +2,7 @@ import { chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
 import { errorToLog } from "../../../wallet/helpers";
 import { setError } from "../../../store/reducers/generalSlice";
+import { setQRCodeModal } from "../../../components/Wallet/TONWallet/tonStore";
 import BigNumber from "bignumber.js";
 
 export const transferNFTFromTON = async ({
@@ -127,4 +128,6 @@ const transfer = async (
     };
     errorToLog(errBogy);
   }
+
+  store.dispatch(setQRCodeModal(false));
 };

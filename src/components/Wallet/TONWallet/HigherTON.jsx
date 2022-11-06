@@ -14,6 +14,9 @@ import {
   connectTonKeeper,
   connectTonWallet,
 } from "./TonConnectors";
+import { setQRCodeModal, setTonKeeperResponse } from "./tonStore";
+
+import store from "../../../store/store";
 
 export default function HigherTON(OriginalComponent) {
   //
@@ -56,7 +59,7 @@ export default function HigherTON(OriginalComponent) {
           // styles.display = "none";
           break;
         case "TonKeeper":
-          styles.display = "none";
+          // styles.display = "none";
           break;
         case "TonHub":
           // styles.display = "none";
@@ -70,11 +73,10 @@ export default function HigherTON(OriginalComponent) {
     const connectWallet = async (wallet) => {
       let account;
       let signer;
+      const fromChain = await factory.inner(27);
       switch (wallet) {
         case "TonWallet": {
           account = await connectTonWallet();
-
-          const fromChain = await factory.inner(27);
 
           signer = fromChain.tonWalletWrapper({
             wallet: account.signer,
@@ -86,10 +88,28 @@ export default function HigherTON(OriginalComponent) {
           break;
         }
         case "TonKeeper":
-          await connectTonKeeper();
+          account = await connectTonKeeper();
+          signer = fromChain.tonKeeperWrapper({
+            wallet: {
+              send: (deepLink) => {
+                store.dispatch(
+                  setTonKeeperResponse({
+                    message: "Approve TON transaction",
+                    deepLink,
+                  })
+                );
+                store.dispatch(setQRCodeModal(true));
+              },
+            },
+            config: {
+              ...account.signer,
+            },
+          });
+
           break;
         case "TonHub":
           await connectTonHub();
+
           break;
         default:
           break;
@@ -99,6 +119,7 @@ export default function HigherTON(OriginalComponent) {
       dispatch(setSigner(signer));
       dispatch(setTonWallet(true));
       dispatch(setWalletsModal(false));
+      dispatch(setQRCodeModal(false));
     };
 
     return (

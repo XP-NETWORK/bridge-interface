@@ -1,5 +1,7 @@
 import { TonhubConnector } from "ton-x";
-import { TonConnectServer, AuthRequestTypes } from "@tonapps/tonconnect-server";
+import {
+  TonConnectServer /*AuthRequestTypes*/,
+} from "@tonapps/tonconnect-server";
 
 import store from "../../../store/store";
 import {
@@ -10,21 +12,46 @@ import {
 
 import { setSigner } from "../../../store/reducers/signersSlice";
 
+import axios from "axios";
+
+function getRandomArbitrary(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 const staticSecret = process.env.REACT_APP_TONCONNECT_SECRET;
-const tonconnect =
-  false &&
-  new TonConnectServer({
-    staticSecret,
-  });
+const tonconnect = new TonConnectServer({
+  staticSecret,
+});
 
 var connector;
 
 export const connectTonKeeper = async () => {
-  // eslint-disable-next-line no-debugger
+  const api = axios.create({
+    baseURL: "https://support-bot-xp.herokuapp.com",
+  });
 
-  // const { location } = document;
-  const connectLink = `bridge.xp.network/tonconnect`;
-  try {
+  const userId = getRandomArbitrary(1000, 99999);
+
+  store.dispatch(
+    setTonKeeperResponse({ userId, message: "Connect TonKeeper" })
+  );
+  store.dispatch(setQRCodeModal(true));
+
+  let session = undefined;
+  const now = Date.now();
+  const expried = 5 * 60 * 1000;
+
+  while (!session && Date.now() < now + expried) {
+    await new Promise((r) => setTimeout(r, 3000));
+    session = await (await api.get(`/getSession/${userId}`)).data;
+  }
+
+  return {
+    signer: session,
+    address: session.address,
+  };
+  //const connectLink = win;
+  /*try {
     const response = tonconnect.createRequest({
       image_url:
         "https://ddejfvww7sqtk.cloudfront.net/images/landing/ton-nft-tegro-dog/avatar/image_d0315e1461.jpg",
@@ -40,12 +67,14 @@ export const connectTonKeeper = async () => {
         },
       ],
     });
+
+    console.log(response);
     store.dispatch(setTonKeeperResponse(response));
     store.dispatch(setQRCodeModal(true));
     return response;
   } catch (error) {
     console.log(error);
-  }
+  }*/
 };
 
 export const awaitReadiness = async (session) => {
