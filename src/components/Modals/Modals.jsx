@@ -21,6 +21,7 @@ import TronConnectionErrMod from "./TronModals/TronConnectionErrMod";
 import RedirectModal from "./Redirect/RedirectModal";
 import "../ApproveLoader/Planet.css";
 import Error from "../innercomponents/Error";
+import { setQRCodeModal } from "../Wallet/TONWallet/tonStore";
 
 export default function Modals() {
     const dispatch = useDispatch();
@@ -70,7 +71,11 @@ export default function Modals() {
 
     return (
         <>
-            <Modal className="ton-modal__connect" show={tonQRCodeModal}>
+            <Modal
+                className="ton-modal__connect"
+                show={tonQRCodeModal}
+                onHide={() => dispatch(setQRCodeModal(false))}
+            >
                 <TonQeCodeModal />
             </Modal>
             <Modal

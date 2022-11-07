@@ -9,6 +9,7 @@ import {
 } from "./tonStore";
 
 import axios from "axios";
+import { setWalletsModal } from "../../../store/reducers/generalSlice";
 
 function getRandomArbitrary(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -31,6 +32,7 @@ export const connectTonKeeper = async () => {
     store.dispatch(
         setTonKeeperSession({ userId, message: "Connect TonKeeper" })
     );
+    store.dispatch(setWalletsModal(false));
     store.dispatch(setQRCodeModal(true));
 
     let session = undefined;
@@ -70,6 +72,7 @@ export const connectTonHub = async (testnet) => {
 
     // store.dispatch(setSigner(connector));
     store.dispatch(setTonHubSession(session));
+    store.dispatch(setWalletsModal(false));
     store.dispatch(setQRCodeModal(true));
 
     return connector;
