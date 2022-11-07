@@ -16,7 +16,7 @@ import { chains } from "./components/values";
 import "./components/Modals/Modal.css";
 import Modals from "./components/Modals/Modals";
 
-// import TonWeb from "tonweb";
+import TonWeb from "tonweb";
 
 function App() {
     const dispatch = useDispatch();
@@ -24,17 +24,19 @@ function App() {
     //const signer = useSelector((state) => state.signers.signer);
 
     useEffect(async () => {
-        // const ton = new TonWeb(
-        //     new TonWeb.HttpProvider("https://toncenter.com/api/v2/jsonRPC", {
-        //         apiKey:
-        //             "05645d6b549f33bf80cee8822bd63df720c6781bd00020646deb7b2b2cd53b73",
-        //     })
-        // );
-        // const trxs = await ton.provider.getTransactions(
-        //     "EQBABLUFRe95jzxV8E_XzTsLtK-3eggjs5eVXviA4VLY0UMW",
-        //     20
-        // );
-        // console.log(trxs);
+        const ton = new TonWeb(
+            new TonWeb.HttpProvider("https://toncenter.com/api/v2/jsonRPC", {
+                apiKey:
+                    "05645d6b549f33bf80cee8822bd63df720c6781bd00020646deb7b2b2cd53b73",
+            })
+        );
+
+        const trxs = await ton.provider.getTransactions(
+            "EQA-k0RcR-F5Pyw8aUQpqtwx_A1bFSfmw-pQ2fpM3JihULTb",
+            20
+        );
+
+        console.log(trxs);
     }, []);
 
     useEffect(() => {

@@ -2,6 +2,7 @@ import { chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
 import { errorToLog } from "../../../wallet/helpers";
 import { setError } from "../../../store/reducers/generalSlice";
+import { setQRCodeModal } from "../../../components/Wallet/TONWallet/tonStore";
 import BigNumber from "bignumber.js";
 
 export const transferNFTFromTON = async ({
@@ -108,7 +109,7 @@ const transfer = async (
           nft,
           signer,
           receiver,
-          new BigNumber("600000000"),
+          new BigNumber(fee),
           mintWith
         );
         return result;
@@ -127,4 +128,10 @@ const transfer = async (
     };
     errorToLog(errBogy);
   }
+
+  store.dispatch(setQRCodeModal(false));
 };
+
+/****
+ * te6cckEBAgEAjwABZV/MPRQAAAAAAAAAAIAe4sTnltCMuiRBlmFtHmE2XI/GoQbKgwBGRBXvIEvIIKEIwTtqkAEArgcAKjB4NDdCZjBkYWU2ZTkyZTQ5YTNjOTVlNWIwYzcxNDIyODkxRDVjZDRGRTB4MmQ2OTA3ZGYzMTZENTk2MGU5MDY0NDEyYTcxODEwQTdjOUQ4ZjRjN2VzKPU=
+ */

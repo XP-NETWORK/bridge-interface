@@ -422,16 +422,26 @@ export const errorToLog = async (error) => {
   }
 };
 
-export const getRightPath = () => {
+export const getRightPath = (checkFrom, checkTo) => {
   const {
-    general: { testNet, staging },
+    general: { testNet, staging, from, to },
   } = store.getState();
+  const query = window.location.search;
+
+  if (checkFrom && checkFrom !== from.text) {
+    return;
+  }
+
+  if (checkTo && checkTo !== to.text) {
+    return;
+  }
+
   switch (true) {
     case testNet:
-      return "/testnet/account";
+      return `/testnet/account${query || ""}`;
     case staging:
-      return "/staging/account";
+      return `/staging/account${query || ""}`;
     default:
-      return "/account";
+      return `/account${query || ""}`;
   }
 };
