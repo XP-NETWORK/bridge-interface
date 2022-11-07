@@ -39,6 +39,7 @@ export default function AccountModal() {
     const WCProvider = useSelector((state) => state.general.WCProvider);
     const tronLink = useSelector((state) => state.general.tronLink);
     const templeWallet = useSelector((state) => state.general.templeWallet);
+    // const TonWallet = useSelector((state) => state.general.TonWallet);
     const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
     const hederaWallet = useSelector((state) => state.general.hederaWallet);
     const hederaAccount = useSelector((state) => state.general.hederaAccount);

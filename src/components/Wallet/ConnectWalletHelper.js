@@ -95,10 +95,6 @@ hashConnect.pairingEvent.once(async (pairingData) => {
     store.dispatch(setSigner(signer));
 });
 
-// hashConnect.foundExtensionEvent.once((walletMetadata) => {
-//     // hashPackWalletMetaData = walletMetadata;
-// });
-
 export const connectHashpack = async () => {
     let appMetadata = {
         name: "XP.NETWORK Cross-Chain NFT Bridge",
