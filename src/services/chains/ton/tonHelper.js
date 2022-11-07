@@ -64,12 +64,60 @@ const transfer = async (
         general: { from, to },
     } = store.getState();
 
+<<<<<<< HEAD
     nft = {
         ...nft,
         native: {
             ...nft.native,
             nftItemAddr: nft.native.address,
         },
+=======
+  nft = {
+    ...nft,
+    native: {
+      ...nft.native,
+      nftItemAddr: nft.native.address,
+    },
+  };
+
+  try {
+    switch (true) {
+      case amount > 0:
+        result = await factory.transferSft(
+          fromChain,
+          toChain,
+          nft,
+          signer,
+          receiver,
+          new BigNumber(amount),
+          undefined,
+          mintWith
+        );
+        return result;
+      default:
+        result = await factory.transferNft(
+          fromChain,
+          toChain,
+          nft,
+          signer,
+          receiver,
+          undefined,
+          mintWith
+        );
+        return result;
+    }
+  } catch (error) {
+    store.dispatch(setError(error));
+    const date = new Date();
+    const errBogy = {
+      type: "Transfer",
+      walletAddress: account,
+      time: date.toString(),
+      fromChain: from.text,
+      toChain: to.text,
+      message: error,
+      nfts: nft.native,
+>>>>>>> ebd91172 (dsa)
     };
 
     try {
