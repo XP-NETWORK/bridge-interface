@@ -252,11 +252,7 @@ function Attribute(props) {
     const { display_type, value } = props;
 
     const trait_type =
-        props.trait_type ||
-        props.name ||
-        props.label ||
-        props.key ||
-        props.attribute;
+        props.trait_type || props.name || props.label || props.attribute;
 
     return (
         <div className="nftToken nftInfBox">
@@ -302,7 +298,7 @@ Attribute.propTypes = {
     trait_type: PropTypes.any,
     name: PropTypes.any,
     label: PropTypes.any,
-    key: PropTypes.any,
+    // key: PropTypes.any,
     attribute: PropTypes.any,
     display_type: PropTypes.any,
     value: PropTypes.any,

@@ -1,4 +1,4 @@
-import { React, useRef, useState } from "react";
+import { React, useEffect, useRef, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -33,6 +33,8 @@ function ConnectWallet() {
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
     const secretAccount = useSelector((state) => state.general.secretAccount);
+    const tonQRCodeModal = useSelector((state) => state.general.tonQRCodeModal);
+
     const unstoppableDomains = useSelector(
         (state) => state.general.unstoppableDomains
     );
@@ -112,23 +114,6 @@ function ConnectWallet() {
                 switchNetwork(from);
                 break;
         }
-        // if (unstoppableDomains) {
-        //     navigate(`/account${location.search ? location.search : ""}`);
-        // } else if (testnet && from.tnChainId === chainID) {
-        //     navigate(
-        //         `/testnet/account${location.search ? location.search : ""}`
-        //     );
-        // } else if (!testnet && from.chainId === chainID) {
-        //     navigate(`/account${location.search ? location.search : ""}`);
-        // } else if (testnet && from.type !== "EVM") {
-        //     navigate(
-        //         `/testnet/account${location.search ? location.search : ""}`
-        //     );
-        // } else if (from.type !== "EVM") {
-        //     navigate(`/account${location.search ? location.search : ""}`);
-        // } else {
-        //     switchNetwork(from);
-        // }
     };
 
     function handleAboutClick() {
@@ -142,12 +127,9 @@ function ConnectWallet() {
         inputElement?.current?.focus();
     }, [show, walletsModal]);
 
-    // useEffect(() => {
-    //     const hardcoded = new URLSearchParams(window.location.search).get(
-    //         "checkWallet"
-    //     );
-    //     dispatch(setCheckWallet(hardcoded));
-    // }, []);
+    useEffect(() => {
+        setShow(false);
+    }, [tonQRCodeModal]);
 
     return (
         <div>

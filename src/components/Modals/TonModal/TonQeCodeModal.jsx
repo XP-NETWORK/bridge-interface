@@ -25,7 +25,11 @@ export default function TonQeCodeModal() {
             <Modal.Header className="border-0">
                 <div className="tron-PopUp__header">
                     <Modal.Title>
-                        {tonKeeperSession?.message || "Connect TonHub"}
+                        {tonKeeperSession?.message
+                            ? "Connect TonKeeper"
+                            : tonHubSession
+                            ? "Connect TonHub"
+                            : ""}
                     </Modal.Title>
                     <span
                         className="CloseModal"

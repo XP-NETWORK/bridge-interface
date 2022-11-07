@@ -21,6 +21,7 @@ const initialState = {
     NFTListSearch: "",
     refreshSecret: false,
     secretCred: initialSecretCred,
+    NFTSetToggler: false,
 };
 
 const generalSlice = createSlice({

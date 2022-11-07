@@ -23,6 +23,8 @@ const tonconnect = new TonConnectServer({
 var connector;
 
 export const connectTonKeeper = async () => {
+    // eslint-disable-next-line no-debugger
+    // debugger;
     const api = axios.create({
         baseURL: "https://support-bot-xp.herokuapp.com",
     });

@@ -11,7 +11,6 @@ import * as thor from "web3-providers-connex";
 import { HashConnect } from "hashconnect";
 import { hethers } from "@hashgraph/hethers";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
-// import tonMnemonic from "tonweb-mnemonic";
 
 import {
     WalletConnectProvider,

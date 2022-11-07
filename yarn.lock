@@ -15269,13 +15269,6 @@ react-scripts@^5.0.1:
   optionalDependencies:
     fsevents "^2.3.2"
 
-react-ton-x@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-ton-x/-/react-ton-x-1.0.2.tgz#a7322f8c10964aeba1ef2b06a92c00ff768623a6"
-  integrity sha512-7Hc34vBre//4XfRIYi4EoaAKxXnSi12b3VuHALQk5VVylb0yE/NNrLUQo3hMHE/1UE3Wd7wT7+eJ/nIzZHb7Cg==
-  dependencies:
-    ton-x "^2.0.0"
-
 react-transition-group@^4.4.2:
   version "4.4.5"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.5.tgz#e53d4e3f3344da8521489fbef8f2581d42becdd1"
@@ -15886,7 +15879,7 @@ secp256k1@^4.0.1, secp256k1@^4.0.2:
     node-addon-api "^2.0.0"
     node-gyp-build "^4.2.0"
 
-secretjs@^1.4.0, secretjs@^1.4.5:
+secretjs@^1.4.5:
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.4.5.tgz#c94098faace9932c5a39cc4622a7510daac44274"
   integrity sha512-WbHzcDTL8VW8WwVMAPXZAMj6QutXBe1gjLhyjOT3lAQX5zU1TKh2h8EpAxNrM0BfLPMPRC24qtngrrkVrdW2CA==
