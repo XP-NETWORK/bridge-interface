@@ -191,6 +191,6 @@ export default function NFTcard({ nft, index, claimables }) {
 }
 NFTcard.propTypes = {
     nft: PropTypes.object,
-    index: PropTypes.string,
+    index: PropTypes.number,
     claimables: PropTypes.bool,
 };

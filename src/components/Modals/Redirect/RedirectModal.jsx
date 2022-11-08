@@ -17,9 +17,6 @@ export default function RedirectModal() {
     const [onHover, setOnHover] = useState();
     const [copied, setCopied] = useState();
     const redirectModal = useSelector((state) => state.general.redirectModal);
-    const handleClose = () => {
-        dispatch(setRedirectModal(false));
-    };
 
     const copy = () => {
         setCopied(true);
@@ -53,11 +50,7 @@ export default function RedirectModal() {
     };
 
     return (
-        <Modal
-            className="bitkeep__popup"
-            show={redirectModal}
-            onHide={() => handleClose()}
-        >
+        <>
             <Modal.Header className="border-0">
                 <div className="tron-PopUp__header">
                     <img
@@ -107,6 +100,6 @@ export default function RedirectModal() {
                     </div>
                 </div>
             </Modal.Body>
-        </Modal>
+        </>
     );
 }

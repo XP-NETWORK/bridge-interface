@@ -1,58 +1,48 @@
-import { useEffect, useState, React } from "react";
-
+import { useEffect, React } from "react";
 import XpBridge from "./pages/XpBridge";
-import ApproveLoader from "./components/innercomponents/ApproveLoader";
-import Error from "./components/innercomponents/Error";
-import TronPopUp from "./components/innercomponents/TronPopUp";
-import About from "./components/innercomponents/About";
-import Video from "./components/innercomponents/Video";
-import TechnicalSupport from "./components/innercomponents/TechnicalSupport";
-import TransferLoader from "./components/innercomponents/TransferLoader";
-import TronConnectionErrMod from "./components/Modals/TronModals/TronConnectionErrMod.jsx";
 import Alert from "./components/Alerts/Alert.jsx";
-import SuccessModal from "./components/Modals/Success/SuccessModal.jsx";
-import ConnectAlgorand from "./components/Modals/AlgorandModal/ConnectAlgorand";
 import DepositAlert from "./components/Alerts/DepositAlert";
-import RedirectModal from "./components/Modals/Redirect/RedirectModal";
-import axios from "axios";
 import * as generalSlice from "./store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-import { transformToDate } from "./wallet/helpers";
+import {
+    checkValidators,
+    fetchXPUpdate,
+    getAndSetFactory,
+    transformToDate,
+} from "./wallet/helpers";
 import { chains } from "./components/values";
 
-import { Modal } from "react-bootstrap";
 import "./components/Modals/Modal.css";
+import Modals from "./components/Modals/Modals";
+
+import TonWeb from "tonweb";
 
 function App() {
     const dispatch = useDispatch();
-    const [nftToOptIn, setNFTToOptIn] = useState();
-    const [testnet, setTestnet] = useState();
-    const txnHashArr = useSelector((state) => state.general.txnHashArr);
+    const factory = useSelector((state) => state.general.factory);
+    //const signer = useSelector((state) => state.signers.signer);
 
-    const toShowSuccess = () => {
-        return txnHashArr?.length ? true : false;
-        // return true;
-    };
+    useEffect(async () => {
+        const ton = new TonWeb(
+            new TonWeb.HttpProvider("https://toncenter.com/api/v2/jsonRPC", {
+                apiKey:
+                    "05645d6b549f33bf80cee8822bd63df720c6781bd00020646deb7b2b2cd53b73",
+            })
+        );
+
+        await ton.provider.getTransactions(
+            "EQA-k0RcR-F5Pyw8aUQpqtwx_A1bFSfmw-pQ2fpM3JihULTb",
+            20
+        );
+    }, []);
 
     useEffect(() => {
         // debugger
+        localStorage.removeItem("walletconnect");
         dispatch(generalSlice.setInnerWidth(window.innerWidth));
-        const algoToOpt = new URLSearchParams(window.location.search).get(
-            "to_opt-in"
-        );
-        const nftToOptIn = new URLSearchParams(window.location.search).get(
-            "nft_uri"
-        );
-        setNFTToOptIn(nftToOptIn);
-        const test = new URLSearchParams(window.location.search).get("testnet");
-        setTestnet(test);
-        if (algoToOpt && nftToOptIn && test) {
-            dispatch(generalSlice.connectAlgorandWalletClaim(true));
-        }
         const from = new URLSearchParams(window.location.search).get("from");
         const to = new URLSearchParams(window.location.search).get("to");
-
         if (from !== to) {
             if (from) {
                 const fromChain = chains.filter(
@@ -71,49 +61,43 @@ function App() {
                 }
             }
         }
-
-        localStorage.removeItem("walletconnect");
-
-        // debugger
-        axios
-            .get("https://xpvitaldata.herokuapp.com/last-commit")
-            .then((response) => {
-                const d = transformToDate(response.data);
-                dispatch(generalSlice.setGitLatestCommit(d));
-            })
-            .catch(function(error) {
-                // handle error
-                console.log(error);
+        fetchXPUpdate().then((data) => {
+            const d = transformToDate(data);
+            dispatch(generalSlice.setGitLatestCommit(d));
+        });
+        checkValidators().then((data) => {
+            dispatch(generalSlice.setValidatorsInf(data));
+        });
+        const validatorsInt = setInterval(() => {
+            checkValidators().then((data) => {
+                dispatch(generalSlice.setValidatorsInf(data));
             });
+        }, 10000);
+        return () => clearInterval(validatorsInt);
     }, []);
 
     useEffect(() => {
-        dispatch(
-            generalSlice.setTestNet(
-                window.location.href.indexOf("/testnet") > 0
-            )
+        let network;
+        if (window.location.href.includes("/staging")) {
+            network = "staging";
+            dispatch(generalSlice.setStaging(true));
+        } else if (window.location.href.includes("/testnet")) {
+            network = "testnet";
+            dispatch(generalSlice.setTestNet(true));
+        }
+        const saveFactory = async () => {
+            await getAndSetFactory(network);
+        };
+        if (!factory) saveFactory();
+        const hardcoded = new URLSearchParams(window.location.search).get(
+            "checkWallet"
         );
+        dispatch(generalSlice.setCheckWallet(hardcoded));
     }, []);
 
     return (
         <div className={"App"}>
-            <ConnectAlgorand nftToOptIn={nftToOptIn} testnet={testnet} />
-            <About />
-            <Video />
-            <TechnicalSupport />
-            <Modal
-                animation={null}
-                className="success-modal"
-                show={toShowSuccess()}
-            >
-                <SuccessModal />
-            </Modal>
-            <TransferLoader />
-            <TronConnectionErrMod />
-            <RedirectModal />
-            <ApproveLoader />
-            <Error />
-            <TronPopUp />
+            <Modals />
             <XpBridge />
             <Alert />
             <DepositAlert />

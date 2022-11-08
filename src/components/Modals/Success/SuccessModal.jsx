@@ -16,6 +16,7 @@ import {
 import "./SuccessModal.css";
 import Tooltip from "../AccountModal/Tooltip";
 import { chainsConfig, CHAIN_INFO } from "../../values";
+import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
 
 export default function SuccessModal() {
     const dispatch = useDispatch();
@@ -36,8 +37,10 @@ export default function SuccessModal() {
     const testnet = useSelector((state) => state.general.testNet);
     const secretAccount = useSelector((state) => state.general.secretAccount);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
+    const tonAccount = useSelector((state) => state.general.tonAccount);
 
     const address =
+        tonAccount ||
         account ||
         algorandAccount ||
         elrondAccount ||
@@ -53,7 +56,7 @@ export default function SuccessModal() {
         });
         dispatch(cleanTxnHashArr());
         dispatch(setNFTSetToggler());
-        // setNFTS(address, from.key, undefined, "success")
+        dispatch(setQRCodeModal(false));
     };
 
     const getSubstringValue = () => {

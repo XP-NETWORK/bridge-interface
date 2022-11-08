@@ -1,6 +1,6 @@
 import React from "react";
 import Ledger from "../../assets/img/wallet/Ledger.svg";
-import Trezor from "../../assets/img/wallet/Trezor.svg";
+import Trezor from "../../assets/img/wallet/trezorn.svg";
 import PropTypes from "prop-types";
 
 export default function USBWallet({ wallet }) {
