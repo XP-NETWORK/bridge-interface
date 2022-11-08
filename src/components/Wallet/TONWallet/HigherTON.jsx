@@ -50,8 +50,9 @@ export default function HigherTON(OriginalComponent) {
 
         const getStyles = (wallet) => {
             let styles = {
-                pointerEvents: ifTypeIsTonOrNotSelected() ? "" : "none",
-                opacity: ifTypeIsTonOrNotSelected() ? "" : "0.6",
+                pointerEvents:
+                    ifTypeIsTonOrNotSelected() && staging ? "" : "none",
+                opacity: ifTypeIsTonOrNotSelected() && staging ? "" : "0.6",
             };
 
             switch (wallet) {
@@ -64,7 +65,6 @@ export default function HigherTON(OriginalComponent) {
                 default:
                     break;
             }
-            if (!staging) styles.display = "none";
             return styles;
         };
 

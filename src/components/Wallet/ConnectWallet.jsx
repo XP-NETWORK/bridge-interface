@@ -10,7 +10,7 @@ import {
     setTemporaryFrom,
     setWalletsModal,
 } from "../../store/reducers/generalSlice";
-import MaiarModal from "../Modals/MaiarModal/MaiarModal";
+// import MaiarModal from "../Modals/MaiarModal/MaiarModal";
 import WalletList from "./WalletList";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
@@ -28,7 +28,6 @@ function ConnectWallet() {
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const [show, setShow] = useState();
-    const qrCodeString = useSelector((state) => state.general.qrCodeString);
     const qrCodeImage = useSelector((state) => state.general.qrCodeImage);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
@@ -127,7 +126,7 @@ function ConnectWallet() {
 
     useEffect(() => {
         setShow(false);
-    }, [tonQRCodeModal]);
+    }, [tonQRCodeModal, qrCodeImage]);
 
     return (
         <div>
@@ -161,41 +160,41 @@ function ConnectWallet() {
                     What is NFT
                 </div>
             </div>
-            {!qrCodeString && (
-                <Modal
-                    show={show || walletsModal}
-                    onHide={handleClose}
-                    animation={null}
-                    className="ChainModal wallet-modal"
-                >
-                    <Modal.Header>
-                        <Modal.Title>Connect Wallet</Modal.Title>
-                        <span className="CloseModal" onClick={handleClose}>
-                            <div className="close-modal"></div>
-                        </span>
-                    </Modal.Header>
-                    <div className="wallet-search__container">
-                        <input
-                            ref={inputElement}
-                            onChange={(e) => setWalletSearch(e.target.value)}
-                            value={walletSearch}
-                            className="wallet-search serchInput"
-                            type="text"
-                            placeholder="Search"
+            {/* {!qrCodeString && ( */}
+            <Modal
+                show={show || walletsModal}
+                onHide={handleClose}
+                animation={null}
+                className="ChainModal wallet-modal"
+            >
+                <Modal.Header>
+                    <Modal.Title>Connect Wallet</Modal.Title>
+                    <span className="CloseModal" onClick={handleClose}>
+                        <div className="close-modal"></div>
+                    </span>
+                </Modal.Header>
+                <div className="wallet-search__container">
+                    <input
+                        ref={inputElement}
+                        onChange={(e) => setWalletSearch(e.target.value)}
+                        value={walletSearch}
+                        className="wallet-search serchInput"
+                        type="text"
+                        placeholder="Search"
+                    />
+                    <div className="magnify"></div>
+                </div>
+                <Modal.Body>
+                    <div className="walletListBox">
+                        <WalletList
+                            input={walletSearch}
+                            connected={handleClose}
                         />
-                        <div className="magnify"></div>
                     </div>
-                    <Modal.Body>
-                        <div className="walletListBox">
-                            <WalletList
-                                input={walletSearch}
-                                connected={handleClose}
-                            />
-                        </div>
-                    </Modal.Body>
-                </Modal>
-            )}
-            {qrCodeString && (
+                </Modal.Body>
+            </Modal>
+            {/* )} */}
+            {/* {qrCodeString && (
                 <MaiarModal
                     handleClose={handleClose}
                     strQR={qrCodeImage}
@@ -203,7 +202,7 @@ function ConnectWallet() {
                     setShow={setShow}
                     show={show}
                 />
-            )}
+            )} */}
         </div>
     );
 }
