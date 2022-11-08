@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
-import EVMWallet from "./EVMWallet";
+// import EVMWallet from "./EVMWallet";
 import TezosWallet from "./TezosWallet";
 import AlgorandWallet from "./AlgorandWallet";
 import TronWallet from "./TronWallet";
@@ -17,6 +17,10 @@ import { sortWallet } from "./WalletListHelper";
 import TonWallet from "./TONWallet/TonWallet";
 import TonKeeper from "./TONWallet/TonKeeper";
 import TonHub from "./TONWallet/TonHub";
+import BitKeep from "./EVMWallet/BitKeep";
+import WalletConnect from "./EVMWallet/WalletConnect";
+import MetaMask from "./EVMWallet/MetaMask";
+import TrustWallet from "./EVMWallet/TrustWallet";
 
 export default function WalletList({ connected, input, discount }) {
     const from = useSelector((state) => state.general.from);
@@ -25,9 +29,9 @@ export default function WalletList({ connected, input, discount }) {
     const walletComponents = [
         {
             Component: (
-                <EVMWallet
+                <MetaMask
                     wallet={"MetaMask"}
-                    key="wallet-index-0"
+                    key="metamask"
                     close={connected}
                 />
             ),
@@ -39,9 +43,9 @@ export default function WalletList({ connected, input, discount }) {
         },
         {
             Component: (
-                <EVMWallet
+                <TrustWallet
                     wallet={"TrustWallet"}
-                    key="wallet-index-2"
+                    key="trust-wallet"
                     close={connected}
                 />
             ),
@@ -53,32 +57,32 @@ export default function WalletList({ connected, input, discount }) {
         },
         {
             Component: (
-                <EVMWallet
-                    wallet={"WalletConnect"}
-                    key="wallet-index-1"
+                <WalletConnect
+                    wallet={"MetaMask"}
+                    key="wallet-connect"
                     close={connected}
                 />
             ),
-            name: "WalletConnect",
+            name: "MetaMask",
             type: "EVM",
             mobile: true,
             desktop: true,
-            order: 3,
+            order: 1,
         },
         {
             Component: (
-                <EVMWallet
-                    wallet={"BitKeep"}
-                    key="wallet-index-1-bitkeep"
+                <BitKeep
+                    wallet={"MetaMask"}
+                    key="bitKeep"
                     close={connected}
                     discount={discount}
                 />
             ),
-            name: "BitKeep",
+            name: "MetaMask",
             type: "EVM",
             mobile: true,
             desktop: true,
-            order: 3,
+            order: 1,
         },
         {
             Component: (

@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     connectAlgorandWalletClaim,
     removeFromNotWhiteListed,
+    setQrCodeString,
     setRedirectModal,
     setShowAbout,
     setShowVideo,
     setTronLoginError,
     setTronPopUp,
+    setWalletsModal,
 } from "../../store/reducers/generalSlice";
 import TonQeCodeModal from "./TonModal/TonQeCodeModal";
 import About from "../../components/innercomponents/About";
@@ -22,6 +24,7 @@ import RedirectModal from "./Redirect/RedirectModal";
 import "../ApproveLoader/Planet.css";
 import Error from "../innercomponents/Error";
 import { setQRCodeModal } from "../Wallet/TONWallet/tonStore";
+import MaiarModal from "./MaiarModal/MaiarModal";
 
 export default function Modals() {
     const dispatch = useDispatch();
@@ -30,9 +33,9 @@ export default function Modals() {
     const tonQRCodeModal = useSelector((state) => state.tonStore.qrCode);
     const show = useSelector((state) => state.general.about);
     const video = useSelector((state) => state.general.video);
-
+    const qrCodeString = useSelector((state) => state.general.qrCodeString);
+    const qrCodeImage = useSelector((state) => state.general.qrCodeImage);
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
-
     const transferModalLoader = useSelector(
         (state) => state.general.transferModalLoader
     );
@@ -67,8 +70,23 @@ export default function Modals() {
         dispatch(setTronLoginError(undefined));
     };
 
+    const closeMaiarQRCodeModal = () => {
+        dispatch(setWalletsModal(false));
+        if (qrCodeImage) {
+            dispatch(setQrCodeString(""));
+        }
+    };
+
     return (
         <>
+            <Modal
+                show={qrCodeString}
+                onHide={closeMaiarQRCodeModal}
+                animation={null}
+                className="MaiarModal"
+            >
+                <MaiarModal strQR={qrCodeImage} qrCodeString={qrCodeString} />
+            </Modal>
             <Modal
                 className="ton-modal__connect"
                 show={tonQRCodeModal}

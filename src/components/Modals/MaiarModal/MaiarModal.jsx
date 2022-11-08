@@ -1,18 +1,26 @@
 import { useEffect, React } from "react";
 import { Image, Modal } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Close } from "../../../assets/img/icons/close.svg";
 import PropTypes from "prop-types";
 import { getRightPath } from "../../../wallet/helpers";
+import { setQrCodeString } from "../../../store/reducers/generalSlice";
 
-export default function MaiarModal({ strQR, qrCodeString, show, handleClose }) {
-    const walletsModal = useSelector((state) => state.general.walletsModal);
-    const elrondAccount = useSelector((state) => state.general.elrondAccount);
+export default function MaiarModal({ strQR, qrCodeString }) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const elrondAccount = useSelector((state) => state.general.elrondAccount);
+    const qrCodeImage = useSelector((state) => state.general.qrCodeImage);
 
     const navigateToAccountRoute = () => {
         navigate(getRightPath());
+    };
+
+    const closeMaiarQRCodeModal = () => {
+        if (qrCodeImage) {
+            dispatch(setQrCodeString(""));
+        }
     };
 
     const walletConnectDeepLink =
@@ -20,46 +28,39 @@ export default function MaiarModal({ strQR, qrCodeString, show, handleClose }) {
 
     useEffect(() => {
         if (elrondAccount) {
-            handleClose();
+            closeMaiarQRCodeModal();
             navigateToAccountRoute();
         }
     }, [elrondAccount]);
 
     return (
         <>
-            <Modal
-                show={show || walletsModal}
-                animation={false}
-                onHide={handleClose}
-                className="MaiarModal"
-            >
-                <Modal.Header>
-                    <Modal.Title>Maiar Login</Modal.Title>
-                    <span className="CloseModal" onClick={handleClose}>
-                        <Close className="svgWidget" />
-                    </span>
-                </Modal.Header>
-                <Modal.Body>
-                    <div className="maiarModal">
-                        <Image src={strQR} />
-                        <div className="maiarSubtitle">
-                            Scan the QR code to connect Maiar
-                        </div>
-                        {window.innerWidth <= 600 ? (
-                            <a
-                                href={`${walletConnectDeepLink}https://maiar.com/?wallet-connect=${encodeURIComponent(
-                                    qrCodeString
-                                )}`}
-                                className="maiarConnectBtn"
-                            >
-                                Maiar Login
-                            </a>
-                        ) : (
-                            ""
-                        )}
+            <Modal.Header>
+                <Modal.Title>Maiar Login</Modal.Title>
+                <span className="CloseModal" onClick={closeMaiarQRCodeModal}>
+                    <Close className="svgWidget" />
+                </span>
+            </Modal.Header>
+            <Modal.Body>
+                <div className="maiarModal">
+                    <Image src={strQR} />
+                    <div className="maiarSubtitle">
+                        Scan the QR code to connect Maiar
                     </div>
-                </Modal.Body>
-            </Modal>
+                    {window.innerWidth <= 600 ? (
+                        <a
+                            href={`${walletConnectDeepLink}https://maiar.com/?wallet-connect=${encodeURIComponent(
+                                qrCodeString
+                            )}`}
+                            className="maiarConnectBtn"
+                        >
+                            Maiar Login
+                        </a>
+                    ) : (
+                        ""
+                    )}
+                </div>
+            </Modal.Body>
         </>
     );
 }

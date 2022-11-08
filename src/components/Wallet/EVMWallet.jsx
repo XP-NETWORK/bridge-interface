@@ -119,21 +119,6 @@ export default function EVMWallet({ wallet, close, discount }) {
             default:
                 return OFF;
         }
-
-        // if (temporaryFrom?.type === "EVM" || temporaryFrom?.type === "Skale") {
-        //     if (from?.text === "Harmony") {
-        //         return OFF;
-        //     } else return {};
-        // } else if (temporaryFrom && temporaryFrom?.type !== "EVM") {
-        //     return OFF;
-        // } else if (!from) {
-        //     return {};
-        // } else if (from && (from.type === "EVM" || from.type === "Skale")) {
-        //     return {};
-        // } else if (((from.type === "EVM" || from.type === "Skale") && getMobOps() && window.innerWidth <= 600) || (window.ethereum && window.innerWidth <= 600 && (from.type === "EVM" || from.type === "Skale"))
-        // ) {
-        //     return {};
-        // } else return OFF;
     };
 
     const isUnsupportedBitKeepChain = () => {

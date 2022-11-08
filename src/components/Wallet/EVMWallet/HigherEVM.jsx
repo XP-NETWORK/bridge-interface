@@ -25,7 +25,6 @@ export default function HigherEVM(OriginalComponent) {
         const temporaryFrom = useSelector(
             (state) => state.general.temporaryFrom
         );
-        // const WCProvider = useSelector((state) => state.general.WCProvider);
 
         const testnet = useSelector((state) => state.general.testNet);
         const dispatch = useDispatch();
@@ -43,6 +42,8 @@ export default function HigherEVM(OriginalComponent) {
         };
 
         const connectHandler = async (wallet) => {
+            // eslint-disable-next-line no-debugger
+            debugger;
             let connected;
             switch (wallet) {
                 case "MetaMask":
@@ -96,30 +97,35 @@ export default function HigherEVM(OriginalComponent) {
         };
 
         const getStyle = () => {
+            // eslint-disable-next-line no-debugger
             // debugger;
-            if (
-                temporaryFrom?.type === "EVM" ||
-                temporaryFrom?.type === "Skale"
-            ) {
-                if (from?.text === "Harmony") {
+            const evmDeparture = () => {
+                if (from && from.type === "EVM") return true;
+                else if (temporaryFrom && temporaryFrom.type === "EVM")
+                    return true;
+                else false;
+            };
+            switch (true) {
+                case !from && !temporaryFrom:
+                    return {};
+                case from !== undefined || temporaryFrom !== undefined:
+                    if (
+                        evmDeparture() &&
+                        getMobOps() &&
+                        window.innerWidth <= 600
+                    )
+                        return {};
+                    else if (
+                        evmDeparture() &&
+                        window.ethereum &&
+                        window.innerWidth <= 600
+                    )
+                        return {};
+                    else if (!evmDeparture()) return OFF;
+                    else return {};
+                default:
                     return OFF;
-                } else return {};
-            } else if (temporaryFrom && temporaryFrom?.type !== "EVM") {
-                return OFF;
-            } else if (!from) {
-                return {};
-            } else if (from && (from.type === "EVM" || from.type === "Skale")) {
-                return {};
-            } else if (
-                ((from.type === "EVM" || from.type === "Skale") &&
-                    getMobOps() &&
-                    window.innerWidth <= 600) ||
-                (window.ethereum &&
-                    window.innerWidth <= 600 &&
-                    (from.type === "EVM" || from.type === "Skale"))
-            ) {
-                return {};
-            } else return OFF;
+            }
         };
 
         return (

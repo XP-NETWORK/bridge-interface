@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import HigherEVM from "./HigherEVM";
 import { useSelector } from "react-redux";
+import icon from "../../../assets/img/wallet/bitkeep.svg";
 
 function BitKeep({ styles, connectWallet }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -29,7 +30,7 @@ function BitKeep({ styles, connectWallet }) {
             className="wllListItem"
             data-wallet="MetaMask"
         >
-            <img src={BitKeep} alt="BitKeep Icon" />
+            <img src={icon} alt="BitKeep Icon" />
             <p>BitKeep</p>
         </li>
     );
