@@ -29,7 +29,7 @@ const generalSlice = createSlice({
     initialState,
     reducers: {
         setAptosAccount(state, action) {
-            state.connectedWallet = action.payload;
+            state.aptosAccount = action.payload;
         },
         setConnectedWallet(state, action) {
             state.connectedWallet = action.payload;

@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import icon from "../../../assets/img/wallet/pontem.svg";
+import HigherAPTOS from "./HigherAPTOS";
 
-export default function Pontem({ styles, connectWallet }) {
+function Pontem({ styles, connectWallet }) {
     return (
         <li
             style={styles()}
@@ -19,3 +20,4 @@ Pontem.propTypes = {
     styles: PropTypes.func,
     connectWallet: PropTypes.func,
 };
+export default HigherAPTOS(Pontem);

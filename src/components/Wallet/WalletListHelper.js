@@ -21,6 +21,7 @@ export const sortWallet = (components) => {
     const usbWallet = components.filter((e) => e.type === "USB");
     const hederaWallets = components.filter((e) => e.type === "Hedera");
     const tonWallets = components.filter((e) => e.type === "TON");
+    const aptosWallets = components.filter((e) => e.type === "APTOS");
 
     if (discount) {
         sortedWallets = [...evmWallets];
@@ -38,8 +39,9 @@ export const sortWallet = (components) => {
                 ...algodWallets,
                 ...tronWallets,
                 ...VeChainWallets,
-                ...usbWallet,
                 ...tonWallets,
+                ...aptosWallets,
+                ...usbWallet,
                 Unscopables,
             ];
             return sortedWallets;
@@ -54,6 +56,7 @@ export const sortWallet = (components) => {
                 ...tronWallets,
                 ...VeChainWallets,
                 ...tonWallets,
+                ...aptosWallets,
                 ...usbWallet,
             ];
             return sortedWallets;
@@ -68,6 +71,7 @@ export const sortWallet = (components) => {
                 ...tronWallets,
                 ...VeChainWallets,
                 ...tonWallets,
+                ...aptosWallets,
                 ...usbWallet,
             ];
             return sortedWallets;
@@ -82,6 +86,7 @@ export const sortWallet = (components) => {
                 ...tronWallets,
                 ...VeChainWallets,
                 ...tonWallets,
+                ...aptosWallets,
                 ...usbWallet,
             ];
             return sortedWallets;
@@ -96,6 +101,7 @@ export const sortWallet = (components) => {
                 ...tronWallets,
                 ...VeChainWallets,
                 ...tonWallets,
+                ...aptosWallets,
                 ...usbWallet,
             ];
             return sortedWallets;
@@ -110,6 +116,7 @@ export const sortWallet = (components) => {
                 ...tezosWallets,
                 ...tronWallets,
                 ...tonWallets,
+                ...aptosWallets,
                 ...usbWallet,
             ];
             return sortedWallets;
@@ -124,6 +131,7 @@ export const sortWallet = (components) => {
                 ...tezosWallets,
                 ...VeChainWallets,
                 ...tonWallets,
+                ...aptosWallets,
                 ...usbWallet,
             ];
             return sortedWallets;
@@ -138,6 +146,7 @@ export const sortWallet = (components) => {
                 ...VeChainWallets,
                 ...tronWallets,
                 ...tonWallets,
+                ...aptosWallets,
                 ...usbWallet,
             ];
             return sortedWallets;
@@ -151,6 +160,7 @@ export const sortWallet = (components) => {
                 ...VeChainWallets,
                 ...tronWallets,
                 ...tonWallets,
+                ...aptosWallets,
                 ...usbWallet,
             ];
             return sortedWallets;
@@ -164,6 +174,21 @@ export const sortWallet = (components) => {
                 ...tezosWallets,
                 ...VeChainWallets,
                 ...tronWallets,
+                ...aptosWallets,
+                ...usbWallet,
+            ];
+            return sortedWallets;
+        case "APTOS":
+            sortedWallets = [
+                ...aptosWallets,
+                ...evmWallets,
+                ...algodWallets,
+                ...elrondWallets,
+                ...tezosWallets,
+                ...VeChainWallets,
+                ...tronWallets,
+                ...tonWallets,
+                ...hederaWallets,
                 ...usbWallet,
             ];
             return sortedWallets;
