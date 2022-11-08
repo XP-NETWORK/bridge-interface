@@ -16,14 +16,14 @@ import { chains } from "./components/values";
 import "./components/Modals/Modal.css";
 import Modals from "./components/Modals/Modals";
 
-import TonWeb from "tonweb";
+//import TonWeb from "tonweb";
 
 function App() {
   const dispatch = useDispatch();
   const factory = useSelector((state) => state.general.factory);
   //const signer = useSelector((state) => state.signers.signer);
 
-  useEffect(async () => {
+  /* useEffect(async () => {
     const ton = new TonWeb(
       new TonWeb.HttpProvider("https://toncenter.com/api/v2/jsonRPC", {
         apiKey:
@@ -37,7 +37,7 @@ function App() {
     );
 
     console.log(trxs);
-  }, []);
+  }, []);*/
 
   useEffect(() => {
     // debugger
