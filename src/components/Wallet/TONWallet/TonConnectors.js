@@ -58,8 +58,7 @@ export const connectTonKeeper = async () => {
 export const awaitReadiness = async (session) => {
     // eslint-disable-next-line no-debugger
 
-    const response = tonconnect.decodeResponse(session);
-    console.log(response);
+    tonconnect.decodeResponse(session);
 };
 
 export const connectTonHub = async (testnet) => {

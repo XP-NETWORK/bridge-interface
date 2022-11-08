@@ -33,7 +33,7 @@ function ConnectWallet() {
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
     const secretAccount = useSelector((state) => state.general.secretAccount);
-    const tonQRCodeModal = useSelector((state) => state.general.tonQRCodeModal);
+    const tonQRCodeModal = useSelector((state) => state.tonStore.qrCode);
 
     const unstoppableDomains = useSelector(
         (state) => state.general.unstoppableDomains
@@ -46,8 +46,6 @@ function ConnectWallet() {
     const tonAccount = useSelector((state) => state.general.tonAccount);
 
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
-    // const testnet = useSelector((state) => state.general.testNet);
-    // const staging = useSelector((state) => state.general.staging);
     const bitKeep = useSelector((state) => state.general.bitKeep);
 
     const { account, chainId } = useWeb3React();
