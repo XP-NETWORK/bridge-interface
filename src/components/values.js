@@ -26,6 +26,7 @@ import SKL from "../assets/img/chain/SFUEL.svg";
 import Moon from "../assets/img/chain/Moonbeam.svg";
 import Abey from "../assets/img/chain/Abey.svg";
 import Caduceus from "../assets/img/chain/caduceus.svg";
+import Aptos from "../assets/img/chain/aptos.svg";
 import InternetComputer from "../assets/img/chain/InternetComputer.svg";
 
 export const EVM = "EVM";
@@ -434,6 +435,17 @@ export const chains = [
         // newChain: true,
         coming: true,
     },
+    {
+        type: "APTOS",
+        key: "APTOS",
+        text: "APTOS",
+        nonce: 0x22,
+        order: 0,
+        image: { avatar: true, src: Aptos },
+        testNet: true,
+        mainnet: true,
+        coming: true,
+    },
 ];
 
 export const chainsConfig = {
@@ -691,6 +703,14 @@ export const chainsConfig = {
         tx: "https://scan.abeychain.com/tx/",
         testTx: "https://testnet-explorer.abeychain.com/tx/",
     },
+    Aptos: {
+        type: "APTOS",
+        token: "APT",
+        image: Aptos,
+        Chain: Chain.APTOS,
+        rx: "https://explorer.aptoslabs.com/txn/",
+        testTx: "https://explorer.aptoslabs.com/txn/",
+    },
 };
 
 export const coins = [
@@ -720,6 +740,7 @@ export const coins = [
     "SKL", //23
     "GLMR", //24
     "ABEY", //25
+    "APT", //26
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -791,6 +812,9 @@ export const TESTNET_CHAIN_INFO = {
     },
     TON: {
         nonce: 0x1b,
+    },
+    APTOS: {
+        nonce: 0x22,
     },
 };
 
@@ -1054,5 +1078,12 @@ export const CHAIN_INFO = {
         tnChainId: 178,
         blockExplorerUrl: "https://testnet-explorer.abeychain.com/address/",
         testBlockExplorerUrl: "https://scan.abeychain.com/address/",
+    },
+    APTOS: {
+        native: coins[26],
+        nonce: 0x22,
+        decimals: 1e18,
+        blockExplorerUrl: "https://explorer.aptoslabs.com/?network=mainnet",
+        testBlockExplorerUrl: "https://explorer.aptoslabs.com/?network=testnet",
     },
 };

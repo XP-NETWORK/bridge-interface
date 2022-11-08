@@ -166,7 +166,6 @@ export default function Modals() {
                 }}
                 show={loader}
             >
-                s
                 <div className="content">
                     <div className="clip">
                         <p>Approving</p>

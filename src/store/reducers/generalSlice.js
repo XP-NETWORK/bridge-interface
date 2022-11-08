@@ -28,6 +28,9 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setAptosAccount(state, action) {
+            state.connectedWallet = action.payload;
+        },
         setConnectedWallet(state, action) {
             state.connectedWallet = action.payload;
         },
@@ -635,6 +638,7 @@ export const {
     setTonAccount,
     setTonWallet,
     setStaging,
+    setAptosAccount,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
