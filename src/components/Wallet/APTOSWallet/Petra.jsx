@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import icon from "../../../assets/img/wallet/petra.svg";
+import HigherAPTOS from "./HigherAPTOS";
 
-export default function Petra({ styles, connectWallet }) {
+function Petra({ styles, connectWallet }) {
     return (
         <li
             style={styles()}
@@ -19,3 +20,4 @@ Petra.propTypes = {
     styles: PropTypes.func,
     connectWallet: PropTypes.func,
 };
+export default HigherAPTOS(Petra);

@@ -7,7 +7,7 @@ import TezosWallet from "./TezosWallet";
 import AlgorandWallet from "./AlgorandWallet";
 import TronWallet from "./TronWallet";
 import ElrondWallet from "./ElrondWallet";
-import USBWallet from "./USBWallet";
+// import USBWallet from "./USBWallet";
 import VeChainWallet from "./VeChainWallet";
 import PropTypes from "prop-types";
 import CosmosWallet from "./CosmosWallet";
@@ -21,6 +21,9 @@ import BitKeep from "./EVMWallet/BitKeep";
 import WalletConnect from "./EVMWallet/WalletConnect";
 import MetaMask from "./EVMWallet/MetaMask";
 import TrustWallet from "./EVMWallet/TrustWallet";
+import Martioan from "./APTOSWallet/Martioan";
+import Petra from "./APTOSWallet/Petra";
+import Pontem from "./APTOSWallet/Pontem";
 
 export default function WalletList({ connected, input, discount }) {
     const from = useSelector((state) => state.general.from);
@@ -269,30 +272,6 @@ export default function WalletList({ connected, input, discount }) {
         },
         {
             Component: (
-                <USBWallet
-                    wallet={"Ledger"}
-                    key="wallet-index-11"
-                    connected={connected}
-                />
-            ),
-            name: "Ledger",
-            mobile: false,
-            desktop: true,
-            order: 15,
-            type: "USB",
-        },
-        {
-            Component: (
-                <USBWallet key="wallet-index-12" connected={connected} />
-            ),
-            name: "Trezor",
-            mobile: false,
-            desktop: true,
-            order: 16,
-            type: "USB",
-        },
-        {
-            Component: (
                 <HederaWallet
                     key="wallet-index-13"
                     close={connected}
@@ -327,6 +306,55 @@ export default function WalletList({ connected, input, discount }) {
             order: 14,
             type: "EVM",
         },
+        {
+            Component: <Martioan key="martian" close={connected} />,
+            name: "Martian",
+            mobile: false,
+            desktop: true,
+            order: 19,
+            type: "APTOS",
+        },
+        {
+            Component: <Petra key="petra" close={connected} />,
+            name: "Petra",
+            mobile: false,
+            desktop: true,
+            order: 20,
+            type: "APTOS",
+        },
+        {
+            Component: <Pontem key="pontem" close={connected} />,
+            name: "Pontem",
+            mobile: false,
+            desktop: true,
+            order: 19,
+            type: "APTOS",
+        },
+        // ////////////!!!!
+        // {
+        //     Component: (
+        //         <USBWallet
+        //             wallet={"Ledger"}
+        //             key="wallet-index-11"
+        //             connected={connected}
+        //         />
+        //     ),
+        //     name: "Ledger",
+        //     mobile: false,
+        //     desktop: true,
+        //     order: 15,
+        //     type: "USB",
+        // },
+        // {
+        //     Component: (
+        //         <USBWallet key="wallet-index-12" connected={connected} />
+        //     ),
+        //     name: "Trezor",
+        //     mobile: false,
+        //     desktop: true,
+        //     order: 16,
+        //     type: "USB",
+        // },
     ];
 
     const filteredWallets = input

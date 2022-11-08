@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import icon from "../../../assets/img/wallet/martian.svg";
+import HigherAPTOS from "./HigherAPTOS";
 
-export default function Martioan({ styles, connectWallet }) {
+function Martioan({ styles, connectWallet }) {
     return (
         <li
             style={styles()}
@@ -19,3 +20,4 @@ Martioan.propTypes = {
     styles: PropTypes.func,
     connectWallet: PropTypes.func,
 };
+export default HigherAPTOS(Martioan);
