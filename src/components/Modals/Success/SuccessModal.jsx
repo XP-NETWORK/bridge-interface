@@ -16,6 +16,7 @@ import {
 import "./SuccessModal.css";
 import Tooltip from "../AccountModal/Tooltip";
 import { chainsConfig, CHAIN_INFO } from "../../values";
+import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
 
 export default function SuccessModal() {
     const dispatch = useDispatch();
@@ -55,6 +56,7 @@ export default function SuccessModal() {
         });
         dispatch(cleanTxnHashArr());
         dispatch(setNFTSetToggler());
+        dispatch(setQRCodeModal(false));
     };
 
     const getSubstringValue = () => {

@@ -30,7 +30,7 @@ export default function HigherTON(OriginalComponent) {
 
         const dispatch = useDispatch();
         const navigate = useNavigate();
-        const { from, to, temporaryFrom } = useSelector(
+        const { from, to, temporaryFrom, staging } = useSelector(
             (state) => state.general
         );
         const factory = useSelector((state) => state.general.factory);
@@ -64,6 +64,7 @@ export default function HigherTON(OriginalComponent) {
                 default:
                     break;
             }
+            if (!staging) styles.display = "none";
             return styles;
         };
 
