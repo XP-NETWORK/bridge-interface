@@ -15,19 +15,23 @@ export const connectMartian = async () => {
 };
 
 export const connectPetra = async () => {
+    // eslint-disable-next-line no-debugger
+    // debugger;
     const isPetraInstalled = window.petra;
     let petra;
-    !isPetraInstalled
-        ? window.open("https://petra.app/", "_blank")
-        : await window.petra.connect();
+    if (!isPetraInstalled) {
+        window.open("https://petra.app/", "_blank");
+    } else petra = await window.petra.connect();
     return petra;
 };
 
 export const connectPontem = async () => {
-    const isPontemInstalled = window.pontem;
+    // eslint-disable-next-line no-debugger
+    // debugger;
+    const isPontemInstalled = await window.pontem;
     let pontem;
-    !isPontemInstalled
-        ? window.open("https://pontem.network/", "_blank")
-        : (pontem = await window.pontem.connect());
+    if (!isPontemInstalled) {
+        window.open("https://pontem.network/", "_blank");
+    } else pontem = await window.pontem.connect();
     return pontem;
 };

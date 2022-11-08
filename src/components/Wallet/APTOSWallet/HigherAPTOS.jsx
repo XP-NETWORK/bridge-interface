@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     setAptosAccount,
     setConnectedWallet,
+    setWalletsModal,
 } from "../../../store/reducers/generalSlice";
-import { connectMartian } from "./AptosConnectors";
+import { setSigner } from "../../../store/reducers/signersSlice";
+import { connectMartian, connectPetra, connectPontem } from "./AptosConnectors";
 
 export default function HigherAPTOS(OriginalComponent) {
     return function updatedComponent() {
@@ -24,25 +26,48 @@ export default function HigherAPTOS(OriginalComponent) {
 
         const connectWallet = async (wallet) => {
             let connected;
+            let Aptos;
             switch (wallet) {
                 case "Martian":
                     connected = await connectMartian();
-                    dispatch(setAptosAccount(connected.address));
+                    dispatch(setWalletsModal(false));
                     dispatch(setConnectedWallet("Martian"));
+                    Aptos = window.martian;
+                    dispatch(
+                        setSigner({
+                            aptosClient: Aptos,
+                            address: connected.address,
+                        })
+                    );
                     break;
                 case "Petra":
-                    connected = await connectMartian();
-                    dispatch(setAptosAccount(connected.address));
+                    connected = await connectPetra();
+                    dispatch(setWalletsModal(false));
                     dispatch(setConnectedWallet("Petra"));
+                    Aptos = window.petra;
+                    dispatch(
+                        setSigner({
+                            aptosClient: Aptos,
+                            address: connected.address,
+                        })
+                    );
                     break;
                 case "Pontem":
-                    connected = await connectMartian();
-                    dispatch(setAptosAccount(connected.address));
+                    connected = await connectPontem();
+                    dispatch(setWalletsModal(false));
                     dispatch(setConnectedWallet("Pontem"));
+                    Aptos = window.pontem;
+                    dispatch(
+                        setSigner({
+                            aptosClient: Aptos,
+                            address: connected.address,
+                        })
+                    );
                     break;
                 default:
                     break;
             }
+            dispatch(setAptosAccount(connected.address));
         };
         return (
             <OriginalComponent

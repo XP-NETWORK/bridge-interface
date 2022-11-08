@@ -43,7 +43,9 @@ export default function AccountModal() {
     const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
     const hederaWallet = useSelector((state) => state.general.hederaWallet);
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
+    const aptosAccount = useSelector((state) => state.general.aptosAccount);
     const currentAccount =
+        aptosAccount ||
         tonAccount ||
         hederaAccount ||
         account ||

@@ -4,7 +4,6 @@ import icon from "../../../assets/img/wallet/pontem.svg";
 import HigherAPTOS from "./HigherAPTOS";
 
 function Pontem({ styles, connectWallet }) {
-    console.log("🚀 ~ file: Pontem.jsx ~ line 6 ~ Pontem ~ styles", styles);
     return (
         <li
             style={styles()}
