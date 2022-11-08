@@ -14,7 +14,7 @@ export default function HigherAPTOS(OriginalComponent) {
         const from = useSelector((state) => state.general.from);
 
         const getStyles = () => {
-            let styles;
+            let styles = { display: "none" };
             if (from && from.type !== "APTOS") {
                 styles = {
                     pointerEvents: "none",
