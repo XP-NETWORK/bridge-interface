@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, React } from "react";
+import { useState, useMemo, React } from "react";
 import { Modal } from "react-bootstrap";
 import moment from "moment";
 import brockenurl from "../../assets/img/brockenurl.png";
@@ -12,7 +12,7 @@ import { isValidHttpUrl } from "../../wallet/helpers";
 import { chainsConfig, CHAIN_INFO } from "../values";
 import PropTypes from "prop-types";
 
-function NFTdetails({ nftInf, claimables, details }) {
+function NFTdetails({ nftInf, details }) {
     const {
         name,
         description,
@@ -57,32 +57,6 @@ function NFTdetails({ nftInf, claimables, details }) {
     };
 
     const symbol = nftInf.symbol || native?.symbol;
-
-    // const getMintedWith = async () => {
-    //     let mintWidth;
-    //     const toNonce = CHAIN_INFO[toKey].nonce;
-    //     const fromNonce = CHAIN_INFO[fromKey].nonce;
-    //     const contract = native?.contract?.toLowerCase();
-    //     const factory = await getFactory();
-    //     try {
-    //         mintWidth = await factory.getVerifiedContract(
-    //             contract,
-    //             toNonce,
-    //             fromNonce
-    //         );
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    //     if (mintWidth) {
-    //         setMinted(mintWidth);
-    //     }
-    // };
-
-    useEffect(() => {
-        if (!claimables) {
-            //getMintedWith();
-        }
-    }, []);
 
     const attrs = useMemo(
         () =>
@@ -207,6 +181,10 @@ function NFTdetails({ nftInf, claimables, details }) {
                                     </p>
                                 </div>
                             )}
+                            <div className="nftInfDesc nftInfBox">
+                                <label>Collection Identifier</label>
+                                <p>{nftInf.collectionIdent}</p>
+                            </div>
                             {symbol && (
                                 <div className="nftInfDesc nftInfBox">
                                     <label>Symbol</label>
@@ -219,6 +197,7 @@ function NFTdetails({ nftInf, claimables, details }) {
                                     <p>{description}</p>
                                 </div>
                             )}
+
                             {attrs &&
                                 Array.isArray(attrs) &&
                                 attrs
@@ -252,11 +231,7 @@ function Attribute(props) {
     const { display_type, value } = props;
 
     const trait_type =
-        props.trait_type ||
-        props.name ||
-        props.label ||
-        props.key ||
-        props.attribute;
+        props.trait_type || props.name || props.label || props.attribute;
 
     return (
         <div className="nftToken nftInfBox">
@@ -302,7 +277,6 @@ Attribute.propTypes = {
     trait_type: PropTypes.any,
     name: PropTypes.any,
     label: PropTypes.any,
-    key: PropTypes.any,
     attribute: PropTypes.any,
     display_type: PropTypes.any,
     value: PropTypes.any,

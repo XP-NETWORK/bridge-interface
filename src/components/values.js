@@ -36,6 +36,7 @@ export const biz =
     window.location.hostname.includes("localhost") ||
     window.location.hostname.includes("staging") ||
     window.location.hostname.includes("development") ||
+    window.location.hostname.includes("temporary") ||
     window.location.hostname.includes("10.0.0.4");
 
 export const chains = [
@@ -193,13 +194,14 @@ export const chains = [
         text: "TON",
         value: "TON",
         chainId: undefined,
-        order: 22,
+        order: -7,
         nonce: 27,
-        coming: true,
+        coming: false,
         image: { avatar: true, src: Ton },
         maintenance: false,
         testNet: false,
-        mainnet: false,
+        mainnet: biz,
+        newChain: biz,
     },
     {
         type: "EVM",
@@ -372,11 +374,11 @@ export const chains = [
         order: 0,
         tnChainId: "pulsar-2",
         image: { avatar: true, src: SCRT },
-        mainnet: biz,
+        mainnet: true,
         testNet: biz,
         test: false,
         newChain: biz,
-        coming: !biz,
+        coming: false,
     },
     {
         type: "Hedera",
@@ -442,8 +444,9 @@ export const chainsConfig = {
         tx: "https://algoexplorer.io/tx/",
         testTx: "https://testnet.algoexplorer.io/",
     },
-    Ton: {
-        type: EVM,
+    TON: {
+        type: "TON",
+        token: "TON",
         img: Ton,
         Chain: Chain.TON,
         testTx: "https://testnet.tonscan.org/tx/",
@@ -665,7 +668,7 @@ export const chainsConfig = {
         testTx: "https://hashscan.io/#/testnet/transaction/",
     },
     Skale: {
-        type: "Skale",
+        type: "EVM",
         token: "SKL",
         image: SKL,
         Chain: Chain.SKALE,
@@ -799,9 +802,9 @@ export const CHAIN_INFO = {
         blockExplorerUrls: "https://explorer.elrond.com/address/",
     },
     TON: {
-        nonce: 3,
+        nonce: 0x1b,
         native: coins[1],
-        chainId: 256,
+        // chainId: 256,
         rpcUrl: "https://http-testnet.hecochain.com",
         decimals: 1e9,
         contract: "0x1247a6cB7aA2c90C6B9eF96AE3E7b269139BE06b",

@@ -4,12 +4,12 @@ import {
     setUnwrappedEGold,
     setWrappedEGold,
 } from "../../store/reducers/generalSlice";
-import { getFactory } from "../../wallet/helpers";
 import { chainsConfig } from "../values";
 import { ExtensionProvider } from "@elrondnetwork/erdjs";
 
 export default function UnwrapWegld() {
     const wrappedEGold = useSelector((state) => state.general.wrappedEGold);
+    const factory = useSelector((state) => state.general.factory);
     const from = useSelector((state) => state.general.from);
     const maiarProvider = useSelector((state) => state.general.maiarProvider);
     const [unwrapping, setUnwrapping] = useState("");
@@ -22,15 +22,6 @@ export default function UnwrapWegld() {
         setUnwrapping(true);
         try {
             const signer = maiarProvider || ExtensionProvider.getInstance();
-            console.log(
-                "🚀 ~ file: UnwrapWegld.jsx ~ line 25 ~ unwrapWegld ~ signer",
-                signer
-            );
-            console.log(
-                "🚀 ~ file: UnwrapWegld.jsx ~ line 44 ~ unwrapWegld ~ wrappedEGold",
-                wrappedEGold
-            );
-            const factory = await getFactory();
             const elronfFactory = await factory.inner(
                 chainsConfig[from.text].Chain
             );

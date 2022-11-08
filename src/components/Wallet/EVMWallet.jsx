@@ -22,6 +22,7 @@ import { switchNetwork } from "../../services/chains/evm/evmService";
 import { setSigner } from "../../store/reducers/signersSlice";
 import { ethers } from "ethers";
 import PropTypes from "prop-types";
+import { getRightPath } from "../../wallet/helpers";
 
 export default function EVMWallet({ wallet, close, discount }) {
     const { account, activate, chainId, deactivate } = useWeb3React();
@@ -30,67 +31,20 @@ export default function EVMWallet({ wallet, close, discount }) {
     const to = useSelector((state) => state.general.to);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
     const WCProvider = useSelector((state) => state.general.WCProvider);
-    const query = window.location.search || "";
 
     const testnet = useSelector((state) => state.general.testNet);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const getMobOps = () =>
+    const getMobOps = () => {
         /android/i.test(navigator.userAgent || navigator.vendor || window.opera)
             ? true
             : false;
-
-    const navigateToAccountRoute = () => {
-        navigate(testnet ? `/testnet/account${query}` : `/account${query}`);
     };
 
-    // const switchNetwork = async () => {
-    //   let changed;
-    //   const info = testnet
-    //     ? TESTNET_CHAIN_INFO[from?.key]
-    //     : CHAIN_INFO[from?.key];
-    //   const _chainId = `0x${info.chainId.toString(16)}`;
-    //   try {
-    //     await window.ethereum.request({
-    //       method: "wallet_switchEthereumChain",
-    //       params: [{ chainId: _chainId }],
-    //     });
-    //     changed = true;
-    //   } catch (switchError) {
-    //     if (switchError.code === 4902 || switchError.code === -32603) {
-    //       try {
-    //         const chain = getAddEthereumChain()[parseInt(_chainId).toString()];
-    //         const params = {
-    //           chainId: _chainId, // A 0x-prefixed hexadecimal string
-    //           chainName: chain.name,
-    //           nativeCurrency: {
-    //             name: chain.nativeCurrency.name,
-    //             symbol: chain.nativeCurrency.symbol, // 2-6 characters long
-    //             decimals: chain.nativeCurrency.decimals,
-    //           },
-    //           rpcUrls: chain.rpc,
-    //           blockExplorerUrls: [
-    //             chain.explorers &&
-    //             chain.explorers.length > 0 &&
-    //             chain.explorers[0].url
-    //               ? chain.explorers[0].url
-    //               : chain.infoURL,
-    //           ],
-    //         };
-    //         await window.ethereum.request({
-    //           method: "wallet_addEthereumChain",
-    //           params: [params, account],
-    //         });
-    //         changed = true;
-    //       } catch (addError) {
-    //         changed = false;
-    //       }
-    //     }
-    //     // handle other "switch" errors
-    //   }
-    //   return changed;
-    // };
+    const navigateToAccountRoute = () => {
+        navigate(getRightPath());
+    };
 
     const connectHandler = async (wallet) => {
         let connected;
@@ -142,27 +96,44 @@ export default function EVMWallet({ wallet, close, discount }) {
     };
 
     const getStyle = () => {
-        // debugger;
-        if (temporaryFrom?.type === "EVM" || temporaryFrom?.type === "Skale") {
-            if (from?.text === "Harmony") {
+        // eslint-disable-next-line no-debugger
+        const evmDeparture = () => {
+            if (from && from.type === "EVM") return true;
+            else if (temporaryFrom && temporaryFrom.type === "EVM") return true;
+            else false;
+        };
+        switch (true) {
+            case !from && !temporaryFrom:
+                return {};
+            case from !== undefined || temporaryFrom !== undefined:
+                if (evmDeparture() && getMobOps() && window.innerWidth <= 600)
+                    return {};
+                else if (
+                    evmDeparture() &&
+                    window.ethereum &&
+                    window.innerWidth <= 600
+                )
+                    return {};
+                else if (!evmDeparture()) return OFF;
+                else return {};
+            default:
                 return OFF;
-            } else return {};
-        } else if (temporaryFrom && temporaryFrom?.type !== "EVM") {
-            return OFF;
-        } else if (!from) {
-            return {};
-        } else if (from && (from.type === "EVM" || from.type === "Skale")) {
-            return {};
-        } else if (
-            ((from.type === "EVM" || from.type === "Skale") &&
-                getMobOps() &&
-                window.innerWidth <= 600) ||
-            (window.ethereum &&
-                window.innerWidth <= 600 &&
-                (from.type === "EVM" || from.type === "Skale"))
-        ) {
-            return {};
-        } else return OFF;
+        }
+
+        // if (temporaryFrom?.type === "EVM" || temporaryFrom?.type === "Skale") {
+        //     if (from?.text === "Harmony") {
+        //         return OFF;
+        //     } else return {};
+        // } else if (temporaryFrom && temporaryFrom?.type !== "EVM") {
+        //     return OFF;
+        // } else if (!from) {
+        //     return {};
+        // } else if (from && (from.type === "EVM" || from.type === "Skale")) {
+        //     return {};
+        // } else if (((from.type === "EVM" || from.type === "Skale") && getMobOps() && window.innerWidth <= 600) || (window.ethereum && window.innerWidth <= 600 && (from.type === "EVM" || from.type === "Skale"))
+        // ) {
+        //     return {};
+        // } else return OFF;
     };
 
     const isUnsupportedBitKeepChain = () => {

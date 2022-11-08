@@ -1,23 +1,18 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setShowAbout } from "../../store/reducers/generalSlice";
 
 export default function About() {
     const dispatch = useDispatch();
-    const show = useSelector((state) => state.general.about);
+    // const show = useSelector((state) => state.general.about);
 
     function handleClose() {
         dispatch(setShowAbout(false));
     }
 
     return (
-        <Modal
-            className="about-nft__modal"
-            show={show}
-            animation={false}
-            onHide={() => handleClose()}
-        >
+        <>
             <Modal.Header className="border-0">
                 <div className="tron-PopUp__header">
                     <Modal.Title>What is NFT?</Modal.Title>
@@ -49,6 +44,6 @@ export default function About() {
                     </p>
                 </div>
             </Modal.Body>
-        </Modal>
+        </>
     );
 }

@@ -1,5 +1,5 @@
 import { chainsConfig, CHAIN_INFO } from "../../../components/values";
-import { errorToLog, getFactory } from "../../../wallet/helpers";
+import { errorToLog } from "../../../wallet/helpers";
 import store from "../../../store/store.js";
 import { setError } from "../../../store/reducers/generalSlice";
 
@@ -11,7 +11,9 @@ export const transferNFTFromTran = async ({
     fee,
     chainConfig,
 }) => {
-    const factory = await getFactory();
+    const {
+        general: { factory },
+    } = store.getState();
     const toChain = await factory.inner(chainsConfig[to.text].Chain);
     const fromChain = await factory.inner(chainsConfig[from.text].Chain);
 

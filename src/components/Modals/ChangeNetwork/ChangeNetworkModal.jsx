@@ -20,10 +20,6 @@ function ChangeNetworkModal() {
     const showWrong = useSelector((state) => state.general.wrongNetwork);
     const dispatch = useDispatch();
     const [loader] = useState(false);
-    console.log(
-        "🚀 ~ file: ChangeNetworkModal.jsx ~ line 23 ~ ChangeNetworkModal ~ loader",
-        loader
-    );
     const testnet = useSelector((state) => state.general.testNet);
     const location = useLocation();
     const { chainId } = useWeb3React();

@@ -16,7 +16,8 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
 
     nft = {
         ...nft,
-        collectionIdent: nft.native?.contract || nft.collectionIdent,
+        collectionIdent:
+            nft.native?.contract || nft.collectionIdent || nft.native?.address,
     };
 
     let whitelisted = !testnet
@@ -55,6 +56,15 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
 
                 try {
                     if (testnet) throw new Error("Testnet exception");
+                    else if (originChain === "27") {
+                        nft.uri = unwraped.nft.uri;
+                        nft.native.uri = unwraped.nft.uri;
+                        nftData = await nftGeneralParser(
+                            nft,
+                            account,
+                            whitelisted
+                        );
+                    }
                     nftData = (
                         await cache.get({ chainId, tokenId, contract }, nft)
                     ).data;

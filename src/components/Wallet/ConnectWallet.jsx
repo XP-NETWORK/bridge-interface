@@ -1,9 +1,9 @@
-import { React, useRef, useState } from "react";
+import { React, useEffect, useRef, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
     setAlert,
-    setCheckWallet,
+    // setCheckWallet,
     setQrCodeString,
     setShowAbout,
     setShowVideo,
@@ -17,16 +17,14 @@ import { useWeb3React } from "@web3-react/core";
 import { useDidUpdateEffect } from "../Settings/hooks";
 import Web3 from "web3";
 import { switchNetwork } from "../../services/chains/evm/evmService";
+import { getRightPath } from "../../wallet/helpers";
 
 function ConnectWallet() {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
-    const [walletSearch, setWalletSearch] = useState();
-    const hardcoded = new URLSearchParams(window.location.search).get(
-        "checkWallet"
-    );
-    dispatch(setCheckWallet(hardcoded));
+    const [walletSearch, setWalletSearch] = useState("");
+
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const [show, setShow] = useState();
@@ -35,6 +33,8 @@ function ConnectWallet() {
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
     const secretAccount = useSelector((state) => state.general.secretAccount);
+    const tonQRCodeModal = useSelector((state) => state.tonStore.qrCode);
+
     const unstoppableDomains = useSelector(
         (state) => state.general.unstoppableDomains
     );
@@ -43,14 +43,16 @@ function ConnectWallet() {
     );
     const evmAccount = useSelector((state) => state.general.account);
     const tronAccount = useSelector((state) => state.general.tronWallet);
+    const tonAccount = useSelector((state) => state.general.tonAccount);
+
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
-    const testnet = useSelector((state) => state.general.testNet);
     const bitKeep = useSelector((state) => state.general.bitKeep);
 
     const { account, chainId } = useWeb3React();
     const inputElement = useRef(null);
 
     const connected =
+        tonAccount ||
         hederaAccount ||
         secretAccount ||
         elrondAccount ||
@@ -75,6 +77,7 @@ function ConnectWallet() {
     const walletsModal = useSelector((state) => state.general.walletsModal);
 
     const handleConnect = async () => {
+        // eslint-disable-next-line no-debugger
         // debugger;
         let provider;
         let _chainId;
@@ -85,22 +88,29 @@ function ConnectWallet() {
             _chainId = await web3.eth.getChainId();
         }
         const chainID = chainId || _chainId;
-        if (unstoppableDomains) {
-            navigate(`/account${location.search ? location.search : ""}`);
-        } else if (testnet && from.tnChainId === chainID) {
-            navigate(
-                `/testnet/account${location.search ? location.search : ""}`
-            );
-        } else if (!testnet && from.chainId === chainID) {
-            navigate(`/account${location.search ? location.search : ""}`);
-        } else if (testnet && from.type !== "EVM") {
-            navigate(
-                `/testnet/account${location.search ? location.search : ""}`
-            );
-        } else if (from.type !== "EVM") {
-            navigate(`/account${location.search ? location.search : ""}`);
-        } else {
-            switchNetwork(from);
+
+        switch (true) {
+            case unstoppableDomains:
+                navigate(`/account${location.search ? location.search : ""}`);
+                break;
+            case from.tnChainId === chainID:
+                navigate(
+                    `${getRightPath()}${location.search ? location.search : ""}`
+                );
+                break;
+            case from.chainId === chainID:
+                navigate(
+                    `${getRightPath()}${location.search ? location.search : ""}`
+                );
+                break;
+            case from.type !== "EVM":
+                navigate(
+                    `${getRightPath()}${location.search ? location.search : ""}`
+                );
+                break;
+            default:
+                switchNetwork(from);
+                break;
         }
     };
 
@@ -115,11 +125,9 @@ function ConnectWallet() {
         inputElement?.current?.focus();
     }, [show, walletsModal]);
 
-    // useDidUpdateEffect(() => {
-    //     if (unstoppableDomains) {
-    //         const domain = JSON.parse(localStorage.username).value;
-    //     }
-    // }, [unstoppableDomains]);
+    useEffect(() => {
+        setShow(false);
+    }, [tonQRCodeModal]);
 
     return (
         <div>

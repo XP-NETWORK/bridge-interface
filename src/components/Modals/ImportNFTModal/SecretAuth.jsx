@@ -11,7 +11,6 @@ import {
 } from "../../../store/reducers/generalSlice";
 import { CHAIN_INFO } from "../../values";
 import "./importNFTModal.css";
-import { getFactory } from "../../../wallet/helpers";
 import { Chain } from "xp.network";
 import { useDidUpdateEffect, useCheckMobileScreen } from "../../Settings/hooks";
 import vk from "../../../assets//img/icons/vkey.svg";
@@ -22,7 +21,7 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
     const dispatch = useDispatch();
     const off = { opacity: 0.6, pointerEvents: "none" };
     const [toggle, setToggle] = useState("show");
-
+    const factory = useSelector((state) => state.general.factory);
     const [importBlocked, setImportBlocked] = useState(false);
     const signer = useSelector((state) => state.signers.signer);
     //MyViewingKey#1
@@ -43,7 +42,7 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
 
         try {
             setImportBlocked(true);
-            const factory = await getFactory();
+
             const secret = await factory.inner(Chain.SECRET);
 
             let secretNFTs = await secret.nftList(
@@ -82,7 +81,7 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
     const createViewingKey = async () => {
         try {
             setImportBlocked(true);
-            const factory = await getFactory();
+
             const secret = await factory.inner(Chain.SECRET);
             const created = await secret.setViewingKey(
                 signer,

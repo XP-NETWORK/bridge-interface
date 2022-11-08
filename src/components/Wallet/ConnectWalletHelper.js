@@ -11,8 +11,6 @@ import * as thor from "web3-providers-connex";
 import { HashConnect } from "hashconnect";
 import { hethers } from "@hashgraph/hethers";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
-import TonWeb from "tonweb";
-// import tonMnemonic from "tonweb-mnemonic";
 
 import {
     WalletConnectProvider,
@@ -60,7 +58,6 @@ import Web3 from "web3";
 
 import { SecretNetworkClient } from "secretjs";
 import { setSigner } from "../../store/reducers/signersSlice";
-import { getFactory } from "../../wallet/helpers";
 
 export const wallets = [
     "MetaMask",
@@ -97,10 +94,6 @@ hashConnect.pairingEvent.once(async (pairingData) => {
     store.dispatch(setSigner(signer));
 });
 
-// hashConnect.foundExtensionEvent.once((walletMetadata) => {
-//     // hashPackWalletMetaData = walletMetadata;
-// });
-
 export const connectHashpack = async () => {
     let appMetadata = {
         name: "XP.NETWORK Cross-Chain NFT Bridge",
@@ -117,46 +110,6 @@ export const connectHashpack = async () => {
     } catch (error) {
         console.log("connectHashpack error: ", error);
     }
-};
-
-export const createKeyPairTonWallet = async () => {
-    // debugger
-    // 1. Use tonweb-mnemonic to generate random 24 words which determine the secret key.
-    // These words will be compatible with TON wallet applications, i.e. using them you will be able to import your account into third-party applications.
-
-    return TonWeb.utils.nacl.sign.keyPair();
-};
-
-export const createWallet = async () => {
-    // debugger;
-    const keyPair = await createKeyPairTonWallet();
-    const tonweb = new TonWeb();
-
-    // There are standard wallet smart contracts that everyone uses.
-    // There are several versions, at the moment wallet v3R2 is default.
-
-    const WalletClass = tonweb.wallet.all.v3R2;
-
-    const wallet = new WalletClass(tonweb.provider, {
-        publicKey: keyPair.publicKey,
-    });
-    store.dispatch(setSigner(wallet));
-
-    // Wallet address depends on key pair and smart contract code.
-    // So for different versions of the smart contract you will get a different address, although the key pair is the same.
-    // Let's get the wallet address (offline operation):
-
-    /** @type {Address} */
-    const address = await wallet.getAddress();
-
-    // The address can be displayed in different formats
-    // More on https://ton.org/docs/#/howto/step-by-step?id=_1-smart-contract-addresses
-
-    const account = address.toString(true, true, true); // print address in default format. In 99% of cases this format is used in UI applications.
-    return account;
-    // We did everything offline and there is no our wallet smart contract on the network yet.
-    // To deploy it, we first need to send Toncoins to the address.
-    // Then when you want to send Toncoins from wallet to someone else - along with this first outgoing transfer, the deployment of the wallet smart contract will happen automatically.
 };
 
 export const connectUnstoppable = async () => {
@@ -483,7 +436,9 @@ export const connectBeacon = async () => {
 };
 
 const getMyAlgoSigner = async (base, algorandAccount) => {
-    const factory = await getFactory();
+    const {
+        general: { factory },
+    } = store.getState();
     const inner = await factory.inner(15);
     const signer = inner.myAlgoSigner(base, algorandAccount);
     return signer;
@@ -607,6 +562,9 @@ export const connectMaiarExtension = async () => {
 
 // Tron blockchain connection ( TronLink )
 export const connectTronlink = async () => {
+    const {
+        general: { factory },
+    } = store.getState();
     if (window.innerWidth <= 600 && !window.tronWeb) {
         store.dispatch(setTronPopUp(true));
     } else {
@@ -629,7 +587,7 @@ export const connectTronlink = async () => {
             if (window.tronLink && window.tronWeb.defaultAddress.base58) {
                 console.log(window.tronLink);
                 const publicAddress = window.tronWeb.defaultAddress.base58;
-                const factory = await getFactory();
+
                 await factory
                     .setProvider(9, window.tronWeb)
                     .catch((e) => console.log(e, "e"));

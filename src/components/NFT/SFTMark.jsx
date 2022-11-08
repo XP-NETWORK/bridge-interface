@@ -32,5 +32,5 @@ export default function SFTMark({ amount }) {
     );
 }
 SFTMark.propTypes = {
-    amount: PropTypes.number,
+    amount: PropTypes.string,
 };

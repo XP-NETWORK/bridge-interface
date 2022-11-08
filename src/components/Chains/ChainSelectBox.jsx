@@ -26,6 +26,7 @@ export default function ChainSelectBox() {
 
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
+    const tonAccount = useSelector((state) => state.general.tonAccount);
     const tronWallet = useSelector((state) => state.general.tronWallet);
 
     const switchChains = (e) => {
@@ -81,6 +82,13 @@ export default function ChainSelectBox() {
                     break;
                 case "Cosmos":
                     if (secretAccount) {
+                        dispatch(setTemporaryFrom(to));
+                        dispatch(setTemporaryTo(from));
+                        dispatch(setChangeWallet(true));
+                    } else handleSwitch(e);
+                    break;
+                case "TON":
+                    if (tonAccount) {
                         dispatch(setTemporaryFrom(to));
                         dispatch(setTemporaryTo(from));
                         dispatch(setChangeWallet(true));

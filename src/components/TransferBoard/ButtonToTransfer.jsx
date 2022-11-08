@@ -5,7 +5,7 @@ import { CHAIN_INFO } from "../values";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { algoConnector } from "../../wallet/connectors";
 
-import { getFactory, convert } from "../../wallet/helpers";
+import { convert } from "../../wallet/helpers";
 import { ExtensionProvider } from "@elrondnetwork/erdjs/out";
 import { ethers } from "ethers";
 import {
@@ -25,6 +25,7 @@ import { transferNFTFromTezos } from "../../services/chains/tezos/tezosHelper";
 import { transferNFTFromCosmos } from "../../services/chains/cosmos/cosmosHelper";
 import { transferNFTFromElrond } from "../../services/chains/elrond/elrondHelper";
 import { transferNFTFromAlgorand } from "../../services/chains/algorand/algorandHelper";
+import { transferNFTFromTON } from "../../services/chains/ton/tonHelper";
 
 export default function ButtonToTransfer() {
     const kukaiWalletSigner = useSelector(
@@ -39,6 +40,7 @@ export default function ButtonToTransfer() {
     const from = useSelector((state) => state.general.from.key);
     const _from = useSelector((state) => state.general.from);
     const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
+    const factory = useSelector((state) => state.general.factory);
     const [loading, setLoading] = useState();
     const dispatch = useDispatch();
     const algorandWallet = useSelector((state) => state.general.AlgorandWallet);
@@ -57,11 +59,12 @@ export default function ButtonToTransfer() {
         (state) => state.signers.chainFactoryConfig
     );
     const discountLeftUsd = useSelector((state) => state.discount.discount);
+    const signerSigner = useSelector((state) => state.signers.signer);
+
     const getAlgorandWalletSigner = async () => {
         const base = new MyAlgoConnect();
         if (algorandWallet) {
             try {
-                const factory = await getFactory();
                 const inner = await factory.inner(15);
                 const signer = await inner.walletConnectSigner(
                     algoConnector,
@@ -78,7 +81,6 @@ export default function ButtonToTransfer() {
                 );
             }
         } else if (MyAlgo) {
-            const factory = await getFactory();
             const inner = await factory.inner(15);
             const signer = inner.myAlgoSigner(base, algorandAccount);
             return signer;
@@ -95,7 +97,8 @@ export default function ButtonToTransfer() {
     const getSigner = async () => {
         let signer;
         try {
-            if (from === "Tezos") {
+            if (from === "TON") return signerSigner;
+            else if (from === "Tezos") {
                 return templeSigner || kukaiWalletSigner;
             } else if (from === "Algorand") {
                 signer = await getAlgorandWalletSigner();
@@ -233,6 +236,9 @@ export default function ButtonToTransfer() {
                 break;
             case "Skale":
                 result = await transferNFTFromEVM(params);
+                break;
+            case "TON":
+                result = await transferNFTFromTON(params);
                 break;
             default:
                 break;

@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import NFTaccount from "../components/NFTsBoard/NFTaccount";
 
 import { Routes, Route } from "react-router-dom";
@@ -7,22 +6,22 @@ import ConnectWallet from "./ConnectWallet";
 import ProtectedRoute from "../pages/ProtectedRoute";
 import Deposits from "./Deposits";
 import PageNotFound from "./PageNotFound";
+import { getRightPath } from "../wallet/helpers";
 
 function XpBridge() {
-    const testnet = useSelector((state) => state.general.testNet);
-
     return (
         <div className="nftContainer">
             <Routes>
                 <Route path="/" element={<ConnectWallet />} />
                 <Route path="/testnet" element={<ConnectWallet />} />
+                <Route path="/staging" element={<ConnectWallet />} />
+
                 <Route path="/connect" element={<ConnectWallet />} />
                 <Route path="/testnet/connect" element={<ConnectWallet />} />
+                <Route path="/staging/connect" element={<ConnectWallet />} />
+
                 <Route element={<ProtectedRoute />}>
-                    <Route
-                        path={testnet ? "/testnet/account" : "/account"}
-                        components={<NFTaccount />}
-                    />
+                    <Route path={getRightPath()} components={<NFTaccount />} />
                 </Route>
                 <Route path="/discounts" element={<Deposits />} />
                 <Route path="*" element={<PageNotFound />} />

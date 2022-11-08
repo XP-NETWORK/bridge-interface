@@ -6,6 +6,7 @@ import settingSlice from "./reducers/settingsSlice";
 import signersSlice from "./reducers/signersSlice";
 import sliderSlice from "./reducers/sliderSlice";
 import transferResultsSlice from "./reducers/transferResultsSlice";
+import tonStore from "../components/Wallet/TONWallet/tonStore";
 
 const middleware = [
     ...getDefaultMiddleware({
@@ -15,6 +16,7 @@ const middleware = [
 
 export default configureStore({
     reducer: {
+        tonStore: tonStore,
         general: generalSlice,
         discount: discountSlice,
         settings: settingSlice,

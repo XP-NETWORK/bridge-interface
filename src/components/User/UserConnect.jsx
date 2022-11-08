@@ -35,7 +35,10 @@ export default function UserConnect({ mobile }) {
     const testnet = useSelector((state) => state.general.testNet);
     const secretAccount = useSelector((state) => state.general.secretAccount);
     const location = useLocation();
+    const tonAccount = useSelector((state) => state.general.tonAccount);
+
     const walletAccount =
+        tonAccount ||
         hederaAccount ||
         secretAccount ||
         account ||

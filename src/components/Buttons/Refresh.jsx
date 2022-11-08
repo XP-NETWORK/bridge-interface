@@ -1,60 +1,60 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    setBigLoader,
-    setRefreshSecret,
+  setBigLoader,
+  setRefreshSecret,
 } from "../../store/reducers/generalSlice";
 import { setNFTS } from "../../wallet/helpers";
 
 export default function Refresh() {
-    const {
-        algorandAccount,
-        from,
-        nfts,
-        tronWallet,
-        elrondAccount,
-        tezosAccount,
-        account,
-        bigLoader,
-        testNet,
-        secretAccount,
-        secretLoggedIn,
-        hederaAccount,
-    } = useSelector((state) => state.general);
-    const dispatch = useDispatch();
+  const {
+    algorandAccount,
+    from,
+    nfts,
+    tronWallet,
+    elrondAccount,
+    tezosAccount,
+    account,
+    bigLoader,
+    testNet,
+    secretAccount,
+    secretLoggedIn,
+    hederaAccount,
+    tonAccount,
+  } = useSelector((state) => state.general);
+  const dispatch = useDispatch();
 
-    const refresh = async () => {
-        if (!bigLoader || !nfts) {
-            let w;
-            if (
-                from.type === "EVM" ||
-                from.type === "VeChain" ||
-                from.type === "Skale"
-            )
-                w = account;
-            else if (from.type === "Tezos") w = tezosAccount;
-            else if (from.type === "Algorand") w = algorandAccount;
-            else if (from.type === "Elrond") w = elrondAccount;
-            else if (from.type === "Tron") w = tronWallet;
-            else if (from.type === "Hedera") w = hederaAccount;
+  const refresh = async () => {
+    if (!bigLoader || !nfts) {
+      let w;
+      if (
+        from.type === "EVM" ||
+        from.type === "VeChain" ||
+        from.type === "Skale"
+      )
+        w = account;
+      else if (from.type === "Tezos") w = tezosAccount;
+      else if (from.type === "Algorand") w = algorandAccount;
+      else if (from.type === "Elrond") w = elrondAccount;
+      else if (from.type === "Tron") w = tronWallet;
+      else if (from.type === "Hedera") w = hederaAccount;
+      else if (from.type === "TON") w = tonAccount;
 
-            await setNFTS(w, from.key, testNet, "refresh");
-        }
-    };
+      await setNFTS(w, from.key, testNet, "refresh");
+    }
+  };
 
-    const refreshSecret = () => {
-        if (secretLoggedIn) {
-            dispatch(setBigLoader(true));
-            dispatch(setRefreshSecret());
-        }
-    };
+  const refreshSecret = () => {
+    if (secretLoggedIn) {
+      dispatch(setBigLoader(true));
+      dispatch(setRefreshSecret());
+    }
+  };
 
-    return (
-        <span
-            className={
-                bigLoader ? "refresh-button--disabled" : "refresh-button"
-            }
-            onClick={secretAccount ? refreshSecret : refresh}
-        ></span>
-    );
+  return (
+    <span
+      className={bigLoader ? "refresh-button--disabled" : "refresh-button"}
+      onClick={secretAccount ? refreshSecret : refresh}
+    ></span>
+  );
 }
