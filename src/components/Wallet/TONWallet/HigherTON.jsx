@@ -30,7 +30,7 @@ export default function HigherTON(OriginalComponent) {
 
         const dispatch = useDispatch();
         const navigate = useNavigate();
-        const { from, to, temporaryFrom, staging } = useSelector(
+        const { from, to, temporaryFrom } = useSelector(
             (state) => state.general
         );
         const factory = useSelector((state) => state.general.factory);
@@ -50,9 +50,8 @@ export default function HigherTON(OriginalComponent) {
 
         const getStyles = (wallet) => {
             let styles = {
-                pointerEvents:
-                    ifTypeIsTonOrNotSelected() && staging ? "" : "none",
-                opacity: ifTypeIsTonOrNotSelected() && staging ? "" : "0.6",
+                pointerEvents: ifTypeIsTonOrNotSelected() ? "" : "none",
+                opacity: ifTypeIsTonOrNotSelected() ? "" : "0.6",
             };
 
             switch (wallet) {
@@ -69,10 +68,16 @@ export default function HigherTON(OriginalComponent) {
         };
 
         const connectWallet = async (wallet) => {
+            // eslint-disable-next-line no-debugger
+            // debugger;
             let account;
             let signer;
             let connectedWallet;
             const fromChain = await factory.inner(27);
+            console.log(
+                "🚀 ~ file: HigherTON.jsx ~ line 77 ~ connectWal ~ fromChain",
+                fromChain
+            );
             switch (wallet) {
                 case "TonWallet": {
                     account = await connectTonWallet();
