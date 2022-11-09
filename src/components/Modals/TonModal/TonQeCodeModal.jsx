@@ -13,6 +13,12 @@ export default function TonQeCodeModal() {
     const tonKeeperSession = useSelector(
         (state) => state.tonStore.tonKeeperSession
     );
+    const innerWidth = useSelector((state) => state.general.innerWidth);
+    const isMobile = innerWidth < 480;
+    console.log(
+        "🚀 ~ file: TonQeCodeModal.jsx ~ line 18 ~ TonQeCodeModal ~ isMobile",
+        isMobile
+    );
     const tonHubSession = useSelector((state) => state.tonStore.tonHubSession);
 
     const deepLink = tonKeeperSession
@@ -70,20 +76,31 @@ export default function TonQeCodeModal() {
                     </ol>
                 </div>
             </Modal.Header>
-            <QRCode
-                className="ton-qrcode"
-                value={deepLink}
-                size={256}
-                quietZone={0}
-                logoImage={xpnet}
-                removeQrCodeBehindLogo
-                eyeRadius={[
-                    [10, 10, 0, 10],
-                    [10, 10, 10, 0],
-                    [10, 0, 10, 10],
-                ]}
-                fgColor="#002457"
-            />
+            {!isMobile ? (
+                <QRCode
+                    className="ton-qrcode"
+                    value={deepLink}
+                    size={256}
+                    quietZone={0}
+                    logoImage={xpnet}
+                    removeQrCodeBehindLogo
+                    eyeRadius={[
+                        [10, 10, 0, 10],
+                        [10, 10, 10, 0],
+                        [10, 0, 10, 10],
+                    ]}
+                    fgColor="#002457"
+                />
+            ) : (
+                <a
+                    className="ton-deep-link"
+                    href={deepLink}
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    Connect
+                </a>
+            )}
         </>
     );
 }

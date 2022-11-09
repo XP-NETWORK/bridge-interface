@@ -366,6 +366,7 @@
     align-items: center;
     color: #14161a;
     font-size: 13px;
+    border-radius: 10px;
 }
 .ton-modal__connect .CloseModal {
     top: 13%;
@@ -386,6 +387,9 @@
 }
 .ton-modal__connect canvas {
     margin-bottom: 10px;
+}
+.ton-deep-link {
+    margin-bottom: 20px;
 }
 @media screen and (max-width: 501px) {
     .copy-tooltip:hover .copy-tooltip__text {
