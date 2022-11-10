@@ -5,7 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 // import tonkeeper from "../../../assets/img/wallet/tonkeeper.svg";
 import xpnet from "../../../assets/img/icons/XPNET.svg";
 
-import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
+import {
+    setActiveTonWalletConnection,
+    setQRCodeModal,
+} from "../../Wallet/TONWallet/tonStore";
 import { Modal } from "react-bootstrap";
 
 export default function TonQeCodeModal() {
@@ -15,11 +18,15 @@ export default function TonQeCodeModal() {
     );
     const innerWidth = useSelector((state) => state.general.innerWidth);
     const isMobile = innerWidth < 480;
-    console.log(
-        "🚀 ~ file: TonQeCodeModal.jsx ~ line 18 ~ TonQeCodeModal ~ isMobile",
-        isMobile
-    );
     const tonHubSession = useSelector((state) => state.tonStore.tonHubSession);
+    const activeConnection = useSelector(
+        (state) => state.tonStore.activeConnection
+    );
+
+    const handleClose = () => {
+        dispatch(setQRCodeModal(false));
+        dispatch(setActiveTonWalletConnection(""));
+    };
 
     const deepLink = tonKeeperSession
         ? tonKeeperSession.deepLink ||
@@ -30,17 +37,8 @@ export default function TonQeCodeModal() {
         <>
             <Modal.Header className="border-0">
                 <div className="tron-PopUp__header">
-                    <Modal.Title>
-                        {tonKeeperSession?.message
-                            ? "Connect TonKeeper"
-                            : tonHubSession
-                            ? "Connect TonHub"
-                            : ""}
-                    </Modal.Title>
-                    <span
-                        className="CloseModal"
-                        onClick={() => dispatch(setQRCodeModal(false))}
-                    >
+                    <Modal.Title>{`Connect ${activeConnection}`}</Modal.Title>
+                    <span className="CloseModal" onClick={handleClose}>
                         <div className="close-modal"></div>
                     </span>
                     <ol>

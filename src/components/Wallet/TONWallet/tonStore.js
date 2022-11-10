@@ -15,10 +15,14 @@ const tonStore = createSlice({
         setQRCodeModal(state, action) {
             state.qrCode = action.payload;
         },
+        setActiveTonWalletConnection(state, action) {
+            state.activeConnection = action.payload;
+        },
     },
 });
 
 export const {
+    setActiveTonWalletConnection,
     setTonKeeperSession,
     setQRCodeModal,
     setTonHubSession,
