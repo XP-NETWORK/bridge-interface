@@ -369,7 +369,7 @@
     border-radius: 10px;
 }
 .ton-modal__connect .CloseModal {
-    top: 13%;
+    top: 17%;
 }
 
 .ton-modal__connect ol {
@@ -390,6 +390,24 @@
 }
 .ton-deep-link {
     margin-bottom: 20px;
+    width: 129px;
+    height: 54px;
+    background: #395feb;
+    border-radius: 66px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.ton-deep-link:active {
+    color: #fff;
+}
+.ton-deep-link:hover {
+    background: #2d51d0;
+}
+.tron-PopUp__header {
+    padding: 10px;
 }
 @media screen and (max-width: 501px) {
     .copy-tooltip:hover .copy-tooltip__text {
