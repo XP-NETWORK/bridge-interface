@@ -78,10 +78,10 @@ function App() {
 
   useEffect(() => {
     let network;
-    if (window.location.href.includes("/staging")) {
+    if (window.location.pathname.includes("staging")) {
       network = "staging";
       dispatch(generalSlice.setStaging(true));
-    } else if (window.location.href.includes("/testnet")) {
+    } else if (window.location.pathname.includes("testnet")) {
       network = "testnet";
       dispatch(generalSlice.setTestNet(true));
     }
