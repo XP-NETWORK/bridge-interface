@@ -10,6 +10,9 @@ import {
   setQRCodeModal,
 } from "../../Wallet/TONWallet/tonStore";
 import { Modal } from "react-bootstrap";
+import { setTransferLoaderModal } from "../../../store/reducers/generalSlice";
+
+import { Emitter } from "xp.network";
 
 export default function TonQeCodeModal() {
   const dispatch = useDispatch();
@@ -17,7 +20,7 @@ export default function TonQeCodeModal() {
     (state) => state.tonStore.tonKeeperSession
   );
   const innerWidth = useSelector((state) => state.general.innerWidth);
-  const isMobile = innerWidth < 480;
+  const isMobile = innerWidth <= 480;
   const tonHubSession = useSelector((state) => state.tonStore.tonHubSession);
   const activeConnection = useSelector(
     (state) => state.tonStore.activeConnection
@@ -26,6 +29,9 @@ export default function TonQeCodeModal() {
   const handleClose = () => {
     dispatch(setQRCodeModal(false));
     dispatch(setActiveTonWalletConnection(""));
+    dispatch(setTransferLoaderModal(false));
+
+    Emitter?.dispatchEvent(new Event("cancel tonKeeper"));
   };
 
   const deepLink =
@@ -34,9 +40,11 @@ export default function TonQeCodeModal() {
         `https://app.tonkeeper.com/ton-login/support-bot-xp.herokuapp.com/tk?userId=${tonKeeperSession.userId}`
       : tonHubSession?.link;
 
+  console.log(deepLink, "dl");
+
   return (
     <>
-      <Modal.Header className="border-0">
+      <Modal.Header className={`border-0`}>
         <div className="tron-PopUp__header">
           <Modal.Title>{`Connect ${activeConnection}`}</Modal.Title>
           <span className="CloseModal" onClick={handleClose}>

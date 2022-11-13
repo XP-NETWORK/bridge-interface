@@ -7,10 +7,6 @@ import { setQRCodeModal, setTonKeeperSession } from "./tonStore";
 import axios from "axios";
 import { setWalletsModal } from "../../../store/reducers/generalSlice";
 
-function getRandomArbitrary(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 const staticSecret = process.env.REACT_APP_TONCONNECT_SECRET;
 const tonconnect = new TonConnectServer({
   staticSecret,
@@ -18,24 +14,24 @@ const tonconnect = new TonConnectServer({
 
 var connector;
 
-export const connectTonKeeper = async () => {
+export const connectTonKeeper = async (userId) => {
   // eslint-disable-next-line no-debugger
   // debugger;
   const api = axios.create({
     baseURL: "https://support-bot-xp.herokuapp.com",
   });
 
-  const userId = getRandomArbitrary(1000, 99999);
-
   store.dispatch(setTonKeeperSession({ userId, message: "Connect TonKeeper" }));
   store.dispatch(setWalletsModal(false));
   store.dispatch(setQRCodeModal(true));
 
   let session = undefined;
+  let stop = false;
   const now = Date.now();
   const expried = 5 * 60 * 1000;
 
   while (!session && Date.now() < now + expried) {
+    if (stop) return;
     await new Promise((r) => setTimeout(r, 3000));
     session = await (await api.get(`/getSession/${userId}`)).data;
   }
@@ -55,7 +51,7 @@ export const awaitReadiness = async (session) => {
   tonconnect.decodeResponse(session);
 };
 
-export const connectTonHub = async (testnet) => {
+export const connectTonHub = async (isMobile, testnet) => {
   connector = new TonhubConnector({
     network: testnet ? "sandbox" : "mainnet",
   });
@@ -65,10 +61,10 @@ export const connectTonHub = async (testnet) => {
     url: "https://bridge.xp.network",
   });
 
-  // store.dispatch(setSigner(connector));
-
   store.dispatch(setWalletsModal(false));
-  store.dispatch(setQRCodeModal(true));
+  !isMobile
+    ? store.dispatch(setQRCodeModal(true))
+    : window.open(session.link, "_blank");
 
   return { connector, session };
 };

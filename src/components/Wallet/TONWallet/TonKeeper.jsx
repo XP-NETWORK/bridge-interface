@@ -6,11 +6,25 @@ import HigherTON from "./HigherTON";
 
 import tonkeeper from "../../../assets/img/wallet/tonkeeper.svg";
 
-function WalletButton({ styles, clickHandler }) {
+import { useSelector } from "react-redux";
+
+function TonKeeper({ styles, connectWallet }) {
+  const isMobile = innerWidth <= 480;
+  const tonKeeperSession = useSelector(
+    (state) => state.tonStore.tonKeeperSession
+  );
+
+  const url = `https://app.tonkeeper.com/ton-login/support-bot-xp.herokuapp.com/tk?userId=${tonKeeperSession.userId}`;
+
+  const connectHandler = () => {
+    connectWallet("TonKeeper");
+    isMobile && window.open(url, "_blank");
+  };
+
   return (
     <li
-      style={styles}
-      onClick={clickHandler}
+      style={styles("TonKeeper")}
+      onClick={connectHandler}
       className="wllListItem"
       data-wallet="Tonkeeper"
     >
@@ -19,24 +33,9 @@ function WalletButton({ styles, clickHandler }) {
     </li>
   );
 }
-
-function TonKeeper({ styles, connectWallet }) {
-  const connectHandler = () => {
-    connectWallet("TonKeeper");
-  };
-
-  return (
-    <WalletButton styles={styles("TonKeeper")} clickHandler={connectHandler} />
-  );
-}
 TonKeeper.propTypes = {
   styles: PropTypes.func,
   connectWallet: PropTypes.func,
-};
-
-WalletButton.propTypes = {
-  styles: PropTypes.any,
-  clickHandler: PropTypes.func,
 };
 
 export default HigherTON(TonKeeper);
