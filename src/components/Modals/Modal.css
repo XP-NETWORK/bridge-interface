@@ -87,6 +87,7 @@
   align-items: center;
   padding: 8px 30px;
   justify-content: center;
+  width: 100%;
 }
 .about__text {
   width: calc(100% - 82px);
@@ -360,13 +361,14 @@
 
 .ton-modal__connect .modal-content {
   margin: 0 auto;
-  width: 300px;
+  width: 450px;
   border-radius: unset;
   display: flex;
   align-items: center;
   color: #14161a;
   font-size: 13px;
   border-radius: 10px;
+  padding-bottom: 15px;
 }
 .ton-modal__connect .CloseModal {
   top: 17%;
@@ -407,7 +409,7 @@
   background: #2d51d0;
 }
 .tron-PopUp__header {
-  padding: 10px;
+  padding: 10px 10px 0 10px;
 }
 
 .modal .hidden {

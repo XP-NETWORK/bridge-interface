@@ -1,16 +1,10 @@
 import { TonhubConnector } from "ton-x";
-import { TonConnectServer } from "@tonapps/tonconnect-server";
 
 import store from "../../../store/store";
 import { setQRCodeModal, setTonKeeperSession } from "./tonStore";
 
 import axios from "axios";
 import { setWalletsModal } from "../../../store/reducers/generalSlice";
-
-const staticSecret = process.env.REACT_APP_TONCONNECT_SECRET;
-const tonconnect = new TonConnectServer({
-  staticSecret,
-});
 
 var connector;
 
@@ -45,12 +39,7 @@ export const connectTonKeeper = async (userId) => {
   };
 };
 
-export const awaitReadiness = async (session) => {
-  // eslint-disable-next-line no-debugger
-
-  tonconnect.decodeResponse(session);
-};
-
+encodeURIComponent;
 export const connectTonHub = async (isMobile, testnet) => {
   connector = new TonhubConnector({
     network: testnet ? "sandbox" : "mainnet",

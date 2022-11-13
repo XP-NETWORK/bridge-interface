@@ -40,8 +40,6 @@ export default function TonQeCodeModal() {
         `https://app.tonkeeper.com/ton-login/support-bot-xp.herokuapp.com/tk?userId=${tonKeeperSession.userId}`
       : tonHubSession?.link;
 
-  console.log(deepLink, "dl");
-
   return (
     <>
       <Modal.Header className={`border-0`}>
@@ -86,7 +84,7 @@ export default function TonQeCodeModal() {
         <QRCode
           className="ton-qrcode"
           value={deepLink}
-          size={256}
+          size={370}
           quietZone={0}
           logoImage={xpnet}
           removeQrCodeBehindLogo

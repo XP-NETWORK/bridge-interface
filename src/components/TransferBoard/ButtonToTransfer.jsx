@@ -9,14 +9,14 @@ import { convert } from "../../wallet/helpers";
 import { ExtensionProvider } from "@elrondnetwork/erdjs/out";
 import { ethers } from "ethers";
 import {
-    setError,
-    setNoApprovedNFTAlert,
-    setTransferLoaderModal,
-    setTxnHash,
+  setError,
+  setNoApprovedNFTAlert,
+  setTransferLoaderModal,
+  setTxnHash,
 } from "../../store/reducers/generalSlice";
 import {
-    setPasteDestinationAlert,
-    setSelectNFTAlert,
+  setPasteDestinationAlert,
+  setSelectNFTAlert,
 } from "../../store/reducers/generalSlice";
 import { getFromDomain } from "../../services/resolution";
 import { transferNFTFromEVM } from "../../services/chains/evm/evmService";
@@ -28,85 +28,81 @@ import { transferNFTFromAlgorand } from "../../services/chains/algorand/algorand
 import { transferNFTFromTON } from "../../services/chains/ton/tonHelper";
 
 export default function ButtonToTransfer() {
-    const kukaiWalletSigner = useSelector(
-        (state) => state.general.kukaiWalletSigner
-    );
-    const txnHashArr = useSelector((state) => state.general.txnHashArr);
-    const receiver = useSelector((state) => state.general.receiver);
-    const receiverAddress = convert(receiver);
-    const approved = useSelector((state) => state.general.approved);
-    const testnet = useSelector((state) => state.general.testNet);
-    const _to = useSelector((state) => state.general.to);
-    const from = useSelector((state) => state.general.from.key);
-    const _from = useSelector((state) => state.general.from);
-    const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
-    const factory = useSelector((state) => state.general.factory);
-    const [loading, setLoading] = useState();
-    const dispatch = useDispatch();
-    const algorandWallet = useSelector((state) => state.general.AlgorandWallet);
-    const MyAlgo = useSelector((state) => state.general.MyAlgo);
-    const algorandAccount = useSelector((s) => s.general.algorandAccount);
-    const maiarProvider = useSelector((state) => state.general.maiarProvider);
-    const templeSigner = useSelector((state) => state.general.templeSigner);
-    const account = useSelector((state) => state.general.account);
-    const selectedNFTList = useSelector(
-        (state) => state.general.selectedNFTList
-    );
-    const WCProvider = useSelector((state) => state.general.WCProvider);
-    const bitKeep = useSelector((state) => state.general.bitKeep);
-    const hederaSigner = useSelector((state) => state.signers.signer);
-    const chainConfig = useSelector(
-        (state) => state.signers.chainFactoryConfig
-    );
-    const discountLeftUsd = useSelector((state) => state.discount.discount);
-    const signerSigner = useSelector((state) => state.signers.signer);
+  const kukaiWalletSigner = useSelector(
+    (state) => state.general.kukaiWalletSigner
+  );
+  const txnHashArr = useSelector((state) => state.general.txnHashArr);
+  const receiver = useSelector((state) => state.general.receiver);
+  const receiverAddress = convert(receiver);
+  const approved = useSelector((state) => state.general.approved);
+  const testnet = useSelector((state) => state.general.testNet);
+  const _to = useSelector((state) => state.general.to);
+  const from = useSelector((state) => state.general.from.key);
+  const _from = useSelector((state) => state.general.from);
+  const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
+  const factory = useSelector((state) => state.general.factory);
+  const [loading, setLoading] = useState();
+  const dispatch = useDispatch();
+  const algorandWallet = useSelector((state) => state.general.AlgorandWallet);
+  const MyAlgo = useSelector((state) => state.general.MyAlgo);
+  const algorandAccount = useSelector((s) => s.general.algorandAccount);
+  const maiarProvider = useSelector((state) => state.general.maiarProvider);
+  const templeSigner = useSelector((state) => state.general.templeSigner);
+  const account = useSelector((state) => state.general.account);
+  const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
+  const WCProvider = useSelector((state) => state.general.WCProvider);
+  const bitKeep = useSelector((state) => state.general.bitKeep);
+  const hederaSigner = useSelector((state) => state.signers.signer);
+  const chainConfig = useSelector((state) => state.signers.chainFactoryConfig);
+  const discountLeftUsd = useSelector((state) => state.discount.discount);
+  const signerSigner = useSelector((state) => state.signers.signer);
 
-    const getAlgorandWalletSigner = async () => {
-        const base = new MyAlgoConnect();
-        if (algorandWallet) {
-            try {
-                const inner = await factory.inner(15);
-                const signer = await inner.walletConnectSigner(
-                    algoConnector,
-                    algorandAccount
-                );
-                return signer;
-            } catch (error) {
-                console.log(
-                    error.data
-                        ? error.data.message
-                        : error.data
-                        ? error.data.message
-                        : error.message
-                );
-            }
-        } else if (MyAlgo) {
-            const inner = await factory.inner(15);
-            const signer = inner.myAlgoSigner(base, algorandAccount);
-            return signer;
-        } else {
-            const signer = {
-                address: algorandAccount,
-                algoSigner: window.AlgoSigner,
-                ledger: testnet ? "TestNet" : "MainNet",
-            };
-            return signer;
-        }
-    };
+  const getAlgorandWalletSigner = async () => {
+    const base = new MyAlgoConnect();
+    if (algorandWallet) {
+      try {
+        const inner = await factory.inner(15);
+        const signer = await inner.walletConnectSigner(
+          algoConnector,
+          algorandAccount
+        );
+        return signer;
+      } catch (error) {
+        console.log(
+          error.data
+            ? error.data.message
+            : error.data
+            ? error.data.message
+            : error.message
+        );
+      }
+    } else if (MyAlgo) {
+      const inner = await factory.inner(15);
+      const signer = inner.myAlgoSigner(base, algorandAccount);
+      return signer;
+    } else {
+      const signer = {
+        address: algorandAccount,
+        algoSigner: window.AlgoSigner,
+        ledger: testnet ? "TestNet" : "MainNet",
+      };
+      return signer;
+    }
+  };
 
-    const getSigner = async () => {
-        let signer;
-        try {
-            if (from === "TON") return signerSigner;
-            else if (from === "Tezos") {
-                return templeSigner || kukaiWalletSigner;
-            } else if (from === "Algorand") {
-                signer = await getAlgorandWalletSigner();
-                return signer;
-            } else if (from === "Elrond")
-                return maiarProvider || ExtensionProvider.getInstance();
-            else if (from === "VeChain") {
-                /*const provider = thor.ethers.modifyProvider(
+  const getSigner = async () => {
+    let signer;
+    try {
+      if (from === "TON") return signerSigner;
+      else if (from === "Tezos") {
+        return templeSigner || kukaiWalletSigner;
+      } else if (from === "Algorand") {
+        signer = await getAlgorandWalletSigner();
+        return signer;
+      } else if (from === "Elrond")
+        return maiarProvider || ExtensionProvider.getInstance();
+      else if (from === "VeChain") {
+        /*const provider = thor.ethers.modifyProvider(
                     new ethers.providers.Web3Provider(
                         new thor.ConnexProvider({
                             connex: new Connex({
@@ -119,169 +115,164 @@ export default function ButtonToTransfer() {
                     )
                 );
                 const signer = await provider.getSigner(account);*/
-                return hederaSigner;
-            } else if (from === "Secret") {
-                const signer = window.getOfflineSigner(
-                    testnet
-                        ? CHAIN_INFO[from.text].tnChainId
-                        : CHAIN_INFO[from.text].chainId
-                );
-                return signer;
-            } else {
-                let provider;
+        return hederaSigner;
+      } else if (from === "Secret") {
+        const signer = window.getOfflineSigner(
+          testnet
+            ? CHAIN_INFO[from.text].tnChainId
+            : CHAIN_INFO[from.text].chainId
+        );
+        return signer;
+      } else {
+        let provider;
 
-                if (bitKeep) {
-                    provider = new ethers.providers.Web3Provider(
-                        window.bitkeep.ethereum
-                    );
-                    signer = provider.getSigner(account);
-                } else {
-                    provider = new ethers.providers.Web3Provider(
-                        WCProvider?.walletConnectProvider || window.ethereum
-                    );
-                    signer = provider.getSigner(account);
-                }
-                return signer;
-            }
-        } catch (error) {
-            console.error(error);
-            return;
+        if (bitKeep) {
+          provider = new ethers.providers.Web3Provider(window.bitkeep.ethereum);
+          signer = provider.getSigner(account);
+        } else {
+          provider = new ethers.providers.Web3Provider(
+            WCProvider?.walletConnectProvider || window.ethereum
+          );
+          signer = provider.getSigner(account);
         }
+        return signer;
+      }
+    } catch (error) {
+      console.error(error);
+      return;
+    }
+  };
+
+  const unstoppabledomainSwitch = (unstoppabledomain) => {
+    let stop;
+    if (unstoppabledomain) {
+      switch (unstoppabledomain) {
+        case "undefined":
+          dispatch(
+            setError({
+              message:
+                "Your domain does not explicitly support the chain you selected.",
+            })
+          );
+          dispatch(dispatch(setTransferLoaderModal(false)));
+          setLoading(false);
+          stop = true;
+          break;
+        case "notEVM":
+          dispatch(
+            setError({
+              message:
+                "Domain names are currently not supported for Non-EVM chains.",
+            })
+          );
+          dispatch(dispatch(setTransferLoaderModal(false)));
+          setLoading(false);
+          stop = true;
+          break;
+        case "invalid":
+          dispatch(
+            setError({
+              message: "Domain does not exist. Please, check the spelling.",
+            })
+          );
+          dispatch(dispatch(setTransferLoaderModal(false)));
+          setLoading(false);
+          stop = true;
+          break;
+        default:
+          break;
+      }
+    }
+    return stop;
+  };
+
+  const sendEach = async (nft, index) => {
+    const signer = await getSigner();
+    const unstoppabledomain = await getFromDomain(receiver, _to);
+    const stop = unstoppabledomainSwitch(unstoppabledomain);
+    if (stop) return;
+    let result;
+    const params = {
+      to: _to,
+      from: _from,
+      nft,
+      signer: from.text === "Hedera" ? hederaSigner : signer,
+      receiver: receiverAddress || unstoppabledomain || receiver,
+      fee: bigNumberFees,
+      index,
+      txnHashArr,
+      chainConfig,
+      testnet,
+      discountLeftUsd,
     };
+    switch (_from.type) {
+      case "EVM":
+        result = await transferNFTFromEVM(params);
+        break;
+      case "Tron":
+        result = await transferNFTFromTran(params);
+        break;
+      case "Tezos":
+        result = await transferNFTFromTezos(params);
+        break;
+      case "Algorand":
+        result = await transferNFTFromAlgorand(params);
+        break;
+      case "Elrond":
+        result = await transferNFTFromElrond(params);
+        break;
+      case "Cosmos":
+        result = await transferNFTFromCosmos(params);
+        ``;
+        break;
+      case "VeChain":
+        result = await transferNFTFromEVM(params);
+        break;
+      case "Skale":
+        result = await transferNFTFromEVM(params);
+        break;
+      case "TON":
+        result = await transferNFTFromTON(params);
+        break;
+      default:
+        break;
+    }
+    if (txnHashArr[0] && !result) {
+      dispatch(setTxnHash({ txn: "failed", nft }));
+    } else if (result) {
+      dispatch(setTxnHash({ txn: result, nft }));
+    }
+    setLoading(false);
+    dispatch(setTransferLoaderModal(false));
+  };
 
-    const unstoppabledomainSwitch = (unstoppabledomain) => {
-        let stop;
-        if (unstoppabledomain) {
-            switch (unstoppabledomain) {
-                case "undefined":
-                    dispatch(
-                        setError({
-                            message:
-                                "Your domain does not explicitly support the chain you selected.",
-                        })
-                    );
-                    dispatch(dispatch(setTransferLoaderModal(false)));
-                    setLoading(false);
-                    stop = true;
-                    break;
-                case "notEVM":
-                    dispatch(
-                        setError({
-                            message:
-                                "Domain names are currently not supported for Non-EVM chains.",
-                        })
-                    );
-                    dispatch(dispatch(setTransferLoaderModal(false)));
-                    setLoading(false);
-                    stop = true;
-                    break;
-                case "invalid":
-                    dispatch(
-                        setError({
-                            message:
-                                "Domain does not exist. Please, check the spelling.",
-                        })
-                    );
-                    dispatch(dispatch(setTransferLoaderModal(false)));
-                    setLoading(false);
-                    stop = true;
-                    break;
-                default:
-                    break;
-            }
+  const sendAllNFTs = async () => {
+    if (!receiver) {
+      dispatch(setPasteDestinationAlert(true));
+    } else if (selectedNFTList.length < 1) {
+      dispatch(setSelectNFTAlert(true));
+    } else if (!approved) {
+      dispatch(setNoApprovedNFTAlert(true));
+    } else if (!loading && approved) {
+      setLoading(true);
+      dispatch(setTransferLoaderModal(true));
+
+      for (let index = 0; index < selectedNFTList.length; index++) {
+        if (from === "VeChain") {
+          await sendEach(selectedNFTList[index], index);
+        } else {
+          sendEach(selectedNFTList[index], index);
         }
-        return stop;
-    };
+      }
+    }
+  };
 
-    const sendEach = async (nft, index) => {
-        const signer = await getSigner();
-        const unstoppabledomain = await getFromDomain(receiver, _to);
-        const stop = unstoppabledomainSwitch(unstoppabledomain);
-        if (stop) return;
-        let result;
-        const params = {
-            to: _to,
-            from: _from,
-            nft,
-            signer: from.text === "Hedera" ? hederaSigner : signer,
-            receiver: receiverAddress || unstoppabledomain || receiver,
-            fee: bigNumberFees,
-            index,
-            txnHashArr,
-            chainConfig,
-            testnet,
-            discountLeftUsd,
-        };
-        switch (_from.type) {
-            case "EVM":
-                result = await transferNFTFromEVM(params);
-                break;
-            case "Tron":
-                result = await transferNFTFromTran(params);
-                break;
-            case "Tezos":
-                result = await transferNFTFromTezos(params);
-                break;
-            case "Algorand":
-                result = await transferNFTFromAlgorand(params);
-                break;
-            case "Elrond":
-                result = await transferNFTFromElrond(params);
-                break;
-            case "Cosmos":
-                result = await transferNFTFromCosmos(params);
-                ``;
-                break;
-            case "VeChain":
-                result = await transferNFTFromEVM(params);
-                break;
-            case "Skale":
-                result = await transferNFTFromEVM(params);
-                break;
-            case "TON":
-                result = await transferNFTFromTON(params);
-                break;
-            default:
-                break;
-        }
-        if (txnHashArr[0] && !result) {
-            dispatch(setTxnHash({ txn: "failed", nft }));
-        } else if (result) {
-            dispatch(setTxnHash({ txn: result, nft }));
-        }
-        setLoading(false);
-        dispatch(setTransferLoaderModal(false));
-    };
-
-    const sendAllNFTs = async () => {
-        if (!receiver) {
-            dispatch(setPasteDestinationAlert(true));
-        } else if (selectedNFTList.length < 1) {
-            dispatch(setSelectNFTAlert(true));
-        } else if (!approved) {
-            dispatch(setNoApprovedNFTAlert(true));
-        } else if (!loading && approved) {
-            setLoading(true);
-            dispatch(setTransferLoaderModal(true));
-
-            for (let index = 0; index < selectedNFTList.length; index++) {
-                if (from === "VeChain") {
-                    await sendEach(selectedNFTList[index], index);
-                } else {
-                    sendEach(selectedNFTList[index], index);
-                }
-            }
-        }
-    };
-
-    return (
-        <div
-            onClick={sendAllNFTs}
-            className={
-                !loading ? "transfer-button" : "transfer-button--disabled"
-            }
-        >
-            {loading ? "Processing" : "Send"}
-        </div>
-    );
+  return (
+    <div
+      onClick={sendAllNFTs}
+      className={!loading ? "transfer-button" : "transfer-button--disabled"}
+    >
+      {loading ? "Processing" : "Send"}
+    </div>
+  );
 }

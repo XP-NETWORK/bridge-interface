@@ -15,6 +15,7 @@ const tonStore = createSlice({
   initialState,
   reducers: {
     setTonKeeperSession(state, action) {
+      console.log(action);
       state.tonKeeperSession = action.payload;
     },
     setTonHubSession(state, action) {
