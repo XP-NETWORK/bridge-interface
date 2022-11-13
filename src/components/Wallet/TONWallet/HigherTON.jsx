@@ -100,6 +100,7 @@ export default function HigherTON(OriginalComponent) {
           signer = fromChain.tonKeeperWrapper({
             wallet: {
               send: (deepLink) => {
+                console.log(deepLink);
                 store.dispatch(setActiveTonWalletConnection("TonKeeper"));
                 store.dispatch(
                   setTonKeeperSession({
