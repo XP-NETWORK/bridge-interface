@@ -426,7 +426,6 @@ export const getRightPath = (checkFrom, checkTo) => {
   const {
     general: { testNet, staging, from, to },
   } = store.getState();
-  const query = window.location.search;
 
   if (checkFrom && checkFrom !== from.text) {
     return;
@@ -436,7 +435,7 @@ export const getRightPath = (checkFrom, checkTo) => {
     return;
   }
 
-  console.log(staging);
+  const query = window.location.search;
 
   switch (true) {
     case testNet:

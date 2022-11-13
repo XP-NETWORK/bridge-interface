@@ -28,14 +28,10 @@ export default function TonQeCodeModal() {
     dispatch(setActiveTonWalletConnection(""));
   };
 
-  // const deepLink = tonKeeperSession
-  //     ? tonKeeperSession.deepLink ||
-  //       `https://app.tonkeeper.com/ton-login/support-bot-xp.herokuapp.com/tk?userId=${tonKeeperSession.userId}`
-  //     : tonHubSession?.link;
-
   const deepLink =
     activeConnection === "TonKeeper"
-      ? tonKeeperSession.deepLink
+      ? tonKeeperSession.deepLink ||
+        `https://app.tonkeeper.com/ton-login/support-bot-xp.herokuapp.com/tk?userId=${tonKeeperSession.userId}`
       : tonHubSession?.link;
 
   return (
