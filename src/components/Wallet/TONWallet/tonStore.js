@@ -4,10 +4,13 @@ const getRandomArbitrary = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+const initTonKeeperSession = {
+  userId: getRandomArbitrary(1000, 99999),
+};
+
 const initialState = {
-  tonKeeperSession: {
-    userId: getRandomArbitrary(1000, 99999),
-  },
+  tonKeeperSession: initTonKeeperSession,
+  tonHubSession: undefined,
 };
 
 const tonStore = createSlice({
@@ -15,10 +18,11 @@ const tonStore = createSlice({
   initialState,
   reducers: {
     setTonKeeperSession(state, action) {
-      console.log(action);
+      state.tonHubSession = initialState.tonHubSession;
       state.tonKeeperSession = action.payload;
     },
     setTonHubSession(state, action) {
+      state.tonKeeperSession = initialState.tonKeeperSession;
       state.tonHubSession = action.payload;
     },
     setQRCodeModal(state, action) {

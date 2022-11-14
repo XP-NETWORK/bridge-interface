@@ -86,7 +86,8 @@ const transfer = async (
           undefined,
           mintWith
         );
-        return result;
+        break;
+
       default:
         result = await factory.transferNft(
           fromChain,
@@ -97,8 +98,10 @@ const transfer = async (
           undefined,
           mintWith
         );
-        return result;
+        break;
     }
+    store.dispatch(setQRCodeModal(false));
+    return result;
   } catch (error) {
     store.dispatch(setError(error));
     const date = new Date();

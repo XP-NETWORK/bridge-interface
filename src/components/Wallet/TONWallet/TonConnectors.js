@@ -51,9 +51,11 @@ export const connectTonHub = async (isMobile, testnet) => {
   });
 
   store.dispatch(setWalletsModal(false));
+  const deepLink = session.link + `&open=${Math.random() * 5}`;
+  console.log(deepLink);
   !isMobile
     ? store.dispatch(setQRCodeModal(true))
-    : window.open(session.link, "_blank");
+    : window.open(deepLink, "_blank");
 
   return { connector, session };
 };

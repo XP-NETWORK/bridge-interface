@@ -37,10 +37,10 @@ export default function TonQeCodeModal() {
   const deepLink =
     activeConnection === "TonKeeper"
       ? tonKeeperSession.deepLink ||
-        `https://app.tonkeeper.com/ton-login/support-bot-xp.herokuapp.com/tk?userId=${tonKeeperSession.userId}`
+        `https://app.tonkeeper.com/ton-login/support-bot-xp.herokuapp.com/tk?open=1&userId=${tonKeeperSession.userId}`
       : tonHubSession?.link;
 
-  console.log(deepLink);
+  console.log(deepLink, "");
 
   return (
     <>
