@@ -182,7 +182,7 @@ export default function WalletList({ connected, input, discount }) {
             name: "Algorand Wallet",
             type: "Algorand",
             mobile: true,
-            desktop: false,
+            desktop: true,
             order: 10,
         },
         {
