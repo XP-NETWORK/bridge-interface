@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     connectAlgorandWalletClaim,
     removeFromNotWhiteListed,
+    setQrCodeString,
+    setQrImage,
     setRedirectModal,
     setShowAbout,
     setShowVideo,
@@ -25,6 +27,7 @@ import {
     setActiveTonWalletConnection,
     setQRCodeModal,
 } from "../Wallet/TONWallet/tonStore";
+import MaiarModal from "./MaiarModal/MaiarModal";
 
 export default function Modals() {
     const dispatch = useDispatch();
@@ -33,9 +36,9 @@ export default function Modals() {
     const tonQRCodeModal = useSelector((state) => state.tonStore.qrCode);
     const show = useSelector((state) => state.general.about);
     const video = useSelector((state) => state.general.video);
-
+    const maiarQRCodeImage = useSelector((state) => state.general.qrCodeImage);
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
-
+    const qrCodeString = useSelector((state) => state.general.qrCodeString);
     const transferModalLoader = useSelector(
         (state) => state.general.transferModalLoader
     );
@@ -73,9 +76,25 @@ export default function Modals() {
         dispatch(setQRCodeModal(false));
         dispatch(setActiveTonWalletConnection(""));
     };
+    const handleCloseMaiarModal = () => {
+        dispatch(setQrImage(""));
+        dispatch(setQrCodeString(""));
+    };
 
     return (
         <>
+            <Modal
+                className="maiar-modal"
+                show={maiarQRCodeImage}
+                animation={false}
+                onHide={handleCloseMaiarModal}
+            >
+                <MaiarModal
+                    close={handleCloseMaiarModal}
+                    strQR={maiarQRCodeImage}
+                    qrCodeString={qrCodeString}
+                />
+            </Modal>
             <Modal
                 className="ton-modal__connect"
                 show={tonQRCodeModal}
