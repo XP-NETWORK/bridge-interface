@@ -102,18 +102,14 @@ export default function HigherTON(OriginalComponent) {
               send: (deepLink) => {
                 store.dispatch(setActiveTonWalletConnection("TonKeeper"));
 
-                if (window.innerHeight <= 480) {
-                  window.open(deepLink, "_blank");
-                } else {
-                  store.dispatch(
-                    setTonKeeperSession({
-                      message: "Approve TON transaction",
-                      deepLink,
-                      userId: tonKeeperSession.userId,
-                    })
-                  );
-                  store.dispatch(setQRCodeModal(true));
-                }
+                store.dispatch(
+                  setTonKeeperSession({
+                    message: "Approve TON transaction",
+                    deepLink,
+                    userId: tonKeeperSession.userId,
+                  })
+                );
+                store.dispatch(setQRCodeModal(true));
               },
             },
             config: {
