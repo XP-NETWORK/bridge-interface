@@ -5,6 +5,8 @@ import { setError } from "../../../store/reducers/generalSlice";
 import { setQRCodeModal } from "../../../components/Wallet/TONWallet/tonStore";
 import BigNumber from "bignumber.js";
 
+import { biz } from "../../../components/values.js";
+
 export const transferNFTFromTON = async ({
   to,
   from,
@@ -86,7 +88,8 @@ const transfer = async (
           undefined,
           mintWith
         );
-        return result;
+        break;
+
       default:
         result = await factory.transferNft(
           fromChain,
@@ -94,11 +97,13 @@ const transfer = async (
           nft,
           signer,
           receiver,
-          undefined,
+          biz ? new BigNumber(100000000) : undefined,
           mintWith
         );
-        return result;
+        break;
     }
+    store.dispatch(setQRCodeModal(false));
+    return result;
   } catch (error) {
     store.dispatch(setError(error));
     const date = new Date();
