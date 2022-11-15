@@ -27,7 +27,13 @@ export const transferNFTFromTON = async ({
   const {
     general: { tonAccount },
   } = store.getState();
-  let mintWith;
+
+  const mintWith = await factory.getVerifiedContract(
+    nft.native.collectionAddress || nft.collectionIdent,
+    to.nonce,
+    from.nonce,
+    String(nft.native.tokenId)
+  );
 
   let result;
 
