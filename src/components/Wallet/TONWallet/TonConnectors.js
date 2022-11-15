@@ -51,8 +51,8 @@ export const connectTonHub = async (isMobile, testnet) => {
   });
 
   store.dispatch(setWalletsModal(false));
-  const deepLink = session.link + `&open=${Math.random() * 5}`;
-  console.log(deepLink);
+  const deepLink = session.link; //.replace("ton://", "tonhub://");
+
   !isMobile
     ? store.dispatch(setQRCodeModal(true))
     : window.open(deepLink, "_blank");

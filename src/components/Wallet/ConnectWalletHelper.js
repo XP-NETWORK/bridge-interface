@@ -59,7 +59,7 @@ import Web3 from "web3";
 import { SecretNetworkClient } from "secretjs";
 import { setSigner } from "../../store/reducers/signersSlice";
 
-import AuthClient from "@walletconnect/auth-client";
+// import AuthClient from "@walletconnect/auth-client";
 
 export const wallets = [
     "MetaMask",
@@ -464,23 +464,23 @@ export const connectMyAlgo = async () => {
     }
 };
 
-const authClient = await AuthClient.init({
-    projectId: "<dhd8193nbaq>",
-    metadata: {
-        name: "XP.NETWORK Cross-Chain NFT Bridge",
-        description:
-            "Seamlessly move assets between chains | The first multichain NFT bridge to connect all major Blockchains into one ecosystem",
-        url: "my-auth-dapp.com",
-        icons: ["https://my-auth-dapp.com/icons/logo.png"],
-    },
-});
+// const authClient = await AuthClient.init({
+//     projectId: "<dhd8193nbaq>",
+//     metadata: {
+//         name: "XP.NETWORK Cross-Chain NFT Bridge",
+//         description:
+//             "Seamlessly move assets between chains | The first multichain NFT bridge to connect all major Blockchains into one ecosystem",
+//         url: "my-auth-dapp.com",
+//         icons: ["https://my-auth-dapp.com/icons/logo.png"],
+//     },
+// });
 
-export const onWalletConnectV2 = async () => {
-    console.log(authClient);
-};
+// export const onWalletConnectV2 = async () => {
+//     console.log(authClient);
+// };
 
 export const onWalletConnect = async (activate, from, testnet) => {
-    onWalletConnectV2();
+    // onWalletConnectV2();
     const { rpc, chainId } = chainsConfig[from];
     try {
         const walletConnect = new WalletConnectConnector({
