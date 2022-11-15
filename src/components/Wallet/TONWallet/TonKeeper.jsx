@@ -14,7 +14,7 @@ function TonKeeper({ styles, connectWallet }) {
     (state) => state.tonStore.tonKeeperSession
   );
 
-  const url = `https://app.tonkeeper.com/ton-login/support-bot-xp.herokuapp.com/tk?open=1&userId=${tonKeeperSession.userId}`;
+  const url = `tonkeeper://ton-login/support-bot-xp.herokuapp.com/tk?open=1&userId=${tonKeeperSession.userId}`;
 
   const connectHandler = () => {
     connectWallet("TonKeeper");

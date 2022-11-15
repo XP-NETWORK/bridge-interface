@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { QRCode } from "react-qrcode-logo";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -41,6 +41,21 @@ export default function TonQeCodeModal() {
       : tonHubSession?.link;
 
   console.log(deepLink, "");
+
+  const linkElement = useRef(null);
+
+  useEffect(() => {
+    const cb = () => {
+      const elem = linkElement.current;
+      elem && (elem.style.display = "none");
+    };
+
+    linkElement.current?.addEventListener("click", cb);
+
+    return () => {
+      linkElement.current?.removeEventListener("click", cb);
+    };
+  }, []);
 
   return (
     <>
@@ -91,6 +106,8 @@ export default function TonQeCodeModal() {
             ) : (
               <li>Scan the next QR code:</li>
             )}
+
+            {isMobile && <li>Wait for the result</li>}
           </ol>
         </div>
       </Modal.Header>
@@ -107,12 +124,13 @@ export default function TonQeCodeModal() {
             [10, 10, 10, 0],
             [10, 0, 10, 10],
           ]}
-          fgColor="#002457"
+          fgColor="#182538"
         />
       ) : (
         <a
           className="ton-deep-link changeBtn"
           href={deepLink}
+          ref={linkElement}
           target="_blank"
           rel="noreferrer"
         >

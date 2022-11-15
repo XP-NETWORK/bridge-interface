@@ -51,7 +51,7 @@ export const connectTonHub = async (isMobile, testnet) => {
   });
 
   store.dispatch(setWalletsModal(false));
-  const deepLink = session.link; //`market://launch?id={APP_ID};` session.link.replace("ton://", "tonhub://");
+  const deepLink = session.link; //.replace("://", "tonkeeper://"); //`market://launch?id={APP_ID};` session.link.replace("ton://", "tonhub://");
   console.log(deepLink);
   !isMobile
     ? store.dispatch(setQRCodeModal(true))

@@ -110,11 +110,13 @@ class CacheService {
     }
 
     if (nft.native.chainId === "27") {
+      const contract = nft.collectionIdent || nft.native.address;
       nft = {
         ...nft,
+        collectionIdent: contract,
         native: {
           ...nft.native,
-          tokenId: nft.native.address,
+          contract,
         },
       };
     }

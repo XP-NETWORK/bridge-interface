@@ -100,6 +100,10 @@ export default function HigherTON(OriginalComponent) {
           signer = fromChain.tonKeeperWrapper({
             wallet: {
               send: (deepLink) => {
+                deepLink = deepLink.replace(
+                  "https://app.tonkeeper.com/",
+                  "tonkeeper://"
+                );
                 store.dispatch(setActiveTonWalletConnection("TonKeeper"));
 
                 store.dispatch(
