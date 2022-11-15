@@ -15,7 +15,6 @@ export const transferNFTFromTON = async ({
   receiver,
   fee,
 }) => {
-  console.log("🚀 ~ file: tonHelper.js ~ line 15 ~ signer", signer);
   // eslint-disable-next-line no-debugger
 
   const {
@@ -78,6 +77,7 @@ const transfer = async (
     native: {
       ...nft.native,
       nftItemAddr: nft.native.address,
+      contract: nft.collectionIdent,
     },
   };
 
@@ -120,8 +120,9 @@ const transfer = async (
       fromChain: from.text,
       toChain: to.text,
       message: error,
-      nfts: nft.native,
+      nfts: nft.nativye,
     };
+
     errorToLog(errBogy);
   }
 

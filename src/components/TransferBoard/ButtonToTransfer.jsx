@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { CHAIN_INFO } from "../values";
+
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { algoConnector } from "../../wallet/connectors";
 
@@ -117,12 +117,7 @@ export default function ButtonToTransfer() {
                 const signer = await provider.getSigner(account);*/
         return hederaSigner;
       } else if (from === "Secret") {
-        const signer = window.getOfflineSigner(
-          testnet
-            ? CHAIN_INFO[from.text].tnChainId
-            : CHAIN_INFO[from.text].chainId
-        );
-        return signer;
+        return signerSigner;
       } else {
         let provider;
 

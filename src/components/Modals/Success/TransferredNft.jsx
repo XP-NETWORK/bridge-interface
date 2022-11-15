@@ -29,7 +29,7 @@ export default function TransferredNft({ nft, testnet }) {
   };
 
   const checkStatus = () => {
-    const { tokenId, token_id, uri } = nft.native;
+    const { tokenId, token_id, uri, address } = nft.native;
 
     const t = tokenId || token_id;
 
@@ -42,7 +42,8 @@ export default function TransferredNft({ nft, testnet }) {
         } else if (
           uri === tx.nftUri ||
           String(t) === String(tx.tokenId) ||
-          (from.type === "Elrond" && new RegExp(`^${tx.tokenId}`).test(t))
+          (from.type === "Elrond" && new RegExp(`^${tx.tokenId}`).test(t)) ||
+          (from.type === "TON" && address === tx.contract)
         ) {
           if (txnStatus !== "Completed")
             setTxnStatus(tx?.status?.toLowerCase());

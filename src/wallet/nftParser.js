@@ -17,7 +17,9 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
   nft = {
     ...nft,
     collectionIdent:
-      nft.native?.contract || nft.collectionIdent || nft.native?.address,
+      nft.native?.contract ||
+      nft.collectionIdent ||
+      nft.native.collectionAddress,
   };
 
   let whitelisted = !testnet
