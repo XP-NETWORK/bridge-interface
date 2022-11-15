@@ -81,7 +81,7 @@ function App() {
       "checkWallet"
     );
     dispatch(generalSlice.setCheckWallet(hardcoded));
-    navigate("/connect");
+    navigate(`/${network ? network + "/" : ""}connect`);
   }, []);
 
   return (
