@@ -19,6 +19,12 @@ class CacheService {
 
   async get({ chainId, tokenId, contract }, nft) {
     try {
+      if (!tokenId) {
+        return axios
+          .get(`${this.cacheApi}/nft/uri?uri=${encodeURIComponent(nft.uri)}`)
+          .catch(() => ({ data: null }));
+      }
+
       return axios
         .get(
           `${this.cacheApi}/nft/data?chainId=${chainId ||
@@ -36,6 +42,7 @@ class CacheService {
   }
 
   async add(nft, account, whitelisted, times = 1) {
+    if (!nft.native?.tokenId) return "key parameter missing";
     return axios
       .post(`${this.cacheApi}/nft/add`, {
         nft,
@@ -74,6 +81,7 @@ class CacheService {
         const { data } = res;
 
         let tokenId = data.wrapped?.token_id || data.wrapped?.tokenId;
+
         const sourceToken =
           data.wrapped?.source_token_id || data.wrapped?.origin;
 
