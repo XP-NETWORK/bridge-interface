@@ -76,10 +76,9 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
           if (
             /(That nft is already caching|key parameter missing)/.test(nftData)
           )
-            nftData =
-              chainId === "27"
-                ? await nftGeneralParser(nft, account, whitelisted)
-                : undefined;
+            nftData = !unwraped.nft?.tokenId
+              ? await nftGeneralParser(nft, account, whitelisted)
+              : undefined;
           return nftData;
         }
 

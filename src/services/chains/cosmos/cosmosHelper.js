@@ -2,7 +2,6 @@ import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
 import { errorToLog } from "../../../wallet/helpers";
 import { setError } from "../../../store/reducers/generalSlice";
-import { BigNumber } from "bignumber.js";
 
 export const transferNFTFromCosmos = async ({
   to,
@@ -73,7 +72,6 @@ const transfer = async (
   } = store.getState();
 
   try {
-    console.log(new BigNumber(fee).plus("150000").toString(10), "fees");
     switch (true) {
       default:
         result = await factory.transferNft(
@@ -82,7 +80,7 @@ const transfer = async (
           nft,
           signer,
           receiver,
-          new BigNumber(fee).plus("150000"),
+          fee,
           mintWith
         );
         return result;

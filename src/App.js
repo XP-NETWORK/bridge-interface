@@ -80,8 +80,11 @@ function App() {
     const hardcoded = new URLSearchParams(window.location.search).get(
       "checkWallet"
     );
+
+    const query = window.location.search;
+
     dispatch(generalSlice.setCheckWallet(hardcoded));
-    navigate(`/${network ? network + "/" : ""}connect`);
+    navigate(`/${network ? network + "/" : ""}connect${query || ""}`);
   }, []);
 
   return (
