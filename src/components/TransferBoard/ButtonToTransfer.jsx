@@ -253,7 +253,7 @@ export default function ButtonToTransfer() {
       dispatch(setTransferLoaderModal(true));
 
       for (let index = 0; index < selectedNFTList.length; index++) {
-        if (from === "VeChain") {
+        if (from === "VeChain" || from === "TON") {
           await sendEach(selectedNFTList[index], index);
         } else {
           sendEach(selectedNFTList[index], index);
