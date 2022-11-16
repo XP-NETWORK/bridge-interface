@@ -89,7 +89,7 @@ const transfer = async (
           signer,
           receiver,
           new BigNumber(amount),
-          undefined,
+          fee,
           mintWith
         );
         break;
@@ -101,7 +101,7 @@ const transfer = async (
           nft,
           signer,
           receiver,
-          undefined /*biz ? new BigNumber(100000000) : undefined,*/,
+          fee,
           mintWith
         );
         break;
