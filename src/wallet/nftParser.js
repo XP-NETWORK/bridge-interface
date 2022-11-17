@@ -16,11 +16,21 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
 
   nft = {
     ...nft,
-    collectionIdent:
-      nft.native?.contract ||
-      nft.collectionIdent ||
-      nft.native.collectionAddress,
+    collectionIdent: nft.native?.contract || nft.collectionIdent,
   };
+
+  if (nft.native.chainId === "27") {
+    const contract = nft.native?.collectionAddress || "SingleNFt";
+    nft = {
+      ...nft,
+      collectionIdent: nft.native?.collectionAddress || "SingleNFt",
+      native: {
+        ...nft.native,
+        contract: contract,
+        tokenId: nft.native?.address,
+      },
+    };
+  }
 
   let whitelisted = !testnet
     ? nft?.native?.contract === "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a"
@@ -76,10 +86,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
           if (
             /(That nft is already caching|key parameter missing)/.test(nftData)
           )
-            nftData = !unwraped.nft?.tokenId
-              ? await nftGeneralParser(nft, account, whitelisted)
-              : undefined;
-          return nftData;
+            return undefined;
         }
 
         return { ...nftData, originChain };
@@ -103,8 +110,6 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
       dataLoaded: true,
       whitelisted,
     };
-
-    //if (cache.isRestricted(nftObj?.image)) nft = cache.preventRestricted(nft);
 
     if (
       !NFTList[index]?.dataLoaded ||

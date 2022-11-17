@@ -19,18 +19,12 @@ class CacheService {
 
   async get({ chainId, tokenId, contract }, nft) {
     try {
-      if (!tokenId) {
-        return axios
-          .get(`${this.cacheApi}/nft/uri?uri=${encodeURIComponent(nft.uri)}`)
-          .catch(() => ({ data: null }));
-      }
-
+      const _tokenId = encodeURIComponent(tokenId || nft.native?.tokenId);
+      const _contract = encodeURIComponent(contract || nft.native?.contract);
       return axios
         .get(
           `${this.cacheApi}/nft/data?chainId=${chainId ||
-            nft.native?.chainId}&tokenId=${tokenId ||
-            nft.native?.tokenId}&contract=${encodeURIComponent(contract) ||
-            encodeURIComponent(nft.native?.contract)}`,
+            nft.native?.chainId}&tokenId=${_tokenId}&contract=${_contract}`,
           {
             timeout: 5000,
           }
@@ -81,7 +75,10 @@ class CacheService {
 
         const { data } = res;
 
-        let tokenId = data.wrapped?.token_id || data.wrapped?.tokenId;
+        let tokenId =
+          data.wrapped?.token_id ||
+          data.wrapped?.tokenId ||
+          data.wrapped?.item_address;
 
         const sourceToken =
           data.wrapped?.source_token_id || data.wrapped?.origin;
@@ -116,18 +113,6 @@ class CacheService {
       } catch (e) {
         console.log(e);
       }
-    }
-
-    if (nft.native.chainId === "27") {
-      const contract = nft.collectionIdent || nft.native.address;
-      nft = {
-        ...nft,
-        collectionIdent: contract,
-        native: {
-          ...nft.native,
-          contract,
-        },
-      };
     }
 
     return {
