@@ -7,6 +7,7 @@ import { algoConnector } from "../../wallet/connectors";
 import {
     setAlgorandAccount,
     setAlgorandWallet,
+    setWalletsModal,
 } from "../../store/reducers/generalSlice";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -25,6 +26,7 @@ export default function ElrondWallet({ wallet, close }) {
     const handleConnect = async (wallet) => {
         switch (wallet) {
             case "Maiar":
+                dispatch(setWalletsModal(false));
                 connectMaiar();
                 break;
             case "Maiar Extension":
@@ -43,6 +45,7 @@ export default function ElrondWallet({ wallet, close }) {
 
     useEffect(() => {
         algoConnector.on("connect", (error, payload) => {
+            console.log("!!!");
             if (error) {
                 throw error;
             }

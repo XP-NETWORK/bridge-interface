@@ -59,6 +59,6 @@ export default function Selected({ index, nft }) {
   );
 }
 Selected.propTypes = {
-    index: PropTypes.string,
+    index: PropTypes.number,
     nft: PropTypes.object,
 };

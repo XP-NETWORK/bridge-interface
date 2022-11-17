@@ -6,7 +6,7 @@ import {
   setFilteredNFTSList,
   setSearchNFTList,
 } from "../../store/reducers/generalSlice";
-// import { debounce } from "../helpers";
+
 import { getSearched } from "../../wallet/helpers";
 import { chains } from "../values";
 
@@ -94,3 +94,41 @@ export default function NFTSearch() {
     </div>
   );
 }
+
+/*
+ * 
+ * 
+ *  <Dropdown.Toggle id="SearchDrop">
+        <Search className="svgWidget "/>
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+          <input
+            type="text"
+            className="serchInput"
+            onChange={handleSearch}
+            value={searchInput}
+          />
+          <div
+            id="SearchDrop"
+            className="CloseIcon"
+            onClick={() => {
+              dispatch(setSearchNFTList(""));
+              dispatch(setFilteredNFTSList(nfts));
+              setOpen(false);
+            }}
+          >
+            <Close className="svgWidget " />
+          </div>
+        </div>
+      ) : (
+        <div
+          id="SearchDrop"
+          className="SearchDrop"
+          onClick={() => setOpen(true)}
+        >
+          <Search className="svgWidget " />
+        </div>
+      )}
+    </div>
+  );
+}*/

@@ -24,6 +24,7 @@ import {
   setReceiver,
 } from "../store/reducers/generalSlice";
 import { biz } from "../components/values";
+import Network from "./Network";
 
 function NavBar() {
   const widget = useSelector((state) => state.widget.widget);
@@ -49,7 +50,7 @@ function NavBar() {
             <Navbar.Brand>
               <img src={Logo} alt="Xp Network" />
               <div>MULTICHAIN NFT BRIDGE</div>
-              {testnet && <span className="testnet">TestNet</span>}
+              <Network />
             </Navbar.Brand>
           </LinkContainer>
           {/* <UserConnect desktop={true} /> */}

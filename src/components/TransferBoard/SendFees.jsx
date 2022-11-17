@@ -3,11 +3,15 @@ import React, { useState, useRef } from "react";
 import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { chainsConfig } from "../values";
+<<<<<<< HEAD
 import {
   errorToLog,
   getFactory,
   handleChainFactory,
 } from "../../wallet/helpers";
+=======
+import { errorToLog, handleChainFactory } from "../../wallet/helpers";
+>>>>>>> temporary
 import { setBigNumFees } from "../../store/reducers/generalSlice";
 import { useEffect } from "react";
 
@@ -26,15 +30,23 @@ function SendFees() {
   const isToEVM = useSelector((state) => state.general.to).type === "EVM";
   const [fees, setFees] = useState("");
   const Web3Utils = require("web3-utils");
+<<<<<<< HEAD
 
   const [loading, setLoading] = useState(false);
 
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
+=======
+  const [loading, setLoading] = useState(false);
+
+  const factory = useSelector((state) => state.general.factory);
+  /*const elrondAccount = useSelector((state) => state.general.elrondAccount);
+>>>>>>> temporary
   const secretAccount = useSelector((state) => state.general.secretAccount);
   const hederaAccount = useSelector((state) => state.general.hederaAccount);
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
 
+<<<<<<< HEAD
   const widget = useSelector((state) => state.widget.widget);
   const { affiliationFees, affiliationSettings } = useSelector(
     ({ settings }) => ({
@@ -43,6 +55,8 @@ function SendFees() {
     })
   );
 
+=======
+>>>>>>> temporary
   const wallet = () => {
     return (
       account ||
@@ -52,12 +66,19 @@ function SendFees() {
       secretAccount ||
       hederaAccount
     );
+<<<<<<< HEAD
   };
+=======
+  };*/
+>>>>>>> temporary
 
   const feesReqInterval = useRef(null);
   async function estimate() {
     const date = new Date();
+<<<<<<< HEAD
     let fact;
+=======
+>>>>>>> temporary
     let fee;
     try {
       const fromChain = await handleChainFactory(from.text);
@@ -76,8 +97,11 @@ function SendFees() {
           ? "0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6"
           : account;
 
+<<<<<<< HEAD
       fact = await getFactory();
 
+=======
+>>>>>>> temporary
       if (to === "Tron") {
         fee =
           from === "BSC"
@@ -99,13 +123,21 @@ function SendFees() {
             : "";
       } else {
         try {
+<<<<<<< HEAD
           fee = await fact.estimateFees(
+=======
+          fee = await factory.estimateFees(
+>>>>>>> temporary
             fromChain,
             toChain,
             selectedNFTList[0],
             wallet
           );
         } catch (error) {
+<<<<<<< HEAD
+=======
+          console.error(error);
+>>>>>>> temporary
           const errBody = {
             type: "Estimate",
             walletAddress: wallet(),
@@ -113,6 +145,7 @@ function SendFees() {
             fromChain: from.text,
             toChain: to.text,
             message: error,
+<<<<<<< HEAD
             nfts: selectedNFTList,
           };
           errorToLog(errBody);
@@ -132,6 +165,19 @@ function SendFees() {
       }
 
       bigNum = bigNum ? bigNum.integerValue().toString(10) : undefined;
+=======
+          };
+          errorToLog(errBody);
+        }
+      }
+
+      const bigNum = fee
+        ? fee
+            .multipliedBy(1.1)
+            .integerValue()
+            .toString(10)
+        : undefined;
+>>>>>>> temporary
 
       dispatch(setBigNumFees(bigNum));
 
@@ -142,22 +188,38 @@ function SendFees() {
         from.type === "Cosmos"
       ) {
         fees = bigNum / 1e6;
+<<<<<<< HEAD
+=======
+      } else if (from.type === "TON") {
+        fees = bigNum / 1e9;
+>>>>>>> temporary
       } else {
         fees = bigNum && (await Web3Utils.fromWei(String(bigNum), "ether"));
       }
 
       fees && setFees(+(fees * selectedNFTList.length));
     } catch (error) {
+<<<<<<< HEAD
       const errBody = {
+=======
+      /*const errBody = {
+>>>>>>> temporary
         type: "Estimate",
         walletAddress: wallet(),
         time: date.toString(),
         fromChain: from.text,
         toChain: to.text,
         message: error,
+<<<<<<< HEAD
       };
       errorToLog(errBody);
       console.log(error.data ? error.data.message : error.message);
+=======
+        nfts: selectedNFTList,
+      };
+      errorToLog(errBody);
+      console.log(error.data ? error.data.message : error.message);*/
+>>>>>>> temporary
     }
     setLoading(false);
   }

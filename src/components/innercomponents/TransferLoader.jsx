@@ -1,20 +1,10 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
-import { useSelector } from "react-redux";
 import "./TransferLoader.css";
 
 export default function TransferLoader() {
-    const transferModalLoader = useSelector(
-        (state) => state.general.transferModalLoader
-    );
-
     return (
-        <Modal
-            className="transfer-loader-modal"
-            animation={false}
-            show={transferModalLoader}
-            size="sm"
-        >
+        <>
             <Modal.Header className="border-0">
                 <Modal.Title>
                     <div className="transfer-loader__animation">
@@ -32,7 +22,7 @@ export default function TransferLoader() {
                 </div>
                 <div className="transfer-loader__sub">💙 Please be patient</div>
             </Modal.Body>
-        </Modal>
+        </>
     );
 }
 

@@ -2,8 +2,13 @@ import { CHAIN_INFO } from "../../components/values";
 
 export const checkIfLive = (chain, validatorsInfo) => {
   // debugger;
+  const { location } = document;
+  const localhost =
+    location.hostname === "localhost" ||
+    window.location.pathname.includes("staging");
   const nonce = CHAIN_INFO[chain]?.nonce;
-  if (validatorsInfo) {
+  if (localhost) return true;
+  else if (validatorsInfo) {
     return validatorsInfo[nonce]?.bridge_alive;
   }
 };

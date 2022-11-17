@@ -12,7 +12,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAlgorandClaimables,
-  getFactory,
   mintForTestNet,
   saveForSearch,
   setNFTS,
@@ -67,22 +66,24 @@ function NFTaccount() {
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
   const hederaAccount = useSelector((state) => state.general.hederaAccount);
   const secretAccount = useSelector((state) => state.general.secretAccount);
+  const tonAccount = useSelector((state) => state.general.tonAccount);
   const NFTSetToggler = useSelector((state) => state.general.NFTSetToggler);
   const prevNFTSetToggler = usePrevious(NFTSetToggler);
+
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
   const wrappedEGold = useSelector((state) => state.general.wrappedEGold);
   const unwrappedEGold = useSelector((state) => state.general.unwrappedEGold);
   const signer = useSelector((state) => state.signers.signer);
-
+  const factory = useSelector((state) => state.general.factory);
   const checkWallet = useSelector((state) => state.general.checkWallet);
+
+  const widget = useSelector((state) => state.widget.widget);
 
   const accountWalletModal = useSelector(
     (state) => state.general.accountWalletModal
   );
   const prevWrappedEGold = usePrevious(wrappedEGold);
   let balanceInterval = useRef(null);
-
-  const widget = useSelector((state) => state.widget.widget);
 
   //Anjelika - 0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE
   //Anjelika elrond - erd1s89aq3s0z6mjfpx8s85zntlfywsvj5r8nzcdujw7mx53f9et9ezq9fnrws
@@ -93,27 +94,49 @@ function NFTaccount() {
   // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
 
   async function getNFTsList() {
-    const useHardcoded = false;
-    const hard = "0x85C25cb6e5C648117E33EF2e2Fbd93067D18b529";
+    // const useHardcoded = false;
+    // const hard = "0x85C25cb6e5C648117E33EF2e2Fbd93067D18b529";
+
     if (type === "Cosmos") return;
+    let walletAccount;
     try {
-      const w = useHardcoded
-        ? hard
-        : type === "EVM" || type === "VeChain" || type === "Skale"
-        ? account
-        : type === "Tezos"
-        ? tezosAccount
-        : type === "Algorand"
-        ? algorandAccount
-        : type === "Elrond"
-        ? elrondAccount
-        : type === "Tron"
-        ? tronWallet
-        : type === "Hedera"
-        ? hederaAccount
-        : undefined;
-      await setNFTS(w, from, undefined, "account");
+      switch (type) {
+        case "EVM":
+          walletAccount = account;
+          break;
+        case "Cosmos":
+          walletAccount = secretAccount;
+          return;
+        case "Tezos":
+          walletAccount = tezosAccount;
+          break;
+        case "Algorand":
+          walletAccount = algorandAccount;
+          break;
+        case "Elrond":
+          walletAccount = elrondAccount;
+          break;
+        case "Tron":
+          walletAccount = tronWallet;
+          break;
+        case "VeChain":
+          walletAccount = account;
+          break;
+        case "Skale":
+          walletAccount = account;
+          break;
+        case "TON":
+          walletAccount = tonAccount;
+          break;
+        // case "Hedera":
+        //     break;
+        default:
+          break;
+      }
+
+      await setNFTS(walletAccount, from, undefined, "account");
     } catch (error) {
+      console.log(error);
       dispatch(setError(error.data ? error.data.message : error.message));
     }
   }
@@ -121,7 +144,6 @@ function NFTaccount() {
   const getWegldBalance = async () => {
     if (elrondAccount && !prevWrappedEGold) {
       try {
-        const factory = await getFactory();
         const elronfFactory = await factory.inner(chainsConfig[from].Chain);
         const weGoldBalance = await elronfFactory.wegldBalance(elrondAccount);
         if (weGoldBalance) dispatch(setWrappedEGold(weGoldBalance));
@@ -141,8 +163,9 @@ function NFTaccount() {
       tezosAccount ||
       elrondAccount ||
       tronWallet ||
-      secretAccount;
-    const factory = await getFactory();
+      secretAccount ||
+      tonAccount;
+
     const fromChain = await factory.inner(chainsConfig[from].Chain);
     let balance;
     let balanceToShow;
@@ -183,6 +206,9 @@ function NFTaccount() {
               break;
             case "Hedera":
               dispatch(setBalance(balance / 1e6));
+              break;
+            case "TON":
+              dispatch(setBalance(balance / 1e9));
               break;
             default:
               break;
@@ -263,6 +289,7 @@ function NFTaccount() {
   useEffect(() => {
     clearInterval(balanceInterval);
     let _account =
+      tonAccount ||
       account ||
       algorandAccount ||
       tezosAccount ||
@@ -352,7 +379,14 @@ function NFTaccount() {
 
 export default NFTaccount;
 
-/** const widget = useSelector((state) => state.widget.widget);
+/** 
+ * 
+ * import UserConnect from "../User/UserConnect";
+import AccountModal from "../Modals/AccountModal/AccountModal";
+
+ const widget = useSelector((state) => state.widget.widget);
+
+const widget = useSelector((state) => state.widget.widget);
  *   {widget && (
           <>
             <UserConnect />

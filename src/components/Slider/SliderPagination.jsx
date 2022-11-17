@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setStep } from "../../store/reducers/sliderSlice";
 import PropTypes from "prop-types";
+// import { useLocation } from "react-router-dom";
 
 export default function SliderPagination({ index }) {
   const length = useSelector((state) => state.slider.nfts.length);
   const dispatch = useDispatch();
   const step = useSelector((state) => state.slider.step);
-
+  // const location = useLocation();
   const [width, setWidth] = useState(0);
 
   const handleClick = () => {
@@ -27,8 +28,9 @@ export default function SliderPagination({ index }) {
         dispatch(setStep(0));
       }
     }
-    //return () => clearTimeout(tm);
-  }, [width]);
+    // if (location.pathname !== "/" && location.pathname !== "/connect")
+    // return () => clearTimeout(tm);
+  });
 
   useEffect(() => {
     let tm;

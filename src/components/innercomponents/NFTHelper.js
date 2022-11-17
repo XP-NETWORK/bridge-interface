@@ -7,6 +7,7 @@ const supportedImageFormats = [
     ".png",
     ".svg",
     ".webp",
+    ".mov",
 ];
 
 const ifVideo = (item) => {

@@ -14,13 +14,7 @@ export default function TronConnectionErrMod() {
     };
     //
     return error === "noTronWeb" ? (
-        <Modal
-            className="tron-connection-error"
-            animation={false}
-            size="sm"
-            show={error}
-            onHide={() => handleClose()}
-        >
+        <>
             <span className="tron-connection-error-close" onClick={handleClose}>
                 <CloseComp className="svgWidget" />
             </span>
@@ -41,15 +35,9 @@ export default function TronConnectionErrMod() {
                     Install Wallet
                 </a>
             </Modal.Body>
-        </Modal>
+        </>
     ) : (
-        <Modal
-            className="tron-connection-error"
-            animation={false}
-            size="sm"
-            show={error}
-            onHide={() => handleClose()}
-        >
+        <>
             <span className="tron-connection-error-close" onClick={handleClose}>
                 <CloseComp className="svgWidget" />
             </span>
@@ -62,6 +50,6 @@ export default function TronConnectionErrMod() {
             <Modal.Body className="tron-connection-error__body">
                 To continue bridging connect your TronLink wallet
             </Modal.Body>
-        </Modal>
+        </>
     );
 }

@@ -21,6 +21,7 @@ export default function Refresh() {
     secretAccount,
     secretLoggedIn,
     hederaAccount,
+    tonAccount,
   } = useSelector((state) => state.general);
   const dispatch = useDispatch();
 
@@ -38,6 +39,7 @@ export default function Refresh() {
       else if (from.type === "Elrond") w = elrondAccount;
       else if (from.type === "Tron") w = tronWallet;
       else if (from.type === "Hedera") w = hederaAccount;
+      else if (from.type === "TON") w = tonAccount;
 
       await setNFTS(w, from.key, testNet, "refresh");
     }

@@ -1,172 +1,38 @@
 import React from "react";
-import EVMWallet from "./EVMWallet";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+
+// import EVMWallet from "./EVMWallet";
 import TezosWallet from "./TezosWallet";
 import AlgorandWallet from "./AlgorandWallet";
 import TronWallet from "./TronWallet";
 import ElrondWallet from "./ElrondWallet";
-import USBWallet from "./USBWallet";
+// import USBWallet from "./USBWallet";
 import VeChainWallet from "./VeChainWallet";
-import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
-
 import CosmosWallet from "./CosmosWallet";
-
 import HederaWallet from "./HederaWallet";
-import { useLocation } from "react-router-dom";
 import Unscopables from "./Unscopables";
-// import TONWallet from "./TONWallet";
+import { sortWallet } from "./WalletListHelper";
+import TonWallet from "./TONWallet/TonWallet";
+import TonKeeper from "./TONWallet/TonKeeper";
+import TonHub from "./TONWallet/TonHub";
+import BitKeep from "./EVMWallet/BitKeep";
+import WalletConnect from "./EVMWallet/WalletConnect";
+import MetaMask from "./EVMWallet/MetaMask";
+import TrustWallet from "./EVMWallet/TrustWallet";
+import Martioan from "./APTOSWallet/Martioan";
+import Petra from "./APTOSWallet/Petra";
+import Pontem from "./APTOSWallet/Pontem";
 
 export default function WalletList({ connected, input, discount }) {
   const from = useSelector((state) => state.general.from);
-  const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
   const location = useLocation();
-
-  const sortWallet = (components) => {
-    let sortedWallets;
-    const evmWallets = components.filter(
-      (e) => e.type === "EVM" || e.type === "Skale"
-    );
-    const tezosWallets = components.filter((e) => e.type === "Tezos");
-    const elrondWallets = components.filter((e) => e.type === "Elrond");
-    const algodWallets = components.filter((e) => e.type === "Algorand");
-    const VeChainWallets = components.filter((e) => e.type === "VeChain");
-    const tronWallets = components.filter((e) => e.type === "Tron");
-    const cosmosWallets = components.filter((e) => e.type === "Cosmos");
-    const usbWallet = components.filter((e) => e.type === "USB");
-    const hederaWallets = components.filter((e) => e.type === "Hedera");
-
-    if (discount) {
-      sortedWallets = [...evmWallets];
-      return;
-    }
-
-    switch (temporaryFrom?.type || from?.type) {
-      case "EVM":
-        sortedWallets = [
-          ...evmWallets,
-          ...hederaWallets,
-          ...cosmosWallets,
-          ...tezosWallets,
-          ...elrondWallets,
-          ...algodWallets,
-          ...tronWallets,
-          ...VeChainWallets,
-          ...usbWallet,
-          Unscopables,
-        ];
-        return sortedWallets;
-      case "Skale":
-        sortedWallets = [
-          ...evmWallets,
-          ...hederaWallets,
-          ...cosmosWallets,
-          ...tezosWallets,
-          ...elrondWallets,
-          ...algodWallets,
-          ...tronWallets,
-          ...VeChainWallets,
-          ...usbWallet,
-        ];
-        return sortedWallets;
-      case "Tezos":
-        sortedWallets = [
-          ...tezosWallets,
-          ...evmWallets,
-          ...hederaWallets,
-          ...cosmosWallets,
-          ...elrondWallets,
-          ...algodWallets,
-          ...tronWallets,
-          ...VeChainWallets,
-          ...usbWallet,
-        ];
-        return sortedWallets;
-      case "Elrond":
-        sortedWallets = [
-          ...elrondWallets,
-          ...evmWallets,
-          ...hederaWallets,
-          ...cosmosWallets,
-          ...tezosWallets,
-          ...algodWallets,
-          ...tronWallets,
-          ...VeChainWallets,
-          ...usbWallet,
-        ];
-        return sortedWallets;
-      case "Algorand":
-        sortedWallets = [
-          ...algodWallets,
-          ...evmWallets,
-          ...hederaWallets,
-          ...cosmosWallets,
-          ...elrondWallets,
-          ...tezosWallets,
-          ...tronWallets,
-          ...VeChainWallets,
-          ...usbWallet,
-        ];
-        return sortedWallets;
-      case "VeChain":
-        sortedWallets = [
-          ...VeChainWallets,
-          ...evmWallets,
-          ...hederaWallets,
-          ...cosmosWallets,
-          ...algodWallets,
-          ...elrondWallets,
-          ...tezosWallets,
-          ...tronWallets,
-          ...usbWallet,
-        ];
-        return sortedWallets;
-      case "Tron":
-        sortedWallets = [
-          ...tronWallets,
-          ...evmWallets,
-          ...hederaWallets,
-          ...cosmosWallets,
-          ...algodWallets,
-          ...elrondWallets,
-          ...tezosWallets,
-          ...VeChainWallets,
-          ...usbWallet,
-        ];
-        return sortedWallets;
-      case "Cosmos":
-        sortedWallets = [
-          ...cosmosWallets,
-          ...evmWallets,
-          ...hederaWallets,
-          ...algodWallets,
-          ...elrondWallets,
-          ...tezosWallets,
-          ...VeChainWallets,
-          ...tronWallets,
-          ...usbWallet,
-        ];
-        return sortedWallets;
-      case "Hedera":
-        sortedWallets = [
-          ...hederaWallets,
-          ...evmWallets,
-          ...algodWallets,
-          ...elrondWallets,
-          ...tezosWallets,
-          ...VeChainWallets,
-          ...tronWallets,
-          ...usbWallet,
-        ];
-        return sortedWallets;
-      default:
-        break;
-    }
-  };
 
   const walletComponents = [
     {
       Component: (
-        <EVMWallet wallet={"MetaMask"} key="wallet-index-0" close={connected} />
+        <MetaMask wallet={"MetaMask"} key="metamask" close={connected} />
       ),
       name: "MetaMask",
       type: "EVM",
@@ -176,9 +42,9 @@ export default function WalletList({ connected, input, discount }) {
     },
     {
       Component: (
-        <EVMWallet
+        <TrustWallet
           wallet={"TrustWallet"}
-          key="wallet-index-2"
+          key="trust-wallet"
           close={connected}
         />
       ),
@@ -190,32 +56,32 @@ export default function WalletList({ connected, input, discount }) {
     },
     {
       Component: (
-        <EVMWallet
-          wallet={"WalletConnect"}
-          key="wallet-index-1"
+        <WalletConnect
+          wallet={"MetaMask"}
+          key="wallet-connect"
           close={connected}
         />
       ),
-      name: "WalletConnect",
+      name: "MetaMask",
       type: "EVM",
       mobile: true,
       desktop: true,
-      order: 3,
+      order: 1,
     },
     {
       Component: (
-        <EVMWallet
-          wallet={"BitKeep"}
-          key="wallet-index-1-bitkeep"
+        <BitKeep
+          wallet={"MetaMask"}
+          key="bitKeep"
           close={connected}
           discount={discount}
         />
       ),
-      name: "BitKeep",
+      name: "MetaMask",
       type: "EVM",
       mobile: true,
       desktop: true,
-      order: 3,
+      order: 1,
     },
     {
       Component: (
@@ -304,7 +170,7 @@ export default function WalletList({ connected, input, discount }) {
       name: "Algorand Wallet",
       type: "Algorand",
       mobile: true,
-      desktop: false,
+      desktop: true,
       order: 10,
     },
     {
@@ -363,26 +229,28 @@ export default function WalletList({ connected, input, discount }) {
       order: 14,
     },
     {
-      Component: (
-        <USBWallet
-          wallet={"Ledger"}
-          key="wallet-index-11"
-          connected={connected}
-        />
-      ),
-      name: "Ledger",
-      mobile: false,
+      Component: <TonKeeper key="TonKeeper" close={connected} />,
+      name: "TonKeeper",
+      mobile: true,
       desktop: true,
-      order: 15,
-      type: "USB",
+      order: 14,
+      type: "TON",
     },
     {
-      Component: <USBWallet key="wallet-index-12" connected={connected} />,
-      name: "Trezor",
+      Component: <TonHub key="TonHub" close={connected} />,
+      name: "TonHub",
+      mobile: true,
+      desktop: true,
+      order: 14,
+      type: "TON",
+    },
+    {
+      Component: <TonWallet key="TonWallet" close={connected} />,
+      name: "TonWallet",
       mobile: false,
       desktop: true,
-      order: 16,
-      type: "USB",
+      order: 14,
+      type: "TON",
     },
     {
       Component: (
@@ -420,21 +288,56 @@ export default function WalletList({ connected, input, discount }) {
       order: 14,
       type: "EVM",
     },
+    {
+      Component: <Martioan key="martian" close={connected} />,
+      name: "Martian",
+      mobile: false,
+      desktop: true,
+      order: 19,
+      type: "APTOS",
+    },
+    {
+      Component: <Petra key="petra" close={connected} />,
+      name: "Petra",
+      mobile: false,
+      desktop: true,
+      order: 20,
+      type: "APTOS",
+    },
+    {
+      Component: <Pontem key="pontem" close={connected} />,
+      name: "Pontem",
+      mobile: false,
+      desktop: true,
+      order: 19,
+      type: "APTOS",
+    },
+    // ////////////!!!!
     // {
     //     Component: (
-    //         <TONWallet wallet={"TONWallet"} key="" close={connected} />
+    //         <USBWallet
+    //             wallet={"Ledger"}
+    //             key="wallet-index-11"
+    //             connected={connected}
+    //         />
     //     ),
-    //     name: "TON Wallet",
+    //     name: "Ledger",
     //     mobile: false,
     //     desktop: true,
-    //     order: 19,
-    //     type: "TON",
+    //     order: 15,
+    //     type: "USB",
+    // },
+    // {
+    //     Component: (
+    //         <USBWallet key="wallet-index-12" connected={connected} />
+    //     ),
+    //     name: "Trezor",
+    //     mobile: false,
+    //     desktop: true,
+    //     order: 16,
+    //     type: "USB",
     // },
   ];
-
-  // const evmWallets = walletComponents.filter(
-  //     (e) => e.type === "EVM" || e.type === "Skale"
-  // );
 
   const filteredWallets = input
     ? walletComponents
@@ -471,7 +374,9 @@ export default function WalletList({ connected, input, discount }) {
                 .map((wallet) => wallet.Component)
             : filteredWallets
                 .filter((wallet) => wallet.desktop)
-                .map((wallet) => wallet.Component)}
+                .map((wallet) => {
+                  return wallet.Component;
+                })}
         </ul>
       );
   }

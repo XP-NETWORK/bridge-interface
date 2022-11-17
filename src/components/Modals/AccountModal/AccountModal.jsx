@@ -27,16 +27,22 @@ export default function AccountModal() {
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
   const MyAlgo = useSelector((state) => state.general.MyAlgo);
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
+  const tonAccount = useSelector((state) => state.general.tonAccount);
   const secretAccount = useSelector((state) => state.general.secretAccount);
 
   const WalletConnect = useSelector((state) => state.general.WalletConnect);
+  const connectedWallet = useSelector((state) => state.general.connectedWallet);
   const WCProvider = useSelector((state) => state.general.WCProvider);
   const tronLink = useSelector((state) => state.general.tronLink);
   const templeWallet = useSelector((state) => state.general.templeWallet);
+  // const TonWallet = useSelector((state) => state.general.TonWallet);
   const kukaiWallet = useSelector((state) => state.general.kukaiWallet);
   const hederaWallet = useSelector((state) => state.general.hederaWallet);
   const hederaAccount = useSelector((state) => state.general.hederaAccount);
+  const aptosAccount = useSelector((state) => state.general.aptosAccount);
   const currentAccount =
+    aptosAccount ||
+    tonAccount ||
     hederaAccount ||
     account ||
     elrondAccount ||
@@ -46,19 +52,20 @@ export default function AccountModal() {
     secretAccount ||
     undefined;
 
+  const handleClose = () => {
+    dispatch(setAccountModal(false));
+  };
+
   const { widget, wsettings } = useSelector(({ widget }) => ({
     widget: widget.widget,
     wsettings: widget.wsettings,
   }));
 
-  const handleClose = () => {
-    dispatch(setAccountModal(false));
-  };
-
   const accountModal = useRef(null);
 
   const connectedWith = () => {
     if (MetaMask) return "MetaMask";
+    if (connectedWallet) return connectedWallet;
     else if (unstoppableDomains) return "Unstoppable Domains";
     else if (onMaiar) return "Maiar Wallet";
     else if (trustWallet) return "Trust Wallet";
@@ -124,3 +131,28 @@ export default function AccountModal() {
     ""
   );
 }
+
+/**
+ * 
+ *   const { widget, wsettings } = useSelector(({ widget }) => ({
+    widget: widget.widget,
+    wsettings: widget.wsettings,
+  }));
+ * 
+ *     <button
+          onClick={
+            widget
+              ? () =>
+                  window.open(
+                    widget && !wsettings
+                      ? `/connect${window.location.search}`
+                      : `/connect${window.location.search}`,
+                    "_self"
+                  )
+              : () => window.location.reload()
+          }
+          className="changeBtn"
+        >
+          Disconnect
+        </button>
+ */

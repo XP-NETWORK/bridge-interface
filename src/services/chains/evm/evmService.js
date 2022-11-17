@@ -4,14 +4,15 @@ import {
   chainsConfig,
 } from "../../../components/values.js";
 import store from "../../../store/store.js";
-import { errorToLog, getFactory } from "../../../wallet/helpers";
+import { errorToLog } from "../../../wallet/helpers";
 import { setError } from "../../../store/reducers/generalSlice";
 import BigNumber from "bignumber.js";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
 import { patchRealizedDiscount } from "../../deposits.js";
 
 export async function switchNetwork(chain) {
-  // debugger;
+  // eslint-disable-next-line no-debugger
+
   const {
     general: { testNet, bitKeep },
   } = store.getState();
@@ -79,7 +80,9 @@ export const transferNFTFromEVM = async ({
   extraFees,
 }) => {
   fee = discountLeftUsd ? fee - fee * 0.25 : fee;
-  const factory = await getFactory();
+  const {
+    general: { factory },
+  } = store.getState();
   const toChain = await factory.inner(chainsConfig[to.text].Chain);
   const fromChain = await factory.inner(chainsConfig[from.text].Chain);
   const fromNonce = CHAIN_INFO[from.text].nonce;
@@ -127,21 +130,10 @@ export const transferNFTFromEVM = async ({
             "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection",
         })
       );
-      break;
-    /*case !wrapped &&
-    !mintWith &&
-    !testnet &&
-    (to.key === "Elrond" || to.type === "EVM"):
-    store.dispatch(
-      setError({
-        message:
-          "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection",
-      })
-    );
-    if (txnHashArr[0]) {
-      store.dispatch(setTxnHash({ txn: "failed", nft }));
-    }
-    break;*/
+      if (txnHashArr[0]) {
+        store.dispatch(setTxnHash({ txn: "failed", nft }));
+      }
+      break;*/
     default:
       result = await transfer(
         fromChain,

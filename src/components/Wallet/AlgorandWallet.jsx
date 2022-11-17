@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setFrom } from "../../store/reducers/generalSlice";
 import PropTypes from "prop-types";
+import { getRightPath } from "../../wallet/helpers";
 
 export default function AlgorandWallet({ wallet, close }) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -22,11 +23,7 @@ export default function AlgorandWallet({ wallet, close }) {
   const navigate = useNavigate();
 
   const navigateToAccountRoute = () => {
-    navigate(
-      testnet
-        ? `/testnet/account${location.search ? location.search : ""}`
-        : `/account${location.search ? location.search : ""}`
-    );
+    navigate(getRightPath());
   };
 
   const connectionHandler = async (wallet) => {

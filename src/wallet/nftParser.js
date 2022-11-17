@@ -19,6 +19,19 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
     collectionIdent: nft.native?.contract || nft.collectionIdent,
   };
 
+  if (nft.native.chainId === "27") {
+    const contract = nft.native?.collectionAddress || "SingleNFt";
+    nft = {
+      ...nft,
+      collectionIdent: nft.native?.collectionAddress || "SingleNFt",
+      native: {
+        ...nft.native,
+        contract: contract,
+        tokenId: nft.native?.address,
+      },
+    };
+  }
+
   let whitelisted = !testnet
     ? nft?.native?.contract === "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a"
       ? false
@@ -34,6 +47,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
     nftId: nft.nftId || undefined,
     appId: nft.appId || undefined,
   };
+
   const {
     general: { from, NFTList, account },
   } = store.getState();
@@ -42,7 +56,6 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
     const [nftRes, whitelistedRes] = await Promise.allSettled([
       (async () => {
         const unwraped = await cache.unwrap(nft);
-        // debugger;
         const {
           chainId,
           tokenId,
@@ -55,7 +68,9 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
 
         try {
           if (testnet) throw new Error("Testnet exception");
-          nftData = (await cache.get({ chainId, tokenId, contract }, nft)).data;
+          nftData = (
+            await cache.get({ chainId, tokenId, contract }, unwraped.nft)
+          ).data;
           if (!nftData) throw new Error("No data exc");
         } catch (e) {
           nftData = await nftGeneralParser(nft, account, whitelisted);
@@ -95,8 +110,6 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
       dataLoaded: true,
       whitelisted,
     };
-
-    //if (cache.isRestricted(nftObj?.image)) nft = cache.preventRestricted(nft);
 
     if (
       !NFTList[index]?.dataLoaded ||

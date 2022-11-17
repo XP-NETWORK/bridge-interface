@@ -19,12 +19,12 @@ class CacheService {
 
   async get({ chainId, tokenId, contract }, nft) {
     try {
+      const _tokenId = encodeURIComponent(tokenId || nft.native?.tokenId);
+      const _contract = encodeURIComponent(contract || nft.native?.contract);
       return axios
         .get(
           `${this.cacheApi}/nft/data?chainId=${chainId ||
-            nft.native?.chainId}&tokenId=${tokenId ||
-            nft.native?.tokenId}&contract=${encodeURIComponent(contract) ||
-            encodeURIComponent(nft.native?.contract)}`,
+            nft.native?.chainId}&tokenId=${_tokenId}&contract=${_contract}`,
           {
             timeout: 5000,
           }
@@ -36,6 +36,8 @@ class CacheService {
   }
 
   async add(nft, account, whitelisted, times = 1) {
+    if (typeof nft.native?.tokenId === "undefined")
+      return "key parameter missing";
     return axios
       .post(`${this.cacheApi}/nft/add`, {
         nft,
@@ -61,14 +63,25 @@ class CacheService {
   }
 
   async unwrap(nft) {
-    if (/(wnfts\.xp\.network|nft\.xp\.network)/.test(nft.uri)) {
+    // eslint-disable-next-line no-debugger
+    // debugger;
+    if (
+      /(wnfts\.xp\.network|nft\.xp\.network|staging-nft\.xp\.network)/.test(
+        nft.uri
+      )
+    ) {
       try {
         const res = await axios(nft.uri);
 
         const { data } = res;
 
-        let tokenId = data.wrapped?.token_id || data.wrapped?.tokenId;
-        const sourceToken = data.wrapped?.source_token_id;
+        let tokenId =
+          data.wrapped?.token_id ||
+          data.wrapped?.tokenId ||
+          data.wrapped?.item_address;
+
+        const sourceToken =
+          data.wrapped?.source_token_id || data.wrapped?.origin;
 
         if (
           data.wrapped?.origin === "2" &&
@@ -118,6 +131,20 @@ class CacheService {
     animation_url: "",
     uri: "",
   });
+
+  parseUniqueNft(nft, whitelisted) {
+    if ("saleContractAddress" in nft.native) {
+      return {
+        ...nft,
+        metaData: {
+          image: nft.native?.image,
+          name: nft.native?.name,
+        },
+        dataLoaded: true,
+        whitelisted,
+      };
+    } else return false;
+  }
 }
 
 export default () => new CacheService();

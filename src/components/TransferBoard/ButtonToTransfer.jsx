@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { algoConnector } from "../../wallet/connectors";
 
-import { getFactory, convert } from "../../wallet/helpers";
+import { convert } from "../../wallet/helpers";
 import { ExtensionProvider } from "@elrondnetwork/erdjs/out";
 import { ethers } from "ethers";
 import {
@@ -25,6 +25,7 @@ import { transferNFTFromTezos } from "../../services/chains/tezos/tezosHelper";
 import { transferNFTFromCosmos } from "../../services/chains/cosmos/cosmosHelper";
 import { transferNFTFromElrond } from "../../services/chains/elrond/elrondHelper";
 import { transferNFTFromAlgorand } from "../../services/chains/algorand/algorandHelper";
+import { transferNFTFromTON } from "../../services/chains/ton/tonHelper";
 
 import { withWidget } from "../Widget/hocs/withWidget";
 
@@ -44,6 +45,7 @@ export default withWidget(function ButtonToTransfer({
   const from = useSelector((state) => state.general.from.key);
   const _from = useSelector((state) => state.general.from);
   const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
+  const factory = useSelector((state) => state.general.factory);
   const [loading, setLoading] = useState();
   const dispatch = useDispatch();
   const algorandWallet = useSelector((state) => state.general.AlgorandWallet);
@@ -51,7 +53,6 @@ export default withWidget(function ButtonToTransfer({
   const algorandAccount = useSelector((s) => s.general.algorandAccount);
   const maiarProvider = useSelector((state) => state.general.maiarProvider);
   const templeSigner = useSelector((state) => state.general.templeSigner);
-  const keplrWallet = useSelector((state) => state.general.keplrWallet);
   const account = useSelector((state) => state.general.account);
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
   const WCProvider = useSelector((state) => state.general.WCProvider);
@@ -59,12 +60,12 @@ export default withWidget(function ButtonToTransfer({
   const hederaSigner = useSelector((state) => state.signers.signer);
   const chainConfig = useSelector((state) => state.signers.chainFactoryConfig);
   const discountLeftUsd = useSelector((state) => state.discount.discount);
+  const signerSigner = useSelector((state) => state.signers.signer);
 
   const getAlgorandWalletSigner = async () => {
     const base = new MyAlgoConnect();
     if (algorandWallet) {
       try {
-        const factory = await getFactory();
         const inner = await factory.inner(15);
         const signer = await inner.walletConnectSigner(
           algoConnector,
@@ -81,7 +82,6 @@ export default withWidget(function ButtonToTransfer({
         );
       }
     } else if (MyAlgo) {
-      const factory = await getFactory();
       const inner = await factory.inner(15);
       const signer = inner.myAlgoSigner(base, algorandAccount);
       return signer;
@@ -98,9 +98,8 @@ export default withWidget(function ButtonToTransfer({
   const getSigner = async () => {
     let signer;
     try {
-      if (from === "Secret") {
-        return keplrWallet;
-      } else if (from === "Tezos") {
+      if (from === "TON") return signerSigner;
+      else if (from === "Tezos") {
         return templeSigner || kukaiWalletSigner;
       } else if (from === "Algorand") {
         signer = await getAlgorandWalletSigner();
@@ -122,6 +121,8 @@ export default withWidget(function ButtonToTransfer({
                 );
                 const signer = await provider.getSigner(account);*/
         return hederaSigner;
+      } else if (from === "Secret") {
+        return signerSigner;
       } else {
         let provider;
 
@@ -184,6 +185,7 @@ export default withWidget(function ButtonToTransfer({
     }
     return stop;
   };
+
   const sendEach = async (nft, index) => {
     const signer = await getSigner();
     const unstoppabledomain = await getFromDomain(receiver, _to);
@@ -204,7 +206,6 @@ export default withWidget(function ButtonToTransfer({
       discountLeftUsd,
       extraFees: getExtraFee(from),
     };
-
     switch (_from.type) {
       case "EVM":
         result = await transferNFTFromEVM(params);
@@ -223,12 +224,16 @@ export default withWidget(function ButtonToTransfer({
         break;
       case "Cosmos":
         result = await transferNFTFromCosmos(params);
+        ``;
         break;
       case "VeChain":
         result = await transferNFTFromEVM(params);
         break;
       case "Skale":
         result = await transferNFTFromEVM(params);
+        break;
+      case "TON":
+        result = await transferNFTFromTON(params);
         break;
       default:
         break;
@@ -246,10 +251,7 @@ export default withWidget(function ButtonToTransfer({
         senderAddress: account || algorandAccount,
         targetAddress: receiverAddress || unstoppabledomain || receiver,
       });
-
-      dispatch(setTxnHash({ txn: result, nft }));
     }
-
     setLoading(false);
     dispatch(setTransferLoaderModal(false));
   };
@@ -266,7 +268,7 @@ export default withWidget(function ButtonToTransfer({
       dispatch(setTransferLoaderModal(true));
 
       for (let index = 0; index < selectedNFTList.length; index++) {
-        if (from === "VeChain") {
+        if (from === "VeChain" || from === "TON") {
           await sendEach(selectedNFTList[index], index);
         } else {
           sendEach(selectedNFTList[index], index);
@@ -284,3 +286,28 @@ export default withWidget(function ButtonToTransfer({
     </div>
   );
 });
+
+/***
+ * 
+ * 
+ * import { withWidget } from "../Widget/hocs/withWidget";
+
+export default withWidget(function ButtonToTransfer({
+
+const params = {
+  extraFees: getExtraFee(from),
+}
+
+
+   } else if (result) {
+      setTxForWidget({
+        result,
+        fromNonce: _from.nonce,
+        toNonce: _to.nonce,
+        bigNumberFees,
+        from,
+        nft,
+        senderAddress: account || algorandAccount,
+        targetAddress: receiverAddress || unstoppabledomain || receiver,
+      });
+ */
