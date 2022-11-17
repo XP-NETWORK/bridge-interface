@@ -19,7 +19,7 @@ export const ChainSelect = ({ setChain, selectedChain, mode, hideChains }) => {
         {selectedChain ? (
           <div className="selectedChain">
             <img src={chainObj?.image?.src} alt={""} />
-            SliderPagination
+
             {mode && (
               <span className="selectedChainItem">{chainObj?.text}</span>
             )}

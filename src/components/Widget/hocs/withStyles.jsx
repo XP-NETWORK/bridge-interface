@@ -152,7 +152,7 @@ export const withStyles = (Wrapped) =>
             }
     
     
-            .modal-content, .modal-content .walletListBox, .nftInfBox, .success-nft-info__wrapper, .accountBox  {
+            .modal-content, .modal-content .walletListBox, .nftInfBox, .success-nft-info__wrapper, .accountBox, .serchInput  {
                 background: ${modalBackground ? modalBackground : ""};
                 filter: brightness(90%);
             }
@@ -227,7 +227,7 @@ export const withStyles = (Wrapped) =>
               filter: brightness(94%);
             }
     
-            .selected-nfts-item:hover,  .chain-hash, .serchInput, .mobile-destination__address input:focus, .mobile-search-input__box input.serchInput:focus  {
+            .selected-nfts-item:hover,  .chain-hash,  .mobile-destination__address input:focus, .mobile-search-input__box input.serchInput:focus  {
               background: ${panelBackground ? panelBackground : ""};
               filter: brightness(92%);
             }
