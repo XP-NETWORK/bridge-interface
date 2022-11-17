@@ -96,13 +96,6 @@ hashConnect.pairingEvent.once(async (pairingData) => {
   store.dispatch(setSigner(signer));
 });
 
-<<<<<<< HEAD
-hashConnect.foundExtensionEvent.once(() => {
-  // hashPackWalletMetaData = walletMetadata;
-});
-
-=======
->>>>>>> temporary
 export const connectHashpack = async () => {
   let appMetadata = {
     name: "XP.NETWORK Cross-Chain NFT Bridge",
@@ -111,7 +104,6 @@ export const connectHashpack = async () => {
     icon: "%PUBLIC_URL%/favicon.ico",
   };
 
-<<<<<<< HEAD
   try {
     const initData = await hashConnect.init(appMetadata, "testnet", false);
     const { pairingString } = initData;
@@ -120,16 +112,6 @@ export const connectHashpack = async () => {
   } catch (error) {
     console.log("connectHashpack error: ", error);
   }
-=======
-    try {
-        const initData = await hashConnect.init(appMetadata, "testnet", false);
-        const { pairingString } = initData;
-        await hashConnect.connectToLocalWallet(pairingString, appMetadata);
-        return true;
-    } catch (error) {
-        console.log("connectHashpack error: ", error);
-    }
->>>>>>> temporary
 };
 
 export const connectUnstoppable = async () => {
@@ -484,12 +466,12 @@ export const connectBeacon = async () => {
 };
 
 const getMyAlgoSigner = async (base, algorandAccount) => {
-    const {
-        general: { factory },
-    } = store.getState();
-    const inner = await factory.inner(15);
-    const signer = inner.myAlgoSigner(base, algorandAccount);
-    return signer;
+  const {
+    general: { factory },
+  } = store.getState();
+  const inner = await factory.inner(15);
+  const signer = inner.myAlgoSigner(base, algorandAccount);
+  return signer;
 };
 
 export const connectMyAlgo = async () => {
@@ -526,31 +508,31 @@ export const connectMyAlgo = async () => {
 // };
 
 export const onWalletConnect = async (activate, from, testnet) => {
-    // onWalletConnectV2();
-    const { rpc, chainId } = chainsConfig[from];
-    try {
-        const walletConnect = new WalletConnectConnector({
-            rpc: {
-                [chainId]: rpc,
-                network: testnet ? "testnet" : "mainnet",
-            },
-            chainId,
-            qrcode: true,
-        });
-        walletConnect.networkId = chainId;
-        await activate(walletConnect, undefined, true);
-        const account = await walletConnect.getAccount();
-        store.dispatch(setAccount(account));
-        store.dispatch(setOnWC(true));
-        store.dispatch(setWC(walletConnect));
-        return true;
-    } catch (error) {
-        store.dispatch(setError(error));
-        if (error.data) {
-            console.log(error.data.message);
-        } else console.log(error);
-        return false;
-    }
+  // onWalletConnectV2();
+  const { rpc, chainId } = chainsConfig[from];
+  try {
+    const walletConnect = new WalletConnectConnector({
+      rpc: {
+        [chainId]: rpc,
+        network: testnet ? "testnet" : "mainnet",
+      },
+      chainId,
+      qrcode: true,
+    });
+    walletConnect.networkId = chainId;
+    await activate(walletConnect, undefined, true);
+    const account = await walletConnect.getAccount();
+    store.dispatch(setAccount(account));
+    store.dispatch(setOnWC(true));
+    store.dispatch(setWC(walletConnect));
+    return true;
+  } catch (error) {
+    store.dispatch(setError(error));
+    if (error.data) {
+      console.log(error.data.message);
+    } else console.log(error);
+    return false;
+  }
 };
 
 const onClientConnect = (maiarProvider) => {
@@ -627,48 +609,48 @@ export const connectMaiarExtension = async () => {
 // Tron blockchain connection ( TronLink )
 export const connectTronlink = async () => {
   const {
-      general: { factory },
+    general: { factory },
   } = store.getState();
   if (window.innerWidth <= 600 && !window.tronWeb) {
-      store.dispatch(setTronPopUp(true));
+    store.dispatch(setTronPopUp(true));
   } else {
+    try {
       try {
-          try {
-              const accounts = await window.tronLink.request({
-                  method: "tron_requestAccounts",
-              });
+        const accounts = await window.tronLink.request({
+          method: "tron_requestAccounts",
+        });
 
-              if (!accounts) {
-                  store.dispatch(setTronLoginError("loggedOut"));
-              }
-          } catch (err) {
-              console.log(err);
-              if (!window.tronWeb) {
-                  store.dispatch(setTronLoginError("noTronWeb"));
-              }
-          }
-
-          if (window.tronLink && window.tronWeb.defaultAddress.base58) {
-              console.log(window.tronLink);
-              const publicAddress = window.tronWeb.defaultAddress.base58;
-
-              await factory
-                  .setProvider(9, window.tronWeb)
-                  .catch((e) => console.log(e, "e"));
-
-              store.dispatch(setTronWallet(publicAddress));
-              store.dispatch(setTronLink(true));
-              return true;
-          }
-      } catch (error) {
-          if (!modalError) {
-              store.dispatch(setError(error));
-              if (error.data) {
-                  console.log(error.data.message);
-              } else console.log(error);
-          }
-          return false;
+        if (!accounts) {
+          store.dispatch(setTronLoginError("loggedOut"));
+        }
+      } catch (err) {
+        console.log(err);
+        if (!window.tronWeb) {
+          store.dispatch(setTronLoginError("noTronWeb"));
+        }
       }
+
+      if (window.tronLink && window.tronWeb.defaultAddress.base58) {
+        console.log(window.tronLink);
+        const publicAddress = window.tronWeb.defaultAddress.base58;
+
+        await factory
+          .setProvider(9, window.tronWeb)
+          .catch((e) => console.log(e, "e"));
+
+        store.dispatch(setTronWallet(publicAddress));
+        store.dispatch(setTronLink(true));
+        return true;
+      }
+    } catch (error) {
+      if (!modalError) {
+        store.dispatch(setError(error));
+        if (error.data) {
+          console.log(error.data.message);
+        } else console.log(error);
+      }
+      return false;
+    }
   }
 };
 // Algorand blockchain connection ( Algo Wallet )

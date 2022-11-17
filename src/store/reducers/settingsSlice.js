@@ -43,6 +43,7 @@ export const availability = {
   VeChain: ["Sync2", "VeChainThor"],
   Evms: ["MetaMask", "WalletConnect", "TrustWallet", "BitKeep"],
   Secret: ["Keplr"],
+  TON: ["TonWallet", "TonHub", "TonKeeper"],
 };
 
 export const wallets = [
@@ -59,6 +60,9 @@ export const wallets = [
   "MaiarExtension",
   "Sync2",
   "VeChainThor",
+  ...(biz ? ["TonWallet"] : []),
+  ...(biz ? ["TonHub"] : []),
+  ...(biz ? ["TonKeeper"] : []),
   ...(biz ? ["Keplr"] : []),
 
   //...(biz ? ["Sync2"] : []),
