@@ -41,6 +41,12 @@ export const biz =
   window.location.hostname.includes("temporary") ||
   window.location.hostname.includes("10.0.0");
 
+export const BridgeModes = {
+  Staging: "staging",
+  TestNet: "testnet",
+  CheckWallet: "checkWallet",
+};
+
 export const chains = [
   {
     type: "EVM",

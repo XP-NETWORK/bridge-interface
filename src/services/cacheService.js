@@ -42,7 +42,8 @@ class CacheService {
   }
 
   async add(nft, account, whitelisted, times = 1) {
-    if (!nft.native?.tokenId) return "key parameter missing";
+    if (typeof nft.native?.tokenId === "undefined")
+      return "key parameter missing";
     return axios
       .post(`${this.cacheApi}/nft/add`, {
         nft,

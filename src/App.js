@@ -17,15 +17,12 @@ import "./components/Modals/Modal.css";
 import Modals from "./components/Modals/Modals";
 import { useNavigate } from "react-router-dom";
 
-//import TonWeb from "tonweb";
+import { BridgeModes } from "./components/values";
 
 function App() {
   const dispatch = useDispatch();
   const factory = useSelector((state) => state.general.factory);
   const navigate = useNavigate();
-  //const signer = useSelector((state) => state.signers.signer);
-
-  useEffect(() => {}, []);
 
   useEffect(() => {
     // debugger
@@ -66,11 +63,11 @@ function App() {
 
   useEffect(() => {
     let network;
-    if (window.location.href.includes("/staging")) {
-      network = "staging";
+    if (window.location.pathname.includes(BridgeModes.Staging)) {
+      network = BridgeModes.Staging;
       dispatch(generalSlice.setStaging(true));
-    } else if (window.location.href.includes("/testnet")) {
-      network = "testnet";
+    } else if (window.location.pathname.includes(BridgeModes.TestNet)) {
+      network = BridgeModes.TestNet;
       dispatch(generalSlice.setTestNet(true));
     }
     const saveFactory = async () => {
@@ -78,7 +75,7 @@ function App() {
     };
     if (!factory) saveFactory();
     const hardcoded = new URLSearchParams(window.location.search).get(
-      "checkWallet"
+      BridgeModes.CheckWallet
     );
 
     const query = window.location.search;
