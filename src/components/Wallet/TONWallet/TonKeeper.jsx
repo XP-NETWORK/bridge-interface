@@ -26,7 +26,7 @@ function TonKeeper({ styles, connectWallet }) {
       style={styles("TonKeeper")}
       onClick={connectHandler}
       className="wllListItem"
-      data-wallet="Tonkeeper"
+      data-wallet="TonKeeper"
     >
       <img style={{ width: "28px" }} src={tonkeeper} alt="" />
       <p>Tonkeeper</p>

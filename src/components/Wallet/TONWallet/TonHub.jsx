@@ -16,7 +16,7 @@ function TonHub({ styles, connectWallet }) {
       style={styles("TonHub")}
       onClick={connectHandler}
       className="wllListItem"
-      data-wallet="Tonhub"
+      data-wallet="TonHub"
     >
       <img style={{ width: "28px" }} src={tonhublogo} alt="" />
       <p>Tonhub</p>
