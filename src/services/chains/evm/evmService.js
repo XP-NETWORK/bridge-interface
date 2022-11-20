@@ -8,7 +8,7 @@ import { errorToLog } from "../../../wallet/helpers";
 import { setError } from "../../../store/reducers/generalSlice";
 import BigNumber from "bignumber.js";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
-import { patchRealizedDiscount } from "../../deposits.js";
+//import { patchRealizedDiscount } from "../../deposits.js";
 
 export async function switchNetwork(chain) {
   // eslint-disable-next-line no-debugger
@@ -150,7 +150,7 @@ export const transferNFTFromEVM = async ({
       );
       break;
   }
-  if (result) patchRealizedDiscount(account, fee * 0.25);
+  //if (result) patchRealizedDiscount(account, fee * 0.25)
   return result || false;
 };
 
