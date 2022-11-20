@@ -118,7 +118,7 @@ export default withWidget(function ButtonToTransfer({
                             }),
                         })
                     )
-                );
+              );
                 const signer = await provider.getSigner(account);*/
         return hederaSigner;
       } else if (from === "Secret") {
