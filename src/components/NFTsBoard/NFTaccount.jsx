@@ -123,6 +123,9 @@ function NFTaccount() {
         case "TON":
           walletAccount = tonAccount;
           break;
+        case "NEAR":
+          walletAccount = account;
+          break;
         // case "Hedera":
         //     break;
         default:
@@ -204,6 +207,9 @@ function NFTaccount() {
               break;
             case "TON":
               dispatch(setBalance(balance / 1e9));
+              break;
+            case "NEAR":
+              dispatch(setBalance(balance.shiftedBy(-24)));
               break;
             default:
               break;

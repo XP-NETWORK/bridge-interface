@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   Chain as ChainNonce,
   CHAIN_INFO,
@@ -8,15 +9,22 @@ import {
 
 import ChainInterface from "./chains";
 
+import { BridgeModes } from "../components/values";
+
 class Bridge {
-  async init() {
+  chains = {};
+  config;
+
+  async init(network) {
+    const testnet = BridgeModes.TestNet === network ? true : false;
+
     try {
-      const config = !this.isTestnet
+      const config = !testnet
         ? await ChainFactoryConfigs.MainNet()
         : await ChainFactoryConfigs.TestNet();
-
+      this.config = config;
       this.bridge = ChainFactory(
-        this.isTestnet ? AppConfigs.TestNet() : AppConfigs.MainNet(),
+        testnet ? AppConfigs.TestNet() : AppConfigs.MainNet(),
         config
       );
 
@@ -26,14 +34,11 @@ class Bridge {
     }
   }
 
-  constructor(isTestnet = false) {
-    this.isTestnet = isTestnet;
-    return this;
-  }
-
-  async getChain(chainParams) {
+  async getChain(nonce) {
+    const chainParams = CHAIN_INFO.get(nonce);
+    const chain = this.chains[chainParams.type];
+    if (chain) return chain;
     try {
-      const nonce = ChainNonce[chainParams.key.toUpperCase()];
       const params = {
         nonce,
         chainParams,
@@ -43,19 +48,29 @@ class Bridge {
 
       switch (chainParams.type) {
         case "EVM":
-          return new ChainInterface.EVM(params);
+          this.chains["EVM"] = new ChainInterface.EVM(params);
+          return this.chains["EVM"];
         case "Tron":
-          return new ChainInterface.Tron(params);
+          this.chains["Tron"] = new ChainInterface.Tron(params);
+          return this.chains["Tron"];
         case "Elrond":
-          return new ChainInterface.Elrond(params);
+          this.chains["Elrond"] = new ChainInterface.Elrond(params);
+          return this.chains["Elrond"];
         case "Algorand":
-          return new ChainInterface.Algorand(params);
+          this.chains["Algorand"] = new ChainInterface.Algorand(params);
+          return this.chains["Algorand"];
         case "Tezos":
-          return new ChainInterface.Tezos(params);
+          this.chains["Tezos"] = new ChainInterface.Tezos(params);
+          return this.chains["Tezos"];
         case "VeChain":
-          return new ChainInterface.VeChain(params);
+          this.chains["VeChain"] = new ChainInterface.VeChain(params);
+          return this.chains["VeChain"];
         case "Cosmos":
-          return new ChainInterface.Cosmos(params);
+          this.chains["Cosmos"] = new ChainInterface.Cosmos(params);
+          return this.chains["Cosmos"];
+        case "NEAR":
+          this.chains["NEAR"] = new ChainInterface.Near(params);
+          return this.chains["NEAR"];
         default:
           throw new Error("unsuported chain");
       }
@@ -66,34 +81,30 @@ class Bridge {
   }
 }
 
-
-
-
-
-
-false && (async () => {
-
-  const nft = {
-    uri: "https://ipfs.moralis.io:2053/ipfs/QmUyGiGSRK56Pz9XizhiXp6ABfUimm8TVHJ3n3HA7NNwSN/30",
-    native: {
+false &&
+  (async () => {
+    const nft = {
+      uri:
+        "https://ipfs.moralis.io:2053/ipfs/QmUyGiGSRK56Pz9XizhiXp6ABfUimm8TVHJ3n3HA7NNwSN/30",
+      native: {
         chainId: "7",
         tokenId: "30",
         contract: "0xa36251C995D8376B6FCf9964eed79E62706b4723",
         owner: "0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE",
-        uri: "https://ipfs.moralis.io:2053/ipfs/QmUyGiGSRK56Pz9XizhiXp6ABfUimm8TVHJ3n3HA7NNwSN/30",
+        uri:
+          "https://ipfs.moralis.io:2053/ipfs/QmUyGiGSRK56Pz9XizhiXp6ABfUimm8TVHJ3n3HA7NNwSN/30",
         symbol: "NANO",
         name: "Nano Paint",
-        contractType: "ERC1155"
-    },
-    collectionIdent: "0xa36251C995D8376B6FCf9964eed79E62706b4723"}
-  
-  // const nftObj = JSON.parse(nft)
+        contractType: "ERC1155",
+      },
+      collectionIdent: "0xa36251C995D8376B6FCf9964eed79E62706b4723",
+    };
 
-   //console.log(nftObj);
+    // const nftObj = JSON.parse(nft)
 
-    const bridge = await new Bridge().init()
+    //console.log(nftObj);
 
-
+    const bridge = await new Bridge().init();
 
     const chain = await bridge.getChain({
       type: "EVM",
@@ -105,13 +116,13 @@ false && (async () => {
       key: "Tron",
     });
 
-  
-
-    const estim = await chain.estimate(to.chain, nft, '0x6449b68cc5675f6011e8DB681B142773A3157cb9')
+    const estim = await chain.estimate(
+      to.chain,
+      nft,
+      "0x6449b68cc5675f6011e8DB681B142773A3157cb9"
+    );
 
     console.log(estim);
-
-    
   })();
 
-export default (isTestnet) => new Bridge(isTestnet);
+export default () => new Bridge();

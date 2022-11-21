@@ -28,6 +28,7 @@ import Abey from "../assets/img/chain/Abey.svg";
 import Caduceus from "../assets/img/chain/caduceus.svg";
 import Aptos from "../assets/img/chain/aptos.svg";
 import InternetComputer from "../assets/img/chain/InternetComputer.svg";
+import near from "../assets/img/wallet/NearWallet.svg";
 
 export const EVM = "EVM";
 export const ELROND = "Elrond";
@@ -453,6 +454,17 @@ export const chains = [
     mainnet: false,
     coming: false,
   },
+  {
+    type: "NEAR",
+    key: "NEAR",
+    text: "NEAR",
+    nonce: 31,
+    order: -999,
+    image: { avatar: true, src: near },
+    testNet: false,
+    mainnet: false,
+    coming: false,
+  },
 ];
 
 export const chainsConfig = {
@@ -715,8 +727,16 @@ export const chainsConfig = {
     token: "APT",
     image: Aptos,
     Chain: Chain.APTOS,
-    rx: "https://explorer.aptoslabs.com/txn/",
+    tx: "https://explorer.aptoslabs.com/txn/",
     testTx: "https://explorer.aptoslabs.com/txn/",
+  },
+  NEAR: {
+    type: "NEAR",
+    token: "NEAR",
+    image: near,
+    Chain: Chain.NEAR,
+    tx: "https://explorer.mainnet.near.org/transactions/",
+    testTx: "https://explorer.testnet.near.org/transactions/",
   },
 };
 
@@ -748,6 +768,7 @@ export const coins = [
   "GLMR", //24
   "ABEY", //25
   "APT", //26
+  "NEAR", //27
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -1090,6 +1111,13 @@ export const CHAIN_INFO = {
     native: coins[26],
     nonce: 0x22,
     decimals: 1e18,
+    blockExplorerUrl: "https://explorer.aptoslabs.com/?network=mainnet",
+    testBlockExplorerUrl: "https://explorer.aptoslabs.com/?network=testnet",
+  },
+  NEAR: {
+    native: coins[27],
+    nonce: 31,
+    decimals: 1e8,
     blockExplorerUrl: "https://explorer.aptoslabs.com/?network=mainnet",
     testBlockExplorerUrl: "https://explorer.aptoslabs.com/?network=testnet",
   },

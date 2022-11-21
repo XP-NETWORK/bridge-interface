@@ -34,6 +34,7 @@ export async function switchNetwork(chain) {
     : CHAIN_INFO[chain?.key];
 
   const chainId = `0x${info.chainId.toString(16)}`;
+
   switch (true) {
     case bitKeep:
       try {
@@ -55,7 +56,8 @@ export async function switchNetwork(chain) {
         return true;
       } catch (error) {
         // const c = testNet ? chain?.tnChainId : chain?.chainId;
-        console.log("birma");
+
+        console.log(copyParams);
         await window.ethereum.request({
           method: "wallet_addEthereumChain",
           params: [copyParams],
