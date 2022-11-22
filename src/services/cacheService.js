@@ -62,6 +62,10 @@ class CacheService {
       });
   }
 
+  isHex(num) {
+    return Boolean(num.match(/^0x[0-9a-f]+$/i));
+  }
+
   async unwrap(nft) {
     // eslint-disable-next-line no-debugger
     // debugger;
@@ -80,18 +84,24 @@ class CacheService {
           data.wrapped?.tokenId ||
           data.wrapped?.item_address;
 
-        const sourceToken =
-          data.wrapped?.source_token_id || data.wrapped?.origin;
-
-        if (
-          data.wrapped?.origin === "2" &&
-          tokenId.split("-").length < 3 &&
-          sourceToken
-        ) {
-          tokenId = tokenId + `-${sourceToken}`;
-        }
-        const contract =
+        let contract =
           data.wrapped?.contract || data.wrapped?.source_mint_ident;
+
+        if (data.wrapped?.origin === "2") {
+          contract =
+            tokenId
+              .split("-")
+              ?.slice(0, 2)
+              .join("-") ||
+            data.wrapped?.source_mint_ident
+              .split("-")
+              ?.slice(0, 2)
+              .join("-");
+          const token = data.wrapped?.source_token_id || data.wrapped?.nonce;
+          tokenId = this.isHex(token)
+            ? contract + token
+            : contract + "-" + ("0000" + Number(token).toString(16)).slice(-4);
+        }
 
         return {
           nft: {
