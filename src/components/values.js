@@ -35,7 +35,6 @@ export const ELROND = "Elrond";
 export const TEZOS = "TEZOS";
 
 export const biz =
-  true ||
   window.location.hostname.includes("localhost") ||
   window.location.hostname.includes("staging") ||
   window.location.hostname.includes("development") ||
