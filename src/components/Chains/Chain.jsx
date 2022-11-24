@@ -6,6 +6,7 @@ import "./Chain.css";
 import { useState } from "react";
 import Status from "./Status";
 import { useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
 
 export default function Chain(props) {
     const {
@@ -21,7 +22,6 @@ export default function Chain(props) {
     } = props;
     const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
     const testnet = useSelector((state) => state.general.testNet);
-    const to = useSelector((state) => state.general.to);
     const from = useSelector((state) => state.general.from);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const NONE = { display: "none" };
@@ -33,12 +33,9 @@ export default function Chain(props) {
         setChainStatus(checkIfLive(chainKey, validatorsInfo));
     }, [validatorsInfo]);
 
-    const algoStyle = {};
-
+    // !! ref
     const getStyle = () => {
         if (
-            maintenance ||
-            maintenance ||
             (location.pathname.includes("testnet")
                 ? false
                 : !checkIfLive(chainKey, validatorsInfo)) ||
@@ -96,3 +93,15 @@ export default function Chain(props) {
         </li>
     );
 }
+
+Chain.propTypes = {
+    filteredChain: PropTypes.any,
+    chainSelectHandler: PropTypes.any,
+    text: PropTypes.string,
+    image: PropTypes.object,
+    coming: PropTypes.bool,
+    newChain: PropTypes.bool,
+    chainKey: PropTypes.string,
+    maintenance: PropTypes.bool,
+    updated: PropTypes.bool,
+};

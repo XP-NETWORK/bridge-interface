@@ -5,7 +5,7 @@ class CacheService {
   retryInterval = 6000;
   totalTry = 6;
   retryStatues = [429];
-  forceCache = ["nft.weedcommerce.info"];
+  forceCache = ["nft.weedcommerce.info", "tritonpass"];
 
   constructor() {
     this.axios = axios.create({
@@ -19,12 +19,12 @@ class CacheService {
 
   async get({ chainId, tokenId, contract }, nft) {
     try {
+      const _tokenId = encodeURIComponent(tokenId || nft.native?.tokenId);
+      const _contract = encodeURIComponent(contract || nft.native?.contract);
       return axios
         .get(
           `${this.cacheApi}/nft/data?chainId=${chainId ||
-            nft.native?.chainId}&tokenId=${tokenId ||
-            nft.native?.tokenId}&contract=${encodeURIComponent(contract) ||
-            encodeURIComponent(nft.native?.contract)}`,
+            nft.native?.chainId}&tokenId=${_tokenId}&contract=${_contract}`,
           {
             timeout: 5000,
           }
@@ -36,6 +36,8 @@ class CacheService {
   }
 
   async add(nft, account, whitelisted, times = 1) {
+    if (typeof nft.native?.tokenId === "undefined")
+      return "key parameter missing";
     return axios
       .post(`${this.cacheApi}/nft/add`, {
         nft,
@@ -60,25 +62,46 @@ class CacheService {
       });
   }
 
+  isHex(num) {
+    return Boolean(num.match(/^0x[0-9a-f]+$/i));
+  }
+
   async unwrap(nft) {
-    if (/(wnfts\.xp\.network|nft\.xp\.network)/.test(nft.uri)) {
+    // eslint-disable-next-line no-debugger
+    // debugger;
+    if (
+      /(wnfts\.xp\.network|nft\.xp\.network|staging-nft\.xp\.network)/.test(
+        nft.uri
+      )
+    ) {
       try {
         const res = await axios(nft.uri);
 
         const { data } = res;
 
-        let tokenId = data.wrapped?.token_id || data.wrapped?.tokenId;
-        const sourceToken = data.wrapped?.source_token_id;
+        let tokenId =
+          data.wrapped?.token_id ||
+          data.wrapped?.tokenId ||
+          data.wrapped?.item_address;
 
-        if (
-          data.wrapped?.origin === "2" &&
-          tokenId.split("-").length < 3 &&
-          sourceToken
-        ) {
-          tokenId = tokenId + `-${sourceToken}`;
-        }
-        const contract =
+        let contract =
           data.wrapped?.contract || data.wrapped?.source_mint_ident;
+
+        if (data.wrapped?.origin === "2") {
+          contract =
+            tokenId
+              .split("-")
+              ?.slice(0, 2)
+              .join("-") ||
+            data.wrapped?.source_mint_ident
+              .split("-")
+              ?.slice(0, 2)
+              .join("-");
+          const token = data.wrapped?.source_token_id || data.wrapped?.nonce;
+          tokenId = this.isHex(token)
+            ? contract + token
+            : contract + "-" + ("0000" + Number(token).toString(16)).slice(-4);
+        }
 
         return {
           nft: {
@@ -97,7 +120,9 @@ class CacheService {
           tokenId,
           contract,
         };
-      } catch (e) {}
+      } catch (e) {
+        console.log(e);
+      }
     }
 
     return {
@@ -116,6 +141,20 @@ class CacheService {
     animation_url: "",
     uri: "",
   });
+
+  parseUniqueNft(nft, whitelisted) {
+    if ("saleContractAddress" in nft.native) {
+      return {
+        ...nft,
+        metaData: {
+          image: nft.native?.image,
+          name: nft.native?.name,
+        },
+        dataLoaded: true,
+        whitelisted,
+      };
+    } else return false;
+  }
 }
 
 export default () => new CacheService();

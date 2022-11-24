@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, React } from "react";
 import { Modal } from "react-bootstrap";
-import Close from "../../../assets/img/icons/close.svg";
-import Wrong from "../../../assets/img/Wrong.svg";
-import { CHAIN_INFO, TESTNET_CHAIN_INFO, chains } from "../../values";
+import { chains } from "../../values";
 import { useSelector } from "react-redux";
-import { getAddEthereumChain } from "../../../wallet/chains";
 import { useDispatch } from "react-redux";
 import { setWrongNetwork } from "../../../store/reducers/generalSlice";
 import ChangeNetworkLoader from "../../innercomponents/ChangeNetworkLoader";
 import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import icon from "../../../assets/img/icons/book.svg";
 import { switchNetwork } from "../../../services/chains/evm/evmService";
@@ -21,13 +18,10 @@ function ChangeNetworkModal() {
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const showWrong = useSelector((state) => state.general.wrongNetwork);
-    const account = useSelector((state) => state.general.account);
     const dispatch = useDispatch();
-    const [loader, setLoader] = useState(false);
+    const [loader] = useState(false);
     const testnet = useSelector((state) => state.general.testNet);
-    const WalletConnect = useSelector((state) => state.general.WalletConnect);
     const location = useLocation();
-    const navigate = useNavigate();
     const { chainId } = useWeb3React();
     const isSupported = !testnet
         ? chains.some((chain) => chain.chainId === chainId)
@@ -117,8 +111,8 @@ function ChangeNetworkModal() {
                             </div>
                         </span>
                         <h3>
-                            Destination and departure chains <br /> can't be the
-                            same
+                            Destination and departure chains <br /> can`&apos;`t
+                            be the same
                         </h3>
                         <p>
                             Please use MetaMask to switch the departure chain.
@@ -170,7 +164,8 @@ function ChangeNetworkModal() {
                         <div className="switchingAcc">
                             <ChangeNetworkLoader />
                             <p className="">
-                                "Switching to" {testnet ? "TestNet" : "Mainnet"}
+                                `&quot;`Switching to`&quot;`{" "}
+                                {testnet ? "TestNet" : "Mainnet"}
                             </p>
                             <p className="">Follow instructions in MetaMask</p>
                         </div>

@@ -1,18 +1,16 @@
 import React, { useEffect } from "react";
-import { useWeb3React } from "@web3-react/core";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { claimAlgorandPopup } from "../../../store/reducers/generalSlice";
-import { setClaimablesAlgorand, getFactory } from "../../../wallet/helpers";
+import PropTypes from "prop-types";
+import "./SuccessNFT.css";
 import TxStatus from "./TxStatus";
 import { chainsConfig } from "../../values";
 
 export default function TransferredNft({ nft, testnet }) {
-  const { image, animation_url, txn, name, native } = nft;
+  const { image, animation_url, txn, name } = nft;
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
-  const algorandAccount = useSelector((state) => state.general.algorandAccount);
+
   const txnHashArr = useSelector((state) => state.general.txnHashArr);
 
   const [txnStatus, setTxnStatus] = useState("pending");
@@ -31,18 +29,21 @@ export default function TransferredNft({ nft, testnet }) {
   };
 
   const checkStatus = () => {
-    const { tokenId, token_id, uri } = nft.native;
+    const { tokenId, token_id, uri, address } = nft.native;
 
     const t = tokenId || token_id;
 
     try {
+      console.log(nft.native);
+      console.log(txnHashArr);
       for (const tx of txnHashArr) {
         if (tx === "failed") {
           setTxnStatus("failed");
         } else if (
           uri === tx.nftUri ||
-          t === tx.tokenId ||
-          (from.type === "Elrond" && new RegExp(`^${tx.tokenId}`).test(t))
+          String(t) === String(tx.tokenId) ||
+          (from.type === "Elrond" && new RegExp(`^${tx.tokenId}`).test(t)) ||
+          (from.type === "TON" && address === tx.contract)
         ) {
           if (txnStatus !== "Completed")
             setTxnStatus(tx?.status?.toLowerCase());
@@ -62,11 +63,14 @@ export default function TransferredNft({ nft, testnet }) {
     checkStatus();
   }, [txnHashArr]);
 
-  useEffect(async () => {
-    if (to.key === "Algorand") {
-      const claimables = await setClaimablesAlgorand(algorandAccount, true);
-    }
-  }, []);
+  // useEffect(async () => {
+  //     if (to.key === "Algorand") {
+  //         const claimables = await setClaimablesAlgorand(
+  //             algorandAccount,
+  //             true
+  //         );
+  //     }
+  // }, []);
 
   return (
     <div className="success-nft-info__wrapper">
@@ -97,6 +101,7 @@ export default function TransferredNft({ nft, testnet }) {
           <span>{depText}:</span>
           <a
             target="_blank"
+            rel="noreferrer"
             href={`${
               testnet
                 ? chainsConfig[from.key]?.testTx
@@ -124,6 +129,7 @@ export default function TransferredNft({ nft, testnet }) {
           <span>{desText}:</span>
           <a
             target="_blank"
+            rel="noreferrer"
             href={`${
               testnet ? chainsConfig[to.key]?.testTx : chainsConfig[to.key]?.tx
             }${hashes?.destHash}`}
@@ -142,3 +148,7 @@ export default function TransferredNft({ nft, testnet }) {
     </div>
   );
 }
+TransferredNft.propTypes = {
+  nft: PropTypes.object,
+  testnet: PropTypes.bool,
+};

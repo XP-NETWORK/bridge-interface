@@ -1,73 +1,35 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Modal } from "react-bootstrap";
-import { ReactComponent as Close } from "../assets/img/icons/close.svg";
-import AlgoSignerIcon from "../assets/img/wallet/Algo Signer.png";
+import { ReactComponent as Close } from "../../../assets/img/icons/close.svg";
+import AlgoSignerIcon from "../../../assets/img/wallet/Algo Signer.png";
 import { useDispatch, useSelector } from "react-redux";
 import {
     setAlgoSigner,
     setAlgorandAccount,
     connectAlgorandWalletClaim,
     setMyAlgo,
-    setAlgorandWallet,
     setAlgoAccountToClaim,
-    setTransferLoaderModal,
-} from "../store/reducers/generalSlice";
-import { algoConnector } from "../wallet/connectors";
+} from "../../../store/reducers/generalSlice";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
-import AlgorandIcon from "../assets/img/algorandwallet.svg";
-import MyAlgoBlue from "../assets/img/wallet/MyAlgoBlue.svg";
+import AlgorandIcon from "../../../assets/img/algorandwallet.svg";
+import MyAlgoBlue from "../../../assets/img/wallet/MyAlgoBlue.svg";
 import axios from "axios";
-import { getFactory } from "../wallet/helpers";
-import store from "../store/store";
-import { setSigner } from "../store/reducers/signersSlice";
+import PropTypes from "prop-types";
 
-function ConnectAlgorand({ nftToOptIn, testnet }) {
+function ConnectAlgorand() {
     const dispatch = useDispatch();
     const [toOptIn, setToOptIn] = useState();
     const [accounts, setAccounts] = useState();
+    const [nftToOptIn, setNFTToOptIn] = useState();
+
     const handleClose = () => {
         dispatch(connectAlgorandWalletClaim(false));
     };
 
-    const connectClaimAlgorand = useSelector(
-        (state) => state.general.connectClaimAlgorand
-    );
-
     const algorandAccountToOptIn = useSelector(
         (state) => state.general.algorandAccountToClaim
     );
-    const networkTestnet = useSelector((state) => state.general.testNet);
-
-    const onAlgoWallet = async () => {
-        if (!algoConnector.connected) {
-            algoConnector.createSession();
-        }
-
-        const getAlgorandWalletSigner = async (algorandAccount) => {
-            const factory = await getFactory();
-            const inner = await factory.inner(15);
-            const signer = await inner.walletConnectSigner(
-                algoConnector,
-                algorandAccount
-            );
-            store.dispatch(setSigner(signer));
-        };
-
-        algoConnector.on("connect", (error, payload) => {
-            if (error) {
-                throw error;
-            }
-            // Get provided accounts
-            const { accounts } = payload.params[0];
-
-            if (accounts) {
-                dispatch(setAlgorandWallet(true));
-                dispatch(setAlgorandAccount(accounts[0]));
-                getAlgorandWalletSigner();
-                handleClose();
-            }
-        });
-    };
+    const testnet = useSelector((state) => state.general.testNet);
 
     const onMyAlgo = useCallback(async () => {
         const myAlgoConnect = new MyAlgoConnect();
@@ -82,7 +44,7 @@ function ConnectAlgorand({ nftToOptIn, testnet }) {
     });
 
     const onAlgoSigner = async () => {
-        if (typeof window.AlgoSigner !== undefined) {
+        if (window.AlgoSigner) {
             try {
                 await window.AlgoSigner.connect();
                 const algo = await window.AlgoSigner.accounts({
@@ -103,29 +65,41 @@ function ConnectAlgorand({ nftToOptIn, testnet }) {
         dispatch(setAlgoAccountToClaim(account["address"]));
     };
 
-    const optIn = async () => {
-        // debugger;
-        dispatch(setTransferLoaderModal(true));
-        const factory = await getFactory();
-        const algorand = await factory.inner(15);
-        // const accounts = await window.AlgoSigner.accounts({ledger:"TestNet"})
-        const signer = {
-            address: algorandAccountToOptIn,
-            algoSigner: window.AlgoSigner,
-            ledger: testnet ? "TestNet" : "MainNet",
-        };
-        try {
-            const optin = await algorand.optInNft(signer, toOptIn);
-            if (optin) {
-                handleClose();
-            }
-        } catch (error) {
-            console.log(error);
-            console.trace();
-            dispatch(setTransferLoaderModal(false));
+    // const optIn = async () => {
+    //     // debugger;
+    //     dispatch(setTransferLoaderModal(true));
+    //     const algorand = await factory.inner(15);
+    //     // const accounts = await window.AlgoSigner.accounts({ledger:"TestNet"})
+    //     const signer = {
+    //         address: algorandAccountToOptIn,
+    //         algoSigner: window.AlgoSigner,
+    //         ledger: testnet ? "TestNet" : "MainNet",
+    //     };
+    //     try {
+    //         const optin = await algorand.optInNft(signer, toOptIn);
+    //         if (optin) {
+    //             handleClose();
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //         dispatch(setTransferLoaderModal(false));
+    //     }
+    //     dispatch(setTransferLoaderModal(false));
+    // };
+
+    useEffect(() => {
+        const algoToOpt = new URLSearchParams(window.location.search).get(
+            "to_opt-in"
+        );
+        const nftToOptIn = new URLSearchParams(window.location.search).get(
+            "nft_uri"
+        );
+        setNFTToOptIn(nftToOptIn);
+
+        if (algoToOpt && nftToOptIn && testnet) {
+            dispatch(connectAlgorandWalletClaim(true));
         }
-        dispatch(setTransferLoaderModal(false));
-    };
+    }, []);
 
     useEffect(async () => {
         let nft;
@@ -145,12 +119,7 @@ function ConnectAlgorand({ nftToOptIn, testnet }) {
     }, [algorandAccountToOptIn]);
 
     return (
-        <Modal
-            show={connectClaimAlgorand}
-            onHide={handleClose}
-            animation="false"
-            className="ChainModal"
-        >
+        <>
             {!algorandAccountToOptIn ? (
                 <>
                     <Modal.Header>
@@ -188,7 +157,7 @@ function ConnectAlgorand({ nftToOptIn, testnet }) {
                                         />
                                         <p>Algo Signer</p>
                                     </li>
-                                    {networkTestnet && (
+                                    {testnet && (
                                         <li
                                             onClick={onMyAlgo}
                                             className="wllListItem algo"
@@ -246,7 +215,7 @@ function ConnectAlgorand({ nftToOptIn, testnet }) {
                                     Skip for now
                                 </div>
                                 <div
-                                    onClick={optIn}
+                                    // onClick={optIn}
                                     className="algo-opt-in__button"
                                 >
                                     Opt-in NFT
@@ -256,8 +225,11 @@ function ConnectAlgorand({ nftToOptIn, testnet }) {
                     </Modal.Body>
                 </>
             )}
-        </Modal>
+        </>
     );
 }
-
+ConnectAlgorand.propTypes = {
+    nftToOptIn: PropTypes.object,
+    testnet: PropTypes.bool,
+};
 export default ConnectAlgorand;

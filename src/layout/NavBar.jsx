@@ -12,7 +12,6 @@ import video from "../assets/img/nav/vid.svg";
 import xpnet from "../assets/img/nav/xpnet.svg";
 import message from "../assets/img/nav/helper.svg";
 import deposits from "../assets/img/nav/deposites.svg";
-import explorer from "../assets/img/nav/explorer.svg";
 import security from "../assets/img/nav/security.svg";
 import UserConnect from "../components/User/UserConnect";
 import { setSearchNFTList, setShowVideo } from "../store/reducers/generalSlice";
@@ -24,10 +23,14 @@ import {
     cleanSelectedNFTList,
     setReceiver,
 } from "../store/reducers/generalSlice";
+import { biz } from "../components/values";
+import Network from "./Network";
 
 function NavBar() {
     const widget = useSelector((state) => state.general.widget);
     const testnet = useSelector((state) => state.general.testNet);
+    // const staging = useSelector((state) => state.general.staging);
+
     const date = useSelector((state) => state.general.gitLatestCommit);
     const [navMenuOpen, toggleNavMenu] = useState(false);
     const dispatch = useDispatch();
@@ -51,9 +54,7 @@ function NavBar() {
                         <Navbar.Brand>
                             <img src={Logo} alt="Xp Network" />
                             <div>MULTICHAIN NFT BRIDGE</div>
-                            {testnet && (
-                                <span className="testnet">TestNet</span>
-                            )}
+                            <Network />
                         </Navbar.Brand>
                     </LinkContainer>
                     {/* <UserConnect desktop={true} /> */}
@@ -125,7 +126,7 @@ function NavBar() {
                                 </div>
                                 <div className="nav-link__txt">Explorer</div>
                             </Nav.Link> */}
-                            {/*!testnet && (
+                            {!testnet && biz && (
                                 <LinkContainer to={"discounts"}>
                                     <Nav.Link>
                                         <div className="nav-link__icon">
@@ -136,7 +137,7 @@ function NavBar() {
                                         </div>
                                     </Nav.Link>
                                 </LinkContainer>
-                            )*/}
+                            )}
                             <a
                                 rel="noreferrer"
                                 className="nav-link help-center"
@@ -263,7 +264,7 @@ function NavBar() {
                                     </div>
                                 </DropdownToggle>
                                 <Dropdown.Menu>
-                                    <div onClick={(e) => toggleNavMenu(false)}>
+                                    <div onClick={() => toggleNavMenu(false)}>
                                         {/* <Dropdown.Item
                                             href="https://bridge-explorer.xp.network/"
                                             target="-blank"

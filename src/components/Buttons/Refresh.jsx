@@ -4,7 +4,7 @@ import {
   setBigLoader,
   setRefreshSecret,
 } from "../../store/reducers/generalSlice";
-import { getAlgorandClaimables, setNFTS } from "../../wallet/helpers";
+import { setNFTS } from "../../wallet/helpers";
 
 export default function Refresh() {
   const {
@@ -20,11 +20,11 @@ export default function Refresh() {
     secretAccount,
     secretLoggedIn,
     hederaAccount,
+    tonAccount,
   } = useSelector((state) => state.general);
   const dispatch = useDispatch();
 
   const refresh = async () => {
-    // debugger;
     if (!bigLoader || !nfts) {
       let w;
       if (
@@ -38,11 +38,10 @@ export default function Refresh() {
       else if (from.type === "Elrond") w = elrondAccount;
       else if (from.type === "Tron") w = tronWallet;
       else if (from.type === "Hedera") w = hederaAccount;
+      else if (from.type === "TON") w = tonAccount;
+      else if (from.type === "NEAR") w = account;
 
       await setNFTS(w, from.key, testNet, "refresh");
-      // if(from.type === "Algorand"){
-      //   await getAlgorandClaimables(algorandAccount)
-      // }
     }
   };
 

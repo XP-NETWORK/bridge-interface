@@ -9,10 +9,6 @@ import { ReactComponent as Check } from "../../assets/img/icons/gray_check.svg";
 export default function SelectClearAll() {
     const dispatch = useDispatch();
     const nfts = useSelector((state) => state.general.NFTList);
-    console.log(
-        "🚀 ~ file: SelectClearAll.jsx ~ line 12 ~ SelectClearAll ~ nfts",
-        nfts
-    );
     const onlyWhiteListedNFTs = nfts?.filter((n) => n.whitelisted);
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
     const OFF = { opacity: 0.6, pointerEvents: "none" };

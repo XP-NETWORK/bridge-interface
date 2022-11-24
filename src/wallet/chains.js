@@ -1,4 +1,4 @@
-export const getAddEthereumChain = (testnet, chainId) => {
+export const getAddEthereumChain = () => {
   let o = allchains.reduce(
     (obj, item) => Object.assign(obj, { [item.chainId]: item }),
     {}
@@ -860,7 +860,7 @@ export const allchains = [
     networkId: 78110,
   },
   {
-    //name: "Polygon Testnet Mumbai",
+    name: "Polygon Testnet Mumbai",
     chainName: "Polygon",
     //network: "testnet",
     rpcUrls: [
@@ -1835,9 +1835,9 @@ export const allchains = [
     chainId: 1564830818,
   },
   {
-    chainId: 1305754875840118,
+    chainId: 0x63e1ef9,
     chainName: "Skale Testnet",
-    rpcUrls: ["https://staging-v2.skalenodes.com/v1/rapping-zuben-elakrab"],
+    rpcUrls: ["https://mainnet.skalenodes.com/v1/honorable-steel-rasalhague"],
     nativeCurrency: {
       name: "SFUEL",
       symbol: "SFUEL",

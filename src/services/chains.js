@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import {
   Chain as ChainNonce,
   CHAIN_INFO,
@@ -6,7 +8,7 @@ import {
   ChainFactoryConfigs,
 } from "xp.network";
 
-import {getTronFees} from './chainUtils/tronUtil'
+import { getTronFees } from "./chainUtils/tronUtil";
 import { calcFees } from "./chainUtils";
 
 import BigNumber from "bignumber.js";
@@ -19,6 +21,10 @@ class AbstractChain {
     this.nonce = nonce;
     this.chain = chain;
     this.bridge = bridge;
+  }
+
+  async connect() {
+    throw new Error("connect method not implemented");
   }
 
   async setSigner(signer) {
@@ -43,23 +49,16 @@ class AbstractChain {
   }
 
   async estimate(toChain, nft, acc) {
-
     console.log(toChain);
-   
+
     if (toChain.getNonce() === 9) {
-      return calcFees(getTronFees(this.chainParams.key), this.nonce)
+      return calcFees(getTronFees(this.chainParams.key), this.nonce);
     }
 
     try {
-      const res = await this.bridge.estimateFees(
-        this.chain,
-        toChain,
-        nft,
-        acc
-      );
+      const res = await this.bridge.estimateFees(this.chain, toChain, nft, acc);
 
-     return calcFees(res, this.nonce)
-
+      return calcFees(res, this.nonce);
     } catch (e) {
       console.log(e.message || e, "in estimate");
       return {
@@ -136,8 +135,6 @@ class Tron extends AbstractChain {
   constructor(params) {
     super(params);
   }
-
-
 }
 
 class Algorand extends AbstractChain {
@@ -168,4 +165,17 @@ class Cosmos extends AbstractChain {
   }
 }
 
-export default { EVM, Elrond, Tron, Algorand, Tezos, VeChain, Cosmos };
+class Near extends AbstractChain {
+  constructor(params) {
+    super(params);
+  }
+
+  async connect(wallet) {
+    switch (wallet) {
+      default:
+        return await this.chain.connectWallet();
+    }
+  }
+}
+
+export default { EVM, Elrond, Tron, Algorand, Tezos, VeChain, Cosmos, Near };

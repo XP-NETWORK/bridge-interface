@@ -1,5 +1,6 @@
 import React from "react";
 import icon from "../../assets/img/icons/sft-icon.svg";
+import PropTypes from "prop-types";
 
 export default function SFTMark({ amount }) {
     const numFormatter = (num) => {
@@ -30,3 +31,6 @@ export default function SFTMark({ amount }) {
         </div>
     );
 }
+SFTMark.propTypes = {
+    amount: PropTypes.string,
+};

@@ -1,32 +1,21 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, React } from "react-redux";
 import {
-    allSelected,
-    setNFTsListView,
-    cleanSelectedNFTList,
     setChainModal,
     setDepartureOrDestination,
-    setWhitelistedNFTs,
 } from "../../store/reducers/generalSlice";
 import { useSelector } from "react-redux";
-import { setNFTS } from "../../wallet/helpers";
 import ChainListBox from "../Chains/ChainListBox";
 import NFTSearch from "./NFTSearch";
 import ChainSwitch from "../Buttons/ChainSwitch";
 import Refresh from "../Buttons/Refresh";
 import SelectedNFTs from "../Buttons/SelectedNFTs";
 import ViewButton from "../Buttons/ViewButton";
-import { ReactComponent as Check } from "../../assets/img/icons/gray_check.svg";
 import ImportNFTButton from "../Buttons/ImportNFTButton";
-import { useEffect } from "react";
 
 function NFTlistTop() {
     const dispatch = useDispatch();
     const nfts = useSelector((state) => state.general.NFTList);
-    const currentsNFTs = useSelector((state) => state.general.currentsNFTs);
     const from = useSelector((state) => state.general.from);
-    const onlyWhiteListedNFTs = currentsNFTs?.filter((n) => n.whitelisted);
-    const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
-    const OFF = { opacity: 0.6, pointerEvents: "none" };
 
     const handleFromChainSwitch = () => {
         dispatch(setDepartureOrDestination("departure"));

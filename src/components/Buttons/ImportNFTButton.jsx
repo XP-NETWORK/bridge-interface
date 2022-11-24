@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setImportModal } from "../../store/reducers/generalSlice";
 
 export default function ImportNFTButton() {

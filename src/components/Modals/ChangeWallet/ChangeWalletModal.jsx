@@ -8,6 +8,7 @@ import {
     setAlgoSigner,
     setChangeWallet,
     setConfirmMaiarMob,
+    setConnectedWallet,
     setElrondAccount,
     setFrom,
     setKeplrAccount,
@@ -26,6 +27,7 @@ import {
     setTemporaryFrom,
     setTezosAccount,
     setTo,
+    setTonAccount,
     setTronLink,
     setTronWallet,
     setWalletsModal,
@@ -43,7 +45,6 @@ export default function ChangeWalletModal() {
     const changeWallet = useSelector((state) => state.general.changeWallet);
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
-    const testnet = useSelector((state) => state.general.testNet);
     const temporaryTo = useSelector((state) => state.general.temporaryTo);
     const Sync2 = useSelector((state) => state.general.Sync2);
 
@@ -54,6 +55,7 @@ export default function ChangeWalletModal() {
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
     const secretAccount = useSelector((state) => state.general.secretAccount);
+    const tonAccount = useSelector((state) => state.general.tonAccount);
 
     const algorandAccount = useSelector(
         (state) => state.general.algorandAccount
@@ -63,7 +65,7 @@ export default function ChangeWalletModal() {
         dispatch(setTemporaryFrom(""));
     };
 
-    const handleSwitch = (e) => {
+    const handleSwitch = () => {
         const temp = to;
         dispatch(setTo(from));
         dispatch(setFrom(temp));
@@ -76,6 +78,8 @@ export default function ChangeWalletModal() {
 
     const typeOfChainConnected = () => {
         switch (true) {
+            case tonAccount?.length > 0:
+                return "TON";
             case evmAccount?.length > 0:
                 return Sync2 ? "VeChain" : "EVM";
             case algorandAccount?.length > 0:
@@ -109,7 +113,8 @@ export default function ChangeWalletModal() {
     };
 
     const handleClick = () => {
-        // debugger;
+        // eslint-disable-next-line no-debugger
+        debugger;
         switch (typeOfChainConnected()) {
             case "EVM":
                 dispatch(setAccount(""));
@@ -174,6 +179,14 @@ export default function ChangeWalletModal() {
             case "Cosmos":
                 dispatch(setKeplrWallet(""));
                 dispatch(setKeplrAccount(""));
+                dispatch(setChangeWallet(false));
+                chooseWalletModal();
+                // dispatch(setNFTSetToggler());s
+                if (temporaryTo) setTempTo();
+                break;
+            case "TON":
+                dispatch(setConnectedWallet(""));
+                dispatch(setTonAccount(""));
                 dispatch(setChangeWallet(false));
                 chooseWalletModal();
                 // dispatch(setNFTSetToggler());s

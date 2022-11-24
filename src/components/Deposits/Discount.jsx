@@ -1,7 +1,7 @@
 import React from "react";
 import ICON from "../../assets/img/icons/ICON.png";
 import percent from "../../assets/img/icons/percent.svg";
-
+import PropTypes from "prop-types";
 export default function Discount({ txns, loader }) {
     return (
         <div className="discount">
@@ -18,3 +18,8 @@ export default function Discount({ txns, loader }) {
         </div>
     );
 }
+
+Discount.propTypes = {
+    txns: PropTypes.number,
+    loader: PropTypes.bool,
+};

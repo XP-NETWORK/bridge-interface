@@ -1,10 +1,9 @@
+import React from "react";
 import { useDispatch } from "react-redux";
 import {
     setTo,
     setFrom,
     setChangeWallet,
-    setKeplrAccount,
-    setKeplrWallet,
     setTemporaryFrom,
     setTemporaryTo,
 } from "../../store/reducers/generalSlice";
@@ -13,13 +12,11 @@ import SetDeparture from "./SetDeparture";
 import SetDestination from "./SetDestination";
 import ChainListBox from "./ChainListBox";
 import swap from "../../assets/img/icons/swapChain.svg";
-import { usePrevious } from "../Settings/hooks";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 
 export default function ChainSelectBox() {
     const dispatch = useDispatch();
     const from = useSelector((state) => state.general.from);
-    const prevSelected = usePrevious(from);
     const to = useSelector((state) => state.general.to);
     const account = useSelector((state) => state.general.account);
     const algorandAccount = useSelector(
@@ -29,8 +26,8 @@ export default function ChainSelectBox() {
 
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
+    const tonAccount = useSelector((state) => state.general.tonAccount);
     const tronWallet = useSelector((state) => state.general.tronWallet);
-    const testnet = useSelector((state) => state.general.testNet);
 
     const switchChains = (e) => {
         if (from.type !== to.type) {
@@ -85,6 +82,13 @@ export default function ChainSelectBox() {
                     break;
                 case "Cosmos":
                     if (secretAccount) {
+                        dispatch(setTemporaryFrom(to));
+                        dispatch(setTemporaryTo(from));
+                        dispatch(setChangeWallet(true));
+                    } else handleSwitch(e);
+                    break;
+                case "TON":
+                    if (tonAccount) {
                         dispatch(setTemporaryFrom(to));
                         dispatch(setTemporaryTo(from));
                         dispatch(setChangeWallet(true));

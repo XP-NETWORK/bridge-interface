@@ -6,6 +6,8 @@ import fina from "../../assets/img/wallet/fina.svg";
 import { connectKeplr } from "./ConnectWalletHelper";
 import { chainsConfig } from "../values";
 import { useCheckMobileScreen } from "../Settings/hooks";
+import PropTypes from "prop-types";
+import { getRightPath } from "../../wallet/helpers";
 
 export default function CosmosWallet({ wallet, close }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -17,7 +19,7 @@ export default function CosmosWallet({ wallet, close }) {
     const isMobile = useCheckMobileScreen();
 
     const navigateToAccountRoute = () => {
-        navigate(testnet ? `/testnet/account` : `/account`);
+        navigate(getRightPath());
     };
 
     const onClickHandler = async (wallet) => {
@@ -71,3 +73,7 @@ export default function CosmosWallet({ wallet, close }) {
             );
     }
 }
+CosmosWallet.propTypes = {
+    close: PropTypes.any,
+    wallet: PropTypes.string,
+};
