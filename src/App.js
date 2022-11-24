@@ -1,14 +1,14 @@
+/* eslint-disable react/prop-types */
 import { useEffect, React } from "react";
 import XpBridge from "./pages/XpBridge";
 import Alert from "./components/Alerts/Alert.jsx";
 import DepositAlert from "./components/Alerts/DepositAlert";
 import * as generalSlice from "./store/reducers/generalSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import {
   checkValidators,
   fetchXPUpdate,
-  getAndSetFactory,
   transformToDate,
 } from "./wallet/helpers";
 import { chains } from "./components/values";
@@ -16,28 +16,10 @@ import { chains } from "./components/values";
 import "./components/Modals/Modal.css";
 import Modals from "./components/Modals/Modals";
 
-//import TonWeb from "tonweb";
+import AppContainer from "./components/App/container";
 
-function App() {
+function App({ network }) {
   const dispatch = useDispatch();
-  const factory = useSelector((state) => state.general.factory);
-  //const signer = useSelector((state) => state.signers.signer);
-
-  /* useEffect(async () => {
-    const ton = new TonWeb(
-      new TonWeb.HttpProvider("https://toncenter.com/api/v2/jsonRPC", {
-        apiKey:
-          "05645d6b549f33bf80cee8822bd63df720c6781bd00020646deb7b2b2cd53b73",
-      })
-    );
-
-    const trxs = await ton.provider.getTransactions(
-      "EQBABLUFRe95jzxV8E_XzTsLtK-3eggjs5eVXviA4VLY0UMW",
-      20
-    );
-
-    console.log(trxs);
-  }, []);*/
 
   useEffect(() => {
     // debugger
@@ -73,34 +55,18 @@ function App() {
         dispatch(generalSlice.setValidatorsInf(data));
       });
     }, 10000);
-    return () => clearInterval(validatorsInt);
-  }, []);
 
-  useEffect(() => {
-    let network;
-    if (window.location.pathname.includes("staging")) {
-      network = "staging";
-      dispatch(generalSlice.setStaging(true));
-    } else if (window.location.pathname.includes("testnet")) {
-      network = "testnet";
-      dispatch(generalSlice.setTestNet(true));
-    }
-    const saveFactory = async () => {
-      await getAndSetFactory(network);
-    };
-    if (!factory) saveFactory();
-    const hardcoded = new URLSearchParams(window.location.search).get(
-      "checkWallet"
-    );
-    dispatch(generalSlice.setCheckWallet(hardcoded));
+    return () => clearInterval(validatorsInt);
   }, []);
 
   return (
     <div className={"App"}>
-      <Modals />
-      <XpBridge />
-      <Alert />
-      <DepositAlert />
+      <AppContainer>
+        <Modals />
+        <XpBridge network={network} />
+        <Alert />
+        <DepositAlert />
+      </AppContainer>
     </div>
   );
 }

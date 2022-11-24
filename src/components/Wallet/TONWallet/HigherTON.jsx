@@ -100,20 +100,20 @@ export default function HigherTON(OriginalComponent) {
           signer = fromChain.tonKeeperWrapper({
             wallet: {
               send: (deepLink) => {
+                deepLink = deepLink.replace(
+                  "https://app.tonkeeper.com/",
+                  "tonkeeper://"
+                );
                 store.dispatch(setActiveTonWalletConnection("TonKeeper"));
 
-                if (window.innerHeight <= 480) {
-                  window.open(deepLink, "_blank");
-                } else {
-                  store.dispatch(
-                    setTonKeeperSession({
-                      message: "Approve TON transaction",
-                      deepLink,
-                      userId: tonKeeperSession.userId,
-                    })
-                  );
-                  store.dispatch(setQRCodeModal(true));
-                }
+                store.dispatch(
+                  setTonKeeperSession({
+                    message: "Approve TON transaction",
+                    deepLink,
+                    userId: tonKeeperSession.userId,
+                  })
+                );
+                store.dispatch(setQRCodeModal(true));
               },
             },
             config: {

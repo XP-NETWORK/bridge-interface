@@ -13,7 +13,6 @@ export const transferNFTFromTON = async ({
   receiver,
   fee,
 }) => {
-  console.log("🚀 ~ file: tonHelper.js ~ line 15 ~ signer", signer);
   // eslint-disable-next-line no-debugger
 
   const {
@@ -25,7 +24,15 @@ export const transferNFTFromTON = async ({
   const {
     general: { tonAccount },
   } = store.getState();
-  let mintWith;
+
+  const tokenId = nft.native.tokenId;
+
+  const mintWith = await factory.getVerifiedContract(
+    nft.native.collectionAddress || nft.collectionIdent,
+    to.nonce,
+    from.nonce,
+    tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
+  );
 
   let result;
 
@@ -70,6 +77,7 @@ const transfer = async (
     native: {
       ...nft.native,
       nftItemAddr: nft.native.address,
+      contract: nft.collectionIdent,
     },
   };
 
@@ -83,7 +91,7 @@ const transfer = async (
           signer,
           receiver,
           new BigNumber(amount),
-          undefined,
+          fee,
           mintWith
         );
         break;
@@ -95,7 +103,7 @@ const transfer = async (
           nft,
           signer,
           receiver,
-          undefined,
+          fee,
           mintWith
         );
         break;
@@ -112,8 +120,9 @@ const transfer = async (
       fromChain: from.text,
       toChain: to.text,
       message: error,
-      nfts: nft.native,
+      nfts: nft.nativye,
     };
+
     errorToLog(errBogy);
   }
 

@@ -388,7 +388,7 @@
   text-align: -webkit-match-parent;
 }
 .ton-modal__connect canvas {
-  margin-bottom: 10px;
+  margin: 10px;
 }
 .ton-deep-link {
   margin-bottom: 20px;
@@ -440,5 +440,6 @@
 @media only screen and (max-width: 480px) {
   .ton-modal__connect .modal-content {
     width: 100% !important;
+    margin-top: 30vh;
   }
 }

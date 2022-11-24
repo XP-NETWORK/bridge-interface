@@ -45,6 +45,7 @@ export default function ElrondWallet({ wallet, close }) {
 
     useEffect(() => {
         algoConnector.on("connect", (error, payload) => {
+            console.log("!!!");
             if (error) {
                 throw error;
             }

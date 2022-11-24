@@ -8,7 +8,7 @@ import { errorToLog } from "../../../wallet/helpers";
 import { setError } from "../../../store/reducers/generalSlice";
 import BigNumber from "bignumber.js";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
-import { patchRealizedDiscount } from "../../deposits.js";
+//import { patchRealizedDiscount } from "../../deposits.js";
 
 export async function switchNetwork(chain) {
   // eslint-disable-next-line no-debugger
@@ -34,6 +34,7 @@ export async function switchNetwork(chain) {
     : CHAIN_INFO[chain?.key];
 
   const chainId = `0x${info.chainId.toString(16)}`;
+
   switch (true) {
     case bitKeep:
       try {
@@ -55,7 +56,8 @@ export async function switchNetwork(chain) {
         return true;
       } catch (error) {
         // const c = testNet ? chain?.tnChainId : chain?.chainId;
-        console.log("birma");
+
+        console.log(copyParams);
         await window.ethereum.request({
           method: "wallet_addEthereumChain",
           params: [copyParams],
@@ -148,7 +150,7 @@ export const transferNFTFromEVM = async ({
       );
       break;
   }
-  if (result) patchRealizedDiscount(account, fee * 0.25);
+  //if (result) patchRealizedDiscount(account, fee * 0.25)
   return result || false;
 };
 

@@ -143,6 +143,7 @@ const generalSlice = createSlice({
         toHash,
         initialTokenId,
         nftUri,
+        contract,
         createdAt,
       } = action.payload;
 
@@ -171,6 +172,7 @@ const generalSlice = createSlice({
           e.nftUri = nftUri;
           e.trxDate = createdAt;
           e.initialTokenId = initialTokenId;
+          e.contract = contract;
         }
         return e;
       });

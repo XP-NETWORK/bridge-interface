@@ -13,154 +13,151 @@ import { chainsConfig, CHAIN_INFO } from "../values";
 import PropTypes from "prop-types";
 
 function NFTdetails({ nftInf, details }) {
-    const {
-        name,
-        description,
-        attributes,
-        uri,
-        native,
-        wrapped,
-        image,
-        animation_url,
-    } = nftInf;
+  const {
+    name,
+    description,
+    attributes,
+    uri,
+    native,
+    wrapped,
+    image,
+    animation_url,
+  } = nftInf;
 
-    const isOriginUriExist =
-        Array.isArray(attributes) &&
-        attributes?.some((e) => {
-            const values = Object.values(e);
-            return values?.some((v) => v === "Original URI");
-        });
-    const isOriginChainExist =
-        Array.isArray(attributes) &&
-        attributes?.some((e) => {
-            const values = Object.values(e);
-            return values?.some((v) => v === "Original Chain");
-        });
+  const isOriginUriExist =
+    Array.isArray(attributes) &&
+    attributes?.some((e) => {
+      const values = Object.values(e);
+      return values?.some((v) => v === "Original URI");
+    });
+  const isOriginChainExist =
+    Array.isArray(attributes) &&
+    attributes?.some((e) => {
+      const values = Object.values(e);
+      return values?.some((v) => v === "Original Chain");
+    });
 
-    const original_uri = wrapped && wrapped.original_uri;
-    const origin =
-        wrapped &&
-        Object.keys(CHAIN_INFO).find(
-            (e) => CHAIN_INFO[e].nonce.toString() === wrapped.origin
-        );
-
-    // const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nftInf);
-    const [show, setShow] = useState(false);
-    const handleClose = () => {
-        setShow(false);
-        details(false);
-    };
-    const handleShow = (e) => {
-        setShow(true);
-        details(true);
-        e.stopPropagation();
-    };
-
-    const symbol = nftInf.symbol || native?.symbol;
-
-    const attrs = useMemo(
-        () =>
-            Array.isArray(attributes) &&
-            attributes?.map((attr) =>
-                attr?.key
-                    ? {
-                          ...attr,
-                          trait_type: attr?.key,
-                      }
-                    : attr
-            ),
-        [attributes]
+  const original_uri = wrapped && wrapped.original_uri;
+  const origin =
+    wrapped &&
+    Object.keys(CHAIN_INFO).find(
+      (e) => CHAIN_INFO[e].nonce.toString() === wrapped.origin
     );
 
-    return (
-        <>
-            <div className="info-icon__container">
-                <span className="NFTInf" onClick={handleShow}>
-                    <INFComp className="svgWidget nftInfIcon" alt="inf" />
-                </span>
-            </div>
-            <Modal
-                animation={false}
-                show={show}
-                onHide={handleClose}
-                className="NftDetails"
-            >
-                <Modal.Header>
-                    <Modal.Title>NFT Details</Modal.Title>
-                    <span className="CloseModal" onClick={() => handleClose()}>
-                        <CloseComp className="svgWidget" alt="closeIcon" />
-                    </span>
-                </Modal.Header>
-                <Modal.Body className="modalBody">
-                    <div className="nftDetailBox">
-                        <div className="nftDetImg">
-                            <ModalImage
-                                className="zoomInBtn"
-                                small={zoomIn}
-                                large={image}
-                                hideDownload={true}
-                                hideZoom={true}
-                            />
+  // const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nftInf);
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false);
+    details(false);
+  };
+  const handleShow = (e) => {
+    setShow(true);
+    details(true);
+    e.stopPropagation();
+  };
 
-                            {(image || animation_url) &&
-                            (uri || image) &&
-                            isValidHttpUrl(uri || image) ? (
-                                animation_url ? (
-                                    <video
-                                        controls={false}
-                                        playsInline={true}
-                                        autoPlay={true}
-                                        loop={true}
-                                        src={animation_url}
-                                    />
-                                ) : (
-                                    <img alt="NFTss" src={image} />
-                                )
-                            ) : (
-                                <div className="brocken-url">
-                                    <img
-                                        src={brockenurl}
-                                        alt=" Broken Token URI"
-                                    />
-                                    <span className="brocken-url__msg">
-                                        NFTs URL
-                                        <br /> is broken
-                                    </span>
-                                </div>
-                            )}
-                        </div>
-                        <div className="nftDetIg">
-                            <div className="nftName nftInfBox">
-                                <label>Name</label>
-                                <p>{name || native?.name}</p>
-                            </div>
-                            <div className="nftToken nftInfBox">
-                                <label>Token ID</label>
-                                <p>{native?.tokenId}</p>
-                            </div>
-                            {original_uri && !isOriginUriExist && (
-                                <div className="nftInfDesc nftInfBox">
-                                    <label>Original uri</label>
-                                    <p>{original_uri}</p>
-                                </div>
-                            )}
-                            {origin && !isOriginChainExist && (
-                                <div className="nftInfDesc nftInfBox">
-                                    <label>Original Chain</label>
-                                    <div style={{ display: "flex" }}>
-                                        <img
-                                            style={{
-                                                marginRight: "4px",
-                                                width: "29px",
-                                            }}
-                                            src={chainsConfig[origin]?.img}
-                                            alt={origin}
-                                        />
-                                        <p>{origin}</p>
-                                    </div>
-                                </div>
-                            )}
-                            {/*minted && minted?.length > 0 ? false && (
+  const symbol = nftInf.symbol || native?.symbol;
+
+  const attrs = useMemo(
+    () =>
+      Array.isArray(attributes) &&
+      attributes?.map((attr) =>
+        attr?.key
+          ? {
+              ...attr,
+              trait_type: attr?.key,
+            }
+          : attr
+      ),
+    [attributes]
+  );
+
+  return (
+    <>
+      <div className="info-icon__container">
+        <span className="NFTInf" onClick={handleShow}>
+          <INFComp className="svgWidget nftInfIcon" alt="inf" />
+        </span>
+      </div>
+      <Modal
+        animation={false}
+        show={show}
+        onHide={handleClose}
+        className="NftDetails"
+      >
+        <Modal.Header>
+          <Modal.Title>NFT Details</Modal.Title>
+          <span className="CloseModal" onClick={() => handleClose()}>
+            <CloseComp className="svgWidget" alt="closeIcon" />
+          </span>
+        </Modal.Header>
+        <Modal.Body className="modalBody">
+          <div className="nftDetailBox">
+            <div className="nftDetImg">
+              <ModalImage
+                className="zoomInBtn"
+                small={zoomIn}
+                large={image}
+                hideDownload={true}
+                hideZoom={true}
+              />
+
+              {(image || animation_url) &&
+              (uri || image) &&
+              isValidHttpUrl(image) ? (
+                animation_url ? (
+                  <video
+                    controls={false}
+                    playsInline={true}
+                    autoPlay={true}
+                    loop={true}
+                    src={animation_url}
+                  />
+                ) : (
+                  <img alt="NFTss" src={image} />
+                )
+              ) : (
+                <div className="brocken-url">
+                  <img src={brockenurl} alt=" Broken Token URI" />
+                  <span className="brocken-url__msg">
+                    NFTs URL
+                    <br /> is broken
+                  </span>
+                </div>
+              )}
+            </div>
+            <div className="nftDetIg">
+              <div className="nftName nftInfBox">
+                <label>Name</label>
+                <p>{name || native?.name}</p>
+              </div>
+              <div className="nftToken nftInfBox">
+                <label>Token ID</label>
+                <p>{native?.tokenId}</p>
+              </div>
+              {original_uri && !isOriginUriExist && (
+                <div className="nftInfDesc nftInfBox">
+                  <label>Original uri</label>
+                  <p>{original_uri}</p>
+                </div>
+              )}
+              {origin && !isOriginChainExist && (
+                <div className="nftInfDesc nftInfBox">
+                  <label>Original Chain</label>
+                  <div style={{ display: "flex" }}>
+                    <img
+                      style={{
+                        marginRight: "4px",
+                        width: "29px",
+                      }}
+                      src={chainsConfig[origin]?.img}
+                      alt={origin}
+                    />
+                    <p>{origin}</p>
+                  </div>
+                </div>
+              )}
+              {/*minted && minted?.length > 0 ? false && (
                                 <div className="nftInfDesc nftInfBox">
                                     <label>Minted With</label>
                                     <p>{minted}</p>
@@ -173,111 +170,104 @@ function NFTdetails({ nftInf, details }) {
                             ) : (
                                 <></>
                             )*/}
-                            {native?.name && (
-                                <div className="nftInfDesc nftInfBox">
-                                    <label>Collection Name</label>
-                                    <p>
-                                        {nftInf.collectionName || native?.name}
-                                    </p>
-                                </div>
-                            )}
-                            <div className="nftInfDesc nftInfBox">
-                                <label>Collection Identifier</label>
-                                <p>{nftInf.collectionIdent}</p>
-                            </div>
-                            {symbol && (
-                                <div className="nftInfDesc nftInfBox">
-                                    <label>Symbol</label>
-                                    <p>{symbol}</p>
-                                </div>
-                            )}
-                            {description && (
-                                <div className="nftInfDesc nftInfBox">
-                                    <label>Description</label>
-                                    <p>{description}</p>
-                                </div>
-                            )}
+              {native?.name && (
+                <div className="nftInfDesc nftInfBox">
+                  <label>Collection Name</label>
+                  <p>{nftInf.collectionName || native?.name}</p>
+                </div>
+              )}
+              <div className="nftInfDesc nftInfBox">
+                <label>Collection Identifier</label>
+                <p>{nftInf.collectionIdent}</p>
+              </div>
+              {symbol && (
+                <div className="nftInfDesc nftInfBox">
+                  <label>Symbol</label>
+                  <p>{symbol}</p>
+                </div>
+              )}
+              {description && (
+                <div className="nftInfDesc nftInfBox">
+                  <label>Description</label>
+                  <p>{description}</p>
+                </div>
+              )}
 
-                            {attrs &&
-                                Array.isArray(attrs) &&
-                                attrs
-                                    .filter(
-                                        (n) =>
-                                            typeof n.value === "string" ||
-                                            typeof n.value === "number"
-                                    )
-                                    .map((n, i) => (
-                                        <Attribute
-                                            {...n}
-                                            key={`attribute-${i}`}
-                                            contract={native?.contract}
-                                        />
-                                    ))}
-                        </div>
-                    </div>
-                </Modal.Body>
-            </Modal>
-        </>
-    );
+              {attrs &&
+                Array.isArray(attrs) &&
+                attrs
+                  .filter(
+                    (n) =>
+                      typeof n.value === "string" || typeof n.value === "number"
+                  )
+                  .map((n, i) => (
+                    <Attribute
+                      {...n}
+                      key={`attribute-${i}`}
+                      contract={native?.contract}
+                    />
+                  ))}
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </>
+  );
 }
 NFTdetails.propTypes = {
-    nftInf: PropTypes.object,
-    claimables: PropTypes.bool,
-    details: PropTypes.any,
+  nftInf: PropTypes.object,
+  claimables: PropTypes.bool,
+  details: PropTypes.any,
 };
 export default NFTdetails;
 
 function Attribute(props) {
-    const { display_type, value } = props;
+  const { display_type, value } = props;
 
-    const trait_type =
-        props.trait_type || props.name || props.label || props.attribute;
+  const trait_type =
+    props.trait_type || props.name || props.label || props.attribute;
 
-    return (
-        <div className="nftToken nftInfBox">
-            <label>
-                {trait_type
-                    ? trait_type
-                          .split("_")
-                          .map(
-                              (n) =>
-                                  n.charAt(0).toUpperCase() +
-                                  n.slice(1).toLowerCase()
-                          )
-                          .join(" ")
-                    : "-"}
-            </label>
-            <p>
-                {trait_type === "Original Chain" && (
-                    <img
-                        alt="#"
-                        style={{ marginRight: "4px", width: "29px" }}
-                        src={
-                            chainsConfig[value]?.img ||
-                            chainsConfig[
-                                Object.keys(chainsConfig)?.find((key) =>
-                                    chainsConfig[key]?.variants?.includes(value)
-                                )
-                            ]?.img
-                        }
-                    />
-                )}
-                {display_type === "date"
-                    ? moment(new Date(value * 1000)).format("MM-DD-YYYY")
-                    : display_type === "boolean"
-                    ? value === true
-                        ? "True"
-                        : "False"
-                    : value}
-            </p>
-        </div>
-    );
+  return (
+    <div className="nftToken nftInfBox">
+      <label>
+        {trait_type
+          ? trait_type
+              .split("_")
+              .map((n) => n.charAt(0).toUpperCase() + n.slice(1).toLowerCase())
+              .join(" ")
+          : "-"}
+      </label>
+      <p>
+        {trait_type === "Original Chain" && (
+          <img
+            alt="#"
+            style={{ marginRight: "4px", width: "29px" }}
+            src={
+              chainsConfig[value]?.img ||
+              chainsConfig[
+                Object.keys(chainsConfig)?.find((key) =>
+                  chainsConfig[key]?.variants?.includes(value)
+                )
+              ]?.img
+            }
+          />
+        )}
+        {display_type === "date"
+          ? moment(new Date(value * 1000)).format("MM-DD-YYYY")
+          : display_type === "boolean"
+          ? value === true
+            ? "True"
+            : "False"
+          : value}
+      </p>
+    </div>
+  );
 }
 Attribute.propTypes = {
-    trait_type: PropTypes.any,
-    name: PropTypes.any,
-    label: PropTypes.any,
-    attribute: PropTypes.any,
-    display_type: PropTypes.any,
-    value: PropTypes.any,
+  trait_type: PropTypes.any,
+  name: PropTypes.any,
+  label: PropTypes.any,
+  attribute: PropTypes.any,
+  display_type: PropTypes.any,
+  value: PropTypes.any,
 };

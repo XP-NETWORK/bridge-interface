@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { QRCode } from "react-qrcode-logo";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -34,22 +34,46 @@ export default function TonQeCodeModal() {
     Emitter?.dispatchEvent(new Event("cancel tonKeeper"));
   };
 
-  const deepLink =
-    activeConnection === "TonKeeper"
-      ? tonKeeperSession.deepLink ||
-        `https://app.tonkeeper.com/ton-login/support-bot-xp.herokuapp.com/tk?open=1&userId=${tonKeeperSession.userId}`
-      : tonHubSession?.link;
+  const isTonKeeper = activeConnection === "TonKeeper";
+
+  const deepLink = isTonKeeper
+    ? tonKeeperSession.deepLink ||
+      `https://app.tonkeeper.com/ton-login/support-bot-xp.herokuapp.com/tk?open=1&userId=${tonKeeperSession.userId}`
+    : tonHubSession?.link;
 
   console.log(deepLink, "");
+
+  const linkElement = useRef(null);
+
+  useEffect(() => {
+    const cb = () => {
+      const elem = linkElement.current;
+      elem && (elem.style.display = "none");
+    };
+
+    linkElement.current?.addEventListener("click", cb);
+
+    return () => {
+      linkElement.current?.removeEventListener("click", cb);
+    };
+  }, []);
 
   return (
     <>
       <Modal.Header className={`border-0`}>
         <div className="tron-PopUp__header">
           <Modal.Title>
-            {isMobile ? "One last step" : `Connect ${activeConnection}`}
+            {isMobile
+              ? "One last step"
+              : tonKeeperSession.deepLink
+              ? "Confirm Transaction"
+              : `Connect ${activeConnection}`}
           </Modal.Title>
-          <span className="CloseModal" onClick={handleClose}>
+          <span
+            className="CloseModal"
+            onClick={handleClose}
+            style={{ display: tonKeeperSession.deepLink ? "none" : "inline" }}
+          >
             <div className="close-modal"></div>
           </span>
           <ol>
@@ -91,28 +115,38 @@ export default function TonQeCodeModal() {
             ) : (
               <li>Scan the next QR code:</li>
             )}
+
+            {tonKeeperSession.deepLink && (
+              <li>
+                Confirm and Wait for the result (do not close the Bridge until
+                its done)
+              </li>
+            )}
           </ol>
         </div>
       </Modal.Header>
       {!isMobile ? (
-        <QRCode
-          className="ton-qrcode"
-          value={deepLink}
-          size={370}
-          quietZone={0}
-          logoImage={xpnet}
-          removeQrCodeBehindLogo
-          eyeRadius={[
-            [10, 10, 0, 10],
-            [10, 10, 10, 0],
-            [10, 0, 10, 10],
-          ]}
-          fgColor="#002457"
-        />
+        <div className="qrClip">
+          <QRCode
+            className="ton-qrcode"
+            value={deepLink}
+            size={370}
+            quietZone={0}
+            logoImage={xpnet}
+            removeQrCodeBehindLogo
+            eyeRadius={[
+              [10, 10, 0, 10],
+              [10, 10, 10, 0],
+              [10, 0, 10, 10],
+            ]}
+            fgColor="#182538"
+          />
+        </div>
       ) : (
         <a
           className="ton-deep-link changeBtn"
           href={deepLink}
+          ref={linkElement}
           target="_blank"
           rel="noreferrer"
         >
