@@ -209,6 +209,8 @@ export const handleChainFactory = async (someChain) => {
         return await factory.inner(Chain.MOONBEAM);
       case "TON":
         return await factory.inner(Chain.TON);
+      case "NEAR":
+        return await factory.inner(Chain.NEAR);
       default:
         return "";
     }
@@ -327,6 +329,30 @@ export const setNFTS = async (w, from, testnet) => {
   store.dispatch(setPreloadNFTs(res.length));
   store.dispatch(setNFTList(res));
   store.dispatch(setBigLoader(false));
+
+  (from === "NEAR" || from.key === "NEAR") &&
+    store.dispatch(
+      setNFTList([
+        {
+          uri:
+            "https://ipfs.featured.market/ipfs/QmdUhQt8ksfgpxjCYNYFY9134j9H2VUUdNRNsKCs6wFZxb",
+          native: {
+            chainId: "31",
+            tokenId: "NFT#{9114635}",
+            contract: "usernftminter.testnet",
+            name: "Halloween Party Girls ",
+            description: "bla bla bla",
+            attributes: [
+              {
+                trait_type: "eyes",
+                value: "green",
+              },
+            ],
+          },
+          collectionIdent: "usernftminter.testnet",
+        },
+      ])
+    );
 };
 
 export function isValidHttpUrl(string) {
@@ -424,6 +450,7 @@ export const errorToLog = async (error) => {
 };
 
 export const getRightPath = (checkFrom, checkTo) => {
+  console.log(checkFrom, checkTo, "ds");
   const {
     general: { testNet, staging, from, to },
   } = store.getState();

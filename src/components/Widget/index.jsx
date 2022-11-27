@@ -17,7 +17,7 @@ import { setFrom, setTo } from "../../store/reducers/generalSlice";
 
 import PropTypes from "prop-types";
 
-function Widget({ setState, widget, settings, wsettings }) {
+function Widget({ setState, widget, settings, wsettings, wid }) {
   const { NFTList } = useSelector(({ general: { NFTList } }) => ({
     NFTList,
   }));
@@ -40,17 +40,16 @@ function Widget({ setState, widget, settings, wsettings }) {
   }, [widget, settings.color, NFTList]);
 
   useEffect(() => {
-    if (
-      widget &&
-      !wsettings &&
-      chains.find((c) => c.text === settings.fromChain) &&
-      chains.find((c) => c.text === settings.toChain)
-    ) {
+    const from = chains.find((c) => c.text === settings.fromChain);
+    const to = chains.find((c) => c.text === settings.toChain);
+    if ((widget || wid) && !wsettings && (from || to)) {
       setState.setChainsLengthEqauls2(true);
-      setState.setIsFrom(true);
-      setState.setIsTo(true);
-      dispatch(setFrom(chains.find((c) => settings.fromChain === c.text)));
-      dispatch(setTo(chains.find((c) => settings.toChain === c.text)));
+      from && setState.setIsFrom(true);
+      to && setState.setIsTo(true);
+      from &&
+        dispatch(setFrom(chains.find((c) => settings.fromChain === c.text)));
+
+      to && dispatch(setTo(chains.find((c) => settings.toChain === c.text)));
     }
     /*  if (
       widget &&
@@ -96,6 +95,7 @@ Widget.propTypes = {
   widget: PropTypes.bool,
   settings: PropTypes.any,
   wsettings: PropTypes.bool,
+  wid: PropTypes.string,
 };
 
 export default compose(InitWidget, withStyles)(Widget);

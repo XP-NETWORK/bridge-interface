@@ -49,6 +49,7 @@ export const ChainSelect = ({ setChain, selectedChain, mode, hideChains }) => {
             .filter(
               (chain) => !hideChains || hideChains.indexOf(chain.text) === -1
             )
+            .filter((chain) => !chain.coming && chain.mainnet)
             .map((chain, i) => (
               <li key={i + "chain"} className="blockChainItem">
                 <img src={chain.image.src} alt={chain.value} />

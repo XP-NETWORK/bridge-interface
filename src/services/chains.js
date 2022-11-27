@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import {
   Chain as ChainNonce,
   CHAIN_INFO,
@@ -19,6 +21,10 @@ class AbstractChain {
     this.nonce = nonce;
     this.chain = chain;
     this.bridge = bridge;
+  }
+
+  async connect() {
+    throw new Error("connect method not implemented");
   }
 
   async setSigner(signer) {
@@ -159,4 +165,17 @@ class Cosmos extends AbstractChain {
   }
 }
 
-export default { EVM, Elrond, Tron, Algorand, Tezos, VeChain, Cosmos };
+class Near extends AbstractChain {
+  constructor(params) {
+    super(params);
+  }
+
+  async connect(wallet) {
+    switch (wallet) {
+      default:
+        return await this.chain.connectWallet();
+    }
+  }
+}
+
+export default { EVM, Elrond, Tron, Algorand, Tezos, VeChain, Cosmos, Near };

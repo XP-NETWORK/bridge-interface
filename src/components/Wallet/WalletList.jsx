@@ -24,6 +24,9 @@ import TrustWallet from "./EVMWallet/TrustWallet";
 import Martioan from "./APTOSWallet/Martioan";
 import Petra from "./APTOSWallet/Petra";
 import Pontem from "./APTOSWallet/Pontem";
+import NearWallet from "./NEARWallet/NearWallet";
+
+import { biz } from "../values";
 
 export default function WalletList({ connected, input, discount }) {
   const from = useSelector((state) => state.general.from);
@@ -200,7 +203,7 @@ export default function WalletList({ connected, input, discount }) {
       ),
       name: "VeChainThor",
       type: "VeChain",
-      mobile: true,
+      mobile: biz,
       desktop: false,
       order: 13,
     },
@@ -214,8 +217,8 @@ export default function WalletList({ connected, input, discount }) {
       ),
       name: "Keplr",
       type: "Cosmos",
-      mobile: "false",
-      desktop: "true",
+      mobile: true,
+      desktop: true,
       order: 14,
     },
     {
@@ -231,24 +234,24 @@ export default function WalletList({ connected, input, discount }) {
     {
       Component: <TonKeeper key="TonKeeper" close={connected} />,
       name: "TonKeeper",
-      mobile: true,
-      desktop: true,
+      mobile: biz,
+      desktop: biz,
       order: 14,
       type: "TON",
     },
     {
       Component: <TonHub key="TonHub" close={connected} />,
       name: "TonHub",
-      mobile: true,
-      desktop: true,
+      mobile: biz,
+      desktop: biz,
       order: 14,
       type: "TON",
     },
     {
       Component: <TonWallet key="TonWallet" close={connected} />,
       name: "TonWallet",
-      mobile: false,
-      desktop: true,
+      mobile: biz,
+      desktop: biz,
       order: 14,
       type: "TON",
     },
@@ -261,8 +264,8 @@ export default function WalletList({ connected, input, discount }) {
         />
       ),
       name: "Hashpack",
-      mobile: false,
-      desktop: true,
+      mobile: biz,
+      desktop: biz,
       order: 17,
       type: "Hedera",
     },
@@ -275,8 +278,8 @@ export default function WalletList({ connected, input, discount }) {
         />
       ),
       name: "Blade",
-      mobile: false,
-      desktop: true,
+      mobile: biz,
+      desktop: biz,
       order: 18,
       type: "Hedera",
     },
@@ -292,7 +295,7 @@ export default function WalletList({ connected, input, discount }) {
       Component: <Martioan key="martian" close={connected} />,
       name: "Martian",
       mobile: false,
-      desktop: true,
+      desktop: biz,
       order: 19,
       type: "APTOS",
     },
@@ -300,7 +303,7 @@ export default function WalletList({ connected, input, discount }) {
       Component: <Petra key="petra" close={connected} />,
       name: "Petra",
       mobile: false,
-      desktop: true,
+      desktop: biz,
       order: 20,
       type: "APTOS",
     },
@@ -308,9 +311,17 @@ export default function WalletList({ connected, input, discount }) {
       Component: <Pontem key="pontem" close={connected} />,
       name: "Pontem",
       mobile: false,
-      desktop: true,
+      desktop: biz,
       order: 19,
       type: "APTOS",
+    },
+    {
+      Component: <NearWallet key="near" close={connected} />,
+      name: "NearWallet",
+      mobile: false,
+      desktop: true,
+      order: -888,
+      type: "NEAR",
     },
     // ////////////!!!!
     // {

@@ -27,6 +27,12 @@ export default function ChainSelectBox() {
   const tonAccount = useSelector((state) => state.general.tonAccount);
   const tronWallet = useSelector((state) => state.general.tronWallet);
 
+  const { settings } = useSelector(({ settings }) => ({
+    settings,
+  }));
+
+  const lockedChains = settings.fromChain || settings.toChain;
+
   const switchChains = (e) => {
     if (from.type !== to.type) {
       switch (from.type) {
@@ -126,12 +132,14 @@ export default function ChainSelectBox() {
       </div>
       <div className="nftSelectBox">
         <SetDeparture />
-        <span
-          className="swap-chain__btn"
-          onClick={(e) => (from && to ? switchChains(e) : undefined)}
-        >
-          <SwapComp className="svgWidget swpBtn" />
-        </span>
+        {!lockedChains && (
+          <span
+            className="swap-chain__btn"
+            onClick={(e) => (from && to ? switchChains(e) : undefined)}
+          >
+            <SwapComp className="svgWidget swpBtn" />
+          </span>
+        )}
         <span className="chain-sep__line"></span>
         <SetDestination />
       </div>

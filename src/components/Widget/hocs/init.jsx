@@ -247,7 +247,12 @@ export const InitWidget = (Wrapped) => {
     }, [widget, wsettings, wid]);
 
     return (
-      <Wrapped widget={widget} wsettings={wsettings} settings={settings} />
+      <Wrapped
+        widget={widget}
+        wsettings={wsettings}
+        settings={settings}
+        wid={wid}
+      />
     );
   };
 };

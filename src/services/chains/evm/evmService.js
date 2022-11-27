@@ -6,7 +6,7 @@ import {
 import store from "../../../store/store.js";
 import { errorToLog } from "../../../wallet/helpers";
 import { setError } from "../../../store/reducers/generalSlice";
-import BigNumber from "bignumber.js";
+import { BigNumber } from "ethers";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
 //import { patchRealizedDiscount } from "../../deposits.js";
 
@@ -34,6 +34,7 @@ export async function switchNetwork(chain) {
     : CHAIN_INFO[chain?.key];
 
   const chainId = `0x${info.chainId.toString(16)}`;
+
   switch (true) {
     case bitKeep:
       try {
@@ -55,7 +56,8 @@ export async function switchNetwork(chain) {
         return true;
       } catch (error) {
         // const c = testNet ? chain?.tnChainId : chain?.chainId;
-        console.log("birma");
+
+        console.log(copyParams);
         await window.ethereum.request({
           method: "wallet_addEthereumChain",
           params: [copyParams],
@@ -180,7 +182,7 @@ const transfer = async (
           nft,
           signer,
           receiver,
-          new BigNumber(amount),
+          BigNumber.from(amount),
           fee,
           mintWith
         );
@@ -200,6 +202,23 @@ const transfer = async (
         return result;
     }
   } catch (error) {
+    if (
+      typeof error.message === "string" &&
+      amount < 1 &&
+      error.message.includes('method="estimateGas"')
+    ) {
+      return await factory.transferNft(
+        fromChain,
+        toChain,
+        nft,
+        signer,
+        receiver,
+        fee,
+        mintWith,
+        BigNumber.from(100000)
+      );
+    }
+
     store.dispatch(setError(error));
     const date = new Date();
     const errBogy = {
