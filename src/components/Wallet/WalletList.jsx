@@ -319,7 +319,7 @@ export default function WalletList({ connected, input, discount }) {
       Component: <NearWallet key="near" close={connected} />,
       name: "NearWallet",
       mobile: false,
-      desktop: false,
+      desktop: true,
       order: -888,
       type: "NEAR",
     },

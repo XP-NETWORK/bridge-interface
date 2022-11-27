@@ -22,20 +22,41 @@ export const withNearConnection = (Wrapped) =>
           const params = new URLSearchParams(location.search.replace("?", ""));
 
           if (
-            params.get("account_id") &&
-            params.get("all_keys") &&
+            (params.get("nearApproval") ||
+              (params.get("account_id") && params.get("all_keys"))) &&
             serviceContainer.bridge.config
           ) {
-            const chain = await serviceContainer?.bridge?.getChain(Chain.NEAR);
+            const chainWrapper = await serviceContainer?.bridge?.getChain(
+              Chain.NEAR
+            );
             //const nearParams = serviceContainer?.bridge?.config?.nearParams;
-            const walletConnection = await chain?.connect();
+            const walletConnection = await chainWrapper?.connect();
             const address = walletConnection.getAccountId();
             console.log(address, "account");
             const signer = walletConnection.account();
+            console.log(signer);
+            if (params.get("nearApproval")) {
+              const tokenId = params.get("nearTokenId");
+              const contract = params.get("nearContract");
+              chainWrapper.chain.preTransfer(
+                signer,
+                {
+                  native: {
+                    tokenId,
+                    contract,
+                    chainId: String(Chain.NEAR),
+                  },
+                },
+                undefined
+              );
+            }
+
             if (address && signer) {
               dispatch(setAccount(address));
               dispatch(setSigner(signer));
               dispatch(setConnectedWallet("Near Wallet"));
+              console.log(localStorage.getItem("_wallet_auth_key"));
+              //const obj = JSON.parse(localStorage.getItem("_wallet_auth_key"));
             }
           }
         }

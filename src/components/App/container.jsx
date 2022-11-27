@@ -40,14 +40,15 @@ const Container = ({ children, serviceContainer, setContainer }) => {
       ]);
     };
     if (!factory) saveFactory();
-    const hardcoded = new URLSearchParams(window.location.search).get(
-      BridgeModes.CheckWallet
-    );
 
+    const params = new URLSearchParams(window.location.search);
     const query = window.location.search;
 
+    const hardcoded = params.get(BridgeModes.CheckWallet);
+
     dispatch(setCheckWallet(hardcoded));
-    navigate(`/${network ? network + "/" : ""}connect${query || ""}`);
+    !params.get("all_keys") &&
+      navigate(`/${network ? network + "/" : ""}connect${query || ""}`);
   }, []);
 
   return <>{children}</>;

@@ -118,6 +118,8 @@ function SendFees() {
         fees = bigNum / 1e6;
       } else if (from.type === "TON") {
         fees = bigNum / 1e9;
+      } else if (from.type === "NEAR") {
+        fees = bigNum / 1e9;
       } else {
         fees = bigNum && (await Web3Utils.fromWei(String(bigNum), "ether"));
       }

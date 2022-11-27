@@ -6,7 +6,7 @@ import {
 import store from "../../../store/store.js";
 import { errorToLog } from "../../../wallet/helpers";
 import { setError } from "../../../store/reducers/generalSlice";
-import BigNumber from "bignumber.js";
+import { BigNumber } from "ethers";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
 //import { patchRealizedDiscount } from "../../deposits.js";
 
@@ -179,7 +179,7 @@ const transfer = async (
           nft,
           signer,
           receiver,
-          new BigNumber(amount),
+          BigNumber.from(amount),
           fee,
           mintWith
         );
@@ -197,6 +197,23 @@ const transfer = async (
         return result;
     }
   } catch (error) {
+    if (
+      typeof error.message === "string" &&
+      amount < 1 &&
+      error.message.includes('method="estimateGas"')
+    ) {
+      return await factory.transferNft(
+        fromChain,
+        toChain,
+        nft,
+        signer,
+        receiver,
+        fee,
+        mintWith,
+        BigNumber.from(100000)
+      );
+    }
+
     store.dispatch(setError(error));
     const date = new Date();
     const errBogy = {

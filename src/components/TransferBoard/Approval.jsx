@@ -156,6 +156,26 @@ function Approval() {
           dispatch(updateApprovedNFTs(nft));
           setFinishedApproving(arr);
           break;
+        case "NEAR":
+          const near = await factory.inner(Chain.NEAR);
+          console.log(nft);
+          false &&
+            window.open(
+              `${location.protocol}//${location.host}${location.search ||
+                "?"}&nearApproval=true&nearTokenId=${encodeURIComponent(
+                nft.native.tokenId
+              )}&nearContract=${encodeURIComponent(nft.native.contract)}`,
+              "_blank"
+            );
+          window.onbeforeunload = function(e) {
+            console.log(e, "e");
+            console.log(document.activeElement.href);
+            return "Dude, are you sure you want to leave? Think of the kittens!";
+          };
+          await near.preTransfer(signerSigner, nft, bigNumberFees);
+          dispatch(updateApprovedNFTs(nft));
+          setFinishedApproving(arr);
+          break;
         default:
           break;
       }
