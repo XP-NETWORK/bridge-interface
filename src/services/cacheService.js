@@ -75,7 +75,12 @@ class CacheService {
       )
     ) {
       if (/.+\/$/.test(nft.uri)) {
-        nft.uri = nft.uri + nft.native?.tokenId;
+        nft = {
+          ...nft,
+          uri:
+            nft.uri +
+            ("0000" + Number(nft.native.tokenId).toString()).slice(-4),
+        };
       }
       try {
         const res = await axios(nft.uri);
