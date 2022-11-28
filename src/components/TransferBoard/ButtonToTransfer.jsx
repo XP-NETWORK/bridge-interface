@@ -192,7 +192,7 @@ export default function ButtonToTransfer() {
       from: _from,
       nft,
       signer: from.text === "Hedera" ? hederaSigner : signer,
-      receiver: receiverAddress || unstoppabledomain || receiver,
+      receiver: (receiverAddress || unstoppabledomain || receiver)?.trim(),
       fee: bigNumberFees,
       index,
       txnHashArr,
