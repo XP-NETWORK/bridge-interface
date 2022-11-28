@@ -7,16 +7,6 @@ class CacheService {
   retryStatues = [429];
   forceCache = ["nft.weedcommerce.info", "tritonpass"];
 
-  constructor() {
-    this.axios = axios.create({
-      baseURL: this.widgetApi,
-      headers: {
-        "Content-type": "application/json",
-      },
-      timeout: 5000,
-    });
-  }
-
   async get({ chainId, tokenId, contract }, nft) {
     try {
       const _tokenId = encodeURIComponent(tokenId || nft.native?.tokenId);
