@@ -31,24 +31,25 @@ const Container = ({ children, serviceContainer, setContainer }) => {
       network = BridgeModes.TestNet;
       dispatch(setTestNet(true));
     }
+    const params = new URLSearchParams(window.location.search);
+    const hardcoded = params.get(BridgeModes.CheckWallet);
+
     const saveFactory = async () => {
       await Promise.all([
-        serviceContainer?.bridge
-          ?.init(network)
-          ?.then((bridge) => setContainer({ ...serviceContainer, bridge })),
+        serviceContainer?.bridge?.init(network)?.then((bridge) => {
+          hardcoded && bridge.setCheckWallet(hardcoded);
+          setContainer({ ...serviceContainer, bridge });
+        }),
         getAndSetFactory(network),
       ]);
     };
+
     if (!factory) saveFactory();
 
-    const params = new URLSearchParams(window.location.search);
     const query = window.location.search;
 
-    const hardcoded = params.get(BridgeModes.CheckWallet);
-
     dispatch(setCheckWallet(hardcoded));
-    !params.get("all_keys") &&
-      navigate(`/${network ? network + "/" : ""}connect${query || ""}`);
+    navigate(`/${network ? network + "/" : ""}connect${query || ""}`);
   }, []);
 
   return <>{children}</>;

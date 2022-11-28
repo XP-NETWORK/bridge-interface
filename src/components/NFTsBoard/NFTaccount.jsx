@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useRef, React } from "react";
 import { Container } from "react-bootstrap";
 
@@ -8,13 +9,16 @@ import {
   setError,
   setWrappedEGold,
   cleanSelectedNFTList,
+  setBigLoader,
+  setPreloadNFTs,
+  setNFTList,
 } from "../../store/reducers/generalSlice";
+import { setIsEmpty } from "../../store/reducers/paginationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAlgorandClaimables,
   mintForTestNet,
   saveForSearch,
-  setNFTS,
 } from "../../wallet/helpers";
 import { ReturnBtn } from "../Settings/returnBtn";
 import DesktopTransferBoard from "../TransferBoard/DesktopTransferBoard";
@@ -41,8 +45,9 @@ import NFTmobileView from "./NFTmobileView";
 import EGoldSuccess from "./../Modals/eGoldSuccess/EGoldSuccess";
 import { checkXpNetLocked } from "../../services/deposits";
 import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
+import { withServices } from "../App/hocs/withServices";
 
-function NFTaccount() {
+function NFTaccount({ serviceContainer }) {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from.key);
   const _from = useSelector((state) => state.general.from);
@@ -88,53 +93,71 @@ function NFTaccount() {
   //
   // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
 
+  const { bridge } = serviceContainer;
+
   async function getNFTsList() {
     // const useHardcoded = false;
     // const hard = "0x85C25cb6e5C648117E33EF2e2Fbd93067D18b529";
 
     if (type === "Cosmos") return;
     let walletAccount;
+
+    switch (type) {
+      case "EVM":
+        walletAccount = account;
+        break;
+      case "Cosmos":
+        walletAccount = secretAccount;
+        return;
+      case "Tezos":
+        walletAccount = tezosAccount;
+        break;
+      case "Algorand":
+        walletAccount = algorandAccount;
+        break;
+      case "Elrond":
+        walletAccount = elrondAccount;
+        break;
+      case "Tron":
+        walletAccount = tronWallet;
+        break;
+      case "VeChain":
+        walletAccount = account;
+        break;
+      case "Skale":
+        walletAccount = account;
+        break;
+      case "TON":
+        walletAccount = tonAccount;
+        break;
+      case "NEAR":
+        walletAccount = account;
+        break;
+      // case "Hedera":
+      //     break;
+      default:
+        break;
+    }
+
+    const fromChain = await bridge.getChain(_from.nonce);
+    dispatch(setBigLoader(true));
     try {
-      switch (type) {
-        case "EVM":
-          walletAccount = account;
-          break;
-        case "Cosmos":
-          walletAccount = secretAccount;
-          return;
-        case "Tezos":
-          walletAccount = tezosAccount;
-          break;
-        case "Algorand":
-          walletAccount = algorandAccount;
-          break;
-        case "Elrond":
-          walletAccount = elrondAccount;
-          break;
-        case "Tron":
-          walletAccount = tronWallet;
-          break;
-        case "VeChain":
-          walletAccount = account;
-          break;
-        case "Skale":
-          walletAccount = account;
-          break;
-        case "TON":
-          walletAccount = tonAccount;
-          break;
-        case "NEAR":
-          walletAccount = account;
-          break;
-        // case "Hedera":
-        //     break;
-        default:
-          break;
+      let nfts = await fromChain.getNFTs(bridge.checkWallet || walletAccount);
+      nfts = fromChain.filterNFTs(nfts);
+
+      if (nfts.length < 1) {
+        dispatch(setIsEmpty(true));
+      } else {
+        dispatch(setIsEmpty(false));
       }
 
-      await setNFTS(walletAccount, from, undefined, "account");
+      dispatch(setPreloadNFTs(nfts.length));
+      dispatch(setNFTList(nfts));
+      dispatch(setBigLoader(false));
     } catch (error) {
       console.log(error);
+      dispatch(setBigLoader(false));
+      dispatch(setNFTList([]));
       dispatch(setError(error.data ? error.data.message : error.message));
     }
   }
@@ -371,4 +394,4 @@ function NFTaccount() {
   );
 }
 
-export default NFTaccount;
+export default withServices(NFTaccount);

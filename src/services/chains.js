@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 
+import axios from "axios";
+
 import {
   Chain as ChainNonce,
   CHAIN_INFO,
@@ -10,8 +12,6 @@ import {
 
 import { getTronFees } from "./chainUtils/tronUtil";
 import { calcFees } from "./chainUtils";
-
-import BigNumber from "bignumber.js";
 
 class AbstractChain {
   chain;
@@ -35,6 +35,49 @@ class AbstractChain {
     } catch (e) {
       console.log(e, "error in setSigner");
       throw e;
+    }
+  }
+
+  async getNFTs(address) {
+    console.log(this.bridge);
+    try {
+      return await this.bridge.nftList(this.chain, address);
+    } catch (e) {
+      throw new Error("NFT-Indexer is temporarily under maintenance");
+    }
+  }
+
+  filterNFTs(nfts) {
+    const unique = {};
+    try {
+      const allNFTs = nfts.filter((n) => {
+        const { chainId, address } = n.native;
+        const tokenId = n.native.tokenId || n.native.token_id;
+        const contract = n.native.contract || n.native.contract_id;
+
+        if (
+          unique[
+            `${tokenId}_${contract?.toLowerCase() ||
+              address?.toLowerCase()}_${chainId}`
+          ]
+        ) {
+          return false;
+        } else {
+          unique[
+            `${tokenId}_${contract?.toLowerCase() ||
+              address?.toLowerCase()}_${chainId}`
+          ] = true;
+          return true;
+        }
+      });
+      if (allNFTs.length < 1) {
+        //store.dispatch(setIsEmpty(true));
+      } else {
+        //store.dispatch(setIsEmpty(false));
+      }
+      return allNFTs;
+    } catch (err) {
+      return [];
     }
   }
 
@@ -68,33 +111,20 @@ class AbstractChain {
     }
   }
 
-  async sendAsset(args) {
+  async sendNFT(args) {
     if (!this.signer) throw new Error("No signer for ", this.chainParams.text);
-    let result;
+    console.log(args, "args");
     const { nft, toChain, receiver, fee, mintWith } = args;
-    if (nft.amount > 0) {
-      result = await this.bridge.transferSft(
-        this.chain,
-        toChain.chain,
-        nft,
-        this.signer,
-        receiver,
-        new BigNumber(nft.amount),
-        fee,
-        mintWith
-      );
-    } else {
-      result = await this.bridge.transferNft(
-        this.chain,
-        toChain.chain,
-        nft,
-        this.signer,
-        receiver,
-        fee,
-        mintWith
-      );
-    }
-    return result;
+
+    return await this.bridge.transferNft(
+      this.chain,
+      toChain.chain,
+      nft,
+      this.signer,
+      receiver,
+      fee,
+      mintWith
+    );
   }
 
   async approve(nfts) {
@@ -107,18 +137,7 @@ class EVM extends AbstractChain {
     super(params);
   }
 
-  async send(nfts, toChain, receiver, fee, mintWith) {
-    for (let index = 0; index < nfts.length; index++) {
-      const args = {
-        nft: nfts[index],
-        toChain,
-        receiver,
-        fee,
-        mintWith,
-      };
-      const result = await super.sendAsset(args);
-    }
-  }
+  async send(nfts, toChain, receiver, fee, mintWith) {}
 }
 
 class Elrond extends AbstractChain {
@@ -175,6 +194,54 @@ class Near extends AbstractChain {
       default:
         return await this.chain.connectWallet();
     }
+  }
+
+  async getNFTs(address) {
+    //const nfts = await super.getNFTs(address);
+
+    const res = await axios.post(
+      "https://interop-testnet.hasura.app/v1/graphql",
+      {
+        query: `
+      query MyQuery {
+        mb_views_nft_tokens(
+          distinct_on: metadata_id
+          where: {owner: {_eq: "${address}"}, _and: {burned_timestamp: {_is_null: true}}}
+        ) {
+          nft_contract_id
+          title
+          description
+          media
+          token_id
+          owner
+          metadata_id
+        }
+      }
+      `,
+      }
+    );
+
+    const {
+      data: {
+        data: { mb_views_nft_tokens: nfts },
+      },
+    } = res;
+
+    return nfts.map((nft) => ({
+      ...nft,
+      native: {
+        ...nft.native,
+        chainId: String(ChainNonce.NEAR),
+        tokenId: nft.token_id || nft.native.token_id,
+        contract: nft.nft_contract_id || nft.native.contract_id,
+      },
+      /* metaData: {
+        ...nft.native?.metadata,
+        name: nft.title || nft.native.metadata.title,
+        image: nft.media || nft.native.metadata.media,
+        imageFormat: nft.native.metadata.mime_type.split("/").at(1),
+      },*/
+    }));
   }
 }
 

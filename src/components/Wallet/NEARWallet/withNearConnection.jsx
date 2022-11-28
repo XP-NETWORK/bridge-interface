@@ -55,7 +55,8 @@ export const withNearConnection = (Wrapped) =>
               dispatch(setAccount(address));
               dispatch(setSigner(signer));
               dispatch(setConnectedWallet("Near Wallet"));
-              console.log(localStorage.getItem("_wallet_auth_key"));
+              chainWrapper.setSigner(signer);
+
               //const obj = JSON.parse(localStorage.getItem("_wallet_auth_key"));
             }
           }

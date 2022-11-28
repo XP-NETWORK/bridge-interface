@@ -19,7 +19,9 @@ function NearWallet({ serviceContainer }) {
 
       nearWalletConnection.requestSignIn(
         nearParams.bridge, // contract requesting access
-        "XP.NETWORK Bridge" // optional title
+        "XP.NETWORK Bridge", // optional title
+        `${location.protocol}//${location.host}/testnet/connect?nearAuth=true`,
+        `${location.protocol}//${location.host}/testnet/connect?nearFail=true`
       );
     } catch (e) {
       console.log(e, "e");

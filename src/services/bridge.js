@@ -14,6 +14,11 @@ import { BridgeModes } from "../components/values";
 class Bridge {
   chains = {};
   config;
+  checkWallet = null;
+
+  setCheckWallet(wallet) {
+    this.checkWallet = wallet;
+  }
 
   async init(network) {
     const testnet = BridgeModes.TestNet === network ? true : false;
@@ -36,7 +41,8 @@ class Bridge {
 
   async getChain(nonce) {
     const chainParams = CHAIN_INFO.get(nonce);
-    const chain = this.chains[chainParams.type];
+    const chainId = String(nonce);
+    const chain = this.chains[chainId];
     if (chain) return chain;
     try {
       const params = {
@@ -48,29 +54,29 @@ class Bridge {
 
       switch (chainParams.type) {
         case "EVM":
-          this.chains["EVM"] = new ChainInterface.EVM(params);
-          return this.chains["EVM"];
+          this.chains[chainId] = new ChainInterface.EVM(params);
+          return this.chains[chainId];
         case "Tron":
-          this.chains["Tron"] = new ChainInterface.Tron(params);
-          return this.chains["Tron"];
+          this.chains[chainId] = new ChainInterface.Tron(params);
+          return this.chains[chainId];
         case "Elrond":
-          this.chains["Elrond"] = new ChainInterface.Elrond(params);
-          return this.chains["Elrond"];
+          this.chains[chainId] = new ChainInterface.Elrond(params);
+          return this.chains[chainId];
         case "Algorand":
-          this.chains["Algorand"] = new ChainInterface.Algorand(params);
-          return this.chains["Algorand"];
+          this.chains[chainId] = new ChainInterface.Algorand(params);
+          return this.chains[chainId];
         case "Tezos":
-          this.chains["Tezos"] = new ChainInterface.Tezos(params);
-          return this.chains["Tezos"];
+          this.chains[chainId] = new ChainInterface.Tezos(params);
+          return this.chains[chainId];
         case "VeChain":
-          this.chains["VeChain"] = new ChainInterface.VeChain(params);
-          return this.chains["VeChain"];
+          this.chains[chainId] = new ChainInterface.VeChain(params);
+          return this.chains[chainId];
         case "Cosmos":
-          this.chains["Cosmos"] = new ChainInterface.Cosmos(params);
-          return this.chains["Cosmos"];
+          this.chains[chainId] = new ChainInterface.Cosmos(params);
+          return this.chains[chainId];
         case "NEAR":
-          this.chains["NEAR"] = new ChainInterface.Near(params);
-          return this.chains["NEAR"];
+          this.chains[chainId] = new ChainInterface.Near(params);
+          return this.chains[chainId];
         default:
           throw new Error("unsuported chain");
       }

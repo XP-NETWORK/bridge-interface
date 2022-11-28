@@ -27,7 +27,10 @@ import { transferNFTFromElrond } from "../../services/chains/elrond/elrondHelper
 import { transferNFTFromAlgorand } from "../../services/chains/algorand/algorandHelper";
 import { transferNFTFromTON } from "../../services/chains/ton/tonHelper";
 
-export default function ButtonToTransfer() {
+import { withServices } from "../App/hocs/withServices";
+
+export default withServices(function ButtonToTransfer({ serviceContainer }) {
+  const { bridge } = serviceContainer;
   const kukaiWalletSigner = useSelector(
     (state) => state.general.kukaiWalletSigner
   );
@@ -116,7 +119,7 @@ export default function ButtonToTransfer() {
                 );
                 const signer = await provider.getSigner(account);*/
         return hederaSigner;
-      } else if (from === "Secret") {
+      } else if (from === "Secret" || from === "NEAR") {
         return signerSigner;
       } else {
         let provider;
@@ -186,13 +189,14 @@ export default function ButtonToTransfer() {
     const unstoppabledomain = await getFromDomain(receiver, _to);
     const stop = unstoppabledomainSwitch(unstoppabledomain);
     if (stop) return;
+
     let result;
     const params = {
       to: _to,
       from: _from,
       nft,
       signer: from.text === "Hedera" ? hederaSigner : signer,
-      receiver: receiverAddress || unstoppabledomain || receiver,
+      receiver: (receiverAddress || unstoppabledomain || receiver)?.trim(),
       fee: bigNumberFees,
       index,
       txnHashArr,
@@ -229,6 +233,18 @@ export default function ButtonToTransfer() {
       case "TON":
         result = await transferNFTFromTON(params);
         break;
+      case "NEAR": {
+        const fromChain = await bridge.getChain(_from.nonce);
+        const toChain = await bridge.getChain(_to.nonce);
+        const _receiver = receiverAddress || unstoppabledomain || receiver;
+        result = await fromChain.sendNFT({
+          toChain,
+          nft,
+          receiver: _receiver,
+          fee: bigNumberFees,
+        });
+        break;
+      }
       default:
         break;
     }
@@ -270,4 +286,4 @@ export default function ButtonToTransfer() {
       {loading ? "Processing" : "Send"}
     </div>
   );
-}
+});
