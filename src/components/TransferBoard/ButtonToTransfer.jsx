@@ -237,7 +237,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
         const fromChain = await bridge.getChain(_from.nonce);
         const toChain = await bridge.getChain(_to.nonce);
         const _receiver = receiverAddress || unstoppabledomain || receiver;
-        result = await fromChain.sendNFT({
+        fromChain.sendNFT({
           toChain,
           nft,
           receiver: _receiver,

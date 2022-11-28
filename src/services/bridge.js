@@ -74,6 +74,9 @@ class Bridge {
         case "Cosmos":
           this.chains[chainId] = new ChainInterface.Cosmos(params);
           return this.chains[chainId];
+        case "TON":
+          this.chains[chainId] = new ChainInterface.TON(params);
+          return this.chains[chainId];
         case "NEAR":
           this.chains[chainId] = new ChainInterface.Near(params);
           return this.chains[chainId];

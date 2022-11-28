@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
 import { compose } from "redux";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { withNearConnection } from "../Wallet/NEARWallet/withNearConnection";
 import { withServices } from "./hocs/withServices";
 
@@ -19,22 +19,22 @@ import { useNavigate } from "react-router";
 
 const Container = ({ children, serviceContainer, setContainer }) => {
   const dispatch = useDispatch();
-  const factory = useSelector((state) => state.general.factory);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    let network;
-    if (window.location.pathname.includes(BridgeModes.Staging)) {
-      network = BridgeModes.Staging;
-      dispatch(setStaging(true));
-    } else if (window.location.pathname.includes(BridgeModes.TestNet)) {
-      network = BridgeModes.TestNet;
-      dispatch(setTestNet(true));
-    }
-    const params = new URLSearchParams(window.location.search);
-    const hardcoded = params.get(BridgeModes.CheckWallet);
+    (async () => {
+      let network;
+      if (window.location.pathname.includes(BridgeModes.Staging)) {
+        network = BridgeModes.Staging;
+        dispatch(setStaging(true));
+      } else if (window.location.pathname.includes(BridgeModes.TestNet)) {
+        network = BridgeModes.TestNet;
+        dispatch(setTestNet(true));
+      }
+      const params = new URLSearchParams(window.location.search);
+      const hardcoded = params.get(BridgeModes.CheckWallet);
 
-    const saveFactory = async () => {
       await Promise.all([
         serviceContainer?.bridge?.init(network)?.then((bridge) => {
           hardcoded && bridge.setCheckWallet(hardcoded);
@@ -42,14 +42,14 @@ const Container = ({ children, serviceContainer, setContainer }) => {
         }),
         getAndSetFactory(network),
       ]);
-    };
 
-    if (!factory) saveFactory();
+      const query = window.location.search;
 
-    const query = window.location.search;
+      dispatch(setCheckWallet(hardcoded));
 
-    dispatch(setCheckWallet(hardcoded));
-    navigate(`/${network ? network + "/" : ""}connect${query || ""}`);
+      !query.includes("NEARTRX=true") &&
+        navigate(`/${network ? network + "/" : ""}connect${query || ""}`);
+    })();
   }, []);
 
   return <>{children}</>;

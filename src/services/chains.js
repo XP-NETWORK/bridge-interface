@@ -184,6 +184,12 @@ class Cosmos extends AbstractChain {
   }
 }
 
+class TON extends AbstractChain {
+  constructor(params) {
+    super(params);
+  }
+}
+
 class Near extends AbstractChain {
   constructor(params) {
     super(params);
@@ -200,7 +206,7 @@ class Near extends AbstractChain {
     //const nfts = await super.getNFTs(address);
 
     const res = await axios.post(
-      "https://interop-testnet.hasura.app/v1/graphql",
+      `https://interop-testnet.hasura.app/v1/graphql?rand=${Math.random()}`,
       {
         query: `
       query MyQuery {
@@ -221,6 +227,8 @@ class Near extends AbstractChain {
       }
     );
 
+    console.log(res.data);
+
     const {
       data: {
         data: { mb_views_nft_tokens: nfts },
@@ -235,7 +243,7 @@ class Near extends AbstractChain {
         tokenId: nft.token_id || nft.native.token_id,
         contract: nft.nft_contract_id || nft.native.contract_id,
       },
-      /* metaData: {
+      /*metaData: {
         ...nft.native?.metadata,
         name: nft.title || nft.native.metadata.title,
         image: nft.media || nft.native.metadata.media,
@@ -245,4 +253,14 @@ class Near extends AbstractChain {
   }
 }
 
-export default { EVM, Elrond, Tron, Algorand, Tezos, VeChain, Cosmos, Near };
+export default {
+  EVM,
+  Elrond,
+  Tron,
+  Algorand,
+  Tezos,
+  VeChain,
+  Cosmos,
+  Near,
+  TON,
+};
