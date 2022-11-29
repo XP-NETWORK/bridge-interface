@@ -2,13 +2,7 @@
 
 import axios from "axios";
 
-import {
-  Chain as ChainNonce,
-  CHAIN_INFO,
-  AppConfigs,
-  ChainFactory,
-  ChainFactoryConfigs,
-} from "xp.network";
+import { Chain as ChainNonce, CHAIN_INFO } from "xp.network";
 
 import { getTronFees } from "./chainUtils/tronUtil";
 import { calcFees } from "./chainUtils";
@@ -43,6 +37,7 @@ class AbstractChain {
     try {
       return await this.bridge.nftList(this.chain, address);
     } catch (e) {
+      console.log(e, "e");
       throw new Error("NFT-Indexer is temporarily under maintenance");
     }
   }
@@ -145,8 +140,22 @@ class Elrond extends AbstractChain {
     super(params);
   }
 
-  async getWlgdBalance(account) {
-    return await this.chain.wegldBalance(account);
+  async getNFTs(address) {
+    try {
+      return await super.getNFTs(address);
+    } catch (e) {
+      return [];
+    }
+  }
+
+  async getWegldBalance(account) {
+    try {
+      console.log(account);
+      const bal = await this.chain.wegldBalance(account);
+      return bal;
+    } catch (e) {
+      return 0;
+    }
   }
 }
 
@@ -162,7 +171,11 @@ class Algorand extends AbstractChain {
   }
 
   async getClaimables(account) {
-    return await this.chain.claimableAlgorandNfts(account);
+    try {
+      return await this.chain.claimableAlgorandNfts(account);
+    } catch (e) {
+      console.log("in getClaimables");
+    }
   }
 }
 

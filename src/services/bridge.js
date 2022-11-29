@@ -5,6 +5,7 @@ import {
   AppConfigs,
   ChainFactory,
   ChainFactoryConfigs,
+  ChainType,
 } from "xp.network";
 
 import ChainInterface from "./chains";
@@ -40,6 +41,7 @@ class Bridge {
   }
 
   async getChain(nonce) {
+    console.log(nonce);
     const chainParams = CHAIN_INFO.get(nonce);
     const chainId = String(nonce);
     const chain = this.chains[chainId];
@@ -52,32 +54,31 @@ class Bridge {
         bridge: this.bridge,
       };
 
+      console.log(chainParams);
+
       switch (chainParams.type) {
-        case "EVM":
+        case ChainType.EVM:
           this.chains[chainId] = new ChainInterface.EVM(params);
           return this.chains[chainId];
-        case "Tron":
+        case ChainType.TRON:
           this.chains[chainId] = new ChainInterface.Tron(params);
           return this.chains[chainId];
-        case "Elrond":
+        case ChainType.ELROND:
           this.chains[chainId] = new ChainInterface.Elrond(params);
           return this.chains[chainId];
-        case "Algorand":
+        case ChainType.ALGORAND:
           this.chains[chainId] = new ChainInterface.Algorand(params);
           return this.chains[chainId];
-        case "Tezos":
+        case ChainType.TEZOS:
           this.chains[chainId] = new ChainInterface.Tezos(params);
           return this.chains[chainId];
-        case "VeChain":
-          this.chains[chainId] = new ChainInterface.VeChain(params);
-          return this.chains[chainId];
-        case "Cosmos":
+        case ChainType.COSMOS:
           this.chains[chainId] = new ChainInterface.Cosmos(params);
           return this.chains[chainId];
-        case "TON":
+        case ChainType.TON:
           this.chains[chainId] = new ChainInterface.TON(params);
           return this.chains[chainId];
-        case "NEAR":
+        case ChainType.NEAR:
           this.chains[chainId] = new ChainInterface.Near(params);
           return this.chains[chainId];
         default:
