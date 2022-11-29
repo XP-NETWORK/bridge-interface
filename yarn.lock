@@ -1110,9 +1110,9 @@
     regenerator-runtime "^0.13.4"
 
 "@babel/runtime@^7.0.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.17.2":
-  version "7.20.5"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.5.tgz#6e1e187d7eaafdb9e0354f9a4815a8e10c8b4cfe"
-  integrity sha512-+4k537wJj1TFJnGfT3gHR5gz5os0XUVYebg4Utdq0KtIxJqiWHtHSSivHBIMFR5Bt0uojHXJKExtKbOywqDtFg==
+  version "7.20.6"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.6.tgz#facf4879bfed9b5326326273a64220f099b0fce3"
+  integrity sha512-Q+8MqP7TiHMWzSfwiJwXCjyf4GYA4Dgw3emg/7xmwsdLJOZUp+nMqcOwOzzYheuM1rhDu8FSj2l0aoMygEuXuA==
   dependencies:
     regenerator-runtime "^0.13.11"
 
@@ -4212,7 +4212,28 @@
     "@solana/web3.js" "^1.32.0"
     start-server-and-test "^1.14.0"
 
-"@solana/web3.js@^1.32.0", "@solana/web3.js@^1.36.0", "@solana/web3.js@^1.44.2", "@solana/web3.js@^1.56.2":
+"@solana/web3.js@^1.32.0", "@solana/web3.js@^1.36.0", "@solana/web3.js@^1.44.2":
+  version "1.67.0"
+  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.67.0.tgz#bd67742cd9c176889fd1954080173dd7d0c224a2"
+  integrity sha512-t6tfRbYyuoyuik4D4B8eK6hPm//+5l7k+00YppFTGoxcix8b2bpE7iANLmvw+u5iZNMwG3VFV20xRdrqz8zhvQ==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    "@noble/ed25519" "^1.7.0"
+    "@noble/hashes" "^1.1.2"
+    "@noble/secp256k1" "^1.6.3"
+    "@solana/buffer-layout" "^4.0.0"
+    bigint-buffer "^1.1.5"
+    bn.js "^5.0.0"
+    borsh "^0.7.0"
+    bs58 "^4.0.1"
+    buffer "6.0.1"
+    fast-stable-stringify "^1.0.0"
+    jayson "^3.4.4"
+    node-fetch "2"
+    rpc-websockets "^7.5.0"
+    superstruct "^0.14.2"
+
+"@solana/web3.js@^1.56.2":
   version "1.66.2"
   resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.66.2.tgz#80b43c5868b846124fe3ebac7d3943930c3fa60c"
   integrity sha512-RyaHMR2jGmaesnYP045VLeBGfR/gAW3cvZHzMFGg7bkO+WOYOYp1nEllf0/la4U4qsYGKCsO9eEevR5fhHiVHg==
@@ -8185,10 +8206,9 @@ crypto-es@^1.2.7:
   dependencies:
     axios "^0.21.1"
 
-"crypto-exchange-rate@git+https://github.com/xp-network/exchange-rate#master-dist":
+"crypto-exchange-rate@git+https://github.com/xp-network/exchange-rate#7e1266d8ab36354c50e80141692beb53625aaaef":
   version "1.0.0"
-  uid "83c1506548400d824af5666ded33eaf55f499f80"
-  resolved "git+https://github.com/xp-network/exchange-rate#83c1506548400d824af5666ded33eaf55f499f80"
+  resolved "git+https://github.com/xp-network/exchange-rate#7e1266d8ab36354c50e80141692beb53625aaaef"
   dependencies:
     axios "^0.21.1"
 
@@ -19447,7 +19467,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "4.0.1"
-  resolved "git+https://github.com/xp-network/xpjs#e6c258251bf472da3e3c35bbdc35d35f589a6f76"
+  resolved "git+https://github.com/xp-network/xpjs#ddd694ce5ed21c428500595b10192c11c59311ee"
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"
@@ -19476,7 +19496,7 @@ xmlhttprequest@1.8.0:
     bignumber.js "=9.0.1"
     bn.js "^5.2.1"
     buffer "^6.0.3"
-    crypto-exchange-rate "git+https://github.com/xp-network/exchange-rate#master-dist"
+    crypto-exchange-rate "git+https://github.com/xp-network/exchange-rate#7e1266d8ab36354c50e80141692beb53625aaaef"
     ethers "^5.5.4"
     google-protobuf "^3.20.1"
     js-base64 "^3.6.1"
