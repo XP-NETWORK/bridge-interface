@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveForSearch } from "../../wallet/helpers";
 import { ReturnBtn } from "../Settings/returnBtn";
 import DesktopTransferBoard from "../TransferBoard/DesktopTransferBoard";
-import MobileTransferBoard from "../TransferBoard/MobileTransferBoard";
 import "./NFTsBoard.css";
 import ChangeNetworkModal from "../Modals/ChangeNetwork/ChangeNetworkModal";
 import UnsupportedNetwork from "../Modals/ChangeNetwork/UnsupportedNetwork";
@@ -43,10 +42,10 @@ import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 
 import withChains from "./hocs";
 
+const intervalTm = 10_000;
+
 function NFTaccount(props) {
   const { serviceContainer, chainSpecific, _from, algorandAccount } = props;
-
-  console.log(props);
 
   const dispatch = useDispatch();
 
@@ -110,13 +109,13 @@ function NFTaccount(props) {
       console.log(error);
       dispatch(setBigLoader(false));
       dispatch(setNFTList([]));
+      console.log(error);
       dispatch(setError(error.data ? error.data.message : error.message));
     }
   }
 
   const getBalance = async (fromChain) => {
     const _balance = await fromChain.balance(_account);
-    console.log(_balance);
     dispatch(setBalance(_balance));
   };
 
@@ -151,7 +150,7 @@ function NFTaccount(props) {
       //update Balance
       getBalance(fromChain);
       chainSpecific && chainSpecific(dispatch, fromChain, _account);
-      balanceInterval = setInterval(() => getBalance(fromChain), 10000);
+      balanceInterval = setInterval(() => getBalance(fromChain), intervalTm);
     })();
     return () => clearInterval(balanceInterval);
   }, [_from, _account, NFTSetToggler]);
@@ -193,9 +192,9 @@ function NFTaccount(props) {
         <div className="row">
           <div className="nftListCol col-lg-8">
             {!isMobile && <NFTscreen />}
-            <MobileTransferBoard />
+            {/*isMobile && <MobileTransferBoard />*/}
           </div>
-          <DesktopTransferBoard />
+          {!isMobile && <DesktopTransferBoard />}
         </div>
         {isMobile && (
           <NFTmobileView

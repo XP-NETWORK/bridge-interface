@@ -10,7 +10,6 @@ import {
 
 export const calcFees = (fees, nonce) => {
   fees = fees.multipliedBy(1.1).integerValue();
-  //.toString(10);
 
   const decimals = CHAIN_INFO.get(nonce)?.decimals;
 

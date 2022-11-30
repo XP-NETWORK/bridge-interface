@@ -1,13 +1,21 @@
+/* eslint-disable react/prop-types */
 import BigNumber from "bignumber.js";
 import React, { useState, useRef } from "react";
 import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { chainsConfig } from "../values";
-import { errorToLog, handleChainFactory } from "../../wallet/helpers";
 import { setBigNumFees } from "../../store/reducers/generalSlice";
 import { useEffect } from "react";
 
-function SendFees() {
+import { withServices } from "../App/hocs/withServices";
+
+const intervalTm = 10_000;
+
+function SendFees(props) {
+  const { serviceContainer } = props;
+
+  const { bridge } = serviceContainer;
+
   const dispatch = useDispatch();
   const balance = useSelector((state) => state.general.balance);
 
@@ -15,50 +23,25 @@ function SendFees() {
   const from = useSelector((state) => state.general.from);
   const account = useSelector((state) => state.general.account);
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
-  const isToEVM = useSelector((state) => state.general.to).type === "EVM";
+
   const [fees, setFees] = useState("");
-  const Web3Utils = require("web3-utils");
+
   const [loading, setLoading] = useState(false);
 
-  const factory = useSelector((state) => state.general.factory);
-  /*const elrondAccount = useSelector((state) => state.general.elrondAccount);
-  const secretAccount = useSelector((state) => state.general.secretAccount);
-  const hederaAccount = useSelector((state) => state.general.hederaAccount);
-  const algorandAccount = useSelector((state) => state.general.algorandAccount);
-  const tezosAccount = useSelector((state) => state.general.tezosAccount);
+  const interval = useRef(null);
 
-  const wallet = () => {
-    return (
-      account ||
-      algorandAccount ||
-      tezosAccount ||
-      elrondAccount ||
-      secretAccount ||
-      hederaAccount
+  async function estimate(fromChain, toChain) {
+    setLoading(true);
+    const { fees, formatedFees } = await fromChain.estimate(
+      toChain,
+      selectedNFTList[0],
+      account
     );
-  };*/
+    console.log(formatedFees);
+    dispatch(setBigNumFees(fees));
+    setFees(formatedFees * selectedNFTList.length);
 
-  const feesReqInterval = useRef(null);
-  async function estimate() {
-    const date = new Date();
-    let fee;
-    try {
-      const fromChain = await handleChainFactory(from.text);
-      const toChain = await handleChainFactory(to.text);
-
-      const wallet =
-        to === "Tron"
-          ? "TCCKoPRcYoCGkxVThCaY9vRPaKiTjE4x1C"
-          : from === "Tron" && isToEVM
-          ? "0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6"
-          : from === "Algorand" && isToEVM
-          ? "0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6"
-          : from === "Elrond" && isToEVM
-          ? "0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6"
-          : from === "Tezos" && isToEVM
-          ? "0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6"
-          : account;
-
+    /* let fee;
       if (to === "Tron") {
         fee =
           from === "BSC"
@@ -78,27 +61,8 @@ function SendFees() {
             : from === "Fuse"
             ? new BigNumber("95352570490000000000")
             : "";
-      } else {
-        try {
-          fee = await factory.estimateFees(
-            fromChain,
-            toChain,
-            selectedNFTList[0],
-            wallet
-          );
-        } catch (error) {
-          console.error(error);
-          const errBody = {
-            type: "Estimate",
-            walletAddress: wallet(),
-            time: date.toString(),
-            fromChain: from.text,
-            toChain: to.text,
-            message: error,
-          };
-          errorToLog(errBody);
-        }
-      }
+      
+     
 
       const bigNum = fee
         ? fee
@@ -136,8 +100,8 @@ function SendFees() {
         nfts: selectedNFTList,
       };
       errorToLog(errBody);
-      console.log(error.data ? error.data.message : error.message);*/
-    }
+      console.log(error.data ? error.data.message : error.message);
+    }*/
     setLoading(false);
   }
 
@@ -157,24 +121,29 @@ function SendFees() {
   const config = chainsConfig[from?.text];
 
   useEffect(() => {
+    console.log(selectedNFTList);
+
     if (!selectedNFTList.length) {
       setFees("0");
-      return clearInterval(feesReqInterval.current);
+      return clearInterval(interval.current);
     }
-    setLoading(true);
 
-    estimate();
-    feesReqInterval.current = setInterval(() => estimate(), 1000 * 10);
-    return () => clearInterval(feesReqInterval.current);
+    selectedNFTList.length &&
+      (async () => {
+        const [fromChainWrapper, toChainWrapper] = await Promise.all([
+          bridge.getChain(from.nonce),
+          bridge.getChain(from.nonce),
+        ]);
+        const toChain = toChainWrapper.chain;
+        estimate(fromChainWrapper, toChain);
+        interval.current = setInterval(
+          () => estimate(fromChainWrapper, toChain),
+          intervalTm
+        );
+      })();
+
+    return () => clearInterval(interval.current);
   }, [selectedNFTList, to]);
-
-  useEffect(() => {
-    /* clearInterval(estimateInterval);
-    estimate();
-    const s = setInterval(() => estimate(), 1000 * 30);
-    setEstimateInterval(s);
-    return () => clearInterval(s);*/
-  }, [to]);
 
   return (
     <div className="fees">
@@ -208,4 +177,4 @@ function SendFees() {
   );
 }
 
-export default SendFees;
+export default withServices(SendFees);

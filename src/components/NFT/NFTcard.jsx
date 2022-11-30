@@ -23,11 +23,18 @@ import OnlyVideo from "./OnlyVideo";
 import { chains, chainsConfig } from "../values";
 import OriginChainMark from "./OriginChainMark";
 
-export default function NFTcard({ nft, index, claimables }) {
+NFTcard.propTypes = {
+  nft: PropTypes.object,
+  index: PropTypes.number,
+  claimables: PropTypes.bool,
+  chain: PropTypes.object,
+};
+
+export default function NFTcard({ nft, index, claimables, chain }) {
   const dispatch = useDispatch();
   const [detailsOn, setDetailsOn] = useState(false);
   const search = useSelector((state) => state.general.NFTListSearch);
-  const factory = useSelector((state) => state.general.factory);
+
   const testnet = useSelector((state) => state.general.testNet);
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
   const [isVisible, setIsVisible] = useState();
@@ -87,7 +94,8 @@ export default function NFTcard({ nft, index, claimables }) {
   useDidUpdateEffect(() => {
     if (isVisible) {
       if (!nft.dataLoaded) {
-        parseNFT(factory)(nft, index, testnet, claimables);
+        const _nft = chain.preParse(nft);
+        parseNFT(_nft, index, testnet, claimables);
       }
     }
   }, [isVisible, nft]);
@@ -166,8 +174,3 @@ export default function NFTcard({ nft, index, claimables }) {
     </>
   );
 }
-NFTcard.propTypes = {
-  nft: PropTypes.object,
-  index: PropTypes.number,
-  claimables: PropTypes.bool,
-};

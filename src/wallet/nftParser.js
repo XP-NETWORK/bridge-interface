@@ -5,32 +5,12 @@ import { setEachNFT, setEachClaimables } from "../store/reducers/generalSlice";
 
 import CacheService from "../services/cacheService";
 import WhiteListedPool from "../services/whiteListedPool";
-import EvmSerivce from "../services/chains/evm/evm";
 
 const cache = CacheService();
 const whiteListedPool = WhiteListedPool();
-const evm = EvmSerivce();
 
-export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
+export const parseNFT = async (nft, index, testnet, claimable) => {
   const { uri } = nft;
-
-  nft = {
-    ...nft,
-    collectionIdent: nft.native?.contract || nft.collectionIdent,
-  };
-
-  if (nft.native?.chainId === "27") {
-    const contract = nft.native?.collectionAddress || "SingleNFt";
-    nft = {
-      ...nft,
-      collectionIdent: nft.native?.collectionAddress || "SingleNFt",
-      native: {
-        ...nft.native,
-        contract: contract,
-        tokenId: nft.native?.address,
-      },
-    };
-  }
 
   let whitelisted = !testnet
     ? nft?.native?.contract === "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a"
@@ -76,10 +56,10 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
           nftData = await nftGeneralParser(nft, account, whitelisted);
         }
         if (nftData === "no NFT with that data was found") {
-          if (!nft.uri) {
+          /*if (!nft.uri) {
             evm.init(factory);
             nft = await evm.getUri(nft, nft.collectionIdent);
-          }
+          }*/
 
           nftData = await cache.add(unwraped.nft, account, whitelisted);
 

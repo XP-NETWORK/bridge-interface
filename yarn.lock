@@ -19469,12 +19469,16 @@ xmlhttprequest@1.8.0:
   version "4.0.1"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   resolved "git+https://github.com/xp-network/xpjs#2b60210f8ea3242f00106cd77d25a6e02185d5b3"
 =======
   resolved "git+https://github.com/xp-network/xpjs#e6c258251bf472da3e3c35bbdc35d35f589a6f76"
 >>>>>>> temporary
 =======
   resolved "git+https://github.com/xp-network/xpjs#107cf30e17e17178211f8ee8b8d97ccdd75726e7"
+>>>>>>> temporary
+=======
+  resolved "git+https://github.com/xp-network/xpjs#75666e2a9bae57193ce18c5f2b684770fb87e3f3"
 >>>>>>> temporary
   dependencies:
     "@dfinity/agent" "^0.11.3"

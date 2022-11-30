@@ -7,6 +7,8 @@ import { Chain as ChainNonce, CHAIN_INFO } from "xp.network";
 import { getTronFees } from "./chainUtils/tronUtil";
 import { calcFees } from "./chainUtils";
 
+const feeMultiplier = 1.1;
+
 class AbstractChain {
   chain;
 
@@ -72,6 +74,47 @@ class AbstractChain {
     }
   }
 
+  preParse(nft) {
+    const contract = nft.native?.contract || nft.collectionIdent;
+    return {
+      ...nft,
+      collectionIdent: contract,
+      chainId: nft.native?.chainId,
+      tokenId: nft.native?.tokenId,
+      contract,
+    };
+  }
+
+  async unwrap(nft) {
+    const res = await axios(nft.uri);
+    const { data } = res;
+
+    let tokenId =
+      data.wrapped?.token_id ||
+      data.wrapped?.tokenId ||
+      data.wrapped?.item_address;
+
+    let contract = data.wrapped?.contract || data.wrapped?.source_mint_ident;
+
+    return {
+      nft: {
+        ...nft,
+        collectionIdent: contract,
+        uri: data.wrapped?.original_uri,
+        native: {
+          ...nft.native,
+          chainId: data.wrapped?.origin,
+          contract,
+          tokenId,
+          uri: data.wrapped?.original_uri,
+        },
+      },
+      chainId: data.wrapped?.origin,
+      tokenId,
+      contract,
+    };
+  }
+
   async mintNFT(uri) {}
 
   async balance(account) {
@@ -84,17 +127,24 @@ class AbstractChain {
     }
   }
 
-  async estimate(toChain, nft, acc) {
-    console.log(toChain);
-
-    if (toChain.getNonce() === 9) {
+  async estimate(toChain, nft, receiver = "") {
+    //tron case
+    /* if (toChain.getNonce() === 9) {
       return calcFees(getTronFees(this.chainParams.key), this.nonce);
-    }
-
+    }*/
+    console.log(toChain);
     try {
-      const res = await this.bridge.estimateFees(this.chain, toChain, nft, acc);
-
-      return calcFees(res, this.nonce);
+      const res = await this.bridge.estimateFees(
+        this.chain,
+        toChain,
+        nft,
+        receiver
+      );
+      const fees = res.multipliedBy(feeMultiplier).integerValue();
+      return {
+        fees: fees.toString(10),
+        formatedFees: fees.dividedBy(this.chainParams.decimals).toNumber(),
+      };
     } catch (e) {
       console.log(e.message || e, "in estimate");
       return {
@@ -144,6 +194,47 @@ class Elrond extends AbstractChain {
     } catch (e) {
       return [];
     }
+  }
+
+  async unwrap(nft) {
+    const res = await super.unwrap(nft);
+
+    const contract =
+      res.tokenId
+        .split("-")
+        ?.slice(0, 2)
+        .join("-") ||
+      data.wrapped?.source_mint_ident
+        .split("-")
+        ?.slice(0, 2)
+        .join("-");
+    const token = data.wrapped?.source_token_id || data.wrapped?.nonce;
+    tokenId = this.isHex(token)
+      ? contract + token
+      : contract + "-" + ("0000" + Number(token).toString(16)).slice(-4);
+
+    return {
+      ...nft,
+      contract,
+    };
+
+    return {
+      nft: {
+        ...nft,
+        collectionIdent: contract,
+        uri: data.wrapped?.original_uri,
+        native: {
+          ...nft.native,
+          chainId: data.wrapped?.origin,
+          contract,
+          tokenId,
+          uri: data.wrapped?.original_uri,
+        },
+      },
+      chainId: data.wrapped?.origin,
+      tokenId,
+      contract,
+    };
   }
 
   async getWegldBalance(account) {
@@ -205,6 +296,21 @@ class Cosmos extends AbstractChain {
 class TON extends AbstractChain {
   constructor(params) {
     super(params);
+  }
+
+  preParse(nft) {
+    nft = super.preParse(nft);
+
+    const contract = nft.native?.collectionAddress || "SingleNFt";
+    return {
+      ...nft,
+      collectionIdent: nft.native?.collectionAddress || "SingleNFt",
+      native: {
+        ...nft.native,
+        contract: contract,
+        tokenId: nft.native?.address,
+      },
+    };
   }
 }
 

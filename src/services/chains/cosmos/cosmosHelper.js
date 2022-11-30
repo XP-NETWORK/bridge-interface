@@ -73,6 +73,8 @@ const transfer = async (
 
   try {
     switch (true) {
+      case amount > 0:
+        throw new Error("SFTs for Secret are not yet supported");
       default:
         result = await factory.transferNft(
           fromChain,
