@@ -5,7 +5,7 @@ import { setAlgorandClaimables } from "../../../store/reducers/generalSlice";
 
 import { useSelector } from "react-redux";
 
-import { Chain } from "xp.network";
+import { ChainType } from "xp.network";
 
 export const withAlgo = (Wrapped) =>
   function CBU(props) {
@@ -30,7 +30,7 @@ export const withAlgo = (Wrapped) =>
         algorandAccount={algorandAccount}
         chainSpecific={{
           ...(props.chainSpecific || {}),
-          [Chain.ALGORAND]: getClaimables,
+          [ChainType.ALGORAND]: getClaimables,
         }}
       />
     );

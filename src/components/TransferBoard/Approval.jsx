@@ -159,13 +159,10 @@ function Approval() {
         case "NEAR":
           const near = await factory.inner(Chain.NEAR);
 
-          await near.preTransfer(
-            signerSigner,
-            nft,
-            bigNumberFees,
-            Number(to.nonce),
-            receiver.trim()
-          );
+          await near.preTransfer(signerSigner, nft, bigNumberFees, {
+            to: Number(to.nonce),
+            receiver: receiver.trim(),
+          });
           dispatch(updateApprovedNFTs(nft));
           setFinishedApproving(arr);
           break;

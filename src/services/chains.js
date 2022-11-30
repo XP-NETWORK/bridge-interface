@@ -65,11 +65,7 @@ class AbstractChain {
           return true;
         }
       });
-      if (allNFTs.length < 1) {
-        //store.dispatch(setIsEmpty(true));
-      } else {
-        //store.dispatch(setIsEmpty(false));
-      }
+
       return allNFTs;
     } catch (err) {
       return [];

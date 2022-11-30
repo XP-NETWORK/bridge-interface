@@ -3,7 +3,7 @@ import React from "react";
 
 import { setWrappedEGold } from "../../../store/reducers/generalSlice";
 
-import { Chain } from "xp.network";
+import { ChainType } from "xp.network";
 
 export const withElrond = (Wrapped) =>
   function CBU(props) {
@@ -18,7 +18,7 @@ export const withElrond = (Wrapped) =>
         {...props}
         chainSpecific={{
           ...(props.chainSpecific || {}),
-          [Chain.ELROND]: getWegldBalance,
+          [ChainType.ELROND]: getWegldBalance,
         }}
       />
     );

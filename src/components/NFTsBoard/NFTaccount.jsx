@@ -152,12 +152,6 @@ function NFTaccount(props) {
       getBalance(fromChain);
       chainSpecific && chainSpecific(dispatch, fromChain, _account);
       balanceInterval = setInterval(() => getBalance(fromChain), 10000);
-
-      //Dicounts
-      if (account) {
-        const data = await checkXpNetLocked(account);
-        dispatch(setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25)));
-      }
     })();
     return () => clearInterval(balanceInterval);
   }, [_from, _account, NFTSetToggler]);
