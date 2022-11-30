@@ -15,11 +15,11 @@ export const withElrond = (Wrapped) =>
 
     return (
       <Wrapped
+        {...props}
         chainSpecific={{
           ...(props.chainSpecific || {}),
           [Chain.ELROND]: getWegldBalance,
         }}
-        {...props}
       />
     );
   };

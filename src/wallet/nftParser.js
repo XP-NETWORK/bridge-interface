@@ -19,7 +19,7 @@ export const parseNFT = (factory) => async (nft, index, testnet, claimable) => {
     collectionIdent: nft.native?.contract || nft.collectionIdent,
   };
 
-  if (nft.native.chainId === "27") {
+  if (nft.native?.chainId === "27") {
     const contract = nft.native?.collectionAddress || "SingleNFt";
     nft = {
       ...nft,

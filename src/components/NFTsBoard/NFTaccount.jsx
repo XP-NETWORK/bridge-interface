@@ -52,7 +52,6 @@ function NFTaccount(props) {
 
   const from = _from.key;
   const prevSelected = usePrevious(from);
-  const type = useSelector((state) => state.general.from.type);
 
   const nfts = useSelector((state) => state.general.NFTList);
   const currentsNFTs = useSelector((state) => state.general.currentsNFTs);
@@ -94,21 +93,18 @@ function NFTaccount(props) {
   const { bridge } = serviceContainer;
 
   async function getNFTsList(fromChain) {
-    if (type === "Cosmos") return;
-
     dispatch(setBigLoader(true));
     try {
       let nfts = await fromChain.getNFTs(bridge.checkWallet || _account);
       nfts = fromChain.filterNFTs(nfts);
-
       if (nfts.length < 1) {
         dispatch(setIsEmpty(true));
       } else {
         dispatch(setIsEmpty(false));
+        dispatch(setNFTList(nfts));
+        dispatch(setPreloadNFTs(nfts.length));
       }
 
-      dispatch(setPreloadNFTs(nfts.length));
-      dispatch(setNFTList(nfts));
       dispatch(setBigLoader(false));
     } catch (error) {
       console.log(error);

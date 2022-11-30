@@ -76,6 +76,8 @@ class AbstractChain {
     }
   }
 
+  async mintNFT(uri) {}
+
   async balance(account) {
     try {
       const res = await this.chain.balance(account);
@@ -172,8 +174,11 @@ class Algorand extends AbstractChain {
 
   async getClaimables(account) {
     try {
-      return await this.chain.claimableAlgorandNfts(account);
+      const x = await this.bridge.claimableAlgorandNfts(account);
+      console.log(x, "x");
+      return x;
     } catch (e) {
+      console.log(e, "e");
       console.log("in getClaimables");
     }
   }
@@ -194,6 +199,10 @@ class VeChain extends AbstractChain {
 class Cosmos extends AbstractChain {
   constructor(params) {
     super(params);
+  }
+
+  async getNFTs() {
+    return [];
   }
 }
 

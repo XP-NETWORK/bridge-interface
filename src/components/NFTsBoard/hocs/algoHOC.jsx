@@ -26,12 +26,12 @@ export const withAlgo = (Wrapped) =>
 
     return (
       <Wrapped
+        {...props}
         algorandAccount={algorandAccount}
         chainSpecific={{
           ...(props.chainSpecific || {}),
           [Chain.ALGORAND]: getClaimables,
         }}
-        {...props}
       />
     );
   };
