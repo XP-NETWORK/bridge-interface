@@ -2,7 +2,7 @@ import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
 import { errorToLog } from "../../../wallet/helpers";
 import { setError } from "../../../store/reducers/generalSlice";
-import { ethers, BigNumber } from "ethers";
+import { ethers } from "ethers";
 
 export const transferNFTFromElrond = async ({
   to,
@@ -26,12 +26,14 @@ export const transferNFTFromElrond = async ({
     collectionIdent,
   } = nft;
   let mintWith;
+
   if (!wrapped) {
+    const hex = tokenId.split("-")?.at(2);
     mintWith = await factory.getVerifiedContract(
       collectionIdent,
       toNonce,
       fromNonce,
-      tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
+      String(hex ? parseInt(hex, 16) : "")
     );
   }
   let result;
@@ -80,7 +82,7 @@ const transfer = async (
           nft,
           signer,
           receiver,
-          BigNumber.from(amount),
+          BigInt(amount),
           fee,
           mintWith
         );

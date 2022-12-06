@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import TransferredNft from "./TransferredNft";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useEffect } from "react";
-import { socket } from "../../../wallet/helpers";
+import { socket, StringShortener } from "../../../wallet/helpers";
 
 import {
   cleanTxnHashArr,
@@ -15,10 +15,14 @@ import {
 } from "../../../store/reducers/generalSlice";
 import "./SuccessModal.css";
 import Tooltip from "../AccountModal/Tooltip";
-import { chainsConfig, CHAIN_INFO } from "../../values";
+//import { chainsConfig, CHAIN_INFO } from "../../values";
 import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
 
-export default function SuccessModal() {
+import { withServices } from "../../App/hocs/withServices";
+
+export default withServices(function SuccessModal({ serviceContainer }) {
+  const { bridge } = serviceContainer;
+
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
@@ -45,6 +49,13 @@ export default function SuccessModal() {
     tezosAccount ||
     "";
 
+  const [links, setLinks] = useState({
+    txFrom: "",
+    txTo: "",
+    addressFrom: "",
+    addressTo: "",
+  });
+
   const handleClose = () => {
     selectedNFTList.forEach((nft) => {
       const { txn } = nft;
@@ -53,12 +64,6 @@ export default function SuccessModal() {
     dispatch(cleanTxnHashArr());
     dispatch(setNFTSetToggler());
     dispatch(setQRCodeModal(false));
-  };
-
-  const getSubstringValue = () => {
-    if (window.innerWidth <= 320) return 3;
-    else if (window.innerWidth <= 375) return 6;
-    else return false;
   };
 
   const getTX = () => {
@@ -79,28 +84,47 @@ export default function SuccessModal() {
     }
   };
 
-  const getExplorer = () => {
-    return !testnet
-      ? `${CHAIN_INFO[from?.text]?.blockExplorerUrls}${address}`
-      : `${CHAIN_INFO[from?.text]?.testBlockExplorerUrls}${address}`;
-  };
+  const tx = getTX();
+  const shortTx = StringShortener(tx, 6);
+  const shortAddress = StringShortener(address, 6);
+  const shortReceiver = StringShortener(receiver, 6);
 
   useEffect(() => {
-    //alert(`success modal ${getTX().toString()}:${socket.connected}`);
     socket.on("incomingEvent", async (e) => {
-      /* if (e.fromChain === "24" || e.fromChainName === "SECRET") {
-        alert(e.fromHash);
-      }*/
       dispatch(setTxnStatus(e));
       console.log("Incoming Event: ", e);
     });
     socket.on("updateEvent", async (e) => {
-      /*if (e.fromChain === "24" || e.fromChainName === "SECRET") {
-        alert(e.toHash);
-      }*/
       dispatch(setTxnStatus(e));
       console.log("Update Event: ", e);
     });
+
+    Promise.all([bridge.getChain(from.nonce), bridge.getChain(to.nonce)]).then(
+      ([fromChain, toChain]) => {
+        const { chainParams: fromChainParams } = fromChain;
+        const { chainParams: toChainParams } = toChain;
+        const txBaseFrom = testnet
+          ? fromChainParams.tnBlockExplorerUrl
+          : fromChainParams.blockExplorerUrl;
+        const txBaseTo = testnet
+          ? toChainParams.tnBlockExplorerUrl
+          : toChainParams.blockExplorerUrl;
+        const addressBaseFrom = testnet
+          ? fromChainParams.tnBlockExplorerUrlAddr
+          : fromChainParams.blockExplorerUrlAddr;
+        const addressBaseTo = testnet
+          ? toChainParams.tnBlockExplorerUrlAddr
+          : toChainParams.blockExplorerUrlAddr;
+
+        setLinks({
+          txFrom: txBaseFrom,
+          txTo: txBaseTo,
+          addressFrom: addressBaseFrom,
+          addressTo: addressBaseTo,
+        });
+      }
+    );
+
     return () => {
       if (socket) {
         socket.off("incomingEvent");
@@ -128,23 +152,14 @@ export default function SuccessModal() {
             </div>
             <div className="success-info-item">
               <div className="info-item-label">Txn Hash</div>
-              <CopyToClipboard text={getTX() || "No tx"}>
+              <CopyToClipboard text={tx || "No tx"}>
                 <a
-                  href={
-                    testnet
-                      ? `${chainsConfig[from?.key]?.testTx + getTX()}`
-                      : `${chainsConfig[from?.key]?.tx + getTX()}`
-                  }
+                  href={links.txFrom + tx}
                   target="_blank"
                   className="success-hash"
                   rel="noreferrer"
                 >
-                  {getTX()
-                    ? `${getTX().substring(
-                        0,
-                        getSubstringValue() || 10
-                      )}...${getTX().substring(getTX().length - 6)}`
-                    : ""}
+                  {shortTx}
                   <Tooltip />
                 </a>
               </CopyToClipboard>
@@ -169,17 +184,12 @@ export default function SuccessModal() {
           <div className="success-info-item">
             <div className="info-item-label">Departure Address</div>
             <a
-              href={getExplorer() || "#"}
+              href={links.addressFrom + address}
               className="success-hash"
               target="_blank"
               rel="noreferrer"
             >
-              {address
-                ? `${address.substring(
-                    0,
-                    getSubstringValue() || 10
-                  )}...${address.substring(address.length - 6)}`
-                : ""}
+              {shortAddress}
             </a>
           </div>
           <div className="success-info-item">
@@ -193,16 +203,11 @@ export default function SuccessModal() {
             <div className="info-item-label">Destination Address</div>
             <a
               className="success-hash"
-              href={`${CHAIN_INFO[to?.text]?.blockExplorerUrls}${receiver}`}
+              href={links.addressTo + receiver}
               target="_blank"
               rel="noreferrer"
             >
-              {receiver
-                ? `${receiver.substring(
-                    0,
-                    getSubstringValue() || 10
-                  )}...${receiver.substring(receiver.length - 6)}`
-                : "test"}
+              {shortReceiver}
             </a>
           </div>
         </div>
@@ -216,6 +221,7 @@ export default function SuccessModal() {
                   <TransferredNft
                     key={`index-${index}-nft-success`}
                     nft={nft}
+                    links={links}
                     testnet={testnet}
                   />
                 ))
@@ -225,4 +231,4 @@ export default function SuccessModal() {
       </Modal.Body>
     </>
   );
-}
+});

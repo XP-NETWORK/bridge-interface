@@ -62,8 +62,6 @@ export async function switchNetwork(chain) {
   }
 }
 
-export const approveForEVM = async () => {};
-
 export const transferNFTFromEVM = async ({
   to,
   from,
@@ -92,6 +90,7 @@ export const transferNFTFromEVM = async ({
     general: { account },
   } = store.getState();
   let mintWith;
+
   if (!wrapped) {
     mintWith = await factory.getVerifiedContract(
       contract,
@@ -173,7 +172,7 @@ const transfer = async (
           nft,
           signer,
           receiver,
-          BigNumber.from(amount),
+          BigInt(amount),
           fee,
           mintWith
         );

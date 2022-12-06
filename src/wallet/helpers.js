@@ -453,3 +453,16 @@ export const getRightPath = (checkFrom, checkTo) => {
       return `/account${query || ""}`;
   }
 };
+
+const getSubstringValue = (length) => {
+  if (window.innerWidth <= 320) return 3;
+  else if (window.innerWidth <= 375) return length;
+  else return false;
+};
+
+export const StringShortener = (str, length) =>
+  str
+    ? `${str.substring(0, getSubstringValue(length) || 10)}...${str.substring(
+        str.length - length
+      )}`
+    : "";

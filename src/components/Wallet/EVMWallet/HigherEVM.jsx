@@ -7,6 +7,7 @@ import {
   setBitKeep,
   setFrom,
   setMetaMask,
+  setWalletsModal,
 } from "../../../store/reducers/generalSlice";
 import { getRightPath } from "../../../wallet/helpers";
 import {
@@ -67,19 +68,19 @@ export default function HigherEVM(OriginalComponent) {
           break;
         case "TrustWallet":
           connected = await connectTrustWallet(activate, from.text);
-
+          dispatch(setWalletsModal(false));
           if (connected && to) navigateToAccountRoute();
           if (temporaryFrom) dispatch(setFrom(temporaryFrom));
           break;
         case "WalletConnect":
           connected = await onWalletConnect(activate, from.text, testnet);
-
+          dispatch(setWalletsModal(false));
           if (connected && to) navigateToAccountRoute();
           break;
         case "BitKeep":
           deactivate();
           connected = await connectBitKeep(from);
-
+          dispatch(setWalletsModal(false));
           dispatch(setBitKeep(true));
           if (connected && to) {
             navigateToAccountRoute();
@@ -118,7 +119,7 @@ export default function HigherEVM(OriginalComponent) {
     };
 
     useEffect(() => {
-      if (account) {
+      if (account && from) {
         bridge.getChain(from.nonce).then((chainWrapper) => {
           const provider = new ethers.providers.Web3Provider(
             bitKeep
@@ -129,7 +130,7 @@ export default function HigherEVM(OriginalComponent) {
           chainWrapper.setSigner(signer);
         });
       }
-    }, [account]);
+    }, [account, from]);
 
     return (
       <OriginalComponent connectWallet={connectHandler} styles={getStyle} />

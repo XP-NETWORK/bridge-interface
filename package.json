@@ -64,7 +64,7 @@
     "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.1",
     "react-use-localstorage": "^3.5.3",
-    "secretjs": "^1.4.5",
+    "secretjs": "=1.4.5",
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.4.1",
     "stream-browserify": "^3.0.0",

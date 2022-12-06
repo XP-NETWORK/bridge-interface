@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+    setAccount,
     setAptosAccount,
     setConnectedWallet,
     setWalletsModal,
@@ -14,7 +15,7 @@ export default function HigherAPTOS(OriginalComponent) {
         const from = useSelector((state) => state.general.from);
 
         const getStyles = () => {
-            let styles = { display: "none" };
+            let styles = {};
             if (from && from.type !== "APTOS") {
                 styles = {
                     pointerEvents: "none",
@@ -68,6 +69,7 @@ export default function HigherAPTOS(OriginalComponent) {
                     break;
             }
             dispatch(setAptosAccount(connected.address));
+            dispatch(setAccount(connected.address));
         };
         return (
             <OriginalComponent
