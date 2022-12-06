@@ -7,6 +7,7 @@ import {
     setBitKeep,
     setFrom,
     setMetaMask,
+    setWalletsModal,
 } from "../../../store/reducers/generalSlice";
 import { getRightPath } from "../../../wallet/helpers";
 import {
@@ -69,7 +70,7 @@ export default function HigherEVM(OriginalComponent) {
                     break;
                 case "TrustWallet":
                     connected = await connectTrustWallet(activate, from.text);
-                    close();
+                    dispatch(setWalletsModal(false))
                     if (connected && to) navigateToAccountRoute();
                     if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                     break;
@@ -79,13 +80,13 @@ export default function HigherEVM(OriginalComponent) {
                         from.text,
                         testnet
                     );
-                    close();
+                    dispatch(setWalletsModal(false))
                     if (connected && to) navigateToAccountRoute();
                     break;
                 case "BitKeep":
                     deactivate();
                     connected = await connectBitKeep(from);
-                    close();
+                    dispatch(setWalletsModal(false))
                     dispatch(setBitKeep(true));
                     if (connected && to) {
                         navigateToAccountRoute();
