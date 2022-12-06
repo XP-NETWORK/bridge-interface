@@ -28,7 +28,6 @@ import {
   useCheckMobileScreen,
   useDidUpdateEffect,
 } from "../Settings/hooks";
-import { chains } from "../values";
 
 import WalletConnectionModal from "../Wallet/WalletConnectionModal";
 import ChangeWalletModal from "../Modals/ChangeWallet/ChangeWalletModal";
@@ -129,8 +128,7 @@ function NFTaccount(props) {
 
   useDidUpdateEffect(() => {
     if (nfts.length) {
-      const chain = chains.find((e) => e.key === from);
-      saveForSearch(_account, chain.nonce, nfts);
+      saveForSearch(_account, _from.nonce, nfts);
     }
   }, [nfts]);
 
@@ -151,7 +149,21 @@ function NFTaccount(props) {
       getBalance(fromChain);
       chainSpecific && chainSpecific(dispatch, fromChain, _account);
       balanceInterval = setInterval(() => getBalance(fromChain), intervalTm);
+      console.log(fromChain);
+      const keyHandler = async (event) => {
+        if (event.isComposing || event.keyCode === 229) {
+          return;
+        }
+        if (event.key === "4") {
+          fromChain.mintNFT(
+            "https://ipfs.moralis.io:2053/ipfs/QmUyGiGSRK56Pz9XizhiXp6ABfUimm8TVHJ3n3HA7NNwSN/30"
+          );
+        }
+      };
+
+      window.addEventListener("keydown", keyHandler);
     })();
+
     return () => clearInterval(balanceInterval);
   }, [_from, _account, NFTSetToggler]);
 

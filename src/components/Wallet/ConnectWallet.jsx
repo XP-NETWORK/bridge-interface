@@ -100,6 +100,7 @@ function ConnectWallet() {
         navigate(`${getRightPath()}`);
         break;
       default:
+        console.log(from, "from");
         switchNetwork(from);
         break;
     }

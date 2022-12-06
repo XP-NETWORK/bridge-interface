@@ -125,7 +125,9 @@ export const connectUnstoppable = async () => {
 
 export const switchNetWork = async (from) => {
   // let fromChainId;
+  console.log(from, "from");
   const chain = getAddEthereumChain()[parseInt(from.chainId).toString()];
+  console.log(chain);
   const params = {
     chainId: from.chainId, // A 0x-prefixed hexadecimal string
     chainName: chain.name,

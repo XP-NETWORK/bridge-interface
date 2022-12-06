@@ -185,73 +185,88 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
   };
 
   const sendEach = async (nft, index) => {
-    const signer = await getSigner();
-    const unstoppabledomain = await getFromDomain(receiver, _to);
-    const stop = unstoppabledomainSwitch(unstoppabledomain);
-    if (stop) return;
+    try {
+      const signer = await getSigner();
+      const unstoppabledomain = await getFromDomain(receiver, _to);
+      const stop = unstoppabledomainSwitch(unstoppabledomain);
+      if (stop) return;
 
-    let result;
-    const params = {
-      to: _to,
-      from: _from,
-      nft,
-      signer: from.text === "Hedera" ? hederaSigner : signer,
-      receiver: (receiverAddress || unstoppabledomain || receiver)?.trim(),
-      fee: bigNumberFees,
-      index,
-      txnHashArr,
-      chainConfig,
-      testnet,
-      discountLeftUsd,
-    };
-    switch (_from.type) {
-      case "EVM":
-        result = await transferNFTFromEVM(params);
-        break;
-      case "Tron":
-        result = await transferNFTFromTran(params);
-        break;
-      case "Tezos":
-        result = await transferNFTFromTezos(params);
-        break;
-      case "Algorand":
-        result = await transferNFTFromAlgorand(params);
-        break;
-      case "Elrond":
-        result = await transferNFTFromElrond(params);
-        break;
-      case "Cosmos":
-        result = await transferNFTFromCosmos(params);
-        ``;
-        break;
-      case "VeChain":
-        result = await transferNFTFromEVM(params);
-        break;
-      case "Skale":
-        result = await transferNFTFromEVM(params);
-        break;
-      case "TON":
-        result = await transferNFTFromTON(params);
-        break;
-      case "NEAR": {
-        const fromChain = await bridge.getChain(_from.nonce);
-        const toChain = await bridge.getChain(_to.nonce);
-        const _receiver = receiverAddress || unstoppabledomain || receiver;
-        fromChain.sendNFT({
-          toChain,
-          nft,
-          receiver: _receiver,
-          fee: bigNumberFees,
-        });
-        break;
+      let result;
+      const params = {
+        to: _to,
+        from: _from,
+        nft,
+        signer: from.text === "Hedera" ? hederaSigner : signer,
+        receiver: (receiverAddress || unstoppabledomain || receiver)?.trim(),
+        fee: bigNumberFees,
+        index,
+        txnHashArr,
+        chainConfig,
+        testnet,
+        discountLeftUsd,
+      };
+      switch (_from.type) {
+        case "EVM": {
+          const [fromChain, toChain] = await Promise.all([
+            bridge.getChain(_from.nonce),
+            bridge.getChain(_to.nonce),
+          ]);
+          const _receiver = receiverAddress || unstoppabledomain || receiver;
+          result = await fromChain.transfer({
+            toChain,
+            nft,
+            receiver: _receiver,
+            fee: bigNumberFees,
+          });
+          break;
+        }
+        case "Tron":
+          result = await transferNFTFromTran(params);
+          break;
+        case "Tezos":
+          result = await transferNFTFromTezos(params);
+          break;
+        case "Algorand":
+          result = await transferNFTFromAlgorand(params);
+          break;
+        case "Elrond":
+          result = await transferNFTFromElrond(params);
+          break;
+        case "Cosmos":
+          result = await transferNFTFromCosmos(params);
+          ``;
+          break;
+        case "VeChain":
+          result = await transferNFTFromEVM(params);
+          break;
+        case "Skale":
+          result = await transferNFTFromEVM(params);
+          break;
+        case "TON":
+          result = await transferNFTFromTON(params);
+          break;
+        case "NEAR": {
+          const fromChain = await bridge.getChain(_from.nonce);
+          const toChain = await bridge.getChain(_to.nonce);
+          const _receiver = receiverAddress || unstoppabledomain || receiver;
+          fromChain.sendNFT({
+            toChain,
+            nft,
+            receiver: _receiver,
+            fee: bigNumberFees,
+          });
+          break;
+        }
+        default:
+          break;
       }
-      default:
-        break;
-    }
-    if (txnHashArr[0] && !result) {
-      dispatch(setTxnHash({ txn: "failed", nft }));
-    } else if (result) {
-      dispatch(setTxnHash({ txn: result, nft }));
+      if (txnHashArr[0] && !result) {
+        dispatch(setTxnHash({ txn: "failed", nft }));
+      } else if (result) {
+        dispatch(setTxnHash({ txn: result, nft }));
+      }
+    } catch (e) {
+      dispatch(setError(e));
     }
     setLoading(false);
     dispatch(setTransferLoaderModal(false));

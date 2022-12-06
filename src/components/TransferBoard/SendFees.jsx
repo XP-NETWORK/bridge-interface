@@ -3,7 +3,7 @@ import BigNumber from "bignumber.js";
 import React, { useState, useRef } from "react";
 import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useDispatch, useSelector } from "react-redux";
-import { chainsConfig } from "../values";
+
 import { setBigNumFees } from "../../store/reducers/generalSlice";
 import { useEffect } from "react";
 
@@ -23,6 +23,8 @@ function SendFees(props) {
   const from = useSelector((state) => state.general.from);
   const account = useSelector((state) => state.general.account);
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
+
+  const [chainParams, setChainParams] = useState({});
 
   const [fees, setFees] = useState("");
 
@@ -118,7 +120,13 @@ function SendFees(props) {
     return num;
   }
 
-  const config = chainsConfig[from?.text];
+  //const config = chainsConfig[from?.text];
+
+  useEffect(() => {
+    bridge
+      .getChain(from.nonce)
+      .then((fromChainWrapper) => setChainParams(fromChainWrapper.chainParams));
+  }, []);
 
   useEffect(() => {
     console.log(selectedNFTList);
@@ -134,6 +142,7 @@ function SendFees(props) {
           bridge.getChain(from.nonce),
           bridge.getChain(from.nonce),
         ]);
+
         const toChain = toChainWrapper.chain;
         estimate(fromChainWrapper, toChain);
         interval.current = setInterval(
@@ -152,9 +161,10 @@ function SendFees(props) {
         {balance ? (
           <span className="fees__balance">{`Balance: ${balance.toFixed(
             3
-          )} ${config?.token || (from?.text === "Gnosis" && "Gnosis")}`}</span>
+          )} ${chainParams?.currency ||
+            (from?.text === "Gnosis" && "Gnosis")}`}</span>
         ) : (
-          `Balance: 0 ${config?.token}`
+          `Balance: 0 ${chainParams?.currency || ""}`
         )}
         {loading ? (
           <LittleLoader />
@@ -167,7 +177,7 @@ function SendFees(props) {
                   : fees?.toFixed(getNumToFix(fees))
                 : "0"
             }
-                        ${config?.token} 
+                        ${chainParams?.currency || ""} 
                         `}
             {/* ${discountLeftUsd && showDiscount(fees).toFixed(2)} */}
           </span>

@@ -28,9 +28,10 @@ NFTcard.propTypes = {
   index: PropTypes.number,
   claimables: PropTypes.bool,
   chain: PropTypes.object,
+  bridge: PropTypes.object,
 };
 
-export default function NFTcard({ nft, index, claimables, chain }) {
+export default function NFTcard({ bridge, chain, nft, index, claimables }) {
   const dispatch = useDispatch();
   const [detailsOn, setDetailsOn] = useState(false);
   const search = useSelector((state) => state.general.NFTListSearch);
@@ -95,7 +96,7 @@ export default function NFTcard({ nft, index, claimables, chain }) {
     if (isVisible) {
       if (!nft.dataLoaded) {
         const _nft = chain.preParse(nft);
-        parseNFT(_nft, index, testnet, claimables);
+        parseNFT(bridge, _nft, index, testnet, claimables);
       }
     }
   }, [isVisible, nft]);

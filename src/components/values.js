@@ -30,6 +30,8 @@ import Aptos from "../assets/img/chain/aptos.svg";
 import InternetComputer from "../assets/img/chain/InternetComputer.svg";
 import near from "../assets/img/wallet/NearWallet.svg";
 
+///import { CHAIN_INFO } from "xp.network";
+
 export const EVM = "EVM";
 export const ELROND = "Elrond";
 export const TEZOS = "TEZOS";
@@ -418,15 +420,16 @@ export const chains = [
     type: "EVM",
     key: "Caduceus",
     text: "Caduceus",
-    nonce: 30,
-    order: 0,
-    chainId: 1564830818,
-    tnChainId: 1305754875840118,
+    value: "Caduceus",
+    nonce: 35,
+    order: -102,
+    chainId: 256256,
+    tnChainId: 512512,
     image: { avatar: true, src: Caduceus },
-    testNet: false,
-    mainnet: true,
-    // newChain: true,
-    coming: true,
+    testNet: true,
+    mainnet: biz,
+    newChain: true,
+    coming: false,
   },
   {
     type: "EVM",
@@ -738,6 +741,14 @@ export const chainsConfig = {
     tx: "https://explorer.mainnet.near.org/transactions/",
     testTx: "https://explorer.testnet.near.org/transactions/",
   },
+  /*Caduceus: {
+    type: "EVM",
+    token: "CTP",
+    image: Caduceus,
+    Chain: Chain.CADUCEUS,
+    //tx: "https://explorer.mainnet.near.org/transactions/",
+    //testTx: "https://explorer.testnet.near.org/transactions/",
+  },*/
 };
 
 export const coins = [
@@ -1118,4 +1129,9 @@ export const CHAIN_INFO = {
     blockExplorerUrls: "https://explorer.mainnet.near.org/accounts/",
     testBlockExplorerUrls: "https://explorer.testnet.near.org/accounts/",
   },
+  /* Caduceus: {
+    native: "CTP",
+    nonce: 35,
+    decimals: 1e18,
+  },*/
 };

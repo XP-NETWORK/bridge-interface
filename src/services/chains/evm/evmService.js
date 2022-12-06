@@ -1,8 +1,4 @@
-import {
-  TESTNET_CHAIN_INFO,
-  CHAIN_INFO,
-  chainsConfig,
-} from "../../../components/values.js";
+import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
 import { errorToLog } from "../../../wallet/helpers";
 import { setError } from "../../../store/reducers/generalSlice";
@@ -23,17 +19,15 @@ export async function switchNetwork(chain) {
   const params = paramsArr[id];
 
   const copyParams = {
-    chainName: params.name,
-    chainId: `0x${params.chainId.toString(16)}`,
+    chainName: params.name || params.chainName,
+    chainId: `0x${Number(id).toString(16)}`,
     nativeCurrency: params.nativeCurrency,
     rpcUrls: params.rpcUrls,
   };
 
-  const info = testNet
-    ? TESTNET_CHAIN_INFO[chain?.key]
-    : CHAIN_INFO[chain?.key];
+  const chainId = `0x${Number(id).toString(16)}`;
 
-  const chainId = `0x${info.chainId.toString(16)}`;
+  console.log(chainId);
 
   switch (true) {
     case bitKeep:

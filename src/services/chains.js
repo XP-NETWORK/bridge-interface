@@ -3,6 +3,7 @@
 import axios from "axios";
 
 import { Chain as ChainNonce, CHAIN_INFO } from "xp.network";
+import { BigNumber } from "ethers";
 
 import { getTronFees } from "./chainUtils/tronUtil";
 import { calcFees } from "./chainUtils";
@@ -85,10 +86,7 @@ class AbstractChain {
     };
   }
 
-  async unwrap(nft) {
-    const res = await axios(nft.uri);
-    const { data } = res;
-
+  async unwrap(nft, data) {
     let tokenId =
       data.wrapped?.token_id ||
       data.wrapped?.tokenId ||
@@ -101,6 +99,7 @@ class AbstractChain {
         ...nft,
         collectionIdent: contract,
         uri: data.wrapped?.original_uri,
+        wrapped: data.wrapped,
         native: {
           ...nft.native,
           chainId: data.wrapped?.origin,
@@ -115,7 +114,13 @@ class AbstractChain {
     };
   }
 
-  async mintNFT(uri) {}
+  async mintNFT(uri) {
+    console.log(this.signer);
+    const mint = await this.chain.mintNft(this.signer, {
+      contract: "0x34933A5958378e7141AA2305Cdb5cDf514896035",
+      uri,
+    });
+  }
 
   async balance(account) {
     try {
@@ -154,24 +159,75 @@ class AbstractChain {
     }
   }
 
-  async sendNFT(args) {
-    if (!this.signer) throw new Error("No signer for ", this.chainParams.text);
-    console.log(args, "args");
-    const { nft, toChain, receiver, fee, mintWith } = args;
+  async transfer(args) {
+    try {
+      if (!this.signer)
+        throw new Error("No signer for ", this.chainParams.text);
+      console.log(args, "args");
+      const {
+        nft,
+        toChain,
+        receiver,
+        fee,
+        tokenId = args.nft.native.tokenId,
+        gasLimit,
+        extraFee,
+      } = args;
 
-    return await this.bridge.transferNft(
-      this.chain,
-      toChain.chain,
-      nft,
-      this.signer,
-      receiver,
-      fee,
-      mintWith
-    );
+      const wrapped = await this.bridge.isWrappedNft(nft, Number(this.nonce));
+      console.log(wrapped, "wrapped");
+      let mintWith = undefined;
+
+      if (!wrapped) {
+        mintWith = await this.bridge.getVerifiedContract(
+          nft.native.contract,
+          Number(toChain.nonce),
+          Number(this.nonce),
+          tokenId //tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
+        );
+        console.log(mintWith, "mintWith");
+      }
+      const amount = nft.amountToTransfer;
+      const beforeAmountArgs = [
+        this.chain,
+        toChain.chain,
+        nft,
+        this.signer,
+        receiver?.trim(),
+      ];
+      const afterAmountArgs = [fee, mintWith, gasLimit, extraFee];
+
+      if (!amount) {
+        const args = [...beforeAmountArgs, ...afterAmountArgs];
+        const res = await this.bridge.transferNft(...args);
+        console.log(res, "res");
+        return res;
+      } else {
+        const args = [
+          ...beforeAmountArgs,
+          BigNumber.from(amount),
+          ...afterAmountArgs,
+        ];
+        console.log(args, "args");
+
+        const res = await this.bridge.transferSft(...args);
+        console.log(res, "res");
+        return res;
+      }
+    } catch (e) {
+      console.log(e, "in transfer");
+      throw e;
+    }
   }
 
-  async approve(nfts) {
+  async preTransfer(nft, fees) {
     if (!this.signer) throw new Error("No signer for ", this.chainParams.text);
+    try {
+      return await this.chain.preTransfer(this.signer, nft, fees);
+    } catch (e) {
+      console.log(e, "in preTransfer");
+      throw e;
+    }
   }
 }
 
@@ -180,7 +236,15 @@ class EVM extends AbstractChain {
     super(params);
   }
 
-  async send(nfts, toChain, receiver, fee, mintWith) {}
+  async preTransfer(nft, fees) {
+    if (!this.signer) throw new Error("No signer for ", this.chainParams.text);
+    try {
+      return await this.chain.approveForMinter(nft, this.signer, fees);
+    } catch (e) {
+      console.log(e, "EVM :in preTransfer");
+      throw e;
+    }
+  }
 }
 
 class Elrond extends AbstractChain {
@@ -196,44 +260,43 @@ class Elrond extends AbstractChain {
     }
   }
 
-  async unwrap(nft) {
-    const res = await super.unwrap(nft);
+  async unwrap(nft, data) {
+    let nonce =
+      data.wrapped?.token_id ||
+      data.wrapped?.tokenId ||
+      data.wrapped?.item_address;
 
-    const contract =
-      res.tokenId
-        .split("-")
-        ?.slice(0, 2)
-        .join("-") ||
-      data.wrapped?.source_mint_ident
+    let contract = data.wrapped?.contract || data.wrapped?.source_mint_ident;
+
+    if (!contract && nonce?.split("-")?.length === 3) {
+      contract = nonce
         .split("-")
         ?.slice(0, 2)
         .join("-");
-    const token = data.wrapped?.source_token_id || data.wrapped?.nonce;
-    tokenId = this.isHex(token)
-      ? contract + token
-      : contract + "-" + ("0000" + Number(token).toString(16)).slice(-4);
+    }
+
+    if (!nonce || nonce.split("-")?.length > 1) {
+      nonce = data.wrapped.source_token_id || data.wrapped.nonce;
+    }
+
+    const tokenId =
+      contract + "-" + ("0000" + Number(nonce).toString(16)).slice(-4);
 
     return {
-      ...nft,
       contract,
-    };
-
-    return {
+      tokenId,
+      chainId: String(this.nonce),
       nft: {
         ...nft,
         collectionIdent: contract,
-        uri: data.wrapped?.original_uri,
         native: {
           ...nft.native,
-          chainId: data.wrapped?.origin,
+          chainId: String(this.nonce),
           contract,
           tokenId,
-          uri: data.wrapped?.original_uri,
+          nonce,
         },
       },
-      chainId: data.wrapped?.origin,
-      tokenId,
-      contract,
     };
   }
 
