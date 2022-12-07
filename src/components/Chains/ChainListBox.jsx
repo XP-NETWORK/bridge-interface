@@ -287,6 +287,7 @@ export default function ChainListBox() {
                   maintenance,
                   mainnet,
                   updated,
+                  nonce,
                 } = chain;
                 return (
                   (mainnet || coming) && (
@@ -301,6 +302,7 @@ export default function ChainListBox() {
                       filteredChain={chain}
                       image={image}
                       key={`chain-${key}`}
+                      nonce={nonce}
                     />
                   )
                 );

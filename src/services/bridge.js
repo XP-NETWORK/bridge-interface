@@ -73,7 +73,6 @@ class Bridge {
     const chainId = String(nonce);
     const chain = this.chains[chainId];
 
-    console.log(this.chains);
     if (chain) return chain;
     try {
       const params = {
@@ -140,7 +139,13 @@ class Bridge {
 
         const chain = await this.getChain(Number(origin));
 
-        console.log(data);
+        nft = {
+          ...nft,
+          native: {
+            ...nft.native,
+            origin,
+          },
+        };
 
         return chain.unwrap(nft, data);
       } catch (e) {

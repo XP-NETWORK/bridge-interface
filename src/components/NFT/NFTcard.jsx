@@ -20,7 +20,7 @@ import Image from "./Image";
 import SFTMark from "./SFTMark";
 
 import OnlyVideo from "./OnlyVideo";
-import { chains, chainsConfig } from "../values";
+import { chains } from "../values";
 import OriginChainMark from "./OriginChainMark";
 
 NFTcard.propTypes = {
@@ -49,9 +49,9 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
 
   const getOriginChain = (originChain) => {
     // debugger;
-    const _nonce = originChain ? parseInt(originChain) : undefined;
+    const _nonce = Number(originChain);
     const origin = chains.find((e) => e.nonce === _nonce);
-    return chainsConfig[origin?.text]?.img;
+    return origin?.image?.src;
   };
 
   const originChainImg = getOriginChain(nft?.originChain);
