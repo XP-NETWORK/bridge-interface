@@ -17,7 +17,6 @@ export default function Selected({ index, nft }) {
 
   const handleRemove = (nft) => {
     dispatch(removeFromSelectedNFTList(nft));
-    nft.native.amount && dispatch(setSelectedNFTAmount({ amount: 0 }));
   };
 
   const handleInput = (e, index) => {
@@ -26,6 +25,8 @@ export default function Selected({ index, nft }) {
     if (amount > 50) amount = 50;
     if (amount > Number(nft.native?.amount))
       amount = Number(nft.native?.amount);
+
+    if (amount < 1) amount = 1;
     if (e.target.validity.valid) {
       const selected = { amount, index };
 
@@ -48,8 +49,11 @@ export default function Selected({ index, nft }) {
           type="text"
           pattern="[0-9]*"
           value={
-            nfts.find((nft1) => nft1.native?.tokenId === nft.native?.tokenId)
-              ?.amountToTransfer
+            nfts.find(
+              (nft1) =>
+                String(nft1.native?.tokenId) + String(nft1.native.contract) ===
+                String(nft.native.tokenId) + String(nft.native.contract)
+            )?.amountToTransfer
           }
           onChange={(e) => handleInput(e, index)}
         />

@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import {
   setSelectedNFTList,
   removeFromSelectedNFTList,
-  setSelectedNFTAmount,
 } from "../../store/reducers/generalSlice";
 import NFTdetails from "./NFTdetails";
 import { useSelector } from "react-redux";
@@ -79,7 +78,6 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
     } else {
       dispatch(removeFromSelectedNFTList(nft));
     }
-    dispatch(setSelectedNFTAmount({ amount: 0 }));
   }
 
   useEffect(() => {
