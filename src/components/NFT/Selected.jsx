@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   removeFromSelectedNFTList,
@@ -15,6 +15,8 @@ export default function Selected({ index, nft }) {
   const nfts = useSelector((state) => state.general.selectedNFTList);
   const dispatch = useDispatch();
 
+  const input = useRef(null);
+
   const handleRemove = (nft) => {
     dispatch(removeFromSelectedNFTList(nft));
   };
@@ -29,9 +31,6 @@ export default function Selected({ index, nft }) {
     if (amount < 1) amount = 1;
     if (e.target.validity.valid) {
       const selected = { amount, index };
-
-      // if (amount > 25) setLimited(true);
-      // else setLimited(false);
       dispatch(setSelectedNFTAmount(selected));
     }
   };
@@ -46,6 +45,8 @@ export default function Selected({ index, nft }) {
         <input
           placeholder="Enter amount"
           className="nft-item__input"
+          ref={input}
+          onClick={() => input.current.select()}
           type="text"
           pattern="[0-9]*"
           value={
