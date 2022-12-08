@@ -41,8 +41,6 @@ function NFTdetails({ nftInf, details }) {
   const original_uri = wrapped && wrapped.original_uri;
   const origin = chains.find((e) => e.nonce === Number(originChain));
 
-  console.log(origin);
-
   // const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nftInf);
   const [show, setShow] = useState(false);
   const handleClose = () => {

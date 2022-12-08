@@ -149,7 +149,7 @@ class Bridge {
 
         return chain.unwrap(nft, data);
       } catch (e) {
-        console.log("in unwrap");
+        console.log(origin + "in unwrap");
         console.log(e);
       }
     }

@@ -39,7 +39,7 @@ function SendFees(props) {
       selectedNFTList[0],
       account
     );
-    console.log(formatedFees);
+
     dispatch(setBigNumFees(fees));
     setFees(formatedFees * selectedNFTList.length);
 

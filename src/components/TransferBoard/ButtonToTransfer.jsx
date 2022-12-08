@@ -186,12 +186,18 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
 
   const sendEach = async (nft, index) => {
     try {
+      const [fromChain, toChain] = await Promise.all([
+        bridge.getChain(_from.nonce),
+        bridge.getChain(_to.nonce),
+      ]);
+
       const signer = await getSigner();
-      const unstoppabledomain = await getFromDomain(receiver, _to);
+      const unstoppabledomain = await getFromDomain(receiver, toChain);
       const stop = unstoppabledomainSwitch(unstoppabledomain);
       if (stop) return;
 
       let result;
+      console.log(bigNumberFees, "bigNumberFees");
       const params = {
         to: _to,
         from: _from,
@@ -207,10 +213,6 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
       };
       switch (_from.type) {
         case "EVM": {
-          const [fromChain, toChain] = await Promise.all([
-            bridge.getChain(_from.nonce),
-            bridge.getChain(_to.nonce),
-          ]);
           const _receiver = receiverAddress || unstoppabledomain || receiver;
           result = await fromChain.transfer({
             toChain,
@@ -266,6 +268,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
         dispatch(setTxnHash({ txn: result, nft }));
       }
     } catch (e) {
+      console.log(e, "eee");
       dispatch(setError(e));
     }
     setLoading(false);

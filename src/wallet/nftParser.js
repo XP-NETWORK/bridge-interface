@@ -41,7 +41,7 @@ export const parseNFT = async (bridge, nft, index, testnet, claimable) => {
           contract,
           nft: { native },
         } = unwraped;
-        console.log(unwraped, "unwraped");
+
         const originChain = native.chainId;
 
         let nftData;

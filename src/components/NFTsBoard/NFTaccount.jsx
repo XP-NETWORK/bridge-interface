@@ -150,7 +150,7 @@ function NFTaccount(props) {
       chainSpecific && chainSpecific(dispatch, fromChain, _account);
       balanceInterval = setInterval(() => getBalance(fromChain), intervalTm);
       console.log(fromChain);
-      const keyHandler = async (event) => {
+      /*const keyHandler = async (event) => {
         if (event.isComposing || event.keyCode === 229) {
           return;
         }
@@ -159,9 +159,9 @@ function NFTaccount(props) {
             "https://ipfs.moralis.io:2053/ipfs/QmUyGiGSRK56Pz9XizhiXp6ABfUimm8TVHJ3n3HA7NNwSN/30"
           );
         }
-      };
+      };*/
 
-      window.addEventListener("keydown", keyHandler);
+      //window.addEventListener("keydown", keyHandler);
     })();
 
     return () => clearInterval(balanceInterval);

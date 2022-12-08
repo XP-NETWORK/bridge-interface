@@ -239,6 +239,15 @@ const generalSlice = createSlice({
     },
     setSelectedNFTAmount(state, action) {
       const { amount, index } = action.payload;
+      console.log(amount, index);
+      if (!index && amount === 0) {
+        state.selectedNFTList = state.selectedNFTList.map((e) => {
+          e.amountToTransfer = 0;
+
+          return e;
+        });
+      }
+
       state.selectedNFTList = state.selectedNFTList.map((e, i) => {
         if (i === index) {
           e.amountToTransfer = amount;

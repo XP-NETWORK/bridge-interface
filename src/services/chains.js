@@ -3,11 +3,9 @@
 import axios from "axios";
 
 import { Chain as ChainNonce, CHAIN_INFO } from "xp.network";
-import { BigNumber } from "ethers";
+import BigNumber from "bignumber.js";
 
-import { getTronFees } from "./chainUtils/tronUtil";
-import { calcFees } from "./chainUtils";
-
+import { ethers, BigNumber as BN } from "ethers";
 const feeMultiplier = 1.1;
 
 class AbstractChain {
@@ -22,6 +20,12 @@ class AbstractChain {
 
   async connect() {
     throw new Error("connect method not implemented");
+  }
+
+  async checkSigner() {
+    if (!this.signer) {
+      throw new Error("No signer");
+    }
   }
 
   async setSigner(signer) {
@@ -132,12 +136,12 @@ class AbstractChain {
     }
   }
 
-  async estimate(toChain, nft, receiver = "") {
+  async estimate(toChain, nft, receiver = "", amount) {
     //tron case
     /* if (toChain.getNonce() === 9) {
       return calcFees(getTronFees(this.chainParams.key), this.nonce);
     }*/
-    console.log(toChain);
+
     try {
       const res = await this.bridge.estimateFees(
         this.chain,
@@ -145,10 +149,25 @@ class AbstractChain {
         nft,
         receiver
       );
+
+      let sftFees = new BigNumber(0);
+
+      if (Number(nft.amountToTransfer) > 0) {
+        sftFees = await this.bridge.estimateSFTfees(
+          this.chain,
+          BigInt(nft.amountToTransfer),
+          0.05
+        );
+      }
+
       const fees = res.multipliedBy(feeMultiplier).integerValue();
+
       return {
         fees: fees.toString(10),
-        formatedFees: fees.dividedBy(this.chainParams.decimals).toNumber(),
+        formatedFees: fees
+          .dividedBy(this.chainParams.decimals)
+          .plus(sftFees.dividedBy(this.chainParams.decimals))
+          .toNumber(),
       };
     } catch (e) {
       console.log(e.message || e, "in estimate");
@@ -164,15 +183,13 @@ class AbstractChain {
       if (!this.signer)
         throw new Error("No signer for ", this.chainParams.text);
       console.log(args, "args");
-      const {
-        nft,
-        toChain,
-        receiver,
-        fee,
-        tokenId = args.nft.native.tokenId,
-        gasLimit,
-        extraFee,
-      } = args;
+      const { nft, toChain, receiver, fee, gasLimit, extraFee } = args;
+
+      let { tokenId } = args;
+
+      if (!tokenId) {
+        tokenId = nft.native.tokenId;
+      }
 
       const wrapped = await this.bridge.isWrappedNft(nft, Number(this.nonce));
       console.log(wrapped, "wrapped");
@@ -185,7 +202,6 @@ class AbstractChain {
           Number(this.nonce),
           tokenId //tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
         );
-        console.log(mintWith, "mintWith");
       }
       const amount = nft.amountToTransfer;
       const beforeAmountArgs = [
@@ -203,11 +219,7 @@ class AbstractChain {
         console.log(res, "res");
         return res;
       } else {
-        const args = [
-          ...beforeAmountArgs,
-          BigNumber.from(amount),
-          ...afterAmountArgs,
-        ];
+        const args = [...beforeAmountArgs, BigInt(amount), ...afterAmountArgs];
         console.log(args, "args");
 
         const res = await this.bridge.transferSft(...args);
@@ -236,12 +248,39 @@ class EVM extends AbstractChain {
     super(params);
   }
 
+  async checkSigner() {
+    try {
+      console.log("ds");
+      this.signer = undefined;
+      await super.checkSigner();
+      console.log("ls");
+    } catch (e) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      this.setSigner(signer);
+    }
+  }
+
   async preTransfer(nft, fees) {
     if (!this.signer) throw new Error("No signer for ", this.chainParams.text);
     try {
       return await this.chain.approveForMinter(nft, this.signer, fees);
     } catch (e) {
       console.log(e, "EVM :in preTransfer");
+      throw e;
+    }
+  }
+
+  async transfer(args) {
+    try {
+      return await super.transfer(args);
+    } catch (e) {
+      if (e.message?.includes("cannot estimate gas;")) {
+        return await super.transfer({
+          ...args,
+          gasLimit: BN.from(100000),
+        });
+      }
       throw e;
     }
   }

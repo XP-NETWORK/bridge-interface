@@ -113,6 +113,7 @@ function Approval({ serviceContainer }) {
         case "EVM":
           if (!isInApprovedNFTs) {
             const fromChain = await bridge.getChain(from.nonce);
+            await fromChain.checkSigner();
             await fromChain.preTransfer(nft, bigNumberFees);
             dispatch(updateApprovedNFTs(nft));
             setFinishedApproving(arr);
