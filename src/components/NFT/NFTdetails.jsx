@@ -9,7 +9,7 @@ import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 
 import { ReactComponent as INFComp } from "../../assets/img/icons/Inf.svg";
 import { isValidHttpUrl } from "../../wallet/helpers";
-import { chainsConfig, CHAIN_INFO } from "../values";
+import { chains } from "../values";
 import PropTypes from "prop-types";
 
 function NFTdetails({ nftInf, details }) {
@@ -22,6 +22,7 @@ function NFTdetails({ nftInf, details }) {
     wrapped,
     image,
     animation_url,
+    originChain,
   } = nftInf;
 
   const isOriginUriExist =
@@ -30,19 +31,15 @@ function NFTdetails({ nftInf, details }) {
       const values = Object.values(e);
       return values?.some((v) => v === "Original URI");
     });
-  const isOriginChainExist =
+  /*const isOriginChainExist =
     Array.isArray(attributes) &&
     attributes?.some((e) => {
       const values = Object.values(e);
       return values?.some((v) => v === "Original Chain");
-    });
+    });*/
 
   const original_uri = wrapped && wrapped.original_uri;
-  const origin =
-    wrapped &&
-    Object.keys(CHAIN_INFO).find(
-      (e) => CHAIN_INFO[e].nonce.toString() === wrapped.origin
-    );
+  const origin = chains.find((e) => e.nonce === Number(originChain));
 
   // const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nftInf);
   const [show, setShow] = useState(false);
@@ -141,7 +138,7 @@ function NFTdetails({ nftInf, details }) {
                   <p>{original_uri}</p>
                 </div>
               )}
-              {origin && !isOriginChainExist && (
+              {origin && (
                 <div className="nftInfDesc nftInfBox">
                   <label>Original Chain</label>
                   <div style={{ display: "flex" }}>
@@ -150,10 +147,10 @@ function NFTdetails({ nftInf, details }) {
                         marginRight: "4px",
                         width: "29px",
                       }}
-                      src={chainsConfig[origin]?.img}
-                      alt={origin}
+                      src={origin.image?.src}
+                      alt={origin.key + "originIconDetails"}
                     />
-                    <p>{origin}</p>
+                    <p>{origin.key}</p>
                   </div>
                 </div>
               )}
@@ -243,12 +240,9 @@ function Attribute(props) {
             alt="#"
             style={{ marginRight: "4px", width: "29px" }}
             src={
-              chainsConfig[value]?.img ||
-              chainsConfig[
-                Object.keys(chainsConfig)?.find((key) =>
-                  chainsConfig[key]?.variants?.includes(value)
-                )
-              ]?.img
+              chains.find(
+                (chain) => chain.key.toLowerCase() === value.toLowerCase()
+              )?.image.src
             }
           />
         )}

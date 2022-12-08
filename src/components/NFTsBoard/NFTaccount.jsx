@@ -1,4 +1,5 @@
-import { useEffect, useRef, React } from "react";
+/* eslint-disable react/prop-types */
+import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 
 import { Modal } from "react-bootstrap";
@@ -6,19 +7,16 @@ import ImportNFTModal from "../Modals/ImportNFTModal/ImportNFTModal";
 import {
   setBalance,
   setError,
-  setWrappedEGold,
   cleanSelectedNFTList,
+  setBigLoader,
+  setPreloadNFTs,
+  setNFTList,
 } from "../../store/reducers/generalSlice";
+import { setIsEmpty } from "../../store/reducers/paginationSlice";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAlgorandClaimables,
-  mintForTestNet,
-  saveForSearch,
-  setNFTS,
-} from "../../wallet/helpers";
+import { saveForSearch } from "../../wallet/helpers";
 import { ReturnBtn } from "../Settings/returnBtn";
 import DesktopTransferBoard from "../TransferBoard/DesktopTransferBoard";
-import MobileTransferBoard from "../TransferBoard/MobileTransferBoard";
 import "./NFTsBoard.css";
 import ChangeNetworkModal from "../Modals/ChangeNetwork/ChangeNetworkModal";
 import UnsupportedNetwork from "../Modals/ChangeNetwork/UnsupportedNetwork";
@@ -30,7 +28,6 @@ import {
   useCheckMobileScreen,
   useDidUpdateEffect,
 } from "../Settings/hooks";
-import { chains, chainsConfig } from "../values";
 
 import WalletConnectionModal from "../Wallet/WalletConnectionModal";
 import ChangeWalletModal from "../Modals/ChangeWallet/ChangeWalletModal";
@@ -45,20 +42,23 @@ import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 import UserConnect from "../User/UserConnect";
 import AccountModal from "../Modals/AccountModal/AccountModal";
 
-function NFTaccount() {
+import withChains from "./hocs";
+
+const intervalTm = 10_000;
+
+function NFTaccount(props) {
+  const { serviceContainer, chainSpecific, _from, algorandAccount } = props;
+
   const dispatch = useDispatch();
-  const from = useSelector((state) => state.general.from.key);
-  const _from = useSelector((state) => state.general.from);
+
+  const from = _from.key;
   const prevSelected = usePrevious(from);
-  const type = useSelector((state) => state.general.from.type);
-  const algorandAccount = useSelector((s) => s.general.algorandAccount);
+
   const nfts = useSelector((state) => state.general.NFTList);
   const currentsNFTs = useSelector((state) => state.general.currentsNFTs);
-  const testnet = useSelector((state) => state.general.testNet);
+
   const importModal = useSelector((state) => state.general.importModal);
-  const algorandClaimables = useSelector(
-    (state) => state.general.algorandClaimables
-  );
+
   const tronWallet = useSelector((state) => state.general.tronWallet);
   const account = useSelector((state) => state.general.account);
   const prevAccount = usePrevious(account);
@@ -71,10 +71,9 @@ function NFTaccount() {
   const prevNFTSetToggler = usePrevious(NFTSetToggler);
 
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
-  const wrappedEGold = useSelector((state) => state.general.wrappedEGold);
+
   const unwrappedEGold = useSelector((state) => state.general.unwrappedEGold);
-  const signer = useSelector((state) => state.signers.signer);
-  const factory = useSelector((state) => state.general.factory);
+
   const checkWallet = useSelector((state) => state.general.checkWallet);
 
   const widget = useSelector((state) => state.widget.widget);
@@ -82,148 +81,46 @@ function NFTaccount() {
   const accountWalletModal = useSelector(
     (state) => state.general.accountWalletModal
   );
-  const prevWrappedEGold = usePrevious(wrappedEGold);
-  let balanceInterval = useRef(null);
 
-  //Anjelika - 0x47Bf0dae6e92e49a3c95e5b0c71422891D5cd4FE
-  //Anjelika elrond - erd1s89aq3s0z6mjfpx8s85zntlfywsvj5r8nzcdujw7mx53f9et9ezq9fnrws
-  //Dima. U - 0x6449b68cc5675f6011e8DB681B142773A3157cb9
-  // -||- vechain 0x124fBa3250c8d72FBcb5b5712d0dF48c33E6C1F6, 0x124fBa3250c8d72FBcb5b5712d0dF48c33E6C1F6
-  // Dima.B - 0x0d7df42014064a163DfDA404253fa9f6883b9187
-  //
-  // ????? - 0x3Aa485a8e745Fc2Bd68aBbdB3cf05B58E338D7FE
+  let _account =
+    checkWallet ||
+    hederaAccount ||
+    account ||
+    algorandAccount ||
+    tezosAccount ||
+    elrondAccount ||
+    tronWallet ||
+    secretAccount ||
+    tonAccount;
 
-  async function getNFTsList() {
-    // const useHardcoded = false;
-    // const hard = "0x85C25cb6e5C648117E33EF2e2Fbd93067D18b529";
+  const { bridge } = serviceContainer;
 
-    if (type === "Cosmos") return;
-    let walletAccount;
+  async function getNFTsList(fromChain) {
+    dispatch(setBigLoader(true));
     try {
-      switch (type) {
-        case "EVM":
-          walletAccount = account;
-          break;
-        case "Cosmos":
-          walletAccount = secretAccount;
-          return;
-        case "Tezos":
-          walletAccount = tezosAccount;
-          break;
-        case "Algorand":
-          walletAccount = algorandAccount;
-          break;
-        case "Elrond":
-          walletAccount = elrondAccount;
-          break;
-        case "Tron":
-          walletAccount = tronWallet;
-          break;
-        case "VeChain":
-          walletAccount = account;
-          break;
-        case "Skale":
-          walletAccount = account;
-          break;
-        case "TON":
-          walletAccount = tonAccount;
-          break;
-        case "NEAR":
-          walletAccount = account;
-          break;
-        // case "Hedera":
-        //     break;
-        default:
-          break;
+      let nfts = await fromChain.getNFTs(bridge.checkWallet || _account);
+      nfts = fromChain.filterNFTs(nfts);
+      if (nfts.length < 1) {
+        dispatch(setIsEmpty(true));
+      } else {
+        dispatch(setIsEmpty(false));
+        dispatch(setNFTList(nfts));
+        dispatch(setPreloadNFTs(nfts.length));
       }
 
-      await setNFTS(walletAccount, from, undefined, "account");
+      dispatch(setBigLoader(false));
     } catch (error) {
+      console.log(error);
+      dispatch(setBigLoader(false));
+      dispatch(setNFTList([]));
       console.log(error);
       dispatch(setError(error.data ? error.data.message : error.message));
     }
   }
 
-  const getWegldBalance = async () => {
-    if (elrondAccount && !prevWrappedEGold) {
-      try {
-        const elronfFactory = await factory.inner(chainsConfig[from].Chain);
-        const weGoldBalance = await elronfFactory.wegldBalance(elrondAccount);
-        if (weGoldBalance) dispatch(setWrappedEGold(weGoldBalance));
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
-
-  const getBalance = async () => {
-    // debugger;
-    let _account =
-      checkWallet ||
-      hederaAccount ||
-      account ||
-      algorandAccount ||
-      tezosAccount ||
-      elrondAccount ||
-      tronWallet ||
-      secretAccount ||
-      tonAccount;
-
-    const fromChain = await factory.inner(chainsConfig[from].Chain);
-    let balance;
-    let balanceToShow;
-
-    !balance &&
-      setTimeout(async () => {
-        try {
-          balance = factory
-            ? await factory.balance(fromChain, _account)
-            : undefined;
-
-          switch (_from.type) {
-            case "EVM":
-              balanceToShow = balance / 1e18;
-              dispatch(setBalance(Number(balanceToShow)));
-              break;
-            case "Skale":
-              balanceToShow = balance / 1e18;
-              dispatch(setBalance(Number(balanceToShow)));
-              break;
-            case "Tezos":
-              dispatch(setBalance(balance / 1e6));
-              break;
-            case "Tron":
-              dispatch(setBalance(balance / 1e6));
-              break;
-            case "Algorand":
-              dispatch(setBalance(balance / 1e6));
-              break;
-            case "Elrond":
-              dispatch(setBalance(balance / 1e18));
-              break;
-            case "VeChain":
-              dispatch(setBalance(balance / 1e18));
-              break;
-            case "Cosmos":
-              dispatch(setBalance(balance / 1e6));
-              break;
-            case "Hedera":
-              dispatch(setBalance(balance / 1e6));
-              break;
-            case "TON":
-              dispatch(setBalance(balance / 1e9));
-              break;
-            case "NEAR":
-              dispatch(setBalance(balance.shiftedBy(-24)));
-              break;
-            default:
-              break;
-          }
-          return balance;
-        } catch (error) {
-          console.log(error);
-        }
-      }, 3000);
+  const getBalance = async (fromChain) => {
+    const _balance = await fromChain.balance(_account);
+    dispatch(setBalance(_balance));
   };
 
   useDidUpdateEffect(() => {
@@ -234,94 +131,33 @@ function NFTaccount() {
     account && checkLocked();
   }, [account]);
 
-  const saveNFTsForSearch = async () => {
-    const _account =
-      checkWallet ||
-      hederaAccount ||
-      account ||
-      algorandAccount ||
-      tezosAccount ||
-      elrondAccount ||
-      tronWallet ||
-      secretAccount;
-    const chain = chains.find((e) => e.key === from);
-    await saveForSearch(_account, chain.nonce, nfts);
-  };
-
   useDidUpdateEffect(() => {
-    if (nfts.length > 0) saveNFTsForSearch();
+    if (nfts.length) {
+      saveForSearch(_account, _from.nonce, nfts);
+    }
   }, [nfts]);
 
   useEffect(() => {
-    const checkIfDataLoaded = async () => {
-      if (!nfts?.some((nft) => nft.dataLoaded)) {
-        await getNFTsList();
-      }
-    };
-    checkIfDataLoaded();
-    const checkAlgorand = async () => {
-      if (
-        algorandAccount &&
-        !algorandClaimables?.some((nft) => nft.dataLoaded)
-      ) {
-        await getAlgorandClaimables(algorandAccount);
-      }
-    };
-    checkAlgorand();
-    getBalance();
-
-    if (from === "Elrond") {
-      getWegldBalance();
-    }
-    balanceInterval = setInterval(() => getBalance(), 5000);
-
-    const keyHandler = async (event) => {
-      if (event.isComposing || event.keyCode === 229) {
-        return;
-      }
-      if (event.key === "4" && testnet) {
-        await mintForTestNet(from, signer);
-      }
-    };
-
-    window.addEventListener("keydown", keyHandler);
-
-    return () => {
-      clearInterval(balanceInterval);
-      window.removeEventListener("keydown", keyHandler);
-    };
-  }, []);
-
-  useEffect(() => {
-    clearInterval(balanceInterval);
-    let _account =
-      tonAccount ||
-      account ||
-      algorandAccount ||
-      tezosAccount ||
-      elrondAccount ||
-      tronWallet ||
-      secretAccount;
-    const getNFTList = async () => {
-      if (nfts && prevSelected !== from) {
-        await getNFTsList();
-      } else if (nfts && prevAccount !== account) {
-        await getNFTsList();
-      } else if (nfts && NFTSetToggler !== prevNFTSetToggler) {
-        await getNFTsList();
-      }
-    };
-    _account && getNFTList();
-    getBalance();
-    balanceInterval = setInterval(() => getBalance(), 5000);
     dispatch(cleanSelectedNFTList());
-    const checkLocked = async () => {
-      const data = await checkXpNetLocked(account);
-      dispatch(setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25)));
-    };
-    account && checkLocked();
+    let balanceInterval;
+    (async () => {
+      const fromChain = await bridge.getChain(_from.nonce);
+
+      //load nfts
+      _account &&
+        (prevSelected !== _from.key ||
+          prevAccount !== _account ||
+          NFTSetToggler !== prevNFTSetToggler) &&
+        getNFTsList(fromChain);
+
+      //update Balance
+      getBalance(fromChain);
+      chainSpecific && chainSpecific(dispatch, fromChain, _account);
+      balanceInterval = setInterval(() => getBalance(fromChain), intervalTm);
+    })();
+
     return () => clearInterval(balanceInterval);
-  }, [from, account, NFTSetToggler]);
+  }, [_from, _account, NFTSetToggler]);
 
   const isMobile = useCheckMobileScreen();
 
@@ -367,9 +203,9 @@ function NFTaccount() {
         <div className="row">
           <div className="nftListCol col-lg-8">
             {!isMobile && <NFTscreen />}
-            <MobileTransferBoard />
+            {/*isMobile && <MobileTransferBoard />*/}
           </div>
-          <DesktopTransferBoard />
+          {!isMobile && <DesktopTransferBoard />}
         </div>
         {isMobile && (
           <NFTmobileView
@@ -383,7 +219,25 @@ function NFTaccount() {
   );
 }
 
-export default NFTaccount;
+export default withChains(NFTaccount);
+
+/**
+ * 
+ * const keyHandler = async (event) => {
+      if (event.isComposing || event.keyCode === 229) {
+        return;
+      }
+      if (event.key === "4" && testnet) {
+        await mintForTestNet(from, signer);
+      }
+    };
+
+    window.addEventListener("keydown", keyHandler);
+
+    return () => {
+      window.removeEventListener("keydown", keyHandler);
+    };
+ */
 
 /** 
  * 

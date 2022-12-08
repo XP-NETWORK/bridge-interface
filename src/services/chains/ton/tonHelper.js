@@ -3,7 +3,6 @@ import store from "../../../store/store.js";
 import { errorToLog } from "../../../wallet/helpers";
 import { setError } from "../../../store/reducers/generalSlice";
 import { setQRCodeModal } from "../../../components/Wallet/TONWallet/tonStore";
-import BigNumber from "bignumber.js";
 
 export const transferNFTFromTON = async ({
   to,
@@ -84,18 +83,7 @@ const transfer = async (
   try {
     switch (true) {
       case amount > 0:
-        result = await factory.transferSft(
-          fromChain,
-          toChain,
-          nft,
-          signer,
-          receiver,
-          new BigNumber(amount),
-          fee,
-          mintWith
-        );
-        break;
-
+        throw new Error("SFTs for TON are not yet supported");
       default:
         result = await factory.transferNft(
           fromChain,

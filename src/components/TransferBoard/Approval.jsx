@@ -1,4 +1,4 @@
-/* eslint-disable no-case-declarations */
+/* eslint-disable no-case-declarations, react/prop-types */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
@@ -25,7 +25,10 @@ import Connex from "@vechain/connex";
 import { CHAIN_INFO } from "../values";
 import BigNumber from "bignumber.js";
 
-function Approval() {
+import { withServices } from "../../components/App/hocs/withServices";
+
+function Approval({ serviceContainer }) {
+  const { bridge } = serviceContainer;
   const dispatch = useDispatch();
   const [finishedApproving, setFinishedApproving] = useState([]);
   const [approvedLoading, setApprovedLoading] = useState();
@@ -109,7 +112,9 @@ function Approval() {
       switch (from.type) {
         case "EVM":
           if (!isInApprovedNFTs) {
-            await chain.approveForMinter(nft, signer);
+            const fromChain = await bridge.getChain(from.nonce);
+            await fromChain.checkSigner();
+            await fromChain.preTransfer(nft, bigNumberFees);
             dispatch(updateApprovedNFTs(nft));
             setFinishedApproving(arr);
           }
@@ -158,21 +163,11 @@ function Approval() {
           break;
         case "NEAR":
           const near = await factory.inner(Chain.NEAR);
-          console.log(nft);
-          false &&
-            window.open(
-              `${location.protocol}//${location.host}${location.search ||
-                "?"}&nearApproval=true&nearTokenId=${encodeURIComponent(
-                nft.native.tokenId
-              )}&nearContract=${encodeURIComponent(nft.native.contract)}`,
-              "_blank"
-            );
-          window.onbeforeunload = function(e) {
-            console.log(e, "e");
-            console.log(document.activeElement.href);
-            return "Dude, are you sure you want to leave? Think of the kittens!";
-          };
-          await near.preTransfer(signerSigner, nft, bigNumberFees);
+
+          await near.preTransfer(signerSigner, nft, bigNumberFees, {
+            to: Number(to.nonce),
+            receiver: receiver.trim(),
+          });
           dispatch(updateApprovedNFTs(nft));
           setFinishedApproving(arr);
           break;
@@ -382,4 +377,4 @@ function Approval() {
   );
 }
 
-export default Approval;
+export default withServices(Approval);

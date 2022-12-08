@@ -20,14 +20,22 @@ import Image from "./Image";
 import SFTMark from "./SFTMark";
 
 import OnlyVideo from "./OnlyVideo";
-import { chains, chainsConfig } from "../values";
+import { chains } from "../values";
 import OriginChainMark from "./OriginChainMark";
 
-export default function NFTcard({ nft, index, claimables }) {
+NFTcard.propTypes = {
+  nft: PropTypes.object,
+  index: PropTypes.number,
+  claimables: PropTypes.bool,
+  chain: PropTypes.object,
+  bridge: PropTypes.object,
+};
+
+export default function NFTcard({ bridge, chain, nft, index, claimables }) {
   const dispatch = useDispatch();
   const [detailsOn, setDetailsOn] = useState(false);
   const search = useSelector((state) => state.general.NFTListSearch);
-  const factory = useSelector((state) => state.general.factory);
+
   const testnet = useSelector((state) => state.general.testNet);
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
   const [isVisible, setIsVisible] = useState();
@@ -41,9 +49,9 @@ export default function NFTcard({ nft, index, claimables }) {
 
   const getOriginChain = (originChain) => {
     // debugger;
-    const _nonce = originChain ? parseInt(originChain) : undefined;
+    const _nonce = Number(originChain);
     const origin = chains.find((e) => e.nonce === _nonce);
-    return chainsConfig[origin?.text]?.img;
+    return origin?.image?.src;
   };
 
   const originChainImg = getOriginChain(nft?.originChain);
@@ -87,7 +95,8 @@ export default function NFTcard({ nft, index, claimables }) {
   useDidUpdateEffect(() => {
     if (isVisible) {
       if (!nft.dataLoaded) {
-        parseNFT(factory)(nft, index, testnet, claimables);
+        const _nft = chain.preParse(nft);
+        parseNFT(bridge, _nft, index, testnet, claimables);
       }
     }
   }, [isVisible, nft]);
@@ -166,8 +175,3 @@ export default function NFTcard({ nft, index, claimables }) {
     </>
   );
 }
-NFTcard.propTypes = {
-  nft: PropTypes.object,
-  index: PropTypes.number,
-  claimables: PropTypes.bool,
-};

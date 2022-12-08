@@ -27,12 +27,16 @@ import { transferNFTFromElrond } from "../../services/chains/elrond/elrondHelper
 import { transferNFTFromAlgorand } from "../../services/chains/algorand/algorandHelper";
 import { transferNFTFromTON } from "../../services/chains/ton/tonHelper";
 
+import { withServices } from "../App/hocs/withServices";
 import { withWidget } from "../Widget/hocs/withWidget";
 
-export default withWidget(function ButtonToTransfer({
-  setTxForWidget,
-  getExtraFee,
-}) {
+import { compose } from "redux";
+
+export default compose(
+  withServices,
+  withWidget
+)(function ButtonToTransfer({ serviceContainer, setTxForWidget, getExtraFee }) {
+  const { bridge } = serviceContainer;
   const kukaiWalletSigner = useSelector(
     (state) => state.general.kukaiWalletSigner
   );
@@ -118,10 +122,10 @@ export default withWidget(function ButtonToTransfer({
                             }),
                         })
                     )
-              );
+                );
                 const signer = await provider.getSigner(account);*/
         return hederaSigner;
-      } else if (from === "Secret") {
+      } else if (from === "Secret" || from === "NEAR") {
         return signerSigner;
       } else {
         let provider;
@@ -187,71 +191,103 @@ export default withWidget(function ButtonToTransfer({
   };
 
   const sendEach = async (nft, index) => {
-    const signer = await getSigner();
-    const unstoppabledomain = await getFromDomain(receiver, _to);
-    const stop = unstoppabledomainSwitch(unstoppabledomain);
-    if (stop) return;
-    let result;
-    const params = {
-      to: _to,
-      from: _from,
-      nft,
-      signer: from.text === "Hedera" ? hederaSigner : signer,
-      receiver: (receiverAddress || unstoppabledomain || receiver)?.trim(),
-      fee: bigNumberFees,
-      index,
-      txnHashArr,
-      chainConfig,
-      testnet,
-      discountLeftUsd,
-      extraFees: getExtraFee(from),
-    };
-    switch (_from.type) {
-      case "EVM":
-        result = await transferNFTFromEVM(params);
-        break;
-      case "Tron":
-        result = await transferNFTFromTran(params);
-        break;
-      case "Tezos":
-        result = await transferNFTFromTezos(params);
-        break;
-      case "Algorand":
-        result = await transferNFTFromAlgorand(params);
-        break;
-      case "Elrond":
-        result = await transferNFTFromElrond(params);
-        break;
-      case "Cosmos":
-        result = await transferNFTFromCosmos(params);
-        ``;
-        break;
-      case "VeChain":
-        result = await transferNFTFromEVM(params);
-        break;
-      case "Skale":
-        result = await transferNFTFromEVM(params);
-        break;
-      case "TON":
-        result = await transferNFTFromTON(params);
-        break;
-      default:
-        break;
-    }
-    if (txnHashArr[0] && !result) {
-      dispatch(setTxnHash({ txn: "failed", nft }));
-    } else if (result) {
-      dispatch(setTxnHash({ txn: result, nft }));
-      setTxForWidget({
-        result,
-        fromNonce: _from.nonce,
-        toNonce: _to.nonce,
-        bigNumberFees,
-        from,
+    try {
+      const [fromChain, toChain] = await Promise.all([
+        bridge.getChain(_from.nonce),
+        bridge.getChain(_to.nonce),
+      ]);
+
+      const signer = await getSigner();
+      const unstoppabledomain = await getFromDomain(receiver, toChain);
+      const stop = unstoppabledomainSwitch(unstoppabledomain);
+      if (stop) return;
+
+      let result;
+      console.log(bigNumberFees, "bigNumberFees");
+      const params = {
+        to: _to,
+        from: _from,
         nft,
-        senderAddress: account || algorandAccount,
-        targetAddress: receiverAddress || unstoppabledomain || receiver,
-      });
+        signer: from.text === "Hedera" ? hederaSigner : signer,
+        receiver: (receiverAddress || unstoppabledomain || receiver)?.trim(),
+        fee: bigNumberFees,
+        index,
+        txnHashArr,
+        chainConfig,
+        testnet,
+        discountLeftUsd,
+        extraFees: getExtraFee(from),
+      };
+      switch (_from.type) {
+        case "EVM": {
+          const _receiver = receiverAddress || unstoppabledomain || receiver;
+          result = await fromChain.transfer({
+            toChain,
+            nft,
+            receiver: _receiver,
+            fee: bigNumberFees,
+            extraFees: getExtraFee(from),
+          });
+          break;
+        }
+        case "Tron":
+          result = await transferNFTFromTran(params);
+          break;
+        case "Tezos":
+          result = await transferNFTFromTezos(params);
+          break;
+        case "Algorand":
+          result = await transferNFTFromAlgorand(params);
+          break;
+        case "Elrond":
+          result = await transferNFTFromElrond(params);
+          break;
+        case "Cosmos":
+          result = await transferNFTFromCosmos(params);
+          ``;
+          break;
+        case "VeChain":
+          result = await transferNFTFromEVM(params);
+          break;
+        case "Skale":
+          result = await transferNFTFromEVM(params);
+          break;
+        case "TON":
+          result = await transferNFTFromTON(params);
+          break;
+        case "NEAR": {
+          const fromChain = await bridge.getChain(_from.nonce);
+          const toChain = await bridge.getChain(_to.nonce);
+          const _receiver = receiverAddress || unstoppabledomain || receiver;
+          fromChain.sendNFT({
+            toChain,
+            nft,
+            receiver: _receiver,
+            fee: bigNumberFees,
+          });
+          break;
+        }
+        default:
+          break;
+      }
+      if (txnHashArr[0] && !result) {
+        dispatch(setTxnHash({ txn: "failed", nft }));
+      } else if (result) {
+        dispatch(setTxnHash({ txn: result, nft }));
+        setTxForWidget({
+          result,
+          fromNonce: _from.nonce,
+          toNonce: _to.nonce,
+          bigNumberFees,
+          from,
+          nft,
+          senderAddress: account || algorandAccount,
+          targetAddress: receiverAddress || unstoppabledomain || receiver,
+        });
+      }
+    } catch (e) {
+      console.log(e, "eee");
+      dispatch(setError(e));
     }
     setLoading(false);
     dispatch(setTransferLoaderModal(false));

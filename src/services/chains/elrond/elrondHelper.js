@@ -26,30 +26,18 @@ export const transferNFTFromElrond = async ({
     collectionIdent,
   } = nft;
   let mintWith;
+
   if (!wrapped) {
+    const hex = tokenId.split("-")?.at(2);
     mintWith = await factory.getVerifiedContract(
       collectionIdent,
       toNonce,
       fromNonce,
-      tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
+      String(hex ? parseInt(hex, 16) : "")
     );
   }
   let result;
   switch (true) {
-    /*case !wrapped &&
-      !mintWith &&
-      !testnet &&
-      (to.type === "EVM" || to.type === "VeChain"):
-      store.dispatch(
-        setError({
-          message:
-            "Transfer has been canceled. The NFT you are trying to send will be minted with a default NFT collection",
-        })
-      );
-      if (txnHashArr[0]) {
-        store.dispatch(setTxnHash({ txn: "failed", nft }));
-      }
-      break;*/
     default:
       result = await transfer(
         fromChain,
@@ -87,6 +75,18 @@ const transfer = async (
 
   try {
     switch (true) {
+      case amount > 0:
+        result = await factory.transferSft(
+          fromChain,
+          toChain,
+          nft,
+          signer,
+          receiver,
+          BigInt(amount),
+          fee,
+          mintWith
+        );
+        break;
       default:
         result = await factory.transferNft(
           fromChain,
@@ -97,11 +97,8 @@ const transfer = async (
           fee,
           mintWith
         );
-
-        return ethers.utils.hexlify(result.hash?.hash)?.replace(/^0x/, "");
-
-      // utils.hexlify(e.hash?.hash)?.replace(/^0x/, "");;
     }
+    return ethers.utils.hexlify(result.hash?.hash)?.replace(/^0x/, "");
   } catch (error) {
     store.dispatch(setError(error));
     const date = new Date();

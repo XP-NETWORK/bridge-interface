@@ -287,6 +287,7 @@ export default function ChainListBox() {
                   maintenance,
                   mainnet,
                   updated,
+                  nonce,
                 } = chain;
                 return (
                   (mainnet || coming) && (
@@ -301,6 +302,7 @@ export default function ChainListBox() {
                       filteredChain={chain}
                       image={image}
                       key={`chain-${key}`}
+                      nonce={nonce}
                     />
                   )
                 );
@@ -318,6 +320,7 @@ export default function ChainListBox() {
                   maintenance,
                   mainnet,
                   updated,
+                  nonce,
                 } = chain;
                 return (
                   (mainnet || coming) && (
@@ -331,6 +334,7 @@ export default function ChainListBox() {
                       chainKey={key}
                       filteredChain={chain}
                       image={image}
+                      nonce={nonce}
                       key={`chain-${key}`}
                     />
                   )
@@ -349,6 +353,7 @@ export default function ChainListBox() {
                   maintenance,
                   testNet,
                   updated,
+                  nonce,
                 } = chain;
                 return (
                   testNet && (
@@ -362,6 +367,7 @@ export default function ChainListBox() {
                       chainKey={key}
                       filteredChain={chain}
                       image={image}
+                      nonce={nonce}
                       key={`chain-${key}`}
                     />
                   )
@@ -380,6 +386,7 @@ export default function ChainListBox() {
                   maintenance,
                   testNet,
                   updated,
+                  nonce,
                 } = chain;
                 return (
                   testNet && (
@@ -393,6 +400,7 @@ export default function ChainListBox() {
                       chainKey={key}
                       filteredChain={chain}
                       image={image}
+                      nonce={nonce}
                       key={`chain-${key}`}
                     />
                   )

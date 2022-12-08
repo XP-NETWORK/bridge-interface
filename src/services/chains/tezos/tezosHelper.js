@@ -68,7 +68,8 @@ const transfer = async (
   let result;
   try {
     switch (true) {
-      case !amount:
+      case amount > 0:
+        throw new Error("SFTs for Tezos are not yet supported");
       default:
         result = await factory.transferNft(
           fromChain,

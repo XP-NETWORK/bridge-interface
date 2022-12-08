@@ -4,12 +4,12 @@ import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import "./SuccessNFT.css";
 import TxStatus from "./TxStatus";
-import { chainsConfig } from "../../values";
 
-export default function TransferredNft({ nft, testnet }) {
+import { StringShortener } from "../../../wallet/helpers";
+
+export default function TransferredNft({ nft, links }) {
   const { image, animation_url, txn, name } = nft;
   const from = useSelector((state) => state.general.from);
-  const to = useSelector((state) => state.general.to);
 
   const txnHashArr = useSelector((state) => state.general.txnHashArr);
 
@@ -21,12 +21,6 @@ export default function TransferredNft({ nft, testnet }) {
 
   const depText = window.innerWidth <= 600 ? "Dep" : "Departure Hash";
   const desText = window.innerWidth <= 600 ? "Des" : "Destination Hash";
-
-  const getSubstringValue = () => {
-    if (window.innerWidth <= 320) return 3;
-    else if (window.innerWidth <= 375) return 3;
-    else return false;
-  };
 
   const checkStatus = () => {
     const { tokenId, token_id, uri, address } = nft.native;
@@ -63,15 +57,6 @@ export default function TransferredNft({ nft, testnet }) {
     checkStatus();
   }, [txnHashArr]);
 
-  // useEffect(async () => {
-  //     if (to.key === "Algorand") {
-  //         const claimables = await setClaimablesAlgorand(
-  //             algorandAccount,
-  //             true
-  //         );
-  //     }
-  // }, []);
-
   return (
     <div className="success-nft-info__wrapper">
       <div className="transferred-nft">
@@ -102,26 +87,12 @@ export default function TransferredNft({ nft, testnet }) {
           <a
             target="_blank"
             rel="noreferrer"
-            href={`${
-              testnet
-                ? chainsConfig[from.key]?.testTx
-                : chainsConfig[from.key]?.tx
-            }${hashes?.depHash || txn?.hash}`}
+            href={`${links.txFrom}${hashes?.depHash || txn?.hash}`}
           >
             {txn?.hash
-              ? `${txn?.hash
-                  .toString()
-                  .substring(
-                    0,
-                    getSubstringValue() || 10
-                  )}...${txn?.hash
-                  .toString()
-                  .substring(txn?.hash.toString().length - 3)}`
+              ? StringShortener(txn?.hash, 3)
               : hashes.depHash
-              ? `${hashes?.depHash?.substring(
-                  0,
-                  getSubstringValue() || 10
-                )}...${hashes?.depHash?.substring(hashes?.depHash?.length - 3)}`
+              ? StringShortener(hashes.depHash, 3)
               : "..."}
           </a>
         </div>
@@ -130,18 +101,9 @@ export default function TransferredNft({ nft, testnet }) {
           <a
             target="_blank"
             rel="noreferrer"
-            href={`${
-              testnet ? chainsConfig[to.key]?.testTx : chainsConfig[to.key]?.tx
-            }${hashes?.destHash}`}
+            href={`${links.txTo}${hashes?.destHash}`}
           >
-            {hashes.destHash
-              ? `${hashes?.destHash?.substring(
-                  0,
-                  getSubstringValue() || 10
-                )}...${hashes?.destHash?.substring(
-                  hashes?.destHash?.length - 3
-                )}`
-              : "..."}
+            {hashes.destHash ? StringShortener(hashes.destHash) : "..."}
           </a>
         </div>
       </div>
@@ -151,4 +113,5 @@ export default function TransferredNft({ nft, testnet }) {
 TransferredNft.propTypes = {
   nft: PropTypes.object,
   testnet: PropTypes.bool,
+  links: PropTypes.object,
 };
