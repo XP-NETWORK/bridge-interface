@@ -393,6 +393,8 @@ class Cosmos extends AbstractChain {
   async getNFTs() {
     return [];
   }
+
+ 
 }
 
 class TON extends AbstractChain {

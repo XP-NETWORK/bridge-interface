@@ -34,7 +34,6 @@ import {
   setTronPopUp,
   setAlgoSigner,
   setAlgorandAccount,
-  setMyAlgo,
   setTezosAccount,
   setKukaiWallet,
   setTempleWallet,
@@ -179,7 +178,7 @@ export const connectKeplr = async (testnet, chain, wallet, isMobile) => {
       store.dispatch(setKeplrAccount(address));
       store.dispatch(setKeplrWallet(signer));
       store.dispatch(setSigner(signer));
-      return true;
+      return signer;
     } catch (error) {
       console.error(error);
       return false;
@@ -354,12 +353,12 @@ export const connectAlgoSigner = async (testnet) => {
       store.dispatch(setAlgoSigner(true));
       store.dispatch(setAlgorandAccount(address));
       const signer = {
-        address: address,
+        address,
         AlgoSigner: window.AlgoSigner,
         ledger: testnet ? "TestNet" : "MainNet",
       };
       store.dispatch(setSigner(signer));
-      return true;
+      return {signer, address};
     } catch (e) {
       console.error(e);
       return JSON.stringify(e, null, 2);
@@ -437,27 +436,17 @@ export const connectBeacon = async () => {
   }
 };
 
-const getMyAlgoSigner = async (base, algorandAccount) => {
-  const {
-    general: { factory },
-  } = store.getState();
-  const inner = await factory.inner(15);
-  const signer = inner.myAlgoSigner(base, algorandAccount);
-  return signer;
-};
 
-export const connectMyAlgo = async () => {
+
+export const connectMyAlgo = async (chain) => {
   const myAlgoConnect = new MyAlgoConnect();
   try {
     const accountsSharedByUser = await myAlgoConnect.connect();
-    const signer = await getMyAlgoSigner(
-      myAlgoConnect,
-      accountsSharedByUser[0].address
-    );
-    store.dispatch(setAlgorandAccount(accountsSharedByUser[0].address));
-    store.dispatch(setSigner(signer));
-    store.dispatch(setMyAlgo(true));
-    return true;
+    const address = accountsSharedByUser[0].address
+
+    const signer = await chain.myAlgoSigner(myAlgoConnect, address)
+  
+    return {signer, address };
   } catch (error) {
     console.log(error);
     return false;

@@ -35,6 +35,7 @@ function ConnectAlgorand() {
         const myAlgoConnect = new MyAlgoConnect();
         try {
             const accountsSharedByUser = await myAlgoConnect.connect();
+            console.log(accountsSharedByUser, 'My Algo');
             dispatch(setAlgorandAccount(accountsSharedByUser[0].address));
             dispatch(setMyAlgo(true));
             handleClose();
