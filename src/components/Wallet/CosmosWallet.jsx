@@ -9,7 +9,13 @@ import { useCheckMobileScreen } from "../Settings/hooks";
 import PropTypes from "prop-types";
 import { getRightPath } from "../../wallet/helpers";
 
-export default function CosmosWallet({ wallet, close }) {
+import { withServices } from "../App/hocs/withServices";
+
+function CosmosWallet({ wallet, close, serviceContainer }) {
+
+    const { bridge } = serviceContainer
+
+
     const OFF = { opacity: 0.6, pointerEvents: "none" };
 
     const from = useSelector((state) => state.general.from);
@@ -23,13 +29,17 @@ export default function CosmosWallet({ wallet, close }) {
     };
 
     const onClickHandler = async (wallet) => {
-        const connected = await connectKeplr(
+        const [signer, chainWrapper] = await Promise.all([connectKeplr(
             testnet,
             chainsConfig.Secret,
             wallet,
             isMobile
-        );
-        if (connected) navigateToAccountRoute();
+        ), bridge.getChain(from.nonce)])
+
+        if (signer) {
+            chainWrapper.setSigner(signer)
+            navigateToAccountRoute()
+        }
         close();
     };
 
@@ -75,5 +85,9 @@ export default function CosmosWallet({ wallet, close }) {
 }
 CosmosWallet.propTypes = {
     close: PropTypes.any,
+    serviceContainer: PropTypes.object,
     wallet: PropTypes.string,
 };
+
+
+export default withServices(CosmosWallet)

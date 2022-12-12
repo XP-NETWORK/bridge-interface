@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Elrond from "../../assets/img/wallet/Elrond.svg";
 import Maiar from "../../assets/img/wallet/Maiar.svg";
 import { connectMaiar, connectMaiarExtension } from "./ConnectWalletHelper";
-import { algoConnector } from "../../wallet/connectors";
+
 import {
-    setAlgorandAccount,
-    setAlgorandWallet,
+
     setWalletsModal,
 } from "../../store/reducers/generalSlice";
 import { useNavigate } from "react-router-dom";
@@ -43,20 +42,7 @@ export default function ElrondWallet({ wallet, close }) {
         navigate(testnet ? `/testnet/account${query}` : `/account${query}`);
     };
 
-    useEffect(() => {
-        algoConnector.on("connect", (error, payload) => {
-            console.log("!!!");
-            if (error) {
-                throw error;
-            }
-            const { accounts } = payload.params[0];
-            if (accounts) {
-                dispatch(setAlgorandWallet(true));
-                dispatch(setAlgorandAccount(accounts[0]));
-                if (to) navigateToAccountRoute();
-            }
-        });
-    }, []);
+
 
     const getStyle = () => {
         if (temporaryFrom?.type === "Elrond") {

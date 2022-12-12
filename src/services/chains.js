@@ -224,7 +224,8 @@ class AbstractChain {
       ];
       const afterAmountArgs = [fee, mintWith, gasLimit, extraFees];
 
-      if (!amount) {
+      if (!amount || toChain.rejectSft) {
+        console.log("here");
         const args = [...beforeAmountArgs, ...afterAmountArgs];
         const res = await this.bridge.transferNft(...args);
         console.log(res, "res");
@@ -298,6 +299,8 @@ class EVM extends AbstractChain {
 }
 
 class Elrond extends AbstractChain {
+  rejectSft = true;
+
   constructor(params) {
     super(params);
   }
@@ -404,6 +407,8 @@ class Cosmos extends AbstractChain {
   async getNFTs() {
     return [];
   }
+
+ 
 }
 
 class TON extends AbstractChain {
