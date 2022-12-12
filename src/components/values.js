@@ -466,7 +466,7 @@ export const chains = [
     image: { avatar: true, src: near },
     testNet: biz,
     mainnet: false,
-    coming: false,
+    coming: biz,
   },
 ];
 
