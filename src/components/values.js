@@ -179,10 +179,10 @@ export const chains = [
     chainId: undefined,
     order: 20,
     nonce: 26,
-    coming: true,
+    coming: false,
     image: { avatar: true, src: Solana },
     maintenance: false,
-    testNet: false,
+    testNet: true,
     mainnet: false,
   },
   {

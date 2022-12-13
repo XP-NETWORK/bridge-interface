@@ -25,7 +25,7 @@ import Martioan from "./APTOSWallet/Martioan";
 import Petra from "./APTOSWallet/Petra";
 import Pontem from "./APTOSWallet/Pontem";
 import NearWallet from "./NEARWallet/NearWallet";
-
+import Solana from "./Solana";
 import { biz } from "../values";
 
 export default function WalletList({ connected, input, discount }) {
@@ -322,6 +322,15 @@ export default function WalletList({ connected, input, discount }) {
       desktop: true,
       order: -888,
       type: "NEAR",
+    },
+
+    {
+      Component: <Solana key="solana" close={connected} />,
+      name: "Solana",
+      mobile: false,
+      desktop: true,
+      order: -889,
+      type: "Phantom",
     },
     // ////////////!!!!
     // {

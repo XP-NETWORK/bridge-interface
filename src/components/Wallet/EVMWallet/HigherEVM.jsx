@@ -119,18 +119,21 @@ export default function HigherEVM(OriginalComponent) {
     };
 
     useEffect(() => {
-      if (account && from) {
-        bridge.getChain(from.nonce).then((chainWrapper) => {
+      if (account) {
+        const nonce = bridge.getNonce(chainId);
+        bridge.getChain(nonce).then((chainWrapper) => {
           const provider = new ethers.providers.Web3Provider(
             bitKeep
               ? window.bitkeep?.ethereum
               : WCProvider?.walletConnectProvider || window.ethereum
           );
           const signer = provider.getSigner(account);
+          console.log(signer, "signer");
           chainWrapper.setSigner(signer);
+          bridge.setCurrentType(chainWrapper);
         });
       }
-    }, [account, from]);
+    }, [account, from, chainId]);
 
     return (
       <OriginalComponent connectWallet={connectHandler} styles={getStyle} />

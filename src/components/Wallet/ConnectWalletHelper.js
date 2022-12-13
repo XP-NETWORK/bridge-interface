@@ -1,11 +1,9 @@
 /* eslint-disable valid-typeof */
 import Connex from "@vechain/connex";
-import { TempleWallet } from "@temple-wallet/dapp";
+
 import { injected, algoConnector, web3Modal } from "../../wallet/connectors";
 import store from "../../store/store";
 
-import { TezosToolkit } from "@taquito/taquito";
-import { BeaconWallet } from "@taquito/beacon-wallet";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import * as thor from "web3-providers-connex";
 import { HashConnect } from "hashconnect";
@@ -34,16 +32,11 @@ import {
   setTronPopUp,
   setAlgoSigner,
   setAlgorandAccount,
-  setTezosAccount,
-  setKukaiWallet,
-  setTempleWallet,
   setQrImage,
   setQrCodeString,
   setWC,
   setOnWC,
   setAccount,
-  setTempleWalletSigner,
-  setKukaiWalletSigner,
   setKeplrAccount,
   setKeplrWallet,
   setHederaAccount,
@@ -358,7 +351,7 @@ export const connectAlgoSigner = async (testnet) => {
         ledger: testnet ? "TestNet" : "MainNet",
       };
       store.dispatch(setSigner(signer));
-      return {signer, address};
+      return { signer, address };
     } catch (e) {
       console.error(e);
       return JSON.stringify(e, null, 2);
@@ -394,59 +387,15 @@ export const connectTrustWallet = async (activate, from) => {
   }
 };
 
-// Tezos blockchain connection ( Temple Wallet )
-export const connectTempleWallet = async () => {
-  try {
-    const available = await TempleWallet.isAvailable();
-    if (!available) {
-      throw new Error("Temple Wallet not installed");
-    }
-    const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
-    await wallet.connect("mainnet");
-    store.dispatch(setTempleWalletSigner(wallet));
-    store.dispatch(setSigner(wallet));
-    const tezos = wallet.toTezos();
-    const accountPkh = await tezos.wallet.pkh();
-    store.dispatch(setTezosAccount(accountPkh));
-    store.dispatch(setTempleWallet(true));
-    return true;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
-};
-// Tezos blockchain connection ( Beacon )
-export const connectBeacon = async () => {
-  const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
-  const wallet = new BeaconWallet({
-    name: "XP.NETWORK Cross-Chain NFT Bridge",
-  });
-  Tezos.setWalletProvider(wallet);
-  try {
-    const permissions = await wallet.client.requestPermissions();
-    store.dispatch(setTezosAccount(permissions.address));
-
-    store.dispatch(setKukaiWalletSigner(wallet));
-    store.dispatch(setSigner(wallet));
-    store.dispatch(setKukaiWallet(true));
-    return true;
-  } catch (error) {
-    console.log("Got error:", error);
-    return false;
-  }
-};
-
-
-
 export const connectMyAlgo = async (chain) => {
   const myAlgoConnect = new MyAlgoConnect();
   try {
     const accountsSharedByUser = await myAlgoConnect.connect();
-    const address = accountsSharedByUser[0].address
+    const address = accountsSharedByUser[0].address;
 
-    const signer = await chain.myAlgoSigner(myAlgoConnect, address)
-  
-    return {signer, address };
+    const signer = await chain.myAlgoSigner(myAlgoConnect, address);
+
+    return { signer, address };
   } catch (error) {
     console.log(error);
     return false;

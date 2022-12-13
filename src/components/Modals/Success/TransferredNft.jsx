@@ -57,6 +57,8 @@ export default function TransferredNft({ nft, links }) {
     checkStatus();
   }, [txnHashArr]);
 
+  const depHash = hashes?.depHash || txn?.hash;
+
   return (
     <div className="success-nft-info__wrapper">
       <div className="transferred-nft">
@@ -87,7 +89,11 @@ export default function TransferredNft({ nft, links }) {
           <a
             target="_blank"
             rel="noreferrer"
-            href={`${links.txFrom}${hashes?.depHash || txn?.hash}`}
+            href={`${
+              typeof links.txFrom === "function"
+                ? links.txFrom(depHash)
+                : links.txFrom + depHash
+            }`}
           >
             {txn?.hash
               ? StringShortener(txn?.hash, 3)
@@ -101,7 +107,11 @@ export default function TransferredNft({ nft, links }) {
           <a
             target="_blank"
             rel="noreferrer"
-            href={`${links.txTo}${hashes?.destHash}`}
+            href={
+              typeof links.txTo === "function"
+                ? links.txTo(hashes.destHash)
+                : links.txTo + hashes.destHash
+            }
           >
             {hashes.destHash ? StringShortener(hashes.destHash) : "..."}
           </a>

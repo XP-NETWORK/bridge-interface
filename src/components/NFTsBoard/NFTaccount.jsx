@@ -58,6 +58,7 @@ function NFTaccount(props) {
 
   const tronWallet = useSelector((state) => state.general.tronWallet);
   const account = useSelector((state) => state.general.account);
+
   const prevAccount = usePrevious(account);
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
@@ -150,18 +151,16 @@ function NFTaccount(props) {
       chainSpecific && chainSpecific(dispatch, fromChain, _account);
       balanceInterval = setInterval(() => getBalance(fromChain), intervalTm);
       console.log(fromChain);
-      /*const keyHandler = async (event) => {
+      const keyHandler = async (event) => {
         if (event.isComposing || event.keyCode === 229) {
           return;
         }
         if (event.key === "4") {
-          fromChain.mintNFT(
-            "https://ipfs.moralis.io:2053/ipfs/QmUyGiGSRK56Pz9XizhiXp6ABfUimm8TVHJ3n3HA7NNwSN/30"
-          );
+          fromChain.mintNFT("https://meta.polkamon.com/meta?id=10001852306");
         }
-      };*/
+      };
 
-      //window.addEventListener("keydown", keyHandler);
+      window.addEventListener("keydown", keyHandler);
     })();
 
     return () => clearInterval(balanceInterval);

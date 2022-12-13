@@ -36,7 +36,7 @@ function Approval({ serviceContainer }) {
   const to = useSelector((state) => state.general.to);
   const testnet = useSelector((state) => state.general.testNet);
   const account = useSelector((state) => state.general.account);
-  const templeSigner = useSelector((state) => state.general.templeSigner);
+
   const bitKeep = useSelector((state) => state.general.bitKeep);
   const signerSigner = useSelector((state) => state.signers.signer);
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
@@ -52,9 +52,7 @@ function Approval({ serviceContainer }) {
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
 
   const MyAlgo = useSelector((state) => state.general.MyAlgo);
-  const kukaiWalletSigner = useSelector(
-    (state) => state.general.kukaiWalletSigner
-  );
+
   const keplrWallet = useSelector((state) => state.general.keplrWallet);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
   const secretAccount = useSelector((state) => state.general.secretAccount);
@@ -135,8 +133,9 @@ function Approval({ serviceContainer }) {
           setFinishedApproving(arr);
           break;
         case "Tezos":
-          const tezos = await factory.inner(Chain.TEZOS);
-          await tezos.preTransfer(templeSigner || kukaiWalletSigner, nft);
+          const fromChain = await bridge.getChain(from.nonce);
+          await fromChain.checkSigner();
+          await fromChain.preTransfer(nft, bigNumberFees);
           dispatch(updateApprovedNFTs(nft));
           setFinishedApproving(arr);
           break;

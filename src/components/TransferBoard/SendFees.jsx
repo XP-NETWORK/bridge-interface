@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import BigNumber from "bignumber.js";
+
 import React, { useState, useRef } from "react";
 import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,6 +39,8 @@ function SendFees(props) {
       selectedNFTList[0],
       account
     );
+
+    console.log(fees, formatedFees);
 
     dispatch(setBigNumFees(fees));
     setFees(formatedFees * selectedNFTList.length);
@@ -170,13 +172,7 @@ function SendFees(props) {
           <LittleLoader />
         ) : (
           <span>
-            {`${
-              fees && fees > 0
-                ? from.key === "Tezos"
-                  ? new BigNumber(fees).multipliedBy(1e12).toString()
-                  : fees?.toFixed(getNumToFix(fees))
-                : "0"
-            }
+            {`${fees && fees > 0 ? fees?.toFixed(getNumToFix(fees)) : "0"}
                         ${chainParams?.currency || ""} 
                         `}
             {/* ${discountLeftUsd && showDiscount(fees).toFixed(2)} */}

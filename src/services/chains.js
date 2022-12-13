@@ -211,6 +211,7 @@ class AbstractChain {
         this.signer,
         receiver?.trim(),
       ];
+      console.log(this.signer, "this.signer");
       const afterAmountArgs = [fee, mintWith, gasLimit, extraFee];
 
       if (!amount || toChain.rejectSft) {
@@ -396,8 +397,6 @@ class Cosmos extends AbstractChain {
   async getNFTs() {
     return [];
   }
-
- 
 }
 
 class TON extends AbstractChain {
@@ -484,6 +483,22 @@ class Near extends AbstractChain {
   }
 }
 
+class Solana extends AbstractChain {
+  constructor(params) {
+    super(params);
+  }
+  async preTransfer() {
+    return true;
+  }
+
+  async mintNFT(uri) {
+    console.log(uri, " uri");
+    const mint = await this.chain.mintNft(this.signer, {
+      uri,
+    });
+  }
+}
+
 export default {
   EVM,
   Elrond,
@@ -494,4 +509,5 @@ export default {
   Cosmos,
   Near,
   TON,
+  Solana,
 };
