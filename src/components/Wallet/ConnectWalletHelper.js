@@ -1,11 +1,10 @@
 /* eslint-disable valid-typeof */
-import Connex from "@vechain/connex";
 
 import { injected, algoConnector, web3Modal } from "../../wallet/connectors";
 import store from "../../store/store";
 
 import MyAlgoConnect from "@randlabs/myalgo-connect";
-import * as thor from "web3-providers-connex";
+
 import { HashConnect } from "hashconnect";
 import { hethers } from "@hashgraph/hethers";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
@@ -37,11 +36,9 @@ import {
   setWC,
   setOnWC,
   setAccount,
-  setKeplrAccount,
   setKeplrWallet,
   setHederaAccount,
   setHederaWallet,
-  setSync2Connex,
   setRedirectModal,
 } from "../../store/reducers/generalSlice";
 import { chainsConfig } from "../values";
@@ -168,7 +165,7 @@ export const connectKeplr = async (testnet, chain, wallet, isMobile) => {
         //encryptionUtils: window.getEnigmaUtils(chain),
       });
 
-      store.dispatch(setKeplrAccount(address));
+      store.dispatch(setAccount(address));
       store.dispatch(setKeplrWallet(signer));
       store.dispatch(setSigner(signer));
       return signer;
@@ -246,92 +243,6 @@ export const connectMetaMask = async (activate, from, to) => {
     } else console.log(ex);
     return false;
   }
-};
-
-export const connectVeChainThor = async (testnet) => {
-  let account;
-  let connex;
-  const userAgent = navigator.userAgent;
-
-  if (userAgent.match(/vechainthorwallet|vechain|thor/)) {
-    connex = new Connex(
-      testnet
-        ? {
-            node: "https://testnet.veblocks.net/",
-            network: "test",
-          }
-        : {
-            node: "https://sync-mainnet.veblocks.net",
-            network: "main",
-          }
-    );
-    await connex.vendor
-      .sign("cert", {
-        purpose: "identification",
-        payload: {
-          type: "text",
-          content: "sign certificate to continue bridging",
-        },
-      })
-      .request()
-      .then((result) => {
-        account = result?.annex?.signer;
-      });
-  } else store.dispatch(setRedirectModal("VeChainThor"));
-
-  const provider = thor.ethers.modifyProvider(
-    new ethers.providers.Web3Provider(new thor.ConnexProvider({ connex }))
-  );
-  const signer = await provider.getSigner(account);
-  store.dispatch(setSync2Connex(connex));
-  store.dispatch(setSigner(signer));
-  return account;
-};
-
-export const connectSync2 = async (testnet) => {
-  let account;
-  const client = new Connex(
-    testnet
-      ? {
-          node: "https://testnet.veblocks.net/",
-          network: "test",
-        }
-      : {
-          node: "https://sync-mainnet.veblocks.net",
-          network: "main",
-        }
-  );
-  store.dispatch(setSync2Connex(client));
-  const connex = new Connex(testnet ? "test" : "main");
-  await connex.vendor
-    .sign("cert", {
-      purpose: "identification",
-      payload: {
-        type: "text",
-        content: "sign certificate to continue bridging",
-      },
-    })
-    .link("https://connex.vecha.in/{certid}")
-    .request()
-    .then((result) => {
-      account = result?.annex?.signer;
-    });
-
-  const provider = thor.ethers.modifyProvider(
-    new ethers.providers.Web3Provider(
-      new thor.ConnexProvider({
-        connex: new Connex({
-          node: testnet
-            ? "https://testnet.veblocks.net/"
-            : "https://sync-mainnet.veblocks.net",
-          network: testnet ? "test" : "main",
-        }),
-      })
-    )
-  );
-  const signer = await provider.getSigner(account);
-  store.dispatch(setSigner(signer));
-  return account;
 };
 
 // Algorand blockchain connection ( AlgoSigner )

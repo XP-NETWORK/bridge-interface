@@ -46,6 +46,7 @@ function SendFees(props) {
     setFees(formatedFees * selectedNFTList.length);
 
     /* let fee;
+    TODO
       if (to === "Tron") {
         fee =
           from === "BSC"
@@ -66,46 +67,7 @@ function SendFees(props) {
             ? new BigNumber("95352570490000000000")
             : "";
       
-     
-
-      const bigNum = fee
-        ? fee
-            .multipliedBy(1.1)
-            .integerValue()
-            .toString(10)
-        : undefined;
-
-      dispatch(setBigNumFees(bigNum));
-
-      let fees;
-      if (
-        from.type === "Tron" ||
-        from.type === "Algorand" ||
-        from.type === "Cosmos"
-      ) {
-        fees = bigNum / 1e6;
-      } else if (from.type === "TON") {
-        fees = bigNum / 1e9;
-      } else if (from.type === "NEAR") {
-        fees = bigNum / 1e9;
-      } else {
-        fees = bigNum && (await Web3Utils.fromWei(String(bigNum), "ether"));
-      }
-
-      fees && setFees(+(fees * selectedNFTList.length));
-    } catch (error) {
-      /*const errBody = {
-        type: "Estimate",
-        walletAddress: wallet(),
-        time: date.toString(),
-        fromChain: from.text,
-        toChain: to.text,
-        message: error,
-        nfts: selectedNFTList,
-      };
-      errorToLog(errBody);
-      console.log(error.data ? error.data.message : error.message);
-    }*/
+   */
     setLoading(false);
   }
 

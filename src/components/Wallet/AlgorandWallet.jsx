@@ -15,6 +15,7 @@ import {
   setMyAlgo,
   setAlgoSigner,
   setAlgorandWallet,
+  setAccount,
 } from "../../store/reducers/generalSlice";
 import { setSigner } from "../../store/reducers/signersSlice";
 import PropTypes from "prop-types";
@@ -62,9 +63,8 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
       close();
       chainWrapper.setSigner(account.signer);
       bridge.setCurrentType(chainWrapper);
-      console.log(account.signer, "account.signer");
       dispatch(setSigner(account.signer));
-      dispatch(setAlgorandAccount(account.address));
+      dispatch(setAccount(account.address));
       if (temporaryFrom) dispatch(setFrom(temporaryFrom));
       if (account && to) navigateToAccountRoute();
     }

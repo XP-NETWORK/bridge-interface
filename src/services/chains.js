@@ -183,9 +183,20 @@ class AbstractChain {
       if (!this.signer)
         throw new Error("No signer for ", this.chainParams.text);
       console.log(args, "args");
-      const { nft, toChain, receiver, fee, gasLimit, extraFee } = args;
+      const {
+        nft,
+        toChain,
+        receiver,
+        gasLimit,
+        extraFee,
+        discountLeftUsd,
+      } = args;
 
-      let { tokenId } = args;
+      let { tokenId, fee } = args;
+
+      if (discountLeftUsd) {
+        fee = Number(fee) - Number(fee) * 0.25;
+      }
 
       if (!tokenId) {
         tokenId = nft.native.tokenId;
@@ -354,6 +365,9 @@ class Tron extends AbstractChain {
   constructor(params) {
     super(params);
   }
+  async preTransfer() {
+    return true;
+  }
 }
 
 class Algorand extends AbstractChain {
@@ -419,6 +433,15 @@ class TON extends AbstractChain {
 class Near extends AbstractChain {
   constructor(params) {
     super(params);
+  }
+
+  async preTransfer(nft, fees, params) {
+    try {
+      return await this.chain.preTransfer(this.signer, nft, fees, params);
+    } catch (e) {
+      console.log(e, "in NEAR preTransfer");
+      throw e;
+    }
   }
 
   async connect(wallet) {

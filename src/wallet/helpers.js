@@ -369,6 +369,7 @@ export const convert = (address) => {
   if (checkIfOne1(address)) {
     return convertOne1(address);
   }
+  return address;
   // else if(checkIfIo1(address)) return convertIo1(address)
 };
 
@@ -413,6 +414,13 @@ export const getSearched = async (address, searched, nonce) => {
 
 export const errorToLog = async (error) => {
   try {
+    if (
+      typeof error.message === "string" &&
+      error.message.includes("user rejected")
+    ) {
+      return;
+    }
+
     const response = await axios.post(
       "https://bridge-error-logs.herokuapp.com/log/error",
       error,
