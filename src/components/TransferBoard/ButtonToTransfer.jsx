@@ -21,10 +21,10 @@ import {
 import { getFromDomain } from "../../services/resolution";
 import { transferNFTFromEVM } from "../../services/chains/evm/evmService";
 import { transferNFTFromTran } from "../../services/chains/tron/tronHelper";
-import { transferNFTFromTezos } from "../../services/chains/tezos/tezosHelper";
+
 import { transferNFTFromCosmos } from "../../services/chains/cosmos/cosmosHelper";
 import { transferNFTFromElrond } from "../../services/chains/elrond/elrondHelper";
-import { transferNFTFromAlgorand } from "../../services/chains/algorand/algorandHelper";
+
 import { transferNFTFromTON } from "../../services/chains/ton/tonHelper";
 
 import { withServices } from "../App/hocs/withServices";
@@ -211,9 +211,9 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
         testnet,
         discountLeftUsd,
       };
+      const _receiver = receiverAddress || unstoppabledomain || receiver;
       switch (_from.type) {
         case "EVM": {
-          const _receiver = receiverAddress || unstoppabledomain || receiver;
           result = await fromChain.transfer({
             toChain,
             nft,
@@ -225,11 +225,22 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
         case "Tron":
           result = await transferNFTFromTran(params);
           break;
-        case "Tezos":
-          result = await transferNFTFromTezos(params);
+        case "Tezos": {
+          result = await fromChain.transfer({
+            toChain,
+            nft,
+            receiver: _receiver,
+            fee: bigNumberFees,
+          });
           break;
+        }
         case "Algorand":
-          result = await transferNFTFromAlgorand(params);
+          result = await fromChain.transfer({
+            toChain,
+            nft,
+            receiver: _receiver,
+            fee: bigNumberFees,
+          });
           break;
         case "Elrond":
           result = await transferNFTFromElrond(params);

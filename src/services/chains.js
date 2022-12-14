@@ -29,8 +29,9 @@ class AbstractChain {
   }
 
   async setSigner(signer) {
+    console.log(signer, this.nonce);
     try {
-      if (!signer) throw new Error("no signer");
+      //if (!signer) throw new Error("no signer");
       this.signer = signer;
       return this;
     } catch (e) {
@@ -40,7 +41,6 @@ class AbstractChain {
   }
 
   async getNFTs(address) {
-    console.log(this.bridge);
     try {
       return await this.bridge.nftList(this.chain, address);
     } catch (e) {
@@ -192,7 +192,7 @@ class AbstractChain {
       }
 
       const wrapped = await this.bridge.isWrappedNft(nft, Number(this.nonce));
-      console.log(wrapped, "wrapped");
+
       let mintWith = undefined;
 
       if (!wrapped) {
@@ -211,11 +211,10 @@ class AbstractChain {
         this.signer,
         receiver?.trim(),
       ];
-      console.log(this.signer, "this.signer");
+
       const afterAmountArgs = [fee, mintWith, gasLimit, extraFee];
 
       if (!amount || toChain.rejectSft) {
-        console.log("here");
         const args = [...beforeAmountArgs, ...afterAmountArgs];
         const res = await this.bridge.transferNft(...args);
         console.log(res, "res");
@@ -252,10 +251,8 @@ class EVM extends AbstractChain {
 
   async checkSigner() {
     try {
-      console.log("ds");
       this.signer = undefined;
       await super.checkSigner();
-      console.log("ls");
     } catch (e) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
@@ -345,7 +342,6 @@ class Elrond extends AbstractChain {
 
   async getWegldBalance(account) {
     try {
-      console.log(account);
       const bal = await this.chain.wegldBalance(account);
       return bal;
     } catch (e) {
@@ -368,7 +364,7 @@ class Algorand extends AbstractChain {
   async getClaimables(account) {
     try {
       const x = await this.bridge.claimableAlgorandNfts(account);
-      console.log(x, "x");
+
       return x;
     } catch (e) {
       console.log(e, "e");
@@ -492,7 +488,6 @@ class Solana extends AbstractChain {
   }
 
   async mintNFT(uri) {
-    console.log(uri, " uri");
     const mint = await this.chain.mintNft(this.signer, {
       uri,
     });
