@@ -51,6 +51,7 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
       case "AlgoSigner":
         account = await connectAlgoSigner(testnet);
         account && dispatch(setAlgoSigner(true));
+
         break;
       case "Algorand Wallet": //TODO
         connectAlgoWallet();

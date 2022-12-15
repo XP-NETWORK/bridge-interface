@@ -94,7 +94,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
       const result = await fromChain.transfer({
         toChain,
         nft,
-        receiver: (unstoppabledomain || receiver).trim(),
+        receiver: unstoppabledomain || receiver,
         fee: bigNumberFees,
         discountLeftUsd,
       });

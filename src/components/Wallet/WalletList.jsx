@@ -330,7 +330,7 @@ export default function WalletList({ connected, input, discount }) {
       mobile: false,
       desktop: true,
       order: -889,
-      type: "Phantom",
+      type: "Solana",
     },
     // ////////////!!!!
     // {

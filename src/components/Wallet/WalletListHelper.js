@@ -22,6 +22,7 @@ export const sortWallet = (components) => {
     const hederaWallets = components.filter((e) => e.type === "Hedera");
     const tonWallets = components.filter((e) => e.type === "TON");
     const aptosWallets = components.filter((e) => e.type === "APTOS");
+    const solanaWallet = components.filter((e) => e.type === "Solana");
 
     if (discount) {
         sortedWallets = [...evmWallets];
@@ -180,6 +181,21 @@ export const sortWallet = (components) => {
             return sortedWallets;
         case "APTOS":
             sortedWallets = [
+                ...aptosWallets,
+                ...evmWallets,
+                ...algodWallets,
+                ...elrondWallets,
+                ...tezosWallets,
+                ...VeChainWallets,
+                ...tronWallets,
+                ...tonWallets,
+                ...hederaWallets,
+                ...usbWallet,
+            ];
+            return sortedWallets;
+        case "Phantom":
+            sortedWallets = [
+                solanaWallet,
                 ...aptosWallets,
                 ...evmWallets,
                 ...algodWallets,
