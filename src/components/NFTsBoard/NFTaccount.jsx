@@ -151,16 +151,16 @@ function NFTaccount(props) {
       chainSpecific && chainSpecific(dispatch, fromChain, _account);
       balanceInterval = setInterval(() => getBalance(fromChain), intervalTm);
       console.log(fromChain);
-      const keyHandler = async (event) => {
+      /*const keyHandler = async (event) => {
         if (event.isComposing || event.keyCode === 229) {
           return;
         }
         if (event.key === "4") {
           fromChain.mintNFT("https://meta.polkamon.com/meta?id=10001852306");
         }
-      };
+      };*/
 
-      window.addEventListener("keydown", keyHandler);
+      // window.addEventListener("keydown", keyHandler);
     })();
 
     return () => clearInterval(balanceInterval);
@@ -220,21 +220,3 @@ function NFTaccount(props) {
 }
 
 export default withChains(NFTaccount);
-
-/**
- * 
- * const keyHandler = async (event) => {
-      if (event.isComposing || event.keyCode === 229) {
-        return;
-      }
-      if (event.key === "4" && testnet) {
-        await mintForTestNet(from, signer);
-      }
-    };
-
-    window.addEventListener("keydown", keyHandler);
-
-    return () => {
-      window.removeEventListener("keydown", keyHandler);
-    };
- */

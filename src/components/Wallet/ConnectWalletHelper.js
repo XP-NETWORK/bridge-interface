@@ -258,7 +258,7 @@ export const connectAlgoSigner = async (testnet) => {
       store.dispatch(setAlgorandAccount(address));
       const signer = {
         address,
-        AlgoSigner: window.AlgoSigner,
+        algoSigner: window.AlgoSigner,
         ledger: testnet ? "TestNet" : "MainNet",
       };
       store.dispatch(setSigner(signer));

@@ -182,7 +182,7 @@ class AbstractChain {
     try {
       if (!this.signer)
         throw new Error("No signer for ", this.chainParams.text);
-      console.log(args, "args");
+
       const {
         nft,
         toChain,
@@ -194,9 +194,12 @@ class AbstractChain {
 
       let { tokenId, fee } = args;
 
-      if (discountLeftUsd) {
-        fee = Number(fee) - Number(fee) * 0.25;
+      if (discountLeftUsd && discountLeftUsd > 0) {
+        const bnFee = new BigNumber(fee);
+        fee = bnFee.minus(bnFee.multipliedBy(0.25));
       }
+
+      fee = fee.toString(10);
 
       if (!tokenId) {
         tokenId = nft.native.tokenId;
@@ -227,13 +230,13 @@ class AbstractChain {
 
       if (!amount || toChain.rejectSft) {
         const args = [...beforeAmountArgs, ...afterAmountArgs];
+        console.log(args);
         const res = await this.bridge.transferNft(...args);
         console.log(res, "res");
         return res;
       } else {
         const args = [...beforeAmountArgs, BigInt(amount), ...afterAmountArgs];
         console.log(args, "args");
-
         const res = await this.bridge.transferSft(...args);
         console.log(res, "res");
         return res;
