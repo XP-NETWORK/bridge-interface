@@ -66,11 +66,17 @@ function VeChainWallet({ close, wallet, serviceContainer }) {
     const provider = thor.ethers.modifyProvider(
       new ethers.providers.Web3Provider(
         new thor.ConnexProvider({
-          connex,
+          connex: new Connex({
+            node: testnet
+              ? "https://testnet.veblocks.net/"
+              : "https://sync-mainnet.veblocks.net",
+            network: testnet ? "test" : "main",
+          }),
         })
       )
     );
-    account.signer = provider.getSigner(account.address);
+    const signer = await provider.getSigner(account.address);
+    account.signer = signer;
     return account;
   };
 
@@ -119,6 +125,7 @@ function VeChainWallet({ close, wallet, serviceContainer }) {
       if (temporaryFrom) dispatch(setFrom(temporaryFrom));
       if (to) navigateToAccountRoute();
     } catch (e) {
+      console.log(e, "e");
       setConnecting(false);
       dispatch(setError(e));
     }
