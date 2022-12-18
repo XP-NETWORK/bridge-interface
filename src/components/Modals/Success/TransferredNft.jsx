@@ -70,16 +70,7 @@ export default function TransferredNft({ nft, links }) {
           )}
           <div className="transferred-nft-name">{name}</div>
         </div>
-        {/* {(txnStatus === "completed" || txnStatus === "pending") && (
-                    <a
-                        href={`https://bridge-explorer.xp.network/tx/${txn?.hash}`}
-                        rel="noreferrer"
-                        target="_blank"
-                        className="view-tx__button"
-                    >
-                        View tx
-                    </a>
-                )} */}
+
         <TxStatus status={txn ? txnStatus : "processing"} />
       </div>
 
@@ -113,7 +104,7 @@ export default function TransferredNft({ nft, links }) {
                 : links.txTo + hashes.destHash
             }
           >
-            {hashes.destHash ? StringShortener(hashes.destHash) : "..."}
+            {hashes.destHash ? StringShortener(hashes.destHash, 3) : "..."}
           </a>
         </div>
       </div>

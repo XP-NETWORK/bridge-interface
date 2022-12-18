@@ -259,6 +259,7 @@ class AbstractChain {
         if (!this.signer)
             throw new Error("No signer for ", this.chainParams.text);
         try {
+            console.log(this.signer, nft, fees);
             return await this.chain.preTransfer(this.signer, nft, fees);
         } catch (e) {
             console.log(e, "in preTransfer");
@@ -269,6 +270,9 @@ class AbstractChain {
 
 class EVM extends AbstractChain {
     constructor(params) {
+        if (params.nonce === ChainNonce.VECHAIN) {
+            return new VeChain(params);
+        }
         super(params);
     }
 
@@ -306,6 +310,12 @@ class EVM extends AbstractChain {
             }
             throw e;
         }
+    }
+}
+
+class VeChain extends AbstractChain {
+    constructor(params) {
+        super(params);
     }
 }
 
@@ -402,12 +412,6 @@ class Algorand extends AbstractChain {
 }
 
 class Tezos extends AbstractChain {
-    constructor(params) {
-        super(params);
-    }
-}
-
-class VeChain extends AbstractChain {
     constructor(params) {
         super(params);
     }
@@ -529,12 +533,10 @@ class Solana extends AbstractChain {
             uri,
         });
     }
-
     filterNFTs(nfts) {
         const unique = {};
         try {
             const allNFTs = nfts.filter((n) => {
-                const { chainId, address } = n.native;
                 const nftMint = n.native.nftMint;
                 if (unique[nftMint]) {
                     return false;
