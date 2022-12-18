@@ -23,10 +23,6 @@ export const sortWallet = (components) => {
     const tonWallets = components.filter((e) => e.type === "TON");
     const aptosWallets = components.filter((e) => e.type === "APTOS");
     const solanaWallet = components.filter((e) => e.type === "Solana");
-    console.log(
-        "🚀 ~ file: WalletListHelper.js:26 ~ sortWal ~ solanaWallet",
-        solanaWallet
-    );
 
     if (discount) {
         sortedWallets = [...evmWallets];

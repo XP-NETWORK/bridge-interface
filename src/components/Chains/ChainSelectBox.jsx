@@ -30,6 +30,8 @@ export default function ChainSelectBox() {
     const tronWallet = useSelector((state) => state.general.tronWallet);
 
     const switchChains = (e) => {
+        // eslint-disable-next-line no-debugger
+        debugger;
         if (from.type !== to.type) {
             switch (from.type) {
                 case "Hedera":
@@ -89,6 +91,13 @@ export default function ChainSelectBox() {
                     break;
                 case "TON":
                     if (tonAccount) {
+                        dispatch(setTemporaryFrom(to));
+                        dispatch(setTemporaryTo(from));
+                        dispatch(setChangeWallet(true));
+                    } else handleSwitch(e);
+                    break;
+                case "Solana":
+                    if (account) {
                         dispatch(setTemporaryFrom(to));
                         dispatch(setTemporaryTo(from));
                         dispatch(setChangeWallet(true));
