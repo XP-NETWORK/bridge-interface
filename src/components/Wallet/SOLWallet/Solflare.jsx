@@ -19,5 +19,6 @@ function Solflare({ connectWallet }) {
 Solflare.propTypes = {
     styles: PropTypes.func,
     connectWallet: PropTypes.func,
+    close: PropTypes.func,
 };
 export default HigherSolana(Solflare);

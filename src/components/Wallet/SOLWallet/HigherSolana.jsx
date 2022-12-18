@@ -15,7 +15,8 @@ import {
 import { onPhantom, onSolflare } from "./SoloanaConnectors";
 
 export default function HigherSolana(OriginalComponent) {
-    const updatedComponent = withServices(({ serviceContainer }) => {
+    const updatedComponent = withServices((props) => {
+        const { serviceContainer, close } = props;
         const { bridge } = serviceContainer;
         const dispatch = useDispatch();
 
@@ -36,6 +37,7 @@ export default function HigherSolana(OriginalComponent) {
             bridge.setCurrentType(chainWrapper);
             dispatch(setAccount(account.address));
             dispatch(setWalletsModal(false));
+            close();
         };
 
         const getStyle = () => {
@@ -45,6 +47,7 @@ export default function HigherSolana(OriginalComponent) {
 
         return (
             <OriginalComponent
+                {...props}
                 connectWallet={connectHandler}
                 styles={getStyle}
             />

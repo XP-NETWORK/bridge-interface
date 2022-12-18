@@ -4,7 +4,8 @@ import icon from "../../../assets/img/wallet/phantom-icon-purple.svg";
 
 import HigherSolana from "./HigherSolana";
 
-function Phantom({ connectWallet }) {
+function Phantom({ connectWallet, close }) {
+    console.log("🚀 ~ file: Phantom.jsx:8 ~ Phantom ~ close", close);
     return (
         <li
             onClick={() => connectWallet("Phantom")}
@@ -19,5 +20,6 @@ function Phantom({ connectWallet }) {
 Phantom.propTypes = {
     styles: PropTypes.func,
     connectWallet: PropTypes.func,
+    close: PropTypes.func,
 };
 export default HigherSolana(Phantom);
