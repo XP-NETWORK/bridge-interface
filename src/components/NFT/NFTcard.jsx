@@ -18,7 +18,8 @@ import { parseNFT } from "../../wallet/nftParser";
 import { useDidUpdateEffect } from "../Settings/hooks";
 import Image from "./Image";
 import SFTMark from "./SFTMark";
-
+import { WhitelistButton } from "./WhitelistButton";
+import { setTransferLoaderModal } from "../../store/reducers/generalSlice";
 import OnlyVideo from "./OnlyVideo";
 import { chains } from "../values";
 import OriginChainMark from "./OriginChainMark";
@@ -38,6 +39,8 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
 
   const testnet = useSelector((state) => state.general.testNet);
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
+  const from = useSelector((state) => state.general.from);
+  const factory = useSelector((state) => state.general.factory);
   const [isVisible, setIsVisible] = useState();
   const localhost = window.location.hostname;
   const [imageErr, setImageErr] = useState(false);
@@ -101,6 +104,18 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
     }
   }, [isVisible, nft]);
 
+  const onClickWhiteListButton = async () => {
+    dispatch(setTransferLoaderModal(true));
+    try {
+      await factory.whitelistEVM(from.nonce, nft.native.contract);
+    } catch (error) {
+      console.log(error.message);
+      // TODO: handle error
+    } finally {
+      dispatch(setTransferLoaderModal(false));
+    }
+  };
+
   return (
     <>
       <div className={`nft-box__wrapper`} ref={cardRef}>
@@ -146,6 +161,10 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
 
               {!nft.whitelisted /*|| !verifiedContract*/ && <NotWhiteListed />}
               {claimables && <ClaimableCard nft={nft} index={index} />}
+              <WhitelistButton
+                isNFTWhitelisted={nft.whitelisted}
+                onClick={onClickWhiteListButton}
+              />
             </div>
             <div className="nft__footer">
               {localhost === "localhost" && (
