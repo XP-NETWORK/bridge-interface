@@ -35,3 +35,10 @@
   font-weight: 400;
   line-height: 18px;
 }
+
+.nft__whitelisted-btn {
+  position: absolute;
+  z-index: 10;
+  bottom: 74px;
+  right: 8.8px;
+}

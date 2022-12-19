@@ -23,6 +23,8 @@ import OnlyVideo from "./OnlyVideo";
 import { chains } from "../values";
 import OriginChainMark from "./OriginChainMark";
 import { selected } from "./NFTHelper";
+import { WhitelistButton } from "./WhitelistButton";
+import { setTransferLoaderModal } from "../../store/reducers/generalSlice";
 
 NFTcard.propTypes = {
     nft: PropTypes.object,
@@ -37,9 +39,10 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
     const [detailsOn, setDetailsOn] = useState(false);
     const search = useSelector((state) => state.general.NFTListSearch);
     const from = useSelector((state) => state.general.from);
-
+    const factory = useSelector((state) => state.general.factory);
     const testnet = useSelector((state) => state.general.testNet);
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
+    
     const [isVisible, setIsVisible] = useState();
     const localhost = window.location.hostname;
     const [imageErr, setImageErr] = useState(false);
@@ -145,6 +148,18 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
         }
     }, [isVisible, nft]);
 
+    const onClickWhiteListButton = async () => {
+      dispatch(setTransferLoaderModal(true));
+      try {
+        await factory.whitelistEVM(from.nonce, nft.native.contract);
+      } catch (error) {
+        console.log(error.message);
+        // TODO: handle error
+      } finally {
+        dispatch(setTransferLoaderModal(false));
+      }
+    };
+
     return (
         <>
             <div className={`nft-box__wrapper`} ref={cardRef}>
@@ -169,6 +184,10 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
                         {originChainImg && (
                             <OriginChainMark icon={originChainImg} />
                         )}
+                           <WhitelistButton
+                            isNFTWhitelisted={nft.whitelisted}
+                            onClick={onClickWhiteListButton}
+                          />
                         <div className="nft__main">
                             {nft.uri && nft.image && nft.animation_url ? (
                                 <VideoAndImage
