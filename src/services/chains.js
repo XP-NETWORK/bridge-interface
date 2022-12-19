@@ -553,6 +553,41 @@ class Solana extends AbstractChain {
     }
 }
 
+class APTOS extends AbstractChain {
+    constructor(params) {
+        super(params);
+    }
+    async preTransfer() {
+        return true;
+    }
+
+    async mintNFT(uri) {
+        const mint = await this.chain.mintNft(this.signer, {
+            uri,
+        });
+    }
+
+    filterNFTs(nfts) {
+        const unique = {};
+        try {
+            const allNFTs = nfts.filter((n) => {
+                const collection_creator = n.native.collection_creator;
+                const token_name = n.native.token_name;
+                if (unique[`${collection_creator}_${token_name}`]) {
+                    return false;
+                } else {
+                    unique[`${collection_creator}_${token_name}`] = true;
+                    return true;
+                }
+            });
+
+            return allNFTs;
+        } catch (err) {
+            return [];
+        }
+    }
+}
+
 export default {
     EVM,
     Elrond,
@@ -564,4 +599,5 @@ export default {
     Near,
     TON,
     Solana,
+    APTOS,
 };

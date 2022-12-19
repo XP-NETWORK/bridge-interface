@@ -22,6 +22,7 @@ import SFTMark from "./SFTMark";
 import OnlyVideo from "./OnlyVideo";
 import { chains } from "../values";
 import OriginChainMark from "./OriginChainMark";
+import { selected } from "./NFTHelper";
 
 NFTcard.propTypes = {
     nft: PropTypes.object,
@@ -66,25 +67,59 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
         };
     }, []);
 
-    let isSelected = selectedNFTs.filter((n) => {
-        if (from.type === "Solana") {
-            if (n.native.nftMint === nft.native.nftMint) {
-                return n;
-            }
-        } else
-            n.native.tokenId === nft.native?.tokenId &&
-                n.native.contract === nft.native?.contract &&
-                n.native.chainId === nft.native?.chainId;
-    })[0];
+    // let isSelected = selectedNFTs.filter((n) => {
+    //     if (from.type === "Solana") {
+    //         if (n.native.nftMint === nft.native.nftMint) {
+    //             return n;
+    //         }
+    //     } else
+    // n.native.tokenId === nft.native?.tokenId &&
+    //     n.native.contract === nft.native?.contract &&
+    //     n.native.chainId === nft.native?.chainId;
+    // })[0];
+
+    // const selected = () => {
+    //     switch (from.type) {
+    //         case "Solana":
+    //             return selectedNFTs.filter(
+    //                 (n) => n.native.nftMint === nft.native.nftMint
+    //             )[0];
+    //         case "APTOS":
+    //             return selectedNFTs.filter(
+    //                 (n) =>
+    //                     n.native.collection_creator ===
+    //                         nft.native?.collection_creator &&
+    //                     n.native.token_name === nft.native?.token_name
+    //             )[0];
+    //         default:
+    //             return selectedNFTs.filter(
+    //                 (n) =>
+    //                     n.native.tokenId === nft.native?.tokenId &&
+    //                     n.native.contract === nft.native?.contract &&
+    //                     n.native.chainId === nft.native?.chainId
+    //             )[0];
+    //     }
+    // };
+
+    // let isSelected =
+    //     from.type === "Solana"
+    //         ? selectedNFTs.filter(
+    //               (n) => n.native.nftMint === nft.native.nftMint
+    //           )[0]
+    //         : selectedNFTs.filter(
+    //               (n) =>
+    //                   n.native.tokenId === nft.native?.tokenId &&
+    //                   n.native.contract === nft.native?.contract &&
+    //                   n.native.chainId === nft.native?.chainId
+    //           )[0];
 
     function addRemoveNFT(chosen) {
-        if (!isSelected) {
+        if (!selected(from.type, nft, selectedNFTs)) {
             dispatch(setSelectedNFTList(chosen));
         } else {
             dispatch(removeFromSelectedNFTList(nft));
         }
     }
-    console.log({ isSelected });
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -156,7 +191,7 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
                             )}
 
                             {!claimables && nft.whitelisted ? (
-                                !isSelected ? (
+                                !selected(from.type, nft, selectedNFTs) ? (
                                     <div className="nft-radio"></div>
                                 ) : (
                                     <div className="nft-radio--selected"></div>
