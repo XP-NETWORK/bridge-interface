@@ -3,13 +3,20 @@ import store from "../store/store";
 import { setEachNFT, setEachClaimables } from "../store/reducers/generalSlice";
 
 import CacheService from "../services/cacheService";
-import WhiteListedPool from "../services/whiteListedPool";
 
 const cache = CacheService();
-const whiteListedPool = WhiteListedPool();
 
-export const parseNFT = async (bridge, nft, index, testnet, claimable) => {
+export const parseNFT = async (
+  serviceContainer,
+  nft,
+  index,
+  testnet,
+  claimable
+) => {
   const { uri } = nft;
+
+  console.log(serviceContainer);
+  const { bridge, whitelistedPool } = serviceContainer;
 
   let whitelisted = !testnet
     ? nft?.native?.contract === "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a"
@@ -73,7 +80,7 @@ export const parseNFT = async (bridge, nft, index, testnet, claimable) => {
       })(),
       !testnet
         ? !cache.isRestricted(nft.uri)
-          ? whiteListedPool.add(bridge.isWhitelisted.bind(bridge))(
+          ? whitelistedPool.add(bridge.isWhitelisted.bind(bridge))(
               from.nonce,
               nft
             )
