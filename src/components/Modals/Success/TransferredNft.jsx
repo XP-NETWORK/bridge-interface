@@ -92,8 +92,8 @@ export default function TransferredNft({ nft, links }) {
             {txn?.hash
               ? StringShortener(txn?.hash, 3)
               : hashes.depHash
-              ? StringShortener(hashes.depHash, 3)
-              : "..."}
+                ? StringShortener(hashes.depHash, 3)
+                : "..."}
           </a>
         </div>
         <div className="chain-hash">
@@ -103,7 +103,7 @@ export default function TransferredNft({ nft, links }) {
             rel="noreferrer"
             href={`${links.txTo}${hashes?.destHash}`}
           >
-            {hashes.destHash ? StringShortener(hashes.destHash) : "..."}
+            {hashes.destHash ? StringShortener(hashes.destHash, 3) : "..."}
           </a>
         </div>
       </div>

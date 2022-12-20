@@ -19,6 +19,7 @@ import { setChainFactoryConfig } from "../store/reducers/signersSlice";
 import Harmony from "@harmony-js/core";
 
 const socketUrl = "wss://dev-explorer-api.herokuapp.com";
+const scraperUrl = "wss://dest-scraper.herokuapp.com";
 const testnet = window.location.pathname.includes("testnet");
 const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/";
 
@@ -67,6 +68,10 @@ export const convertTransactionHash = (txn) => {
 };
 
 export const socket = io(testnet ? testnetSocketUrl : socketUrl, {
+  path: "/socket.io",
+});
+
+export const scraperSocket = io(scraperUrl, {
   path: "/socket.io",
 });
 

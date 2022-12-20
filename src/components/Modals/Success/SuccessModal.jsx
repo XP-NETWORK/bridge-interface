@@ -5,7 +5,7 @@ import moment from "moment";
 import TransferredNft from "./TransferredNft";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useEffect } from "react";
-import { socket, StringShortener } from "../../../wallet/helpers";
+import { socket, StringShortener, scraperSocket } from "../../../wallet/helpers";
 
 import {
   cleanTxnHashArr,
@@ -90,14 +90,22 @@ export default withServices(function SuccessModal({ serviceContainer }) {
   const shortReceiver = StringShortener(receiver, 6);
 
   useEffect(() => {
-    socket.on("incomingEvent", async (e) => {
+    const incoming = async (e) => {
       dispatch(setTxnStatus(e));
       console.log("Incoming Event: ", e);
-    });
-    socket.on("updateEvent", async (e) => {
+    };
+
+    const update = (text) => async (e) => {
       dispatch(setTxnStatus(e));
-      console.log("Update Event: ", e);
-    });
+      console.log(text, e);
+    };
+
+    const updateOld = update("Update Event: ");
+    const updateScraper = update("Update Event ScraperSocket: ");
+
+    socket.on("incomingEvent", incoming);
+    scraperSocket.on("updateEvent", updateScraper);
+    socket.on("updateEvent", updateOld);
 
     Promise.all([bridge.getChain(from.nonce), bridge.getChain(to.nonce)]).then(
       ([fromChain, toChain]) => {
@@ -127,8 +135,9 @@ export default withServices(function SuccessModal({ serviceContainer }) {
 
     return () => {
       if (socket) {
-        socket.off("incomingEvent");
-        socket.off("updateEvent");
+        socket.off("incomingEvent", incoming);
+        socket.off("updateEvent", updateOld);
+        scraperSocket.off("updateEvent", updateScraper);
       }
     };
   }, []);
@@ -218,13 +227,13 @@ export default withServices(function SuccessModal({ serviceContainer }) {
           <div className="success-nft-info">
             {selectedNFTList.length
               ? selectedNFTList.map((nft, index) => (
-                  <TransferredNft
-                    key={`index-${index}-nft-success`}
-                    nft={nft}
-                    links={links}
-                    testnet={testnet}
-                  />
-                ))
+                <TransferredNft
+                  key={`index-${index}-nft-success`}
+                  nft={nft}
+                  links={links}
+                  testnet={testnet}
+                />
+              ))
               : ""}
           </div>
         </div>

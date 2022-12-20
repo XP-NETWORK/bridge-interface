@@ -115,6 +115,17 @@ const generalSlice = createSlice({
         return n;
       });
     },
+    setWhiteListedCollection(state, action) {
+      const { contract } = action.payload;
+      
+      state.currentsNFTs = state.currentsNFTs.map((n) => {
+        if (n.native.contract === contract) n = {
+          ...n,
+          whitelisted: true
+        }
+        return n;
+      });
+    },
     setEachClaimables(state, action) {
       const { nftObj, index } = action.payload;
       state.algorandClaimables = state.algorandClaimables.map((n, i) => {
@@ -389,6 +400,7 @@ const generalSlice = createSlice({
     setError(state, action) {
       if (action.payload) {
         const { err, data, message } = action.payload;
+       
 
         switch (true) {
           case typeof data === "object":
@@ -638,6 +650,7 @@ export const {
   setTonAccount,
   setTonWallet,
   setStaging,
+  setWhiteListedCollection,
   setAptosAccount,
 } = generalSlice.actions;
 
