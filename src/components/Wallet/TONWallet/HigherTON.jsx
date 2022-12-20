@@ -1,10 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setAccount,
   setConnectedWallet,
   setTonAccount,
   setTonWallet,
   setWalletsModal,
+  setFrom,
 } from "../../../store/reducers/generalSlice";
 import {
   setSigner,
@@ -28,15 +30,19 @@ import { getRightPath } from "../../../wallet/helpers";
 import store from "../../../store/store";
 import { useNavigate } from "react-router";
 
-export default function HigherTON(OriginalComponent) {
-  //
-  return function updatedComponent() {
-    //
+import { withServices } from "../../App/hocs/withServices";
 
+import { Chain } from "xp.network";
+import { getChainObject } from "../../../components/values";
+
+function HigherTON(OriginalComponent) {
+  //
+  function updatedComponent({ serviceContainer }) {
+    //
+    const { bridge } = serviceContainer;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { from, to, temporaryFrom } = useSelector((state) => state.general);
-    const factory = useSelector((state) => state.general.factory);
 
     const tonKeeperSession = useSelector(
       (state) => state.tonStore.tonKeeperSession
@@ -79,7 +85,10 @@ export default function HigherTON(OriginalComponent) {
       let account;
       let signer;
       let connectedWallet;
-      const fromChain = await factory.inner(27);
+      //const fromChain = await factory.inner(27);
+      const chainWrapper = await bridge.getChain(from?.nonce || Chain.TON);
+      const { chain: fromChain } = chainWrapper;
+
       switch (wallet) {
         case "TonWallet": {
           account = await connectTonWallet();
@@ -144,6 +153,11 @@ export default function HigherTON(OriginalComponent) {
         default:
           break;
       }
+
+      chainWrapper.setSigner(signer);
+      bridge.setCurrentType(chainWrapper);
+      dispatch(setAccount(account.address));
+
       dispatch(setConnectedWallet(connectedWallet));
       dispatch(setTonAccount(account.address));
       dispatch(setWalletAddress(account.address));
@@ -151,6 +165,10 @@ export default function HigherTON(OriginalComponent) {
       dispatch(setTonWallet(true));
       dispatch(setWalletsModal(false));
       dispatch(setQRCodeModal(false));
+
+      if (!from) {
+        dispatch(setFrom(getChainObject(Chain.TON)));
+      }
 
       if (from && to) {
         navigate(getRightPath("TON"));
@@ -160,5 +178,9 @@ export default function HigherTON(OriginalComponent) {
     return (
       <OriginalComponent styles={getStyles} connectWallet={connectWallet} />
     );
-  };
+  }
+
+  return withServices(updatedComponent);
 }
+
+export default HigherTON;
