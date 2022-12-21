@@ -19,7 +19,10 @@ import { useDidUpdateEffect } from "../Settings/hooks";
 import Image from "./Image";
 import SFTMark from "./SFTMark";
 import { WhitelistButton } from "./WhitelistButton";
-import { setTransferLoaderModal, setWhiteListedCollection } from "../../store/reducers/generalSlice";
+import {
+    setTransferLoaderModal,
+    setWhiteListedCollection,
+} from "../../store/reducers/generalSlice";
 import OnlyVideo from "./OnlyVideo";
 import { chains } from "../values";
 import OriginChainMark from "./OriginChainMark";
@@ -109,31 +112,30 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
 
     const onClickWhiteListButton = async () => {
         // eslint-disable-next-line no-debugger
-
-        console.log(nft.native.contract);
         dispatch(setTransferLoaderModal(true));
         try {
-            const s = await factory.whitelistEVM(
-                from.nonce,
-                nft.native.contract
+            await factory.whitelistEVM(from.nonce, nft.native.contract);
+            const interval = setInterval(
+                () =>
+                    bridge.isWhitelisted(from.nonce, nft).then((result) => {
+                        if (result) {
+                            dispatch(setTransferLoaderModal(false));
+
+                            dispatch(
+                                setWhiteListedCollection({
+                                    contract: nft.native.contract,
+                                })
+                            );
+                            clearInterval(interval);
+                        }
+                    }),
+                5000
             );
-            console.log({ s });
-
-            const interval = setInterval(() => bridge.isWhitelisted(from.nonce, nft).then(result => {
-                console.log(result, 'wl-result');
-                if (result) {
-                    dispatch(setTransferLoaderModal(false));
-
-                    dispatch(setWhiteListedCollection({ contract: nft.native.contract }));
-                    clearInterval(interval)
-                }
-            }), 5000)
 
             setTimeout(() => {
                 dispatch(setTransferLoaderModal(false));
-                clearInterval(interval)
-            }, 80 * 1000)
-
+                clearInterval(interval);
+            }, 80 * 1000);
         } catch (error) {
             dispatch(setTransferLoaderModal(false));
             console.log(error.message);
@@ -167,12 +169,10 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
                                 {originChainImg && (
                                     <OriginChainMark icon={originChainImg} />
                                 )}
-                                {!nft.whitelisted && (
-                                    <WhitelistButton
-                                        isNFTWhitelisted={nft.whitelisted}
-                                        whitelist={onClickWhiteListButton}
-                                    />
-                                )}
+                                <WhitelistButton
+                                    isNFTWhitelisted={nft.whitelisted}
+                                    whitelist={onClickWhiteListButton}
+                                />
                             </div>
                             {nft.uri && nft.image && nft.animation_url ? (
                                 <VideoAndImage
