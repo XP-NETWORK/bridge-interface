@@ -10,7 +10,7 @@ import NFTdetails from "./NFTdetails";
 import { parseNFT } from "../../wallet/nftParser";
 import PropTypes from "prop-types";
 
-export default function NFTlistedCard({ bridge, chain, nft, index }) {
+export default function NFTlistedCard({ serviceContainer, chain, nft, index }) {
   const dispatch = useDispatch();
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
 
@@ -54,7 +54,7 @@ export default function NFTlistedCard({ bridge, chain, nft, index }) {
     if (isVisible) {
       if (!nft.dataLoaded) {
         const _nft = chain.preParse(nft);
-        parseNFT(bridge, _nft, index, testnet);
+        parseNFT(serviceContainer, _nft, index, testnet);
       }
     }
   }, [isVisible, nft]);
@@ -127,5 +127,5 @@ NFTlistedCard.propTypes = {
   nft: PropTypes.object,
   index: PropTypes.string,
   chain: PropTypes.object,
-  bridge: PropTypes.object,
+  serviceContainer: PropTypes.object,
 };

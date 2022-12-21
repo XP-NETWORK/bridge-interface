@@ -59,7 +59,7 @@ function NFTgridView({ serviceContainer }) {
                 key={`nft-${index}`}
                 claimables={true}
                 chain={chain}
-                bridge={bridge}
+                serviceContainer={serviceContainer}
               />
             ))}
           {currentsNFTs?.length
@@ -69,7 +69,7 @@ function NFTgridView({ serviceContainer }) {
                   index={index}
                   key={`nft-${index}`}
                   chain={chain}
-                  bridge={bridge}
+                  serviceContainer={serviceContainer}
                 />
               ))
             : (!algorandClaimables || algorandClaimables?.length < 1) && (

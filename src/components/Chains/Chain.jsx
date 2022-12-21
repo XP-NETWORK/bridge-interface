@@ -100,5 +100,5 @@ Chain.propTypes = {
   chainKey: PropTypes.string,
   maintenance: PropTypes.bool,
   updated: PropTypes.bool,
-  nonce: PropTypes.string,
+  nonce: PropTypes.number,
 };

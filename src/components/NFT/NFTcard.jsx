@@ -32,10 +32,17 @@ NFTcard.propTypes = {
     index: PropTypes.number,
     claimables: PropTypes.bool,
     chain: PropTypes.object,
-    bridge: PropTypes.object,
+    serviceContainer: PropTypes.object,
 };
 
-export default function NFTcard({ bridge, chain, nft, index, claimables }) {
+export default function NFTcard({
+    serviceContainer,
+    chain,
+    nft,
+    index,
+    claimables,
+}) {
+    const { bridge, whitelistedPool } = serviceContainer;
     const dispatch = useDispatch();
     const [detailsOn, setDetailsOn] = useState(false);
     const search = useSelector((state) => state.general.NFTListSearch);
@@ -105,26 +112,36 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
         if (isVisible) {
             if (!nft.dataLoaded) {
                 const _nft = chain.preParse(nft);
-                parseNFT(bridge, _nft, index, testnet, claimables);
+                parseNFT(serviceContainer, _nft, index, testnet, claimables);
             }
         }
     }, [isVisible, nft]);
 
     const onClickWhiteListButton = async () => {
         // eslint-disable-next-line no-debugger
+
+        console.log(nft.native.contract);
         dispatch(setTransferLoaderModal(true));
         try {
-            await factory.whitelistEVM(from.nonce, nft.native.contract);
+            const s = await factory.whitelistEVM(
+                from.nonce,
+                nft.native.contract
+            );
+            console.log({ s });
+
             const interval = setInterval(
                 () =>
                     bridge.isWhitelisted(from.nonce, nft).then((result) => {
+                        console.log(result, "wl-result");
                         if (result) {
                             dispatch(setTransferLoaderModal(false));
-
                             dispatch(
                                 setWhiteListedCollection({
                                     contract: nft.native.contract,
                                 })
+                            );
+                            whitelistedPool.whitelistContract(
+                                nft.native.contract
                             );
                             clearInterval(interval);
                         }
@@ -169,10 +186,12 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
                                 {originChainImg && (
                                     <OriginChainMark icon={originChainImg} />
                                 )}
-                                <WhitelistButton
-                                    isNFTWhitelisted={nft.whitelisted}
-                                    whitelist={onClickWhiteListButton}
-                                />
+                                {!nft.whitelisted && (
+                                    <WhitelistButton
+                                        isNFTWhitelisted={nft.whitelisted}
+                                        whitelist={onClickWhiteListButton}
+                                    />
+                                )}
                             </div>
                             {nft.uri && nft.image && nft.animation_url ? (
                                 <VideoAndImage
