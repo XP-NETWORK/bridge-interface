@@ -31,7 +31,7 @@ export default function ChainSelectBox() {
 
     const switchChains = (e) => {
         // eslint-disable-next-line no-debugger
-        debugger;
+        // debugger;
         if (from.type !== to.type) {
             switch (from.type) {
                 case "Hedera":
@@ -98,6 +98,7 @@ export default function ChainSelectBox() {
                     break;
                 case "Solana":
                     if (account) {
+                        console.log({ to, from });
                         dispatch(setTemporaryFrom(to));
                         dispatch(setTemporaryTo(from));
                         dispatch(setChangeWallet(true));
