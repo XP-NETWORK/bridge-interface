@@ -6,9 +6,11 @@ import React from "react";
 
 import { withServices } from "../../App/hocs/withServices";
 import { Chain } from "xp.network";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     setAccount,
+    setConnectedWallet,
+    setRedirectModal,
     // setError,
     setWalletsModal,
 } from "../../../store/reducers/generalSlice";
@@ -16,6 +18,7 @@ import { onPhantom, onSolflare } from "./SoloanaConnectors";
 
 export default function HigherSolana(OriginalComponent) {
     const updatedComponent = withServices((props) => {
+        const { innerWidth } = useSelector((state) => state.general);
         const { serviceContainer, close } = props;
         const { bridge } = serviceContainer;
         const dispatch = useDispatch();
@@ -24,10 +27,20 @@ export default function HigherSolana(OriginalComponent) {
             let account;
             switch (wallet) {
                 case "Phantom":
+                    if (innerWidth < 425) {
+                        dispatch(setRedirectModal("Phantom"));
+                        return;
+                    }
                     account = await onPhantom();
+                    dispatch(setConnectedWallet("Phantom"));
                     break;
                 case "Solflare":
+                    if (innerWidth < 425) {
+                        dispatch(setRedirectModal("Solflare"));
+                        return;
+                    }
                     account = await onSolflare();
+                    dispatch(setConnectedWallet("Solflare"));
                     break;
                 default:
                     break;
