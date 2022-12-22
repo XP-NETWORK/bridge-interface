@@ -75,7 +75,7 @@
         "web3-providers-connex": "^0.7.4",
         "web3-utils": "^1.6.0",
         "web3modal": "^1.9.6",
-        "xp.network": "git+https://github.com/xp-network/xpjs#bleeding-edge"
+        "xp.network": "git+https://github.com/xp-network/xpjs#feat/whitelist"
     },
     "scripts": {
         "start": "react-app-rewired start",

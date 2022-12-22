@@ -11564,9 +11564,9 @@ ieee754@^1.1.13, ieee754@^1.2.1:
   integrity sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==
 
 ignore@^5.2.0:
-  version "5.2.2"
-  resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.2.tgz#7e5f30224584b67aeeefe383a24a61dce4cb370d"
-  integrity sha512-m1MJSy4Z2NAcyhoYpxQeBsc1ZdNQwYjN0wGbLBlnVArdJ90Gtr8IhNSfZZcCoR0fM/0E0BJ0mf1KnLNDOCJP4w==
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.4.tgz#a291c0c6178ff1b960befe47fcdec301674a6324"
+  integrity sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==
 
 immediate@^3.2.3:
   version "3.3.0"
@@ -16734,9 +16734,9 @@ secretjs@=1.4.5:
     secure-random "1.1.2"
 
 secretjs@^1.4.5:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.5.1.tgz#d3363dba472064feb0117452a5042df220fad6b4"
-  integrity sha512-R4FNh0RIoyHa1gaVs+utTWogOcGUu+UW85pX8k0KRzWUmxjDUGjutPztwY5Wl3O0LIyOiqvBpaDBxooxfe6FKw==
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.5.3.tgz#c02b2bf0c1ed74e0d4446c485fb6db85e9e2995a"
+  integrity sha512-eKK1QX4bgGKFgALeT3zWIIlCyg59gTcsq0hh60NOSsKc9DWwnPvDdxyJ/RtwACFRAkuSae9SbXafxOvqPJumhQ==
   dependencies:
     "@cosmjs/encoding" "0.27.1"
     "@cosmjs/math" "0.27.1"
@@ -19558,9 +19558,9 @@ xmlhttprequest@1.8.0:
   resolved "https://registry.yarnpkg.com/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz#67fe075c5c24fef39f9d65f5f7b7fe75171968fc"
   integrity sha512-58Im/U0mlVBLM38NdZjHyhuMtCqa61469k2YP/AaPbvCoV9aQGUpbJBj1QRm2ytRiVQBD/fsw7L2bJGDVQswBA==
 
-"xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
+"xp.network@git+https://github.com/xp-network/xpjs#feat/whitelist":
   version "4.0.2"
-  resolved "git+https://github.com/xp-network/xpjs#2c5f8547fc5a4d85228d516fbfa528cbb8f92a0d"
+  resolved "git+https://github.com/xp-network/xpjs#71cf63dea99bd636a4544bea0242bb1e56e5c8c4"
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"
