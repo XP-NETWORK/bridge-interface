@@ -8413,10 +8413,9 @@ crypto-es@^1.2.7:
   dependencies:
     axios "^0.21.1"
 
-"crypto-exchange-rate@git+https://github.com/xp-network/exchange-rate#7e1266d8ab36354c50e80141692beb53625aaaef":
+"crypto-exchange-rate@git+https://github.com/xp-network/exchange-rate#0fe687a60ed884c129c87f93028c7b057543d09b":
   version "1.0.0"
-  uid "7e1266d8ab36354c50e80141692beb53625aaaef"
-  resolved "git+https://github.com/xp-network/exchange-rate#7e1266d8ab36354c50e80141692beb53625aaaef"
+  resolved "git+https://github.com/xp-network/exchange-rate#0fe687a60ed884c129c87f93028c7b057543d09b"
   dependencies:
     axios "^0.21.1"
 
@@ -19558,9 +19557,9 @@ xmlhttprequest@1.8.0:
   resolved "https://registry.yarnpkg.com/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz#67fe075c5c24fef39f9d65f5f7b7fe75171968fc"
   integrity sha512-58Im/U0mlVBLM38NdZjHyhuMtCqa61469k2YP/AaPbvCoV9aQGUpbJBj1QRm2ytRiVQBD/fsw7L2bJGDVQswBA==
 
-"xp.network@git+https://github.com/xp-network/xpjs#feat/whitelist":
+"xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "4.0.2"
-  resolved "git+https://github.com/xp-network/xpjs#71cf63dea99bd636a4544bea0242bb1e56e5c8c4"
+  resolved "git+https://github.com/xp-network/xpjs#87b4bf2db252637b11fa79617283de62ae3ffe5f"
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"
@@ -19590,7 +19589,7 @@ xmlhttprequest@1.8.0:
     bignumber.js "=9.0.1"
     bn.js "^5.2.1"
     buffer "^6.0.3"
-    crypto-exchange-rate "git+https://github.com/xp-network/exchange-rate#7e1266d8ab36354c50e80141692beb53625aaaef"
+    crypto-exchange-rate "git+https://github.com/xp-network/exchange-rate#0fe687a60ed884c129c87f93028c7b057543d09b"
     ethers "^5.5.4"
     google-protobuf "^3.20.1"
     js-base64 "^3.6.1"

@@ -18,7 +18,9 @@ import { onPhantom, onSolflare } from "./SoloanaConnectors";
 
 export default function HigherSolana(OriginalComponent) {
     const updatedComponent = withServices((props) => {
-        const { innerWidth } = useSelector((state) => state.general);
+        const { innerWidth, testNet, from } = useSelector(
+            (state) => state.general
+        );
         const { serviceContainer, close } = props;
         const { bridge } = serviceContainer;
         const dispatch = useDispatch();
@@ -56,6 +58,10 @@ export default function HigherSolana(OriginalComponent) {
         const getStyle = () => {
             // eslint-disable-next-line no-debugger
             // debugger;
+            if (!testNet) return { display: "none" };
+            else if (!from) return {};
+            else if (from && from?.type === "Solana")
+                return { pointerEvents: "none", opacity: "0.6" };
         };
 
         return (

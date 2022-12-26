@@ -4,9 +4,10 @@ import icon from "../../../assets/img/wallet/Solflare.svg";
 
 import HigherSolana from "./HigherSolana";
 
-function Solflare({ connectWallet }) {
+function Solflare({ connectWallet, styles }) {
     return (
         <li
+            style={styles()}
             onClick={() => connectWallet("Solflare")}
             className="wllListItem"
             data-wallet="Solflare"
