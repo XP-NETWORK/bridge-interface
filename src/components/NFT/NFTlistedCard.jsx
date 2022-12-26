@@ -53,8 +53,9 @@ export default function NFTlistedCard({ bridge, chain, nft, index }) {
   useEffect(() => {
     if (isVisible) {
       if (!nft.dataLoaded) {
-        const _nft = chain.preParse(nft);
-        parseNFT(bridge, _nft, index, testnet);
+        chain
+          .preParse(nft)
+          .then((_nft) => parseNFT(bridge, _nft, index, testnet));
       }
     }
   }, [isVisible, nft]);
