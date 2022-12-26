@@ -29,6 +29,7 @@ import NearWallet from "./NEARWallet/NearWallet";
 import { biz } from "../values";
 import Phantom from "./SOLWallet/Phantom";
 import Solflare from "./SOLWallet/Solflare";
+import OKX from "./EVMWallet/OKX";
 
 export default function WalletList({ connected, input, discount }) {
     const from = useSelector((state) => state.general.from);
@@ -90,6 +91,21 @@ export default function WalletList({ connected, input, discount }) {
             type: "EVM",
             mobile: true,
             desktop: true,
+            order: 1,
+        },
+        {
+            Component: (
+                <OKX
+                    wallet={"OKX"}
+                    key="OKX"
+                    close={connected}
+                    discount={discount}
+                />
+            ),
+            name: "OKX",
+            type: "EVM",
+            mobile: false,
+            desktop: false,
             order: 1,
         },
         {
