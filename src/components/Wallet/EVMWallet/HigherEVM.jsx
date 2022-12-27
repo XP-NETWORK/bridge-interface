@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { switchNetwork } from "../../../services/chains/evm/evmService";
@@ -17,19 +17,14 @@ import {
   onWalletConnect,
 } from "../ConnectWalletHelper";
 
-import { ethers } from "ethers";
-import { withServices } from "../../App/hocs/withServices";
-
 export default function HigherEVM(OriginalComponent) {
-  const updatedComponent = withServices(({ serviceContainer }) => {
-    const { bridge } = serviceContainer;
-    const { activate, chainId, deactivate, account } = useWeb3React();
+  const updatedComponent = () => {
+    const { activate, chainId, deactivate } = useWeb3React();
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
-    const WCProvider = useSelector((state) => state.general.WCProvider);
-    const bitKeep = useSelector((state) => state.general.bitKeep);
+
     const testnet = useSelector((state) => state.general.testNet);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -89,6 +84,7 @@ export default function HigherEVM(OriginalComponent) {
         default:
           break;
       }
+      dispatch(setWalletsModal(false));
     };
 
     const getStyle = () => {
@@ -118,23 +114,9 @@ export default function HigherEVM(OriginalComponent) {
       }
     };
 
-    useEffect(() => {
-      if (account && from) {
-        bridge.getChain(from.nonce).then((chainWrapper) => {
-          const provider = new ethers.providers.Web3Provider(
-            bitKeep
-              ? window.bitkeep?.ethereum
-              : WCProvider?.walletConnectProvider || window.ethereum
-          );
-          const signer = provider.getSigner(account);
-          chainWrapper.setSigner(signer);
-        });
-      }
-    }, [account, from]);
-
     return (
       <OriginalComponent connectWallet={connectHandler} styles={getStyle} />
     );
-  });
+  };
   return updatedComponent;
 }

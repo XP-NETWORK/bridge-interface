@@ -18,8 +18,10 @@ import { setIsEmpty } from "../store/reducers/paginationSlice";
 import { setChainFactoryConfig } from "../store/reducers/signersSlice";
 import Harmony from "@harmony-js/core";
 
-const socketUrl = "wss://dev-explorer-api.herokuapp.com";
+const socketUrl = "wss://dev-explorer-api.herokuapp.com"; //wss://dest-scraper.herokuapp.com/
+const scraperUrl = "wss://dest-scraper.herokuapp.com";
 const testnet = window.location.pathname.includes("testnet");
+
 const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/";
 
 export const isApproved = async (c, nft) => {
@@ -67,6 +69,10 @@ export const convertTransactionHash = (txn) => {
 };
 
 export const socket = io(testnet ? testnetSocketUrl : socketUrl, {
+  path: "/socket.io",
+});
+
+export const scraperSocket = io(scraperUrl, {
   path: "/socket.io",
 });
 
@@ -369,6 +375,7 @@ export const convert = (address) => {
   if (checkIfOne1(address)) {
     return convertOne1(address);
   }
+  return address;
   // else if(checkIfIo1(address)) return convertIo1(address)
 };
 
@@ -413,6 +420,13 @@ export const getSearched = async (address, searched, nonce) => {
 
 export const errorToLog = async (error) => {
   try {
+    if (
+      typeof error.message === "string" &&
+      error.message.includes("user rejected")
+    ) {
+      return;
+    }
+
     const response = await axios.post(
       "https://bridge-error-logs.herokuapp.com/log/error",
       error,

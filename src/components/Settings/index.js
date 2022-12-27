@@ -12,6 +12,7 @@ import {
   wallets,
   availability,
   fonts,
+  newChains,
 } from "../../store/reducers/settingsSlice";
 import "./Settings.css";
 
@@ -241,6 +242,10 @@ function WSettings({
                                 {chain.value === "xDai"
                                   ? "Gnosis"
                                   : chain.value}
+
+                                {newChains.includes(chain.text) && (
+                                  <span>New chain</span>
+                                )}
 
                                 {chain.maintenance ? (
                                   <span

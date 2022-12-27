@@ -48,8 +48,10 @@ export const BridgeModes = {
   TestNet: "testnet",
   CheckWallet: "checkWallet",
 };
-
+export const getChainObject = (nonce) =>
+  chains.find((chain) => chain.nonce === nonce);
 export const chains = [
+
   {
     type: "EVM",
     key: "Ethereum",
@@ -179,10 +181,10 @@ export const chains = [
     chainId: undefined,
     order: 20,
     nonce: 26,
-    coming: true,
+    coming: false,
     image: { avatar: true, src: Solana },
     maintenance: false,
-    testNet: false,
+    testNet: true,
     mainnet: false,
   },
   {
@@ -336,14 +338,14 @@ export const chains = [
     text: "Moonbeam",
     value: "Moonbeam",
     nonce: 32,
-    order: -6,
+    order: -68,
     chainId: 1284,
     tnChainId: 1287,
     image: { avatar: true, src: Moon },
     testNet: true,
-    mainnet: biz,
-    newChain: biz,
-    coming: !biz,
+    mainnet: true,
+    newChain: true,
+    coming: false,
   },
   {
     type: "EVM",
@@ -422,7 +424,7 @@ export const chains = [
     text: "Caduceus",
     value: "Caduceus",
     nonce: 35,
-    order: -102,
+    order: -52,
     chainId: 256256,
     tnChainId: 512512,
     image: { avatar: true, src: Caduceus },
@@ -452,7 +454,7 @@ export const chains = [
     nonce: 0x22,
     order: 0,
     image: { avatar: true, src: Aptos },
-    testNet: false,
+    testNet: true,
     mainnet: false,
     coming: false,
   },

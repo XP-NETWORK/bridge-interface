@@ -22,6 +22,9 @@ import SFTMark from "./SFTMark";
 import OnlyVideo from "./OnlyVideo";
 import { chains } from "../values";
 import OriginChainMark from "./OriginChainMark";
+import { selected } from "./NFTHelper";
+// import { WhitelistButton } from "./WhitelistButton";
+// import { setTransferLoaderModal } from "../../store/reducers/generalSlice";
 
 NFTcard.propTypes = {
   nft: PropTypes.object,
@@ -35,9 +38,11 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
   const dispatch = useDispatch();
   const [detailsOn, setDetailsOn] = useState(false);
   const search = useSelector((state) => state.general.NFTListSearch);
-
+  const from = useSelector((state) => state.general.from);
+  // const factory = useSelector((state) => state.general.factory);
   const testnet = useSelector((state) => state.general.testNet);
   const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
+
   const [isVisible, setIsVisible] = useState();
   const localhost = window.location.hostname;
   const [imageErr, setImageErr] = useState(false);
@@ -65,15 +70,54 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
     };
   }, []);
 
-  let isSelected = selectedNFTs.filter(
-    (n) =>
-      n.native.tokenId === nft.native?.tokenId &&
-      n.native.contract === nft.native?.contract &&
-      n.native.chainId === nft.native?.chainId
-  )[0];
+  // let isSelected = selectedNFTs.filter((n) => {
+  //     if (from.type === "Solana") {
+  //         if (n.native.nftMint === nft.native.nftMint) {
+  //             return n;
+  //         }
+  //     } else
+  // n.native.tokenId === nft.native?.tokenId &&
+  //     n.native.contract === nft.native?.contract &&
+  //     n.native.chainId === nft.native?.chainId;
+  // })[0];
+
+  // const selected = () => {
+  //     switch (from.type) {
+  //         case "Solana":
+  //             return selectedNFTs.filter(
+  //                 (n) => n.native.nftMint === nft.native.nftMint
+  //             )[0];
+  //         case "APTOS":
+  //             return selectedNFTs.filter(
+  //                 (n) =>
+  //                     n.native.collection_creator ===
+  //                         nft.native?.collection_creator &&
+  //                     n.native.token_name === nft.native?.token_name
+  //             )[0];
+  //         default:
+  //             return selectedNFTs.filter(
+  //                 (n) =>
+  //                     n.native.tokenId === nft.native?.tokenId &&
+  //                     n.native.contract === nft.native?.contract &&
+  //                     n.native.chainId === nft.native?.chainId
+  //             )[0];
+  //     }
+  // };
+
+  // let isSelected =
+  //     from.type === "Solana"
+  //         ? selectedNFTs.filter(
+  //               (n) => n.native.nftMint === nft.native.nftMint
+  //           )[0]
+  //         : selectedNFTs.filter(
+  //               (n) =>
+  //                   n.native.tokenId === nft.native?.tokenId &&
+  //                   n.native.contract === nft.native?.contract &&
+  //                   n.native.chainId === nft.native?.chainId
+  //           )[0];
 
   function addRemoveNFT(chosen) {
-    if (!isSelected) {
+    if (!selected(from.type, nft, selectedNFTs)) {
       dispatch(setSelectedNFTList(chosen));
     } else {
       dispatch(removeFromSelectedNFTList(nft));
@@ -95,11 +139,24 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
   useDidUpdateEffect(() => {
     if (isVisible) {
       if (!nft.dataLoaded) {
-        const _nft = chain.preParse(nft);
-        parseNFT(bridge, _nft, index, testnet, claimables);
+        chain
+          .preParse(nft)
+          .then((_nft) => parseNFT(bridge, _nft, index, testnet, claimables));
       }
     }
   }, [isVisible, nft]);
+
+  // const onClickWhiteListButton = async () => {
+  //     dispatch(setTransferLoaderModal(true));
+  //     try {
+  //         await factory.whitelistEVM(from.nonce, nft.native.contract);
+  //     } catch (error) {
+  //         console.log(error.message);
+  //         // TODO: handle error
+  //     } finally {
+  //         dispatch(setTransferLoaderModal(false));
+  //     }
+  // };
 
   return (
     <>
@@ -117,6 +174,10 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
           >
             {nft.native?.amount && <SFTMark amount={nft?.native.amount} />}
             {originChainImg && <OriginChainMark icon={originChainImg} />}
+            {/* <WhitelistButton
+                            isNFTWhitelisted={nft.whitelisted}
+                            onClick={onClickWhiteListButton}
+                          /> */}
             <div className="nft__main">
               {nft.uri && nft.image && nft.animation_url ? (
                 <VideoAndImage
@@ -135,7 +196,7 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
               )}
 
               {!claimables && nft.whitelisted ? (
-                !isSelected ? (
+                !selected(from.type, nft, selectedNFTs) ? (
                   <div className="nft-radio"></div>
                 ) : (
                   <div className="nft-radio--selected"></div>

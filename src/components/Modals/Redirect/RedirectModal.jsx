@@ -11,6 +11,8 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import vechainframe from "../../../assets/img/icons/vechainframe.svg";
 import bitkeepicon from "../../../assets/img/icons/bitkeeppopup.png";
 import finaframe from "../../../assets/img/icons/finaframe.png";
+import solflare from "../../../assets/img/icons/solflare.png";
+import phantom from "../../../assets/img/icons/phantom.png";
 
 export default function RedirectModal() {
   const dispatch = useDispatch();
@@ -30,21 +32,12 @@ export default function RedirectModal() {
         return finaframe;
       case "VeChainThor":
         return vechainframe;
+      case "Phantom":
+        return phantom;
+      case "Solflare":
+        return solflare;
       case "BitKeep":
         return bitkeepicon;
-      default:
-        break;
-    }
-  };
-
-  const getWalletName = () => {
-    switch (redirectModal) {
-      case "Fina":
-        return "Fina";
-      case "BitKeep":
-        return "BitKeep";
-      case "VeChainThor":
-        return "VeChainThor";
       default:
         break;
     }
@@ -83,7 +76,7 @@ export default function RedirectModal() {
       <Modal.Body className="modalBody text-center">
         <div className="tron-PopUp__list">
           <div className="list__item">1. Copy link below</div>
-          <div className="list__item">{`2. Open ${getWalletName()} App`}</div>
+          <div className="list__item">{`2. Open ${redirectModal} App`}</div>
           <div className="list__item">3. Paste link to browser</div>
           <div className="list__item">4. Enjoy 😉</div>
         </div>

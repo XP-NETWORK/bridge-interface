@@ -61,6 +61,7 @@ function NFTaccount(props) {
 
   const tronWallet = useSelector((state) => state.general.tronWallet);
   const account = useSelector((state) => state.general.account);
+
   const prevAccount = usePrevious(account);
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
@@ -220,38 +221,3 @@ function NFTaccount(props) {
 }
 
 export default withChains(NFTaccount);
-
-/**
- * 
- * const keyHandler = async (event) => {
-      if (event.isComposing || event.keyCode === 229) {
-        return;
-      }
-      if (event.key === "4" && testnet) {
-        await mintForTestNet(from, signer);
-      }
-    };
-
-    window.addEventListener("keydown", keyHandler);
-
-    return () => {
-      window.removeEventListener("keydown", keyHandler);
-    };
- */
-
-/** 
- * 
- * import UserConnect from "../User/UserConnect";
-import AccountModal from "../Modals/AccountModal/AccountModal";
-
- const widget = useSelector((state) => state.widget.widget);
-
-const widget = useSelector((state) => state.widget.widget);
- *   {widget && (
-          <>
-            <UserConnect />
-            {window.innerWidth < 760 && <UserConnect mobile={true} />}
-            <AccountModal />
-          </>
-        )}
- */

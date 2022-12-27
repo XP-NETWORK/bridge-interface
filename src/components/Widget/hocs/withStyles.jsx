@@ -112,7 +112,7 @@ export const withStyles = (Wrapped) =>
           .nftContainer {
             position:relative;
             margin-top: 0;
-    
+            display: ${wsettings ? "flex" : "block"};
           }
           
           .nft-list__wrapper {
@@ -134,7 +134,7 @@ export const withStyles = (Wrapped) =>
           .NFTaccount {
             margin: auto;
             padding-top: 107px;
-            margin-bottom: 0;
+            margin-bottom: ${wsettings ? "auto" : "0"};
           }
     
           #poweredId {

@@ -42,14 +42,13 @@ import { useLocation } from "react-router-dom";
 
 export default function ChangeWalletModal() {
     const location = useLocation();
+    const dispatch = useDispatch();
+    const { deactivate } = useWeb3React();
     const changeWallet = useSelector((state) => state.general.changeWallet);
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const temporaryTo = useSelector((state) => state.general.temporaryTo);
     const Sync2 = useSelector((state) => state.general.Sync2);
-
-    const dispatch = useDispatch();
-    const { deactivate } = useWeb3React();
     const evmAccount = useSelector((state) => state.general.account);
     const tronAccount = useSelector((state) => state.general.tronWallet);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
@@ -81,7 +80,11 @@ export default function ChangeWalletModal() {
             case tonAccount?.length > 0:
                 return "TON";
             case evmAccount?.length > 0:
-                return Sync2 ? "VeChain" : "EVM";
+                return Sync2
+                    ? "VeChain"
+                    : from.type === "Solana"
+                    ? "Solana"
+                    : "EVM";
             case algorandAccount?.length > 0:
                 return "Algorand";
             case tezosAccount?.length > 0:
@@ -190,6 +193,13 @@ export default function ChangeWalletModal() {
                 dispatch(setChangeWallet(false));
                 chooseWalletModal();
                 // dispatch(setNFTSetToggler());s
+                if (temporaryTo) setTempTo();
+                break;
+            case "Solana":
+                dispatch(setConnectedWallet(""));
+                dispatch(setTonAccount(""));
+                dispatch(setChangeWallet(false));
+                chooseWalletModal();
                 if (temporaryTo) setTempTo();
                 break;
             default:

@@ -59,6 +59,7 @@ export const withNearConnection = (Wrapped) =>
             if (address && signer) {
               dispatch(setAccount(address));
               dispatch(setSigner(signer));
+              serviceContainer.bridge.setCurrentType(chainWrapper);
               dispatch(setConnectedWallet("Near Wallet"));
               chainWrapper.setSigner(signer);
               dispatch(setFrom(chains.find((c) => c.nonce === Chain.NEAR)));

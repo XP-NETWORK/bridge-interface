@@ -27,8 +27,6 @@ export async function switchNetwork(chain) {
 
   const chainId = `0x${Number(id).toString(16)}`;
 
-  console.log(chainId);
-
   switch (true) {
     case bitKeep:
       try {
