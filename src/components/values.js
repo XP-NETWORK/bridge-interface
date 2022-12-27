@@ -781,6 +781,7 @@ export const coins = [
     "ABEY", //25
     "APT", //26
     "NEAR", //27
+    "OKT", //28
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -1130,6 +1131,13 @@ export const CHAIN_INFO = {
         decimals: 1e8,
         blockExplorerUrls: "https://explorer.mainnet.near.org/accounts/",
         testBlockExplorerUrls: "https://explorer.testnet.near.org/accounts/",
+    },
+    OKC: {
+        native: coins[28],
+        nonce: 0x24,
+        decimals: 1e8,
+        blockExplorerUrls: "https://www.oklink.com/okc/accounts/",
+        testBlockExplorerUrls: "https://www.oklink.com/okc-test/accounts",
     },
     /* Caduceus: {
     native: "CTP",
