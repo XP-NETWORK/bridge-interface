@@ -6,6 +6,8 @@ import { Chain as ChainNonce, CHAIN_INFO } from "xp.network";
 import BigNumber from "bignumber.js";
 
 import { ethers, BigNumber as BN } from "ethers";
+import xpchallenge from "./xpchallenge";
+const Xpchallenge = xpchallenge();
 const feeMultiplier = 1.1;
 
 class AbstractChain {
@@ -309,6 +311,11 @@ class EVM extends AbstractChain {
       throw e;
     }
   }
+
+  setSigner(signer) {
+    super.setSigner(signer);
+    Xpchallenge.connectWallet(signer._address, this.chainParams.name);
+  }
 }
 
 class VeChain extends AbstractChain {
@@ -322,6 +329,14 @@ class Elrond extends AbstractChain {
 
   constructor(params) {
     super(params);
+  }
+
+  setSigner(signer) {
+    super.setSigner(signer);
+    Xpchallenge.connectWallet(
+      signer.address || signer.account.address,
+      this.chainParams.name
+    );
   }
 
   async getNFTs(address) {
