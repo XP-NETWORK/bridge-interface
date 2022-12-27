@@ -13,6 +13,26 @@ export const allchains = [
     chainId: 1284,
   },
   {
+    chainName: "Cadusous TestNet",
+    rpcUrls: ["https://galaxy.block.caduceus.foundation"],
+    chainId: 512512,
+    nativeCurrency: {
+      name: "CMP",
+      symbol: "CMP",
+      decimals: 18,
+    },
+  },
+  {
+    chainName: "Cadusous MainNet",
+    rpcUrls: ["https://mainnet.block.caduceus.foundation"],
+    chainId: 256256,
+    nativeCurrency: {
+      name: "CMP",
+      symbol: "CMP",
+      decimals: 18,
+    },
+  },
+  {
     chainName: "Moonbeam Mainnet",
     rpcUrls: ["https://rpc.api.moonbeam.network"],
     chainId: 1287,

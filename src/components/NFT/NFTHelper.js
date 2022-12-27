@@ -1,5 +1,5 @@
 import store from "../../store/store";
-import { CHAIN_INFO } from "../values";
+
 const supportedVideoFormats = [".mp4", ".ogg", ".webm", ".avi"];
 const supportedImageFormats = [
     ".apng",
@@ -126,10 +126,10 @@ export const isWhiteListed = async (from, nft) => {
     } = store.getState();
     try {
         let whitelisted;
-        const chainNonce = CHAIN_INFO[from].nonce;
+        const chainNonce = from.nonce;
 
         const inner = await factory
-            .inner(chainNonce)
+            .inner(+chainNonce)
             .catch((e) => console.log(e));
         if (inner) {
             try {
@@ -151,5 +151,28 @@ export const isWhiteListed = async (from, nft) => {
         return whitelisted;
     } catch (e) {
         console.log(e);
+    }
+};
+
+export const selected = (type, nft, selectedNFTs) => {
+    switch (type) {
+        case "Solana":
+            return selectedNFTs.filter(
+                (n) => n.native.nftMint === nft.native.nftMint
+            )[0];
+        case "APTOS":
+            return selectedNFTs.filter(
+                (n) =>
+                    n.native.collection_creator ===
+                        nft.native?.collection_creator &&
+                    n.native.token_name === nft.native?.token_name
+            )[0];
+        default:
+            return selectedNFTs.filter(
+                (n) =>
+                    n.native.tokenId === nft.native?.tokenId &&
+                    n.native.contract === nft.native?.contract &&
+                    n.native.chainId === nft.native?.chainId
+            )[0];
     }
 };

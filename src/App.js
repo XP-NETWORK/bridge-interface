@@ -27,6 +27,7 @@ function App({ network }) {
     dispatch(generalSlice.setInnerWidth(window.innerWidth));
     const from = new URLSearchParams(window.location.search).get("from");
     const to = new URLSearchParams(window.location.search).get("to");
+
     if (from !== to) {
       if (from) {
         const fromChain = chains.filter(

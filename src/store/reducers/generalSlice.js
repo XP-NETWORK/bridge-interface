@@ -221,7 +221,11 @@ const generalSlice = createSlice({
       state.NFTList = action.payload;
     },
     setSelectedNFTList(state, action) {
-      state.selectedNFTList = [...state.selectedNFTList, action.payload];
+      const nft = {
+        ...action.payload,
+        amountToTransfer: action.payload.native?.amount ? 1 : undefined,
+      };
+      state.selectedNFTList = [...state.selectedNFTList, nft];
     },
     cleanSelectedNFTList(state) {
       state.selectedNFTList = [];
@@ -239,6 +243,7 @@ const generalSlice = createSlice({
     },
     setSelectedNFTAmount(state, action) {
       const { amount, index } = action.payload;
+
       state.selectedNFTList = state.selectedNFTList.map((e, i) => {
         if (i === index) {
           e.amountToTransfer = amount;

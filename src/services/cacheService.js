@@ -56,7 +56,7 @@ class CacheService {
     return Boolean(num.match(/^0x[0-9a-f]+$/i));
   }
 
-  async unwrap(nft) {
+  /*async unwrap(nft) {
     // eslint-disable-next-line no-debugger
     // debugger;
     if (
@@ -95,7 +95,9 @@ class CacheService {
               .split("-")
               ?.slice(0, 2)
               .join("-");
+
           const token = data.wrapped?.source_token_id || data.wrapped?.nonce;
+
           tokenId = this.isHex(token)
             ? contract + token
             : contract + "-" + ("0000" + Number(token).toString(16)).slice(-4);
@@ -129,7 +131,7 @@ class CacheService {
       tokenId: nft.native?.tokenId,
       contract: nft.collectionIdent,
     };
-  }
+  }*/
 
   isRestricted = (url) => this.forceCache.some((r) => url?.includes(r));
 

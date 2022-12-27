@@ -75,7 +75,7 @@ const transfer = async (
 
   try {
     switch (true) {
-      case amount > 0:
+      /*case amount > 0:
         result = await factory.transferSft(
           fromChain,
           toChain,
@@ -86,7 +86,7 @@ const transfer = async (
           fee,
           mintWith
         );
-        break;
+        break;*/
       default:
         result = await factory.transferNft(
           fromChain,

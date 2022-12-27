@@ -30,6 +30,8 @@ import Aptos from "../assets/img/chain/aptos.svg";
 import InternetComputer from "../assets/img/chain/InternetComputer.svg";
 import near from "../assets/img/wallet/NearWallet.svg";
 
+///import { CHAIN_INFO } from "xp.network";
+
 export const EVM = "EVM";
 export const ELROND = "Elrond";
 export const TEZOS = "TEZOS";
@@ -46,7 +48,8 @@ export const BridgeModes = {
     TestNet: "testnet",
     CheckWallet: "checkWallet",
 };
-
+export const getChainObject = (nonce) =>
+    chains.find((chain) => chain.nonce === nonce);
 export const chains = [
     {
         type: "EVM",
@@ -177,10 +180,10 @@ export const chains = [
         chainId: undefined,
         order: 20,
         nonce: 26,
-        coming: true,
+        coming: false,
         image: { avatar: true, src: Solana },
         maintenance: false,
-        testNet: false,
+        testNet: true,
         mainnet: false,
     },
     {
@@ -334,7 +337,7 @@ export const chains = [
         text: "Moonbeam",
         value: "Moonbeam",
         nonce: 32,
-        order: -6,
+        order: -68,
         chainId: 1284,
         tnChainId: 1287,
         image: { avatar: true, src: Moon },
@@ -418,15 +421,16 @@ export const chains = [
         type: "EVM",
         key: "Caduceus",
         text: "Caduceus",
-        nonce: 30,
-        order: 0,
-        chainId: 1564830818,
-        tnChainId: 1305754875840118,
+        value: "Caduceus",
+        nonce: 35,
+        order: -52,
+        chainId: 256256,
+        tnChainId: 512512,
         image: { avatar: true, src: Caduceus },
-        testNet: false,
-        mainnet: true,
-        // newChain: true,
-        coming: true,
+        testNet: true,
+        mainnet: biz,
+        newChain: true,
+        coming: false,
     },
     {
         type: "EVM",
@@ -437,7 +441,7 @@ export const chains = [
         chainId: 1564830818,
         tnChainId: 1305754875840118,
         image: { avatar: true, src: InternetComputer },
-        testNet: true,
+        testNet: false,
         mainnet: false,
         // newChain: true,
         coming: true,
@@ -451,7 +455,6 @@ export const chains = [
         image: { avatar: true, src: Aptos },
         testNet: true,
         mainnet: false,
-        newChain: false,
         coming: false,
     },
     {
@@ -739,6 +742,14 @@ export const chainsConfig = {
         tx: "https://explorer.mainnet.near.org/transactions/",
         testTx: "https://explorer.testnet.near.org/transactions/",
     },
+    /*Caduceus: {
+    type: "EVM",
+    token: "CTP",
+    image: Caduceus,
+    Chain: Chain.CADUCEUS,
+    //tx: "https://explorer.mainnet.near.org/transactions/",
+    //testTx: "https://explorer.testnet.near.org/transactions/",
+  },*/
 };
 
 export const coins = [
@@ -1053,7 +1064,6 @@ export const CHAIN_INFO = {
         chainId: "secret-4",
         tnChainId: "pulsar-2",
         decimals: 1e6,
-        blockExplorerUrl: "https://atomscan.com/secret-network/accounts/",
         blockExplorerUrls: "https://atomscan.com/secret-network/accounts/",
         testBlockExplorerUrls: "https://chainofsecrets.org/testnet.html/",
     },
@@ -1064,7 +1074,6 @@ export const CHAIN_INFO = {
         chainId: 71402,
         tnChainId: 0x116e9,
         rpc: "https://v1.mainnet.godwoken.io/rpc",
-        blockExplorerUrl: "https://gwscan.com/account/",
         blockExplorerUrls: "https://gwscan.com/account/",
         testBlockExplorerUrls: "https://v1.testnet.gwscan.com/account",
     },
@@ -1072,7 +1081,7 @@ export const CHAIN_INFO = {
         native: coins[22],
         nonce: 0x1d,
         decimals: 1e6,
-        blockExplorerUrl: "https://hashscan.io/#/mainnet/account",
+        blockExplorerUrls: "https://hashscan.io/#/mainnet/account",
         testBlockExplorerUrls: "https://hashscan.io/#/testnet/account",
     },
     Skale: {
@@ -1081,7 +1090,7 @@ export const CHAIN_INFO = {
         decimals: 1e18,
         chainId: 1564830818,
         tnChainId: 1305754875840118,
-        blockExplorerUrl:
+        blockExplorerUrls:
             "https://honorable-steel-rasalhague.explorer.mainnet.skalenodes.com/address/",
         testBlockExplorerUrls:
             "https://rapping-zuben-elakrab.explorer.staging-v2.skalenodes.com/address",
@@ -1095,7 +1104,6 @@ export const CHAIN_INFO = {
         chainId: 1284,
         tnChainId: 1287,
         rpc: "https://rpc.api.moonbase.moonbeam.network",
-        blockExplorerUrl: "https://moonbeam.moonscan.io/address/",
         blockExplorerUrls: "https://moonbeam.moonscan.io/address/",
         testBlockExplorerUrls: "https://moonbase.moonscan.io/address/",
     },
@@ -1105,21 +1113,27 @@ export const CHAIN_INFO = {
         decimals: 1e18,
         chainId: 179,
         tnChainId: 178,
-        blockExplorerUrl: "https://testnet-explorer.abeychain.com/address/",
-        testBlockExplorerUrl: "https://scan.abeychain.com/address/",
+        blockExplorerUrls: "https://testnet-explorer.abeychain.com/address/",
+        testBlockExplorerUrls: "https://scan.abeychain.com/address/",
     },
     APTOS: {
         native: coins[26],
         nonce: 0x22,
         decimals: 1e18,
-        blockExplorerUrl: "https://explorer.aptoslabs.com/?network=mainnet",
-        testBlockExplorerUrl: "https://explorer.aptoslabs.com/?network=testnet",
+        blockExplorerUrls: "https://explorer.aptoslabs.com/?network=mainnet",
+        testBlockExplorerUrls:
+            "https://explorer.aptoslabs.com/?network=testnet",
     },
     NEAR: {
         native: coins[27],
         nonce: 31,
         decimals: 1e8,
-        blockExplorerUrl: "https://explorer.aptoslabs.com/?network=mainnet",
-        testBlockExplorerUrl: "https://explorer.aptoslabs.com/?network=testnet",
+        blockExplorerUrls: "https://explorer.mainnet.near.org/accounts/",
+        testBlockExplorerUrls: "https://explorer.testnet.near.org/accounts/",
     },
+    /* Caduceus: {
+    native: "CTP",
+    nonce: 35,
+    decimals: 1e18,
+  },*/
 };

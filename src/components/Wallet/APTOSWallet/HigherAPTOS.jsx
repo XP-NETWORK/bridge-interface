@@ -12,11 +12,12 @@ import { connectMartian, connectPetra, connectPontem } from "./AptosConnectors";
 export default function HigherAPTOS(OriginalComponent) {
     return function updatedComponent() {
         const dispatch = useDispatch();
-        const from = useSelector((state) => state.general.from);
+        const { from, testNet } = useSelector((state) => state.general);
 
         const getStyles = () => {
             let styles = {};
-            if (from && from.type !== "APTOS") {
+            if (!testNet) return { display: "none" };
+            else if (from && from.type !== "APTOS") {
                 styles = {
                     pointerEvents: "none",
                     opacity: "0.6",
@@ -70,6 +71,7 @@ export default function HigherAPTOS(OriginalComponent) {
             }
             dispatch(setAptosAccount(connected.address));
             dispatch(setAccount(connected.address));
+            dispatch(setWalletsModal(false));
         };
         return (
             <OriginalComponent

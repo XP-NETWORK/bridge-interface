@@ -22,6 +22,13 @@ module.exports = function override(webpackConfig) {
     "@hashgraph/proto": "@hashgraph/proto/lib/proto.js",
   };*/
 
+  webpackConfig.module.rules.push({
+    test: /\.m?js/,
+    resolve: {
+      fullySpecified: false,
+    },
+  });
+
   webpackConfig.plugins.push(
     new webpack.ProvidePlugin({
       process: "process/browser",
