@@ -60,7 +60,7 @@ export default function HigherSolana(OriginalComponent) {
             // debugger;
             if (!testNet) return { display: "none" };
             else if (!from) return {};
-            else if (from && from?.type === "Solana")
+            else if (from && from?.type !== "Solana")
                 return { pointerEvents: "none", opacity: "0.6" };
         };
 
