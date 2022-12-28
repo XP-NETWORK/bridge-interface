@@ -16825,9 +16825,9 @@ secretjs@=1.4.5:
     secure-random "1.1.2"
 
 secretjs@^1.4.5:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.6.0.tgz#9ef605f9b59d03340ebbc9deef8e03466d0e368e"
-  integrity sha512-uhDQBZ6rLiNIhw9Cc/ZqCgMEQ4E3k3l970Qkf0b5IaYOwCTPfjB/9EAwUVbGJY1RHlPQnRoyAXUlIhbXkfZ+sQ==
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.6.1.tgz#0c5e34b041bff51fcdf4732c0707fd431fabf293"
+  integrity sha512-jo8HGJBefc9RCEzlMR1AaxmyrxSpyEoB/8E5keSiriO+JCjfabEIEkW/SP5TEbFp1nJXDPaQMvXDU5nLWS3DlQ==
   dependencies:
     "@cosmjs/encoding" "0.27.1"
     "@cosmjs/math" "0.27.1"
@@ -19664,7 +19664,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "4.0.2"
-  resolved "git+https://github.com/xp-network/xpjs#5c3d8a2089106d1b9fc6cd08ef6c2dcf25d70814"
+  resolved "git+https://github.com/xp-network/xpjs#571df5d0d074e21bec403adf826d5dea7db352f3"
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"
