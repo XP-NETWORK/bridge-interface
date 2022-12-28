@@ -29,6 +29,7 @@ import Caduceus from "../assets/img/chain/caduceus.svg";
 import Aptos from "../assets/img/chain/aptos.svg";
 import InternetComputer from "../assets/img/chain/InternetComputer.svg";
 import near from "../assets/img/wallet/NearWallet.svg";
+import okx from "../assets/img/chain/okx.svg";
 
 ///import { CHAIN_INFO } from "xp.network";
 
@@ -469,6 +470,21 @@ export const chains = [
         mainnet: false,
         coming: false,
     },
+    {
+        type: "EVM",
+        key: "OKC",
+        text: "OKC",
+        value: "OKC",
+        nonce: 0x24,
+        order: -1000,
+        image: { avatar: true, src: okx },
+        testNet: true,
+        mainnet: false,
+        coming: false,
+        newChain: true,
+        chainId: 66,
+        tnChainId: 65,
+    },
 ];
 
 export const chainsConfig = {
@@ -741,6 +757,16 @@ export const chainsConfig = {
         Chain: Chain.NEAR,
         tx: "https://explorer.mainnet.near.org/transactions/",
         testTx: "https://explorer.testnet.near.org/transactions/",
+    },
+    OKC: {
+        type: "EVM",
+        token: "OKT",
+        image: okx,
+        Chain: Chain.OKC,
+        tx: "https://www.oklink.com/okc/tx/",
+        testTx: "https://www.oklink.com/en/okc-test/tx/",
+        chainId: 66,
+        tnChainId: 65,
     },
     /*Caduceus: {
     type: "EVM",
