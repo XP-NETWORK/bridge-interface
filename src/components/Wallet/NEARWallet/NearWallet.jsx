@@ -9,11 +9,18 @@ import { withServices } from "../../App/hocs/withServices";
 import { Chain } from "xp.network";
 import { useDispatch, useSelector } from "react-redux";
 import { setWalletsModal } from "../../../store/reducers/generalSlice";
+import { getRightPath } from "../../../wallet/helpers";
+import { useNavigate } from "react-router-dom";
 
 function NearWallet({ serviceContainer }) {
     //const isMobile = innerWidth <= 480;
     const dispatch = useDispatch();
-    const { from, testNet } = useSelector((state) => state.general);
+    const navigate = useNavigate();
+    const { from, testNet, to } = useSelector((state) => state.general);
+
+    const navigateToAccountRoute = () => {
+        if (from && to) navigate(getRightPath());
+    };
 
     const connectHandler = async () => {
         try {
@@ -35,6 +42,7 @@ function NearWallet({ serviceContainer }) {
             console.log(e, "e");
         }
         dispatch(setWalletsModal(false));
+        navigateToAccountRoute();
     };
 
     const getStyles = () => {
