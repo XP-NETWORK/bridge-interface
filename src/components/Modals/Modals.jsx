@@ -31,7 +31,6 @@ import MaiarModal from "./MaiarModal/MaiarModal";
 
 export default function Modals() {
     const dispatch = useDispatch();
-
     const tronPopUp = useSelector((state) => state.general.tronPopUp);
     const tonQRCodeModal = useSelector((state) => state.tonStore.qrCode);
     const show = useSelector((state) => state.general.about);
