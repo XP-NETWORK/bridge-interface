@@ -21,6 +21,7 @@ import Harmony from "@harmony-js/core";
 const socketUrl = "wss://dev-explorer-api.herokuapp.com"; //wss://dest-scraper.herokuapp.com/
 const scraperUrl = "wss://dest-scraper.herokuapp.com";
 const testnet = window.location.pathname.includes("testnet");
+
 const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/";
 
 export const isApproved = async (c, nft) => {

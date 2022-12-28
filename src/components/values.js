@@ -51,6 +51,7 @@ export const BridgeModes = {
 export const getChainObject = (nonce) =>
   chains.find((chain) => chain.nonce === nonce);
 export const chains = [
+
   {
     type: "EVM",
     key: "Ethereum",

@@ -9,3 +9,5 @@ yarn-error.log
 .prettierre.json
 bridge.code-workspace
 **/workspace.code-workspace
+**/bridge.code-workspace
+

@@ -11,6 +11,8 @@ import {
   scraperSocket,
 } from "../../../wallet/helpers";
 
+
+
 import {
   cleanTxnHashArr,
   removeFromSelectedNFTList,
@@ -21,7 +23,6 @@ import "./SuccessModal.css";
 import Tooltip from "../AccountModal/Tooltip";
 //import { chainsConfig, CHAIN_INFO } from "../../values";
 import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
-
 import { withServices } from "../../App/hocs/withServices";
 
 export default withServices(function SuccessModal({ serviceContainer }) {
@@ -165,12 +166,14 @@ export default withServices(function SuccessModal({ serviceContainer }) {
             </div>
             <div className="success-info-item">
               <div className="info-item-label">Txn Hash</div>
+
               <CopyToClipboard text={tx || "No tx"}>
                 <a
                   href={
                     typeof links.txFrom === "function"
                       ? links.txFrom(tx)
                       : links.txFrom + tx
+
                   }
                   target="_blank"
                   className="success-hash"
@@ -201,11 +204,13 @@ export default withServices(function SuccessModal({ serviceContainer }) {
           <div className="success-info-item">
             <div className="info-item-label">Departure Address</div>
             <a
+
               href={
                 typeof links.addressFrom === "function"
                   ? links.addressFrom(address)
                   : links.addressFrom + address
               }
+
               className="success-hash"
               target="_blank"
               rel="noreferrer"
@@ -224,6 +229,7 @@ export default withServices(function SuccessModal({ serviceContainer }) {
             <div className="info-item-label">Destination Address</div>
             <a
               className="success-hash"
+
               href={
                 typeof links.addressTo === "function"
                   ? links.addressTo(receiver)
@@ -257,3 +263,4 @@ export default withServices(function SuccessModal({ serviceContainer }) {
     </>
   );
 });
+
