@@ -30,7 +30,7 @@ import {
 } from "../Settings/hooks";
 
 import WalletConnectionModal from "../Wallet/WalletConnectionModal";
-import ChangeWalletModal from "../Modals/ChangeWallet/ChangeWalletModal";
+// import ChangeWalletModal from "../Modals/ChangeWallet/ChangeWalletModal";
 
 import NFTscreen from "./NFTscreen";
 import NFTmobileView from "./NFTmobileView";
@@ -198,7 +198,7 @@ function NFTaccount(props) {
                 <EGoldSuccess />
             </Modal>
             <ChangeNetworkModal />
-            <ChangeWalletModal />
+            {/* <ChangeWalletModal /> */}
             <UnsupportedNetwork />
             <SelectNFTAler />
             <PasteDestinationAlert />

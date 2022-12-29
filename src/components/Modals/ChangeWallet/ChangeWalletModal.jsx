@@ -38,12 +38,19 @@ import { Modal } from "react-bootstrap";
 import icon from "../../../assets/img/icons/book.svg";
 import { useWeb3React } from "@web3-react/core";
 import { useLocation } from "react-router-dom";
+// import { withServices } from "../../App/hocs/withServices";
 
 export default function ChangeWalletModal() {
+    // const updatedComponent = withServices((props) => {
+    //     console.log(
+    //         "🚀 ~ file: ChangeWalletModal.jsx:47 ~ updatedComponent ~ props",
+    //         props
+    //     );
+
     const location = useLocation();
     const dispatch = useDispatch();
     const { deactivate } = useWeb3React();
-    const changeWallet = useSelector((state) => state.general.changeWallet);
+    // const changeWallet = useSelector((state) => state.general.changeWallet);
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const temporaryTo = useSelector((state) => state.general.temporaryTo);
@@ -207,13 +214,7 @@ export default function ChangeWalletModal() {
     };
 
     return (
-        <Modal
-            className="ChainModal switchWallet"
-            animation={false}
-            size="sm"
-            show={changeWallet}
-            onHide={() => handleClose()}
-        >
+        <>
             <span className="tron-connection-error-close" onClick={handleClose}>
                 <CloseComp className="svgWidget" />
             </span>
@@ -244,6 +245,11 @@ export default function ChangeWalletModal() {
                     </div>
                 </div>
             </Modal.Body>
-        </Modal>
+        </>
     );
 }
+
+//     );
+
+//     return updatedComponent;
+// }
