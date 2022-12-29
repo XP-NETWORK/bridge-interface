@@ -82,7 +82,7 @@ function ChainListBox({ serviceContainer }) {
     // ! ref
     const chainSelectHandler = async (chain) => {
         // eslint-disable-next-line no-debugger
-        // debugger;
+        debugger;
 
         const chainWrapper = await bridge.getChain(chain.nonce);
 
@@ -124,6 +124,7 @@ function ChainListBox({ serviceContainer }) {
             } else {
                 // dispatch(setTemporaryFrom(chain));
                 dispatch(setChangeWallet(true));
+                dispatch(setTemporaryFrom(chain));
                 handleClose();
             }
         } else if (departureOrDestination === "destination") {

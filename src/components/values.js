@@ -400,9 +400,9 @@ export const chains = [
         order: 0,
         image: { avatar: true, src: HBAR },
         testNet: false,
-        mainnet: false,
+        mainnet: true,
         // newChain: true,
-        coming: true,
+        coming: false,
     },
     {
         type: "EVM",

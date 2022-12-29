@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { switchNetwork } from "../../../services/chains/evm/evmService";
 import {
     setBitKeep,
+    setConnectedWallet,
     setFrom,
     setMetaMask,
     setWalletsModal,
@@ -58,6 +59,7 @@ export default function HigherEVM(OriginalComponent) {
                     );
                     if (connected) {
                         dispatch(setMetaMask(true));
+                        dispatch(setConnectedWallet("MetaMask"));
                         if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                         if (to) {
                             if (
@@ -74,7 +76,10 @@ export default function HigherEVM(OriginalComponent) {
                 case "TrustWallet":
                     connected = await connectTrustWallet(activate, from.text);
                     dispatch(setWalletsModal(false));
-                    if (connected && to) navigateToAccountRoute();
+                    if (connected && to) {
+                        dispatch(setConnectedWallet("TrustWallet"));
+                        navigateToAccountRoute();
+                    }
                     if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                     break;
                 case "WalletConnect":
@@ -84,7 +89,10 @@ export default function HigherEVM(OriginalComponent) {
                         testnet
                     );
                     dispatch(setWalletsModal(false));
-                    if (connected && to) navigateToAccountRoute();
+                    if (connected && to) {
+                        dispatch(setConnectedWallet("WalletConnect"));
+                        navigateToAccountRoute();
+                    }
                     break;
                 case "BitKeep":
                     deactivate();
@@ -98,6 +106,7 @@ export default function HigherEVM(OriginalComponent) {
                 default:
                     break;
             }
+
             dispatch(setWalletsModal(false));
         };
 

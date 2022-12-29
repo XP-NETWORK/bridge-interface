@@ -19,96 +19,26 @@ export default function ChainSelectBox() {
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const account = useSelector((state) => state.general.account);
-    const algorandAccount = useSelector(
-        (state) => state.general.algorandAccount
-    );
-    const secretAccount = useSelector((state) => state.general.secretAccount);
+    // const algorandAccount = useSelector(
+    //     (state) => state.general.algorandAccount
+    // );
+    // const secretAccount = useSelector((state) => state.general.secretAccount);
 
-    const tezosAccount = useSelector((state) => state.general.tezosAccount);
-    const elrondAccount = useSelector((state) => state.general.elrondAccount);
-    const tonAccount = useSelector((state) => state.general.tonAccount);
-    const tronWallet = useSelector((state) => state.general.tronWallet);
+    // const tezosAccount = useSelector((state) => state.general.tezosAccount);
+    // const elrondAccount = useSelector((state) => state.general.elrondAccount);
+    // const tonAccount = useSelector((state) => state.general.tonAccount);
+    // const tronWallet = useSelector((state) => state.general.tronWallet);
 
-    const switchChains = (e) => {
+    const switchChains = async (e) => {
         // eslint-disable-next-line no-debugger
         // debugger;
-        if (from.type !== to.type) {
-            switch (from.type) {
-                case "Hedera":
-                    if (account) {
-                        //TODO
-                    } else handleSwitch(e);
-                    break;
-                case "EVM":
-                    if (account) {
-                        dispatch(setTemporaryFrom(to));
-                        dispatch(setTemporaryTo(from));
-                        dispatch(setChangeWallet(true));
-                    } else handleSwitch(e);
-                    break;
-                case "Tron":
-                    if (tronWallet) {
-                        dispatch(setTemporaryFrom(to));
-                        dispatch(setTemporaryTo(from));
-                        dispatch(setTo(""));
-                        dispatch(setChangeWallet(true));
-                    } else handleSwitch(e);
-                    break;
-                case "Elrond":
-                    if (elrondAccount) {
-                        dispatch(setTemporaryFrom(to));
-                        dispatch(setTemporaryTo(from));
-                        dispatch(setChangeWallet(true));
-                    } else handleSwitch(e);
-                    break;
-                case "Tezos":
-                    if (tezosAccount) {
-                        dispatch(setTemporaryFrom(to));
-                        dispatch(setTemporaryTo(from));
-                        dispatch(setChangeWallet(true));
-                    } else handleSwitch(e);
-                    break;
-                case "VeChain":
-                    if (account) {
-                        dispatch(setTemporaryFrom(to));
-                        dispatch(setTemporaryTo(from));
-                        dispatch(setChangeWallet(true));
-                    } else handleSwitch(e);
-                    break;
-                case "Algorand":
-                    if (algorandAccount) {
-                        dispatch(setTemporaryFrom(to));
-                        dispatch(setTemporaryTo(from));
-                        dispatch(setChangeWallet(true));
-                    } else handleSwitch(e);
-                    break;
-                case "Cosmos":
-                    if (secretAccount) {
-                        dispatch(setTemporaryFrom(to));
-                        dispatch(setTemporaryTo(from));
-                        dispatch(setChangeWallet(true));
-                    } else handleSwitch(e);
-                    break;
-                case "TON":
-                    if (tonAccount) {
-                        dispatch(setTemporaryFrom(to));
-                        dispatch(setTemporaryTo(from));
-                        dispatch(setChangeWallet(true));
-                    } else handleSwitch(e);
-                    break;
-                case "Solana":
-                    if (account) {
-                        console.log({ to, from });
-                        dispatch(setTemporaryFrom(to));
-                        dispatch(setTemporaryTo(from));
-                        dispatch(setChangeWallet(true));
-                    } else handleSwitch(e);
-                    break;
-                default:
-                    break;
-            }
-        } else {
+
+        if ((from && from.type === to.type) || !account) {
             handleSwitch(e);
+        } else {
+            dispatch(setTemporaryFrom(to));
+            dispatch(setTemporaryTo(from));
+            dispatch(setChangeWallet(true));
         }
     };
 
