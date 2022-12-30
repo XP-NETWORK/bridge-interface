@@ -446,8 +446,8 @@ class TON extends AbstractChain {
     super(params);
   }
 
-  preParse(nft) {
-    nft = super.preParse(nft);
+  async preParse(nft) {
+    nft = await super.preParse(nft);
 
     const contract = nft.native?.collectionAddress || "SingleNFt";
     return {
