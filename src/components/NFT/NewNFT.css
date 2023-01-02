@@ -47,11 +47,38 @@
     padding: 6px 5px;
     gap: 2px;
 }
-.origin__mark {
+.nft-actions__container {
+    /* background-color: red; */
+    width: 100%;
+    min-height: 32px;
     position: absolute;
-    left: 9.5px;
-    bottom: 68px;
+    bottom: 0;
     z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4px 4px;
+    align-items: center;
+}
+.whitelist-btn {
+    display: flex;
+    background: #2d51d0;
+
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 160%;
+    color: #fff;
+    margin-left: auto;
+
+    padding: 3px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.whitelist-btn:hover {
+    background: #395feb;
+}
+.whitelist-btn:active {
+}
+.origin__mark {
     background: rgba(255, 255, 255, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 6px;
