@@ -41,7 +41,7 @@ export default function Unscopables({ close }) {
             data-wallet="Unstoppable"
         >
             <img src={icon} alt="#" />
-            <p>Unstoppable domains</p>
+            <p>Unstoppable Domains</p>
         </li>
     );
 }
