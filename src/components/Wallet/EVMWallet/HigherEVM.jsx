@@ -48,15 +48,11 @@ export default function HigherEVM(OriginalComponent) {
 
         const connectHandler = async (wallet) => {
             // eslint-disable-next-line no-debugger
-
+            debugger;
             let connected;
             switch (wallet) {
                 case "MetaMask":
-                    connected = await connectMetaMask(
-                        activate,
-                        from?.text,
-                        to?.text
-                    );
+                    connected = await connectMetaMask(activate, from, to);
                     if (connected) {
                         dispatch(setMetaMask(true));
                         dispatch(setConnectedWallet("MetaMask"));

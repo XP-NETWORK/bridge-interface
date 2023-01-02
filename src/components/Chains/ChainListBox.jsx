@@ -88,6 +88,13 @@ function ChainListBox({ serviceContainer }) {
 
         if (departureOrDestination === "departure") {
             if (
+                chainWrapper.chainParams.name === "VeChain" &&
+                bridge.currentType === "EVM"
+            ) {
+                dispatch(setChangeWallet(true));
+                dispatch(setTemporaryFrom(chain));
+                handleClose();
+            } else if (
                 chainWrapper.chainParams.type === bridge.currentType ||
                 !bridge.currentType
             ) {

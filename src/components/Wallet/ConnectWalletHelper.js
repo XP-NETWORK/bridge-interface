@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 /* eslint-disable valid-typeof */
 
 import { injected, algoConnector, web3Modal } from "../../wallet/connectors";
@@ -226,7 +227,7 @@ export const connectBitKeep = async (from) => {
 };
 
 export const connectMetaMask = async (activate, from, to) => {
-    // debugger;
+    debugger;
     try {
         if (!window.ethereum && window.innerWidth <= 600) {
             const link = `dapp://${window.location.host}?to=${to}&from=${from}/`;
