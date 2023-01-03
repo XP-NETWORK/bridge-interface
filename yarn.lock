@@ -5683,7 +5683,7 @@
   resolved "https://registry.yarnpkg.com/@uauth/common/-/common-2.3.0.tgz#de0018503614e993af9f6373983bc53828bf9b80"
   integrity sha512-RuRYd8UgVN1eotoZjj2YhgHHP7PlEGxPEKSqUbmtJYumb6DLrlR0HNRF+wM8LQz/x4SBBo+hdm0ueC5bAHcXBg==
 
-"@uauth/js@^2.3.0":
+"@uauth/js@^2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@uauth/js/-/js-2.4.0.tgz#f69d3221f560b0984955432f6de5e6eb089f36a6"
   integrity sha512-KYWnEa2+Waa216TNhKmd1M78A8VnEjL6TbfaFHUKtixzKHYMYPIGj3zrD2Am3KHKIyq3bP11++ozoos6551Qrw==
@@ -5693,7 +5693,7 @@
     global "^4.4.0"
     jose "^4.5.0"
 
-"@uauth/web3modal@^2.2.0":
+"@uauth/web3modal@^2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@uauth/web3modal/-/web3modal-2.4.0.tgz#355fbdedb49058cf8c460b461d25ff43844a6444"
   integrity sha512-+R3n7Xx9eK54nfagtYUylaAYACjeg7uqgwD4FeMRdhhcP7lhBEn/LyueWVgwA8oC1itg/Oer/HG9t1DuuxTWLw==
@@ -6136,7 +6136,7 @@
     js-sha3 "0.8.0"
     query-string "6.13.5"
 
-"@walletconnect/web3-provider@^1.7.7":
+"@walletconnect/web3-provider@^1.8.0":
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/@walletconnect/web3-provider/-/web3-provider-1.8.0.tgz#e90d903f4c609b7158ecb5f0f41df121e93b56b5"
   integrity sha512-lqqEO0oRmCehH+c8ZPk3iH7I7YtbzmkWd58/Or2AgWAl869JamzndKCD3sTlNsPRQLxxPpraHQqzur7uclLWvg==
@@ -19064,7 +19064,7 @@ web3@^1.7.1, web3@^1.7.3:
     web3-shh "1.8.1"
     web3-utils "1.8.1"
 
-web3modal@^1.9.6:
+web3modal@^1.9.10:
   version "1.9.10"
   resolved "https://registry.yarnpkg.com/web3modal/-/web3modal-1.9.10.tgz#ab7836ff27c6a16b9ca881ba0e8008bd33cb0dff"
   integrity sha512-gRByp+toRiADwkJLLGRXsnIVbLS1aJB71sJyryS6C7cF6jJ3cRN1LbPYEMObMyJkyjOZonx0CNZVAYGiD099aA==

@@ -7,11 +7,16 @@ import {
     setUnstoppableDomains,
 } from "../../store/reducers/generalSlice";
 import PropTypes from "prop-types";
+// import { withServices } from "../../App/hocs/withServices";
 
-export default function Unscopables({ close }) {
+export default function Unscopables() {
+    // const updatedComponent = withServices((props) => {})
+
     const dispatch = useDispatch();
     const handleConnect = async () => {
-        close();
+        // close();
+        // eslint-disable-next-line no-debugger
+        debugger;
         window.localStorage.clear();
         const address = await connectUnstoppable();
         if (address) dispatch(setUnstoppableDomains(true));
@@ -41,10 +46,11 @@ export default function Unscopables({ close }) {
             data-wallet="Unstoppable"
         >
             <img src={icon} alt="#" />
-            <p>Unstoppable domains</p>
+            <p>Unstoppable Domains</p>
         </li>
     );
 }
+
 Unscopables.propTypes = {
     close: PropTypes.any,
 };

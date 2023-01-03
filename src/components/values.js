@@ -479,7 +479,7 @@ export const chains = [
         order: -1000,
         image: { avatar: true, src: okx },
         testNet: true,
-        mainnet: false,
+        mainnet: true,
         coming: false,
         newChain: true,
         chainId: 66,

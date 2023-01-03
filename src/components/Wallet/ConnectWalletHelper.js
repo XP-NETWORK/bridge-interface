@@ -104,6 +104,8 @@ export const connectHashpack = async () => {
 };
 
 export const connectUnstoppable = async () => {
+    // eslint-disable-next-line no-debugger
+    // debugger;
     try {
         const provider = await web3Modal.connect();
         return provider.sendAsync();
