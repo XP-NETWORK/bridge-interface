@@ -1,12 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
+
 import { ReactComponent as MetaIcon } from "../../../assets/img/wallet/MetaMask.svg";
 import "../Widget.css";
 
 import Wservice from "../wservice";
 import { initialState as initialWidget } from "../../../store/reducers/settingsSlice";
 import mobileBanner from "../../Settings/assets/img/mobileOnlyBanner.svg";
-//import {useNavigate} from 'react-router-dom'
+
+import { useSearchParams } from "react-router-dom";
 
 const wservice = Wservice();
 
@@ -60,42 +61,25 @@ const Connect = () => {
   );
 };
 
-export const withConnect = (App) =>
-  function Callback() {
-    const { wconnect } = useSelector(({ general: { wconnect } }) => ({
-      wconnect,
-    }));
-    //const navigate = useNavigate
+export const withConnect = (App) => {
+  return function Callback() {
+    const [searchParams] = useSearchParams();
 
-    const p = new URLSearchParams(window.location.search);
+    const widget = searchParams.get("widget");
+    const wsettings = searchParams.get("wsettings");
+    const wid = searchParams.get("wid");
 
-    const widget = p.get("widget");
-    const wsettings = p.get("wsettings");
-    const wid = p.get("wid");
-
-    if (!widget && !wsettings && !wid) {
-      window.open(
-        window.location.href + "?widget=true&wsettings=true",
-        "_self"
-      );
-    }
+    const createMode = wsettings && widget && wid === "create";
 
     if (wsettings && window.innerWidth <= 600) {
       document.body.appendChild(overlay);
       document.body.style.pointerEvents = "none";
     }
 
-    if (wsettings && widget && !wconnect && wid === "create") {
+    if (createMode) {
       document.body.classList.remove("widgetBlur");
     }
 
-    return (
-      <>
-        {!wconnect && widget && wsettings && wid === "create" ? (
-          <Connect />
-        ) : (
-          <App />
-        )}
-      </>
-    );
+    return <>{createMode ? <Connect /> : <App />}</>;
   };
+};

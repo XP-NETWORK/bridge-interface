@@ -14,6 +14,7 @@ import { initialState as initialWidget } from "../../../store/reducers/settingsS
 import { inIframe } from "../../Settings/helpers";
 
 import WService from "../wservice";
+import { useSearchParams } from "react-router-dom";
 
 const wservice = WService();
 
@@ -116,6 +117,7 @@ const parentAccountChange = async (event) => {
 export const InitWidget = (Wrapped) => {
   return function CB() {
     const dispatch = useDispatch();
+    const [searchparams, setSearchParams] = useSearchParams();
     const { widget, wsettings, settings, wid } = useSelector(
       ({
         general: { from, to },
@@ -132,13 +134,16 @@ export const InitWidget = (Wrapped) => {
     );
 
     useEffect(() => {
-      console.log("grishay");
-      const p = new URLSearchParams(window.location.search);
-      const wid = p.get("wid");
-      const widget = p.get("widget") === "true" || wid;
-      const wsettings = p.get("wsettings") === "true";
+      if (searchparams) {
+        const wid = searchparams.get("wid");
+        const widget = searchparams.get("widget") === "true" || wid;
+        const wsettings = searchparams.get("wsettings") === "true";
 
-      if (widget) {
+        if (!widget && !wsettings && !wid) {
+          setSearchParams({ widget: true, wsettings: true });
+          return;
+        }
+
         if (wsettings && window.innerWidth <= 600) {
           document.body.appendChild(overlay);
           document.body.style.pointerEvents = "none";
@@ -155,10 +160,10 @@ export const InitWidget = (Wrapped) => {
         document.body.classList.add("widget");
 
         inIframe() && window.addEventListener("message", parentAccountChange);
-      }
 
-      return () => window.removeEventListener("message", parentAccountChange);
-    }, []);
+        return () => window.removeEventListener("message", parentAccountChange);
+      }
+    }, [searchparams]);
 
     useEffect(() => {
       let settings;
