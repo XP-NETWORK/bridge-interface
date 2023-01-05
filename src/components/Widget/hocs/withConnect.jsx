@@ -6,6 +6,7 @@ import "../Widget.css";
 import Wservice from "../wservice";
 import { initialState as initialWidget } from "../../../store/reducers/settingsSlice";
 import mobileBanner from "../../Settings/assets/img/mobileOnlyBanner.svg";
+//import {useNavigate} from 'react-router-dom'
 
 const wservice = Wservice();
 
@@ -64,12 +65,20 @@ export const withConnect = (App) =>
     const { wconnect } = useSelector(({ general: { wconnect } }) => ({
       wconnect,
     }));
+    //const navigate = useNavigate
 
     const p = new URLSearchParams(window.location.search);
 
     const widget = p.get("widget");
     const wsettings = p.get("wsettings");
     const wid = p.get("wid");
+
+    if (!widget && !wsettings && !wid) {
+      window.open(
+        window.location.href + "?widget=true&wsettings=true",
+        "_self"
+      );
+    }
 
     if (wsettings && window.innerWidth <= 600) {
       document.body.appendChild(overlay);
