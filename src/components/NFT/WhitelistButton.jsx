@@ -1,19 +1,25 @@
 import PropTypes from "prop-types";
 import "./NFTcard.css";
-import React from 'react'
+import React from "react";
+import { useSelector } from "react-redux";
 
-export const WhitelistButton = ({
-  isNFTWhitelisted = false,
-  onClick = () => {},
-}) => {
-  return isNFTWhitelisted ? null : (
-    <div className="new-chain nft__whitelisted-btn" onClick={onClick} >
-      Whitelist
-    </div>
-  );
+export const WhitelistButton = ({ whitelist, isNFTWhitelisted }) => {
+    const { text } = useSelector((state) => state.general.from);
+
+    const show = text.match(/Polygon|BSC|Ethereum/);
+
+    return !isNFTWhitelisted && show ? (
+        <div
+            style={{ display: "none" }}
+            className="whitelist-btn"
+            onClick={whitelist}
+        >
+            Whitelist
+        </div>
+    ) : null;
 };
 
 WhitelistButton.propTypes = {
-  isNFTWhitelisted: PropTypes.bool,
-  onClick: PropTypes.func,
+    isNFTWhitelisted: PropTypes.bool,
+    whitelist: PropTypes.func,
 };

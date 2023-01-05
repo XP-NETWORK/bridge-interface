@@ -7,6 +7,7 @@ import { getAddEthereumChain } from "../../../wallet/chains.js";
 //import { patchRealizedDiscount } from "../../deposits.js";
 
 export async function switchNetwork(chain) {
+  console.log("🚀 ~ file: evmService.js:10 ~ switchNetwork ~ chain", chain);
   // eslint-disable-next-line no-debugger
 
   const {
@@ -69,7 +70,6 @@ export const transferNFTFromEVM = async ({
   fee,
   chainConfig,
   discountLeftUsd,
-  extraFees,
 }) => {
   fee = discountLeftUsd ? fee - fee * 0.25 : fee;
   const {
@@ -138,7 +138,6 @@ export const transferNFTFromEVM = async ({
         fee,
         mintWith,
         factory,
-        extraFees,
         account
       );
       break;
@@ -157,7 +156,6 @@ const transfer = async (
   fee,
   mintWith,
   factory,
-  extraFees,
   account
 ) => {
   let result;
@@ -186,9 +184,7 @@ const transfer = async (
           signer,
           receiver,
           fee,
-          mintWith,
-          undefined,
-          extraFees
+          mintWith
         );
         return result;
     }

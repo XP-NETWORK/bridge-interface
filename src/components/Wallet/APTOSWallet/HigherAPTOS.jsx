@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
     setAccount,
     setAptosAccount,
@@ -7,12 +8,18 @@ import {
     setWalletsModal,
 } from "../../../store/reducers/generalSlice";
 import { setSigner } from "../../../store/reducers/signersSlice";
+import { getRightPath } from "../../../wallet/helpers";
 import { connectMartian, connectPetra, connectPontem } from "./AptosConnectors";
 
 export default function HigherAPTOS(OriginalComponent) {
     return function updatedComponent() {
         const dispatch = useDispatch();
-        const { from, testNet } = useSelector((state) => state.general);
+        const navigate = useNavigate();
+        const { from, testNet, to } = useSelector((state) => state.general);
+
+        const navigateToAccountRoute = () => {
+            if (from && to) navigate(getRightPath());
+        };
 
         const getStyles = () => {
             let styles = {};
@@ -72,6 +79,7 @@ export default function HigherAPTOS(OriginalComponent) {
             dispatch(setAptosAccount(connected.address));
             dispatch(setAccount(connected.address));
             dispatch(setWalletsModal(false));
+            navigateToAccountRoute();
         };
         return (
             <OriginalComponent

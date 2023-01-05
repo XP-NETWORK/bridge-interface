@@ -29,6 +29,7 @@ import Caduceus from "../assets/img/chain/caduceus.svg";
 import Aptos from "../assets/img/chain/aptos.svg";
 import InternetComputer from "../assets/img/chain/InternetComputer.svg";
 import near from "../assets/img/wallet/NearWallet.svg";
+import okx from "../assets/img/chain/okx.svg";
 
 ///import { CHAIN_INFO } from "xp.network";
 
@@ -51,7 +52,6 @@ export const BridgeModes = {
 export const getChainObject = (nonce) =>
   chains.find((chain) => chain.nonce === nonce);
 export const chains = [
-
   {
     type: "EVM",
     key: "Ethereum",
@@ -455,7 +455,7 @@ export const chains = [
     order: 0,
     image: { avatar: true, src: Aptos },
     testNet: true,
-    mainnet: false,
+    mainnet: true,
     coming: false,
   },
   {
@@ -468,7 +468,22 @@ export const chains = [
     image: { avatar: true, src: near },
     testNet: biz,
     mainnet: false,
-    coming: biz,
+    coming: false,
+  },
+  {
+    type: "EVM",
+    key: "OKC",
+    text: "OKC",
+    value: "OKC",
+    nonce: 0x24,
+    order: -1000,
+    image: { avatar: true, src: okx },
+    testNet: true,
+    mainnet: true,
+    coming: false,
+    newChain: true,
+    chainId: 66,
+    tnChainId: 65,
   },
 ];
 
@@ -743,6 +758,16 @@ export const chainsConfig = {
     tx: "https://explorer.mainnet.near.org/transactions/",
     testTx: "https://explorer.testnet.near.org/transactions/",
   },
+  OKC: {
+    type: "EVM",
+    token: "OKT",
+    image: okx,
+    Chain: Chain.OKC,
+    tx: "https://www.oklink.com/okc/tx/",
+    testTx: "https://www.oklink.com/en/okc-test/tx/",
+    chainId: 66,
+    tnChainId: 65,
+  },
   /*Caduceus: {
     type: "EVM",
     token: "CTP",
@@ -782,6 +807,7 @@ export const coins = [
   "ABEY", //25
   "APT", //26
   "NEAR", //27
+  "OKT", //28
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -1130,6 +1156,13 @@ export const CHAIN_INFO = {
     decimals: 1e8,
     blockExplorerUrls: "https://explorer.mainnet.near.org/accounts/",
     testBlockExplorerUrls: "https://explorer.testnet.near.org/accounts/",
+  },
+  OKC: {
+    native: coins[28],
+    nonce: 0x24,
+    decimals: 1e8,
+    blockExplorerUrls: "https://www.oklink.com/okc/accounts/",
+    testBlockExplorerUrls: "https://www.oklink.com/okc-test/accounts",
   },
   /* Caduceus: {
     native: "CTP",

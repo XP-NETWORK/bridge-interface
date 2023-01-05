@@ -15,15 +15,22 @@ import {
     setWalletsModal,
 } from "../../../store/reducers/generalSlice";
 import { onPhantom, onSolflare } from "./SoloanaConnectors";
+import { useNavigate } from "react-router-dom";
+import { getRightPath } from "../../../wallet/helpers";
 
 export default function HigherSolana(OriginalComponent) {
     const updatedComponent = withServices((props) => {
-        const { innerWidth, testNet, from } = useSelector(
+        const { innerWidth, testNet, from, to } = useSelector(
             (state) => state.general
         );
         const { serviceContainer, close } = props;
         const { bridge } = serviceContainer;
         const dispatch = useDispatch();
+        const navigate = useNavigate();
+
+        const navigateToAccountRoute = () => {
+            if (from && to) navigate(getRightPath());
+        };
 
         const connectHandler = async (wallet) => {
             let account;
@@ -53,6 +60,7 @@ export default function HigherSolana(OriginalComponent) {
             dispatch(setAccount(account.address));
             dispatch(setWalletsModal(false));
             close();
+            navigateToAccountRoute();
         };
 
         const getStyle = () => {
@@ -60,7 +68,7 @@ export default function HigherSolana(OriginalComponent) {
             // debugger;
             if (!testNet) return { display: "none" };
             else if (!from) return {};
-            else if (from && from?.type === "Solana")
+            else if (from && from?.type !== "Solana")
                 return { pointerEvents: "none", opacity: "0.6" };
         };
 

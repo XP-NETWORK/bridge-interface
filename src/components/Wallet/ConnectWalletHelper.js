@@ -105,9 +105,11 @@ export const connectHashpack = async () => {
 };
 
 export const connectUnstoppable = async () => {
+  // eslint-disable-next-line no-debugger
+  // debugger;
   try {
     const provider = await web3Modal.connect();
-    return provider.sendAsync();
+    return provider.selectedAddress;
   } catch (error) {
     console.log(error);
   }
@@ -115,7 +117,9 @@ export const connectUnstoppable = async () => {
 
 export const switchNetWork = async (from) => {
   // let fromChainId;
+  console.log(from, "from");
   const chain = getAddEthereumChain()[parseInt(from.chainId).toString()];
+  console.log(chain);
   const params = {
     chainId: from.chainId, // A 0x-prefixed hexadecimal string
     chainName: chain.name,
@@ -224,12 +228,11 @@ export const connectBitKeep = async (from) => {
 };
 
 export const connectMetaMask = async (activate) => {
-  const store1 = store.getState();
   // debugger;
-
   try {
     if (!window.ethereum && window.innerWidth <= 600) {
       let timer;
+      const store1 = store.getState();
       if (store1.widget.widget && inIframe()) {
         window.parent.postMessage(
           `From Widget: Open MetaMask###${window.location.search}`,
@@ -247,12 +250,9 @@ export const connectMetaMask = async (activate) => {
       timer = setTimeout(() => {
         window.open(link);
       }, 1000);
-
-      return;
     }
     await activate(injected);
     store.dispatch(setMetaMask(true));
-
     return true;
   } catch (ex) {
     store.dispatch(setError(ex));
@@ -265,7 +265,7 @@ export const connectMetaMask = async (activate) => {
 
 // Algorand blockchain connection ( AlgoSigner )
 export const connectAlgoSigner = async (testnet) => {
-  if (typeof window.AlgoSigner !== "undefined") {
+  if (typeof window.AlgoSigner !== undefined) {
     try {
       await window.AlgoSigner.connect();
       const algo = await window.AlgoSigner.accounts({

@@ -82,7 +82,7 @@ function ChainListBox({ serviceContainer }) {
     // ! ref
     const chainSelectHandler = async (chain) => {
         // eslint-disable-next-line no-debugger
-        debugger;
+        // debugger;
 
         const chainWrapper = await bridge.getChain(chain.nonce);
 
@@ -108,21 +108,9 @@ function ChainListBox({ serviceContainer }) {
                     }
                 } else {
                     dispatch(setFrom(chain));
-                    /* if (
-            (account || evmAccount) &&
-            chain.text !== "VeChain" &&
-            chain.text !== "NEAR"
-          ) {
-            const switched = await switchNetwork(chain);
-
-            if (switched) {
-              dispatch(setFrom(chain));
-            }
-          } else dispatch(setFrom(chain));*/
                 }
                 handleClose();
             } else {
-                // dispatch(setTemporaryFrom(chain));
                 dispatch(setChangeWallet(true));
                 handleClose();
             }
