@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 /* eslint-disable valid-typeof */
 
 import { injected, algoConnector, web3Modal } from "../../wallet/connectors";
@@ -29,12 +30,11 @@ import {
     setMaiarProvider,
     setError,
     setTronPopUp,
-    setAlgoSigner,
-    setAlgorandAccount,
+    // setAlgoSigner,
+    // setAlgorandAccount,
     setQrImage,
     setQrCodeString,
     setWC,
-    setOnWC,
     setAccount,
     setKeplrWallet,
     setHederaAccount,
@@ -229,7 +229,7 @@ export const connectBitKeep = async (from) => {
 };
 
 export const connectMetaMask = async (activate, from, to) => {
-    // debugger;
+    debugger;
     try {
         if (!window.ethereum && window.innerWidth <= 600) {
             const link = `dapp://${window.location.host}?to=${to}&from=${from}/`;
@@ -256,15 +256,15 @@ export const connectAlgoSigner = async (testnet) => {
             const algo = await window.AlgoSigner.accounts({
                 ledger: testnet ? "TestNet" : "MainNet",
             });
-            const { address } = algo[0];
-            store.dispatch(setAlgoSigner(true));
-            store.dispatch(setAlgorandAccount(address));
+            // store.dispatch(setAlgoSigner(true));
+            // store.dispatch(setAlgorandAccount(address));
+            const address = algo[0].address;
             const signer = {
-                address,
+                address: algo[0],
                 algoSigner: window.AlgoSigner,
                 ledger: testnet ? "TestNet" : "MainNet",
             };
-            store.dispatch(setSigner(signer));
+            // store.dispatch(setSigner(signer));
             return { signer, address };
         } catch (e) {
             console.error(e);
@@ -289,8 +289,6 @@ export const connectTrustWallet = async (activate, from) => {
         });
         walletConnect.networkId = chainId;
         await activate(walletConnect, undefined, true);
-        store.dispatch(setOnWC(true));
-        store.dispatch(setWC(walletConnect));
         return true;
     } catch (error) {
         store.dispatch(setError(error));
@@ -347,7 +345,6 @@ export const onWalletConnect = async (activate, from, testnet) => {
         await activate(walletConnect, undefined, true);
         const account = await walletConnect.getAccount();
         store.dispatch(setAccount(account));
-        store.dispatch(setOnWC(true));
         store.dispatch(setWC(walletConnect));
         return true;
     } catch (error) {

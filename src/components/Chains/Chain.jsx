@@ -105,4 +105,5 @@ Chain.propTypes = {
     maintenance: PropTypes.bool,
     updated: PropTypes.bool,
     nonce: PropTypes.string || PropTypes.number,
+
 };

@@ -28,6 +28,7 @@ import {
     setQRCodeModal,
 } from "../Wallet/TONWallet/tonStore";
 import MaiarModal from "./MaiarModal/MaiarModal";
+import ChangeWalletModal from "./ChangeWallet/ChangeWalletModal";
 
 export default function Modals() {
     const dispatch = useDispatch();
@@ -41,6 +42,8 @@ export default function Modals() {
     const transferModalLoader = useSelector(
         (state) => state.general.transferModalLoader
     );
+    const changeWallet = useSelector((state) => state.general.changeWallet);
+
     const error = useSelector((state) => state.general.error);
     const tronError = useSelector((state) => state.general.tronLoginError);
     const redirectModal = useSelector((state) => state.general.redirectModal);
@@ -79,9 +82,21 @@ export default function Modals() {
         dispatch(setQrImage(""));
         dispatch(setQrCodeString(""));
     };
+    const handleCloseChangeWalletModal = () => {
+        //todo
+    };
 
     return (
         <>
+            <Modal
+                className="ChainModal switchWallet"
+                animation={false}
+                size="sm"
+                show={changeWallet}
+                onHide={handleCloseChangeWalletModal}
+            >
+                <ChangeWalletModal />
+            </Modal>
             <Modal
                 className="maiar-modal"
                 show={maiarQRCodeImage}
@@ -186,3 +201,5 @@ export default function Modals() {
         </>
     );
 }
+
+Modals.propTypes = {};
