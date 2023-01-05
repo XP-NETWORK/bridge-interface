@@ -5,27 +5,35 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     setAccount,
     setUnstoppableDomains,
+    setWalletsModal,
 } from "../../store/reducers/generalSlice";
 import PropTypes from "prop-types";
-// import { withServices } from "../../App/hocs/withServices";
+import { withServices } from "../App/hocs/withServices";
+import { ethers } from "ethers";
 
-export default function Unscopables() {
-    // const updatedComponent = withServices((props) => {})
-
+function Unscopables({ serviceContainer }) {
+    const { bridge } = serviceContainer;
     const dispatch = useDispatch();
+    const from = useSelector((state) => state.general.from);
+    const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
+    const OFF = { opacity: 0.6, pointerEvents: "none" };
+
     const handleConnect = async () => {
         // close();
+        dispatch(setWalletsModal(false));
         // eslint-disable-next-line no-debugger
-        debugger;
+        // debugger;
         window.localStorage.clear();
         const address = await connectUnstoppable();
         if (address) dispatch(setUnstoppableDomains(true));
         dispatch(setAccount(address));
+        const nonce = bridge.getNonce(from.chainId);
+        const chainWrapper = await bridge.getChain(nonce);
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner(address);
+        chainWrapper.setSigner(signer);
+        bridge.setCurrentType(chainWrapper);
     };
-
-    const from = useSelector((state) => state.general.from);
-    const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
-    const OFF = { opacity: 0.6, pointerEvents: "none" };
 
     const getStyle = () => {
         switch (true) {
@@ -53,4 +61,7 @@ export default function Unscopables() {
 
 Unscopables.propTypes = {
     close: PropTypes.any,
+    serviceContainer: PropTypes.object,
 };
+
+export default withServices(Unscopables);

@@ -455,7 +455,7 @@ export const chains = [
         order: 0,
         image: { avatar: true, src: Aptos },
         testNet: true,
-        mainnet: false,
+        mainnet: true,
         coming: false,
     },
     {

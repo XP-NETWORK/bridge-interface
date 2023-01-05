@@ -108,7 +108,7 @@ export const connectUnstoppable = async () => {
     // debugger;
     try {
         const provider = await web3Modal.connect();
-        return provider.sendAsync();
+        return provider.selectedAddress;
     } catch (error) {
         console.log(error);
     }
