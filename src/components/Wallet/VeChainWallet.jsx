@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import Sync2 from "../../assets/img/wallet/Sync2_.svg";
 import { useDispatch, useSelector } from "react-redux";
-//import { connectVeChainThor } from "./ConnectWalletHelper";
 import {
   setAccount,
+  setConnectedWallet,
   setError,
   setFrom,
-  /*setSync2,
-  setSync2Connex,*/
   setRedirectModal,
 } from "../../store/reducers/generalSlice";
 import { useNavigate } from "react-router-dom";
@@ -35,8 +33,9 @@ function VeChainWallet({ close, wallet, serviceContainer }) {
   const to = useSelector((state) => state.general.to);
   const testnet = useSelector((state) => state.general.testNet);
   const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
-  const [connecting, setConnecting] = useState(false);
   const widget = useSelector((state) => state.widget.widget);
+  const [connecting, setConnecting] = useState(false);
+
   const query = window.location.search || "";
 
   const dispatch = useDispatch();
@@ -115,7 +114,6 @@ function VeChainWallet({ close, wallet, serviceContainer }) {
                   `&to=${to.text}&from=${from.text}`
               );
             }
-
             account = await connect(setConnecting);
           } else dispatch(setRedirectModal("VeChainThor"));
 
@@ -128,6 +126,9 @@ function VeChainWallet({ close, wallet, serviceContainer }) {
       }
 
       dispatch(setAccount(account.address));
+      dispatch(
+        setConnectedWallet(w === "VeChainThor" ? "VeChainThor" : "Sync2")
+      );
       chainWrapper.setSigner(account.signer);
       bridge.setCurrentType(chainWrapper);
       close();

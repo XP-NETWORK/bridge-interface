@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 /* eslint-disable valid-typeof */
 
 import { injected, algoConnector, web3Modal } from "../../wallet/connectors";
@@ -7,7 +8,6 @@ import MyAlgoConnect from "@randlabs/myalgo-connect";
 
 import { HashConnect } from "hashconnect";
 import { hethers } from "@hashgraph/hethers";
-import { inIframe } from "../Settings/helpers";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 
 import {
@@ -30,12 +30,11 @@ import {
   setMaiarProvider,
   setError,
   setTronPopUp,
-  setAlgoSigner,
-  setAlgorandAccount,
+  // setAlgoSigner,
+  // setAlgorandAccount,
   setQrImage,
   setQrCodeString,
   setWC,
-  setOnWC,
   setAccount,
   setKeplrWallet,
   setHederaAccount,
@@ -48,6 +47,8 @@ import Web3 from "web3";
 
 import { SecretNetworkClient } from "secretjs";
 import { setSigner } from "../../store/reducers/signersSlice";
+
+import { inIframe } from "../Settings/helpers";
 
 // import AuthClient from "@walletconnect/auth-client";
 
@@ -262,7 +263,6 @@ export const connectMetaMask = async (activate) => {
     return false;
   }
 };
-
 // Algorand blockchain connection ( AlgoSigner )
 export const connectAlgoSigner = async (testnet) => {
   if (typeof window.AlgoSigner !== undefined) {
@@ -271,15 +271,15 @@ export const connectAlgoSigner = async (testnet) => {
       const algo = await window.AlgoSigner.accounts({
         ledger: testnet ? "TestNet" : "MainNet",
       });
-      const { address } = algo[0];
-      store.dispatch(setAlgoSigner(true));
-      store.dispatch(setAlgorandAccount(address));
+      // store.dispatch(setAlgoSigner(true));
+      // store.dispatch(setAlgorandAccount(address));
+      const address = algo[0].address;
       const signer = {
-        address,
+        address: algo[0],
         algoSigner: window.AlgoSigner,
         ledger: testnet ? "TestNet" : "MainNet",
       };
-      store.dispatch(setSigner(signer));
+      // store.dispatch(setSigner(signer));
       return { signer, address };
     } catch (e) {
       console.error(e);
@@ -304,8 +304,6 @@ export const connectTrustWallet = async (activate, from) => {
     });
     walletConnect.networkId = chainId;
     await activate(walletConnect, undefined, true);
-    store.dispatch(setOnWC(true));
-    store.dispatch(setWC(walletConnect));
     return true;
   } catch (error) {
     store.dispatch(setError(error));
@@ -362,7 +360,6 @@ export const onWalletConnect = async (activate, from, testnet) => {
     await activate(walletConnect, undefined, true);
     const account = await walletConnect.getAccount();
     store.dispatch(setAccount(account));
-    store.dispatch(setOnWC(true));
     store.dispatch(setWC(walletConnect));
     return true;
   } catch (error) {
@@ -492,6 +489,7 @@ export const connectTronlink = async () => {
     }
   }
 };
+
 // Algorand blockchain connection ( Algo Wallet )
 export const connectAlgoWallet = async () => {
   if (!algoConnector.connected) {

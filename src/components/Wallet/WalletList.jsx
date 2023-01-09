@@ -301,7 +301,7 @@ export default function WalletList({ connected, input, discount }) {
             ),
             name: "Hashpack",
             mobile: biz,
-            desktop: biz,
+            desktop: true,
             order: 17,
             type: "Hedera",
         },

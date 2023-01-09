@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
     setAccount,
-    setAptosAccount,
     setConnectedWallet,
     setWalletsModal,
 } from "../../../store/reducers/generalSlice";
@@ -76,7 +75,6 @@ export default function HigherAPTOS(OriginalComponent) {
                 default:
                     break;
             }
-            dispatch(setAptosAccount(connected.address));
             dispatch(setAccount(connected.address));
             dispatch(setWalletsModal(false));
             navigateToAccountRoute();
