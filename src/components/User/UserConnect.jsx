@@ -64,7 +64,7 @@ export default function UserConnect({ mobile }) {
     }
   };
 
-  const getAccountString = () => {
+  const getAccountString = (walletAccount) => {
     if (innerWidth >= 425) {
       return `${walletAccount.substring(0, 5)}...${walletAccount.substring(
         walletAccount.length - 4
@@ -78,6 +78,9 @@ export default function UserConnect({ mobile }) {
         walletAccount.length - 4
       )}`;
     }
+    return `${walletAccount.substring(0, 5)}...${walletAccount.substring(
+      walletAccount.length - 4
+    )}`;
   };
 
   const getChain = async (id) => {
@@ -170,7 +173,7 @@ export default function UserConnect({ mobile }) {
         walletAccount ? "navbar-connect connected" : "navbar-connect"
       } ${mobile ? "xmobile_only" : "xdesktop_only"}`}
     >
-      {walletAccount ? getAccountString() : "Connect Wallet"}
+      {walletAccount ? getAccountString(walletAccount) : "Connect Wallet"}
       {walletAccount && <Identicon account={walletAccount} />}
     </div>
   );
