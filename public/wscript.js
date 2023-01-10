@@ -34,7 +34,7 @@
           msg[0] === "From Widget: Open MetaMask" &&
           url[0]?.includes(ev.origin)
         ) {
-          const link = `dapp://${`${url[0].replace(/^https?\:\/\//, "")}/${
+          const link = `dapp://${`${url[0].replace(/^https?:\/\//, "")}/${
             msg[1]
           }`}`;
           openMetaMaskUrl(link);
