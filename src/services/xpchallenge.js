@@ -9,16 +9,14 @@ class XpchallengeApi {
     if (url) this.base = url;
   }
 
-  connectWallet(address, name) {
+  connectWallet(address) {
     const params = new URLSearchParams(location.search.replace("?", ""));
     const xpchallenge = params.get("xpchallenge");
 
     if (xpchallenge) {
       const project = params.get("projectNumber");
       instance.patch(
-        `${
-          this.base
-        }/connectWallet?projectNumber=${project}&chain=${name.toUpperCase()}&address=${address}`
+        `${this.base}/connectWallet?projectNumber=${project}&address=${address}`
       );
     }
   }

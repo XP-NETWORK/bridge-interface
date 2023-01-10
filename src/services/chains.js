@@ -325,7 +325,7 @@ class EVM extends AbstractChain {
 
   setSigner(signer) {
     super.setSigner(signer);
-    signer && Xpchallenge.connectWallet(signer._address, this.chainParams.name);
+    signer && Xpchallenge.connectWallet(signer._address);
   }
 }
 
@@ -346,10 +346,7 @@ class Elrond extends AbstractChain {
     super.setSigner(signer);
 
     signer &&
-      Xpchallenge.connectWallet(
-        signer.address || signer.account?.address,
-        this.chainParams.name
-      );
+      Xpchallenge.connectWallet(signer.address || signer.account?.address);
   }
 
   async getNFTs(address) {
