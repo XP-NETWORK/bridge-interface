@@ -74,7 +74,9 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
+    "startwin": "set NODE_OPTIONS=--openssl-legacy-provider && react-app-rewired start",
     "build": "react-app-rewired build",
+    "buildwin": "set NODE_OPTIONS=--openssl-legacy-provider && react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "predeploy": "npm run build",
