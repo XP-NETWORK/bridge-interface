@@ -2,25 +2,20 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     removeAlgorandClaimable,
-    removeFromClaimables,
     setApproveLoader,
     setNFTSetToggler,
     setTransferLoaderModal,
 } from "../../store/reducers/generalSlice";
-import {
-    getAlgorandClaimables,
-    getFactory,
-    setClaimablesAlgorand,
-    setNFTS,
-} from "../../wallet/helpers";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { algoConnector } from "../../wallet/connectors.js";
+import PropTypes from "prop-types";
 
-export default function ClaimableCard({ nft, index }) {
+export default function ClaimableCard({ nft }) {
     const dispatch = useDispatch();
     const algorandAccount = useSelector(
         (state) => state.general.algorandAccount
     );
+    const factory = useSelector((state) => state.general.factory);
     const algorandWallet = useSelector((state) => state.general.algorandWallet);
     const MyAlgo = useSelector((state) => state.general.MyAlgo);
     const testnet = useSelector((state) => state.general.testNet);
@@ -31,7 +26,6 @@ export default function ClaimableCard({ nft, index }) {
         const base = new MyAlgoConnect();
         if (algorandWallet) {
             try {
-                const factory = await getFactory();
                 const inner = await factory.inner(15);
                 const signer = await inner.walletConnectSigner(
                     algoConnector,
@@ -48,7 +42,6 @@ export default function ClaimableCard({ nft, index }) {
                 );
             }
         } else if (MyAlgo) {
-            const factory = await getFactory();
             const inner = await factory.inner(15);
             const signer = inner.myAlgoSigner(base, algorandAccount);
             return signer;
@@ -63,7 +56,6 @@ export default function ClaimableCard({ nft, index }) {
     };
 
     const checkIfOptIn = async () => {
-        const factory = await getFactory();
         const algorand = await factory.inner(15);
         const isOpted = await algorand.isOptIn(algorandAccount, nft.nftId);
         setIsOptin(isOpted);
@@ -71,7 +63,6 @@ export default function ClaimableCard({ nft, index }) {
 
     const optIn = async () => {
         dispatch(setApproveLoader(true));
-        const factory = await getFactory();
         const algorand = await factory.inner(15);
         let isOpted;
         try {
@@ -102,7 +93,6 @@ export default function ClaimableCard({ nft, index }) {
         // debugger
         dispatch(setTransferLoaderModal(true));
         if (isOptin) {
-            const factory = await getFactory();
             const algorand = await factory.inner(15);
             const signer = await getAlgorandWalletSigner();
             try {
@@ -147,3 +137,6 @@ export default function ClaimableCard({ nft, index }) {
         </div>
     );
 }
+ClaimableCard.propTypes = {
+    nft: PropTypes.object,
+};

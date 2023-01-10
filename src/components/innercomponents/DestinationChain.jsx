@@ -8,15 +8,10 @@ import {
   setSwitchDestination,
 } from "../../store/reducers/generalSlice";
 import ChainSwitch from "../Buttons/ChainSwitch";
-// import vet from "../../assets/img/Vector.svg";
-// import { ReactComponent as Vet } from "../../assets/img/Vector.svg";
 
 function DestinationChain() {
   const alert = useSelector((state) => state.general.pasteDestinationAlert);
   const to = useSelector((state) => state.general.to);
-  const { widget } = useSelector(({ general: { widget } }) => ({
-    widget,
-  }));
 
   const dispatch = useDispatch();
   const receiver = useSelector((state) => state.general.receiver);
@@ -26,7 +21,7 @@ function DestinationChain() {
   };
 
   function handleSwitchChain() {
-    dispatch(setDepartureOrDestination("destination"))
+    dispatch(setDepartureOrDestination("destination"));
     dispatch(setSwitchDestination(true));
   }
 
@@ -39,7 +34,11 @@ function DestinationChain() {
         <ChainSwitch assignment={"to"} func={handleSwitchChain} />
       </div>
 
-      <div className={!alert? "destination__address" : "destination__address desti-alert"}>
+      <div
+        className={
+          !alert ? "destination__address" : "destination__address desti-alert"
+        }
+      >
         <input
           value={receiver}
           onChange={(e) => handleChange(e)}

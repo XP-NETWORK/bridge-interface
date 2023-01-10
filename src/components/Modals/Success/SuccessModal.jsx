@@ -1,26 +1,33 @@
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
-import Close from "../../../assets/img/icons/close.svg";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import TransferredNft from "./TransferredNft";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import ConnectAlgorand from "../../ConnectAlgorand";
-import ClaimAlgorandNFT from "../../ClaimAlgorandNFT";
 import { useEffect } from "react";
-import { setNFTS, socket } from "../../../wallet/helpers";
+import {
+  socket,
+  StringShortener,
+  scraperSocket,
+} from "../../../wallet/helpers";
+
+
 
 import {
   cleanTxnHashArr,
-  connectAlgorandWalletClaim,
   removeFromSelectedNFTList,
   setNFTSetToggler,
   setTxnStatus,
 } from "../../../store/reducers/generalSlice";
 import "./SuccessModal.css";
 import Tooltip from "../AccountModal/Tooltip";
-import { chainsConfig, CHAIN_INFO } from "../../values";
+//import { chainsConfig, CHAIN_INFO } from "../../values";
+import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
+import { withServices } from "../../App/hocs/withServices";
 
-export default function SuccessModal() {
+export default withServices(function SuccessModal({ serviceContainer }) {
+  const { bridge } = serviceContainer;
+
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
@@ -33,15 +40,26 @@ export default function SuccessModal() {
   const txnHashArr = useSelector((state) => state.general.txnHashArr);
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
   const testnet = useSelector((state) => state.general.testNet);
-  const address = account
-    ? account
-    : algorandAccount
-    ? algorandAccount
-    : elrondAccount
-    ? elrondAccount
-    : tronWallet
-    ? tronWallet
-    : "";
+  const secretAccount = useSelector((state) => state.general.secretAccount);
+  const tezosAccount = useSelector((state) => state.general.tezosAccount);
+  const tonAccount = useSelector((state) => state.general.tonAccount);
+
+  const address =
+    tonAccount ||
+    account ||
+    algorandAccount ||
+    elrondAccount ||
+    tronWallet ||
+    secretAccount ||
+    tezosAccount ||
+    "";
+
+  const [links, setLinks] = useState({
+    txFrom: "",
+    txTo: "",
+    addressFrom: "",
+    addressTo: "",
+  });
 
   const handleClose = () => {
     selectedNFTList.forEach((nft) => {
@@ -50,17 +68,10 @@ export default function SuccessModal() {
     });
     dispatch(cleanTxnHashArr());
     dispatch(setNFTSetToggler());
-    // setNFTS(address, from.key, undefined, "success")
-  };
-
-  const getSubstringValue = () => {
-    if (window.innerWidth <= 320) return 3;
-    else if (window.innerWidth <= 375) return 6;
-    else return false;
+    dispatch(setQRCodeModal(false));
   };
 
   const getTX = () => {
-    let ntx;
     if (txnHashArr && txnHashArr.length > 0) {
       if (typeof txnHashArr === "object" && !Array.isArray(txnHashArr)) {
         return txnHashArr[0].hash.toString();
@@ -78,26 +89,60 @@ export default function SuccessModal() {
     }
   };
 
-  const getExplorer = () => {
-    return !testnet
-      ? `${CHAIN_INFO[from?.text]?.blockExplorerUrls}${address}`
-      : `${CHAIN_INFO[from?.text]?.testBlockExplorerUrls}${address}`;
-  };
+  const tx = getTX();
+  const shortTx = StringShortener(tx, 6);
+  const shortAddress = StringShortener(address, 6);
+  const shortReceiver = StringShortener(receiver, 6);
 
   useEffect(() => {
-    socket.on("incomingEvent", async (e) => {
-      debugger;
+    const incoming = async (e) => {
       dispatch(setTxnStatus(e));
-      console.log("🚀 ~ file: SuccessModal.jsx ~ line 96 ~ socket.on ~ e", e);
-    });
-    socket.on("updateEvent", async (e) => {
+      console.log("Incoming Event: ", e);
+    };
+
+    const update = (text) => async (e) => {
       dispatch(setTxnStatus(e));
-      console.log("🚀 ~ file: SuccessModal.jsx ~ line 99 ~ socket.on ~ e", e);
-    });
+      console.log(text, e);
+    };
+
+    const updateOld = update("Update Event: ");
+    const updateScraper = update("Update Event ScraperSocket: ");
+
+    socket.on("incomingEvent", incoming);
+    scraperSocket.on("updateEvent", updateScraper);
+    socket.on("updateEvent", updateOld);
+
+    Promise.all([bridge.getChain(from.nonce), bridge.getChain(to.nonce)]).then(
+      ([fromChain, toChain]) => {
+        const { chainParams: fromChainParams } = fromChain;
+        const { chainParams: toChainParams } = toChain;
+        const txBaseFrom = testnet
+          ? fromChainParams.tnBlockExplorerUrl
+          : fromChainParams.blockExplorerUrl;
+        const txBaseTo = testnet
+          ? toChainParams.tnBlockExplorerUrl
+          : toChainParams.blockExplorerUrl;
+        const addressBaseFrom = testnet
+          ? fromChainParams.tnBlockExplorerUrlAddr
+          : fromChainParams.blockExplorerUrlAddr;
+        const addressBaseTo = testnet
+          ? toChainParams.tnBlockExplorerUrlAddr
+          : toChainParams.blockExplorerUrlAddr;
+
+        setLinks({
+          txFrom: txBaseFrom,
+          txTo: txBaseTo,
+          addressFrom: addressBaseFrom,
+          addressTo: addressBaseTo,
+        });
+      }
+    );
+
     return () => {
       if (socket) {
-        socket.off("incomingEvent");
-        socket.off("updateEvent");
+        socket.off("incomingEvent", incoming);
+        socket.off("updateEvent", updateOld);
+        scraperSocket.off("updateEvent", updateScraper);
       }
     };
   }, []);
@@ -121,22 +166,20 @@ export default function SuccessModal() {
             </div>
             <div className="success-info-item">
               <div className="info-item-label">Txn Hash</div>
-              <CopyToClipboard text={getTX() || "No tx"}>
+
+              <CopyToClipboard text={tx || "No tx"}>
                 <a
                   href={
-                    testnet
-                      ? `${chainsConfig[from?.key]?.testTx + getTX()}`
-                      : `${chainsConfig[from?.key]?.tx + getTX()}`
+                    typeof links.txFrom === "function"
+                      ? links.txFrom(tx)
+                      : links.txFrom + tx
+
                   }
                   target="_blank"
                   className="success-hash"
+                  rel="noreferrer"
                 >
-                  {getTX()
-                    ? `${getTX().substring(
-                        0,
-                        getSubstringValue() || 10
-                      )}...${getTX().substring(getTX().length - 6)}`
-                    : ""}
+                  {shortTx}
                   <Tooltip />
                 </a>
               </CopyToClipboard>
@@ -161,16 +204,18 @@ export default function SuccessModal() {
           <div className="success-info-item">
             <div className="info-item-label">Departure Address</div>
             <a
-              href={getExplorer() || "#"}
+
+              href={
+                typeof links.addressFrom === "function"
+                  ? links.addressFrom(address)
+                  : links.addressFrom + address
+              }
+
               className="success-hash"
               target="_blank"
+              rel="noreferrer"
             >
-              {address
-                ? `${address.substring(
-                    0,
-                    getSubstringValue() || 10
-                  )}...${address.substring(address.length - 6)}`
-                : ""}
+              {shortAddress}
             </a>
           </div>
           <div className="success-info-item">
@@ -184,15 +229,16 @@ export default function SuccessModal() {
             <div className="info-item-label">Destination Address</div>
             <a
               className="success-hash"
-              href={`${CHAIN_INFO[to?.text]?.blockExplorerUrls}${receiver}`}
+
+              href={
+                typeof links.addressTo === "function"
+                  ? links.addressTo(receiver)
+                  : links.addressTo + receiver
+              }
               target="_blank"
+              rel="noreferrer"
             >
-              {receiver
-                ? `${receiver.substring(
-                    0,
-                    getSubstringValue() || 10
-                  )}...${receiver.substring(receiver.length - 6)}`
-                : "test"}
+              {shortReceiver}
             </a>
           </div>
         </div>
@@ -206,6 +252,8 @@ export default function SuccessModal() {
                   <TransferredNft
                     key={`index-${index}-nft-success`}
                     nft={nft}
+                    links={links}
+                    testnet={testnet}
                   />
                 ))
               : ""}
@@ -214,4 +262,5 @@ export default function SuccessModal() {
       </Modal.Body>
     </>
   );
-}
+});
+

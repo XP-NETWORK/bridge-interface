@@ -37,8 +37,8 @@
     background-repeat: no-repeat;
 }
 
-.grid-icon:hover svg rect  {
-    fill: #3E64ED;
+.grid-icon:hover svg rect {
+  fill: #3e64ed;
 }
 .grid-icon {
     position: absolute;
@@ -61,7 +61,7 @@
     width: 40px;
     height: 40px;
     background: #f6f6f8;
-    border: 1px solid rgb(255, 255, 255);
+    border: 1px solid rgb(255, 255, 255) !important;
     border-radius: 50%;
     box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.12);
     position: relative;
@@ -277,7 +277,174 @@
     line-height: 18px;
 }
 
-#SearchDrop {
+.nftListBox.withSecret {
+    background-color: rgba(236, 236, 241, 0.3);
+    border: 1px dashed #ececf1;
+    border-radius: 20px;
+    display: flex;
+}
+
+.secretAuth {
+    margin: auto;
+    width: 350px;
+    margin: auto;
+    color: rgba(20, 22, 26, 1);
+    text-align: center;
+}
+.secret-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    width: 255px;
+    height: 40px;
+    margin: 24px auto;
+    background: #ececf1;
+    border: 1px solid #e0e4eb;
+    border-radius: 40px;
+    cursor: pointer;
+    padding: 2px 0;
+}
+.secret-toggle .show,
+.secret-toggle .set {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 160%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 114px;
+    height: 26px;
+    color: #62718a;
+    border-radius: 20px;
+    padding: 2px 8px;
+}
+.show--selected,
+.set--selected {
+    font-weight: 500;
+    padding: 2px 8px;
+
+    font-size: 14px;
+    line-height: 160%;
+    color: #395feb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 114px;
+    height: 26px;
+    background: #ffffff;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+}
+
+.contract-input__wrapper {
+    position: relative;
+}
+.secret__dropdown {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+}
+.secret__dropdown .dropdown-menu {
+    width: 352px;
+    filter: none;
+    top: -4px !important;
+    right: -18px !important;
+}
+.secret__dropdown .btn-primary {
+    color: unset !important;
+    background-color: unset !important;
+}
+.secretAuth .inputWrapper {
+    position: relative;
+}
+.vkey-icon {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+}
+.withSecret__btns {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.secretAuth .transfer-button {
+    width: 130px;
+    margin: unset;
+}
+
+.secretAuth h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.secretAuth p {
+    font-size: 14px;
+    color: #14161a;
+    font-family: "Inter";
+}
+.secretContainer .nftListBox {
+    position: relative;
+}
+
+.secretContainer .nftListBox {
+    padding-top: 55px;
+}
+
+.secretContainer .nft-list__wrapper {
+    padding-top: 15px;
+}
+
+.scretPannelWrap {
+    padding: 0 10px;
+
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 12;
+}
+
+.scretPannel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background: rgba(243, 243, 246, 1);
+    border-radius: 12px;
+}
+
+.scretPannel p {
+    margin-bottom: 0;
+    font-size: 14px;
+    font-family: Inter, sans-serif;
+}
+
+.scretPannel a {
+    color: #395feb;
+}
+
+.scretPannel button {
+}
+
+.fieldsWrapper input {
+    width: 100%;
+    border-radius: 40px;
+    background: #ffffff;
+    border: 1px solid #e0e4eb;
+    padding: 11px 16px;
+    margin-bottom: 16px;
+}
+
+.fieldsWrapper input::placeholder {
+    font-size: 14px;
+    color: rgba(20, 22, 26, 0.6);
+}
+
+.fieldsWrapper input:focus {
+    outline: none;
 }
 
 @media screen and (min-width: 768px) {

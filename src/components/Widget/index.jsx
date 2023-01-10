@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Widget.css";
 
-import { setWidget, setWSettings } from "../../store/reducers/generalSlice";
+import { setWSettings } from "../../store/reducers/widgetSlice";
 import { chains } from "../values";
 import { power } from "../Settings/assets/power.js";
 
@@ -13,7 +13,11 @@ import { compose } from "@reduxjs/toolkit";
 
 import WSettings from "../Settings";
 
-function Widget({ setState, widget, settings, wsettings }) {
+import { setFrom, setTo } from "../../store/reducers/generalSlice";
+
+import PropTypes from "prop-types";
+
+function Widget({ setState, widget, settings, wsettings, wid }) {
   const { NFTList } = useSelector(({ general: { NFTList } }) => ({
     NFTList,
   }));
@@ -35,37 +39,19 @@ function Widget({ setState, widget, settings, wsettings }) {
     }
   }, [widget, settings.color, NFTList]);
 
-  // useEffect(() => {
-  //   if (widget && !wsettings && settings.selectedChains.length === 2) {
-  //     setChainsLengthEqauls2(true);
-  //     console.log(chains.find((c) => c.text === settings.selectedChains[0]));
-  //     setTimeout(
-  //       () =>
-  //         dispatch(
-  //           setFrom(chains.find((c) => c.text === settings.selectedChains[1]))
-  //         ),
-  //       5
-  //     );
-  //     setTimeout(
-  //       () =>
-  //         dispatch(
-  //           setTo(chains.find((c) => c.text === settings.selectedChains[0]))
-  //         ),
-  //       7
-  //     );
-  //   }
-  // }, [widget]);
-
   useEffect(() => {
-    if (
-      widget &&
-      !wsettings &&
-      chains.find((c) => c.text === settings.fromChain) &&
-      chains.find((c) => c.text === settings.toChain)
-    ) {
+    const from = chains.find((c) => c.text === settings.fromChain);
+    const to = chains.find((c) => c.text === settings.toChain);
+    if ((widget || wid) && !wsettings && (from || to)) {
       setState.setChainsLengthEqauls2(true);
+      from && setState.setIsFrom(true);
+      to && setState.setIsTo(true);
+      from &&
+        dispatch(setFrom(chains.find((c) => settings.fromChain === c.text)));
+
+      to && dispatch(setTo(chains.find((c) => settings.toChain === c.text)));
     }
-    if (
+    /*  if (
       widget &&
       !wsettings &&
       chains.find((c) => c.text === settings.fromChain)
@@ -78,8 +64,8 @@ function Widget({ setState, widget, settings, wsettings }) {
       chains.find((c) => c.text === settings.toChain)
     ) {
       setState.setIsTo(true);
-    }
-  }, [settings]);
+    }*/
+  }, [settings.fromChain, settings.toChain]);
 
   const screenSize = useRef();
 
@@ -103,5 +89,13 @@ function Widget({ setState, widget, settings, wsettings }) {
 
   return <>{wsettings && <WSettings />}</>;
 }
+
+Widget.propTypes = {
+  setState: PropTypes.any,
+  widget: PropTypes.bool,
+  settings: PropTypes.any,
+  wsettings: PropTypes.bool,
+  wid: PropTypes.string,
+};
 
 export default compose(InitWidget, withStyles)(Widget);

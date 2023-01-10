@@ -1,114 +1,87 @@
-import BigNumber from "bignumber.js";
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+
+import React, { useState, useRef } from "react";
 import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useDispatch, useSelector } from "react-redux";
-import { chainsConfig, CHAIN_INFO } from "../values";
-import {
-  getFactory,
-  handleChainFactory,
-  setClaimablesAlgorand,
-  setNFTS,
-} from "../../wallet/helpers";
-import { setBigNumFees } from "../../store/reducers/generalSlice";
-import { setOriginalFee } from "../../store/reducers/settingsSlice";
-import { useEffect } from "react";
-import { useWeb3React } from "@web3-react/core";
 
-function SendFees() {
+import { setBigNumFees } from "../../store/reducers/generalSlice";
+import { useEffect } from "react";
+
+import { withServices } from "../App/hocs/withServices";
+
+import Wservice from "../Widget/wservice";
+
+const intervalTm = 10_000;
+
+function SendFees(props) {
+  const { serviceContainer } = props;
+
+  const { bridge } = serviceContainer;
+
   const dispatch = useDispatch();
   const balance = useSelector((state) => state.general.balance);
+
   const to = useSelector((state) => state.general.to);
   const from = useSelector((state) => state.general.from);
   const account = useSelector((state) => state.general.account);
-  const widget = useSelector((state) => state.general.widget);
-  const affiliationFees = useSelector(
-    (state) => state.settings.affiliationFees
-  );
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
-  const isToEVM = useSelector((state) => state.general.to).type === "EVM";
+
+  const widget = useSelector((state) => state.widget.widget);
+  const { affiliationFees, affiliationSettings } = useSelector(
+    ({ settings }) => ({
+      affiliationFees: settings.affiliationFees,
+      affiliationSettings: settings.affiliationSettings,
+    })
+  );
+
+  const [chainParams, setChainParams] = useState({});
+
   const [fees, setFees] = useState("");
-  const Web3Utils = require("web3-utils");
-  const [estimateInterval, setEstimateInterval] = useState();
+
   const [loading, setLoading] = useState(false);
 
-  async function estimate() {
-    let fact;
-    let fee;
-    try {
-      const fromChain = await handleChainFactory(from.text);
-      const toChain = await handleChainFactory(to.text);
-      const wallet =
-        to === "Tron"
-          ? "TCCKoPRcYoCGkxVThCaY9vRPaKiTjE4x1C"
-          : from === "Tron" && isToEVM
-          ? "0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6"
-          : from === "Algorand" && isToEVM
-          ? "0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6"
-          : from === "Elrond" && isToEVM
-          ? "0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6"
-          : from === "Tezos" && isToEVM
-          ? "0x5fbc2F7B45155CbE713EAa9133Dd0e88D74126f6"
-          : account;
+  const interval = useRef(null);
 
-      fact = await getFactory();
-      if (selectedNFTList.length) {
-        if (to === "Tron") {
-          fee =
-            from === "BSC"
-              ? new BigNumber("100000000000000000")
-              : from === "Polygon"
-              ? new BigNumber("23200000000000000000")
-              : from === "Ethereum"
-              ? new BigNumber("14952490000000000")
-              : from === "Algorand"
-              ? new BigNumber("32160950300000000000")
-              : from === "Elrond"
-              ? new BigNumber("239344350000000000")
-              : from === "Avalanche"
-              ? new BigNumber("529683610000000000")
-              : from === "xDai"
-              ? new BigNumber("56645012600000000000")
-              : from === "Fuse"
-              ? new BigNumber("95352570490000000000")
-              : "";
-        } else {
-          try {
-            fee = await fact.estimateFees(
-              fromChain,
-              toChain,
-              selectedNFTList[0],
-              wallet
-            );
-          } catch (error) {
-            console.error(error);
-          }
-        }
-      }
-      let bigNum = fee ? fee.multipliedBy(1.1) : undefined; //.integerValue().toString(10) : undefined;
+  async function estimate(fromChain, toChain) {
+    setLoading(true);
+    const { fees, formatedFees } = await fromChain.estimate(
+      toChain,
+      selectedNFTList[0],
+      account,
+      widget
+        ? { wservice: Wservice(), affiliationFees, affiliationSettings, from }
+        : undefined
+    );
 
-      if (
-        bigNum &&
-        widget &&
-        affiliationFees &&
-        Number(affiliationFees) / 100 + 1 > 1
-      ) {
-        const feesMultiplier = Number(affiliationFees) / 100 + 1;
-        bigNum = bigNum.multipliedBy(feesMultiplier <= 2 ? feesMultiplier : 2);
-      }
+    console.log(fees, formatedFees);
 
-      bigNum = bigNum ? bigNum.integerValue().toString(10) : undefined;
+    dispatch(setBigNumFees(fees));
+    setFees(formatedFees * selectedNFTList.length);
 
-      dispatch(setBigNumFees(bigNum));
-      let fees;
-      if (from.type === "Tron" || from.type === "Algorand") {
-        fees = bigNum / 1e6;
-      } else {
-        fees = bigNum && (await Web3Utils.fromWei(String(bigNum), "ether"));
-      }
-      fees && setFees(+(fees * selectedNFTList.length));
-    } catch (error) {
-      console.log(error.data ? error.data.message : error.message);
-    }
+    /* let fee;
+    TODO
+      if (to === "Tron") {
+        fee =
+          from === "BSC"
+            ? new BigNumber("100000000000000000")
+            : from === "Polygon"
+            ? new BigNumber("23200000000000000000")
+            : from === "Ethereum"
+            ? new BigNumber("14952490000000000")
+            : from === "Algorand"
+            ? new BigNumber("32160950300000000000")
+            : from === "Elrond"
+            ? new BigNumber("239344350000000000")
+            : from === "Avalanche"
+            ? new BigNumber("529683610000000000")
+            : from === "xDai"
+            ? new BigNumber("56645012600000000000")
+            : from === "Fuse"
+            ? new BigNumber("95352570490000000000")
+            : "";
+      
+   */
+    setLoading(false);
   }
 
   function getNumToFix() {
@@ -124,61 +97,60 @@ function SendFees() {
     return num;
   }
 
-  const config = chainsConfig[from?.text];
+  //const config = chainsConfig[from?.text];
 
   useEffect(() => {
-    if (selectedNFTList.length > 0) {
+    bridge
+      .getChain(from.nonce)
+      .then((fromChainWrapper) => setChainParams(fromChainWrapper.chainParams));
+  }, []);
+
+  useEffect(() => {
+    console.log(selectedNFTList);
+
+    if (!selectedNFTList.length) {
+      setFees("0");
+      return clearInterval(interval.current);
+    }
+
+    selectedNFTList.length &&
       (async () => {
-        setLoading(true);
-        await estimate();
-        setLoading(false);
+        const [fromChainWrapper, toChainWrapper] = await Promise.all([
+          bridge.getChain(from.nonce),
+          bridge.getChain(from.nonce),
+        ]);
+
+        const toChain = toChainWrapper.chain;
+        estimate(fromChainWrapper, toChain);
+        interval.current = setInterval(
+          () => estimate(fromChainWrapper, toChain),
+          intervalTm
+        );
       })();
-    } else setFees("0");
-    const s = setInterval(() => estimate(), 1000 * 30);
-    setEstimateInterval(s);
-    return () => clearInterval(s);
-  }, [selectedNFTList, affiliationFees]);
 
-  useEffect(() => {
-    clearInterval(estimateInterval);
-    estimate();
-    const s = setInterval(() => estimate(), 1000 * 30);
-    setEstimateInterval(s);
-    return () => clearInterval(s);
-  }, [to]);
-
-  // useEffect(async() => {
-  //     const balance = await getBalance()
-  //     setBalance(balance)
-  // }, [])
-
-  useEffect(() => {
-    clearInterval(estimateInterval);
-    estimate();
-    const s = setInterval(() => estimate(), 1000 * 30);
-    setEstimateInterval(s);
-    return () => clearInterval(s);
-  }, [to]);
+    return () => clearInterval(interval.current);
+  }, [selectedNFTList, to]);
 
   return (
     <div className="fees">
       <div className="fees__title">Fees</div>
       <div className="fees__bank">
-        {balance && (
-          <span className="fees__balance">{`Balance: ${balance.toFixed(5)} ${
-            config?.token
-          }`}</span>
+        {balance ? (
+          <span className="fees__balance">{`Balance: ${balance.toFixed(
+            3
+          )} ${chainParams?.currency ||
+            (from?.text === "Gnosis" && "Gnosis")}`}</span>
+        ) : (
+          `Balance: 0 ${chainParams?.currency || ""}`
         )}
         {loading ? (
           <LittleLoader />
         ) : (
           <span>
-            {fees && fees > 0
-              ? from.key === "Tezos"
-                ? new BigNumber(fees).multipliedBy(1e12).toString()
-                : fees?.toFixed(getNumToFix(fees))
-              : "0"}{" "}
-            {config?.token}
+            {`${fees && fees > 0 ? fees?.toFixed(getNumToFix(fees)) : "0"}
+                        ${chainParams?.currency || ""} 
+                        `}
+            {/* ${discountLeftUsd && showDiscount(fees).toFixed(2)} */}
           </span>
         )}
       </div>
@@ -186,4 +158,27 @@ function SendFees() {
   );
 }
 
-export default SendFees;
+export default withServices(SendFees);
+
+/**
+ * const widget = useSelector((state) => state.widget.widget);
+  const { affiliationFees, affiliationSettings } = useSelector(
+    ({ settings }) => ({
+      affiliationFees: settings.affiliationFees,
+      affiliationSettings: settings.affiliationSettings,
+    })
+  );
+ * 
+ *   let bigNum = fee ? fee.multipliedBy(1.1) : undefined; //.integerValue().toString(10) : undefined;
+
+      if (widget) {
+        bigNum = wservice.calcExtraFees(
+          bigNum,
+          from,
+          affiliationSettings,
+          affiliationFees
+        );
+      }
+
+      bigNum = bigNum ? bigNum.integerValue().toString(10) : undefined;
+ */

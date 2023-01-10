@@ -2,9 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 export const ReturnBtn = () => {
-  const { widget, wsettings } = useSelector((state) => ({
-    widget: state.general.widget,
-    wsettings: state.general.wsettings,
+  const { widget } = useSelector((state) => ({
+    widget: state.widget.widget,
   }));
 
   return widget ? (

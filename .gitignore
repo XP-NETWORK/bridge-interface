@@ -6,3 +6,8 @@ yarn-error.log
 **/build.zip
 .DS_Store
 .env
+.prettierre.json
+bridge.code-workspace
+**/workspace.code-workspace
+**/bridge.code-workspace
+

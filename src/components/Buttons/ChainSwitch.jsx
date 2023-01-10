@@ -7,20 +7,11 @@ import {
 } from "../../store/reducers/generalSlice";
 import "./Buttons.css";
 
-export default function ChainSwitch({ assignment, func }) {
+export default function ChainSwitch({ assignment }) {
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
-    const walletconnect = useSelector((state) => state.general.WalletConnect);
-    const OFF = { opacity: "0.6", pointerEvents: "none" };
-    const elrondAccount = useSelector((state) => state.general.elrondAccount);
-    const tezosAccount = useSelector((state) => state.general.tezosAccount);
-    const algorandAccount = useSelector(
-        (state) => state.general.algorandAccount
-    );
-    const tronAccount = useSelector((state) => state.general.tronWallet);
+
     const dispatch = useDispatch();
-    const nonEVM =
-        tezosAccount || tronAccount || algorandAccount || elrondAccount;
 
     function handleSwitchChain() {
         dispatch(setDepartureOrDestination("destination"));
@@ -66,5 +57,6 @@ export default function ChainSwitch({ assignment, func }) {
                 break;
         }
     };
+
     return show();
 }

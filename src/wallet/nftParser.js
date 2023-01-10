@@ -1,23 +1,22 @@
-//import requestPool from "./requestPool";
-import { isWhiteListed } from "./../components/NFT/NFTHelper";
-import axios from "axios";
 import { nftGeneralParser } from "nft-parser/dist/src/index";
 import store from "../store/store";
-import { setEachNFT } from "../store/reducers/generalSlice";
-import { parseEachNFT } from "./helpers";
+import { setEachNFT, setEachClaimables } from "../store/reducers/generalSlice";
 
-//const pool = requestPool(5000);
+import CacheService from "../services/cacheService";
+import WhiteListedPool from "../services/whiteListedPool";
 
-const cacheUrl = `https://nft-cache.herokuapp.com`;
-//const cacheUrl = `http://localhost:3030`;
+const cache = CacheService();
+const whiteListedPool = WhiteListedPool();
 
-export const parseNFT = async (nft, index, testnet, claimable) => {
+export const parseNFT = async (bridge, nft, index, testnet, claimable) => {
   const { uri } = nft;
+
   let whitelisted = !testnet
     ? nft?.native?.contract === "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a"
       ? false
       : undefined
     : true;
+
   let nftObj = {
     uri,
     collectionIdent: nft.collectionIdent || undefined,
@@ -27,111 +26,74 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
     nftId: nft.nftId || undefined,
     appId: nft.appId || undefined,
   };
+
   const {
     general: { from, NFTList, account },
   } = store.getState();
 
   if (!claimable) {
-    const [nftObject, wlListed] = await Promise.allSettled([
+    const [nftRes, whitelistedRes] = await Promise.allSettled([
       (async () => {
-        let chainId, tokenId, contract;
+        const unwraped = await bridge.unwrap(nft);
+        const {
+          chainId,
+          tokenId,
+          contract,
+          nft: { native },
+        } = unwraped;
 
-        if (/(wnfts\.xp\.network|nft\.xp\.network)/.test(nft.uri)) {
-          const res = await axios(nft.uri);
-          const { data } = res;
-          chainId = data.wrapped?.origin;
-          tokenId = data.wrapped?.tokenId;
-          contract = data.wrapped?.contract;
-        } else {
-          chainId = nft.native?.chainId;
-          tokenId = nft.native?.tokenId;
-          contract = nft.native?.contract;
+        const originChain = native.chainId;
+
+        let nftData;
+
+        try {
+          if (testnet) throw new Error("Testnet exception");
+          nftData = (
+            await cache.get({ chainId, tokenId, contract }, unwraped.nft)
+          ).data;
+          if (!nftData) throw new Error("No data exc");
+        } catch (e) {
+          nftData = await nftGeneralParser(nft, account, whitelisted);
         }
+        if (nftData === "no NFT with that data was found") {
+          /*if (!nft.uri) {
+            evm.init(factory);
+            nft = await evm.getUri(nft, nft.collectionIdent);
+          }*/
 
-        const res = await axios
-          .get(
-            `${cacheUrl}/nft/data?chainId=${chainId ||
-              nft.native?.chainId}&tokenId=${tokenId ||
-              nft.native?.tokenId}&contract=${contract ||
-              nft.native?.contract}`,
-            {
-              headers: { "Content-type": "application/json" },
-              timeout: 5000,
-            }
+          nftData = await cache.add(unwraped.nft, account, whitelisted);
+
+          if (
+            /(That nft is already caching|key parameter missing)/.test(nftData)
           )
-          .catch((e) => "error");
-
-        if (
-          (res && res.data === "no NFT with that data was found") ||
-          res === "error"
-        ) {
-          const parsed = await nftGeneralParser(nft, account, whitelisted);
-          return {
-            data: parsed,
-            toCache: true,
-          };
-        } else {
-          return {
-            data: res.data,
-            toCache: false,
-          };
+            return undefined;
         }
+
+        return { ...nftData, originChain };
       })(),
-      !testnet ? isWhiteListed(from.text, nft) : true,
+      !testnet
+        ? !cache.isRestricted(nft.uri)
+          ? whiteListedPool.add(bridge.isWhitelisted.bind(bridge))(
+              from.nonce,
+              nft
+            )
+          : true
+        : true,
     ]);
 
-    const nftObjectResponse =
-      nftObject.status === "fulfilled" ? nftObject.value : undefined;
-    whitelisted = wlListed.status === "fulfilled" ? wlListed.value : undefined;
+    const nftData = nftRes.status === "fulfilled" ? nftRes.value : undefined;
 
-    if (nftObjectResponse) {
-      const { data, toCache } = nftObjectResponse;
-      if (toCache) {
-        if (data.metaData?.image || data.metaData?.animation_url) {
-          console.log(
-            `caching Nft ${data?.metaData?.name || data?.native?.name}`
-          );
+    whitelisted =
+      whitelistedRes.status === "fulfilled" ? whitelistedRes.value : undefined;
 
-          try {
-            !testnet &&
-              whitelisted !== undefined &&
-              axios.post(
-                `${cacheUrl}/nft/add`,
-                JSON.stringify({
-                  ...data,
-                  metaData: {
-                    ...data.metaData,
-                    whitelisted,
-                  },
-                }),
-                {
-                  headers: {
-                    "Content-type": "application/json",
-                  },
-                }
-              );
-          } catch (error) {
-            console.error("nft-cache add: ", error);
-          }
-        }
-        const dataLoaded = true;
-        nftObj = {
-          ...nft,
-          ...data.metaData,
-          wrapped: data.wrapped,
-          dataLoaded,
-          whitelisted,
-        };
-      } else {
-        const dataLoaded = true;
-        nftObj = {
-          ...nft,
-          ...data,
-          dataLoaded,
-          whitelisted,
-        };
-      }
-    }
+    nftObj = {
+      ...nft,
+      ...(nftData?.metaData || nftData),
+      origin: nft.native.origin,
+      wrapped: nftData?.wrapped,
+      dataLoaded: true,
+      whitelisted,
+    };
 
     if (
       !NFTList[index]?.dataLoaded ||
@@ -141,6 +103,23 @@ export const parseNFT = async (nft, index, testnet, claimable) => {
       store.dispatch(setEachNFT({ nftObj, index }));
     }
   } else {
-    await parseEachNFT(nft, index, testnet, claimable);
+    const unwraped = await bridge.unwrap(nft);
+
+    const { chainId, tokenId, contract } = unwraped;
+    const claimableData = (await cache.get({ chainId, tokenId, contract }, nft))
+      .data;
+
+    store.dispatch(
+      setEachClaimables({
+        nftObj: {
+          ...nft,
+          ...claimableData,
+          native: {},
+          dataLoaded: true,
+          whitelisted: true,
+        },
+        index,
+      })
+    );
   }
 };

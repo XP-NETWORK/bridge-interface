@@ -140,3 +140,58 @@
 .transfer-board > svg {
   margin-top: auto;
 }
+
+.connectWalletLabel {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 119%;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  align-self: center;
+  padding: 20px;
+}
+
+.WalletBtn {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 16px;
+  gap: 12px;
+  width: 197px;
+  height: 197px;
+  border: 1px solid #45454b;
+  border-radius: 6px;
+  background: #363638;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.WalletBtn:hover {
+  background: #333335;
+  cursor: pointer;
+}
+
+.metaIcon {
+  width: 99.25px;
+  height: 99.25px;
+}
+
+.connectWalletCompDiv {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 281px;
+  height: 327px;
+  margin: auto;
+  background: #363638;
+  border: 1px solid #45454b;
+  box-shadow: 0px 1px 24px rgba(47, 48, 50, 0.08);
+  border-radius: 12px;
+}

@@ -1,0 +1,495 @@
+[
+    {
+        "name": "Ethereum Mainnet",
+        "chain": "ETH",
+        "network": "mainnet",
+        "icon": "ethereum",
+        "rpc": [
+            "https://mainnet.infura.io/v3/${INFURA_API_KEY}",
+            "wss://mainnet.infura.io/ws/v3/${INFURA_API_KEY}",
+            "https://api.mycryptoapi.com/eth",
+            "https://cloudflare-eth.com"
+        ],
+        "faucets": [],
+        "nativeCurrency": {
+            "name": "Ether",
+            "symbol": "ETH",
+            "decimals": 18
+        },
+        "infoURL": "https://ethereum.org",
+        "shortName": "eth",
+        "chainId": 1,
+        "networkId": 1,
+        "slip44": 60,
+        "ens": {
+            "registry": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e"
+        },
+        "explorers": [
+            {
+                "name": "etherscan",
+                "url": "https://etherscan.io",
+                "standard": "EIP3091"
+            }
+        ]
+    },
+    {
+        "name": "Ethereum Testnet Rinkeby",
+        "chain": "ETH",
+        "network": "rinkeby",
+        "rpc": [
+            "https://rinkeby.infura.io/v3/${INFURA_API_KEY}",
+            "wss://rinkeby.infura.io/ws/v3/${INFURA_API_KEY}"
+        ],
+        "faucets": ["https://faucet.rinkeby.io"],
+        "nativeCurrency": {
+            "name": "Rinkeby Ether",
+            "symbol": "RIN",
+            "decimals": 18
+        },
+        "infoURL": "https://www.rinkeby.io",
+        "shortName": "rin",
+        "chainId": 4,
+        "networkId": 4,
+        "ens": {
+            "registry": "0xe7410170f87102df0055eb195163a03b7f2bff4a"
+        },
+        "explorers": [
+            {
+                "name": "etherscan-rinkeby",
+                "url": "https://rinkeby.etherscan.io",
+                "standard": "EIP3091"
+            }
+        ]
+    },
+    {
+        "name": "Godwoken Testnet",
+        "chain": "CKB",
+        "tnChainId": 71401,
+        "network": "testnet",
+        "rpc": ["https://godwoken-testnet-v1.ckbapp.dev"],
+        "faucets": ["https://faucet.nervos.org/"],
+        "nativeCurrency": {
+            "name": "CKB",
+            "symbol": "CKB",
+            "decimals": 8
+        },
+        "infoURL": "https://github.com/nervosnetwork/godwoken",
+        "shortName": "ckb"
+    },
+    {
+        "name": "Godwoken Mainnet",
+        "chain": "CKB",
+        "network": "mainnet",
+        "icon": "godwoken",
+        "rpc": ["https://v1.mainnet.godwoken.io/rpc"],
+        "faucets": ["https://faucet.nervos.org/"],
+        "nativeCurrency": {
+            "name": "CKB",
+            "symbol": "CKB",
+            "decimals": 8
+        },
+        "infoURL": "https://github.com/nervosnetwork/godwoken",
+        "shortName": "ckb",
+        "chainId": 71402,
+        "networkId": 1
+    },
+    {
+        "name": "Aurora MainNet",
+        "chain": "NEAR",
+        "network": "mainnet",
+        "rpc": ["https://mainnet.aurora.dev"],
+        "faucets": [],
+        "nativeCurrency": {
+            "name": "aEther",
+            "symbol": "aETH",
+            "decimals": 18
+        },
+        "infoURL": "https://aurora.dev",
+        "shortName": "aurora",
+        "chainId": 1313161554,
+        "networkId": 1313161554
+    },
+    {
+        "name": "Aurora TestNet",
+        "chain": "NEAR",
+        "network": "testnet",
+        "rpc": ["https://testnet.aurora.dev/"],
+        "faucets": [],
+        "nativeCurrency": {
+            "name": "Ether",
+            "symbol": "aETH",
+            "decimals": 18
+        },
+        "infoURL": "https://aurora.dev",
+        "shortName": "aurora-testnet",
+        "tnChainId": 1313161555,
+        "networkId": 1313161555
+    },
+    {
+        "name": "Skale MainNet",
+        "chain": "SFUEL",
+        "network": "mainnet",
+        "rpc": ["https://mainnet.skalenodes.com/v1/honorable-steel-rasalhague"],
+        "faucets": [],
+        "nativeCurrency": {
+            "name": "SFUEL",
+            "symbol": "SFUEL",
+            "decimals": 18
+        },
+        "shortName": "skale",
+        "chainId": 1564830818
+    },
+    {
+        "chainId": 1305754875840118,
+        "chainName": "Skale Testnet",
+        "rpc": ["https://staging-v2.skalenodes.com/v1/rapping-zuben-elakrab"],
+        "nativeCurrency": {
+            "name": "SFUEL",
+            "symbol": "SFUEL",
+            "decimals": 18
+        }
+    },
+    {
+        "name": "Polygon Mainnet",
+        "chain": "Polygon",
+        "network": "mainnet",
+        "rpc": [
+            "https://polygon-rpc.com/",
+            "https://rpc-mainnet.matic.network",
+            "https://matic-mainnet.chainstacklabs.com",
+            "https://rpc-mainnet.maticvigil.com",
+            "https://rpc-mainnet.matic.quiknode.pro",
+            "https://matic-mainnet-full-rpc.bwarelabs.com"
+        ],
+        "faucets": [],
+        "nativeCurrency": {
+            "name": "MATIC",
+            "symbol": "MATIC",
+            "decimals": 18
+        },
+        "infoURL": "https://polygon.technology/",
+        "shortName": "MATIC",
+        "chainId": 137,
+        "networkId": 137,
+        "slip44": 966,
+        "explorers": [
+            {
+                "name": "polygonscan",
+                "url": "https://polygonscan.com/",
+                "standard": "EIP3091"
+            }
+        ]
+    },
+    {
+        "name": "Polygon Testnet Mumbai",
+        "chain": "Polygon",
+        "network": "testnet",
+        "rpc": [
+            "https://matic-mumbai.chainstacklabs.com",
+            "https://rpc-mumbai.maticvigil.com",
+            "https://matic-testnet-archive-rpc.bwarelabs.com"
+        ],
+        "faucets": ["https://faucet.polygon.technology/"],
+        "nativeCurrency": {
+            "name": "MATIC",
+            "symbol": "MATIC",
+            "decimals": 18
+        },
+        "infoURL": "https://polygon.technology/",
+        "shortName": "maticmum",
+        "chainId": 80001,
+        "networkId": 80001,
+        "explorers": [
+            {
+                "name": "polygonscan",
+                "url": "https://mumbai.polygonscan.com/",
+                "standard": "EIP3091"
+            }
+        ]
+    },
+    {
+        "name": "Binance Smart Chain Mainnet",
+        "chain": "BSC",
+        "network": "mainnet",
+        "rpc": [
+            "https://bsc-dataseed1.binance.org",
+            "https://bsc-dataseed2.binance.org",
+            "https://bsc-dataseed3.binance.org",
+            "https://bsc-dataseed4.binance.org",
+            "https://bsc-dataseed1.defibit.io",
+            "https://bsc-dataseed2.defibit.io",
+            "https://bsc-dataseed3.defibit.io",
+            "https://bsc-dataseed4.defibit.io",
+            "https://bsc-dataseed1.ninicoin.io",
+            "https://bsc-dataseed2.ninicoin.io",
+            "https://bsc-dataseed3.ninicoin.io",
+            "https://bsc-dataseed4.ninicoin.io",
+            "wss://bsc-ws-node.nariox.org"
+        ],
+        "faucets": ["https://free-online-app.com/faucet-for-eth-evm-chains/"],
+        "nativeCurrency": {
+            "name": "Binance Chain Native Token",
+            "symbol": "BNB",
+            "decimals": 18
+        },
+        "infoURL": "https://www.binance.org",
+        "shortName": "bnb",
+        "chainId": 56,
+        "networkId": 56,
+        "slip44": 714,
+        "explorers": [
+            {
+                "name": "bscscan",
+                "url": "https://bscscan.com",
+                "standard": "EIP3091"
+            }
+        ]
+    },
+    {
+        "name": "Avalanche Fuji Testnet",
+        "chain": "AVAX",
+        "network": "testnet",
+        "rpc": ["https://api.avax-test.network/ext/bc/C/rpc"],
+        "faucets": ["https://faucet.avax-test.network/"],
+        "nativeCurrency": {
+            "name": "Avalanche",
+            "symbol": "AVAX",
+            "decimals": 18
+        },
+        "infoURL": "https://cchain.explorer.avax-test.network",
+        "shortName": "Fuji",
+        "chainId": 43113,
+        "networkId": 1,
+        "explorers": [
+            {
+                "name": "snowtrace",
+                "url": "https://testnet.snowtrace.io/",
+                "standard": "EIP3091"
+            }
+        ]
+    },
+    {
+        "name": "Avalanche Mainnet",
+        "chain": "AVAX",
+        "network": "mainnet",
+        "rpc": ["https://api.avax.network/ext/bc/C/rpc"],
+        "faucets": ["https://free-online-app.com/faucet-for-eth-evm-chains/"],
+        "nativeCurrency": {
+            "name": "Avalanche",
+            "symbol": "AVAX",
+            "decimals": 18
+        },
+        "infoURL": "https://www.avax.network/",
+        "shortName": "Avalanche",
+        "chainId": 43114,
+        "networkId": 43114,
+        "slip44": 9000,
+        "explorers": [
+            {
+                "name": "snowtrace",
+                "url": "https://snowtrace.io/",
+                "standard": "EIP3091"
+            }
+        ]
+    },
+    {
+        "name": "IoTeX Network Mainnet",
+        "chain": "iotex.io",
+        "network": "mainnet",
+        "rpc": ["https://babel-api.mainnet.iotex.io"],
+        "faucets": [],
+        "nativeCurrency": {
+            "name": "IoTeX",
+            "symbol": "IOTX",
+            "decimals": 18
+        },
+        "infoURL": "https://iotex.io",
+        "shortName": "iotex-mainnet",
+        "chainId": 4689,
+        "networkId": 4689,
+        "explorers": [
+            {
+                "name": "iotexscan",
+                "url": "https://iotexscan.io",
+                "standard": "EIP3091"
+            }
+        ]
+    },
+    {
+        "name": "IoTeX Network Testnet",
+        "chain": "iotex.io",
+        "network": "testnet",
+        "rpc": ["https://babel-api.testnet.iotex.io"],
+        "faucets": ["https://faucet.iotex.io/"],
+        "nativeCurrency": {
+            "name": "IoTeX",
+            "symbol": "IOTX",
+            "decimals": 18
+        },
+        "infoURL": "https://iotex.io",
+        "shortName": "iotex-testnet",
+        "chainId": 4690,
+        "networkId": 4690,
+        "explorers": [
+            {
+                "name": "testnet iotexscan",
+                "url": "https://testnet.iotexscan.io",
+                "standard": "EIP3091"
+            }
+        ]
+    },
+    {
+        "name": "Velas EVM Mainnet",
+        "chain": "Velas",
+        "network": "mainnet",
+        "icon": "velas",
+        "rpc": [
+            "https://evmexplorer.velas.com/rpc",
+            "https://explorer.velas.com/rpc"
+        ],
+        "faucets": [],
+        "nativeCurrency": {
+            "name": "Velas",
+            "symbol": "VLX",
+            "decimals": 18
+        },
+        "infoURL": "https://velas.com",
+        "shortName": "vlx",
+        "chainId": 106,
+        "networkId": 106,
+        "explorers": [
+            {
+                "name": "Velas Explorer",
+                "url": "https://evmexplorer.velas.com",
+                "standard": "EIP3091"
+            }
+        ]
+    },
+    {
+        "name": "Harmony Mainnet Shard 0",
+        "chain": "Harmony",
+        "network": "mainnet",
+        "rpc": ["https://api.harmony.one"],
+        "faucets": ["https://free-online-app.com/faucet-for-eth-evm-chains/"],
+        "nativeCurrency": {
+            "name": "ONE",
+            "symbol": "ONE",
+            "decimals": 18
+        },
+        "infoURL": "https://www.harmony.one/",
+        "shortName": "hmy-s0",
+        "chainId": 1666600000,
+        "networkId": 1666600000,
+        "explorers": [
+            {
+                "name": "Harmony Block Explorer",
+                "url": "https://explorer.harmony.one",
+                "standard": "EIP3091"
+            }
+        ]
+    },
+    {
+        "name": "Harmony Testnet Shard 0",
+        "chain": "Harmony",
+        "network": "testnet",
+        "rpc": ["https://api.s0.b.hmny.io"],
+        "faucets": ["https://faucet.pops.one"],
+        "nativeCurrency": {
+            "name": "ONE",
+            "symbol": "ONE",
+            "decimals": 18
+        },
+        "infoURL": "https://www.harmony.one/",
+        "shortName": "hmy-b-s0",
+        "chainId": 1666700000,
+        "networkId": 1666700000,
+        "explorers": [
+            {
+                "name": "Harmony Testnet Block Explorer",
+                "url": "https://explorer.pops.one",
+                "standard": "EIP3091"
+            }
+        ]
+    },
+    {
+        "name": "xDAI Chain",
+        "chain": "XDAI",
+        "network": "mainnet",
+        "rpc": [
+            "https://rpc.xdaichain.com",
+            "https://xdai.poanetwork.dev",
+            "wss://rpc.xdaichain.com/wss",
+            "wss://xdai.poanetwork.dev/wss",
+            "http://xdai.poanetwork.dev",
+            "https://dai.poa.network",
+            "ws://xdai.poanetwork.dev:8546"
+        ],
+        "faucets": [
+            "https://free-online-app.com/faucet-for-eth-evm-chains/",
+            "https://xdai-app.herokuapp.com/faucet"
+        ],
+        "nativeCurrency": {
+            "name": "xDAI",
+            "symbol": "xDAI",
+            "decimals": 18
+        },
+        "infoURL": "https://forum.poa.network/c/xdai-chain",
+        "shortName": "xdai",
+        "chainId": 100,
+        "networkId": 100,
+        "slip44": 700,
+        "explorers": [
+            {
+                "name": "blockscout",
+                "url": "https://blockscout.com/poa/xdai",
+                "standard": "EIP3091"
+            }
+        ]
+    },
+    {
+        "name": "GateChain Testnet",
+        "chainId": 85,
+        "shortName": "gttest",
+        "chain": "GT",
+        "network": "testnet",
+        "networkId": 85,
+        "nativeCurrency": {
+            "name": "GateToken",
+            "symbol": "GT",
+            "decimals": 18
+        },
+        "rpc": ["https://meteora-evm.gatenode.cc"],
+        "faucets": ["https://www.gatescan.org/testnet/faucet"],
+        "explorers": [
+            {
+                "name": "GateScan",
+                "url": "https://www.gatescan.org/testnet",
+                "standard": "EIP3091"
+            }
+        ],
+        "infoURL": "https://www.gatechain.io"
+    },
+    {
+        "name": "GateChain Mainnet",
+        "chainId": 86,
+        "shortName": "gt",
+        "chain": "GT",
+        "network": "mainnet",
+        "networkId": 86,
+        "nativeCurrency": {
+            "name": "GateToken",
+            "symbol": "GT",
+            "decimals": 18
+        },
+        "rpc": ["https://evm.gatenode.cc"],
+        "faucets": ["https://www.gatescan.org/faucet"],
+        "explorers": [
+            {
+                "name": "GateScan",
+                "url": "https://www.gatescan.org",
+                "standard": "EIP3091"
+            }
+        ],
+        "infoURL": "https://www.gatechain.io"
+    }
+]

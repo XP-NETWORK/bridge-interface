@@ -1,10 +1,11 @@
-import { CHAIN_INFO } from "../../components/values";
+export const checkIfLive = (nonce, validatorsInfo) => {
+  const localhost =
+    window.location.hostname === "localhost" ||
+    window.location.pathname.includes("staging");
 
-export const checkIfLive = (chain, validatorsInfo) => {
-  // debugger;
-  const nonce = CHAIN_INFO[chain]?.nonce;
-  if (validatorsInfo) {
-    return validatorsInfo[nonce]?.bridge_alive;
+  if (localhost) return true;
+  else if (validatorsInfo) {
+    return validatorsInfo[Number(nonce)]?.bridge_alive;
   }
 };
 

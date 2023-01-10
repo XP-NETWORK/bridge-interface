@@ -1,42 +1,35 @@
-import {
-  setSelectedNFTList,
-  removeFromSelectedNFTList,
-} from "../../store/reducers/generalSlice";
-import NFTdetails from "../NFT/NFTdetails";
-import { useDispatch, useSelector } from "react-redux";
+/* eslint-disable react/prop-types */
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import NFTempty from "../innercomponents/NFTempty";
-import CheckGreen from "../../assets/img/icons/check_green.svg";
-import ListedView from "../NFT/ListedView";
-import { useState } from "react";
-import { useEffect } from "react";
-import { isWhiteListed } from "./NFTHelper";
-import NFTlistedCard from "./NFTlistedCard";
 
-function NFTlistView() {
-  const nfts = useSelector((state) => state.general.NFTList);
-  const search = useSelector((state) => state.general.NFTListSearch);
+import NFTlistedCard from "./NFTlistedCard";
+import { withSecretAuth } from "../Modals/ImportNFTModal/SecretAuth";
+import { withServices } from "../App/hocs/withServices";
+import { compose } from "redux";
+
+function NFTlistView({ serviceContainer }) {
+  const currentsNFTs = useSelector((state) => state.general.currentsNFTs);
+  const from = useSelector((state) => state.general.from);
+  const { bridge } = serviceContainer;
+  const [chain, setChain] = useState(null);
+
+  useEffect(() => {
+    bridge.getChain(from.nonce).then((fromChain) => setChain(fromChain));
+  }, []);
 
   return (
     <div className="nftListBox nftListView">
       <ul className="nftList">
-        {nfts?.length ? (
-          !search ? (
-            nfts.map((nft, index) => (
-              <NFTlistedCard
-                nft={nft}
-                index={index}
-                key={index + "listedview"}
-              />
-            ))
-          ) : (
-            nfts
-              .filter(
-                (nft, index) =>
-                  nft?.name?.includes(search ? search : "") ||
-                  nft?.native.owner?.includes(search ? search : "")
-              )
-              .map((nft, index) => <NFTlistedCard nft={nft} index={index} />)
-          )
+        {currentsNFTs?.length ? (
+          currentsNFTs.map((nft, index) => (
+            <NFTlistedCard
+              nft={nft}
+              index={index}
+              key={index + "listedview"}
+              chain={chain}
+            />
+          ))
         ) : (
           <NFTempty />
         )}
@@ -45,4 +38,4 @@ function NFTlistView() {
   );
 }
 
-export default NFTlistView;
+export default compose(withSecretAuth, withServices)(NFTlistView);

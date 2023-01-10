@@ -1,10 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useRef, React } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    chains,
-    CHAIN_INFO,
-    TESTNET_CHAIN_INFO,
-} from "../../components/values";
+import { chains } from "../../components/values";
 import {
     setChainModal,
     setDepartureOrDestination,
@@ -12,7 +8,6 @@ import {
     setFrom,
     setChainSearch,
     setSwitchDestination,
-    setValidatorsInf,
     setChangeWallet,
     setTemporaryFrom,
 } from "../../store/reducers/generalSlice";
@@ -21,10 +16,17 @@ import ChainSearch from "../Chains/ChainSearch";
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
 import { useWeb3React } from "@web3-react/core";
-import { getAddEthereumChain } from "../../wallet/chains";
 import { useLocation } from "react-router-dom";
+import { switchNetwork } from "../../services/chains/evm/evmService";
+import ScrollArrows from "./ScrollArrows";
 
-export default function ChainListBox(props) {
+import PropTypes from "prop-types";
+
+import { withServices } from "../App/hocs/withServices";
+
+function ChainListBox({ serviceContainer }) {
+    const { bridge } = serviceContainer;
+
     const dispatch = useDispatch();
     const location = useLocation();
     const departureOrDestination = useSelector(
@@ -45,20 +47,15 @@ export default function ChainListBox(props) {
     );
     const evmAccount = useSelector((state) => state.general.account);
     const tronAccount = useSelector((state) => state.general.tronWallet);
+    //const Sync2 = useSelector((state) => state.general.Sync2);
     const { account } = useWeb3React();
-    const testnet = useSelector((state) => state.general.testNet);
-    const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
-    const axios = require("axios");
+    const bitKeep = useSelector((state) => state.general.bitKeep);
+    const nftChainListRef = useRef(null);
+    /*const nearWallet = useSelector(
+    (state) => state.general.connectedWallet === "Near Wallet"
+  );*/
 
-    const checkValidators = async () => {
-        let res;
-        try {
-            res = await axios.get("https://bridgestatus.herokuapp.com/status");
-        } catch (error) {
-            console.error(error);
-        }
-        if (res?.data) dispatch(setValidatorsInf(res.data));
-    };
+    const [reached, setReached] = useState(false);
 
     const handleClose = () => {
         dispatch(setChainModal(false));
@@ -67,47 +64,77 @@ export default function ChainListBox(props) {
         dispatch(setChainSearch(""));
     };
 
-    const typeOfChainConnected = () => {
-        switch (true) {
-            case evmAccount?.length > 0:
-                return "EVM";
-            case algorandAccount?.length > 0:
-                return "Algorand";
-            case tezosAccount?.length > 0:
-                return "Tezos";
-            case elrondAccount?.length > 0:
-                return "Elrond";
-            case tronAccount?.length > 0:
-                return "Tron";
-            default:
-                return undefined;
+    const handleScroll = () => {
+        const {
+            scrollTop,
+            scrollHeight,
+            clientHeight,
+        } = nftChainListRef.current;
+        if (nftChainListRef?.current) {
+            if (
+                Math.ceil(scrollTop) + clientHeight === scrollHeight ||
+                Math.ceil(scrollTop) - 1 + clientHeight === scrollHeight
+            ) {
+                setReached(true);
+            } else setReached(false);
         }
     };
-
-    const chainSelectHandler = (chain) => {
+    // ! ref
+    const chainSelectHandler = async (chain) => {
+        // eslint-disable-next-line no-debugger
         // debugger;
+
+        const chainWrapper = await bridge.getChain(chain.nonce);
 
         if (departureOrDestination === "departure") {
             if (
-                chain.type === typeOfChainConnected() ||
-                !typeOfChainConnected()
+                chainWrapper.chainParams.name === "VeChain" &&
+                bridge.currentType === "EVM"
             ) {
-                if (to?.text === chain.text) {
-                    dispatch(setTo(from));
-                    dispatch(setFrom(to));
+                dispatch(setChangeWallet(true));
+                dispatch(setTemporaryFrom(chain));
+                handleClose();
+            } else if (
+                chainWrapper.chainParams.type === bridge.currentType ||
+                !bridge.currentType
+            ) {
+                if (to && to?.text === chain.text) {
+                    if (to?.text === "Harmony" && bitKeep) {
+                        dispatch(setTemporaryFrom(chain));
+                        dispatch(setChangeWallet(true));
+                        handleClose();
+                    } else if (
+                        (account || evmAccount) &&
+                        from.text !== "VeChain"
+                    ) {
+                        const switched = await switchNetwork(from);
+                        if (switched) {
+                            dispatch(setTo(from));
+                            dispatch(setFrom(to));
+                        }
+                    }
                 } else {
                     dispatch(setFrom(chain));
                 }
                 handleClose();
             } else {
-                dispatch(setTemporaryFrom(chain));
                 dispatch(setChangeWallet(true));
+                dispatch(setTemporaryFrom(chain));
                 handleClose();
             }
         } else if (departureOrDestination === "destination") {
             if (from?.text === chain.text) {
-                dispatch(setTo(from));
-                dispatch(setFrom(to));
+                if (to?.text === "Harmony" && bitKeep) {
+                    dispatch(setTemporaryFrom(to));
+                    dispatch(setChangeWallet(true));
+                    handleClose();
+                } else if (account || evmAccount) {
+                    const switched = await switchNetwork(to);
+                    if (switched) {
+                        dispatch(setTo(from));
+                        dispatch(setFrom(to));
+                    }
+                }
             } else {
                 dispatch(setTo(chain));
             }
@@ -116,8 +143,13 @@ export default function ChainListBox(props) {
     };
 
     useEffect(() => {
-        // debugger
+        // debugger;
         let filteredChains = chains;
+        if (chainSearch && departureOrDestination === "departure") {
+            filteredChains = chains.filter((chain) =>
+                chain.text.toLowerCase().includes(chainSearch.toLowerCase())
+            );
+        }
         const withNew = filteredChains
             .filter((chain) => chain.newChain)
             .sort((a, b) => a.order - b.order);
@@ -139,18 +171,20 @@ export default function ChainListBox(props) {
             ...withMaintenance,
             ...withComing,
         ];
-        if (chainSearch && departureOrDestination === "departure") {
-            sorted = chains.filter((chain) =>
-                chain.text.toLowerCase().includes(chainSearch.toLowerCase())
-            );
-        }
+        // if (chainSearch && departureOrDestination === "departure") {
+        //     sorted = chains.filter((chain) =>
+        //         chain.text.toLowerCase().includes(chainSearch.toLowerCase())
+        //     );
+        // }
         if (
-            location.pathname === "connect" ||
+            location.pathname === "/connect" ||
             location.pathname === "/testnet/connect" ||
             location.pathname === "/"
         ) {
             setFromChains(sorted.filter((e) => e.text !== to?.text));
         } else setFromChains(sorted);
+        if (sorted.length <= 5) setReached(true);
+        return () => setReached(false);
     }, [
         elrondAccount,
         tezosAccount,
@@ -159,15 +193,24 @@ export default function ChainListBox(props) {
         evmAccount,
         chainSearch,
         to,
+        departureOrDestination,
+        location.pathname,
     ]);
 
-    useEffect(async () => {
-        if (!validatorsInfo) await checkValidators();
-    }, [validatorsInfo]);
+    // useEffect(() => {
+    //     const check = async () => {
+    //         if (!validatorsInfo) await checkValidators();
+    //     };
+    //     check();
+    // }, [validatorsInfo, checkValidators]);
 
     useEffect(() => {
-        // debugger
         let filteredChains = chains;
+        if (chainSearch && departureOrDestination === "destination") {
+            filteredChains = chains.filter((chain) =>
+                chain.text.toLowerCase().includes(chainSearch.toLowerCase())
+            );
+        }
         const withNew = filteredChains
             .filter((chain) => chain.newChain)
             .sort((a, b) => a.order - b.order);
@@ -189,13 +232,8 @@ export default function ChainListBox(props) {
             ...withMaintenance,
             ...withComing,
         ];
-        if (chainSearch && departureOrDestination === "destination") {
-            sorted = chains.filter((chain) =>
-                chain.text.toLowerCase().includes(chainSearch.toLowerCase())
-            );
-        }
         if (
-            location.pathname === "connect" ||
+            location.pathname === "/connect" ||
             location.pathname === "/testnet/connect" ||
             location.pathname === "/"
         ) {
@@ -203,7 +241,9 @@ export default function ChainListBox(props) {
         } else {
             setToChains(sorted);
         }
-    }, [from, chainSearch, departureOrDestination]);
+        if (sorted.length <= 5) setReached(true);
+        return () => setReached(false);
+    }, [from, chainSearch, departureOrDestination, location.pathname]);
 
     useEffect(() => {
         if (
@@ -213,7 +253,7 @@ export default function ChainListBox(props) {
         ) {
             dispatch(setTo(""));
         }
-    }, [to, from]);
+    }, [to, from, dispatch, location.pathname]);
 
     return (
         <Modal
@@ -235,7 +275,11 @@ export default function ChainListBox(props) {
             <Modal.Body>
                 <div className="nftChainListBox">
                     <ChainSearch />
-                    <ul className="nftChainList scrollSty">
+                    <ul
+                        onScroll={handleScroll}
+                        ref={nftChainListRef}
+                        className="nftChainList scrollSty"
+                    >
                         {//! Show only mainnet FROM chains //
                         departureOrDestination === "departure" &&
                             !globalTestnet &&
@@ -249,6 +293,7 @@ export default function ChainListBox(props) {
                                     maintenance,
                                     mainnet,
                                     updated,
+                                    nonce,
                                 } = chain;
                                 return (
                                     (mainnet || coming) && (
@@ -265,6 +310,7 @@ export default function ChainListBox(props) {
                                             filteredChain={chain}
                                             image={image}
                                             key={`chain-${key}`}
+                                            nonce={nonce}
                                         />
                                     )
                                 );
@@ -282,6 +328,7 @@ export default function ChainListBox(props) {
                                     maintenance,
                                     mainnet,
                                     updated,
+                                    nonce,
                                 } = chain;
                                 return (
                                     (mainnet || coming) && (
@@ -297,6 +344,7 @@ export default function ChainListBox(props) {
                                             chainKey={key}
                                             filteredChain={chain}
                                             image={image}
+                                            nonce={nonce}
                                             key={`chain-${key}`}
                                         />
                                     )
@@ -315,6 +363,7 @@ export default function ChainListBox(props) {
                                     maintenance,
                                     testNet,
                                     updated,
+                                    nonce,
                                 } = chain;
                                 return (
                                     testNet && (
@@ -330,6 +379,7 @@ export default function ChainListBox(props) {
                                             chainKey={key}
                                             filteredChain={chain}
                                             image={image}
+                                            nonce={nonce}
                                             key={`chain-${key}`}
                                         />
                                     )
@@ -348,6 +398,7 @@ export default function ChainListBox(props) {
                                     maintenance,
                                     testNet,
                                     updated,
+                                    nonce,
                                 } = chain;
                                 return (
                                     testNet && (
@@ -363,14 +414,22 @@ export default function ChainListBox(props) {
                                             chainKey={key}
                                             filteredChain={chain}
                                             image={image}
+                                            nonce={nonce}
                                             key={`chain-${key}`}
                                         />
                                     )
                                 );
                             })}
                     </ul>
+                    {!reached && <ScrollArrows />}
                 </div>
             </Modal.Body>
         </Modal>
     );
 }
+
+ChainListBox.propTypes = {
+    serviceContainer: PropTypes.object,
+};
+
+export default withServices(ChainListBox);

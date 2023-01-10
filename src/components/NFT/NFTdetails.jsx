@@ -1,20 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState, useMemo, React } from "react";
 import { Modal } from "react-bootstrap";
 import moment from "moment";
 import brockenurl from "../../assets/img/brockenurl.png";
+import ModalImage from "react-modal-image";
+import zoomIn from "../../assets/img/icons/zoomInWhite.png";
 
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 
 import { ReactComponent as INFComp } from "../../assets/img/icons/Inf.svg";
-import { setupURI } from "../../wallet/helpers";
-import { getFactory, isValidHttpUrl } from "../../wallet/helpers";
-import { chainsConfig, CHAIN_INFO } from "../values";
-import { getUrl } from "./NFTHelper";
-import VideoOrImage from "./VideoOrImage";
-import { useSelector } from "react-redux";
+import { isValidHttpUrl } from "../../wallet/helpers";
+import { chains } from "../values";
+import PropTypes from "prop-types";
 
-function NFTdetails({ nftInf, claimables, details }) {
-  const widget = new URLSearchParams(window.location.search).get("widget");
+function NFTdetails({ nftInf, details }) {
   const {
     name,
     description,
@@ -24,23 +22,24 @@ function NFTdetails({ nftInf, claimables, details }) {
     wrapped,
     image,
     animation_url,
+    originChain,
   } = nftInf;
 
-  const isOriginUriExist = attributes?.some((e) => {
-    const values = Object.values(e);
-    return values?.some((v) => v === "Original URI");
-  });
-  const isOriginChainExist = attributes?.some((e) => {
-    const values = Object.values(e);
-    return values?.some((v) => v === "Original Chain");
-  });
+  const isOriginUriExist =
+    Array.isArray(attributes) &&
+    attributes?.some((e) => {
+      const values = Object.values(e);
+      return values?.some((v) => v === "Original URI");
+    });
+  /*const isOriginChainExist =
+    Array.isArray(attributes) &&
+    attributes?.some((e) => {
+      const values = Object.values(e);
+      return values?.some((v) => v === "Original Chain");
+    });*/
 
   const original_uri = wrapped && wrapped.original_uri;
-  const origin =
-    wrapped &&
-    Object.keys(CHAIN_INFO).find(
-      (e) => CHAIN_INFO[e].nonce.toString() === wrapped.origin
-    );
+  const origin = chains.find((e) => e.nonce === Number(originChain));
 
   // const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nftInf);
   const [show, setShow] = useState(false);
@@ -53,35 +52,22 @@ function NFTdetails({ nftInf, claimables, details }) {
     details(true);
     e.stopPropagation();
   };
-  const toKey = useSelector((state) => state.general.to.key);
-  const fromKey = useSelector((state) => state.general.from.key);
-  const [minted, setMinted] = useState();
 
-  const getMintedWith = async () => {
-    let mintWidth;
-    const toNonce = CHAIN_INFO[toKey].nonce;
-    const fromNonce = CHAIN_INFO[fromKey].nonce;
-    const contract = native?.contract?.toLowerCase();
-    const factory = await getFactory();
-    try {
-      mintWidth = await factory.getVerifiedContracts(
-        contract,
-        toNonce,
-        fromNonce
-      );
-    } catch (error) {
-      console.log(error);
-    }
-    if (mintWidth) {
-      setMinted(mintWidth);
-    }
-  };
+  const symbol = nftInf.symbol || native?.symbol;
 
-  useEffect(() => {
-    if (!claimables) {
-      getMintedWith();
-    }
-  }, []);
+  const attrs = useMemo(
+    () =>
+      Array.isArray(attributes) &&
+      attributes?.map((attr) =>
+        attr?.key
+          ? {
+              ...attr,
+              trait_type: attr?.key,
+            }
+          : attr
+      ),
+    [attributes]
+  );
 
   return (
     <>
@@ -105,17 +91,27 @@ function NFTdetails({ nftInf, claimables, details }) {
         <Modal.Body className="modalBody">
           <div className="nftDetailBox">
             <div className="nftDetImg">
-              {(image || animation_url) && uri && isValidHttpUrl(uri) ? (
+              <ModalImage
+                className="zoomInBtn"
+                small={zoomIn}
+                large={image}
+                hideDownload={true}
+                hideZoom={true}
+              />
+
+              {(image || animation_url) &&
+              (uri || image) &&
+              isValidHttpUrl(image) ? (
                 animation_url ? (
                   <video
                     controls={false}
                     playsInline={true}
                     autoPlay={true}
                     loop={true}
-                    src={setupURI(animation_url)}
+                    src={animation_url}
                   />
                 ) : (
-                  <img alt="NFTss" src={setupURI(image)} />
+                  <img alt="NFTss" src={image} />
                 )
               ) : (
                 <div className="brocken-url">
@@ -130,11 +126,11 @@ function NFTdetails({ nftInf, claimables, details }) {
             <div className="nftDetIg">
               <div className="nftName nftInfBox">
                 <label>Name</label>
-                <p>{name}</p>
+                <p>{name || native?.name}</p>
               </div>
               <div className="nftToken nftInfBox">
                 <label>Token ID</label>
-                <p>{native.tokenId}</p>
+                <p>{native?.tokenId}</p>
               </div>
               {original_uri && !isOriginUriExist && (
                 <div className="nftInfDesc nftInfBox">
@@ -142,7 +138,7 @@ function NFTdetails({ nftInf, claimables, details }) {
                   <p>{original_uri}</p>
                 </div>
               )}
-              {origin && !isOriginChainExist && (
+              {origin && (
                 <div className="nftInfDesc nftInfBox">
                   <label>Original Chain</label>
                   <div style={{ display: "flex" }}>
@@ -151,10 +147,10 @@ function NFTdetails({ nftInf, claimables, details }) {
                         marginRight: "4px",
                         width: "29px",
                       }}
-                      src={chainsConfig[origin]?.img}
-                      alt={origin}
+                      src={origin.image?.src}
+                      alt={origin.key + "originIconDetails"}
                     />
-                    <p>{origin}</p>
+                    <p>{origin.key}</p>
                   </div>
                 </div>
               )}
@@ -171,25 +167,32 @@ function NFTdetails({ nftInf, claimables, details }) {
                             ) : (
                                 <></>
                             )*/}
-              {native.name && (
+              {native?.name && (
                 <div className="nftInfDesc nftInfBox">
                   <label>Collection Name</label>
-                  <p>{nftInf.collectionName || native.name}</p>
+                  <p>{nftInf.collectionName || native?.name}</p>
                 </div>
               )}
               <div className="nftInfDesc nftInfBox">
-                <label>Symbol</label>
-                <p>{nftInf.symbol || native.symbol}</p>
+                <label>Collection Identifier</label>
+                <p>{nftInf.collectionIdent}</p>
               </div>
+              {symbol && (
+                <div className="nftInfDesc nftInfBox">
+                  <label>Symbol</label>
+                  <p>{symbol}</p>
+                </div>
+              )}
               {description && (
                 <div className="nftInfDesc nftInfBox">
                   <label>Description</label>
                   <p>{description}</p>
                 </div>
               )}
-              {attributes &&
-                Array.isArray(attributes) &&
-                attributes
+
+              {attrs &&
+                Array.isArray(attrs) &&
+                attrs
                   .filter(
                     (n) =>
                       typeof n.value === "string" || typeof n.value === "number"
@@ -208,14 +211,19 @@ function NFTdetails({ nftInf, claimables, details }) {
     </>
   );
 }
-
+NFTdetails.propTypes = {
+  nftInf: PropTypes.object,
+  claimables: PropTypes.bool,
+  details: PropTypes.any,
+};
 export default NFTdetails;
 
 function Attribute(props) {
   const { display_type, value } = props;
-  const trait_type = props.trait_type || props.name;
-  if (trait_type === "Original Chain") {
-  }
+
+  const trait_type =
+    props.trait_type || props.name || props.label || props.attribute;
+
   return (
     <div className="nftToken nftInfBox">
       <label>
@@ -232,12 +240,9 @@ function Attribute(props) {
             alt="#"
             style={{ marginRight: "4px", width: "29px" }}
             src={
-              chainsConfig[value]?.img ||
-              chainsConfig[
-                Object.keys(chainsConfig)?.find((key) =>
-                  chainsConfig[key]?.variants?.includes(value)
-                )
-              ]?.img
+              chains.find(
+                (chain) => chain.key.toLowerCase() === value.toLowerCase()
+              )?.image.src
             }
           />
         )}
@@ -252,3 +257,11 @@ function Attribute(props) {
     </div>
   );
 }
+Attribute.propTypes = {
+  trait_type: PropTypes.any,
+  name: PropTypes.any,
+  label: PropTypes.any,
+  attribute: PropTypes.any,
+  display_type: PropTypes.any,
+  value: PropTypes.any,
+};

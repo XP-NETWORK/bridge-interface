@@ -1,18 +1,23 @@
-import Connex from "@vechain/connex";
-import { TempleWallet } from "@temple-wallet/dapp";
-import { injected, algoConnector } from "../../wallet/connectors";
+/* eslint-disable no-debugger */
+/* eslint-disable valid-typeof */
+
+import { injected, algoConnector, web3Modal } from "../../wallet/connectors";
 import store from "../../store/store";
-import WalletConnect from "@walletconnect/client";
-import QRCodeModal from "@walletconnect/qrcode-modal";
-import { TezosToolkit } from "@taquito/taquito";
-import { BeaconWallet } from "@taquito/beacon-wallet";
+
 import MyAlgoConnect from "@randlabs/myalgo-connect";
+
+import { HashConnect } from "hashconnect";
+import { hethers } from "@hashgraph/hethers";
+import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+
 import {
   WalletConnectProvider,
   ProxyProvider,
   ExtensionProvider,
 } from "@elrondnetwork/erdjs";
 import QRCode from "qrcode";
+import { ethers } from "ethers";
+
 import {
   setTronWallet,
   setConfirmMaiarMob,
@@ -23,29 +28,29 @@ import {
   setOnMaiar,
   setElrondAccount,
   setMaiarProvider,
-  setReset,
   setError,
   setTronPopUp,
-  setAlgoSigner,
-  setAlgorandAccount,
-  setMyAlgo,
-  setTezosAccount,
-  setKukaiWallet,
-  setTempleWallet,
+  // setAlgoSigner,
+  // setAlgorandAccount,
   setQrImage,
   setQrCodeString,
   setWC,
-  setOnWC,
   setAccount,
-  setSync2,
-  setSync2Connecx,
-  setTempleWalletSigner,
+  setKeplrWallet,
+  setHederaAccount,
+  setHederaWallet,
+  setRedirectModal,
 } from "../../store/reducers/generalSlice";
-import { useNavigate } from "react-router";
-import { chainsConfig, CHAIN_INFO, TESTNET_CHAIN_INFO } from "../values";
-import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { chainsConfig } from "../values";
 import { getAddEthereumChain } from "../../wallet/chains";
 import Web3 from "web3";
+
+import { SecretNetworkClient } from "secretjs";
+import { setSigner } from "../../store/reducers/signersSlice";
+
+import { inIframe } from "../Settings/helpers";
+
+// import AuthClient from "@walletconnect/auth-client";
 
 export const wallets = [
   "MetaMask",
@@ -61,22 +66,63 @@ export const wallets = [
   "Maiar Extension",
   "Ledger",
   "Trezor",
+  "Hashpack",
 ];
-const { to, modalError } = store.getState();
-const connector = new WalletConnect({
-  bridge: "https://bridge.walletconnect.org", // Required
+const { modalError } = store.getState();
+
+const hashConnect = new HashConnect(true);
+
+hashConnect.pairingEvent.once(async (pairingData) => {
+  const {
+    accountIds,
+    topic,
+    metadata: { name },
+  } = pairingData;
+  const address = await hethers.utils.getAddressFromAccount(accountIds[0]);
+  const provider = hashConnect.getProvider("testnet", topic, accountIds[0]);
+  const signer = hashConnect.getSigner(provider);
+
+  store.dispatch(setHederaAccount(address));
+  store.dispatch(setHederaWallet(name));
+  store.dispatch(setSigner(signer));
 });
 
-const switchNetWork = async (from) => {
-  debugger;
-  const transfer16 = (val = 0) => {
-    val = isNaN(Number(val)) ? 1 : Number(val);
-    return "0x" + val.toString(16);
+export const connectHashpack = async () => {
+  let appMetadata = {
+    name: "XP.NETWORK Cross-Chain NFT Bridge",
+    description:
+      "Seamlessly move assets between chains | The first multichain NFT bridge to connect all major Blockchains into one ecosystem",
+    icon: "%PUBLIC_URL%/favicon.ico",
   };
+
+  try {
+    const initData = await hashConnect.init(appMetadata, "testnet", false);
+    const { pairingString } = initData;
+    await hashConnect.connectToLocalWallet(pairingString, appMetadata);
+    return true;
+  } catch (error) {
+    console.log("connectHashpack error: ", error);
+  }
+};
+
+export const connectUnstoppable = async () => {
+  // eslint-disable-next-line no-debugger
+  // debugger;
+  try {
+    const provider = await web3Modal.connect();
+    return provider.selectedAddress;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const switchNetWork = async (from) => {
   // let fromChainId;
+  console.log(from, "from");
   const chain = getAddEthereumChain()[parseInt(from.chainId).toString()];
+  console.log(chain);
   const params = {
-    chainId: from.chainID, // A 0x-prefixed hexadecimal string
+    chainId: from.chainId, // A 0x-prefixed hexadecimal string
     chainName: chain.name,
     nativeCurrency: {
       name: chain.nativeCurrency.name,
@@ -102,55 +148,70 @@ const switchNetWork = async (from) => {
       .catch((e) => {
         console.log(e);
       });
-  // try {
-  //     fromChainId = transfer16(from.chainId);
-  //     await window.bitkeep?.ethereum?.request({
-  //         method: "wallet_switchEthereumChain",
-  //         params: fromChainId,
-  //     });
-  // } catch (error) {
-  //     console.error(error);
-  //     const chain = getAddEthereumChain()[parseInt(fromChainId).toString()];
-  // const params = {
-  //     chainId: fromChainId, // A 0x-prefixed hexadecimal string
-  //     chainName: chain.name,
-  //     nativeCurrency: {
-  //         name: chain.nativeCurrency.name,
-  //         symbol: chain.nativeCurrency.symbol, // 2-6 characters long
-  //         decimals: chain.nativeCurrency.decimals,
-  //     },
-  //     rpcUrls: chain.rpc,
-  //     blockExplorerUrls: [
-  //         chain.explorers &&
-  //         chain.explorers.length > 0 &&
-  //         chain.explorers[0].url
-  //             ? chain.explorers[0].url
-  //             : chain.infoURL,
-  //     ],
-  // };
-  //     try {
-  //         fromChainId = transfer16(from.chainId);
-  //         window.bitkeep?.ethereum?.request({
-  //             method: "wallet_addEthereumChain",
-  //             params,
-  //         });
-  //     } catch (error) {
-  //         console.error(error);
-  //     }
-  // }
+};
+
+export const connectKeplr = async (testnet, chain, wallet, isMobile) => {
+  const chainId = testnet ? chain.tnChainId : chain.chainId;
+  if (window.keplr) {
+    try {
+      await window.keplr.enable(chainId);
+      const offlineSigner = window.keplr.getOfflineSigner(chainId);
+
+      const accounts = await offlineSigner.getAccounts();
+
+      const { address } = accounts[0];
+
+      const signer = await SecretNetworkClient.create({
+        grpcWebUrl: testnet ? chain.tnRpc : chain.rpc,
+        chainId,
+        wallet: offlineSigner,
+        walletAddress: address,
+        //encryptionUtils: window.getEnigmaUtils(chain),
+      });
+
+      store.dispatch(setAccount(address));
+      store.dispatch(setKeplrWallet(signer));
+      store.dispatch(setSigner(signer));
+      return signer;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  } else {
+    if (isMobile) {
+      store.dispatch(setRedirectModal("Fina"));
+    } else
+      store.dispatch(
+        setError({
+          message: "Please install Keplr extension",
+        })
+      );
+    return false;
+  }
+};
+
+const setBitKeepSigner = (account) => {
+  const provider = new ethers.providers.Web3Provider(window.bitkeep.ethereum);
+  const signer = provider.getSigner(account);
+  store.dispatch(setSigner(signer));
 };
 
 export const connectBitKeep = async (from) => {
+  // debugger;
   let provider;
   const isInstallBikeep = () => {
     return window.bitkeep && window.bitkeep?.ethereum;
   };
   if (!isInstallBikeep()) {
-    window.open(
-      "https://chrome.google.com/webstore/detail/bitkeep-bitcoin-crypto-wa/jiidiaalihmmhddjgbnbgdfflelocpak",
-      "bitkeep installer",
-      "width=500,height=500"
-    );
+    if (window.innerWidth <= 600) {
+      store.dispatch(setRedirectModal("BitKeep"));
+    } else {
+      window.open(
+        "https://chrome.google.com/webstore/detail/bitkeep-bitcoin-crypto-wa/jiidiaalihmmhddjgbnbgdfflelocpak",
+        "bitkeep installer",
+        "width=500,height=500"
+      );
+    }
   } else {
     provider = window.bitkeep?.ethereum;
     await provider.request({ method: "eth_requestAccounts" });
@@ -161,17 +222,35 @@ export const connectBitKeep = async (from) => {
       switchNetWork(from, true);
     } else {
       store.dispatch(setAccount(address[0]));
+      setBitKeepSigner(address[0]);
       return true;
     }
   }
 };
 
-export const connectMetaMask = async (activate, from, to) => {
+export const connectMetaMask = async (activate) => {
   // debugger;
   try {
     if (!window.ethereum && window.innerWidth <= 600) {
-      const link = `https://metamask.app.link/dapp/${window.location.host}?to=${to}&from=${from}/`;
-      window.open(link);
+      let timer;
+      const store1 = store.getState();
+      if (store1.widget.widget && inIframe()) {
+        window.parent.postMessage(
+          `From Widget: Open MetaMask###${window.location.search}`,
+          "*"
+        );
+        window.addEventListener("message", (event) => {
+          if (event.data?.type === "redirectFromTop" && event.data?.status) {
+            timer && clearTimeout(timer);
+          }
+        });
+      }
+
+      const link = `dapp://${window.location.host}${window.location.search}`;
+
+      timer = setTimeout(() => {
+        window.open(link);
+      }, 1000);
     }
     await activate(injected);
     store.dispatch(setMetaMask(true));
@@ -184,38 +263,6 @@ export const connectMetaMask = async (activate, from, to) => {
     return false;
   }
 };
-
-export const connectSync2 = async (testnet) => {
-  let account;
-  const client = new Connex(
-    testnet
-      ? {
-          node: "https://testnet.veblocks.net/",
-          network: "test",
-        }
-      : {
-          node: "https://sync-mainnet.veblocks.net",
-          network: "main",
-        }
-  );
-  store.dispatch(setSync2Connecx(client));
-  const vendor = new Connex.Vendor(testnet ? "test" : "main");
-  await vendor
-    .sign("cert", {
-      purpose: "identification",
-      payload: {
-        type: "text",
-        content: "sign certificate to continue bridging",
-      },
-    })
-    .link("https://connex.vecha.in/{certid}") // User will be back to the app by the url https://connex.vecha.in/0xffff....
-    .request()
-    .then((result) => {
-      account = result?.annex?.signer;
-    });
-  return account;
-};
-
 // Algorand blockchain connection ( AlgoSigner )
 export const connectAlgoSigner = async (testnet) => {
   if (typeof window.AlgoSigner !== undefined) {
@@ -224,11 +271,16 @@ export const connectAlgoSigner = async (testnet) => {
       const algo = await window.AlgoSigner.accounts({
         ledger: testnet ? "TestNet" : "MainNet",
       });
-      const { address } = algo[0];
-
-      store.dispatch(setAlgoSigner(true));
-      store.dispatch(setAlgorandAccount(address));
-      return true;
+      // store.dispatch(setAlgoSigner(true));
+      // store.dispatch(setAlgorandAccount(address));
+      const address = algo[0].address;
+      const signer = {
+        address: algo[0],
+        algoSigner: window.AlgoSigner,
+        ledger: testnet ? "TestNet" : "MainNet",
+      };
+      // store.dispatch(setSigner(signer));
+      return { signer, address };
     } catch (e) {
       console.error(e);
       return JSON.stringify(e, null, 2);
@@ -252,8 +304,6 @@ export const connectTrustWallet = async (activate, from) => {
     });
     walletConnect.networkId = chainId;
     await activate(walletConnect, undefined, true);
-    store.dispatch(setOnWC(true));
-    store.dispatch(setWC(walletConnect));
     return true;
   } catch (error) {
     store.dispatch(setError(error));
@@ -264,58 +314,38 @@ export const connectTrustWallet = async (activate, from) => {
   }
 };
 
-// Tezos blockchain connection ( Temple Wallet )
-export const connectTempleWallet = async () => {
-  try {
-    const available = await TempleWallet.isAvailable();
-    if (!available) {
-      throw new Error("Temple Wallet not installed");
-    }
-    const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
-    await wallet.connect("mainnet");
-    store.dispatch(setTempleWalletSigner(wallet));
-    const tezos = wallet.toTezos();
-    const accountPkh = await tezos.wallet.pkh();
-    store.dispatch(setTezosAccount(accountPkh));
-    store.dispatch(setTempleWallet(true));
-    return true;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
-};
-// Tezos blockchain connection ( Beacon )
-export const connectBeacon = async () => {
-  const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
-  const wallet = new BeaconWallet({
-    name: "XP.NETWORK Cross-Chain NFT Bridge",
-  });
-  Tezos.setWalletProvider(wallet);
-  try {
-    const permissions = await wallet.client.requestPermissions();
-    store.dispatch(setTezosAccount(permissions.address));
-    store.dispatch(setKukaiWallet(true));
-    return true;
-  } catch (error) {
-    console.log("Got error:", error);
-    return false;
-  }
-};
-
-export const connectMyAlgo = async () => {
+export const connectMyAlgo = async (chain) => {
   const myAlgoConnect = new MyAlgoConnect();
   try {
     const accountsSharedByUser = await myAlgoConnect.connect();
-    store.dispatch(setAlgorandAccount(accountsSharedByUser[0].address));
-    store.dispatch(setMyAlgo(true));
-    return true;
+    const address = accountsSharedByUser[0].address;
+
+    const signer = await chain.myAlgoSigner(myAlgoConnect, address);
+
+    return { signer, address };
   } catch (error) {
     console.log(error);
     return false;
   }
 };
 
+// const authClient = await AuthClient.init({
+//     projectId: "<dhd8193nbaq>",
+//     metadata: {
+//         name: "XP.NETWORK Cross-Chain NFT Bridge",
+//         description:
+//             "Seamlessly move assets between chains | The first multichain NFT bridge to connect all major Blockchains into one ecosystem",
+//         url: "my-auth-dapp.com",
+//         icons: ["https://my-auth-dapp.com/icons/logo.png"],
+//     },
+// });
+
+// export const onWalletConnectV2 = async () => {
+//     console.log(authClient);
+// };
+
 export const onWalletConnect = async (activate, from, testnet) => {
+  // onWalletConnectV2();
   const { rpc, chainId } = chainsConfig[from];
   try {
     const walletConnect = new WalletConnectConnector({
@@ -330,7 +360,6 @@ export const onWalletConnect = async (activate, from, testnet) => {
     await activate(walletConnect, undefined, true);
     const account = await walletConnect.getAccount();
     store.dispatch(setAccount(account));
-    store.dispatch(setOnWC(true));
     store.dispatch(setWC(walletConnect));
     return true;
   } catch (error) {
@@ -350,6 +379,7 @@ const onClientConnect = (maiarProvider) => {
       store.dispatch(setElrondAccount(add));
 
       store.dispatch(setMaiarProvider(maiarProvider));
+      store.dispatch(setSigner(maiarProvider));
       store.dispatch(setOnMaiar(true));
       store.dispatch(setStep(2));
     },
@@ -391,14 +421,19 @@ export const connectMaiar = async () => {
 
 // Elrond blockchain connection ( Maiar Extension )
 export const connectMaiarExtension = async () => {
+  // debugger;
   const instance = ExtensionProvider.getInstance();
   try {
     await instance.init();
     await instance.login();
     const { account } = instance;
+    if (account?.name === "CanceledError") {
+      return false;
+    }
     store.dispatch(setOnMaiar(true));
     store.dispatch(setElrondAccount(account.address));
     store.dispatch(setMaiarProvider(instance));
+    store.dispatch(setSigner(instance));
     return true;
   } catch (err) {
     window.open("https://getmaiar.com/defi", "_blank");
@@ -409,6 +444,9 @@ export const connectMaiarExtension = async () => {
 
 // Tron blockchain connection ( TronLink )
 export const connectTronlink = async () => {
+  const {
+    general: { factory },
+  } = store.getState();
   if (window.innerWidth <= 600 && !window.tronWeb) {
     store.dispatch(setTronPopUp(true));
   } else {
@@ -419,7 +457,7 @@ export const connectTronlink = async () => {
         });
 
         if (!accounts) {
-          store.dispatch(setTronLoginError("loggedOut"))``;
+          store.dispatch(setTronLoginError("loggedOut"));
         }
       } catch (err) {
         console.log(err);
@@ -429,7 +467,13 @@ export const connectTronlink = async () => {
       }
 
       if (window.tronLink && window.tronWeb.defaultAddress.base58) {
+        console.log(window.tronLink);
         const publicAddress = window.tronWeb.defaultAddress.base58;
+
+        await factory
+          .setProvider(9, window.tronWeb)
+          .catch((e) => console.log(e, "e"));
+
         store.dispatch(setTronWallet(publicAddress));
         store.dispatch(setTronLink(true));
         return true;

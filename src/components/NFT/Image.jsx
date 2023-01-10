@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { setupURI } from "../../wallet/helpers";
+import PropTypes from "prop-types";
 
-export default function Image({ nft, index, onError }) {
+export default function Image({ nft, onError }) {
     const [loaded, setLoaded] = useState(false);
 
     return (
@@ -18,9 +18,14 @@ export default function Image({ nft, index, onError }) {
                     onLoad={() => setLoaded(true)}
                     onError={() => onError(true)}
                     alt={nft.name || nft.description || undefined}
-                    src={setupURI(nft.image)}
+                    src={nft.image}
                 />
             )}
         </div>
     );
 }
+
+Image.propTypes = {
+    nft: PropTypes.any,
+    onError: PropTypes.any,
+};

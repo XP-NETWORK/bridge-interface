@@ -87,7 +87,7 @@ div#root {
 }
 .about-btn {
   letter-spacing: 0.03em;
-  color: #62718a;
+  color: #14161a;
   opacity: 0.8;
   display: flex;
   align-items: center;
@@ -843,6 +843,7 @@ li.nftSelecItem .Close:hover {
 }
 
 .nftDetImg {
+  position: relative;
   flex-shrink: 0;
   height: 300px;
   display: flex;
@@ -854,7 +855,7 @@ li.nftSelecItem .Close:hover {
 
 .nftDetImg img,
 .nftDetImg video {
-  height: 60%;
+  height: 100%;
   border-radius: 16px;
 }
 
@@ -871,11 +872,6 @@ li.nftSelecItem .Close:hover {
   padding: 8px 12px;
   border-radius: 6px;
   margin-bottom: 9px;
-}
-
-.nftInfBox p {
-  display: flex;
-  align-items: center;
 }
 
 .nftInfBox p {
@@ -913,6 +909,7 @@ li.nftSelecItem .Close:hover {
 
 .nftDetailBox {
   display: flex;
+  justify-content: space-evenly;
   padding-top: 10px;
   flex-wrap: wrap;
   padding-bottom: 10px;
@@ -920,7 +917,7 @@ li.nftSelecItem .Close:hover {
 
 .nftDetImg {
   flex-shrink: 0;
-  width: 50%;
+  max-width: 50%;
   padding: 0 15px 0 30px;
 }
 
@@ -1139,6 +1136,10 @@ span.statComp img {
 .wrongNFT {
   padding: 24px;
   color: #14161a;
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 300px;
+  word-break: break-all;
 }
 
 .nftListView span.NFTInf {
@@ -1707,10 +1708,6 @@ span.transPend {
   z-index: -1;
 }
 
-.widgetBlur {
-  backdrop-filter: blur(225px);
-}
-
 .modal-open .App::before {
   z-index: 12;
 }
@@ -1822,6 +1819,10 @@ span.closeBox:hover svg path {
   position: relative;
 }
 
+.tron-modal_address {
+  color: #62718a;
+}
+
 .video-responsive iframe {
   width: 100%;
   height: 640px;
@@ -1850,7 +1851,7 @@ span.closeBox:hover svg path {
   margin: 0 auto;
   width: 260px;
   height: 40px;
-  background: #50505077;
+  background: #b4b0b077;
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -1861,6 +1862,11 @@ span.closeBox:hover svg path {
   position: absolute;
   bottom: 15px;
   right: -50px;
+}
+
+.copyTronTT g path {
+  fill: black;
+  stroke: black;
 }
 
 .copyTronTTc {
@@ -1984,6 +1990,10 @@ span.closeBox:hover svg path {
 
 .get-featured img {
   margin: 0 8px;
+}
+
+.secretAuth .contract-input__wrapper input {
+  padding-right: 35px;
 }
 
 .get-featured:hover {

@@ -16,81 +16,34 @@ import {
   setFrom,
   setMetaMask,
 } from "../../store/reducers/generalSlice";
-import { useLocation, useNavigate } from "react-router-dom";
-import { getAddEthereumChain } from "../../wallet/chains";
+import { useNavigate } from "react-router-dom";
 import BitKeep from "../../assets/img/wallet/bitkeep.svg";
-import { CHAIN_INFO, TESTNET_CHAIN_INFO, biz } from "../values";
+import { switchNetwork } from "../../services/chains/evm/evmService";
+import { setSigner } from "../../store/reducers/signersSlice";
+import { ethers } from "ethers";
+import PropTypes from "prop-types";
+import { getRightPath } from "../../wallet/helpers";
 
-export default function EVMWallet({ wallet, close }) {
+export default function EVMWallet({ wallet, close, discount }) {
   const { account, activate, chainId, deactivate } = useWeb3React();
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
   const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
+  const WCProvider = useSelector((state) => state.general.WCProvider);
+
   const testnet = useSelector((state) => state.general.testNet);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const getMobOps = () =>
+  const getMobOps = () => {
     /android/i.test(navigator.userAgent || navigator.vendor || window.opera)
       ? true
       : false;
-
-  const navigateToAccountRoute = () => {
-    navigate(
-      testnet
-        ? `/testnet/account${
-            window.location.search ? window.location.search : ""
-          }`
-        : `/account${window.location.search ? window.location.search : ""}`
-    );
   };
 
-  const switchNetwork = async () => {
-    let changed;
-    const info = testnet
-      ? TESTNET_CHAIN_INFO[from?.key]
-      : CHAIN_INFO[from?.key];
-    const _chainId = `0x${info.chainId.toString(16)}`;
-    try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: _chainId }],
-      });
-      changed = true;
-    } catch (switchError) {
-      if (switchError.code === 4902) {
-        try {
-          const chain = getAddEthereumChain()[parseInt(_chainId).toString()];
-          const params = {
-            chainId: _chainId, // A 0x-prefixed hexadecimal string
-            chainName: chain.name,
-            nativeCurrency: {
-              name: chain.nativeCurrency.name,
-              symbol: chain.nativeCurrency.symbol, // 2-6 characters long
-              decimals: chain.nativeCurrency.decimals,
-            },
-            rpcUrls: chain.rpc,
-            blockExplorerUrls: [
-              chain.explorers &&
-              chain.explorers.length > 0 &&
-              chain.explorers[0].url
-                ? chain.explorers[0].url
-                : chain.infoURL,
-            ],
-          };
-          await window.ethereum.request({
-            method: "wallet_addEthereumChain",
-            params: params,
-          });
-          changed = true;
-        } catch (addError) {
-          changed = false;
-        }
-      }
-      // handle other "switch" errors
-    }
-    return changed;
+  const navigateToAccountRoute = () => {
+    navigate(getRightPath());
   };
 
   const connectHandler = async (wallet) => {
@@ -107,7 +60,7 @@ export default function EVMWallet({ wallet, close }) {
               window.ethereum?.chainId ||
               chainId !== `0x${from?.chainId.toString(16)}`
             ) {
-              const switched = await switchNetwork();
+              const switched = await switchNetwork(from);
               if (switched) navigateToAccountRoute();
             } else navigateToAccountRoute();
           }
@@ -139,25 +92,51 @@ export default function EVMWallet({ wallet, close }) {
   };
 
   const getStyle = () => {
-    // debugger;
-    if (temporaryFrom?.type === "EVM") {
-      return {};
-    } else if (temporaryFrom && temporaryFrom?.type !== "EVM") {
-      return OFF;
-    } else if (!from) {
-      return {};
-    } else if (from && from.type === "EVM") {
-      return {};
-    } else if (
-      (from.type === "EVM" && getMobOps() && window.innerWidth <= 600) ||
-      (window.ethereum && window.innerWidth <= 600 && from.type === "EVM")
-    ) {
-      return {};
-    } else return OFF;
+    // eslint-disable-next-line no-debugger
+    const evmDeparture = () => {
+      if (from && from.type === "EVM") return true;
+      else if (temporaryFrom && temporaryFrom.type === "EVM") return true;
+      else false;
+    };
+    switch (true) {
+      case !from && !temporaryFrom:
+        return {};
+      case from !== undefined || temporaryFrom !== undefined:
+        if (evmDeparture() && getMobOps() && window.innerWidth <= 600)
+          return {};
+        else if (evmDeparture() && window.ethereum && window.innerWidth <= 600)
+          return {};
+        else if (!evmDeparture()) return OFF;
+        else return {};
+      default:
+        return OFF;
+    }
+  };
+
+  const isUnsupportedBitKeepChain = () => {
+    const chain = from || temporaryFrom;
+
+    if (chain) {
+      switch (from?.text) {
+        case "Godwoken":
+          return true;
+        case "Harmony":
+          return true;
+        default:
+          return false;
+      }
+    }
   };
 
   useEffect(() => {
-    if (account) dispatch(setAccount(account));
+    if (account) {
+      const provider = new ethers.providers.Web3Provider(
+        WCProvider?.walletConnectProvider || window.ethereum
+      );
+      const signer = provider.getSigner(account);
+      dispatch(setSigner(signer));
+      dispatch(setAccount(account));
+    }
   }, [account]);
 
   switch (wallet) {
@@ -215,9 +194,9 @@ export default function EVMWallet({ wallet, close }) {
       } else return <></>;
     case "BitKeep":
       return (
-        biz && (
+        !discount && (
           <li
-            style={getStyle()}
+            style={isUnsupportedBitKeepChain() ? OFF : getStyle()}
             onClick={() => connectHandler("BitKeep")}
             className="wllListItem"
             data-wallet="MetaMask"
@@ -227,7 +206,13 @@ export default function EVMWallet({ wallet, close }) {
           </li>
         )
       );
+
     default:
       break;
   }
 }
+EVMWallet.propTypes = {
+  close: PropTypes.any,
+  wallet: PropTypes.string,
+  discount: PropTypes.bool,
+};

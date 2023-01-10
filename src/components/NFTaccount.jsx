@@ -5,7 +5,6 @@ import UserConnect from "./User/UserConnect";
 import DestinationChain from "./innercomponents/DestinationChain";
 import DestinationChainReload from "./innercomponents/DestinationChainReload";
 
-
 import SelectedNFT from "./innercomponents/SelectedNFT";
 import Approval from "./innercomponents/Approval";
 import NFTgridView from "../components/NFT/NFTgridView";
@@ -19,7 +18,6 @@ import { setNFTS } from "../wallet/helpers";
 import Comment from "../components/innercomponents/Comment";
 import { ReturnBtn } from "./Settings/returnBtn";
 
-
 function NFTaccount() {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from.key);
@@ -31,8 +29,6 @@ function NFTaccount() {
   const account = useSelector((state) => state.general.account);
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
-  const widget = useSelector((state) => state.general.widget);
-
 
   async function getNFTsList() {
     const useHardcoded = false;

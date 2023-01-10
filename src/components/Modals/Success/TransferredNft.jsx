@@ -1,20 +1,18 @@
 import React, { useEffect } from "react";
-import { useWeb3React } from "@web3-react/core";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { claimAlgorandPopup } from "../../../store/reducers/generalSlice";
-import { setClaimablesAlgorand, getFactory } from "../../../wallet/helpers";
+import PropTypes from "prop-types";
+import "./SuccessNFT.css";
 import TxStatus from "./TxStatus";
-import { chainsConfig } from "../../values";
 
-export default function TransferredNft({ nft }) {
-  const { image, animation_url, txn, name, native } = nft;
+import { StringShortener } from "../../../wallet/helpers";
+
+export default function TransferredNft({ nft, links }) {
+  const { image, animation_url, txn, name } = nft;
   const from = useSelector((state) => state.general.from);
-  const to = useSelector((state) => state.general.to);
-  const algorandAccount = useSelector((state) => state.general.algorandAccount);
-  const dispatch = useDispatch();
+
   const txnHashArr = useSelector((state) => state.general.txnHashArr);
+
   const [txnStatus, setTxnStatus] = useState("pending");
   const [hashes, setHashes] = useState({
     depHash: "",
@@ -24,25 +22,34 @@ export default function TransferredNft({ nft }) {
   const depText = window.innerWidth <= 600 ? "Dep" : "Departure Hash";
   const desText = window.innerWidth <= 600 ? "Des" : "Destination Hash";
 
-  const getSubstringValue = () => {
-    if (window.innerWidth <= 320) return 3;
-    else if (window.innerWidth <= 375) return 3;
-    else return false;
-  };
-
   const checkStatus = () => {
-    // debugger
-    for (const tx of txnHashArr) {
-      if (
-        nft.native.uri === tx.nftUri ||
-        String(nft.native["token_id"]) === String(tx.tokenId)
-      ) {
-        if (txnStatus !== "Completed") setTxnStatus(tx?.status?.toLowerCase());
-        setHashes({
-          depHash: tx.hash,
-          destHash: tx.toHash,
-        });
+    const { tokenId, token_id, uri, address } = nft.native;
+
+    const t = tokenId || token_id;
+
+    try {
+      console.log(nft.native);
+      console.log(txnHashArr);
+      for (const tx of txnHashArr) {
+        if (tx === "failed") {
+          setTxnStatus("failed");
+        } else if (
+          uri === tx.nftUri ||
+          String(t) === String(tx.tokenId) ||
+          (from.type === "Elrond" && new RegExp(`^${tx.tokenId}`).test(t)) ||
+          (from.type === "TON" && address === tx.contract)
+        ) {
+          if (txnStatus !== "Completed")
+            setTxnStatus(tx?.status?.toLowerCase());
+
+          setHashes({
+            depHash: tx.hash,
+            destHash: tx.toHash,
+          });
+        }
       }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -50,11 +57,7 @@ export default function TransferredNft({ nft }) {
     checkStatus();
   }, [txnHashArr]);
 
-  useEffect(async () => {
-    if (to.key === "Algorand") {
-      const claimables = await setClaimablesAlgorand(algorandAccount, true);
-    }
-  }, []);
+  const depHash = hashes?.depHash || txn?.hash;
 
   return (
     <div className="success-nft-info__wrapper">
@@ -67,6 +70,7 @@ export default function TransferredNft({ nft }) {
           )}
           <div className="transferred-nft-name">{name}</div>
         </div>
+
         <TxStatus status={txn ? txnStatus : "processing"} />
       </div>
 
@@ -75,23 +79,17 @@ export default function TransferredNft({ nft }) {
           <span>{depText}:</span>
           <a
             target="_blank"
-            href={`${chainsConfig[from.key]?.tx}${hashes?.depHash ||
-              txn?.hash}`}
+            rel="noreferrer"
+            href={`${
+              typeof links.txFrom === "function"
+                ? links.txFrom(depHash)
+                : links.txFrom + depHash
+            }`}
           >
             {txn?.hash
-              ? `${txn?.hash
-                  .toString()
-                  .substring(
-                    0,
-                    getSubstringValue() || 10
-                  )}...${txn?.hash
-                  .toString()
-                  .substring(txn?.hash.toString().length - 3)}`
+              ? StringShortener(txn?.hash, 3)
               : hashes.depHash
-              ? `${hashes?.depHash?.substring(
-                  0,
-                  getSubstringValue() || 10
-                )}...${hashes?.depHash?.substring(hashes?.depHash?.length - 3)}`
+              ? StringShortener(hashes.depHash, 3)
               : "..."}
           </a>
         </div>
@@ -99,19 +97,22 @@ export default function TransferredNft({ nft }) {
           <span>{desText}:</span>
           <a
             target="_blank"
-            href={`${chainsConfig[to.key]?.tx}${hashes?.destHash}`}
+            rel="noreferrer"
+            href={
+              typeof links.txTo === "function"
+                ? links.txTo(hashes.destHash)
+                : links.txTo + hashes.destHash
+            }
           >
-            {hashes.destHash
-              ? `${hashes?.destHash?.substring(
-                  0,
-                  getSubstringValue() || 10
-                )}...${hashes?.destHash?.substring(
-                  hashes?.destHash?.length - 3
-                )}`
-              : "..."}
+            {hashes.destHash ? StringShortener(hashes.destHash, 3) : "..."}
           </a>
         </div>
       </div>
     </div>
   );
 }
+TransferredNft.propTypes = {
+  nft: PropTypes.object,
+  testnet: PropTypes.bool,
+  links: PropTypes.object,
+};

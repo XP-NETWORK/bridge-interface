@@ -1,53 +1,60 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+
 import { useLocation } from "react-router-dom";
 
-export const withStyles = (Wrapped) => (props) => {
-  const { widget, wsettings, settings } = props;
+import PropTypes from "prop-types";
 
-  const [chainsLengthEqauls2, setChainsLengthEqauls2] = useState(false);
-  const [isFrom, setIsFrom] = useState(false);
-  const [isTo, setIsTo] = useState(false);
+export const withStyles = (Wrapped) =>
+  function CallBack(props) {
+    CallBack.propTypes = {
+      widget: PropTypes.bool,
+      wsettings: PropTypes.bool,
+      settings: PropTypes.any,
+    };
 
-  const location = useLocation();
+    const { widget, wsettings, settings } = props;
 
-  const {
-    backgroundColor,
-    panelBackground,
-    modalBackground,
-    color,
-    fontFamily,
-    fontSize,
-    btnColor,
-    btnBackground,
-    btnRadius,
-    selectedChains,
-    selectedWallets,
-    cardBackground,
-    cardBackgroundBot,
-    cardColor,
-    cardRadius,
-    accentColor,
-    secondaryColor,
-    borderColor,
-    iconColor,
-    tooltipColor,
-    tooltipBg,
-    wallets,
-    showLink,
-    collapsed,
-    fromChain,
-    toChain,
-  } = settings;
+    const [chainsLengthEqauls2, setChainsLengthEqauls2] = useState(false);
+    const [isFrom, setIsFrom] = useState(false);
+    const [isTo, setIsTo] = useState(false);
 
-  useEffect(() => {
-    if (widget) {
-      document.getElementById("bridgeSettings")?.remove();
-      const $style = document.createElement("style");
-      $style.id = "bridgeSettings";
-      document.head.appendChild($style);
+    const location = useLocation();
 
-      $style.innerHTML = `
+    const {
+      backgroundColor,
+      panelBackground,
+      modalBackground,
+      color,
+      fontFamily,
+      fontSize,
+      btnColor,
+      btnBackground,
+      btnRadius,
+      selectedChains,
+      selectedWallets,
+      cardBackground,
+      cardBackgroundBot,
+      cardColor,
+      cardRadius,
+      accentColor,
+      secondaryColor,
+      borderColor,
+      iconColor,
+      tooltipColor,
+      tooltipBg,
+
+      showLink,
+      collapsed,
+    } = settings;
+
+    useEffect(() => {
+      if (widget) {
+        document.getElementById("bridgeSettings")?.remove();
+        const $style = document.createElement("style");
+        $style.id = "bridgeSettings";
+        document.head.appendChild($style);
+
+        $style.innerHTML = `
     
           ${
             wsettings
@@ -72,10 +79,14 @@ export const withStyles = (Wrapped) => (props) => {
           }
     
           div#root {
+
+            
           
             overflow-y: ${
               !location.pathname.includes("account") ? "hidden" : "auto"
             };
+
+
           }
     
           #root {
@@ -101,7 +112,7 @@ export const withStyles = (Wrapped) => (props) => {
           .nftContainer {
             position:relative;
             margin-top: 0;
-    
+            display: ${wsettings ? "flex" : "block"};
           }
           
           .nft-list__wrapper {
@@ -123,7 +134,7 @@ export const withStyles = (Wrapped) => (props) => {
           .NFTaccount {
             margin: auto;
             padding-top: 107px;
-            margin-bottom: 0;
+            margin-bottom: ${wsettings ? "auto" : "0"};
           }
     
           #poweredId {
@@ -141,7 +152,7 @@ export const withStyles = (Wrapped) => (props) => {
             }
     
     
-            .modal-content, .modal-content .walletListBox, .nftInfBox, .success-nft-info__wrapper, .accountBox  {
+            .modal-content, .modal-content .walletListBox, .nftInfBox, .success-nft-info__wrapper, .accountBox, .serchInput  {
                 background: ${modalBackground ? modalBackground : ""};
                 filter: brightness(90%);
             }
@@ -155,7 +166,7 @@ export const withStyles = (Wrapped) => (props) => {
             
             }
     
-            .selChain:hover {
+            .selChain:hove {
               background: ${panelBackground ? panelBackground : ""};
               filter: brightness(105%);
             }
@@ -173,6 +184,11 @@ export const withStyles = (Wrapped) => (props) => {
             }
             .seleDepat{
               pointer-events: ${isFrom && !wsettings ? "none" : "auto"};
+            }
+
+            .seleDepat:hover, .selChain.seleDesti:hover {
+              background: ${panelBackground && panelBackground};
+              filter: brightness(112%);
             }
             .seleDesti{
               pointer-events: ${isTo && !wsettings ? "none" : "auto"};
@@ -206,17 +222,17 @@ export const withStyles = (Wrapped) => (props) => {
             
     
     
-            .approval, .fees, .selected-nfts-item, .nftListed:hover, .mobile-destination__address input, .mobile-search-input__box input.serchInput, .selected-nfts__button, .success-info-box, .chain-switch, .destination__address input, .navbar-connect:hover, .import-nft__form input[type="text"]{
+            .approval, .fees, .scretPannel, .fieldsWrapper input, .selected-nfts-item, .nftListed:hover, .mobile-destination__address input, .mobile-search-input__box input.serchInput, .selected-nfts__button, .success-info-box, .chain-switch, .destination__address input, .navbar-connect:hover, .import-nft__form input[type="text"]{
               background: ${panelBackground ? panelBackground : ""};
               filter: brightness(94%);
             }
     
-            .selected-nfts-item:hover,  .chain-hash, .serchInput, .mobile-destination__address input:focus, .mobile-search-input__box input.serchInput:focus  {
+            .selected-nfts-item:hover,  .chain-hash,  .mobile-destination__address input:focus, .mobile-search-input__box input.serchInput:focus  {
               background: ${panelBackground ? panelBackground : ""};
               filter: brightness(92%);
             }
     
-            .mobile-destination__address input:focus {
+            .mobile-destination__address input:focus, .fieldsWrapper input, .nftListBox.withSecret, .change-view__button, .SearchDrop, .CloseIcon {
               outline:none;
               border-color: ${borderColor ? borderColor : ""};
             }
@@ -295,6 +311,8 @@ export const withStyles = (Wrapped) => (props) => {
             .chain-switch {
               box-shadow: none;
             }
+
+           
     
     
             .chain-switch, .nonftAcc h2, .nonftAcc span {
@@ -360,7 +378,7 @@ export const withStyles = (Wrapped) => (props) => {
                 font-size: ${fontSize ? fontSize * 0.87 + "px" : ""}
             }
     
-            #collecSlideCont, #footer, #aboutnft, #tttt, #Header, #alertb, .get-featured, .slider__wrapper, .stickers   {
+            #collecSlideCont, #footer, .audited__wrapper, #aboutnft, #tttt, #Header, #alertb, .get-featured, .slider__wrapper, .stickers, .refresh-button::after, .refresh-button--disabled::after{
                 display:none;
             }
     
@@ -578,12 +596,19 @@ export const withStyles = (Wrapped) => (props) => {
               box-shadow: none;
             
             }
+
+            ::-webkit-scrollbar-corner {
+              background: rgba(0,0,0,0);
+            }
     
             .nftSelectBox, .modal-content {
               border: 1px solid ${borderColor ? borderColor : ""} !important;
               filter: unset;
               opacity: 1;
-          
+            }
+
+            .nftSelectBox {
+              backdrop-filter: unset;
             }
             
              .modal-header {
@@ -623,7 +648,7 @@ export const withStyles = (Wrapped) => (props) => {
               border-color:  ${borderColor ? borderColor : ""} !important;
             }
           
-            .import-nft-button {
+            .import-nft-button, .refresh-button  {
               display: flex;
               justify-content: center;
               align-items: center;
@@ -639,7 +664,7 @@ export const withStyles = (Wrapped) => (props) => {
               display: flex;
               justify-content: center;
               align-items: center;
-              j
+           
             }
     
             .wllListItem:hover {
@@ -774,18 +799,18 @@ export const withStyles = (Wrapped) => (props) => {
             }
     
             `;
-      document.body.classList.remove("widgetBlur");
-    }
-  }, [settings, location, chainsLengthEqauls2, isFrom, isTo]);
+        document.body.classList.remove("widgetBlur");
+      }
+    }, [settings, location, chainsLengthEqauls2, isFrom, isTo]);
 
-  return (
-    <Wrapped
-      {...props}
-      setState={{
-        setChainsLengthEqauls2,
-        setIsFrom,
-        setIsTo,
-      }}
-    />
-  );
-};
+    return (
+      <Wrapped
+        {...props}
+        setState={{
+          setChainsLengthEqauls2,
+          setIsFrom,
+          setIsTo,
+        }}
+      />
+    );
+  };

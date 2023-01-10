@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { checkRgbaIn } from "../../Settings/helpers";
 
@@ -6,19 +6,17 @@ import {
   setWidget,
   setWSettings,
   setWid,
-} from "../../../store/reducers/generalSlice";
-import {
-  initialState,
-  setSettings,
-} from "../../../store/reducers/settingsSlice";
+} from "../../../store/reducers/widgetSlice";
+import { setSettings } from "../../../store/reducers/settingsSlice";
 import mobileBanner from "../../Settings/assets/img/mobileOnlyBanner.svg";
-import axios from "axios";
-import { ethers } from "ethers";
 
 import { initialState as initialWidget } from "../../../store/reducers/settingsSlice";
 import { inIframe } from "../../Settings/helpers";
 
-export const widgetApi = "https://xpnetwork-widget.herokuapp.com";
+import WService from "../wservice";
+import { useSearchParams } from "react-router-dom";
+
+const wservice = WService();
 
 //.nft-list__wrappera
 const mobileOnlyBanner = `
@@ -70,52 +68,40 @@ function initFromQuery() {
 
 async function initFormId(id) {
   if (id === "create" && window.ethereum) {
-    console.log("ds");
+    const { signature, address } = await wservice.sign(undefined, true);
 
-    await window.ethereum.request({
-      method: "wallet_switchEthereumChain",
-      params: [{ chainId: "0x4" }], // chainId must be in hexadecimal numbers
-    });
+    const res = await wservice.add(
+      address,
+      signature,
+      initialWidget,
+      new URLSearchParams(window.location.search).get("name")
+    );
 
-    //const acc = await window.ethereum.send("eth_requestAccounts");
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const msg = "Please sign in order to see your widgets";
-    const [signature, address] = await Promise.all([
-      signer.signMessage(msg),
-      signer.getAddress(),
-    ]);
-
-    const res = await axios
-      .post(`${widgetApi}/addWidget`, {
-        address,
-        signature,
-        widget: initialWidget,
-      })
-      .catch((e) => ({}));
-
-    if (!res?.data?.newWidget) {
+    if (!res?.newWidget) {
       return;
     } //show error msg
 
     return window.open(
-      `/${window.location.search.replace("create", res.data.newWidget?._id)}`,
+      `/${window.location.search
+        .replace("create", res?.newWidget?._id)
+        .replace(/&name=\S*/, "")}`,
       "_self"
     );
   }
 
-  const res = await axios
-    .get(`${widgetApi}/getWidget?widgetId=${id}`)
-    .catch((e) => ({}));
-
-  return res?.data?.settings;
+  return (await wservice.get(id))?.settings;
 }
 
 const parentAccountChange = async (event) => {
   console.log(event.data?.type, 'type');
   if (event.data?.type === "ethAddress" && window.ethereum) {
+<<<<<<< HEAD
     const parentAddress = event.data.address;
     console.log(parentAddress, 'parentAddress');
+=======
+    const parentAddress = event.data?.address;
+    console.log(parentAddress);
+>>>>>>> c5dd4bf4bd69849fbc15800e12356c6a981d83f8
     if (!parentAddress) return;
     const accounts = await window.ethereum.request({
       method: "eth_requestAccounts",
@@ -137,8 +123,13 @@ const parentAccountChange = async (event) => {
 export const InitWidget = (Wrapped) => {
   return function CB() {
     const dispatch = useDispatch();
+    const [searchparams, setSearchParams] = useSearchParams();
     const { widget, wsettings, settings, wid } = useSelector(
-      ({ general: { widget, wsettings, from, to, wid }, settings }) => ({
+      ({
+        general: { from, to },
+        settings,
+        widget: { widget, wsettings, wid },
+      }) => ({
         widget,
         settings,
         wsettings,
@@ -149,12 +140,16 @@ export const InitWidget = (Wrapped) => {
     );
 
     useEffect(() => {
-      const p = new URLSearchParams(window.location.search);
-      const wid = p.get("wid");
-      const widget = p.get("widget") === "true" || wid;
-      const wsettings = p.get("wsettings") === "true";
+      if (searchparams) {
+        const wid = searchparams.get("wid");
+        const widget = searchparams.get("widget") === "true" || wid;
+        const wsettings = searchparams.get("wsettings") === "true";
 
-      if (widget) {
+        if (!widget && !wsettings && !wid) {
+          setSearchParams({ widget: true, wsettings: true });
+          return;
+        }
+
         if (wsettings && window.innerWidth <= 600) {
           document.body.appendChild(overlay);
           document.body.style.pointerEvents = "none";
@@ -166,14 +161,15 @@ export const InitWidget = (Wrapped) => {
         }
 
         dispatch(setWidget(true));
+        console.log(wid, "wid");
         wid && dispatch(setWid(wid));
         document.body.classList.add("widget");
 
         inIframe() && window.addEventListener("message", parentAccountChange);
-      }
 
-      return () => window.removeEventListener("message", parentAccountChange);
-    }, []);
+        return () => window.removeEventListener("message", parentAccountChange);
+      }
+    }, [searchparams]);
 
     useEffect(() => {
       let settings;
@@ -185,9 +181,7 @@ export const InitWidget = (Wrapped) => {
           if (!wsettings) {
             settings = wid ? await initFormId(wid) : initFromQuery();
           } else {
-            settings = wid
-              ? await initFormId(wid)
-              : JSON.parse(localStorage.getItem("widgetSettings"));
+            settings = wid && (await initFormId(wid));
           }
 
           const {
@@ -217,6 +211,7 @@ export const InitWidget = (Wrapped) => {
             selectedWallets,
             affiliationFees,
             affiliationWallet,
+            affiliationSettings,
           } = settings || initialWidget;
 
           dispatch(
@@ -230,7 +225,7 @@ export const InitWidget = (Wrapped) => {
               btnColor: checkRgbaIn("#" + btnColor),
               btnBackground: checkRgbaIn("#" + btnBackground),
               btnRadius: String(btnRadius).replace(/\D/g, ""),
-              selectedChains: selectedChains.map((c) =>
+              selectedChains: selectedChains?.map((c) =>
                 c === "Gnosis" ? "xDai" : c
               ),
               selectedWallets,
@@ -247,23 +242,28 @@ export const InitWidget = (Wrapped) => {
               showLink: showLink === "true" ? true : false,
               affiliationWallet,
               affiliationFees: affiliationFees
-                ? ((+affiliationFees - 1) * 100).toFixed(0)
+                ? ((+affiliationFees - 1) * 100).toFixed(1)
                 : 0,
+              affiliationSettings: affiliationSettings?.map((feeSetting) => ({
+                ...feeSetting,
+                extraFees: feeSetting.extraFees
+                  ? ((+feeSetting.extraFees - 1) * 100).toFixed(1)
+                  : 0,
+              })),
               fromChain: fromChain,
               toChain: toChain,
             })
           );
-
-          false &&
-            setTimeout(
-              () => document.body.classList.remove("modal-open", "widgetBlur"),
-              1000
-            );
         })();
     }, [widget, wsettings, wid]);
 
     return (
-      <Wrapped widget={widget} wsettings={wsettings} settings={settings} />
+      <Wrapped
+        widget={widget}
+        wsettings={wsettings}
+        settings={settings}
+        wid={wid}
+      />
     );
   };
 };

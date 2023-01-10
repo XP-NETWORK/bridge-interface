@@ -21,21 +21,21 @@ import { ReactComponent as RefreshComp } from "../../assets/img/refresh.svg";
 import ChainListBox from "../Chains/ChainListBox";
 
 function NFTlistTop() {
-//   const { Harmony } = require('@harmony-js/core')
-//   const { ChainID, ChainType } = require('@harmony-js/utils')
-//   const shardID = 0
-//   const hmySDK = new Harmony(
-//     'https://api.s0.b.hmny.io',
-//     {
-//       chainType: ChainType.Harmony,
-//       chainId:ChainID.HmyMainnet,
-//       shardID,
-//     }
-//   )
-//   console.log("hmySDK.crypto: ", hmySDK.crypto);
-//   const arr = hmySDK.crypto.toBech32("0xb6C8748115d23Eb1c6d59Cb83eAe051b56ef75c7")
-//  console.log("toBech32: ", arr);
- 
+  //   const { Harmony } = require('@harmony-js/core')
+  //   const { ChainID, ChainType } = require('@harmony-js/utils')
+  //   const shardID = 0
+  //   const hmySDK = new Harmony(
+  //     'https://api.s0.b.hmny.io',
+  //     {
+  //       chainType: ChainType.Harmony,
+  //       chainId:ChainID.HmyMainnet,
+  //       shardID,
+  //     }
+  //   )
+  //   console.log("hmySDK.crypto: ", hmySDK.crypto);
+  //   const arr = hmySDK.crypto.toBech32("0xb6C8748115d23Eb1c6d59Cb83eAe051b56ef75c7")
+  //  console.log("toBech32: ", arr);
+
   const dispatch = useDispatch();
   const nfts = useSelector((state) => state.general.NFTList);
   const {
@@ -50,9 +50,9 @@ function NFTlistTop() {
   const NFTListView = useSelector((state) => state.general.NFTListView);
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
-  const widget = useSelector((state) => state.general.widget);
+  const widget = useSelector((state) => state.widget.widget);
   const [showSearch, setShowSearch] = useState(false);
-  const [icon, setIcon] = useState(true)
+  const [icon, setIcon] = useState(true);
   const handleSearch = (e) => {
     dispatch(setSearchNFTList(e.target.value));
   };
@@ -80,7 +80,6 @@ function NFTlistTop() {
     cursor: bigLoader ? "" : "pointer",
     opacity: bigLoader ? 0.6 : 1,
   };
-
 
   const off = { display: "none" };
   return (
@@ -133,8 +132,20 @@ function NFTlistTop() {
           <div className="searchNft desktopOnly">
             <Dropdown className="SearchDrop" autoClose="outside">
               <Dropdown.Toggle id="SearchDrop">
-                
-                {widget ? icon && <SearchComp  onClick={() => setIcon(false)} className="svgWidget" /> : icon && <img onClick={() => setIcon(false)} src={Search} alt="#" />}
+                {widget
+                  ? icon && (
+                      <SearchComp
+                        onClick={() => setIcon(false)}
+                        className="svgWidget"
+                      />
+                    )
+                  : icon && (
+                      <img
+                        onClick={() => setIcon(false)}
+                        src={Search}
+                        alt="#"
+                      />
+                    )}
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <form action="#">
@@ -145,9 +156,7 @@ function NFTlistTop() {
                   />
                   {/* { search ?  <button type="button"><img src={Close} alt="" /></button> : <button type="button"><img src={Search} alt=""/></button>} */}
                   <button type="button">
-               
-                      <SearchComp className="svgWidget" />
-               
+                    <SearchComp className="svgWidget" />
                   </button>
                 </form>
               </Dropdown.Menu>
@@ -200,7 +209,7 @@ function NFTlistTop() {
               onChange={(e) => handleSearch(e)}
             />
             <button type="button">
-            <SearchComp className="svgWidget" />
+              <SearchComp className="svgWidget" />
             </button>
           </form>
         </div>

@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import Web3 from "web3";
+import { ethers } from "ethers";
 import {
   setAccount,
   setAccountModal,
@@ -10,39 +10,61 @@ import {
   setUnsupportedNetwork,
   setWalletsModal,
 } from "../../store/reducers/generalSlice";
-import { setNFTS } from "../../wallet/helpers";
+import { setSigner } from "../../store/reducers/signersSlice";
 import { chains } from "../values";
 import Identicon from "./Identicon";
+import { setDepositWalletModal } from "../../store/reducers/discountSlice";
+import PropTypes from "prop-types";
 
-export default function UserConnect({ desktop, mobile }) {
+export default function UserConnect({ mobile }) {
   const dispatch = useDispatch();
   const to = useSelector((state) => state.general.to);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
   const tezosAccount = useSelector((state) => state.general.tezosAccount);
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
+  const WCProvider = useSelector((state) => state.general.WCProvider);
   const _account = useSelector((state) => state.general.account);
   const innerWidth = useSelector((state) => state.general.innerWidth);
   const tronWallet = useSelector((state) => state.general.tronWallet);
   const bitKeep = useSelector((state) => state.general.bitKeep);
   const WalletConnect = useSelector((state) => state.general.WalletConnect);
   const { account, chainId, active } = useWeb3React();
+  const hederaAccount = useSelector((state) => state.general.hederaAccount);
   const testnet = useSelector((state) => state.general.testNet);
+  const secretAccount = useSelector((state) => state.general.secretAccount);
+  const location = useLocation();
+  const tonAccount = useSelector((state) => state.general.tonAccount);
+  const aptosAccount = useSelector((state) => state.general.aptosAccount);
+
   const walletAccount =
+    aptosAccount ||
+    tonAccount ||
+    hederaAccount ||
+    secretAccount ||
     account ||
     elrondAccount ||
     tezosAccount ||
     algorandAccount ||
     tronWallet ||
     _account;
-  const location = useLocation();
 
   const handleConnect = () => {
-    if (!walletAccount) {
-      dispatch(setWalletsModal(true));
-    } else if (walletAccount) dispatch(setAccountModal(true));
+    // debugger;
+    switch (location.pathname) {
+      case "/discounts":
+        if (!walletAccount) {
+          dispatch(setDepositWalletModal(true));
+        } else if (walletAccount) dispatch(setAccountModal(true));
+        break;
+      default:
+        if (!walletAccount) {
+          dispatch(setWalletsModal(true));
+        } else if (walletAccount) dispatch(setAccountModal(true));
+        break;
+    }
   };
 
-  const getAccountString = () => {
+  const getAccountString = (walletAccount) => {
     if (innerWidth >= 425) {
       return `${walletAccount.substring(0, 5)}...${walletAccount.substring(
         walletAccount.length - 4
@@ -56,85 +78,92 @@ export default function UserConnect({ desktop, mobile }) {
         walletAccount.length - 4
       )}`;
     }
+    return `${walletAccount.substring(0, 5)}...${walletAccount.substring(
+      walletAccount.length - 4
+    )}`;
   };
 
-  const getChain = async () => {
-    let provider;
-    provider = window.bitkeep?.ethereum || window.ethereum;
-    if (!provider) return;
-    const web3 = new Web3(provider);
-    const _chainId = await web3.eth.getChainId();
+  const getChain = async (id) => {
     if (testnet) {
-      console.log();
-      return chains.find(
-        (chain) => chain.tnChainId === chainId || chain.tnChainId === _chainId
-      );
+      return chains.find((chain) => chain.tnChainId === id);
     } else {
-      console.log();
-      return chains.find(
-        (chain) => chain.chainId === chainId || chain.tnChainId === _chainId
-      );
+      return chains.find((chain) => chain.chainId === id);
     }
   };
 
-  const handleChangeAccountOrChainId = async () => {
+  const handleChangeAccountOrChainId = async (hex) => {
     // debugger;
-    let provider;
-    let _chainId;
-    if (bitKeep) {
-      provider = window.bitkeep?.ethereum;
-      const web3 = new Web3(provider);
-      _chainId = await web3.eth.getChainId();
-    }
-    const chainID = _chainId || chainId;
-    dispatch(setAccount(account));
-    const chainConnected = await getChain();
-    if (chainID && location.pathname.includes("/account")) {
-      if (testnet) {
+    const hexToDecimal = (hex) => parseInt(hex, 16);
+    const decimal = hexToDecimal(hex);
+    const chainConnected = await getChain(decimal);
+
+    switch (true) {
+      case testnet:
         if (
           !chainConnected?.testNet ||
-          !chains.some((chain) => chain.tnChainId === chainID)
+          !chains.some((chain) => chain.tnChainId === decimal)
         ) {
           dispatch(setUnsupportedNetwork(true));
-        } else if (chainID === to.tnChainId) {
+        } else if (decimal === to.tnChainId) {
           dispatch(setUnsupportedNetwork(true));
         } else {
           dispatch(setUnsupportedNetwork(false));
           dispatch(setFrom(chainConnected));
         }
-      } else {
+        break;
+      default:
         if (
           !chainConnected?.mainnet ||
-          !chains.some((chain) => chain.chainId === chainID)
+          !chains.some((chain) => chain?.chainId === decimal)
         ) {
           dispatch(setUnsupportedNetwork(true));
-        } else if (chainID === to.chainId) {
+        } else if (decimal === to.chainId) {
           dispatch(setUnsupportedNetwork(true));
         } else {
           dispatch(setUnsupportedNetwork(false));
           dispatch(setFrom(chainConnected));
         }
-      }
+        break;
     }
   };
 
-  window.bitkeep?.ethereum?.on("chainChanged", (chainId) => {
-    handleChangeAccountOrChainId();
-  });
+  useEffect(() => {
+    if (bitKeep && _account) {
+      window.bitkeep?.ethereum?.on("chainChanged", (chainId) => {
+        handleChangeAccountOrChainId(chainId);
+      });
 
-  window.bitkeep?.ethereum?.on("accountsChanged", (account) => {
-    handleChangeAccountOrChainId();
-  });
+      window.bitkeep?.ethereum?.on("accountsChanged", () => {
+        handleChangeAccountOrChainId();
+      });
+    } else {
+      if (account) {
+        window.ethereum.on("chainChanged", (chainId) => {
+          handleChangeAccountOrChainId(chainId);
+        });
+
+        window.ethereum.on("accountsChanged", () => {
+          handleChangeAccountOrChainId();
+        });
+      }
+    }
+  }, []);
 
   useEffect(() => {
-    // debugger
-    handleChangeAccountOrChainId();
-  }, [chainId, account]);
+    if (account) {
+      const provider = new ethers.providers.Web3Provider(
+        WCProvider?.walletConnectProvider || window.ethereum
+      );
+      const signer = provider.getSigner(account);
+      dispatch(setSigner(signer));
+    }
+  }, [chainId]);
 
   useEffect(() => {
     if (!account && WalletConnect) {
       active !== undefined && window.location.reload();
     }
+    dispatch(setAccount(account));
   }, [active]);
 
   return (
@@ -144,8 +173,12 @@ export default function UserConnect({ desktop, mobile }) {
         walletAccount ? "navbar-connect connected" : "navbar-connect"
       } ${mobile ? "xmobile_only" : "xdesktop_only"}`}
     >
-      {walletAccount ? getAccountString() : "Connect Wallet"}
+      {walletAccount ? getAccountString(walletAccount) : "Connect Wallet"}
       {walletAccount && <Identicon account={walletAccount} />}
     </div>
   );
 }
+UserConnect.propTypes = {
+  desktop: PropTypes.bool,
+  mobile: PropTypes.bool,
+};

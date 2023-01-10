@@ -1,0 +1,429 @@
+.deposit__container {
+    width: 1000px;
+    margin: 26px auto 0 auto;
+}
+.deposit__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+.deposit__title {
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 120%;
+    color: #14161a;
+}
+.deposit__subtitle {
+    max-width: 365px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 180%;
+    text-align: center;
+    color: #1b2135;
+    opacity: 0.8;
+}
+.balance {
+    grid-area: balance;
+    position: relative;
+}
+.locked {
+    grid-area: locked;
+    position: relative;
+}
+.discount {
+    grid-area: discount;
+    position: relative;
+}
+.deposit__body__loader {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    backdrop-filter: blur(7px);
+    top: 0;
+    left: 0;
+}
+.discount-bg {
+    position: absolute;
+    top: -6px;
+    right: 0;
+    filter: grayscale();
+    opacity: 0.6;
+}
+.balance,
+.locked {
+    background: #fdfdfd;
+    border: 2px solid #ffffff;
+    border-radius: 16px;
+    padding: 22px 24px;
+    height: 165px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.discount {
+    background: linear-gradient(110.71deg, #395feb 36.28%, #3d4f8f 102.53%);
+    border: 2px solid #ffffff;
+    border-radius: 16px;
+    padding: 22px 24px;
+    height: 165px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.staker {
+    grid-area: staker;
+    background: #fdfdfd;
+    border: 2px solid #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+}
+.staker hr {
+    margin: unset;
+}
+.staker__title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 126%;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+.deposit__body {
+    display: grid;
+    grid-template-areas:
+        "balance locked discount"
+        "staker staker staker";
+    gap: 24px;
+    margin-top: 50px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.deposit__body .title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 126%;
+    color: #000000;
+}
+.deposit__body .xpnet,
+.deposit__body .percent {
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 126%;
+    color: #000000;
+}
+.transactions,
+.usd {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 126%;
+    display: flex;
+    align-items: center;
+    color: #0000006b;
+}
+.discount .title,
+.discount .percent,
+.discount .transactions {
+    color: #ececf1 !important;
+}
+.title {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 12px;
+}
+.title .claim {
+    margin-left: auto;
+    background: #e4e7f3;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 126%;
+    display: flex;
+    align-items: center;
+    color: #395feb;
+    padding: 4px 8px;
+}
+.staker__form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 48px;
+}
+.staker__amount {
+    position: relative;
+    width: 35%;
+}
+.staker__discount {
+    width: 20%;
+}
+.staker__buttons {
+    width: 18%;
+}
+.staker__amount .error {
+    position: absolute;
+    bottom: -30px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 160%;
+    color: #c6354a;
+}
+.staker__amount input {
+    width: 420px;
+    height: 44px;
+    background: #ffffff;
+    border: 1px solid #e0e4eb;
+    border-radius: 40px;
+    outline: none;
+    padding: 16px;
+}
+.staker__amount__input {
+    position: relative;
+}
+.staker__amount__input .error {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 160%;
+    display: flex;
+    align-items: center;
+    color: #c6354a !important;
+    margin: 6px 0 20px 0;
+}
+.staker__amount input::placeholder {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 126%;
+    letter-spacing: 0.03em;
+    color: #14161a;
+    opacity: 0.6;
+}
+
+.xpnet-icon {
+    position: absolute;
+    top: 55%;
+    right: -110px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #14161a;
+}
+.staker__form label {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 160%;
+    color: #14161a;
+}
+.staker__duration .dropdown {
+    width: 200px;
+    height: 44px;
+    background: #ffffff;
+    border: 1px solid #e0e4eb;
+    border-radius: 40px;
+}
+.staker__duration .dropdown .btn {
+    background-color: unset;
+    color: #000000;
+    position: absolute;
+    right: 16px;
+    top: 11px;
+}
+.staker__duration .dropdown-menu {
+    left: -172px !important;
+    top: 5px !important;
+    width: 200px;
+    inset: unset;
+}
+.dropdown__place-holder {
+    position: absolute;
+    top: 30%;
+    padding-left: 16px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 126%;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.03em;
+    color: #14161a;
+}
+.staker__discount input {
+    width: 290px;
+    height: 40px;
+    background: #fff;
+    border-radius: 40px;
+    border: 1px solid #e0e4eb;
+    outline: none;
+    padding: 16px;
+    background: #f3f3f6;
+}
+.staker__buttons {
+    margin-top: auto;
+    margin-bottom: 2px;
+    justify-content: flex-end;
+}
+.staker__btn {
+    width: 174px;
+    height: 40px;
+    background: #395feb;
+    border-radius: 40px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+    cursor: pointer;
+}
+.staker__information {
+    margin-top: 20px;
+}
+.info__header {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 120%;
+    letter-spacing: 0.03em;
+    color: #222222;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+}
+.info__icon {
+    width: 16px;
+    height: 16px;
+    background: #235ef5;
+    border-radius: 50%;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.info__text {
+    margin-top: 18px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 26px;
+    color: #222222;
+}
+@media screen and (max-width: 1000px) {
+    .deposit__container {
+        width: unset;
+        margin: 26px 10px 0 10px;
+    }
+    .deposit__body {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .balance,
+    .locked,
+    .discount,
+    .staker__amount,
+    .staker__duration,
+    .staker__discount {
+        width: 30%;
+    }
+    .locked,
+    .discount,
+    .balance {
+        padding: 3vh 2vw;
+    }
+    .staker__form {
+        flex-wrap: wrap;
+    }
+    .staker__buttons {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 22px;
+        margin-bottom: 12px;
+    }
+    .staker__duration .dropdown {
+        width: unset;
+    }
+    .staker__discount input,
+    .staker__amount input {
+        width: 100%;
+    }
+    .staker__amount .error {
+        font-size: 1.5vw;
+    }
+    .xpnet,
+    .percent {
+        font-size: 3vw !important;
+    }
+    .deposit__body .title {
+        font-size: 1.5vw !important;
+        gap: 2px;
+    }
+}
+
+@media screen and (max-width: 570px) {
+    .deposit__body {
+        flex-direction: column;
+        align-items: center;
+    }
+    .locked,
+    .discount,
+    .balance {
+        width: 100%;
+        padding: 22px 25px;
+    }
+    .deposit__body .title {
+        font-size: 3vw !important;
+        gap: 14px;
+    }
+    .xpnet,
+    .percent {
+        font-size: 18px !important;
+    }
+    .deposit__body .title img {
+    }
+    .staker__form {
+        flex-direction: column;
+    }
+    .staker__amount {
+        margin-bottom: 20px;
+    }
+    .staker__amount,
+    .staker__duration,
+    .staker__discount {
+        width: 100%;
+    }
+    .staker__amount .error {
+        font-size: 14px;
+        line-height: 160%;
+        display: flex;
+        align-items: center;
+        color: #c6354a;
+    }
+    .staker__duration .dropdown-menu {
+        left: 16px !important;
+        width: 100%;
+    }
+}
+@media screen and (max-width: 425px) {
+    .deposit__title {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 150%;
+    }
+    .deposit__subtitle {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 160%;
+    }
+    .deposit__body {
+        margin-top: 32px;
+        gap: 12px;
+    }
+    .staker__buttons {
+        margin: 22px 0 20px 0;
+    }
+    .staker__btn {
+        width: 100%;
+    }
+}
