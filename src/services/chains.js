@@ -342,6 +342,45 @@ class Elrond extends AbstractChain {
     super(params);
   }
 
+  async preParse(nft) {
+    if (!nft.native.contract) {
+      nft = {
+        ...nft,
+        native: {
+          ...nft.native,
+          contract: nft.collectionIdent,
+        },
+      };
+    }
+
+    return await super.preParse(nft);
+  }
+
+  async transfer(args) {
+    const {
+      nft: { native },
+    } = args;
+
+    const idFromNative =
+      native?.tokenId || native?.token_id || native?.item_address;
+    let tokenId = native.nonce;
+
+    if (
+      typeof tokenId === "undefined" &&
+      idFromNative.split("-")?.length === 3
+    ) {
+      const hex = idFromNative.split("-").at(2);
+      tokenId = parseInt(hex, 16);
+    }
+
+    const { nft } = args;
+
+    return await super.transfer({
+      ...args,
+      tokenId: tokenId && String(tokenId),
+    });
+  }
+
   setSigner(signer) {
     super.setSigner(signer);
 
@@ -465,6 +504,7 @@ class TON extends AbstractChain {
         ...nft.native,
         contract: contract,
         tokenId: nft.native?.address,
+        nftItemAddr: nft.native.address,
       },
     };
   }
