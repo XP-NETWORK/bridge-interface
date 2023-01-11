@@ -11,7 +11,7 @@ import {
 import ChainInterface from "./chains";
 
 import axios from "axios";
-import { BridgeModes, chains, stagingWNFT } from "../components/values";
+import { BridgeModes, chains, stagingWNFT, wnft } from "../components/values";
 
 class Bridge {
   chains = {};
@@ -74,6 +74,14 @@ class Bridge {
         isWNFT &&
         nft.uri.includes(stagingWNFT) &&
         !window.location.pathname.includes(BridgeModes.Staging)
+      ) {
+        return false;
+      }
+
+      if (
+        isWNFT &&
+        wnft.some((url) => nft.uri.includes(url)) &&
+        window.location.pathname.includes(BridgeModes.Staging)
       ) {
         return false;
       }
@@ -144,6 +152,12 @@ class Bridge {
   }
 
   isWrapped(uri) {
+    /* if ([...wnft, stagingWNFT].some((url) => uri.includes(url))) {
+      return true;
+    }
+
+    return false;*/
+
     return /(wnfts\.xp\.network|nft\.xp\.network|staging-nft\.xp\.network)/.test(
       uri
     );
