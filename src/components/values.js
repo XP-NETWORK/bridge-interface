@@ -38,6 +38,7 @@ export const ELROND = "Elrond";
 export const TEZOS = "TEZOS";
 
 export const stagingWNFT = "https://staging-nft.xp.network";
+export const wnft = ["wnfts.xp.network", "nft.xp.network"];
 
 export const biz =
   window.location.hostname.includes("localhost") ||
