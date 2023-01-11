@@ -89,8 +89,6 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
       const unstoppabledomain = await getFromDomain(receiver, toChain);
       if (unstoppabledomainSwitch(unstoppabledomain)) return;
 
-      console.log(bigNumberFees, "bigNumberFees");
-
       const result = await fromChain.transfer({
         toChain,
         nft,
