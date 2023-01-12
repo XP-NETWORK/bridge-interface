@@ -24,8 +24,9 @@ import {
     ExtensionProvider,
 } from "@elrondnetwork/erdjs";
 
-import { chains } from "../../components/values";
+
 import { getRightPath } from "../../wallet/helpers";
+import { chains, getChainObject } from "../../components/values";
 
 function ElrondWallet({ wallet, close, serviceContainer }) {
     const { bridge } = serviceContainer;
@@ -129,9 +130,16 @@ function ElrondWallet({ wallet, close, serviceContainer }) {
         }
     };
 
-    const navigateToAccountRoute = () => {
-        navigate(getRightPath());
-    };
+      dispatch(setAccount(account.address));
+      chainWrapper.setSigner(account.signer);
+      bridge.setCurrentType(chainWrapper);
+      close();
+      if (to) navigateToAccountRoute();
+      if (!from) {
+        dispatch(setFrom(getChainObject(Chain.ELROND)));
+      }
+ 
+  };
 
     const getStyle = () => {
         if (temporaryFrom?.type === "Elrond") {
