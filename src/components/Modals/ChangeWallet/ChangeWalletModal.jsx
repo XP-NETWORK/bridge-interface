@@ -1,11 +1,33 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+    //clearStateForNewConnection,
+    // setAccount,
+    // setAccountWalletModal,
+    // setAlgorandAccount,
+    // setAlgorandClaimables,
+    // setAlgoSigner,
     setChangeWallet,
     setFrom,
+    // setConfirmMaiarMob,
+    // setConnectedWallet,
+    // setElrondAccount,
+    // setFrom,
+    // setKeplrWallet,
+    // setKukaiWallet,
+    // setMaiarProvider,
+    // setMyAlgo,
+    // setOnMaiar,
+    // setQrCodeString,
+    // setQrImage,
+    // setTempleWallet,
     setTemporaryFrom,
     setTo,
     setWalletsModal,
+    // setTo,
+    // setTronLink,
+    // setTronWallet,
+    // setWalletsModal,
 } from "../../../store/reducers/generalSlice";
 import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg";
 import { Modal } from "react-bootstrap";
@@ -57,7 +79,7 @@ export default function ChangeWalletModal() {
         // eslint-disable-next-line no-debugger
         // debugger;
         deactivate();
-        // dispatch(clearStateForNewConnection());
+        //dispatch(clearStateForNewConnection());
         dispatch(setFrom(temporaryFrom));
         dispatch(setTo(temporaryTo));
         dispatch(setChangeWallet(false));

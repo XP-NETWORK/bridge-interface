@@ -37,6 +37,9 @@ export const EVM = "EVM";
 export const ELROND = "Elrond";
 export const TEZOS = "TEZOS";
 
+export const stagingWNFT = "https://staging-nft.xp.network";
+export const wnft = ["wnfts.xp.network", "nft.xp.network"];
+
 export const biz =
     window.location.hostname.includes("localhost") ||
     window.location.hostname.includes("staging") ||
@@ -212,7 +215,7 @@ export const chains = [
         image: { avatar: true, src: Ton },
         maintenance: false,
         testNet: false,
-        mainnet: true,
+        mainnet: biz,
         newChain: biz,
     },
     {
@@ -429,7 +432,7 @@ export const chains = [
         tnChainId: 512512,
         image: { avatar: true, src: Caduceus },
         testNet: true,
-        mainnet: true,
+        mainnet: biz,
         newChain: true,
         coming: false,
     },
