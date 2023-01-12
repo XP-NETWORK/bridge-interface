@@ -2005,9 +2005,9 @@
     "@ethersproject/strings" "^5.7.0"
 
 "@grpc/grpc-js@^1.5.3":
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.8.2.tgz#7f2d18a32a45624174444c915d0fc26fc0c5179c"
-  integrity sha512-5cqCjUvDKJWHGeu1prlrFOUmjuML0NequZKJ38PsCkfwIqPnZq4Q9burPP3It7/+46wpl0KsqVN3s6Te3B9Qtw==
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.8.3.tgz#1eceeeda8d3af6a3cf9f1b74032bbc411af9f3eb"
+  integrity sha512-1oO40SPA9nyBEsSMg0Mq7aMxQMVH009NJLG4HeMPQ7kdDGWuC5fI6dmEjaEJzUbtmC1S2leLaDRMB4ByZ1cFew==
   dependencies:
     "@grpc/proto-loader" "^0.7.0"
     "@types/node" ">=12.12.47"
@@ -16857,9 +16857,9 @@ secretjs@=1.4.5:
     secure-random "1.1.2"
 
 secretjs@^1.4.5:
-  version "1.6.7"
-  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.6.7.tgz#b989d3808c789e2c813e652e021ecdf29dbe7104"
-  integrity sha512-zZKLn+9gcRMGNePcwyonVtiRDYZm64HwF0BBH1iO3hFecxaN2vi91RKPGPWhkze2mlkGN3OBtQn3qP757QMQ3Q==
+  version "1.6.8"
+  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.6.8.tgz#95a2b8a58ddc91122687de2bd34ef0349181d584"
+  integrity sha512-WaSJSWWbJ3rHGdA+ONU50K0pOULej5mUXXWGcIcKwWTxLA3sV81ULMMcJlPVW3AheAPw24lCKX3lJ67xdID7fA==
   dependencies:
     "@cosmjs/encoding" "0.27.1"
     "@cosmjs/math" "0.27.1"
@@ -19701,11 +19701,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "4.0.2"
-<<<<<<< HEAD
-  resolved "git+https://github.com/xp-network/xpjs#347cbeb8bf7db84e42e4fe6bf517b8132000c73e"
-=======
   resolved "git+https://github.com/xp-network/xpjs#758271ace65e16f8b85bdf3da7a12e38dcb914ae"
->>>>>>> origin/temporary
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"
