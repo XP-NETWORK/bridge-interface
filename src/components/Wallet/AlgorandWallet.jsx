@@ -10,22 +10,24 @@ import AlgoSignerIcon from "../../assets/img/wallet/Algo Signer.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-  setFrom, setAlgorandAccount, setMyAlgo, setAlgoSigner,
+  setFrom,
+  setAlgorandAccount,
+  setMyAlgo,
+  setAlgoSigner,
   setAlgorandWallet,
+  setAccount,
 } from "../../store/reducers/generalSlice";
 import { setSigner } from "../../store/reducers/signersSlice";
 import PropTypes from "prop-types";
 import { getRightPath } from "../../wallet/helpers";
 
-import { Chain } from 'xp.network'
-
-
+import { Chain } from "xp.network";
+import { getChainObject } from "../../components/values";
 import { withServices } from "../App/hocs/withServices";
 import { algoConnector } from "../../wallet/connectors";
 
 function AlgorandWallet({ wallet, close, serviceContainer }) {
-
-  const { bridge } = serviceContainer
+  const { bridge } = serviceContainer;
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
@@ -38,9 +40,6 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
     navigate(getRightPath());
   };
 
-
-
-
   const connectionHandler = async (wallet) => {
     const chainWrapper = await bridge.getChain(from?.nonce || Chain.ALGORAND);
     let account;
@@ -51,9 +50,14 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
         break;
       case "AlgoSigner":
         account = await connectAlgoSigner(testnet);
+        console.log(
+          "🚀 ~ file: AlgorandWallet.jsx:53 ~ connectionHandler ~ account",
+          account
+        );
         account && dispatch(setAlgoSigner(true));
+
         break;
-      case "Algorand Wallet"://TODO
+      case "Algorand Wallet": //TODO
         connectAlgoWallet();
         break;
       default:
@@ -62,18 +66,20 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
 
     if (account) {
       close();
-      chainWrapper.setSigner(account.signer)
-      console.log(account.signer, 'account.signer');
+      chainWrapper.setSigner(account.signer);
+      bridge.setCurrentType(chainWrapper);
       dispatch(setSigner(account.signer));
-      dispatch(setAlgorandAccount(account.address));
+      console.log(account.address);
+      dispatch(setAccount(account.address));
       if (temporaryFrom) dispatch(setFrom(temporaryFrom));
       if (account && to) navigateToAccountRoute();
+      if (!from) {
+        dispatch(setFrom(getChainObject(Chain.ALGORAND)));
+      }
     }
-
   };
 
   const getStyle = () => {
-    // debugger;
     if (temporaryFrom?.type === "Algorand") {
       return {};
     } else if (temporaryFrom && temporaryFrom?.type !== "Algorand") {
@@ -85,9 +91,7 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
     } else return OFF;
   };
 
-
   useEffect(() => {
-
     const cb = async (error, payload) => {
       console.log("setAlgorandWallet");
       const chainWrapper = await bridge.getChain(from?.nonce || Chain.ALGORAND);
@@ -95,22 +99,22 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
         throw error;
       }
       const { accounts } = payload.params[0];
-      const account = accounts[0]
+      const account = accounts[0];
       if (account) {
         const signer = await chainWrapper.chain.walletConnectSigner(
           algoConnector,
           account
         );
 
-        chainWrapper.setSigner(signer)
+        chainWrapper.setSigner(signer);
         dispatch(setAlgorandWallet(true));
         dispatch(setAlgorandAccount(account));
         if (to) navigateToAccountRoute();
       }
-    }
+    };
 
     algoConnector.on("connect", cb);
-    return () => algoConnector.off("connect", cb)
+    return () => algoConnector.off("connect", cb);
   }, []);
 
   return wallet === "MyAlgo" ? (
@@ -147,7 +151,10 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
     </li>
   );
 }
-AlgorandWallet.propTypes = { wallet: PropTypes.string, close: PropTypes.any, serviceContainer: PropTypes.object };
+AlgorandWallet.propTypes = {
+  wallet: PropTypes.string,
+  close: PropTypes.any,
+  serviceContainer: PropTypes.object,
+};
 
-
-export default withServices(AlgorandWallet)
+export default withServices(AlgorandWallet);

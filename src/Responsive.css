@@ -1,3 +1,9 @@
+@media only screen and (min-height: 1024px) {
+  .App {
+    padding-top: 100px;
+  }
+}
+
 @media only screen and (max-width: 1024px) {
   .infText {
     right: -32px;

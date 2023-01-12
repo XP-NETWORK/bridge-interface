@@ -12,82 +12,78 @@ import { getRightPath } from "../../wallet/helpers";
 import { withServices } from "../App/hocs/withServices";
 
 function CosmosWallet({ wallet, close, serviceContainer }) {
+  const { bridge } = serviceContainer;
 
-    const { bridge } = serviceContainer
+  const OFF = { opacity: 0.6, pointerEvents: "none" };
 
+  const from = useSelector((state) => state.general.from);
+  const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
+  const testnet = useSelector((state) => state.general.testNet);
+  const navigate = useNavigate();
+  const isMobile = useCheckMobileScreen();
 
-    const OFF = { opacity: 0.6, pointerEvents: "none" };
+  const navigateToAccountRoute = () => {
+    navigate(getRightPath());
+  };
 
-    const from = useSelector((state) => state.general.from);
-    const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
-    const testnet = useSelector((state) => state.general.testNet);
-    const navigate = useNavigate();
-    const isMobile = useCheckMobileScreen();
+  const onClickHandler = async (wallet) => {
+    const [signer, chainWrapper] = await Promise.all([
+      connectKeplr(testnet, chainsConfig.Secret, wallet, isMobile),
+      bridge.getChain(from.nonce),
+    ]);
 
-    const navigateToAccountRoute = () => {
-        navigate(getRightPath());
-    };
-
-    const onClickHandler = async (wallet) => {
-        const [signer, chainWrapper] = await Promise.all([connectKeplr(
-            testnet,
-            chainsConfig.Secret,
-            wallet,
-            isMobile
-        ), bridge.getChain(from.nonce)])
-
-        if (signer) {
-            chainWrapper.setSigner(signer)
-            navigateToAccountRoute()
-        }
-        close();
-    };
-
-    const getStyle = () => {
-        if (temporaryFrom?.type === "Cosmos") {
-            return {};
-        } else if (temporaryFrom && temporaryFrom?.type !== "Cosmos") {
-            return OFF;
-        } else if (!from) {
-            return {};
-        } else if (from && from.type === "Cosmos") {
-            return {};
-        } else return OFF;
-    };
-
-    switch (wallet) {
-        case "Fina":
-            return (
-                <li
-                    style={getStyle()}
-                    onClick={() => onClickHandler("Fina")}
-                    className="wllListItem keplr"
-                    data-wallet="Keplr"
-                >
-                    <img src={fina} alt="Keplr" />
-                    <p>Fina</p>
-                </li>
-            );
-
-        default:
-            return (
-                <li
-                    style={getStyle()}
-                    onClick={onClickHandler}
-                    className="wllListItem keplr"
-                    data-wallet="Keplr"
-                >
-                    <img src={keplr} alt="Keplr" />
-                    <p>Keplr</p>
-                </li>
-            );
+    if (signer) {
+      chainWrapper.setSigner(signer);
+      bridge.setCurrentType(chainWrapper);
+      navigateToAccountRoute();
     }
+    close();
+  };
+
+  const getStyle = () => {
+    if (temporaryFrom?.type === "Cosmos") {
+      return {};
+    } else if (temporaryFrom && temporaryFrom?.type !== "Cosmos") {
+      return OFF;
+    } else if (!from) {
+      return {};
+    } else if (from && from.type === "Cosmos") {
+      return {};
+    } else return OFF;
+  };
+
+  switch (wallet) {
+    case "Fina":
+      return (
+        <li
+          style={getStyle()}
+          onClick={() => onClickHandler("Fina")}
+          className="wllListItem keplr"
+          data-wallet="Keplr"
+        >
+          <img src={fina} alt="Keplr" />
+          <p>Fina</p>
+        </li>
+      );
+
+    default:
+      return (
+        <li
+          style={getStyle()}
+          onClick={onClickHandler}
+          className="wllListItem keplr"
+          data-wallet="Keplr"
+        >
+          <img src={keplr} alt="Keplr" />
+          <p>Keplr</p>
+        </li>
+      );
+  }
 }
 CosmosWallet.propTypes = {
-    close: PropTypes.any,
-    serviceContainer: PropTypes.object,
-    wallet: PropTypes.string,
+  close: PropTypes.any,
+  serviceContainer: PropTypes.object,
+  wallet: PropTypes.string,
 };
 
-
-export default withServices(CosmosWallet)
+export default withServices(CosmosWallet);

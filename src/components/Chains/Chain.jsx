@@ -20,6 +20,7 @@ export default function Chain(props) {
     updated,
     nonce,
   } = props;
+
   const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
   const testnet = useSelector((state) => state.general.testNet);
   const from = useSelector((state) => state.general.from);
@@ -100,5 +101,5 @@ Chain.propTypes = {
   chainKey: PropTypes.string,
   maintenance: PropTypes.bool,
   updated: PropTypes.bool,
-  nonce: PropTypes.number,
+  nonce: PropTypes.string || PropTypes.number,
 };

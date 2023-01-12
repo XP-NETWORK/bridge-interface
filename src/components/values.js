@@ -29,12 +29,14 @@ import Caduceus from "../assets/img/chain/caduceus.svg";
 import Aptos from "../assets/img/chain/aptos.svg";
 import InternetComputer from "../assets/img/chain/InternetComputer.svg";
 import near from "../assets/img/wallet/NearWallet.svg";
-
-///import { CHAIN_INFO } from "xp.network";
+import okx from "../assets/img/chain/okx.svg";
 
 export const EVM = "EVM";
 export const ELROND = "Elrond";
 export const TEZOS = "TEZOS";
+
+export const stagingWNFT = "https://staging-nft.xp.network";
+export const wnft = ["wnfts.xp.network", "nft.xp.network"];
 
 export const biz =
   window.location.hostname.includes("localhost") ||
@@ -43,12 +45,17 @@ export const biz =
   window.location.hostname.includes("temporary") ||
   window.location.hostname.includes("10.0.0");
 
+/*export const bMode =  window.location.hostname.includes("staging") 
+export const devMode =   window.location.hostname.includes("development") || window.location.hostname.includes("temporary") ||   window.location.hostname.includes("10.0.0");
+export const full = */
+
 export const BridgeModes = {
   Staging: "staging",
   TestNet: "testnet",
   CheckWallet: "checkWallet",
 };
-
+export const getChainObject = (nonce) =>
+  chains.find((chain) => chain.nonce === nonce);
 export const chains = [
   {
     type: "EVM",
@@ -58,7 +65,7 @@ export const chains = [
     nonce: 5,
     chainId: 1,
     tnChainId: 3,
-    order: -1,
+    order: 8,
     image: { avatar: true, src: Ethereum },
     maintenance: false,
     testNet: true,
@@ -72,7 +79,7 @@ export const chains = [
     nonce: 4,
     chainId: 56,
     tnChainId: 97,
-    order: 2,
+    order: 10,
     image: { avatar: true, src: Binance },
     maintenance: false,
     testNet: true,
@@ -84,7 +91,7 @@ export const chains = [
     text: "Tron",
     value: "Tron",
     nonce: 9,
-    order: 5,
+    order: 12,
     image: { avatar: true, src: Tron },
     maintenance: false,
     testNet: true,
@@ -97,7 +104,7 @@ export const chains = [
     text: ELROND,
     value: ELROND,
     nonce: 2,
-    order: 9,
+    order: 15,
     image: { avatar: true, src: Elrond },
     maintenance: false,
     testNet: false,
@@ -111,7 +118,7 @@ export const chains = [
     nonce: 7,
     chainId: 137,
     tnChainId: 80001,
-    order: 1,
+    order: 9,
     image: { avatar: true, src: Polygon },
     maintenance: false,
     testNet: true,
@@ -125,7 +132,7 @@ export const chains = [
     nonce: 6,
     chainId: 43114,
     tnChainId: 43113,
-    order: 3,
+    order: 11,
     image: { avatar: true, src: Avalanche },
     maintenance: false,
     testNet: true,
@@ -138,7 +145,7 @@ export const chains = [
     value: "Fantom",
     nonce: 8,
     chainId: 250,
-    order: 10,
+    order: 16,
     image: { avatar: true, src: Fantom },
     maintenance: false,
     testNet: false,
@@ -151,7 +158,7 @@ export const chains = [
     text: "Algorand",
     value: "Algorand",
     nonce: 15,
-    order: 6,
+    order: 13,
     image: { avatar: true, src: Algorand },
     maintenance: false,
     testNet: true,
@@ -165,7 +172,7 @@ export const chains = [
     value: "xDai",
     nonce: 14,
     chainId: 100,
-    order: 11,
+    order: 17,
     image: { avatar: true, src: Gnosis },
     maintenance: false,
     testNet: false,
@@ -204,9 +211,9 @@ export const chains = [
     text: "TON",
     value: "TON",
     chainId: undefined,
-    order: -7,
+    order: 5,
     nonce: 27,
-    coming: false,
+    coming: !biz,
     image: { avatar: true, src: Ton },
     maintenance: false,
     testNet: false,
@@ -220,7 +227,7 @@ export const chains = [
     value: "Fuse",
     nonce: 16,
     chainId: 122,
-    order: 15,
+    order: 21,
     image: { avatar: true, src: Fuse },
     maintenance: false,
     testNet: false,
@@ -234,7 +241,7 @@ export const chains = [
     nonce: 19,
     chainId: 106,
     tnChainId: 0x6f,
-    order: 14,
+    order: 20,
     image: { avatar: true, src: Velas },
     newChain: false,
     maintenance: false,
@@ -247,7 +254,7 @@ export const chains = [
     text: "Tezos",
     value: "Tezos",
     nonce: 18,
-    order: 7,
+    order: 12,
     image: { avatar: true, src: Tezos },
     newChain: false,
     coming: false,
@@ -263,7 +270,7 @@ export const chains = [
     nonce: 20,
     chainId: 4689,
     tnChainId: 0x1252,
-    order: 13,
+    order: 20,
     image: { avatar: true, src: Iotex },
     coming: false,
     maintenance: false,
@@ -278,7 +285,7 @@ export const chains = [
     nonce: 12,
     chainId: 1666600000,
     tnChainId: 1666700000,
-    order: 4,
+    order: 6,
     image: { avatar: true, src: One },
     maintenance: false,
     testNet: false,
@@ -293,7 +300,7 @@ export const chains = [
     nonce: 21,
     chainId: 1313161554,
     tnChainId: 1313161555,
-    order: 5,
+    order: 7,
     image: { avatar: true, src: Aurora },
     maintenance: false,
     testNet: true,
@@ -308,7 +315,7 @@ export const chains = [
     nonce: 22,
     chainId: 71402,
     tnChainId: 0x116e9,
-    order: 1,
+    order: 4,
     image: { avatar: true, src: CKB },
     maintenance: false,
     testNet: true,
@@ -323,7 +330,7 @@ export const chains = [
     nonce: 23,
     tnChainId: 85,
     chainId: 86,
-    order: 12,
+    order: 19,
     image: { avatar: true, src: GT },
     maintenance: false,
     testNet: false,
@@ -336,14 +343,14 @@ export const chains = [
     text: "Moonbeam",
     value: "Moonbeam",
     nonce: 32,
-    order: -6,
+    order: 3,
     chainId: 1284,
     tnChainId: 1287,
     image: { avatar: true, src: Moon },
     testNet: true,
-    mainnet: biz,
-    newChain: biz,
-    coming: !biz,
+    mainnet: true,
+    newChain: true,
+    coming: false,
   },
   {
     type: "EVM",
@@ -351,11 +358,11 @@ export const chains = [
     text: "Abeychain",
     value: "Abeychain",
     nonce: 33,
-    order: -5,
+    order: 5,
     chainId: 179,
     tnChainId: 178,
     image: { avatar: true, src: Abey },
-    testNet: true,
+    testNet: biz,
     mainnet: biz,
     newChain: biz,
     coming: !biz,
@@ -368,7 +375,7 @@ export const chains = [
     nonce: 25,
     tnChainId: 39,
     chainId: undefined,
-    order: 2,
+    order: 5,
     image: { avatar: true, src: VET },
     maintenance: false,
     mainnet: true,
@@ -381,11 +388,11 @@ export const chains = [
     text: "Secret",
     value: "Secret",
     nonce: 24,
-    order: 0,
+    order: 9,
     tnChainId: "pulsar-2",
     image: { avatar: true, src: SCRT },
     mainnet: biz,
-    testNet: biz,
+    testNet: false,
     test: false,
     newChain: biz,
     coming: !biz,
@@ -407,14 +414,14 @@ export const chains = [
     key: "Skale",
     text: "Skale",
     nonce: 30,
-    order: 0,
+    order: 8,
     chainId: 1564830818,
     tnChainId: 0x63e1ef9,
     image: { avatar: true, src: SKL },
-    testNet: true,
+    testNet: biz,
     mainnet: biz,
     newChain: biz,
-    coming: false,
+    coming: !biz,
   },
   {
     type: "EVM",
@@ -422,12 +429,12 @@ export const chains = [
     text: "Caduceus",
     value: "Caduceus",
     nonce: 35,
-    order: -102,
+    order: 2,
     chainId: 256256,
     tnChainId: 512512,
     image: { avatar: true, src: Caduceus },
     testNet: true,
-    mainnet: biz,
+    mainnet: true,
     newChain: true,
     coming: false,
   },
@@ -454,7 +461,7 @@ export const chains = [
     image: { avatar: true, src: Aptos },
     testNet: false,
     mainnet: false,
-    coming: false,
+    coming: true,
   },
   {
     type: "NEAR",
@@ -462,11 +469,26 @@ export const chains = [
     text: "NEAR",
     value: "NEAR",
     nonce: 31,
-    order: -999,
+    order: 0,
     image: { avatar: true, src: near },
-    testNet: biz,
+    testNet: false,
     mainnet: false,
+    coming: true,
+  },
+  {
+    type: "EVM",
+    key: "OKC",
+    text: "OKC",
+    value: "OKC",
+    nonce: 0x24,
+    order: 1,
+    image: { avatar: true, src: okx },
+    testNet: true,
+    mainnet: true,
     coming: false,
+    newChain: true,
+    chainId: 66,
+    tnChainId: 65,
   },
 ];
 
@@ -741,6 +763,16 @@ export const chainsConfig = {
     tx: "https://explorer.mainnet.near.org/transactions/",
     testTx: "https://explorer.testnet.near.org/transactions/",
   },
+  OKC: {
+    type: "EVM",
+    token: "OKT",
+    image: okx,
+    Chain: Chain.OKC,
+    tx: "https://www.oklink.com/okc/tx/",
+    testTx: "https://www.oklink.com/en/okc-test/tx/",
+    chainId: 66,
+    tnChainId: 65,
+  },
   /*Caduceus: {
     type: "EVM",
     token: "CTP",
@@ -780,6 +812,7 @@ export const coins = [
   "ABEY", //25
   "APT", //26
   "NEAR", //27
+  "OKT", //28
 ];
 
 export const TESTNET_CHAIN_INFO = {
@@ -1128,6 +1161,13 @@ export const CHAIN_INFO = {
     decimals: 1e8,
     blockExplorerUrls: "https://explorer.mainnet.near.org/accounts/",
     testBlockExplorerUrls: "https://explorer.testnet.near.org/accounts/",
+  },
+  OKC: {
+    native: coins[28],
+    nonce: 0x24,
+    decimals: 1e8,
+    blockExplorerUrls: "https://www.oklink.com/okc/accounts/",
+    testBlockExplorerUrls: "https://www.oklink.com/okc-test/accounts",
   },
   /* Caduceus: {
     native: "CTP",

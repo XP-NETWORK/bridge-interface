@@ -5,7 +5,13 @@ import moment from "moment";
 import TransferredNft from "./TransferredNft";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useEffect } from "react";
-import { socket, StringShortener, scraperSocket } from "../../../wallet/helpers";
+import {
+  socket,
+  StringShortener,
+  scraperSocket,
+} from "../../../wallet/helpers";
+
+
 
 import {
   cleanTxnHashArr,
@@ -17,7 +23,6 @@ import "./SuccessModal.css";
 import Tooltip from "../AccountModal/Tooltip";
 //import { chainsConfig, CHAIN_INFO } from "../../values";
 import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
-
 import { withServices } from "../../App/hocs/withServices";
 
 export default withServices(function SuccessModal({ serviceContainer }) {
@@ -161,9 +166,15 @@ export default withServices(function SuccessModal({ serviceContainer }) {
             </div>
             <div className="success-info-item">
               <div className="info-item-label">Txn Hash</div>
+
               <CopyToClipboard text={tx || "No tx"}>
                 <a
-                  href={links.txFrom + tx}
+                  href={
+                    typeof links.txFrom === "function"
+                      ? links.txFrom(tx)
+                      : links.txFrom + tx
+
+                  }
                   target="_blank"
                   className="success-hash"
                   rel="noreferrer"
@@ -193,7 +204,13 @@ export default withServices(function SuccessModal({ serviceContainer }) {
           <div className="success-info-item">
             <div className="info-item-label">Departure Address</div>
             <a
-              href={links.addressFrom + address}
+
+              href={
+                typeof links.addressFrom === "function"
+                  ? links.addressFrom(address)
+                  : links.addressFrom + address
+              }
+
               className="success-hash"
               target="_blank"
               rel="noreferrer"
@@ -212,7 +229,12 @@ export default withServices(function SuccessModal({ serviceContainer }) {
             <div className="info-item-label">Destination Address</div>
             <a
               className="success-hash"
-              href={links.addressTo + receiver}
+
+              href={
+                typeof links.addressTo === "function"
+                  ? links.addressTo(receiver)
+                  : links.addressTo + receiver
+              }
               target="_blank"
               rel="noreferrer"
             >
@@ -241,3 +263,4 @@ export default withServices(function SuccessModal({ serviceContainer }) {
     </>
   );
 });
+

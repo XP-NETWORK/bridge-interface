@@ -2,12 +2,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
-import MyAlgoConnect from "@randlabs/myalgo-connect";
-import { algoConnector } from "../../wallet/connectors";
-
 import { convert } from "../../wallet/helpers";
-import { ExtensionProvider } from "@elrondnetwork/erdjs/out";
-import { ethers } from "ethers";
+
 import {
   setError,
   setNoApprovedNFTAlert,
@@ -19,127 +15,26 @@ import {
   setSelectNFTAlert,
 } from "../../store/reducers/generalSlice";
 import { getFromDomain } from "../../services/resolution";
-import { transferNFTFromEVM } from "../../services/chains/evm/evmService";
-import { transferNFTFromTran } from "../../services/chains/tron/tronHelper";
-import { transferNFTFromTezos } from "../../services/chains/tezos/tezosHelper";
-import { transferNFTFromCosmos } from "../../services/chains/cosmos/cosmosHelper";
-import { transferNFTFromElrond } from "../../services/chains/elrond/elrondHelper";
-import { transferNFTFromAlgorand } from "../../services/chains/algorand/algorandHelper";
-import { transferNFTFromTON } from "../../services/chains/ton/tonHelper";
 
 import { withServices } from "../App/hocs/withServices";
 
 export default withServices(function ButtonToTransfer({ serviceContainer }) {
   const { bridge } = serviceContainer;
-  const kukaiWalletSigner = useSelector(
-    (state) => state.general.kukaiWalletSigner
-  );
+
   const txnHashArr = useSelector((state) => state.general.txnHashArr);
-  const receiver = useSelector((state) => state.general.receiver);
-  const receiverAddress = convert(receiver);
+  const receiver = convert(useSelector((state) => state.general.receiver));
+
   const approved = useSelector((state) => state.general.approved);
-  const testnet = useSelector((state) => state.general.testNet);
   const _to = useSelector((state) => state.general.to);
   const from = useSelector((state) => state.general.from.key);
   const _from = useSelector((state) => state.general.from);
   const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
-  const factory = useSelector((state) => state.general.factory);
+
   const [loading, setLoading] = useState();
   const dispatch = useDispatch();
-  const algorandWallet = useSelector((state) => state.general.AlgorandWallet);
-  const MyAlgo = useSelector((state) => state.general.MyAlgo);
-  const algorandAccount = useSelector((s) => s.general.algorandAccount);
-  const maiarProvider = useSelector((state) => state.general.maiarProvider);
-  const templeSigner = useSelector((state) => state.general.templeSigner);
-  const account = useSelector((state) => state.general.account);
+
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
-  const WCProvider = useSelector((state) => state.general.WCProvider);
-  const bitKeep = useSelector((state) => state.general.bitKeep);
-  const hederaSigner = useSelector((state) => state.signers.signer);
-  const chainConfig = useSelector((state) => state.signers.chainFactoryConfig);
   const discountLeftUsd = useSelector((state) => state.discount.discount);
-  const signerSigner = useSelector((state) => state.signers.signer);
-
-  const getAlgorandWalletSigner = async () => {
-    const base = new MyAlgoConnect();
-    if (algorandWallet) {
-      try {
-        const inner = await factory.inner(15);
-        const signer = await inner.walletConnectSigner(
-          algoConnector,
-          algorandAccount
-        );
-        return signer;
-      } catch (error) {
-        console.log(
-          error.data
-            ? error.data.message
-            : error.data
-            ? error.data.message
-            : error.message
-        );
-      }
-    } else if (MyAlgo) {
-      const inner = await factory.inner(15);
-      const signer = inner.myAlgoSigner(base, algorandAccount);
-      return signer;
-    } else {
-      const signer = {
-        address: algorandAccount,
-        algoSigner: window.AlgoSigner,
-        ledger: testnet ? "TestNet" : "MainNet",
-      };
-      return signer;
-    }
-  };
-
-  const getSigner = async () => {
-    let signer;
-    try {
-      if (from === "TON") return signerSigner;
-      else if (from === "Tezos") {
-        return templeSigner || kukaiWalletSigner;
-      } else if (from === "Algorand") {
-        signer = await getAlgorandWalletSigner();
-        return signer;
-      } else if (from === "Elrond")
-        return maiarProvider || ExtensionProvider.getInstance();
-      else if (from === "VeChain") {
-        /*const provider = thor.ethers.modifyProvider(
-                    new ethers.providers.Web3Provider(
-                        new thor.ConnexProvider({
-                            connex: new Connex({
-                                node: testnet
-                                    ? "https://testnet.veblocks.net/"
-                                    : "https://sync-mainnet.veblocks.net",
-                                network: testnet ? "test" : "main",
-                            }),
-                        })
-                    )
-                );
-                const signer = await provider.getSigner(account);*/
-        return hederaSigner;
-      } else if (from === "Secret" || from === "NEAR") {
-        return signerSigner;
-      } else {
-        let provider;
-
-        if (bitKeep) {
-          provider = new ethers.providers.Web3Provider(window.bitkeep.ethereum);
-          signer = provider.getSigner(account);
-        } else {
-          provider = new ethers.providers.Web3Provider(
-            WCProvider?.walletConnectProvider || window.ethereum
-          );
-          signer = provider.getSigner(account);
-        }
-        return signer;
-      }
-    } catch (error) {
-      console.error(error);
-      return;
-    }
-  };
 
   const unstoppabledomainSwitch = (unstoppabledomain) => {
     let stop;
@@ -184,93 +79,35 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
     return stop;
   };
 
-  const sendEach = async (nft, index) => {
+  const sendEach = async (nft) => {
     try {
       const [fromChain, toChain] = await Promise.all([
         bridge.getChain(_from.nonce),
         bridge.getChain(_to.nonce),
       ]);
 
-      const signer = await getSigner();
       const unstoppabledomain = await getFromDomain(receiver, toChain);
-      const stop = unstoppabledomainSwitch(unstoppabledomain);
-      if (stop) return;
+      if (unstoppabledomainSwitch(unstoppabledomain)) return;
 
-      let result;
-      console.log(bigNumberFees, "bigNumberFees");
-      const params = {
-        to: _to,
-        from: _from,
+      const result = await fromChain.transfer({
+        toChain,
         nft,
-        signer: from.text === "Hedera" ? hederaSigner : signer,
-        receiver: (receiverAddress || unstoppabledomain || receiver)?.trim(),
+        receiver: unstoppabledomain || receiver,
         fee: bigNumberFees,
-        index,
-        txnHashArr,
-        chainConfig,
-        testnet,
         discountLeftUsd,
-      };
-      switch (_from.type) {
-        case "EVM": {
-          const _receiver = receiverAddress || unstoppabledomain || receiver;
-          result = await fromChain.transfer({
-            toChain,
-            nft,
-            receiver: _receiver,
-            fee: bigNumberFees,
-          });
-          break;
-        }
-        case "Tron":
-          result = await transferNFTFromTran(params);
-          break;
-        case "Tezos":
-          result = await transferNFTFromTezos(params);
-          break;
-        case "Algorand":
-          result = await transferNFTFromAlgorand(params);
-          break;
-        case "Elrond":
-          result = await transferNFTFromElrond(params);
-          break;
-        case "Cosmos":
-          result = await transferNFTFromCosmos(params);
-          ``;
-          break;
-        case "VeChain":
-          result = await transferNFTFromEVM(params);
-          break;
-        case "Skale":
-          result = await transferNFTFromEVM(params);
-          break;
-        case "TON":
-          result = await transferNFTFromTON(params);
-          break;
-        case "NEAR": {
-          const fromChain = await bridge.getChain(_from.nonce);
-          const toChain = await bridge.getChain(_to.nonce);
-          const _receiver = receiverAddress || unstoppabledomain || receiver;
-          fromChain.sendNFT({
-            toChain,
-            nft,
-            receiver: _receiver,
-            fee: bigNumberFees,
-          });
-          break;
-        }
-        default:
-          break;
-      }
+      });
+
       if (txnHashArr[0] && !result) {
         dispatch(setTxnHash({ txn: "failed", nft }));
       } else if (result) {
+        //TODO fromChain.handleResult(...);
         dispatch(setTxnHash({ txn: result, nft }));
       }
     } catch (e) {
       console.log(e, "eee");
       dispatch(setError(e));
     }
+
     setLoading(false);
     dispatch(setTransferLoaderModal(false));
   };

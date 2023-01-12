@@ -39,7 +39,6 @@ export const getUrl = (nft) => {
   let urls = [];
   let ipfsArr = [];
 
-  // debugger
   values.forEach((item) => {
     if (item && typeof item === "object") {
       const objValues = Object.values(item);
@@ -59,7 +58,6 @@ export const getUrl = (nft) => {
     if (item && typeof item === "string" && item.length > 1) {
       strings.push(item);
     } else if (item && typeof item === "object") {
-      // debugger
       const vals = Object.values(item);
       vals.forEach((item) => {
         if (typeof item === "string" && item.length > 1) {
@@ -120,7 +118,6 @@ export const isShown = (search, nft) =>
 
 export const isWhiteListed = async (from, nft) => {
   // eslint-disable-next-line no-debugger
-  // debugger;
   const {
     general: { factory },
   } = store.getState();
@@ -148,5 +145,27 @@ export const isWhiteListed = async (from, nft) => {
     return whitelisted;
   } catch (e) {
     console.log(e);
+  }
+};
+
+export const selected = (type, nft, selectedNFTs) => {
+  switch (type) {
+    case "Solana":
+      return selectedNFTs.filter(
+        (n) => n.native.nftMint === nft.native.nftMint
+      )[0];
+    case "APTOS":
+      return selectedNFTs.filter(
+        (n) =>
+          n.native.collection_creator === nft.native?.collection_creator &&
+          n.native.token_name === nft.native?.token_name
+      )[0];
+    default:
+      return selectedNFTs.filter(
+        (n) =>
+          n.native.tokenId === nft.native?.tokenId &&
+          n.native.contract === nft.native?.contract &&
+          n.native.chainId === nft.native?.chainId
+      )[0];
   }
 };

@@ -30,13 +30,12 @@ export default function Widget() {
       wsettings,
     })
   );
-console.log(settings);
+  console.log(settings);
   const dispatch = useDispatch();
 
   const [state, setState] = useState({});
 
   useEffect(() => {
-    // debugger
     const p = new URLSearchParams(window.location.search);
     const widget = p.get("widget") === "true";
     const wsettings = p.get("wsettings") === "true";

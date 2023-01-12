@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -22,7 +23,6 @@ export default function Selected({ index, nft }) {
   };
 
   const handleInput = (e, index) => {
-    // debugger;
     let amount = Number(e.target.value);
     if (amount > 50) amount = 50;
     if (amount > Number(nft.native?.amount))

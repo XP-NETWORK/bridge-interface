@@ -53,8 +53,10 @@ export default function NFTlistedCard({ serviceContainer, chain, nft, index }) {
   useEffect(() => {
     if (isVisible) {
       if (!nft.dataLoaded) {
-        const _nft = chain.preParse(nft);
-        parseNFT(serviceContainer, _nft, index, testnet);
+        chain.preParse(nft).then((_nft) => {
+          parseNFT(serviceContainer, _nft, index, testnet);
+      })
+        
       }
     }
   }, [isVisible, nft]);

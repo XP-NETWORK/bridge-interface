@@ -20,7 +20,13 @@ import { useLocation } from "react-router-dom";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import ScrollArrows from "./ScrollArrows";
 
-export default function ChainListBox() {
+import PropTypes from "prop-types";
+
+import { withServices } from "../App/hocs/withServices";
+
+function ChainListBox({ serviceContainer }) {
+  const { bridge } = serviceContainer;
+
   const dispatch = useDispatch();
   const location = useLocation();
   const departureOrDestination = useSelector(
@@ -39,13 +45,13 @@ export default function ChainListBox() {
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
   const evmAccount = useSelector((state) => state.general.account);
   const tronAccount = useSelector((state) => state.general.tronWallet);
-  const Sync2 = useSelector((state) => state.general.Sync2);
+  //const Sync2 = useSelector((state) => state.general.Sync2);
   const { account } = useWeb3React();
   const bitKeep = useSelector((state) => state.general.bitKeep);
   const nftChainListRef = useRef(null);
-  const nearWallet = useSelector(
+  /*const nearWallet = useSelector(
     (state) => state.general.connectedWallet === "Near Wallet"
-  );
+  );*/
 
   const [reached, setReached] = useState(false);
 
@@ -54,26 +60,6 @@ export default function ChainListBox() {
     dispatch(setDepartureOrDestination(""));
     dispatch(setSwitchDestination(false));
     dispatch(setChainSearch(""));
-  };
-
-  const typeOfChainConnected = () => {
-    switch (true) {
-      case nearWallet:
-        return "NEAR";
-      case evmAccount?.length > 0:
-        return Sync2 ? "VeChain" : "EVM";
-      case algorandAccount?.length > 0:
-        return "Algorand";
-      case tezosAccount?.length > 0:
-        return "Tezos";
-      case elrondAccount?.length > 0:
-        return "Elrond";
-      case tronAccount?.length > 0:
-        return "Tron";
-
-      default:
-        return undefined;
-    }
   };
 
   const handleScroll = () => {
@@ -90,9 +76,20 @@ export default function ChainListBox() {
   // ! ref
   const chainSelectHandler = async (chain) => {
     // eslint-disable-next-line no-debugger
-    // debugger;
+    const chainWrapper = await bridge.getChain(chain.nonce);
+
     if (departureOrDestination === "departure") {
-      if (chain.type === typeOfChainConnected() || !typeOfChainConnected()) {
+      if (
+        chainWrapper.chainParams.name === "VeChain" &&
+        bridge.currentType === "EVM"
+      ) {
+        dispatch(setChangeWallet(true));
+        dispatch(setTemporaryFrom(chain));
+        handleClose();
+      } else if (
+        chainWrapper.chainParams.type === bridge.currentType ||
+        !bridge.currentType
+      ) {
         if (to && to?.text === chain.text) {
           if (to?.text === "Harmony" && bitKeep) {
             dispatch(setTemporaryFrom(chain));
@@ -106,22 +103,12 @@ export default function ChainListBox() {
             }
           }
         } else {
-          if (
-            (account || evmAccount) &&
-            chain.text !== "VeChain" &&
-            chain.text !== "NEAR"
-          ) {
-            const switched = await switchNetwork(chain);
-
-            if (switched) {
-              dispatch(setFrom(chain));
-            }
-          } else dispatch(setFrom(chain));
+          dispatch(setFrom(chain));
         }
         handleClose();
       } else {
-        dispatch(setTemporaryFrom(chain));
         dispatch(setChangeWallet(true));
+        dispatch(setTemporaryFrom(chain));
         handleClose();
       }
     } else if (departureOrDestination === "destination") {
@@ -145,7 +132,6 @@ export default function ChainListBox() {
   };
 
   useEffect(() => {
-    // debugger;
     let filteredChains = chains;
     if (chainSearch && departureOrDestination === "departure") {
       filteredChains = chains.filter((chain) =>
@@ -413,3 +399,9 @@ export default function ChainListBox() {
     </Modal>
   );
 }
+
+ChainListBox.propTypes = {
+  serviceContainer: PropTypes.object,
+};
+
+export default withServices(ChainListBox);

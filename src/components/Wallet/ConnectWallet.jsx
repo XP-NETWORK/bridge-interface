@@ -74,8 +74,6 @@ function ConnectWallet() {
   const walletsModal = useSelector((state) => state.general.walletsModal);
 
   const handleConnect = async () => {
-    // eslint-disable-next-line no-debugger
-    // debugger;
     let provider;
     let _chainId;
     if (bitKeep) {

@@ -33,7 +33,6 @@ function NFTgridView({ serviceContainer }) {
   const loader = useSelector((state) => state.general.bigLoader);
 
   useEffect(() => {
-    console.log(from.nonce);
     bridge.getChain(from.nonce).then((fromChain) => setChain(fromChain));
   }, []);
 

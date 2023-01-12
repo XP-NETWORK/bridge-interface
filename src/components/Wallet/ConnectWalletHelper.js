@@ -1,13 +1,10 @@
 /* eslint-disable valid-typeof */
-import Connex from "@vechain/connex";
-import { TempleWallet } from "@temple-wallet/dapp";
+
 import { injected, algoConnector, web3Modal } from "../../wallet/connectors";
 import store from "../../store/store";
 
-import { TezosToolkit } from "@taquito/taquito";
-import { BeaconWallet } from "@taquito/beacon-wallet";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
-import * as thor from "web3-providers-connex";
+
 import { HashConnect } from "hashconnect";
 import { hethers } from "@hashgraph/hethers";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
@@ -32,23 +29,15 @@ import {
   setMaiarProvider,
   setError,
   setTronPopUp,
-  setAlgoSigner,
-  setAlgorandAccount,
-  setTezosAccount,
-  setKukaiWallet,
-  setTempleWallet,
+  // setAlgoSigner,
+  // setAlgorandAccount,
   setQrImage,
   setQrCodeString,
   setWC,
-  setOnWC,
   setAccount,
-  setTempleWalletSigner,
-  setKukaiWalletSigner,
-  setKeplrAccount,
   setKeplrWallet,
   setHederaAccount,
   setHederaWallet,
-  setSync2Connex,
   setRedirectModal,
 } from "../../store/reducers/generalSlice";
 import { chainsConfig } from "../values";
@@ -116,7 +105,7 @@ export const connectHashpack = async () => {
 export const connectUnstoppable = async () => {
   try {
     const provider = await web3Modal.connect();
-    return provider.sendAsync();
+    return provider.selectedAddress;
   } catch (error) {
     console.log(error);
   }
@@ -175,7 +164,7 @@ export const connectKeplr = async (testnet, chain, wallet, isMobile) => {
         //encryptionUtils: window.getEnigmaUtils(chain),
       });
 
-      store.dispatch(setKeplrAccount(address));
+      store.dispatch(setAccount(address));
       store.dispatch(setKeplrWallet(signer));
       store.dispatch(setSigner(signer));
       return signer;
@@ -203,7 +192,6 @@ const setBitKeepSigner = (account) => {
 };
 
 export const connectBitKeep = async (from) => {
-  // debugger;
   let provider;
   const isInstallBikeep = () => {
     return window.bitkeep && window.bitkeep?.ethereum;
@@ -235,7 +223,6 @@ export const connectBitKeep = async (from) => {
 };
 
 export const connectMetaMask = async (activate, from, to) => {
-  // debugger;
   try {
     if (!window.ethereum && window.innerWidth <= 600) {
       const link = `dapp://${window.location.host}?to=${to}&from=${from}/`;
@@ -244,7 +231,6 @@ export const connectMetaMask = async (activate, from, to) => {
     }
     await activate(injected);
     store.dispatch(setMetaMask(true));
-
     return true;
   } catch (ex) {
     store.dispatch(setError(ex));
@@ -255,92 +241,6 @@ export const connectMetaMask = async (activate, from, to) => {
   }
 };
 
-export const connectVeChainThor = async (testnet) => {
-  let account;
-  let connex;
-  const userAgent = navigator.userAgent;
-
-  if (userAgent.match(/vechainthorwallet|vechain|thor/)) {
-    connex = new Connex(
-      testnet
-        ? {
-            node: "https://testnet.veblocks.net/",
-            network: "test",
-          }
-        : {
-            node: "https://sync-mainnet.veblocks.net",
-            network: "main",
-          }
-    );
-    await connex.vendor
-      .sign("cert", {
-        purpose: "identification",
-        payload: {
-          type: "text",
-          content: "sign certificate to continue bridging",
-        },
-      })
-      .request()
-      .then((result) => {
-        account = result?.annex?.signer;
-      });
-  } else store.dispatch(setRedirectModal("VeChainThor"));
-
-  const provider = thor.ethers.modifyProvider(
-    new ethers.providers.Web3Provider(new thor.ConnexProvider({ connex }))
-  );
-  const signer = await provider.getSigner(account);
-  store.dispatch(setSync2Connex(connex));
-  store.dispatch(setSigner(signer));
-  return account;
-};
-
-export const connectSync2 = async (testnet) => {
-  let account;
-  const client = new Connex(
-    testnet
-      ? {
-          node: "https://testnet.veblocks.net/",
-          network: "test",
-        }
-      : {
-          node: "https://sync-mainnet.veblocks.net",
-          network: "main",
-        }
-  );
-  store.dispatch(setSync2Connex(client));
-  const connex = new Connex(testnet ? "test" : "main");
-  await connex.vendor
-    .sign("cert", {
-      purpose: "identification",
-      payload: {
-        type: "text",
-        content: "sign certificate to continue bridging",
-      },
-    })
-    .link("https://connex.vecha.in/{certid}")
-    .request()
-    .then((result) => {
-      account = result?.annex?.signer;
-    });
-
-  const provider = thor.ethers.modifyProvider(
-    new ethers.providers.Web3Provider(
-      new thor.ConnexProvider({
-        connex: new Connex({
-          node: testnet
-            ? "https://testnet.veblocks.net/"
-            : "https://sync-mainnet.veblocks.net",
-          network: testnet ? "test" : "main",
-        }),
-      })
-    )
-  );
-  const signer = await provider.getSigner(account);
-  store.dispatch(setSigner(signer));
-  return account;
-};
-
 // Algorand blockchain connection ( AlgoSigner )
 export const connectAlgoSigner = async (testnet) => {
   if (typeof window.AlgoSigner !== undefined) {
@@ -349,16 +249,16 @@ export const connectAlgoSigner = async (testnet) => {
       const algo = await window.AlgoSigner.accounts({
         ledger: testnet ? "TestNet" : "MainNet",
       });
-      const { address } = algo[0];
-      store.dispatch(setAlgoSigner(true));
-      store.dispatch(setAlgorandAccount(address));
+      // store.dispatch(setAlgoSigner(true));
+      // store.dispatch(setAlgorandAccount(address));
+      const address = algo[0].address;
       const signer = {
-        address,
-        AlgoSigner: window.AlgoSigner,
+        address: algo[0],
+        algoSigner: window.AlgoSigner,
         ledger: testnet ? "TestNet" : "MainNet",
       };
-      store.dispatch(setSigner(signer));
-      return {signer, address};
+      // store.dispatch(setSigner(signer));
+      return { signer, address };
     } catch (e) {
       console.error(e);
       return JSON.stringify(e, null, 2);
@@ -370,7 +270,6 @@ export const connectAlgoSigner = async (testnet) => {
 };
 
 export const connectTrustWallet = async (activate, from) => {
-  // debugger
   const { rpc, chainId } = chainsConfig[from];
   try {
     const walletConnect = new WalletConnectConnector({
@@ -382,8 +281,6 @@ export const connectTrustWallet = async (activate, from) => {
     });
     walletConnect.networkId = chainId;
     await activate(walletConnect, undefined, true);
-    store.dispatch(setOnWC(true));
-    store.dispatch(setWC(walletConnect));
     return true;
   } catch (error) {
     store.dispatch(setError(error));
@@ -394,59 +291,15 @@ export const connectTrustWallet = async (activate, from) => {
   }
 };
 
-// Tezos blockchain connection ( Temple Wallet )
-export const connectTempleWallet = async () => {
-  try {
-    const available = await TempleWallet.isAvailable();
-    if (!available) {
-      throw new Error("Temple Wallet not installed");
-    }
-    const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
-    await wallet.connect("mainnet");
-    store.dispatch(setTempleWalletSigner(wallet));
-    store.dispatch(setSigner(wallet));
-    const tezos = wallet.toTezos();
-    const accountPkh = await tezos.wallet.pkh();
-    store.dispatch(setTezosAccount(accountPkh));
-    store.dispatch(setTempleWallet(true));
-    return true;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
-};
-// Tezos blockchain connection ( Beacon )
-export const connectBeacon = async () => {
-  const Tezos = new TezosToolkit("https://mainnet-tezos.giganode.io");
-  const wallet = new BeaconWallet({
-    name: "XP.NETWORK Cross-Chain NFT Bridge",
-  });
-  Tezos.setWalletProvider(wallet);
-  try {
-    const permissions = await wallet.client.requestPermissions();
-    store.dispatch(setTezosAccount(permissions.address));
-
-    store.dispatch(setKukaiWalletSigner(wallet));
-    store.dispatch(setSigner(wallet));
-    store.dispatch(setKukaiWallet(true));
-    return true;
-  } catch (error) {
-    console.log("Got error:", error);
-    return false;
-  }
-};
-
-
-
 export const connectMyAlgo = async (chain) => {
   const myAlgoConnect = new MyAlgoConnect();
   try {
     const accountsSharedByUser = await myAlgoConnect.connect();
-    const address = accountsSharedByUser[0].address
+    const address = accountsSharedByUser[0].address;
 
-    const signer = await chain.myAlgoSigner(myAlgoConnect, address)
-  
-    return {signer, address };
+    const signer = await chain.myAlgoSigner(myAlgoConnect, address);
+
+    return { signer, address };
   } catch (error) {
     console.log(error);
     return false;
@@ -484,7 +337,6 @@ export const onWalletConnect = async (activate, from, testnet) => {
     await activate(walletConnect, undefined, true);
     const account = await walletConnect.getAccount();
     store.dispatch(setAccount(account));
-    store.dispatch(setOnWC(true));
     store.dispatch(setWC(walletConnect));
     return true;
   } catch (error) {
@@ -523,7 +375,6 @@ const generateQR = async (text) => {
 };
 // Elrond blockchain connection ( Maiar )
 export const connectMaiar = async () => {
-  // debugger
   const provider = new ProxyProvider("https://gateway.elrond.com");
   const maiarProvider = new WalletConnectProvider(
     provider,
@@ -546,7 +397,6 @@ export const connectMaiar = async () => {
 
 // Elrond blockchain connection ( Maiar Extension )
 export const connectMaiarExtension = async () => {
-  // debugger;
   const instance = ExtensionProvider.getInstance();
   try {
     await instance.init();

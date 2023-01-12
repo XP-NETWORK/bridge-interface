@@ -1,15 +1,19 @@
+/* eslint-disable no-debugger */
 import { useWeb3React } from "@web3-react/core";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { switchNetwork } from "../../../services/chains/evm/evmService";
 import {
   setBitKeep,
+  setConnectedWallet,
   setFrom,
   setMetaMask,
   setWalletsModal,
 } from "../../../store/reducers/generalSlice";
 import { getRightPath } from "../../../wallet/helpers";
+import { withServices } from "../../App/hocs/withServices";
+
 import {
   connectBitKeep,
   connectMetaMask,
@@ -17,19 +21,14 @@ import {
   onWalletConnect,
 } from "../ConnectWalletHelper";
 
-import { ethers } from "ethers";
-import { withServices } from "../../App/hocs/withServices";
-
 export default function HigherEVM(OriginalComponent) {
-  const updatedComponent = withServices(({ serviceContainer }) => {
-    const { bridge } = serviceContainer;
-    const { activate, chainId, deactivate, account } = useWeb3React();
+  const updatedComponent = withServices(() => {
+    const { activate, chainId, deactivate } = useWeb3React();
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
-    const WCProvider = useSelector((state) => state.general.WCProvider);
-    const bitKeep = useSelector((state) => state.general.bitKeep);
+
     const testnet = useSelector((state) => state.general.testNet);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -44,16 +43,14 @@ export default function HigherEVM(OriginalComponent) {
     };
 
     const connectHandler = async (wallet) => {
-      // eslint-disable-next-line no-debugger
-
       let connected;
       switch (wallet) {
         case "MetaMask":
-          connected = await connectMetaMask(activate, from?.text, to?.text);
+          connected = await connectMetaMask(activate, from, to);
           if (connected) {
             dispatch(setMetaMask(true));
+            dispatch(setConnectedWallet("MetaMask"));
             if (temporaryFrom) dispatch(setFrom(temporaryFrom));
-
             if (to) {
               if (
                 window.ethereum?.chainId ||
@@ -69,13 +66,19 @@ export default function HigherEVM(OriginalComponent) {
         case "TrustWallet":
           connected = await connectTrustWallet(activate, from.text);
           dispatch(setWalletsModal(false));
-          if (connected && to) navigateToAccountRoute();
+          if (connected && to) {
+            dispatch(setConnectedWallet("TrustWallet"));
+            navigateToAccountRoute();
+          }
           if (temporaryFrom) dispatch(setFrom(temporaryFrom));
           break;
         case "WalletConnect":
           connected = await onWalletConnect(activate, from.text, testnet);
           dispatch(setWalletsModal(false));
-          if (connected && to) navigateToAccountRoute();
+          if (connected && to) {
+            dispatch(setConnectedWallet("WalletConnect"));
+            navigateToAccountRoute();
+          }
           break;
         case "BitKeep":
           deactivate();
@@ -89,11 +92,12 @@ export default function HigherEVM(OriginalComponent) {
         default:
           break;
       }
+
+      dispatch(setWalletsModal(false));
     };
 
     const getStyle = () => {
       // eslint-disable-next-line no-debugger
-      // debugger;
       const evmDeparture = () => {
         if (from && from.type === "EVM") return true;
         else if (temporaryFrom && temporaryFrom.type === "EVM") return true;
@@ -117,20 +121,6 @@ export default function HigherEVM(OriginalComponent) {
           return OFF;
       }
     };
-
-    useEffect(() => {
-      if (account && from) {
-        bridge.getChain(from.nonce).then((chainWrapper) => {
-          const provider = new ethers.providers.Web3Provider(
-            bitKeep
-              ? window.bitkeep?.ethereum
-              : WCProvider?.walletConnectProvider || window.ethereum
-          );
-          const signer = provider.getSigner(account);
-          chainWrapper.setSigner(signer);
-        });
-      }
-    }, [account, from]);
 
     return (
       <OriginalComponent connectWallet={connectHandler} styles={getStyle} />

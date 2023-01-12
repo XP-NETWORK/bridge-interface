@@ -6,6 +6,8 @@ import { Chain as ChainNonce, CHAIN_INFO } from "xp.network";
 import BigNumber from "bignumber.js";
 
 import { ethers, BigNumber as BN } from "ethers";
+import xpchallenge from "./xpchallenge";
+const Xpchallenge = xpchallenge();
 const feeMultiplier = 1.1;
 
 class AbstractChain {
@@ -29,8 +31,9 @@ class AbstractChain {
   }
 
   async setSigner(signer) {
+    console.log(signer, this.nonce);
     try {
-      if (!signer) throw new Error("no signer");
+      //if (!signer) throw new Error("no signer");
       this.signer = signer;
       return this;
     } catch (e) {
@@ -40,7 +43,6 @@ class AbstractChain {
   }
 
   async getNFTs(address) {
-    console.log(this.bridge);
     try {
       return await this.bridge.nftList(this.chain, address);
     } catch (e) {
@@ -69,6 +71,7 @@ class AbstractChain {
             `${tokenId}_${contract?.toLowerCase() ||
               address?.toLowerCase()}_${chainId}`
           ] = true;
+
           return true;
         }
       });
@@ -79,10 +82,17 @@ class AbstractChain {
     }
   }
 
-  preParse(nft) {
+  async preParse(nft) {
+    let uri = nft.uri;
     const contract = nft.native?.contract || nft.collectionIdent;
+
+    if (!uri && this.chain.getTokenURI) {
+      uri = await this.chain.getTokenURI(contract, nft.native?.tokenId);
+    }
+
     return {
       ...nft,
+      uri,
       collectionIdent: contract,
       chainId: nft.native?.chainId,
       tokenId: nft.native?.tokenId,
@@ -182,17 +192,31 @@ class AbstractChain {
     try {
       if (!this.signer)
         throw new Error("No signer for ", this.chainParams.text);
-      console.log(args, "args");
-      const { nft, toChain, receiver, fee, gasLimit, extraFee } = args;
 
-      let { tokenId } = args;
+      const {
+        nft,
+        toChain,
+        receiver,
+        gasLimit,
+        extraFee,
+        discountLeftUsd,
+      } = args;
+
+      let { tokenId, fee } = args;
+
+      if (discountLeftUsd && discountLeftUsd > 0) {
+        const bnFee = new BigNumber(fee);
+        fee = bnFee.minus(bnFee.multipliedBy(0.25));
+      }
+
+      fee = fee.toString(10);
 
       if (!tokenId) {
         tokenId = nft.native.tokenId;
       }
 
       const wrapped = await this.bridge.isWrappedNft(nft, Number(this.nonce));
-      console.log(wrapped, "wrapped");
+
       let mintWith = undefined;
 
       if (!wrapped) {
@@ -211,18 +235,18 @@ class AbstractChain {
         this.signer,
         receiver?.trim(),
       ];
+
       const afterAmountArgs = [fee, mintWith, gasLimit, extraFee];
 
       if (!amount || toChain.rejectSft) {
-        console.log("here");
         const args = [...beforeAmountArgs, ...afterAmountArgs];
+        console.log(args);
         const res = await this.bridge.transferNft(...args);
         console.log(res, "res");
         return res;
       } else {
         const args = [...beforeAmountArgs, BigInt(amount), ...afterAmountArgs];
         console.log(args, "args");
-
         const res = await this.bridge.transferSft(...args);
         console.log(res, "res");
         return res;
@@ -236,6 +260,7 @@ class AbstractChain {
   async preTransfer(nft, fees) {
     if (!this.signer) throw new Error("No signer for ", this.chainParams.text);
     try {
+      console.log(this.signer, nft, fees);
       return await this.chain.preTransfer(this.signer, nft, fees);
     } catch (e) {
       console.log(e, "in preTransfer");
@@ -246,15 +271,16 @@ class AbstractChain {
 
 class EVM extends AbstractChain {
   constructor(params) {
+    if (params.nonce === ChainNonce.VECHAIN) {
+      return new VeChain(params);
+    }
     super(params);
   }
 
   async checkSigner() {
     try {
-      console.log("ds");
       this.signer = undefined;
       await super.checkSigner();
-      console.log("ls");
     } catch (e) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
@@ -285,6 +311,17 @@ class EVM extends AbstractChain {
       throw e;
     }
   }
+
+  setSigner(signer) {
+    super.setSigner(signer);
+    signer && Xpchallenge.connectWallet(signer._address, this.chainParams.name);
+  }
+}
+
+class VeChain extends AbstractChain {
+  constructor(params) {
+    super(params);
+  }
 }
 
 class Elrond extends AbstractChain {
@@ -292,6 +329,55 @@ class Elrond extends AbstractChain {
 
   constructor(params) {
     super(params);
+  }
+
+  async preParse(nft) {
+    if (!nft.native.contract) {
+      nft = {
+        ...nft,
+        native: {
+          ...nft.native,
+          contract: nft.collectionIdent,
+        },
+      };
+    }
+
+    return await super.preParse(nft);
+  }
+
+  async transfer(args) {
+    const {
+      nft: { native },
+    } = args;
+
+    const idFromNative =
+      native?.tokenId || native?.token_id || native?.item_address;
+    let tokenId = native.nonce;
+
+    if (
+      typeof tokenId === "undefined" &&
+      idFromNative.split("-")?.length === 3
+    ) {
+      const hex = idFromNative.split("-").at(2);
+      tokenId = parseInt(hex, 16);
+    }
+
+    const { nft } = args;
+
+    return await super.transfer({
+      ...args,
+      tokenId: tokenId && String(tokenId),
+    });
+  }
+
+  setSigner(signer) {
+    super.setSigner(signer);
+
+    signer &&
+      Xpchallenge.connectWallet(
+        signer.address || signer.account?.address,
+        this.chainParams.name
+      );
   }
 
   async getNFTs(address) {
@@ -344,7 +430,6 @@ class Elrond extends AbstractChain {
 
   async getWegldBalance(account) {
     try {
-      console.log(account);
       const bal = await this.chain.wegldBalance(account);
       return bal;
     } catch (e) {
@@ -357,6 +442,9 @@ class Tron extends AbstractChain {
   constructor(params) {
     super(params);
   }
+  async preTransfer() {
+    return true;
+  }
 }
 
 class Algorand extends AbstractChain {
@@ -367,7 +455,7 @@ class Algorand extends AbstractChain {
   async getClaimables(account) {
     try {
       const x = await this.bridge.claimableAlgorandNfts(account);
-      console.log(x, "x");
+
       return x;
     } catch (e) {
       console.log(e, "e");
@@ -382,12 +470,6 @@ class Tezos extends AbstractChain {
   }
 }
 
-class VeChain extends AbstractChain {
-  constructor(params) {
-    super(params);
-  }
-}
-
 class Cosmos extends AbstractChain {
   constructor(params) {
     super(params);
@@ -396,8 +478,6 @@ class Cosmos extends AbstractChain {
   async getNFTs() {
     return [];
   }
-
- 
 }
 
 class TON extends AbstractChain {
@@ -405,8 +485,8 @@ class TON extends AbstractChain {
     super(params);
   }
 
-  preParse(nft) {
-    nft = super.preParse(nft);
+  async preParse(nft) {
+    nft = await super.preParse(nft);
 
     const contract = nft.native?.collectionAddress || "SingleNFt";
     return {
@@ -416,6 +496,7 @@ class TON extends AbstractChain {
         ...nft.native,
         contract: contract,
         tokenId: nft.native?.address,
+        nftItemAddr: nft.native.address,
       },
     };
   }
@@ -424,6 +505,15 @@ class TON extends AbstractChain {
 class Near extends AbstractChain {
   constructor(params) {
     super(params);
+  }
+
+  async preTransfer(nft, fees, params) {
+    try {
+      return await this.chain.preTransfer(this.signer, nft, fees, params);
+    } catch (e) {
+      console.log(e, "in NEAR preTransfer");
+      throw e;
+    }
   }
 
   async connect(wallet) {
@@ -484,6 +574,74 @@ class Near extends AbstractChain {
   }
 }
 
+class Solana extends AbstractChain {
+  constructor(params) {
+    super(params);
+  }
+  async preTransfer() {
+    return true;
+  }
+
+  async mintNFT(uri) {
+    const mint = await this.chain.mintNft(this.signer, {
+      uri,
+    });
+  }
+  filterNFTs(nfts) {
+    const unique = {};
+    try {
+      const allNFTs = nfts.filter((n) => {
+        const nftMint = n.native.nftMint;
+        if (unique[nftMint]) {
+          return false;
+        } else {
+          unique[nftMint] = true;
+          return true;
+        }
+      });
+
+      return allNFTs;
+    } catch (err) {
+      return [];
+    }
+  }
+}
+
+class APTOS extends AbstractChain {
+  constructor(params) {
+    super(params);
+  }
+  async preTransfer() {
+    return true;
+  }
+
+  async mintNFT(uri) {
+    const mint = await this.chain.mintNft(this.signer, {
+      uri,
+    });
+  }
+
+  filterNFTs(nfts) {
+    const unique = {};
+    try {
+      const allNFTs = nfts.filter((n) => {
+        const collection_creator = n.native.collection_creator;
+        const token_name = n.native.token_name;
+        if (unique[`${collection_creator}_${token_name}`]) {
+          return false;
+        } else {
+          unique[`${collection_creator}_${token_name}`] = true;
+          return true;
+        }
+      });
+
+      return allNFTs;
+    } catch (err) {
+      return [];
+    }
+  }
+}
+
 export default {
   EVM,
   Elrond,
@@ -494,4 +652,6 @@ export default {
   Cosmos,
   Near,
   TON,
+  Solana,
+  APTOS,
 };

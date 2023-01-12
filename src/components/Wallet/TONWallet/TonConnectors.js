@@ -10,7 +10,6 @@ var connector;
 
 export const connectTonKeeper = async (userId) => {
   // eslint-disable-next-line no-debugger
-  // debugger;
   const api = axios.create({
     baseURL: "https://support-bot-xp.herokuapp.com",
   });
@@ -62,7 +61,6 @@ export const connectTonHub = async (isMobile, testnet) => {
 
 export const awaitTonHubReady = async (tonHubSession) => {
   // eslint-disable-next-line no-debugger
-  // debugger;
   //const { tonHubSession } = store.getState().tonStore;
   const newSession = await connector.awaitSessionReady(
     tonHubSession.id,
