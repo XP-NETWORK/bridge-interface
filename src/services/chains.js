@@ -221,7 +221,7 @@ class AbstractChain {
 
       if (!wrapped) {
         mintWith = await this.bridge.getVerifiedContract(
-          nft.native.contract,
+          nft.native.contract || nft.collectionIdent,
           Number(toChain.nonce),
           Number(this.nonce),
           tokenId //tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
@@ -331,7 +331,7 @@ class Elrond extends AbstractChain {
     super(params);
   }
 
-  async preParse(nft) {
+  /*async preParse(nft) {
     if (!nft.native.contract) {
       nft = {
         ...nft,
@@ -343,7 +343,7 @@ class Elrond extends AbstractChain {
     }
 
     return await super.preParse(nft);
-  }
+  }*/
 
   async transfer(args) {
     const {
