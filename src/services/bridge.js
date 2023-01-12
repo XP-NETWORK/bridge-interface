@@ -79,9 +79,9 @@ class Bridge {
       }
 
       if (
+        window.location.pathname.includes(BridgeModes.Staging) &&
         isWNFT &&
-        wnft.some((url) => nft.uri.includes(url)) &&
-        window.location.pathname.includes(BridgeModes.Staging)
+        wnft.some((url) => nft.uri.includes(url))
       ) {
         return false;
       }
