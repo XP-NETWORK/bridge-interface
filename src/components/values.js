@@ -212,7 +212,7 @@ export const chains = [
         image: { avatar: true, src: Ton },
         maintenance: false,
         testNet: false,
-        mainnet: biz,
+        mainnet: true,
         newChain: biz,
     },
     {
@@ -429,7 +429,7 @@ export const chains = [
         tnChainId: 512512,
         image: { avatar: true, src: Caduceus },
         testNet: true,
-        mainnet: biz,
+        mainnet: true,
         newChain: true,
         coming: false,
     },
