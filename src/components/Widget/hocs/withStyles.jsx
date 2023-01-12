@@ -264,7 +264,7 @@ export const withStyles = (Wrapped) =>
             .modal-title, .modalSelectOptionsText, .selChain, .seleDestiSele, .yourNft, .yourNft span, .sendNftTit, .nfts-item__name, .destination__address input, .destination__address input::placeholder,
             .desChain span, .ComentBox p, .selectedNft span, .approveBtn, .nftFees span, .nftSelecItem, .wllListItem, .nftListed, .chain-switch, .wrongNFT, .opt-in__text, .transferred-nft-hashes span,
              .desAddress input, .nftWornTop h3, .nftWornTop p, .nftInfBox p, .about__text, .ComentBox p, .nonftAcc, .yourNft__title, .destination__title, .nftListed__info .name,
-              .nonftAcc  h2,  .transfer-loader__title, .txn-hash, .sucesList span, .selected-nfts__header, .approval__header, .fees__title, .clip p,
+              .nonftAcc  h2,  .transfer-loader__title, .transfer-loader__text, .transfer-loader__sub, .txn-hash, .sucesList span, .selected-nfts__header, .approval__header, .fees__title, .clip p,
               .fees span, .listed-view__not-whitelisted__button, .success-info-box, .accountTit, .accountBox p, .mobile-destination__address input,
               .info-item-chain, .chain-select__box, .desktop__header span, .account-modal__account,  .navbar-connect, 
               .import-nft__form, .import-nft__form form, .import-nft__form input[type="text"], .mobile-destination__address input::placeholder {
