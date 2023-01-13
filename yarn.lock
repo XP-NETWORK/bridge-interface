@@ -2005,9 +2005,9 @@
     "@ethersproject/strings" "^5.7.0"
 
 "@grpc/grpc-js@^1.5.3":
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.8.3.tgz#1eceeeda8d3af6a3cf9f1b74032bbc411af9f3eb"
-  integrity sha512-1oO40SPA9nyBEsSMg0Mq7aMxQMVH009NJLG4HeMPQ7kdDGWuC5fI6dmEjaEJzUbtmC1S2leLaDRMB4ByZ1cFew==
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.8.4.tgz#316674e8905e2dd310d8aa60331e05b32584e6ad"
+  integrity sha512-oaETBotls7FTBpySg5dhyUCyXSxSeCMmkBBXHXG1iw57MiNoB6D7VRhkrXYbwyHM3Q3Afjp4KlsBX0Zb+ELZXw==
   dependencies:
     "@grpc/proto-loader" "^0.7.0"
     "@types/node" ">=12.12.47"
@@ -2159,7 +2159,19 @@
     "@types/bn.js" "^4.11.3"
     bn.js "^4.11.8"
 
-"@hashgraph/cryptography@^1.1.0-beta.5", "@hashgraph/cryptography@^1.4.1":
+"@hashgraph/cryptography@^1.1.0-beta.5":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@hashgraph/cryptography/-/cryptography-1.4.2.tgz#adb3be1bf13b65247e8aa50b8134fc11a9897ae1"
+  integrity sha512-9p9wZvB7JQ7sgcllVHOQb8qxVvkYVfH4TjDsNiy/V38WOXNdf9L8CMd/A3zFP+eXm9jtrybqxmtLZHVO2XZ2lA==
+  dependencies:
+    bignumber.js "^9.1.0"
+    crypto-js "^4.1.1"
+    elliptic "^6.5.4"
+    js-base64 "^3.7.2"
+    tweetnacl "^1.0.3"
+    utf8 "^3.0.0"
+
+"@hashgraph/cryptography@^1.4.1":
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@hashgraph/cryptography/-/cryptography-1.4.1.tgz#7dcba4bc867037d2f192c419ceb48e3725e09e95"
   integrity sha512-Qx7fl58Upyf1C4Xdqo2DdMaELYAni3RpAr6fVux3tpGUwp0Wo+zaWseW7k2Klg+FPlmjOjL8XBCXkOr1AbHYWQ==
@@ -14211,7 +14223,14 @@ node-addon-api@^4.2.0, node-addon-api@^4.3.0:
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-4.3.0.tgz#52a1a0b475193e0928e98e0426a0d1254782b77f"
   integrity sha512-73sE9+3UaLYYFmDsFZnqCInzPyh3MqIwZO9cw58yIqAZhONrrabrYyYe3TuIqtIiOuTXVhsGau8hcrhhwSsDIQ==
 
-node-fetch@2, node-fetch@2.6.7, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.7:
+node-fetch@2, node-fetch@^2.6.1, node-fetch@^2.6.7:
+  version "2.6.8"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.8.tgz#a68d30b162bc1d8fd71a367e81b997e1f4d4937e"
+  integrity sha512-RZ6dBYuj8dRSfxpUSu+NsdF1dpPpluJxwOp+6IoDp/sH2QNDSvurYsAa+F1WxY2RjA1iP93xhcsUoYbF2XBqVg==
+  dependencies:
+    whatwg-url "^5.0.0"
+
+node-fetch@2.6.7, node-fetch@^2.6.0:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
@@ -14352,10 +14371,15 @@ object-hash@^3.0.0:
   resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-3.0.0.tgz#73f97f753e7baffc0e2cc9d6e079079744ac82e9"
   integrity sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==
 
-object-inspect@^1.12.2, object-inspect@^1.9.0:
+object-inspect@^1.12.2:
   version "1.12.2"
   resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.12.2.tgz#c0641f26394532f28ab8d796ab954e43c009a8ea"
   integrity sha512-z+cPxW0QGUp0mcqcsgQyLVRDoXFQbXOwBaqyF7VIgI4TWNQsDHrBpUQslRmIfAoYWdYzs6UlKJtB2XJpTaNSpQ==
+
+object-inspect@^1.9.0:
+  version "1.12.3"
+  resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.12.3.tgz#ba62dffd67ee256c8c086dfae69e016cd1f198b9"
+  integrity sha512-geUvdk7c+eizMNUDkRpW1wJwgfOiOeHbxBR/hLXK1aT6zmVSO0jsQcs7fj6MGw89jC/cjGfLcNOrtMYtGqm81g==
 
 object-is@^1.0.1, object-is@^1.1.5:
   version "1.1.5"
