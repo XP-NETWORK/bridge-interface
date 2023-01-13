@@ -331,20 +331,6 @@ class Elrond extends AbstractChain {
     super(params);
   }
 
-  /*async preParse(nft) {
-    if (!nft.native.contract) {
-      nft = {
-        ...nft,
-        native: {
-          ...nft.native,
-          contract: nft.collectionIdent,
-        },
-      };
-    }
-
-    return await super.preParse(nft);
-  }*/
-
   async transfer(args) {
     const {
       nft: { native },
@@ -361,8 +347,6 @@ class Elrond extends AbstractChain {
       const hex = idFromNative.split("-").at(2);
       tokenId = parseInt(hex, 16);
     }
-
-    const { nft } = args;
 
     return await super.transfer({
       ...args,

@@ -9,7 +9,7 @@ export const WhitelistButton = ({ whitelist, isNFTWhitelisted }) => {
 
   // const show = text.match(/Polygon|BSC|Ethereum/);
 
-  const show = biz && text.match(/Polygon|BSC|Ethereum|Phantom|Avalanche/)
+  const show = biz && text.match(/Polygon|BSC|Ethereum|Fantom|Avalanche/);
 
   /*const show = () => {
     let networks;
@@ -26,10 +26,7 @@ export const WhitelistButton = ({ whitelist, isNFTWhitelisted }) => {
   };*/
 
   return !isNFTWhitelisted && show ? (
-    <div
-      className="whitelist-btn"
-      onClick={whitelist}
-    >
+    <div className="whitelist-btn" onClick={whitelist}>
       Whitelist
     </div>
   ) : null;
