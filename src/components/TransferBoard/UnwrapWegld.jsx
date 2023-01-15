@@ -4,25 +4,26 @@ import {
   setUnwrappedEGold,
   setWrappedEGold,
 } from "../../store/reducers/generalSlice";
-import { chainsConfig } from "../values";
-import { ExtensionProvider } from "@elrondnetwork/erdjs";
 
-export default function UnwrapWegld() {
+import { withServices } from "../App/hocs/withServices";
+import { Chain } from "xp.network";
+
+export default withServices(function UnwrapWegld({ serviceContainer }) {
+  const { bridge } = serviceContainer;
   const wrappedEGold = useSelector((state) => state.general.wrappedEGold);
-  const factory = useSelector((state) => state.general.factory);
-  const from = useSelector((state) => state.general.from);
-  const maiarProvider = useSelector((state) => state.general.maiarProvider);
+
   const [unwrapping, setUnwrapping] = useState("");
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const [dots, setDots] = useState("");
 
   const dispatch = useDispatch();
+
   const unwrapWegld = async () => {
     setUnwrapping(true);
+    const chainWrapper = await bridge.getChain(Chain.ELROND);
+
     try {
-      const signer = maiarProvider || ExtensionProvider.getInstance();
-      const elronfFactory = await factory.inner(chainsConfig[from.text].Chain);
-      const unwrapped = await elronfFactory.unwrapWegld(signer, wrappedEGold);
+      const unwrapped = await chainWrapper.unwrapWegld(wrappedEGold);
       if (unwrapped) {
         dispatch(setUnwrappedEGold(wrappedEGold));
         dispatch(setWrappedEGold(""));
@@ -73,4 +74,4 @@ export default function UnwrapWegld() {
   ) : (
     ""
   );
-}
+});

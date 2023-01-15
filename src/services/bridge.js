@@ -88,7 +88,6 @@ class Bridge {
 
       if (isWNFT || !chain.isNftWhitelisted) return true;
       return await chainWrapper.chain.isNftWhitelisted(nft);
-      //console.log(x, nft.native.name);
     } catch (e) {
       console.log(e, "in isWhitelisted");
       return false;
