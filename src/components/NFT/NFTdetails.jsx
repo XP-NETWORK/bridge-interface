@@ -8,7 +8,7 @@ import zoomIn from "../../assets/img/icons/zoomInWhite.png";
 import { ReactComponent as CloseComp } from "../../assets/img/icons/close.svg";
 
 import { ReactComponent as INFComp } from "../../assets/img/icons/Inf.svg";
-import { isValidHttpUrl } from "../../wallet/helpers";
+
 import { chains } from "../values";
 import PropTypes from "prop-types";
 
@@ -99,9 +99,7 @@ function NFTdetails({ nftInf, details }) {
                 hideZoom={true}
               />
 
-              {(image || animation_url) &&
-              (uri || image) &&
-              isValidHttpUrl(image) ? (
+              {(image || animation_url) && (uri || image) && true ? (
                 animation_url ? (
                   <video
                     controls={false}
