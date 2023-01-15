@@ -33,7 +33,6 @@ import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg
 import { Modal } from "react-bootstrap";
 import icon from "../../../assets/img/icons/book.svg";
 import { useWeb3React } from "@web3-react/core";
-// import { useLocation } from "react-router-dom";
 
 export default function ChangeWalletModal() {
   // const location = useLocation();

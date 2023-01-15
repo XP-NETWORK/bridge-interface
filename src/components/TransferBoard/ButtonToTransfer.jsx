@@ -108,7 +108,7 @@ export default compose(
         dispatch(setTxnHash({ txn: "failed", nft }));
       } else if (result) {
         //TODO fromChain.handleResult(...);
-        dispatch(setTxnHash({ txn: result, nft }));
+        dispatch(setTxnHash({ txn: fromChain.handlerResult(result), nft }));
         setTxForWidget({
           result,
           fromNonce: _from.nonce,

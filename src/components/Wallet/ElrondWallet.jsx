@@ -24,7 +24,8 @@ import {
   ExtensionProvider,
 } from "@elrondnetwork/erdjs";
 
-import { chains } from "../../components/values";
+import { chains, getChainObject } from "../../components/values";
+import { getRightPath } from "../../wallet/helpers";
 
 function ElrondWallet({ wallet, close, serviceContainer }) {
   const { bridge } = serviceContainer;
@@ -32,11 +33,11 @@ function ElrondWallet({ wallet, close, serviceContainer }) {
   const from = useSelector((state) => state.general.from);
   const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
   const to = useSelector((state) => state.general.to);
-  const testnet = useSelector((state) => state.general.testNet);
+  // const testnet = useSelector((state) => state.general.testNet);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const query = window.location.search || "";
+  // const query = window.location.search || "";
 
   const handleConnect = async (wallet) => {
     try {
@@ -113,13 +114,16 @@ function ElrondWallet({ wallet, close, serviceContainer }) {
       bridge.setCurrentType(chainWrapper);
       close();
       if (to) navigateToAccountRoute();
+      if (!from) {
+        dispatch(setFrom(getChainObject(Chain.ELROND)));
+      }
     } catch (e) {
       dispatch(setError(e));
     }
   };
 
   const navigateToAccountRoute = () => {
-    navigate(testnet ? `/testnet/account${query}` : `/account${query}`);
+    navigate(getRightPath());
   };
 
   const getStyle = () => {

@@ -232,7 +232,7 @@ class AbstractChain {
 
       if (!wrapped) {
         mintWith = await this.bridge.getVerifiedContract(
-          nft.native.contract,
+          nft.native.contract || nft.collectionIdent,
           Number(toChain.nonce),
           Number(this.nonce),
           tokenId //tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
@@ -277,6 +277,10 @@ class AbstractChain {
       console.log(e, "in preTransfer");
       throw e;
     }
+  }
+
+  handlerResult(res) {
+    return res;
   }
 }
 
@@ -342,18 +346,8 @@ class Elrond extends AbstractChain {
     super(params);
   }
 
-  async preParse(nft) {
-    if (!nft.native.contract) {
-      nft = {
-        ...nft,
-        native: {
-          ...nft.native,
-          contract: nft.collectionIdent,
-        },
-      };
-    }
-
-    return await super.preParse(nft);
+  handlerResult(res) {
+    return ethers.utils.hexlify(res.hash?.hash)?.replace(/^0x/, "");
   }
 
   async transfer(args) {
@@ -372,8 +366,6 @@ class Elrond extends AbstractChain {
       const hex = idFromNative.split("-").at(2);
       tokenId = parseInt(hex, 16);
     }
-
-    const { nft } = args;
 
     return await super.transfer({
       ...args,
@@ -416,7 +408,9 @@ class Elrond extends AbstractChain {
     }
 
     const tokenId =
-      contract + "-" + ("0000" + Number(nonce).toString(16)).slice(-4);
+      contract +
+      "-" +
+      (nonce > 9 ? "0000" : "0" + Number(nonce).toString(16)).slice(-4);
 
     return {
       contract,
@@ -442,6 +436,15 @@ class Elrond extends AbstractChain {
       return bal;
     } catch (e) {
       return 0;
+    }
+  }
+
+  async unwrapWegld(wrappedEGold) {
+    try {
+      return await this.chain.unwrapWegld(this.signer, wrappedEGold);
+    } catch (e) {
+      console.log(e, "in unwrapWegld");
+      return undefined;
     }
   }
 }

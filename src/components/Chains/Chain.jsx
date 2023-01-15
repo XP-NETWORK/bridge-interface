@@ -20,6 +20,7 @@ export default function Chain(props) {
     updated,
     nonce,
   } = props;
+
   const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
   const testnet = useSelector((state) => state.general.testNet);
   const from = useSelector((state) => state.general.from);
@@ -71,7 +72,7 @@ export default function Chain(props) {
     >
       <img className="modalSelectOptionsImage" src={image.src} alt={text} />
       <div className="modalSelectOptionsText">
-        {text === "xDai" ? "Gnosis" : text}
+        {text}
         <div className="chain--identifier">
           {chainStatus === undefined && !coming && !maintenance ? (
             <Status status={"connecting"} />
