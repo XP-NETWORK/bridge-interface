@@ -290,7 +290,7 @@ export const chains = [
     maintenance: false,
     testNet: false,
     mainnet: true,
-    newChain: true,
+    newChain: false,
   },
   {
     type: "EVM",
@@ -305,7 +305,7 @@ export const chains = [
     maintenance: false,
     testNet: true,
     mainnet: true,
-    newChain: true,
+    newChain: false,
   },
   {
     type: "EVM",
@@ -320,7 +320,7 @@ export const chains = [
     maintenance: false,
     testNet: true,
     mainnet: true,
-    newChain: true,
+    newChain: false,
   },
   {
     type: "EVM",
@@ -380,7 +380,7 @@ export const chains = [
     maintenance: false,
     mainnet: true,
     testNet: false,
-    newChain: true,
+    newChain: false,
   },
   {
     type: "Cosmos",
