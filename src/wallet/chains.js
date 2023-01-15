@@ -251,7 +251,7 @@ export const allchains = [
     name: "xDAI Chain",
     chain: "XDAI",
     network: "mainnet",
-   rpcUrls: ["https://gnosis.xp.network/node"],
+    rpcUrls: ["https://gnosis.xp.network/node"],
     faucets: [
       "https://free-online-app.com/faucet-for-eth-evm-chains/",
       "https://xdai-app.herokuapp.com/faucet",
