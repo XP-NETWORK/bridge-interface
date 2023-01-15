@@ -347,6 +347,9 @@ class Elrond extends AbstractChain {
   }
 
   handlerResult(res) {
+    if (Array.isArray(res)) {
+      res = res[0]
+    }
     return ethers.utils.hexlify(res.hash?.hash)?.replace(/^0x/, "");
   }
 

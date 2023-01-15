@@ -16,18 +16,13 @@ import { withServices } from "../App/hocs/withServices";
 
 export default withServices(function Refresh({ serviceContainer }) {
   const {
-    algorandAccount,
     from,
     nfts,
-    tronWallet,
-    elrondAccount,
-    tezosAccount,
+
     account,
     bigLoader,
     secretAccount,
     secretLoggedIn,
-    hederaAccount,
-    tonAccount,
   } = useSelector((state) => state.general);
   const dispatch = useDispatch();
 
@@ -35,20 +30,7 @@ export default withServices(function Refresh({ serviceContainer }) {
 
   const refresh = async () => {
     if (!bigLoader || !nfts) {
-      let w;
-      if (
-        from.type === "EVM" ||
-        from.type === "VeChain" ||
-        from.type === "Skale"
-      )
-        w = account;
-      else if (from.type === "Tezos") w = tezosAccount;
-      else if (from.type === "Algorand") w = algorandAccount;
-      else if (from.type === "Elrond") w = elrondAccount;
-      else if (from.type === "Tron") w = tronWallet;
-      else if (from.type === "Hedera") w = hederaAccount;
-      else if (from.type === "TON") w = tonAccount;
-      else if (from.type === "NEAR") w = account;
+      let w = account;
 
       const fromChain = await bridge.getChain(from.nonce);
       dispatch(setBigLoader(true));
