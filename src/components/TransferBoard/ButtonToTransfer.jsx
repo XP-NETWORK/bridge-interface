@@ -100,8 +100,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
       if (txnHashArr[0] && !result) {
         dispatch(setTxnHash({ txn: "failed", nft }));
       } else if (result) {
-        //TODO fromChain.handleResult(...);
-        dispatch(setTxnHash({ txn: result, nft }));
+        dispatch(setTxnHash({ txn: fromChain.handlerResult(result), nft }));
       }
     } catch (e) {
       console.log(e, "eee");

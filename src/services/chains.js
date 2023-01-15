@@ -267,6 +267,10 @@ class AbstractChain {
       throw e;
     }
   }
+
+  handlerResult(res) {
+    return res;
+  }
 }
 
 class EVM extends AbstractChain {
@@ -331,19 +335,9 @@ class Elrond extends AbstractChain {
     super(params);
   }
 
-  /*async preParse(nft) {
-    if (!nft.native.contract) {
-      nft = {
-        ...nft,
-        native: {
-          ...nft.native,
-          contract: nft.collectionIdent,
-        },
-      };
-    }
-
-    return await super.preParse(nft);
-  }*/
+  handlerResult(res) {
+    return ethers.utils.hexlify(res.hash?.hash)?.replace(/^0x/, "");
+  }
 
   async transfer(args) {
     const {
@@ -406,7 +400,9 @@ class Elrond extends AbstractChain {
     }
 
     const tokenId =
-      contract + "-" + ("0000" + Number(nonce).toString(16)).slice(-4);
+      contract +
+      "-" +
+      (nonce > 9 ? "0000" : "0" + Number(nonce).toString(16)).slice(-4);
 
     return {
       contract,
@@ -432,6 +428,15 @@ class Elrond extends AbstractChain {
       return bal;
     } catch (e) {
       return 0;
+    }
+  }
+
+  async unwrapWegld(wrappedEGold) {
+    try {
+      return await this.chain.unwrapWegld(this.signer, wrappedEGold);
+    } catch (e) {
+      console.log(e, "in unwrapWegld");
+      return undefined;
     }
   }
 }
