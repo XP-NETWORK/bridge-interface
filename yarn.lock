@@ -19772,13 +19772,13 @@ xmlhttprequest@1.8.0:
 
 "xpnet-web3-contracts@git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#dist-erc1155":
   version "0.1.0"
-  uid aa9473ea3b0f748bba54f5755abcfd17e3548237
   resolved "git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#aa9473ea3b0f748bba54f5755abcfd17e3548237"
   dependencies:
     ethers "^5.5.4"
 
 "xpnet-web3-contracts@git+https://github.com/xp-network/XP.network-HECO-Migration#aa9473ea3b0f748bba54f5755abcfd17e3548237":
   version "0.1.0"
+  uid aa9473ea3b0f748bba54f5755abcfd17e3548237
   resolved "git+https://github.com/xp-network/XP.network-HECO-Migration#aa9473ea3b0f748bba54f5755abcfd17e3548237"
   dependencies:
     ethers "^5.5.4"
