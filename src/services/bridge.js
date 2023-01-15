@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import {
-  Chain as ChainNonce,
   CHAIN_INFO,
   AppConfigs,
   ChainFactory,
@@ -87,7 +86,9 @@ class Bridge {
       }
 
       if (isWNFT || !chain.isNftWhitelisted) return true;
-      return await chainWrapper.chain.isNftWhitelisted(nft);
+      const x = await chainWrapper.chain.isNftWhitelisted(nft);
+      console.log(x, nft.native.name);
+      return x;
     } catch (e) {
       console.log(e, "in isWhitelisted");
       return false;
