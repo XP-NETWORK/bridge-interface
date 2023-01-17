@@ -258,6 +258,7 @@ export const connectAlgoSigner = async (testnet) => {
             });
             // store.dispatch(setAlgoSigner(true));
             // store.dispatch(setAlgorandAccount(address));
+            console.log({ algo });
             const address = algo[0].address;
             const signer = {
                 address: algo[0],
