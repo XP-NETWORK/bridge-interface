@@ -8,6 +8,11 @@ export const getAddEthereumChain = () => {
 
 export const allchains = [
   {
+    chainName: "Arbitrum Goerli Testnet",
+    rpcUrls: ["https://goerli-rollup.arbitrum.io/rpc"],
+    chainId: 421613,
+  },
+  {
     chainName: "Moonbeam Testnet",
     rpcUrls: ["https://rpc.api.moonbase.moonbeam.network"],
     chainId: 1284,
@@ -24,7 +29,7 @@ export const allchains = [
   },
   {
     chainName: "OKC",
-    rpcUrls: ["https://exchainrpc.okex.org", "wss://exchainws.okex.org:8443"],
+    rpcUrls: ["https://exchainrpc.okex.org, wss://exchainws.okex.org:8443"],
     chainId: 66,
     nativeCurrency: {
       name: "OKC",
@@ -251,7 +256,15 @@ export const allchains = [
     name: "xDAI Chain",
     chain: "XDAI",
     network: "mainnet",
-    rpcUrls: ["https://gnosis.xp.network/node"],
+    rpcUrls: [
+      "https://rpc.xdaichain.com",
+      "https://xdai.poanetwork.dev",
+      "wss://rpc.xdaichain.com/wss",
+      "wss://xdai.poanetwork.dev/wss",
+      "http://xdai.poanetwork.dev",
+      "https://dai.poa.network",
+      "ws://xdai.poanetwork.dev:8546",
+    ],
     faucets: [
       "https://free-online-app.com/faucet-for-eth-evm-chains/",
       "https://xdai-app.herokuapp.com/faucet",
