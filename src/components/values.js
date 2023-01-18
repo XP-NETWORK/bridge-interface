@@ -36,7 +36,10 @@ export const ELROND = "Elrond";
 export const TEZOS = "TEZOS";
 
 export const stagingWNFT = "https://staging-nft.xp.network";
-export const wnft = ["wnfts.xp.network", "nft.xp.network"];
+export const wnft = ["https://wnfts.xp.network", "https://nft.xp.network"];
+
+export const wnftPattern =
+  "(wnfts.xp.network|nft.xp.network|staging-nft.xp.network)";
 
 export const biz =
   window.location.hostname.includes("localhost") ||
@@ -44,10 +47,6 @@ export const biz =
   window.location.hostname.includes("development") ||
   window.location.hostname.includes("temporary") ||
   window.location.hostname.includes("10.0.0");
-
-/*export const bMode =  window.location.hostname.includes("staging") 
-export const devMode =   window.location.hostname.includes("development") || window.location.hostname.includes("temporary") ||   window.location.hostname.includes("10.0.0");
-export const full = */
 
 export const BridgeModes = {
   Staging: "staging",
@@ -148,7 +147,7 @@ export const chains = [
     order: 16,
     image: { avatar: true, src: Fantom },
     maintenance: false,
-    testNet: false,
+    testNet: true,
     mainnet: true,
     newChain: false,
   },

@@ -10,7 +10,13 @@ import {
 import ChainInterface from "./chains";
 
 import axios from "axios";
-import { BridgeModes, chains, stagingWNFT, wnft } from "../components/values";
+import {
+  BridgeModes,
+  chains,
+  stagingWNFT,
+  wnft,
+  wnftPattern,
+} from "../components/values";
 
 class Bridge {
   chains = {};
@@ -69,6 +75,10 @@ class Bridge {
 
       const isWNFT = this.isWrapped(nft.uri);
 
+      if (chainWrapper.noWhiteListing) {
+        return true;
+      }
+
       if (
         isWNFT &&
         nft.uri.includes(stagingWNFT) &&
@@ -86,9 +96,9 @@ class Bridge {
       }
 
       if (isWNFT || !chain.isNftWhitelisted) return true;
-      const x = await chainWrapper.chain.isNftWhitelisted(nft);
-      console.log(x, nft.native.name);
-      return x;
+      const wl = await chainWrapper.chain.isNftWhitelisted(nft);
+
+      return wl;
     } catch (e) {
       console.log(e, "in isWhitelisted");
       return false;
@@ -151,15 +161,7 @@ class Bridge {
   }
 
   isWrapped(uri) {
-    /* if ([...wnft, stagingWNFT].some((url) => uri.includes(url))) {
-      return true;
-    }
-
-    return false;*/
-
-    return /(wnfts\.xp\.network|nft\.xp\.network|staging-nft\.xp\.network)/.test(
-      uri
-    );
+    return new RegExp(wnftPattern).test(uri);
   }
 
   async unwrap(nft) {

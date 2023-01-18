@@ -167,7 +167,6 @@ export default function NFTcard({
       const interval = setInterval(
         () =>
           bridgeWrapper.isWhitelisted(from.nonce, nft).then((result) => {
-            console.log(result, "wl-result");
             if (result) {
               dispatch(setTransferLoaderModal(false));
               dispatch(
