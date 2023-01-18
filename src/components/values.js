@@ -30,6 +30,7 @@ import Aptos from "../assets/img/chain/aptos.svg";
 import InternetComputer from "../assets/img/chain/InternetComputer.svg";
 import near from "../assets/img/wallet/NearWallet.svg";
 import okx from "../assets/img/chain/okx.svg";
+import arbitrum from "../assets/img/chain/arbitrum.svg";
 
 export const EVM = "EVM";
 export const ELROND = "Elrond";
@@ -488,6 +489,21 @@ export const chains = [
     newChain: true,
     chainId: 66,
     tnChainId: 65,
+  },
+  {
+    type: "EVM",
+    key: "Arbitrum",
+    text: "Arbitrum",
+    value: "Arbitrum",
+    nonce: 0x25,
+    order: -1,
+    image: { avatar: true, src: arbitrum },
+    testNet: true,
+    mainnet: false,
+    coming: false,
+    newChain: true,
+    chainId: 42161,
+    tnChainId: 421613,
   },
 ];
 
