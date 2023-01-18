@@ -140,18 +140,8 @@ class AbstractChain {
     async balance(account) {
         try {
             const res = await this.chain.balance(account);
-            console.log(
-                "🚀 ~ file: chains.js:143 ~ AbstractChain ~ balance ~ res",
-                res
-            );
             const decimals = CHAIN_INFO.get(this.nonce)?.decimals;
-            console.log(
-                "🚀 ~ file: chains.js:144 ~ AbstractChain ~ balance ~ decimals",
-                decimals
-            );
-            const divided = res.dividedBy(decimals).toNumber();
-
-            return divided;
+            return res.dividedBy(decimals).toNumber();
         } catch (e) {
             console.log(e, "error in balance");
         }
@@ -357,6 +347,9 @@ class Elrond extends AbstractChain {
     }
 
     handlerResult(res) {
+        if (Array.isArray(res)) {
+            res = res[0];
+        }
         return ethers.utils.hexlify(res.hash?.hash)?.replace(/^0x/, "");
     }
 
@@ -506,6 +499,8 @@ class Cosmos extends AbstractChain {
 }
 
 class TON extends AbstractChain {
+    noWhiteListing = true;
+
     constructor(params) {
         super(params);
     }

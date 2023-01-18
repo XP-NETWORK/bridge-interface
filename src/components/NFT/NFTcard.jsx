@@ -168,8 +168,8 @@ export default function NFTcard({
 
     const onClickWhiteListButton = async () => {
         // eslint-disable-next-line no-debugger
-        // debugger;
-        +dispatch(setTransferLoaderModal(true));
+
+        dispatch(setTransferLoaderModal(true));
         try {
             await bridgeWrapper.bridge.whitelistEVM(
                 from.nonce,
@@ -181,7 +181,6 @@ export default function NFTcard({
                     bridgeWrapper
                         .isWhitelisted(from.nonce, nft)
                         .then((result) => {
-                            console.log(result, "wl-result");
                             if (result) {
                                 dispatch(setTransferLoaderModal(false));
                                 dispatch(
