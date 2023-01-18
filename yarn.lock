@@ -9442,9 +9442,9 @@ engine.io-client@~6.2.3:
     xmlhttprequest-ssl "~2.0.0"
 
 engine.io-parser@~5.0.3:
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/engine.io-parser/-/engine.io-parser-5.0.5.tgz#c6fa52e57d8d2dc68b24754348f779aa6e44f886"
-  integrity sha512-mjEyaa4zhuuRhaSLOdjEb57X0XPP9JEsnXI4E+ivhwT0GgzUogARx4MqoY1jQyB+4Bkz3BUOmzL7t9RMKmlG3g==
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/engine.io-parser/-/engine.io-parser-5.0.6.tgz#7811244af173e157295dec9b2718dfe42a64ef45"
+  integrity sha512-tjuoZDMAdEhVnSFleYPCtdL2GXwVTGtNjoeJd9IhIG3C1xs9uwxqRNEu5WpnDZCaozwVlK/nuQhpodhXSIMaxw==
 
 enhanced-resolve@^5.10.0:
   version "5.12.0"
@@ -13889,9 +13889,9 @@ mkdirp-promise@^5.0.1:
     mkdirp "*"
 
 mkdirp@*:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-2.0.0.tgz#1460f186644abf3b751e74f5ee82f47d191b586d"
-  integrity sha512-M9ecBPkCu6jZ+H19zruhjw/JB97qqVhyi1H2Lxxo2XAoIMdpHKQ8MfQiMzXk9SH/oJXIbM3oSAfLB8qSWJdCLA==
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-2.1.2.tgz#51524af79237f3cd1345d3b9eec2e0458dcf520c"
+  integrity sha512-12UORspdR5q37RhJO1XasFrqNX3FbIbdtvNP2uHJJx6mhEXdNDaaCiXLiLGrqaKX1n6WvafTIIndZV2pJayNsg==
 
 mkdirp@^0.5.5, mkdirp@~0.5.1:
   version "0.5.6"
@@ -16886,9 +16886,9 @@ secretjs@=1.4.5:
     secure-random "1.1.2"
 
 secretjs@^1.4.5:
-  version "1.6.8"
-  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.6.8.tgz#95a2b8a58ddc91122687de2bd34ef0349181d584"
-  integrity sha512-WaSJSWWbJ3rHGdA+ONU50K0pOULej5mUXXWGcIcKwWTxLA3sV81ULMMcJlPVW3AheAPw24lCKX3lJ67xdID7fA==
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.6.9.tgz#c03fe6541d1c8c716f1c93f1c6a9bbecd99f6f31"
+  integrity sha512-BJKgu0CZ7n0lfUObmTkjWHCxEcph3tp7DKzA+CwfGTQ5AMTsFKZoXhSoE/mJCd8grc8lDofUSENAuQGkHR+6sg==
   dependencies:
     "@cosmjs/encoding" "0.27.1"
     "@cosmjs/math" "0.27.1"
@@ -19730,7 +19730,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#feat/whitelist":
   version "4.0.2"
-  resolved "git+https://github.com/xp-network/xpjs#3d744e9006bfd5cc5633e82d0477d4f092939cd8"
+  resolved "git+https://github.com/xp-network/xpjs#63ea6d11693b05e3dd12169f3cf4d4725787a175"
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"
