@@ -278,6 +278,7 @@ class EVM extends AbstractChain {
     if (params.nonce === ChainNonce.VECHAIN) {
       return new VeChain(params);
     }
+
     super(params);
   }
 
@@ -337,7 +338,7 @@ class Elrond extends AbstractChain {
 
   handlerResult(res) {
     if (Array.isArray(res)) {
-      res = res[0]
+      res = res[0];
     }
     return ethers.utils.hexlify(res.hash?.hash)?.replace(/^0x/, "");
   }

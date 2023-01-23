@@ -11,6 +11,8 @@ import { getRightPath } from "../../wallet/helpers";
 
 import { withServices } from "../App/hocs/withServices";
 
+import { Chain } from "xp.network";
+
 function CosmosWallet({ wallet, close, serviceContainer }) {
   const { bridge } = serviceContainer;
 
@@ -29,7 +31,7 @@ function CosmosWallet({ wallet, close, serviceContainer }) {
   const onClickHandler = async (wallet) => {
     const [signer, chainWrapper] = await Promise.all([
       connectKeplr(testnet, chainsConfig.Secret, wallet, isMobile),
-      bridge.getChain(from.nonce),
+      bridge.getChain(Chain.SECRET),
     ]);
 
     if (signer) {

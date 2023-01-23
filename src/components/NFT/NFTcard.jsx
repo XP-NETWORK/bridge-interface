@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useDispatch } from "react-redux";
 import {
-    setSelectedNFTList,
-    removeFromSelectedNFTList,
-    setTransferLoaderModal,
-    setWhiteListedCollection,
+  setSelectedNFTList,
+  removeFromSelectedNFTList,
+  setTransferLoaderModal,
+  setWhiteListedCollection,
 } from "../../store/reducers/generalSlice";
 import NFTdetails from "./NFTdetails";
 import { useSelector } from "react-redux";
@@ -27,279 +27,247 @@ import { selected } from "./NFTHelper";
 import whiteListedPool from "../../services/whiteListedPool";
 import { WhitelistButton } from "./WhitelistButton";
 import SFTMark from "./SFTMark";
-// import { WhitelistButton } from "./WhitelistButton";
-// import { setTransferLoaderModal } from "../../store/reducers/generalSlice";
 
 NFTcard.propTypes = {
-    nft: PropTypes.object,
-    index: PropTypes.number,
-    claimables: PropTypes.bool,
-    chain: PropTypes.object,
-    bridge: PropTypes.object,
+  nft: PropTypes.object,
+  index: PropTypes.number,
+  claimables: PropTypes.bool,
+  chain: PropTypes.object,
+  bridge: PropTypes.object,
 };
 
 export default function NFTcard({ bridge, chain, nft, index, claimables }) {
-    const dispatch = useDispatch();
-    const [detailsOn, setDetailsOn] = useState(false);
-    const search = useSelector((state) => state.general.NFTListSearch);
-    const from = useSelector((state) => state.general.from);
-    const factory = useSelector((state) => state.general.factory);
-    const testnet = useSelector((state) => state.general.testNet);
-    const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
+  const dispatch = useDispatch();
+  const [detailsOn, setDetailsOn] = useState(false);
+  const search = useSelector((state) => state.general.NFTListSearch);
+  const from = useSelector((state) => state.general.from);
+  const factory = useSelector((state) => state.general.factory);
+  const testnet = useSelector((state) => state.general.testNet);
+  const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
 
-    const [isVisible, setIsVisible] = useState();
-    const localhost = window.location.hostname;
-    const [imageErr, setImageErr] = useState(false);
+  const [isVisible, setIsVisible] = useState();
+  const localhost = window.location.hostname;
+  const [imageErr, setImageErr] = useState(false);
 
-    const callBackWhenObserver = (entries) => {
-        const [entry] = entries;
-        setIsVisible(entry.isIntersecting);
+  const callBackWhenObserver = (entries) => {
+    const [entry] = entries;
+    setIsVisible(entry.isIntersecting);
+  };
+
+  const getOriginChain = (originChain) => {
+    // debugger;
+    const _nonce = Number(originChain);
+    const origin = chains.find((e) => e.nonce === _nonce);
+    return origin?.image?.src;
+  };
+
+  const originChainImg = getOriginChain(nft?.originChain);
+
+  const cardRef = useRef(null);
+  const options = useMemo(() => {
+    return {
+      root: null,
+      tootMargin: "0px",
+      threshold: 0.3,
     };
+  }, []);
 
-    const getOriginChain = (originChain) => {
-        // debugger;
-        const _nonce = Number(originChain);
-        const origin = chains.find((e) => e.nonce === _nonce);
-        return origin?.image?.src;
-    };
+  // let isSelected = selectedNFTs.filter((n) => {
+  //     if (from.type === "Solana") {
+  //         if (n.native.nftMint === nft.native.nftMint) {
+  //             return n;
+  //         }
+  //     } else
+  // n.native.tokenId === nft.native?.tokenId &&
+  //     n.native.contract === nft.native?.contract &&
+  //     n.native.chainId === nft.native?.chainId;
+  // })[0];
 
-    const originChainImg = getOriginChain(nft?.originChain);
+  // const selected = () => {
+  //     switch (from.type) {
+  //         case "Solana":
+  //             return selectedNFTs.filter(
+  //                 (n) => n.native.nftMint === nft.native.nftMint
+  //             )[0];
+  //         case "APTOS":
+  //             return selectedNFTs.filter(
+  //                 (n) =>
+  //                     n.native.collection_creator ===
+  //                         nft.native?.collection_creator &&
+  //                     n.native.token_name === nft.native?.token_name
+  //             )[0];
+  //         default:
+  //             return selectedNFTs.filter(
+  //                 (n) =>
+  //                     n.native.tokenId === nft.native?.tokenId &&
+  //                     n.native.contract === nft.native?.contract &&
+  //                     n.native.chainId === nft.native?.chainId
+  //             )[0];
+  //     }
+  // };
 
-    const cardRef = useRef(null);
-    const options = useMemo(() => {
-        return {
-            root: null,
-            tootMargin: "0px",
-            threshold: 0.3,
-        };
-    }, []);
+  // let isSelected =
+  //     from.type === "Solana"
+  //         ? selectedNFTs.filter(
+  //               (n) => n.native.nftMint === nft.native.nftMint
+  //           )[0]
+  //         : selectedNFTs.filter(
+  //               (n) =>
+  //                   n.native.tokenId === nft.native?.tokenId &&
+  //                   n.native.contract === nft.native?.contract &&
+  //                   n.native.chainId === nft.native?.chainId
+  //           )[0];
 
-    // let isSelected = selectedNFTs.filter((n) => {
-    //     if (from.type === "Solana") {
-    //         if (n.native.nftMint === nft.native.nftMint) {
-    //             return n;
-    //         }
-    //     } else
-    // n.native.tokenId === nft.native?.tokenId &&
-    //     n.native.contract === nft.native?.contract &&
-    //     n.native.chainId === nft.native?.chainId;
-    // })[0];
-
-    // const selected = () => {
-    //     switch (from.type) {
-    //         case "Solana":
-    //             return selectedNFTs.filter(
-    //                 (n) => n.native.nftMint === nft.native.nftMint
-    //             )[0];
-    //         case "APTOS":
-    //             return selectedNFTs.filter(
-    //                 (n) =>
-    //                     n.native.collection_creator ===
-    //                         nft.native?.collection_creator &&
-    //                     n.native.token_name === nft.native?.token_name
-    //             )[0];
-    //         default:
-    //             return selectedNFTs.filter(
-    //                 (n) =>
-    //                     n.native.tokenId === nft.native?.tokenId &&
-    //                     n.native.contract === nft.native?.contract &&
-    //                     n.native.chainId === nft.native?.chainId
-    //             )[0];
-    //     }
-    // };
-
-    // let isSelected =
-    //     from.type === "Solana"
-    //         ? selectedNFTs.filter(
-    //               (n) => n.native.nftMint === nft.native.nftMint
-    //           )[0]
-    //         : selectedNFTs.filter(
-    //               (n) =>
-    //                   n.native.tokenId === nft.native?.tokenId &&
-    //                   n.native.contract === nft.native?.contract &&
-    //                   n.native.chainId === nft.native?.chainId
-    //           )[0];
-
-    function addRemoveNFT(chosen) {
-        if (!selected(from.type, nft, selectedNFTs)) {
-            dispatch(setSelectedNFTList(chosen));
-        } else {
-            dispatch(removeFromSelectedNFTList(nft));
-        }
+  function addRemoveNFT(chosen) {
+    if (!selected(from.type, nft, selectedNFTs)) {
+      dispatch(setSelectedNFTList(chosen));
+    } else {
+      dispatch(removeFromSelectedNFTList(nft));
     }
+  }
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            callBackWhenObserver,
-            options
-        );
-        const currentTarget = cardRef.current;
+  useEffect(() => {
+    const observer = new IntersectionObserver(callBackWhenObserver, options);
+    const currentTarget = cardRef.current;
 
-        if (currentTarget) observer.observe(currentTarget);
-        return () => {
-            if (currentTarget) {
-                observer.unobserve(currentTarget);
-            }
-        };
-    }, [cardRef, options, search]);
-
-    useDidUpdateEffect(() => {
-        if (isVisible) {
-            if (!nft.dataLoaded) {
-                chain
-                    .preParse(nft)
-                    .then((_nft) =>
-                        parseNFT(bridge, _nft, index, testnet, claimables)
-                    );
-            }
-        }
-    }, [isVisible, nft]);
-
-    const onClickWhiteListButton = async () => {
-        // eslint-disable-next-line no-debugger
-
-        console.log(nft.native.contract);
-        dispatch(setTransferLoaderModal(true));
-        try {
-            const s = await factory.whitelistEVM(
-                from.nonce,
-                nft.native.contract
-            );
-            console.log({ s });
-
-            const interval = setInterval(
-                () =>
-                    bridge.isWhitelisted(from.nonce, nft).then((result) => {
-                        console.log(result, "wl-result");
-                        if (result) {
-                            dispatch(setTransferLoaderModal(false));
-                            dispatch(
-                                setWhiteListedCollection({
-                                    contract: nft.native.contract,
-                                })
-                            );
-                            whiteListedPool.whitelistContract(
-                                nft.native.contract
-                            );
-                            clearInterval(interval);
-                        }
-                    }),
-                5000
-            );
-
-            setTimeout(() => {
-                dispatch(setTransferLoaderModal(false));
-                clearInterval(interval);
-            }, 80 * 1000);
-        } catch (error) {
-            dispatch(setTransferLoaderModal(false));
-            console.log(error.message);
-            // TODO: handle error
-        }
+    if (currentTarget) observer.observe(currentTarget);
+    return () => {
+      if (currentTarget) {
+        observer.unobserve(currentTarget);
+      }
     };
+  }, [cardRef, options, search]);
 
-    return (
-        <>
-            <div className={`nft-box__wrapper`} ref={cardRef}>
-                {!nft?.dataLoaded ? (
-                    <Preload />
-                ) : (
-                    <div
-                        onClick={() =>
-                            nft.whitelisted && !detailsOn && !claimables
-                                ? addRemoveNFT(nft, index)
-                                : undefined
-                        }
-                        className={
-                            nft.whitelisted
-                                ? "nft__card--selected"
-                                : "nft__card"
-                        }
-                    >
-                        {nft.native?.amount && (
-                            <SFTMark amount={nft?.native.amount} />
-                        )}
-                        {/* {originChainImg && (
+  useDidUpdateEffect(() => {
+    if (isVisible) {
+      if (!nft.dataLoaded) {
+        chain
+          .preParse(nft)
+          .then((_nft) => parseNFT(bridge, _nft, index, testnet, claimables));
+      }
+    }
+  }, [isVisible, nft]);
+
+  const onClickWhiteListButton = async () => {
+    // eslint-disable-next-line no-debugger
+
+    console.log(nft.native.contract);
+    dispatch(setTransferLoaderModal(true));
+    try {
+      const s = await factory.whitelistEVM(from.nonce, nft.native.contract);
+      console.log({ s });
+
+      const interval = setInterval(
+        () =>
+          bridge.isWhitelisted(from.nonce, nft).then((result) => {
+            console.log(result, "wl-result");
+            if (result) {
+              dispatch(setTransferLoaderModal(false));
+              dispatch(
+                setWhiteListedCollection({
+                  contract: nft.native.contract,
+                })
+              );
+              whiteListedPool.whitelistContract(nft.native.contract);
+              clearInterval(interval);
+            }
+          }),
+        5000
+      );
+
+      setTimeout(() => {
+        dispatch(setTransferLoaderModal(false));
+        clearInterval(interval);
+      }, 80 * 1000);
+    } catch (error) {
+      dispatch(setTransferLoaderModal(false));
+      console.log(error.message);
+      // TODO: handle error
+    }
+  };
+
+  return (
+    <>
+      <div className={`nft-box__wrapper`} ref={cardRef}>
+        {!nft?.dataLoaded ? (
+          <Preload />
+        ) : (
+          <div
+            onClick={() =>
+              nft.whitelisted && !detailsOn && !claimables
+                ? addRemoveNFT(nft, index)
+                : undefined
+            }
+            className={nft.whitelisted ? "nft__card--selected" : "nft__card"}
+          >
+            {nft.native?.amount && <SFTMark amount={nft?.native.amount} />}
+            {/* {originChainImg && (
                             <OriginChainMark icon={originChainImg} />
                         )} */}
-                        <div className="nft__main">
-                            <div className="nft-actions__container">
-                                {originChainImg && (
-                                    <OriginChainMark icon={originChainImg} />
-                                )}
-                                {!nft.whitelisted && (
-                                    <WhitelistButton
-                                        isNFTWhitelisted={nft.whitelisted}
-                                        whitelist={onClickWhiteListButton}
-                                    />
-                                )}
-                            </div>
-                            {nft.uri && nft.image && nft.animation_url ? (
-                                <VideoAndImage
-                                    index={index}
-                                    videoUrl={nft.animation_url}
-                                    imageUrl={nft.image}
-                                    onError={setImageErr}
-                                    nft={nft}
-                                />
-                            ) : nft.image && !imageErr ? (
-                                <Image
-                                    onError={setImageErr}
-                                    nft={nft}
-                                    index={index}
-                                />
-                            ) : !nft.image && nft.animation_url ? (
-                                <OnlyVideo videoUrl={nft.animation_url} />
-                            ) : (
-                                <BrockenUtlGridView />
-                            )}
-
-                            {!claimables && nft.whitelisted ? (
-                                !selected(from.type, nft, selectedNFTs) ? (
-                                    <div className="nft-radio"></div>
-                                ) : (
-                                    <div className="nft-radio--selected"></div>
-                                )
-                            ) : (
-                                ""
-                            )}
-
-                            {!nft.whitelisted /*|| !verifiedContract*/ && (
-                                <NotWhiteListed />
-                            )}
-                            {claimables && (
-                                <ClaimableCard nft={nft} index={index} />
-                            )}
-                        </div>
-                        <div className="nft__footer">
-                            {localhost === "localhost" && (
-                                <span
-                                    style={{
-                                        fontSize: "10px",
-                                        color: "red",
-                                    }}
-                                >
-                                    index: {index}
-                                </span>
-                            )}
-                            <span className="nft-name">
-                                <span className="name">
-                                    {nft.name || nft.native?.name}
-                                </span>
-                                <NFTdetails
-                                    details={setDetailsOn}
-                                    nftInf={nft}
-                                    index={index}
-                                    claimables={claimables}
-                                />
-                            </span>
-                            <span className="nft-number">
-                                {nft.native?.tokenId}
-                            </span>
-                        </div>
-                    </div>
+            <div className="nft__main">
+              <div className="nft-actions__container">
+                {originChainImg && <OriginChainMark icon={originChainImg} />}
+                {!nft.whitelisted && (
+                  <WhitelistButton
+                    isNFTWhitelisted={nft.whitelisted}
+                    whitelist={onClickWhiteListButton}
+                  />
                 )}
+              </div>
+              {nft.uri && nft.image && nft.animation_url ? (
+                <VideoAndImage
+                  index={index}
+                  videoUrl={nft.animation_url}
+                  imageUrl={nft.image}
+                  onError={setImageErr}
+                  nft={nft}
+                />
+              ) : nft.image && !imageErr ? (
+                <Image onError={setImageErr} nft={nft} index={index} />
+              ) : !nft.image && nft.animation_url ? (
+                <OnlyVideo videoUrl={nft.animation_url} />
+              ) : (
+                <BrockenUtlGridView />
+              )}
+
+              {!claimables && nft.whitelisted ? (
+                !selected(from.type, nft, selectedNFTs) ? (
+                  <div className="nft-radio"></div>
+                ) : (
+                  <div className="nft-radio--selected"></div>
+                )
+              ) : (
+                ""
+              )}
+
+              {!nft.whitelisted /*|| !verifiedContract*/ && <NotWhiteListed />}
+              {claimables && <ClaimableCard nft={nft} index={index} />}
             </div>
-        </>
-    );
+            <div className="nft__footer">
+              {localhost === "localhost" && (
+                <span
+                  style={{
+                    fontSize: "10px",
+                    color: "red",
+                  }}
+                >
+                  index: {index}
+                </span>
+              )}
+              <span className="nft-name">
+                <span className="name">{nft.name || nft.native?.name}</span>
+                <NFTdetails
+                  details={setDetailsOn}
+                  nftInf={nft}
+                  index={index}
+                  claimables={claimables}
+                />
+              </span>
+              <span className="nft-number">{nft.native?.tokenId}</span>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
+  );
 }
