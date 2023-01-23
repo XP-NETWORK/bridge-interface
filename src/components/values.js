@@ -31,6 +31,7 @@ import InternetComputer from "../assets/img/chain/InternetComputer.svg";
 import near from "../assets/img/wallet/NearWallet.svg";
 import okx from "../assets/img/chain/okx.svg";
 import arbitrum from "../assets/img/chain/arbitrum.svg";
+import brise from "../assets/img/chain/brise.png";
 
 export const EVM = "EVM";
 export const ELROND = "Elrond";
@@ -504,6 +505,21 @@ export const chains = [
     newChain: true,
     chainId: 42161,
     tnChainId: 421613,
+  },
+  {
+    type: "EVM",
+    key: "Bitgert",
+    text: "Bitgert",
+    value: "Bitgert",
+    nonce: 0x26,
+    order: -2,
+    image: { avatar: true, src: brise },
+    testNet: false,
+    mainnet: false,
+    coming: false,
+    newChain: true,
+    chainId: 3250,
+    tnChainId: 64668,
   },
 ];
 
