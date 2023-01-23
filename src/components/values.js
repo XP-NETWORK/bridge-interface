@@ -1,6 +1,7 @@
 import Ethereum from "../assets/img/chain/Etherium.svg";
 import Ton from "../assets/img/chain/ton.svg";
-import Elrond from "../assets/img/chain/Elrond.svg";
+import Elrond from "../assets/img/chain/multiverseX.png";
+
 import Binance from "../assets/img/chain/Binance.svg";
 import Cardano from "../assets/img/chain/Cardano.svg";
 import Algorand from "../assets/img/chain/Algarand.svg";
@@ -33,7 +34,7 @@ import okx from "../assets/img/chain/okx.svg";
 import arbitrum from "../assets/img/chain/arbitrum.svg";
 
 export const EVM = "EVM";
-export const ELROND = "Elrond";
+export const ELROND = "MultiversX";
 export const TEZOS = "TEZOS";
 
 export const stagingWNFT = "https://staging-nft.xp.network";
@@ -97,9 +98,9 @@ export const chains = [
   },
   {
     type: "Elrond",
-    key: ELROND,
+    key: "Elrond",
     text: ELROND,
-    value: ELROND,
+    value: "Elrond",
     nonce: 2,
     order: 15,
     image: { avatar: true, src: Elrond },
@@ -593,7 +594,7 @@ export const chainsConfig = {
     // chainData: ChainData.Fantom
   },
   Elrond: {
-    type: ELROND,
+    type: "Elrond",
     token: "EGLD",
     img: Elrond,
     // chainData: ChainData.Elrond,

@@ -283,7 +283,7 @@ export const withSecretAuth = (Wrapped) =>
     const dispatch = useDispatch();
     const refreshSecret = useSelector((state) => state.general.refreshSecret);
 
-    const isSecret = from.text === "Secret";
+    const isSecret = from.key === "Secret";
 
     const renderAuth = isSecret && !secretLoggedIn;
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Elrond from "../../assets/img/wallet/Elrond.svg";
+import Elrond from "../../assets/img/chain/multiverseX.png";
 import Maiar from "../../assets/img/wallet/Maiar.svg";
 
 import {
@@ -133,7 +133,7 @@ function ElrondWallet({ wallet, close, serviceContainer }) {
       return OFF;
     } else if (!from) {
       return {};
-    } else if (from && from.text === "Elrond") {
+    } else if (from && from.type === "Elrond") {
       return {};
     } else return OFF;
   };
@@ -156,7 +156,7 @@ function ElrondWallet({ wallet, close, serviceContainer }) {
       data-wallet="MaiarExtension"
     >
       <img src={Elrond} alt="Elrond Icon" />
-      <p>Maiar Extension</p>
+      <p>MultiversX DeFi Wallet</p>
     </li>
   );
 }

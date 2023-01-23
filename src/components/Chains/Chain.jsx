@@ -72,7 +72,7 @@ export default function Chain(props) {
     >
       <img className="modalSelectOptionsImage" src={image.src} alt={text} />
       <div className="modalSelectOptionsText">
-        {text === "xDai" ? "Gnosis" : text}
+        {text}
         <div className="chain--identifier">
           {chainStatus === undefined && !coming && !maintenance ? (
             <Status status={"connecting"} />

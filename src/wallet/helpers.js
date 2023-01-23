@@ -1,7 +1,7 @@
 import { AppConfigs, ChainFactory, ChainFactoryConfigs } from "xp.network";
 
 import { Chain } from "xp.network/dist/consts";
-import { chainsConfig, CHAIN_INFO } from "../components/values";
+import { chainsConfig } from "../components/values";
 import {
   setAlgorandClaimables,
   setBigLoader,
@@ -377,19 +377,6 @@ export const convert = (address) => {
   // else if(checkIfIo1(address)) return convertIo1(address)
 };
 
-export const checkMintWith = async (from, to, contract, tokenId) => {
-  const { factory } = store.getState().general;
-  const fromNonce = CHAIN_INFO[from.text].nonce;
-  const toNonce = CHAIN_INFO[to.text].nonce;
-  const mintWith = await factory.getVerifiedContract(
-    contract,
-    toNonce,
-    fromNonce,
-    tokenId
-  );
-  return mintWith;
-};
-
 export const saveForSearch = async (address, chain, data) => {
   const baseUrl = "https://server-bridge.herokuapp.com/saveUser";
   const body = {
@@ -446,11 +433,11 @@ export const getRightPath = (checkFrom, checkTo) => {
     general: { testNet, staging, from, to },
   } = store.getState();
 
-  if (checkFrom && checkFrom !== from.text) {
+  if (checkFrom && checkFrom !== from.key) {
     return;
   }
 
-  if (checkTo && checkTo !== to.text) {
+  if (checkTo && checkTo !== to.key) {
     return;
   }
 

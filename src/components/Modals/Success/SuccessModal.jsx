@@ -11,8 +11,6 @@ import {
   scraperSocket,
 } from "../../../wallet/helpers";
 
-
-
 import {
   cleanTxnHashArr,
   removeFromSelectedNFTList,
@@ -173,7 +171,6 @@ export default withServices(function SuccessModal({ serviceContainer }) {
                     typeof links.txFrom === "function"
                       ? links.txFrom(tx)
                       : links.txFrom + tx
-
                   }
                   target="_blank"
                   className="success-hash"
@@ -198,19 +195,17 @@ export default withServices(function SuccessModal({ serviceContainer }) {
             <div className="info-item-label">Sent From</div>
             <div className="info-item-chain">
               <img src={from?.image?.src} alt={from?.text} />
-              {from?.text === "xDai" ? "Gnosis" : from?.text}
+              {from?.text}
             </div>
           </div>
           <div className="success-info-item">
             <div className="info-item-label">Departure Address</div>
             <a
-
               href={
                 typeof links.addressFrom === "function"
                   ? links.addressFrom(address)
                   : links.addressFrom + address
               }
-
               className="success-hash"
               target="_blank"
               rel="noreferrer"
@@ -222,14 +217,13 @@ export default withServices(function SuccessModal({ serviceContainer }) {
             <div className="info-item-label">Sent To</div>
             <div className="info-item-chain">
               <img src={to?.image?.src} alt={to?.text} />
-              {to?.text === "xDai" ? "Gnosis" : to?.text}
+              {to?.text}
             </div>
           </div>
           <div className="success-info-item">
             <div className="info-item-label">Destination Address</div>
             <a
               className="success-hash"
-
               href={
                 typeof links.addressTo === "function"
                   ? links.addressTo(receiver)
@@ -263,4 +257,3 @@ export default withServices(function SuccessModal({ serviceContainer }) {
     </>
   );
 });
-
