@@ -1,67 +1,66 @@
-import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
-import { errorToLog } from "../../../wallet/helpers";
-import { setError } from "../../../store/reducers/generalSlice";
-import { BigNumber } from "ethers";
+//import { errorToLog } from "../../../wallet/helpers";
+//import { setError } from "../../../store/reducers/generalSlice";
+//import { BigNumber } from "ethers";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
 //import { patchRealizedDiscount } from "../../deposits.js";
 
 export async function switchNetwork(chain) {
-    console.log("🚀 ~ file: evmService.js:10 ~ switchNetwork ~ chain", chain);
-    // eslint-disable-next-line no-debugger
+  console.log("🚀 ~ file: evmService.js:10 ~ switchNetwork ~ chain", chain);
+  // eslint-disable-next-line no-debugger
 
-    const {
-        general: { testNet, bitKeep },
-    } = store.getState();
+  const {
+    general: { testNet, bitKeep },
+  } = store.getState();
 
-    const id = (testNet ? chain.tnChainId : chain.chainId).toString();
-    const paramsArr = getAddEthereumChain(testNet, id);
+  const id = (testNet ? chain.tnChainId : chain.chainId).toString();
+  const paramsArr = getAddEthereumChain(testNet, id);
 
-    const params = paramsArr[id];
+  const params = paramsArr[id];
 
-    const copyParams = {
-        chainName: params.name || params.chainName,
-        chainId: `0x${Number(id).toString(16)}`,
-        nativeCurrency: params.nativeCurrency,
-        rpcUrls: params.rpcUrls,
-    };
+  const copyParams = {
+    chainName: params.name || params.chainName,
+    chainId: `0x${Number(id).toString(16)}`,
+    nativeCurrency: params.nativeCurrency,
+    rpcUrls: params.rpcUrls,
+  };
 
-    const chainId = `0x${Number(id).toString(16)}`;
+  const chainId = `0x${Number(id).toString(16)}`;
 
-    switch (true) {
-        case bitKeep:
-            try {
-                await window.bitkeep.ethereum.request({
-                    method: "wallet_switchEthereumChain",
-                    params: [{ chainId: chainId }],
-                });
-                return true;
-            } catch (error) {
-                console.log(error);
-                return false;
-            }
-        default:
-            try {
-                await window.ethereum.request({
-                    method: "wallet_switchEthereumChain",
-                    params: [{ chainId }],
-                });
-                return true;
-            } catch (error) {
-                // const c = testNet ? chain?.tnChainId : chain?.chainId;
+  switch (true) {
+    case bitKeep:
+      try {
+        await window.bitkeep.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: chainId }],
+        });
+        return true;
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    default:
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId }],
+        });
+        return true;
+      } catch (error) {
+        // const c = testNet ? chain?.tnChainId : chain?.chainId;
 
-                console.log(copyParams);
-                await window.ethereum.request({
-                    method: "wallet_addEthereumChain",
-                    params: [copyParams],
-                });
-                console.log(error);
-                return false;
-            }
-    }
+        console.log(copyParams);
+        await window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [copyParams],
+        });
+        console.log(error);
+        return false;
+      }
+  }
 }
 
-export const transferNFTFromEVM = async ({
+/*export const transferNFTFromEVM = async ({
     to,
     from,
     nft,
@@ -126,7 +125,7 @@ export const transferNFTFromEVM = async ({
       if (txnHashArr[0]) {
         store.dispatch(setTxnHash({ txn: "failed", nft }));
       }
-      break;*/
+      break;
         default:
             result = await transfer(
                 fromChain,
@@ -220,3 +219,4 @@ const transfer = async (
         errorToLog(errBogy);
     }
 };
+*/

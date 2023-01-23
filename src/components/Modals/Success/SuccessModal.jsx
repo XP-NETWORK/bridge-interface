@@ -19,7 +19,7 @@ import {
 } from "../../../store/reducers/generalSlice";
 import "./SuccessModal.css";
 import Tooltip from "../AccountModal/Tooltip";
-//import { chainsConfig, CHAIN_INFO } from "../../values";
+
 import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
 import { withServices } from "../../App/hocs/withServices";
 

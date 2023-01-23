@@ -253,8 +253,8 @@ export const allchains = [
   },
 
   {
-    name: "xDAI Chain",
-    chain: "XDAI",
+    name: "Gnosis",
+    chain: "Gnosis",
     network: "mainnet",
     rpcUrls: [
       "https://rpc.xdaichain.com",

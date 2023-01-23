@@ -64,7 +64,7 @@ export default function HigherEVM(OriginalComponent) {
           }
           break;
         case "TrustWallet":
-          connected = await connectTrustWallet(activate, from.text);
+          connected = await connectTrustWallet(activate, from.key, chainId);
           dispatch(setWalletsModal(false));
           if (connected && to) {
             dispatch(setConnectedWallet("TrustWallet"));
@@ -73,7 +73,12 @@ export default function HigherEVM(OriginalComponent) {
           if (temporaryFrom) dispatch(setFrom(temporaryFrom));
           break;
         case "WalletConnect":
-          connected = await onWalletConnect(activate, from.text, testnet);
+          connected = await onWalletConnect(
+            activate,
+            from.key,
+            testnet,
+            chainId
+          );
           dispatch(setWalletsModal(false));
           if (connected && to) {
             dispatch(setConnectedWallet("WalletConnect"));

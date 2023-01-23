@@ -1,9 +1,9 @@
-import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
+/*import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
 import { errorToLog } from "../../../wallet/helpers";
 import { setError } from "../../../store/reducers/generalSlice";
 
-export const transferNFTFromAlgorand = async ({
+/*export const transferNFTFromAlgorand = async ({
   to,
   from,
   nft,
@@ -99,4 +99,4 @@ const transfer = async (
     errorToLog(errBogy);
     return false;
   }
-};
+};*/

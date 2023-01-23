@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import keplr from "../../assets/img/wallet/keplr.svg";
 import fina from "../../assets/img/wallet/fina.svg";
 import { connectKeplr } from "./ConnectWalletHelper";
-import { chainsConfig } from "../values";
+import { getChainObject } from "../values";
 import { useCheckMobileScreen } from "../Settings/hooks";
 import PropTypes from "prop-types";
 import { getRightPath } from "../../wallet/helpers";
@@ -30,7 +30,7 @@ function CosmosWallet({ wallet, close, serviceContainer }) {
 
   const onClickHandler = async (wallet) => {
     const [signer, chainWrapper] = await Promise.all([
-      connectKeplr(testnet, chainsConfig.Secret, wallet, isMobile),
+      connectKeplr(testnet, getChainObject(Chain.SECRET), wallet, isMobile),
       bridge.getChain(Chain.SECRET),
     ]);
 
