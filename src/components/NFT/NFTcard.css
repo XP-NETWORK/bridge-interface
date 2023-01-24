@@ -49,6 +49,10 @@
   .nft__card--selected {
     width: 190px;
   }
+
+  .nft__main {
+    height: 196px;
+  }
 }
 
 @media only screen and (max-width: 405px) {

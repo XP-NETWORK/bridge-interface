@@ -48,7 +48,7 @@ const SecretAuth = withServices(
         const chainWrapper = await bridge.getChain(Chain.SECRET);
         //const secret = await factory.inner(Chain.SECRET);
 
-        let secretNFTs = await chainWrapper.bridge.nftList(
+        let secretNFTs = await chainWrapper.chain.nftList(
           checkWallet || secretAccount,
           secretCred.viewKey,
           secretCred.contract

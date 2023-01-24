@@ -155,7 +155,7 @@ export const connectKeplr = async (testnet, chain, wallet, isMobile) => {
 
   if (window.keplr) {
     try {
-      //await window.keplr.enable(chainId);
+      await window.keplr.enable(chainId);
       const offlineSigner = window.keplr.getOfflineSigner(chainId);
 
       const accounts = await offlineSigner.getAccounts();
