@@ -9,9 +9,9 @@ import {
   initialSecretCred,
   cleanSelectedNFTList,
 } from "../../../store/reducers/generalSlice";
-import { CHAIN_INFO } from "../../values";
+
 import "./importNFTModal.css";
-import { Chain } from "xp.network";
+import { Chain, CHAIN_INFO } from "xp.network";
 import { useDidUpdateEffect, useCheckMobileScreen } from "../../Settings/hooks";
 import vk from "../../../assets//img/icons/vkey.svg";
 import SecretContractsDropdown from "../../Dropdowns/SecretContractsDropdown";
@@ -238,6 +238,7 @@ const SecretContractPanned = () => {
   const dispatch = useDispatch();
 
   const isMobile = useCheckMobileScreen();
+  const chain = CHAIN_INFO.get(Chain.SECRET);
 
   return (
     <div className="scretPannelWrap">
@@ -247,7 +248,7 @@ const SecretContractPanned = () => {
           <a
             target="_blank"
             rel="noreferrer"
-            href={`${CHAIN_INFO.Secret.blockExplorerUrls}accounts/${secretCred.contract}`}
+            href={`${chain.blockExplorerUrlAddr}${secretCred.contract}`}
           >
             {isMobile
               ? `${secretCred.contract.slice(
