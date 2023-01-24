@@ -289,16 +289,18 @@ class EVM extends AbstractChain {
     if (params.nonce === ChainNonce.VECHAIN) {
       return new VeChain(params);
     }
+
     super(params);
   }
 
   async checkSigner() {
     try {
-      this.signer = undefined;
+      //this.signer = undefined;
       await super.checkSigner();
     } catch (e) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      console.log(signer, "ssSIGNEr");
       this.setSigner(signer);
     }
   }
@@ -348,7 +350,7 @@ class Elrond extends AbstractChain {
 
   handlerResult(res) {
     if (Array.isArray(res)) {
-      res = res[0]
+      res = res[0];
     }
     return ethers.utils.hexlify(res.hash?.hash)?.replace(/^0x/, "");
   }

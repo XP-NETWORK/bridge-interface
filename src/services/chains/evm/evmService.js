@@ -1,8 +1,7 @@
-import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
-import { errorToLog } from "../../../wallet/helpers";
-import { setError } from "../../../store/reducers/generalSlice";
-import { BigNumber } from "ethers";
+//import { errorToLog } from "../../../wallet/helpers";
+//import { setError } from "../../../store/reducers/generalSlice";
+//import { BigNumber } from "ethers";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
 //import { patchRealizedDiscount } from "../../deposits.js";
 
@@ -61,25 +60,25 @@ export async function switchNetwork(chain) {
   }
 }
 
-export const transferNFTFromEVM = async ({
-  to,
-  from,
-  nft,
-  signer,
-  receiver,
-  fee,
-  chainConfig,
-  discountLeftUsd,
+/*export const transferNFTFromEVM = async ({
+    to,
+    from,
+    nft,
+    signer,
+    receiver,
+    fee,
+    chainConfig,
+    discountLeftUsd,
 }) => {
-  fee = discountLeftUsd ? fee - fee * 0.25 : fee;
-  const {
-    general: { factory },
-  } = store.getState();
-  const toChain = await factory.inner(chainsConfig[to.text].Chain);
-  const fromChain = await factory.inner(chainsConfig[from.text].Chain);
-  const fromNonce = CHAIN_INFO[from.text].nonce;
-  const toNonce = CHAIN_INFO[to.text].nonce;
-  const wrapped = await factory.isWrappedNft(nft, fromNonce);
+    fee = discountLeftUsd ? fee - fee * 0.25 : fee;
+    const {
+        general: { factory },
+    } = store.getState();
+    const toChain = await factory.inner(b[to.text].Chain);
+    const fromChain = await factory.inner(chainsConfig[from.text].Chain);
+    const fromNonce = CHAIN_INFO[from.text].nonce;
+    const toNonce = CHAIN_INFO[to.text].nonce;
+    const wrapped = await factory.isWrappedNft(nft, fromNonce);
 
   const {
     native: { contract, tokenId },
@@ -126,24 +125,24 @@ export const transferNFTFromEVM = async ({
       if (txnHashArr[0]) {
         store.dispatch(setTxnHash({ txn: "failed", nft }));
       }
-      break;*/
-    default:
-      result = await transfer(
-        fromChain,
-        toChain,
-        nft,
-        signer,
-        receiver,
-        amountToTransfer,
-        fee,
-        mintWith,
-        factory,
-        account
-      );
       break;
-  }
-  //if (result) patchRealizedDiscount(account, fee * 0.25)
-  return result || false;
+        default:
+            result = await transfer(
+                fromChain,
+                toChain,
+                nft,
+                signer,
+                receiver,
+                amountToTransfer,
+                fee,
+                mintWith,
+                factory,
+                account
+            );
+            break;
+    }
+    //if (result) patchRealizedDiscount(account, fee * 0.25)
+    return result || false;
 };
 
 const transfer = async (
@@ -220,3 +219,4 @@ const transfer = async (
     errorToLog(errBogy);
   }
 };
+*/

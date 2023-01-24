@@ -24,7 +24,7 @@ import { compose } from "redux";
 export default compose(
   withServices,
   withWidget
-)(function ButtonToTransfer({ serviceContainer, setTxForWidget }) {
+)(function ButtonToTransfer({ serviceContainer, setTxForWidget, getExtraFee }) {
   const { bridge } = serviceContainer;
 
   const txnHashArr = useSelector((state) => state.general.txnHashArr);
@@ -102,6 +102,7 @@ export default compose(
         receiver: unstoppabledomain || receiver,
         fee: bigNumberFees,
         discountLeftUsd,
+        extraFee: getExtraFee(from),
       });
 
       if (txnHashArr[0] && !result) {

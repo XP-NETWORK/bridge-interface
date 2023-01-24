@@ -89,7 +89,7 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
       return OFF;
     } else if (!from) {
       return {};
-    } else if (from && from.text === "Algorand") {
+    } else if (from && from.type === "Algorand") {
       return {};
     } else return OFF;
   };

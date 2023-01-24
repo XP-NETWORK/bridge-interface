@@ -169,7 +169,7 @@ class WService {
         wallet: "",
       };
 
-    from = from === "xDai" ? "Gnosis" : from;
+    //from = from === "xDai" ? "Gnosis" : from;
 
     if (affiliationSettings && affiliationSettings.length) {
       const feeSetting = affiliationSettings.find(

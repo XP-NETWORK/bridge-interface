@@ -93,7 +93,6 @@ async function initFormId(id) {
 }
 
 const parentAccountChange = async (event) => {
-
   if (event.data?.type === "ethAddress" && window.ethereum) {
     const parentAddress = event.data?.address;
 
@@ -241,6 +240,8 @@ export const InitWidget = (Wrapped) => {
                 : 0,
               affiliationSettings: affiliationSettings?.map((feeSetting) => ({
                 ...feeSetting,
+                chain:
+                  feeSetting.chain === "Gnosis" ? "xDai" : feeSetting.chain,
                 extraFees: feeSetting.extraFees
                   ? ((+feeSetting.extraFees - 1) * 100).toFixed(1)
                   : 0,

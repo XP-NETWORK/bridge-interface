@@ -97,8 +97,6 @@ function SendFees(props) {
     return num;
   }
 
-  //const config = chainsConfig[from?.text];
-
   useEffect(() => {
     bridge
       .getChain(from.nonce)

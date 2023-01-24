@@ -239,9 +239,7 @@ function WSettings({
                               <div className="blockChainItem">
                                 <img src={chain.image.src} alt={chain.value} />
 
-                                {chain.value === "xDai"
-                                  ? "Gnosis"
-                                  : chain.value}
+                                {chain.text}
 
                                 {newChains.includes(chain.text) && (
                                   <span>New chain</span>
@@ -1032,11 +1030,7 @@ function WSettings({
                                     ...chains
                                       .filter(
                                         (c) =>
-                                          selectedChains.indexOf(
-                                            c.text === "Gnosis"
-                                              ? "xDai"
-                                              : c.text
-                                          ) === -1
+                                          selectedChains.indexOf(c.key) === -1
                                       )
                                       .map((c) => c.text),
                                   ]}

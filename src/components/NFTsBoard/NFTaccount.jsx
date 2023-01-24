@@ -41,10 +41,10 @@ import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 
 import withChains from "./hocs";
 
-import UserConnect from "../User/UserConnect";
 import AccountModal from "../Modals/AccountModal/AccountModal";
+import UserConnect from "../User/UserConnect";
 
-const intervalTm = 10_000;
+const intervalTm = 15_000;
 
 function NFTaccount(props) {
   const { serviceContainer, chainSpecific, _from, algorandAccount } = props;

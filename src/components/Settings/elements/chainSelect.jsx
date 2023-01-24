@@ -56,7 +56,7 @@ export const ChainSelect = ({ setChain, selectedChain, mode, hideChains }) => {
                 <span
                   className="dropdown-item"
                   onClick={() => {
-                    setChain(chain.text, mode);
+                    setChain(chain.key, mode);
                   }}
                 >
                   {chain.text}

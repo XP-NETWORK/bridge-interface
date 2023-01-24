@@ -41,7 +41,7 @@ import {
   setHederaWallet,
   setRedirectModal,
 } from "../../store/reducers/generalSlice";
-import { chainsConfig } from "../values";
+
 import { getAddEthereumChain } from "../../wallet/chains";
 import Web3 from "web3";
 
@@ -51,6 +51,7 @@ import { setSigner } from "../../store/reducers/signersSlice";
 import { inIframe } from "../Settings/helpers";
 
 // import AuthClient from "@walletconnect/auth-client";
+import { MainNetRpcUri, TestNetRpcUri } from "xp.network";
 
 export const wallets = [
   "MetaMask",
@@ -68,6 +69,7 @@ export const wallets = [
   "Trezor",
   "Hashpack",
 ];
+
 const { modalError } = store.getState();
 
 const hashConnect = new HashConnect(true);
@@ -152,6 +154,8 @@ export const switchNetWork = async (from) => {
 
 export const connectKeplr = async (testnet, chain, wallet, isMobile) => {
   const chainId = testnet ? chain.tnChainId : chain.chainId;
+  const key = chain.key.toUpperCase();
+
   if (window.keplr) {
     try {
       await window.keplr.enable(chainId);
@@ -162,10 +166,11 @@ export const connectKeplr = async (testnet, chain, wallet, isMobile) => {
       const { address } = accounts[0];
 
       const signer = await SecretNetworkClient.create({
-        grpcWebUrl: testnet ? chain.tnRpc : chain.rpc,
+        grpcWebUrl: testnet ? TestNetRpcUri[key] : MainNetRpcUri[key],
         chainId,
         wallet: offlineSigner,
         walletAddress: address,
+
         //encryptionUtils: window.getEnigmaUtils(chain),
       });
 
@@ -291,9 +296,9 @@ export const connectAlgoSigner = async (testnet) => {
   }
 };
 
-export const connectTrustWallet = async (activate, from) => {
-  // debugger
-  const { rpc, chainId } = chainsConfig[from];
+export const connectTrustWallet = async (activate, from, chainId) => {
+  const rpc = MainNetRpcUri[from.toUpperCase()];
+  console.log(rpc, chainId, "rpc");
   try {
     const walletConnect = new WalletConnectConnector({
       rpc: {
@@ -329,24 +334,10 @@ export const connectMyAlgo = async (chain) => {
   }
 };
 
-// const authClient = await AuthClient.init({
-//     projectId: "<dhd8193nbaq>",
-//     metadata: {
-//         name: "XP.NETWORK Cross-Chain NFT Bridge",
-//         description:
-//             "Seamlessly move assets between chains | The first multichain NFT bridge to connect all major Blockchains into one ecosystem",
-//         url: "my-auth-dapp.com",
-//         icons: ["https://my-auth-dapp.com/icons/logo.png"],
-//     },
-// });
+export const onWalletConnect = async (activate, from, testnet, chainId) => {
+  const key = from.toUpperCase();
+  const rpc = testnet ? TestNetRpcUri[key] : MainNetRpcUri[key];
 
-// export const onWalletConnectV2 = async () => {
-//     console.log(authClient);
-// };
-
-export const onWalletConnect = async (activate, from, testnet) => {
-  // onWalletConnectV2();
-  const { rpc, chainId } = chainsConfig[from];
   try {
     const walletConnect = new WalletConnectConnector({
       rpc: {

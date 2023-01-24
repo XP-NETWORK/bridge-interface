@@ -12,6 +12,12 @@
 
   const url = widget?.getAttribute("src")?.split("?");
 
+  console.log(
+    url
+      ? `XP.NETWORK widget embeded script on,  ${url[0]}`
+      : "widget iframe not found"
+  );
+
   if (window.ethereum && url) {
     window.ethereum.on("accountsChanged", function(acc) {
       widget?.contentWindow?.postMessage(

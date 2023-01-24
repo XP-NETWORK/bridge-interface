@@ -23,7 +23,7 @@ export const chains = [
     value: c.value || c.text,
   })),
 ]
-  .filter((c) => c.mainnet || c.coming)
+  .filter((c) => c.mainnet || c.coming || c.testNet)
   .sort((a, b) => b.order - a.order)
   .sort((a, b) => (a.coming && !b.coming ? 1 : -1));
 
