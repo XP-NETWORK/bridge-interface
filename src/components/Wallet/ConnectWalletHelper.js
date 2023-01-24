@@ -167,6 +167,7 @@ export const connectKeplr = async (testnet, chain, wallet, isMobile) => {
         chainId,
         wallet: offlineSigner,
         walletAddress: address,
+
         //encryptionUtils: window.getEnigmaUtils(chain),
       });
 
