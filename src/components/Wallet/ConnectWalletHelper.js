@@ -162,12 +162,11 @@ export const connectKeplr = async (testnet, chain, wallet, isMobile) => {
 
       const { address } = accounts[0];
 
-      const signer = await SecretNetworkClient.create({
-        grpcWebUrl: testnet ? TestNetRpcUri[key] : MainNetRpcUri[key],
+      const signer = new SecretNetworkClient({
+        url: testnet ? TestNetRpcUri[key] : MainNetRpcUri[key],
         chainId,
         wallet: offlineSigner,
         walletAddress: address,
-
         //encryptionUtils: window.getEnigmaUtils(chain),
       });
 
