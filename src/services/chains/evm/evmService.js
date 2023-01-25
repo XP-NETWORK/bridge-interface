@@ -46,7 +46,8 @@ export async function switchNetwork(chain) {
                     method: "wallet_switchEthereumChain",
                     params: [{ chainId }],
                 });
-                return true;
+                const currentChainId = await window.ethereum.request({ method: 'eth_chainId' })
+                return currentChainId == chainId;
             } catch (error) {
                 await window.ethereum.request({
                     method: "wallet_addEthereumChain",
