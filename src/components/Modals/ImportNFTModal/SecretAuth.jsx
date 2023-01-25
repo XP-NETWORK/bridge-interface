@@ -32,9 +32,9 @@ const SecretAuth = withServices(
     //secret146snljq0kjsva7qrx4am54nv3fhfaet7srx4n2
     /// const [error, setError] = useState("");
 
-    const { secretAccount, checkWallet, secretCred } = useSelector(
-      ({ general: { secretAccount, checkWallet, secretCred } }) => ({
-        secretAccount,
+    const { account, checkWallet, secretCred } = useSelector(
+      ({ general: { account, checkWallet, secretCred } }) => ({
+        account,
         checkWallet,
         secretCred,
       })
@@ -47,9 +47,13 @@ const SecretAuth = withServices(
         setImportBlocked(true);
         const chainWrapper = await bridge.getChain(Chain.SECRET);
         //const secret = await factory.inner(Chain.SECRET);
-
+        console.log(
+          checkWallet || account,
+          secretCred.viewKey,
+          secretCred.contract
+        );
         let secretNFTs = await chainWrapper.chain.nftList(
-          checkWallet || secretAccount,
+          checkWallet || account,
           secretCred.viewKey,
           secretCred.contract
         );
@@ -94,7 +98,7 @@ const SecretAuth = withServices(
         console.log("Viewing Key was created: ", created);
         if (created) {
           let secretNFTs = await chain.nftList(
-            checkWallet || secretAccount,
+            checkWallet || account,
             secretCred.viewKey,
             secretCred.contract
           );
@@ -121,10 +125,10 @@ const SecretAuth = withServices(
       switch (btn) {
         case "set":
           setToggle("set");
-          dispatch(setSecretCred(initialSecretCred));
           break;
         case "show":
           setToggle("show");
+          dispatch(setSecretCred(initialSecretCred));
           break;
         default:
           break;

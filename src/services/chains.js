@@ -284,11 +284,12 @@ class EVM extends AbstractChain {
 
   async checkSigner() {
     try {
-      this.signer = undefined;
+      //this.signer = undefined;
       await super.checkSigner();
     } catch (e) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      console.log(signer, "ssSIGNEr");
       this.setSigner(signer);
     }
   }

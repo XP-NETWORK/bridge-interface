@@ -72,7 +72,7 @@ export async function switchNetwork(chain) {
     const {
         general: { factory },
     } = store.getState();
-    const toChain = await factory.inner(chainsConfig[to.text].Chain);
+    const toChain = await factory.inner(b[to.text].Chain);
     const fromChain = await factory.inner(chainsConfig[from.text].Chain);
     const fromNonce = CHAIN_INFO[from.text].nonce;
     const toNonce = CHAIN_INFO[to.text].nonce;
