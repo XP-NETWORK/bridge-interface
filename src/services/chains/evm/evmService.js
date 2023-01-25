@@ -6,8 +6,8 @@ import { getAddEthereumChain } from "../../../wallet/chains.js";
 //import { patchRealizedDiscount } from "../../deposits.js";
 
 export async function switchNetwork(chain) {
-  console.log("🚀 ~ file: evmService.js:10 ~ switchNetwork ~ chain", chain);
-  // eslint-disable-next-line no-debugger
+    // console.log("🚀 ~ file: evmService.js:10 ~ switchNetwork ~ chain", chain);
+    // eslint-disable-next-line no-debugger
 
   const {
     general: { testNet, bitKeep },
@@ -27,37 +27,35 @@ export async function switchNetwork(chain) {
 
   const chainId = `0x${Number(id).toString(16)}`;
 
-  switch (true) {
-    case bitKeep:
-      try {
-        await window.bitkeep.ethereum.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: chainId }],
-        });
-        return true;
-      } catch (error) {
-        console.log(error);
-        return false;
-      }
-    default:
-      try {
-        await window.ethereum.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId }],
-        });
-        return true;
-      } catch (error) {
-        // const c = testNet ? chain?.tnChainId : chain?.chainId;
-
-        console.log(copyParams);
-        await window.ethereum.request({
-          method: "wallet_addEthereumChain",
-          params: [copyParams],
-        });
-        console.log(error);
-        return false;
-      }
-  }
+    switch (true) {
+        case bitKeep:
+            try {
+                await window.bitkeep.ethereum.request({
+                    method: "wallet_switchEthereumChain",
+                    params: [{ chainId: +chainId }],
+                });
+                const currentChainId = await window.ethereum.request({ method: 'eth_chainId' })
+                return currentChainId == chainId;
+            } catch (error) {
+                console.log(error);
+                return false;
+            }
+        default:
+            try {                
+                await window.ethereum.request({
+                    method: "wallet_switchEthereumChain",
+                    params: [{ chainId }],
+                });
+                return true;
+            } catch (error) {
+                await window.ethereum.request({
+                    method: "wallet_addEthereumChain",
+                    params: [copyParams],
+                });
+                console.log(error);
+                return false;
+            }
+    }
 }
 
 /*export const transferNFTFromEVM = async ({
