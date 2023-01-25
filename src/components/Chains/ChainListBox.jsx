@@ -97,7 +97,7 @@ function ChainListBox({ serviceContainer }) {
             dispatch(setTemporaryFrom(chain));
             dispatch(setChangeWallet(true));
             handleClose();
-          } else if ((account || evmAccount) && from.text !== "VeChain") {
+          } else if ((account || evmAccount) && from.key !== "VeChain") {
             const switched = await switchNetwork(from);
             if (switched) {
               dispatch(setTo(from));

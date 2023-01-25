@@ -28,10 +28,9 @@ export const withNearConnection = (Wrapped) =>
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { NFTList, selectedNFTList, factory } = useSelector((state) => ({
+    const { NFTList, selectedNFTList } = useSelector((state) => ({
       NFTList: state.general.NFTList,
       selectedNFTList: state.general.selectedNFTList,
-      factory: state.general.factory,
     }));
 
     const params = new URLSearchParams(location.search.replace("?", ""));
@@ -44,7 +43,7 @@ export const withNearConnection = (Wrapped) =>
 
     useEffect(() => {
       (async () => {
-        if (serviceContainer.bridge && factory) {
+        if (serviceContainer.bridge) {
           if (nearFlow && serviceContainer.bridge.config) {
             const chainWrapper = await serviceContainer?.bridge?.getChain(
               Chain.NEAR
@@ -76,7 +75,7 @@ export const withNearConnection = (Wrapped) =>
           }
         }
       })();
-    }, [serviceContainer, factory]);
+    }, [serviceContainer]);
 
     useEffect(() => {
       if (NFTList?.length && nearTrx) {

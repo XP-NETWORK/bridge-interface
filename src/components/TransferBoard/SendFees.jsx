@@ -86,8 +86,6 @@ function SendFees(props) {
         return num;
     }
 
-    //const config = chainsConfig[from?.text];
-
     useEffect(() => {
         bridge
             .getChain(from.nonce)
@@ -97,6 +95,8 @@ function SendFees(props) {
     }, []);
 
     useEffect(() => {
+        console.log(selectedNFTList);
+
         if (!selectedNFTList.length) {
             setFees("0");
             return clearInterval(interval.current);
@@ -118,7 +118,7 @@ function SendFees(props) {
             })();
 
         return () => clearInterval(interval.current);
-    }, [selectedNFTList, to, from]);
+    }, [selectedNFTList, to]);
 
     return (
         <div className="fees">

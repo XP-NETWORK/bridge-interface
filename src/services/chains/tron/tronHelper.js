@@ -1,4 +1,4 @@
-import { chainsConfig, CHAIN_INFO } from "../../../components/values";
+/*import { chainsConfig, CHAIN_INFO } from "../../../components/values";
 import { errorToLog } from "../../../wallet/helpers";
 import store from "../../../store/store.js";
 import { setError } from "../../../store/reducers/generalSlice";
@@ -81,4 +81,4 @@ export const transferNFTFromTran = async ({
         errorToLog(errBogy);
     }
     return result || false;
-};
+};*/

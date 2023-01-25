@@ -11,6 +11,7 @@
   cursor: pointer;
   border: 1px solid white;
   transition: all 0.3s ease-in-out;
+  position: relative;
 }
 .nft__card:hover,
 .nft__card--selected:hover {
@@ -41,4 +42,26 @@
   z-index: 10;
   bottom: 74px;
   right: 8.8px;
+}
+
+@media only screen and (max-width: 435px) {
+  .nft__card,
+  .nft__card--selected {
+    width: 190px;
+  }
+
+  .nft__main {
+    height: 196px;
+  }
+}
+
+@media only screen and (max-width: 405px) {
+  .nft__card,
+  .nft__card--selected {
+    width: 180px;
+  }
+
+  .nft__main {
+    height: 190px;
+  }
 }
