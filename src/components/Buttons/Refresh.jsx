@@ -2,7 +2,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setBigLoader,
-  setRefreshSecret,
   setNFTList,
   setPreloadNFTs,
   setError,
@@ -15,15 +14,9 @@ import { setIsEmpty } from "../../store/reducers/paginationSlice";
 import { withServices } from "../App/hocs/withServices";
 
 export default withServices(function Refresh({ serviceContainer }) {
-  const {
-    from,
-    nfts,
-
-    account,
-    bigLoader,
-    secretAccount,
-    secretLoggedIn,
-  } = useSelector((state) => state.general);
+  const { from, nfts, account, bigLoader, secretCred } = useSelector(
+    (state) => state.general
+  );
   const dispatch = useDispatch();
 
   const { bridge } = serviceContainer;
@@ -35,7 +28,7 @@ export default withServices(function Refresh({ serviceContainer }) {
       const fromChain = await bridge.getChain(from.nonce);
       dispatch(setBigLoader(true));
       try {
-        let nfts = await fromChain.getNFTs(bridge.checkWallet || w);
+        let nfts = await fromChain.getNFTs(bridge.checkWallet || w, secretCred);
         nfts = fromChain.filterNFTs(nfts);
 
         if (nfts.length < 1) {
@@ -56,17 +49,10 @@ export default withServices(function Refresh({ serviceContainer }) {
     }
   };
 
-  const refreshSecret = () => {
-    if (secretLoggedIn) {
-      dispatch(setBigLoader(true));
-      dispatch(setRefreshSecret());
-    }
-  };
-
   return (
     <span
       className={bigLoader ? "refresh-button--disabled" : "refresh-button"}
-      onClick={secretAccount ? refreshSecret : refresh}
+      onClick={refresh}
     >
       <RefreshComp className="svgWidget" />
     </span>
