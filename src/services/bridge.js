@@ -158,7 +158,7 @@ class Bridge {
 
     return false;*/
 
-    return /(wnfts\.xp\.network|nft\.xp\.network|staging-nft\.xp\.network)/.test(
+    return /(wnfts\.xp\.network|nft\.xp\.network|staging-nft\.xp\.network|bridge-wnftapi)/.test(
       uri
     );
   }

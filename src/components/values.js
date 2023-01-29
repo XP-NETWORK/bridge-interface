@@ -38,7 +38,7 @@ export const ELROND = "MultiversX";
 export const TEZOS = "TEZOS";
 
 export const stagingWNFT = "https://staging-nft.xp.network";
-export const wnft = ["wnfts.xp.network", "nft.xp.network"];
+export const wnft = ["wnfts.xp.network", "nft.xp.network", "bridge-wnftapi"];
 
 export const biz =
   window.location.hostname.includes("localhost") ||
