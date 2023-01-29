@@ -102,8 +102,6 @@ export default function HigherEVM(OriginalComponent) {
     };
 
     const getStyle = () => {
-      // eslint-disable-next-line no-debugger
-      // debugger;
       const evmDeparture = () => {
         if (from && from.type === "EVM") return true;
         else if (temporaryFrom && temporaryFrom.type === "EVM") return true;

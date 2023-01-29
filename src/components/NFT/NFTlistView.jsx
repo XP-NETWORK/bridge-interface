@@ -28,6 +28,7 @@ function NFTlistView({ serviceContainer }) {
               index={index}
               key={index + "listedview"}
               chain={chain}
+              serviceContainer={serviceContainer}
             />
           ))
         ) : (

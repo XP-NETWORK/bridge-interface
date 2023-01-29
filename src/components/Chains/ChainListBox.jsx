@@ -76,8 +76,6 @@ function ChainListBox({ serviceContainer }) {
   // ! ref
   const chainSelectHandler = async (chain) => {
     // eslint-disable-next-line no-debugger
-    // debugger;
-
     const chainWrapper = await bridge.getChain(chain.nonce);
 
     if (departureOrDestination === "departure") {
@@ -134,7 +132,6 @@ function ChainListBox({ serviceContainer }) {
   };
 
   useEffect(() => {
-    // debugger;
     let filteredChains = chains;
     if (chainSearch && departureOrDestination === "departure") {
       filteredChains = chains.filter((chain) =>

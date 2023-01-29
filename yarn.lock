@@ -2005,9 +2005,15 @@
     "@ethersproject/strings" "^5.7.0"
 
 "@grpc/grpc-js@^1.5.3":
+<<<<<<< HEAD
   version "1.8.7"
   resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.8.7.tgz#2154fc0134462ad45f4134e8b54682a25ed05956"
   integrity sha512-dRAWjRFN1Zy9mzPNLkFFIWT8T6C9euwluzCHZUKuhC+Bk3MayNPcpgDRyG+sg+n2sitEUySKxUynirVpu9ItKw==
+=======
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.8.4.tgz#316674e8905e2dd310d8aa60331e05b32584e6ad"
+  integrity sha512-oaETBotls7FTBpySg5dhyUCyXSxSeCMmkBBXHXG1iw57MiNoB6D7VRhkrXYbwyHM3Q3Afjp4KlsBX0Zb+ELZXw==
+>>>>>>> newWhitelisted
   dependencies:
     "@grpc/proto-loader" "^0.7.0"
     "@types/node" ">=12.12.47"
@@ -2237,9 +2243,9 @@
     utf8 "^3.0.0"
 
 "@hashgraph/sdk@^2.14.2":
-  version "2.19.0"
-  resolved "https://registry.yarnpkg.com/@hashgraph/sdk/-/sdk-2.19.0.tgz#62b73fdb635a1c19911054c195b6439e263bc77d"
-  integrity sha512-EXfk8wRHK9KvDHwrxcOA1LcxBFwamGGBPMJWPfQvo23N3XLh4fWXJu8iv87+Ea6YTmE8VGu3C2rBEjSf9ClcSA==
+  version "2.19.1"
+  resolved "https://registry.yarnpkg.com/@hashgraph/sdk/-/sdk-2.19.1.tgz#9043637ccc325edfeb27865508f12c484154ce03"
+  integrity sha512-Mn/o5gEUR/modcd7AfnGjHnEULXb7LYl49pSbSgWyE+HC0wnnPCXcQmThLvul4o2gMFKu2UCTxRiL976GQaQtg==
   dependencies:
     "@ethersproject/rlp" "^5.7.0"
     "@grpc/grpc-js" "^1.7.0"
@@ -6993,10 +6999,17 @@ axe-core@^4.4.3:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.6.1.tgz#79cccdee3e3ab61a8f42c458d4123a6768e6fbce"
   integrity sha512-lCZN5XRuOnpG4bpMq8v0khrWtUOn+i8lZSb6wHZH56ZfbIEv6XwJV84AAueh9/zi7qPVJ/E4yz6fmsiyOmXR4w==
 
+<<<<<<< HEAD
 axios@*:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.4.tgz#6555dd955d2efa9b8f4cb4cb0b3371b7b243537a"
   integrity sha512-lIQuCfBJvZB/Bv7+RWUqEJqNShGOVpk9v7P0ZWx5Ip0qY6u7JBAU6dzQPMLasU9vHL2uD8av/1FDJXj7n6c39w==
+=======
+axios@*, axios@^1.2.1:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.3.tgz#31a3d824c0ebf754a004b585e5f04a5f87e6c4ff"
+  integrity sha512-pdDkMYJeuXLZ6Xj/Q5J3Phpe+jbGdsSzlQaFVkMQzRUL05+6+tetX8TV3p4HrU4kzuO9bt+io/yGQxuyxA/xcw==
+>>>>>>> newWhitelisted
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -16854,10 +16867,42 @@ secp256k1@^4.0.1, secp256k1@^4.0.2:
     node-addon-api "^2.0.0"
     node-gyp-build "^4.2.0"
 
+<<<<<<< HEAD
 secretjs@^1.6.10:
   version "1.6.10"
   resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.6.10.tgz#ee98cb4c0b81f715cfba576062410266672ac65d"
   integrity sha512-XFjNbn1akifwE5ceSVhzPj1V95gKjuXmyFr8X3dFmGNd7L4pyDOvgpR+32uwK7GVz5PMDvusVIff16a8D43/bw==
+=======
+secretjs@=1.4.5:
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.4.5.tgz#c94098faace9932c5a39cc4622a7510daac44274"
+  integrity sha512-WbHzcDTL8VW8WwVMAPXZAMj6QutXBe1gjLhyjOT3lAQX5zU1TKh2h8EpAxNrM0BfLPMPRC24qtngrrkVrdW2CA==
+  dependencies:
+    "@cosmjs/encoding" "0.27.1"
+    "@cosmjs/math" "0.27.1"
+    "@improbable-eng/grpc-web" "0.15.0"
+    "@improbable-eng/grpc-web-node-http-transport" "0.15.0"
+    "@noble/hashes" "1.0.0"
+    "@noble/secp256k1" "1.6.3"
+    "@osmonauts/helpers" "0.3.8"
+    bech32 "2.0.0"
+    big-integer "1.6.51"
+    bignumber.js "9.0.2"
+    bip32 "2.0.6"
+    bip39 "3.0.4"
+    curve25519-js "0.0.4"
+    google-protobuf "^3.14.0"
+    is-gzip "2.0.0"
+    miscreant "0.3.2"
+    pako "2.0.4"
+    protobufjs "6.11.3"
+    secure-random "1.1.2"
+
+secretjs@^1.4.5:
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.6.9.tgz#c03fe6541d1c8c716f1c93f1c6a9bbecd99f6f31"
+  integrity sha512-BJKgu0CZ7n0lfUObmTkjWHCxEcph3tp7DKzA+CwfGTQ5AMTsFKZoXhSoE/mJCd8grc8lDofUSENAuQGkHR+6sg==
+>>>>>>> newWhitelisted
   dependencies:
     "@cosmjs/encoding" "0.27.1"
     "@cosmjs/math" "0.27.1"
@@ -19697,9 +19742,13 @@ xmlhttprequest@1.8.0:
   resolved "https://registry.yarnpkg.com/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz#67fe075c5c24fef39f9d65f5f7b7fe75171968fc"
   integrity sha512-58Im/U0mlVBLM38NdZjHyhuMtCqa61469k2YP/AaPbvCoV9aQGUpbJBj1QRm2ytRiVQBD/fsw7L2bJGDVQswBA==
 
-"xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
+"xp.network@git+https://github.com/xp-network/xpjs#feat/whitelist":
   version "4.0.2"
+<<<<<<< HEAD
   resolved "git+https://github.com/xp-network/xpjs#6651b3a28f9da8034be046ada2d77e0dd4098905"
+=======
+  resolved "git+https://github.com/xp-network/xpjs#c7cb35655d58dd1694e7bb73f0312414a5310525"
+>>>>>>> newWhitelisted
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"
@@ -19746,13 +19795,13 @@ xmlhttprequest@1.8.0:
 
 "xpnet-web3-contracts@git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#dist-erc1155":
   version "0.1.0"
+  uid aa9473ea3b0f748bba54f5755abcfd17e3548237
   resolved "git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#aa9473ea3b0f748bba54f5755abcfd17e3548237"
   dependencies:
     ethers "^5.5.4"
 
 "xpnet-web3-contracts@git+https://github.com/xp-network/XP.network-HECO-Migration#aa9473ea3b0f748bba54f5755abcfd17e3548237":
   version "0.1.0"
-  uid aa9473ea3b0f748bba54f5755abcfd17e3548237
   resolved "git+https://github.com/xp-network/XP.network-HECO-Migration#aa9473ea3b0f748bba54f5755abcfd17e3548237"
   dependencies:
     ethers "^5.5.4"

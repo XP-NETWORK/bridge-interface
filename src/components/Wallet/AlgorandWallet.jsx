@@ -41,8 +41,6 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
   };
 
   const connectionHandler = async (wallet) => {
-    // eslint-disable-next-line no-debugger
-    debugger;
     const chainWrapper = await bridge.getChain(from?.nonce || Chain.ALGORAND);
     let account;
     switch (wallet) {
@@ -82,7 +80,6 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
   };
 
   const getStyle = () => {
-    // debugger;
     if (temporaryFrom?.type === "Algorand") {
       return {};
     } else if (temporaryFrom && temporaryFrom?.type !== "Algorand") {

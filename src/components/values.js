@@ -32,13 +32,21 @@ import InternetComputer from "../assets/img/chain/InternetComputer.svg";
 import near from "../assets/img/wallet/NearWallet.svg";
 import okx from "../assets/img/chain/okx.svg";
 import arbitrum from "../assets/img/chain/arbitrum.svg";
+import brise from "../assets/img/chain/brise.png";
 
 export const EVM = "EVM";
 export const ELROND = "MultiversX";
 export const TEZOS = "TEZOS";
 
 export const stagingWNFT = "https://staging-nft.xp.network";
-export const wnft = ["wnfts.xp.network", "nft.xp.network", "bridge-wnftapi"];
+export const wnft = [
+  "https://wnfts.xp.network",
+  "https://nft.xp.network",
+  "https://bridge-wnftapi",
+];
+
+export const wnftPattern =
+  "(wnfts.xp.network|nft.xp.network|staging-nft.xp.network|bridge-wnftapi)";
 
 export const biz =
   window.location.hostname.includes("localhost") ||
@@ -144,10 +152,11 @@ export const chains = [
     value: "Fantom",
     nonce: 8,
     chainId: 250,
+    tnChainId: 4002,
     order: 16,
     image: { avatar: true, src: Fantom },
     maintenance: false,
-    testNet: false,
+    testNet: true,
     mainnet: true,
     newChain: false,
   },
@@ -504,5 +513,20 @@ export const chains = [
     newChain: true,
     chainId: 42161,
     tnChainId: 421613,
+  },
+  {
+    type: "EVM",
+    key: "Bitgert",
+    text: "Bitgert",
+    value: "Bitgert",
+    nonce: 0x26,
+    order: -2,
+    image: { avatar: true, src: brise },
+    testNet: false,
+    mainnet: false,
+    coming: false,
+    newChain: true,
+    chainId: 3250,
+    tnChainId: 64668,
   },
 ];

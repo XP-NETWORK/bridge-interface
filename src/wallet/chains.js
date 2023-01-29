@@ -8,6 +8,11 @@ export const getAddEthereumChain = () => {
 
 export const allchains = [
   {
+    chainName: "Bitgert Testnet",
+    rpcUrls: ["https://testnet-rpc.brisescan.com"],
+    chainId: 64668,
+  },
+  {
     chainName: "Arbitrum Goerli Testnet",
     rpcUrls: ["https://goerli-rollup.arbitrum.io/rpc"],
     chainId: 421613,
