@@ -12,226 +12,194 @@ import {
 
 import "./importNFTModal.css";
 import { Chain, CHAIN_INFO } from "xp.network";
-import { useDidUpdateEffect, useCheckMobileScreen } from "../../Settings/hooks";
+import { useCheckMobileScreen } from "../../Settings/hooks";
 import vk from "../../../assets//img/icons/vkey.svg";
 import SecretContractsDropdown from "../../Dropdowns/SecretContractsDropdown";
 import PropTypes from "prop-types";
 
 import { withServices } from "../../App/hocs/withServices";
 
-const SecretAuth = withServices(
-  ({ setLogdIn, refreshSecret, serviceContainer }) => {
-    const { bridge } = serviceContainer;
-    const dispatch = useDispatch();
-    const off = { opacity: 0.6, pointerEvents: "none" };
-    const [toggle, setToggle] = useState("show");
-    const [importBlocked, setImportBlocked] = useState(false);
-    const signer = useSelector((state) => state.signers.signer);
-    //MyViewingKey#1
+const SecretAuth = ({ setLogdIn, serviceContainer }) => {
+  const { bridge } = serviceContainer;
+  const dispatch = useDispatch();
+  const off = { opacity: 0.6, pointerEvents: "none" };
+  const [toggle, setToggle] = useState("show");
+  const [importBlocked, setImportBlocked] = useState(false);
 
-    //secret146snljq0kjsva7qrx4am54nv3fhfaet7srx4n2
-    /// const [error, setError] = useState("");
+  const { account, checkWallet, secretCred } = useSelector(
+    ({ general: { account, checkWallet, secretCred } }) => ({
+      account,
+      checkWallet,
+      secretCred,
+    })
+  );
 
-    const { account, checkWallet, secretCred } = useSelector(
-      ({ general: { account, checkWallet, secretCred } }) => ({
-        account,
-        checkWallet,
-        secretCred,
-      })
-    );
+  const fetchSecretNfts = async () => {
+    if (!secretCred.viewKey || !secretCred.contract) return;
 
-    const fetchSecretNfts = async () => {
-      if (!secretCred.viewKey || !secretCred.contract) return;
+    try {
+      setImportBlocked(true);
+      const chainWrapper = await bridge.getChain(Chain.SECRET);
 
-      try {
-        setImportBlocked(true);
-        const chainWrapper = await bridge.getChain(Chain.SECRET);
-        //const secret = await factory.inner(Chain.SECRET);
-        console.log(
-          checkWallet || account,
-          secretCred.viewKey,
-          secretCred.contract
-        );
-        let secretNFTs = await chainWrapper.chain.nftList(
-          checkWallet || account,
-          secretCred.viewKey,
-          secretCred.contract
-        );
+      let secretNFTs = await chainWrapper.chain.nftList(
+        checkWallet || account,
+        secretCred.viewKey,
+        secretCred.contract
+      );
 
-        // let secretNFTs = await secret.nftList(
-        //     "secret1dazpkyxaj9eau9ej0fv266vdaaxtgn9nhak6ad",
-        //     secretCred.viewKey,
-        //     secretCred.contract
-        // );
+      secretNFTs = secretNFTs.map((nft) => ({
+        ...nft,
+        metaData: !nft?.uri
+          ? {
+              ...nft?.metaData,
+              image: nft?.metaData?.media[0]?.url,
+              imageFormat: nft?.metaData?.media[0]?.extension,
+            }
+          : null,
+      }));
+      dispatch(addImportedNFTtoNFTlist(secretNFTs));
 
-        secretNFTs = secretNFTs.map((nft) => ({
-          ...nft,
-          metaData: !nft?.uri
-            ? {
-                ...nft?.metaData,
-                image: nft?.metaData?.media[0]?.url,
-                imageFormat: nft?.metaData?.media[0]?.extension,
-              }
-            : null,
-        }));
+      setLogdIn(true);
+    } catch (error) {
+      dispatch(setError({ message: error.message }));
+      console.log(error);
+    }
+    setImportBlocked(false);
+    dispatch(setBigLoader(false));
+  };
+
+  const createViewingKey = async () => {
+    try {
+      setImportBlocked(true);
+      const { chain, signer, getNFTs, filterNFTs } = await bridge.getChain(
+        Chain.SECRET
+      );
+
+      const created = await chain.setViewingKey(
+        signer,
+        secretCred.contract,
+        secretCred.viewKey
+      );
+      console.log("Viewing Key was created: ", created);
+      if (created) {
+        let secretNFTs = await getNFTs(checkWallet || account, secretCred);
+        secretNFTs = filterNFTs(secretNFTs);
         dispatch(addImportedNFTtoNFTlist(secretNFTs));
-
-        setLogdIn(true);
-      } catch (error) {
-        dispatch(setError({ message: error.message }));
-        console.log(error);
       }
-      setImportBlocked(false);
-      dispatch(setBigLoader(false));
-    };
+    } catch (error) {
+      console.log(error);
+      dispatch(setError(error.message));
+    }
+    setImportBlocked(false);
+  };
 
-    const createViewingKey = async () => {
-      try {
-        setImportBlocked(true);
-        const { chain } = await bridge.getChain(Chain.SECRET);
+  const hadleSelectToggle = (btn) => {
+    switch (btn) {
+      case "set":
+        setToggle("set");
+        break;
+      case "show":
+        setToggle("show");
+        dispatch(setSecretCred(initialSecretCred));
+        break;
+      default:
+        break;
+    }
+  };
 
-        const created = await chain.setViewingKey(
-          signer,
-          secretCred.contract,
-          secretCred.viewKey
-        );
-        console.log("Viewing Key was created: ", created);
-        if (created) {
-          let secretNFTs = await chain.nftList(
-            checkWallet || account,
-            secretCred.viewKey,
-            secretCred.contract
-          );
-          secretNFTs = secretNFTs.map((nft) => ({
-            ...nft,
-            metaData: !nft?.uri
-              ? {
-                  ...nft?.metaData,
-                  image: nft?.metaData?.media[0]?.url,
-                  imageFormat: nft?.metaData?.media[0]?.extension,
-                }
-              : null,
-          }));
-          dispatch(addImportedNFTtoNFTlist(secretNFTs));
-        }
-      } catch (error) {
-        console.log(error);
-        dispatch(setError(error.message));
-      }
-      setImportBlocked(false);
-    };
-
-    const hadleSelectToggle = (btn) => {
-      switch (btn) {
-        case "set":
-          setToggle("set");
-          break;
-        case "show":
-          setToggle("show");
-          dispatch(setSecretCred(initialSecretCred));
-          break;
-        default:
-          break;
-      }
-    };
-
-    useDidUpdateEffect(() => {
-      fetchSecretNfts();
-    }, [refreshSecret]);
-
-    return (
-      <div className="nftListBox withSecret">
-        <div className="secretAuth">
-          <h3>Private ownership </h3>
-          <p>
-            Your assets are protected. Please enter contract address and viewing
-            key below.
-          </p>
-          <div className="secret-toggle">
+  return (
+    <div className="nftListBox withSecret">
+      <div className="secretAuth">
+        <h3>Private ownership </h3>
+        <p>
+          Your assets are protected. Please enter contract address and viewing
+          key below.
+        </p>
+        <div className="secret-toggle">
+          <div
+            onClick={() => hadleSelectToggle("show")}
+            className={toggle === "show" ? "show--selected" : "show"}
+          >
+            Show assets
+          </div>
+          <div
+            onClick={() => hadleSelectToggle("set")}
+            className={toggle === "set" ? "set--selected" : "set"}
+          >
+            Set V-Key
+          </div>
+        </div>
+        <div className="fieldsWrapper">
+          <div className="contract-input__wrapper">
+            <input
+              disabled={toggle === "set" ? true : false}
+              type="text"
+              placeholder="Paste contract address"
+              value={secretCred.contract}
+              onChange={(e) =>
+                dispatch(
+                  setSecretCred({
+                    ...secretCred,
+                    contract: e.target.value,
+                  })
+                )
+              }
+            />
+            {toggle === "set" && <SecretContractsDropdown />}
+          </div>
+          <div className="inputWrapper">
+            <input
+              type="text"
+              placeholder="Enter viewing key"
+              value={secretCred.viewKey}
+              onChange={(e) =>
+                dispatch(
+                  setSecretCred({
+                    ...secretCred,
+                    viewKey: e.target.value,
+                  })
+                )
+              }
+            />
+            <img className="vkey-icon" src={vk} alt="" />
+          </div>
+        </div>
+        <div
+          style={secretCred.contract && secretCred.viewKey ? {} : off}
+          className="withSecret__btns"
+        >
+          {toggle === "show" && (
             <div
-              onClick={() => hadleSelectToggle("show")}
-              className={toggle === "show" ? "show--selected" : "show"}
+              className="transfer-button"
+              onClick={fetchSecretNfts}
+              style={
+                !importBlocked ? {} : { opacity: 0.6, pointerEvents: "none" }
+              }
             >
               Show assets
             </div>
+          )}
+          {toggle === "set" && (
             <div
-              onClick={() => hadleSelectToggle("set")}
-              className={toggle === "set" ? "set--selected" : "set"}
+              className="transfer-button"
+              onClick={createViewingKey}
+              style={
+                !importBlocked ? {} : { opacity: 0.6, pointerEvents: "none" }
+              }
             >
-              Set V-Key
+              Create V-Key
             </div>
-          </div>
-          <div className="fieldsWrapper">
-            <div className="contract-input__wrapper">
-              <input
-                disabled={toggle === "set" ? true : false}
-                type="text"
-                placeholder="Paste contract address"
-                value={secretCred.contract}
-                onChange={(e) =>
-                  dispatch(
-                    setSecretCred({
-                      ...secretCred,
-                      contract: e.target.value,
-                    })
-                  )
-                }
-              />
-              {toggle === "set" && <SecretContractsDropdown />}
-            </div>
-            <div className="inputWrapper">
-              <input
-                type="text"
-                placeholder="Enter viewing key"
-                value={secretCred.viewKey}
-                onChange={(e) =>
-                  dispatch(
-                    setSecretCred({
-                      ...secretCred,
-                      viewKey: e.target.value,
-                    })
-                  )
-                }
-              />
-              <img className="vkey-icon" src={vk} alt="" />
-            </div>
-          </div>
-          <div
-            style={secretCred.contract && secretCred.viewKey ? {} : off}
-            className="withSecret__btns"
-          >
-            {toggle === "show" && (
-              <div
-                className="transfer-button"
-                onClick={fetchSecretNfts}
-                style={
-                  !importBlocked ? {} : { opacity: 0.6, pointerEvents: "none" }
-                }
-              >
-                Show assets
-              </div>
-            )}
-            {toggle === "set" && (
-              <div
-                className="transfer-button"
-                onClick={createViewingKey}
-                style={
-                  !importBlocked ? {} : { opacity: 0.6, pointerEvents: "none" }
-                }
-              >
-                Create V-Key
-              </div>
-            )}
-          </div>
+          )}
         </div>
       </div>
-    );
-  }
-);
+    </div>
+  );
+};
 
 SecretAuth.propTypes = {
   setLogdIn: PropTypes.any,
   refreshSecret: PropTypes.any,
+  serviceContainer: PropTypes.object,
 };
 
 const SecretContractPanned = () => {
@@ -278,7 +246,7 @@ const SecretContractPanned = () => {
 };
 
 export const withSecretAuth = (Wrapped) =>
-  function Callback(props) {
+  withServices(function Callback(props) {
     const secretLoggedIn = useSelector((state) => state.general.secretLoggedIn);
     const { from } = useSelector(({ general: { from, NFTList } }) => ({
       from,
@@ -286,7 +254,6 @@ export const withSecretAuth = (Wrapped) =>
     }));
 
     const dispatch = useDispatch();
-    const refreshSecret = useSelector((state) => state.general.refreshSecret);
 
     const isSecret = from.key === "Secret";
 
@@ -296,7 +263,7 @@ export const withSecretAuth = (Wrapped) =>
       <div className={isSecret ? "secretContainer" : ""}>
         <div style={renderAuth ? {} : { display: "none" }}>
           <SecretAuth
-            refreshSecret={refreshSecret}
+            serviceContainer={props.serviceContainer}
             setLogdIn={(val) => dispatch(setSecretLoggedIn(val))}
           />
         </div>
@@ -305,6 +272,6 @@ export const withSecretAuth = (Wrapped) =>
         </div>
       </div>
     );
-  };
+  });
 
 export default SecretAuth;
