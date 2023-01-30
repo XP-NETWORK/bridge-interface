@@ -18,8 +18,6 @@ import Modals from "./components/Modals/Modals";
 
 import AppContainer from "./components/App/container";
 
-//import TonWeb from 'tonweb'
-
 function App({ network }) {
   const dispatch = useDispatch();
 
