@@ -261,7 +261,9 @@ class AbstractChain {
     if (!this.signer) throw new Error("No signer for ", this.chainParams.text);
     try {
       console.log(this.signer, nft, fees);
-      return await this.chain.preTransfer(this.signer, nft, fees);
+      const res = await this.chain.preTransfer(this.signer, nft, fees);
+      console.log(res, "approval res");
+      return res;
     } catch (e) {
       console.log(e, "in preTransfer");
       throw e;
@@ -483,8 +485,34 @@ class Cosmos extends AbstractChain {
     super(params);
   }
 
-  async getNFTs() {
-    return [];
+  async getNFTs(account, secretCred) {
+    let secretNFTs = await this.chain.nftList(
+      account,
+      secretCred.viewKey,
+      secretCred.contract
+    );
+    secretNFTs = secretNFTs.map((nft) => ({
+      ...nft,
+      native: {
+        ...nft.native,
+        name: nft?.native?.metadata?.name,
+        description: nft?.native?.metadata?.description,
+      },
+      metaData: !nft?.uri
+        ? {
+            ...nft?.native?.metadata,
+            image: nft?.native?.metadata?.media[0]?.url,
+            imageFormat: nft?.native?.metadata?.media[0]?.extension,
+          }
+        : null,
+    }));
+
+    return secretNFTs;
+  }
+
+  handlerResult(res) {
+    console.log(res, "res in secret");
+    return res;
   }
 }
 
