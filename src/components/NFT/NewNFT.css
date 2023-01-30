@@ -28,7 +28,7 @@
     height: 204px;
     overflow: hidden;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     position: relative;
 }
 .sft__mark {
@@ -49,7 +49,7 @@
 }
 .nft-actions__container {
     /* background-color: red; */
-    width: 100%;
+    width: 50%;
     min-height: 32px;
     position: absolute;
     bottom: 0;

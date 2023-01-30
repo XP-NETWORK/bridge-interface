@@ -39,6 +39,8 @@
     "bootstrap": "^4.6.0",
     "crypto-exchange-rate": "git+https://github.com/QuigonCom/exchange-rate#master-dist",
     "dotenv": "^16.0.3",
+    "ethereum-utils": "^1.0.0",
+    "ethereumjs-util": "^7.1.5",
     "ethers": "^5.6.8",
     "hashconnect": "^0.2.2",
     "https-browserify": "^1.0.0",
