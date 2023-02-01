@@ -14,4 +14,8 @@ bridge.code-workspace
 **/workspace.code-workspace
 **/bridge.code-workspace
 
+<<<<<<< HEAD
 >>>>>>> temporary
+=======
+package-lock.json
+>>>>>>> origin/temporary
