@@ -92,7 +92,7 @@ function SendFees(props) {
             .then((fromChainWrapper) =>
                 setChainParams(fromChainWrapper.chainParams)
             );
-    }, []);
+    }, [from]);
 
     useEffect(() => {
         console.log(selectedNFTList);

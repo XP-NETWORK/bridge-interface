@@ -21,7 +21,7 @@
   height: 204px;
   overflow: hidden;
   display: flex;
-  justify-content: center;
+  justify-content:start;
   position: relative;
 }
 .nft__footer {

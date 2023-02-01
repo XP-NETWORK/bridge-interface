@@ -82,7 +82,7 @@ function ChainListBox({ serviceContainer }) {
     // ! ref
     const chainSelectHandler = async (chain) => {
         // eslint-disable-next-line no-debugger
-        debugger;
+        // debugger;
 
         const chainWrapper = await bridge.getChain(chain.nonce);
 
@@ -98,19 +98,19 @@ function ChainListBox({ serviceContainer }) {
                 chainWrapper.chainParams.type === bridge.currentType ||
                 !bridge.currentType
             ) {
-                if (to && to?.text === chain.text) {
-                    if (to?.text === "Harmony" && bitKeep) {
+                if (from && from?.text !== chain.text) {
+                    if (from?.text === "Harmony" && bitKeep) {
                         dispatch(setTemporaryFrom(chain));
                         dispatch(setChangeWallet(true));
                         handleClose();
                     } else if (
                         (account || evmAccount) &&
-                        from.key !== "VeChain"
+                        from.text !== "VeChain"
                     ) {
-                        const switched = await switchNetwork(from);
+                        const switched = await switchNetwork(chain);
                         if (switched) {
-                            dispatch(setTo(from));
-                            dispatch(setFrom(to));
+                            // dispatch(setTo(to));
+                            dispatch(setFrom(chain));
                         }
                     }
                 } else {

@@ -11,3 +11,4 @@ bridge.code-workspace
 **/workspace.code-workspace
 **/bridge.code-workspace
 
+package-lock.json
