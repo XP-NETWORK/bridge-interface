@@ -649,6 +649,7 @@ class APTOS extends AbstractChain {
   constructor(params) {
     super(params);
   }
+
   async preTransfer() {
     return true;
   }
