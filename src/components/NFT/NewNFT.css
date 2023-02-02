@@ -49,7 +49,7 @@
 }
 .nft-actions__container {
     /* background-color: red; */
-    width: 50%;
+    width: 100%;
     min-height: 32px;
     position: absolute;
     bottom: 0;
