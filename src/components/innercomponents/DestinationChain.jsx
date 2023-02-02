@@ -25,7 +25,7 @@ function DestinationChain() {
 				if (address) {
 					const validAddress = isValidChecksumAddress(address);
 					if (validAddress) {
-						dispatch(setReceiver());
+						dispatch(setReceiver(address));
 					} else {
 						throw new Error(
 							"INVALID RECIPIENT ADDRESS: The recipient address is not a valid EVM address"
