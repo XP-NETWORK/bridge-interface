@@ -111,6 +111,9 @@ function ChainListBox({ serviceContainer }) {
                         if (switched) {
                             // dispatch(setTo(to));
                             dispatch(setFrom(chain));
+                            if(to?.text === chain.text){
+                                dispatch(setTo(from))
+                            }
                         }
                     }
                 } else {
