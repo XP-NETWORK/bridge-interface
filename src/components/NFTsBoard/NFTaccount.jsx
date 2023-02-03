@@ -98,6 +98,8 @@ function NFTaccount(props) {
       nfts = fromChain.filterNFTs(nfts);
       if (nfts.length < 1) {
         dispatch(setIsEmpty(true));
+        dispatch(setNFTList([]))
+        dispatch(setPreloadNFTs(0));
       } else {
         dispatch(setIsEmpty(false));
         dispatch(setNFTList(nfts));
