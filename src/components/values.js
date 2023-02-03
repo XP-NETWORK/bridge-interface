@@ -32,13 +32,21 @@ import InternetComputer from "../assets/img/chain/InternetComputer.svg";
 import near from "../assets/img/wallet/NearWallet.svg";
 import okx from "../assets/img/chain/okx.svg";
 import arbitrum from "../assets/img/chain/arbitrum.svg";
+// import brise from "../assets/img/chain/brise.png";
 
 export const EVM = "EVM";
 export const ELROND = "MultiversX";
 export const TEZOS = "TEZOS";
 
 export const stagingWNFT = "https://staging-nft.xp.network";
-export const wnft = ["wnfts.xp.network", "nft.xp.network"];
+export const wnft = [
+    "https://wnfts.xp.network",
+    "https://nft.xp.network",
+    "https://bridge-wnftapi",
+];
+
+export const wnftPattern =
+    "(wnfts.xp.network|nft.xp.network|staging-nft.xp.network|bridge-wnftapi)";
 
 export const biz =
     window.location.hostname.includes("localhost") ||

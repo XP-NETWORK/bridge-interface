@@ -22,7 +22,6 @@ function App({ network }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // debugger
     localStorage.removeItem("walletconnect");
     dispatch(generalSlice.setInnerWidth(window.innerWidth));
     const from = new URLSearchParams(window.location.search).get("from");
@@ -56,6 +55,17 @@ function App({ network }) {
         dispatch(generalSlice.setValidatorsInf(data));
       });
     }, 10000);
+
+    /*const tweb = new TonWeb(
+      new TonWeb.HttpProvider("https://toncenter.com/api/v2/jsonRPC", {
+        apiKey:
+          "05645d6b549f33bf80cee8822bd63df720c6781bd00020646deb7b2b2cd53b73",
+      })
+    )
+
+     tweb.provider.getTransactions('EQBABLUFRe95jzxV8E_XzTsLtK-3eggjs5eVXviA4VLY0UMW', 20).then(trxs => {
+      console.log(trxs, 'trxs')
+    })*/
 
     return () => clearInterval(validatorsInt);
   }, []);

@@ -20,8 +20,6 @@ const scraperUrl = "wss://dest-scraper.herokuapp.com";
 const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/";
 
 export const isApproved = async (c, nft) => {
-  // debugger;
-
   const {
     signers: { signer },
     general: { factory },
@@ -128,7 +126,7 @@ export const checkValidators = () => {
 
 export const getAndSetFactory = async (network) => {
   // eslint-disable-next-line no-debugger
-  // debugger;
+
   let config;
   let factory;
   switch (network) {
@@ -151,7 +149,6 @@ export const getAndSetFactory = async (network) => {
 };
 
 export const handleChainFactory = async (someChain) => {
-  // debugger;
   const { factory } = store.getState().general;
 
   try {
@@ -265,7 +262,7 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 
 export const getAlgorandClaimables = async (account) => {
   const { checkWallet, factory } = store.getState().general;
-  // debugger;
+
   let claimables;
   try {
     claimables = await factory.claimableAlgorandNfts(checkWallet || account);
@@ -304,7 +301,6 @@ export const convertOne1 = (address) => {
 };
 
 export const convert = (address) => {
-  // debugger
   if (checkIfOne1(address)) {
     return convertOne1(address);
   }

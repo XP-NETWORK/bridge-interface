@@ -2109,10 +2109,17 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
+<<<<<<< HEAD
+"@grpc/grpc-js@^1.5.3":
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.8.4.tgz#316674e8905e2dd310d8aa60331e05b32584e6ad"
+  integrity sha512-oaETBotls7FTBpySg5dhyUCyXSxSeCMmkBBXHXG1iw57MiNoB6D7VRhkrXYbwyHM3Q3Afjp4KlsBX0Zb+ELZXw==
+=======
 "@ethersproject/wordlists@5.5.0":
   version "5.5.0"
   resolved "https://registry.npmjs.org/@ethersproject/wordlists/-/wordlists-5.5.0.tgz"
   integrity sha512-bL0UTReWDiaQJJYOC9sh/XcRu/9i2jMrzf8VLRmPKx58ckSlOJiohODkECCO50dtLZHcGU6MLXQ4OOrgBwP77Q==
+>>>>>>> origin/temporary
   dependencies:
     "@ethersproject/bytes" "^5.5.0"
     "@ethersproject/hash" "^5.5.0"
@@ -2629,9 +2636,15 @@
     protobufjs "^6.11.3"
 
 "@hashgraph/sdk@^2.14.2":
+<<<<<<< HEAD
+  version "2.19.1"
+  resolved "https://registry.yarnpkg.com/@hashgraph/sdk/-/sdk-2.19.1.tgz#9043637ccc325edfeb27865508f12c484154ce03"
+  integrity sha512-Mn/o5gEUR/modcd7AfnGjHnEULXb7LYl49pSbSgWyE+HC0wnnPCXcQmThLvul4o2gMFKu2UCTxRiL976GQaQtg==
+=======
   version "2.19.0"
   resolved "https://registry.npmjs.org/@hashgraph/sdk/-/sdk-2.19.0.tgz"
   integrity sha512-EXfk8wRHK9KvDHwrxcOA1LcxBFwamGGBPMJWPfQvo23N3XLh4fWXJu8iv87+Ea6YTmE8VGu3C2rBEjSf9ClcSA==
+>>>>>>> origin/temporary
   dependencies:
     "@ethersproject/rlp" "^5.7.0"
     "@grpc/grpc-js" "^1.7.0"
@@ -3627,9 +3640,15 @@
     bs58 "^4.0.1"
 
 "@metaplex-foundation/mpl-token-metadata@^2.3.3":
+<<<<<<< HEAD
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/@metaplex-foundation/mpl-token-metadata/-/mpl-token-metadata-2.7.0.tgz#3d404d27fb65c638263bff115e10115c30f94c96"
+  integrity sha512-dF20BAD5Kvd/qNOa8xmANO5//xvsmleCsD98HHeqBiz20HwC01y6VMkfwjXgVmrg8WSLpzojlQgMYO6jKhuZtg==
+=======
   version "2.5.2"
   resolved "https://registry.npmjs.org/@metaplex-foundation/mpl-token-metadata/-/mpl-token-metadata-2.5.2.tgz"
   integrity sha512-lAjQjj2gGtyLq8MOkp4tWZSC5DK9NWgPd3EoH0KQ9gMs3sKIJRik0CBaZg+JA0uLwzkiErY2Izus4vbWtRADJQ==
+>>>>>>> origin/temporary
   dependencies:
     "@metaplex-foundation/beet" "^0.7.1"
     "@metaplex-foundation/beet-solana" "^0.4.0"
@@ -7807,17 +7826,22 @@ arweave-stream-tx@^1.1.0:
   dependencies:
     exponential-backoff "^3.1.0"
 
+<<<<<<< HEAD
+arweave@^1.10.13, arweave@^1.11.4:
+  version "1.12.4"
+  resolved "https://registry.yarnpkg.com/arweave/-/arweave-1.12.4.tgz#08a4fcbda250c490150cb094ce57119eb1e46b3b"
+  integrity sha512-W5z7hb9/ZP2vy6BiYC+2obfGMhlhz/DaCkEXpkj/4hjaecWYUnvlUX5aCI2i0+lCrzbBUFbz+maDihUpBrdZpg==
+=======
 arweave@^1.10.0, arweave@^1.10.13, arweave@^1.11.4:
   version "1.12.2"
   resolved "https://registry.npmjs.org/arweave/-/arweave-1.12.2.tgz"
   integrity sha512-gm82sbUd3AqiRxZ9hWRBnC2mRff+kCuVw1cSdMwhUmVyeSgvDxi5GkdCKHUm1tMvu59f45OcZRiL1yEIvvJY2Q==
+>>>>>>> origin/temporary
   dependencies:
     arconnect "^0.4.2"
     asn1.js "^5.4.1"
-    axios "^0.27.2"
     base64-js "^1.5.1"
     bignumber.js "^9.0.2"
-    util "^0.12.4"
 
 asap@~2.0.3, asap@~2.0.6:
   version "2.0.6"
@@ -8043,10 +8067,17 @@ axe-core@^4.4.3:
   resolved "https://registry.npmjs.org/axe-core/-/axe-core-4.6.1.tgz"
   integrity sha512-lCZN5XRuOnpG4bpMq8v0khrWtUOn+i8lZSb6wHZH56ZfbIEv6XwJV84AAueh9/zi7qPVJ/E4yz6fmsiyOmXR4w==
 
+<<<<<<< HEAD
+axios@*, axios@^1.2.1:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.3.tgz#31a3d824c0ebf754a004b585e5f04a5f87e6c4ff"
+  integrity sha512-pdDkMYJeuXLZ6Xj/Q5J3Phpe+jbGdsSzlQaFVkMQzRUL05+6+tetX8TV3p4HrU4kzuO9bt+io/yGQxuyxA/xcw==
+=======
 axios@*:
   version "1.2.2"
   resolved "https://registry.npmjs.org/axios/-/axios-1.2.2.tgz"
   integrity sha512-bz/J4gS2S3I7mpN/YZfGFTqhXTYzRho8Ay38w2otuuDR322KzFIWm/4W2K6gIwvWaws5n+mnb7D1lN9uD+QH6Q==
+>>>>>>> origin/temporary
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -8109,6 +8140,28 @@ axios@^0.27.0, axios@^0.27.2, axios@0.27.2:
     follow-redirects "^1.14.9"
     form-data "^4.0.0"
 
+<<<<<<< HEAD
+axios@^0.21.0, axios@^0.21.1, axios@^0.21.3:
+  version "0.21.4"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
+  integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
+  dependencies:
+    follow-redirects "^1.14.0"
+
+axios@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.25.0.tgz#349cfbb31331a9b4453190791760a8d35b093e0a"
+  integrity sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==
+  dependencies:
+    follow-redirects "^1.14.7"
+
+axios@^0.26.0, axios@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.26.1.tgz#1ede41c51fcf51bbbd6fd43669caaa4f0495aaa9"
+  integrity sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==
+  dependencies:
+    follow-redirects "^1.14.8"
+=======
 axios@^1.2.1:
   version "1.2.2"
   resolved "https://registry.npmjs.org/axios/-/axios-1.2.2.tgz"
@@ -8131,6 +8184,7 @@ axobject-query@^0.1.0:
   integrity sha512-hEvSXm+TPfadELgugiwUBoTQBFvNF+riZKUxuqoRbm7dv06hVd0yvyIaS4DBohxgO8WpIJ2/OSEhdk+iw/LWsg==
   dependencies:
     ast-types-flow "0.0.7"
+>>>>>>> origin/temporary
 
 axobject-query@^2.2.0:
   version "2.2.0"
@@ -27353,6 +27407,9 @@ util@^0.10.3:
   dependencies:
     inherits "2.0.3"
 
+<<<<<<< HEAD
+util@^0.12.0:
+=======
 util@^0.11.0:
   version "0.11.1"
   resolved "https://registry.npmjs.org/util/-/util-0.11.1.tgz"
@@ -27361,6 +27418,7 @@ util@^0.11.0:
     inherits "2.0.3"
 
 util@^0.12.0, util@^0.12.4:
+>>>>>>> origin/temporary
   version "0.12.5"
   resolved "https://registry.npmjs.org/util/-/util-0.12.5.tgz"
   integrity sha512-kZf/K6hEIrWHI6XqOFUiiMa+79wE/D8Q+NCNAWclkyg3b4d2k7s0QGepNjiABc+aR3N1PAyHL7p6UcLY6LmrnA==
@@ -28773,9 +28831,9 @@ xmlhttprequest@1.8.0:
   resolved "https://registry.npmjs.org/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz"
   integrity sha512-58Im/U0mlVBLM38NdZjHyhuMtCqa61469k2YP/AaPbvCoV9aQGUpbJBj1QRm2ytRiVQBD/fsw7L2bJGDVQswBA==
 
-"xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
+"xp.network@git+https://github.com/xp-network/xpjs#production":
   version "4.0.2"
-  resolved "git+https://github.com/xp-network/xpjs#77f6cb178aaabe15e27711d31ddd6eb4627e8b02"
+  resolved "git+https://github.com/xp-network/xpjs#fbb53a50b995b2473bbcf76430de51573f405034"
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"
@@ -28828,8 +28886,12 @@ xmlhttprequest@1.8.0:
 
 "xpnet-web3-contracts@git+https://github.com/xp-network/XP.network-HECO-Migration#aa9473ea3b0f748bba54f5755abcfd17e3548237":
   version "0.1.0"
+<<<<<<< HEAD
+  resolved "git+https://github.com/xp-network/XP.network-HECO-Migration#aa9473ea3b0f748bba54f5755abcfd17e3548237"
+=======
   resolved "git+ssh://git@github.com/xp-network/XP.network-HECO-Migration.git#aa9473ea3b0f748bba54f5755abcfd17e3548237"
   integrity sha512-yxY4ubrSFh8JjlfXwdXHc+KyZRFV+xhZoRpr7N0DYTuZwpT7zZvcHnP2YOwHmOF9xeSTxojI3IM+Ln3bwGn2ow==
+>>>>>>> origin/temporary
   dependencies:
     ethers "^5.5.4"
 

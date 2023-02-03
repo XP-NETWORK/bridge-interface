@@ -42,7 +42,6 @@ export default function NFTSearch() {
   };
 
   const handleKeyDown = async (e) => {
-    // debugger;
     const chain = chains.find((e) => e.key === from.key);
     const _account =
       checkWallet ||

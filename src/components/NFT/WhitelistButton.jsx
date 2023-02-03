@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 // import { biz } from "../values";
 
 export const WhitelistButton = ({ whitelist, isNFTWhitelisted }) => {
-    const { text, testNet } = useSelector((state) => state.general.from);
-
+    const { text } = useSelector((state) => state.general.from);
+    const testnet = useSelector((state) => state.general.testNet);
     // const show = text.match(/Polygon|BSC|Ethereum/);
 
     const show = () => {
@@ -18,7 +18,7 @@ export const WhitelistButton = ({ whitelist, isNFTWhitelisted }) => {
 
     return !isNFTWhitelisted && show ? (
         <div
-            style={{ display: testNet ? "none" : "auto" }}
+            style={{ display: testnet ? "none" : "" }}
             className="whitelist-btn"
             onClick={whitelist}
         >
