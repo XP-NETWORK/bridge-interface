@@ -20,7 +20,7 @@ export const fonts = [
 export const chains = [
   ...valuesChains.map((c) => ({
     ...c,
-    value: c.value || c.text,
+    value: c.key || c.text,
   })),
 ]
   .filter((c) => c.mainnet || c.coming || c.testNet)
@@ -28,10 +28,10 @@ export const chains = [
   .sort((a, b) => (a.coming && !b.coming ? 1 : -1));
 
 export const activeChains = [
-  ...chains.filter((chain) => !chain.maintenance).map((c) => c.value),
+  ...chains.filter((chain) => !chain.maintenance).map((c) => c.key),
 ];
 
-export const newChains = ["OKC", "Caduceus", "Moonbeam"];
+export const newChains = ["OKC", "Caduceus", "SKALE"];
 
 export const comingSoonChains = ["Cardano", "Solana", "TON"];
 
@@ -93,7 +93,7 @@ export const initialState = {
   cardRadius: 25,
   accentColor: "#3e64ed",
   secondaryColor: "#0c0d0d",
-  selectedChains: [...chains.map((c) => c.value)],
+  selectedChains: [...chains.map((c) => c.key)],
   selectedWallets: [...wallets],
   copied: null,
   borderColor: "#988b8b",

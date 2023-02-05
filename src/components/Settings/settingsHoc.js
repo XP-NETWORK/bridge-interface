@@ -302,7 +302,7 @@ const settingsHoc = (Wrapped) =>
       if (
         selectedChains.every((c) => {
           const obj = chains.find((cc) => cc.key === c);
-          return obj.type !== "EVM";
+          return obj?.type !== "EVM";
         })
       ) {
         removMultiple(availability.Evms);

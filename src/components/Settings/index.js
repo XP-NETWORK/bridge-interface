@@ -223,7 +223,7 @@ function WSettings({
                             <li
                               key={i}
                               className="blockChain_item"
-                              onClick={() => chainCheck(chain.value)}
+                              onClick={() => chainCheck(chain.key)}
                             >
                               <div className="select_nft">
                                 <input
@@ -231,12 +231,12 @@ function WSettings({
                                   name=""
                                   id=""
                                   readOnly
-                                  checked={selectedChains.includes(chain.value)}
+                                  checked={selectedChains.includes(chain.key)}
                                 />
                                 <span className="icon selectNfticon"></span>
                               </div>
                               <div className="blockChainItem">
-                                <img src={chain.image.src} alt={chain.value} />
+                                <img src={chain.image.src} alt={chain.key} />
 
                                 {chain.text}
 
