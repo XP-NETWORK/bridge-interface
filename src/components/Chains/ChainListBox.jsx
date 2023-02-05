@@ -55,6 +55,10 @@ function ChainListBox({ serviceContainer }) {
 
   const [reached, setReached] = useState(false);
 
+  const searchCriteria = (chain) =>
+    chain.text.toLowerCase().includes(chainSearch.toLowerCase()) ||
+    chain.key.toLowerCase().includes(chainSearch.toLowerCase());
+
   const handleClose = () => {
     dispatch(setChainModal(false));
     dispatch(setDepartureOrDestination(""));
@@ -76,8 +80,6 @@ function ChainListBox({ serviceContainer }) {
   // ! ref
   const chainSelectHandler = async (chain) => {
     // eslint-disable-next-line no-debugger
-    // debugger;
-
     const chainWrapper = await bridge.getChain(chain.nonce);
 
     if (departureOrDestination === "departure") {
@@ -134,12 +136,9 @@ function ChainListBox({ serviceContainer }) {
   };
 
   useEffect(() => {
-    // debugger;
     let filteredChains = chains;
     if (chainSearch && departureOrDestination === "departure") {
-      filteredChains = chains.filter((chain) =>
-        chain.text.toLowerCase().includes(chainSearch.toLowerCase())
-      );
+      filteredChains = chains.filter((chain) => searchCriteria(chain));
     }
     const withNew = filteredChains
       .filter((chain) => chain.newChain)
@@ -195,9 +194,7 @@ function ChainListBox({ serviceContainer }) {
   useEffect(() => {
     let filteredChains = chains;
     if (chainSearch && departureOrDestination === "destination") {
-      filteredChains = chains.filter((chain) =>
-        chain.text.toLowerCase().includes(chainSearch.toLowerCase())
-      );
+      filteredChains = chains.filter((chain) => searchCriteria(chain));
     }
     const withNew = filteredChains
       .filter((chain) => chain.newChain)
@@ -290,7 +287,7 @@ function ChainListBox({ serviceContainer }) {
                       chainKey={key}
                       filteredChain={chain}
                       image={image}
-                      key={`chain-${key}`}
+                      key={key}
                       nonce={nonce}
                     />
                   )

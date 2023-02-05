@@ -85,7 +85,6 @@ function SendFees(props) {
   }
 
   function getNumToFix() {
-    // debugger
     let num = 1;
     let str;
     if (fees > 0 && fees) {

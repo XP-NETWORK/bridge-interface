@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { ethers } from "ethers";
 import {
-  setAccount,
   setAccountModal,
   setFrom,
   setUnsupportedNetwork,
@@ -19,37 +18,22 @@ import PropTypes from "prop-types";
 export default function UserConnect({ mobile }) {
   const dispatch = useDispatch();
   const to = useSelector((state) => state.general.to);
-  const elrondAccount = useSelector((state) => state.general.elrondAccount);
-  const tezosAccount = useSelector((state) => state.general.tezosAccount);
-  const algorandAccount = useSelector((state) => state.general.algorandAccount);
+
   const WCProvider = useSelector((state) => state.general.WCProvider);
   const _account = useSelector((state) => state.general.account);
   const innerWidth = useSelector((state) => state.general.innerWidth);
-  const tronWallet = useSelector((state) => state.general.tronWallet);
-  const bitKeep = useSelector((state) => state.general.bitKeep);
-  const WalletConnect = useSelector((state) => state.general.WalletConnect);
-  const { account, chainId, active } = useWeb3React();
-  const hederaAccount = useSelector((state) => state.general.hederaAccount);
-  const testnet = useSelector((state) => state.general.testNet);
-  const secretAccount = useSelector((state) => state.general.secretAccount);
-  const location = useLocation();
-  const tonAccount = useSelector((state) => state.general.tonAccount);
-  const aptosAccount = useSelector((state) => state.general.aptosAccount);
 
-  const walletAccount =
-    aptosAccount ||
-    tonAccount ||
-    hederaAccount ||
-    secretAccount ||
-    account ||
-    elrondAccount ||
-    tezosAccount ||
-    algorandAccount ||
-    tronWallet ||
-    _account;
+  const bitKeep = useSelector((state) => state.general.bitKeep);
+
+  const { account, chainId } = useWeb3React();
+
+  const testnet = useSelector((state) => state.general.testNet);
+
+  const location = useLocation();
+
+  const walletAccount = _account;
 
   const handleConnect = () => {
-    // debugger;
     switch (location.pathname) {
       case "/discounts":
         if (!walletAccount) {
@@ -64,7 +48,7 @@ export default function UserConnect({ mobile }) {
     }
   };
 
-  const getAccountString = (walletAccount) => {
+  const getAccountString = () => {
     if (innerWidth >= 425) {
       return `${walletAccount.substring(0, 5)}...${walletAccount.substring(
         walletAccount.length - 4
@@ -78,9 +62,6 @@ export default function UserConnect({ mobile }) {
         walletAccount.length - 4
       )}`;
     }
-    return `${walletAccount.substring(0, 5)}...${walletAccount.substring(
-      walletAccount.length - 4
-    )}`;
   };
 
   const getChain = async (id) => {
@@ -92,7 +73,6 @@ export default function UserConnect({ mobile }) {
   };
 
   const handleChangeAccountOrChainId = async (hex) => {
-    // debugger;
     const hexToDecimal = (hex) => parseInt(hex, 16);
     const decimal = hexToDecimal(hex);
     const chainConnected = await getChain(decimal);
@@ -159,12 +139,13 @@ export default function UserConnect({ mobile }) {
     }
   }, [chainId]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (!account && WalletConnect) {
       active !== undefined && window.location.reload();
     }
+
     dispatch(setAccount(account));
-  }, [active]);
+  }, [active]);*/
 
   return (
     <div
@@ -173,7 +154,7 @@ export default function UserConnect({ mobile }) {
         walletAccount ? "navbar-connect connected" : "navbar-connect"
       } ${mobile ? "xmobile_only" : "xdesktop_only"}`}
     >
-      {walletAccount ? getAccountString(walletAccount) : "Connect Wallet"}
+      {walletAccount ? getAccountString() : "Connect Wallet"}
       {walletAccount && <Identicon account={walletAccount} />}
     </div>
   );

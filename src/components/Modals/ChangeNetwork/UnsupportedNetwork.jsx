@@ -29,7 +29,7 @@ export default function UnsupportedNetwork() {
   //         location.pathname === "/testnet/account");
 
   // async function switchNetwork() {
-  //   // debugger
+  //
   //     setLoader(true);
   //     const info = testnet
   //       ? TESTNET_CHAIN_INFO[from?.key]

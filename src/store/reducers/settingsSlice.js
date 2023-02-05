@@ -37,7 +37,7 @@ export const comingSoonChains = ["Cardano", "Solana", "TON"];
 
 export const availability = {
   Algorand: ["MyAlgo", "AlgoSigner"],
-  Elrond: ["Maiar", "MaiarExtension"],
+  Elrond: ["Maiar", "MultiversX DeFi Wallet"],
   Tron: ["TronLink"],
   Tezos: ["Beacon", "TempleWallet"],
   VeChain: ["Sync2", "VeChainThor"],
@@ -57,7 +57,7 @@ export const wallets = [
   "Maiar",
   "Beacon",
   "TempleWallet",
-  "MaiarExtension",
+  "MultiversX DeFi Wallet",
   "Sync2",
   "VeChainThor",
   ...(biz ? ["TonWallet"] : []),

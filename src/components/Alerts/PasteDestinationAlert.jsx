@@ -5,34 +5,33 @@ import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
 import { setPasteDestinationAlert } from "../../store/reducers/generalSlice";
 
 function PasteDestinationAlert() {
-    const dispatch = useDispatch();
-    const receiver = useSelector((state) => state.general.receiver);
-    const alert = useSelector((state) => state.general.pasteDestinationAlert);
+  const dispatch = useDispatch();
+  const receiver = useSelector((state) => state.general.receiver);
+  const alert = useSelector((state) => state.general.pasteDestinationAlert);
 
-    const handleClose = () => {
-        // debugger
-        dispatch(setPasteDestinationAlert(false));
-    };
+  const handleClose = () => {
+    dispatch(setPasteDestinationAlert(false));
+  };
 
-    useEffect(() => {
-        if (receiver) {
-            dispatch(setPasteDestinationAlert(false));
-        }
-    }, [receiver]);
+  useEffect(() => {
+    if (receiver) {
+      dispatch(setPasteDestinationAlert(false));
+    }
+  }, [receiver]);
 
-    return (
-        <div id="alertb">
-            {alert && (
-                <div className="aleartBox">
-                    Paste destination address to continue bridging
-                    <span onClick={handleClose} className="closeBox">
-                        {" "}
-                        <Close className="svgWidget closeIcon" />
-                    </span>
-                </div>
-            )}
+  return (
+    <div id="alertb">
+      {alert && (
+        <div className="aleartBox">
+          Paste destination address to continue bridging
+          <span onClick={handleClose} className="closeBox">
+            {" "}
+            <Close className="svgWidget closeIcon" />
+          </span>
         </div>
-    );
+      )}
+    </div>
+  );
 }
 
 export default PasteDestinationAlert;

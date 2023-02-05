@@ -99,6 +99,7 @@ const transfer = async (
     store.dispatch(setQRCodeModal(false));
     return result;
   } catch (error) {
+    console.log(error,'error');
     store.dispatch(setError(error));
     const date = new Date();
     const errBogy = {

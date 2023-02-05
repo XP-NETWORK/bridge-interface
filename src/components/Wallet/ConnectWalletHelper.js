@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 /* eslint-disable valid-typeof */
 
 import { injected, algoConnector, web3Modal } from "../../wallet/connectors";
@@ -201,7 +200,7 @@ const setBitKeepSigner = (account) => {
 };
 
 export const connectBitKeep = async (from) => {
-  // debugger;
+
   let provider;
   const isInstallBikeep = () => {
     return window.bitkeep && window.bitkeep?.ethereum;

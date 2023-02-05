@@ -37,7 +37,6 @@ export const getUrl = (nft) => {
   let urls = [];
   let ipfsArr = [];
 
-  // debugger
   values.forEach((item) => {
     if (item && typeof item === "object") {
       const objValues = Object.values(item);
@@ -57,7 +56,6 @@ export const getUrl = (nft) => {
     if (item && typeof item === "string" && item.length > 1) {
       strings.push(item);
     } else if (item && typeof item === "object") {
-      // debugger
       const vals = Object.values(item);
       vals.forEach((item) => {
         if (typeof item === "string" && item.length > 1) {

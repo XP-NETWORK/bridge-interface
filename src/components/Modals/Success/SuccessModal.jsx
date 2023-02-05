@@ -243,13 +243,13 @@ export default withServices(function SuccessModal({ serviceContainer }) {
           <div className="success-nft-info">
             {selectedNFTList.length
               ? selectedNFTList.map((nft, index) => (
-                  <TransferredNft
-                    key={`index-${index}-nft-success`}
-                    nft={nft}
-                    links={links}
-                    testnet={testnet}
-                  />
-                ))
+                <TransferredNft
+                  key={`index-${index}-nft-success`}
+                  nft={nft}
+                  links={links}
+                  testnet={testnet}
+                />
+              ))
               : ""}
           </div>
         </div>

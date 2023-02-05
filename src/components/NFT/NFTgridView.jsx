@@ -33,7 +33,6 @@ function NFTgridView({ serviceContainer }) {
   const loader = useSelector((state) => state.general.bigLoader);
 
   useEffect(() => {
-    console.log(from.nonce);
     bridge.getChain(from.nonce).then((fromChain) => setChain(fromChain));
   }, []);
 
@@ -59,7 +58,7 @@ function NFTgridView({ serviceContainer }) {
                 key={`nft-${index}`}
                 claimables={true}
                 chain={chain}
-                bridge={bridge}
+                serviceContainer={serviceContainer}
               />
             ))}
           {currentsNFTs?.length
@@ -69,7 +68,7 @@ function NFTgridView({ serviceContainer }) {
                   index={index}
                   key={`nft-${index}`}
                   chain={chain}
-                  bridge={bridge}
+                  serviceContainer={serviceContainer}
                 />
               ))
             : (!algorandClaimables || algorandClaimables?.length < 1) && (

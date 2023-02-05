@@ -77,7 +77,6 @@ export default function ChangeWalletModal() {
 
   const handleClick = () => {
     // eslint-disable-next-line no-debugger
-    // debugger;
     deactivate();
     //dispatch(clearStateForNewConnection());
     dispatch(setFrom(temporaryFrom));

@@ -109,6 +109,7 @@ function ElrondWallet({ wallet, close, serviceContainer }) {
         }
       }
 
+      console.log(account, "account");
       dispatch(setAccount(account.address));
       chainWrapper.setSigner(account.signer);
       bridge.setCurrentType(chainWrapper);

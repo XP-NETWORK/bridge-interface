@@ -298,6 +298,15 @@ const settingsHoc = (Wrapped) =>
           addWallets && addMultiple(addWallets);
         }
       }
+
+      if (
+        selectedChains.every((c) => {
+          const obj = chains.find((cc) => cc.key === c);
+          return obj.type !== "EVM";
+        })
+      ) {
+        removMultiple(availability.Evms);
+      }
     }, [selectedChains]);
 
     const toggleShow = () =>

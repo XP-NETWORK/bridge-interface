@@ -10,7 +10,6 @@ import ThemeSwitch from "./themeSwitch";
 import {
   chains,
   wallets,
-  availability,
   fonts,
   newChains,
 } from "../../store/reducers/settingsSlice";
@@ -328,17 +327,23 @@ function WSettings({
                           Unselect all
                         </button>
                         {wallets?.map((wallet, i) => {
-                          const chain = Object.keys(availability).find((key) =>
+                          /*const chain = Object.keys(availability).find((key) =>
                             availability[key].includes(wallet)
                           );
-                          //const notSingleCommomChain = !selectedChains.includes()
+                          console.log(selectedChains);
+                          console.log(chain);
+                            */
                           const li = (
                             <li
                               key={i + "wallet"}
                               className={`blockChain_item ${
-                                !chain || selectedChains.includes(chain)
+                                /*
+                                !chain ||
+                                chain === "Evms" ||
+                                selectedChains.some((c) => chain === c)
                                   ? ""
                                   : "inactive"
+                              */ ""
                               }`}
                               onClick={() => walletCheck(wallet)}
                             >
