@@ -6,13 +6,19 @@ import { useSelector } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
+import { useDispatch } from "react-redux";
+
+import { setAccount } from "../../../store/reducers/generalSlice";
+
 export const withEVMConnection = (Wrapped) =>
   function CB(props) {
     const { serviceContainer } = props;
 
+    const dispatch = useDispatch();
+
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const WCProvider = useSelector((state) => state.general.WCProvider);
-    const { chainId, account } = useWeb3React();
+    const { chainId, account, active } = useWeb3React();
 
     const { bridge } = serviceContainer;
 
@@ -31,11 +37,12 @@ export const withEVMConnection = (Wrapped) =>
             const signer = provider.getSigner(account);
 
             chainWrapper.setSigner(signer);
+            dispatch(setAccount(account));
             bridge.setCurrentType(chainWrapper);
           });
         })();
       }
-    }, [serviceContainer, account, chainId]);
+    }, [serviceContainer, account, chainId, active]);
 
     return <Wrapped {...props} />;
   };
