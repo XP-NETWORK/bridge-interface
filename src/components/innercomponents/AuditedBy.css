@@ -21,6 +21,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 18px;
+    margin-bottom: 20px;
 }
 
 @media only screen and (max-width: 1024px) {
