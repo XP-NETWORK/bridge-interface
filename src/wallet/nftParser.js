@@ -63,11 +63,6 @@ export const parseNFT = async (
           nftData = await nftGeneralParser(nft, account, whitelisted);
         }
         if (nftData === "no NFT with that data was found") {
-          /*if (!nft.uri) {
-            evm.init(factory);
-            nft = await evm.getUri(nft, nft.collectionIdent);
-          }*/
-
           nftData = await cache.add(unwraped.nft, account, whitelisted);
 
           if (

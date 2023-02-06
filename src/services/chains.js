@@ -88,6 +88,7 @@ class AbstractChain {
 
     if (!uri && this.chain.getTokenURI) {
       uri = await this.chain.getTokenURI(contract, nft.native?.tokenId);
+      console.log(uri, "uri");
     }
 
     return {
