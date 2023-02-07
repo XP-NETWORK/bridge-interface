@@ -8,9 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
 import {
-	checkValidators,
-	fetchXPUpdate,
-	transformToDate,
+    checkValidators,
+    fetchXPUpdate,
+    transformToDate,
 } from "./wallet/helpers";
 import { setChainModal } from "./store/reducers/generalSlice";
 import { chains } from "./components/values";
