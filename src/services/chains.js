@@ -88,7 +88,6 @@ class AbstractChain {
 
     if (!uri && this.chain.getTokenURI) {
       uri = await this.chain.getTokenURI(contract, nft.native?.tokenId);
-      console.log(uri, "uri");
     }
 
     return {
@@ -419,6 +418,14 @@ class Elrond extends AbstractChain {
       nft: {
         ...nft,
         collectionIdent: contract,
+        metaData: /(.png|.jpe?g)$/.test(data.wrapped.original_uri)
+          ? {
+              image: data.image,
+              name: data.name,
+              attributes: data.attributes,
+              description: data.description,
+            }
+          : undefined,
         native: {
           ...nft.native,
           chainId: String(this.nonce),
