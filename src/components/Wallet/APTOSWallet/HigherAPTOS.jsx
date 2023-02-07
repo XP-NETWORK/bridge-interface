@@ -9,9 +9,13 @@ import {
 import { setSigner } from "../../../store/reducers/signersSlice";
 import { getRightPath } from "../../../wallet/helpers";
 import { connectMartian, connectPetra, connectPontem } from "./AptosConnectors";
+import { withServices } from "../../App/hocs/withServices";
+import { Chain } from "xp.network";
 
 export default function HigherAPTOS(OriginalComponent) {
-    return function updatedComponent() {
+    const updatedComponent = withServices((props) => {
+        const { serviceContainer, close } = props;
+        const { bridge } = serviceContainer;
         const dispatch = useDispatch();
         const navigate = useNavigate();
         const { from, testNet, to } = useSelector((state) => state.general);
@@ -34,56 +38,50 @@ export default function HigherAPTOS(OriginalComponent) {
 
         const connectWallet = async (wallet) => {
             let connected;
-            let Aptos;
+            let signer;
             switch (wallet) {
                 case "Martian":
                     connected = await connectMartian();
                     dispatch(setWalletsModal(false));
                     dispatch(setConnectedWallet("Martian"));
-                    Aptos = window.martian;
-                    dispatch(
-                        setSigner({
-                            aptosClient: Aptos,
-                            address: connected.address,
-                        })
-                    );
+                    signer = window.martian;
                     break;
                 case "Petra":
                     connected = await connectPetra();
                     dispatch(setWalletsModal(false));
                     dispatch(setConnectedWallet("Petra"));
-                    Aptos = window.petra;
-                    dispatch(
-                        setSigner({
-                            aptosClient: Aptos,
-                            address: connected.address,
-                        })
-                    );
+                    signer = window.petra;
                     break;
                 case "Pontem":
                     connected = await connectPontem();
                     dispatch(setWalletsModal(false));
                     dispatch(setConnectedWallet("Pontem"));
-                    Aptos = window.pontem;
-                    dispatch(
-                        setSigner({
-                            aptosClient: Aptos,
-                            address: connected.address,
-                        })
-                    );
+                    signer = window.pontem;
                     break;
                 default:
                     break;
             }
+            const chainWrapper = await bridge.getChain(Chain.APTOS);
+            chainWrapper.setSigner(signer);
+            dispatch(
+                setSigner({
+                    aptosClient: window.aptos,
+                    address: connected.address,
+                })
+            );
+            bridge.setCurrentType(chainWrapper);
             dispatch(setAccount(connected.address));
             dispatch(setWalletsModal(false));
+            close();
             navigateToAccountRoute();
         };
+
         return (
             <OriginalComponent
                 styles={getStyles}
                 connectWallet={connectWallet}
             />
         );
-    };
+    });
+    return updatedComponent;
 }
