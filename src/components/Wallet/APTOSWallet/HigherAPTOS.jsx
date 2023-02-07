@@ -6,7 +6,7 @@ import {
     setConnectedWallet,
     setWalletsModal,
 } from "../../../store/reducers/generalSlice";
-import { setSigner } from "../../../store/reducers/signersSlice";
+// import { setSigner } from "../../../store/reducers/signersSlice";
 import { getRightPath } from "../../../wallet/helpers";
 import { connectMartian, connectPetra, connectPontem } from "./AptosConnectors";
 import { withServices } from "../../App/hocs/withServices";
@@ -44,31 +44,25 @@ export default function HigherAPTOS(OriginalComponent) {
                     connected = await connectMartian();
                     dispatch(setWalletsModal(false));
                     dispatch(setConnectedWallet("Martian"));
-                    signer = window.martian;
+                    signer = connected;
                     break;
                 case "Petra":
                     connected = await connectPetra();
                     dispatch(setWalletsModal(false));
                     dispatch(setConnectedWallet("Petra"));
-                    signer = window.petra;
+                    signer = connected;
                     break;
                 case "Pontem":
                     connected = await connectPontem();
                     dispatch(setWalletsModal(false));
                     dispatch(setConnectedWallet("Pontem"));
-                    signer = window.pontem;
+                    signer = connected;
                     break;
                 default:
                     break;
             }
             const chainWrapper = await bridge.getChain(Chain.APTOS);
             chainWrapper.setSigner(signer);
-            dispatch(
-                setSigner({
-                    aptosClient: window.aptos,
-                    address: connected.address,
-                })
-            );
             bridge.setCurrentType(chainWrapper);
             dispatch(setAccount(connected.address));
             dispatch(setWalletsModal(false));

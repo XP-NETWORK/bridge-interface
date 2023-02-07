@@ -78,6 +78,10 @@ function NFTaccount(props) {
         (state) => state.general.accountWalletModal
     );
 
+    const arr = ["sdssds", "sdasdsdad", "sadadads", "sdjhskjdhf"];
+    const lengthsWords = (arr) => arr.map((e) => e.length);
+    console.log(lengthsWords(arr));
+
     let _account =
         checkWallet ||
         hederaAccount ||
