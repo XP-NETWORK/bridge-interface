@@ -3,15 +3,17 @@ import PropTypes from "prop-types";
 
 export default function SelectedNFTs({ show, on }) {
     const selected = useSelector((state) => state.general.selectedNFTList);
+    const nfts = useSelector((state) => state.general.NFTList);
 
     return (
         <div onClick={show} className="selected-nfts__button">
             <span className="selected-nfts__title">
                 {!on ? "Selected" : "Back"}
             </span>
-            <span className="selected-nfts__selected">{`/ ${
+            {/* <span className="selected-nfts__selected">{`/ ${
                 selected ? selected.length : ""
-            } `}</span>
+            } `}</span> */}
+            <span className="selected-nfts__selected">{selected.length} / {nfts?.length}</span>
         </div>
     );
 }

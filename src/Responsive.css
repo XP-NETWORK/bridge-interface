@@ -364,4 +364,8 @@
   .nonftContainer .row {
     gap: 10px;
   }
+  .App{
+    padding-left: 5%;
+    padding-right: 5%;
+  }
 }
