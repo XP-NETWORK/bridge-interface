@@ -9,7 +9,6 @@ import {
     setError,
 } from "../../store/reducers/generalSlice";
 import ChainSwitch from "../Buttons/ChainSwitch";
-import { isValidChecksumAddress } from "ethereumjs-util";
 
 function DestinationChain() {
     const alert = useSelector((state) => state.general.pasteDestinationAlert);
@@ -18,27 +17,13 @@ function DestinationChain() {
     const dispatch = useDispatch();
     const receiver = useSelector((state) => state.general.receiver);
 
-    const handleChange = (e) => {
-        const address = e.target.value;
-        try {
-            if (to.type === "EVM") {
-                if (address) {
-                    const validAddress = isValidChecksumAddress(address);
-                    if (validAddress) {
-                        dispatch(setReceiver(address));
-                    } else {
-                        throw new Error(
-                            "INVALID RECIPIENT ADDRESS: The recipient address is not a valid EVM address"
-                        );
-                    }
-                }
-            } else {
-                dispatch(setReceiver(address));
-            }
-        } catch (error) {
-            dispatch(setError(error));
-        }
-    };
+	const handleChange = (e) => {
+		try {
+			dispatch(setReceiver(e.target.value));
+		} catch (error) {
+			dispatch(setError(error));
+		}
+	};
 
     function handleSwitchChain() {
         dispatch(setDepartureOrDestination("destination"));

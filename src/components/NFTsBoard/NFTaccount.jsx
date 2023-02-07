@@ -91,18 +91,20 @@ function NFTaccount(props) {
 
     const { bridge } = serviceContainer;
 
-    async function getNFTsList(fromChain) {
-        dispatch(setBigLoader(true));
-        try {
-            let nfts = await fromChain.getNFTs(bridge.checkWallet || _account);
-            nfts = fromChain.filterNFTs(nfts);
-            if (nfts.length < 1) {
-                dispatch(setIsEmpty(true));
-            } else {
-                dispatch(setIsEmpty(false));
-                dispatch(setNFTList(nfts));
-                dispatch(setPreloadNFTs(nfts.length));
-            }
+  async function getNFTsList(fromChain) {
+    dispatch(setBigLoader(true));
+    try {
+      let nfts = await fromChain.getNFTs(bridge.checkWallet || _account);
+      nfts = fromChain.filterNFTs(nfts);
+      if (nfts.length < 1) {
+        dispatch(setIsEmpty(true));
+        dispatch(setNFTList([]))
+        dispatch(setPreloadNFTs(0));
+      } else {
+        dispatch(setIsEmpty(false));
+        dispatch(setNFTList(nfts));
+        dispatch(setPreloadNFTs(nfts.length));
+      }
 
             dispatch(setBigLoader(false));
         } catch (error) {
