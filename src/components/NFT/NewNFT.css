@@ -5,14 +5,14 @@
 .missing-nft-box__wrapper {
     background: #ececf14d;
     width: 200px;
-    height: 268px;
+    height: 280px;
     border-radius: 20px;
 }
 .nft__card,
 .nft__card--selected {
     margin: 0 auto;
     width: 200px;
-    height: 268px;
+    height: 280px;
     background: #f0f2f5;
     border-radius: 20px;
     overflow: hidden;
@@ -808,7 +808,7 @@
 .skeleton {
     background: #ececf1;
     width: 200px;
-    height: 268px;
+    height: 280px;
     border-radius: 20px;
     overflow: hidden;
     position: relative;

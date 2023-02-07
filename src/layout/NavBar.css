@@ -128,6 +128,7 @@
     margin-left: auto !important;
     margin-top: auto;
     margin-bottom: auto;
+    min-width: max-content;
 }
 .nav-link {
     margin: 0 1px;
@@ -140,6 +141,7 @@
     display: flex;
     gap: 7px;
     color: #14161a;
+    min-width: max-content;
 }
 .show .nav-link {
     color: #14161a;
@@ -181,6 +183,7 @@
     margin-left: 2px;
     margin-right: 6px;
     box-shadow: 0px 2px 4px rgba(180, 185, 199, 0.25);
+    min-width: max-content;
 }
 .navbar-connect:hover {
     background: #ffffff;
@@ -324,6 +327,7 @@
     }
     .navbar-connect-mob {
         display: flex;
+        min-width: max-content;
     }
     .nav-link {
         width: 100%;
@@ -337,13 +341,14 @@
     }
     .navbar-nav .navbar-connect {
         position: absolute;
+        min-width: max-content;
     }
     .navbar-nav .navbar-dropdown {
         display: none;
     }
-    .desc-link {
+    /* .desc-link {
         display: none !important;
-    }
+    } */
 }
 
 @media only screen and (min-width: 600px) {
@@ -362,6 +367,7 @@
     .navbar-connect {
         margin-left: auto;
         margin-right: 0;
+        min-width: max-content;
     }
 
     .xdesktop_only {

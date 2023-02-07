@@ -44,6 +44,7 @@ function NavBar() {
         dispatch(setSearchNFTList(""));
     }, [loc]);
 
+    
     return (
         !widget && (
             <header id="Header">
@@ -101,8 +102,9 @@ function NavBar() {
                         aria-controls=""
                         className="navbarToggleMoblie"
                     />
+                    
 
-                    <Navbar.Collapse id="">
+                    <Navbar.Collapse id="" style={{marginLeft:"10px"}}>
                         <Nav>
                             {/* <LinkContainer to='/connect'>
                                 <Nav.Link className="desc-link" target="_blank" href="#">Bridge</Nav.Link>
