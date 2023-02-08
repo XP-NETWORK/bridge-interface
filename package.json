@@ -37,6 +37,7 @@
         "axios": "^0.27.2",
         "bignumber.js": "=9.0.1",
         "bootstrap": "^4.6.0",
+        "crypto-browserify": "^3.12.0",
         "crypto-exchange-rate": "git+https://github.com/QuigonCom/exchange-rate#master-dist",
         "dotenv": "^16.0.3",
         "ethereum-utils": "^1.0.0",
