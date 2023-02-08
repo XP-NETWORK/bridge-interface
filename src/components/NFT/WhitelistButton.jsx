@@ -19,6 +19,7 @@ export const WhitelistButton = ({ whitelist, isNFTWhitelisted }) => {
     return !isNFTWhitelisted && show ? (
         <div
             style={{ display: testnet ? "none" : "" }}
+            // style={{ display: "none" }}
             className="whitelist-btn"
             onClick={whitelist}
         >

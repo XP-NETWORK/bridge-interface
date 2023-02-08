@@ -73,11 +73,16 @@ export default function HigherAPTOS(OriginalComponent) {
                 return HexString.ensure(connected.address);
             };
             const acc = await client.getAccount(connected.address);
+            const hexAcc = HexString.ensure(connected.address);
+            console.log(
+                "🚀 ~ file: HigherAPTOS.jsx:77 ~ connectWal ~ hexAcc",
+                hexAcc
+            );
+            acc.address = function() {
+                return HexString.ensure(connected.address);
+            };
             console.log({ acc });
-            // const s = (window.petra.address = () =>
-            //     HexString.ensure(connected.address));
-
-            chainWrapper.setSigner(_signer);
+            chainWrapper.setSigner(acc);
             bridge.setCurrentType(chainWrapper);
             dispatch(setAccount(connected.address));
             dispatch(setWalletsModal(false));
