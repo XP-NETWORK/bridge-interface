@@ -937,6 +937,10 @@
         height: 165px;
     }
 }
+.img-component__wrapper {
+    display: flex;
+    justify-content: center;
+}
 .img-component__wrapper img {
     width: auto;
     height: 100%;
