@@ -48,9 +48,9 @@
     margin-left: 5px;
   }
 
-  .desktopOnly {
+  /* .desktopOnly {
     display: none !important;
-  }
+  } */
 
   .col-lg-4.col-md-4.col-sm-6.col-6 {
     padding-right: 8px;
@@ -363,5 +363,9 @@
 
   .nonftContainer .row {
     gap: 10px;
+  }
+  .App{
+    padding-left: 5%;
+    padding-right: 5%;
   }
 }

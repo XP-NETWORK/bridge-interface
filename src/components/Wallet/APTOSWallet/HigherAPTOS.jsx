@@ -11,6 +11,7 @@ import { getRightPath } from "../../../wallet/helpers";
 import { connectMartian, connectPetra, connectPontem } from "./AptosConnectors";
 import { withServices } from "../../App/hocs/withServices";
 import { Chain } from "xp.network";
+import { HexString, AptosClient } from "aptos";
 
 export default function HigherAPTOS(OriginalComponent) {
     const updatedComponent = withServices((props) => {
@@ -20,6 +21,7 @@ export default function HigherAPTOS(OriginalComponent) {
         const navigate = useNavigate();
         const { from, testNet, to } = useSelector((state) => state.general);
 
+        const client = new AptosClient("https://fullnode.devnet.aptoslabs.com");
         const navigateToAccountRoute = () => {
             if (from && to) navigate(getRightPath());
         };
@@ -37,36 +39,50 @@ export default function HigherAPTOS(OriginalComponent) {
         };
 
         const connectWallet = async (wallet) => {
+            // eslint-disable-next-line no-debugger
+            debugger;
             let connected;
-            let signer;
+            // let signer;
+
             switch (wallet) {
                 case "Martian":
                     connected = await connectMartian();
                     dispatch(setWalletsModal(false));
                     dispatch(setConnectedWallet("Martian"));
-                    signer = connected;
+                    // signer = connected;
                     break;
                 case "Petra":
                     connected = await connectPetra();
                     dispatch(setWalletsModal(false));
                     dispatch(setConnectedWallet("Petra"));
-                    signer = connected;
+                    // signer = connected;
                     break;
                 case "Pontem":
                     connected = await connectPontem();
                     dispatch(setWalletsModal(false));
                     dispatch(setConnectedWallet("Pontem"));
-                    signer = connected;
+                    // signer = connected;
                     break;
                 default:
                     break;
             }
             const chainWrapper = await bridge.getChain(Chain.APTOS);
-            chainWrapper.setSigner(signer);
+
+            const _signer = await window.petra.account();
+            _signer.address = function() {
+                return HexString.ensure(connected.address);
+            };
+            const acc = await client.getAccount(connected.address);
+            console.log({ acc });
+            // const s = (window.petra.address = () =>
+            //     HexString.ensure(connected.address));
+
+            chainWrapper.setSigner(_signer);
             bridge.setCurrentType(chainWrapper);
             dispatch(setAccount(connected.address));
             dispatch(setWalletsModal(false));
             close();
+            4;
             navigateToAccountRoute();
         };
 

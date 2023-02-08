@@ -15,7 +15,7 @@ export default function DiscountWalletModal({ handleClose }) {
     return (
         <div>
             <Modal.Header>
-                <Modal.Title>Connect Wallet</Modal.Title>
+                <Modal.Title style={{minWidth: "max-content"}}>Connect Wallet</Modal.Title>
                 <span className="CloseModal" onClick={handleClose}>
                     <div className="close-modal"></div>
                 </span>

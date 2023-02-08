@@ -10,7 +10,7 @@ import { DetectOutsideClick } from "./accountModalHelper";
 
 export default function AccountModal() {
     const dispatch = useDispatch();
-    const account = useSelector((state) => state.general.account);
+    let account = useSelector((state) => state.general.account);
 
     const connectedWallet = useSelector(
         (state) => state.general.connectedWallet

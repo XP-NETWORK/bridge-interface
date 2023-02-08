@@ -671,6 +671,7 @@ class APTOS extends AbstractChain {
             collection: "XPNFT",
             description: "description",
             uri,
+            royalty_payee_address: this.signer.address,
         };
         console.log(this.signer);
         const mint = await this.chain.mintNft(this.signer, options);
