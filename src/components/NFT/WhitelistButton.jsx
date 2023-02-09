@@ -10,14 +10,6 @@ export const WhitelistButton = ({ whitelist, isNFTWhitelisted }) => {
         /Polygon|BSC|Ethereum|Phantom|Avalanche|Moonbeam/
     );
     const testnet = useSelector((state) => state.general.testNet);
-    // const show = text.match(/Polygon|BSC|Ethereum/);
-
-    // const show = () => {
-    //     let networks = text.match(
-    //         /Polygon|BSC|Ethereum|Phantom|Avalanche|Moonbeam/
-    //     );
-    //     return networks;
-    // };
 
     return !isNFTWhitelisted && networks ? (
         <div

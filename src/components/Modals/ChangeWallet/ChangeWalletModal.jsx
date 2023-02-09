@@ -2,33 +2,11 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     setAccountWalletModal,
-    //clearStateForNewConnection,
-    // setAccount,
-    // setAccountWalletModal,
-    // setAlgorandAccount,
-    // setAlgorandClaimables,
-    // setAlgoSigner,
     setChangeWallet,
     setFrom,
-    // setConfirmMaiarMob,
-    // setConnectedWallet,
-    // setElrondAccount,
-    // setFrom,
-    // setKeplrWallet,
-    // setKukaiWallet,
-    // setMaiarProvider,
-    // setMyAlgo,
-    // setOnMaiar,
-    // setQrCodeString,
-    // setQrImage,
-    // setTempleWallet,
     setTemporaryFrom,
     setTo,
-    // setWalletsModal,
-    // setTo,
-    // setTronLink,
-    // setTronWallet,
-    // setWalletsModal,
+    setWalletsModal,
 } from "../../../store/reducers/generalSlice";
 import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg";
 import { Modal } from "react-bootstrap";
@@ -39,10 +17,13 @@ export default function ChangeWalletModal() {
     // const location = useLocation();
     const dispatch = useDispatch();
     const { deactivate } = useWeb3React();
-    // const from = useSelector((state) => state.general.from);
-    // const to = useSelector((state) => state.general.to);
     const temporaryTo = useSelector((state) => state.general.temporaryTo);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
+    const path = window.location.pathname;
+    console.log(
+        "🚀 ~ file: ChangeWalletModal.jsx:22 ~ ChangeWalletModal ~ path",
+        path
+    );
 
     // );
     const handleClose = () => {
@@ -50,41 +31,16 @@ export default function ChangeWalletModal() {
         dispatch(setTemporaryFrom(""));
     };
 
-    // const handleSwitch = () => {
-    //     const temp = to;
-    //     dispatch(setTo(from));
-    //     dispatch(setFrom(temp));
-    // };
-
-    // const chooseWalletModal = () =>
-    //     isRightLocation()
-    //         ? dispatch(setAccountWalletModal(true))
-    //         : dispatch(setWalletsModal(true));
-
-    // const isRightLocation = () => {
-    //     switch (location.pathname) {
-    //         case "/account":
-    //             return true;
-    //         case "/testnet/account":
-    //             return true;
-    //         default:
-    //             break;
-    //     }
-    // };
-
-    // const setTempTo = () => {
-    //     dispatch(setTo(temporaryTo));
-    // };
-
     const handleClick = () => {
         // eslint-disable-next-line no-debugger
         debugger;
         deactivate();
-        //dispatch(clearStateForNewConnection());
         dispatch(setFrom(temporaryFrom));
         dispatch(setTo(temporaryTo));
         dispatch(setChangeWallet(false));
-        dispatch(setAccountWalletModal(true));
+        if (path === "/connect") {
+            dispatch(setWalletsModal(true));
+        } else dispatch(setAccountWalletModal(true));
     };
 
     return (
