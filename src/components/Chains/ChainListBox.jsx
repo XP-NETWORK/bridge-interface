@@ -78,14 +78,13 @@ function ChainListBox({ serviceContainer }) {
     // ! ref
     const chainSelectHandler = async (chain) => {
         // eslint-disable-next-line no-debugger
-        debugger;
+        // debugger;
 
         const chainWrapper = await bridge.getChain(chain.nonce);
 
         if (departureOrDestination === "departure") {
             if (
-                (chainWrapper.chainParams.name === "VeChain" ||
-                    chainWrapper.chainParams.name === "Skale") &&
+                chainWrapper.chainParams.name === "VeChain" &&
                 bridge.currentType === "EVM"
             ) {
                 dispatch(setChangeWallet(true));
