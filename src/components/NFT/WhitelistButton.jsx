@@ -6,17 +6,20 @@ import { useSelector } from "react-redux";
 
 export const WhitelistButton = ({ whitelist, isNFTWhitelisted }) => {
     const { text } = useSelector((state) => state.general.from);
+    let networks = text.match(
+        /Polygon|BSC|Ethereum|Phantom|Avalanche|Moonbeam/
+    );
     const testnet = useSelector((state) => state.general.testNet);
     // const show = text.match(/Polygon|BSC|Ethereum/);
 
-    const show = () => {
-        let networks = text.match(
-            /Polygon|BSC|Ethereum|Phantom|Avalanche|Moonbeam/
-        );
-        return networks;
-    };
+    // const show = () => {
+    //     let networks = text.match(
+    //         /Polygon|BSC|Ethereum|Phantom|Avalanche|Moonbeam/
+    //     );
+    //     return networks;
+    // };
 
-    return !isNFTWhitelisted && show ? (
+    return !isNFTWhitelisted && networks ? (
         <div
             style={{ display: testnet ? "none" : "" }}
             // style={{ display: "none" }}
