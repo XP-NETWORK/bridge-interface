@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import { useEffect, useRef, React } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { chains } from "../../components/values";
@@ -10,6 +11,7 @@ import {
     setSwitchDestination,
     setChangeWallet,
     setTemporaryFrom,
+    setTemporaryTo,
 } from "../../store/reducers/generalSlice";
 import Chain from "./Chain";
 import ChainSearch from "../Chains/ChainSearch";
@@ -113,6 +115,7 @@ function ChainListBox({ serviceContainer }) {
                         handleClose();
                     } else {
                         dispatch(setFrom(chain));
+
                         handleClose();
                     }
                 } else {
@@ -123,6 +126,7 @@ function ChainListBox({ serviceContainer }) {
             } else {
                 dispatch(setChangeWallet(true));
                 dispatch(setTemporaryFrom(chain));
+                dispatch(setTemporaryTo(to));
                 handleClose();
             }
             handleClose();

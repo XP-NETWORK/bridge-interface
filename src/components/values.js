@@ -424,7 +424,7 @@ export const chains = [
         nonce: 30,
         order: 8,
         chainId: 1564830818,
-        tnChainId: 0x63e1ef9,
+        tnChainId: 344106930,
         image: { avatar: true, src: SKL },
         testNet: biz,
         mainnet: biz,

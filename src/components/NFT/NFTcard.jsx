@@ -8,6 +8,7 @@ import {
     setTransferLoaderModal,
     setWhiteListedCollection,
     setError,
+    setWhitelistingLoader,
 } from "../../store/reducers/generalSlice";
 import NFTdetails from "./NFTdetails";
 import { useSelector } from "react-redux";
@@ -122,7 +123,8 @@ export default function NFTcard({
 
     const onClickWhiteListButton = async () => {
         // eslint-disable-next-line no-debugger
-        dispatch(setupUnitTestWatcherTimeouts(true));
+        // debugger;
+        dispatch(setWhitelistingLoader(true));
         dispatch(setTransferLoaderModal(true));
         try {
             const tx = await bridgeWrapper.bridge.whitelistEVM(
@@ -137,7 +139,7 @@ export default function NFTcard({
                         .then((result) => {
                             if (result) {
                                 dispatch(setTransferLoaderModal(false));
-                                dispatch(setupUnitTestWatcherTimeouts(false));
+                                dispatch(setWhitelistingLoader(false));
                                 dispatch(
                                     setWhiteListedCollection({
                                         contract: nft.native.contract,
@@ -153,12 +155,12 @@ export default function NFTcard({
             );
 
             setTimeout(() => {
-                dispatch(setupUnitTestWatcherTimeouts(false));
+                dispatch(setWhitelistingLoader(false));
                 dispatch(setTransferLoaderModal(false));
                 clearInterval(interval);
             }, 80 * 1000);
         } catch (error) {
-            dispatch(setupUnitTestWatcherTimeouts(false));
+            dispatch(setWhitelistingLoader(false));
             dispatch(setTransferLoaderModal(false));
             dispatch(
                 setError({
