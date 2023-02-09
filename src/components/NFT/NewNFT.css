@@ -95,7 +95,7 @@
     color: #14161a;
 }
 .nft__footer {
-    height: 64px;
+    height:max-content;
     border-top: 1px solid white;
     padding: 6px 12px;
     display: flex;
@@ -119,9 +119,16 @@
     justify-content: flex-start;
     align-items: stretch;
     gap: 12px;
-    padding: 5px 6px 5px 12px;
+    /* padding: 5px 6px 5px 12px; */
+    padding: 6px;
     /* overflow-x: auto; */
     height: 560px;
+}
+.mobile-col .nft-list__wrapper{
+    justify-content: flex-start;
+}
+.mobile-col .nft-box__wrapper{
+    max-width: 47.5%;
 }
 .video__wrapper video {
     width: auto;

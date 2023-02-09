@@ -6,8 +6,8 @@ import Selected from "./Selected";
 
 function SelectedNFTs() {
     const dispatch = useDispatch();
-    const _selectedNFTs = useSelector((state) => state.general.selectedNFTList);
-    const nfts = useSelector((state) => state.general.NFTList);
+    let _selectedNFTs = useSelector((state) => state.general.selectedNFTList);
+    let nfts = useSelector((state) => state.general.NFTList);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const handleClear = () => {
         dispatch(cleanSelectedNFTList());
@@ -20,9 +20,18 @@ function SelectedNFTs() {
             <div className="selected-nfts__header">
                 <span className="desktop__header">
                     Selected NFTs{" "}
-                    <span>
+                    {/* <span>
                         {_selectedNFTs.length} / {nfts?.length}
-                    </span>
+                    </span> */}
+                    {nfts?.length ? (
+				<>
+					<span className="selected-nfts__selected">
+						{_selectedNFTs?.length} / {nfts?.length}
+					</span>
+				</>
+			) : (
+				<span className="selected-nfts__selected">0 / 0</span>
+			)}
                 </span>
                 {_selectedNFTs.length > 0 && (
                     <div
