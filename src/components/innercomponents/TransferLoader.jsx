@@ -26,7 +26,7 @@ export default function TransferLoader() {
                 <div className="transfer-loader__text">
                     {!whitelistingLoader
                         ? "Departure and destination chain transactions take time, especially in periods of heavy congestion."
-                        : "Deploying smart contract on destination chain."}
+                        : "Please wait patiently while our servers are fetching your code and approving it. Fetching code from blockchain can take a while."}
                 </div>
                 <div className="transfer-loader__sub">💙 Please be patient</div>
             </Modal.Body>

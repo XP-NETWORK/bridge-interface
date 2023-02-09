@@ -1,12 +1,7 @@
 import store from "../../../store/store.js";
-//import { errorToLog } from "../../../wallet/helpers";
-//import { setError } from "../../../store/reducers/generalSlice";
-//import { BigNumber } from "ethers";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
-//import { patchRealizedDiscount } from "../../deposits.js";
 
 export async function switchNetwork(chain) {
-    // console.log("🚀 ~ file: evmService.js:10 ~ switchNetwork ~ chain", chain);
     // eslint-disable-next-line no-debugger
 
     const {
@@ -14,11 +9,9 @@ export async function switchNetwork(chain) {
     } = store.getState();
 
     const id = (testNet ? chain.tnChainId : chain.chainId).toString();
-    console.log("🚀 ~ file: evmService.js:17 ~ switchNetwork ~ id", id);
     const ethereumChainsParams = getAddEthereumChain();
 
     const params = ethereumChainsParams[id];
-    console.log("🚀 ~ file: evmService.js:21 ~ switchNetwork ~ params", params);
 
     const copyParams = {
         chainName: params.name || params.chainName,

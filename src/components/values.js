@@ -71,7 +71,7 @@ export const chains = [
         value: "Ethereum",
         nonce: 5,
         chainId: 1,
-        tnChainId: 3,
+        tnChainId: 5,
         order: 8,
         image: { avatar: true, src: Ethereum },
         maintenance: false,

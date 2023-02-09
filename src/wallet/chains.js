@@ -115,8 +115,7 @@ export const allchains = [
         chain: "ETH",
         network: "ropsten",
         rpcUrls: [
-            "https://ropsten.infura.io/v3/${INFURA_API_KEY}",
-            "wss://ropsten.infura.io/ws/v3/${INFURA_API_KEY}",
+            "https://goerli.infura.io/v3/cec5dc92097a46f0b895ac1e89865467",
         ],
         faucets: ["https://faucet.ropsten.be?${ADDRESS}"],
         nativeCurrency: {
@@ -126,8 +125,8 @@ export const allchains = [
         },
         infoURL: "https://github.com/ethereum/ropsten",
         shortName: "rop",
-        chainId: 3,
-        networkId: 3,
+        chainId: 5,
+        networkId: 5,
         ens: {
             registry: "0x112234455c3a32fd11230c42e7bccd4a84e02010",
         },
@@ -1925,7 +1924,7 @@ export const allchains = [
         },
         infoURL: "https://aurora.dev",
         shortName: "aurora-testnet",
-        tnChainId: 1313161555,
+        chainId: 1313161555,
         networkId: 1313161555,
     },
     {
