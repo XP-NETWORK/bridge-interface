@@ -1,31 +1,26 @@
 import store from "../../../store/store.js";
-//import { errorToLog } from "../../../wallet/helpers";
-//import { setError } from "../../../store/reducers/generalSlice";
-//import { BigNumber } from "ethers";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
-//import { patchRealizedDiscount } from "../../deposits.js";
 
 export async function switchNetwork(chain) {
-    // console.log("🚀 ~ file: evmService.js:10 ~ switchNetwork ~ chain", chain);
     // eslint-disable-next-line no-debugger
 
-  const {
-    general: { testNet, bitKeep },
-  } = store.getState();
+    const {
+        general: { testNet, bitKeep },
+    } = store.getState();
 
-  const id = (testNet ? chain.tnChainId : chain.chainId).toString();
-  const paramsArr = getAddEthereumChain(testNet, id);
+    const id = (testNet ? chain.tnChainId : chain.chainId).toString();
+    const ethereumChainsParams = getAddEthereumChain();
 
-  const params = paramsArr[id];
+    const params = ethereumChainsParams[id];
 
-  const copyParams = {
-    chainName: params.name || params.chainName,
-    chainId: `0x${Number(id).toString(16)}`,
-    nativeCurrency: params.nativeCurrency,
-    rpcUrls: params.rpcUrls,
-  };
+    const copyParams = {
+        chainName: params.name || params.chainName,
+        chainId: `0x${Number(id).toString(16)}`,
+        nativeCurrency: params.nativeCurrency,
+        rpcUrls: params.rpcUrls,
+    };
 
-  const chainId = `0x${Number(id).toString(16)}`;
+    const chainId = `0x${Number(id).toString(16)}`;
 
     switch (true) {
         case bitKeep:
@@ -34,19 +29,23 @@ export async function switchNetwork(chain) {
                     method: "wallet_switchEthereumChain",
                     params: [{ chainId: +chainId }],
                 });
-                const currentChainId = await window.ethereum.request({ method: 'eth_chainId' })
+                const currentChainId = await window.ethereum.request({
+                    method: "eth_chainId",
+                });
                 return currentChainId == chainId;
             } catch (error) {
                 console.log(error);
                 return false;
             }
         default:
-            try {                
+            try {
                 await window.ethereum.request({
                     method: "wallet_switchEthereumChain",
                     params: [{ chainId }],
                 });
-                const currentChainId = await window.ethereum.request({ method: 'eth_chainId' })
+                const currentChainId = await window.ethereum.request({
+                    method: "eth_chainId",
+                });
                 return currentChainId == chainId;
             } catch (error) {
                 await window.ethereum.request({
