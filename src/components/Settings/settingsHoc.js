@@ -113,13 +113,13 @@ const settingsHoc = (Wrapped) =>
 
     useEffect(() => {
       if (settings.fromChain !== "") {
-        dispatch(setFrom(chains.find((c) => c.text === fromChain)));
+        dispatch(setFrom(chains.find((c) => c.key === fromChain)));
       }
     }, [fromChain]);
 
     useEffect(() => {
       if (settings.toChain !== "") {
-        dispatch(setTo(chains.find((c) => c.text === toChain)));
+        dispatch(setTo(chains.find((c) => c.key === toChain)));
       }
     }, [toChain]);
 

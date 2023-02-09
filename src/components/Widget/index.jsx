@@ -40,31 +40,19 @@ function Widget({ setState, widget, settings, wsettings, wid }) {
   }, [widget, settings.color, NFTList]);
 
   useEffect(() => {
-    const from = chains.find((c) => c.text === settings.fromChain);
-    const to = chains.find((c) => c.text === settings.toChain);
+    const from = chains.find((c) => c.key === settings.fromChain);
+    console.log(from);
+    const to = chains.find((c) => c.key === settings.toChain);
     if ((widget || wid) && !wsettings && (from || to)) {
+      console.log("gato");
       setState.setChainsLengthEqauls2(true);
       from && setState.setIsFrom(true);
       to && setState.setIsTo(true);
-      from &&
-        dispatch(setFrom(chains.find((c) => settings.fromChain === c.text)));
 
-      to && dispatch(setTo(chains.find((c) => settings.toChain === c.text)));
+      from &&
+        dispatch(setFrom(chains.find((c) => settings.fromChain === c.key)));
+      to && dispatch(setTo(chains.find((c) => settings.toChain === c.key)));
     }
-    /*  if (
-      widget &&
-      !wsettings &&
-      chains.find((c) => c.text === settings.fromChain)
-    ) {
-      setState.setIsFrom(true);
-    }
-    if (
-      widget &&
-      !wsettings &&
-      chains.find((c) => c.text === settings.toChain)
-    ) {
-      setState.setIsTo(true);
-    }*/
   }, [settings.fromChain, settings.toChain]);
 
   const screenSize = useRef();
