@@ -97,20 +97,23 @@ class Bridge {
 
       if (isWNFT || !chain.isNftWhitelisted) return true;
       return await chainWrapper.chain.isNftWhitelisted(nft);
-      //console.log(x, nft.native.name);
+      // console.log(x, nft.native.name);
+      //return x;
     } catch (e) {
       console.log(e, "in isWhitelisted");
       return false;
     }
   }
 
-  async getChain(nonce) {
+  async getChain(nonce, params = {}) {
     // eslint-disable-next-line no-debugger
     const chainParams = CHAIN_INFO.get(nonce);
     const chainId = String(nonce);
     const chain = this.chains[chainId];
+    const overwrite = params.overwrite;
 
-    if (chain) return chain;
+    if (chain && !overwrite) return chain;
+
     try {
       const params = {
         nonce,
