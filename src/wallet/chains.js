@@ -845,7 +845,7 @@ export const allchains = [
     {
         name: "Godwoken Testnet",
         chain: "CKB",
-        tnChainId: 71401,
+        chainId: 71401,
         network: "testnet",
         rpcUrls: ["https://godwoken-testnet-v1.ckbapp.dev"],
         faucets: ["https://faucet.nervos.org/"],

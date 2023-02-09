@@ -321,7 +321,7 @@ export const chains = [
         value: "Godwoken",
         nonce: 22,
         chainId: 71402,
-        tnChainId: 0x116e9,
+        tnChainId: 71401,
         order: 4,
         image: { avatar: true, src: CKB },
         maintenance: false,

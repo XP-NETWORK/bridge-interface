@@ -14,9 +14,11 @@ export async function switchNetwork(chain) {
     } = store.getState();
 
     const id = (testNet ? chain.tnChainId : chain.chainId).toString();
+    console.log("🚀 ~ file: evmService.js:17 ~ switchNetwork ~ id", id);
     const ethereumChainsParams = getAddEthereumChain();
 
     const params = ethereumChainsParams[id];
+    console.log("🚀 ~ file: evmService.js:21 ~ switchNetwork ~ params", params);
 
     const copyParams = {
         chainName: params.name || params.chainName,
