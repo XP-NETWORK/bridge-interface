@@ -11,7 +11,7 @@ import { getRightPath } from "../../../wallet/helpers";
 import { connectMartian, connectPetra, connectPontem } from "./AptosConnectors";
 import { withServices } from "../../App/hocs/withServices";
 import { Chain } from "xp.network";
-import { HexString, AptosClient } from "aptos";
+import { HexString, AptosClient, TokenClient } from "aptos";
 
 export default function HigherAPTOS(OriginalComponent) {
     const updatedComponent = withServices((props) => {
@@ -21,7 +21,6 @@ export default function HigherAPTOS(OriginalComponent) {
         const navigate = useNavigate();
         const { from, testNet, to } = useSelector((state) => state.general);
 
-        const client = new AptosClient("https://fullnode.devnet.aptoslabs.com");
         const navigateToAccountRoute = () => {
             if (from && to) navigate(getRightPath());
         };
@@ -72,7 +71,25 @@ export default function HigherAPTOS(OriginalComponent) {
             _signer.address = function() {
                 return HexString.ensure(connected.address);
             };
+            const client = new AptosClient(
+                "https://fullnode.devnet.aptoslabs.com"
+            );
+            const tokenClient = new TokenClient(client);
+            const options = {
+                name: "Name",
+                collection: "XPNFT",
+                description: "description",
+                uri:
+                    "https://assets.polkamon.com/images/Unimons_T06C02H10B04G00.jpg'",
+                royalty_payee_address: connected.address,
+            };
+            const resp = await tokenClient.createToken(connected, options);
+            console.log(
+                "🚀 ~ file: HigherAPTOS.jsx:86 ~ connectWal ~ resp",
+                resp
+            );
             const acc = await client.getAccount(connected.address);
+
             const hexAcc = HexString.ensure(connected.address);
             console.log(
                 "🚀 ~ file: HigherAPTOS.jsx:77 ~ connectWal ~ hexAcc",
