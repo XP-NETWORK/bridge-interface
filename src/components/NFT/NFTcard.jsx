@@ -7,6 +7,7 @@ import {
   removeFromSelectedNFTList,
   setTransferLoaderModal,
   setWhiteListedCollection,
+  setError,
 } from "../../store/reducers/generalSlice";
 import NFTdetails from "./NFTdetails";
 import { useSelector } from "react-redux";
@@ -79,8 +80,6 @@ export default function NFTcard({
     };
   }, []);
 
-
-
   function addRemoveNFT(chosen) {
     if (!selected(from.type, nft, selectedNFTs)) {
       dispatch(setSelectedNFTList(chosen));
@@ -116,7 +115,10 @@ export default function NFTcard({
 
     dispatch(setTransferLoaderModal(true));
     try {
-      await bridgeWrapper.bridge.whitelistEVM(from.nonce, nft.native.contract);
+      const tx = await bridgeWrapper.bridge.whitelistEVM(
+        from.nonce,
+        nft.native.contract
+      );
 
       const interval = setInterval(
         () =>
@@ -141,6 +143,14 @@ export default function NFTcard({
       }, 80 * 1000);
     } catch (error) {
       dispatch(setTransferLoaderModal(false));
+      dispatch(
+        setError({
+          link: "https://t.me/xp_network",
+          anchor: "XP.NETWORK",
+          message: `Smart contract cannot be automatically whitelisted. \n
+            Please contact the XP.NETWORK support team`,
+        })
+      );
       console.log(error.message);
     }
   };

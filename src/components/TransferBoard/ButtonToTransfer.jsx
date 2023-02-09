@@ -17,7 +17,6 @@ import {
 import { getFromDomain } from "../../services/resolution";
 
 import { withServices } from "../App/hocs/withServices";
-import { isValidChecksumAddress } from "ethereumjs-util";
 
 export default withServices(function ButtonToTransfer({ serviceContainer }) {
     const { bridge } = serviceContainer;
@@ -118,45 +117,23 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
     };
 
     const sendAllNFTs = async () => {
-        // eslint-disable-next-line no-debugger
-        debugger;
-        try {
-            if (_to.type === "EVM") {
-                if (receiver) {
-                    const validAddress = isValidChecksumAddress(receiver);
-                    if (!validAddress) {
-                        console.log("receiver: ", receiver);
-                        throw new Error(
-                            "INVALID RECIPIENT ADDRESS: The recipient address is not a valid EVM address"
-                        );
-                    }
-                }
-            } else {
-                if (!receiver) {
-                    dispatch(setPasteDestinationAlert(true));
-                } else if (selectedNFTList.length < 1) {
-                    dispatch(setSelectNFTAlert(true));
-                } else if (!approved) {
-                    dispatch(setNoApprovedNFTAlert(true));
-                } else if (!loading && approved) {
-                    setLoading(true);
-                    dispatch(setTransferLoaderModal(true));
+        if (!receiver) {
+            dispatch(setPasteDestinationAlert(true));
+        } else if (selectedNFTList.length < 1) {
+            dispatch(setSelectNFTAlert(true));
+        } else if (!approved) {
+            dispatch(setNoApprovedNFTAlert(true));
+        } else if (!loading && approved) {
+            setLoading(true);
+            dispatch(setTransferLoaderModal(true));
 
-                    for (
-                        let index = 0;
-                        index < selectedNFTList.length;
-                        index++
-                    ) {
-                        if (from === "VeChain" || from === "TON") {
-                            await sendEach(selectedNFTList[index], index);
-                        } else {
-                            sendEach(selectedNFTList[index], index);
-                        }
-                    }
+            for (let index = 0; index < selectedNFTList.length; index++) {
+                if (from === "VeChain" || from === "TON") {
+                    await sendEach(selectedNFTList[index], index);
+                } else {
+                    sendEach(selectedNFTList[index], index);
                 }
             }
-        } catch (error) {
-            dispatch(setError(error));
         }
     };
 
