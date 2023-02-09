@@ -1,8 +1,13 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import "./TransferLoader.css";
 
 export default function TransferLoader() {
+    const whitelistingLoader = useSelector(
+        (state) => state.general.whitelistingLoader
+    );
+
     return (
         <>
             <Modal.Header className="border-0">
@@ -14,11 +19,14 @@ export default function TransferLoader() {
             </Modal.Header>
             <Modal.Body className="transfer-loader__body">
                 <div className="transfer-loader__title">
-                    Transaction Processing
+                    {!whitelistingLoader
+                        ? "Transaction Processing"
+                        : "Whitelist Processing"}
                 </div>
                 <div className="transfer-loader__text">
-                    Departure and destination chain transactions take time,
-                    especially in periods of heavy congestion.
+                    {!whitelistingLoader
+                        ? "Departure and destination chain transactions take time, especially in periods of heavy congestion."
+                        : "Deploying smart contract on destination chain."}
                 </div>
                 <div className="transfer-loader__sub">💙 Please be patient</div>
             </Modal.Body>
