@@ -12,8 +12,22 @@ import {
   fetchXPUpdate,
   transformToDate,
 } from "./wallet/helpers";
-import { setChainModal } from "./store/reducers/generalSlice";
-import { chains } from "./components/values";
+import { 
+  setChainModal, 
+  setImportModal, 
+  setError, 
+  setGetFeaturedModal, 
+  setRedirectModal,
+  setApproveLoader,
+  setChangeWallet,
+  setAccountModal,
+  setWalletsModal,
+  setAccountWalletModal,
+  setTransferLoaderModal,
+
+ } from "./store/reducers/generalSlice";
+//  import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
+ import { chains } from "./components/values";
 
 import "./components/Modals/Modal.css";
 import Modals from "./components/Modals/Modals";
@@ -22,12 +36,23 @@ import AppContainer from "./components/App/container";
 
 function App({ network }) {
   const dispatch = useDispatch();
-  const showChainModal = useSelector((state) => state.general.showChainModal);
+  let showChainModal = useSelector((state) => state.general.showChainModal);
   let location = useLocation();
 
   useEffect(() => {
     if (showChainModal) {
       dispatch(setChainModal(false));
+      dispatch(setImportModal(false));
+      dispatch(setError(false));
+      dispatch(setGetFeaturedModal(false));
+      dispatch(setRedirectModal(false));
+      dispatch(setApproveLoader(false));
+      dispatch(setChangeWallet(false));
+      dispatch(setAccountModal(false));
+      dispatch(setWalletsModal(false));
+      dispatch(setAccountWalletModal(false));
+      dispatch(setTransferLoaderModal(false));
+      
     }
   }, [location]);
 
