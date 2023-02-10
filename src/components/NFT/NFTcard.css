@@ -3,7 +3,9 @@
 .nft__card,
 .nft__card--selected {
   margin: 0 auto;
-  /* width: 200px; */
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 200px;
   /* height: 280px;
    */
   height: max-content;

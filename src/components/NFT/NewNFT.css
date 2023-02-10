@@ -128,7 +128,8 @@
     justify-content: flex-start;
 }
 .mobile-col .nft-box__wrapper{
-    max-width: 47.5%;
+    width: 47.5%;
+    max-width: 200px;
 }
 .video__wrapper video {
     width: auto;

@@ -176,7 +176,8 @@
     margin: 12px 0;
 }
 .mobile-col .nft-box__wrapper{
-    max-width: 47.5%;
+    width: 47.5%;
+    max-width: 200px;
 }
 .mobile-col .nft__main {
     height: 73%;
