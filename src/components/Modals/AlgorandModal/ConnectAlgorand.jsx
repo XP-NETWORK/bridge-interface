@@ -124,7 +124,7 @@ function ConnectAlgorand() {
       {!algorandAccountToOptIn ? (
         <>
           <Modal.Header>
-            <Modal.Title>Connect Wallet</Modal.Title>
+            <Modal.Title style={{minWidth: "max-content"}}>Connect Wallet</Modal.Title>
             <span className="CloseModal" onClick={handleClose}>
               <Close className="svgWidget" />
             </span>

@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import { useEffect, useRef, React } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { chains } from "../../components/values";
@@ -10,6 +11,7 @@ import {
   setSwitchDestination,
   setChangeWallet,
   setTemporaryFrom,
+  setTemporaryTo,
 } from "../../store/reducers/generalSlice";
 import Chain from "./Chain";
 import ChainSearch from "../Chains/ChainSearch";
@@ -33,8 +35,8 @@ function ChainListBox({ serviceContainer }) {
     (state) => state.general.departureOrDestination
   );
   const chainSearch = useSelector((state) => state.general.chainSearch);
-  const from = useSelector((state) => state.general.from);
-  const to = useSelector((state) => state.general.to);
+  let from = useSelector((state) => state.general.from);
+  let to = useSelector((state) => state.general.to);
   const globalTestnet = useSelector((state) => state.general.testNet);
   const show = useSelector((state) => state.general.showChainModal);
   const switchChain = useSelector((state) => state.general.switchDestination);
@@ -49,15 +51,7 @@ function ChainListBox({ serviceContainer }) {
   const { account } = useWeb3React();
   const bitKeep = useSelector((state) => state.general.bitKeep);
   const nftChainListRef = useRef(null);
-  /*const nearWallet = useSelector(
-    (state) => state.general.connectedWallet === "Near Wallet"
-  );*/
-
   const [reached, setReached] = useState(false);
-
-  const searchCriteria = (chain) =>
-    chain.text.toLowerCase().includes(chainSearch.toLowerCase()) ||
-    chain.key.toLowerCase().includes(chainSearch.toLowerCase());
 
   const handleClose = () => {
     dispatch(setChainModal(false));
@@ -80,6 +74,8 @@ function ChainListBox({ serviceContainer }) {
   // ! ref
   const chainSelectHandler = async (chain) => {
     // eslint-disable-next-line no-debugger
+    // debugger;
+
     const chainWrapper = await bridge.getChain(chain.nonce);
 
     if (departureOrDestination === "departure") {
@@ -94,27 +90,37 @@ function ChainListBox({ serviceContainer }) {
         chainWrapper.chainParams.type === bridge.currentType ||
         !bridge.currentType
       ) {
-        if (to && to?.text === chain.text) {
-          if (to?.text === "Harmony" && bitKeep) {
+        if (from && from?.text !== chain.text) {
+          if (from?.text === "Harmony" && bitKeep) {
             dispatch(setTemporaryFrom(chain));
             dispatch(setChangeWallet(true));
             handleClose();
-          } else if ((account || evmAccount) && from.key !== "VeChain") {
-            const switched = await switchNetwork(from);
+          } else if ((account || evmAccount) && from.text !== "VeChain") {
+            const switched = await switchNetwork(chain);
             if (switched) {
-              dispatch(setTo(from));
-              dispatch(setFrom(to));
+              dispatch(setFrom(chain));
+              if (to?.text === chain.text) {
+                dispatch(setTo(from));
+              }
             }
+            handleClose();
+          } else {
+            dispatch(setFrom(chain));
+
+            handleClose();
           }
         } else {
           dispatch(setFrom(chain));
+          handleClose();
         }
         handleClose();
       } else {
         dispatch(setChangeWallet(true));
         dispatch(setTemporaryFrom(chain));
+        dispatch(setTemporaryTo(to));
         handleClose();
       }
+      handleClose();
     } else if (departureOrDestination === "destination") {
       if (from?.text === chain.text) {
         if (to?.text === "Harmony" && bitKeep) {
@@ -136,9 +142,12 @@ function ChainListBox({ serviceContainer }) {
   };
 
   useEffect(() => {
+    // debugger;
     let filteredChains = chains;
     if (chainSearch && departureOrDestination === "departure") {
-      filteredChains = chains.filter((chain) => searchCriteria(chain));
+      filteredChains = chains.filter((chain) =>
+        chain.text.toLowerCase().includes(chainSearch.toLowerCase())
+      );
     }
     const withNew = filteredChains
       .filter((chain) => chain.newChain)
@@ -194,7 +203,9 @@ function ChainListBox({ serviceContainer }) {
   useEffect(() => {
     let filteredChains = chains;
     if (chainSearch && departureOrDestination === "destination") {
-      filteredChains = chains.filter((chain) => searchCriteria(chain));
+      filteredChains = chains.filter((chain) =>
+        chain.text.toLowerCase().includes(chainSearch.toLowerCase())
+      );
     }
     const withNew = filteredChains
       .filter((chain) => chain.newChain)
@@ -287,7 +298,7 @@ function ChainListBox({ serviceContainer }) {
                       chainKey={key}
                       filteredChain={chain}
                       image={image}
-                      key={key}
+                      key={`chain-${key}`}
                       nonce={nonce}
                     />
                   )

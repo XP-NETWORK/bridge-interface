@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 /* eslint-disable valid-typeof */
 
 import { injected, algoConnector, web3Modal } from "../../wallet/connectors";
@@ -200,7 +201,7 @@ const setBitKeepSigner = (account) => {
 };
 
 export const connectBitKeep = async (from) => {
-
+  // debugger;
   let provider;
   const isInstallBikeep = () => {
     return window.bitkeep && window.bitkeep?.ethereum;
@@ -232,7 +233,6 @@ export const connectBitKeep = async (from) => {
 };
 
 export const connectMetaMask = async (activate) => {
-  // debugger;
   try {
     if (!window.ethereum && window.innerWidth <= 600) {
       let timer;
@@ -254,7 +254,10 @@ export const connectMetaMask = async (activate) => {
       timer = setTimeout(() => {
         window.open(link);
       }, 1000);
+
+      window.open(link);
     }
+
     await activate(injected);
     store.dispatch(setMetaMask(true));
     return true;

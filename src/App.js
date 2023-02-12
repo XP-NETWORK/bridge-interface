@@ -4,13 +4,15 @@ import XpBridge from "./pages/XpBridge";
 import Alert from "./components/Alerts/Alert.jsx";
 import DepositAlert from "./components/Alerts/DepositAlert";
 import * as generalSlice from "./store/reducers/generalSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 import {
   checkValidators,
   fetchXPUpdate,
   transformToDate,
 } from "./wallet/helpers";
+import { setChainModal } from "./store/reducers/generalSlice";
 import { chains } from "./components/values";
 
 import "./components/Modals/Modal.css";
@@ -23,6 +25,14 @@ import { withConnect } from "./components/Widget/hocs/withConnect";
 
 function App({ network }) {
   const dispatch = useDispatch();
+  const showChainModal = useSelector((state) => state.general.showChainModal);
+  let location = useLocation();
+
+  useEffect(() => {
+    if (showChainModal) {
+      dispatch(setChainModal(false));
+    }
+  }, [location]);
 
   useEffect(() => {
     localStorage.removeItem("walletconnect");
@@ -65,9 +75,9 @@ function App({ network }) {
           "05645d6b549f33bf80cee8822bd63df720c6781bd00020646deb7b2b2cd53b73",
       })
     )
-
+console.log(
      tweb.provider.getTransactions('EQBABLUFRe95jzxV8E_XzTsLtK-3eggjs5eVXviA4VLY0UMW', 20).then(trxs => {
-      console.log(trxs, 'trxs')
+      trxs, 'trxs')
     })*/
 
     return () => clearInterval(validatorsInt);

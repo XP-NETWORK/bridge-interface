@@ -48,12 +48,11 @@ function TronWallet({ close, serviceContainer }) {
     }
 
     try {
-      const chainWrapper = await bridge.getChain(from?.nonce || Chain.TRON);
+      let chainWrapper = await bridge.getChain(from?.nonce || Chain.TRON);
 
       const accounts = await tronLink.request({
         method: "tron_requestAccounts",
       });
-      console.log(chainWrapper);
 
       if (!accounts) {
         dispatch(setTronLoginError("loggedOut"));
@@ -65,6 +64,9 @@ function TronWallet({ close, serviceContainer }) {
           .setProvider(Chain.TRON, extensionProvider)
           .catch((e) => console.log(e, "e"));
 
+        chainWrapper = await bridge.getChain(Chain.TRON, {
+          overwrite: true,
+        });
         dispatch(setAccount(address));
         dispatch(setTronLink(true));
         chainWrapper.setSigner(extensionProvider);

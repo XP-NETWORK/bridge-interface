@@ -12,7 +12,17 @@ export default function Error() {
   const handleClose = () => {
     dispatch(setError(false));
   };
-  const error = useSelector((state) => state.general.error);
+  let error = useSelector((state) => state.general.error);
+
+  if (error && error?.includes("automatically whitelisted")) {
+    error = `Smart contract cannot be automatically whitelisted. </br>
+
+      Please contact the 
+        <a target="_blank" rel="noreferrer" href="https://t.me/xp_network">
+          XP.NETWORK
+        </a>
+       support team`;
+  }
 
   return (
     <>
@@ -30,7 +40,15 @@ export default function Error() {
           style={error?.length > 30 ? { fontSize: "11px" } : {}}
           className="wrongNFT"
         >
-          {typeof error === "object" ? error?.message : error}
+          {typeof error === "object" ? (
+            <p>{error?.message}</p>
+          ) : (
+            <p
+              dangerouslySetInnerHTML={{
+                __html: error,
+              }}
+            ></p>
+          )}
         </div>
         {URLToOptIn && (
           <CopyToClipboard text={URLToOptIn}>

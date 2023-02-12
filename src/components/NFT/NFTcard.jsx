@@ -7,6 +7,8 @@ import {
   removeFromSelectedNFTList,
   setTransferLoaderModal,
   setWhiteListedCollection,
+  setError,
+  setWhitelistingLoader,
 } from "../../store/reducers/generalSlice";
 import NFTdetails from "./NFTdetails";
 import { useSelector } from "react-redux";
@@ -28,6 +30,7 @@ import { selected } from "./NFTHelper";
 
 import { WhitelistButton } from "./WhitelistButton";
 import SFTMark from "./SFTMark";
+import { setupUnitTestWatcherTimeouts } from "@elrondnetwork/erdjs/out/testutils";
 
 NFTcard.propTypes = {
   nft: PropTypes.object,
@@ -111,16 +114,21 @@ export default function NFTcard({
 
   const onClickWhiteListButton = async () => {
     // eslint-disable-next-line no-debugger
-
+    // debugger;
+    dispatch(setWhitelistingLoader(true));
     dispatch(setTransferLoaderModal(true));
     try {
-      await bridgeWrapper.bridge.whitelistEVM(from.nonce, nft.native.contract);
+      const tx = await bridgeWrapper.bridge.whitelistEVM(
+        from.nonce,
+        nft.native.contract
+      );
 
       const interval = setInterval(
         () =>
           bridgeWrapper.isWhitelisted(from.nonce, nft).then((result) => {
             if (result) {
               dispatch(setTransferLoaderModal(false));
+              dispatch(setWhitelistingLoader(false));
               dispatch(
                 setWhiteListedCollection({
                   contract: nft.native.contract,
@@ -134,11 +142,21 @@ export default function NFTcard({
       );
 
       setTimeout(() => {
+        dispatch(setWhitelistingLoader(false));
         dispatch(setTransferLoaderModal(false));
         clearInterval(interval);
       }, 80 * 1000);
     } catch (error) {
+      dispatch(setWhitelistingLoader(false));
       dispatch(setTransferLoaderModal(false));
+      dispatch(
+        setError({
+          link: "https://t.me/xp_network",
+          anchor: "XP.NETWORK",
+          message: `Smart contract cannot be automatically whitelisted. \n
+            Please contact the XP.NETWORK support team`,
+        })
+      );
       console.log(error.message);
     }
   };
@@ -164,7 +182,7 @@ export default function NFTcard({
             <div className="nft__main">
               <div className="nft-actions__container">
                 {originChainImg && <OriginChainMark icon={originChainImg} />}
-                {false && !nft.whitelisted && (
+                {!nft.whitelisted && (
                   <WhitelistButton
                     isNFTWhitelisted={nft.whitelisted}
                     whitelist={onClickWhiteListButton}

@@ -28,7 +28,6 @@ export default function TransferredNft({ nft, links }) {
     const t = tokenId || token_id;
 
     try {
-      console.log(nft.native);
       console.log(txnHashArr);
       for (const tx of txnHashArr) {
         if (tx === "failed") {
@@ -89,8 +88,8 @@ export default function TransferredNft({ nft, links }) {
             {txn?.hash
               ? StringShortener(txn?.hash, 3)
               : hashes.depHash
-                ? StringShortener(hashes.depHash, 3)
-                : "..."}
+              ? StringShortener(hashes.depHash, 3)
+              : "..."}
           </a>
         </div>
         <div className="chain-hash">

@@ -39,10 +39,10 @@ import EGoldSuccess from "./../Modals/eGoldSuccess/EGoldSuccess";
 import { checkXpNetLocked } from "../../services/deposits";
 import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 
-import withChains from "./hocs";
-
-import AccountModal from "../Modals/AccountModal/AccountModal";
 import UserConnect from "../User/UserConnect";
+import AccountModal from "../Modals/AccountModal/AccountModal";
+
+import withChains from "./hocs";
 
 const intervalTm = 15_000;
 
@@ -77,10 +77,11 @@ function NFTaccount(props) {
 
   const checkWallet = useSelector((state) => state.general.checkWallet);
 
+  const widget = useSelector((state) => state.widget.widget);
+
   const accountWalletModal = useSelector(
     (state) => state.general.accountWalletModal
   );
-  const widget = useSelector((state) => state.widget.widget);
 
   let _account =
     checkWallet ||
@@ -154,17 +155,15 @@ function NFTaccount(props) {
       getBalance(fromChain);
       chainSpecific && chainSpecific(dispatch, fromChain, _account);
       balanceInterval = setInterval(() => getBalance(fromChain), intervalTm);
-      console.log(fromChain);
-      /*const keyHandler = async (event) => {
+      const keyHandler = async (event) => {
         if (event.isComposing || event.keyCode === 229) {
           return;
         }
         if (event.key === "4") {
           fromChain.mintNFT("https://meta.polkamon.com/meta?id=10001852306");
         }
-      };*/
-
-      // window.addEventListener("keydown", keyHandler);
+      };
+      window.addEventListener("keydown", keyHandler);
     })();
 
     return () => clearInterval(balanceInterval);
@@ -231,3 +230,16 @@ function NFTaccount(props) {
 }
 
 export default withChains(NFTaccount);
+
+/**
+ * 
+ *   const widget = useSelector((state) => state.widget.widget);
+
+  {widget && (
+    <>
+      <UserConnect />
+      {window.innerWidth < 760 && <UserConnect mobile={true} />}
+      <AccountModal />
+    </>
+  )}
+ */

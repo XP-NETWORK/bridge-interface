@@ -148,9 +148,6 @@ class AbstractChain {
 
   async estimate(toChain, nft, receiver = "", widgetParams) {
     //tron case
-    /* if (toChain.getNonce() === 9) {
-      return calcFees(getTronFees(this.chainParams.key), this.nonce);
-    }*/
 
     try {
       const res = await this.bridge.estimateFees(
@@ -272,7 +269,9 @@ class AbstractChain {
     if (!this.signer) throw new Error("No signer for ", this.chainParams.text);
     try {
       console.log(this.signer, nft, fees);
-      return await this.chain.preTransfer(this.signer, nft, fees);
+      const res = await this.chain.preTransfer(this.signer, nft, fees);
+      console.log(res, "approval res");
+      return res;
     } catch (e) {
       console.log(e, "in preTransfer");
       throw e;
@@ -331,7 +330,7 @@ class EVM extends AbstractChain {
 
   setSigner(signer) {
     super.setSigner(signer);
-    signer && Xpchallenge.connectWallet(signer._address);
+    signer && Xpchallenge.connectWallet(signer._address, this.chainParams.name);
   }
 }
 
@@ -382,7 +381,10 @@ class Elrond extends AbstractChain {
     super.setSigner(signer);
 
     signer &&
-      Xpchallenge.connectWallet(signer.address || signer.account?.address);
+      Xpchallenge.connectWallet(
+        signer.address || signer.account?.address,
+        this.chainParams.name
+      );
   }
 
   async getNFTs(address) {
@@ -655,15 +657,20 @@ class APTOS extends AbstractChain {
   constructor(params) {
     super(params);
   }
-
   async preTransfer() {
     return true;
   }
 
   async mintNFT(uri) {
-    const mint = await this.chain.mintNft(this.signer, {
+    const options = {
+      name: "Name",
+      collection: "XPNFT",
+      description: "description",
       uri,
-    });
+      royalty_payee_address: this.signer.address,
+    };
+    console.log(this.signer);
+    const mint = await this.chain.mintNft(this.signer, options);
   }
 
   filterNFTs(nfts) {
