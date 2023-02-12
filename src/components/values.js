@@ -420,7 +420,7 @@ export const chains = [
     {
         type: "EVM",
         key: "Skale",
-        text: "Skale",
+        text: "SKALE",
         nonce: 30,
         order: 8,
         chainId: 1564830818,

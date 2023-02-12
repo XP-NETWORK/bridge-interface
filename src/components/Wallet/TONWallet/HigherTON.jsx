@@ -129,6 +129,9 @@ function HigherTON(OriginalComponent) {
                                 );
                                 store.dispatch(setQRCodeModal(true));
                             },
+                            onSuccess: () => {
+                                store.dispatch(setQRCodeModal(false));
+                            },
                         },
                         config: {
                             ...account.signer,
