@@ -17,13 +17,11 @@ export default function ChangeWalletModal() {
     // const location = useLocation();
     const dispatch = useDispatch();
     const { deactivate } = useWeb3React();
-    const temporaryTo = useSelector((state) => state.general.temporaryTo);
-    const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
-    const path = window.location.pathname;
-    console.log(
-        "🚀 ~ file: ChangeWalletModal.jsx:22 ~ ChangeWalletModal ~ path",
-        path
+    const { temporaryTo, temporaryFrom, testNet } = useSelector(
+        (state) => state.general
     );
+
+    const path = window.location.pathname;
 
     // );
     const handleClose = () => {
@@ -38,7 +36,7 @@ export default function ChangeWalletModal() {
         dispatch(setFrom(temporaryFrom));
         dispatch(setTo(temporaryTo));
         dispatch(setChangeWallet(false));
-        if (path === "/connect") {
+        if (path === `${testNet ? "/testnet/connect" : "/connect"}`) {
             dispatch(setWalletsModal(true));
         } else dispatch(setAccountWalletModal(true));
     };
