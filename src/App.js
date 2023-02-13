@@ -24,6 +24,7 @@ import {
   setWalletsModal,
   setAccountWalletModal,
   setTransferLoaderModal,
+  setSwitchDestination
 
  } from "./store/reducers/generalSlice";
 //  import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
@@ -35,12 +36,41 @@ import Modals from "./components/Modals/Modals";
 import AppContainer from "./components/App/container";
 
 function App({ network }) {
-  const dispatch = useDispatch();
+  let dispatch = useDispatch();
   let showChainModal = useSelector((state) => state.general.showChainModal);
+  let importModal = useSelector((state) => state.general.importModal);
+  let error = useSelector((state) => state.general.error);
+  let featuredModal = useSelector((state) => state.general.featuredModal);
+  let redirectModal = useSelector((state) => state.general.redirectModal);
+  let approveLoader = useSelector((state) => state.general.approveLoader);
+  let changeWallet = useSelector((state) => state.general.changeWallet);
+  let accountModal = useSelector((state) => state.general.accountModal);
+  let walletsModal = useSelector((state) => state.general.walletsModal);
+  let accountWalletModal = useSelector((state) => state.general.accountWalletModal);
+  let transferModalLoader = useSelector((state) => state.general.transferModalLoader);
+  let switchDestination = useSelector((state) => state.general.switchDestination);
+  // let showChainModal = useSelector((state) => state.general.showChainModal);
+
+  let modalArray = [
+    showChainModal,
+    importModal,
+    featuredModal,
+    error,
+    redirectModal,
+    approveLoader,
+    changeWallet,
+    accountModal,
+    walletsModal,
+    accountWalletModal,
+    transferModalLoader,
+    switchDestination
+  ]
+
   let location = useLocation();
 
   useEffect(() => {
-    if (showChainModal) {
+    console.log('array: ',modalArray)
+    if (modalArray.indexOf(true) !== -1) {
       dispatch(setChainModal(false));
       dispatch(setImportModal(false));
       dispatch(setError(false));
@@ -52,7 +82,7 @@ function App({ network }) {
       dispatch(setWalletsModal(false));
       dispatch(setAccountWalletModal(false));
       dispatch(setTransferLoaderModal(false));
-      
+      dispatch(setSwitchDestination(false));
     }
   }, [location]);
 
