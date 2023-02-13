@@ -41,8 +41,6 @@ export default function TonQeCodeModal() {
       `https://app.tonkeeper.com/ton-login/support-bot-xp.herokuapp.com/tk?open=1&userId=${tonKeeperSession.userId}`
     : tonHubSession?.link;
 
-  console.log(deepLink, "");
-
   const linkElement = useRef(null);
 
   useEffect(() => {

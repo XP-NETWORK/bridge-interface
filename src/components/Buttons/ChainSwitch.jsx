@@ -28,7 +28,6 @@ export default function ChainSwitch({ assignment }) {
             case "from":
                 return (
                     <span
-                        // style={walletconnect || nonEVM ? OFF : {}}
                         onClick={handleFromChainSwitch}
                         className="chain-switch"
                     >
@@ -37,7 +36,7 @@ export default function ChainSwitch({ assignment }) {
                             src={from.image.src}
                             alt=""
                         />{" "}
-                        {from.key === "xDai" ? "Gnosis" : from.key}
+                        {from.text}
                         <div className="arrow-down"></div>
                     </span>
                 );
@@ -49,7 +48,7 @@ export default function ChainSwitch({ assignment }) {
                             src={to?.image?.src}
                             alt=""
                         />{" "}
-                        {to?.key === "xDai" ? "Gnosis" : to?.key}
+                        {to.text}
                         <div className="arrow-down"></div>
                     </span>
                 );

@@ -17,6 +17,15 @@ export default function ChainSearch() {
 
     useEffect(() => {
         inputElement.current.focus();
+        const handleKeyDown = () => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+            }
+        };
+        document.addEventListener("keydown", handleKeyDown);
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
     }, []);
 
     return (

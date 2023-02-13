@@ -28,7 +28,6 @@ export default function TransferredNft({ nft, links }) {
     const t = tokenId || token_id;
 
     try {
-      console.log(nft.native);
       console.log(txnHashArr);
       for (const tx of txnHashArr) {
         if (tx === "failed") {

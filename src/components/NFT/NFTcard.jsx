@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -5,6 +7,8 @@ import {
     removeFromSelectedNFTList,
     setTransferLoaderModal,
     setWhiteListedCollection,
+    setError,
+    setWhitelistingLoader,
 } from "../../store/reducers/generalSlice";
 import NFTdetails from "./NFTdetails";
 import { useSelector } from "react-redux";
@@ -19,31 +23,36 @@ import PropTypes from "prop-types";
 import { parseNFT } from "../../wallet/nftParser";
 import { useDidUpdateEffect } from "../Settings/hooks";
 import Image from "./Image";
-
 import OnlyVideo from "./OnlyVideo";
 import { chains } from "../values";
 import OriginChainMark from "./OriginChainMark";
 import { selected } from "./NFTHelper";
-import whiteListedPool from "../../services/whiteListedPool";
+
 import { WhitelistButton } from "./WhitelistButton";
 import SFTMark from "./SFTMark";
-// import { WhitelistButton } from "./WhitelistButton";
-// import { setTransferLoaderModal } from "../../store/reducers/generalSlice";
+import { setupUnitTestWatcherTimeouts } from "@elrondnetwork/erdjs/out/testutils";
 
 NFTcard.propTypes = {
     nft: PropTypes.object,
     index: PropTypes.number,
     claimables: PropTypes.bool,
     chain: PropTypes.object,
-    bridge: PropTypes.object,
+    serviceContainer: PropTypes.object,
 };
 
-export default function NFTcard({ bridge, chain, nft, index, claimables }) {
+export default function NFTcard({
+    serviceContainer,
+    chain,
+    nft,
+    index,
+    claimables,
+}) {
+    const { bridge: bridgeWrapper, whitelistedPool } = serviceContainer;
     const dispatch = useDispatch();
     const [detailsOn, setDetailsOn] = useState(false);
     const search = useSelector((state) => state.general.NFTListSearch);
     const from = useSelector((state) => state.general.from);
-    const factory = useSelector((state) => state.general.factory);
+
     const testnet = useSelector((state) => state.general.testNet);
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
 
@@ -57,7 +66,6 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
     };
 
     const getOriginChain = (originChain) => {
-        // debugger;
         const _nonce = Number(originChain);
         const origin = chains.find((e) => e.nonce === _nonce);
         return origin?.image?.src;
@@ -73,52 +81,6 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
             threshold: 0.3,
         };
     }, []);
-
-    // let isSelected = selectedNFTs.filter((n) => {
-    //     if (from.type === "Solana") {
-    //         if (n.native.nftMint === nft.native.nftMint) {
-    //             return n;
-    //         }
-    //     } else
-    // n.native.tokenId === nft.native?.tokenId &&
-    //     n.native.contract === nft.native?.contract &&
-    //     n.native.chainId === nft.native?.chainId;
-    // })[0];
-
-    // const selected = () => {
-    //     switch (from.type) {
-    //         case "Solana":
-    //             return selectedNFTs.filter(
-    //                 (n) => n.native.nftMint === nft.native.nftMint
-    //             )[0];
-    //         case "APTOS":
-    //             return selectedNFTs.filter(
-    //                 (n) =>
-    //                     n.native.collection_creator ===
-    //                         nft.native?.collection_creator &&
-    //                     n.native.token_name === nft.native?.token_name
-    //             )[0];
-    //         default:
-    //             return selectedNFTs.filter(
-    //                 (n) =>
-    //                     n.native.tokenId === nft.native?.tokenId &&
-    //                     n.native.contract === nft.native?.contract &&
-    //                     n.native.chainId === nft.native?.chainId
-    //             )[0];
-    //     }
-    // };
-
-    // let isSelected =
-    //     from.type === "Solana"
-    //         ? selectedNFTs.filter(
-    //               (n) => n.native.nftMint === nft.native.nftMint
-    //           )[0]
-    //         : selectedNFTs.filter(
-    //               (n) =>
-    //                   n.native.tokenId === nft.native?.tokenId &&
-    //                   n.native.contract === nft.native?.contract &&
-    //                   n.native.chainId === nft.native?.chainId
-    //           )[0];
 
     function addRemoveNFT(chosen) {
         if (!selected(from.type, nft, selectedNFTs)) {
@@ -146,55 +108,69 @@ export default function NFTcard({ bridge, chain, nft, index, claimables }) {
     useDidUpdateEffect(() => {
         if (isVisible) {
             if (!nft.dataLoaded) {
-                chain
-                    .preParse(nft)
-                    .then((_nft) =>
-                        parseNFT(bridge, _nft, index, testnet, claimables)
+                chain.preParse(nft).then((_nft) => {
+                    parseNFT(
+                        serviceContainer,
+                        _nft,
+                        index,
+                        testnet,
+                        claimables
                     );
+                });
             }
         }
     }, [isVisible, nft]);
 
     const onClickWhiteListButton = async () => {
         // eslint-disable-next-line no-debugger
-
-        console.log(nft.native.contract);
+        // debugger;
+        dispatch(setWhitelistingLoader(true));
         dispatch(setTransferLoaderModal(true));
         try {
-            const s = await factory.whitelistEVM(
+            const tx = await bridgeWrapper.bridge.whitelistEVM(
                 from.nonce,
                 nft.native.contract
             );
-            console.log({ s });
 
             const interval = setInterval(
                 () =>
-                    bridge.isWhitelisted(from.nonce, nft).then((result) => {
-                        console.log(result, "wl-result");
-                        if (result) {
-                            dispatch(setTransferLoaderModal(false));
-                            dispatch(
-                                setWhiteListedCollection({
-                                    contract: nft.native.contract,
-                                })
-                            );
-                            whiteListedPool.whitelistContract(
-                                nft.native.contract
-                            );
-                            clearInterval(interval);
-                        }
-                    }),
+                    bridgeWrapper
+                        .isWhitelisted(from.nonce, nft)
+                        .then((result) => {
+                            if (result) {
+                                dispatch(setTransferLoaderModal(false));
+                                dispatch(setWhitelistingLoader(false));
+                                dispatch(
+                                    setWhiteListedCollection({
+                                        contract: nft.native.contract,
+                                    })
+                                );
+                                whitelistedPool.whitelistContract(
+                                    nft.native.contract
+                                );
+                                clearInterval(interval);
+                            }
+                        }),
                 5000
             );
 
             setTimeout(() => {
+                dispatch(setWhitelistingLoader(false));
                 dispatch(setTransferLoaderModal(false));
                 clearInterval(interval);
             }, 80 * 1000);
         } catch (error) {
+            dispatch(setWhitelistingLoader(false));
             dispatch(setTransferLoaderModal(false));
+            dispatch(
+                setError({
+                    link: "https://t.me/xp_network",
+                    anchor: "XP.NETWORK",
+                    message: `Smart contract cannot be automatically whitelisted. \n
+            Please contact the XP.NETWORK support team`,
+                })
+            );
             console.log(error.message);
-            // TODO: handle error
         }
     };
 

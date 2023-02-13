@@ -9,29 +9,26 @@ import {
   initialSecretCred,
   cleanSelectedNFTList,
 } from "../../../store/reducers/generalSlice";
-import { CHAIN_INFO } from "../../values";
+
 import "./importNFTModal.css";
-import { Chain } from "xp.network";
-import { useDidUpdateEffect, useCheckMobileScreen } from "../../Settings/hooks";
+import { Chain, CHAIN_INFO } from "xp.network";
+import { useCheckMobileScreen } from "../../Settings/hooks";
 import vk from "../../../assets//img/icons/vkey.svg";
 import SecretContractsDropdown from "../../Dropdowns/SecretContractsDropdown";
 import PropTypes from "prop-types";
 
-const SecretAuth = ({ setLogdIn, refreshSecret }) => {
+import { withServices } from "../../App/hocs/withServices";
+
+const SecretAuth = ({ setLogdIn, serviceContainer }) => {
+  const { bridge } = serviceContainer;
   const dispatch = useDispatch();
   const off = { opacity: 0.6, pointerEvents: "none" };
   const [toggle, setToggle] = useState("show");
-  const factory = useSelector((state) => state.general.factory);
   const [importBlocked, setImportBlocked] = useState(false);
-  const signer = useSelector((state) => state.signers.signer);
-  //MyViewingKey#1
 
-  //secret146snljq0kjsva7qrx4am54nv3fhfaet7srx4n2
-  /// const [error, setError] = useState("");
-
-  const { secretAccount, checkWallet, secretCred } = useSelector(
-    ({ general: { secretAccount, checkWallet, secretCred } }) => ({
-      secretAccount,
+  const { account, checkWallet, secretCred } = useSelector(
+    ({ general: { account, checkWallet, secretCred } }) => ({
+      account,
       checkWallet,
       secretCred,
     })
@@ -42,20 +39,13 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
 
     try {
       setImportBlocked(true);
+      const chainWrapper = await bridge.getChain(Chain.SECRET);
 
-      const secret = await factory.inner(Chain.SECRET);
-
-      let secretNFTs = await secret.nftList(
-        checkWallet || secretAccount,
+      let secretNFTs = await chainWrapper.chain.nftList(
+        checkWallet || account,
         secretCred.viewKey,
         secretCred.contract
       );
-
-      // let secretNFTs = await secret.nftList(
-      //     "secret1dazpkyxaj9eau9ej0fv266vdaaxtgn9nhak6ad",
-      //     secretCred.viewKey,
-      //     secretCred.contract
-      // );
 
       secretNFTs = secretNFTs.map((nft) => ({
         ...nft,
@@ -81,30 +71,19 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
   const createViewingKey = async () => {
     try {
       setImportBlocked(true);
+      const { chain, signer, getNFTs, filterNFTs } = await bridge.getChain(
+        Chain.SECRET
+      );
 
-      const secret = await factory.inner(Chain.SECRET);
-      const created = await secret.setViewingKey(
+      const created = await chain.setViewingKey(
         signer,
         secretCred.contract,
         secretCred.viewKey
       );
       console.log("Viewing Key was created: ", created);
       if (created) {
-        let secretNFTs = await secret.nftList(
-          checkWallet || secretAccount,
-          secretCred.viewKey,
-          secretCred.contract
-        );
-        secretNFTs = secretNFTs.map((nft) => ({
-          ...nft,
-          metaData: !nft?.uri
-            ? {
-                ...nft?.metaData,
-                image: nft?.metaData?.media[0]?.url,
-                imageFormat: nft?.metaData?.media[0]?.extension,
-              }
-            : null,
-        }));
+        let secretNFTs = await getNFTs(checkWallet || account, secretCred);
+        secretNFTs = filterNFTs(secretNFTs);
         dispatch(addImportedNFTtoNFTlist(secretNFTs));
       }
     } catch (error) {
@@ -118,19 +97,15 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
     switch (btn) {
       case "set":
         setToggle("set");
-        dispatch(setSecretCred(initialSecretCred));
         break;
       case "show":
         setToggle("show");
+        dispatch(setSecretCred(initialSecretCred));
         break;
       default:
         break;
     }
   };
-
-  useDidUpdateEffect(() => {
-    fetchSecretNfts();
-  }, [refreshSecret]);
 
   return (
     <div className="nftListBox withSecret">
@@ -220,9 +195,11 @@ const SecretAuth = ({ setLogdIn, refreshSecret }) => {
     </div>
   );
 };
+
 SecretAuth.propTypes = {
   setLogdIn: PropTypes.any,
   refreshSecret: PropTypes.any,
+  serviceContainer: PropTypes.object,
 };
 
 const SecretContractPanned = () => {
@@ -233,6 +210,7 @@ const SecretContractPanned = () => {
   const dispatch = useDispatch();
 
   const isMobile = useCheckMobileScreen();
+  const chain = CHAIN_INFO.get(Chain.SECRET);
 
   return (
     <div className="scretPannelWrap">
@@ -242,7 +220,7 @@ const SecretContractPanned = () => {
           <a
             target="_blank"
             rel="noreferrer"
-            href={`${CHAIN_INFO.Secret.blockExplorerUrls}accounts/${secretCred.contract}`}
+            href={`${chain.blockExplorerUrlAddr}${secretCred.contract}`}
           >
             {isMobile
               ? `${secretCred.contract.slice(
@@ -268,7 +246,7 @@ const SecretContractPanned = () => {
 };
 
 export const withSecretAuth = (Wrapped) =>
-  function Callback(props) {
+  withServices(function Callback(props) {
     const secretLoggedIn = useSelector((state) => state.general.secretLoggedIn);
     const { from } = useSelector(({ general: { from, NFTList } }) => ({
       from,
@@ -276,9 +254,8 @@ export const withSecretAuth = (Wrapped) =>
     }));
 
     const dispatch = useDispatch();
-    const refreshSecret = useSelector((state) => state.general.refreshSecret);
 
-    const isSecret = from.text === "Secret";
+    const isSecret = from.key === "Secret";
 
     const renderAuth = isSecret && !secretLoggedIn;
 
@@ -286,7 +263,7 @@ export const withSecretAuth = (Wrapped) =>
       <div className={isSecret ? "secretContainer" : ""}>
         <div style={renderAuth ? {} : { display: "none" }}>
           <SecretAuth
-            refreshSecret={refreshSecret}
+            serviceContainer={props.serviceContainer}
             setLogdIn={(val) => dispatch(setSecretLoggedIn(val))}
           />
         </div>
@@ -295,5 +272,6 @@ export const withSecretAuth = (Wrapped) =>
         </div>
       </div>
     );
-  };
+  });
+
 export default SecretAuth;

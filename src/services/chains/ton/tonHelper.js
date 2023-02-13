@@ -1,4 +1,4 @@
-import { chainsConfig } from "../../../components/values.js";
+/*import { chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
 import { errorToLog } from "../../../wallet/helpers";
 import { setError } from "../../../store/reducers/generalSlice";
@@ -99,6 +99,7 @@ const transfer = async (
     store.dispatch(setQRCodeModal(false));
     return result;
   } catch (error) {
+    console.log(error,'error');
     store.dispatch(setError(error));
     const date = new Date();
     const errBogy = {
@@ -116,3 +117,4 @@ const transfer = async (
 
   store.dispatch(setQRCodeModal(false));
 };
+*/

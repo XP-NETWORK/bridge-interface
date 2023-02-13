@@ -28,6 +28,9 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setWhitelistingLoader(state, action) {
+            state.whitelistingLoader = action.payload;
+        },
         setWhiteListedCollection(state, action) {
             const { contract } = action.payload;
 
@@ -551,6 +554,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+    setWhitelistingLoader,
     setWhiteListedCollection,
     setConnectedWallet,
     setUnstoppableDomains,

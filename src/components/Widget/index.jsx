@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Widget.css";
 import { setSettings } from "../../store/reducers/settingsSlice";
@@ -6,8 +6,6 @@ import { setWidget, setWSettings } from "../../store/reducers/generalSlice";
 
 import { power } from "../Settings/assets/power.js";
 import mobileBanner from "../Settings/assets/img/mobileOnlyBanner.svg";
-
-const setBanner = () => {};
 
 const mobileOnlyBanner = `
 <div class="mobileOnlyBanner"><img src=${mobileBanner} alt="mobileOnlyXP"/><div class="testComp">
@@ -30,13 +28,10 @@ export default function Widget() {
       wsettings,
     })
   );
-console.log(settings);
+  console.log(settings);
   const dispatch = useDispatch();
 
-  const [state, setState] = useState({});
-
   useEffect(() => {
-    // debugger
     const p = new URLSearchParams(window.location.search);
     const widget = p.get("widget") === "true";
     const wsettings = p.get("wsettings") === "true";
@@ -111,7 +106,6 @@ console.log(settings);
     secondaryColor,
     borderColor,
     iconColor,
-    wallets,
     showLink,
     collapsed,
   } = settings;

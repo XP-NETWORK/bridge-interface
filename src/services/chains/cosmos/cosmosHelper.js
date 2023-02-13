@@ -1,4 +1,4 @@
-import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
+/*import { CHAIN_INFO, chainsConfig } from "../../../components/values.js";
 import store from "../../../store/store.js";
 import { errorToLog } from "../../../wallet/helpers";
 import { setError } from "../../../store/reducers/generalSlice";
@@ -103,3 +103,4 @@ const transfer = async (
     return false;
   }
 };
+*/

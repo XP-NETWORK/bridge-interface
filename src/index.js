@@ -23,6 +23,7 @@ import ErrorBoundary from "./layout/ErrorBoundary";
 import { ServiceProvider } from "./components/App/hocs/serviceProvider";
 
 import Bridge from "./services/bridge";
+import WhiteListedPool from "./services/whiteListedPool";
 
 function getLibrary(provider) {
   return new Web3(provider);
@@ -31,6 +32,7 @@ function getLibrary(provider) {
 const Services = ({ children }) => {
   const [serviceContainer, setContainer] = useState({
     bridge: Bridge(),
+    whitelistedPool: WhiteListedPool(),
   });
 
   return (

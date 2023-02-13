@@ -7,7 +7,15 @@ yarn-error.log
 .DS_Store
 .env
 .prettierre.json
+<<<<<<< HEAD
+bridge.code-workspace
+=======
 bridge.code-workspace
 **/workspace.code-workspace
 **/bridge.code-workspace
 
+<<<<<<< HEAD
+>>>>>>> temporary
+=======
+package-lock.json
+>>>>>>> origin/temporary

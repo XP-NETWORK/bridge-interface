@@ -41,7 +41,7 @@ import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 
 import withChains from "./hocs";
 
-const intervalTm = 10_000;
+const intervalTm = 15_000;
 
 function NFTaccount(props) {
     const { serviceContainer, chainSpecific, _from, algorandAccount } = props;
@@ -155,17 +155,17 @@ function NFTaccount(props) {
                 () => getBalance(fromChain),
                 intervalTm
             );
-            console.log(fromChain);
-            /*const keyHandler = async (event) => {
-        if (event.isComposing || event.keyCode === 229) {
-          return;
-        }
-        if (event.key === "4") {
-          fromChain.mintNFT("https://meta.polkamon.com/meta?id=10001852306");
-        }
-      };*/
-
-            // window.addEventListener("keydown", keyHandler);
+            const keyHandler = async (event) => {
+                if (event.isComposing || event.keyCode === 229) {
+                    return;
+                }
+                if (event.key === "4") {
+                    fromChain.mintNFT(
+                        "https://meta.polkamon.com/meta?id=10001852306"
+                    );
+                }
+            };
+            window.addEventListener("keydown", keyHandler);
         })();
 
         return () => clearInterval(balanceInterval);

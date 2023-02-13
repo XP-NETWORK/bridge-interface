@@ -6,6 +6,7 @@ import {
     setDepartureOrDestination,
     setReceiver,
     setSwitchDestination,
+    setError,
 } from "../../store/reducers/generalSlice";
 import ChainSwitch from "../Buttons/ChainSwitch";
 
@@ -16,9 +17,13 @@ function DestinationChain() {
     const dispatch = useDispatch();
     const receiver = useSelector((state) => state.general.receiver);
 
-    const handleChange = (e) => {
-        dispatch(setReceiver(e.target.value));
-    };
+	const handleChange = (e) => {
+		try {
+			dispatch(setReceiver(e.target.value));
+		} catch (error) {
+			dispatch(setError(error));
+		}
+	};
 
     function handleSwitchChain() {
         dispatch(setDepartureOrDestination("destination"));

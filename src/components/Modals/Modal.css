@@ -184,6 +184,7 @@
 .wllListItem img {
   display: block;
   margin-right: auto;
+  max-width: 28px;
 }
 
 .wllListItem:hover {

@@ -1,20 +1,16 @@
 import { AppConfigs, ChainFactory, ChainFactoryConfigs } from "xp.network";
 
 import { Chain } from "xp.network/dist/consts";
-import { chainsConfig, CHAIN_INFO } from "../components/values";
+
 import {
   setAlgorandClaimables,
-  setBigLoader,
-  setError,
   setFactory,
-  setNFTList,
-  setPreloadNFTs,
 } from "../store/reducers/generalSlice";
 import store from "../store/store";
 import io from "socket.io-client";
 import axios from "axios";
 import { utils } from "ethers";
-import { setIsEmpty } from "../store/reducers/paginationSlice";
+
 import { setChainFactoryConfig } from "../store/reducers/signersSlice";
 import Harmony from "@harmony-js/core";
 
@@ -24,8 +20,6 @@ const scraperUrl = "wss://dest-scraper.herokuapp.com";
 const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/";
 
 export const isApproved = async (c, nft) => {
-  // debugger;
-
   const {
     signers: { signer },
     general: { factory },
@@ -132,7 +126,7 @@ export const checkValidators = () => {
 
 export const getAndSetFactory = async (network) => {
   // eslint-disable-next-line no-debugger
-  // debugger;
+
   let config;
   let factory;
   switch (network) {
@@ -155,7 +149,6 @@ export const getAndSetFactory = async (network) => {
 };
 
 export const handleChainFactory = async (someChain) => {
-  // debugger;
   const { factory } = store.getState().general;
 
   try {
@@ -224,7 +217,7 @@ export const handleChainFactory = async (someChain) => {
   }
 };
 
-export const mintForTestNet = async (from, signer) => {
+/*export const mintForTestNet = async (from, signer) => {
   const { factory } = store.getState().general;
   const chain = await factory.inner(chainsConfig[from].Chain);
   const uri = await prompt();
@@ -239,60 +232,7 @@ export const mintForTestNet = async (from, signer) => {
   } catch (error) {
     console.log(error);
   }
-};
-
-export const getNFTS = async (wallet, from) => {
-  // eslint-disable-next-line no-debugger
-
-  const { checkWallet, NFTList, factory } = store.getState().general;
-  const chain = await factory.inner(chainsConfig[from].Chain);
-  try {
-    let response;
-    response = await factory.nftList(chain, checkWallet ? checkWallet : wallet);
-
-    const unique = {};
-    try {
-      const allNFTs = response.filter((n) => {
-        const { chainId, address } = n.native;
-        const tokenId = n.native.tokenId || n.native.token_id;
-        const contract = n.native.contract || n.native.contract_id;
-
-        if (
-          unique[
-            `${tokenId}_${contract?.toLowerCase() ||
-              address?.toLowerCase()}_${chainId}`
-          ]
-        ) {
-          return false;
-        } else {
-          unique[
-            `${tokenId}_${contract?.toLowerCase() ||
-              address?.toLowerCase()}_${chainId}`
-          ] = true;
-          return true;
-        }
-      });
-      if (allNFTs.length < 1) {
-        store.dispatch(setIsEmpty(true));
-      } else {
-        store.dispatch(setIsEmpty(false));
-      }
-      return allNFTs;
-    } catch (err) {
-      return [];
-    }
-  } catch (err) {
-    console.log(err, "NFT Indexer error");
-    if (!NFTList) {
-      store.dispatch(
-        setError({
-          message: "NFT-Indexer is temporarily under maintenance",
-        })
-      );
-    }
-    return [];
-  }
-};
+};*/
 
 export const checkIfSmartContract = async (c, address) => {
   const { factory } = store.getState().general;
@@ -322,7 +262,7 @@ export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
 
 export const getAlgorandClaimables = async (account) => {
   const { checkWallet, factory } = store.getState().general;
-  // debugger;
+
   let claimables;
   try {
     claimables = await factory.claimableAlgorandNfts(checkWallet || account);
@@ -330,14 +270,6 @@ export const getAlgorandClaimables = async (account) => {
   } catch (error) {
     console.error(error);
   }
-};
-
-export const setNFTS = async (w, from, testnet) => {
-  store.dispatch(setBigLoader(true));
-  const nfts = await getNFTS(w, from, testnet);
-  store.dispatch(setPreloadNFTs(nfts.length));
-  store.dispatch(setNFTList(nfts));
-  store.dispatch(setBigLoader(false));
 };
 
 export function isValidHttpUrl(string) {
@@ -369,25 +301,11 @@ export const convertOne1 = (address) => {
 };
 
 export const convert = (address) => {
-  // debugger
   if (checkIfOne1(address)) {
     return convertOne1(address);
   }
   return address;
   // else if(checkIfIo1(address)) return convertIo1(address)
-};
-
-export const checkMintWith = async (from, to, contract, tokenId) => {
-  const { factory } = store.getState().general;
-  const fromNonce = CHAIN_INFO[from.text].nonce;
-  const toNonce = CHAIN_INFO[to.text].nonce;
-  const mintWith = await factory.getVerifiedContract(
-    contract,
-    toNonce,
-    fromNonce,
-    tokenId
-  );
-  return mintWith;
 };
 
 export const saveForSearch = async (address, chain, data) => {
@@ -446,11 +364,11 @@ export const getRightPath = (checkFrom, checkTo) => {
     general: { testNet, staging, from, to },
   } = store.getState();
 
-  if (checkFrom && checkFrom !== from.text) {
+  if (checkFrom && checkFrom !== from.key) {
     return;
   }
 
-  if (checkTo && checkTo !== to.text) {
+  if (checkTo && checkTo !== to.key) {
     return;
   }
 

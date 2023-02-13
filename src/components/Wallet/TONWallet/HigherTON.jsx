@@ -62,22 +62,22 @@ function HigherTON(OriginalComponent) {
             }
         };
 
-        const getStyles = (wallet) => {
+        const getStyles = () => {
             let styles = {
                 pointerEvents: ifTypeIsTonOrNotSelected() ? "" : "none",
                 opacity: ifTypeIsTonOrNotSelected() ? "" : "0.6",
             };
 
-            switch (wallet) {
-                case "TonWallet":
-                    break;
-                case "TonKeeper":
-                    break;
-                case "TonHub":
-                    break;
-                default:
-                    break;
-            }
+            // switch (wallet) {
+            //     case "TonWallet":
+            //         break;
+            //     case "TonKeeper":
+            //         break;
+            //     case "TonHub":
+            //         break;
+            //     default:
+            //         break;
+            // }
 
             return styles;
         };
@@ -128,6 +128,9 @@ function HigherTON(OriginalComponent) {
                                     })
                                 );
                                 store.dispatch(setQRCodeModal(true));
+                            },
+                            onSuccess: () => {
+                                store.dispatch(setQRCodeModal(false));
                             },
                         },
                         config: {

@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import {
-  Chain as ChainNonce,
   CHAIN_INFO,
   AppConfigs,
   ChainFactory,
@@ -11,7 +10,13 @@ import {
 import ChainInterface from "./chains";
 
 import axios from "axios";
-import { BridgeModes, chains, stagingWNFT, wnft } from "../components/values";
+import {
+  BridgeModes,
+  chains,
+  stagingWNFT,
+  wnft,
+  wnftPattern,
+} from "../components/values";
 
 class Bridge {
   chains = {};
@@ -70,6 +75,10 @@ class Bridge {
 
       const isWNFT = this.isWrapped(nft.uri);
 
+      if (chainWrapper.noWhiteListing) {
+        return true;
+      }
+
       if (
         isWNFT &&
         nft.uri.includes(stagingWNFT) &&
@@ -88,21 +97,23 @@ class Bridge {
 
       if (isWNFT || !chain.isNftWhitelisted) return true;
       return await chainWrapper.chain.isNftWhitelisted(nft);
-      //console.log(x, nft.native.name);
+      // console.log(x, nft.native.name);
+      //return x;
     } catch (e) {
       console.log(e, "in isWhitelisted");
       return false;
     }
   }
 
-  async getChain(nonce) {
+  async getChain(nonce, params = {}) {
     // eslint-disable-next-line no-debugger
-    // debugger;
     const chainParams = CHAIN_INFO.get(nonce);
     const chainId = String(nonce);
     const chain = this.chains[chainId];
+    const overwrite = params.overwrite;
 
-    if (chain) return chain;
+    if (chain && !overwrite) return chain;
+
     try {
       const params = {
         nonce,
@@ -152,15 +163,7 @@ class Bridge {
   }
 
   isWrapped(uri) {
-    /* if ([...wnft, stagingWNFT].some((url) => uri.includes(url))) {
-      return true;
-    }
-
-    return false;*/
-
-    return /(wnfts\.xp\.network|nft\.xp\.network|staging-nft\.xp\.network)/.test(
-      uri
-    );
+    return new RegExp(wnftPattern).test(uri);
   }
 
   async unwrap(nft) {
