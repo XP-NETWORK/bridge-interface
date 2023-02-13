@@ -196,7 +196,7 @@ export const chains = [
         image: { avatar: true, src: Solana },
         maintenance: false,
         testNet: true,
-        mainnet: false,
+        mainnet: biz,
     },
     {
         type: "Cardano",
@@ -495,7 +495,7 @@ export const chains = [
         order: -1,
         image: { avatar: true, src: arbitrum },
         testNet: true,
-        mainnet: false,
+        mainnet: true,
         coming: false,
         newChain: true,
         chainId: 42161,
