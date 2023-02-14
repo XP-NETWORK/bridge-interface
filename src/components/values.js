@@ -1,7 +1,6 @@
 import Ethereum from "../assets/img/chain/Etherium.svg";
 import Ton from "../assets/img/chain/ton.svg";
 import Elrond from "../assets/img/chain/multiverseX.png";
-
 import Binance from "../assets/img/chain/Binance.svg";
 import Cardano from "../assets/img/chain/Cardano.svg";
 import Algorand from "../assets/img/chain/Algarand.svg";
@@ -19,7 +18,6 @@ import One from "../assets/img/chain/One.svg";
 import Aurora from "../assets/img/chain/aurora.svg";
 import GT from "../assets/img/chain/GateChain.svg";
 import VET from "../assets/img/chain/Vechain.png";
-
 import SCRT from "../assets/img/chain/secret.svg";
 import CKB from "../assets/img/chain/godwoken.svg";
 import HBAR from "../assets/img/chain/Hedera.svg";
@@ -32,6 +30,7 @@ import InternetComputer from "../assets/img/chain/InternetComputer.svg";
 import near from "../assets/img/wallet/NearWallet.svg";
 import okx from "../assets/img/chain/okx.svg";
 import arbitrum from "../assets/img/chain/arbitrum.svg";
+import arbitrumTestNet from "../assets/img/chain/arbitrumTN.svg";
 // import brise from "../assets/img/chain/brise.png";
 
 export const EVM = "EVM";
@@ -493,7 +492,12 @@ export const chains = [
         value: "Arbitrum",
         nonce: 0x25,
         order: -1,
-        image: { avatar: true, src: arbitrum },
+        image: {
+            avatar: true,
+            src: window.location.href.includes("testnet")
+                ? arbitrumTestNet
+                : arbitrum,
+        },
         testNet: true,
         mainnet: true,
         coming: false,

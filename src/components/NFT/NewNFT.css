@@ -96,7 +96,7 @@
     color: #14161a;
 }
 .nft__footer {
-    height:max-content;
+    height: max-content;
     border-top: 1px solid white;
     padding: 6px 12px;
     display: flex;
@@ -125,10 +125,10 @@
     /* overflow-x: auto; */
     height: 560px;
 }
-.mobile-col .nft-list__wrapper{
+.mobile-col .nft-list__wrapper {
     justify-content: flex-start;
 }
-.mobile-col .nft-box__wrapper{
+.mobile-col .nft-box__wrapper {
     width: 47.5%;
     max-width: 200px;
 }
@@ -139,7 +139,7 @@
 
 .nft-box__wrapper {
     position: relative;
-    /* max-height: 270px; */
+    max-height: 270px;
 }
 
 .listed-view__not-whitelisted {
