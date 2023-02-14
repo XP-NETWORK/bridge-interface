@@ -6824,9 +6824,9 @@ arweave-stream-tx@^1.1.0:
     exponential-backoff "^3.1.0"
 
 arweave@^1.10.13, arweave@^1.11.4:
-  version "1.12.6"
-  resolved "https://registry.yarnpkg.com/arweave/-/arweave-1.12.6.tgz#de2314618afa040e7f6fc99ab1a178d17042339c"
-  integrity sha512-OglStwi/79e69XO42DbaqoOBNC9CZS+EupusYawRLMj0V2/zRlhrJi0WDuy4IaqY9LQYv8dHD9iyThvRUl9mqw==
+  version "1.12.7"
+  resolved "https://registry.yarnpkg.com/arweave/-/arweave-1.12.7.tgz#41a84660dfdd19d52a94cc6312e62db7b669d9f8"
+  integrity sha512-zgw5hcAjyNEH4X7JgkQ3AizK3voFn4fhCUyM9cqOC/kFN9ib33U/1wMfSkK+Uod5y9y2laAkxi4TPDJNC3U+QA==
   dependencies:
     arconnect "^0.4.2"
     asn1.js "^5.4.1"
@@ -19822,7 +19822,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#production":
   version "4.0.2"
-  resolved "git+https://github.com/xp-network/xpjs#4234d209d4649d1266341c8300cfb75bbef58624"
+  resolved "git+https://github.com/xp-network/xpjs#f40ae2a2ceb0aa285cfd7e9a3ed44bc16f4059e9"
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"

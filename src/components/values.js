@@ -157,7 +157,6 @@ export const chains = [
         maintenance: false,
         testNet: false,
         mainnet: true,
-        newChain: false,
     },
     {
         type: "Algorand",
@@ -197,7 +196,7 @@ export const chains = [
         image: { avatar: true, src: Solana },
         maintenance: false,
         testNet: true,
-        mainnet: false,
+        mainnet: biz,
     },
     {
         type: "Cardano",
@@ -297,7 +296,6 @@ export const chains = [
         maintenance: false,
         testNet: false,
         mainnet: true,
-        newChain: false,
     },
     {
         type: "EVM",
@@ -312,7 +310,6 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
-        newChain: false,
     },
     {
         type: "EVM",
@@ -327,7 +324,6 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
-        newChain: false,
     },
     {
         type: "EVM",
@@ -342,7 +338,6 @@ export const chains = [
         maintenance: false,
         testNet: false,
         mainnet: true,
-        newChain: false,
     },
     {
         type: "EVM",
@@ -356,8 +351,6 @@ export const chains = [
         image: { avatar: true, src: Moon },
         testNet: true,
         mainnet: true,
-        newChain: false,
-        coming: false,
     },
     {
         type: "EVM",
@@ -387,7 +380,6 @@ export const chains = [
         maintenance: false,
         mainnet: true,
         testNet: false,
-        newChain: false,
     },
     {
         type: "Cosmos",
@@ -429,7 +421,6 @@ export const chains = [
         testNet: true,
         mainnet: true,
         newChain: true,
-        coming: false,
     },
     {
         type: "EVM",
@@ -443,8 +434,7 @@ export const chains = [
         image: { avatar: true, src: Caduceus },
         testNet: true,
         mainnet: true,
-        newChain: false,
-        coming: false,
+        newChain: true,
     },
     {
         type: "EVM",
@@ -469,7 +459,6 @@ export const chains = [
         image: { avatar: true, src: Aptos },
         testNet: biz,
         mainnet: false,
-        coming: false,
     },
     {
         type: "NEAR",
@@ -481,7 +470,6 @@ export const chains = [
         image: { avatar: true, src: near },
         testNet: true,
         mainnet: false,
-        coming: false,
     },
     {
         type: "EVM",
@@ -507,7 +495,7 @@ export const chains = [
         order: -1,
         image: { avatar: true, src: arbitrum },
         testNet: true,
-        mainnet: false,
+        mainnet: true,
         coming: false,
         newChain: true,
         chainId: 42161,
