@@ -5,14 +5,15 @@
 .missing-nft-box__wrapper {
     background: #ececf14d;
     width: 200px;
-    height: 280px;
+    /* height: 280px; */
     border-radius: 20px;
+    margin-bottom: 10px;
 }
 .nft__card,
 .nft__card--selected {
     margin: 0 auto;
     width: 200px;
-    height: 280px;
+    /* height: 280px; */
     background: #f0f2f5;
     border-radius: 20px;
     overflow: hidden;
@@ -138,7 +139,7 @@
 
 .nft-box__wrapper {
     position: relative;
-    max-height: 270px;
+    /* max-height: 270px; */
 }
 
 .listed-view__not-whitelisted {
@@ -816,7 +817,7 @@
 .skeleton {
     background: #ececf1;
     width: 200px;
-    height: 280px;
+    /* height: 280px; */
     border-radius: 20px;
     overflow: hidden;
     position: relative;

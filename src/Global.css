@@ -409,6 +409,8 @@ span.closeBox svg {
   -moz-appearance: none;
   appearance: none;
   margin: 1px 0px;
+  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .yourNft span img {

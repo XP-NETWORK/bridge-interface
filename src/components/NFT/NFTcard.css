@@ -1,21 +1,20 @@
-.nft-box__wrapper {}
+.nft-box__wrapper {
+  margin-bottom: 10px;
+}
 
 .nft__card,
 .nft__card--selected {
   margin: 0 auto;
-  margin-bottom: 20px;
-  width: 100%;
-  max-width: 200px;
-  /* height: 280px;
-   */
-  height: max-content;
+  /* width: 100%; */
+  max-width: 200px;  
+  height: 100%;
   background: #f0f2f5;
   border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
   border: 1px solid white;
   transition: all 0.3s ease-in-out;
-  position: relative;
+  position: relative;       
 }
 
 
@@ -33,7 +32,8 @@
 }
 
 .nft__footer {
-  height: max-content;
+  
+  margin-bottom: 20px;
   border-top: 1px solid white;
   padding: 6px 12px;
   display: flex;
