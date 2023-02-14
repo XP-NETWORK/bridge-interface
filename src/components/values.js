@@ -393,7 +393,7 @@ export const chains = [
     mainnet: biz,
     testNet: false,
     test: false,
-    newChain: biz,
+    newChain: false,
     coming: !biz,
   },
   {
