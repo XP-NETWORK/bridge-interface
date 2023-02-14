@@ -1,0 +1,19 @@
+.whitelist-error-body {
+    display: flex;
+    flex-direction: column;
+    width: 360px;
+    margin: 0 auto;
+}
+
+.whitelist-error-body .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 6px;
+    text-align: left;
+}
+
+.whitelist-error-body .message {
+    margin-bottom: 6px;
+    text-align: left;
+}

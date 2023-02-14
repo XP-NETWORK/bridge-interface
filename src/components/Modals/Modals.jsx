@@ -157,7 +157,11 @@ export default function Modals() {
             >
                 <TechnicalSupport />
             </Modal>
-            <Modal show={tronPopUp} onHide={handleTronClose}></Modal>
+            <Modal
+                animation={false}
+                show={tronPopUp}
+                onHide={handleTronClose}
+            ></Modal>
             <Modal
                 className="transfer-loader-modal"
                 animation={false}
@@ -176,6 +180,7 @@ export default function Modals() {
                 <TronConnectionErrMod />
             </Modal>
             <Modal
+                animation={false}
                 className="bitkeep__popup"
                 show={redirectModal}
                 onHide={handleCloseRedirectModal}
@@ -183,6 +188,7 @@ export default function Modals() {
                 <RedirectModal />
             </Modal>
             <Modal
+                animation={false}
                 className="approve-modal"
                 style={{
                     overflow: "hidden",
@@ -195,7 +201,7 @@ export default function Modals() {
                     </div>
                 </div>
             </Modal>
-            <Modal show={error} className="error__modal">
+            <Modal animation={false} show={error} className="error__modal">
                 <Error />
             </Modal>
         </>

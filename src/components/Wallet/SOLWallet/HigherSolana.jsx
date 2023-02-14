@@ -66,7 +66,6 @@ export default function HigherSolana(OriginalComponent) {
 
         const getStyle = () => {
             // eslint-disable-next-line no-debugger
-            console.log({ biz });
             if (biz || testNet) {
                 if (!from) return {};
                 else if (from && from?.type !== "Solana")
