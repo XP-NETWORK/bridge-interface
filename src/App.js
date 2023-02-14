@@ -12,7 +12,21 @@ import {
   fetchXPUpdate,
   transformToDate,
 } from "./wallet/helpers";
-import { setChainModal } from "./store/reducers/generalSlice";
+import {
+  setChainModal,
+  setImportModal,
+  setError,
+  setGetFeaturedModal,
+  setRedirectModal,
+  setApproveLoader,
+  setChangeWallet,
+  setAccountModal,
+  setWalletsModal,
+  setAccountWalletModal,
+  setTransferLoaderModal,
+  setSwitchDestination,
+} from "./store/reducers/generalSlice";
+//  import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
 import { chains } from "./components/values";
 
 import "./components/Modals/Modal.css";
@@ -24,13 +38,59 @@ import Widget from "./components/Widget";
 import { withConnect } from "./components/Widget/hocs/withConnect";
 
 function App({ network }) {
-  const dispatch = useDispatch();
-  const showChainModal = useSelector((state) => state.general.showChainModal);
+  let dispatch = useDispatch();
+  let showChainModal = useSelector((state) => state.general.showChainModal);
+  let importModal = useSelector((state) => state.general.importModal);
+  let error = useSelector((state) => state.general.error);
+  let featuredModal = useSelector((state) => state.general.featuredModal);
+  let redirectModal = useSelector((state) => state.general.redirectModal);
+  let approveLoader = useSelector((state) => state.general.approveLoader);
+  let changeWallet = useSelector((state) => state.general.changeWallet);
+  let accountModal = useSelector((state) => state.general.accountModal);
+  let walletsModal = useSelector((state) => state.general.walletsModal);
+  let accountWalletModal = useSelector(
+    (state) => state.general.accountWalletModal
+  );
+  let transferModalLoader = useSelector(
+    (state) => state.general.transferModalLoader
+  );
+  let switchDestination = useSelector(
+    (state) => state.general.switchDestination
+  );
+  // let showChainModal = useSelector((state) => state.general.showChainModal);
+
+  let modalArray = [
+    showChainModal,
+    importModal,
+    featuredModal,
+    error,
+    redirectModal,
+    approveLoader,
+    changeWallet,
+    accountModal,
+    walletsModal,
+    accountWalletModal,
+    transferModalLoader,
+    switchDestination,
+  ];
+
   let location = useLocation();
 
   useEffect(() => {
-    if (showChainModal) {
+    // console.log('array: ',modalArray)
+    if (modalArray.indexOf(true) !== -1) {
       dispatch(setChainModal(false));
+      dispatch(setImportModal(false));
+      dispatch(setError(false));
+      dispatch(setGetFeaturedModal(false));
+      dispatch(setRedirectModal(false));
+      dispatch(setApproveLoader(false));
+      dispatch(setChangeWallet(false));
+      dispatch(setAccountModal(false));
+      dispatch(setWalletsModal(false));
+      dispatch(setAccountWalletModal(false));
+      dispatch(setTransferLoaderModal(false));
+      dispatch(setSwitchDestination(false));
     }
   }, [location]);
 

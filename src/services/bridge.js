@@ -75,8 +75,8 @@ class Bridge {
 
       const isWNFT = this.isWrapped(nft.uri);
 
-      if (chainWrapper.noWhiteListing) {
-        return true;
+      if (chainWrapper.nativeNotWhitelised && !isWNFT) {
+        return false;
       }
 
       if (

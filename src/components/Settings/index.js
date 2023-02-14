@@ -11,7 +11,7 @@ import {
   chains,
   wallets,
   fonts,
-  newChains,
+  //newChains,
 } from "../../store/reducers/settingsSlice";
 import "./Settings.css";
 
@@ -217,7 +217,8 @@ function WSettings({
                               c.coming ||
                               c.maintenance ||
                               c.mainnet ||
-                              c.testNet
+                              (window.location.pathname.includes("testnet") &&
+                                c.testNet)
                           )
                           ?.map((chain, i) => (
                             <li
@@ -240,9 +241,7 @@ function WSettings({
 
                                 {chain.text}
 
-                                {newChains.includes(chain.text) && (
-                                  <span>New chain</span>
-                                )}
+                                {chain.newChain && <span>New chain</span>}
 
                                 {chain.maintenance ? (
                                   <span

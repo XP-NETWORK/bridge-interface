@@ -525,7 +525,7 @@ class Cosmos extends AbstractChain {
 }
 
 class TON extends AbstractChain {
-  noWhiteListing = true;
+  nativeNotWhitelised = true;
 
   constructor(params) {
     super(params);

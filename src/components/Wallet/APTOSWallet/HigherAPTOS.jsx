@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +12,7 @@ import { getRightPath } from "../../../wallet/helpers";
 import { connectMartian, connectPetra, connectPontem } from "./AptosConnectors";
 import { withServices } from "../../App/hocs/withServices";
 import { Chain } from "xp.network";
-// import { AptosClient } from "aptos";
+import { AptosAccount } from "aptos";
 
 export default function HigherAPTOS(OriginalComponent) {
     const updatedComponent = withServices((props) => {
@@ -39,7 +40,6 @@ export default function HigherAPTOS(OriginalComponent) {
 
         const connectWallet = async (wallet) => {
             // eslint-disable-next-line no-debugger
-            // debugger;
             let connected;
             // let signer;
 
@@ -66,14 +66,39 @@ export default function HigherAPTOS(OriginalComponent) {
                     break;
             }
             const chainWrapper = await bridge.getChain(Chain.APTOS);
+            debugger;
+            // const client = new AptosClient(
+            //     "https://fullnode.devnet.aptoslabs.com"
+            // );
 
+            // const tokenClient = new TokenClient(client);
             // const _signer = await window.petra.account();
             // _signer.address = function() {
             //     return HexString.ensure(connected.address);
             // };
-            // const client = new AptosClient(
+            // const Aptos = new AptosClient(
             //     "https://fullnode.devnet.aptoslabs.com"
             // );
+            // console.log(
+            //     "🚀 ~ file: HigherAPTOS.jsx:78 ~ connectWal ~ client",
+            //     Aptos
+            // );
+            // const { address } = await window.petra.account();
+            // console.log(
+            //     "🚀 ~ file: HigherAPTOS.jsx:83 ~ connectWal ~ address",
+            //     address
+            // );
+
+            // const acc = await Aptos.client.accounts.getAccount(address);
+
+            const signer = new AptosAccount(connected.address);
+
+            // const sume = await Account.address();
+            // console.log(
+            //     "🚀 ~ file: HigherAPTOS.jsx:91 ~ connectWal ~ Account",
+            //     sume
+            // );
+
             // const tokenClient = new TokenClient(client);
             // const options = {
             //     name: "Name",
@@ -99,7 +124,7 @@ export default function HigherAPTOS(OriginalComponent) {
             //     return HexString.ensure(connected.address);
             // };
             // console.log({ acc });
-            chainWrapper.setSigner(connected);
+            chainWrapper.setSigner(signer);
             bridge.setCurrentType(chainWrapper);
             dispatch(setAccount(connected.address));
             dispatch(setWalletsModal(false));

@@ -1,7 +1,6 @@
 import Ethereum from "../assets/img/chain/Etherium.svg";
 import Ton from "../assets/img/chain/ton.svg";
 import Elrond from "../assets/img/chain/multiverseX.png";
-
 import Binance from "../assets/img/chain/Binance.svg";
 import Cardano from "../assets/img/chain/Cardano.svg";
 import Algorand from "../assets/img/chain/Algarand.svg";
@@ -19,7 +18,6 @@ import One from "../assets/img/chain/One.svg";
 import Aurora from "../assets/img/chain/aurora.svg";
 import GT from "../assets/img/chain/GateChain.svg";
 import VET from "../assets/img/chain/Vechain.png";
-
 import SCRT from "../assets/img/chain/secret.svg";
 import CKB from "../assets/img/chain/godwoken.svg";
 import HBAR from "../assets/img/chain/Hedera.svg";
@@ -32,6 +30,7 @@ import InternetComputer from "../assets/img/chain/InternetComputer.svg";
 import near from "../assets/img/wallet/NearWallet.svg";
 import okx from "../assets/img/chain/okx.svg";
 import arbitrum from "../assets/img/chain/arbitrum.svg";
+import arbitrumTestNet from "../assets/img/chain/arbitrumTN.svg";
 // import brise from "../assets/img/chain/brise.png";
 
 export const EVM = "EVM";
@@ -157,7 +156,6 @@ export const chains = [
     maintenance: false,
     testNet: false,
     mainnet: true,
-    newChain: false,
   },
   {
     type: "Algorand",
@@ -193,11 +191,11 @@ export const chains = [
     chainId: undefined,
     order: 20,
     nonce: 26,
-    coming: false,
+    coming: !biz,
     image: { avatar: true, src: Solana },
     maintenance: false,
-    testNet: true,
-    mainnet: false,
+    testNet: biz,
+    mainnet: biz,
   },
   {
     type: "Cardano",
@@ -218,12 +216,12 @@ export const chains = [
     text: "TON",
     value: "TON",
     chainId: undefined,
-    order: -8,
+    order: -100,
     nonce: 27,
     coming: false,
     image: { avatar: true, src: Ton },
     maintenance: false,
-    testNet: true,
+    testNet: false,
     mainnet: true,
     newChain: true,
   },
@@ -297,7 +295,6 @@ export const chains = [
     maintenance: false,
     testNet: false,
     mainnet: true,
-    newChain: false,
   },
   {
     type: "EVM",
@@ -312,7 +309,6 @@ export const chains = [
     maintenance: false,
     testNet: true,
     mainnet: true,
-    newChain: false,
   },
   {
     type: "EVM",
@@ -327,7 +323,6 @@ export const chains = [
     maintenance: false,
     testNet: true,
     mainnet: true,
-    newChain: false,
   },
   {
     type: "EVM",
@@ -342,7 +337,6 @@ export const chains = [
     maintenance: false,
     testNet: false,
     mainnet: true,
-    newChain: false,
   },
   {
     type: "EVM",
@@ -356,8 +350,6 @@ export const chains = [
     image: { avatar: true, src: Moon },
     testNet: true,
     mainnet: true,
-    newChain: true,
-    coming: false,
   },
   {
     type: "EVM",
@@ -365,14 +357,14 @@ export const chains = [
     text: "Abeychain",
     value: "Abeychain",
     nonce: 33,
-    order: -6,
+    order: 5,
     chainId: 179,
     tnChainId: 178,
     image: { avatar: true, src: Abey },
-    testNet: true,
-    mainnet: true,
-    newChain: true,
-    coming: false,
+    testNet: biz,
+    mainnet: false,
+    newChain: false,
+    coming: !biz,
   },
   {
     type: "VeChain",
@@ -387,7 +379,6 @@ export const chains = [
     maintenance: false,
     mainnet: true,
     testNet: false,
-    newChain: false,
   },
   {
     type: "Cosmos",
@@ -402,7 +393,7 @@ export const chains = [
     mainnet: biz,
     testNet: false,
     test: false,
-    newChain: biz,
+    newChain: false,
     coming: !biz,
   },
   {
@@ -422,14 +413,13 @@ export const chains = [
     key: "Skale",
     text: "SKALE",
     nonce: 30,
-    order: -7,
+    order: -99,
     chainId: 1564830818,
     tnChainId: 344106930,
     image: { avatar: true, src: SKL },
     testNet: true,
     mainnet: true,
     newChain: true,
-    coming: false,
   },
   {
     type: "EVM",
@@ -444,7 +434,6 @@ export const chains = [
     testNet: true,
     mainnet: true,
     newChain: true,
-    coming: false,
   },
   {
     type: "EVM",
@@ -469,7 +458,7 @@ export const chains = [
     image: { avatar: true, src: Aptos },
     testNet: biz,
     mainnet: false,
-    coming: false,
+    coming: !biz,
   },
   {
     type: "NEAR",
@@ -479,9 +468,9 @@ export const chains = [
     nonce: 31,
     order: 0,
     image: { avatar: true, src: near },
-    testNet: true,
+    testNet: biz,
     mainnet: false,
-    coming: false,
+    coming: !biz,
   },
   {
     type: "EVM",
@@ -489,12 +478,12 @@ export const chains = [
     text: "OKC",
     value: "OKC",
     nonce: 0x24,
-    order: 1,
+    order: 3,
     image: { avatar: true, src: okx },
     testNet: true,
     mainnet: true,
     coming: false,
-    newChain: true,
+    newChain: false,
     chainId: 66,
     tnChainId: 65,
   },
@@ -505,9 +494,14 @@ export const chains = [
     value: "Arbitrum",
     nonce: 0x25,
     order: -1,
-    image: { avatar: true, src: arbitrum },
+    image: {
+      avatar: true,
+      src: window.location.href.includes("testnet")
+        ? arbitrumTestNet
+        : arbitrum,
+    },
     testNet: true,
-    mainnet: false,
+    mainnet: true,
     coming: false,
     newChain: true,
     chainId: 42161,

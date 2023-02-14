@@ -448,9 +448,9 @@
 }
 
 @media screen and (min-width: 768px) {
-    .mobile-col {
+    /* .mobile-col {
         display: none;
-    }
+    } */
 
     .nft_selectBox {
         border: 1px solid white;

@@ -175,6 +175,13 @@
     border-radius: 0;
     margin: 12px 0;
 }
+.mobile-col .nft-box__wrapper{
+    width: 47.5%;
+    max-width: 200px;
+}
+.mobile-col .nft__main {
+    height: 73%;
+}
 .approval__header {
     color: #14161a;
     display: flex;

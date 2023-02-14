@@ -31,9 +31,9 @@ export const activeChains = [
   ...chains.filter((chain) => !chain.maintenance).map((c) => c.key),
 ];
 
-export const newChains = ["OKC", "Caduceus", "SKALE"];
+//export const newChains = ["Caduceus", "SKALE", "TON", ""];
 
-export const comingSoonChains = ["Cardano", "Solana", "TON"];
+export const comingSoonChains = ["Cardano", "Solana"];
 
 export const availability = {
   Algorand: ["MyAlgo", "AlgoSigner"],
