@@ -5,14 +5,15 @@
 .missing-nft-box__wrapper {
     background: #ececf14d;
     width: 200px;
-    height: 280px;
+    /* height: 280px; */
     border-radius: 20px;
+    margin-bottom: 10px;
 }
 .nft__card,
 .nft__card--selected {
     margin: 0 auto;
     width: 200px;
-    height: 280px;
+    /* height: 280px; */
     background: #f0f2f5;
     border-radius: 20px;
     overflow: hidden;
@@ -95,7 +96,7 @@
     color: #14161a;
 }
 .nft__footer {
-    height: 64px;
+    height:max-content;
     border-top: 1px solid white;
     padding: 6px 12px;
     display: flex;
@@ -119,9 +120,17 @@
     justify-content: flex-start;
     align-items: stretch;
     gap: 12px;
-    padding: 5px 6px 5px 12px;
+    /* padding: 5px 6px 5px 12px; */
+    padding: 6px;
     /* overflow-x: auto; */
     height: 560px;
+}
+.mobile-col .nft-list__wrapper{
+    justify-content: flex-start;
+}
+.mobile-col .nft-box__wrapper{
+    width: 47.5%;
+    max-width: 200px;
 }
 .video__wrapper video {
     width: auto;
@@ -130,7 +139,7 @@
 
 .nft-box__wrapper {
     position: relative;
-    max-height: 270px;
+    /* max-height: 270px; */
 }
 
 .listed-view__not-whitelisted {
@@ -808,7 +817,7 @@
 .skeleton {
     background: #ececf1;
     width: 200px;
-    height: 280px;
+    /* height: 280px; */
     border-radius: 20px;
     overflow: hidden;
     position: relative;

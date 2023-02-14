@@ -1,40 +1,48 @@
 .nft-box__wrapper {
+  margin-bottom: 10px;
 }
+
 .nft__card,
 .nft__card--selected {
-    margin: 0 auto;
-    width: 200px;
-    height: 280px;
-    background: #f0f2f5;
-    border-radius: 20px;
-    overflow: hidden;
-    cursor: pointer;
-    border: 1px solid white;
-    transition: all 0.3s ease-in-out;
-    position: relative;
+  margin: 0 auto;
+  /* width: 100%; */
+  max-width: 200px;  
+  height: 100%;
+  background: #f0f2f5;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid white;
+  transition: all 0.3s ease-in-out;
+  position: relative;       
 }
+
+
 .nft__card:hover,
 .nft__card--selected:hover {
     box-shadow: 0px 1px 9px rgba(55, 63, 92, 0.52);
 }
+
 .nft__main {
-    height: 220px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    position: relative;
+  height: 220px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  position: relative;
 }
+
 .nft__footer {
-    height: 64px;
-    border-top: 1px solid white;
-    padding: 6px 12px;
-    display: flex;
-    flex-direction: column;
-    border: 1ps solid white;
-    color: #000000;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 18px;
+  
+  margin-bottom: 20px;
+  border-top: 1px solid white;
+  padding: 6px 12px;
+  display: flex;
+  flex-direction: column;
+  border: 1ps solid white;
+  color: #000000;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
 }
 
 .nft__whitelisted-btn {
@@ -45,23 +53,23 @@
 }
 
 @media only screen and (max-width: 435px) {
-    .nft__card,
-    .nft__card--selected {
-        width: 190px;
-    }
+  /* .nft__card,
+  .nft__card--selected {
+    width: 190px;
+  } */
 
-    .nft__main {
-        height: 196px;
-    }
+  /* .nft__main {
+    height: 196px;
+  } */
 }
 
 @media only screen and (max-width: 405px) {
-    .nft__card,
-    .nft__card--selected {
-        width: 180px;
-    }
+  /* .nft__card,
+  .nft__card--selected {
+    width: 180px;
+  } */
 
-    .nft__main {
-        height: 190px;
-    }
+  /* .nft__main {
+    height: 190px;
+  } */
 }
