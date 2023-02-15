@@ -12,7 +12,7 @@ import { getRightPath } from "../../../wallet/helpers";
 import { connectMartian, connectPetra, connectPontem } from "./AptosConnectors";
 import { withServices } from "../../App/hocs/withServices";
 import { Chain } from "xp.network";
-// import { AptosAccount, AptosClient } from "aptos";
+import { AptosAccount } from "aptos";
 
 export default function HigherAPTOS(OriginalComponent) {
     const updatedComponent = withServices((props) => {
@@ -67,7 +67,11 @@ export default function HigherAPTOS(OriginalComponent) {
             }
             const chainWrapper = await bridge.getChain(Chain.APTOS);
             debugger;
+            // const client = new AptosClient(
+            //     "https://fullnode.devnet.aptoslabs.com"
+            // );
 
+            // const tokenClient = new TokenClient(client);
             // const _signer = await window.petra.account();
             // _signer.address = function() {
             //     return HexString.ensure(connected.address);
@@ -87,7 +91,8 @@ export default function HigherAPTOS(OriginalComponent) {
 
             // const acc = await Aptos.client.accounts.getAccount(address);
 
-            // const Account = new AptosAccount();
+            const signer = new AptosAccount(connected.address);
+
             // const sume = await Account.address();
             // console.log(
             //     "🚀 ~ file: HigherAPTOS.jsx:91 ~ connectWal ~ Account",
@@ -119,7 +124,7 @@ export default function HigherAPTOS(OriginalComponent) {
             //     return HexString.ensure(connected.address);
             // };
             // console.log({ acc });
-            chainWrapper.setSigner(connected.address);
+            chainWrapper.setSigner(signer);
             bridge.setCurrentType(chainWrapper);
             dispatch(setAccount(connected.address));
             dispatch(setWalletsModal(false));
