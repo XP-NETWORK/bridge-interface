@@ -158,7 +158,7 @@ export default function WalletList({ connected, input, discount }) {
                     close={connected}
                 />
             ),
-            name: "MultiverseX DeFi Wallet",
+            name: "MultiversX DeFi Wallet",
             type: "Elrond",
             mobile: false,
             desktop: true,
