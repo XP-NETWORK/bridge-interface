@@ -6,7 +6,7 @@ export default function BrockenUtlGridView() {
 
   return (
     <div className="broken-url__wrapper">
-        <img className="broken-url__img" src={brokenUrl} alt="no url" />
+        <img src={brokenUrl} alt="no url" />
         <span className="broken__text">Broken Token URI</span>
     </div>
   )

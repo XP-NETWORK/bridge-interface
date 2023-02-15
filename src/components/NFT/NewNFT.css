@@ -332,6 +332,12 @@
     /* gap: 15px; */
     justify-content: center;
     align-items: center;
+    padding-bottom: 20px;
+}
+
+.broken-url__wrapper img {
+    /* max-width: 32px; */
+    width: 70%;
 }
 
 .broken-url-listed__wrapper {
