@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { checkRgbaIn } from "../../Settings/helpers";
 
@@ -15,6 +15,10 @@ import { inIframe } from "../../Settings/helpers";
 
 import WService from "../wservice";
 import { useSearchParams } from "react-router-dom";
+
+import { connectMetaMask } from "../../Wallet/ConnectWalletHelper";
+
+import { useWeb3React } from "@web3-react/core";
 
 const wservice = WService();
 
@@ -92,38 +96,17 @@ async function initFormId(id) {
   return (await wservice.get(id))?.settings;
 }
 
-const parentAccountChange = async (event) => {
-  if (event.data?.type === "ethAddress" && window.ethereum) {
-    const parentAddress = event.data?.address;
-
-    if (!parentAddress) return;
-    const accounts = await window.ethereum.request({
-      method: "eth_requestAccounts",
-    });
-    const account = accounts[0];
-    if (parentAddress.toLowerCase() !== account.toLowerCase()) {
-      window.ethereum.request({
-        method: "wallet_requestPermissions",
-        params: [
-          {
-            eth_accounts: {},
-          },
-        ],
-      });
-    }
-  }
-};
-
 export const InitWidget = (Wrapped) => {
   return function CB() {
     const dispatch = useDispatch();
     const [searchparams, setSearchParams] = useSearchParams();
-    const { widget, wsettings, settings, wid } = useSelector(
+    const { widget, wsettings, settings, wid, from } = useSelector(
       ({
-        general: { from, to },
+        general: { from, to, account },
         settings,
         widget: { widget, wsettings, wid },
       }) => ({
+        accountAddress: account,
         widget,
         settings,
         wsettings,
@@ -132,6 +115,32 @@ export const InitWidget = (Wrapped) => {
         to,
       })
     );
+
+    const { activate, active } = useWeb3React();
+
+    const parentAccountChange = useCallback(async (event) => {
+      if (event.data?.type === "ethAddress" && window.ethereum) {
+        const parentAddress = event.data?.address;
+
+        if (!parentAddress) return;
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        const account = accounts[0];
+
+        if (parentAddress.toLowerCase() !== account.toLowerCase()) {
+          window.ethereum.request({
+            method: "wallet_requestPermissions",
+            params: [
+              {
+                eth_accounts: {},
+              },
+            ],
+          });
+        }
+        return;
+      }
+    }, []);
 
     useEffect(() => {
       if (searchparams) {
@@ -159,11 +168,19 @@ export const InitWidget = (Wrapped) => {
         wid && dispatch(setWid(wid));
         document.body.classList.add("widget");
 
-        inIframe() && window.addEventListener("message", parentAccountChange);
+        if (inIframe()) {
+          window.addEventListener("message", parentAccountChange);
+        }
 
         return () => window.removeEventListener("message", parentAccountChange);
       }
     }, [searchparams]);
+
+    useEffect(() => {
+      if (from?.type === "EVM" && inIframe() && !active) {
+        connectMetaMask(activate);
+      }
+    }, [from]);
 
     useEffect(() => {
       let settings;

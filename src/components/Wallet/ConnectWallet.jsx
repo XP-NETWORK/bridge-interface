@@ -159,7 +159,9 @@ function ConnectWallet() {
         className="ChainModal wallet-modal"
       >
         <Modal.Header>
-          <Modal.Title style={{minWidth: "max-content"}}>Connect Wallet</Modal.Title>
+          <Modal.Title style={{ minWidth: "max-content" }}>
+            Connect Wallet
+          </Modal.Title>
           <span className="CloseModal" onClick={handleClose}>
             <div className="close-modal"></div>
           </span>

@@ -114,7 +114,7 @@ function SendFees(props) {
       (async () => {
         const [fromChainWrapper, toChainWrapper] = await Promise.all([
           bridge.getChain(from.nonce),
-          bridge.getChain(from.nonce),
+          bridge.getChain(to.nonce),
         ]);
 
         const toChain = toChainWrapper.chain;
