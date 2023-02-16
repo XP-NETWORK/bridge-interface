@@ -351,7 +351,7 @@
     } */
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 990px) {
     .xdesktop_only {
         /* display: block !important; */
     }
@@ -363,7 +363,7 @@
     }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 990px) {
     .navbar-connect {
         margin-left: auto;
         margin-right: 0;
@@ -382,6 +382,13 @@
 @media screen and (max-width: 768px) {
     .navbar {
         width: calc(100% - 10px);
+    }
+    .navbar-nav .navbar-dropdown {
+        display: none;
+    }
+    .navbar-connect-mob {
+        display: flex;
+        min-width: max-content;
     }
 }
 @media screen and (max-width: 475px) {
