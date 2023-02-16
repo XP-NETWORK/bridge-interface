@@ -16,9 +16,9 @@ import { inIframe } from "../../Settings/helpers";
 import WService from "../wservice";
 import { useSearchParams } from "react-router-dom";
 
-import { connectMetaMask } from "../../Wallet/ConnectWalletHelper";
+//import { connectMetaMask } from "../../Wallet/ConnectWalletHelper";
 
-import { useWeb3React } from "@web3-react/core";
+//import { useWeb3React } from "@web3-react/core";
 
 const wservice = WService();
 
@@ -100,7 +100,7 @@ export const InitWidget = (Wrapped) => {
   return function CB() {
     const dispatch = useDispatch();
     const [searchparams, setSearchParams] = useSearchParams();
-    const { widget, wsettings, settings, wid, from } = useSelector(
+    const { widget, wsettings, settings, wid /*from */ } = useSelector(
       ({
         general: { from, to, account },
         settings,
@@ -116,7 +116,7 @@ export const InitWidget = (Wrapped) => {
       })
     );
 
-    const { activate, active } = useWeb3React();
+    // const { activate, active } = useWeb3React();
 
     const parentAccountChange = useCallback(async (event) => {
       if (event.data?.type === "ethAddress" && window.ethereum) {
@@ -176,11 +176,11 @@ export const InitWidget = (Wrapped) => {
       }
     }, [searchparams]);
 
-    useEffect(() => {
+    /*useEffect(() => {
       if (from?.type === "EVM" && inIframe() && !active) {
-        connectMetaMask(activate);
+       // connectMetaMask(activate);
       }
-    }, [from]);
+    }, [from]);*/
 
     useEffect(() => {
       let settings;

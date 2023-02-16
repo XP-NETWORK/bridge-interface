@@ -77,7 +77,6 @@ function App({ network }) {
   let location = useLocation();
 
   useEffect(() => {
-    // console.log('array: ',modalArray)
     if (modalArray.indexOf(true) !== -1) {
       dispatch(setChainModal(false));
       dispatch(setImportModal(false));

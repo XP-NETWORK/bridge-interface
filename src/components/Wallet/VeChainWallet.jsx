@@ -67,15 +67,11 @@ function VeChainWallet({ close, wallet, serviceContainer }) {
     const provider = thor.ethers.modifyProvider(
       new ethers.providers.Web3Provider(
         new thor.ConnexProvider({
-          connex: new Connex({
-            node: testnet
-              ? "https://testnet.veblocks.net/"
-              : "https://sync-mainnet.veblocks.net",
-            network: testnet ? "test" : "main",
-          }),
+          connex,
         })
       )
     );
+
     const signer = await provider.getSigner(account.address);
     account.signer = signer;
     return account;

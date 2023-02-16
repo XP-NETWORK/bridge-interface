@@ -258,7 +258,18 @@ export const connectMetaMask = async (activate) => {
       window.open(link);
     }
 
+    if (!localStorage.getItem("XP_MM_CONNECTED"))
+      await window.ethereum.request({
+        method: "wallet_requestPermissions",
+        params: [
+          {
+            eth_accounts: {},
+          },
+        ],
+      });
+
     await activate(injected);
+    localStorage.setItem("XP_MM_CONNECTED", "true");
     store.dispatch(setMetaMask(true));
     return true;
   } catch (ex) {

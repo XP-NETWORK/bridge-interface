@@ -64,17 +64,19 @@ export default function AccountModal() {
       {/* </CopyToClipboard> */}
       <div className="accountBtn">
         <button
-          onClick={
-            widget
-              ? () =>
-                  window.open(
-                    widget && !wsettings
-                      ? `/connect${window.location.search}`
-                      : `/connect${window.location.search}`,
-                    "_self"
-                  )
-              : () => window.location.reload()
-          }
+          onClick={() => {
+            localStorage.removeItem("XP_MM_CONNECTED");
+            if (widget) {
+              window.open(
+                widget && !wsettings
+                  ? `/connect${window.location.search}`
+                  : `/connect${window.location.search}`,
+                "_self"
+              );
+            } else {
+              window.location.reload();
+            }
+          }}
           className="changeBtn"
         >
           Disconnect

@@ -44,6 +44,7 @@ export const availability = {
   Evms: ["MetaMask", "WalletConnect", "TrustWallet", "BitKeep"],
   Secret: ["Keplr"],
   TON: ["TonWallet", "TonHub", "TonKeeper"],
+  APTOS: ["Petra"],
 };
 
 export const wallets = [
