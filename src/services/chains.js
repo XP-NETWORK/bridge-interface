@@ -647,6 +647,20 @@ class Solana extends AbstractChain {
       return [];
     }
   }
+
+  async preParse(nft) {
+    nft = await super.preParse(nft);
+
+    return {
+      ...nft,
+      native: {
+        ...nft.native,
+        contract: nft.collectionIdent,
+        tokenId: encodeURIComponent(nft.native.name),
+        chainId: String(this.chainParams.nonce),
+      },
+    };
+  }
 }
 
 class APTOS extends AbstractChain {
