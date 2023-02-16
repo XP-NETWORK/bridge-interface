@@ -22,6 +22,7 @@
   position: relative;
   width: calc(100% - 60px);
   margin: 0 auto;
+  margin-bottom: 20px;
 }
 
 .eGold-success__text {
