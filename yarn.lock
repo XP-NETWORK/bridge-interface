@@ -7,13 +7,20 @@
   resolved "https://registry.npmjs.org/@adobe/css-tools/-/css-tools-4.1.0.tgz"
   integrity sha512-mMVJ/j/GbZ/De4ZHWbQAQO1J6iVnjtZLc9WEdkUQb8S/Bu2cAF2bETXUgMAdvMG3/ngtKmcNBe+Zms9bg6jnQQ==
 
+<<<<<<< HEAD
 "@airgap/beacon-core@^3.3.2":
   version "3.3.2"
   resolved "https://registry.npmjs.org/@airgap/beacon-core/-/beacon-core-3.3.2.tgz"
   integrity sha512-H8d0V15cxT+TvvPu+Pn29Wh9Jg5LDEbpS4OFyI8Jk8PpmwwJSr4NYxhuj+JtNz99S4VeXrW+lzIb6FVqSv8U6A==
+=======
+"@airgap/beacon-core@^3.3.3":
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/@airgap/beacon-core/-/beacon-core-3.3.3.tgz#27a109a88a97bc47c289ae8ff880f2cf772192c0"
+  integrity sha512-rBh8Bs8b9H5QmkAAeR97zzamOFTyl54WckYW9MR0/uFv1oUIwdvM3aSlspQ2BaNkEI8AueulQM858Orj1tQWpg==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@airgap/beacon-types" "^3.3.2"
-    "@airgap/beacon-utils" "^3.3.2"
+    "@airgap/beacon-types" "^3.3.3"
+    "@airgap/beacon-utils" "^3.3.3"
     "@stablelib/ed25519" "^1.0.3"
     "@stablelib/nacl" "^1.0.4"
     "@stablelib/utf8" "^1.0.1"
@@ -21,34 +28,55 @@
     bs58check "2.1.2"
 
 "@airgap/beacon-dapp@^3.1.3":
+<<<<<<< HEAD
   version "3.3.2"
   resolved "https://registry.npmjs.org/@airgap/beacon-dapp/-/beacon-dapp-3.3.2.tgz"
   integrity sha512-5yrmoFFUJhmoRKiXWtMgjfk4hVHfmi7BjElYe5wjeazMdLRJ0JgjNmWS461wMTFnMqy9fGTsua3sl1zBu2CBQQ==
+=======
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/@airgap/beacon-dapp/-/beacon-dapp-3.3.3.tgz#4143d2a415105496f0067ee65c5662faeefa265e"
+  integrity sha512-icF+E6Zgq/fPiIFL6Mypc7a4jW+Cq7F7/pQvCmJU3yg1+G0psiDAe8hSi/yr3yBtJF+qSlluIpwB4+L8QGdgZw==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@airgap/beacon-core" "^3.3.2"
-    "@airgap/beacon-transport-matrix" "^3.3.2"
-    "@airgap/beacon-transport-postmessage" "^3.3.2"
-    "@airgap/beacon-ui" "^3.3.2"
+    "@airgap/beacon-core" "^3.3.3"
+    "@airgap/beacon-transport-matrix" "^3.3.3"
+    "@airgap/beacon-transport-postmessage" "^3.3.3"
+    "@airgap/beacon-ui" "^3.3.3"
     qrcode-generator "1.4.4"
 
+<<<<<<< HEAD
 "@airgap/beacon-transport-matrix@^3.3.2":
   version "3.3.2"
   resolved "https://registry.npmjs.org/@airgap/beacon-transport-matrix/-/beacon-transport-matrix-3.3.2.tgz"
   integrity sha512-eE6UWuPQus8Z1yG6PpmaDCfiKjtfw0lJtw+KL4qvEsKDzJvhON0q2Wbr8swGxx6KaznA3U8auKg6vZFsDjCViw==
+=======
+"@airgap/beacon-transport-matrix@^3.3.3":
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/@airgap/beacon-transport-matrix/-/beacon-transport-matrix-3.3.3.tgz#e62a5c56cd978d443085666d178d901efb3080bf"
+  integrity sha512-j2hqMtVpV+d+HHFChuBEuXl38aXz1wAS3OS3RQCwyLsJRlEQRjM8dKvlcsVxT4p3KAeY9uIhhsHaNZgmebrLOg==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@airgap/beacon-core" "^3.3.2"
-    "@airgap/beacon-utils" "^3.3.2"
+    "@airgap/beacon-core" "^3.3.3"
+    "@airgap/beacon-utils" "^3.3.3"
     axios "0.24.0"
 
+<<<<<<< HEAD
 "@airgap/beacon-transport-postmessage@^3.3.2":
   version "3.3.2"
   resolved "https://registry.npmjs.org/@airgap/beacon-transport-postmessage/-/beacon-transport-postmessage-3.3.2.tgz"
   integrity sha512-STgr1fRmIWiUeGWTMhFXzYOvcOnLkEtmREidJvz5Lmts4TKgF6diRPDZa510XnuQoGsyZFnhHq/CQaLY53PfjQ==
+=======
+"@airgap/beacon-transport-postmessage@^3.3.3":
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/@airgap/beacon-transport-postmessage/-/beacon-transport-postmessage-3.3.3.tgz#93aa80ac767171d773880d18d0ee2486cb029648"
+  integrity sha512-Y6/EOQt4AuNP4i8/3/8sUsS5ay3OJ/F0quF6l3zIP4vqyFjEQuFPJoSWA1K/vA44YwnkDLh7viRdS/emutTjlg==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@airgap/beacon-core" "^3.3.2"
-    "@airgap/beacon-types" "^3.3.2"
-    "@airgap/beacon-utils" "^3.3.2"
+    "@airgap/beacon-core" "^3.3.3"
+    "@airgap/beacon-types" "^3.3.3"
+    "@airgap/beacon-utils" "^3.3.3"
 
+<<<<<<< HEAD
 "@airgap/beacon-types@^3.3.2":
   version "3.3.2"
   resolved "https://registry.npmjs.org/@airgap/beacon-types/-/beacon-types-3.3.2.tgz"
@@ -60,16 +88,36 @@
   version "3.3.2"
   resolved "https://registry.npmjs.org/@airgap/beacon-ui/-/beacon-ui-3.3.2.tgz"
   integrity sha512-V9gGZyfsTMIUe3ES10Uls51fp+7B13edPR970Fa4BoZxo6tyL8fPk1dD6plu/pJz2JxUZofpSinDYxW1iquAew==
+=======
+"@airgap/beacon-types@^3.3.3":
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/@airgap/beacon-types/-/beacon-types-3.3.3.tgz#cb75adc0684280c2b9113cd8893b2f43bb76a8c0"
+  integrity sha512-lo2Mw0I6cwY+SBxA+qWZjt55HtwQCNTndjHxmHPHoLTA+ay19YgQS1PlQ37bkJyJzfJ3/PimOwHLggsw9hbELg==
   dependencies:
-    "@airgap/beacon-core" "^3.3.2"
-    "@airgap/beacon-transport-postmessage" "^3.3.2"
-    "@airgap/beacon-types" "^3.3.2"
-    "@airgap/beacon-utils" "^3.3.2"
+    "@types/chrome" "0.0.163"
 
+"@airgap/beacon-ui@^3.3.3":
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/@airgap/beacon-ui/-/beacon-ui-3.3.3.tgz#9b30ddfcb0fe03ba3dd03a609d02645b322ba699"
+  integrity sha512-HkCBD/04ZZJGs4PUrBMIvVg/Z2D3BEa9KmyesLFTW4z84mnOJNgSNbc8Qevhv1yzhnIvUMsT7Gcuy1xZwWZ1uA==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
+  dependencies:
+    "@airgap/beacon-core" "^3.3.3"
+    "@airgap/beacon-transport-postmessage" "^3.3.3"
+    "@airgap/beacon-types" "^3.3.3"
+    "@airgap/beacon-utils" "^3.3.3"
+
+<<<<<<< HEAD
 "@airgap/beacon-utils@^3.3.2":
   version "3.3.2"
   resolved "https://registry.npmjs.org/@airgap/beacon-utils/-/beacon-utils-3.3.2.tgz"
   integrity sha512-nKK5FzluJfX7hgsq+uDeDlUip206G1OkvbvVSBXB4RppBHeg5ApHTvE8+0CMjvas20XMNdosnU5pFed3n4kF4Q==
+=======
+"@airgap/beacon-utils@^3.3.3":
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/@airgap/beacon-utils/-/beacon-utils-3.3.3.tgz#1466fc3a0a5abf7a07d9bcbb880f24e428105a15"
+  integrity sha512-IyvDC59POue/idTt5tV4abvSEqibtzGhoeGCI45oJ88n3F4/d6Lx6pr/9sSNEJe7Ue+T6Fmb9ATYCBRAZ2xh7g==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@stablelib/nacl" "^1.0.3"
     "@stablelib/random" "^1.0.2"
@@ -371,7 +419,11 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
+<<<<<<< HEAD
 "@babel/parser@^7.1.0", "@babel/parser@^7.13.16", "@babel/parser@^7.14.0", "@babel/parser@^7.14.7", "@babel/parser@^7.20.0", "@babel/parser@^7.20.13", "@babel/parser@^7.20.7":
+=======
+"@babel/parser@^7.1.0", "@babel/parser@^7.14.7", "@babel/parser@^7.20.13", "@babel/parser@^7.20.7", "@babel/parser@^7.9.4":
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "7.20.15"
   resolved "https://registry.npmjs.org/@babel/parser/-/parser-7.20.15.tgz"
   integrity sha512-DI4a1oZuf8wC+oAJA9RW6ga3Zbe8RZFt7kD9i4qAspz3I/yHet1VvC3DiSy/fsUvv5pvJuNPh0LPOdCcqinDPg==
@@ -2105,6 +2157,7 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
+<<<<<<< HEAD
 "@ethersproject/wordlists@5.5.0":
   version "5.5.0"
   resolved "https://registry.npmjs.org/@ethersproject/wordlists/-/wordlists-5.5.0.tgz"
@@ -2432,6 +2485,12 @@
   version "1.8.8"
   resolved "https://registry.npmjs.org/@grpc/grpc-js/-/grpc-js-1.8.8.tgz"
   integrity sha512-4gfDqMLXTrorvYTKA1jL22zLvVwiHJ73t6Re1OHwdCFRjdGTDOVtSJuaWhtHaivyeDGg0LeCkmU77MTKoV3wPA==
+=======
+"@grpc/grpc-js@^1.5.3", "@grpc/grpc-js@^1.7.3":
+  version "1.8.9"
+  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.8.9.tgz#84e9167dc80b0c3a98608e14b839458bf0df684d"
+  integrity sha512-xzsl2HamhovnZddS/2pMF4Q+FgwINaBvxoFGQ+G54Lo7Xsge36VvfDO/TDkL7FofmrRK/X5weRvwlJh7rKwN4w==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@grpc/proto-loader" "^0.7.0"
     "@types/node" ">=12.12.47"
@@ -2573,7 +2632,11 @@
     "@types/bn.js" "^4.11.3"
     bn.js "^4.11.8"
 
+<<<<<<< HEAD
 "@hashgraph/cryptography@^1.1.0-beta.5", "@hashgraph/cryptography@^1.4.2":
+=======
+"@hashgraph/cryptography@^1.1.0-beta.5", "@hashgraph/cryptography@^1.4.3":
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "1.4.3"
   resolved "https://registry.npmjs.org/@hashgraph/cryptography/-/cryptography-1.4.3.tgz"
   integrity sha512-txU2SVz8mBJ5aHqkrIpmaerJSu0F/S9T/0eXpYAIC2USy/8oTisp54gKVDTETFdnCrq0tNgCJmWt2N8QHMMbcw==
@@ -2614,30 +2677,44 @@
     long "^4.0.0"
     protobufjs "^6.11.2"
 
+<<<<<<< HEAD
 "@hashgraph/proto@2.11.0":
   version "2.11.0"
   resolved "https://registry.npmjs.org/@hashgraph/proto/-/proto-2.11.0.tgz"
   integrity sha512-JOom5ZIfmgPWfPMaCYg5pYBuNyMGb38F9lNFBxjA7cVbo2dnIOUQx4Zi98yyq0O4CrUSlKBhFaspDKXk+FfAhQ==
+=======
+"@hashgraph/proto@2.12.0":
+  version "2.12.0"
+  resolved "https://registry.yarnpkg.com/@hashgraph/proto/-/proto-2.12.0.tgz#9801251f33ea40c8a25fe47ba754340863dd4b3a"
+  integrity sha512-IIN6K3b2X8ih7V14IDH8rsVJ1DE9ud25FfKUpr+lDNnQdBfdZdG2AGlHRhc9iDAz4vCHoHc6F3Ao6yYKMceeTg==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     long "^4.0.0"
-    protobufjs "^6.11.3"
+    protobufjs "^7.1.2"
+    protobufjs-cli "^1.0.2"
 
 "@hashgraph/sdk@^2.19.2":
+<<<<<<< HEAD
   version "2.19.2"
   resolved "https://registry.npmjs.org/@hashgraph/sdk/-/sdk-2.19.2.tgz"
   integrity sha512-cFS+kCukk2Y8ZyjX5XZBLMylXRyWbghkpIGDKNHQdpU3JJ7Xbp/r23hOxn4aQnz6jbO1GSH5447gCQHkfIENoQ==
+=======
+  version "2.20.0"
+  resolved "https://registry.yarnpkg.com/@hashgraph/sdk/-/sdk-2.20.0.tgz#0568146fcacc6fc8c7f5295ef4455b0561e72511"
+  integrity sha512-Scc/mP7FtTnw5DZnGWK6YxYoAPmBC+GEnrzzcCgjAVa2YA/3Dbr4qXk3XFPVOXY5G9qxW0O5/j2z9BxY+/yrXg==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@ethersproject/rlp" "^5.7.0"
-    "@grpc/grpc-js" "^1.7.0"
-    "@hashgraph/cryptography" "^1.4.2"
-    "@hashgraph/proto" "2.11.0"
-    axios "^0.27.2"
-    bignumber.js "^9.1.0"
+    "@grpc/grpc-js" "^1.7.3"
+    "@hashgraph/cryptography" "^1.4.3"
+    "@hashgraph/proto" "2.12.0"
+    axios "^1.3.1"
+    bignumber.js "^9.1.1"
     crypto-js "^4.1.1"
-    js-base64 "^3.7.2"
+    js-base64 "^3.7.4"
     js-logger "^1.6.1"
     long "^4.0.0"
-    protobufjs "^6.11.3"
+    protobufjs "^7.1.2"
     utf8 "^3.0.0"
 
 "@hashgraph/sdk@2.11.0-beta.1":
@@ -2883,6 +2960,7 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+<<<<<<< HEAD
 "@ipld/dag-cbor@^6.0.3":
   version "6.0.15"
   resolved "https://registry.npmjs.org/@ipld/dag-cbor/-/dag-cbor-6.0.15.tgz"
@@ -2914,6 +2992,8 @@
   dependencies:
     multiformats "^9.5.4"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.npmjs.org/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz"
@@ -3005,6 +3085,7 @@
     "@types/node" "*"
     jest-mock "^27.5.1"
 
+<<<<<<< HEAD
 "@jest/environment@^29.4.2":
   version "29.4.2"
   resolved "https://registry.npmjs.org/@jest/environment/-/environment-29.4.2.tgz"
@@ -3019,8 +3100,14 @@
   version "29.4.2"
   resolved "https://registry.npmjs.org/@jest/expect-utils/-/expect-utils-29.4.2.tgz"
   integrity sha512-Dd3ilDJpBnqa0GiPN7QrudVs0cczMMHtehSo2CSTjm3zdHx0RcpmhFNVEltuEFeqfLIyWKFI224FsMSQ/nsJQA==
+=======
+"@jest/expect-utils@^29.4.3":
+  version "29.4.3"
+  resolved "https://registry.yarnpkg.com/@jest/expect-utils/-/expect-utils-29.4.3.tgz#95ce4df62952f071bcd618225ac7c47eaa81431e"
+  integrity sha512-/6JWbkxHOP8EoS8jeeTd9dTfc9Uawi+43oLKHfp6zzux3U2hqOOVnV3ai4RpDYHOccL6g+5nrxpoc8DmJxtXVQ==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    jest-get-type "^29.4.2"
+    jest-get-type "^29.4.3"
 
 "@jest/fake-timers@^27.5.1":
   version "27.5.1"
@@ -3093,10 +3180,17 @@
   dependencies:
     "@sinclair/typebox" "^0.24.1"
 
+<<<<<<< HEAD
 "@jest/schemas@^29.4.2":
   version "29.4.2"
   resolved "https://registry.npmjs.org/@jest/schemas/-/schemas-29.4.2.tgz"
   integrity sha512-ZrGzGfh31NtdVH8tn0mgJw4khQuNHiKqdzJAFbCaERbyCP9tHlxWuL/mnMu8P7e/+k4puWjI1NOzi/sFsjce/g==
+=======
+"@jest/schemas@^29.4.3":
+  version "29.4.3"
+  resolved "https://registry.yarnpkg.com/@jest/schemas/-/schemas-29.4.3.tgz#39cf1b8469afc40b6f5a2baaa146e332c4151788"
+  integrity sha512-VLYKXQmtmuEz6IxJsrZwzG9NvtkQsWNnWMsKxqWNu3+CnfzJQhp0WDDKWLVV9hLKr0l3SLLFRqcYHjhtyuDVxg==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@sinclair/typebox" "^0.25.16"
 
@@ -3194,12 +3288,19 @@
     "@types/yargs" "^17.0.8"
     chalk "^4.0.0"
 
+<<<<<<< HEAD
 "@jest/types@^29.4.2":
   version "29.4.2"
   resolved "https://registry.npmjs.org/@jest/types/-/types-29.4.2.tgz"
   integrity sha512-CKlngyGP0fwlgC1BRUtPZSiWLBhyS9dKwKmyGxk8Z6M82LBEGB2aLQSg+U1MyLsU+M7UjnlLllBM2BLWKVm/Uw==
+=======
+"@jest/types@^29.4.3":
+  version "29.4.3"
+  resolved "https://registry.yarnpkg.com/@jest/types/-/types-29.4.3.tgz#9069145f4ef09adf10cec1b2901b2d390031431f"
+  integrity sha512-bPYfw8V65v17m2Od1cv44FH+SiKW7w2Xu7trhcdTLUmSv85rfKsP+qXSjO4KGJr4dtPSzl/gvslZBXctf1qGEA==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@jest/schemas" "^29.4.2"
+    "@jest/schemas" "^29.4.3"
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/istanbul-reports" "^3.0.0"
     "@types/node" "*"
@@ -3254,6 +3355,7 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
+<<<<<<< HEAD
 "@jridgewell/trace-mapping@0.3.9":
   version "0.3.9"
   resolved "https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.9.tgz"
@@ -3261,6 +3363,14 @@
   dependencies:
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
+=======
+"@jsdoc/salty@^0.2.1":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@jsdoc/salty/-/salty-0.2.3.tgz#aab70c8756c1b98598bbc30867d3aa7a31b5c7d4"
+  integrity sha512-bbtCxCkxcnWhi50I+4Lj6mdz9w3pOXOgEQrID8TCZ/DF51fW7M9GCQW2y45SpBDdHd1Eirm1X/Cf6CkAAe8HPg==
+  dependencies:
+    lodash "^4.17.21"
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 "@json-rpc-tools/provider@^1.5.5":
   version "1.7.6"
@@ -3307,10 +3417,17 @@
     rxjs "6"
     semver "^7.3.5"
 
+<<<<<<< HEAD
 "@ledgerhq/devices@^7.0.7":
   version "7.0.7"
   resolved "https://registry.npmjs.org/@ledgerhq/devices/-/devices-7.0.7.tgz"
   integrity sha512-PZ9TtaTGBYUm/g0qNKPbECZt7DDNvqM3ILS5wAtOMna2cBR+mrywUGXrkjuOWlHpuqZ8wenaAKveQBbzF2ba8w==
+=======
+"@ledgerhq/devices@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/devices/-/devices-8.0.0.tgz#8fe9f9e442e28b7a20bcdf4c2eed06ce7b8f76ae"
+  integrity sha512-gSnRT0KPca+LIpaC6D/WZQjOAlSI5uCvK1dmxXtKhODLAj735rX5Z3SnGnLUavRCHNbUi44FzgvloF5BKTkh7A==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@ledgerhq/errors" "^6.12.3"
     "@ledgerhq/logs" "^6.10.1"
@@ -3374,13 +3491,19 @@
     rxjs "^6.6.7"
 
 "@ledgerhq/hw-transport-webhid@^6.11.2":
+<<<<<<< HEAD
   version "6.27.11"
   resolved "https://registry.npmjs.org/@ledgerhq/hw-transport-webhid/-/hw-transport-webhid-6.27.11.tgz"
   integrity sha512-4HAhZdou4UBTEaUOBlFfeAAjTT7CuhmKryoAfgdidbSLXNwFwKGBigdZl6AkYqpubRzsi26AGr0SJonW3Uh/Hg==
+=======
+  version "6.27.12"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-webhid/-/hw-transport-webhid-6.27.12.tgz#dd5073c5da05c6c3234a76a6e44ed576fe198757"
+  integrity sha512-Yhy5dOKeJIU24Dh9xQjrStc++NviPjRSGHsbc1PeyEjgPEGc8q8wtvm7WFBDzmymBwMhIA5eoNj3fGLk/voXQQ==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@ledgerhq/devices" "^7.0.7"
+    "@ledgerhq/devices" "^8.0.0"
     "@ledgerhq/errors" "^6.12.3"
-    "@ledgerhq/hw-transport" "^6.28.0"
+    "@ledgerhq/hw-transport" "^6.28.1"
     "@ledgerhq/logs" "^6.10.1"
 
 "@ledgerhq/hw-transport-webhid@5.48.0":
@@ -3422,12 +3545,19 @@
     "@ledgerhq/errors" "^5.50.0"
     events "^3.3.0"
 
+<<<<<<< HEAD
 "@ledgerhq/hw-transport@^6.11.2", "@ledgerhq/hw-transport@^6.28.0":
   version "6.28.0"
   resolved "https://registry.npmjs.org/@ledgerhq/hw-transport/-/hw-transport-6.28.0.tgz"
   integrity sha512-VRhVwxQN82PWxgsmLUXogWn8K2TOHF6zGBJpyPda3/TtQWxEPmW6xCa1/vomsu1C1pamAUeoKhQrOYagzfFPkg==
+=======
+"@ledgerhq/hw-transport@^6.11.2", "@ledgerhq/hw-transport@^6.28.1":
+  version "6.28.1"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-6.28.1.tgz#cb22fe9bc23af4682c30f2aac7fe6f7ab13ed65a"
+  integrity sha512-RaZe+abn0zBIz82cE9tp7Y7aZkHWWbEaE2yJpfxT8AhFz3fx+BU0kLYzuRN9fmA7vKueNJ1MTVUCY+Ex9/CHSQ==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@ledgerhq/devices" "^7.0.7"
+    "@ledgerhq/devices" "^8.0.0"
     "@ledgerhq/errors" "^6.12.3"
     events "^3.3.0"
 
@@ -4853,16 +4983,28 @@
   integrity sha512-t54ONhl/h75X94SWsHGQ4G/ZrCEguKSRQr7DrjTciJXW0YU1QhlwYeycvK5JgkzlxmvrK7wq1NB/PLtHxoiDcA==
 
 "@restart/hooks@^0.4.6", "@restart/hooks@^0.4.7":
+<<<<<<< HEAD
   version "0.4.8"
   resolved "https://registry.npmjs.org/@restart/hooks/-/hooks-0.4.8.tgz"
   integrity sha512-Ivvp1FZ0Lja80iUTYAhbzy+stxwO7FbPHP95ypCtIh0wyOLiayQywXhVJ2ZYP5S1AjW2GmKHeRU4UglMwTG2sA==
+=======
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/@restart/hooks/-/hooks-0.4.9.tgz#ad858fb39d99e252cccce19416adc18fc3f18fcb"
+  integrity sha512-3BekqcwB6Umeya+16XPooARn4qEPW6vNvwYnlofIYe6h9qG1/VeD7UvShCWx11eFz5ELYmwIEshz+MkPX3wjcQ==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     dequal "^2.0.2"
 
 "@restart/ui@^1.4.1":
+<<<<<<< HEAD
   version "1.5.4"
   resolved "https://registry.npmjs.org/@restart/ui/-/ui-1.5.4.tgz"
   integrity sha512-ziNtXY2PrjXrRUfR1D/ry1v1i5IF+kfMcH9d1kIcU2lOELfmDsVb+fzbyEDz3yKvKuqkphTunVDuLdYRJ0YsAg==
+=======
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@restart/ui/-/ui-1.6.1.tgz#1db9c11f13bafc0546e33fe0e2ffc7de920cb7dd"
+  integrity sha512-cMI9DdqZV5VGEyANYM4alHK9/2Lh/mKZAMydztMl6PBLm6EetFbwE2RfYqliloR+EtEULlI4TiZk/XPhQAovxw==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@babel/runtime" "^7.20.7"
     "@popperjs/core" "^2.11.6"
@@ -4963,9 +5105,15 @@
   integrity sha512-1P1OROm/rdubP5aFDSZQILU0vrLCJ4fvHt6EoqHEM+2D/G5MK3bIaymUKLit8Js9gbns5UyJnkP/TZROLw4tUA==
 
 "@sinclair/typebox@^0.25.16":
+<<<<<<< HEAD
   version "0.25.22"
   resolved "https://registry.npmjs.org/@sinclair/typebox/-/typebox-0.25.22.tgz"
   integrity sha512-6U6r2L7rnM7EG8G1tWzIjdB3QlsHF4slgcqXNN/SF0xJOAr0nDmT2GedlkyO3mrv8mDTJ24UuOMWR3diBrCvQQ==
+=======
+  version "0.25.23"
+  resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.25.23.tgz#1c15b0d2b872d89cc0f47c7243eacb447df8b8bd"
+  integrity sha512-VEB8ygeP42CFLWyAJhN5OklpxUliqdNEUcXb4xZ/CINqtYGTjL5ukluKdKzQ0iWdUxyQ7B0539PAUhHKrCNWSQ==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 "@sindresorhus/is@^4.0.0", "@sindresorhus/is@^4.6.0":
   version "4.6.0"
@@ -5595,7 +5743,7 @@
     elliptic "^6.5.4"
     typedarray-to-buffer "^4.0.0"
 
-"@taquito/utils@^13.0.0", "@taquito/utils@^13.0.1":
+"@taquito/utils@^13.0.1":
   version "13.0.1"
   resolved "https://registry.npmjs.org/@taquito/utils/-/utils-13.0.1.tgz"
   integrity sha512-uRtsl4EATlVJ1UnNUiAEoibFFyexGLDLz02CBHoBrcWjqrZdj3AxA+TO63E2kWn/JmT2FM0Sqaqbm555lj4tow==
@@ -5665,6 +5813,7 @@
   resolved "https://registry.npmjs.org/@tokenizer/token/-/token-0.3.0.tgz"
   integrity sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==
 
+<<<<<<< HEAD
 "@tonapps/tonconnect-server@^0.1.1":
   version "0.1.1"
   resolved "https://registry.npmjs.org/@tonapps/tonconnect-server/-/tonconnect-server-0.1.1.tgz"
@@ -5684,6 +5833,8 @@
     tweetnacl "^1.0.3"
     tweetnacl-util "^0.15.1"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.npmjs.org/@tootallnate/once/-/once-1.1.2.tgz"
@@ -5849,9 +6000,15 @@
     "@types/estree" "*"
 
 "@types/eslint@*", "@types/eslint@^7.29.0 || ^8.4.1":
+<<<<<<< HEAD
   version "8.21.0"
   resolved "https://registry.npmjs.org/@types/eslint/-/eslint-8.21.0.tgz"
   integrity sha512-35EhHNOXgxnUgh4XCJsGhE7zdlDhYDN/aMG6UbkByCFFNgQ7b3U+uVoqBpicFydR8JEfgdjCF7SJ7MiJfzuiTA==
+=======
+  version "8.21.1"
+  resolved "https://registry.yarnpkg.com/@types/eslint/-/eslint-8.21.1.tgz#110b441a210d53ab47795124dbc3e9bb993d1e7c"
+  integrity sha512-rc9K8ZpVjNcLs8Fp0dkozd5Pt2Apk1glO4Vgz8ix1u6yFByxfqo5Yavpy65o+93TAe24jr7v+eSBtFLvOQtCRQ==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@types/estree" "*"
     "@types/json-schema" "*"
@@ -5983,22 +6140,44 @@
   dependencies:
     "@types/node" "*"
 
+"@types/linkify-it@*":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@types/linkify-it/-/linkify-it-3.0.2.tgz#fd2cd2edbaa7eaac7e7f3c1748b52a19143846c9"
+  integrity sha512-HZQYqbiFVWufzCwexrvh694SOim8z2d+xJl5UNamcvQFejLY/2YUtzXHYi3cHdI7PMlS8ejH2slRAOJQ32aNbA==
+
 "@types/long@^4.0.1":
   version "4.0.2"
   resolved "https://registry.npmjs.org/@types/long/-/long-4.0.2.tgz"
   integrity sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==
+
+"@types/markdown-it@^12.2.3":
+  version "12.2.3"
+  resolved "https://registry.yarnpkg.com/@types/markdown-it/-/markdown-it-12.2.3.tgz#0d6f6e5e413f8daaa26522904597be3d6cd93b51"
+  integrity sha512-GKMHFfv3458yYy+v/N8gjufHO6MSZKCOXpZc5GXIWWy8uldwfmPn98vp81gZ5f9SVw8YYBctgfJ22a2d7AOMeQ==
+  dependencies:
+    "@types/linkify-it" "*"
+    "@types/mdurl" "*"
+
+"@types/mdurl@*":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@types/mdurl/-/mdurl-1.0.2.tgz#e2ce9d83a613bacf284c7be7d491945e39e1f8e9"
+  integrity sha512-eC4U9MlIcu2q0KQmXszyn5Akca/0jrQmwDRgpAMJai7qBWq4amIQhZyNau4VYGtCeALvW1/NtjzJJ567aZxfKA==
 
 "@types/mime@*":
   version "3.0.1"
   resolved "https://registry.npmjs.org/@types/mime/-/mime-3.0.1.tgz"
   integrity sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==
 
+<<<<<<< HEAD
 "@types/minimatch@^3.0.4":
   version "3.0.5"
   resolved "https://registry.npmjs.org/@types/minimatch/-/minimatch-3.0.5.tgz"
   integrity sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==
 
 "@types/node@*", "@types/node@>= 14", "@types/node@>=12.12.47", "@types/node@>=13.7.0":
+=======
+"@types/node@*", "@types/node@>=12.12.47", "@types/node@>=13.7.0":
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "18.13.0"
   resolved "https://registry.npmjs.org/@types/node/-/node-18.13.0.tgz"
   integrity sha512-gC3TazRzGoOnoKAhUx+Q0t8S9Tzs74z7m0ipwGpSqQrleP14hKxP4/JUeEQcD3W1/aIpnWl8pHowI7WokuZpXg==
@@ -6092,10 +6271,17 @@
   dependencies:
     "@types/react" "*"
 
+<<<<<<< HEAD
 "@types/react@*", "@types/react@>=16.14.8", "@types/react@>=16.9.11":
   version "18.0.27"
   resolved "https://registry.npmjs.org/@types/react/-/react-18.0.27.tgz"
   integrity sha512-3vtRKHgVxu3Jp9t718R9BuzoD4NcQ8YJ5XRzsSKxNDiDonD2MXIT1TmSkenxuCycZJoQT5d2vE8LwWJxBC1gmA==
+=======
+"@types/react@*", "@types/react@>=16.9.11":
+  version "18.0.28"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.28.tgz#accaeb8b86f4908057ad629a26635fe641480065"
+  integrity sha512-RD0ivG1kEztNBdoAK7lekI9M+azSnitIn85h4iOiaLjaTrMjzslhaqCGaI4IyCJ1RljWiLCEu4jyrLLgqxBTew==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -6172,9 +6358,15 @@
     "@types/jest" "*"
 
 "@types/trusted-types@^2.0.2":
+<<<<<<< HEAD
   version "2.0.2"
   resolved "https://registry.npmjs.org/@types/trusted-types/-/trusted-types-2.0.2.tgz"
   integrity sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==
+=======
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@types/trusted-types/-/trusted-types-2.0.3.tgz#a136f83b0758698df454e328759dbd3d44555311"
+  integrity sha512-NfQ4gyz38SL8sDNrSixxU2Os1a5xcdFxipAFxYEuLUlvU2uDwS4NUpsImcf1//SlWItCVMMLiylsxbmNMToV/g==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 "@types/warning@^3.0.0":
   version "3.0.0"
@@ -6221,14 +6413,21 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+<<<<<<< HEAD
 "@typescript-eslint/eslint-plugin@^4.0.0 || ^5.0.0", "@typescript-eslint/eslint-plugin@^5.5.0":
   version "5.51.0"
   resolved "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.51.0.tgz"
   integrity sha512-wcAwhEWm1RgNd7dxD/o+nnLW8oH+6RK1OGnmbmkj/GGoDPV1WWMVP0FXYQBivKHdwM1pwii3bt//RC62EriIUQ==
+=======
+"@typescript-eslint/eslint-plugin@^5.5.0":
+  version "5.52.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.52.0.tgz#5fb0d43574c2411f16ea80f5fc335b8eaa7b28a8"
+  integrity sha512-lHazYdvYVsBokwCdKOppvYJKaJ4S41CgKBcPvyd0xjZNbvQdhn/pnJlGtQksQ/NhInzdaeaSarlBjDXHuclEbg==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@typescript-eslint/scope-manager" "5.51.0"
-    "@typescript-eslint/type-utils" "5.51.0"
-    "@typescript-eslint/utils" "5.51.0"
+    "@typescript-eslint/scope-manager" "5.52.0"
+    "@typescript-eslint/type-utils" "5.52.0"
+    "@typescript-eslint/utils" "5.52.0"
     debug "^4.3.4"
     grapheme-splitter "^1.0.4"
     ignore "^5.2.0"
@@ -6238,40 +6437,68 @@
     tsutils "^3.21.0"
 
 "@typescript-eslint/experimental-utils@^5.0.0":
+<<<<<<< HEAD
   version "5.51.0"
   resolved "https://registry.npmjs.org/@typescript-eslint/experimental-utils/-/experimental-utils-5.51.0.tgz"
   integrity sha512-8/3+ZyBENl2aog1/QB3S39ptkZ2oRhDB+sJt15UWXBE3skgwL1C8BN9RjpOyhTejwR2hVrvqEjcYcNY6qtZ7nw==
+=======
+  version "5.52.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-5.52.0.tgz#cc79b91ea62f43bb5e9bec2d94a7df513220e9df"
+  integrity sha512-kd8CRr04mNE3hw4et6+0T0NI5vli2H6dJCGzjX1r12s/FXUehLVadmvo2Nl3DN80YqAh1cVC6zYZAkpmGiVJ5g==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@typescript-eslint/utils" "5.51.0"
+    "@typescript-eslint/utils" "5.52.0"
 
+<<<<<<< HEAD
 "@typescript-eslint/parser@^5.0.0", "@typescript-eslint/parser@^5.5.0":
   version "5.51.0"
   resolved "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-5.51.0.tgz"
   integrity sha512-fEV0R9gGmfpDeRzJXn+fGQKcl0inIeYobmmUWijZh9zA7bxJ8clPhV9up2ZQzATxAiFAECqPQyMDB4o4B81AaA==
+=======
+"@typescript-eslint/parser@^5.5.0":
+  version "5.52.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-5.52.0.tgz#73c136df6c0133f1d7870de7131ccf356f5be5a4"
+  integrity sha512-e2KiLQOZRo4Y0D/b+3y08i3jsekoSkOYStROYmPUnGMEoA0h+k2qOH5H6tcjIc68WDvGwH+PaOrP1XRzLJ6QlA==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@typescript-eslint/scope-manager" "5.51.0"
-    "@typescript-eslint/types" "5.51.0"
-    "@typescript-eslint/typescript-estree" "5.51.0"
+    "@typescript-eslint/scope-manager" "5.52.0"
+    "@typescript-eslint/types" "5.52.0"
+    "@typescript-eslint/typescript-estree" "5.52.0"
     debug "^4.3.4"
 
+<<<<<<< HEAD
 "@typescript-eslint/scope-manager@5.51.0":
   version "5.51.0"
   resolved "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-5.51.0.tgz"
   integrity sha512-gNpxRdlx5qw3yaHA0SFuTjW4rxeYhpHxt491PEcKF8Z6zpq0kMhe0Tolxt0qjlojS+/wArSDlj/LtE69xUJphQ==
+=======
+"@typescript-eslint/scope-manager@5.52.0":
+  version "5.52.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/scope-manager/-/scope-manager-5.52.0.tgz#a993d89a0556ea16811db48eabd7c5b72dcb83d1"
+  integrity sha512-AR7sxxfBKiNV0FWBSARxM8DmNxrwgnYMPwmpkC1Pl1n+eT8/I2NAUPuwDy/FmDcC6F8pBfmOcaxcxRHspgOBMw==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@typescript-eslint/types" "5.51.0"
-    "@typescript-eslint/visitor-keys" "5.51.0"
+    "@typescript-eslint/types" "5.52.0"
+    "@typescript-eslint/visitor-keys" "5.52.0"
 
+<<<<<<< HEAD
 "@typescript-eslint/type-utils@5.51.0":
   version "5.51.0"
   resolved "https://registry.npmjs.org/@typescript-eslint/type-utils/-/type-utils-5.51.0.tgz"
   integrity sha512-QHC5KKyfV8sNSyHqfNa0UbTbJ6caB8uhcx2hYcWVvJAZYJRBo5HyyZfzMdRx8nvS+GyMg56fugMzzWnojREuQQ==
+=======
+"@typescript-eslint/type-utils@5.52.0":
+  version "5.52.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/type-utils/-/type-utils-5.52.0.tgz#9fd28cd02e6f21f5109e35496df41893f33167aa"
+  integrity sha512-tEKuUHfDOv852QGlpPtB3lHOoig5pyFQN/cUiZtpw99D93nEBjexRLre5sQZlkMoHry/lZr8qDAt2oAHLKA6Jw==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@typescript-eslint/typescript-estree" "5.51.0"
-    "@typescript-eslint/utils" "5.51.0"
+    "@typescript-eslint/typescript-estree" "5.52.0"
+    "@typescript-eslint/utils" "5.52.0"
     debug "^4.3.4"
     tsutils "^3.21.0"
 
+<<<<<<< HEAD
 "@typescript-eslint/types@5.51.0":
   version "5.51.0"
   resolved "https://registry.npmjs.org/@typescript-eslint/types/-/types-5.51.0.tgz"
@@ -6281,35 +6508,60 @@
   version "5.51.0"
   resolved "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-5.51.0.tgz"
   integrity sha512-TSkNupHvNRkoH9FMA3w7TazVFcBPveAAmb7Sz+kArY6sLT86PA5Vx80cKlYmd8m3Ha2SwofM1KwraF24lM9FvA==
+=======
+"@typescript-eslint/types@5.52.0":
+  version "5.52.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-5.52.0.tgz#19e9abc6afb5bd37a1a9bea877a1a836c0b3241b"
+  integrity sha512-oV7XU4CHYfBhk78fS7tkum+/Dpgsfi91IIDy7fjCyq2k6KB63M6gMC0YIvy+iABzmXThCRI6xpCEyVObBdWSDQ==
+
+"@typescript-eslint/typescript-estree@5.52.0":
+  version "5.52.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-5.52.0.tgz#6408cb3c2ccc01c03c278cb201cf07e73347dfca"
+  integrity sha512-WeWnjanyEwt6+fVrSR0MYgEpUAuROxuAH516WPjUblIrClzYJj0kBbjdnbQXLpgAN8qbEuGywiQsXUVDiAoEuQ==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@typescript-eslint/types" "5.51.0"
-    "@typescript-eslint/visitor-keys" "5.51.0"
+    "@typescript-eslint/types" "5.52.0"
+    "@typescript-eslint/visitor-keys" "5.52.0"
     debug "^4.3.4"
     globby "^11.1.0"
     is-glob "^4.0.3"
     semver "^7.3.7"
     tsutils "^3.21.0"
 
+<<<<<<< HEAD
 "@typescript-eslint/utils@^5.43.0", "@typescript-eslint/utils@5.51.0":
   version "5.51.0"
   resolved "https://registry.npmjs.org/@typescript-eslint/utils/-/utils-5.51.0.tgz"
   integrity sha512-76qs+5KWcaatmwtwsDJvBk4H76RJQBFe+Gext0EfJdC3Vd2kpY2Pf//OHHzHp84Ciw0/rYoGTDnIAr3uWhhJYw==
+=======
+"@typescript-eslint/utils@5.52.0", "@typescript-eslint/utils@^5.43.0":
+  version "5.52.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-5.52.0.tgz#b260bb5a8f6b00a0ed51db66bdba4ed5e4845a72"
+  integrity sha512-As3lChhrbwWQLNk2HC8Ree96hldKIqk98EYvypd3It8Q1f8d5zWyIoaZEp2va5667M4ZyE7X8UUR+azXrFl+NA==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@types/json-schema" "^7.0.9"
     "@types/semver" "^7.3.12"
-    "@typescript-eslint/scope-manager" "5.51.0"
-    "@typescript-eslint/types" "5.51.0"
-    "@typescript-eslint/typescript-estree" "5.51.0"
+    "@typescript-eslint/scope-manager" "5.52.0"
+    "@typescript-eslint/types" "5.52.0"
+    "@typescript-eslint/typescript-estree" "5.52.0"
     eslint-scope "^5.1.1"
     eslint-utils "^3.0.0"
     semver "^7.3.7"
 
+<<<<<<< HEAD
 "@typescript-eslint/visitor-keys@5.51.0":
   version "5.51.0"
   resolved "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-5.51.0.tgz"
   integrity sha512-Oh2+eTdjHjOFjKA27sxESlA87YPSOJafGCR0md5oeMdh1ZcCfAGCIOL216uTBAkAIptvLIfKQhl7lHxMJet4GQ==
+=======
+"@typescript-eslint/visitor-keys@5.52.0":
+  version "5.52.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/visitor-keys/-/visitor-keys-5.52.0.tgz#e38c971259f44f80cfe49d97dbffa38e3e75030f"
+  integrity sha512-qMwpw6SU5VHCPr99y274xhbm+PRViK/NATY6qzt+Et7+mThGuFSl/ompj2/hrBlRP/kq+BFdgagnOSgw9TB0eA==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@typescript-eslint/types" "5.51.0"
+    "@typescript-eslint/types" "5.52.0"
     eslint-visitor-keys "^3.3.0"
 
 "@uauth/common@2.3.0":
@@ -6358,6 +6610,7 @@
     crypto-js "^4.1.1"
     elliptic "^6.5.4"
 
+<<<<<<< HEAD
 "@urql/core@>=2.3.1", "@urql/core@2.3.6":
   version "2.3.6"
   resolved "https://registry.npmjs.org/@urql/core/-/core-2.3.6.tgz"
@@ -6375,6 +6628,9 @@
     wonka "^4.0.14"
 
 "@vechain/connex-driver@^2.0.10", "@vechain/connex-driver@^2.0.12", "@vechain/connex-driver@^2.0.8":
+=======
+"@vechain/connex-driver@^2.0.12", "@vechain/connex-driver@^2.0.8":
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "2.0.12"
   resolved "https://registry.npmjs.org/@vechain/connex-driver/-/connex-driver-2.0.12.tgz"
   integrity sha512-KdlpCIuFPqnOSlJGc2tnqZDC62WypSjFFj0m/wH6bkOSPKugmy5wapQfhoMs0iR8EvO8xpXzg1jDcVapN7vgXQ==
@@ -6387,7 +6643,7 @@
     thor-devkit "^2.0.5"
     ws "^7.1.0"
 
-"@vechain/connex-framework@^2.0.10", "@vechain/connex-framework@^2.0.12", "@vechain/connex-framework@^2.0.8":
+"@vechain/connex-framework@^2.0.12", "@vechain/connex-framework@^2.0.8":
   version "2.0.12"
   resolved "https://registry.npmjs.org/@vechain/connex-framework/-/connex-framework-2.0.12.tgz"
   integrity sha512-IwPBPHv9utWqUQc5nc2uEkQqMls6Gc1qX/4tVM1VNsc0r/MQZBZGyxJLFSIpcGumEploesZO0s3x7+zRicn7og==
@@ -6402,7 +6658,7 @@
   resolved "https://registry.npmjs.org/@vechain/connex-types/-/connex-types-2.0.12.tgz"
   integrity sha512-FZLvB48U53FyL0cmDIh+eKqn6pNOjoUmp57qtMK8hDXi+hT+x6ZMEJbpmNhtcR7RrQoXqlx5/HFPOC6mVR+1Qg==
 
-"@vechain/connex@^2.0.9":
+"@vechain/connex@^2.0.14":
   version "2.0.14"
   resolved "https://registry.npmjs.org/@vechain/connex/-/connex-2.0.14.tgz"
   integrity sha512-h3JyW4rWTArK/Q7AA0TI7AjxDY/koW1s5NzY3yMoaOG26xqUbaSdagy3faId633LMZQPAx0BpVoCMmI7B1pwBw==
@@ -6449,6 +6705,7 @@
     "@walletconnect/types" "^1.8.0"
     "@walletconnect/utils" "^1.8.0"
 
+<<<<<<< HEAD
 "@walletconnect/client@1.6.5":
   version "1.6.5"
   resolved "https://registry.npmjs.org/@walletconnect/client/-/client-1.6.5.tgz"
@@ -6472,6 +6729,12 @@
   version "2.4.0"
   resolved "https://registry.npmjs.org/@walletconnect/core/-/core-2.4.0.tgz"
   integrity sha512-JsyKtzSmwtKDCaMFe3Vr5Dx2JVOLKsZJ55m8lC/C3Dt5Nph1KAAq/7xO/rkTSkbRB4e3KuqKO11ynhhrvks/aw==
+=======
+"@walletconnect/core@2.4.4":
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/@walletconnect/core/-/core-2.4.4.tgz#5f22fd2e9a13c3995c164530f5e77b671bb40850"
+  integrity sha512-tdMmPNGgpTrk95hG8H5V6Du59HA4e3tVdvGngZjcja6VnmkfZdW4fGCWaJWyKYkrQQknDug4dH47/HZ6cAxj/g==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@walletconnect/heartbeat" "1.2.0"
     "@walletconnect/jsonrpc-provider" "^1.0.6"
@@ -6483,8 +6746,8 @@
     "@walletconnect/relay-auth" "^1.0.4"
     "@walletconnect/safe-json" "^1.0.1"
     "@walletconnect/time" "^1.0.2"
-    "@walletconnect/types" "2.4.0"
-    "@walletconnect/utils" "2.4.0"
+    "@walletconnect/types" "2.4.4"
+    "@walletconnect/utils" "2.4.4"
     events "^3.3.0"
     lodash.isequal "4.5.0"
     pino "7.11.0"
@@ -6692,19 +6955,25 @@
   integrity sha512-QJzp/S/86sUAgWY6eh5MKYmSfZaRpIlmCJdi5uG4DJlKkZrHEF7ye7gA+VtbVzvTtpM/gRwO2plQuiooIeXjfg==
 
 "@walletconnect/sign-client@^2.1.3":
+<<<<<<< HEAD
   version "2.4.0"
   resolved "https://registry.npmjs.org/@walletconnect/sign-client/-/sign-client-2.4.0.tgz"
   integrity sha512-0QTKcpel6hQeiXJGFS4TpxbOVbKAbgyp34tkkU/jWuvdEI+ISZWinwbYlGavBzwSUNe2coFtooFTCFgMcUh74w==
+=======
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/@walletconnect/sign-client/-/sign-client-2.4.4.tgz#8c1109de277452356094961c45e819c8575b51aa"
+  integrity sha512-ByF1Qi+r7EAZ8HX++aiHekSxiruIlUg3KWfXvki5n4PQNv9Ldad/RaMswk7CB7ESCZuHc7ylKcT3SwOJjHOopg==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@walletconnect/core" "2.4.0"
+    "@walletconnect/core" "2.4.4"
     "@walletconnect/events" "^1.0.1"
     "@walletconnect/heartbeat" "1.2.0"
     "@walletconnect/jsonrpc-provider" "^1.0.6"
     "@walletconnect/jsonrpc-utils" "^1.0.4"
     "@walletconnect/logger" "^2.0.1"
     "@walletconnect/time" "^1.0.2"
-    "@walletconnect/types" "2.4.0"
-    "@walletconnect/utils" "2.4.0"
+    "@walletconnect/types" "2.4.4"
+    "@walletconnect/utils" "2.4.4"
     events "^3.3.0"
     pino "7.11.0"
 
@@ -6736,6 +7005,7 @@
   dependencies:
     tslib "1.14.1"
 
+<<<<<<< HEAD
 "@walletconnect/types@^1.6.5", "@walletconnect/types@^1.7.1", "@walletconnect/types@^1.8.0":
   version "1.8.0"
   resolved "https://registry.npmjs.org/@walletconnect/types/-/types-1.8.0.tgz"
@@ -6745,6 +7015,12 @@
   version "2.4.0"
   resolved "https://registry.npmjs.org/@walletconnect/types/-/types-2.4.0.tgz"
   integrity sha512-hUdvwte7jnycq+B4Wa9czWraH3fDilbzr2/uziQTs61hiafoP7BkS+OrMymeb4HGmo+I2YOgVlc8ngVtdAxOSQ==
+=======
+"@walletconnect/types@2.4.4":
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/@walletconnect/types/-/types-2.4.4.tgz#f2edb02f70e7dfb0f4265d78b0b745a776eb0dae"
+  integrity sha512-4XndBOlB0qbhaJvzcBZCfR69rfU5rV0U5b3YbJ1AmtxcJSJAIg68WDP7o4BE4w1LHzdsEWvbXHRYL+KsA+uG3w==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@walletconnect/events" "^1.0.1"
     "@walletconnect/heartbeat" "1.2.0"
@@ -6766,10 +7042,17 @@
     js-sha3 "0.8.0"
     query-string "6.13.5"
 
+<<<<<<< HEAD
 "@walletconnect/utils@2.4.0":
   version "2.4.0"
   resolved "https://registry.npmjs.org/@walletconnect/utils/-/utils-2.4.0.tgz"
   integrity sha512-wXmy35hCpCNQLr21uFYM0+Wu1ON5J8bKTZ5x4FKaaw5qL24gjHridqUwdepjjkMpU1l3JX2OJGpmmKMyCBSu0g==
+=======
+"@walletconnect/utils@2.4.4":
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/@walletconnect/utils/-/utils-2.4.4.tgz#1ee72172c7fb28f096c600fde19b12b770aa44df"
+  integrity sha512-PM4biwrvi5OwXIroLHDxtCOXlvZGCGNvbYS0Jkb6ZmP1EbGjVz1xA1hnp/lC3eGFQArSyvS7EHD6XQQpymZ2jA==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@stablelib/chacha20poly1305" "1.0.1"
     "@stablelib/hkdf" "1.0.1"
@@ -6780,7 +7063,7 @@
     "@walletconnect/relay-api" "^1.0.7"
     "@walletconnect/safe-json" "^1.0.1"
     "@walletconnect/time" "^1.0.2"
-    "@walletconnect/types" "2.4.0"
+    "@walletconnect/types" "2.4.4"
     "@walletconnect/window-getters" "^1.0.1"
     "@walletconnect/window-metadata" "^1.0.1"
     detect-browser "5.3.0"
@@ -7456,6 +7739,7 @@ ansicolors@^0.3.2:
   resolved "https://registry.npmjs.org/ansicolors/-/ansicolors-0.3.2.tgz"
   integrity sha512-QXu7BPrP29VllRxH8GwB7x5iX5qWKAAMLqKQGWTeLWVlNHNOpVMJ91dsxQAIWXpjuW5wqvxu3Jd/nRjrJ+0pqg==
 
+<<<<<<< HEAD
 any-promise@^1.0.0:
   version "1.3.0"
   resolved "https://registry.npmjs.org/any-promise/-/any-promise-1.3.0.tgz"
@@ -7482,6 +7766,8 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 anymatch@^3.0.3, anymatch@~3.1.2:
   version "3.1.3"
   resolved "https://registry.npmjs.org/anymatch/-/anymatch-3.1.3.tgz"
@@ -7764,8 +8050,15 @@ arweave-stream-tx@^1.1.0:
   dependencies:
     exponential-backoff "^3.1.0"
 
+<<<<<<< HEAD
 arweave@^1.10.0, arweave@^1.10.13, arweave@^1.11.4:
   version "1.12.6"
+=======
+arweave@^1.10.13, arweave@^1.11.4:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/arweave/-/arweave-1.13.0.tgz#046d1b74efe5b157ad85279473f3729e8c7a47a9"
+  integrity sha512-pir1s0Lg7MzAxmFsPqht1SGOq8Hoj1fhf44/8PVjBd6T8l6JRrFN23UvKp7N+MXBYM5SqrLYB8KrgvxAaczGFg==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     arconnect "^0.4.2"
     asn1.js "^5.4.1"
@@ -7996,8 +8289,15 @@ axe-core@^4.6.2:
   resolved "https://registry.npmjs.org/axe-core/-/axe-core-4.6.3.tgz"
   integrity sha512-/BQzOX780JhsxDnPpH4ZiyrJAzcd8AfzFPkv+89veFSr1rcMjuq2JDCwypKaPeB6ljHp9KjXhPpjgCvQlWYuqg==
 
+<<<<<<< HEAD
 axios@*:
   version "1.3.2"
+=======
+axios@*, axios@^1.2.1, axios@^1.3.1:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.3.3.tgz#e7011384ba839b885007c9c9fae1ff23dceb295b"
+  integrity sha512-eYq77dYIFS77AQlhzEL937yUBSepBfPIe8FcgEDN35vMNZKMrs81pgnyrQpwfy4NF4b4XWX1Zgx7yX+25w8QJA==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -8060,6 +8360,7 @@ axios@^0.27.0, axios@^0.27.2, axios@0.27.2:
     follow-redirects "^1.14.9"
     form-data "^4.0.0"
 
+<<<<<<< HEAD
 axios@^1.2.1:
   version "1.3.2"
   resolved "https://registry.npmjs.org/axios/-/axios-1.3.2.tgz"
@@ -8082,6 +8383,28 @@ axobject-query@^0.1.0:
   integrity sha512-hEvSXm+TPfadELgugiwUBoTQBFvNF+riZKUxuqoRbm7dv06hVd0yvyIaS4DBohxgO8WpIJ2/OSEhdk+iw/LWsg==
   dependencies:
     ast-types-flow "0.0.7"
+=======
+axios@^0.21.0, axios@^0.21.1, axios@^0.21.3:
+  version "0.21.4"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
+  integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
+  dependencies:
+    follow-redirects "^1.14.0"
+
+axios@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.25.0.tgz#349cfbb31331a9b4453190791760a8d35b093e0a"
+  integrity sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==
+  dependencies:
+    follow-redirects "^1.14.7"
+
+axios@^0.26.0, axios@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.26.1.tgz#1ede41c51fcf51bbbd6fd43669caaa4f0495aaa9"
+  integrity sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==
+  dependencies:
+    follow-redirects "^1.14.8"
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 axobject-query@^3.1.1:
   version "3.1.1"
@@ -9229,10 +9552,22 @@ bignumber.js@9.0.2:
   resolved "https://registry.npmjs.org/bignumber.js/-/bignumber.js-9.0.2.tgz"
   integrity sha512-GAcQvbpsM0pUb0zw1EI0KhQEZ+lRwR5fYaAp3vPOYuP7aDvGy6cVN6XHLauvF8SOga2y0dcLcjt3iQDTSEliyw==
 
+<<<<<<< HEAD
 binary-extensions@^1.0.0:
   version "1.13.1"
   resolved "https://registry.npmjs.org/binary-extensions/-/binary-extensions-1.13.1.tgz"
   integrity sha512-Un7MIEDdUC5gNpcGDV97op1Ywk748MpHcFTHoYs6qnj1Z3j7I53VG3nwZhKzoBZmbdRNnb6WRdFlwl7tSDuZGw==
+=======
+bignumber.js@^7.2.1:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-7.2.1.tgz#80c048759d826800807c4bfd521e50edbba57a5f"
+  integrity sha512-S4XzBk5sMB+Rcb/LNcpzXr57VRTxgAvaAEDAl1AwRx27j00hT84O6OkteE7u8UB3NuaaygCRrEpqox4uDOrbdQ==
+
+bignumber.js@^9.0.0, bignumber.js@^9.0.1, bignumber.js@^9.0.2, bignumber.js@^9.1.1:
+  version "9.1.1"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.1.1.tgz#c4df7dc496bd849d4c9464344c1aa74228b4dac6"
+  integrity sha512-pHm4LsMJ6lzgNGVfZHjMoO8sdoRhOzOH4MLmY65Jg70bpxCKu5iOHNJyfF6OyvYw7t8Fpf35RuzUyqnQsj8Vig==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 binary-extensions@^2.0.0:
   version "2.2.0"
@@ -9339,6 +9674,7 @@ blakejs@^1.1.0, blakejs@^1.1.1, blakejs@^1.1.2, blakejs@^1.2.1:
   resolved "https://registry.npmjs.org/blakejs/-/blakejs-1.2.1.tgz"
   integrity sha512-QXUSXI3QVc/gJME0dBpXrag1kbzOqCjCX8/b54ntNyW6sjtoqxqRk3LTmXzaJoh71zMsDCjM+47jS7XiwN/+fQ==
 
+<<<<<<< HEAD
 blob-to-it@^1.0.1:
   version "1.0.4"
   resolved "https://registry.npmjs.org/blob-to-it/-/blob-to-it-1.0.4.tgz"
@@ -9347,6 +9683,9 @@ blob-to-it@^1.0.1:
     browser-readablestream-to-it "^1.0.3"
 
 bluebird@^3.4.7, bluebird@^3.5.0, bluebird@^3.5.5, bluebird@3.7.2:
+=======
+bluebird@3.7.2, bluebird@^3.5.0, bluebird@^3.5.5, bluebird@^3.7.2:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "3.7.2"
   resolved "https://registry.npmjs.org/bluebird/-/bluebird-3.7.2.tgz"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
@@ -9623,6 +9962,7 @@ browser-process-hrtime@^1.0.0:
   resolved "https://registry.npmjs.org/browser-process-hrtime/-/browser-process-hrtime-1.0.0.tgz"
   integrity sha512-9o5UecI3GhkpM6DrXr69PblIuWxPKk9Y0jHBRhdocZ2y7YECBFCsHm79Pr3OyR2AvjhDkabFJaDJMYRazHgsow==
 
+<<<<<<< HEAD
 browser-readablestream-to-it@^1.0.0, browser-readablestream-to-it@^1.0.1, browser-readablestream-to-it@^1.0.3:
   version "1.0.3"
   resolved "https://registry.npmjs.org/browser-readablestream-to-it/-/browser-readablestream-to-it-1.0.3.tgz"
@@ -9635,6 +9975,8 @@ browser-resolve@^1.11.2:
   dependencies:
     resolve "1.1.7"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 browser-stdout@1.3.1:
   version "1.3.1"
   resolved "https://registry.npmjs.org/browser-stdout/-/browser-stdout-1.3.1.tgz"
@@ -9694,6 +10036,7 @@ browserify-sign@^4.0.0:
     readable-stream "^3.6.0"
     safe-buffer "^5.2.0"
 
+<<<<<<< HEAD
 browserify-zlib@^0.2.0:
   version "0.2.0"
   resolved "https://registry.npmjs.org/browserify-zlib/-/browserify-zlib-0.2.0.tgz"
@@ -9742,6 +10085,9 @@ browserslist@^2.5.1:
     electron-to-chromium "^1.3.30"
 
 browserslist@^4.0.0, browserslist@^4.14.5, browserslist@^4.16.6, browserslist@^4.18.1, browserslist@^4.21.3, browserslist@^4.21.4, browserslist@^4.6.6, "browserslist@>= 4", "browserslist@>= 4.21.0", browserslist@>=4:
+=======
+browserslist@^4.0.0, browserslist@^4.14.5, browserslist@^4.18.1, browserslist@^4.21.3, browserslist@^4.21.4, browserslist@^4.21.5, browserslist@^4.6.6:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "4.21.5"
   resolved "https://registry.npmjs.org/browserslist/-/browserslist-4.21.5.tgz"
   integrity sha512-tUkiguQGW7S3IhB7N+c2MV/HZPSCPAAiYBZXLsBhFB/PCy6ZKKsZrmBayHV9fdGV/ARIfJ14NkxKzRDjvp7L6w==
@@ -9850,7 +10196,19 @@ buffer@^4.3.0:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
+<<<<<<< HEAD
 buffer@^5.0.5:
+=======
+buffer@6.0.3, buffer@^6.0.2, buffer@^6.0.3, buffer@~6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/buffer/-/buffer-6.0.3.tgz#2ace578459cc8fbe2a70aaa8f52ee63b6a74c6c6"
+  integrity sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==
+  dependencies:
+    base64-js "^1.3.1"
+    ieee754 "^1.2.1"
+
+buffer@^5.0.5, buffer@^5.4.3, buffer@^5.5.0, buffer@^5.6.0:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "5.7.1"
   resolved "https://registry.npmjs.org/buffer/-/buffer-5.7.1.tgz"
   integrity sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==
@@ -10142,6 +10500,7 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
+<<<<<<< HEAD
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
   version "1.0.30001452"
   resolved "https://registry.npmjs.org/caniuse-db/-/caniuse-db-1.0.30001452.tgz"
@@ -10151,6 +10510,12 @@ caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000748, caniuse-lite@^1.0.30000792, can
   version "1.0.30001451"
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001451.tgz"
   integrity sha512-XY7UbUpGRatZzoRft//5xOa69/1iGJRBlrieH6QYrkKLIFn3m7OVEJ81dSrKoy2BnKsdbX5cLrOispZNYo9v2w==
+=======
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001426, caniuse-lite@^1.0.30001449:
+  version "1.0.30001453"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001453.tgz#6d3a1501622bf424a3cee5ad9550e640b0de3de8"
+  integrity sha512-R9o/uySW38VViaTrOtwfbFEiBFUh7ST3uIG4OEymIG3/uKdHDO4xk/FaqfUw0d+irSUyFPy3dZszf9VvSTPnsA==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 capability@^0.2.5:
   version "0.2.5"
@@ -10177,10 +10542,19 @@ caseless@~0.12.0:
   resolved "https://registry.npmjs.org/caseless/-/caseless-0.12.0.tgz"
   integrity sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==
 
+<<<<<<< HEAD
 cborg@^1.5.4, cborg@^1.6.0:
   version "1.10.0"
   resolved "https://registry.npmjs.org/cborg/-/cborg-1.10.0.tgz"
   integrity sha512-/eM0JCaL99HDHxjySNQJLaolZFVdl6VA0/hEKIoiQPcQzE5LrG5QHdml0HaBt31brgB9dNe1zMr3f8IVrpotRQ==
+=======
+catharsis@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/catharsis/-/catharsis-0.9.0.tgz#40382a168be0e6da308c277d3a2b3eb40c7d2121"
+  integrity sha512-prMTQVpcns/tzFgFVkVp6ak6RykZyWb3gu8ckUpd6YkTlacOd3DXGJjIpD4Q6zJirizvaiAjSSHlOsA+6sNh2A==
+  dependencies:
+    lodash "^4.17.15"
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 center-align@^0.1.1:
   version "0.1.3"
@@ -10402,6 +10776,7 @@ chrome-trace-event@^1.0.2:
   resolved "https://registry.npmjs.org/chrome-trace-event/-/chrome-trace-event-1.0.3.tgz"
   integrity sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==
 
+<<<<<<< HEAD
 ci-info@^1.5.0:
   version "1.6.0"
   resolved "https://registry.npmjs.org/ci-info/-/ci-info-1.6.0.tgz"
@@ -10416,6 +10791,12 @@ ci-info@^3.2.0, ci-info@^3.3.0:
   version "3.7.1"
   resolved "https://registry.npmjs.org/ci-info/-/ci-info-3.7.1.tgz"
   integrity sha512-4jYS4MOAaCIStSRwiuxc4B8MYhIe676yO1sYGzARnjXkWpmzZMMYxY6zu8WYWDhSuth5zhrQ1rhNSibyyvv4/w==
+=======
+ci-info@^3.2.0:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.8.0.tgz#81408265a5380c929f0bc665d62256628ce9ef91"
+  integrity sha512-eXTggHWSooYhq49F2opQhuHWgzucfF2YgODK4e1566GQs5BIfP30B0oenwBJHfWxAs2fyPB1s7Mg949zLf61Yw==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 cids@^0.7.1:
   version "0.7.5"
@@ -10974,16 +11355,28 @@ copy-to-clipboard@^3.3.1:
     toggle-selection "^1.0.6"
 
 core-js-compat@^3.25.1:
+<<<<<<< HEAD
   version "3.27.2"
   resolved "https://registry.npmjs.org/core-js-compat/-/core-js-compat-3.27.2.tgz"
   integrity sha512-welaYuF7ZtbYKGrIy7y3eb40d37rG1FvzEOfe7hSLd2iD6duMDqUhRfSvCGyC46HhR6Y8JXXdZ2lnRUMkPBpvg==
+=======
+  version "3.28.0"
+  resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.28.0.tgz#c08456d854608a7264530a2afa281fadf20ecee6"
+  integrity sha512-myzPgE7QodMg4nnd3K1TDoES/nADRStM8Gpz0D6nhkwbmwEnE0ZGJgoWsvQ722FR8D7xS0n0LV556RcEicjTyg==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    browserslist "^4.21.4"
+    browserslist "^4.21.5"
 
 core-js-pure@^3.23.3, core-js-pure@^3.25.1:
+<<<<<<< HEAD
   version "3.27.2"
   resolved "https://registry.npmjs.org/core-js-pure/-/core-js-pure-3.27.2.tgz"
   integrity sha512-Cf2jqAbXgWH3VVzjyaaFkY1EBazxugUepGymDoeteyYr9ByX51kD2jdHZlsEF/xnJMyN3Prua7mQuzwMg6Zc9A==
+=======
+  version "3.28.0"
+  resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.28.0.tgz#4ef2888475b6c856ef6f5aeef8b4f618b76ad048"
+  integrity sha512-DSOVleA9/v3LNj/vFxAPfUHttKTzrB2RXhAPvR5TPXn4vrra3Z2ssytvRyt8eruJwAfwAiFADEbrjcRdcvPLQQ==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 core-js@^2.4.0:
   version "2.6.12"
@@ -10996,9 +11389,15 @@ core-js@^2.5.0:
   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
 
 core-js@^3.19.2:
+<<<<<<< HEAD
   version "3.27.2"
   resolved "https://registry.npmjs.org/core-js/-/core-js-3.27.2.tgz"
   integrity sha512-9ashVQskuh5AZEZ1JdQWp1GqSoC1e1G87MzRqg2gIfVAQ7Qn9K+uFj8EcniUFA4P2NLZfV+TOlX1SzoKfo+s7w==
+=======
+  version "3.28.0"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.28.0.tgz#ed8b9e99c273879fdfff0edfc77ee709a5800e4a"
+  integrity sha512-GiZn9D4Z/rSYvTeg1ljAIsEqFm0LaN9gVtwDCrKL80zHtS31p9BAjmTxVqTQDMpwlMolJZOFntUG2uwyj7DAqw==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 core-util-is@~1.0.0:
   version "1.0.3"
@@ -11221,8 +11620,9 @@ crypto-es@^1.2.7:
   resolved "https://registry.npmjs.org/crypto-es/-/crypto-es-1.2.7.tgz"
   integrity sha512-UUqiVJ2gUuZFmbFsKmud3uuLcNP2+Opt+5ysmljycFCyhA0+T16XJmo1ev/t5kMChMqWh7IEvURNCqsg+SjZGQ==
 
-"crypto-exchange-rate@git+https://github.com/QuigonCom/exchange-rate#master-dist":
+"crypto-exchange-rate@git+https://github.com/xp-network/exchange-rate#aedf7b2c152d6d25e9e6cec5d222c63a3ade18ab":
   version "1.0.0"
+<<<<<<< HEAD
   resolved "git+ssh://git@github.com/QuigonCom/exchange-rate.git#2bebad526e8dd1974d9250c0629f00b51472e49a"
   dependencies:
     axios "^0.21.1"
@@ -11231,6 +11631,9 @@ crypto-es@^1.2.7:
   version "1.0.0"
   resolved "git+ssh://git@github.com/xp-network/exchange-rate.git#bec675e143f6a54209b1a546279aa64e029903aa"
   integrity sha512-e5UQAjKvDeOpM/lJZUuMQJKwGP8+FlR0du3EiQafNVUV1ziVDFbzCTzaDPG+9ecP2j3yvb9tPOnqGK86AdXXrw==
+=======
+  resolved "git+https://github.com/xp-network/exchange-rate#aedf7b2c152d6d25e9e6cec5d222c63a3ade18ab"
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     axios "^0.21.1"
 
@@ -11384,9 +11787,15 @@ css-selector-tokenizer@^0.7.0:
     fastparse "^1.1.2"
 
 css-to-react-native@^3.0.0:
+<<<<<<< HEAD
   version "3.1.0"
   resolved "https://registry.npmjs.org/css-to-react-native/-/css-to-react-native-3.1.0.tgz"
   integrity sha512-AryfkFA29b4I3vG7N4kxFboq15DxwSXzhXM37XNEjwJMgjYIc8BcqfiprpAqX0zadI5PMByEIwAMzXxk5Vcc4g==
+=======
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/css-to-react-native/-/css-to-react-native-3.2.0.tgz#cdd8099f71024e149e4f6fe17a7d46ecd55f1e32"
+  integrity sha512-e8RKaLXMOFii+02mOlqwjbD00KSEKqblnpO9e++1aXS1fPQOpS1YoqdVHBqPjHNoxeF2mimzVqawm2KCbEdtHQ==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     camelize "^1.0.0"
     css-color-keywords "^1.0.0"
@@ -11438,22 +11847,29 @@ cssesc@^3.0.0:
   resolved "https://registry.npmjs.org/cssesc/-/cssesc-3.0.0.tgz"
   integrity sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==
 
+<<<<<<< HEAD
 cssnano-preset-default@^5.2.13:
   version "5.2.13"
   resolved "https://registry.npmjs.org/cssnano-preset-default/-/cssnano-preset-default-5.2.13.tgz"
   integrity sha512-PX7sQ4Pb+UtOWuz8A1d+Rbi+WimBIxJTRyBdgGp1J75VU0r/HFQeLnMYgHiCAp6AR4rqrc7Y4R+1Rjk3KJz6DQ==
+=======
+cssnano-preset-default@^5.2.14:
+  version "5.2.14"
+  resolved "https://registry.yarnpkg.com/cssnano-preset-default/-/cssnano-preset-default-5.2.14.tgz#309def4f7b7e16d71ab2438052093330d9ab45d8"
+  integrity sha512-t0SFesj/ZV2OTylqQVOrFgEh5uanxbO6ZAdeCrNsUQ6fVuXwYTxJPNAGvGTxHbD68ldIJNec7PyYZDBrfDQ+6A==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     css-declaration-sorter "^6.3.1"
     cssnano-utils "^3.1.0"
     postcss-calc "^8.2.3"
-    postcss-colormin "^5.3.0"
+    postcss-colormin "^5.3.1"
     postcss-convert-values "^5.1.3"
     postcss-discard-comments "^5.1.2"
     postcss-discard-duplicates "^5.1.0"
     postcss-discard-empty "^5.1.1"
     postcss-discard-overridden "^5.1.0"
     postcss-merge-longhand "^5.1.7"
-    postcss-merge-rules "^5.1.3"
+    postcss-merge-rules "^5.1.4"
     postcss-minify-font-values "^5.1.0"
     postcss-minify-gradients "^5.1.1"
     postcss-minify-params "^5.1.4"
@@ -11468,7 +11884,7 @@ cssnano-preset-default@^5.2.13:
     postcss-normalize-url "^5.1.0"
     postcss-normalize-whitespace "^5.1.1"
     postcss-ordered-values "^5.1.3"
-    postcss-reduce-initial "^5.1.1"
+    postcss-reduce-initial "^5.1.2"
     postcss-reduce-transforms "^5.1.0"
     postcss-svgo "^5.1.0"
     postcss-unique-selectors "^5.1.1"
@@ -11478,12 +11894,19 @@ cssnano-utils@^3.1.0:
   resolved "https://registry.npmjs.org/cssnano-utils/-/cssnano-utils-3.1.0.tgz"
   integrity sha512-JQNR19/YZhz4psLX/rQ9M83e3z2Wf/HdJbryzte4a3NSuafyp9w/I4U+hx5C2S9g41qlstH7DEWnZaaj83OuEA==
 
+<<<<<<< HEAD
 cssnano@^5.0.11, cssnano@^5.0.6:
   version "5.1.14"
   resolved "https://registry.npmjs.org/cssnano/-/cssnano-5.1.14.tgz"
   integrity sha512-Oou7ihiTocbKqi0J1bB+TRJIQX5RMR3JghA8hcWSw9mjBLQ5Y3RWqEDoYG3sRNlAbCIXpqMoZGbq5KDR3vdzgw==
+=======
+cssnano@^5.0.6:
+  version "5.1.15"
+  resolved "https://registry.yarnpkg.com/cssnano/-/cssnano-5.1.15.tgz#ded66b5480d5127fcb44dac12ea5a983755136bf"
+  integrity sha512-j+BKgDcLDQA+eDifLx0EO4XSA56b7uut3BQFH+wbSaSTuGLuiyTa/wbRYthUXX8LC9mLg+WWKe8h+qJuwTAbHw==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    cssnano-preset-default "^5.2.13"
+    cssnano-preset-default "^5.2.14"
     lilconfig "^2.0.3"
     yaml "^1.10.2"
 
@@ -11619,6 +12042,7 @@ d@^1.0.1, d@1:
     es5-ext "^0.10.50"
     type "^1.0.1"
 
+<<<<<<< HEAD
 dag-jose@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/dag-jose/-/dag-jose-1.0.0.tgz"
@@ -11633,6 +12057,9 @@ dag-map@~1.0.0:
   integrity sha512-+LSAiGFwQ9dRnRdOeaj7g47ZFJcOUPukAP8J3A3fuZ1g9Y44BG+P1sgApjLXTQPOzC4+7S9Wr8kXsfpINM4jpw==
 
 damerau-levenshtein@^1.0.0, damerau-levenshtein@^1.0.8:
+=======
+damerau-levenshtein@^1.0.8:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "1.0.8"
   resolved "https://registry.npmjs.org/damerau-levenshtein/-/damerau-levenshtein-1.0.8.tgz"
   integrity sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==
@@ -11654,9 +12081,15 @@ data-urls@^2.0.0:
     whatwg-url "^8.0.0"
 
 dataloader@^2.0.0:
+<<<<<<< HEAD
   version "2.2.1"
   resolved "https://registry.npmjs.org/dataloader/-/dataloader-2.2.1.tgz"
   integrity sha512-Zn+tVZo1RKu120rgoe0JsRk56UiKdefPSH47QROJsMHrX8/S9UJvi5A/A6+Sbuk6rE88z5JoM/wIJ09Z7BTfYA==
+=======
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/dataloader/-/dataloader-2.2.2.tgz#216dc509b5abe39d43a9b9d97e6e5e473dfbe3e0"
+  integrity sha512-8YnDaaf7N3k/q5HnTJVuzSyLETjoZjVmHc4AeKAzOvKHEFQKcn64OKBfzHYtE9zGjctNM7V9I0MfnUVLpi7M5g==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 dayjs@^1.8.15:
   version "1.11.7"
@@ -11670,10 +12103,17 @@ debug@^2.2.0:
   dependencies:
     ms "2.0.0"
 
+<<<<<<< HEAD
 debug@^2.3.3, debug@^2.6.6, debug@^2.6.8:
   version "2.6.9"
   resolved "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz"
   integrity sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==
+=======
+debug@4, debug@4.3.4, debug@^4.1.0, debug@^4.1.1, debug@^4.3.2, debug@^4.3.3, debug@^4.3.4, debug@~4.3.1, debug@~4.3.2:
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.4.tgz#1319f6579357f2338d3337d2cdd4914bb5dcc865"
+  integrity sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     ms "2.0.0"
 
@@ -11881,13 +12321,20 @@ define-lazy-prop@^2.0.0:
   integrity sha512-Ds09qNh8yw3khSjiJjiUInaGX9xlqZDY7JVryGxdxV7NPeuqQfplOpQ66yJFZut3jLa5zOwkXw1g9EI2uKh4Og==
 
 define-properties@^1.1.3, define-properties@^1.1.4:
+<<<<<<< HEAD
   version "1.1.4"
   resolved "https://registry.npmjs.org/define-properties/-/define-properties-1.1.4.tgz"
   integrity sha512-uckOqKcfaVvtBdsVkdPv3XjveQJsNQqmhXgRi8uhvWWuPYZCNlzT8qAyblUgNoXdHdjMTzAqeGjAoli8f+bzPA==
+=======
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/define-properties/-/define-properties-1.2.0.tgz#52988570670c9eacedd8064f4a990f2405849bd5"
+  integrity sha512-xvqAVKGfT1+UAvPwKTVw/njhdQ8ZhXK4lI0bCIuCMrp2up9nPnaDftrLtmpTazqd1o+UY4zgzU+avtMbDP+ldA==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     has-property-descriptors "^1.0.0"
     object-keys "^1.1.1"
 
+<<<<<<< HEAD
 define-property@^0.2.5:
   version "0.2.5"
   resolved "https://registry.npmjs.org/define-property/-/define-property-0.2.5.tgz"
@@ -11910,6 +12357,8 @@ define-property@^2.0.2:
     is-descriptor "^1.0.2"
     isobject "^3.0.1"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 defined@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/defined/-/defined-1.0.1.tgz"
@@ -12085,10 +12534,17 @@ diff-sequences@^27.5.1:
   resolved "https://registry.npmjs.org/diff-sequences/-/diff-sequences-27.5.1.tgz"
   integrity sha512-k1gCAXAsNgLwEL+Y8Wvl+M6oEFj5bgazfZULpS5CneoPPXRaCCW7dm+q21Ky2VEE5X+VeRDBVg1Pcvvsr4TtNQ==
 
+<<<<<<< HEAD
 diff-sequences@^29.4.2:
   version "29.4.2"
   resolved "https://registry.npmjs.org/diff-sequences/-/diff-sequences-29.4.2.tgz"
   integrity sha512-R6P0Y6PrsH3n4hUXxL3nns0rbRk6Q33js3ygJBeEpbzLzgcNuJ61+u0RXasFpTKISw99TxUzFnumSnRLsjhLaw==
+=======
+diff-sequences@^29.4.3:
+  version "29.4.3"
+  resolved "https://registry.yarnpkg.com/diff-sequences/-/diff-sequences-29.4.3.tgz#9314bc1fabe09267ffeca9cbafc457d8499a13f2"
+  integrity sha512-ofrBgwpPhCD85kMKtE9RYFFq6OC1A89oW2vvgWZNCwxrUpRUILopY7lsYyMDSjc8g6U6aiO0Qubg6r4Wgt5ZnA==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 diff@^3.2.0:
   version "3.5.0"
@@ -12141,6 +12597,7 @@ dns-equal@^1.0.0:
   resolved "https://registry.npmjs.org/dns-equal/-/dns-equal-1.0.0.tgz"
   integrity sha512-z+paD6YUQsk+AbGCEM4PrOXSss5gd66QfcVBFTKR/HpFL9jCqikS94HYwKww6fQyO7IxrIIyUu+g0Ka9tUS2Cg==
 
+<<<<<<< HEAD
 dns-over-http-resolver@^1.2.3:
   version "1.2.3"
   resolved "https://registry.npmjs.org/dns-over-http-resolver/-/dns-over-http-resolver-1.2.3.tgz"
@@ -12158,6 +12615,8 @@ dns-packet@^1.3.1:
     ip "^1.1.0"
     safe-buffer "^5.0.1"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 dns-packet@^5.2.2:
   version "5.4.0"
   resolved "https://registry.npmjs.org/dns-packet/-/dns-packet-5.4.0.tgz"
@@ -12350,12 +12809,16 @@ dotenv@^10.0.0:
   resolved "https://registry.npmjs.org/dotenv/-/dotenv-10.0.0.tgz"
   integrity sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==
 
+<<<<<<< HEAD
 dotenv@^16.0.3:
   version "16.0.3"
   resolved "https://registry.npmjs.org/dotenv/-/dotenv-16.0.3.tgz"
   integrity sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==
 
 dotenv@^4.0.0, dotenv@4.0.0:
+=======
+dotenv@^4.0.0:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "4.0.0"
   resolved "https://registry.npmjs.org/dotenv/-/dotenv-4.0.0.tgz"
   integrity sha512-XcaMACOr3JMVcEv0Y/iUM2XaOsATRZ3U1In41/1jjK6vJZ2PZbQ1bzCG8uvaByfaBpl9gqc9QWJovpUGBXLLYQ==
@@ -12430,6 +12893,7 @@ ejs@^3.1.6:
   dependencies:
     jake "^10.8.5"
 
+<<<<<<< HEAD
 electron-fetch@^1.7.2:
   version "1.9.1"
   resolved "https://registry.npmjs.org/electron-fetch/-/electron-fetch-1.9.1.tgz"
@@ -12441,6 +12905,12 @@ electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.30, electron-to-chromium@
   version "1.4.292"
   resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.292.tgz"
   integrity sha512-ESWOSyJy5odDlE8wvh5NNAMORv4r6assPwIPGHEMWrWD0SONXcG/xT+9aD9CQyeRwyYDPo6dJT4Bbeg5uevVQQ==
+=======
+electron-to-chromium@^1.4.284:
+  version "1.4.299"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.299.tgz#faa2069cd4879a73e540e533178db5c618768d41"
+  integrity sha512-lQ7ijJghH6pCGbfWXr6EY+KYCMaRSjgsY925r1p/TlpSfVM1VjHTcn1gAc15VM4uwti283X6QtjPTXdpoSGiZQ==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 elliptic@^6.4.0, elliptic@^6.4.1, elliptic@^6.5.2, elliptic@^6.5.3, elliptic@^6.5.4, elliptic@6.5.4:
   version "6.5.4"
@@ -12505,6 +12975,7 @@ encodeurl@~1.0.2:
   resolved "https://registry.npmjs.org/encodeurl/-/encodeurl-1.0.2.tgz"
   integrity sha512-TPJXq8JqFaVYm2CWmPvnP2Iyo4ZSM7/QKcSmuMLDObfpH5fi7RUGmd/rTDf+rut/saiDiQEeVTNgAmJEdAOx0w==
 
+<<<<<<< HEAD
 encoding@^0.1.0, encoding@^0.1.13:
   version "0.1.13"
   resolved "https://registry.npmjs.org/encoding/-/encoding-0.1.13.tgz"
@@ -12512,6 +12983,8 @@ encoding@^0.1.0, encoding@^0.1.13:
   dependencies:
     iconv-lite "^0.6.2"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 end-of-stream@^1.1.0, end-of-stream@^1.4.1:
   version "1.4.4"
   resolved "https://registry.npmjs.org/end-of-stream/-/end-of-stream-1.4.4.tgz"
@@ -12568,6 +13041,7 @@ entities@^3.0.1:
   resolved "https://registry.npmjs.org/entities/-/entities-3.0.1.tgz"
   integrity sha512-WiyBqoomrwMdFG1e0kqvASYfnlb0lp8M5o5Fw2OFq1hNZxxcNk8Ik0Xm7LxzBhuidnZB/UtBqVCgUz3kBOP51Q==
 
+<<<<<<< HEAD
 env-editor@^0.4.1:
   version "0.4.2"
   resolved "https://registry.npmjs.org/env-editor/-/env-editor-0.4.2.tgz"
@@ -12587,6 +13061,12 @@ err-code@^3.0.1:
   version "3.0.1"
   resolved "https://registry.npmjs.org/err-code/-/err-code-3.0.1.tgz"
   integrity sha512-GiaH0KJUewYok+eeY05IIgjtAe4Yltygk9Wqp1V5yVWLdhf0hYZchRjNIT9bb0mSwRcIusT3cx7PJUf3zEIfUA==
+=======
+entities@~2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/entities/-/entities-2.1.0.tgz#992d3129cf7df6870b96c57858c249a120f8b8b5"
+  integrity sha512-hCx1oky9PFrJ611mf0ifBLBRW8lUUVRlFolb5gWRfIELabBlbp9xZvrqZLZAs+NxFnbfQoeGd8wDkygjg7U85w==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 errno@^0.1.3, errno@~0.1.1, errno@~0.1.7:
   version "0.1.8"
@@ -12845,6 +13325,7 @@ escape-string-regexp@^2.0.0:
   resolved "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-2.0.0.tgz"
   integrity sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==
 
+<<<<<<< HEAD
 escape-string-regexp@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz"
@@ -12858,6 +13339,11 @@ escape-string-regexp@4.0.0:
 escodegen@^1.6.1:
   version "1.14.3"
   resolved "https://registry.npmjs.org/escodegen/-/escodegen-1.14.3.tgz"
+=======
+escodegen@^1.13.0:
+  version "1.14.3"
+  resolved "https://registry.yarnpkg.com/escodegen/-/escodegen-1.14.3.tgz#4e7b81fba61581dc97582ed78cab7f0e8d63f503"
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   integrity sha512-qFcX0XJkdg+PB3xjZZG/wKSuT1PnQWx57+TVSjIMmILd2yC/6ByYElPwJnslDsuWuSAp4AwJGumarAAmJch5Kw==
   dependencies:
     esprima "^4.0.1"
@@ -13072,9 +13558,15 @@ eslint-plugin-react@^7.27.1, eslint-plugin-react@^7.31.10:
     string.prototype.matchall "^4.0.8"
 
 eslint-plugin-testing-library@^5.0.1:
+<<<<<<< HEAD
   version "5.10.1"
   resolved "https://registry.npmjs.org/eslint-plugin-testing-library/-/eslint-plugin-testing-library-5.10.1.tgz"
   integrity sha512-GRy87AqUi2Ij69pe0YnOXm3oGBCgnFwfIv+Hu9q/kT3jL0pX1cXA7aO+oJnvdpbJy2+riOPqGsa3iAkL888NLg==
+=======
+  version "5.10.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-testing-library/-/eslint-plugin-testing-library-5.10.2.tgz#12f231ad9b52b6aef45c801fd00aa129a932e0c2"
+  integrity sha512-f1DmDWcz5SDM+IpCkEX0lbFqrrTs8HRsEElzDEqN/EBI0hpRj8Cns5+IVANXswE8/LeybIJqPAOQIFu2j5Y5sw==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@typescript-eslint/utils" "^5.43.0"
 
@@ -13135,10 +13627,17 @@ eslint-webpack-plugin@^3.1.1:
     normalize-path "^3.0.0"
     schema-utils "^4.0.0"
 
+<<<<<<< HEAD
 eslint@*, "eslint@^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8", "eslint@^3 || ^4 || ^5 || ^6 || ^7 || ^8", "eslint@^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0", "eslint@^6.0.0 || ^7.0.0 || ^8.0.0", "eslint@^7.0.0 || ^8.0.0", "eslint@^7.5.0 || ^8.0.0", eslint@^8.0.0, eslint@^8.1.0, eslint@^8.26.0, eslint@^8.3.0, "eslint@>= 6", eslint@>=5:
   version "8.33.0"
   resolved "https://registry.npmjs.org/eslint/-/eslint-8.33.0.tgz"
   integrity sha512-WjOpFQgKK8VrCnAtl8We0SUOy/oVZ5NHykyMiagV1M9r8IFpIJX7DduK6n1mpfhlG7T1NLWm2SuD8QB7KFySaA==
+=======
+eslint@^8.26.0, eslint@^8.3.0:
+  version "8.34.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.34.0.tgz#fe0ab0ef478104c1f9ebc5537e303d25a8fb22d6"
+  integrity sha512-1Z8iFsucw+7kSqXNZVslXS8Ioa4u2KM7GPwuKtkTFAqZ/cHMcEaR+1+Br0wLlot49cNxIiZk5wp8EAbPcYZxTg==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@eslint/eslintrc" "^1.4.1"
     "@humanwhocodes/config-array" "^0.11.8"
@@ -13180,6 +13679,7 @@ eslint@*, "eslint@^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8", "eslint@^3 || ^4 
     strip-json-comments "^3.1.0"
     text-table "^0.2.0"
 
+<<<<<<< HEAD
 "eslint@^2.10.2 || ^3 || ^4", "eslint@^3.0.0 || ^4.0.0", eslint@^4.1.1, "eslint@>=1.6.0 <5.0.0", eslint@>=2.0.0, "eslint@2.x - 4.x", eslint@4.10.0:
   version "4.10.0"
   resolved "https://registry.npmjs.org/eslint/-/eslint-4.10.0.tgz"
@@ -13232,6 +13732,9 @@ espree@^3.5.1:
     acorn-jsx "^3.0.0"
 
 espree@^9.4.0:
+=======
+espree@^9.0.0, espree@^9.4.0:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "9.4.1"
   resolved "https://registry.npmjs.org/espree/-/espree-9.4.1.tgz"
   integrity sha512-XwctdmTO6SIvCzd9810yyNzIrOrqNYV9Koizx4C/mRhf9uq0o4yHoCEU/670pOxOL/MSraektvSAji79kX90Vg==
@@ -13250,10 +13753,17 @@ esprima@^4.0.0, esprima@^4.0.1, esprima@~4.0.0:
   resolved "https://registry.npmjs.org/esprima/-/esprima-4.0.1.tgz"
   integrity sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A==
 
+<<<<<<< HEAD
 esquery@^1.0.0, esquery@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/esquery/-/esquery-1.4.0.tgz"
   integrity sha512-cCDispWt5vHHtwMY2YrAQ4ibFkAL8RbH5YGBnZBc90MolvvfkkQcJro/aZiAQUlQ3qgrYS6D6v8Gc5G5CQsc9w==
+=======
+esquery@^1.4.0:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/esquery/-/esquery-1.4.2.tgz#c6d3fee05dd665808e2ad870631f221f5617b1d1"
+  integrity sha512-JVSoLdTlTDkmjFmab7H/9SL9qGSyjElT3myyKp7krqjVFQCDLmj1QFaCLRFBszBKI0XVZaiiXvuPIX3ZwHe1Ng==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     estraverse "^5.1.0"
 
@@ -13437,6 +13947,7 @@ ethereum-cryptography@^0.1.3:
     secp256k1 "^4.0.1"
     setimmediate "^1.0.5"
 
+<<<<<<< HEAD
 ethereum-utils@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/ethereum-utils/-/ethereum-utils-1.0.0.tgz"
@@ -13444,6 +13955,8 @@ ethereum-utils@^1.0.0:
   dependencies:
     moment "^2.17.1"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 "ethereumjs-abi@git+https://github.com/ethereumjs/ethereumjs-abi.git":
   version "0.6.8"
   resolved "git+ssh://git@github.com/ethereumjs/ethereumjs-abi.git#ee3994657fa7a427238e6ba92a84d0b529bbcde0"
@@ -13822,15 +14335,21 @@ expect@^27.5.1:
     jest-message-util "^27.5.1"
 
 expect@^29.0.0:
+<<<<<<< HEAD
   version "29.4.2"
   resolved "https://registry.npmjs.org/expect/-/expect-29.4.2.tgz"
   integrity sha512-+JHYg9O3hd3RlICG90OPVjRkPBoiUH7PxvDVMnRiaq1g6JUgZStX514erMl0v2Dc5SkfVbm7ztqbd6qHHPn+mQ==
+=======
+  version "29.4.3"
+  resolved "https://registry.yarnpkg.com/expect/-/expect-29.4.3.tgz#5e47757316df744fe3b8926c3ae8a3ebdafff7fe"
+  integrity sha512-uC05+Q7eXECFpgDrHdXA4k2rpMyStAYPItEDLyQDo5Ta7fVkJnNA/4zh/OIVkVVNZ1oOK1PipQoyNjuZ6sz6Dg==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@jest/expect-utils" "^29.4.2"
-    jest-get-type "^29.4.2"
-    jest-matcher-utils "^29.4.2"
-    jest-message-util "^29.4.2"
-    jest-util "^29.4.2"
+    "@jest/expect-utils" "^29.4.3"
+    jest-get-type "^29.4.3"
+    jest-matcher-utils "^29.4.3"
+    jest-message-util "^29.4.3"
+    jest-util "^29.4.3"
 
 expo-application@~4.1.0:
   version "4.1.0"
@@ -14107,11 +14626,14 @@ fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   resolved "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz"
   integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
 
+<<<<<<< HEAD
 fast-fifo@^1.0.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/fast-fifo/-/fast-fifo-1.1.0.tgz"
   integrity sha512-Kl29QoNbNvn4nhDsLYjyIAaIqaJB6rBx5p3sL9VjaefJ+eMFBWVZiaoguaoZfzEKr5RhAti0UgM8703akGPJ6g==
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 fast-glob@^3.2.12, fast-glob@^3.2.5, fast-glob@^3.2.9:
   version "3.2.12"
   resolved "https://registry.npmjs.org/fast-glob/-/fast-glob-3.2.12.tgz"
@@ -14864,7 +15386,7 @@ get-func-name@^2.0.0:
   resolved "https://registry.npmjs.org/get-func-name/-/get-func-name-2.0.0.tgz"
   integrity sha512-Hm0ixYtaSZ/V7C8FJrtZIuBBI+iSgL+1Aq82zSu8VQNB4S3Gk8e7Qs3VwBDJAhmRZcFqkl3tQu36g/Foh5I5ig==
 
-get-intrinsic@^1.0.2, get-intrinsic@^1.1.1, get-intrinsic@^1.1.3:
+get-intrinsic@^1.0.2, get-intrinsic@^1.1.1, get-intrinsic@^1.1.3, get-intrinsic@^1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.2.0.tgz"
   integrity sha512-L049y6nFOuom5wGyRc3/gdTLO94dySVKRACj1RmJZBQXlbTMhtNIgkWkUHq+jYmZvKf14EW1EoJnnjbmoHij0Q==
@@ -14873,11 +15395,14 @@ get-intrinsic@^1.0.2, get-intrinsic@^1.1.1, get-intrinsic@^1.1.3:
     has "^1.0.3"
     has-symbols "^1.0.3"
 
+<<<<<<< HEAD
 get-iterator@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/get-iterator/-/get-iterator-1.0.2.tgz"
   integrity sha512-v+dm9bNVfOYsY1OrhaCrmyOcYoSeVvbt+hHZ0Au+T+p1y+0Uyj9aMaGIeUTT6xdpRbWzDeYKvfOslPhggQMcsg==
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 get-own-enumerable-property-symbols@^3.0.0:
   version "3.0.2"
   resolved "https://registry.npmjs.org/get-own-enumerable-property-symbols/-/get-own-enumerable-property-symbols-3.0.2.tgz"
@@ -15035,14 +15560,22 @@ glob@^7.0.0, glob@^7.0.3, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, gl
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
+<<<<<<< HEAD
 glob@7.1.6:
   version "7.1.6"
   resolved "https://registry.npmjs.org/glob/-/glob-7.1.6.tgz"
   integrity sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==
+=======
+glob@^8.0.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-8.1.0.tgz#d388f656593ef708ee3e34640fdfb99a9fd1c33e"
+  integrity sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     fs.realpath "^1.0.0"
     inflight "^1.0.4"
     inherits "2"
+<<<<<<< HEAD
     minimatch "^3.0.4"
     once "^1.3.0"
     path-is-absolute "^1.0.0"
@@ -15074,6 +15607,10 @@ global-modules@^1.0.0:
     global-prefix "^1.0.1"
     is-windows "^1.0.1"
     resolve-dir "^1.0.0"
+=======
+    minimatch "^5.0.1"
+    once "^1.3.0"
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 global-modules@^2.0.0:
   version "2.0.0"
@@ -15248,7 +15785,28 @@ got@12.1.0:
     p-cancelable "^3.0.0"
     responselike "^2.0.0"
 
+<<<<<<< HEAD
 graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.3, graceful-fs@^4.1.6, graceful-fs@^4.1.9, graceful-fs@^4.2.0, graceful-fs@^4.2.4, graceful-fs@^4.2.6, graceful-fs@^4.2.9:
+=======
+got@^11.8.5:
+  version "11.8.6"
+  resolved "https://registry.yarnpkg.com/got/-/got-11.8.6.tgz#276e827ead8772eddbcfc97170590b841823233a"
+  integrity sha512-6tfZ91bOr7bOXnK7PRDCGBLa1H4U080YHNaAQ2KsMGlLEzRbk44nsZF2E1IeRc3vtJHPVbKCYgdFbaGO2ljd8g==
+  dependencies:
+    "@sindresorhus/is" "^4.0.0"
+    "@szmarczak/http-timer" "^4.0.5"
+    "@types/cacheable-request" "^6.0.1"
+    "@types/responselike" "^1.0.0"
+    cacheable-lookup "^5.0.3"
+    cacheable-request "^7.0.2"
+    decompress-response "^6.0.0"
+    http2-wrapper "^1.0.0-beta.5.2"
+    lowercase-keys "^2.0.0"
+    p-cancelable "^2.0.0"
+    responselike "^2.0.0"
+
+graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9, graceful-fs@^4.2.0, graceful-fs@^4.2.4, graceful-fs@^4.2.6, graceful-fs@^4.2.9:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "4.2.10"
   resolved "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.10.tgz"
   integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
@@ -15854,7 +16412,11 @@ iconv-lite@^0.4.17, iconv-lite@^0.4.24, iconv-lite@0.4.24:
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
+<<<<<<< HEAD
 iconv-lite@^0.6.2:
+=======
+iconv-lite@^0.6.3:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "0.6.3"
   resolved "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.6.3.tgz"
   integrity sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==
@@ -16072,6 +16634,7 @@ inquirer@^8.2.0:
     through "^2.3.6"
     wrap-ansi "^7.0.0"
 
+<<<<<<< HEAD
 interface-datastore@^6.0.2:
   version "6.1.1"
   resolved "https://registry.npmjs.org/interface-datastore/-/interface-datastore-6.1.1.tgz"
@@ -16105,8 +16668,14 @@ internal-slot@^1.0.3, internal-slot@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npmjs.org/internal-slot/-/internal-slot-1.0.4.tgz"
   integrity sha512-tA8URYccNzMo94s5MQZgH8NB/XTa6HsOo0MLfXTKKEnHVVdegzaQoFZ7Jp44bdvLvY2waT5dc+j5ICEswhi7UQ==
+=======
+internal-slot@^1.0.3, internal-slot@^1.0.4:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/internal-slot/-/internal-slot-1.0.5.tgz#f2a2ee21f668f8627a4667f309dc0f4fb6674986"
+  integrity sha512-Y+R5hJrzs52QCG2laLn4udYVnxsfny9CpOhNhUvk/SSSVyF6T27FzRbF0sroPidSu3X8oEAkOn2K804mjpt6UQ==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    get-intrinsic "^1.1.3"
+    get-intrinsic "^1.2.0"
     has "^1.0.3"
     side-channel "^1.0.4"
 
@@ -16139,6 +16708,7 @@ io-ts@^2.2.16:
   resolved "https://registry.npmjs.org/io-ts/-/io-ts-2.2.20.tgz"
   integrity sha512-Rq2BsYmtwS5vVttie4rqrOCIfHCS9TgpRLFpKQCM1wZBBRY9nWVGmEvm2FnDbSE2un1UE39DvFpTR5UL47YDcA==
 
+<<<<<<< HEAD
 ip-regex@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/ip-regex/-/ip-regex-2.1.0.tgz"
@@ -16155,6 +16725,9 @@ ip@^1.1.0, ip@^1.1.5:
   integrity sha512-PuExPYUiu6qMBQb4l06ecm6T6ujzhmh+MeJcW9wa89PoAz5pvd4zPgN5WJV104mb6S2T1AwNIAaB70JNrLQWhg==
 
 ipaddr.js@^1.9.0:
+=======
+ipaddr.js@1.9.1:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "1.9.1"
   resolved "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.9.1.tgz"
   integrity sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==
@@ -16164,6 +16737,7 @@ ipaddr.js@^2.0.1:
   resolved "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-2.0.1.tgz"
   integrity sha512-1qTgH9NG+IIJ4yfKs2e6Pp1bZg8wbDbKHT21HrLIeYBTRLgMYKnMTPAuI3Lcs61nfx5h1xlXnbJtH1kX5/d/ng==
 
+<<<<<<< HEAD
 ipaddr.js@1.9.1:
   version "1.9.1"
   resolved "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.9.1.tgz"
@@ -16279,6 +16853,8 @@ is-accessor-descriptor@^1.0.0:
   dependencies:
     kind-of "^6.0.0"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 is-arguments@^1.0.4, is-arguments@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/is-arguments/-/is-arguments-1.1.1.tgz"
@@ -16410,6 +16986,7 @@ is-docker@^2.0.0, is-docker@^2.1.1:
   resolved "https://registry.npmjs.org/is-docker/-/is-docker-2.2.1.tgz"
   integrity sha512-F+i2BKsFrH66iaUFc0woD8sLy8getkwTwtOBjvs56Cx4CgJDeKQeqfz8wAYiSb8JOprWhHH5p77PbmYCvvUuXQ==
 
+<<<<<<< HEAD
 is-dotfile@^1.0.0:
   version "1.0.3"
   resolved "https://registry.npmjs.org/is-dotfile/-/is-dotfile-1.0.3.tgz"
@@ -16445,6 +17022,9 @@ is-extglob@^1.0.0:
   integrity sha512-7Q+VbVafe6x2T+Tu6NcOf6sRklazEPmBoB3IWk3WdGZM2iGUwU/Oe3Wtq5lSEkDTTlpp8yx+5t4pzO/i9Ty1ww==
 
 is-extglob@^2.1.0, is-extglob@^2.1.1:
+=======
+is-extglob@^2.1.1:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "2.1.1"
   resolved "https://registry.npmjs.org/is-extglob/-/is-extglob-2.1.1.tgz"
   integrity sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==
@@ -16539,6 +17119,7 @@ is-interactive@^1.0.0:
   resolved "https://registry.npmjs.org/is-interactive/-/is-interactive-1.0.0.tgz"
   integrity sha512-2HvIEKRoqS62guEC+qBjpvRubdX910WCMuJTZ+I9yvqKU2/12eSL549HMwtabb4oupdj2sMP50k+XJfB/8JE6w==
 
+<<<<<<< HEAD
 is-invalid-path@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/is-invalid-path/-/is-invalid-path-0.1.0.tgz"
@@ -16553,6 +17134,8 @@ is-ip@^3.1.0:
   dependencies:
     ip-regex "^4.0.0"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 is-json@^2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/is-json/-/is-json-2.0.1.tgz"
@@ -16886,11 +17469,14 @@ isexe@^2.0.0:
   resolved "https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz"
   integrity sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==
 
+<<<<<<< HEAD
 iso-url@^1.1.5:
   version "1.2.1"
   resolved "https://registry.npmjs.org/iso-url/-/iso-url-1.2.1.tgz"
   integrity sha512-9JPDgCN4B7QPkLtYAAOrEuAWvP9rWvR5offAr0/SeF046wIkglqH3VXgYYP6NcsKslH80UIVgmPqNe3j7tG2ng==
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 iso-url@~0.4.7:
   version "0.4.7"
   resolved "https://registry.npmjs.org/iso-url/-/iso-url-0.4.7.tgz"
@@ -17077,6 +17663,7 @@ istanbul-reports@^3.1.3:
     html-escaper "^2.0.0"
     istanbul-lib-report "^3.0.0"
 
+<<<<<<< HEAD
 it-all@^1.0.4:
   version "1.0.6"
   resolved "https://registry.npmjs.org/it-all/-/it-all-1.0.6.tgz"
@@ -17122,6 +17709,8 @@ it-to-stream@^1.0.0:
     p-fifo "^1.0.0"
     readable-stream "^3.6.0"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 jake@^10.8.5:
   version "10.8.5"
   resolved "https://registry.npmjs.org/jake/-/jake-10.8.5.tgz"
@@ -17310,15 +17899,22 @@ jest-diff@^27.5.1:
     jest-get-type "^27.5.1"
     pretty-format "^27.5.1"
 
+<<<<<<< HEAD
 jest-diff@^29.4.2:
   version "29.4.2"
   resolved "https://registry.npmjs.org/jest-diff/-/jest-diff-29.4.2.tgz"
   integrity sha512-EK8DSajVtnjx9sa1BkjZq3mqChm2Cd8rIzdXkQMA8e0wuXq53ypz6s5o5V8HRZkoEt2ywJ3eeNWFKWeYr8HK4g==
+=======
+jest-diff@^29.4.3:
+  version "29.4.3"
+  resolved "https://registry.yarnpkg.com/jest-diff/-/jest-diff-29.4.3.tgz#42f4eb34d0bf8c0fb08b0501069b87e8e84df347"
+  integrity sha512-YB+ocenx7FZ3T5O9lMVMeLYV4265socJKtkwgk/6YUz/VsEzYDkiMuMhWzZmxm3wDRQvayJu/PjkjjSkjoHsCA==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     chalk "^4.0.0"
-    diff-sequences "^29.4.2"
-    jest-get-type "^29.4.2"
-    pretty-format "^29.4.2"
+    diff-sequences "^29.4.3"
+    jest-get-type "^29.4.3"
+    pretty-format "^29.4.3"
 
 jest-docblock@^20.0.3:
   version "20.0.3"
@@ -17407,10 +18003,17 @@ jest-get-type@^27.5.1:
   resolved "https://registry.npmjs.org/jest-get-type/-/jest-get-type-27.5.1.tgz"
   integrity sha512-2KY95ksYSaK7DMBWQn6dQz3kqAf3BB64y2udeG+hv4KfSOb9qwcYQstTJc1KCbsix+wLZWZYN8t7nwX3GOBLRw==
 
+<<<<<<< HEAD
 jest-get-type@^29.4.2:
   version "29.4.2"
   resolved "https://registry.npmjs.org/jest-get-type/-/jest-get-type-29.4.2.tgz"
   integrity sha512-vERN30V5i2N6lqlFu4ljdTqQAgrkTFMC9xaIIfOPYBw04pufjXRty5RuXBiB1d72tGbURa/UgoiHB90ruOSivg==
+=======
+jest-get-type@^29.4.3:
+  version "29.4.3"
+  resolved "https://registry.yarnpkg.com/jest-get-type/-/jest-get-type-29.4.3.tgz#1ab7a5207c995161100b5187159ca82dd48b3dd5"
+  integrity sha512-J5Xez4nRRMjk8emnTpWrlkyb9pfRQQanDrvWHhsR1+VUfbwxi30eVcZFlcdGInRibU4G5LwHXpI7IRHU0CY+gg==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 jest-haste-map@^20.0.4:
   version "20.0.5"
@@ -17508,15 +18111,22 @@ jest-matcher-utils@^27.5.1:
     jest-get-type "^27.5.1"
     pretty-format "^27.5.1"
 
+<<<<<<< HEAD
 jest-matcher-utils@^29.4.2:
   version "29.4.2"
   resolved "https://registry.npmjs.org/jest-matcher-utils/-/jest-matcher-utils-29.4.2.tgz"
   integrity sha512-EZaAQy2je6Uqkrm6frnxBIdaWtSYFoR8SVb2sNLAtldswlR/29JAgx+hy67llT3+hXBaLB0zAm5UfeqerioZyg==
+=======
+jest-matcher-utils@^29.4.3:
+  version "29.4.3"
+  resolved "https://registry.yarnpkg.com/jest-matcher-utils/-/jest-matcher-utils-29.4.3.tgz#ea68ebc0568aebea4c4213b99f169ff786df96a0"
+  integrity sha512-TTciiXEONycZ03h6R6pYiZlSkvYgT0l8aa49z/DLSGYjex4orMUcafuLXYyyEDWB1RKglq00jzwY00Ei7yFNVg==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     chalk "^4.0.0"
-    jest-diff "^29.4.2"
-    jest-get-type "^29.4.2"
-    pretty-format "^29.4.2"
+    jest-diff "^29.4.3"
+    jest-get-type "^29.4.3"
+    pretty-format "^29.4.3"
 
 jest-matchers@^20.0.3:
   version "20.0.3"
@@ -17567,18 +18177,25 @@ jest-message-util@^28.1.3:
     slash "^3.0.0"
     stack-utils "^2.0.3"
 
+<<<<<<< HEAD
 jest-message-util@^29.4.2:
   version "29.4.2"
   resolved "https://registry.npmjs.org/jest-message-util/-/jest-message-util-29.4.2.tgz"
   integrity sha512-SElcuN4s6PNKpOEtTInjOAA8QvItu0iugkXqhYyguRvQoXapg5gN+9RQxLAkakChZA7Y26j6yUCsFWN+hlKD6g==
+=======
+jest-message-util@^29.4.3:
+  version "29.4.3"
+  resolved "https://registry.yarnpkg.com/jest-message-util/-/jest-message-util-29.4.3.tgz#65b5280c0fdc9419503b49d4f48d4999d481cb5b"
+  integrity sha512-1Y8Zd4ZCN7o/QnWdMmT76If8LuDv23Z1DRovBj/vcSFNlGCJGoO8D1nJDw1AdyAGUk0myDLFGN5RbNeJyCRGCw==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@babel/code-frame" "^7.12.13"
-    "@jest/types" "^29.4.2"
+    "@jest/types" "^29.4.3"
     "@types/stack-utils" "^2.0.0"
     chalk "^4.0.0"
     graceful-fs "^4.2.9"
     micromatch "^4.0.4"
-    pretty-format "^29.4.2"
+    pretty-format "^29.4.3"
     slash "^3.0.0"
     stack-utils "^2.0.3"
 
@@ -17826,12 +18443,19 @@ jest-util@^28.1.3:
     graceful-fs "^4.2.9"
     picomatch "^2.2.3"
 
+<<<<<<< HEAD
 jest-util@^29.4.2:
   version "29.4.2"
   resolved "https://registry.npmjs.org/jest-util/-/jest-util-29.4.2.tgz"
   integrity sha512-wKnm6XpJgzMUSRFB7YF48CuwdzuDIHenVuoIb1PLuJ6F+uErZsuDkU+EiExkChf6473XcawBrSfDSnXl+/YG4g==
+=======
+jest-util@^29.4.3:
+  version "29.4.3"
+  resolved "https://registry.yarnpkg.com/jest-util/-/jest-util-29.4.3.tgz#851a148e23fc2b633c55f6dad2e45d7f4579f496"
+  integrity sha512-ToSGORAz4SSSoqxDSylWX8JzkOQR7zoBtNRsA7e+1WUX5F8jrOwaNpuh1YfJHJKDHXLHmObv5eOjejUd+/Ws+Q==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@jest/types" "^29.4.2"
+    "@jest/types" "^29.4.3"
     "@types/node" "*"
     chalk "^4.0.0"
     ci-info "^3.2.0"
@@ -17975,9 +18599,15 @@ join-component@^1.1.0:
   integrity sha512-bF7vcQxbODoGK1imE2P9GS9aw4zD0Sd+Hni68IMZLj7zRnquH7dXUmMw9hDI5S/Jzt7q+IyTXN0rSg2GI0IKhQ==
 
 jose@^4.5.0:
+<<<<<<< HEAD
   version "4.11.4"
   resolved "https://registry.npmjs.org/jose/-/jose-4.11.4.tgz"
   integrity sha512-94FdcR8felat4vaTJyL/WVdtlWLlsnLMZP8v+A0Vru18K3bQ22vn7TtpVh3JlgBFNIlYOUlGqwp/MjRPOnIyCQ==
+=======
+  version "4.12.0"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-4.12.0.tgz#7f00cd2f82499b91623cd413b7b5287fd52651ed"
+  integrity sha512-wW1u3cK81b+SFcHjGC8zw87yuyUweEFe0UJirrXEw1NasW00eF7sZjeG3SLBGz001ozxQ46Y9sofDvhBmWFtXQ==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 jquery@>=1.8.0, "jquery@1.9.1 - 3":
   version "3.6.3"
@@ -18047,6 +18677,7 @@ js-yaml@^3.13.1:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
+<<<<<<< HEAD
 js-yaml@^3.4.3, js-yaml@^3.9.1:
   version "3.14.1"
   resolved "https://registry.npmjs.org/js-yaml/-/js-yaml-3.14.1.tgz"
@@ -18077,12 +18708,21 @@ js-yaml@~3.7.0:
   dependencies:
     argparse "^1.0.7"
     esprima "^2.6.0"
+=======
+js2xmlparser@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/js2xmlparser/-/js2xmlparser-4.0.2.tgz#2a1fdf01e90585ef2ae872a01bc169c6a8d5e60a"
+  integrity sha512-6n4D8gLlLf1n5mNLQPRfViYzu9RATblzPEtm1SthMX1Pjao0r9YI9nw7ZIfRxQMERS87mcswrg+r/OYrPRX6jA==
+  dependencies:
+    xmlcreate "^2.0.4"
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.npmjs.org/jsbn/-/jsbn-0.1.1.tgz"
   integrity sha512-UVU9dibq2JcFWxQPA6KCqj5O42VOmAY3zQUfEKxU0KpTGXwNoCjkX1e13eHNvw/xPynt6pU0rZ1htjWTNTSXsg==
 
+<<<<<<< HEAD
 jsc-android@^250231.0.0:
   version "250231.0.0"
   resolved "https://registry.npmjs.org/jsc-android/-/jsc-android-250231.0.0.tgz"
@@ -18114,6 +18754,30 @@ jscodeshift@^0.13.1:
     write-file-atomic "^2.3.0"
 
 jsdom@*, jsdom@^16.6.0:
+=======
+jsdoc@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/jsdoc/-/jsdoc-4.0.0.tgz#9569f79ea5b14ba4bc726da1a48fe6a241ad7893"
+  integrity sha512-tzTgkklbWKrlaQL2+e3NNgLcZu3NaK2vsHRx7tyHQ+H5jcB9Gx0txSd2eJWlMC/xU1+7LQu4s58Ry0RkuaEQVg==
+  dependencies:
+    "@babel/parser" "^7.9.4"
+    "@jsdoc/salty" "^0.2.1"
+    "@types/markdown-it" "^12.2.3"
+    bluebird "^3.7.2"
+    catharsis "^0.9.0"
+    escape-string-regexp "^2.0.0"
+    js2xmlparser "^4.0.2"
+    klaw "^3.0.0"
+    markdown-it "^12.3.2"
+    markdown-it-anchor "^8.4.1"
+    marked "^4.0.10"
+    mkdirp "^1.0.4"
+    requizzle "^0.2.3"
+    strip-json-comments "^3.1.0"
+    underscore "~1.13.2"
+
+jsdom@^16.6.0:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "16.7.0"
   resolved "https://registry.npmjs.org/jsdom/-/jsdom-16.7.0.tgz"
   integrity sha512-u9Smc2G1USStM+s/x1ru5Sxrl6mPYCbByG1U/hUmqaVsm4tbNyS7CicOSRyuGQYZhTu0h84qkZZQ/I+dzizSVw==
@@ -18477,11 +19141,19 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   resolved "https://registry.npmjs.org/kind-of/-/kind-of-6.0.3.tgz"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
 
+<<<<<<< HEAD
 klaw@^1.0.0:
   version "1.3.1"
   resolved "https://registry.npmjs.org/klaw/-/klaw-1.3.1.tgz"
   integrity sha512-TED5xi9gGQjGpNnvRWknrwAB1eL5GciPfVFOt3Vk1OJCVDQbzuSfrF3hkUQKlsgKrG1F+0t5W0m+Fje1jIt8rw==
   optionalDependencies:
+=======
+klaw@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/klaw/-/klaw-3.0.0.tgz#b11bec9cf2492f06756d6e809ab73a2910259146"
+  integrity sha512-0Fo5oir+O9jnXu5EefYbVK+mHMBeEVEy2cmctR1O1NECcCkPRreJKrS6Qt/j3KC2C148Dfo9i3pCmCMsdqGr0g==
+  dependencies:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
     graceful-fs "^4.1.9"
 
 kleur@^3.0.3:
@@ -18618,6 +19290,7 @@ libsodium@^0.7.0:
   resolved "https://registry.npmjs.org/libsodium/-/libsodium-0.7.10.tgz"
   integrity sha512-eY+z7hDrDKxkAK+QKZVNv92A5KYkxfvIshtBJkmg5TSiCnYqZP3i9OO9whE79Pwgm4jGaoHgkM4ao/b9Cyu4zQ==
 
+<<<<<<< HEAD
 lightningcss-linux-x64-gnu@1.18.0:
   version "1.18.0"
   resolved "https://registry.npmjs.org/lightningcss-linux-x64-gnu/-/lightningcss-linux-x64-gnu-1.18.0.tgz"
@@ -18632,17 +19305,63 @@ lightningcss@^1.16.1:
   version "1.18.0"
   resolved "https://registry.npmjs.org/lightningcss/-/lightningcss-1.18.0.tgz"
   integrity sha512-uk10tNxi5fhZqU93vtYiQgx/8a9f0Kvtj5AXIm+VlOXY+t/DWDmCZWJEkZJmmALgvbS6aAW8or+Kq85eJ6TDTw==
+=======
+lightningcss-darwin-arm64@1.19.0:
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/lightningcss-darwin-arm64/-/lightningcss-darwin-arm64-1.19.0.tgz#56ab071e932f845dbb7667f44f5b78441175a343"
+  integrity sha512-wIJmFtYX0rXHsXHSr4+sC5clwblEMji7HHQ4Ub1/CznVRxtCFha6JIt5JZaNf8vQrfdZnBxLLC6R8pC818jXqg==
+
+lightningcss-darwin-x64@1.19.0:
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/lightningcss-darwin-x64/-/lightningcss-darwin-x64-1.19.0.tgz#c867308b88859ba61a2c46c82b1ca52ff73a1bd0"
+  integrity sha512-Lif1wD6P4poaw9c/4Uh2z+gmrWhw/HtXFoeZ3bEsv6Ia4tt8rOJBdkfVaUJ6VXmpKHALve+iTyP2+50xY1wKPw==
+
+lightningcss-linux-arm-gnueabihf@1.19.0:
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/lightningcss-linux-arm-gnueabihf/-/lightningcss-linux-arm-gnueabihf-1.19.0.tgz#0f921dc45f2e5c3aea70fab98844ac0e5f2f81be"
+  integrity sha512-P15VXY5682mTXaiDtbnLYQflc8BYb774j2R84FgDLJTN6Qp0ZjWEFyN1SPqyfTj2B2TFjRHRUvQSSZ7qN4Weig==
+
+lightningcss-linux-arm64-gnu@1.19.0:
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/lightningcss-linux-arm64-gnu/-/lightningcss-linux-arm64-gnu-1.19.0.tgz#027f9df9c7f4ffa127c37a71726245a5794d7ba2"
+  integrity sha512-zwXRjWqpev8wqO0sv0M1aM1PpjHz6RVIsBcxKszIG83Befuh4yNysjgHVplF9RTU7eozGe3Ts7r6we1+Qkqsww==
+
+lightningcss-linux-arm64-musl@1.19.0:
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/lightningcss-linux-arm64-musl/-/lightningcss-linux-arm64-musl-1.19.0.tgz#85ea987da868524eac6db94f8e1eaa23d0b688a3"
+  integrity sha512-vSCKO7SDnZaFN9zEloKSZM5/kC5gbzUjoJQ43BvUpyTFUX7ACs/mDfl2Eq6fdz2+uWhUh7vf92c4EaaP4udEtA==
+
+lightningcss-linux-x64-gnu@1.19.0:
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/lightningcss-linux-x64-gnu/-/lightningcss-linux-x64-gnu-1.19.0.tgz#02bec89579ab4153dccc0def755d1fd9e3ee7f3c"
+  integrity sha512-0AFQKvVzXf9byrXUq9z0anMGLdZJS+XSDqidyijI5njIwj6MdbvX2UZK/c4FfNmeRa2N/8ngTffoIuOUit5eIQ==
+
+lightningcss-linux-x64-musl@1.19.0:
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/lightningcss-linux-x64-musl/-/lightningcss-linux-x64-musl-1.19.0.tgz#e36a5df8193ae961d22974635e4c100a1823bb8c"
+  integrity sha512-SJoM8CLPt6ECCgSuWe+g0qo8dqQYVcPiW2s19dxkmSI5+Uu1GIRzyKA0b7QqmEXolA+oSJhQqCmJpzjY4CuZAg==
+
+lightningcss-win32-x64-msvc@1.19.0:
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/lightningcss-win32-x64-msvc/-/lightningcss-win32-x64-msvc-1.19.0.tgz#0854dbd153035eca1396e2227c708ad43655a61c"
+  integrity sha512-C+VuUTeSUOAaBZZOPT7Etn/agx/MatzJzGRkeV+zEABmPuntv1zihncsi+AyGmjkkzq3wVedEy7h0/4S84mUtg==
+
+lightningcss@^1.16.1:
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/lightningcss/-/lightningcss-1.19.0.tgz#fbbad0975de66252e38d96b5bdd2a62f2dd0ffbf"
+  integrity sha512-yV5UR7og+Og7lQC+70DA7a8ta1uiOPnWPJfxa0wnxylev5qfo4P+4iMpzWAdYWOca4jdNQZii+bDL/l+4hUXIA==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     detect-libc "^1.0.3"
   optionalDependencies:
-    lightningcss-darwin-arm64 "1.18.0"
-    lightningcss-darwin-x64 "1.18.0"
-    lightningcss-linux-arm-gnueabihf "1.18.0"
-    lightningcss-linux-arm64-gnu "1.18.0"
-    lightningcss-linux-arm64-musl "1.18.0"
-    lightningcss-linux-x64-gnu "1.18.0"
-    lightningcss-linux-x64-musl "1.18.0"
-    lightningcss-win32-x64-msvc "1.18.0"
+    lightningcss-darwin-arm64 "1.19.0"
+    lightningcss-darwin-x64 "1.19.0"
+    lightningcss-linux-arm-gnueabihf "1.19.0"
+    lightningcss-linux-arm64-gnu "1.19.0"
+    lightningcss-linux-arm64-musl "1.19.0"
+    lightningcss-linux-x64-gnu "1.19.0"
+    lightningcss-linux-x64-musl "1.19.0"
+    lightningcss-win32-x64-msvc "1.19.0"
 
 lilconfig@^2.0.3, lilconfig@^2.0.5, lilconfig@^2.0.6:
   version "2.0.6"
@@ -18653,6 +19372,13 @@ lines-and-columns@^1.1.6:
   version "1.2.4"
   resolved "https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.2.4.tgz"
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
+
+linkify-it@^3.0.1:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-3.0.3.tgz#a98baf44ce45a550efb4d49c769d07524cc2fa2e"
+  integrity sha512-ynTsyrFSdE5oZ/O9GEf00kPngmOfVwazR5GKDq6EYfhlpFug3J2zybX56a2PRRpc9P+FuSoGNAwjlbDs9jJBPQ==
+  dependencies:
+    uc.micro "^1.0.1"
 
 lmdb@2.5.2:
   version "2.5.2"
@@ -19055,6 +19781,7 @@ map-stream@~0.1.0:
   resolved "https://registry.npmjs.org/map-stream/-/map-stream-0.1.0.tgz"
   integrity sha512-CkYQrPYZfWnu/DAmVCpTSX/xHpKZ80eKh2lAkyA6AJTef6bW+6JpbQZN5rofum7da+SyN1bi5ctTm+lTfcCW3g==
 
+<<<<<<< HEAD
 map-visit@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/map-visit/-/map-visit-1.0.0.tgz"
@@ -19078,6 +19805,28 @@ md5-file@^3.2.3:
   integrity sha512-3Tkp1piAHaworfcCgH0jKbTvj1jWWFgbvh2cXaNCgHwyTCBxxvD1Y04rmfpvdPm1P4oXMOpm6+2H7sr7v9v8Fw==
   dependencies:
     buffer-alloc "^1.1.0"
+=======
+markdown-it-anchor@^8.4.1:
+  version "8.6.6"
+  resolved "https://registry.yarnpkg.com/markdown-it-anchor/-/markdown-it-anchor-8.6.6.tgz#4a12e358c9c2167ee28cb7a5f10e29d6f1ffd7ca"
+  integrity sha512-jRW30YGywD2ESXDc+l17AiritL0uVaSnWsb26f+68qaW9zgbIIr1f4v2Nsvc0+s0Z2N3uX6t/yAw7BwCQ1wMsA==
+
+markdown-it@^12.3.2:
+  version "12.3.2"
+  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-12.3.2.tgz#bf92ac92283fe983fe4de8ff8abfb5ad72cd0c90"
+  integrity sha512-TchMembfxfNVpHkbtriWltGWc+m3xszaRD0CZup7GFFhzIgQqxIfn3eGj1yZpfuflzPvfkt611B2Q/Bsk1YnGg==
+  dependencies:
+    argparse "^2.0.1"
+    entities "~2.1.0"
+    linkify-it "^3.0.1"
+    mdurl "^1.0.1"
+    uc.micro "^1.0.5"
+
+marked@^4.0.10:
+  version "4.2.12"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-4.2.12.tgz#d69a64e21d71b06250da995dcd065c11083bebb5"
+  integrity sha512-yr8hSKa3Fv4D3jdZmtMMPghgVt6TWbk86WQaWhDloQjRSQhMMYCAro7jP7VDJrjjdV8pxVxMssXS8B8Y5DZ5aw==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 md5.js@^1.3.4:
   version "1.3.5"
@@ -19120,6 +19869,11 @@ mdn-data@2.0.4:
   version "2.0.4"
   resolved "https://registry.npmjs.org/mdn-data/-/mdn-data-2.0.4.tgz"
   integrity sha512-iV3XNKw06j5Q7mi6h+9vbx23Tv7JkjEVgKHW4pimwyDGWm0OIQntJJ+u1C6mg6mK1EaTv42XQ7w76yuzH7M2cA==
+
+mdurl@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
+  integrity sha512-/sKlQJCBYVY9Ers9hqzKou4H6V5UWc/M59TH2dvkt+84itfnq7uFOMLpOiOS4ujvHP4etln18fmIxA5R5fll0g==
 
 media-typer@0.3.0:
   version "0.3.0"
@@ -19191,6 +19945,7 @@ merge-descriptors@1.0.1:
   resolved "https://registry.npmjs.org/merge-descriptors/-/merge-descriptors-1.0.1.tgz"
   integrity sha512-cCi6g3/Zr1iqQi6ySbseM1Xvooa98N0w31jzUYrXPX2xqObmFGHJ0tQ5u74H3mVh7wLouTseZyYIq39g8cNp1w==
 
+<<<<<<< HEAD
 merge-options@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npmjs.org/merge-options/-/merge-options-3.0.4.tgz"
@@ -19198,6 +19953,8 @@ merge-options@^3.0.4:
   dependencies:
     is-plain-obj "^2.1.0"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 merge-stream@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/merge-stream/-/merge-stream-2.0.0.tgz"
@@ -19895,7 +20652,7 @@ mkdirp@^0.5.1, mkdirp@^0.5.5, mkdirp@^0.5.6, mkdirp@~0.5.0, mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.6"
 
-mkdirp@^1.0.3:
+mkdirp@^1.0.3, mkdirp@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
@@ -19937,7 +20694,7 @@ mock-fs@^4.1.0:
   resolved "https://registry.npmjs.org/mock-fs/-/mock-fs-4.14.0.tgz"
   integrity sha512-qYvlv/exQ4+svI3UOvPUpLDF0OMX5euvUH0Ny4N5QyRyhNdgAgUrVH3iUINSzEPLvx0kbo/Bp28GJKIqvE7URw==
 
-moment@^2.17.1, moment@^2.29.1:
+moment@^2.29.1:
   version "2.29.4"
   resolved "https://registry.npmjs.org/moment/-/moment-2.29.4.tgz"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
@@ -20000,6 +20757,7 @@ msrcrypto@^1.5.6:
   resolved "https://registry.npmjs.org/msrcrypto/-/msrcrypto-1.5.8.tgz"
   integrity sha512-ujZ0TRuozHKKm6eGbKHfXef7f+esIhEckmThVnz7RNyiOJd7a6MXj2JGBoL9cnPDW+JMG16MoTUh5X+XXjI66Q==
 
+<<<<<<< HEAD
 multiaddr-to-uri@^8.0.0:
   version "8.0.0"
   resolved "https://registry.npmjs.org/multiaddr-to-uri/-/multiaddr-to-uri-8.0.0.tgz"
@@ -20019,6 +20777,8 @@ multiaddr@^10.0.0:
     uint8arrays "^3.0.0"
     varint "^6.0.0"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 multibase@^0.7.0:
   version "0.7.0"
   resolved "https://registry.npmjs.org/multibase/-/multibase-0.7.0.tgz"
@@ -20071,7 +20831,7 @@ multicodec@^1.0.0:
     buffer "^5.6.0"
     varint "^5.0.0"
 
-multiformats@^9.0.2, multiformats@^9.4.2, multiformats@^9.4.5, multiformats@^9.5.1, multiformats@^9.5.4:
+multiformats@^9.4.2:
   version "9.9.0"
   resolved "https://registry.npmjs.org/multiformats/-/multiformats-9.9.0.tgz"
   integrity sha512-HoMUjhH9T8DDBNT+6xzkrd9ga/XiBI4xLr58LJACwK6G3HTOPeMz4nB4KJs33L2BelrIJa7P0VuNaVF3hMYfjg==
@@ -20141,7 +20901,16 @@ nanoassert@^1.0.0:
   resolved "https://registry.npmjs.org/nanoassert/-/nanoassert-1.1.0.tgz"
   integrity sha512-C40jQ3NzfkP53NsO8kEOFd79p4b9kDXQMwgiY1z8ZwrDZgUyom0AHwGegF4Dm99L+YoYhuaB0ceerUcXmqr1rQ==
 
+<<<<<<< HEAD
 nanoid@^3.0.2, nanoid@^3.1.20, nanoid@^3.1.23, nanoid@^3.1.30, nanoid@^3.3.4:
+=======
+nanoid@3.3.3:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.3.tgz#fd8e8b7aa761fe807dba2d1b98fb7241bb724a25"
+  integrity sha512-p1sjXuopFs0xg+fPASzQ28agW1oHD7xDsd9Xkf3T15H3c/cifrFHVwrh74PdoklAPi+i7MdRsE47vm2r6JoB+w==
+
+nanoid@^3.1.30, nanoid@^3.3.4:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "3.3.4"
   resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.4.tgz"
   integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
@@ -20173,11 +20942,14 @@ napi-build-utils@^1.0.1:
   resolved "https://registry.npmjs.org/napi-build-utils/-/napi-build-utils-1.0.2.tgz"
   integrity sha512-ONmRUqK7zj7DWX0D9ADe03wbwOBZxNAfF20PlGfCWQcD3+/MakShIHrMqx9YwPTfxDdF1zLeL+RGZiR9kGMLdg==
 
+<<<<<<< HEAD
 native-fetch@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/native-fetch/-/native-fetch-3.0.0.tgz"
   integrity sha512-G3Z7vx0IFb/FQ4JxvtqGABsOTIqRWvgQz6e+erkB+JJD6LrszQtMozEHI4EkmgZQvnGHrpLVzUWk7t4sJCIkVw==
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 natural-compare-lite@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/natural-compare-lite/-/natural-compare-lite-1.4.0.tgz"
@@ -20268,7 +21040,11 @@ next-tick@^1.1.0:
 
 "nft-parser@git+https://github.com/xp-network/nft-parser#bleeding-edge":
   version "0.2.0"
+<<<<<<< HEAD
   resolved "git+ssh://git@github.com/xp-network/nft-parser.git#8a6273584615ec009d7a1f435456822ea4b3ea62"
+=======
+  resolved "git+https://github.com/xp-network/nft-parser#8a6273584615ec009d7a1f435456822ea4b3ea62"
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@ethersproject/providers" "^5.7.2"
     "@moralisweb3/evm-utils" "^2.7.0"
@@ -20347,6 +21123,7 @@ node-addon-api@^4.2.0:
   resolved "https://registry.npmjs.org/node-addon-api/-/node-addon-api-4.3.0.tgz"
   integrity sha512-73sE9+3UaLYYFmDsFZnqCInzPyh3MqIwZO9cw58yIqAZhONrrabrYyYe3TuIqtIiOuTXVhsGau8hcrhhwSsDIQ==
 
+<<<<<<< HEAD
 node-addon-api@^4.3.0:
   version "4.3.0"
   resolved "https://registry.npmjs.org/node-addon-api/-/node-addon-api-4.3.0.tgz"
@@ -20360,6 +21137,9 @@ node-dir@^0.1.17:
     minimatch "^3.0.2"
 
 node-fetch@*, node-fetch@^2.2.0, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.7, node-fetch@^2.6.8, node-fetch@2:
+=======
+node-fetch@2, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.7:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "2.6.9"
   resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.9.tgz"
   integrity sha512-DJm/CJkZkRjKKj4Zi4BsKVZh3ValV5IR5s7LVZnW+6YMh0W1BfNA8XSs6DLMGYlId5F3KnA70uu2qepcR08Qqg==
@@ -20937,6 +21717,7 @@ p-cancelable@^3.0.0:
   resolved "https://registry.npmjs.org/p-cancelable/-/p-cancelable-3.0.0.tgz"
   integrity sha512-mlVgR3PGuzlo0MmTdk4cXqXWlwQDLnONTAg6sm62XkMJEiRxN3GL3SffkYvqwonbkJBcrI7Uvv5Zh9yjvn2iUw==
 
+<<<<<<< HEAD
 p-defer@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/p-defer/-/p-defer-3.0.0.tgz"
@@ -20962,6 +21743,8 @@ p-limit@^1.1.0:
   dependencies:
     p-try "^1.0.0"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 p-limit@^2.0.0, p-limit@^2.2.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/p-limit/-/p-limit-2.3.0.tgz"
@@ -21112,6 +21895,7 @@ parse-asn1@^5.0.0, parse-asn1@^5.1.5:
     pbkdf2 "^3.0.3"
     safe-buffer "^5.1.1"
 
+<<<<<<< HEAD
 parse-duration@^1.0.0:
   version "1.0.2"
   resolved "https://registry.npmjs.org/parse-duration/-/parse-duration-1.0.2.tgz"
@@ -21127,6 +21911,8 @@ parse-glob@^3.0.4:
     is-extglob "^1.0.0"
     is-glob "^2.0.0"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 parse-headers@^2.0.0:
   version "2.0.5"
   resolved "https://registry.npmjs.org/parse-headers/-/parse-headers-2.0.5.tgz"
@@ -21571,6 +22357,7 @@ postcss-color-rebeccapurple@^7.1.1:
   dependencies:
     postcss-value-parser "^4.2.0"
 
+<<<<<<< HEAD
 postcss-colormin@^2.1.8:
   version "2.2.2"
   resolved "https://registry.npmjs.org/postcss-colormin/-/postcss-colormin-2.2.2.tgz"
@@ -21584,8 +22371,14 @@ postcss-colormin@^5.3.0:
   version "5.3.0"
   resolved "https://registry.npmjs.org/postcss-colormin/-/postcss-colormin-5.3.0.tgz"
   integrity sha512-WdDO4gOFG2Z8n4P8TWBpshnL3JpmNmJwdnfP2gbk2qBA8PWwOYcmjmI/t3CmMeL72a7Hkd+x/Mg9O2/0rD54Pg==
+=======
+postcss-colormin@^5.3.1:
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/postcss-colormin/-/postcss-colormin-5.3.1.tgz#86c27c26ed6ba00d96c79e08f3ffb418d1d1988f"
+  integrity sha512-UsWQG0AqTFQmpBegeLLc1+c3jIqBNB0zlDGRWR+dQ3pRKJL1oeMzyqmH3o2PIfn9MBdNrVPWhDbT769LxCTLJQ==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    browserslist "^4.16.6"
+    browserslist "^4.21.4"
     caniuse-api "^3.0.0"
     colord "^2.9.1"
     postcss-value-parser "^4.2.0"
@@ -21871,6 +22664,7 @@ postcss-merge-longhand@^5.1.7:
     postcss-value-parser "^4.2.0"
     stylehacks "^5.1.1"
 
+<<<<<<< HEAD
 postcss-merge-rules@^2.0.3:
   version "2.1.2"
   resolved "https://registry.npmjs.org/postcss-merge-rules/-/postcss-merge-rules-2.1.2.tgz"
@@ -21886,6 +22680,12 @@ postcss-merge-rules@^5.1.3:
   version "5.1.3"
   resolved "https://registry.npmjs.org/postcss-merge-rules/-/postcss-merge-rules-5.1.3.tgz"
   integrity sha512-LbLd7uFC00vpOuMvyZop8+vvhnfRGpp2S+IMQKeuOZZapPRY4SMq5ErjQeHbHsjCUgJkRNrlU+LmxsKIqPKQlA==
+=======
+postcss-merge-rules@^5.1.4:
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/postcss-merge-rules/-/postcss-merge-rules-5.1.4.tgz#2f26fa5cacb75b1402e213789f6766ae5e40313c"
+  integrity sha512-0R2IuYpgU93y9lhVbO/OylTtKMVcHb67zjWIfCiKR9rWL3GUk1677LAqD/BcHizukdZEjT8Ru3oHRoAYoJy44g==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     browserslist "^4.21.4"
     caniuse-api "^3.0.0"
@@ -22231,6 +23031,7 @@ postcss-pseudo-class-any-link@^7.1.6:
   dependencies:
     postcss-selector-parser "^6.0.10"
 
+<<<<<<< HEAD
 postcss-reduce-idents@^2.2.2:
   version "2.4.0"
   resolved "https://registry.npmjs.org/postcss-reduce-idents/-/postcss-reduce-idents-2.4.0.tgz"
@@ -22250,6 +23051,12 @@ postcss-reduce-initial@^5.1.1:
   version "5.1.1"
   resolved "https://registry.npmjs.org/postcss-reduce-initial/-/postcss-reduce-initial-5.1.1.tgz"
   integrity sha512-//jeDqWcHPuXGZLoolFrUXBDyuEGbr9S2rMo19bkTIjBQ4PqkaO+oI8wua5BOUxpfi97i3PCoInsiFIEBfkm9w==
+=======
+postcss-reduce-initial@^5.1.2:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/postcss-reduce-initial/-/postcss-reduce-initial-5.1.2.tgz#798cd77b3e033eae7105c18c9d371d989e1382d6"
+  integrity sha512-dE/y2XRaqAi6OvjzD22pjTUQ8eOfc6m/natGHgKFBK9DxFmIm69YmaRVQrGgFlEfc1HePIurY0TmDeROK05rIg==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     browserslist "^4.21.4"
     caniuse-api "^3.0.0"
@@ -22654,12 +23461,19 @@ pretty-format@^28.1.3:
     ansi-styles "^5.0.0"
     react-is "^18.0.0"
 
+<<<<<<< HEAD
 pretty-format@^29.0.0, pretty-format@^29.4.2:
   version "29.4.2"
   resolved "https://registry.npmjs.org/pretty-format/-/pretty-format-29.4.2.tgz"
   integrity sha512-qKlHR8yFVCbcEWba0H0TOC8dnLlO4vPlyEjRPw31FZ2Rupy9nLa8ZLbYny8gWEl8CkEhJqAE6IzdNELTBVcBEg==
+=======
+pretty-format@^29.0.0, pretty-format@^29.4.3:
+  version "29.4.3"
+  resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-29.4.3.tgz#25500ada21a53c9e8423205cf0337056b201244c"
+  integrity sha512-cvpcHTc42lcsvOOAzd3XuNWTcvk1Jmnzqeu+WsOuiPmxUJTnkbAcFNsRKvEpBEUFVUgy/GTZLulZDcDEi+CIlA==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
-    "@jest/schemas" "^29.4.2"
+    "@jest/schemas" "^29.4.3"
     ansi-styles "^5.0.0"
     react-is "^18.0.0"
 
@@ -22747,7 +23561,46 @@ prop-types@*, prop-types@^15.5.10, prop-types@^15.6.2, prop-types@^15.7.2, prop-
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
+<<<<<<< HEAD
 protobufjs@^6.10.2, protobufjs@^6.11.2, protobufjs@^6.11.3, protobufjs@6.11.3:
+=======
+protobufjs-cli@^1.0.2:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/protobufjs-cli/-/protobufjs-cli-1.1.1.tgz#f531201b1c8c7772066aa822bf9a08318b24a704"
+  integrity sha512-VPWMgIcRNyQwWUv8OLPyGQ/0lQY/QTQAVN5fh+XzfDwsVw1FZ2L3DM/bcBf8WPiRz2tNpaov9lPZfNcmNo6LXA==
+  dependencies:
+    chalk "^4.0.0"
+    escodegen "^1.13.0"
+    espree "^9.0.0"
+    estraverse "^5.1.0"
+    glob "^8.0.0"
+    jsdoc "^4.0.0"
+    minimist "^1.2.0"
+    semver "^7.1.2"
+    tmp "^0.2.1"
+    uglify-js "^3.7.7"
+
+protobufjs@6.10.2:
+  version "6.10.2"
+  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-6.10.2.tgz#b9cb6bd8ec8f87514592ba3fdfd28e93f33a469b"
+  integrity sha512-27yj+04uF6ya9l+qfpH187aqEzfCF4+Uit0I9ZBQVqK09hk/SQzKa2MUqUpXaVa7LOFRg1TSSr3lVxGOk6c0SQ==
+  dependencies:
+    "@protobufjs/aspromise" "^1.1.2"
+    "@protobufjs/base64" "^1.1.2"
+    "@protobufjs/codegen" "^2.0.4"
+    "@protobufjs/eventemitter" "^1.1.0"
+    "@protobufjs/fetch" "^1.1.0"
+    "@protobufjs/float" "^1.0.2"
+    "@protobufjs/inquire" "^1.1.0"
+    "@protobufjs/path" "^1.1.2"
+    "@protobufjs/pool" "^1.1.0"
+    "@protobufjs/utf8" "^1.1.0"
+    "@types/long" "^4.0.1"
+    "@types/node" "^13.7.0"
+    long "^4.0.0"
+
+protobufjs@6.11.3, protobufjs@^6.11.2, protobufjs@^6.11.3:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "6.11.3"
   resolved "https://registry.npmjs.org/protobufjs/-/protobufjs-6.11.3.tgz"
   integrity sha512-xL96WDdCZYdU7Slin569tFX712BxsxslWwAfAhCYjQKGTq7dAU91Lomy6nLLhh/dyGhk/YH4TwTSRxTzhuHyZg==
@@ -22766,7 +23619,7 @@ protobufjs@^6.10.2, protobufjs@^6.11.2, protobufjs@^6.11.3, protobufjs@6.11.3:
     "@types/node" ">=13.7.0"
     long "^4.0.0"
 
-protobufjs@^7.0.0:
+protobufjs@^7.0.0, protobufjs@^7.1.2:
   version "7.2.2"
   resolved "https://registry.npmjs.org/protobufjs/-/protobufjs-7.2.2.tgz"
   integrity sha512-++PrQIjrom+bFDPpfmqXfAGSQs40116JRrqqyf53dymUMvvb5d/LMRyicRoF1AUKoXVS1/IgJXlEgcpr4gTF3Q==
@@ -23138,9 +23991,15 @@ react-blockies@^1.4.1:
     prop-types "^15.5.10"
 
 react-bootstrap@^2.0.0:
+<<<<<<< HEAD
   version "2.7.0"
   resolved "https://registry.npmjs.org/react-bootstrap/-/react-bootstrap-2.7.0.tgz"
   integrity sha512-Jcrn6aUuRVBeSB6dzKODKZU1TONOdhAxu0IDm4Sv74SJUm98dMdhSotF2SNvFEADANoR+stV+7TK6SNX1wWu5w==
+=======
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-2.7.2.tgz#100069ea7b4807cccbc5fef1e33bc90283262602"
+  integrity sha512-WDSln+mG4RLLFO01stkj2bEx/3MF4YihK9D/dWnHaSxOiQZLbhhlf95D2Jb20X3t2m7vMxRe888FVrfLJoGmmA==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@babel/runtime" "^7.17.2"
     "@restart/hooks" "^0.4.6"
@@ -23193,6 +24052,7 @@ react-dev-utils@^12.0.1:
     strip-ansi "^6.0.1"
     text-table "^0.2.0"
 
+<<<<<<< HEAD
 react-dev-utils@^5.0.2:
   version "5.0.3"
   resolved "https://registry.npmjs.org/react-dev-utils/-/react-dev-utils-5.0.3.tgz"
@@ -23242,6 +24102,9 @@ react-dom@*, react-dom@^17.0.2, "react-dom@>= 0.14.0", react-dom@>=16.14.0, reac
     scheduler "^0.20.2"
 
 react-dom@^16.8.6, "react-dom@>= 16.8.0":
+=======
+react-dom@^16.8.6:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "16.14.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-16.14.0.tgz"
   integrity sha512-1gCeQXDLoIqMgqD3IO2Ah9bnf0w9kzhwN5q4FGnHZ67hBm9yePzB5JJAIQCc8x3pFnNlwFq4RidZggNAAkzWWw==
@@ -23303,6 +24166,7 @@ react-modal-image@^2.5.0:
   resolved "https://registry.npmjs.org/react-modal-image/-/react-modal-image-2.6.0.tgz"
   integrity sha512-NNc1xPKzFAn0VsNMdJ8NXt6c54aL/z0fcoYmw9qn4SBUONdGl+8LOQ0sTfo0wtdzcjLiby/ncloHcAL+UI+wIA==
 
+<<<<<<< HEAD
 react-native-codegen@^0.71.5:
   version "0.71.5"
   resolved "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.71.5.tgz"
@@ -23325,6 +24189,8 @@ react-native-gradle-plugin@^0.71.15:
   resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.15.tgz"
   integrity sha512-7S3pAuPaQJlhax6EZ4JMsDNpj05TfuzX9gPgWLrFfAIWIFLuJ6aDQYAZy2TEI9QJALPoWrj8LWaqP/DGYh14pw==
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 react-native-securerandom@^0.1.1:
   version "0.1.1"
   resolved "https://registry.npmjs.org/react-native-securerandom/-/react-native-securerandom-0.1.1.tgz"
@@ -23769,6 +24635,7 @@ real-require@^0.1.0:
   resolved "https://registry.npmjs.org/real-require/-/real-require-0.1.0.tgz"
   integrity sha512-r/H9MzAWtrv8aSVjPCMFpDMl5q66GqtmmRkRjpHTsp4zBAa+snZyiQNlMONiUmEJcsnaw0wCauJ2GWODr/aFkg==
 
+<<<<<<< HEAD
 recast@^0.20.4:
   version "0.20.5"
   resolved "https://registry.npmjs.org/recast/-/recast-0.20.5.tgz"
@@ -23786,6 +24653,8 @@ receptacle@^1.3.2:
   dependencies:
     ms "^2.1.1"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 rechoir@^0.6.2:
   version "0.6.2"
   resolved "https://registry.npmjs.org/rechoir/-/rechoir-0.6.2.tgz"
@@ -24105,7 +24974,18 @@ requires-port@^1.0.0:
   resolved "https://registry.npmjs.org/requires-port/-/requires-port-1.0.0.tgz"
   integrity sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==
 
+<<<<<<< HEAD
 reselect@^4.0.0, reselect@^4.1.7:
+=======
+requizzle@^0.2.3:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/requizzle/-/requizzle-0.2.4.tgz#319eb658b28c370f0c20f968fa8ceab98c13d27c"
+  integrity sha512-JRrFk1D4OQ4SqovXOgdav+K8EAhSB/LJZqCz8tbX0KObcdeM15Ss59ozWMBWmmINMagCwmqn4ZNryUGpBsl6Jw==
+  dependencies:
+    lodash "^4.17.21"
+
+reselect@^4.1.7:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "4.1.7"
   resolved "https://registry.npmjs.org/reselect/-/reselect-4.1.7.tgz"
   integrity sha512-Zu1xbUt3/OPwsXL46hvOOoQrap2azE7ZQbokq61BQfiXvhewsKDwhMeZjTX9sX0nvw1t/U5Audyn1I9P/m9z0A==
@@ -24238,6 +25118,7 @@ restore-cursor@^3.1.0:
     onetime "^5.1.0"
     signal-exit "^3.0.2"
 
+<<<<<<< HEAD
 ret@~0.1.10:
   version "0.1.15"
   resolved "https://registry.npmjs.org/ret/-/ret-0.1.15.tgz"
@@ -24249,6 +25130,9 @@ retimer@^3.0.0:
   integrity sha512-WKE0j11Pa0ZJI5YIk0nflGI7SQsfl2ljihVy7ogh7DeQSeYAUi0ubZ/yEueGtDfUPk6GH5LRw1hBdLq4IwUBWA==
 
 retry@^0.13.1, retry@0.13.1:
+=======
+retry@0.13.1, retry@^0.13.1:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "0.13.1"
   resolved "https://registry.npmjs.org/retry/-/retry-0.13.1.tgz"
   integrity sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg==
@@ -24726,7 +25610,11 @@ semver@^6.0.0, semver@^6.1.1, semver@^6.1.2, semver@^6.3.0:
   resolved "https://registry.npmjs.org/semver/-/semver-6.3.0.tgz"
   integrity sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==
 
+<<<<<<< HEAD
 semver@^7.3.2:
+=======
+semver@^7.1.2, semver@^7.3.2, semver@^7.3.5, semver@^7.3.7, semver@^7.3.8:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "7.3.8"
   resolved "https://registry.npmjs.org/semver/-/semver-7.3.8.tgz"
   integrity sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==
@@ -25569,6 +26457,7 @@ stream-shift@^1.0.0:
   resolved "https://registry.npmjs.org/stream-shift/-/stream-shift-1.0.1.tgz"
   integrity sha512-AiisoFqQ0vbGcZgQPY1cdP2I76glaVA/RauYR4G4thNFgkTqr90yXTo4LYX60Jl+sIlPNHHdGSwo01AvbKUSVQ==
 
+<<<<<<< HEAD
 stream-to-it@^0.2.2:
   version "0.2.4"
   resolved "https://registry.npmjs.org/stream-to-it/-/stream-to-it-0.2.4.tgz"
@@ -25576,6 +26465,8 @@ stream-to-it@^0.2.2:
   dependencies:
     get-iterator "^1.0.2"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 stream-transform@^3.2.2:
   version "3.2.2"
   resolved "https://registry.npmjs.org/stream-transform/-/stream-transform-3.2.2.tgz"
@@ -26397,9 +27288,15 @@ thenify-all@^1.0.0:
     any-promise "^1.0.0"
 
 thor-devkit@^2.0.4, thor-devkit@^2.0.5:
+<<<<<<< HEAD
   version "2.0.6"
   resolved "https://registry.npmjs.org/thor-devkit/-/thor-devkit-2.0.6.tgz"
   integrity sha512-kvg4cJuTOmW4kcXR+RwYsatAK47pL+88c7WE66j5HWYc+4kbVYGrzplrLHITo38iziFMqvbhBLf5gteyfNwwfg==
+=======
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/thor-devkit/-/thor-devkit-2.0.7.tgz#0454053eda03abe1b785dc4f534f7aa1321dd89c"
+  integrity sha512-km+r+4fD9KP9Ea8bCfobVg6dsRgiTfi2GK9vVGHmnFHP7WJc98C+7B/VmfunEigsavkwcHcASLX50CwzZfgU+g==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@vechain/ethers" "^4.0.27-5"
     bignumber.js "^7.2.1"
@@ -26459,6 +27356,7 @@ timed-out@^4.0.0, timed-out@^4.0.1:
   resolved "https://registry.npmjs.org/timed-out/-/timed-out-4.0.1.tgz"
   integrity sha512-G7r3AhovYtr5YKOWQkta8RKAPb+J9IsO4uVmzjl8AZwfhs8UcUwTiD6gcJYSgOtzyjvQKrKYn41syHbUWMkafA==
 
+<<<<<<< HEAD
 timeout-abort-controller@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/timeout-abort-controller/-/timeout-abort-controller-3.0.0.tgz"
@@ -26473,6 +27371,8 @@ timers-browserify@^2.0.4:
   dependencies:
     setimmediate "^1.0.4"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 timsort@^0.3.0:
   version "0.3.0"
   resolved "https://registry.npmjs.org/timsort/-/timsort-0.3.0.tgz"
@@ -26523,7 +27423,7 @@ tmp@^0.0.33:
   dependencies:
     os-tmpdir "~1.0.2"
 
-tmp@^0.2.0:
+tmp@^0.2.0, tmp@^0.2.1:
   version "0.2.1"
   resolved "https://registry.npmjs.org/tmp/-/tmp-0.2.1.tgz"
   integrity sha512-76SUhtfqR2Ijn+xllcI5P1oyannHNHByD80W1q447gU3mp9G9PSpGdWmjUOHRDPiHYacIk66W7ubDTuPF3BEtQ==
@@ -26673,6 +27573,7 @@ tonweb-mnemonic@^1.0.1:
   dependencies:
     tweetnacl "^1.0.3"
 
+<<<<<<< HEAD
 tonweb@^0.0.38:
   version "0.0.38"
   resolved "https://registry.npmjs.org/tonweb/-/tonweb-0.0.38.tgz"
@@ -26687,6 +27588,8 @@ tonweb@^0.0.38:
     node-fetch "2.6.7"
     tweetnacl "1.0.3"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 tonweb@^0.0.57:
   version "0.0.57"
   resolved "https://registry.npmjs.org/tonweb/-/tonweb-0.0.57.tgz"
@@ -26701,6 +27604,7 @@ tonweb@^0.0.57:
     node-fetch "2.6.7"
     tweetnacl "1.0.3"
 
+<<<<<<< HEAD
 tonweb@^0.0.58:
   version "0.0.58"
   resolved "https://registry.npmjs.org/tonweb/-/tonweb-0.0.58.tgz"
@@ -26728,6 +27632,8 @@ tough-cookie@^2.3.2, tough-cookie@~2.5.0:
     psl "^1.1.28"
     punycode "^2.1.1"
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 tough-cookie@^4.0.0:
   version "4.1.2"
   resolved "https://registry.npmjs.org/tough-cookie/-/tough-cookie-4.1.2.tgz"
@@ -26906,12 +27812,21 @@ tunnel-agent@^0.6.0:
   dependencies:
     safe-buffer "^5.0.1"
 
+<<<<<<< HEAD
 tweetnacl-util@^0.15.1:
   version "0.15.1"
   resolved "https://registry.npmjs.org/tweetnacl-util/-/tweetnacl-util-0.15.1.tgz"
   integrity sha512-RKJBIj8lySrShN4w6i/BonWp2Z/uxwC3h4y7xsRrpP59ZboCd0GpEVsOnMDYLMmKBpYhb5TgHzZXy7wTfYFBRw==
 
 tweetnacl@^0.14.3:
+=======
+tweetnacl@1.0.3, tweetnacl@^1.0.1, tweetnacl@^1.0.2, tweetnacl@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-1.0.3.tgz#ac0af71680458d8a6378d0d0d050ab1407d35596"
+  integrity sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==
+
+tweetnacl@^0.14.3, tweetnacl@~0.14.0:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "0.14.5"
   resolved "https://registry.npmjs.org/tweetnacl/-/tweetnacl-0.14.5.tgz"
   integrity sha512-KXXFFdAbFXY4geFIwoyNK+f5Z1b7swfXABfL7HXCmoIWMKU3dmS26672A4EeQtDzLKy7SXmfBu51JolvEKwtGA==
@@ -27056,6 +27971,7 @@ u3@^0.1.1:
   resolved "https://registry.npmjs.org/u3/-/u3-0.1.1.tgz"
   integrity sha512-+J5D5ir763y+Am/QY6hXNRlwljIeRMZMGs0cT6qqZVVzzT3X3nFPXVyPOFRMOR4kupB0T8JnCdpWdp6Q/iXn3w==
 
+<<<<<<< HEAD
 ua-parser-js@^0.7.30:
   version "0.7.33"
   resolved "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.33.tgz"
@@ -27065,6 +27981,17 @@ ua-parser-js@^1.0.33:
   version "1.0.33"
   resolved "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-1.0.33.tgz"
   integrity sha512-RqshF7TPTE0XLYAqmjlu5cLLuGdKrNu9O1KLA/qp39QtbZwuzwv1dT46DZSopoUMsYgXpB3Cv8a03FI8b74oFQ==
+=======
+uc.micro@^1.0.1, uc.micro@^1.0.5:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/uc.micro/-/uc.micro-1.0.6.tgz#9c411a802a409a91fc6cf74081baba34b24499ac"
+  integrity sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==
+
+uglify-js@^3.7.7:
+  version "3.17.4"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.17.4.tgz#61678cf5fa3f5b7eb789bb345df29afb8257c22c"
+  integrity sha512-T9q82TJI9e/C1TAxYvfb16xO120tMVFZrGA3f9/P4424DNu6ypK103y0GPFVa17yotwSyZW5iYXgjYHkGrJW/g==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 uglify-es@^3.1.9:
   version "3.3.9"
@@ -27144,6 +28071,11 @@ uncontrollable@^7.2.1:
     "@types/react" ">=16.9.11"
     invariant "^2.2.4"
     react-lifecycles-compat "^3.0.4"
+
+underscore@~1.13.2:
+  version "1.13.6"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.6.tgz#04786a1f589dc6c09f761fc5f45b89e935136441"
+  integrity sha512-+A5Sja4HP1M08MaXya7p5LvjuM7K6q/2EaC0+iovj/wOcMsTzMvDFbasi/oSapiwOlt252IqsKqPjCl7huKS0A==
 
 unicode-canonical-property-names-ecmascript@^2.0.0:
   version "2.0.0"
@@ -27543,11 +28475,14 @@ varint@^5.0.0, varint@~5.0.0:
   resolved "https://registry.npmjs.org/varint/-/varint-5.0.2.tgz"
   integrity sha512-lKxKYG6H03yCZUpAGOPOsMcGxd1RHCu1iKvEHYDPmTyq2HueGhD73ssNBqqQWfvYs04G9iUFRvmAVLW20Jw6ow==
 
+<<<<<<< HEAD
 varint@^6.0.0:
   version "6.0.0"
   resolved "https://registry.npmjs.org/varint/-/varint-6.0.0.tgz"
   integrity sha512-cXEIW6cfr15lFv563k4GuVuW/fiwjknytD37jIOLSdSWuOI6WnO/oKwmP2FQTU2l01LP8/M5TSAJpzUaGe3uWg==
 
+=======
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 vary@^1, vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz"
@@ -27951,7 +28886,11 @@ web3-shh@1.8.2:
     web3-core-subscriptions "1.8.2"
     web3-net "1.8.2"
 
+<<<<<<< HEAD
 web3-utils@^1.3.4, web3-utils@^1.6.0, web3-utils@^1.7.3, web3-utils@1.8.2:
+=======
+web3-utils@1.8.2, web3-utils@^1.3.4, web3-utils@^1.7.3:
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   version "1.8.2"
   resolved "https://registry.npmjs.org/web3-utils/-/web3-utils-1.8.2.tgz"
   integrity sha512-v7j6xhfLQfY7xQDrUP0BKbaNrmZ2/+egbqP9q3KYmOiPpnvAfol+32slgL0WX/5n8VPvKCK5EZ1HGrAVICSToA==
@@ -28708,6 +29647,7 @@ ws@^6.2.2:
   dependencies:
     async-limiter "~1.0.0"
 
+<<<<<<< HEAD
 ws@^8.4.2:
   version "8.12.0"
   resolved "https://registry.npmjs.org/ws/-/ws-8.12.0.tgz"
@@ -28720,6 +29660,12 @@ ws@^8.8.1:
   version "8.12.0"
   resolved "https://registry.npmjs.org/ws/-/ws-8.12.0.tgz"
   integrity sha512-kU62emKIdKVeEIOIKVegvqpXMSTAMLJozpHZaJNDYqBjzlSYXQGviYwN1osDLJ9av68qHd4a2oSjd7yD4pacig==
+=======
+ws@^8.4.2, ws@^8.5.0, ws@^8.8.1:
+  version "8.12.1"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.12.1.tgz#c51e583d79140b5e42e39be48c934131942d4a8f"
+  integrity sha512-1qo+M9Ba+xNhPB+YTWUlK6M17brTut5EXbcBaMRN5pH5dFrXz7lzz1ChFSUq3bOUl8yEvSenhHmYUNJxFzdJew==
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
 
 ws@~8.11.0:
   version "8.11.0"
@@ -28824,6 +29770,11 @@ xmlchars@^2.2.0:
   resolved "https://registry.npmjs.org/xmlchars/-/xmlchars-2.2.0.tgz"
   integrity sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==
 
+xmlcreate@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/xmlcreate/-/xmlcreate-2.0.4.tgz#0c5ab0f99cdd02a81065fa9cd8f8ae87624889be"
+  integrity sha512-nquOebG4sngPmGPICTS5EnxqhKbCmz5Ox5hsszI2T6U5qdrJizBc+0ilYSEjTSzU0yZcmvppztXe/5Al5fUwdg==
+
 xmlhttprequest-ssl@~2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/xmlhttprequest-ssl/-/xmlhttprequest-ssl-2.0.0.tgz"
@@ -28834,9 +29785,13 @@ xmlhttprequest@1.8.0:
   resolved "https://registry.npmjs.org/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz"
   integrity sha512-58Im/U0mlVBLM38NdZjHyhuMtCqa61469k2YP/AaPbvCoV9aQGUpbJBj1QRm2ytRiVQBD/fsw7L2bJGDVQswBA==
 
-"xp.network@git+https://github.com/xp-network/xpjs#production":
+"xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "4.0.2"
+<<<<<<< HEAD
   resolved "git+ssh://git@github.com/xp-network/xpjs.git#df78926f839a67d7f17aba603d9a45e8b7034eeb"
+=======
+  resolved "git+https://github.com/xp-network/xpjs#73ffb1e83ac5d5e481b83e679d011853471b78ed"
+>>>>>>> d689cb1f (APTOS: fix signer, Vechain update connex, delete unused packages)
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"
@@ -28866,7 +29821,7 @@ xmlhttprequest@1.8.0:
     bignumber.js "=9.0.1"
     bn.js "^5.2.1"
     buffer "^6.0.3"
-    crypto-exchange-rate "git+https://github.com/xp-network/exchange-rate#bec675e143f6a54209b1a546279aa64e029903aa"
+    crypto-exchange-rate "git+https://github.com/xp-network/exchange-rate#aedf7b2c152d6d25e9e6cec5d222c63a3ade18ab"
     ethers "^5.5.4"
     google-protobuf "^3.20.1"
     js-base64 "^3.6.1"

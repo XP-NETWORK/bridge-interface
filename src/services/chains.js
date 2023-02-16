@@ -139,7 +139,9 @@ class AbstractChain {
   async balance(account) {
     try {
       const res = await this.chain.balance(account);
+
       const decimals = CHAIN_INFO.get(this.nonce)?.decimals;
+
       return res.dividedBy(decimals).toNumber();
     } catch (e) {
       console.log(e, "error in balance");
@@ -171,6 +173,8 @@ class AbstractChain {
       }
 
       const fees = res.multipliedBy(feeMultiplier).integerValue();
+
+      console.log(fees.toString());
 
       return {
         fees: fees.toString(10),

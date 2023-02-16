@@ -40,8 +40,6 @@ function SendFees(props) {
       account
     );
 
-    console.log(fees, formatedFees);
-
     dispatch(setBigNumFees(fees));
     setFees(formatedFees * selectedNFTList.length);
 
@@ -91,8 +89,6 @@ function SendFees(props) {
   }, [from]);
 
   useEffect(() => {
-    console.log(selectedNFTList);
-
     if (!selectedNFTList.length) {
       setFees("0");
       return clearInterval(interval.current);
@@ -123,17 +119,17 @@ function SendFees(props) {
         {balance ? (
           <span className="fees__balance">{`Balance: ${balance.toFixed(
             3
-          )} ${chainParams?.currency ||
+          )} ${chainParams?.currencySymbol ||
             (from?.text === "Gnosis" && "Gnosis")}`}</span>
         ) : (
-          `Balance: 0 ${chainParams?.currency || ""}`
+          `Balance: 0 ${chainParams?.currencySymbol || ""}`
         )}
         {loading ? (
           <LittleLoader />
         ) : (
           <span>
             {`${fees && fees > 0 ? fees?.toFixed(getNumToFix(fees)) : "0"}
-                        ${chainParams?.currency || ""} 
+                        ${chainParams?.currencySymbol || ""} 
                         `}
             {/* ${discountLeftUsd && showDiscount(fees).toFixed(2)} */}
           </span>
