@@ -19,7 +19,7 @@ const endings = [
 
 export const getFromDomain = async (domain, to) => {
   const { chainParams } = to;
-  const currency = chainParams.currency;
+  const currency = chainParams.currencySymbol;
   const dotExist = domain.lastIndexOf(".");
   if (dotExist === -1) return;
   const ending = domain.slice(domain.lastIndexOf("."), domain.length);
