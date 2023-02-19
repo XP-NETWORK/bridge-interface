@@ -29,7 +29,7 @@
     height: 204px;
     overflow: hidden;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     position: relative;
 }
 .sft__mark {

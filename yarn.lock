@@ -14081,7 +14081,7 @@ next-tick@^1.1.0:
 
 "nft-parser@git+https://github.com/xp-network/nft-parser#bleeding-edge":
   version "0.2.0"
-  resolved "git+https://github.com/xp-network/nft-parser#8a6273584615ec009d7a1f435456822ea4b3ea62"
+  resolved "git+https://github.com/xp-network/nft-parser#807e51df7fb68afb1db555b53ecf830479fd79c6"
   dependencies:
     "@ethersproject/providers" "^5.7.2"
     "@moralisweb3/evm-utils" "^2.7.0"
