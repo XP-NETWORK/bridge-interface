@@ -12,7 +12,7 @@ export default function Slider() {
         setStyle({
             backgroundImage: `url(${nfts[step].image})`,
             backgroundPosition: "top",
-            backgroundSize: "cover",
+            backgroundSize: "100% 100%",
             backgroundRepeat: "no-repeat",
             // transition: "2s",
             // transitionTimingFunction: "ease-in-out",

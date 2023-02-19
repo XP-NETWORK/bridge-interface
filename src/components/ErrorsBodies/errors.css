@@ -1,13 +1,10 @@
 .whitelist-error-body {
     display: flex;
     flex-direction: column;
-    width: 360px;
+    max-width: 360px;
+    min-width: min-content;
     margin: 0 auto;
-    word-break: normal;
-}
-
-.whitelist-error-body .title {
-    margin-bottom: 10px;
+    word-break: keep-all;
 }
 
 .whitelist-error-body .actions {
