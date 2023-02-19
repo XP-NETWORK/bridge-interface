@@ -17,6 +17,7 @@ import {
 import { getFromDomain } from "../../services/resolution";
 
 import { withServices } from "../App/hocs/withServices";
+import { notifyExplorer } from "../../services/explorer";
 
 export default withServices(function ButtonToTransfer({ serviceContainer }) {
     const { bridge } = serviceContainer;
@@ -103,9 +104,9 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
             if (txnHashArr[0] && !result) {
                 dispatch(setTxnHash({ txn: "failed", nft }));
             } else if (result) {
-                dispatch(
-                    setTxnHash({ txn: fromChain.handlerResult(result), nft })
-                );
+                const fromChainHash = fromChain.handlerResult(result);
+                notifyExplorer(_from.nonce, fromChainHash);
+                dispatch(setTxnHash({ txn: fromChainHash, nft }));
             }
         } catch (e) {
             console.log(e, "eee");
