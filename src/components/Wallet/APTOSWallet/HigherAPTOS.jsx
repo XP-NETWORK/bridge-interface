@@ -91,7 +91,11 @@ export default function HigherAPTOS(OriginalComponent) {
 
             // const acc = await Aptos.client.accounts.getAccount(address);
 
-            const signer = new AptosAccount(connected.address);
+            const signer = new AptosAccount();
+            console.log(
+                "🚀 ~ file: HigherAPTOS.jsx:95 ~ connectWal ~ signer",
+                signer
+            );
 
             // const sume = await Account.address();
             // console.log(
@@ -124,7 +128,7 @@ export default function HigherAPTOS(OriginalComponent) {
             //     return HexString.ensure(connected.address);
             // };
             // console.log({ acc });
-            chainWrapper.setSigner(signer);
+            chainWrapper.setSigner(connected);
             bridge.setCurrentType(chainWrapper);
             dispatch(setAccount(connected.address));
             dispatch(setWalletsModal(false));

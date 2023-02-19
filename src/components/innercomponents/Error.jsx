@@ -14,9 +14,10 @@ export default function Error() {
         dispatch(setError(false));
     };
     let error = useSelector((state) => state.general.error);
+    const whitelistErr = error?.includes("automatically whitelisted");
     console.log("🚀 ~ file: Error.jsx:16 ~ Error ~ error", error);
 
-    if (error && error?.includes("automatically whitelisted")) {
+    if (error && whitelistErr) {
         error = <WhiteListError />;
     }
 
@@ -24,8 +25,16 @@ export default function Error() {
         <>
             <Modal.Header animation={false} className="border-0">
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                    <img style={{ margin: "30px" }} alt="" src={ERR} />
-                    <Modal.Title>An error has occured</Modal.Title>
+                    <img
+                        style={{ margin: "30px auto", width: "120px" }}
+                        alt=""
+                        src={ERR}
+                    />
+                    <Modal.Title style={{ textAlign: "center" }}>
+                        {!whitelistErr
+                            ? "An error has occurred"
+                            : "Smart contract cannot be automatically whitelisted"}
+                    </Modal.Title>
                     <span className="CloseModal" onClick={handleClose}>
                         <Close className="svgWidget" />
                     </span>

@@ -15,7 +15,7 @@ export default function WhiteListError() {
             </div>
             <div className="message">
                 For more information regarding whitelisting limitations, visit
-                our documentation
+                our documentation{" "}
                 <a
                     target="_blank"
                     rel="noreferrer"
@@ -26,7 +26,7 @@ export default function WhiteListError() {
             </div>
             <div className="message">
                 If the smart contract meets the requirements, but the problem
-                persists, contact XP.NETWORK support team
+                persists, contact XP.NETWORK support team{" "}
                 <a
                     target="_blank"
                     rel="noreferrer"
