@@ -7,7 +7,6 @@ import {
     setConnectedWallet,
     setWalletsModal,
 } from "../../../store/reducers/generalSlice";
-
 import { getRightPath } from "../../../wallet/helpers";
 import { withServices } from "../../App/hocs/withServices";
 import { Chain } from "xp.network";
