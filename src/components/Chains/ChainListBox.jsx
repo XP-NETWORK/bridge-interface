@@ -49,7 +49,6 @@ function ChainListBox({ serviceContainer }) {
     );
     const evmAccount = useSelector((state) => state.general.account);
     const tronAccount = useSelector((state) => state.general.tronWallet);
-    //const Sync2 = useSelector((state) => state.general.Sync2);
     const { account } = useWeb3React();
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const nftChainListRef = useRef(null);
@@ -80,17 +79,20 @@ function ChainListBox({ serviceContainer }) {
     // ! ref
     const chainSelectHandler = async (chain) => {
         // eslint-disable-next-line no-debugger
-        // debugger;
+        debugger;
 
         const chainWrapper = await bridge.getChain(chain.nonce);
 
         if (departureOrDestination === "departure") {
             if (
-                chainWrapper.chainParams.name === "VeChain" &&
-                bridge.currentType === "EVM"
+                (chainWrapper.chainParams.name === "VeChain" &&
+                    bridge.currentType === "EVM") ||
+                (chainWrapper.chainParams.type === "EVM" &&
+                    bridge.currentType === "EVM")
             ) {
                 dispatch(setChangeWallet(true));
                 dispatch(setTemporaryFrom(chain));
+                dispatch(setTemporaryTo(to));
                 handleClose();
             } else if (
                 chainWrapper.chainParams.type === bridge.currentType ||
@@ -99,6 +101,7 @@ function ChainListBox({ serviceContainer }) {
                 if (from && from?.text !== chain.text) {
                     if (from?.text === "Harmony" && bitKeep) {
                         dispatch(setTemporaryFrom(chain));
+
                         dispatch(setChangeWallet(true));
                         handleClose();
                     } else if (
@@ -179,11 +182,7 @@ function ChainListBox({ serviceContainer }) {
             ...withMaintenance,
             ...withComing,
         ];
-        // if (chainSearch && departureOrDestination === "departure") {
-        //     sorted = chains.filter((chain) =>
-        //         chain.text.toLowerCase().includes(chainSearch.toLowerCase())
-        //     );
-        // }
+
         if (
             location.pathname === "/connect" ||
             location.pathname === "/testnet/connect" ||
@@ -204,13 +203,6 @@ function ChainListBox({ serviceContainer }) {
         departureOrDestination,
         location.pathname,
     ]);
-
-    // useEffect(() => {
-    //     const check = async () => {
-    //         if (!validatorsInfo) await checkValidators();
-    //     };
-    //     check();
-    // }, [validatorsInfo, checkValidators]);
 
     useEffect(() => {
         let filteredChains = chains;
