@@ -9,7 +9,7 @@ import { getRightPath } from "../../../wallet/helpers";
 export default function MaiarModal({ strQR, qrCodeString, close }) {
     const navigate = useNavigate();
 
-    const elrondAccount = useSelector((state) => state.general.elrondAccount);
+    const account = useSelector((state) => state.general.account);
 
     const navigateToAccountRoute = () => {
         navigate(getRightPath());
@@ -19,11 +19,11 @@ export default function MaiarModal({ strQR, qrCodeString, close }) {
         "https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet.dev&link=";
 
     useEffect(() => {
-        if (elrondAccount) {
+        if (account) {
             close();
             navigateToAccountRoute();
         }
-    }, [elrondAccount]);
+    }, [account]);
 
     return (
         <>

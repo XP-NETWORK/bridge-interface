@@ -17,7 +17,6 @@ import Chain from "./Chain";
 import ChainSearch from "../Chains/ChainSearch";
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
-import { useWeb3React } from "@web3-react/core";
 import { useLocation } from "react-router-dom";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import ScrollArrows from "./ScrollArrows";
@@ -42,14 +41,9 @@ function ChainListBox({ serviceContainer }) {
     const switchChain = useSelector((state) => state.general.switchDestination);
     const [fromChains, setFromChains] = useState(chains);
     const [toChains, setToChains] = useState(chains);
-    const elrondAccount = useSelector((state) => state.general.elrondAccount);
-    const tezosAccount = useSelector((state) => state.general.tezosAccount);
-    const algorandAccount = useSelector(
-        (state) => state.general.algorandAccount
-    );
-    const evmAccount = useSelector((state) => state.general.account);
-    const tronAccount = useSelector((state) => state.general.tronWallet);
-    const { account } = useWeb3React();
+
+    const account = useSelector((state) => state.general.account);
+
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const nftChainListRef = useRef(null);
     const [reached, setReached] = useState(false);
@@ -104,10 +98,7 @@ function ChainListBox({ serviceContainer }) {
 
                         dispatch(setChangeWallet(true));
                         handleClose();
-                    } else if (
-                        (account || evmAccount) &&
-                        from.text !== "VeChain"
-                    ) {
+                    } else if (account && from.text !== "VeChain") {
                         const switched = await switchNetwork(chain);
                         if (switched) {
                             dispatch(setFrom(chain));
@@ -139,7 +130,7 @@ function ChainListBox({ serviceContainer }) {
                     dispatch(setTemporaryFrom(to));
                     dispatch(setChangeWallet(true));
                     handleClose();
-                } else if (account || evmAccount) {
+                } else if (account) {
                     const switched = await switchNetwork(to);
                     if (switched) {
                         dispatch(setTo(from));
@@ -196,17 +187,7 @@ function ChainListBox({ serviceContainer }) {
         } else setFromChains(sorted);
         if (sorted.length <= 5) setReached(true);
         return () => setReached(false);
-    }, [
-        elrondAccount,
-        tezosAccount,
-        algorandAccount,
-        tronAccount,
-        evmAccount,
-        chainSearch,
-        to,
-        departureOrDestination,
-        location.pathname,
-    ]);
+    }, [account, chainSearch, to, departureOrDestination, location.pathname]);
 
     useEffect(() => {
         let filteredChains = chains;

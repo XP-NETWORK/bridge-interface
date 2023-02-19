@@ -43,9 +43,6 @@ const generalSlice = createSlice({
                 return n;
             });
         },
-        setAptosAccount(state, action) {
-            state.aptosAccount = action.payload;
-        },
         setConnectedWallet(state, action) {
             state.connectedWallet = action.payload;
         },
@@ -61,9 +58,7 @@ const generalSlice = createSlice({
         setHederaWallet(state, action) {
             state.hederaWallet = action.payload;
         },
-        setHederaAccount(state, action) {
-            state.hederaAccount = action.payload;
-        },
+
         setFilteredNFTSList(state, action) {
             state.filteredNFTList = action.payload;
         },
@@ -369,9 +364,7 @@ const generalSlice = createSlice({
                 //account: state.account
             };
         },
-        setElrondAccount(state, action) {
-            state.elrondAccount = action.payload;
-        },
+
         setMaiarProvider(state, action) {
             state.maiarProvider = action.payload;
         },
@@ -383,9 +376,7 @@ const generalSlice = createSlice({
         setOnMaiar(state, action) {
             state.onMaiar = action.payload;
         },
-        setTronWallet(state, action) {
-            state.tronWallet = action.payload;
-        },
+
         setConfirmMaiarMob(state, action) {
             state.confirmMaiarMob = action.payload;
         },
@@ -465,9 +456,7 @@ const generalSlice = createSlice({
         setAlgoSigner(state, action) {
             state.AlgoSigner = action.payload;
         },
-        setAlgorandAccount(state, action) {
-            state.algorandAccount = action.payload;
-        },
+
         setShowAbout(state, action) {
             state.about = action.payload;
         },
@@ -500,9 +489,7 @@ const generalSlice = createSlice({
         setTransactionStep(state, action) {
             state.transactionStep = action.payload;
         },
-        setTezosAccount(state, action) {
-            state.tezosAccount = action.payload;
-        },
+
         setKukaiWallet(state, action) {
             state.kukaiWallet = action.payload;
         },
@@ -547,9 +534,6 @@ const generalSlice = createSlice({
         setTonWallet(state, action) {
             state.TonWallet = action.payload;
         },
-        setTonAccount(state, action) {
-            state.tonAccount = action.payload;
-        },
     },
 });
 
@@ -559,7 +543,6 @@ export const {
     setConnectedWallet,
     setUnstoppableDomains,
     setRedirectModal,
-    setHederaAccount,
     setHederaWallet,
     setFilteredNFTSList,
     setUnwrappedEGold,
@@ -588,7 +571,6 @@ export const {
     setInnerWidth,
     setTempleWallet,
     setKukaiWallet,
-    setTezosAccount,
     setTestNet,
     setGetFeaturedModal,
     setTransactionStep,
@@ -621,12 +603,10 @@ export const {
     setTxnHash,
     setWrongNetwork,
     setMetaMaskActive,
-    setElrondAccount,
     removeAlgorandClaimable,
     setMaiarProvider,
     setOnMaiar,
     connectAlgorandWalletClaim,
-    setTronWallet,
     setConfirmMaiarMob,
     setSwitchDestination,
     setAccountModal,
@@ -642,7 +622,6 @@ export const {
     setTronLoginError,
     setTrustWallet,
     setAlgoSigner,
-    setAlgorandAccount,
     setShowAbout,
     setShowVideo,
     setAlgorandWallet,
@@ -663,10 +642,8 @@ export const {
     setTemporaryTo,
     setSecretCred,
     setSelectedNFTAmount,
-    setTonAccount,
     setTonWallet,
     setStaging,
-    setAptosAccount,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

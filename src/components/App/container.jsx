@@ -13,14 +13,20 @@ import {
     setTestNet,
     setStaging,
     setCheckWallet,
+    setAccount,
 } from "../../store/reducers/generalSlice";
 
 import { useNavigate } from "react-router";
+import { useWeb3React } from "@web3-react/core";
 
 const Container = ({ children, serviceContainer, setContainer }) => {
     const dispatch = useDispatch();
-
+    const { account } = useWeb3React();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        dispatch(setAccount(account));
+    }, [account]);
 
     useEffect(() => {
         (async () => {

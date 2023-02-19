@@ -8,30 +8,31 @@ import { useSelector } from "react-redux";
 import { ChainType } from "xp.network";
 
 export const withAlgo = (Wrapped) =>
-  function CBU(props) {
-    const algorandAccount = useSelector((s) => s.general.algorandAccount);
-    const algorandClaimables = useSelector(
-      (state) => state.general.algorandClaimables
-    );
-
-    const getClaimables = (dispatch, chain, _account) =>
-      algorandAccount &&
-      !algorandClaimables?.some((nft) => nft.dataLoaded) &&
-      chain
-        .getClaimables(_account)
-        .then(
-          (claimables) =>
-            claimables && dispatch(setAlgorandClaimables(claimables))
+    function CBU(props) {
+        const account = useSelector((s) => s.general.account);
+        const algorandClaimables = useSelector(
+            (state) => state.general.algorandClaimables
         );
 
-    return (
-      <Wrapped
-        {...props}
-        algorandAccount={algorandAccount}
-        chainSpecific={{
-          ...(props.chainSpecific || {}),
-          [ChainType.ALGORAND]: getClaimables,
-        }}
-      />
-    );
-  };
+        const getClaimables = (dispatch, chain, _account) =>
+            account &&
+            !algorandClaimables?.some((nft) => nft.dataLoaded) &&
+            chain
+                .getClaimables(_account)
+                .then(
+                    (claimables) =>
+                        claimables &&
+                        dispatch(setAlgorandClaimables(claimables))
+                );
+
+        return (
+            <Wrapped
+                {...props}
+                algorandAccount={account}
+                chainSpecific={{
+                    ...(props.chainSpecific || {}),
+                    [ChainType.ALGORAND]: getClaimables,
+                }}
+            />
+        );
+    };
