@@ -51,8 +51,8 @@ function NFTaccount(props) {
     const from = _from.key;
     const prevSelected = usePrevious(from);
 
-    const nfts = useSelector((state) => state.general.NFTList);
-    const currentsNFTs = useSelector((state) => state.general.currentsNFTs);
+    let nfts = useSelector((state) => state.general.NFTList);
+    let currentsNFTs = useSelector((state) => state.general.currentsNFTs);
 
     const importModal = useSelector((state) => state.general.importModal);
 
@@ -68,7 +68,7 @@ function NFTaccount(props) {
     const NFTSetToggler = useSelector((state) => state.general.NFTSetToggler);
     const prevNFTSetToggler = usePrevious(NFTSetToggler);
 
-    const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
+    let selectedNFTs = useSelector((state) => state.general.selectedNFTList);
 
     const unwrappedEGold = useSelector((state) => state.general.unwrappedEGold);
 
@@ -92,26 +92,23 @@ function NFTaccount(props) {
     const { bridge } = serviceContainer;
 
     async function getNFTsList(fromChain) {
-        dispatch(setBigLoader(true));
-        try {
-            let nfts = await fromChain.getNFTs(bridge.checkWallet || _account);
-            nfts = fromChain.filterNFTs(nfts);
-            if (nfts.length < 1) {
-                dispatch(setIsEmpty(true));
-            } else {
-                dispatch(setIsEmpty(false));
-                dispatch(setNFTList(nfts));
-                dispatch(setPreloadNFTs(nfts.length));
-            }
+      dispatch(setBigLoader(true));
+      try {
+        let nfts = await fromChain.getNFTs(bridge.checkWallet || _account);
+        nfts = fromChain.filterNFTs(nfts);
 
-            dispatch(setBigLoader(false));
-        } catch (error) {
-            console.log(error);
-            dispatch(setBigLoader(false));
-            dispatch(setNFTList([]));
-            console.log(error);
-            dispatch(setError(error.data ? error.data.message : error.message));
-        }
+        dispatch(setNFTList(nfts));
+        dispatch(setPreloadNFTs(nfts.length));
+        dispatch(setIsEmpty(nfts.length < 1));
+
+        dispatch(setBigLoader(false));
+      } catch (error) {
+        console.log(error);
+        dispatch(setBigLoader(false));
+        dispatch(setNFTList([]));
+        console.log(error);
+        dispatch(setError(error.data ? error.data.message : error.message));
+      }
     }
 
     const getBalance = async (fromChain) => {

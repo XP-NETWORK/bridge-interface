@@ -7,12 +7,10 @@ import {
     setConnectedWallet,
     setWalletsModal,
 } from "../../../store/reducers/generalSlice";
-// import { setSigner } from "../../../store/reducers/signersSlice";
+
 import { getRightPath } from "../../../wallet/helpers";
-import { connectMartian, connectPetra, connectPontem } from "./AptosConnectors";
 import { withServices } from "../../App/hocs/withServices";
 import { Chain } from "xp.network";
-import { AptosAccount } from "aptos";
 
 export default function HigherAPTOS(OriginalComponent) {
     const updatedComponent = withServices((props) => {
@@ -39,101 +37,45 @@ export default function HigherAPTOS(OriginalComponent) {
         };
 
         const connectWallet = async (wallet) => {
-            // eslint-disable-next-line no-debugger
-            let connected;
-            // let signer;
+            let signer;
+            let address;
+            const chainWrapper = await bridge.getChain(Chain.APTOS);
 
             switch (wallet) {
                 case "Martian":
-                    connected = await connectMartian();
-                    dispatch(setWalletsModal(false));
-                    dispatch(setConnectedWallet("Martian"));
+                    //signer = await connectMartian();
+                    //dispatch(setWalletsModal(false));
+                    //dispatch(setConnectedWallet("Martian"));
                     // signer = connected;
                     break;
-                case "Petra":
-                    connected = await connectPetra();
+                case "Petra": {
+                    const petra = window.petra;
+                    if (!petra)
+                        return window.open("https://petra.app/", "_blank");
+                    const account = await petra.connect();
+                    address = account.address;
+                    signer = petra;
+                    chainWrapper.chain.setPetraSigner(signer);
                     dispatch(setWalletsModal(false));
                     dispatch(setConnectedWallet("Petra"));
-                    // signer = connected;
+
                     break;
+                }
                 case "Pontem":
-                    connected = await connectPontem();
-                    dispatch(setWalletsModal(false));
-                    dispatch(setConnectedWallet("Pontem"));
+                    //signer = await connectPontem();
+                    //dispatch(setWalletsModal(false));
+                    //dispatch(setConnectedWallet("Pontem"));
                     // signer = connected;
                     break;
                 default:
                     break;
             }
-            const chainWrapper = await bridge.getChain(Chain.APTOS);
-            debugger;
-            // const client = new AptosClient(
-            //     "https://fullnode.devnet.aptoslabs.com"
-            // );
 
-            // const tokenClient = new TokenClient(client);
-            // const _signer = await window.petra.account();
-            // _signer.address = function() {
-            //     return HexString.ensure(connected.address);
-            // };
-            // const Aptos = new AptosClient(
-            //     "https://fullnode.devnet.aptoslabs.com"
-            // );
-            // console.log(
-            //     "🚀 ~ file: HigherAPTOS.jsx:78 ~ connectWal ~ client",
-            //     Aptos
-            // );
-            // const { address } = await window.petra.account();
-            // console.log(
-            //     "🚀 ~ file: HigherAPTOS.jsx:83 ~ connectWal ~ address",
-            //     address
-            // );
-
-            // const acc = await Aptos.client.accounts.getAccount(address);
-
-            const signer = new AptosAccount();
-            console.log(
-                "🚀 ~ file: HigherAPTOS.jsx:95 ~ connectWal ~ signer",
-                signer
-            );
-
-            // const sume = await Account.address();
-            // console.log(
-            //     "🚀 ~ file: HigherAPTOS.jsx:91 ~ connectWal ~ Account",
-            //     sume
-            // );
-
-            // const tokenClient = new TokenClient(client);
-            // const options = {
-            //     name: "Name",
-            //     collection: "XPNFT",
-            //     description: "description",
-            //     uri:
-            //         "https://assets.polkamon.com/images/Unimons_T06C02H10B04G00.jpg'",
-            //     royalty_payee_address: connected.address,
-            // };
-            // const resp = await tokenClient.createToken(connected, options);
-            // console.log(
-            //     "🚀 ~ file: HigherAPTOS.jsx:86 ~ connectWal ~ resp",
-            //     resp
-            // );
-            // const acc = await client.getAccount(connected.address);
-
-            // const hexAcc = HexString.ensure(connected.address);
-            // console.log(
-            //     "🚀 ~ file: HigherAPTOS.jsx:77 ~ connectWal ~ hexAcc",
-            //     hexAcc
-            // );
-            // acc.address = function() {
-            //     return HexString.ensure(connected.address);
-            // };
-            // console.log({ acc });
-            chainWrapper.setSigner(connected);
+            chainWrapper.setSigner(signer);
             bridge.setCurrentType(chainWrapper);
-            dispatch(setAccount(connected.address));
+            dispatch(setAccount(address));
             dispatch(setWalletsModal(false));
             close();
-            4;
             navigateToAccountRoute();
         };
 

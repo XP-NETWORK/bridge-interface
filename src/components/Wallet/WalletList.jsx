@@ -87,7 +87,7 @@ export default function WalletList({ connected, input, discount }) {
                     discount={discount}
                 />
             ),
-            name: "MetaMask",
+            name: "BitKeep",
             type: "EVM",
             mobile: true,
             desktop: true,
@@ -158,7 +158,7 @@ export default function WalletList({ connected, input, discount }) {
                     close={connected}
                 />
             ),
-            name: "Maiar Extension Elrond",
+            name: "MultiversX DeFi Wallet",
             type: "Elrond",
             mobile: false,
             desktop: true,
@@ -186,7 +186,7 @@ export default function WalletList({ connected, input, discount }) {
                     close={connected}
                 />
             ),
-            name: "AlgoSigner",
+            name: "Algo Signer",
             type: "Algorand",
             mobile: false,
             desktop: true,
@@ -285,7 +285,7 @@ export default function WalletList({ connected, input, discount }) {
         },
         {
             Component: <TonWallet key="TonWallet" close={connected} />,
-            name: "TonWallet",
+            name: "Ton Wallet",
             mobile: false,
             desktop: true,
             order: 14,
@@ -321,7 +321,7 @@ export default function WalletList({ connected, input, discount }) {
         },
         {
             Component: <Unscopables key="wallet-index-21" close={connected} />,
-            name: "Unscopables",
+            name: "Unstoppable Domains",
             mobile: true,
             desktop: true,
             order: 14,
