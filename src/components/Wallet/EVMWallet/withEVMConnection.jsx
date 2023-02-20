@@ -22,19 +22,23 @@ export const withEVMConnection = (Wrapped) =>
           const nonce = bridge.getNonce(chainId);
 
           bridge.getChain(nonce).then((chainWrapper) => {
-            const provider = new ethers.providers.Web3Provider(
-              bitKeep
-                ? window.bitkeep?.ethereum
-                : WCProvider?.walletConnectProvider || window.ethereum
+            const provider = bitKeep
+              ? window.bitkeep?.ethereum
+              : WCProvider?.walletConnectProvider || window.ethereum;
+
+            if (!provider) return;
+
+            const upgradedProvider = new ethers.providers.Web3Provider(
+              provider
             );
-            const signer = provider.getSigner(account);
+            const signer = upgradedProvider.getSigner(account);
 
             chainWrapper.setSigner(signer);
             bridge.setCurrentType(chainWrapper);
           });
         })();
       }
-    }, [serviceContainer, account, chainId]);
+    }, [serviceContainer, account, chainId, WCProvider]);
 
     return <Wrapped {...props} />;
   };
