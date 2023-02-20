@@ -504,7 +504,7 @@ export const chains = [
         },
         testNet: true,
         mainnet: true,
-        coming: true,
+        coming: false,
         newChain: false,
         chainId: 42161,
         tnChainId: 421613,
