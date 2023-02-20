@@ -329,7 +329,6 @@ export const connectMyAlgo = async (chain) => {
 export const onWalletConnect = async (activate, from, testnet, chainId) => {
   const key = from.toUpperCase();
   const rpc = testnet ? TestNetRpcUri[key] : MainNetRpcUri[key];
-
   try {
     const walletConnect = new WalletConnectConnector({
       rpc: {

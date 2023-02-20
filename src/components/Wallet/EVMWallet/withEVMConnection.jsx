@@ -19,7 +19,6 @@ export const withEVMConnection = (Wrapped) =>
     useEffect(() => {
       if (serviceContainer.bridge && account && chainId) {
         (async () => {
-          console.log(chainId, "chainId");
           const nonce = bridge.getNonce(chainId);
 
           bridge.getChain(nonce).then((chainWrapper) => {
