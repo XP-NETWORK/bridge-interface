@@ -31,6 +31,7 @@ import { selected } from "./NFTHelper";
 import { WhitelistButton } from "./WhitelistButton";
 import SFTMark from "./SFTMark";
 import { setupUnitTestWatcherTimeouts } from "@elrondnetwork/erdjs/out/testutils";
+import axios from "axios";
 
 NFTcard.propTypes = {
     nft: PropTypes.object,
@@ -47,6 +48,7 @@ export default function NFTcard({
     index,
     claimables,
 }) {
+    const [nftState, setNftState] = useState(nft)
     const { bridge: bridgeWrapper, whitelistedPool } = serviceContainer;
     const dispatch = useDispatch();
     const [detailsOn, setDetailsOn] = useState(false);
@@ -71,7 +73,7 @@ export default function NFTcard({
         return origin?.image?.src;
     };
 
-    const originChainImg = getOriginChain(nft?.originChain);
+    const originChainImg = getOriginChain(nftState?.originChain);
 
     const cardRef = useRef(null);
     const options = useMemo(() => {
@@ -83,10 +85,10 @@ export default function NFTcard({
     }, []);
 
     function addRemoveNFT(chosen) {
-        if (!selected(from.type, nft, selectedNFTs)) {
+        if (!selected(from.type, nftState, selectedNFTs)) {
             dispatch(setSelectedNFTList(chosen));
         } else {
-            dispatch(removeFromSelectedNFTList(nft));
+            dispatch(removeFromSelectedNFTList(nftState));
         }
     }
 
@@ -105,10 +107,40 @@ export default function NFTcard({
         };
     }, [cardRef, options, search]);
 
+    const getDetails = async (nft) => {
+        // const headers = {
+        //     "Content-Type": "application/json",
+        // }
+      if (!nftState.image && !nftState.animation_url && nftState.uri) {
+
+        const client = axios.create({
+            baseURL:nftState.uri
+          });
+          client.get().then((response) => {
+            console.log('response.data: ',response.data);
+          })
+          
+        // axios.create({baseURL:nftState.uri}).then((result)=>{
+        //     console.log('result: ',result)
+        // })
+        // console.log("nftState.uri: ", nftState.uri);
+        // const data = await (axios.get(nftState.uri)).data
+        // console.log("result -> ", data);
+        // nft["image"] = data.image;
+        // nft["animation_url"] = data.animation_url;
+        // setNftState(nft);
+        // console.log("updated nft state : ", nftState);
+        }
+    };
+
+    useEffect(async ()=>{
+        getDetails(nft)
+    },[])
+
     useDidUpdateEffect(() => {
         if (isVisible) {
-            if (!nft.dataLoaded) {
-                chain.preParse(nft).then((_nft) => {
+            if (!nftState.dataLoaded) {
+                chain.preParse(nftState).then((_nft) => {
                     parseNFT(
                         serviceContainer,
                         _nft,
@@ -119,7 +151,7 @@ export default function NFTcard({
                 });
             }
         }
-    }, [isVisible, nft]);
+    }, [isVisible, nftState]);
 
     const onClickWhiteListButton = async () => {
         // eslint-disable-next-line no-debugger
@@ -129,24 +161,24 @@ export default function NFTcard({
         try {
             const tx = await bridgeWrapper.bridge.whitelistEVM(
                 from.nonce,
-                nft.native.contract
+                nftState.native.contract
             );
 
             const interval = setInterval(
                 () =>
                     bridgeWrapper
-                        .isWhitelisted(from.nonce, nft)
+                        .isWhitelisted(from.nonce, nftState)
                         .then((result) => {
                             if (result) {
                                 dispatch(setTransferLoaderModal(false));
                                 dispatch(setWhitelistingLoader(false));
                                 dispatch(
                                     setWhiteListedCollection({
-                                        contract: nft.native.contract,
+                                        contract: nftState.native.contract,
                                     })
                                 );
                                 whitelistedPool.whitelistContract(
-                                    nft.native.contract
+                                    nftState.native.contract
                                 );
                                 clearInterval(interval);
                             }
@@ -174,26 +206,47 @@ export default function NFTcard({
         }
     };
 
+    
+
+    // const [isImageAndOrVideo, setIsImageAndOrVideo] = useState('')
+    // useEffect(async () => {
+    //   if (nft.uri && nft.image && nft.animation_url) {
+    //     setIsImageAndOrVideo("both");
+    //   } else if (nft.image && !imageErr) {
+    //     setIsImageAndOrVideo("image");
+    //   } else if (!nft.image && nft.animation_url) {
+    //     setIsImageAndOrVideo("video");
+    //   } else if(!nft.image && !nft.animation_url) {
+    //     let url = await (await axios.get(nft?.uri)).data
+    //     console.log('get url', await url)
+    //     setNftUrl(await url)
+    //     console.log('nftUrl: ',nftUrl)
+    //     nft['image']=nftUrl
+    //     await url ? setIsImageAndOrVideo(url) : setIsImageAndOrVideo(undefined)
+
+    //   }
+    // }, []);
+
     return (
         <>
             <div className={`nft-box__wrapper`} ref={cardRef}>
-                {!nft?.dataLoaded ? (
+                {!nftState?.dataLoaded ? (
                     <Preload />
                 ) : (
                     <div
                         onClick={() =>
-                            nft.whitelisted && !detailsOn && !claimables
-                                ? addRemoveNFT(nft, index)
+                            nftState.whitelisted && !detailsOn && !claimables
+                                ? addRemoveNFT(nftState, index)
                                 : undefined
                         }
                         className={
-                            nft.whitelisted
+                            nftState.whitelisted
                                 ? "nft__card--selected"
                                 : "nft__card"
                         }
                     >
-                        {nft.native?.amount && (
-                            <SFTMark amount={nft?.native.amount} />
+                        {nftState.native?.amount && (
+                            <SFTMark amount={nftState?.native.amount} />
                         )}
                         {/* {originChainImg && (
                             <OriginChainMark icon={originChainImg} />
@@ -203,35 +256,35 @@ export default function NFTcard({
                                 {originChainImg && (
                                     <OriginChainMark icon={originChainImg} />
                                 )}
-                                {!nft.whitelisted && (
+                                {!nftState.whitelisted && (
                                     <WhitelistButton
-                                        isNFTWhitelisted={nft.whitelisted}
+                                        isNFTWhitelisted={nftState.whitelisted}
                                         whitelist={onClickWhiteListButton}
                                     />
                                 )}
                             </div>
-                            {nft.uri && nft.image && nft.animation_url ? (
+                            {nftState.uri && nftState.image && nftState.animation_url ? (
                                 <VideoAndImage
                                     index={index}
-                                    videoUrl={nft.animation_url}
-                                    imageUrl={nft.image}
+                                    videoUrl={nftState.animation_url}
+                                    imageUrl={nftState.image}
                                     onError={setImageErr}
-                                    nft={nft}
+                                    nft={nftState}
                                 />
-                            ) : nft.image && !imageErr ? (
+                            ) : nftState.image && !imageErr ? (
                                 <Image
                                     onError={setImageErr}
-                                    nft={nft}
+                                    nft={nftState}
                                     index={index}
                                 />
-                            ) : !nft.image && nft.animation_url ? (
-                                <OnlyVideo videoUrl={nft.animation_url} />
+                            ) : !nftState.image && nftState.animation_url ? (
+                                <OnlyVideo videoUrl={nftState.animation_url} />
                             ) : (
                                 <BrockenUtlGridView />
                             )}
 
-                            {!claimables && nft.whitelisted ? (
-                                !selected(from.type, nft, selectedNFTs) ? (
+                            {!claimables && nftState.whitelisted ? (
+                                !selected(from.type, nftState, selectedNFTs) ? (
                                     <div className="nft-radio"></div>
                                 ) : (
                                     <div className="nft-radio--selected"></div>
@@ -240,11 +293,11 @@ export default function NFTcard({
                                 ""
                             )}
 
-                            {!nft.whitelisted /*|| !verifiedContract*/ && (
+                            {!nftState.whitelisted /*|| !verifiedContract*/ && (
                                 <NotWhiteListed />
                             )}
                             {claimables && (
-                                <ClaimableCard nft={nft} index={index} />
+                                <ClaimableCard nft={nftState} index={index} />
                             )}
                         </div>
                         <div className="nft__footer">
@@ -260,17 +313,17 @@ export default function NFTcard({
                             )}
                             <span className="nft-name">
                                 <span className="name">
-                                    {nft.name || nft.native?.name}
+                                    {nftState.name || nftState.native?.name}
                                 </span>
                                 <NFTdetails
                                     details={setDetailsOn}
-                                    nftInf={nft}
+                                    nftInf={nftState}
                                     index={index}
                                     claimables={claimables}
                                 />
                             </span>
                             <span className="nft-number">
-                                {nft.native?.tokenId}
+                                {nftState.native?.tokenId}
                             </span>
                         </div>
                     </div>
