@@ -29,6 +29,8 @@ import {
 } from "../Wallet/TONWallet/tonStore";
 import MaiarModal from "./MaiarModal/MaiarModal";
 import ChangeWalletModal from "./ChangeWallet/ChangeWalletModal";
+import { Web3Modal } from "@web3modal/react";
+import { ethereumClient, wcId } from "../Wallet/EVMWallet/evmConnectors";
 
 export default function Modals() {
     const dispatch = useDispatch();
@@ -88,6 +90,7 @@ export default function Modals() {
 
     return (
         <>
+            <Web3Modal projectId={wcId} ethereumClient={ethereumClient} />
             <Modal
                 className="ChainModal switchWallet"
                 animation={false}
