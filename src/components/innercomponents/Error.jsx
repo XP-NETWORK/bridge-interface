@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
 import { setError } from "../../store/reducers/generalSlice";
 import ERR from "../../assets/img/icons/ERROR.svg";
+import WHERROR from "../../assets/img/icons/error-icon.png";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import WhiteListError from "../ErrorsBodies/WhiteListError";
 
@@ -28,7 +29,7 @@ export default function Error() {
                     <img
                         style={{ margin: "30px auto", width: "120px" }}
                         alt=""
-                        src={ERR}
+                        src={!whitelistErr ? ERR : WHERROR}
                     />
                     <Modal.Title style={{ textAlign: "center" }}>
                         {!whitelistErr
