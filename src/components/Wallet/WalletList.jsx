@@ -81,7 +81,7 @@ export default function WalletList({ connected, input, discount }) {
         {
             Component: (
                 <BitKeep
-                    wallet={"MetaMask"}
+                    wallet={"BitKeep"}
                     key="bitKeep"
                     close={connected}
                     discount={discount}
