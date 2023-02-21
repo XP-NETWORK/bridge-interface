@@ -257,7 +257,7 @@ export const connectMetaMask = async (activate) => {
 
       window.open(link);
     }
-    console.log(window.safeLocalStorage.getItem("XP_MM_CONNECTED"));
+
     if (!window.safeLocalStorage.getItem("XP_MM_CONNECTED"))
       await window.ethereum.request({
         method: "wallet_requestPermissions",

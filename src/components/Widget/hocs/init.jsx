@@ -153,12 +153,12 @@ export const InitWidget = (Wrapped) => {
           return;
         }
 
-        if (wsettings && window.innerWidth <= 600) {
+        if (wsettings && window.innerWidth <= 800) {
           document.body.appendChild(overlay);
           document.body.style.pointerEvents = "none";
         }
 
-        if (wsettings && window.innerWidth > 600) {
+        if (wsettings && window.innerWidth > 800) {
           dispatch(setWSettings(true));
           document.querySelector(".nftContainer").style = "margin-left: 300px";
         }

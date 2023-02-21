@@ -294,7 +294,7 @@ export const withStyles = (Wrapped) =>
               background: ${borderColor ? borderColor : ""};
             }
     
-            .wllListItem, .themBtn, .selChain, .seleDestiSele, .approval, .fees {
+            .wllListItem, .themBtn, .selChain, .seleDestiSele, .approval, .fees, .navbar-connect {
                 font-size: ${fontSize ? fontSize + "px" : ""}
             }
     
@@ -382,7 +382,7 @@ export const withStyles = (Wrapped) =>
     
             .videoLink, .about_Nft, .nftAut a,.aleartBox, .SearchDrop.dropdown input, .nftCont span, 
             .nftInfBox label, .nftInfBox p, .nftInfBox label, .bluTextBtn, .label, .details, .transferTable.table tbody tr td, .ComentBox p, 
-            .changeBtn, a.disconBtn, .nft-box__container, .nft-box__container--selected, .success-buttons {
+            .changeBtn, a.disconBtn, .nft-box__container, .nft-box__container--selected, .success-buttons, .returnBtn button {
                 font-size: ${fontSize ? fontSize * 0.87 + "px" : ""}
             }
     
@@ -709,6 +709,15 @@ export const withStyles = (Wrapped) =>
     
     
             @media only screen and (max-width: 1024px) {
+
+              .nftSlectContaine.container {
+
+                width: 90% !important;
+                max-width: 95% !important;
+              }
+
+             
+
               .nft__card, .nft__card--selected, .skeleton {
                 width: 180px;
               }
@@ -798,9 +807,11 @@ export const withStyles = (Wrapped) =>
     
     
     
-            @media only screen and (max-height: 633px) {
+            @media only screen and (max-height: 683px) {
     
-           
+              .settingsPannel {
+                transform: translateX(-100%);
+              }
     
               .modal-dialog {
                 margin-top: 6vh;

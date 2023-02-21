@@ -19,6 +19,7 @@ export default function Chain(props) {
     maintenance,
     updated,
     nonce,
+    chainKey,
   } = props;
 
   const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
@@ -68,7 +69,7 @@ export default function Chain(props) {
       style={getStyle()}
       onClick={() => chainSelectHandler(filteredChain)}
       className="nftChainItem"
-      data-chain={text}
+      data-chain={chainKey}
     >
       <img className="modalSelectOptionsImage" src={image.src} alt={text} />
       <div className="modalSelectOptionsText">

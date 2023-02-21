@@ -1104,7 +1104,7 @@ li.blockChain_item .select_nft {
   top: unset;
   width: 18px;
   height: 18px;
-  margin-right: 12px;
+  margin-right: 7px;
 }
 
 li.blockChain_item .selectNfticon {
@@ -1518,11 +1518,11 @@ li.blockChain_item .blockChainItem span {
   right: 16px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 12px;
+  font-size: 8px;
   color: #08d70d;
   border: 1px solid #08d70d;
   display: inline-block;
-  padding: 5px;
+  padding: 1px;
 }
 
 #SearchDrop svg {
@@ -1821,13 +1821,11 @@ li.blockChain_item .blockChainItem span {
 .dtm .comingSoon {
   color: #f9fafb !important;
   border-color: #f9fafb !important;
-  font-size: 10px !important;
 }
 
 .ltm .comingSoon {
   color: gray !important;
   border-color: grey !important;
-  font-size: 10px !important;
 }
 
 .dtm .sidebar_content::-webkit-scrollbar-track {

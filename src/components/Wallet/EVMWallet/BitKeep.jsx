@@ -28,7 +28,7 @@ function BitKeep({ styles, connectWallet }) {
       style={isUnsupportedBitKeepChain() ? OFF : styles()}
       onClick={() => connectWallet("BitKeep")}
       className="wllListItem"
-      data-wallet="MetaMask"
+      data-wallet="BitKeep"
     >
       <img src={icon} alt="BitKeep Icon" />
       <p>BitKeep</p>

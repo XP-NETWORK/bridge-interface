@@ -410,7 +410,7 @@ export const chains = [
   },
   {
     type: "EVM",
-    key: "Skale",
+    key: "SKALE",
     text: "SKALE",
     nonce: 30,
     order: -99,
@@ -505,7 +505,7 @@ export const chains = [
     testNet: true,
     mainnet: true,
     coming: false,
-    newChain: false,
+    newChain: true,
     chainId: 42170,
     tnChainId: 421613,
   },

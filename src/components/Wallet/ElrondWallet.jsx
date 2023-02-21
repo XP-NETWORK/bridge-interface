@@ -154,7 +154,7 @@ function ElrondWallet({ wallet, close, serviceContainer }) {
       style={getStyle()}
       onClick={() => handleConnect("Maiar Extension")}
       className="wllListItem"
-      data-wallet="MaiarExtension"
+      data-wallet="MultiversX DeFi Wallet"
     >
       <img src={Elrond} alt="Elrond Icon" />
       <p>MultiversX DeFi Wallet</p>
