@@ -12,6 +12,23 @@ body {
     line-height: 160%;
     background-color: #f0f0f3;
 }
+
+.account__container {
+    gap: 15px !important;
+}
+
+.sendNftCol {
+    padding: 0 !important;
+}
+
+.nftListCol {
+    flex: 0 0 65% !important;
+}
+
+.sendNftCol {
+    flex: 0 0 35% !important;
+}
+
 .widgetBlack {
     color: black !important;
 }
@@ -2219,5 +2236,15 @@ span.closeBox:hover svg path {
 @media screen and (min-width: 600px) {
     .yourNft--mobile {
         display: none;
+    }
+}
+
+@media screen and (max-width: 912px) {
+    .nftListCol {
+        flex: 0 0 100% !important;
+    }
+
+    .sendNftCol {
+        flex: 0 0 100% !important;
     }
 }

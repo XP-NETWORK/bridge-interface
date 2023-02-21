@@ -18,7 +18,7 @@ export const withEVMConnection = (Wrapped) =>
 
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const WCProvider = useSelector((state) => state.general.WCProvider);
-    const { chainId, account, active } = useWeb3React();
+    const { chainId, account } = useWeb3React();
 
     const { bridge } = serviceContainer;
 
@@ -45,11 +45,7 @@ export const withEVMConnection = (Wrapped) =>
           });
         })();
       }
-<<<<<<< HEAD
-    }, [serviceContainer, account, chainId, active]);
-=======
     }, [serviceContainer, account, chainId, WCProvider]);
->>>>>>> temporary
 
     return <Wrapped {...props} />;
   };

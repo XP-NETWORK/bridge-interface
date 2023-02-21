@@ -103,6 +103,10 @@ export const withStyles = (Wrapped) =>
             width: 90%;
             max-width: 95%;
           }
+
+          .nftSlectContaine.container .row {
+            justify-content: space-between;
+          }
     
           .sendNftCol {
             padding-right: 0;
@@ -114,10 +118,10 @@ export const withStyles = (Wrapped) =>
             margin-top: 0;
             display: ${wsettings ? "flex" : "block"};
           }
+
           
-          .nft-list__wrapper {
-            justify-content: center;
-          }
+          
+        
     
           .NftSelect {
             position: absolute;
@@ -129,6 +133,10 @@ export const withStyles = (Wrapped) =>
     
           .nftSlectArea {
             height: auto;
+          }
+
+          .nft-list__wrapper {
+            padding: 0;
           }
     
           .NFTaccount {
@@ -754,6 +762,7 @@ export const withStyles = (Wrapped) =>
               
               .nft-list__wrapper {
                 height: 300px;
+
           
               }
     

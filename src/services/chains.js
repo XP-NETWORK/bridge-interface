@@ -285,7 +285,22 @@ class AbstractChain {
   }
 
   handlerResult(res) {
-    return res;
+    switch (true) {
+      case typeof res === "string":
+        return { hash: res };
+      case typeof res === "object":
+        return {
+          ...res,
+          hash: res.hash || res.transactionHash,
+        };
+      case Array.isArray(res):
+        return {
+          ...res[0],
+          hash: res[0].hash || res[0].transactionHash,
+        };
+      default:
+        return res;
+    }
   }
 }
 
@@ -357,7 +372,7 @@ class Elrond extends AbstractChain {
     if (Array.isArray(res)) {
       res = res[0];
     }
-    return ethers.utils.hexlify(res.hash?.hash)?.replace(/^0x/, "");
+    return { hash: ethers.utils.hexlify(res.hash?.hash)?.replace(/^0x/, "") };
   }
 
   async transfer(args) {
@@ -522,11 +537,6 @@ class Cosmos extends AbstractChain {
     }));
 
     return secretNFTs;
-  }
-
-  handlerResult(res) {
-    console.log(res, "res in secret");
-    return res;
   }
 }
 

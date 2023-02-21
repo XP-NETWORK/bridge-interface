@@ -107,10 +107,7 @@ class WService {
   }) {
     this.axios.post(`/addTransaction`, {
       widgetId: wid,
-      txHash:
-        fromNonce === 2
-          ? result.hash?.hash?.toString()
-          : result.hash || result.transactionHash,
+      txHash: result.hash,
       fromChain: fromNonce,
       toChain: toNonce,
       fees: String(bigNumberFees),

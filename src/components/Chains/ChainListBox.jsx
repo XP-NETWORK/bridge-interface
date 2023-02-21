@@ -284,23 +284,28 @@ function ChainListBox({ serviceContainer }) {
                   updated,
                   nonce,
                 } = chain;
-                return (
-                  (mainnet || coming) && (
-                    <Chain
-                      chainSelectHandler={chainSelectHandler}
-                      updated={updated}
-                      newChain={newChain}
-                      maintenance={maintenance}
-                      coming={coming}
-                      text={text}
-                      chainKey={key}
-                      filteredChain={chain}
-                      image={image}
-                      key={`chain-${key}`}
-                      nonce={nonce}
-                    />
-                  )
-                );
+                if (
+                  String(from?.text).toLowerCase() !==
+                  String(text).toLowerCase()
+                )
+                  return (
+                    (mainnet || coming) && (
+                      <Chain
+                        chainSelectHandler={chainSelectHandler}
+                        updated={updated}
+                        newChain={newChain}
+                        maintenance={maintenance}
+                        coming={coming}
+                        text={text}
+                        chainKey={key}
+                        filteredChain={chain}
+                        image={image}
+                        key={`chain-${key}`}
+                        nonce={nonce}
+                      />
+                    )
+                  );
+                return null;
               })}
             {//! Show only mainnet TO chains //
             departureOrDestination === "destination" &&
@@ -317,23 +322,28 @@ function ChainListBox({ serviceContainer }) {
                   updated,
                   nonce,
                 } = chain;
-                return (
-                  (mainnet || coming) && (
-                    <Chain
-                      chainSelectHandler={chainSelectHandler}
-                      updated={updated}
-                      newChain={newChain}
-                      maintenance={maintenance}
-                      coming={coming}
-                      text={text}
-                      chainKey={key}
-                      filteredChain={chain}
-                      image={image}
-                      nonce={nonce}
-                      key={`chain-${key}`}
-                    />
-                  )
-                );
+
+                if (
+                  String(to?.text).toLowerCase() !== String(text).toLowerCase()
+                )
+                  return (
+                    (mainnet || coming) && (
+                      <Chain
+                        chainSelectHandler={chainSelectHandler}
+                        updated={updated}
+                        newChain={newChain}
+                        maintenance={maintenance}
+                        coming={coming}
+                        text={text}
+                        chainKey={key}
+                        filteredChain={chain}
+                        image={image}
+                        nonce={nonce}
+                        key={`chain-${key}`}
+                      />
+                    )
+                  );
+                return null;
               })}
             {//! Show only testnet FROM chains //
             departureOrDestination === "departure" &&
@@ -350,23 +360,28 @@ function ChainListBox({ serviceContainer }) {
                   updated,
                   nonce,
                 } = chain;
-                return (
-                  testNet && (
-                    <Chain
-                      chainSelectHandler={chainSelectHandler}
-                      updated={updated}
-                      newChain={newChain}
-                      maintenance={maintenance}
-                      coming={coming}
-                      text={text}
-                      chainKey={key}
-                      filteredChain={chain}
-                      image={image}
-                      nonce={nonce}
-                      key={`chain-${key}`}
-                    />
-                  )
-                );
+                if (
+                  String(from?.text).toLowerCase() !==
+                  String(text).toLowerCase()
+                )
+                  return (
+                    testNet && (
+                      <Chain
+                        chainSelectHandler={chainSelectHandler}
+                        updated={updated}
+                        newChain={newChain}
+                        maintenance={maintenance}
+                        coming={coming}
+                        text={text}
+                        chainKey={key}
+                        filteredChain={chain}
+                        image={image}
+                        nonce={nonce}
+                        key={`chain-${key}`}
+                      />
+                    )
+                  );
+                return null;
               })}
             {//! Show only testnet TO chains //
             departureOrDestination === "destination" &&
@@ -383,23 +398,27 @@ function ChainListBox({ serviceContainer }) {
                   updated,
                   nonce,
                 } = chain;
-                return (
-                  testNet && (
-                    <Chain
-                      chainSelectHandler={chainSelectHandler}
-                      updated={updated}
-                      newChain={newChain}
-                      maintenance={maintenance}
-                      coming={coming}
-                      text={text}
-                      chainKey={key}
-                      filteredChain={chain}
-                      image={image}
-                      nonce={nonce}
-                      key={`chain-${key}`}
-                    />
-                  )
-                );
+                if (
+                  String(to?.text).toLowerCase() !== String(text).toLowerCase()
+                )
+                  return (
+                    testNet && (
+                      <Chain
+                        chainSelectHandler={chainSelectHandler}
+                        updated={updated}
+                        newChain={newChain}
+                        maintenance={maintenance}
+                        coming={coming}
+                        text={text}
+                        chainKey={key}
+                        filteredChain={chain}
+                        image={image}
+                        nonce={nonce}
+                        key={`chain-${key}`}
+                      />
+                    )
+                  );
+                return null;
               })}
           </ul>
           {!reached && <ScrollArrows />}

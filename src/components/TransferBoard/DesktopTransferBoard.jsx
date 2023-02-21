@@ -9,11 +9,13 @@ import SendFees from "./SendFees";
 import "./TransferBoard.css";
 import UnwrapWegld from "./UnwrapWegld.jsx";
 import SecureTX from "./SecureTX.jsx";
+import { ELROND } from "../../components/values";
 
 import { useCheckMobileScreen } from "../Settings/hooks";
 
 export default function DesktopTransferBoard() {
     const nfts = useSelector((state) => state.general.NFTList);
+    const from = useSelector((state) => state.general.from);
 
     const mobile = useCheckMobileScreen();
 
@@ -28,7 +30,7 @@ export default function DesktopTransferBoard() {
                             <Approval />
                             {!mobile && <SendFees />}
                             <ButtonToTransfer />
-                            <UnwrapWegld />
+                            {from?.text === ELROND && <UnwrapWegld />}
                             <SecureTX />
                         </>
                     ) : (

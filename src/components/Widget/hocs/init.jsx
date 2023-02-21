@@ -149,7 +149,7 @@ export const InitWidget = (Wrapped) => {
         const wsettings = searchparams.get("wsettings") === "true";
 
         if (!widget && !wsettings && !wid) {
-          setSearchParams({ widget: true, wsettings: true });
+          setSearchParams({ widget: true, wsettings: true, wid: "create" });
           return;
         }
 
