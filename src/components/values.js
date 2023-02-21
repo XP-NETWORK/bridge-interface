@@ -362,9 +362,9 @@ export const chains = [
         tnChainId: 178,
         image: { avatar: true, src: Abey },
         testNet: biz,
-        mainnet: false,
-        newChain: false,
-        coming: !biz,
+        mainnet: biz,
+        newChain: true,
+        coming: false,
     },
     {
         type: "VeChain",
@@ -492,7 +492,7 @@ export const chains = [
         key: "Arbitrum",
         text: window.location.href.includes("testnet")
             ? "Arbitrum"
-            : "Arbitrum NOVA",
+            : "Arbitrum Nova",
         value: "Arbitrum",
         nonce: 0x25,
         order: -1,
