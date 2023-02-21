@@ -60,7 +60,7 @@ export default function AccountModal() {
       <div className="accountBtn">
         <button
           onClick={() => {
-            localStorage.removeItem("XP_MM_CONNECTED");
+            window.safeLocalStorage.removeItem("XP_MM_CONNECTED");
             window.location.reload();
           }}
           className="changeBtn"
