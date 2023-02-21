@@ -17,7 +17,11 @@ import {
 import { getFromDomain } from "../../services/resolution";
 
 import { withServices } from "../App/hocs/withServices";
+<<<<<<< HEAD
 import { withWidget } from "../Widget/hocs/withWidget";
+=======
+import { notifyExplorer } from "../../services/explorer";
+>>>>>>> temporary
 
 import { compose } from "redux";
 
@@ -151,6 +155,7 @@ export default compose(
     }
   };
 
+<<<<<<< HEAD
   return (
     <div
       onClick={sendAllNFTs}
@@ -159,6 +164,73 @@ export default compose(
       {loading ? "Processing" : "Send"}
     </div>
   );
+=======
+    const sendEach = async (nft) => {
+        try {
+            const [fromChain, toChain] = await Promise.all([
+                bridge.getChain(_from.nonce),
+                bridge.getChain(_to.nonce),
+            ]);
+
+            const unstoppabledomain = await getFromDomain(receiver, toChain);
+            if (unstoppabledomainSwitch(unstoppabledomain)) return;
+
+            const result = await fromChain.transfer({
+                toChain,
+                nft,
+                receiver: unstoppabledomain || receiver,
+                fee: bigNumberFees,
+                discountLeftUsd,
+            });
+
+            if (txnHashArr[0] && !result) {
+                dispatch(setTxnHash({ txn: "failed", nft }));
+            } else if (result) {
+                const fromChainHash = fromChain.handlerResult(result);
+                notifyExplorer(_from.nonce, fromChainHash);
+                dispatch(setTxnHash({ txn: fromChainHash, nft }));
+            }
+        } catch (e) {
+            console.log(e, "eee");
+            dispatch(setError(e));
+        }
+
+        setLoading(false);
+        dispatch(setTransferLoaderModal(false));
+    };
+
+    const sendAllNFTs = async () => {
+        if (!receiver) {
+            dispatch(setPasteDestinationAlert(true));
+        } else if (selectedNFTList.length < 1) {
+            dispatch(setSelectNFTAlert(true));
+        } else if (!approved) {
+            dispatch(setNoApprovedNFTAlert(true));
+        } else if (!loading && approved) {
+            setLoading(true);
+            dispatch(setTransferLoaderModal(true));
+
+            for (let index = 0; index < selectedNFTList.length; index++) {
+                if (from === "VeChain" || from === "TON") {
+                    await sendEach(selectedNFTList[index], index);
+                } else {
+                    sendEach(selectedNFTList[index], index);
+                }
+            }
+        }
+    };
+
+    return (
+        <div
+            onClick={sendAllNFTs}
+            className={
+                !loading ? "transfer-button" : "transfer-button--disabled"
+            }
+        >
+            {loading ? "Processing" : "Send"}
+        </div>
+    );
+>>>>>>> temporary
 });
 
 /***

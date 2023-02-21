@@ -15,24 +15,24 @@ export default function WhiteListError() {
             </div>
             <div className="message">
                 For more information regarding whitelisting limitations, visit
-                our documentation
+                our documentation{" "}
                 <a
                     target="_blank"
                     rel="noreferrer"
                     href="https://docs.xp.network/docs/Multibridge3.0/limitations"
                 >
-                    here
+                    {` here`}
                 </a>
             </div>
             <div className="message">
                 If the smart contract meets the requirements, but the problem
-                persists, contact XP.NETWORK support team
+                persists, contact XP.NETWORK support team{" "}
                 <a
                     target="_blank"
                     rel="noreferrer"
                     href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"
                 >
-                    here
+                    {` here`}
                 </a>
             </div>
         </div>

@@ -42,7 +42,7 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
 
     const connectionHandler = async (wallet) => {
         // eslint-disable-next-line no-debugger
-        debugger;
+        // debugger;
         const chainWrapper = await bridge.getChain(
             from?.nonce || Chain.ALGORAND
         );

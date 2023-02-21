@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 /* eslint-disable no-unused-vars */
 
 import axios from "axios";
@@ -201,6 +202,7 @@ class AbstractChain {
   }
 
   async transfer(args) {
+    debugger;
     try {
       if (!this.signer)
         throw new Error("No signer for ", this.chainParams.text);
@@ -325,7 +327,7 @@ class EVM extends AbstractChain {
       if (e.message?.includes("cannot estimate gas;")) {
         return await super.transfer({
           ...args,
-          gasLimit: BN.from(100000),
+          gasLimit: BN.from(140000),
         });
       }
       throw e;
@@ -654,6 +656,20 @@ class Solana extends AbstractChain {
     } catch (err) {
       return [];
     }
+  }
+
+  async preParse(nft) {
+    nft = await super.preParse(nft);
+
+    return {
+      ...nft,
+      native: {
+        ...nft.native,
+        contract: nft.collectionIdent,
+        tokenId: encodeURIComponent(nft.native.name),
+        chainId: String(this.chainParams.nonce),
+      },
+    };
   }
 }
 

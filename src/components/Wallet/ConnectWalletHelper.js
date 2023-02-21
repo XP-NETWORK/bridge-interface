@@ -310,7 +310,7 @@ export const connectAlgoSigner = async (testnet) => {
 
 export const connectTrustWallet = async (activate, from, chainId) => {
   const rpc = MainNetRpcUri[from.toUpperCase()];
-  console.log(rpc, chainId, "rpc");
+
   try {
     const walletConnect = new WalletConnectConnector({
       rpc: {
@@ -321,6 +321,7 @@ export const connectTrustWallet = async (activate, from, chainId) => {
     });
     walletConnect.networkId = chainId;
     await activate(walletConnect, undefined, true);
+    store.dispatch(setWC(walletConnect));
     return true;
   } catch (error) {
     store.dispatch(setError(error));
@@ -349,7 +350,6 @@ export const connectMyAlgo = async (chain) => {
 export const onWalletConnect = async (activate, from, testnet, chainId) => {
   const key = from.toUpperCase();
   const rpc = testnet ? TestNetRpcUri[key] : MainNetRpcUri[key];
-
   try {
     const walletConnect = new WalletConnectConnector({
       rpc: {

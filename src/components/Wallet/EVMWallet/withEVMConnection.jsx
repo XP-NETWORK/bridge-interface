@@ -25,16 +25,19 @@ export const withEVMConnection = (Wrapped) =>
     useEffect(() => {
       if (serviceContainer.bridge && account && chainId) {
         (async () => {
-          console.log(chainId, "chainId");
           const nonce = bridge.getNonce(chainId);
 
           bridge.getChain(nonce).then((chainWrapper) => {
-            const provider = new ethers.providers.Web3Provider(
-              bitKeep
-                ? window.bitkeep?.ethereum
-                : WCProvider?.walletConnectProvider || window.ethereum
+            const provider = bitKeep
+              ? window.bitkeep?.ethereum
+              : WCProvider?.walletConnectProvider || window.ethereum;
+
+            if (!provider) return;
+
+            const upgradedProvider = new ethers.providers.Web3Provider(
+              provider
             );
-            const signer = provider.getSigner(account);
+            const signer = upgradedProvider.getSigner(account);
 
             chainWrapper.setSigner(signer);
             dispatch(setAccount(account));
@@ -42,7 +45,11 @@ export const withEVMConnection = (Wrapped) =>
           });
         })();
       }
+<<<<<<< HEAD
     }, [serviceContainer, account, chainId, active]);
+=======
+    }, [serviceContainer, account, chainId, WCProvider]);
+>>>>>>> temporary
 
     return <Wrapped {...props} />;
   };

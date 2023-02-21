@@ -39,6 +39,8 @@ import EGoldSuccess from "./../Modals/eGoldSuccess/EGoldSuccess";
 import { checkXpNetLocked } from "../../services/deposits";
 import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 
+import { biz } from "../values";
+
 import withChains from "./hocs";
 
 import UserConnect from "../User/UserConnect";
@@ -160,7 +162,7 @@ function NFTaccount(props) {
           fromChain.mintNFT("https://meta.polkamon.com/meta?id=10001852306");
         }
       };
-      window.addEventListener("keydown", keyHandler);
+      biz && window.addEventListener("keydown", keyHandler);
     })();
 
     return () => clearInterval(balanceInterval);

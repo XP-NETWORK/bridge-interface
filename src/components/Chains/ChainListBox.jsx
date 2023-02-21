@@ -47,7 +47,6 @@ function ChainListBox({ serviceContainer }) {
   const algorandAccount = useSelector((state) => state.general.algorandAccount);
   const evmAccount = useSelector((state) => state.general.account);
   const tronAccount = useSelector((state) => state.general.tronWallet);
-  //const Sync2 = useSelector((state) => state.general.Sync2);
   const { account } = useWeb3React();
   const bitKeep = useSelector((state) => state.general.bitKeep);
   const nftChainListRef = useRef(null);
@@ -85,6 +84,7 @@ function ChainListBox({ serviceContainer }) {
       ) {
         dispatch(setChangeWallet(true));
         dispatch(setTemporaryFrom(chain));
+        dispatch(setTemporaryTo(to));
         handleClose();
       } else if (
         chainWrapper.chainParams.type === bridge.currentType ||
@@ -93,6 +93,7 @@ function ChainListBox({ serviceContainer }) {
         if (from && from?.text !== chain.text) {
           if (from?.text === "Harmony" && bitKeep) {
             dispatch(setTemporaryFrom(chain));
+
             dispatch(setChangeWallet(true));
             handleClose();
           } else if ((account || evmAccount) && from.text !== "VeChain") {
@@ -167,14 +168,14 @@ function ChainListBox({ serviceContainer }) {
       ...withMaintenance,
       ...withComing,
     ];
-    // if (chainSearch && departureOrDestination === "departure") {
-    //     sorted = chains.filter((chain) =>
-    //         chain.text.toLowerCase().includes(chainSearch.toLowerCase())
-    //     );
-    // }
+
     if (
       location.pathname === "/connect" ||
       location.pathname === "/testnet/connect" ||
+      location.pathname === "/account" ||
+      location.pathname === "/testnet/account" ||
+      location.pathname === "/staging" ||
+      location.pathname === "/staging/account" ||
       location.pathname === "/"
     ) {
       setFromChains(sorted.filter((e) => e.text !== to?.text));
@@ -192,13 +193,6 @@ function ChainListBox({ serviceContainer }) {
     departureOrDestination,
     location.pathname,
   ]);
-
-  // useEffect(() => {
-  //     const check = async () => {
-  //         if (!validatorsInfo) await checkValidators();
-  //     };
-  //     check();
-  // }, [validatorsInfo, checkValidators]);
 
   useEffect(() => {
     let filteredChains = chains;
@@ -228,6 +222,10 @@ function ChainListBox({ serviceContainer }) {
     if (
       location.pathname === "/connect" ||
       location.pathname === "/testnet/connect" ||
+      location.pathname === "/account" ||
+      location.pathname === "/testnet/account" ||
+      location.pathname === "/staging" ||
+      location.pathname === "/staging/account" ||
       location.pathname === "/"
     ) {
       setToChains(sorted.filter((e) => e.text !== from?.text));

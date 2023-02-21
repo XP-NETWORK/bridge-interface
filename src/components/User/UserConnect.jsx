@@ -130,14 +130,15 @@ export default function UserConnect({ mobile }) {
   }, []);
 
   useEffect(() => {
-    if (account) {
+    if (account && WCProvider) {
       const provider = new ethers.providers.Web3Provider(
         WCProvider?.walletConnectProvider || window.ethereum
       );
       const signer = provider.getSigner(account);
       dispatch(setSigner(signer));
     }
-  }, [chainId]);
+  }, [chainId, WCProvider]);
+
 
   /*useEffect(() => {
     if (!account && WalletConnect) {
