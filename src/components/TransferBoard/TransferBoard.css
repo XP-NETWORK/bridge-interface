@@ -175,7 +175,7 @@
     border-radius: 0;
     margin: 12px 0;
 }
-.mobile-col .nft-box__wrapper{
+.mobile-col .nft-box__wrapper {
     width: 47.5%;
     max-width: 200px;
 }
@@ -278,6 +278,37 @@
     height: 62px;
     padding: 16px;
     font-size: 14px;
+}
+.deploy-fees__inf {
+    position: relative;
+}
+.deploy-fees__inf:hover::before {
+    content: "One time fee for deploying a new smart contract on the destination chain.";
+    position: absolute;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16.8px;
+    width: 220px;
+    bottom: 30px;
+    left: -100px;
+    padding: 12px 12px 21px 12px;
+    background: #282829;
+    border-radius: 10px;
+    color: white;
+    /* box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.5); */
+}
+.deploy-fees__inf:hover::after {
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    content: "";
+    width: 15px;
+    height: 15px;
+    /* box-shadow: 0px 4px 24px rgba(180, 185, 199); */
+    background: #282829;
+    border-left: 0;
+    border-top: 0;
+    transform: translate(-50%, -100%) rotate(45deg);
 }
 .mobile-col .transfer-button {
     margin: 10px 5px;
