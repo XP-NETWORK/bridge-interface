@@ -56,6 +56,7 @@ export const withEVMConnection = (Wrapped) =>
             }
         }, [address]);
 
+<<<<<<< HEAD
         useEffect(() => {
             if (bridge && account && chainId) {
                 (async () => {
@@ -77,6 +78,31 @@ export const withEVMConnection = (Wrapped) =>
                 })();
             }
         }, [serviceContainer, account, chainId]);
+=======
+    useEffect(() => {
+      if (serviceContainer.bridge && account && chainId) {
+        (async () => {
+          const nonce = bridge.getNonce(chainId);
+
+          bridge.getChain(nonce).then((chainWrapper) => {
+            const provider = bitKeep
+              ? window.bitkeep?.ethereum
+              : WCProvider?.walletConnectProvider || window.ethereum;
+
+            if (!provider) return;
+
+            const upgradedProvider = new ethers.providers.Web3Provider(
+              provider
+            );
+            const signer = upgradedProvider.getSigner(account);
+
+            chainWrapper.setSigner(signer);
+            bridge.setCurrentType(chainWrapper);
+          });
+        })();
+      }
+    }, [serviceContainer, account, chainId, WCProvider]);
+>>>>>>> origin/temporary
 
         return <Wrapped {...props} />;
     };
