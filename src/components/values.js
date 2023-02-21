@@ -506,7 +506,7 @@ export const chains = [
         mainnet: true,
         coming: false,
         newChain: false,
-        chainId: 42161,
+        chainId: 42170,
         tnChainId: 421613,
     },
     {

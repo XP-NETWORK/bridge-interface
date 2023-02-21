@@ -22,7 +22,10 @@ import {
 } from "../ConnectWalletHelper";
 
 export default function HigherEVM(OriginalComponent) {
-  const updatedComponent = withServices(() => {
+  const updatedComponent = withServices((props) => {
+    const {
+      serviceContainer: { bridge },
+    } = props;
     const { activate, chainId, deactivate } = useWeb3React();
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector((state) => state.general.from);
@@ -64,7 +67,11 @@ export default function HigherEVM(OriginalComponent) {
           }
           break;
         case "TrustWallet":
-          connected = await connectTrustWallet(activate, from.key, chainId);
+          connected = await connectTrustWallet(
+            activate,
+            from.key,
+            bridge.getChainIdByKey(from.key, testnet)
+          );
           dispatch(setWalletsModal(false));
           if (connected && to) {
             dispatch(setConnectedWallet("TrustWallet"));
@@ -77,7 +84,7 @@ export default function HigherEVM(OriginalComponent) {
             activate,
             from.key,
             testnet,
-            chainId
+            bridge.getChainIdByKey(from.key, testnet)
           );
           dispatch(setWalletsModal(false));
           if (connected && to) {
