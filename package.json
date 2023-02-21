@@ -68,7 +68,7 @@
     "xp.network": "git+https://github.com/xp-network/xpjs#bleeding-edge"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "HTTPS=true react-app-rewired start",
     "build": "REACT_APP_GIT_SHA=`git rev-parse HEAD` react-app-rewired build --max_old_space_size=8192",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
