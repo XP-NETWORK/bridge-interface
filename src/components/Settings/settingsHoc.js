@@ -340,7 +340,10 @@ const settingsHoc = (Wrapped) =>
           }
         }
       } else {
-        localStorage.setItem("widgetSettings", JSON.stringify(newSettings));
+        window.safeLocalStorage.setItem(
+          "widgetSettings",
+          JSON.stringify(newSettings)
+        );
         setCopied("saved");
       }
 
@@ -351,7 +354,7 @@ const settingsHoc = (Wrapped) =>
 
     const onResetSettings = () => {
       dispatch(setSettings(initSettings));
-      localStorage.removeItem("widgetSettings");
+      window.safeLocalStorage.removeItem("widgetSettings");
     };
 
     const onSelectAll = (entity) => {
