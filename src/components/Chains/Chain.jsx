@@ -7,7 +7,7 @@ import { useState } from "react";
 import Status from "./Status";
 import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-import { biz } from "../values";
+// import { biz } from "../values";
 
 export default function Chain(props) {
     const {
@@ -20,7 +20,7 @@ export default function Chain(props) {
         maintenance,
         updated,
         nonce,
-        type,
+        chainType,
     } = props;
 
     const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
@@ -31,8 +31,12 @@ export default function Chain(props) {
     const NONE = { display: "none" };
     const [chainStatus, setChainStatus] = useState(undefined);
     const location = useLocation();
-    const receiveFromSolana = biz && type === "EVM";
-    const sendFromSolana = biz && type === "Solana";
+    const departureOrDestination = useSelector(
+        (state) => state.general.departureOrDestination
+    );
+    // const receiveFromSolana = biz && type === "EVM";
+    // const sendFromSolana = biz && type === "Solana";
+    const isSolana = chainType === "Solana";
 
     useEffect(() => {
         if (testnet) return setChainStatus(true);
@@ -41,11 +45,7 @@ export default function Chain(props) {
 
     // !! ref
     const getStyle = () => {
-        if (from && from?.type !== "EVM" && sendFromSolana) {
-            return OFF;
-        } else if (from?.type === "Solana" && !receiveFromSolana) {
-            return OFF;
-        } else if (
+        if (
             (location.pathname.includes("testnet")
                 ? false
                 : !checkIfLive(nonce, validatorsInfo)) ||
@@ -72,9 +72,22 @@ export default function Chain(props) {
         } else return {};
     };
 
+    const getSolanaStyles = () => {
+        console.log({ departureOrDestination });
+        switch (departureOrDestination) {
+            case "departure":
+                return {};
+
+            case "destination":
+                if (from && from?.type !== "EVM") {
+                    return OFF;
+                } else return {};
+        }
+    };
+
     return (
         <li
-            style={getStyle()}
+            style={isSolana ? getSolanaStyles() : getStyle()}
             onClick={() => chainSelectHandler(filteredChain)}
             className="nftChainItem"
             data-chain={text}
@@ -114,6 +127,6 @@ Chain.propTypes = {
     chainKey: PropTypes.string,
     maintenance: PropTypes.bool,
     updated: PropTypes.bool,
-    type: PropTypes.text,
+    chainType: PropTypes.text,
     nonce: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };

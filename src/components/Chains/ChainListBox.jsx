@@ -331,7 +331,7 @@ function ChainListBox({ serviceContainer }) {
                                                 image={image}
                                                 key={`chain-${key}`}
                                                 nonce={nonce}
-                                                type={type}
+                                                chainType={type}
                                             />
                                         )
                                     );
@@ -374,7 +374,7 @@ function ChainListBox({ serviceContainer }) {
                                                 image={image}
                                                 nonce={nonce}
                                                 key={`chain-${key}`}
-                                                type={type}
+                                                chainType={type}
                                             />
                                         )
                                     );
@@ -416,7 +416,7 @@ function ChainListBox({ serviceContainer }) {
                                                 image={image}
                                                 nonce={nonce}
                                                 key={`chain-${key}`}
-                                                type={type}
+                                                chainType={type}
                                             />
                                         )
                                     );
@@ -458,7 +458,7 @@ function ChainListBox({ serviceContainer }) {
                                                 image={image}
                                                 nonce={nonce}
                                                 key={`chain-${key}`}
-                                                type={type}
+                                                chainType={type}
                                             />
                                         )
                                     );
