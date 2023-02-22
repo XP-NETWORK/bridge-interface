@@ -22,11 +22,11 @@ export default function Chain(props) {
         nonce,
         chainType,
     } = props;
-
+    console.log({ chainType });
     const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
     const testnet = useSelector((state) => state.general.testNet);
     const from = useSelector((state) => state.general.from);
-    // const to = useSelector((state) => state.general.to);
+    const to = useSelector((state) => state.general.to);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const NONE = { display: "none" };
     const [chainStatus, setChainStatus] = useState(undefined);
@@ -73,16 +73,18 @@ export default function Chain(props) {
     };
 
     const getSolanaStyles = () => {
-        console.log({ departureOrDestination });
-        switch (departureOrDestination) {
-            case "departure":
-                return {};
+        if (!from && !to) {
+            return {};
+        } else
+            switch (departureOrDestination) {
+                case "departure":
+                    return {};
 
-            case "destination":
-                if (from && from?.type !== "EVM") {
-                    return OFF;
-                } else return {};
-        }
+                case "destination":
+                    if (from && from?.type !== "EVM") {
+                        return OFF;
+                    } else return {};
+            }
     };
 
     return (
