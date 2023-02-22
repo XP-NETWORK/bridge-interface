@@ -7,6 +7,7 @@ import { useState } from "react";
 import Status from "./Status";
 import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
+import { biz } from "../values";
 
 export default function Chain(props) {
     const {
@@ -19,15 +20,18 @@ export default function Chain(props) {
         maintenance,
         updated,
         nonce,
+        type,
     } = props;
 
     const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
     const testnet = useSelector((state) => state.general.testNet);
     const from = useSelector((state) => state.general.from);
+    // const to = useSelector((state) => state.general.to);
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const NONE = { display: "none" };
     const [chainStatus, setChainStatus] = useState(undefined);
     const location = useLocation();
+    const receiveFromSolana = biz && type === "EVM";
 
     useEffect(() => {
         if (testnet) return setChainStatus(true);
@@ -36,7 +40,11 @@ export default function Chain(props) {
 
     // !! ref
     const getStyle = () => {
-        if (
+        if (from && from?.type !== "EVM" && type === "Solana") {
+            return OFF;
+        } else if (from?.type === "Solana" && !receiveFromSolana) {
+            return OFF;
+        } else if (
             (location.pathname.includes("testnet")
                 ? false
                 : !checkIfLive(nonce, validatorsInfo)) ||
@@ -105,5 +113,6 @@ Chain.propTypes = {
     chainKey: PropTypes.string,
     maintenance: PropTypes.bool,
     updated: PropTypes.bool,
+    type: PropTypes.text,
     nonce: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };

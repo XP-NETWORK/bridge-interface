@@ -309,6 +309,7 @@ function ChainListBox({ serviceContainer }) {
                                     mainnet,
                                     updated,
                                     nonce,
+                                    type,
                                 } = chain;
                                 if (
                                     String(from?.text).toLowerCase() !==
@@ -330,6 +331,7 @@ function ChainListBox({ serviceContainer }) {
                                                 image={image}
                                                 key={`chain-${key}`}
                                                 nonce={nonce}
+                                                type={type}
                                             />
                                         )
                                     );
@@ -349,6 +351,7 @@ function ChainListBox({ serviceContainer }) {
                                     mainnet,
                                     updated,
                                     nonce,
+                                    type,
                                 } = chain;
 
                                 if (
@@ -371,6 +374,7 @@ function ChainListBox({ serviceContainer }) {
                                                 image={image}
                                                 nonce={nonce}
                                                 key={`chain-${key}`}
+                                                type={type}
                                             />
                                         )
                                     );
@@ -390,6 +394,7 @@ function ChainListBox({ serviceContainer }) {
                                     testNet,
                                     updated,
                                     nonce,
+                                    type,
                                 } = chain;
                                 if (
                                     String(from?.text).toLowerCase() !==
@@ -411,6 +416,7 @@ function ChainListBox({ serviceContainer }) {
                                                 image={image}
                                                 nonce={nonce}
                                                 key={`chain-${key}`}
+                                                type={type}
                                             />
                                         )
                                     );
@@ -430,6 +436,7 @@ function ChainListBox({ serviceContainer }) {
                                     testNet,
                                     updated,
                                     nonce,
+                                    type,
                                 } = chain;
                                 if (
                                     String(to?.text).toLowerCase() !==
@@ -451,6 +458,7 @@ function ChainListBox({ serviceContainer }) {
                                                 image={image}
                                                 nonce={nonce}
                                                 key={`chain-${key}`}
+                                                type={type}
                                             />
                                         )
                                     );
