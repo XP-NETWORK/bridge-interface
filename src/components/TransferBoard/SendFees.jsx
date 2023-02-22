@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { withServices } from "../App/hocs/withServices";
 
 import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
+import BigNumber from "bignumber.js";
 
 const intervalTm = 10_000;
 
@@ -34,7 +35,17 @@ function SendFees(props) {
 
     const [loading, setLoading] = useState(false);
 
-    // const [deployFeeLoading, setDeployFeeLoading] = useState(false);
+    const [deployFeeLoading, setDeployFeeLoading] = useState(false);
+    console.log(
+        "🚀 ~ file: SendFees.jsx:38 ~ SendFees ~ deployFeeLoading:",
+        deployFeeLoading
+    );
+
+    const [deployFees, setDeployFees] = useState(0);
+    console.log(
+        "🚀 ~ file: SendFees.jsx:40 ~ SendFees ~ deployFees:",
+        deployFees
+    );
 
     const interval = useRef(null);
 
@@ -50,11 +61,26 @@ function SendFees(props) {
         setLoading(false);
     }
 
-    // const estimateDeploy = (fromChain, toChain, nft) => {
-    //     setDeployFeeLoading(true)
-    //     const res = fromChain.estimateDeploy(toChain, nft)
-    //     console.log({res});
-    // }
+    const estimateDeploy = async (fromChain, toChain, nfts) => {
+        setDeployFeeLoading(true);
+        const promises = nfts.map((nft) =>
+            fromChain.estimateDeploy(toChain, nft)
+        );
+        const settled = await Promise.allSettled(promises);
+        console.log(
+            "🚀 ~ file: SendFees.jsx:69 ~ estimateDeploy ~ settled:",
+            settled
+        );
+        let finalFee = new BigNumber(0);
+        settled.forEach((item) => {
+            const num = new BigNumber(item.value);
+            finalFee = finalFee.plus(num);
+        });
+        // console.log(Number(finalFee.toString()).toFixed(2));
+        // const fees = await fromChain.estimateDeploy(toChain, nfts[0]);
+        setDeployFees(Number(finalFee.toString()));
+        setDeployFeeLoading(false);
+    };
 
     function getNumToFix() {
         // debugger
@@ -92,11 +118,11 @@ function SendFees(props) {
 
                 const toChain = toChainWrapper.chain;
                 estimate(fromChainWrapper, toChain);
-                // estimateDeploy(fromChainWrapper, toChain, nft)
-                interval.current = setInterval(
-                    () => estimate(fromChainWrapper, toChain),
-                    intervalTm
-                );
+                estimateDeploy(fromChainWrapper, toChain, selectedNFTList);
+                interval.current = setInterval(() => {
+                    estimate(fromChainWrapper, toChain);
+                    estimateDeploy(fromChainWrapper, toChain, selectedNFTList);
+                }, intervalTm);
             })();
 
         return () => clearInterval(interval.current);
@@ -131,21 +157,27 @@ function SendFees(props) {
                     )}
                 </div>
             </div>
-            <div className="fees deploy-fees">
-                <div className="fees__title deploy-fees__tittle">
-                    <span>Deploy Fees</span>
-                    <span className="deploy-fees__inf">
-                        <InfLithComp
-                            className="svgWidget nftInfIcon"
-                            alt="info"
-                        />
-                    </span>
+            {deployFees && (
+                <div className="fees deploy-fees">
+                    <div className="fees__title deploy-fees__tittle">
+                        <span>Deploy Fees</span>
+                        <span className="deploy-fees__inf">
+                            <InfLithComp
+                                className="svgWidget nftInfIcon"
+                                alt="info"
+                            />
+                        </span>
+                    </div>
+                    {deployFeeLoading ? (
+                        <div>
+                            <span>{deployFees.toFixed(2)}</span>
+                            <span>{` ${chainParams?.currencySymbol}`}</span>
+                        </div>
+                    ) : (
+                        <LittleLoader />
+                    )}
                 </div>
-                <div>
-                    <span>12</span>
-                    <span>{` ${chainParams?.currencySymbol}`}</span>
-                </div>
-            </div>
+            )}
         </div>
     );
 }

@@ -279,6 +279,10 @@
     padding: 16px;
     font-size: 14px;
 }
+.deploy-fees__tittle {
+    display: flex;
+    gap: 6px;
+}
 .deploy-fees__inf {
     position: relative;
 }
