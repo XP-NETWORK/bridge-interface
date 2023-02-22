@@ -34,6 +34,8 @@ function SendFees(props) {
 
     const [loading, setLoading] = useState(false);
 
+    // const [deployFeeLoading, setDeployFeeLoading] = useState(false);
+
     const interval = useRef(null);
 
     async function estimate(fromChain, toChain) {
@@ -47,6 +49,12 @@ function SendFees(props) {
         setFees(formatedFees * selectedNFTList.length);
         setLoading(false);
     }
+
+    // const estimateDeploy = (fromChain, toChain, nft) => {
+    //     setDeployFeeLoading(true)
+    //     const res = fromChain.estimateDeploy(toChain, nft)
+    //     console.log({res});
+    // }
 
     function getNumToFix() {
         // debugger
@@ -84,6 +92,7 @@ function SendFees(props) {
 
                 const toChain = toChainWrapper.chain;
                 estimate(fromChainWrapper, toChain);
+                // estimateDeploy(fromChainWrapper, toChain, nft)
                 interval.current = setInterval(
                     () => estimate(fromChainWrapper, toChain),
                     intervalTm
