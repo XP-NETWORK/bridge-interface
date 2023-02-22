@@ -193,8 +193,25 @@ class AbstractChain {
     }
   }
 
+  async estimateDeploy(toChain, nft) {
+    try {
+      const res = await this.bridge.estimateWithContractDep(
+        this.chain,
+        toChain,
+        nft
+      );
+      console.log(
+        res.calcContractDep
+          ?.integerValue()
+          .dividedBy(this.chainParams.decimals)
+          .toNumber()
+      );
+    } catch (e) {
+      console.log("in estimateDeploy", e);
+    }
+  }
+
   async transfer(args) {
-    debugger;
     try {
       if (!this.signer)
         throw new Error("No signer for ", this.chainParams.text);

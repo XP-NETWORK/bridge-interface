@@ -236,8 +236,8 @@ export const connectMetaMask = async (activate, from, to) => {
 
       window.open(link);
     }
-
-    if (!localStorage.getItem("XP_MM_CONNECTED"))
+    console.log(window.safeLocalStorage.getItem("XP_MM_CONNECTED"));
+    if (!window.safeLocalStorage.getItem("XP_MM_CONNECTED"))
       await window.ethereum.request({
         method: "wallet_requestPermissions",
         params: [
@@ -248,7 +248,7 @@ export const connectMetaMask = async (activate, from, to) => {
       });
 
     await activate(injected);
-    localStorage.setItem("XP_MM_CONNECTED", "true");
+    window.safeLocalStorage.setItem("XP_MM_CONNECTED", "true");
     store.dispatch(setMetaMask(true));
     return true;
   } catch (ex) {
