@@ -102,6 +102,7 @@ function SendFees(props) {
         ]);
 
         const toChain = toChainWrapper.chain;
+        //fromChainWrapper.estimateDeploy(toChain, selectedNFTList[0]);
         estimate(fromChainWrapper, toChain);
         interval.current = setInterval(
           () => estimate(fromChainWrapper, toChain),
