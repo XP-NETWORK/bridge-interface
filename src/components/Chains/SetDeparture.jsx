@@ -8,7 +8,7 @@ import Jazzicon from "react-jazzicon";
 
 export default function SetDeparture() {
   const dispatch = useDispatch();
-  const from = useSelector((state) => state.general.from);
+  let from = useSelector((state) => state.general.from);
 
   const [seed, setSeed] = useState();
 

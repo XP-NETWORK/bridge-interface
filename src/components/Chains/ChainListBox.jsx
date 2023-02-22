@@ -191,12 +191,13 @@ function ChainListBox({ serviceContainer }) {
         ];
 
         if (
-            location.pathname === "/connect" ||
-            location.pathname === "/testnet/connect" ||
-            location.pathname === "/account" ||
-            location.pathname === "/testnet/account" ||
-            location.pathname === "/staging" ||
-            location.pathname === "/staging/account" ||
+            location.pathname.includes("/connect") ||
+            location.pathname.includes("/testnet/connect") ||
+            location.pathname.includes("/account") ||
+            location.pathname.includes("/testnet/account") ||
+            location.pathname.includes("/staging") ||
+            location.pathname.includes("/staging/") ||
+            location.pathname.includes("/staging/account") ||
             location.pathname === "/"
         ) {
             setFromChains(sorted.filter((e) => e.text !== to?.text));
@@ -244,12 +245,13 @@ function ChainListBox({ serviceContainer }) {
             ...withComing,
         ];
         if (
-            location.pathname === "/connect" ||
-            location.pathname === "/testnet/connect" ||
-            location.pathname === "/account" ||
-            location.pathname === "/testnet/account" ||
-            location.pathname === "/staging" ||
-            location.pathname === "/staging/account" ||
+            location.pathname.includes("/connect") ||
+            location.pathname.includes("/testnet/connect") ||
+            location.pathname.includes("/account") ||
+            location.pathname.includes("/testnet/account") ||
+            location.pathname.includes("/staging") ||
+            location.pathname.includes("/staging/") ||
+            location.pathname.includes("/staging/account") ||
             location.pathname === "/"
         ) {
             setToChains(sorted.filter((e) => e.text !== from?.text));
