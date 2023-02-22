@@ -32,6 +32,7 @@ export default function Chain(props) {
     const [chainStatus, setChainStatus] = useState(undefined);
     const location = useLocation();
     const receiveFromSolana = biz && type === "EVM";
+    const sendFromSolana = biz && type === "Solana";
 
     useEffect(() => {
         if (testnet) return setChainStatus(true);
@@ -40,7 +41,7 @@ export default function Chain(props) {
 
     // !! ref
     const getStyle = () => {
-        if (from && from?.type !== "EVM" && type === "Solana") {
+        if (from && from?.type !== "EVM" && sendFromSolana) {
             return OFF;
         } else if (from?.type === "Solana" && !receiveFromSolana) {
             return OFF;
