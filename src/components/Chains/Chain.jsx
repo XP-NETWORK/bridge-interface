@@ -20,9 +20,9 @@ export default function Chain(props) {
         maintenance,
         updated,
         nonce,
-        chainType,
+        // chainType,
     } = props;
-    console.log({ chainType });
+
     const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
     const testnet = useSelector((state) => state.general.testNet);
     const from = useSelector((state) => state.general.from);
@@ -36,7 +36,12 @@ export default function Chain(props) {
     );
     // const receiveFromSolana = biz && type === "EVM";
     // const sendFromSolana = biz && type === "Solana";
-    const isSolana = chainType === "Solana";
+    const isSolana = filteredChain.type === "Solana";
+    console.log(
+        "🚀 ~ file: Chain.jsx:40 ~ Chain ~ isSolana:",
+        isSolana,
+        filteredChain.type
+    );
 
     useEffect(() => {
         if (testnet) return setChainStatus(true);
@@ -129,6 +134,6 @@ Chain.propTypes = {
     chainKey: PropTypes.string,
     maintenance: PropTypes.bool,
     updated: PropTypes.bool,
-    chainType: PropTypes.text,
+    // chainType: PropTypes.text,
     nonce: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
