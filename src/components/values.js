@@ -195,7 +195,7 @@ export const chains = [
         image: { avatar: true, src: Solana },
         maintenance: false,
         testNet: true,
-        mainnet: true,
+        mainnet: biz,
     },
     {
         type: "Cardano",
