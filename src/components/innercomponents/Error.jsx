@@ -16,7 +16,6 @@ export default function Error() {
     };
     let error = useSelector((state) => state.general.error);
     const whitelistErr = error?.includes("automatically whitelisted");
-    console.log("🚀 ~ file: Error.jsx:16 ~ Error ~ error", error);
 
     if (error && whitelistErr) {
         error = <WhiteListError />;

@@ -44,13 +44,13 @@ export const withEVMConnection = (Wrapped) =>
                     } else
                         dispatch(
                             setError({
-                                message: `Destination chain and walletconnect chain must be the same.`,
+                                message: `Departure chain and WalletConnect selected network must be the same.`,
                             })
                         );
                 } else
                     dispatch(
                         setError({
-                            message: `${chain.name} is not supported by walletconnect protocol.`,
+                            message: `${chain.name} is not supported by WalletConnect protocol.`,
                         })
                     );
             }
