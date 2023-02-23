@@ -176,7 +176,7 @@ class AbstractChain {
 
             const fees = res.multipliedBy(feeMultiplier).integerValue();
 
-            console.log(fees.toString());
+            // console.log(fees.toString());
 
             return {
                 fees: fees.toString(10),

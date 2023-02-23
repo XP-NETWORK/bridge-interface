@@ -13,6 +13,7 @@ import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
 import BigNumber from "bignumber.js";
 
 const intervalTm = 10_000;
+const deployFeeIntTm = 30_000;
 
 function SendFees(props) {
     const { serviceContainer } = props;
@@ -35,11 +36,12 @@ function SendFees(props) {
 
     const [loading, setLoading] = useState(false);
 
-    const [deployFeeLoading, setDeployFeeLoading] = useState(false);
+    // const [deployFeeLoading, setDeployFeeLoading] = useState(false);
 
     const [deployFees, setDeployFees] = useState(0);
 
     const interval = useRef(null);
+    const deployFeeInterval = useRef(null);
 
     async function estimate(fromChain, toChain) {
         setLoading(true);
@@ -54,7 +56,7 @@ function SendFees(props) {
     }
 
     const estimateDeploy = async (fromChain, toChain, nfts) => {
-        setDeployFeeLoading(true);
+        // setDeployFeeLoading(true);
         const promises = nfts.map((nft) =>
             fromChain.estimateDeploy(toChain, nft)
         );
@@ -67,7 +69,7 @@ function SendFees(props) {
         });
 
         setDeployFees(Number(finalFee.toString()));
-        setDeployFeeLoading(false);
+        // setDeployFeeLoading(false);
     };
 
     function getNumToFix() {
@@ -94,7 +96,10 @@ function SendFees(props) {
     useEffect(() => {
         if (!selectedNFTList.length) {
             setFees("0");
-            return clearInterval(interval.current);
+            setDeployFees(0);
+            clearInterval(interval.current);
+            clearInterval(deployFeeInterval.current);
+            return;
         }
 
         selectedNFTList.length &&
@@ -109,11 +114,16 @@ function SendFees(props) {
                 estimateDeploy(fromChainWrapper, toChain, selectedNFTList);
                 interval.current = setInterval(() => {
                     estimate(fromChainWrapper, toChain);
-                    estimateDeploy(fromChainWrapper, toChain, selectedNFTList);
                 }, intervalTm);
+                deployFeeInterval.current = setInterval(() => {
+                    estimateDeploy(fromChainWrapper, toChain, selectedNFTList);
+                }, deployFeeIntTm);
             })();
 
-        return () => clearInterval(interval.current);
+        return () => {
+            clearInterval(deployFeeInterval.current);
+            clearInterval(interval.current);
+        };
     }, [selectedNFTList, to]);
 
     return (
@@ -145,7 +155,7 @@ function SendFees(props) {
                     )}
                 </div>
             </div>
-            {deployFees && selectedNFTList?.length > 0 && (
+            {deployFees && selectedNFTList?.length ? (
                 <div className="fees deploy-fees">
                     <div className="fees__title deploy-fees__tittle">
                         <span>Deploy Fees</span>
@@ -156,16 +166,16 @@ function SendFees(props) {
                             />
                         </span>
                     </div>
-                    {deployFeeLoading ? (
-                        <div>
-                            <span>{deployFees.toFixed(2)}</span>
-                            <span>{` ${chainParams?.currencySymbol}`}</span>
-                        </div>
-                    ) : (
+                    {/* {deployFeeLoading ? ( */}
+                    <div>
+                        <span>{deployFees.toFixed(2)}</span>
+                        <span>{` ${chainParams?.currencySymbol}`}</span>
+                    </div>
+                    {/* ) : (
                         <LittleLoader />
-                    )}
+                    )} */}
                 </div>
-            )}
+            ) : null}
         </div>
     );
 }
