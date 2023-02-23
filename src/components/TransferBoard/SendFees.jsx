@@ -36,16 +36,8 @@ function SendFees(props) {
     const [loading, setLoading] = useState(false);
 
     const [deployFeeLoading, setDeployFeeLoading] = useState(false);
-    console.log(
-        "🚀 ~ file: SendFees.jsx:38 ~ SendFees ~ deployFeeLoading:",
-        deployFeeLoading
-    );
 
     const [deployFees, setDeployFees] = useState(0);
-    console.log(
-        "🚀 ~ file: SendFees.jsx:40 ~ SendFees ~ deployFees:",
-        deployFees
-    );
 
     const interval = useRef(null);
 
@@ -67,17 +59,13 @@ function SendFees(props) {
             fromChain.estimateDeploy(toChain, nft)
         );
         const settled = await Promise.allSettled(promises);
-        console.log(
-            "🚀 ~ file: SendFees.jsx:69 ~ estimateDeploy ~ settled:",
-            settled
-        );
+
         let finalFee = new BigNumber(0);
         settled.forEach((item) => {
             const num = new BigNumber(item.value);
             finalFee = finalFee.plus(num);
         });
-        // console.log(Number(finalFee.toString()).toFixed(2));
-        // const fees = await fromChain.estimateDeploy(toChain, nfts[0]);
+
         setDeployFees(Number(finalFee.toString()));
         setDeployFeeLoading(false);
     };
@@ -157,7 +145,7 @@ function SendFees(props) {
                     )}
                 </div>
             </div>
-            {deployFees && (
+            {deployFees && selectedNFTList?.length > 0 && (
                 <div className="fees deploy-fees">
                     <div className="fees__title deploy-fees__tittle">
                         <span>Deploy Fees</span>
