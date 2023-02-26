@@ -1,20 +1,9 @@
 import {
-    EthereumClient,
-    modalConnectors,
-    walletConnectProvider,
+  EthereumClient,
+  modalConnectors,
+  walletConnectProvider,
 } from "@web3modal/ethereum";
-import {
-    avalanche,
-    bsc,
-    mainnet,
-    aurora,
-    fantom,
-    gnosis,
-    iotex,
-    moonbeam,
-    okc,
-    polygon,
-} from "wagmi/chains";
+import * as allChains from "wagmi/chains";
 import { configureChains, createClient } from "wagmi";
 // import { Chain } from 'wagmi'
 
@@ -43,36 +32,29 @@ import { configureChains, createClient } from "wagmi";
 //     },
 //   } as const satisfies Chain
 
-export const wcId = process.env.REACT_APP_WALLETCONNECT_APP_ID;
-export const wcSupportedChains = [
-    avalanche,
-    bsc,
-    mainnet,
-    aurora,
-    fantom,
-    gnosis,
-    moonbeam,
-    iotex,
-    okc,
-    polygon,
-];
+export const wcId = "d61f00671338b982a0b8a236682e2b1d";
+export const wcSupportedChains = Object.keys(allChains).map(
+  (key) => allChains[key]
+);
 
 const { provider } = configureChains(wcSupportedChains, [
-    walletConnectProvider({ projectId: wcId }),
+  walletConnectProvider({ projectId: wcId }),
 ]);
 
 export const wagmiClient = createClient({
-    autoConnect: false,
-    connectors: modalConnectors({
-        projectId: process.env.REACT_APP_WALLETCONNECT_APP_ID,
-        version: "1",
-        appName: "XP.NETWORK Multi-chain NFT bridge",
-        wcSupportedChains,
-    }),
-    provider,
+  autoConnect: true,
+
+  connectors: modalConnectors({
+    projectId: wcId,
+    version: "1",
+
+    appName: "XP.NETWORK Multi-chain NFT bridge",
+    chains: wcSupportedChains,
+  }),
+  provider,
 });
 
 export const ethereumClient = new EthereumClient(
-    wagmiClient,
-    wcSupportedChains
+  wagmiClient,
+  wcSupportedChains
 );
