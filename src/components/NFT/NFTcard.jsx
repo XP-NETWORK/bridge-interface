@@ -238,7 +238,9 @@ export default function NFTcard({
                   claimables={claimables}
                 />
               </span>
-              <span className="nft-number">{nft.native?.tokenId}</span>
+              {from?.text !== "Solana" && (
+                <span className="nft-number">{nft.native?.tokenId}</span>
+              )}
             </div>
           </div>
         )}

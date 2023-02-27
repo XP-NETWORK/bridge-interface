@@ -151,6 +151,9 @@ class AbstractChain {
 
   async estimate(toChain, nft, receiver = "", widgetParams) {
     //tron case
+    /* if (toChain.getNonce() === 9) {
+      return calcFees(getTronFees(this.chainParams.key), this.nonce);
+    }*/
 
     try {
       const res = await this.bridge.estimateFees(
@@ -183,8 +186,6 @@ class AbstractChain {
           ?.integerValue();
       }
 
-      console.log(fees.toString());
-
       return {
         fees: fees.toString(10),
         formatedFees: fees
@@ -201,8 +202,23 @@ class AbstractChain {
     }
   }
 
+  async estimateDeploy(toChain, nft) {
+    try {
+      const res = await this.bridge.estimateWithContractDep(
+        this.chain,
+        toChain,
+        nft
+      );
+      return res.calcContractDep
+        ?.integerValue()
+        .dividedBy(this.chainParams.decimals)
+        .toNumber();
+    } catch (e) {
+      console.log("in estimateDeploy", e);
+    }
+  }
+
   async transfer(args) {
-    debugger;
     try {
       if (!this.signer)
         throw new Error("No signer for ", this.chainParams.text);
@@ -372,7 +388,9 @@ class Elrond extends AbstractChain {
     if (Array.isArray(res)) {
       res = res[0];
     }
-    return { hash: ethers.utils.hexlify(res.hash?.hash)?.replace(/^0x/, "") };
+    return {
+      hash: ethers.utils.hexlify(res.hash?.hash)?.replace(/^0x/, ""),
+    };
   }
 
   async transfer(args) {

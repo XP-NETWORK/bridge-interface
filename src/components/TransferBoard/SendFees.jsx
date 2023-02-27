@@ -9,9 +9,13 @@ import { useEffect } from "react";
 
 import { withServices } from "../App/hocs/withServices";
 
+import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
+import BigNumber from "bignumber.js";
+
 import Wservice from "../Widget/wservice";
 
 const intervalTm = 10_000;
+const deployFeeIntTm = 30_000;
 
 function SendFees(props) {
   const { serviceContainer } = props;
@@ -40,7 +44,12 @@ function SendFees(props) {
 
   const [loading, setLoading] = useState(false);
 
+  // const [deployFeeLoading, setDeployFeeLoading] = useState(false);
+
+  const [deployFees, setDeployFees] = useState(0);
+
   const interval = useRef(null);
+  const deployFeeInterval = useRef(null);
 
   async function estimate(fromChain, toChain) {
     setLoading(true);
@@ -52,39 +61,28 @@ function SendFees(props) {
         ? { wservice: Wservice(), affiliationFees, affiliationSettings, from }
         : undefined
     );
-
-    console.log(fees, formatedFees);
-
     dispatch(setBigNumFees(fees));
     setFees(formatedFees * selectedNFTList.length);
-
-    /* let fee;
-    TODO
-      if (to === "Tron") {
-        fee =
-          from === "BSC"
-            ? new BigNumber("100000000000000000")
-            : from === "Polygon"
-            ? new BigNumber("23200000000000000000")
-            : from === "Ethereum"
-            ? new BigNumber("14952490000000000")
-            : from === "Algorand"
-            ? new BigNumber("32160950300000000000")
-            : from === "Elrond"
-            ? new BigNumber("239344350000000000")
-            : from === "Avalanche"
-            ? new BigNumber("529683610000000000")
-            : from === "xDai"
-            ? new BigNumber("56645012600000000000")
-            : from === "Fuse"
-            ? new BigNumber("95352570490000000000")
-            : "";
-      
-   */
     setLoading(false);
   }
 
+  const estimateDeploy = async (fromChain, toChain, nfts) => {
+    // setDeployFeeLoading(true);
+    const promises = nfts.map((nft) => fromChain.estimateDeploy(toChain, nft));
+    const settled = await Promise.allSettled(promises);
+
+    let finalFee = new BigNumber(0);
+    settled.forEach((item) => {
+      const num = new BigNumber(item.value);
+      finalFee = finalFee.plus(num);
+    });
+
+    setDeployFees(Number(finalFee.toString()));
+    // setDeployFeeLoading(false);
+  };
+
   function getNumToFix() {
+    // debugger
     let num = 1;
     let str;
     if (fees > 0 && fees) {
@@ -103,11 +101,12 @@ function SendFees(props) {
   }, [from]);
 
   useEffect(() => {
-    console.log(selectedNFTList);
-
     if (!selectedNFTList.length) {
       setFees("0");
-      return clearInterval(interval.current);
+      setDeployFees(0);
+      clearInterval(interval.current);
+      clearInterval(deployFeeInterval.current);
+      return;
     }
 
     selectedNFTList.length &&
@@ -119,38 +118,64 @@ function SendFees(props) {
 
         const toChain = toChainWrapper.chain;
         estimate(fromChainWrapper, toChain);
-        interval.current = setInterval(
-          () => estimate(fromChainWrapper, toChain),
-          intervalTm
-        );
+        estimateDeploy(fromChainWrapper, toChain, selectedNFTList);
+        interval.current = setInterval(() => {
+          estimate(fromChainWrapper, toChain);
+        }, intervalTm);
+        deployFeeInterval.current = setInterval(() => {
+          estimateDeploy(fromChainWrapper, toChain, selectedNFTList);
+        }, deployFeeIntTm);
       })();
 
-    return () => clearInterval(interval.current);
+    return () => {
+      clearInterval(deployFeeInterval.current);
+      clearInterval(interval.current);
+    };
   }, [selectedNFTList, to]);
 
   return (
-    <div className="fees">
-      <div className="fees__title">Fees</div>
-      <div className="fees__bank">
-        {balance ? (
-          <span className="fees__balance">{`Balance: ${balance.toFixed(
-            3
-          )} ${chainParams?.currencySymbol ||
-            (from?.text === "Gnosis" && "Gnosis")}`}</span>
-        ) : (
-          `Balance: 0 ${chainParams?.currencySymbol || ""}`
-        )}
-        {loading ? (
-          <LittleLoader />
-        ) : (
-          <span>
-            {`${fees && fees > 0 ? fees?.toFixed(getNumToFix(fees)) : "0"}
+    <div className="fees__container">
+      <div className="fees">
+        <div className="fees__title">Fees</div>
+        <div className="fees__bank">
+          {balance ? (
+            <span className="fees__balance">{`Balance: ${balance.toFixed(
+              3
+            )} ${chainParams?.currencySymbol ||
+              (from?.text === "Gnosis" && "Gnosis")}`}</span>
+          ) : (
+            `Balance: 0 ${chainParams?.currencySymbol || ""}`
+          )}
+          {loading ? (
+            <LittleLoader />
+          ) : (
+            <span>
+              {`${fees && fees > 0 ? fees?.toFixed(getNumToFix(fees)) : "0"}
                         ${chainParams?.currencySymbol || ""} 
                         `}
-            {/* ${discountLeftUsd && showDiscount(fees).toFixed(2)} */}
-          </span>
-        )}
+              {/* ${discountLeftUsd && showDiscount(fees).toFixed(2)} */}
+            </span>
+          )}
+        </div>
       </div>
+      {deployFees && selectedNFTList?.length ? (
+        <div className="fees deploy-fees">
+          <div className="fees__title deploy-fees__tittle">
+            <span>Deploy Fees</span>
+            <span className="deploy-fees__inf">
+              <InfLithComp className="svgWidget nftInfIcon" alt="info" />
+            </span>
+          </div>
+          {/* {deployFeeLoading ? ( */}
+          <div>
+            <span>{deployFees.toFixed(2)}</span>
+            <span>{` ${chainParams?.currencySymbol}`}</span>
+          </div>
+          {/* ) : (
+                        <LittleLoader />
+                    )} */}
+        </div>
+      ) : null}
     </div>
   );
 }

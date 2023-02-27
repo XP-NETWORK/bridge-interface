@@ -31,7 +31,6 @@ import { chains } from "./components/values";
 
 import "./components/Modals/Modal.css";
 import Modals from "./components/Modals/Modals";
-
 import AppContainer from "./components/App/container";
 
 import Widget from "./components/Widget";
@@ -94,7 +93,7 @@ function App({ network }) {
   }, [location]);
 
   useEffect(() => {
-    window.safeLocalStorage.removeItem("walletconnect");
+    localStorage.removeItem("walletconnect");
     dispatch(generalSlice.setInnerWidth(window.innerWidth));
     const from = new URLSearchParams(window.location.search).get("from");
     const to = new URLSearchParams(window.location.search).get("to");
