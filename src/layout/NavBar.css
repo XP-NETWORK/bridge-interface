@@ -346,9 +346,14 @@
     .navbar-nav .navbar-dropdown {
         display: none;
     }
-    /* .desc-link {
+    .navbar-connect {
+        margin-left: auto;
+        margin-right: 0;
+        min-width: max-content;
+    }
+    .xdesktop_only {
         display: none !important;
-    } */
+    }
 }
 
 @media only screen and (min-width: 990px) {
@@ -363,25 +368,19 @@
     }
 }
 
-@media only screen and (max-width: 990px) {
-    .navbar-connect {
-        margin-left: auto;
-        margin-right: 0;
-        min-width: max-content;
-    }
-
-    .xdesktop_only {
-        display: none !important;
-    }
-
-    .xmobile_only {
-        /* display: block !important; */
-    }
-}
-
 @media screen and (max-width: 768px) {
     .navbar {
         width: calc(100% - 10px);
+        position: relative;
+    }
+    .navbar-collapse {
+        top: 60px;
+        position: absolute;
+        right: 10px;
+        margin-left: 10px;
+        z-index: 2;
+        filter: drop-shadow(0px 4px 24px rgba(0, 0, 0, 0.12));
+        width: 400px;
     }
     .navbar-nav .navbar-dropdown {
         display: none;
