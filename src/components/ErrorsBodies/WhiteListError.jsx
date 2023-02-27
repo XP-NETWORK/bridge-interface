@@ -21,7 +21,7 @@ export default function WhiteListError() {
                     rel="noreferrer"
                     href="https://docs.xp.network/docs/Multibridge3.0/limitations"
                 >
-                    {` here`}
+                    {` here`}.
                 </a>
             </div>
             <div className="message">
@@ -32,7 +32,7 @@ export default function WhiteListError() {
                     rel="noreferrer"
                     href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"
                 >
-                    {` here`}
+                    {` here`}.
                 </a>
             </div>
         </div>
