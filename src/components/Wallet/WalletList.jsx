@@ -67,12 +67,12 @@ export default function WalletList({ connected, input, discount }) {
         {
             Component: (
                 <WalletConnect
-                    wallet={"MetaMask"}
+                    wallet={"WalletConnect"}
                     key="wallet-connect"
                     close={connected}
                 />
             ),
-            name: "MetaMask",
+            name: "WalletConnect",
             type: "EVM",
             mobile: true,
             desktop: true,

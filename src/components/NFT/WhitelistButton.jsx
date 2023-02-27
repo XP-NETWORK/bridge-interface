@@ -5,25 +5,26 @@ import { useSelector } from "react-redux";
 // import { biz } from "../values";
 
 export const WhitelistButton = ({ whitelist, isNFTWhitelisted }) => {
-    const { text } = useSelector((state) => state.general.from);
-    let networks = text.match(
-        /Polygon|BSC|Ethereum|Fantom|Avalanche|Moonbeam|SKALE|Godwoken|GateChain|Fuse|Gnosis|Velas|Harmony|Caduceus|Arbitrum|MultiversX/
-    );
-    const testnet = useSelector((state) => state.general.testNet);
+  const { text } = useSelector((state) => state.general.from);
+  let networks = text.match(
+    /Polygon|BSC|Ethereum|Fantom|Avalanche|Moonbeam/
+    /*SKALE|Godwoken|GateChain|Fuse|Gnosis|Velas|Harmony|Caduceus|Arbitrum|MultiversX*/
+  );
+  const testnet = useSelector((state) => state.general.testNet);
 
-    return !isNFTWhitelisted && networks ? (
-        <div
-            style={{ display: testnet ? "none" : "" }}
-            // style={{ display: "none" }}
-            className="whitelist-btn"
-            onClick={whitelist}
-        >
-            Whitelist
-        </div>
-    ) : null;
+  return !isNFTWhitelisted && networks ? (
+    <div
+      style={{ display: testnet ? "none" : "" }}
+      // style={{ display: "none" }}
+      className="whitelist-btn"
+      onClick={whitelist}
+    >
+      Whitelist
+    </div>
+  ) : null;
 };
 
 WhitelistButton.propTypes = {
-    isNFTWhitelisted: PropTypes.bool,
-    whitelist: PropTypes.func,
+  isNFTWhitelisted: PropTypes.bool,
+  whitelist: PropTypes.func,
 };

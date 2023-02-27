@@ -10,9 +10,12 @@ import "./Buttons.css";
 export default function ChainSwitch({ assignment }) {
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
-
+    const connectedWallet = useSelector(
+        (state) => state.general.connectedWallet
+    );
+    const wc = connectedWallet === "WalletConnect";
     const dispatch = useDispatch();
-
+    const OFF = { pointerEvents: "none", opacity: "0.7" };
     function handleSwitchChain() {
         dispatch(setDepartureOrDestination("destination"));
         dispatch(setSwitchDestination(true));
@@ -28,6 +31,7 @@ export default function ChainSwitch({ assignment }) {
             case "from":
                 return (
                     <span
+                        style={wc ? OFF : {}}
                         onClick={handleFromChainSwitch}
                         className="chain-switch"
                     >

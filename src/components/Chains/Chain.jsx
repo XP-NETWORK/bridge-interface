@@ -20,7 +20,7 @@ export default function Chain(props) {
         maintenance,
         updated,
         nonce,
-        // chainType,
+        chainType,
     } = props;
 
     const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
@@ -36,12 +36,9 @@ export default function Chain(props) {
     );
     // const receiveFromSolana = biz && type === "EVM";
     // const sendFromSolana = biz && type === "Solana";
-    const isSolana = filteredChain.type === "Solana";
-    console.log(
-        "🚀 ~ file: Chain.jsx:40 ~ Chain ~ isSolana:",
-        isSolana,
-        filteredChain.type
-    );
+    // const isSolana = filteredChain.type === "Solana";
+    // const solanaDepOrDes =
+    //     (from && from?.type === "Solana") || (to && to?.type === "Solana");
 
     useEffect(() => {
         if (testnet) return setChainStatus(true);
@@ -50,6 +47,22 @@ export default function Chain(props) {
 
     // !! ref
     const getStyle = () => {
+        switch (departureOrDestination) {
+            case "departure":
+                if (to && to?.text === text) return NONE;
+                if (to && to?.type === "Solana" && chainType !== "EVM")
+                    return OFF;
+                if (to && to?.type !== "EVM" && chainType === "Solana")
+                    return OFF;
+                break;
+            case "destination":
+                if (from && from?.text === text) return NONE;
+                if (from && from?.type === "Solana" && chainType !== "EVM")
+                    return OFF;
+                if (from && from?.type !== "EVM" && chainType === "Solana")
+                    return OFF;
+        }
+
         if (
             (location.pathname.includes("testnet")
                 ? false
@@ -77,24 +90,23 @@ export default function Chain(props) {
         } else return {};
     };
 
-    const getSolanaStyles = () => {
-        if (!from && !to) {
-            return {};
-        } else
-            switch (departureOrDestination) {
-                case "departure":
-                    return {};
+    // const getSolanaDepOrDesStyles = () => {
+    //     // eslint-disable-next-line no-debugger
+    //     // debugger;
+    //     switch (departureOrDestination) {
+    //         case "departure":
+    //             if (to.type === "Solana" && chainType !== "EVM") return OFF;
+    //             else if (to.type !== "EVM" && text === "Solana") return OFF;
+    //             else return styles();
 
-                case "destination":
-                    if (from && from?.type !== "EVM") {
-                        return OFF;
-                    } else return {};
-            }
-    };
+    //         case "destination":
+    //             return from.type === "Solana" && chainType !== "EVM" ? OFF : {};
+    //     }
+    // };
 
     return (
         <li
-            style={isSolana ? getSolanaStyles() : getStyle()}
+            style={getStyle()}
             onClick={() => chainSelectHandler(filteredChain)}
             className="nftChainItem"
             data-chain={text}
@@ -134,6 +146,6 @@ Chain.propTypes = {
     chainKey: PropTypes.string,
     maintenance: PropTypes.bool,
     updated: PropTypes.bool,
-    // chainType: PropTypes.text,
+    chainType: PropTypes.text,
     nonce: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
