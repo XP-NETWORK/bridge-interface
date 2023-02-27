@@ -445,3 +445,14 @@
         margin-top: 30vh;
     }
 }
+
+@media only screen and (max-width: 1024px) {
+    .video-responsive iframe {
+        width: 100%;
+        height: 440px;
+    }
+    .video__modal {
+        width: 90%;
+        left: 5%;
+    }
+}
