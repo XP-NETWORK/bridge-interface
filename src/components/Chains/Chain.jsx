@@ -34,11 +34,6 @@ export default function Chain(props) {
     const departureOrDestination = useSelector(
         (state) => state.general.departureOrDestination
     );
-    // const receiveFromSolana = biz && type === "EVM";
-    // const sendFromSolana = biz && type === "Solana";
-    // const isSolana = filteredChain.type === "Solana";
-    // const solanaDepOrDes =
-    //     (from && from?.type === "Solana") || (to && to?.type === "Solana");
 
     useEffect(() => {
         if (testnet) return setChainStatus(true);
@@ -89,20 +84,6 @@ export default function Chain(props) {
             return NONE;
         } else return {};
     };
-
-    // const getSolanaDepOrDesStyles = () => {
-    //     // eslint-disable-next-line no-debugger
-    //     // debugger;
-    //     switch (departureOrDestination) {
-    //         case "departure":
-    //             if (to.type === "Solana" && chainType !== "EVM") return OFF;
-    //             else if (to.type !== "EVM" && text === "Solana") return OFF;
-    //             else return styles();
-
-    //         case "destination":
-    //             return from.type === "Solana" && chainType !== "EVM" ? OFF : {};
-    //     }
-    // };
 
     return (
         <li
