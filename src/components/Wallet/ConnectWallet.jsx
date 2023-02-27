@@ -10,7 +10,7 @@ import {
   setTemporaryFrom,
   setWalletsModal,
 } from "../../store/reducers/generalSlice";
-// import MaiarModal from "../Modals/MaiarModal/MaiarModal";
+import { useAccount } from "wagmi";
 import WalletList from "./WalletList";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
@@ -18,6 +18,7 @@ import { useDidUpdateEffect } from "../Settings/hooks";
 import Web3 from "web3";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import { getRightPath } from "../../wallet/helpers";
+import { useWeb3Modal } from "@web3modal/react";
 
 function ConnectWallet() {
   const navigate = useNavigate();
@@ -41,11 +42,15 @@ function ConnectWallet() {
   const evmAccount = useSelector((state) => state.general.account);
   const tronAccount = useSelector((state) => state.general.tronWallet);
   const tonAccount = useSelector((state) => state.general.tonAccount);
+  const connectedWallet = useSelector((state) => state.general.connectedWallet);
 
   const hederaAccount = useSelector((state) => state.general.hederaAccount);
   const bitKeep = useSelector((state) => state.general.bitKeep);
+  const { address } = useAccount();
 
   const { account, chainId } = useWeb3React();
+  const { isOpen } = useWeb3Modal();
+
   const inputElement = useRef(null);
 
   const connected =
@@ -57,7 +62,8 @@ function ConnectWallet() {
     algorandAccount ||
     evmAccount ||
     tronAccount ||
-    account
+    account ||
+    address
       ? true
       : false;
 
@@ -85,6 +91,9 @@ function ConnectWallet() {
     const chainID = chainId || _chainId;
 
     switch (true) {
+      case connectedWallet === "WalletConnect":
+        navigate(`/account${location.search ? location.search : ""}`);
+        break;
       case unstoppableDomains:
         navigate(`/account${location.search ? location.search : ""}`);
         break;
@@ -98,7 +107,6 @@ function ConnectWallet() {
         navigate(`${getRightPath()}`);
         break;
       default:
-        console.log(from, "from");
         switchNetwork(from);
         break;
     }
@@ -118,6 +126,10 @@ function ConnectWallet() {
   useEffect(() => {
     setShow(false);
   }, [tonQRCodeModal, qrCodeImage]);
+
+  useEffect(() => {
+    if (isOpen) setShow(false);
+  }, [isOpen]);
 
   return (
     <div>
