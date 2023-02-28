@@ -17,7 +17,8 @@ export default function HigherAPTOS(OriginalComponent) {
         const { bridge } = serviceContainer;
         const dispatch = useDispatch();
         const navigate = useNavigate();
-        const { from, testNet, to } = useSelector((state) => state.general);
+        const { from, to } = useSelector((state) => state.general);
+
 
         const navigateToAccountRoute = () => {
             if (from && to) navigate(getRightPath());
@@ -25,8 +26,7 @@ export default function HigherAPTOS(OriginalComponent) {
 
         const getStyles = () => {
             let styles = {};
-            if (!testNet) return { display: "none" };
-            else if (from && from.type !== "APTOS") {
+                if (from && from.type !== "APTOS") {
                 styles = {
                     pointerEvents: "none",
                     opacity: "0.6",
