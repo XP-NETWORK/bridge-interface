@@ -25,7 +25,7 @@ function DestinationChain({ serviceContainer }) {
   const handleChange = async (e) => {
     const address = e.target.value;
     const chainWrapper = await bridge.getChain(to.nonce);
-    const validAddress = await chainWrapper.validateAddress(address);
+    const validAddress = await chainWrapper?.validateAddress(address);
 
     if (!validAddress) {
       setInvalid(true);
