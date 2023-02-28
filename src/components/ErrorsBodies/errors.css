@@ -1,3 +1,7 @@
+.error__modal .modal-content {
+    height: 630px;
+}
+
 .whitelist-error-body {
     display: flex;
     flex-direction: column;
