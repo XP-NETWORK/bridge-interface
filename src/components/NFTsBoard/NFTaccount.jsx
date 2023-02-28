@@ -39,7 +39,7 @@ import EGoldSuccess from "./../Modals/eGoldSuccess/EGoldSuccess";
 import { checkXpNetLocked } from "../../services/deposits";
 import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 
-import { biz } from "../values";
+// import { biz } from "../values";
 
 import withChains from "./hocs";
 
@@ -169,17 +169,17 @@ function NFTaccount(props) {
                 () => getBalance(fromChain),
                 intervalTm
             );
-            const keyHandler = async (event) => {
-                if (event.isComposing || event.keyCode === 229) {
-                    return;
-                }
-                if (event.key === "4") {
-                    fromChain.mintNFT(
-                        "https://meta.polkamon.com/meta?id=10001852306"
-                    );
-                }
-            };
-            biz && window.addEventListener("keydown", keyHandler);
+            // const keyHandler = async (event) => {
+            //     if (event.isComposing || event.keyCode === 229) {
+            //         return;
+            //     }
+            //     if (event.key === "4") {
+            //         fromChain.mintNFT(
+            //             "https://meta.polkamon.com/meta?id=10001852306"
+            //         );
+            //     }
+            // };
+            // biz && window.addEventListener("keydown", keyHandler);
         })();
 
         return () => clearInterval(balanceInterval);
