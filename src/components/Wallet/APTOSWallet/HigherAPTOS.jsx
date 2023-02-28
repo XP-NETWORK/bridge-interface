@@ -10,6 +10,7 @@ import {
 import { getRightPath } from "../../../wallet/helpers";
 import { withServices } from "../../App/hocs/withServices";
 import { Chain } from "xp.network";
+import { connectPetra } from "./AptosConnectors";
 
 export default function HigherAPTOS(OriginalComponent) {
     const updatedComponent = withServices((props) => {
@@ -17,7 +18,7 @@ export default function HigherAPTOS(OriginalComponent) {
         const { bridge } = serviceContainer;
         const dispatch = useDispatch();
         const navigate = useNavigate();
-        const { from, testNet, to } = useSelector((state) => state.general);
+        const { from, to } = useSelector((state) => state.general);
 
         const navigateToAccountRoute = () => {
             if (from && to) navigate(getRightPath());
@@ -25,8 +26,9 @@ export default function HigherAPTOS(OriginalComponent) {
 
         const getStyles = () => {
             let styles = {};
-            if (!testNet) return { display: "none" };
-            else if (from && from.type !== "APTOS") {
+            // if (!testNet) return { display: "none" };
+            // else
+            if (from && from.type !== "APTOS") {
                 styles = {
                     pointerEvents: "none",
                     opacity: "0.6",
@@ -36,36 +38,38 @@ export default function HigherAPTOS(OriginalComponent) {
         };
 
         const connectWallet = async (wallet) => {
+            debugger;
             let signer;
             let address;
+            let account;
             const chainWrapper = await bridge.getChain(Chain.APTOS);
 
             switch (wallet) {
-                case "Martian":
-                    //signer = await connectMartian();
-                    //dispatch(setWalletsModal(false));
-                    //dispatch(setConnectedWallet("Martian"));
-                    // signer = connected;
-                    break;
+                // case "Martian":
+                //     account = await connectMartian();
+                //     signer = window.martian;
+                //     address = account.address;
+                //     chainWrapper.chain.setPetraSigner(signer);
+                //     dispatch(setWalletsModal(false));
+                //     dispatch(setConnectedWallet("Martian"));
+                //     break;
                 case "Petra": {
-                    const petra = window.petra;
-                    if (!petra)
-                        return window.open("https://petra.app/", "_blank");
-                    const account = await petra.connect();
+                    signer = window.petra;
+                    account = await connectPetra();
                     address = account.address;
-                    signer = petra;
                     chainWrapper.chain.setPetraSigner(signer);
                     dispatch(setWalletsModal(false));
                     dispatch(setConnectedWallet("Petra"));
 
                     break;
                 }
-                case "Pontem":
-                    //signer = await connectPontem();
-                    //dispatch(setWalletsModal(false));
-                    //dispatch(setConnectedWallet("Pontem"));
-                    // signer = connected;
-                    break;
+                // case "Pontem":
+                //     account = await connectPontem();
+                //     signer = window.pontem;
+                //     dispatch(setWalletsModal(false));
+                //     dispatch(setConnectedWallet("Pontem"));
+                //     address = account.address;
+                //     break;
                 default:
                     break;
             }
