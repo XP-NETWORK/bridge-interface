@@ -1,17 +1,17 @@
 import React from "react";
-// import { connectHashpack } from "./ConnectWalletHelper";
+import { connectHashpack } from "./ConnectWalletHelper";
 import hashpack from "../../assets/img/wallet/hashpack.svg";
 import PropTypes from "prop-types";
 
 export default function HederaWallet({ wallet }) {
     const getStyle = () => {
-        return { display: "none" };
+        return {};
     };
 
     const connectHandler = async (wallet) => {
         switch (wallet) {
             case "Hashpack":
-                // if (await connectHashpack()) close();
+                if (await connectHashpack()) close();
                 break;
             default:
                 break;

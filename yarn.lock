@@ -11788,7 +11788,7 @@ hash.js@1.1.7, hash.js@^1.0.0, hash.js@^1.0.3, hash.js@^1.1.7:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-hashconnect@^0.2.2:
+hashconnect@^0.2.4:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/hashconnect/-/hashconnect-0.2.4.tgz#b15d2c8d2808a6770dd00dd372ac43faa6d4e089"
   integrity sha512-LPz+gu/8rQT/OEn1Gdcrqb0Mgbbw6cKjRH12Q0AkjJPAE8ks0pTpOi6Rdp6TZ6gzO7xgm8POSAABa13ITD9bLw==

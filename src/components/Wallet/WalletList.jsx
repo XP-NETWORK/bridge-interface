@@ -11,7 +11,7 @@ import ElrondWallet from "./ElrondWallet";
 import VeChainWallet from "./VeChainWallet";
 import PropTypes from "prop-types";
 import CosmosWallet from "./CosmosWallet";
-import HederaWallet from "./HederaWallet";
+// import HederaWallet from "./HederaWallet";
 import Unscopables from "./Unscopables";
 import { sortWallet } from "./WalletListHelper";
 import TonWallet from "./TONWallet/TonWallet";
@@ -30,6 +30,7 @@ import { biz } from "../values";
 import Phantom from "./SOLWallet/Phantom";
 import Solflare from "./SOLWallet/Solflare";
 import OKX from "./EVMWallet/OKX";
+import Hashpack from "./HederaWallet/Hashpack";
 
 export default function WalletList({ connected, input, discount }) {
     const from = useSelector((state) => state.general.from);
@@ -291,23 +292,37 @@ export default function WalletList({ connected, input, discount }) {
             order: 14,
             type: "TON",
         },
+        // {
+        //     Component: (
+        //         <HederaWallet
+        //             key="wallet-index-13"
+        //             close={connected}
+        //             wallet={"Hashpack"}
+        //         />
+        //     ),
+        //     name: "Hashpack",
+        //     mobile: biz,
+        //     desktop: true,
+        //     order: 17,
+        //     type: "Hedera",
+        // },
+        // {
+        //     Component: (
+        //         <HederaWallet
+        //             key="wallet-index-20"
+        //             close={connected}
+        //             wallet={"Blade"}
+        //         />
+        //     ),
+        //     name: "Blade",
+        //     mobile: biz,
+        //     desktop: biz,
+        //     order: 18,
+        //     type: "Hedera",
+        // },
         {
             Component: (
-                <HederaWallet
-                    key="wallet-index-13"
-                    close={connected}
-                    wallet={"Hashpack"}
-                />
-            ),
-            name: "Hashpack",
-            mobile: biz,
-            desktop: true,
-            order: 17,
-            type: "Hedera",
-        },
-        {
-            Component: (
-                <HederaWallet
+                <Hashpack
                     key="wallet-index-20"
                     close={connected}
                     wallet={"Blade"}
