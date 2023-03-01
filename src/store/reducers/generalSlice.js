@@ -22,6 +22,7 @@ const initialState = {
   refreshSecret: false,
   secretCred: initialSecretCred,
   NFTSetToggler: false,
+  isInvalid:true
 };
 
 const generalSlice = createSlice({
@@ -298,6 +299,9 @@ const generalSlice = createSlice({
     },
     setReceiver(state, action) {
       state.receiver = action.payload;
+    },
+    setIsInvalidAddress(state, action) {
+      state.isInvalid = action.payload;
     },
     cleanTxnHashArr(state) {
       state.txnHashArr = state.txnHashArr?.initialState
@@ -634,6 +638,7 @@ export const {
   setTonWallet,
   setStaging,
   setAptosAccount,
+  setIsInvalidAddress
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

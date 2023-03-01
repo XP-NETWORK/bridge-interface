@@ -30,6 +30,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
   const from = useSelector((state) => state.general.from.key);
   const _from = useSelector((state) => state.general.from);
   const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
+  const isInvalid = useSelector((state) => state.general.isInvalid);
 
   const [loading, setLoading] = useState();
   const dispatch = useDispatch();
@@ -121,7 +122,10 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
       dispatch(setSelectNFTAlert(true));
     } else if (!approved) {
       dispatch(setNoApprovedNFTAlert(true));
-    } else if (!loading && approved) {
+    } else if (!isInvalid){
+      // console.log(isInvalid)
+    }
+    else if (!loading && approved) {
       setLoading(true);
       dispatch(setTransferLoaderModal(true));
 
