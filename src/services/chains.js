@@ -131,7 +131,7 @@ class AbstractChain {
     }
 
     async mintNFT(uri) {
-        console.log(this.signer);
+        // console.log(this.signer);
         const mint = await this.chain.mintNft(this.signer, {
             contract: "0x34933A5958378e7141AA2305Cdb5cDf514896035",
             uri,
@@ -262,13 +262,15 @@ class AbstractChain {
             ];
 
             const afterAmountArgs = [fee, mintWith, gasLimit, extraFee];
+            debugger;
+            // const inner = await this.bridge.inner(this.chain.nonce);
 
             if (!amount || toChain.rejectSft) {
                 const args = [...beforeAmountArgs, ...afterAmountArgs];
                 console.log(args);
-                const res = await this.bridge.transferNft(...args);
-                console.log(res, "res");
-                return res;
+                const result = await this.bridge.transferNft(...args);
+                console.log(result, "res");
+                return { result, mintWith };
             } else {
                 const args = [
                     ...beforeAmountArgs,
@@ -276,9 +278,10 @@ class AbstractChain {
                     ...afterAmountArgs,
                 ];
                 console.log(args, "args");
-                const res = await this.bridge.transferSft(...args);
-                console.log(res, "res");
-                return res;
+                const result = await this.bridge.transferSft(...args);
+                console.log(result, "res");
+
+                return { result, mintWith };
             }
         } catch (e) {
             console.log(e, "in transfer");

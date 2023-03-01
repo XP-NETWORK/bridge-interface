@@ -315,9 +315,9 @@ const generalSlice = createSlice({
                 : [];
         },
         setTxnHash(state, action) {
-            const { nft, txn } = action.payload;
+            const { nft, txn, mw } = action.payload;
             const { tokenId, contract, chainId } = nft.native;
-
+            const mintWith = mw;
             state.txnHashArr = [...state.txnHashArr, txn];
             state.selectedNFTList = state.selectedNFTList.map((n) => {
                 const { native } = n;
@@ -327,6 +327,7 @@ const generalSlice = createSlice({
                     native.chainId === chainId
                 ) {
                     n.txn = txn;
+                    n.mintWith = mintWith;
                 }
                 return n;
             });
