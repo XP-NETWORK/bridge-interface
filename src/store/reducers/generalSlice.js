@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import { createSlice } from "@reduxjs/toolkit";
 import { utils } from "ethers";
 
@@ -314,31 +315,9 @@ const generalSlice = createSlice({
                 : [];
         },
         setTxnHash(state, action) {
-            let { nft, txn } = action.payload;
+            const { nft, txn, mw } = action.payload;
             const { tokenId, contract, chainId } = nft.native;
-            switch (true) {
-                case Array.isArray(txn):
-                    txn = {
-                        ...txn[0],
-                        hash: txn[0].hash || txn[0].transactionHash,
-                    };
-                    break;
-                case typeof txn === "object":
-                    txn = {
-                        ...txn,
-                        hash: txn.hash || txn.transactionHash,
-                    };
-                    break;
-                case txn && txn?.hash?.hash instanceof Uint8Array:
-                    txn.hash = utils.hexlify(txn.hash?.hash).replace(/^0x/, "");
-                    break;
-                case typeof txn === "string":
-                    txn = { hash: txn };
-                    break;
-                default:
-                    break;
-            }
-
+            const mintWith = mw;
             state.txnHashArr = [...state.txnHashArr, txn];
             state.selectedNFTList = state.selectedNFTList.map((n) => {
                 const { native } = n;
@@ -348,6 +327,7 @@ const generalSlice = createSlice({
                     native.chainId === chainId
                 ) {
                     n.txn = txn;
+                    n.mintWith = mintWith;
                 }
                 return n;
             });
@@ -411,6 +391,7 @@ const generalSlice = createSlice({
             state.WCProvider = action.payload;
         },
         setError(state, action) {
+            // debugger;
             if (action.payload) {
                 const { err, data, message } = action.payload;
 

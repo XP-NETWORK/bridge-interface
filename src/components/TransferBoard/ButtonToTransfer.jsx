@@ -17,6 +17,12 @@ import {
 import { getFromDomain } from "../../services/resolution";
 
 import { withServices } from "../App/hocs/withServices";
+import { notifyExplorer } from "../../services/explorer";
+import {
+    mainnetSecretMintWith,
+    stagingSecretMintWith,
+    testnetSecretMintWith,
+} from "../values";
 
 export default withServices(function ButtonToTransfer({ serviceContainer }) {
     const { bridge } = serviceContainer;
@@ -29,6 +35,8 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
     const from = useSelector((state) => state.general.from.key);
     const _from = useSelector((state) => state.general.from);
     const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
+    const testnet = useSelector((state) => state.general.testNet);
+    const staging = useSelector((state) => state.general.staging);
 
     const [loading, setLoading] = useState();
     const dispatch = useDispatch();
@@ -92,20 +100,29 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
             const unstoppabledomain = await getFromDomain(receiver, toChain);
             if (unstoppabledomainSwitch(unstoppabledomain)) return;
 
-            const result = await fromChain.transfer({
+            const { result, mintWith } = await fromChain.transfer({
                 toChain,
                 nft,
                 receiver: unstoppabledomain || receiver,
                 fee: bigNumberFees,
                 discountLeftUsd,
             });
-
+            let mw = mintWith || undefined;
+            if (!mintWith) {
+                mw = mintWith
+                    ? mintWith
+                    : testnet
+                    ? testnetSecretMintWith
+                    : staging
+                    ? stagingSecretMintWith
+                    : mainnetSecretMintWith;
+            }
             if (txnHashArr[0] && !result) {
                 dispatch(setTxnHash({ txn: "failed", nft }));
             } else if (result) {
-                dispatch(
-                    setTxnHash({ txn: fromChain.handlerResult(result), nft })
-                );
+                const resultObject = fromChain.handlerResult(result);
+                notifyExplorer(_from.nonce, resultObject.hash);
+                dispatch(setTxnHash({ txn: resultObject, nft, mw }));
             }
         } catch (e) {
             console.log(e, "eee");

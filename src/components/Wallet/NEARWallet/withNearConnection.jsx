@@ -66,8 +66,6 @@ export const withNearConnection = (Wrapped) =>
               if (nearTrx) {
                 console.log("NEAR: jump to wallet");
                 const to = params.get("to");
-
-                //dispatch(setFrom(chains.find((c) => c.nonce === Chain.NEAR)));
                 dispatch(setTo(chains.find((c) => c.nonce === Number(to))));
                 navigate(getRightPath());
               }
@@ -114,7 +112,7 @@ export const withNearConnection = (Wrapped) =>
           dispatch(setSelectedNFTList(nft));
           dispatch(
             setTxnHash({
-              txn: hash,
+              txn: { hash },
               nft,
             })
           );

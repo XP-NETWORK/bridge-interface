@@ -49,7 +49,6 @@ function ChainListBox({ serviceContainer }) {
     );
     const evmAccount = useSelector((state) => state.general.account);
     const tronAccount = useSelector((state) => state.general.tronWallet);
-    //const Sync2 = useSelector((state) => state.general.Sync2);
     const { account } = useWeb3React();
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const nftChainListRef = useRef(null);
@@ -86,11 +85,21 @@ function ChainListBox({ serviceContainer }) {
 
         if (departureOrDestination === "departure") {
             if (
+                bridge.currentType === "EVM" &&
+                from?.text === "VeChain" &&
+                chainWrapper.chainParams.type === "EVM"
+            ) {
+                dispatch(setChangeWallet(true));
+                dispatch(setTemporaryFrom(chain));
+                dispatch(setTemporaryTo(to));
+                handleClose();
+            } else if (
                 chainWrapper.chainParams.name === "VeChain" &&
                 bridge.currentType === "EVM"
             ) {
                 dispatch(setChangeWallet(true));
                 dispatch(setTemporaryFrom(chain));
+                dispatch(setTemporaryTo(to));
                 handleClose();
             } else if (
                 chainWrapper.chainParams.type === bridge.currentType ||
@@ -99,6 +108,7 @@ function ChainListBox({ serviceContainer }) {
                 if (from && from?.text !== chain.text) {
                     if (from?.text === "Harmony" && bitKeep) {
                         dispatch(setTemporaryFrom(chain));
+
                         dispatch(setChangeWallet(true));
                         handleClose();
                     } else if (
@@ -179,14 +189,14 @@ function ChainListBox({ serviceContainer }) {
             ...withMaintenance,
             ...withComing,
         ];
-        // if (chainSearch && departureOrDestination === "departure") {
-        //     sorted = chains.filter((chain) =>
-        //         chain.text.toLowerCase().includes(chainSearch.toLowerCase())
-        //     );
-        // }
+
         if (
             location.pathname === "/connect" ||
             location.pathname === "/testnet/connect" ||
+            location.pathname === "/account" ||
+            location.pathname === "/testnet/account" ||
+            location.pathname === "/staging" ||
+            location.pathname === "/staging/account" ||
             location.pathname === "/"
         ) {
             setFromChains(sorted.filter((e) => e.text !== to?.text));
@@ -204,13 +214,6 @@ function ChainListBox({ serviceContainer }) {
         departureOrDestination,
         location.pathname,
     ]);
-
-    // useEffect(() => {
-    //     const check = async () => {
-    //         if (!validatorsInfo) await checkValidators();
-    //     };
-    //     check();
-    // }, [validatorsInfo, checkValidators]);
 
     useEffect(() => {
         let filteredChains = chains;
@@ -243,6 +246,10 @@ function ChainListBox({ serviceContainer }) {
         if (
             location.pathname === "/connect" ||
             location.pathname === "/testnet/connect" ||
+            location.pathname === "/account" ||
+            location.pathname === "/testnet/account" ||
+            location.pathname === "/staging" ||
+            location.pathname === "/staging/account" ||
             location.pathname === "/"
         ) {
             setToChains(sorted.filter((e) => e.text !== from?.text));
@@ -303,25 +310,30 @@ function ChainListBox({ serviceContainer }) {
                                     updated,
                                     nonce,
                                 } = chain;
-                                return (
-                                    (mainnet || coming) && (
-                                        <Chain
-                                            chainSelectHandler={
-                                                chainSelectHandler
-                                            }
-                                            updated={updated}
-                                            newChain={newChain}
-                                            maintenance={maintenance}
-                                            coming={coming}
-                                            text={text}
-                                            chainKey={key}
-                                            filteredChain={chain}
-                                            image={image}
-                                            key={`chain-${key}`}
-                                            nonce={nonce}
-                                        />
-                                    )
-                                );
+                                if (
+                                    String(from?.text).toLowerCase() !==
+                                    String(text).toLowerCase()
+                                )
+                                    return (
+                                        (mainnet || coming) && (
+                                            <Chain
+                                                chainSelectHandler={
+                                                    chainSelectHandler
+                                                }
+                                                updated={updated}
+                                                newChain={newChain}
+                                                maintenance={maintenance}
+                                                coming={coming}
+                                                text={text}
+                                                chainKey={key}
+                                                filteredChain={chain}
+                                                image={image}
+                                                key={`chain-${key}`}
+                                                nonce={nonce}
+                                            />
+                                        )
+                                    );
+                                return null;
                             })}
                         {//! Show only mainnet TO chains //
                         departureOrDestination === "destination" &&
@@ -338,25 +350,31 @@ function ChainListBox({ serviceContainer }) {
                                     updated,
                                     nonce,
                                 } = chain;
-                                return (
-                                    (mainnet || coming) && (
-                                        <Chain
-                                            chainSelectHandler={
-                                                chainSelectHandler
-                                            }
-                                            updated={updated}
-                                            newChain={newChain}
-                                            maintenance={maintenance}
-                                            coming={coming}
-                                            text={text}
-                                            chainKey={key}
-                                            filteredChain={chain}
-                                            image={image}
-                                            nonce={nonce}
-                                            key={`chain-${key}`}
-                                        />
-                                    )
-                                );
+
+                                if (
+                                    String(to?.text).toLowerCase() !==
+                                    String(text).toLowerCase()
+                                )
+                                    return (
+                                        (mainnet || coming) && (
+                                            <Chain
+                                                chainSelectHandler={
+                                                    chainSelectHandler
+                                                }
+                                                updated={updated}
+                                                newChain={newChain}
+                                                maintenance={maintenance}
+                                                coming={coming}
+                                                text={text}
+                                                chainKey={key}
+                                                filteredChain={chain}
+                                                image={image}
+                                                nonce={nonce}
+                                                key={`chain-${key}`}
+                                            />
+                                        )
+                                    );
+                                return null;
                             })}
                         {//! Show only testnet FROM chains //
                         departureOrDestination === "departure" &&
@@ -373,25 +391,30 @@ function ChainListBox({ serviceContainer }) {
                                     updated,
                                     nonce,
                                 } = chain;
-                                return (
-                                    testNet && (
-                                        <Chain
-                                            chainSelectHandler={
-                                                chainSelectHandler
-                                            }
-                                            updated={updated}
-                                            newChain={newChain}
-                                            maintenance={maintenance}
-                                            coming={coming}
-                                            text={text}
-                                            chainKey={key}
-                                            filteredChain={chain}
-                                            image={image}
-                                            nonce={nonce}
-                                            key={`chain-${key}`}
-                                        />
-                                    )
-                                );
+                                if (
+                                    String(from?.text).toLowerCase() !==
+                                    String(text).toLowerCase()
+                                )
+                                    return (
+                                        testNet && (
+                                            <Chain
+                                                chainSelectHandler={
+                                                    chainSelectHandler
+                                                }
+                                                updated={updated}
+                                                newChain={newChain}
+                                                maintenance={maintenance}
+                                                coming={coming}
+                                                text={text}
+                                                chainKey={key}
+                                                filteredChain={chain}
+                                                image={image}
+                                                nonce={nonce}
+                                                key={`chain-${key}`}
+                                            />
+                                        )
+                                    );
+                                return null;
                             })}
                         {//! Show only testnet TO chains //
                         departureOrDestination === "destination" &&
@@ -408,25 +431,30 @@ function ChainListBox({ serviceContainer }) {
                                     updated,
                                     nonce,
                                 } = chain;
-                                return (
-                                    testNet && (
-                                        <Chain
-                                            chainSelectHandler={
-                                                chainSelectHandler
-                                            }
-                                            updated={updated}
-                                            newChain={newChain}
-                                            maintenance={maintenance}
-                                            coming={coming}
-                                            text={text}
-                                            chainKey={key}
-                                            filteredChain={chain}
-                                            image={image}
-                                            nonce={nonce}
-                                            key={`chain-${key}`}
-                                        />
-                                    )
-                                );
+                                if (
+                                    String(to?.text).toLowerCase() !==
+                                    String(text).toLowerCase()
+                                )
+                                    return (
+                                        testNet && (
+                                            <Chain
+                                                chainSelectHandler={
+                                                    chainSelectHandler
+                                                }
+                                                updated={updated}
+                                                newChain={newChain}
+                                                maintenance={maintenance}
+                                                coming={coming}
+                                                text={text}
+                                                chainKey={key}
+                                                filteredChain={chain}
+                                                image={image}
+                                                nonce={nonce}
+                                                key={`chain-${key}`}
+                                            />
+                                        )
+                                    );
+                                return null;
                             })}
                     </ul>
                     {!reached && <ScrollArrows />}

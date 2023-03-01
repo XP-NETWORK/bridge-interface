@@ -23,10 +23,12 @@ import Approval from "../TransferBoard/Approval";
 import SendFees from "../TransferBoard/SendFees";
 import ButtonToTransfer from "../TransferBoard/ButtonToTransfer";
 import ImportNFTButton from "../Buttons/ImportNFTButton";
+import Comment from "../innercomponents/Comment";
 
 import UnwrapWegld from "../TransferBoard/UnwrapWegld";
 import Pagination from "./Pagination";
 import ChainListBox from "../Chains/ChainListBox";
+import { ELROND } from "../../components/values";
 
 const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
     const dispatch = useDispatch();
@@ -35,6 +37,7 @@ const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
     const [showSelected, setShowSelected] = useState(false);
 
     const NFTListView = useSelector((state) => state.general.NFTListView);
+    const from = useSelector((state) => state.general.from);
 
     useEffect(() => {
         if (selectedNFTs.length < 1) {
@@ -71,12 +74,13 @@ const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
                 {!showNFTsSearch ? (
                     <div className="mobile-nfts__header">
                         <SelectedNFTs
-                            on={showSelected}
+                            on={true}
                             show={
                                 selectedNFTs.length > 0
                                     ? handleShowSelected
                                     : undefined
                             }
+                            // show={true}
                             showSelected={showSelected}
                             setOff={setShowSelected}
                         />
@@ -110,11 +114,17 @@ const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
                 </div>
             </div>
             <Pagination />
-            <MobileDestinationAddressBar />
-            <Approval />
-            <SendFees />
-            <ButtonToTransfer />
-            <UnwrapWegld />
+            {nfts?.length ? (
+                <>
+                    <MobileDestinationAddressBar />
+                    <Approval />
+                    <SendFees />
+                    <ButtonToTransfer />
+                    {from?.text === ELROND && <UnwrapWegld />}
+                </>
+            ) : (
+                <Comment />
+            )}
         </div>
     );
 };

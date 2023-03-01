@@ -11,7 +11,7 @@ import github from "../assets/img/nav/github.svg";
 import video from "../assets/img/nav/vid.svg";
 import xpnet from "../assets/img/nav/xpnet.svg";
 import message from "../assets/img/nav/helper.svg";
-import deposits from "../assets/img/nav/deposites.svg";
+// import deposits from "../assets/img/nav/deposites.svg";
 import security from "../assets/img/nav/security.svg";
 import UserConnect from "../components/User/UserConnect";
 import { setSearchNFTList, setShowVideo } from "../store/reducers/generalSlice";
@@ -23,7 +23,7 @@ import {
     cleanSelectedNFTList,
     setReceiver,
 } from "../store/reducers/generalSlice";
-import { biz } from "../components/values";
+// import { biz } from "../components/values";
 import Network from "./Network";
 
 function NavBar() {
@@ -44,7 +44,6 @@ function NavBar() {
         dispatch(setSearchNFTList(""));
     }, [loc]);
 
-    
     return (
         !widget && (
             <header id="Header">
@@ -102,9 +101,8 @@ function NavBar() {
                         aria-controls=""
                         className="navbarToggleMoblie"
                     />
-                    
 
-                    <Navbar.Collapse id="" style={{marginLeft:"10px"}}>
+                    <Navbar.Collapse id="" style={{ marginLeft: "10px" }}>
                         <Nav>
                             {/* <LinkContainer to='/connect'>
                                 <Nav.Link className="desc-link" target="_blank" href="#">Bridge</Nav.Link>
@@ -128,7 +126,7 @@ function NavBar() {
                                 </div>
                                 <div className="nav-link__txt">Explorer</div>
                             </Nav.Link> */}
-                            {!testnet && biz && (
+                            {/* {!testnet && biz && (
                                 <LinkContainer to={"discounts"}>
                                     <Nav.Link>
                                         <div className="nav-link__icon">
@@ -139,7 +137,7 @@ function NavBar() {
                                         </div>
                                     </Nav.Link>
                                 </LinkContainer>
-                            )}
+                            )} */}
                             <a
                                 rel="noreferrer"
                                 className="nav-link help-center"

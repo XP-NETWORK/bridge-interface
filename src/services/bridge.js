@@ -24,6 +24,12 @@ class Bridge {
   checkWallet = null;
   currentType;
 
+  getChainIdByKey(key, testnet) {
+    const c = chains.find((chain) => chain.key === key);
+    if (!c) return;
+    return testnet ? c.tnChainId : c.chainId;
+  }
+
   getNonce(chainId) {
     return chains.find(
       (chain) => chain.chainId === chainId || chain.tnChainId === chainId
@@ -75,8 +81,8 @@ class Bridge {
 
       const isWNFT = this.isWrapped(nft.uri);
 
-      if (chainWrapper.noWhiteListing) {
-        return true;
+      if (chainWrapper.nativeNotWhitelised && !isWNFT) {
+        return false;
       }
 
       if (

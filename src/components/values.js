@@ -1,7 +1,6 @@
 import Ethereum from "../assets/img/chain/Etherium.svg";
 import Ton from "../assets/img/chain/ton.svg";
 import Elrond from "../assets/img/chain/multiverseX.png";
-
 import Binance from "../assets/img/chain/Binance.svg";
 import Cardano from "../assets/img/chain/Cardano.svg";
 import Algorand from "../assets/img/chain/Algarand.svg";
@@ -19,7 +18,6 @@ import One from "../assets/img/chain/One.svg";
 import Aurora from "../assets/img/chain/aurora.svg";
 import GT from "../assets/img/chain/GateChain.svg";
 import VET from "../assets/img/chain/Vechain.png";
-
 import SCRT from "../assets/img/chain/secret.svg";
 import CKB from "../assets/img/chain/godwoken.svg";
 import HBAR from "../assets/img/chain/Hedera.svg";
@@ -32,7 +30,9 @@ import InternetComputer from "../assets/img/chain/InternetComputer.svg";
 import near from "../assets/img/wallet/NearWallet.svg";
 import okx from "../assets/img/chain/okx.svg";
 import arbitrum from "../assets/img/chain/arbitrum.svg";
-// import brise from "../assets/img/chain/brise.png";
+import arbitrumTestNet from "../assets/img/chain/arbitrumTN.svg";
+import brise from "../assets/img/chain/brise.png";
+import casper from "../assets/img/chain/casper.svg";
 
 export const EVM = "EVM";
 export const ELROND = "MultiversX";
@@ -62,6 +62,13 @@ export const BridgeModes = {
 };
 export const getChainObject = (nonce) =>
     chains.find((chain) => chain.nonce === nonce);
+
+export const testnetSecretMintWith =
+    "secret1x4afa2shvq4uwwtl0ld8qnjfm3jkmyvap3yn9g";
+export const stagingSecretMintWith =
+    "secret1ggvqzks96k7hawhdx3harrtnffhttrrq2qxmdg";
+export const mainnetSecretMintWith =
+    "secret16zcej6asqrtfq08u3fdjhs03zpl7lgy7q32eps";
 
 export const chains = [
     {
@@ -157,7 +164,6 @@ export const chains = [
         maintenance: false,
         testNet: false,
         mainnet: true,
-        newChain: false,
     },
     {
         type: "Algorand",
@@ -193,11 +199,11 @@ export const chains = [
         chainId: undefined,
         order: 20,
         nonce: 26,
-        coming: false,
+        coming: !biz,
         image: { avatar: true, src: Solana },
         maintenance: false,
         testNet: true,
-        mainnet: false,
+        mainnet: biz,
     },
     {
         type: "Cardano",
@@ -297,7 +303,6 @@ export const chains = [
         maintenance: false,
         testNet: false,
         mainnet: true,
-        newChain: false,
     },
     {
         type: "EVM",
@@ -312,7 +317,6 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
-        newChain: false,
     },
     {
         type: "EVM",
@@ -327,7 +331,6 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
-        newChain: false,
     },
     {
         type: "EVM",
@@ -342,7 +345,6 @@ export const chains = [
         maintenance: false,
         testNet: false,
         mainnet: true,
-        newChain: false,
     },
     {
         type: "EVM",
@@ -356,8 +358,6 @@ export const chains = [
         image: { avatar: true, src: Moon },
         testNet: true,
         mainnet: true,
-        newChain: false,
-        coming: false,
     },
     {
         type: "EVM",
@@ -371,8 +371,8 @@ export const chains = [
         image: { avatar: true, src: Abey },
         testNet: biz,
         mainnet: biz,
-        newChain: biz,
-        coming: !biz,
+        newChain: true,
+        coming: false,
     },
     {
         type: "VeChain",
@@ -387,7 +387,6 @@ export const chains = [
         maintenance: false,
         mainnet: true,
         testNet: false,
-        newChain: false,
     },
     {
         type: "Cosmos",
@@ -402,7 +401,7 @@ export const chains = [
         mainnet: biz,
         testNet: false,
         test: false,
-        newChain: biz,
+        newChain: false,
         coming: !biz,
     },
     {
@@ -429,7 +428,6 @@ export const chains = [
         testNet: true,
         mainnet: true,
         newChain: true,
-        coming: false,
     },
     {
         type: "EVM",
@@ -444,7 +442,6 @@ export const chains = [
         testNet: true,
         mainnet: true,
         newChain: false,
-        coming: false,
     },
     {
         type: "EVM",
@@ -462,14 +459,14 @@ export const chains = [
     },
     {
         type: "APTOS",
-        key: "APTOS",
-        text: "APTOS",
+        key: "Aptos",
+        text: "Aptos",
         nonce: 0x22,
         order: 0,
         image: { avatar: true, src: Aptos },
         testNet: biz,
         mainnet: false,
-        coming: false,
+        coming: !biz,
     },
     {
         type: "NEAR",
@@ -479,9 +476,9 @@ export const chains = [
         nonce: 31,
         order: 0,
         image: { avatar: true, src: near },
-        testNet: true,
-        mainnet: false,
-        coming: false,
+        testNet: biz,
+        mainnet: true,
+        coming: true,
     },
     {
         type: "EVM",
@@ -494,23 +491,60 @@ export const chains = [
         testNet: true,
         mainnet: true,
         coming: false,
-        newChain: false,
+        newChain: true,
         chainId: 66,
         tnChainId: 65,
     },
     {
         type: "EVM",
         key: "Arbitrum",
-        text: "Arbitrum",
+        text: window.location.href.includes("testnet")
+            ? "Arbitrum"
+            : "Arbitrum Nova",
         value: "Arbitrum",
         nonce: 0x25,
         order: -1,
-        image: { avatar: true, src: arbitrum },
+        image: {
+            avatar: true,
+            src: window.location.href.includes("testnet")
+                ? arbitrumTestNet
+                : arbitrum,
+        },
         testNet: true,
-        mainnet: false,
-        coming: false,
-        newChain: true,
-        chainId: 42161,
+        mainnet: biz,
+        coming: !biz,
+        newChain: false,
+        chainId: 42170,
         tnChainId: 421613,
+    },
+    {
+        type: "EVM",
+        key: "Bitgert",
+        text: "Bitgert",
+        value: "Bitgert",
+        nonce: 0x26,
+        order: -1,
+        image: { avatar: true, src: brise },
+        testNet: true,
+        mainnet: true,
+        coming: true,
+        newChain: false,
+        chainId: 32520,
+        tnChainId: 64668,
+    },
+    {
+        type: "",
+        key: "Casper",
+        text: "Casper",
+        value: "Casper",
+        nonce: 0x26,
+        order: -1,
+        image: { avatar: true, src: casper },
+        testNet: true,
+        mainnet: true,
+        coming: true,
+        newChain: false,
+        chainId: 32520,
+        tnChainId: 64668,
     },
 ];

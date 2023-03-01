@@ -39,6 +39,8 @@ import EGoldSuccess from "./../Modals/eGoldSuccess/EGoldSuccess";
 import { checkXpNetLocked } from "../../services/deposits";
 import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 
+// import { biz } from "../values";
+
 import withChains from "./hocs";
 
 const intervalTm = 15_000;
@@ -49,10 +51,11 @@ function NFTaccount(props) {
     const dispatch = useDispatch();
 
     const from = _from.key;
+    const secret = from === "Secret";
     const prevSelected = usePrevious(from);
 
-    const nfts = useSelector((state) => state.general.NFTList);
-    const currentsNFTs = useSelector((state) => state.general.currentsNFTs);
+    let nfts = useSelector((state) => state.general.NFTList);
+    let currentsNFTs = useSelector((state) => state.general.currentsNFTs);
 
     const importModal = useSelector((state) => state.general.importModal);
 
@@ -68,7 +71,7 @@ function NFTaccount(props) {
     const NFTSetToggler = useSelector((state) => state.general.NFTSetToggler);
     const prevNFTSetToggler = usePrevious(NFTSetToggler);
 
-    const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
+    let selectedNFTs = useSelector((state) => state.general.selectedNFTList);
 
     const unwrappedEGold = useSelector((state) => state.general.unwrappedEGold);
 
@@ -96,13 +99,10 @@ function NFTaccount(props) {
         try {
             let nfts = await fromChain.getNFTs(bridge.checkWallet || _account);
             nfts = fromChain.filterNFTs(nfts);
-            if (nfts.length < 1) {
-                dispatch(setIsEmpty(true));
-            } else {
-                dispatch(setIsEmpty(false));
-                dispatch(setNFTList(nfts));
-                dispatch(setPreloadNFTs(nfts.length));
-            }
+
+            dispatch(setNFTList(nfts));
+            dispatch(setPreloadNFTs(nfts.length));
+            dispatch(setIsEmpty(nfts.length < 1));
 
             dispatch(setBigLoader(false));
         } catch (error) {
@@ -113,6 +113,17 @@ function NFTaccount(props) {
             dispatch(setError(error.data ? error.data.message : error.message));
         }
     }
+
+    // const getAlgorandClaimables = async (fromChain) => {
+    //     // eslint-disable-next-line no-debugger
+    //     debugger;
+    //     try {
+    //         const claimables = await fromChain.getClaimables(account);
+    //         console.log({ claimables });
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
 
     const getBalance = async (fromChain) => {
         const _balance = await fromChain.balance(_account);
@@ -142,11 +153,16 @@ function NFTaccount(props) {
             const fromChain = await bridge.getChain(_from.nonce);
 
             //load nfts
-            _account &&
+            !secret &&
+                _account &&
                 (prevSelected !== _from.key ||
                     prevAccount !== _account ||
                     NFTSetToggler !== prevNFTSetToggler) &&
                 getNFTsList(fromChain);
+
+            // if (_account && _from?.type === "Algorand") {
+            //     getAlgorandClaimables(fromChain);
+            // }
 
             //update Balance
             getBalance(fromChain);
@@ -155,17 +171,17 @@ function NFTaccount(props) {
                 () => getBalance(fromChain),
                 intervalTm
             );
-            const keyHandler = async (event) => {
-                if (event.isComposing || event.keyCode === 229) {
-                    return;
-                }
-                if (event.key === "4") {
-                    fromChain.mintNFT(
-                        "https://meta.polkamon.com/meta?id=10001852306"
-                    );
-                }
-            };
-            window.addEventListener("keydown", keyHandler);
+            // const keyHandler = async (event) => {
+            //     if (event.isComposing || event.keyCode === 229) {
+            //         return;
+            //     }
+            //     if (event.key === "4") {
+            //         fromChain.mintNFT(
+            //             "https://meta.polkamon.com/meta?id=10001852306"
+            //         );
+            //     }
+            // };
+            // biz && window.addEventListener("keydown", keyHandler);
         })();
 
         return () => clearInterval(balanceInterval);
@@ -205,7 +221,7 @@ function NFTaccount(props) {
             <NoApprovedNFT />
             <Container className="nftSlectContaine">
                 <ReturnBtn />
-                <div className="row">
+                <div className="row account__container">
                     <div className="nftListCol col-lg-8">
                         {!isMobile && <NFTscreen />}
                         {/*isMobile && <MobileTransferBoard />*/}

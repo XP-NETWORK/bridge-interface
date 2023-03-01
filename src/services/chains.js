@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 /* eslint-disable no-unused-vars */
 
 import axios from "axios";
@@ -130,7 +131,7 @@ class AbstractChain {
     }
 
     async mintNFT(uri) {
-        console.log(this.signer);
+        // console.log(this.signer);
         const mint = await this.chain.mintNft(this.signer, {
             contract: "0x34933A5958378e7141AA2305Cdb5cDf514896035",
             uri,
@@ -140,7 +141,9 @@ class AbstractChain {
     async balance(account) {
         try {
             const res = await this.chain.balance(account);
+
             const decimals = CHAIN_INFO.get(this.nonce)?.decimals;
+
             return res.dividedBy(decimals).toNumber();
         } catch (e) {
             console.log(e, "error in balance");
@@ -173,6 +176,8 @@ class AbstractChain {
 
             const fees = res.multipliedBy(feeMultiplier).integerValue();
 
+            // console.log(fees.toString());
+
             return {
                 fees: fees.toString(10),
                 formatedFees: fees
@@ -186,6 +191,22 @@ class AbstractChain {
                 fees: "",
                 formatedFees: 0,
             };
+        }
+    }
+
+    async estimateDeploy(toChain, nft) {
+        try {
+            const res = await this.bridge.estimateWithContractDep(
+                this.chain,
+                toChain,
+                nft
+            );
+            return res.calcContractDep
+                ?.integerValue()
+                .dividedBy(this.chainParams.decimals)
+                .toNumber();
+        } catch (e) {
+            console.log("in estimateDeploy", e);
         }
     }
 
@@ -241,13 +262,15 @@ class AbstractChain {
             ];
 
             const afterAmountArgs = [fee, mintWith, gasLimit, extraFee];
+            debugger;
+            // const inner = await this.bridge.inner(this.chain.nonce);
 
             if (!amount || toChain.rejectSft) {
                 const args = [...beforeAmountArgs, ...afterAmountArgs];
                 console.log(args);
-                const res = await this.bridge.transferNft(...args);
-                console.log(res, "res");
-                return res;
+                const result = await this.bridge.transferNft(...args);
+                console.log(result, "res");
+                return { result, mintWith };
             } else {
                 const args = [
                     ...beforeAmountArgs,
@@ -255,9 +278,10 @@ class AbstractChain {
                     ...afterAmountArgs,
                 ];
                 console.log(args, "args");
-                const res = await this.bridge.transferSft(...args);
-                console.log(res, "res");
-                return res;
+                const result = await this.bridge.transferSft(...args);
+                console.log(result, "res");
+
+                return { result, mintWith };
             }
         } catch (e) {
             console.log(e, "in transfer");
@@ -280,7 +304,22 @@ class AbstractChain {
     }
 
     handlerResult(res) {
-        return res;
+        switch (true) {
+            case typeof res === "string":
+                return { hash: res };
+            case typeof res === "object":
+                return {
+                    ...res,
+                    hash: res.hash || res.transactionHash,
+                };
+            case Array.isArray(res):
+                return {
+                    ...res[0],
+                    hash: res[0].hash || res[0].transactionHash,
+                };
+            default:
+                return res;
+        }
     }
 }
 
@@ -323,7 +362,7 @@ class EVM extends AbstractChain {
             if (e.message?.includes("cannot estimate gas;")) {
                 return await super.transfer({
                     ...args,
-                    gasLimit: BN.from(100000),
+                    gasLimit: BN.from(140000),
                 });
             }
             throw e;
@@ -354,7 +393,9 @@ class Elrond extends AbstractChain {
         if (Array.isArray(res)) {
             res = res[0];
         }
-        return ethers.utils.hexlify(res.hash?.hash)?.replace(/^0x/, "");
+        return {
+            hash: ethers.utils.hexlify(res.hash?.hash)?.replace(/^0x/, ""),
+        };
     }
 
     async transfer(args) {
@@ -477,7 +518,6 @@ class Algorand extends AbstractChain {
     async getClaimables(account) {
         try {
             const x = await this.bridge.claimableAlgorandNfts(account);
-
             return x;
         } catch (e) {
             console.log(e, "e");
@@ -521,15 +561,10 @@ class Cosmos extends AbstractChain {
 
         return secretNFTs;
     }
-
-    handlerResult(res) {
-        console.log(res, "res in secret");
-        return res;
-    }
 }
 
 class TON extends AbstractChain {
-    noWhiteListing = true;
+    nativeNotWhitelised = true;
 
     constructor(params) {
         super(params);
@@ -654,6 +689,20 @@ class Solana extends AbstractChain {
         } catch (err) {
             return [];
         }
+    }
+
+    async preParse(nft) {
+        nft = await super.preParse(nft);
+
+        return {
+            ...nft,
+            native: {
+                ...nft.native,
+                contract: nft.collectionIdent,
+                tokenId: encodeURIComponent(nft.native.name),
+                chainId: String(this.chainParams.nonce),
+            },
+        };
     }
 }
 

@@ -29,6 +29,8 @@ import {
 } from "../Wallet/TONWallet/tonStore";
 import MaiarModal from "./MaiarModal/MaiarModal";
 import ChangeWalletModal from "./ChangeWallet/ChangeWalletModal";
+import { Web3Modal } from "@web3modal/react";
+import { ethereumClient, wcId } from "../Wallet/EVMWallet/evmConnectors";
 
 export default function Modals() {
     const dispatch = useDispatch();
@@ -88,6 +90,7 @@ export default function Modals() {
 
     return (
         <>
+            <Web3Modal projectId={wcId} ethereumClient={ethereumClient} />
             <Modal
                 className="ChainModal switchWallet"
                 animation={false}
@@ -157,7 +160,11 @@ export default function Modals() {
             >
                 <TechnicalSupport />
             </Modal>
-            <Modal show={tronPopUp} onHide={handleTronClose}></Modal>
+            <Modal
+                animation={false}
+                show={tronPopUp}
+                onHide={handleTronClose}
+            ></Modal>
             <Modal
                 className="transfer-loader-modal"
                 animation={false}
@@ -176,6 +183,7 @@ export default function Modals() {
                 <TronConnectionErrMod />
             </Modal>
             <Modal
+                animation={false}
                 className="bitkeep__popup"
                 show={redirectModal}
                 onHide={handleCloseRedirectModal}
@@ -183,6 +191,7 @@ export default function Modals() {
                 <RedirectModal />
             </Modal>
             <Modal
+                animation={false}
                 className="approve-modal"
                 style={{
                     overflow: "hidden",
@@ -195,7 +204,7 @@ export default function Modals() {
                     </div>
                 </div>
             </Modal>
-            <Modal show={error} className="error__modal">
+            <Modal animation={false} show={error} className="error__modal">
                 <Error />
             </Modal>
         </>
