@@ -25,6 +25,7 @@ function SendFees(props) {
 
     const to = useSelector((state) => state.general.to);
     const from = useSelector((state) => state.general.from);
+    const EVM = from?.type === "EVM";
     const account = useSelector((state) => state.general.account);
     const selectedNFTList = useSelector(
         (state) => state.general.selectedNFTList
@@ -155,7 +156,7 @@ function SendFees(props) {
                     )}
                 </div>
             </div>
-            {deployFees && selectedNFTList?.length ? (
+            {EVM && deployFees && selectedNFTList?.length ? (
                 <div className="fees deploy-fees">
                     <div className="fees__title deploy-fees__tittle">
                         <span>Deploy Fees</span>
@@ -166,14 +167,10 @@ function SendFees(props) {
                             />
                         </span>
                     </div>
-                    {/* {deployFeeLoading ? ( */}
                     <div>
                         <span>{deployFees.toFixed(2)}</span>
                         <span>{` ${chainParams?.currencySymbol}`}</span>
                     </div>
-                    {/* ) : (
-                        <LittleLoader />
-                    )} */}
                 </div>
             ) : null}
         </div>
