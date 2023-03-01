@@ -166,6 +166,7 @@ function DestinationChain() {
                 }
 
                 default: {
+                  dispatch(setReceiver(address));
                   break;
                 }
               }
