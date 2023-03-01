@@ -2,8 +2,8 @@
 // import { HashConnect } from "hashconnect/dist/cjs/main";
 import icon from "./../../../assets/img/icons/XPNET.svg";
 
-export const connectHashPack = async (hashConnect) => {
-    debugger;
+export const connectHashPack = async (hashConnect, network) => {
+    // debugger;
 
     let initData;
 
@@ -15,7 +15,7 @@ export const connectHashPack = async (hashConnect) => {
         icon: icon,
     };
     try {
-        initData = await hashConnect.init(appMetadata, "testnet", true);
+        initData = await hashConnect.init(appMetadata, "testnet", network);
         const { pairingString } = initData;
         hashConnect.connectToLocalWallet(pairingString, appMetadata);
         return initData;
