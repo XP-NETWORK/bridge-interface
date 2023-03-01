@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import RedClose from "../../assets/img/icons/RedClose.svg";
@@ -7,6 +7,7 @@ import {
     setReceiver,
     setSwitchDestination,
     setError,
+    setIsInvalidAddress
 } from "../../store/reducers/generalSlice";
 import ChainSwitch from "../Buttons/ChainSwitch";
 
@@ -25,7 +26,7 @@ import {PublicKey} from '@solana/web3.js'
 function DestinationChain() {
     let alert = useSelector((state) => state.general.pasteDestinationAlert);
     const to = useSelector((state) => state.general.to);
-    let [isInvalid, setIsInvalid] = useState(true)
+    const isInvalid = useSelector((state) => state.general.isInvalid);
 
     const dispatch = useDispatch();
     let receiver = useSelector((state) => state.general.receiver);
@@ -75,6 +76,11 @@ function DestinationChain() {
     //   return new AptosAccount.isValidPath(address);
     // };
 
+    const addressValidateNear = (address) => {
+      // NEAR wallet address are simple base64 strings containing lowercase and numeric characters only
+      return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(address)      
+    };
+
     const addressValidateAlgo = (address) => {
       return algo.isValidAddress(address)
     };
@@ -100,65 +106,72 @@ function DestinationChain() {
             if (address !== "") {
               switch (to.type) {
                 case "EVM": {
-                  setIsInvalid(addressValidateWeb3(address));
+                  dispatch(setIsInvalidAddress(addressValidateWeb3(address)));
                   dispatch(setReceiver(address));
                   break;
                 }
 
                 case "TON": {
-                  setIsInvalid(addressValidateTon(address));
+                  dispatch(setIsInvalidAddress(addressValidateTon(address)));
                   dispatch(setReceiver(address));
                   break;
                 }
 
                 // case "Cardano": {
-                //   setIsInvalid(addressValidateCardano(address));
+                //   setIsInvalidAddress(addressValidateCardano(address));
                 //   dispatch(setReceiver(address));
                 //   break;
                 // }
 
                 case "Elrond": {
-                  setIsInvalid(addressValidateElrd(address));
+                  dispatch(setIsInvalidAddress(addressValidateElrd(address)));
                   dispatch(setReceiver(address));
                   break;
                 }
 
                 case "Algorand": {
-                  setIsInvalid(addressValidateAlgo(address));
+                  dispatch(setIsInvalidAddress(addressValidateAlgo(address)));
                   dispatch(setReceiver(address));
                   break;
                 }
 
                 case "Tezos": {
-                  setIsInvalid(addressValidateTezos(address));
+                  dispatch(setIsInvalidAddress(addressValidateTezos(address)));
                   dispatch(setReceiver(address));
                   break;
                 }
 
                 case "Tron": {
-                  setIsInvalid(addressValidateTron(address));
+                  dispatch(setIsInvalidAddress(addressValidateTron(address)));
                   dispatch(setReceiver(address));
                   break;
                 }
 
                 // case "APTOS": {
-                //   setIsInvalid(addressValidateAptos(address));
+                //   setIsInvalidAddress(addressValidateAptos(address));
                 //   dispatch(setReceiver(address));
                 //   break;
                 // }
 
                 case "Solana": {
-                  setIsInvalid(addressValidateSolana(address));
+                  dispatch(setIsInvalidAddress(addressValidateSolana(address)))
+                  dispatch(setReceiver(address));
+                  break;
+                }
+
+                case "NEAR": {
+                  dispatch(setIsInvalidAddress(addressValidateNear(address)));
                   dispatch(setReceiver(address));
                   break;
                 }
 
                 default: {
+                  dispatch(setReceiver(address));
                   break;
                 }
               }
             } else {
-              setIsInvalid(true);
+              dispatch(setIsInvalidAddress(true));
               dispatch(setReceiver(address));
             }
 		} catch (error) {

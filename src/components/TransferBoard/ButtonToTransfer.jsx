@@ -38,6 +38,8 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
     const testnet = useSelector((state) => state.general.testNet);
     const staging = useSelector((state) => state.general.staging);
 
+    const isInvalid = useSelector((state) => state.general.isInvalid);
+
     const [loading, setLoading] = useState();
     const dispatch = useDispatch();
 
@@ -90,6 +92,30 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
         return stop;
     };
 
+    const sendAllNFTs = async () => {
+        if (!receiver) {
+            dispatch(setPasteDestinationAlert(true));
+        } else if (selectedNFTList.length < 1) {
+            dispatch(setSelectNFTAlert(true));
+        } else if (!approved) {
+            dispatch(setNoApprovedNFTAlert(true));
+        } else if (!isInvalid) {
+            // console.log(isInvalid)
+        } else if (!loading && approved) {
+            setLoading(true);
+            dispatch(setTransferLoaderModal(true));
+
+            for (let index = 0; index < selectedNFTList.length; index++) {
+                if (from === "VeChain" || from === "TON") {
+                    await sendEach(selectedNFTList[index], index);
+                } else {
+                    sendEach(selectedNFTList[index], index);
+                }
+                return stop;
+            }
+        }
+    };
+
     const sendEach = async (nft) => {
         try {
             const [fromChain, toChain] = await Promise.all([
@@ -131,27 +157,6 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
 
         setLoading(false);
         dispatch(setTransferLoaderModal(false));
-    };
-
-    const sendAllNFTs = async () => {
-        if (!receiver) {
-            dispatch(setPasteDestinationAlert(true));
-        } else if (selectedNFTList.length < 1) {
-            dispatch(setSelectNFTAlert(true));
-        } else if (!approved) {
-            dispatch(setNoApprovedNFTAlert(true));
-        } else if (!loading && approved) {
-            setLoading(true);
-            dispatch(setTransferLoaderModal(true));
-
-            for (let index = 0; index < selectedNFTList.length; index++) {
-                if (from === "VeChain" || from === "TON") {
-                    await sendEach(selectedNFTList[index], index);
-                } else {
-                    sendEach(selectedNFTList[index], index);
-                }
-            }
-        }
     };
 
     return (
