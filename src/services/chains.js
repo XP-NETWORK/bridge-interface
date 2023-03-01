@@ -262,7 +262,7 @@ class AbstractChain {
             ];
 
             const afterAmountArgs = [fee, mintWith, gasLimit, extraFee];
-            debugger;
+            // debugger;
             // const inner = await this.bridge.inner(this.chain.nonce);
 
             if (!amount || toChain.rejectSft) {
