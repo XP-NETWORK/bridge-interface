@@ -11,10 +11,10 @@ function HigherHEDERA(OriginalComponent) {
 
         const getStyles = () => {};
 
-        const connectWallet = async (wallet, connector) => {
+        const connectWallet = async (wallet) => {
             switch (wallet) {
                 case "HashPack":
-                    await connectHashPack(connector, network);
+                    await connectHashPack(network);
                     break;
 
                 default:

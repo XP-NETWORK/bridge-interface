@@ -6,6 +6,7 @@ import { compose } from "redux";
 import { useDispatch } from "react-redux";
 import { withNearConnection } from "../Wallet/NEARWallet/withNearConnection";
 import { withEVMConnection } from "../Wallet/EVMWallet/withEVMConnection";
+import { withHederaConnection } from "../Wallet/HederaWallet/withHederaConnection";
 import { withServices } from "./hocs/withServices";
 
 import { BridgeModes } from "../values";
@@ -61,5 +62,6 @@ Container.propTypes = {
 export default compose(
     withServices,
     withNearConnection,
-    withEVMConnection
+    withEVMConnection,
+    withHederaConnection
 )(Container);

@@ -113,7 +113,7 @@ class Bridge {
 
     async getChain(nonce, params = {}) {
         // eslint-disable-next-line no-debugger
-        debugger;
+        // debugger;
         const chainParams = CHAIN_INFO.get(nonce);
         const chainId = String(nonce);
         const chain = this.chains[chainId];

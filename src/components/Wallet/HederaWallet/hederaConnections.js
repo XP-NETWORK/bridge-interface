@@ -1,7 +1,10 @@
 /* eslint-disable no-debugger */
+import { HashConnect } from "hashconnect";
 import icon from "./../../../assets/img/icons/XPNET.svg";
 
-export const connectHashPack = async (hashConnect, network) => {
+export const hashConnect = new HashConnect(true);
+
+export const connectHashPack = async (network) => {
     // debugger;
     let initData;
     let appMetadata = {

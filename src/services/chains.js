@@ -8,6 +8,7 @@ import BigNumber from "bignumber.js";
 
 import { ethers, BigNumber as BN } from "ethers";
 import xpchallenge from "./xpchallenge";
+import { HashConnect } from "hashconnect";
 const Xpchallenge = xpchallenge();
 const feeMultiplier = 1.1;
 
@@ -752,6 +753,10 @@ class HEDERA extends AbstractChain {
     async preTransfer() {
         return true;
     }
+
+    // getConnector() {
+    //     return this.hashConnect;
+    // }
 }
 
 export default {
