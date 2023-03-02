@@ -1,6 +1,7 @@
 /* eslint-disable no-debugger */
 import React, { useEffect } from "react";
-// import { hethers } from "@hashgraph/hethers";
+import { hethers } from "@hashgraph/hethers";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
     setAccount,
@@ -51,12 +52,8 @@ export const withHederaConnection = (Wrapped) =>
                 const network = testnet ? "testnet" : "mainnet";
                 const topic = pairingData.topic;
                 const accountId = pairingData.accountIds[0];
-                // const address = hethers.utils.getAddressFromAccount("0.0.1");
-                // console.log(
-                //     "🚀 ~ file: withHederaConnection.jsx:55 ~ hashConnect.pairingEvent.once ~ address:",
-                //     address
-                // );
-                dispatch(setAccount(accountId));
+                const address = hethers.utils.getAddressFromAccount(accountId);
+                dispatch(setAccount(address));
                 try {
                     provider = hashConnect.getProvider(
                         network,
