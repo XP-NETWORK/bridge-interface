@@ -753,6 +753,9 @@ class HEDERA extends AbstractChain {
     async preTransfer() {
         return true;
     }
+    async getClaimables(account) {
+        console.log("CLAIMABLES", account);
+    }
 
     // getConnector() {
     //     return this.hashConnect;

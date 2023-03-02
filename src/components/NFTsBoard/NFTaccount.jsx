@@ -125,6 +125,10 @@ function NFTaccount(props) {
     //     }
     // };
 
+    const getHederaClaimables = async (fromChain) => {
+        await fromChain.getClaimables(account);
+    };
+
     const getBalance = async (fromChain) => {
         const _balance = await fromChain.balance(_account);
         dispatch(setBalance(_balance));
@@ -163,6 +167,10 @@ function NFTaccount(props) {
             // if (_account && _from?.type === "Algorand") {
             //     getAlgorandClaimables(fromChain);
             // }
+
+            _account &&
+                _from?.type === "Hedera" &&
+                getHederaClaimables(fromChain);
 
             //update Balance
             getBalance(fromChain);
