@@ -744,6 +744,15 @@ class APTOS extends AbstractChain {
     }
 }
 
+class HEDERA extends AbstractChain {
+    constructor(params) {
+        super(params);
+    }
+    async preTransfer() {
+        return true;
+    }
+}
+
 export default {
     EVM,
     Elrond,
@@ -756,4 +765,5 @@ export default {
     TON,
     Solana,
     APTOS,
+    HEDERA,
 };

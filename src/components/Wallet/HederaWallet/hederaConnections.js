@@ -1,12 +1,9 @@
 /* eslint-disable no-debugger */
-// import { HashConnect } from "hashconnect/dist/cjs/main";
 import icon from "./../../../assets/img/icons/XPNET.svg";
 
 export const connectHashPack = async (hashConnect, network) => {
     // debugger;
-
     let initData;
-
     let appMetadata = {
         url: location.origin,
         name: "XP.NETWORK Multi-chain NFT bridge",
