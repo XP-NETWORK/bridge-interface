@@ -236,7 +236,7 @@ export const connectMetaMask = async (activate, from, to) => {
       const link = `dapp://${window.location.host}?to=${to}&from=${from}/`;
       window.open(link);
     }
-
+    //d/
     if (!mobile && !window.safeLocalStorage?.getItem("XP_MM_CONNECTED"))
       await window.ethereum.request({
         method: "wallet_requestPermissions",
