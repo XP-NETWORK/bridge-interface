@@ -17,7 +17,7 @@ function Hashpack({ connect, bridge }) {
 
     useEffect(() => {
         hashConnect.pairingEvent.once((pairingData) => {
-            // debugger;
+            debugger;
             console.log("pairingEvent", { pairingData });
             const network = testnet ? "testnet" : "mainnet";
             const topic = pairingData.topic;
