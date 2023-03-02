@@ -3204,9 +3204,9 @@
     bs58 "^4.0.1"
 
 "@metaplex-foundation/mpl-token-metadata@^2.3.3":
-  version "2.8.5"
-  resolved "https://registry.yarnpkg.com/@metaplex-foundation/mpl-token-metadata/-/mpl-token-metadata-2.8.5.tgz#b36e5fe8181eab86ba70d6e36cfa6f44be523836"
-  integrity sha512-CfI8zmU9qr5j3KIsmBg7VtBz9Eqb4CjBtBa7CZg+5gMa/bVDsFIfmZCXaM4dS1KcWPsoFSyJYnQApbBjbyCZEw==
+  version "2.8.6"
+  resolved "https://registry.yarnpkg.com/@metaplex-foundation/mpl-token-metadata/-/mpl-token-metadata-2.8.6.tgz#c4d7e88fd5ed723e27d74a8e3f1d0a9e20504cee"
+  integrity sha512-JxpdLBRYVs3ScyipGsrUalI61Ss8url5vTbao+BPSZF/G6iTggo50LJAj15/8Wc6yoKbgkyJwc8PR2UMyLM67g==
   dependencies:
     "@metaplex-foundation/beet" "^0.7.1"
     "@metaplex-foundation/beet-solana" "^0.4.0"
@@ -5574,9 +5574,9 @@
   integrity sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==
 
 "@types/node@*", "@types/node@>=12.12.47", "@types/node@>=13.7.0":
-  version "18.14.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.14.1.tgz#90dad8476f1e42797c49d6f8b69aaf9f876fc69f"
-  integrity sha512-QH+37Qds3E0eDlReeboBxfHbX9omAcBCXEzswCu6jySP642jiM3cYSIkU/REqwhCUqXdonHFuBfJDiAJxMNhaQ==
+  version "18.14.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.14.4.tgz#0e64ec0b35a772e1e3d849f9a0ff61782d0cb647"
+  integrity sha512-VhCw7I7qO2X49+jaKcAUwi3rR+hbxT5VcYF493+Z5kMLI0DL568b7JI4IDJaxWFH0D/xwmGJNoXisyX+w7GH/g==
 
 "@types/node@10.12.18":
   version "10.12.18"
@@ -7007,9 +7007,9 @@ aproba@^1.0.3:
   integrity sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw==
 
 aptos@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/aptos/-/aptos-1.6.0.tgz#177fad94667503df0b911a5ea7b8e542b612be8b"
-  integrity sha512-5khjDwrDeNMDBFRcZAmETW20D+V2AqTdsgqkh6bvvl70BtRXdkitN0saM05gf1rK3atnO9PyUKO8iRaBDG5qtA==
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/aptos/-/aptos-1.7.0.tgz#83860c5ae46728fd4b4f692aae76a81ba042607f"
+  integrity sha512-aWxxew9zbHbmvG5YWhliCX8dJr05q/Aqturi2u+INTOtyFTvPKP5gfx6SLgEe7QD47sAyK2i2ZD08sre3hWrFQ==
   dependencies:
     "@noble/hashes" "1.1.3"
     "@scure/bip39" "1.1.0"
@@ -7179,9 +7179,9 @@ arweave-stream-tx@^1.1.0:
     exponential-backoff "^3.1.0"
 
 arweave@^1.10.13, arweave@^1.11.4:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/arweave/-/arweave-1.13.0.tgz#046d1b74efe5b157ad85279473f3729e8c7a47a9"
-  integrity sha512-pir1s0Lg7MzAxmFsPqht1SGOq8Hoj1fhf44/8PVjBd6T8l6JRrFN23UvKp7N+MXBYM5SqrLYB8KrgvxAaczGFg==
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/arweave/-/arweave-1.13.1.tgz#acc70c07cb8505ddaa84548332c82fb45aa8f7c5"
+  integrity sha512-B6+N/5Ngvm0w1XTcboRbHGhyJkLmneqz8F5FaoVtd8KHVrzJ8cGq/dBAToP+QL4QJXlRudjLMxX7Mm9tzJt2xQ==
   dependencies:
     arconnect "^0.4.2"
     asn1.js "^5.4.1"
@@ -14249,9 +14249,9 @@ mkdirp-promise@^5.0.1:
     mkdirp "*"
 
 mkdirp@*:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-2.1.3.tgz#b083ff37be046fd3d6552468c1f0ff44c1545d1f"
-  integrity sha512-sjAkg21peAG9HS+Dkx7hlG9Ztx7HLeKnvB3NQRcu/mltCVmvkF0pisbiTSfDVYTT86XEfZrTUosLdZLStquZUw==
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-2.1.4.tgz#34faf1f2a1b4cc9a65a84e2979087211da608d11"
+  integrity sha512-Cy9cV4pRSl1o10i1dURTuRt4T04l0DkS1WZrT+Jir886OqOVkSv4FbOA7pgjhS8kEUrmm4kCRvv5var2iOCxpA==
 
 mkdirp@^0.5.5, mkdirp@~0.5.1:
   version "0.5.6"
@@ -17754,9 +17754,9 @@ stackframe@^1.3.4:
   integrity sha512-oeVtt7eWQS+Na6F//S4kJ2K2VbRlS9D43mAlMyVpVWovy9o+jfgH8O9agzANzaiLjclA0oYzUXEM4PurhSUChw==
 
 start-server-and-test@^1.14.0:
-  version "1.15.4"
-  resolved "https://registry.yarnpkg.com/start-server-and-test/-/start-server-and-test-1.15.4.tgz#8dd7c695c2c1f7e6e024843ca2224ee7d58d9a02"
-  integrity sha512-ucQtp5+UCr0m4aHlY+aEV2JSYNTiMZKdSKK/bsIr6AlmwAWDYDnV7uGlWWEtWa7T4XvRI5cPYcPcQgeLqpz+Tg==
+  version "1.15.5"
+  resolved "https://registry.yarnpkg.com/start-server-and-test/-/start-server-and-test-1.15.5.tgz#5c9103bd87c06678fc62658fbe97d09501714011"
+  integrity sha512-o3EmkX0++GV+qsvIJ/OKWm3w91fD8uS/bPQVPrh/7loaxkpXSuAIHdnmN/P/regQK9eNAK76aBJcHt+OSTk+nA==
   dependencies:
     arg "^5.0.2"
     bluebird "3.7.2"
@@ -20108,7 +20108,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "4.0.2"
-  resolved "git+https://github.com/xp-network/xpjs#2f621bdeb51c8b4fc34306c366d20c2fcb1994f3"
+  resolved "git+https://github.com/xp-network/xpjs#91546d8bc1f935ea0c69b501f8a0d03e93371179"
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"
@@ -20135,6 +20135,7 @@ xmlhttprequest@1.8.0:
     algosdk "^1.15.0-beta.1"
     aptos "^1.6.0"
     axios "^0.21.1"
+    base64url "^3.0.1"
     bignumber.js "=9.0.1"
     bn.js "^5.2.1"
     buffer "^6.0.3"

@@ -33,7 +33,7 @@ export const withEVMConnection = (Wrapped) =>
     const { bridge } = serviceContainer;
 
     useEffect(() => {
-      if (address && signer) {
+      if (address && signer && chain) {
         const isSupported = wcSupportedChains.find(
           (supported) => chain.id === supported.id
         );
@@ -64,7 +64,7 @@ export const withEVMConnection = (Wrapped) =>
             })
           );
       }
-    }, [address, signer]);
+    }, [address, signer, chain]);
 
     useEffect(() => {
       if (bridge && account && chainId) {
