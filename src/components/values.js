@@ -63,6 +63,13 @@ export const BridgeModes = {
 export const getChainObject = (nonce) =>
     chains.find((chain) => chain.nonce === nonce);
 
+export const testnetSecretMintWith =
+    "secret1x4afa2shvq4uwwtl0ld8qnjfm3jkmyvap3yn9g";
+export const stagingSecretMintWith =
+    "secret1ggvqzks96k7hawhdx3harrtnffhttrrq2qxmdg";
+export const mainnetSecretMintWith =
+    "secret16zcej6asqrtfq08u3fdjhs03zpl7lgy7q32eps";
+
 export const chains = [
     {
         type: "EVM",

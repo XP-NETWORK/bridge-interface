@@ -51,6 +51,7 @@ function NFTaccount(props) {
     const dispatch = useDispatch();
 
     const from = _from.key;
+    const secret = from === "Secret";
     const prevSelected = usePrevious(from);
 
     let nfts = useSelector((state) => state.general.NFTList);
@@ -152,7 +153,8 @@ function NFTaccount(props) {
             const fromChain = await bridge.getChain(_from.nonce);
 
             //load nfts
-            _account &&
+            !secret &&
+                _account &&
                 (prevSelected !== _from.key ||
                     prevAccount !== _account ||
                     NFTSetToggler !== prevNFTSetToggler) &&
