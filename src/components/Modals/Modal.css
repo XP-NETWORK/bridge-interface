@@ -63,7 +63,7 @@
 }
 
 .ChainModal .modal-body {
-    padding-bottom: 44px;
+    max-height: 390px;
 }
 
 .close-modal {
@@ -152,9 +152,10 @@
     cursor: pointer;
 }
 .walletListBox {
-    padding: 19px 30px 19px 30px;
+    padding: 19px 30px 0px 30px;
     background: #f9f9fb;
     overflow-y: scroll;
+    max-height: 350px;
 }
 .wllListItem {
     position: relative;
@@ -193,13 +194,9 @@
     border: 1px solid #ffffff;
 }
 
-.wllListItem:last-child {
-    margin: 0;
-}
-
 .walletList {
     list-style: none;
-    max-height: 336px;
+    /* max-height: 350px; */
 }
 
 .wllListItem .coming-chain {
