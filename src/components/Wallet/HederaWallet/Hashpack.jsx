@@ -20,18 +20,31 @@ function Hashpack({ connect, bridge }) {
     let signer;
     const testnet = useSelector((state) => state.general.testNet);
 
-    const setSigner = async () => {
+    const setSigner = async (signer) => {
+        debugger;
         try {
-            const chainWrapper = await bridge.getChain(Chain.HEDERA);
-            chainWrapper.chain.setPetraSigner(signer);
+            console.log(Chain.HEDERA);
+            const chainWrapper = await getChain();
+            chainWrapper.setSigner(signer);
             dispatch(setWalletsModal(false));
             dispatch(setConnectedWallet("HashPack"));
+            // connected();
         } catch (error) {
             console.log(error);
         }
     };
+    const getChain = async () => {
+        let chain;
+        try {
+            chain = await bridge.getChain(Chain.HEDERA);
+        } catch (error) {
+            console.log(error);
+        }
+        return chain;
+    };
 
-    useEffect(() => {
+    useEffect(async () => {
+        // getChain.then((chain) => (chainWrapper = chain));
         hashConnect.pairingEvent.once((pairingData) => {
             debugger;
             console.log("pairingEvent", { pairingData });
@@ -42,7 +55,9 @@ function Hashpack({ connect, bridge }) {
             try {
                 provider = hashConnect.getProvider(network, topic, accountId);
                 signer = hashConnect.getSigner(provider);
-                setSigner();
+                setSigner(signer);
+                dispatch(setWalletsModal(false));
+                dispatch(setConnectedWallet("HashPack"));
             } catch (error) {
                 console.log("pairingEvent error", error);
             }
@@ -72,6 +87,7 @@ Hashpack.propTypes = {
     getStyles: PropTypes.func,
     connect: PropTypes.func,
     bridge: PropTypes.object,
+    connected: PropTypes.func,
 };
 
 export default HigherHEDERA(Hashpack);

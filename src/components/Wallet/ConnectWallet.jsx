@@ -135,6 +135,10 @@ function ConnectWallet() {
         if (isOpen) setShow(false);
     }, [isOpen]);
 
+    useEffect(() => {
+        if (evmAccount) setShow(false);
+    }, [evmAccount]);
+
     return (
         <div>
             <div

@@ -324,7 +324,7 @@ export default function WalletList({ connected, input, discount }) {
             Component: (
                 <Hashpack
                     key="wallet-index-20"
-                    close={connected}
+                    connected={connected}
                     wallet={"Blade"}
                 />
             ),

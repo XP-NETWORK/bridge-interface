@@ -32,6 +32,7 @@ class AbstractChain {
     }
 
     async setSigner(signer) {
+        debugger;
         console.log(signer, this.nonce);
         try {
             //if (!signer) throw new Error("no signer");
