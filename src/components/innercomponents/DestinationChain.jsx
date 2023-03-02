@@ -39,6 +39,7 @@ function DestinationChain() {
 
     useEffect(() => {
         dispatch(setReceiver(''))
+        dispatch(setIsInvalidAddress(true))
     }, [to]);
 
     const addressValidateTon = (address) => {
