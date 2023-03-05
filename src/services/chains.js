@@ -643,6 +643,7 @@ class Near extends AbstractChain {
 
         return nfts.map((nft) => ({
             ...nft,
+            image: nft.media,
             native: {
                 ...nft.native,
                 chainId: String(ChainNonce.NEAR),
