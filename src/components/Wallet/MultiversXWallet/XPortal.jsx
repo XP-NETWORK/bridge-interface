@@ -1,13 +1,13 @@
-import React from "react";
+import { React } from "react";
 import Elrond from "../../../assets/img/chain/multiverseX.png";
 import PropTypes from "prop-types";
 import HigherMultiversX from "./HigherMultiversX";
 
-function XPortal({ styles, handleConnect }) {
+function XPortal({ styles, connectWallet }) {
     return (
         <li
             style={styles()}
-            onClick={() => handleConnect("xPortal")}
+            onClick={() => connectWallet("xPortal")}
             className="wllListItem"
             data-wallet="xPortal"
         >
@@ -19,7 +19,7 @@ function XPortal({ styles, handleConnect }) {
 
 XPortal.propTypes = {
     styles: PropTypes.func,
-    handleConnect: PropTypes.func,
+    connectWallet: PropTypes.func,
 };
 
 export default HigherMultiversX(XPortal);

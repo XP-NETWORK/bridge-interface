@@ -1,13 +1,14 @@
+/* eslint-disable no-debugger */
 import React from "react";
 import Elrond from "../../../assets/img/chain/multiverseX.png";
 import PropTypes from "prop-types";
 import HigherMultiversX from "./HigherMultiversX";
 
-function MultiversXDeFi({ handleConnect, styles }) {
+function MultiversXDeFi({ connectWallet, styles }) {
     return (
         <li
             style={styles()}
-            onClick={() => handleConnect("MultiversXDeFi")}
+            onClick={() => connectWallet("MultiversXDeFi")}
             className="wllListItem"
             data-wallet="MultiversXDeFiWallet"
         >
@@ -19,7 +20,7 @@ function MultiversXDeFi({ handleConnect, styles }) {
 
 MultiversXDeFi.propTypes = {
     styles: PropTypes.func,
-    handleConnect: PropTypes.func,
+    connectWallet: PropTypes.func,
 };
 
 export default HigherMultiversX(MultiversXDeFi);

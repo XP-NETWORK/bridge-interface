@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withServices } from "../../App/hocs/withServices";
@@ -6,26 +7,57 @@ import {
     setAccount,
     setError,
     setFrom,
+    // setQrCodeString,
+    setQrImage,
+    setWalletsModal,
 } from "../../../store/reducers/generalSlice";
 import { getChainObject } from "../../../components/values";
-
+// import { chains } from "../../components/values";
+import QRCode from "qrcode";
 import { ExtensionProvider } from "@elrondnetwork/erdjs";
 import { useNavigate } from "react-router";
 import { getRightPath } from "../../../wallet/helpers";
+import { WalletConnectV2Provider } from "@multiversx/sdk-wallet-connect-provider";
+import { wcId } from "../EVMWallet/evmConnectors";
 
 export default function HigherMultiversX(OriginalComponent) {
     const updatedComponent = withServices((props) => {
         const {
             serviceContainer: { bridge },
         } = props;
-        console.log(bridge);
         const dispatch = useDispatch();
         const navigate = useNavigate();
         const OFF = { opacity: 0.6, pointerEvents: "none" };
         const from = useSelector((state) => state.general.from);
+        const testnet = useSelector((state) => state.general.testNet);
+
         const to = useSelector((state) => state.general.to);
         const temporaryFrom = useSelector(
             (state) => state.general.temporaryFrom
+        );
+
+        const projectId = wcId;
+        const relayUrl = "wss://relay.walletconnect.com";
+        const chainId = testnet ? "T" : "1";
+        const callbacks = {
+            onClientLogin: async function() {
+                // closeModal() is defined above
+                // closeModal();
+                const address = await provider.getAddress();
+                console.log("Address:", address);
+            },
+            onClientLogout: async function() {
+                console.log("onClientLogout()");
+            },
+            onClientEvent: async function(event) {
+                console.log("onClientEvent()", event);
+            },
+        };
+        const provider = new WalletConnectV2Provider(
+            callbacks,
+            chainId,
+            relayUrl,
+            projectId
         );
 
         const navigateToAccountRoute = () => {
@@ -33,6 +65,7 @@ export default function HigherMultiversX(OriginalComponent) {
         };
 
         const handleConnect = async (wallet) => {
+            debugger;
             try {
                 const chainWrapper = await bridge.getChain(
                     from?.nonce || Chain.ELROND
@@ -41,52 +74,32 @@ export default function HigherMultiversX(OriginalComponent) {
                 let account = {};
 
                 switch (wallet) {
-                    // case "Maiar": {
-                    //   await new Promise((r) => {
-                    //     (async () => {
-                    //       const provider = new ProxyProvider("https://gateway.elrond.com");
-                    //       const maiarProvider = new WalletConnectProvider(
-                    //         provider,
-                    //         "https://bridge.walletconnect.org/"
-                    //       );
-                    //       await maiarProvider.init();
-
-                    //       maiarProvider.onClientConnect = {
-                    //         onClientLogin: async () => {
-                    //           const addess = await maiarProvider.getAddress();
-                    //           account.address = addess;
-                    //           account.signer = maiarProvider;
-                    //           dispatch(setConfirmMaiarMob(true));
-                    //           dispatch(setOnMaiar(true));
-                    //           dispatch(setQrImage(null));
-                    //           !from &&
-                    //             dispatch(
-                    //               setFrom(
-                    //                 chains.find((chain) => chain.nonce === Chain.ELROND)
-                    //               )
-                    //             );
-                    //           r();
-                    //         },
-                    //         onClientLogout: async () => {
-                    //           chainWrapper.setSigner(null);
-                    //           dispatch(
-                    //             setError({
-                    //               message:
-                    //                 "You have disconnected from Maiar, in order to transfer assets please login again",
-                    //             })
-                    //           );
-                    //         },
-                    //       };
-
-                    //       const qrCodeString = await maiarProvider.login();
-                    //       dispatch(setQrCodeString(qrCodeString));
-                    //       const qr = await QRCode.toDataURL(qrCodeString);
-                    //       dispatch(setQrImage(qr));
-                    //     })();
-                    //   });
-                    //   break;
-                    // }
-                    case "Maiar Extension": {
+                    case "xPortal": {
+                        await provider.init();
+                        provider.onClientConnect = {
+                            onClientLogin: async () => {
+                                console.log("xPortal successful connected.");
+                            },
+                            onClientLogout: async () => {
+                                window.localStorage.clear();
+                                dispatch(setAccount(""));
+                                dispatch(
+                                    setError({
+                                        message:
+                                            "You have disconnected from Maiar, in order to transfer assets please login again",
+                                    })
+                                );
+                            },
+                        };
+                        const { uri, approval } = await provider.connect();
+                        const qr = await QRCode.toDataURL(uri);
+                        dispatch(setQrImage(qr));
+                        await provider.login({ approval });
+                        account.address = provider.address;
+                        account.signer = provider;
+                        break;
+                    }
+                    case "MultiversXDeFi": {
                         const instance = ExtensionProvider.getInstance();
                         await instance
                             .init()
@@ -112,7 +125,8 @@ export default function HigherMultiversX(OriginalComponent) {
                 dispatch(setAccount(account.address));
                 chainWrapper.setSigner(account.signer);
                 bridge.setCurrentType(chainWrapper);
-                close();
+                dispatch(setWalletsModal(false));
+                dispatch(setQrImage(false));
                 if (to) navigateToAccountRoute();
                 if (!from) {
                     dispatch(setFrom(getChainObject(Chain.ELROND)));

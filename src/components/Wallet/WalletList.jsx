@@ -139,13 +139,7 @@ export default function WalletList({ connected, input, discount }) {
             order: 5,
         },
         {
-            Component: (
-                <XPortal
-                    wallet={"xPortal"}
-                    key="wallet-index-9"
-                    close={connected}
-                />
-            ),
+            Component: <XPortal wallet={"xPortal"} key="wallet-index-9" />,
             name: "xPortal",
             type: "Elrond",
             mobile: true,
@@ -154,11 +148,7 @@ export default function WalletList({ connected, input, discount }) {
         },
         {
             Component: (
-                <MultiversXDeFi
-                    wallet={undefined}
-                    key="wallet-index-10"
-                    close={connected}
-                />
+                <MultiversXDeFi wallet={undefined} key="wallet-index-10" />
             ),
             name: "MultiversX DeFi Wallet",
             type: "Elrond",
