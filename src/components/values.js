@@ -478,7 +478,7 @@ export const chains = [
         image: { avatar: true, src: near },
         testNet: biz,
         mainnet: true,
-        coming: true,
+        coming: false,
     },
     {
         type: "EVM",

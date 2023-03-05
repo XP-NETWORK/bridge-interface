@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { useEffect } from "react";
 
 import PropTypes from "prop-types";
@@ -25,6 +26,7 @@ const Container = ({ children, serviceContainer, setContainer }) => {
     useEffect(() => {
         (async () => {
             let network;
+            // debugger;
 
             if (window.location.pathname.includes(BridgeModes.Staging)) {
                 network = BridgeModes.Staging;
@@ -34,10 +36,10 @@ const Container = ({ children, serviceContainer, setContainer }) => {
                 dispatch(setTestNet(true));
             }
             const params = new URLSearchParams(window.location.search);
+
             const checkWallet = params.get(
                 BridgeModes.CheckWallet.toLowerCase()
             );
-
             const bridge = await serviceContainer?.bridge?.init(network);
             checkWallet && bridge.setCheckWallet(checkWallet);
             setContainer({ ...serviceContainer, bridge });

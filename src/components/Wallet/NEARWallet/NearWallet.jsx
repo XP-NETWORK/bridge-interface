@@ -49,7 +49,7 @@ function NearWallet({ serviceContainer }) {
         // eslint-disable-next-line no-debugger
         // debugger;
         const OFF = { pointerEvents: "none", opacity: "0.6" };
-        if (!testNet) return { display: "none" };
+        if (testNet) return { display: "none" };
         else if (!from) return {};
         else if (from && from?.type !== "NEAR") return OFF;
         // return {};
