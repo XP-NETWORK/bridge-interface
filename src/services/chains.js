@@ -612,7 +612,7 @@ class Near extends AbstractChain {
         //const nfts = await super.getNFTs(address);
 
         const res = await axios.post(
-            `https://interop-testnet.hasura.app/v1/graphql?rand=${Math.random()}`,
+            `https://interop-mainnet.hasura.app/v1/graphql?rand=${Math.random()}`,
             {
                 query: `
       query MyQuery {
