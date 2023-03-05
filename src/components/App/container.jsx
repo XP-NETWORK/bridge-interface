@@ -34,7 +34,9 @@ const Container = ({ children, serviceContainer, setContainer }) => {
                 dispatch(setTestNet(true));
             }
             const params = new URLSearchParams(window.location.search);
-            const checkWallet = params.get(BridgeModes.CheckWallet);
+            const checkWallet = params.get(
+                BridgeModes.CheckWallet.toLowerCase()
+            );
 
             const bridge = await serviceContainer?.bridge?.init(network);
             checkWallet && bridge.setCheckWallet(checkWallet);
