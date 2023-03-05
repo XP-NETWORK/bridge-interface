@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import TezosWallet from "./TezosWallet";
 import AlgorandWallet from "./AlgorandWallet";
 import TronWallet from "./TronWallet";
-import ElrondWallet from "./ElrondWallet";
+// import ElrondWallet from "./ElrondWallet";
 // import USBWallet from "./USBWallet";
 import VeChainWallet from "./VeChainWallet";
 import PropTypes from "prop-types";
@@ -30,6 +30,8 @@ import { biz } from "../values";
 import Phantom from "./SOLWallet/Phantom";
 import Solflare from "./SOLWallet/Solflare";
 import OKX from "./EVMWallet/OKX";
+import XPortal from "./MultiversXWallet/XPortal";
+import MultiversXDeFi from "./MultiversXWallet/MultiversXDeFi";
 
 export default function WalletList({ connected, input, discount }) {
     const from = useSelector((state) => state.general.from);
@@ -138,13 +140,13 @@ export default function WalletList({ connected, input, discount }) {
         },
         {
             Component: (
-                <ElrondWallet
-                    wallet={"Maiar"}
+                <XPortal
+                    wallet={"xPortal"}
                     key="wallet-index-9"
                     close={connected}
                 />
             ),
-            name: "Maiar Elrond",
+            name: "xPortal",
             type: "Elrond",
             mobile: true,
             desktop: true,
@@ -152,7 +154,7 @@ export default function WalletList({ connected, input, discount }) {
         },
         {
             Component: (
-                <ElrondWallet
+                <MultiversXDeFi
                     wallet={undefined}
                     key="wallet-index-10"
                     close={connected}
@@ -164,6 +166,7 @@ export default function WalletList({ connected, input, discount }) {
             desktop: true,
             order: 7,
         },
+
         {
             Component: (
                 <AlgorandWallet
