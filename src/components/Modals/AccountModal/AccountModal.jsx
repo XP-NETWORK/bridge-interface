@@ -65,17 +65,8 @@ export default function AccountModal() {
       <div className="accountBtn">
         <button
           onClick={() => {
-            window.safeLocalStorage.removeItem("XP_MM_CONNECTED");
-            if (widget) {
-              window.open(
-                widget && !wsettings
-                  ? `/connect${window.location.search}`
-                  : `/connect${window.location.search}`,
-                "_self"
-              );
-            } else {
-              window.location.reload();
-            }
+            window.safeLocalStorage?.removeItem("XP_MM_CONNECTED");
+            window.location.reload();
           }}
           className="changeBtn"
         >

@@ -233,8 +233,9 @@ export const connectBitKeep = async (from) => {
 };
 
 export const connectMetaMask = async (activate) => {
+  const mobile = window.innerWidth <= 600;
   try {
-    if (!window.ethereum && window.innerWidth <= 600) {
+    if (!window.ethereum && mobile) {
       let timer;
       const store1 = store.getState();
       if (store1.widget.widget && inIframe()) {
@@ -257,8 +258,7 @@ export const connectMetaMask = async (activate) => {
 
       window.open(link);
     }
-
-    if (!window.safeLocalStorage.getItem("XP_MM_CONNECTED"))
+    if (!mobile && !window.safeLocalStorage?.getItem("XP_MM_CONNECTED"))
       await window.ethereum.request({
         method: "wallet_requestPermissions",
         params: [
@@ -269,7 +269,7 @@ export const connectMetaMask = async (activate) => {
       });
 
     await activate(injected);
-    window.safeLocalStorage.setItem("XP_MM_CONNECTED", "true");
+    !mobile && window.safeLocalStorage?.setItem("XP_MM_CONNECTED", "true");
     store.dispatch(setMetaMask(true));
     return true;
   } catch (ex) {
