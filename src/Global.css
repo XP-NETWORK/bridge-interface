@@ -799,6 +799,16 @@ li.nftSelecItem > video {
 
 span.invalid.visible {
     display: initial !important;
+}
+
+.reciverAddress.invalid,
+.reciverAddress.invalid:focus {
+    border: 1px solid #c23165;
+    background: #ecd7df;
+}
+
+span.invalid.visible {
+    display: initial !important;
     color: #c23165;
 }
 
@@ -1404,8 +1414,7 @@ span.statComp img {
     z-index: 1;
 }
 
-/* span.invalid {
-    background: linear-gradient(273.47deg, #1d212a 6.6%, #4b041e 221.21%);
+span.invalid {
     border-radius: 10px;
     display: none;
     align-items: center;
@@ -1416,7 +1425,7 @@ span.statComp img {
 span.invalid img {
     display: inline-block;
     margin-right: 3px;
-} */
+}
 
 .ComentBox {
     display: flex;
