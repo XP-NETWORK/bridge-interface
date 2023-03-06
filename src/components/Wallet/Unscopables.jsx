@@ -22,7 +22,7 @@ function Unscopables({ serviceContainer }) {
     // close();
     dispatch(setWalletsModal(false));
 
-    window.safeLocalStorage.clear();
+    window.safeLocalStorage?.clear();
     const address = await connectUnstoppable();
     if (address) dispatch(setUnstoppableDomains(true));
     dispatch(setAccount(address));
