@@ -213,7 +213,7 @@ class Bridge {
   }
 
   setCurrentType({ chainParams }) {
-    console.log(chainParams, "chainParams");
+    // console.log(chainParams, "chainParams");
     this.currentType = chainParams.type;
   }
 }

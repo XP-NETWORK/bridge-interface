@@ -91,89 +91,117 @@ function DestinationChain() {
     };
 
     const addressValidateSolana = (address) => {
-        try {
-            let publicKey = new PublicKey(address)
-            PublicKey.isOnCurve(publicKey.toBuffer())
-            return true
-        } catch (error) {
-            return false
-        }
-      };
+      try {
+        let publicKey = new PublicKey(address);
+        PublicKey.isOnCurve(publicKey.toBuffer());
+        return true;
+      } catch (error) {
+        return false;
+      }
+    };
+
+    const charMatch = (e, str, char) => {
+      const keyPressed = e.nativeEvent.data;
+      return str.lastIndexOf(char) === str.length - 1 && keyPressed === char;
+    };
+
+    const generalValidation = (e) => {
+      let isValid = true;
+
+      //cannot contain consecutive special characters
+      if (
+        charMatch(e, receiver, ".") ||
+        charMatch(e, receiver, "$") ||
+        charMatch(e, receiver, "&")
+      ) {
+        isValid = false;
+      }
+      return isValid;
+    };
+
+    const inputFilter = (e) => {
+      return /^[ A-Za-z0-9_.$&/]*$/.test(e.nativeEvent.data);
+    };
 
     const handleChange = (e) => {
 		try {
-            let address = e.target.value
-            console.log(e)
-            if (address !== "") {
-              switch (to.type) {
-                case "EVM": {
-                  dispatch(setIsInvalidAddress(addressValidateWeb3(address)));
-                  dispatch(setReceiver(address));
-                  break;
+            if (inputFilter(e)) {
+              let address = e.target.value.trim();
+              if (generalValidation(e)) {
+                switch (to.type) {
+                  case "EVM": {
+                    dispatch(setIsInvalidAddress(addressValidateWeb3(address)));
+                    dispatch(setReceiver(address));
+                    break;
+                  }
+
+                  case "TON": {
+                    dispatch(setIsInvalidAddress(addressValidateTon(address)));
+                    dispatch(setReceiver(address));
+                    break;
+                  }
+
+                  // case "Cardano": {
+                  //   setIsInvalidAddress(addressValidateCardano(address));
+                  //   dispatch(setReceiver(address));
+                  //   break;
+                  // }
+
+                  case "Elrond": {
+                    dispatch(setIsInvalidAddress(addressValidateElrd(address)));
+                    dispatch(setReceiver(address));
+                    break;
+                  }
+
+                  case "Algorand": {
+                    dispatch(setIsInvalidAddress(addressValidateAlgo(address)));
+                    dispatch(setReceiver(address));
+                    break;
+                  }
+
+                  case "Tezos": {
+                    dispatch(
+                      setIsInvalidAddress(addressValidateTezos(address))
+                    );
+                    dispatch(setReceiver(address));
+                    break;
+                  }
+
+                  case "Tron": {
+                    dispatch(setIsInvalidAddress(addressValidateTron(address)));
+                    dispatch(setReceiver(address));
+                    break;
+                  }
+
+                  // case "APTOS": {
+                  //   setIsInvalidAddress(addressValidateAptos(address));
+                  //   dispatch(setReceiver(address));
+                  //   break;
+                  // }
+
+                  case "Solana": {
+                    dispatch(
+                      setIsInvalidAddress(addressValidateSolana(address))
+                    );
+                    dispatch(setReceiver(address));
+                    break;
+                  }
+
+                  case "NEAR": {
+                    dispatch(setIsInvalidAddress(addressValidateNear(address)));
+                    dispatch(setReceiver(address));
+                    break;
+                  }
+
+                  default: {
+                    dispatch(setReceiver(address));
+                    break;
+                  }
                 }
-
-                case "TON": {
-                  dispatch(setIsInvalidAddress(addressValidateTon(address)));
-                  dispatch(setReceiver(address));
-                  break;
-                }
-
-                // case "Cardano": {
-                //   setIsInvalidAddress(addressValidateCardano(address));
-                //   dispatch(setReceiver(address));
-                //   break;
-                // }
-
-                case "Elrond": {
-                  dispatch(setIsInvalidAddress(addressValidateElrd(address)));
-                  dispatch(setReceiver(address));
-                  break;
-                }
-
-                case "Algorand": {
-                  dispatch(setIsInvalidAddress(addressValidateAlgo(address)));
-                  dispatch(setReceiver(address));
-                  break;
-                }
-
-                case "Tezos": {
-                  dispatch(setIsInvalidAddress(addressValidateTezos(address)));
-                  dispatch(setReceiver(address));
-                  break;
-                }
-
-                case "Tron": {
-                  dispatch(setIsInvalidAddress(addressValidateTron(address)));
-                  dispatch(setReceiver(address));
-                  break;
-                }
-
-                // case "APTOS": {
-                //   setIsInvalidAddress(addressValidateAptos(address));
-                //   dispatch(setReceiver(address));
-                //   break;
-                // }
-
-                case "Solana": {
-                  dispatch(setIsInvalidAddress(addressValidateSolana(address)))
-                  dispatch(setReceiver(address));
-                  break;
-                }
-
-                case "NEAR": {
-                  dispatch(setIsInvalidAddress(addressValidateNear(address)));
-                  dispatch(setReceiver(address));
-                  break;
-                }
-
-                default: {
-                  dispatch(setReceiver(address));
-                  break;
-                }
+              } else {
+                // dispatch(setIsInvalidAddress(true));
+                // dispatch(setReceiver(address));
               }
-            } else {
-              dispatch(setIsInvalidAddress(true));
-              dispatch(setReceiver(address));
             }
 		} catch (error) {
 			dispatch(setError(error));

@@ -403,12 +403,6 @@ export default function WalletList({ connected, input, discount }) {
         // },
     ];
 
-    console.log('wallet list: ',walletComponents
-    .sort((a, b) => b.order - a.order)
-    .filter((wallet) =>
-        wallet.name.toLowerCase().includes(input.toLowerCase())
-    ))
-
     const filteredWallets = input
         ? walletComponents
               .sort((a, b) => b.order - a.order)
