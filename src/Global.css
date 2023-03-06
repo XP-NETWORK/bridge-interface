@@ -793,15 +793,14 @@ li.nftSelecItem > video {
 
 .reciverAddress.invalid,
 .reciverAddress.invalid:focus {
-  border: 1px solid #c23165;
-  background: #ecd7df;
+    border: 1px solid #c23165;
+    background: #ecd7df;
 }
 
 span.invalid.visible {
-  display: initial !important;
-  color:#c23165;
+    display: initial !important;
+    color: #c23165;
 }
-
 
 li.nftSelecItem .Close {
     margin-left: auto;
@@ -1171,9 +1170,9 @@ span.statComp img {
 .wrongNFT {
     padding: 10px 24px 24px 24px;
     color: #14161a;
-    overflow-x: unset;
-    overflow-y: unset;
-    max-height: 300px;
+    /* overflow-x: unset; */
+    /* overflow-y: unset; */
+    /* max-height: 300px; */
     word-break: break-all;
 }
 
