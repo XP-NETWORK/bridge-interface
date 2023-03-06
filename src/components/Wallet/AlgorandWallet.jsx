@@ -16,6 +16,7 @@ import {
     setAlgoSigner,
     setAlgorandWallet,
     setAccount,
+    setConnectedWallet,
 } from "../../store/reducers/generalSlice";
 import { setSigner } from "../../store/reducers/signersSlice";
 import PropTypes from "prop-types";
@@ -51,15 +52,12 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
             case "MyAlgo":
                 account = await connectMyAlgo(chainWrapper.chain);
                 account && dispatch(setMyAlgo(true));
+                account && dispatch(setConnectedWallet("MyAlgo"));
                 break;
             case "AlgoSigner":
                 account = await connectAlgoSigner(testnet);
-                console.log(
-                    "🚀 ~ file: AlgorandWallet.jsx:53 ~ connectionHandler ~ account",
-                    account
-                );
                 account && dispatch(setAlgoSigner(true));
-
+                account && dispatch(setConnectedWallet("AlgoSigner"));
                 break;
             case "Algorand Wallet": //TODO
                 connectAlgoWallet();
