@@ -27,7 +27,7 @@ export default function NFTSearch() {
   const from = useSelector((state) => state.general.from);
 
   const handleSearch = (e) => {
-    const search = e.target.value.toLowerCase();
+    const search = e.target.value
     setInput(search);
     // let filteredNFTs = currentNfts.filter(
     //     (e) =>
