@@ -54,22 +54,20 @@ export const withEVMConnection = (Wrapped) =>
                             bridge.setCurrentType(chainWrapper);
                             from && navigate(getRightPath());
                         });
-                    } else {
+                    } else
                         dispatch(
                             setError({
                                 message: `Departure chain and WalletConnect selected network must be the same.`,
                             })
                         );
-                    }
-                } else {
+                } else
                     dispatch(
                         setError({
                             message: `${chain.name} is not supported by WalletConnect protocol.`,
                         })
                     );
-                }
             }
-        }, [address, signer]);
+        }, [address, signer, chain]);
 
         useEffect(() => {
             if (bridge && account && chainId) {

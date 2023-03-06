@@ -244,7 +244,7 @@ class AbstractChain {
 
       let mintWith = undefined;
 
-      if (!wrapped) {
+      if (!wrapped.bool) {
         mintWith = await this.bridge.getVerifiedContract(
           nft.native.contract || nft.collectionIdent,
           Number(toChain.nonce),
@@ -262,8 +262,6 @@ class AbstractChain {
       ];
 
       const afterAmountArgs = [fee, mintWith, gasLimit, extraFee];
-      // debugger;
-      // const inner = await this.bridge.inner(this.chain.nonce);
 
       if (!amount || toChain.rejectSft) {
         const args = [...beforeAmountArgs, ...afterAmountArgs];

@@ -39,7 +39,7 @@ import EGoldSuccess from "./../Modals/eGoldSuccess/EGoldSuccess";
 import { checkXpNetLocked } from "../../services/deposits";
 import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 
-// import { biz } from "../values";
+//import { biz } from "../values";
 
 import withChains from "./hocs";
 

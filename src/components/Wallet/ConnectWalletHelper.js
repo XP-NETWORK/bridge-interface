@@ -230,14 +230,14 @@ export const connectBitKeep = async (from) => {
 };
 
 export const connectMetaMask = async (activate, from, to) => {
+  const mobile = window.innerWidth <= 600;
   try {
-    if (!window.ethereum && window.innerWidth <= 600) {
+    if (!window.ethereum && mobile) {
       const link = `dapp://${window.location.host}?to=${to}&from=${from}/`;
-
       window.open(link);
     }
-    console.log(window.safeLocalStorage.getItem("XP_MM_CONNECTED"));
-    if (!window.safeLocalStorage.getItem("XP_MM_CONNECTED"))
+    //d/
+    if (!mobile && !window.safeLocalStorage?.getItem("XP_MM_CONNECTED"))
       await window.ethereum.request({
         method: "wallet_requestPermissions",
         params: [
@@ -248,7 +248,7 @@ export const connectMetaMask = async (activate, from, to) => {
       });
 
     await activate(injected);
-    window.safeLocalStorage.setItem("XP_MM_CONNECTED", "true");
+    !mobile && window.safeLocalStorage?.setItem("XP_MM_CONNECTED", "true");
     store.dispatch(setMetaMask(true));
     return true;
   } catch (ex) {
