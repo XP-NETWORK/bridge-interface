@@ -201,7 +201,7 @@ export const handleChainFactory = async (someChain) => {
         return await factory.innner(Chain.HEDERA);
       case "Skale":
         return await factory.inner(Chain.SKALE);
-      case "Abeychain":
+      case "ABEY":
         return await factory.inner(Chain.ABEYCHAIN);
       case "Moonbeam":
         return await factory.inner(Chain.MOONBEAM);

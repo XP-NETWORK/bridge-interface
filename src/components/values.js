@@ -354,7 +354,7 @@ export const chains = [
   {
     type: "EVM",
     key: "Abeychain",
-    text: "Abeychain",
+    text: "ABEY",
     value: "Abeychain",
     nonce: 33,
     order: 5,
