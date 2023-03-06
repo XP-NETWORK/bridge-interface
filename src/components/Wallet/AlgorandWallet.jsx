@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
     setFrom,
-    setAlgorandAccount,
     setMyAlgo,
     setAlgoSigner,
     setAlgorandWallet,
@@ -113,7 +112,8 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
 
                 chainWrapper.setSigner(signer);
                 dispatch(setAlgorandWallet(true));
-                dispatch(setAlgorandAccount(account));
+                dispatch(setAccount(account));
+                dispatch(setConnectedWallet("Algorand Wallet"));
                 if (to) navigateToAccountRoute();
             }
         };
