@@ -23,6 +23,9 @@ export const withEVMConnection = (Wrapped) =>
         const bitKeep = useSelector((state) => state.general.bitKeep);
         const WCProvider = useSelector((state) => state.general.WCProvider);
         const from = useSelector((state) => state.general.from);
+        const connectedWallet = useSelector(
+            (state) => state.general.connectedWallet
+        );
 
         const navigate = useNavigate();
 
@@ -33,7 +36,7 @@ export const withEVMConnection = (Wrapped) =>
         const { bridge } = serviceContainer;
 
         useEffect(() => {
-            if (address && signer) {
+            if (address && signer && !connectedWallet) {
                 const isSupported = wcSupportedChains.find(
                     (supported) => chain.id === supported.id
                 );
