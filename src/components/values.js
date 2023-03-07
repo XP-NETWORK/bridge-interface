@@ -301,7 +301,7 @@ export const chains = [
         order: 6,
         image: { avatar: true, src: One },
         maintenance: false,
-        testNet: false,
+        testNet: true,
         mainnet: true,
     },
     {

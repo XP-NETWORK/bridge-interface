@@ -66,8 +66,15 @@ function DestinationChain() {
 
     const addressValidateTron = (address) => {
       try {
+        let isValid = false
         TronWeb.address.toHex(address);
-        return true
+
+        /**
+         * Tron address can either be base58 OR Hexadecimal strings
+         */
+        if(/^[A-HJ-NP-Za-km-z1-9]*$/.test(address)) isValid = true // is base58
+        if(/^[a-fA-F0-9]+$/.test(address)) isValid = true // is hex
+        return isValid
       } catch (error) {
         return false
       }

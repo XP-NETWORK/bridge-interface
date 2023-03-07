@@ -47,8 +47,15 @@ export default function MobileDestinationAddressBar() {
 
   const addressValidateTron = (address) => {
     try {
+      let isValid = false
       TronWeb.address.toHex(address);
-      return true
+
+      /**
+       * Tron address can either be base58 OR Hexadecimal strings
+       */
+      if(/^[A-HJ-NP-Za-km-z1-9]*$/.test(address)) isValid = true // is base58
+      if(/^[a-fA-F0-9]+$/.test(address)) isValid = true // is hex
+      return isValid
     } catch (error) {
       return false
     }
@@ -81,11 +88,35 @@ export default function MobileDestinationAddressBar() {
       }
     };
 
+    const charMatch = (e, str, char) => {
+      const keyPressed = e.nativeEvent.data;
+      return str.lastIndexOf(char) === str.length - 1 && keyPressed === char;
+    };
+
+    const generalValidation = (e) => {
+      let isValid = true;
+
+      //cannot contain consecutive special characters
+      if (
+        charMatch(e, receiver, ".") ||
+        charMatch(e, receiver, "$") ||
+        charMatch(e, receiver, "&")
+      ) {
+        isValid = false;
+      }
+      return isValid;
+    };
+
+    const inputFilter = (e) => {
+      return /^[ A-Za-z0-9_.$&/]*$/.test(e.nativeEvent.data);
+    };
+
   const handleChange = (e) => {
     try {
-      let address = e.target.value
+      if(inputFilter(e)){
+        let address = e.target.value
       console.log(e)
-      if (address !== "") {
+      if (generalValidation(e)) {
         switch (to.type) {
           case "EVM": {
             dispatch(setIsInvalidAddress(addressValidateWeb3(address)));
@@ -153,8 +184,9 @@ export default function MobileDestinationAddressBar() {
           }
         }
       } else {
-        dispatch(setIsInvalidAddress(true));
-        dispatch(setReceiver(address));
+        // dispatch(setIsInvalidAddress(true));
+        // dispatch(setReceiver(address));
+      }
       }
 } catch (error) {
 dispatch(setError(error));
