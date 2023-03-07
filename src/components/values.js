@@ -75,6 +75,8 @@ export const scVerify = axios.create({
     baseURL: "https://sc-verify.xp.network",
 });
 
+export const secretnodes = "https://secretnodes.com/secret/accounts";
+
 export const chains = [
     {
         type: "EVM",

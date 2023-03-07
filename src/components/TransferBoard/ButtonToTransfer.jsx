@@ -146,7 +146,10 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
                 dispatch(setTxnHash({ txn: "failed", nft }));
             } else if (result) {
                 const resultObject = fromChain.handlerResult(result);
-                notifyExplorer(_from.nonce, resultObject.hash);
+                notifyExplorer(
+                    _from.nonce,
+                    resultObject.hash || resultObject.transactionHash
+                );
                 dispatch(setTxnHash({ txn: resultObject, nft, mw }));
             }
         } catch (e) {

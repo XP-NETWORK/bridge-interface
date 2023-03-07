@@ -248,7 +248,7 @@ class AbstractChain {
             );
 
             let mintWith = undefined;
-            debugger;
+            // debugger;
             if (!wrapped.bool) {
                 mintWith = await this.bridge.getVerifiedContract(
                     nft.native.contract || nft.collectionIdent,

@@ -130,6 +130,7 @@
 
 .secret-hashes .chain-hash {
     display: flex;
+    align-items: center;
 }
 
 .transferred-nft-hashes span {
