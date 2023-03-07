@@ -226,6 +226,7 @@ class AbstractChain {
                 gasLimit,
                 extraFee,
                 discountLeftUsd,
+                // account
             } = args;
 
             let { tokenId, fee } = args;
@@ -247,7 +248,7 @@ class AbstractChain {
             );
 
             let mintWith = undefined;
-
+            debugger;
             if (!wrapped.bool) {
                 mintWith = await this.bridge.getVerifiedContract(
                     nft.native.contract || nft.collectionIdent,
@@ -256,7 +257,11 @@ class AbstractChain {
                     tokenId //tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
                 );
             }
+            mintWith = mintWith
+                ? mintWith.slice(0, mintWith.indexOf(","))
+                : mintWith;
             const amount = nft.amountToTransfer;
+
             const beforeAmountArgs = [
                 this.chain,
                 toChain.chain,
