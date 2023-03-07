@@ -23,6 +23,9 @@ export const withEVMConnection = (Wrapped) =>
         const bitKeep = useSelector((state) => state.general.bitKeep);
         const WCProvider = useSelector((state) => state.general.WCProvider);
         const from = useSelector((state) => state.general.from);
+        const connectedWallet = useSelector(
+            (state) => state.general.connectedWallet
+        );
 
         const navigate = useNavigate();
 
@@ -33,7 +36,7 @@ export const withEVMConnection = (Wrapped) =>
         const { bridge } = serviceContainer;
 
         useEffect(() => {
-            if (address && signer) {
+            if (address && signer && !connectedWallet) {
                 const isSupported = wcSupportedChains.find(
                     (supported) => chain.id === supported.id
                 );
@@ -51,22 +54,20 @@ export const withEVMConnection = (Wrapped) =>
                             bridge.setCurrentType(chainWrapper);
                             from && navigate(getRightPath());
                         });
-                    } else {
+                    } else
                         dispatch(
                             setError({
                                 message: `Departure chain and WalletConnect selected network must be the same.`,
                             })
                         );
-                    }
-                } else {
+                } else
                     dispatch(
                         setError({
                             message: `${chain.name} is not supported by WalletConnect protocol.`,
                         })
                     );
-                }
             }
-        }, [address, signer]);
+        }, [address, signer, chain]);
 
         useEffect(() => {
             if (bridge && account && chainId) {
