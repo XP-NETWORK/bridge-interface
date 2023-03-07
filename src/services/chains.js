@@ -249,13 +249,12 @@ class AbstractChain {
             let mintWith = undefined;
 
             if (!wrapped.bool) {
-                const resp = await this.bridge.getVerifiedContract(
+                mintWith = await this.bridge.getVerifiedContract(
                     nft.native.contract || nft.collectionIdent,
                     Number(toChain.nonce),
                     Number(this.nonce),
                     tokenId //tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
                 );
-                mintWith = resp?.to;
             }
             const amount = nft.amountToTransfer;
             const beforeAmountArgs = [
