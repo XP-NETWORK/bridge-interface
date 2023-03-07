@@ -129,6 +129,12 @@ function DestinationChain() {
       return /^[ A-Za-z0-9_.$&/]*$/.test(e.nativeEvent.data);
     };
 
+    useEffect(()=>{
+      if(receiver === ""){
+        dispatch(setIsInvalidAddress(true))
+      }
+    },[receiver])
+
     const handleChange = (e) => {
 		try {
             if (inputFilter(e)) {

@@ -210,6 +210,12 @@ export default function MobileDestinationAddressBar() {
     dispatch(setIsInvalidAddress(true));
   }, [to]);
 
+  useEffect(()=>{
+    if(receiver === ""){
+      dispatch(setIsInvalidAddress(true))
+    }
+  },[receiver])
+
   return (
     <div className="mobile-destination__container">
       <div className="mobile-destination__header">
