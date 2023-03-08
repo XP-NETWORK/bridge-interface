@@ -6,12 +6,11 @@ import NFTempty from "../innercomponents/NFTempty";
 import Missing from "../innercomponents/Missing";
 import BigLoader from "../../components/innercomponents/BigLoader";
 import NFTcard from "./NFTcard";
-import {
-    SecretContractPanned,
-    withSecretAuth,
-} from "../Modals/ImportNFTModal/SecretAuth";
+
+import { withSecretAuth } from "../Modals/ImportNFTModal/SecretAuth";
 import { withServices } from "../App/hocs/withServices";
 import { compose } from "redux";
+import SecretContractPanel from "../innercomponents/SecretContractPannel";
 
 function NFTgridView({ serviceContainer }) {
     const { bridge } = serviceContainer;
@@ -47,7 +46,7 @@ function NFTgridView({ serviceContainer }) {
 
     return (
         <div className="nftListBox">
-            {from?.type === "Secret" && <SecretContractPanned />}
+            {from?.type === "Cosmos" && <SecretContractPanel />}
             {loader ? (
                 <BigLoader />
             ) : (
