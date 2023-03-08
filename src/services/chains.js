@@ -258,9 +258,7 @@ class AbstractChain {
                     tokenId //tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
                 );
             }
-            mintWithToUI = mintWith
-                ? mintWith.slice(0, mintWith.indexOf(","))
-                : mintWith;
+            mintWithToUI = mintWith ? mintWith.split(",") : mintWith;
             const amount = nft.amountToTransfer;
 
             const beforeAmountArgs = [

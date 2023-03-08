@@ -7,7 +7,7 @@ export default function Tooltip({ text }) {
     const copyTextToClipboard = async () => {
         setCopied(true);
         setTimeout(() => setCopied(false), 3000);
-        if ("clipboard" in navigator) {
+        if (text && "clipboard" in navigator) {
             return await navigator.clipboard.writeText(text);
         } else {
             return document.execCommand("copy", true, text);

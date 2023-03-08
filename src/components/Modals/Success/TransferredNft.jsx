@@ -131,7 +131,7 @@ export default function TransferredNft({ nft, links }) {
                                 {mintWith}
                             </a>
                         </span>
-                        <Tooltip />
+                        <Tooltip text={mintWith} />
                     </div>
                 </div>
             )}
