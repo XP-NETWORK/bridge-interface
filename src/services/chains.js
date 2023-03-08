@@ -246,7 +246,7 @@ class AbstractChain {
                 nft,
                 Number(this.nonce)
             );
-
+            debugger;
             let mintWith = undefined;
             let mintWithToUI;
             // debugger;
