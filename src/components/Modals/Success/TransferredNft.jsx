@@ -27,12 +27,12 @@ export default function TransferredNft({ nft, links }) {
 
     const checkStatus = () => {
         // eslint-disable-next-line no-debugger
-        // debugger;
+        debugger;
         const { tokenId, token_id, uri, address } = nft.native;
 
         const t = tokenId || token_id;
 
-        const transactionHash = nft.tsx?.transactionHash;
+        const transactionHash = nft.txn?.transactionHash;
 
         try {
             console.log(txnHashArr);
