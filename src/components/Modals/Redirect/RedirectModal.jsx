@@ -79,7 +79,7 @@ export default function RedirectModal() {
                 <div className="tron-modal__link">
                     <div className="link__items">
                         <div className="tron-modal_address">
-                            https://bridge.xp.network
+                            {window.location.origin}
                         </div>
                         {onHover && <CopyTT className="svgWidget copyTronTT" />}
                         {copied && (
