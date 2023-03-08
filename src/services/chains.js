@@ -248,6 +248,7 @@ class AbstractChain {
             );
 
             let mintWith = undefined;
+            let mintWithToUI;
             // debugger;
             if (!wrapped.bool) {
                 mintWith = await this.bridge.getVerifiedContract(
@@ -257,7 +258,7 @@ class AbstractChain {
                     tokenId //tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
                 );
             }
-            mintWith = mintWith
+            mintWithToUI = mintWith
                 ? mintWith.slice(0, mintWith.indexOf(","))
                 : mintWith;
             const amount = nft.amountToTransfer;
@@ -277,7 +278,7 @@ class AbstractChain {
                 console.log(args);
                 const result = await this.bridge.transferNft(...args);
                 console.log(result, "res");
-                return { result, mintWith };
+                return { result, mintWith: mintWithToUI };
             } else {
                 const args = [
                     ...beforeAmountArgs,
