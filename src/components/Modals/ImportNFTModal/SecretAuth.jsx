@@ -211,7 +211,7 @@ SecretAuth.propTypes = {
     serviceContainer: PropTypes.object,
 };
 
-const SecretContractPanned = () => {
+export const SecretContractPanned = () => {
     const { secretCred } = useSelector(({ general: { secretCred } }) => ({
         secretCred,
     }));
@@ -281,7 +281,7 @@ export const withSecretAuth = (Wrapped) =>
                 <div style={!renderAuth ? {} : { display: "none" }}>
                     <Wrapped
                         {...props}
-                        secretRender={isSecret && SecretContractPanned}
+                        // secretRender={isSecret && SecretContractPanned}
                     />
                 </div>
             </div>
