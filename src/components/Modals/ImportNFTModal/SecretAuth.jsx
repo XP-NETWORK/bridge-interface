@@ -24,7 +24,7 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
     const { bridge } = serviceContainer;
     const dispatch = useDispatch();
     const off = { opacity: 0.6, pointerEvents: "none" };
-    const [toggle, setToggle] = useState("show");
+    const [toggle, setToggle] = useState("set");
     const [importBlocked, setImportBlocked] = useState(false);
 
     const { account, checkWallet, secretCred } = useSelector(
