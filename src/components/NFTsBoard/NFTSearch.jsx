@@ -29,16 +29,6 @@ export default function NFTSearch() {
     const handleSearch = (e) => {
         const search = e.target.value.toLowerCase();
         setInput(search);
-        // let filteredNFTs = currentNfts.filter(
-        //     (e) =>
-        //         e.name?.toLowerCase().includes(search) ||
-        //         e.native.name?.toLowerCase().includes(search) ||
-        //         e.description?.toLowerCase().includes(search) ||
-        //         e.collectionIdent?.toLowerCase() === search.toLowerCase()
-        // );
-
-        // dispatch(setSearchNFTList(search));
-        // dispatch(setFilteredNFTSList(filteredNFTs));
     };
 
     const handleKeyDown = async (e) => {
