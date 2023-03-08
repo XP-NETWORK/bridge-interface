@@ -29,7 +29,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
 
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
     const receiver = convert(useSelector((state) => state.general.receiver));
-
+    const account = convert(useSelector((state) => state.general.account));
     const approved = useSelector((state) => state.general.approved);
     const _to = useSelector((state) => state.general.to);
     const from = useSelector((state) => state.general.from.key);
@@ -37,9 +37,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
     const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
     const testnet = useSelector((state) => state.general.testNet);
     const staging = useSelector((state) => state.general.staging);
-
     const isInvalid = useSelector((state) => state.general.isInvalid);
-
     const [loading, setLoading] = useState();
     const dispatch = useDispatch();
 
@@ -132,6 +130,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
                 receiver: unstoppabledomain || receiver,
                 fee: bigNumberFees,
                 discountLeftUsd,
+                account,
             });
             let mw = mintWith || undefined;
             if (!mintWith) {
@@ -147,7 +146,10 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
                 dispatch(setTxnHash({ txn: "failed", nft }));
             } else if (result) {
                 const resultObject = fromChain.handlerResult(result);
-                notifyExplorer(_from.nonce, resultObject.hash);
+                notifyExplorer(
+                    _from.nonce,
+                    resultObject.hash || resultObject.transactionHash
+                );
                 dispatch(setTxnHash({ txn: resultObject, nft, mw }));
             }
         } catch (e) {

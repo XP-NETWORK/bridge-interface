@@ -7,10 +7,12 @@ import TxStatus from "./TxStatus";
 
 import { StringShortener } from "../../../wallet/helpers";
 import Tooltip from "../AccountModal/Tooltip";
+import { secretnodes } from "../../values";
 
 export default function TransferredNft({ nft, links }) {
     const { image, animation_url, txn, name, mintWith } = nft;
     const from = useSelector((state) => state.general.from);
+    const to = useSelector((state) => state.general.to);
 
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
 
@@ -24,6 +26,8 @@ export default function TransferredNft({ nft, links }) {
     const desText = window.innerWidth <= 600 ? "Des" : "Destination Hash";
 
     const checkStatus = () => {
+        // eslint-disable-next-line no-debugger
+        // debugger;
         const { tokenId, token_id, uri, address } = nft.native;
 
         const t = tokenId || token_id;
@@ -111,11 +115,19 @@ export default function TransferredNft({ nft, links }) {
                     </a>
                 </div>
             </div>
-            {from?.text === "Secret" && (
+            {to?.text === "Secret" && (
                 <div className="transferred-nft-hashes secret-hashes">
                     <div className="chain-hash">
                         <span>Collection address:</span>
-                        <span>{mintWith}</span>
+                        <span>
+                            <a
+                                href={`${secretnodes}/${mintWith}`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                {mintWith}
+                            </a>
+                        </span>
                         <Tooltip />
                     </div>
                 </div>
