@@ -1,4 +1,4 @@
-import { useState, React, useEffect } from "react";
+import { useState, React } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Search } from "../../assets/img/icons/Search.svg";
 import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
@@ -12,7 +12,7 @@ import { chains } from "../values";
 
 export default function NFTSearch() {
   const dispatch = useDispatch();
-  let nfts = useSelector((state) => state.general.NFTList);
+  const nfts = useSelector((state) => state.general.NFTList);
   const [openSearch, setOpen] = useState(false);
   const [searchInput, setInput] = useState("");
 
@@ -27,7 +27,7 @@ export default function NFTSearch() {
   const from = useSelector((state) => state.general.from);
 
   const handleSearch = (e) => {
-    const search = e.target.value
+    const search = e.target.value.toLowerCase();
     setInput(search);
     // let filteredNFTs = currentNfts.filter(
     //     (e) =>
@@ -58,16 +58,6 @@ export default function NFTSearch() {
     }
   };
 
-  const clear = (()=>{
-    console.log("from changed")
-    // dispatch()
-    setInput("");
-    setOpen(false);
-    dispatch(setSearchNFTList(""));
-    dispatch(setFilteredNFTSList(nfts));
-  })
-  useEffect(clear,[from])
-
   return (
     <div onKeyDown={handleKeyDown} className="search-dropdown">
       {openSearch ? (
@@ -82,7 +72,11 @@ export default function NFTSearch() {
           <div
             id="SearchDrop"
             className="CloseIcon"
-            onClick={clear}
+            onClick={() => {
+              dispatch(setSearchNFTList(""));
+              dispatch(setFilteredNFTSList(nfts));
+              setOpen(false);
+            }}
           >
             <Close className="svgWidget " />
           </div>
@@ -99,3 +93,18 @@ export default function NFTSearch() {
     </div>
   );
 }
+
+/**
+ * 
+ * 
+ *  <Dropdown.Toggle id="SearchDrop">
+        <Search className="svgWidget "/>
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+          <input
+            onChange={(e) => handleSearch(e)}
+            type="text"
+            placeholder="Search NFT"
+          />
+      </Dropdown.Menu>
+ */
