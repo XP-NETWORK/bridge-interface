@@ -32,12 +32,15 @@ export default function TransferredNft({ nft, links }) {
 
         const t = tokenId || token_id;
 
+        const transactionHash = nft.tsx?.transactionHash;
+
         try {
             console.log(txnHashArr);
             for (const tx of txnHashArr) {
                 if (tx === "failed") {
                     setTxnStatus("failed");
                 } else if (
+                    transactionHash === tx.transactionHash ||
                     uri === tx.nftUri ||
                     String(t) === String(tx.tokenId) ||
                     (from.type === "Elrond" &&
