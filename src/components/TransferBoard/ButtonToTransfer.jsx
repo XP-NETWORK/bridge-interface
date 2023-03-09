@@ -38,6 +38,7 @@ export default compose(
   const account = useSelector((state) => state.general.account);
   const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
 
+  const isInvalid = useSelector((state) => state.general.isInvalid);
   const [loading, setLoading] = useState();
   const dispatch = useDispatch();
 
@@ -97,7 +98,7 @@ export default compose(
       const unstoppabledomain = await getFromDomain(receiver, toChain);
       if (unstoppabledomainSwitch(unstoppabledomain)) return;
 
-      const result = await fromChain.transfer({
+      const { result, mintWith } = await fromChain.transfer({
         toChain,
         nft,
         receiver: unstoppabledomain || receiver,
@@ -105,13 +106,13 @@ export default compose(
         discountLeftUsd,
         extraFee: getExtraFee(from),
       });
-
+      let mw = toChain.showMintWith && (mintWith || toChain.XpNft);
       if (txnHashArr[0] && !result) {
         dispatch(setTxnHash({ txn: "failed", nft }));
       } else if (result) {
         const resultObject = fromChain.handlerResult(result);
         notifyExplorer(_from.nonce, resultObject.hash);
-        dispatch(setTxnHash({ txn: resultObject, nft }));
+        dispatch(setTxnHash({ txn: resultObject, nft, mw }));
         setTxForWidget({
           result: resultObject,
           fromNonce: _from.nonce,
