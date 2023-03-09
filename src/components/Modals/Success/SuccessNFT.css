@@ -1,165 +1,165 @@
 .nftSelected__name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sucesList {
-    position: relative;
+  position: relative;
 }
 
 .tooltip-icon {
-    position: absolute;
-    right: -56px;
-    top: -45px;
-    cursor: pointer;
+  position: absolute;
+  right: -56px;
+  top: -45px;
+  cursor: pointer;
 }
 
 .tooltip-icon:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .success__copy {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .tx-status {
-    height: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 5px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
 }
 .tx-txt {
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 17px;
-    width: 64px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 17px;
+  width: 64px;
 }
 .failed .tx-txn {
-    width: 70px;
+  width: 70px;
 }
 .tx-icon img {
-    width: 16px;
+  width: 16px;
 }
 .view-tx__button {
-    width: 59px;
-    height: 23px;
-    padding: 2px 8px;
-    margin-left: auto;
-    margin-right: 15px;
-    background: #395feb;
-    border-radius: 40px;
-    color: white;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 19px;
-    display: flex;
-    justify-content: center;
+  width: 59px;
+  height: 23px;
+  padding: 2px 8px;
+  margin-left: auto;
+  margin-right: 15px;
+  background: #395feb;
+  border-radius: 40px;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 19px;
+  display: flex;
+  justify-content: center;
 }
 .view-tx__button:active,
 .view-tx__button:hover {
-    color: white;
+  color: white;
 }
 .pending {
-    color: #c058ff;
+  color: #c058ff;
 }
 .completed {
-    color: #10b67a;
+  color: #10b67a;
 }
 .processing {
-    color: #6d7a92;
+  color: #6d7a92;
 }
 .failed {
-    color: #c23165;
+  color: #c23165;
 }
 .txn-processing__inf {
-    width: 20px;
-    height: 20px;
-    background-image: url("../../../assets/img/icons/info.svg");
-    background-position: center;
-    position: relative;
+  width: 20px;
+  height: 20px;
+  background-image: url("../../../assets/img/icons/info.svg");
+  background-position: center;
+  position: relative;
 }
 .txn-processing__inf:hover {
-    background-image: url("../../../assets/img/icons/inf_hovered.svg");
+  background-image: url("../../../assets/img/icons/inf_hovered.svg");
 }
 .txn-processing__inf:hover::before {
-    content: "Halted by the validators Please be patient 💙";
-    position: absolute;
-    width: 160px;
-    bottom: 30px;
-    left: -70px;
-    padding: 6px 9px;
-    background: #282829;
-    border-radius: 10px;
-    box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.5);
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 17px;
-    color: white;
-    text-align: center;
-    z-index: 3;
+  content: "Halted by the validators Please be patient 💙";
+  position: absolute;
+  width: 160px;
+  bottom: 30px;
+  left: -70px;
+  padding: 6px 9px;
+  background: #282829;
+  border-radius: 10px;
+  box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.5);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 17px;
+  color: white;
+  text-align: center;
+  z-index: 3;
 }
 .txn-processing__inf:hover::after {
-    position: absolute;
-    bottom: 20px;
-    z-index: 3;
-    left: 0;
-    content: "";
-    /* width: 15px;
+  position: absolute;
+  bottom: 20px;
+  z-index: 3;
+  left: 0;
+  content: "";
+  /* width: 15px;
     height: 15px; */
-    box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.5);
-    /* background: #282829; */
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid #282829;
+  box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.5);
+  /* background: #282829; */
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #282829;
 }
 .transferred-nft-hashes {
-    display: flex;
-    justify-content: space-between;
-    margin: 14px 0 3px 0;
-    font-family: Inter, sans-serif;
-    font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  margin: 14px 0 3px 0;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
 }
 
 .chain-hash {
-    background-color: #f3f3f6;
-    border-radius: 40px;
-    padding: 2px 11px;
+  background-color: #f3f3f6;
+  border-radius: 40px;
+  padding: 2px 11px;
 }
 
 .secret-hashes .chain-hash {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .transferred-nft-hashes span {
-    color: #62718a;
-    margin-right: 6px;
+  color: #62718a;
+  margin-right: 6px;
 }
 
 .transferred-nft-hashes a {
-    color: #395feb;
+  color: #395feb;
 }
 
 @media screen and (max-width: 600px) {
-    .success-nft-info {
-        max-height: 40vh;
-        overflow-y: auto;
-    }
+  .success-nft-info {
+    max-height: 40vh;
+    overflow-y: auto;
+  }
 }
 
 @media screen and (max-width: 375px) {
-    .nft--success .nftSelecItem {
-        padding: 6px 20px !important ;
-    }
-    .txn-processing__inf:hover::before {
-        left: -170px !important;
-        bottom: -15px !important;
-    }
-    .txn-processing__inf:hover::after {
-        left: -16px;
-        bottom: 5px;
-        transform: rotate(-90deg);
-    }
+  .nft--success .nftSelecItem {
+    padding: 6px 20px !important ;
+  }
+  .txn-processing__inf:hover::before {
+    left: -170px !important;
+    bottom: -15px !important;
+  }
+  .txn-processing__inf:hover::after {
+    left: -16px;
+    bottom: 5px;
+    transform: rotate(-90deg);
+  }
 }
