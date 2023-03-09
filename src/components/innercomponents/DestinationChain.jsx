@@ -111,7 +111,7 @@ function DestinationChain() {
       return str.lastIndexOf(char) === str.length - 1 && keyPressed === char;
     };
 
-    const generalValidation = (e) => {
+    const inputFilters = (e) => {
       let isValid = true;
 
       //cannot contain consecutive special characters
@@ -139,7 +139,7 @@ function DestinationChain() {
 		try {
             if (inputFilter(e)) {
               let address = e.target.value.trim();
-              if (generalValidation(e)) {
+              if (inputFilters(e)) {
                 switch (to.type) {
                   case "EVM": {
                     dispatch(setIsInvalidAddress(addressValidateWeb3(address)));
@@ -209,8 +209,8 @@ function DestinationChain() {
                 }
               }
             } else {
-              dispatch(setIsInvalidAddress(true));
-              dispatch(setReceiver(address));
+              // dispatch(setIsInvalidAddress(false));
+              // dispatch(setReceiver(address));
             }
           }
 		} catch (error) {
