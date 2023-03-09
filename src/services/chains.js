@@ -13,7 +13,7 @@ const feeMultiplier = 1.1;
 
 class AbstractChain {
   chain;
-
+  showMintWith = false;
   constructor({ chainParams, nonce, chain, bridge }) {
     this.chainParams = chainParams;
     this.nonce = nonce;
@@ -264,7 +264,7 @@ class AbstractChain {
         );
       }
       const mintWithToUI = mintWith
-        ? mintWith.slice(0, mintWith.indexOf(","))
+        ? toChain.chain.XpNft.split(",")[0]
         : mintWith;
 
       const amount = nft.amountToTransfer;
@@ -539,6 +539,8 @@ class Tezos extends AbstractChain {
 }
 
 class Cosmos extends AbstractChain {
+  showMintWith = true;
+  XpNft = this.chain.XpNft.split(",")[0];
   constructor(params) {
     super(params);
   }
@@ -549,6 +551,7 @@ class Cosmos extends AbstractChain {
       secretCred.viewKey,
       secretCred.contract
     );
+
     secretNFTs = secretNFTs.map((nft) => ({
       ...nft,
       native: {
@@ -566,6 +569,13 @@ class Cosmos extends AbstractChain {
     }));
 
     return secretNFTs;
+  }
+
+  async transfer(args) {
+    debugger;
+    let minWidth;
+
+    const resp = super.transfer(args);
   }
 }
 
