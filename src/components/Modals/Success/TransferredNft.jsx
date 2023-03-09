@@ -12,7 +12,6 @@ import { secretnodes } from "../../values";
 export default function TransferredNft({ nft, links }) {
     const { image, animation_url, txn, name, mintWith } = nft;
     const from = useSelector((state) => state.general.from);
-    const to = useSelector((state) => state.general.to);
 
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
 
@@ -118,7 +117,7 @@ export default function TransferredNft({ nft, links }) {
                     </a>
                 </div>
             </div>
-            {to?.text === "Secret" && (
+            {mintWith && (
                 <div className="transferred-nft-hashes secret-hashes">
                     <div className="chain-hash">
                         <span>Collection address:</span>
