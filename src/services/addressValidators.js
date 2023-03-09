@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import * as taquito from "@taquito/utils";
 import * as algo from "algosdk";
 import { ethers } from "ethers";
@@ -38,10 +39,6 @@ const addressValidateTron = (address) => {
     }
 };
 
-// const addressValidateAptos = (address) => {
-//   return new AptosAccount.isValidPath(address);
-// };
-
 const addressValidateNear = (address) => {
     // NEAR wallet address are simple base64 strings containing lowercase and numeric characters only
     return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(address);
@@ -63,6 +60,30 @@ const addressValidateSolana = (address) => {
     } catch (error) {
         return false;
     }
+};
+
+const charMatch = (e, str, char) => {
+    // debugger;
+    const keyPressed = e.nativeEvent.data;
+    return str.lastIndexOf(char) === str.length - 1 && keyPressed === char;
+};
+
+export const generalValidation = (e, receiver) => {
+    let isValid = true;
+
+    //cannot contain consecutive special characters
+    if (
+        charMatch(e, receiver, ".") ||
+        charMatch(e, receiver, "$") ||
+        charMatch(e, receiver, "&")
+    ) {
+        isValid = false;
+    }
+    return isValid;
+};
+
+export const inputFilter = (e) => {
+    return /^[ A-Za-z0-9_.$&/]*$/.test(e.nativeEvent.data);
 };
 
 const addressValidateCosmos = (address) => {
