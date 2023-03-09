@@ -44,7 +44,7 @@ function XpBridge() {
         <Route path="/staging/connect" element={<ConnectWallet />} />
 
         <Route element={<ProtectedRoute />}>
-          <Route path={nftAccountPath} components={<NFTaccount />} />
+          <Route path={nftAccountPath} element={<NFTaccount />} />
         </Route>
         <Route path="/discounts" element={<Deposits />} />
         {<Route path="*" element={<PageNotFound />} />}

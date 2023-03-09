@@ -54,6 +54,7 @@ function NFTaccount(props) {
   const dispatch = useDispatch();
 
   const from = _from.key;
+  const secret = from === "Secret";
   const prevSelected = usePrevious(from);
 
   let nfts = useSelector((state) => state.general.NFTList);
@@ -118,6 +119,17 @@ function NFTaccount(props) {
     }
   }
 
+  // const getAlgorandClaimables = async (fromChain) => {
+  //     // eslint-disable-next-line no-debugger
+  //     debugger;
+  //     try {
+  //         const claimables = await fromChain.getClaimables(account);
+  //         console.log({ claimables });
+  //     } catch (error) {
+  //         console.log(error);
+  //     }
+  // };
+
   const getBalance = async (fromChain) => {
     const _balance = await fromChain.balance(_account);
     dispatch(setBalance(_balance));
@@ -144,27 +156,32 @@ function NFTaccount(props) {
       const fromChain = await bridge.getChain(_from.nonce);
 
       //load nfts
-      _account &&
+      !secret &&
+        _account &&
         (prevSelected !== _from.key ||
           prevAccount !== _account ||
           NFTSetToggler !== prevNFTSetToggler) &&
         getNFTsList(fromChain);
 
+      // if (_account && _from?.type === "Algorand") {
+      //     getAlgorandClaimables(fromChain);
+      // }
+
       //update Balance
       getBalance(fromChain);
       chainSpecific && chainSpecific(dispatch, fromChain, _account);
       balanceInterval = setInterval(() => getBalance(fromChain), intervalTm);
-      /* const keyHandler = async (event) => {
-                if (event.isComposing || event.keyCode === 229) {
-                    return;
-                }
-                if (event.key === "4") {
-                    fromChain.mintNFT(
-                        "https://meta.polkamon.com/meta?id=10001852306"
-                    );
-                }
-            };
-            biz && window.addEventListener("keydown", keyHandler);*/
+      // const keyHandler = async (event) => {
+      //     if (event.isComposing || event.keyCode === 229) {
+      //         return;
+      //     }
+      //     if (event.key === "4") {
+      //         fromChain.mintNFT(
+      //             "https://meta.polkamon.com/meta?id=10001852306"
+      //         );
+      //     }
+      // };
+      // biz && window.addEventListener("keydown", keyHandler);
     })();
 
     return () => clearInterval(balanceInterval);

@@ -224,7 +224,7 @@ span.closeBox svg {
 }
 
 .modal-body {
-    padding: 0px 0 24px 0;
+    padding: 0px 0 40px 0;
 }
 
 .searchChain {
@@ -234,6 +234,10 @@ span.closeBox svg {
     margin: 0 30px;
     margin-bottom: 6px;
     margin-top: 6px;
+}
+.chain-search__button {
+    position: absolute;
+    right: 15px;
 }
 
 .searchChain input {
@@ -787,6 +791,27 @@ li.nftSelecItem > video {
     border-radius: 4px;
 }
 
+.reciverAddress.invalid,
+.reciverAddress.invalid:focus {
+    border: 1px solid #c23165;
+    background: #ecd7df;
+}
+
+span.invalid.visible {
+    display: initial !important;
+}
+
+.reciverAddress.invalid,
+.reciverAddress.invalid:focus {
+    border: 1px solid #c23165;
+    background: #ecd7df;
+}
+
+span.invalid.visible {
+    display: initial !important;
+    color: #c23165;
+}
+
 li.nftSelecItem .Close {
     margin-left: auto;
 }
@@ -1155,9 +1180,9 @@ span.statComp img {
 .wrongNFT {
     padding: 10px 24px 24px 24px;
     color: #14161a;
-    overflow-x: auto;
-    overflow-y: auto;
-    max-height: 300px;
+    /* overflow-x: unset; */
+    /* overflow-y: unset; */
+    /* max-height: 300px; */
     word-break: break-all;
 }
 
@@ -1390,7 +1415,6 @@ span.statComp img {
 }
 
 span.invalid {
-    background: linear-gradient(273.47deg, #1d212a 6.6%, #4b041e 221.21%);
     border-radius: 10px;
     display: none;
     align-items: center;

@@ -25,6 +25,7 @@ import {
   setAccountWalletModal,
   setTransferLoaderModal,
   setSwitchDestination,
+  setIsInvalidAddress,
 } from "./store/reducers/generalSlice";
 //  import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
 import { chains } from "./components/values";
@@ -89,6 +90,9 @@ function App({ network }) {
       dispatch(setAccountWalletModal(false));
       dispatch(setTransferLoaderModal(false));
       dispatch(setSwitchDestination(false));
+    }
+    if (!location.pathname.includes("account")) {
+      dispatch(setIsInvalidAddress(true));
     }
   }, [location]);
 

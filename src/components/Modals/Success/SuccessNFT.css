@@ -128,6 +128,11 @@
     padding: 2px 11px;
 }
 
+.secret-hashes .chain-hash {
+    display: flex;
+    align-items: center;
+}
+
 .transferred-nft-hashes span {
     color: #62718a;
     margin-right: 6px;

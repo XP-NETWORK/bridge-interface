@@ -38,9 +38,9 @@ export default function ChainSearch() {
                     type="text"
                     placeholder="Search"
                 />
-                <button type="submit">
+                <div className="chain-search__button">
                     <Search className="svgWidget" alt="search" />
-                </button>
+                </div>
             </div>
         </form>
     );

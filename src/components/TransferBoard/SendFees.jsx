@@ -166,14 +166,10 @@ function SendFees(props) {
               <InfLithComp className="svgWidget nftInfIcon" alt="info" />
             </span>
           </div>
-          {/* {deployFeeLoading ? ( */}
           <div>
             <span>{deployFees.toFixed(2)}</span>
             <span>{` ${chainParams?.currencySymbol}`}</span>
           </div>
-          {/* ) : (
-                        <LittleLoader />
-                    )} */}
         </div>
       ) : null}
     </div>

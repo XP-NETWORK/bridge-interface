@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import { createSlice } from "@reduxjs/toolkit";
 import { utils } from "ethers";
 
@@ -22,6 +23,7 @@ const initialState = {
   refreshSecret: false,
   secretCred: initialSecretCred,
   NFTSetToggler: false,
+  isInvalid: true,
 };
 
 const generalSlice = createSlice({
@@ -299,15 +301,18 @@ const generalSlice = createSlice({
     setReceiver(state, action) {
       state.receiver = action.payload;
     },
+    setIsInvalidAddress(state, action) {
+      state.isInvalid = action.payload;
+    },
     cleanTxnHashArr(state) {
       state.txnHashArr = state.txnHashArr?.initialState
         ? state.txnHashArr?.initialState
         : [];
     },
     setTxnHash(state, action) {
-      const { nft, txn } = action.payload;
+      const { nft, txn, mw } = action.payload;
       const { tokenId, contract, chainId } = nft.native;
-
+      const mintWith = mw;
       state.txnHashArr = [...state.txnHashArr, txn];
       state.selectedNFTList = state.selectedNFTList.map((n) => {
         const { native } = n;
@@ -317,6 +322,7 @@ const generalSlice = createSlice({
           native.chainId === chainId
         ) {
           n.txn = txn;
+          n.mintWith = mintWith;
         }
         return n;
       });
@@ -634,6 +640,7 @@ export const {
   setTonWallet,
   setStaging,
   setAptosAccount,
+  setIsInvalidAddress,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

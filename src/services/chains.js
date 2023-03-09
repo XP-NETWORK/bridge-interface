@@ -83,6 +83,10 @@ class AbstractChain {
     }
   }
 
+  async validateAddress(address) {
+    return true;
+  }
+
   async preParse(nft) {
     let uri = nft.uri;
     const contract = nft.native?.contract || nft.collectionIdent;
@@ -130,7 +134,7 @@ class AbstractChain {
   }
 
   async mintNFT(uri) {
-    console.log(this.signer);
+    // console.log(this.signer);
     const mint = await this.chain.mintNft(this.signer, {
       contract: "0x34933A5958378e7141AA2305Cdb5cDf514896035",
       uri,
@@ -230,6 +234,7 @@ class AbstractChain {
         gasLimit,
         extraFee,
         discountLeftUsd,
+        // account
       } = args;
 
       let { tokenId, fee } = args;
@@ -249,6 +254,7 @@ class AbstractChain {
 
       let mintWith = undefined;
 
+      // debugger;
       if (!wrapped.bool) {
         mintWith = await this.bridge.getVerifiedContract(
           nft.native.contract || nft.collectionIdent,
@@ -257,7 +263,12 @@ class AbstractChain {
           tokenId //tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
         );
       }
+      const mintWithToUI = mintWith
+        ? mintWith.slice(0, mintWith.indexOf(","))
+        : mintWith;
+
       const amount = nft.amountToTransfer;
+
       const beforeAmountArgs = [
         this.chain,
         toChain.chain,
@@ -271,15 +282,16 @@ class AbstractChain {
       if (!amount || toChain.rejectSft) {
         const args = [...beforeAmountArgs, ...afterAmountArgs];
         console.log(args);
-        const res = await this.bridge.transferNft(...args);
-        console.log(res, "res");
-        return res;
+        const result = await this.bridge.transferNft(...args);
+        console.log(result, "res");
+        return { result, mintWith: mintWithToUI };
       } else {
         const args = [...beforeAmountArgs, BigInt(amount), ...afterAmountArgs];
         console.log(args, "args");
-        const res = await this.bridge.transferSft(...args);
-        console.log(res, "res");
-        return res;
+        const result = await this.bridge.transferSft(...args);
+        console.log(result, "res");
+
+        return { result, mintWith };
       }
     } catch (e) {
       console.log(e, "in transfer");
@@ -512,7 +524,6 @@ class Algorand extends AbstractChain {
   async getClaimables(account) {
     try {
       const x = await this.bridge.claimableAlgorandNfts(account);
-
       return x;
     } catch (e) {
       console.log(e, "e");
@@ -565,6 +576,10 @@ class TON extends AbstractChain {
     super(params);
   }
 
+  async validateAddress(address) {
+    return this.chain.validateAddress(address).catch(() => false);
+  }
+
   async preParse(nft) {
     nft = await super.preParse(nft);
 
@@ -607,7 +622,7 @@ class Near extends AbstractChain {
     //const nfts = await super.getNFTs(address);
 
     const res = await axios.post(
-      `https://interop-testnet.hasura.app/v1/graphql?rand=${Math.random()}`,
+      `https://interop-mainnet.hasura.app/v1/graphql?rand=${Math.random()}`,
       {
         query: `
       query MyQuery {
@@ -638,6 +653,7 @@ class Near extends AbstractChain {
 
     return nfts.map((nft) => ({
       ...nft,
+      image: nft.media,
       native: {
         ...nft.native,
         chainId: String(ChainNonce.NEAR),
