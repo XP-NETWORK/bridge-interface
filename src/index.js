@@ -26,78 +26,46 @@ import Bridge from "./services/bridge";
 import WhiteListedPool from "./services/whiteListedPool";
 
 import { WagmiConfig } from "wagmi";
-import { wagmiClient } from "./components/Wallet/EVMWallet/evmConnectors";
+import {
+  wagmiClient,
+  createSafeStorage,
+} from "./components/Wallet/EVMWallet/evmConnectors";
 
 function getLibrary(provider) {
-    return new Web3(provider);
+  return new Web3(provider);
 }
 
 const Services = ({ children }) => {
-    const [serviceContainer, setContainer] = useState({
-        bridge: Bridge(),
-        whitelistedPool: WhiteListedPool(),
-        safeLocalStorage: (() => {
-            window.safeLocalStorage = {
-                getItem(key) {
-                    try {
-                        return localStorage.getItem(key);
-                    } catch (e) {
-                        console.log("error in safeLocalStorage", e);
-                        return undefined;
-                    }
-                },
-                setItem(key, val) {
-                    try {
-                        return localStorage.setItem(key, val);
-                    } catch (e) {
-                        console.log("error in safeLocalStorage", e);
-                        return undefined;
-                    }
-                },
-                removeItem(key) {
-                    try {
-                        return localStorage.removeItem(key);
-                    } catch (e) {
-                        console.log("error in safeLocalStorage", e);
-                        return undefined;
-                    }
-                },
-                clear() {
-                    try {
-                        return localStorage.clear();
-                    } catch (e) {
-                        console.log("error in safeLocalStorage", e);
-                        return undefined;
-                    }
-                },
-            };
-        })(),
-    });
+  const [serviceContainer, setContainer] = useState({
+    bridge: Bridge(),
+    whitelistedPool: WhiteListedPool(),
+    safeLocalStorage: createSafeStorage(),
+  });
 
-    return (
-        <ServiceProvider value={{ serviceContainer, setContainer }}>
-            {children}
-        </ServiceProvider>
-    );
+  return (
+    <ServiceProvider value={{ serviceContainer, setContainer }}>
+      {children}
+    </ServiceProvider>
+  );
 };
 
 ReactDOM.render(
-    <React.StrictMode>
-        <WagmiConfig client={wagmiClient}>
-            <Web3ReactProvider getLibrary={getLibrary}>
-                <Services>
-                    <Provider store={store}>
-                        <BrowserRouter>
-                            <ErrorBoundary>
-                                <NavBar />
-                                <App />
-                                <Footer />
-                            </ErrorBoundary>
-                        </BrowserRouter>
-                    </Provider>
-                </Services>
-            </Web3ReactProvider>
-        </WagmiConfig>
-    </React.StrictMode>,
-    document.getElementById("root")
+  <React.StrictMode>
+    <WagmiConfig client={wagmiClient}>
+      <Web3ReactProvider getLibrary={getLibrary}>
+        <Services>
+          <Provider store={store}>
+            <BrowserRouter>
+              <ErrorBoundary>
+                <NavBar />
+                <App />
+                <Footer />
+              </ErrorBoundary>
+            </BrowserRouter>
+          </Provider>
+        </Services>
+      </Web3ReactProvider>
+    </WagmiConfig>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
