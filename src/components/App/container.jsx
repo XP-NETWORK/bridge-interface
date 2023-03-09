@@ -37,9 +37,11 @@ const Container = ({ children, serviceContainer, setContainer }) => {
             }
             const params = new URLSearchParams(window.location.search);
 
-            const checkWallet = params.get(
-                BridgeModes.CheckWallet.toLowerCase()
-            );
+            let checkWallet = params.get(BridgeModes.CheckWallet.toLowerCase());
+            checkWallet = !checkWallet
+                ? params.get(BridgeModes.CheckWallet)
+                : checkWallet;
+
             const bridge = await serviceContainer?.bridge?.init(network);
             checkWallet && bridge.setCheckWallet(checkWallet);
             setContainer({ ...serviceContainer, bridge });
