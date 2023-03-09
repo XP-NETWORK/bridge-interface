@@ -122,7 +122,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
       const unstoppabledomain = await getFromDomain(receiver, toChain);
       if (unstoppabledomainSwitch(unstoppabledomain)) return;
       console.log(toChain.XpNft);
-      const { result, mintWith } = await fromChain.transfer({
+      const res = await fromChain.transfer({
         toChain,
         nft,
         receiver: unstoppabledomain || receiver,
@@ -130,6 +130,8 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
         discountLeftUsd,
         account,
       });
+
+      const { result, mintWith } = res;
 
       let mw = toChain.showMintWith && (mintWith || toChain.XpNft);
       if (txnHashArr[0] && !result) {
