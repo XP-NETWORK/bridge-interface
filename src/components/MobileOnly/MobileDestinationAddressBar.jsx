@@ -36,7 +36,6 @@ export default function MobileDestinationAddressBar() {
                     dispatch(setReceiver(address));
                 } else {
                     dispatch(setIsInvalidAddress(true));
-                    dispatch(setReceiver(address));
                 }
             }
         } catch (error) {
