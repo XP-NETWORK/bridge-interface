@@ -52,7 +52,7 @@ export default function ChainSwitch({ assignment }) {
                             src={to?.image?.src}
                             alt=""
                         />{" "}
-                        {to.text}
+                        {to?.text}
                         <div className="arrow-down"></div>
                     </span>
                 );
