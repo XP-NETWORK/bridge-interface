@@ -115,7 +115,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
     };
 
     const sendEach = async (nft) => {
-        debugger;
+        // debugger;
         try {
             const [fromChain, toChain] = await Promise.all([
                 bridge.getChain(_from.nonce),
