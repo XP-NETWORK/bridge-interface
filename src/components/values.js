@@ -486,6 +486,7 @@ export const chains = [
         testNet: biz,
         mainnet: biz,
         coming: false,
+        maintenance:true
     },
     {
         type: "EVM",
