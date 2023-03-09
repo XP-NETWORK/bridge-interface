@@ -25,7 +25,7 @@ function SendFees(props) {
 
     const to = useSelector((state) => state.general.to);
     const from = useSelector((state) => state.general.from);
-    const EVM = from?.type === "EVM";
+    // const EVM = from?.type === "EVM";
     const account = useSelector((state) => state.general.account);
     const selectedNFTList = useSelector(
         (state) => state.general.selectedNFTList
@@ -156,7 +156,7 @@ function SendFees(props) {
                     )}
                 </div>
             </div>
-            {EVM && deployFees && selectedNFTList?.length ? (
+            {deployFees && selectedNFTList?.length ? (
                 <div className="fees deploy-fees">
                     <div className="fees__title deploy-fees__tittle">
                         <span>Deploy Fees</span>
