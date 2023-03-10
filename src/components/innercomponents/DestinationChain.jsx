@@ -55,8 +55,8 @@ function DestinationChain() {
                     dispatch(setIsInvalidAddress(validateFunc(address)));
                     dispatch(setReceiver(address));
                 } else {
-                    dispatch(setIsInvalidAddress(true));
-                    dispatch(setReceiver(address));
+                    // dispatch(setIsInvalidAddress(true));
+                    // dispatch(setReceiver(address));
                 }
             }
         } catch (error) {

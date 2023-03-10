@@ -35,7 +35,7 @@ export default function MobileDestinationAddressBar() {
                     dispatch(setIsInvalidAddress(validateFunc(address)));
                     dispatch(setReceiver(address));
                 } else {
-                    dispatch(setIsInvalidAddress(true));
+                    // dispatch(setIsInvalidAddress(true));
                 }
             }
         } catch (error) {
