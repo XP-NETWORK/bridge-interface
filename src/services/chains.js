@@ -291,7 +291,7 @@ class AbstractChain {
         const result = await this.bridge.transferSft(...args);
         console.log(result, "res");
 
-        return { result, mintWith };
+        return { result, mintWith: mintWithToUI };
       }
     } catch (e) {
       console.log(e, "in transfer");
@@ -569,13 +569,6 @@ class Cosmos extends AbstractChain {
     }));
 
     return secretNFTs;
-  }
-
-  async transfer(args) {
-    debugger;
-    let minWidth;
-
-    const resp = super.transfer(args);
   }
 }
 
