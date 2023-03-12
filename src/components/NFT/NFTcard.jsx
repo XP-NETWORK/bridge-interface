@@ -30,7 +30,6 @@ import { selected } from "./NFTHelper";
 
 import { WhitelistButton } from "./WhitelistButton";
 import SFTMark from "./SFTMark";
-import { setupUnitTestWatcherTimeouts } from "@elrondnetwork/erdjs/out/testutils";
 
 NFTcard.propTypes = {
   nft: PropTypes.object,

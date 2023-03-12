@@ -253,6 +253,7 @@ class AbstractChain {
       const wrapped = await this.bridge.isWrappedNft(nft, Number(this.nonce));
 
       let mintWith = undefined;
+      let mwToUI = undefined;
 
       // debugger;
       if (!wrapped.bool) {
@@ -262,10 +263,12 @@ class AbstractChain {
           Number(this.nonce),
           tokenId //tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
         );
+        mwToUI = mintWith?.split(",")?.at(0);
       }
-      const mintWithToUI = mintWith
-        ? toChain.chain.XpNft.split(",")[0]
-        : mintWith;
+
+      if (wrapped.bool && String(toChain.nonce) === wrapped.wrapped?.origin) {
+        mwToUI = wrapped.wrapped.source_mint_ident;
+      }
 
       const amount = nft.amountToTransfer;
 
@@ -284,14 +287,14 @@ class AbstractChain {
         console.log(args);
         const result = await this.bridge.transferNft(...args);
         console.log(result, "res");
-        return { result, mintWith: mintWithToUI };
+        return { result, mintWith: mwToUI };
       } else {
         const args = [...beforeAmountArgs, BigInt(amount), ...afterAmountArgs];
         console.log(args, "args");
         const result = await this.bridge.transferSft(...args);
         console.log(result, "res");
 
-        return { result, mintWith: mintWithToUI };
+        return { result, mintWith: mwToUI };
       }
     } catch (e) {
       console.log(e, "in transfer");

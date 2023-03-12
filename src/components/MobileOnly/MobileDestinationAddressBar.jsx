@@ -32,8 +32,10 @@ export default function MobileDestinationAddressBar() {
                 let address = e.target.value.trim();
                 if (generalValidation(e, receiver)) {
                     const validateFunc = validateFunctions[to.type];
-                    dispatch(setIsInvalidAddress(validateFunc(address)));
-                    dispatch(setReceiver(address));
+                    if (validateFunc) {
+                        dispatch(setIsInvalidAddress(validateFunc(address)));
+                        dispatch(setReceiver(address));
+                    }
                 } else {
                     dispatch(setIsInvalidAddress(true));
                 }
