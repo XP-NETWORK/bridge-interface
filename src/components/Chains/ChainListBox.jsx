@@ -77,75 +77,141 @@ function ChainListBox({ serviceContainer }) {
         }
     };
     // ! ref
+    // const chainSelectHandler = async (chain) => {
+    //     // eslint-disable-next-line no-debugger
+    //     // debugger;
+
+    //     const chainWrapper = await bridge.getChain(chain.nonce);
+
+    //     if (departureOrDestination === "departure") {
+    //         if (
+    //             bridge.currentType === "EVM" &&
+    //             from?.text === "VeChain" &&
+    //             chainWrapper.chainParams.type === "EVM"
+    //         ) {
+    //             dispatch(setChangeWallet(true));
+    //             dispatch(setTemporaryFrom(chain));
+    //             dispatch(setTemporaryTo(to));
+    //             handleClose();
+    //         } else if (
+    //             chainWrapper.chainParams.name === "VeChain" &&
+    //             bridge.currentType === "EVM"
+    //         ) {
+    //             dispatch(setChangeWallet(true));
+    //             dispatch(setTemporaryFrom(chain));
+    //             dispatch(setTemporaryTo(to));
+    //             handleClose();
+    //         } else if (
+    //             chainWrapper.chainParams.type === bridge.currentType ||
+    //             !bridge.currentType
+    //         ) {
+    //             if (from && from?.text !== chain.text) {
+    //                 if (from?.text === "Harmony" && bitKeep) {
+    //                     dispatch(setTemporaryFrom(chain));
+
+    //                     dispatch(setChangeWallet(true));
+    //                     handleClose();
+    //                 } else if (
+    //                     (account || evmAccount) &&
+    //                     from.text !== "VeChain"
+    //                 ) {
+    //                     const switched = await switchNetwork(chain);
+    //                     if (switched) {
+    //                         dispatch(setFrom(chain));
+    //                         if (to?.text === chain.text) {
+    //                             dispatch(setTo(from));
+    //                         }
+    //                     }
+    //                     handleClose();
+    //                 } else {
+    //                     dispatch(setFrom(chain));
+
+    //                     handleClose();
+    //                 }
+    //             } else {
+    //                 dispatch(setFrom(chain));
+    //                 handleClose();
+    //             }
+    //             handleClose();
+    //         } else {
+    //             dispatch(setChangeWallet(true));
+    //             dispatch(setTemporaryFrom(chain));
+    //             dispatch(setTemporaryTo(to));
+    //             handleClose();
+    //         }
+    //         handleClose();
+    //     } else if (departureOrDestination === "destination") {
+    //         if (from?.text === chain.text) {
+    //             if (to?.text === "Harmony" && bitKeep) {
+    //                 dispatch(setTemporaryFrom(to));
+    //                 dispatch(setChangeWallet(true));
+    //                 handleClose();
+    //             } else if (account || evmAccount) {
+    //                 const switched = await switchNetwork(to);
+    //                 if (switched) {
+    //                     dispatch(setTo(from));
+    //                     dispatch(setFrom(to));
+    //                 }
+    //             }
+    //         } else {
+    //             dispatch(setTo(chain));
+    //         }
+    //         handleClose();
+    //     }
+    // };
+
     const chainSelectHandler = async (chain) => {
-        // eslint-disable-next-line no-debugger
-        // debugger;
-
         const chainWrapper = await bridge.getChain(chain.nonce);
+        const isDeparture = departureOrDestination === "departure";
+        const isVeChain = from?.text === "VeChain";
+        const isEVM = chainWrapper.chainParams.type === "EVM";
+        const isVeChainToEVM =
+            bridge.currentType === "EVM" && isVeChain && isEVM;
+        const isEVMToVeChain =
+            chainWrapper.chainParams.name === "VeChain" &&
+            bridge.currentType === "EVM";
+        const isSameChainType =
+            chainWrapper.chainParams.type === bridge.currentType ||
+            !bridge.currentType;
+        const isHarmonyToNonVeChain =
+            from?.text === "Harmony" && bitKeep && chain.text !== "VeChain";
+        const isSwitchNetwork =
+            (account || evmAccount) &&
+            from.text !== "VeChain" &&
+            to?.text === chain.text;
+        const isDestination = departureOrDestination === "destination";
+        const isSameChain = from?.text === chain.text;
+        const isHarmonyTo = to?.text === "Harmony" && bitKeep;
 
-        if (departureOrDestination === "departure") {
-            if (
-                bridge.currentType === "EVM" &&
-                from?.text === "VeChain" &&
-                chainWrapper.chainParams.type === "EVM"
-            ) {
-                dispatch(setChangeWallet(true));
-                dispatch(setTemporaryFrom(chain));
-                dispatch(setTemporaryTo(to));
-                handleClose();
-            } else if (
-                chainWrapper.chainParams.name === "VeChain" &&
-                bridge.currentType === "EVM"
-            ) {
-                dispatch(setChangeWallet(true));
-                dispatch(setTemporaryFrom(chain));
-                dispatch(setTemporaryTo(to));
-                handleClose();
-            } else if (
-                chainWrapper.chainParams.type === bridge.currentType ||
-                !bridge.currentType
-            ) {
-                if (from && from?.text !== chain.text) {
-                    if (from?.text === "Harmony" && bitKeep) {
-                        dispatch(setTemporaryFrom(chain));
+        const setTemporaryFromAndTo = () => {
+            dispatch(setTemporaryFrom(chain));
+            dispatch(setTemporaryTo(to));
+            dispatch(setChangeWallet(true));
+        };
 
-                        dispatch(setChangeWallet(true));
-                        handleClose();
-                    } else if (
-                        (account || evmAccount) &&
-                        from.text !== "VeChain"
-                    ) {
-                        const switched = await switchNetwork(chain);
-                        if (switched) {
-                            dispatch(setFrom(chain));
-                            if (to?.text === chain.text) {
-                                dispatch(setTo(from));
-                            }
-                        }
-                        handleClose();
-                    } else {
+        if (isDeparture) {
+            if (isVeChainToEVM || isEVMToVeChain || isSameChainType) {
+                if (isHarmonyToNonVeChain) {
+                    setTemporaryFromAndTo();
+                } else if (isSwitchNetwork) {
+                    const switched = await switchNetwork(chain);
+                    if (switched) {
                         dispatch(setFrom(chain));
-
-                        handleClose();
+                        if (isSameChain) {
+                            dispatch(setTo(from));
+                        }
                     }
                 } else {
                     dispatch(setFrom(chain));
-                    handleClose();
                 }
-                handleClose();
             } else {
-                dispatch(setChangeWallet(true));
-                dispatch(setTemporaryFrom(chain));
-                dispatch(setTemporaryTo(to));
-                handleClose();
+                setTemporaryFromAndTo();
             }
-            handleClose();
-        } else if (departureOrDestination === "destination") {
-            if (from?.text === chain.text) {
-                if (to?.text === "Harmony" && bitKeep) {
+        } else if (isDestination) {
+            if (isSameChain) {
+                if (isHarmonyTo) {
                     dispatch(setTemporaryFrom(to));
                     dispatch(setChangeWallet(true));
-                    handleClose();
                 } else if (account || evmAccount) {
                     const switched = await switchNetwork(to);
                     if (switched) {
@@ -156,8 +222,9 @@ function ChainListBox({ serviceContainer }) {
             } else {
                 dispatch(setTo(chain));
             }
-            handleClose();
         }
+
+        handleClose();
     };
 
     useEffect(() => {
