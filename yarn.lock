@@ -2040,6 +2040,11 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
+"@evanhahn/lottie-web-light@5.8.1":
+  version "5.8.1"
+  resolved "https://registry.yarnpkg.com/@evanhahn/lottie-web-light/-/lottie-web-light-5.8.1.tgz#9154f9301479ec16745da925d44bd721efa04cbb"
+  integrity sha512-U0G1tt3/UEYnyCNNslWPi1dB7X1xQ9aoSip+B3GTKO/Bns8yz/p39vBkRSN9d25nkbHuCsbjky2coQftj5YVKw==
+
 "@grpc/grpc-js@^1.5.3":
   version "1.8.12"
   resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.8.12.tgz#bc0120859e8b153db764b473cc019ddf6bb2b414"
@@ -4238,6 +4243,18 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@pedrouid/environment/-/environment-1.0.1.tgz#858f0f8a057340e0b250398b75ead77d6f4342ec"
   integrity sha512-HaW78NszGzRZd9SeoI3JD11JqY+lubnaOx7Pewj5pfjqWXOEATpeKIFb9Z4t2WBUK2iryiXX3lzWwmYWgUL0Ug==
+
+"@perawallet/connect@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@perawallet/connect/-/connect-1.1.1.tgz#6ff31e2bb334963d99ccc741bd18619f05226d50"
+  integrity sha512-1DRlJmJifjz0eA2xKfze7pGEBEu4DOOwdsuM3AEjIq67tmI1FT/wVd671bcbRsaJ+LJ3Q/r/ggL9lPnzC1nNnQ==
+  dependencies:
+    "@evanhahn/lottie-web-light" "5.8.1"
+    "@walletconnect/client" "^1.8.0"
+    "@walletconnect/types" "^1.8.0"
+    bowser "2.11.0"
+    buffer "^6.0.3"
+    qr-code-styling "1.6.0-rc.1"
 
 "@pmmmwh/react-refresh-webpack-plugin@^0.5.3":
   version "0.5.10"
@@ -7914,6 +7931,11 @@ borsh@^0.7.0:
     bn.js "^5.2.0"
     bs58 "^4.0.0"
     text-encoding-utf-8 "^1.0.2"
+
+bowser@2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/bowser/-/bowser-2.11.0.tgz#5ca3c35757a7aa5771500c70a73a9f91ef420a8f"
+  integrity sha512-AlcaJBi/pqqJBIQ8U9Mcpc9i8Aqxn88Skv5d+xBX006BY5u8N3mGLHa5Lgppa7L/HfwgwLgZ6NYs+Ag6uUmJRA==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -16161,7 +16183,14 @@ q@^1.1.2:
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==
 
-qrcode-generator@1.4.4, qrcode-generator@^1.4.1:
+qr-code-styling@1.6.0-rc.1:
+  version "1.6.0-rc.1"
+  resolved "https://registry.yarnpkg.com/qr-code-styling/-/qr-code-styling-1.6.0-rc.1.tgz#6c89e185fa50cc9135101085c12ae95b06f1b290"
+  integrity sha512-ModRIiW6oUnsP18QzrRYZSc/CFKFKIdj7pUs57AEVH20ajlglRpN3HukjHk0UbNMTlKGuaYl7Gt6/O5Gg2NU2Q==
+  dependencies:
+    qrcode-generator "^1.4.3"
+
+qrcode-generator@1.4.4, qrcode-generator@^1.4.1, qrcode-generator@^1.4.3:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/qrcode-generator/-/qrcode-generator-1.4.4.tgz#63f771224854759329a99048806a53ed278740e7"
   integrity sha512-HM7yY8O2ilqhmULxGMpcHSF1EhJJ9yBj8gvDEuZ6M+KGJ0YY2hKpnXvRD+hZPLrDVck3ExIGhmPtSdcjC+guuw==
