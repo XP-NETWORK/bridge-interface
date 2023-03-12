@@ -396,8 +396,8 @@ export const chains = [
     mainnet: true,
     testNet: true,
     test: false,
-    newChain: true,
-    coming: false,
+    newChain: false,
+    coming: true,
   },
   {
     type: "Hedera",
