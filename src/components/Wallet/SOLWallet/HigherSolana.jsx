@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     setAccount,
     setConnectedWallet,
+    setFrom,
     setRedirectModal,
     // setError,
     setWalletsModal,
@@ -17,7 +18,7 @@ import {
 import { onPhantom, onSolflare } from "./SoloanaConnectors";
 import { useNavigate } from "react-router-dom";
 import { getRightPath } from "../../../wallet/helpers";
-import { biz } from "../../values";
+import { biz, chains } from "../../values";
 
 export default function HigherSolana(OriginalComponent) {
     const updatedComponent = withServices((props) => {
@@ -26,6 +27,8 @@ export default function HigherSolana(OriginalComponent) {
         );
         const { serviceContainer, close } = props;
         const { bridge } = serviceContainer;
+        const solana = chains.find((chains) => chains.type === "Solana");
+
         const dispatch = useDispatch();
         const navigate = useNavigate();
 
@@ -61,6 +64,7 @@ export default function HigherSolana(OriginalComponent) {
             dispatch(setAccount(account.address));
             dispatch(setWalletsModal(false));
             close();
+            dispatch(setFrom(solana));
             navigateToAccountRoute();
         };
 

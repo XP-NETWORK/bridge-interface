@@ -13,7 +13,7 @@ const feeMultiplier = 1.1;
 
 class AbstractChain {
     chain;
-
+    displayDefaultContract = false;
     constructor({ chainParams, nonce, chain, bridge }) {
         this.chainParams = chainParams;
         this.nonce = nonce;
@@ -81,6 +81,10 @@ class AbstractChain {
         } catch (err) {
             return [];
         }
+    }
+
+    async validateAddress(address) {
+        return true;
     }
 
     async preParse(nft) {
@@ -222,6 +226,7 @@ class AbstractChain {
                 gasLimit,
                 extraFee,
                 discountLeftUsd,
+                // account
             } = args;
 
             let { tokenId, fee } = args;
@@ -244,7 +249,8 @@ class AbstractChain {
 
             let mintWith = undefined;
 
-            if (!wrapped) {
+            // debugger;
+            if (!wrapped.bool) {
                 mintWith = await this.bridge.getVerifiedContract(
                     nft.native.contract || nft.collectionIdent,
                     Number(toChain.nonce),
@@ -252,7 +258,12 @@ class AbstractChain {
                     tokenId //tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
                 );
             }
+            const mintWithToUI = mintWith
+                ? toChain.chain.XpNft.split(",")[0]
+                : mintWith;
+
             const amount = nft.amountToTransfer;
+
             const beforeAmountArgs = [
                 this.chain,
                 toChain.chain,
@@ -262,15 +273,13 @@ class AbstractChain {
             ];
 
             const afterAmountArgs = [fee, mintWith, gasLimit, extraFee];
-            // debugger;
-            // const inner = await this.bridge.inner(this.chain.nonce);
 
             if (!amount || toChain.rejectSft) {
                 const args = [...beforeAmountArgs, ...afterAmountArgs];
                 console.log(args);
                 const result = await this.bridge.transferNft(...args);
                 console.log(result, "res");
-                return { result, mintWith };
+                return { result, mintWith: mintWithToUI };
             } else {
                 const args = [
                     ...beforeAmountArgs,
@@ -290,6 +299,7 @@ class AbstractChain {
     }
 
     async preTransfer(nft, fees) {
+        console.log("preTransfer", this.signer);
         if (!this.signer)
             throw new Error("No signer for ", this.chainParams.text);
         try {
@@ -533,6 +543,8 @@ class Tezos extends AbstractChain {
 }
 
 class Cosmos extends AbstractChain {
+    displayDefaultContract = true;
+    XpNft = this.chain.XpNft.split(",")[0];
     constructor(params) {
         super(params);
     }
@@ -543,6 +555,7 @@ class Cosmos extends AbstractChain {
             secretCred.viewKey,
             secretCred.contract
         );
+
         secretNFTs = secretNFTs.map((nft) => ({
             ...nft,
             native: {
@@ -561,6 +574,13 @@ class Cosmos extends AbstractChain {
 
         return secretNFTs;
     }
+
+    async transfer(args) {
+        debugger;
+        let minWidth;
+
+        const resp = super.transfer(args);
+    }
 }
 
 class TON extends AbstractChain {
@@ -568,6 +588,10 @@ class TON extends AbstractChain {
 
     constructor(params) {
         super(params);
+    }
+
+    async validateAddress(address) {
+        return this.chain.validateAddress(address).catch(() => false);
     }
 
     async preParse(nft) {
@@ -612,7 +636,7 @@ class Near extends AbstractChain {
         //const nfts = await super.getNFTs(address);
 
         const res = await axios.post(
-            `https://interop-testnet.hasura.app/v1/graphql?rand=${Math.random()}`,
+            `https://interop-mainnet.hasura.app/v1/graphql?rand=${Math.random()}`,
             {
                 query: `
       query MyQuery {
@@ -643,6 +667,7 @@ class Near extends AbstractChain {
 
         return nfts.map((nft) => ({
             ...nft,
+            image: nft.media,
             native: {
                 ...nft.native,
                 chainId: String(ChainNonce.NEAR),

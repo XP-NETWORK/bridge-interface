@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { useEffect } from "react";
 
 import PropTypes from "prop-types";
@@ -10,58 +11,61 @@ import { withServices } from "./hocs/withServices";
 
 import { BridgeModes } from "../values";
 import {
-    setTestNet,
-    setStaging,
-    setCheckWallet,
+  setTestNet,
+  setStaging,
+  setCheckWallet,
 } from "../../store/reducers/generalSlice";
 
 import { useNavigate } from "react-router";
 
 const Container = ({ children, serviceContainer, setContainer }) => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        (async () => {
-            let network;
+  useEffect(() => {
+    (async () => {
+      let network;
+      // debugger;
 
-            if (window.location.pathname.includes(BridgeModes.Staging)) {
-                network = BridgeModes.Staging;
-                dispatch(setStaging(true));
-            } else if (window.location.pathname.includes(BridgeModes.TestNet)) {
-                network = BridgeModes.TestNet;
-                dispatch(setTestNet(true));
-            }
-            const params = new URLSearchParams(window.location.search);
-            const checkWallet = params.get(
-                BridgeModes.CheckWallet.toLowerCase()
-            );
+      if (window.location.pathname.includes(BridgeModes.Staging)) {
+        network = BridgeModes.Staging;
+        dispatch(setStaging(true));
+      } else if (window.location.pathname.includes(BridgeModes.TestNet)) {
+        network = BridgeModes.TestNet;
+        dispatch(setTestNet(true));
+      }
+      const params = new URLSearchParams(window.location.search);
 
-            const bridge = await serviceContainer?.bridge?.init(network);
-            checkWallet && bridge.setCheckWallet(checkWallet);
-            setContainer({ ...serviceContainer, bridge });
+      let checkWallet = params.get(BridgeModes.CheckWallet.toLowerCase());
+      checkWallet = !checkWallet
+        ? params.get(BridgeModes.CheckWallet)
+        : checkWallet;
 
-            const query = window.location.search;
+      const bridge = await serviceContainer?.bridge?.init(network);
+      checkWallet && bridge.setCheckWallet(checkWallet);
+      setContainer({ ...serviceContainer, bridge });
 
-            dispatch(setCheckWallet(checkWallet));
+      const query = window.location.search;
 
-            !query.includes("NEARTRX=true") &&
-                navigate(`/${network ? network + "/" : ""}${query || ""}`);
-        })();
-    }, []);
+      dispatch(setCheckWallet(checkWallet));
 
-    return <>{children}</>;
+      !query.includes("NEARTRX=true") &&
+        navigate(`/${network ? network + "/" : ""}${query || ""}`);
+    })();
+  }, []);
+
+  return <>{children}</>;
 };
 
 Container.propTypes = {
-    children: PropTypes.any,
-    serviceContainer: PropTypes.object,
-    setContainer: PropTypes.func,
+  children: PropTypes.any,
+  serviceContainer: PropTypes.object,
+  setContainer: PropTypes.func,
 };
 
 export default compose(
-    withServices,
-    withNearConnection,
-    withEVMConnection
+  withServices,
+  withNearConnection,
+  withEVMConnection
 )(Container);

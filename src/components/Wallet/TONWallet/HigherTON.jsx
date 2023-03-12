@@ -37,7 +37,6 @@ import { getChainObject } from "../../../components/values";
 function HigherTON(OriginalComponent) {
     //
     function updatedComponent({ serviceContainer }) {
-        //
         const { bridge } = serviceContainer;
         const dispatch = useDispatch();
         const navigate = useNavigate();
@@ -67,17 +66,6 @@ function HigherTON(OriginalComponent) {
                 pointerEvents: ifTypeIsTonOrNotSelected() ? "" : "none",
                 opacity: ifTypeIsTonOrNotSelected() ? "" : "0.6",
             };
-
-            // switch (wallet) {
-            //     case "TonWallet":
-            //         break;
-            //     case "TonKeeper":
-            //         break;
-            //     case "TonHub":
-            //         break;
-            //     default:
-            //         break;
-            // }
 
             return styles;
         };

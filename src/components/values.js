@@ -33,6 +33,7 @@ import arbitrum from "../assets/img/chain/arbitrum.svg";
 import arbitrumTestNet from "../assets/img/chain/arbitrumTN.svg";
 import brise from "../assets/img/chain/brise.png";
 import casper from "../assets/img/chain/casper.svg";
+import axios from "axios";
 
 export const EVM = "EVM";
 export const ELROND = "MultiversX";
@@ -69,6 +70,12 @@ export const stagingSecretMintWith =
     "secret1ggvqzks96k7hawhdx3harrtnffhttrrq2qxmdg";
 export const mainnetSecretMintWith =
     "secret16zcej6asqrtfq08u3fdjhs03zpl7lgy7q32eps";
+
+export const scVerify = axios.create({
+    baseURL: "https://sc-verify.xp.network",
+});
+
+export const secretnodes = "https://secretnodes.com/secret/accounts";
 
 export const chains = [
     {
@@ -121,7 +128,7 @@ export const chains = [
         order: 15,
         image: { avatar: true, src: Elrond },
         maintenance: false,
-        testNet: false,
+        testNet: true,
         mainnet: true,
     },
     {
@@ -362,15 +369,15 @@ export const chains = [
     {
         type: "EVM",
         key: "Abeychain",
-        text: "Abeychain",
+        text: "ABEY",
         value: "Abeychain",
         nonce: 33,
         order: 5,
         chainId: 179,
         tnChainId: 178,
         image: { avatar: true, src: Abey },
-        testNet: biz,
-        mainnet: biz,
+        testNet: true,
+        mainnet: true,
         newChain: true,
         coming: false,
     },
@@ -398,11 +405,11 @@ export const chains = [
         tnChainId: "pulsar-2",
         chainId: "secret-4",
         image: { avatar: true, src: SCRT },
-        mainnet: biz,
+        mainnet: true,
         testNet: false,
         test: false,
-        newChain: false,
-        coming: !biz,
+        newChain: true,
+        coming: false,
     },
     {
         type: "Hedera",
@@ -477,8 +484,8 @@ export const chains = [
         order: 0,
         image: { avatar: true, src: near },
         testNet: biz,
-        mainnet: true,
-        coming: true,
+        mainnet: biz,
+        coming: false,
     },
     {
         type: "EVM",

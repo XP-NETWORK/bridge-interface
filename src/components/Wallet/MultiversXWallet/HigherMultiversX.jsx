@@ -38,7 +38,7 @@ export default function HigherMultiversX(OriginalComponent) {
 
         const projectId = wcId;
         const relayUrl = "wss://relay.walletconnect.com";
-        const chainId = testnet ? "T" : "1";
+        const chainId = testnet ? "D" : "1";
         const callbacks = {
             onClientLogin: async function() {
                 // closeModal() is defined above
@@ -65,7 +65,7 @@ export default function HigherMultiversX(OriginalComponent) {
         };
 
         const handleConnect = async (wallet) => {
-            debugger;
+            // debugger;
             try {
                 const chainWrapper = await bridge.getChain(
                     from?.nonce || Chain.ELROND
@@ -83,6 +83,7 @@ export default function HigherMultiversX(OriginalComponent) {
                             onClientLogout: async () => {
                                 window.localStorage.clear();
                                 dispatch(setAccount(""));
+                                navigate("/");
                                 dispatch(
                                     setError({
                                         message:

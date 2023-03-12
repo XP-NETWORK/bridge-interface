@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+    setAccount,
     setAccountWalletModal,
     setChangeWallet,
     setFrom,
@@ -35,6 +36,7 @@ export default function ChangeWalletModal() {
         deactivate();
         dispatch(setFrom(temporaryFrom));
         dispatch(setTo(temporaryTo));
+        dispatch(setAccount(""));
         dispatch(setChangeWallet(false));
         if (path === `${testNet ? "/testnet/connect" : "/connect"}`) {
             dispatch(setWalletsModal(true));

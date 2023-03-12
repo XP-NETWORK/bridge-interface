@@ -176,7 +176,7 @@ function ConnectWallet() {
             >
                 <Modal.Header>
                     <Modal.Title style={{ minWidth: "max-content" }}>
-                        Connect Wallet
+                        Connect Wallet 
                     </Modal.Title>
                     <span className="CloseModal" onClick={handleClose}>
                         <div className="close-modal"></div>
@@ -195,6 +195,7 @@ function ConnectWallet() {
                 </div>
                 <Modal.Body>
                     <div className="walletListBox">
+                        
                         <WalletList
                             input={walletSearch}
                             connected={handleClose}

@@ -7,6 +7,7 @@ import TxStatus from "./TxStatus";
 
 import { StringShortener } from "../../../wallet/helpers";
 import Tooltip from "../AccountModal/Tooltip";
+import { secretnodes } from "../../values";
 
 export default function TransferredNft({ nft, links }) {
     const { image, animation_url, txn, name, mintWith } = nft;
@@ -24,9 +25,13 @@ export default function TransferredNft({ nft, links }) {
     const desText = window.innerWidth <= 600 ? "Des" : "Destination Hash";
 
     const checkStatus = () => {
+        // eslint-disable-next-line no-debugger
+        // debugger;
         const { tokenId, token_id, uri, address } = nft.native;
 
         const t = tokenId || token_id;
+
+        const transactionHash = nft.txn?.transactionHash;
 
         try {
             console.log(txnHashArr);
@@ -34,6 +39,7 @@ export default function TransferredNft({ nft, links }) {
                 if (tx === "failed") {
                     setTxnStatus("failed");
                 } else if (
+                    transactionHash === tx.transactionHash ||
                     uri === tx.nftUri ||
                     String(t) === String(tx.tokenId) ||
                     (from.type === "Elrond" &&
@@ -111,12 +117,20 @@ export default function TransferredNft({ nft, links }) {
                     </a>
                 </div>
             </div>
-            {from?.text === "Secret" && (
+            {mintWith && (
                 <div className="transferred-nft-hashes secret-hashes">
                     <div className="chain-hash">
                         <span>Collection address:</span>
-                        <span>{mintWith}</span>
-                        <Tooltip />
+                        <span>
+                            <a
+                                href={`${secretnodes}/${mintWith}`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                {mintWith}
+                            </a>
+                        </span>
+                        <Tooltip text={mintWith} />
                     </div>
                 </div>
             )}

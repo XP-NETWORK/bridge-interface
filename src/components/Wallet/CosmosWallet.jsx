@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import keplr from "../../assets/img/wallet/keplr.svg";
 import fina from "../../assets/img/wallet/fina.svg";
@@ -12,8 +12,11 @@ import { getRightPath } from "../../wallet/helpers";
 import { withServices } from "../App/hocs/withServices";
 
 import { Chain } from "xp.network";
+import { setConnectedWallet } from "../../store/reducers/generalSlice";
 
 function CosmosWallet({ wallet, serviceContainer }) {
+    const dispatch = useDispatch();
+
     const { bridge } = serviceContainer;
 
     const OFF = { opacity: 0.6, pointerEvents: "none" };
@@ -44,6 +47,7 @@ function CosmosWallet({ wallet, serviceContainer }) {
             chainWrapper.setSigner(signer);
             bridge.setCurrentType(chainWrapper);
             navigateToAccountRoute();
+            dispatch(setConnectedWallet(wallet));
         }
         // close();
     };
@@ -78,7 +82,7 @@ function CosmosWallet({ wallet, serviceContainer }) {
             return (
                 <li
                     style={getStyle()}
-                    onClick={onClickHandler}
+                    onClick={() => onClickHandler("Keplr")}
                     className="wllListItem keplr"
                     data-wallet="Keplr"
                 >

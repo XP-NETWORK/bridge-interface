@@ -164,13 +164,13 @@ export const connectKeplr = async (testnet, chain, wallet, isMobile) => {
 
             const { address } = accounts[0];
 
-            const signer = new SecretNetworkClient({
-                url: testnet ? TestNetRpcUri[key] : MainNetRpcUri[key],
-                chainId,
-                wallet: offlineSigner,
-                walletAddress: address,
-                //encryptionUtils: window.getEnigmaUtils(chain),
-            });
+      const signer = await SecretNetworkClient.create({
+        grpcWebUrl: testnet ? TestNetRpcUri[key] : MainNetRpcUri[key],
+        chainId,
+        wallet: offlineSigner,
+        walletAddress: address,
+        //encryptionUtils: window.getEnigmaUtils(chain),
+      });
 
             store.dispatch(setAccount(address));
             store.dispatch(setKeplrWallet(signer));
@@ -232,34 +232,34 @@ export const connectBitKeep = async (from) => {
 };
 
 export const connectMetaMask = async (activate, from, to) => {
-    try {
-        if (!window.ethereum && window.innerWidth <= 600) {
-            const link = `dapp://${window.location.host}?to=${to}&from=${from}/`;
-
-            window.open(link);
-        }
-        console.log(window.safeLocalStorage.getItem("XP_MM_CONNECTED"));
-        if (!window.safeLocalStorage.getItem("XP_MM_CONNECTED"))
-            await window.ethereum.request({
-                method: "wallet_requestPermissions",
-                params: [
-                    {
-                        eth_accounts: {},
-                    },
-                ],
-            });
-
-        await activate(injected);
-        window.safeLocalStorage.setItem("XP_MM_CONNECTED", "true");
-        store.dispatch(setMetaMask(true));
-        return true;
-    } catch (ex) {
-        store.dispatch(setError(ex));
-        if (ex.data) {
-            console.log(ex.data.message);
-        } else console.log(ex);
-        return false;
+  const mobile = window.innerWidth <= 600;
+  try {
+    if (!window.ethereum && mobile) {
+      const link = `dapp://${window.location.host}?to=${to}&from=${from}/`;
+      window.open(link);
     }
+    //d/
+    if (!mobile && !window.safeLocalStorage?.getItem("XP_MM_CONNECTED"))
+      await window.ethereum.request({
+        method: "wallet_requestPermissions",
+        params: [
+          {
+            eth_accounts: {},
+          },
+        ],
+      });
+
+    await activate(injected);
+    !mobile && window.safeLocalStorage?.setItem("XP_MM_CONNECTED", "true");
+    store.dispatch(setMetaMask(true));
+    return true;
+  } catch (ex) {
+    store.dispatch(setError(ex));
+    if (ex.data) {
+      console.log(ex.data.message);
+    } else console.log(ex);
+    return false;
+  }
 };
 
 // Algorand blockchain connection ( AlgoSigner )

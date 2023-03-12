@@ -11,11 +11,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
     setFrom,
-    setAlgorandAccount,
     setMyAlgo,
     setAlgoSigner,
     setAlgorandWallet,
     setAccount,
+    setConnectedWallet,
 } from "../../store/reducers/generalSlice";
 import { setSigner } from "../../store/reducers/signersSlice";
 import PropTypes from "prop-types";
@@ -51,15 +51,12 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
             case "MyAlgo":
                 account = await connectMyAlgo(chainWrapper.chain);
                 account && dispatch(setMyAlgo(true));
+                account && dispatch(setConnectedWallet("MyAlgo"));
                 break;
             case "AlgoSigner":
                 account = await connectAlgoSigner(testnet);
-                console.log(
-                    "🚀 ~ file: AlgorandWallet.jsx:53 ~ connectionHandler ~ account",
-                    account
-                );
                 account && dispatch(setAlgoSigner(true));
-
+                account && dispatch(setConnectedWallet("AlgoSigner"));
                 break;
             case "Algorand Wallet": //TODO
                 connectAlgoWallet();
@@ -115,7 +112,8 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
 
                 chainWrapper.setSigner(signer);
                 dispatch(setAlgorandWallet(true));
-                dispatch(setAlgorandAccount(account));
+                dispatch(setAccount(account));
+                dispatch(setConnectedWallet("Algorand Wallet"));
                 if (to) navigateToAccountRoute();
             }
         };

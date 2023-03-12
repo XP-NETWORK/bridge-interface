@@ -14,8 +14,8 @@ import { utils } from "ethers";
 import { setChainFactoryConfig } from "../store/reducers/signersSlice";
 import Harmony from "@harmony-js/core";
 
-const socketUrl = "wss://dev-explorer-api.herokuapp.com"; //wss://dest-scraper.herokuapp.com/
 const testnet = window.location.pathname.includes("testnet");
+const socketUrl = "wss://dev-explorer-api.herokuapp.com"; //wss://dest-scraper.herokuapp.com/
 const scraperUrl = "wss://dest-scraper.herokuapp.com";
 const testnetSocketUrl = "wss://testnet-bridge-explorer.herokuapp.com/";
 
@@ -205,7 +205,7 @@ export const handleChainFactory = async (someChain) => {
                 return await factory.innner(Chain.HEDERA);
             case "Skale":
                 return await factory.inner(Chain.SKALE);
-            case "Abeychain":
+            case "ABEY":
                 return await factory.inner(Chain.ABEYCHAIN);
             case "Moonbeam":
                 return await factory.inner(Chain.MOONBEAM);

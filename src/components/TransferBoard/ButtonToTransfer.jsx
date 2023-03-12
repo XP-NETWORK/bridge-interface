@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -18,28 +19,25 @@ import { getFromDomain } from "../../services/resolution";
 
 import { withServices } from "../App/hocs/withServices";
 import { notifyExplorer } from "../../services/explorer";
-import {
-    mainnetSecretMintWith,
-    stagingSecretMintWith,
-    testnetSecretMintWith,
-} from "../values";
+import // mainnetSecretMintWith,
+// stagingSecretMintWith,
+// testnetSecretMintWith,
+"../values";
 
 export default withServices(function ButtonToTransfer({ serviceContainer }) {
     const { bridge } = serviceContainer;
 
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
     const receiver = convert(useSelector((state) => state.general.receiver));
-
+    const account = convert(useSelector((state) => state.general.account));
     const approved = useSelector((state) => state.general.approved);
     const _to = useSelector((state) => state.general.to);
     const from = useSelector((state) => state.general.from.key);
     const _from = useSelector((state) => state.general.from);
     const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
-    const testnet = useSelector((state) => state.general.testNet);
-    const staging = useSelector((state) => state.general.staging);
-
+    // const testnet = useSelector((state) => state.general.testNet);
+    // const staging = useSelector((state) => state.general.staging);
     const isInvalid = useSelector((state) => state.general.isInvalid);
-
     const [loading, setLoading] = useState();
     const dispatch = useDispatch();
 
@@ -117,6 +115,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
     };
 
     const sendEach = async (nft) => {
+        // debugger;
         try {
             const [fromChain, toChain] = await Promise.all([
                 bridge.getChain(_from.nonce),
@@ -125,29 +124,26 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
 
             const unstoppabledomain = await getFromDomain(receiver, toChain);
             if (unstoppabledomainSwitch(unstoppabledomain)) return;
-
+            console.log(toChain.XpNft);
             const { result, mintWith } = await fromChain.transfer({
                 toChain,
                 nft,
                 receiver: unstoppabledomain || receiver,
                 fee: bigNumberFees,
                 discountLeftUsd,
+                account,
             });
-            let mw = mintWith || undefined;
-            if (!mintWith) {
-                mw = mintWith
-                    ? mintWith
-                    : testnet
-                    ? testnetSecretMintWith
-                    : staging
-                    ? stagingSecretMintWith
-                    : mainnetSecretMintWith;
-            }
+
+            let mw =
+                toChain.displayDefaultContract && (mintWith || toChain.XpNft); //.chain.XpNft.split(",")[0];
             if (txnHashArr[0] && !result) {
                 dispatch(setTxnHash({ txn: "failed", nft }));
             } else if (result) {
                 const resultObject = fromChain.handlerResult(result);
-                notifyExplorer(_from.nonce, resultObject.hash);
+                notifyExplorer(
+                    _from.nonce,
+                    resultObject.hash || resultObject.transactionHash
+                );
                 dispatch(setTxnHash({ txn: resultObject, nft, mw }));
             }
         } catch (e) {

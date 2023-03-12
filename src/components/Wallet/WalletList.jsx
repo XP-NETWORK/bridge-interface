@@ -36,7 +36,7 @@ import MultiversXDeFi from "./MultiversXWallet/MultiversXDeFi";
 export default function WalletList({ connected, input, discount }) {
     const from = useSelector((state) => state.general.from);
     const location = useLocation();
-
+    
     const walletComponents = [
         {
             Component: (
@@ -51,6 +51,7 @@ export default function WalletList({ connected, input, discount }) {
             mobile: true,
             desktop: true,
             order: 1,
+            keyName: "MetaMask"
         },
         {
             Component: (
@@ -65,6 +66,8 @@ export default function WalletList({ connected, input, discount }) {
             mobile: true,
             desktop: false,
             order: 2,
+            keyName: "TrustWallet"
+
         },
         {
             Component: (
@@ -79,6 +82,8 @@ export default function WalletList({ connected, input, discount }) {
             mobile: true,
             desktop: true,
             order: 1,
+            keyName: "WalletConnect"
+
         },
         {
             Component: (
@@ -94,6 +99,8 @@ export default function WalletList({ connected, input, discount }) {
             mobile: true,
             desktop: true,
             order: 1,
+            keyName: "BitKeep"
+
         },
         {
             Component: (
@@ -109,6 +116,8 @@ export default function WalletList({ connected, input, discount }) {
             mobile: false,
             desktop: false,
             order: 1,
+            keyName: "OKX"
+            
         },
         {
             Component: (
@@ -123,6 +132,8 @@ export default function WalletList({ connected, input, discount }) {
             mobile: true,
             desktop: true,
             order: 4,
+            keyName: "TempleWallet"
+
         },
         {
             Component: (
@@ -137,6 +148,9 @@ export default function WalletList({ connected, input, discount }) {
             mobile: true,
             desktop: true,
             order: 5,
+
+            keyName: "Beacon"
+
         },
         {
             Component: <XPortal wallet={"xPortal"} key="wallet-index-9" />,
@@ -145,6 +159,8 @@ export default function WalletList({ connected, input, discount }) {
             mobile: true,
             desktop: true,
             order: 6,
+            keyName: "Maiar"
+
         },
         {
             Component: (
@@ -155,6 +171,8 @@ export default function WalletList({ connected, input, discount }) {
             mobile: false,
             desktop: true,
             order: 7,
+            keyName: "MultiversX DeFi Wallet",
+
         },
 
         {
@@ -170,6 +188,8 @@ export default function WalletList({ connected, input, discount }) {
             mobile: false,
             desktop: true,
             order: 8,
+            keyName: "MyAlgo",
+
         },
         {
             Component: (
@@ -184,6 +204,8 @@ export default function WalletList({ connected, input, discount }) {
             mobile: false,
             desktop: true,
             order: 9,
+            keyName: "AlgoSigner",
+
         },
         {
             Component: (
@@ -198,6 +220,7 @@ export default function WalletList({ connected, input, discount }) {
             mobile: true,
             desktop: true,
             order: 10,
+            keyName:"Algorand Wallet"
         },
         {
             Component: <TronWallet key="wallet-index-6" close={connected} />,
@@ -205,7 +228,8 @@ export default function WalletList({ connected, input, discount }) {
             type: "Tron",
             mobile: true,
             desktop: true,
-            order: 11,
+            order: 11,            
+            keyName: 'TronLink'
         },
         {
             Component: (
@@ -216,6 +240,9 @@ export default function WalletList({ connected, input, discount }) {
             mobile: true,
             desktop: true,
             order: 12,
+            keyName: "Sync2",
+
+
         },
 
         {
@@ -231,6 +258,7 @@ export default function WalletList({ connected, input, discount }) {
             mobile: biz,
             desktop: false,
             order: 13,
+            keyName: 'VeChainThor'
         },
         {
             Component: (
@@ -245,6 +273,8 @@ export default function WalletList({ connected, input, discount }) {
             mobile: true,
             desktop: true,
             order: 14,
+            keyName: "Keplr",
+
         },
         {
             Component: (
@@ -259,6 +289,8 @@ export default function WalletList({ connected, input, discount }) {
             mobile: true,
             desktop: false,
             order: 14,
+            keyName: "Fina",
+
         },
         {
             Component: <TonKeeper key="TonKeeper" close={connected} />,
@@ -267,6 +299,7 @@ export default function WalletList({ connected, input, discount }) {
             desktop: true,
             order: 14,
             type: "TON",
+            keyName: "TonKeeper"
         },
         {
             Component: <TonHub key="TonHub" close={connected} />,
@@ -275,6 +308,9 @@ export default function WalletList({ connected, input, discount }) {
             desktop: true,
             order: 14,
             type: "TON",
+            keyName: "TonHub",
+
+
         },
         {
             Component: <TonWallet key="TonWallet" close={connected} />,
@@ -283,6 +319,7 @@ export default function WalletList({ connected, input, discount }) {
             desktop: true,
             order: 14,
             type: "TON",
+            keyName: 'Ton Wallet'
         },
         {
             Component: (
@@ -293,6 +330,8 @@ export default function WalletList({ connected, input, discount }) {
                 />
             ),
             name: "Hashpack",
+            keyName: 'Hashpack',
+
             mobile: biz,
             desktop: true,
             order: 17,
@@ -311,6 +350,7 @@ export default function WalletList({ connected, input, discount }) {
             desktop: biz,
             order: 18,
             type: "Hedera",
+            keyName: 'Blade'
         },
         {
             Component: <Unscopables key="wallet-index-21" close={connected} />,
@@ -319,10 +359,13 @@ export default function WalletList({ connected, input, discount }) {
             desktop: true,
             order: 14,
             type: "EVM",
+            keyName: 'Unstoppable Domains'
         },
         {
             Component: <Martioan key="martian" close={connected} />,
             name: "Martian",
+            keyName: "Martian",
+
             mobile: false,
             desktop: false,
             order: 19,
@@ -331,6 +374,8 @@ export default function WalletList({ connected, input, discount }) {
         {
             Component: <Petra key="petra" close={connected} />,
             name: "Petra",
+            keyName: "Petra",
+
             mobile: false,
             desktop: true,
             order: 20,
@@ -339,6 +384,7 @@ export default function WalletList({ connected, input, discount }) {
         {
             Component: <Pontem key="pontem" close={connected} />,
             name: "Pontem",
+            keyName: "Pontem",
             mobile: false,
             desktop: false,
             order: 19,
@@ -351,6 +397,7 @@ export default function WalletList({ connected, input, discount }) {
             desktop: true,
             order: -888,
             type: "NEAR",
+            keyName: 'NearWallet'
         },
         {
             Component: <Phantom key="Phantom" close={connected} />,
@@ -359,6 +406,8 @@ export default function WalletList({ connected, input, discount }) {
             desktop: true,
             order: -889,
             type: "Solana",
+            keyName: "Phantom",
+
         },
 
         {
@@ -368,6 +417,7 @@ export default function WalletList({ connected, input, discount }) {
             desktop: true,
             order: -889,
             type: "Solana",
+            keyName: 'Solflare'
         },
         // ////////////!!!!
         // {
@@ -396,11 +446,24 @@ export default function WalletList({ connected, input, discount }) {
         // },
     ];
 
-    const filteredWallets = input
+    // const filteredWallets = input
+        // ? walletComponents
+        //       .sort((a, b) => b.order - a.order)
+        //       .filter((wallet) =>
+        //           wallet.name.toLowerCase().includes(input.toLowerCase())
+        //       )
+        // : from
+        // ? sortWallet(walletComponents)
+        // : walletComponents.sort((a, b) => a.order - b.order);
+
+        const filteredWallets = input
         ? walletComponents
               .sort((a, b) => b.order - a.order)
               .filter((wallet) =>
-                  wallet.name.toLowerCase().includes(input.toLowerCase())
+                  wallet.keyName.toLowerCase().includes(input.toLowerCase())
+                    
+                    
+                  
               )
         : from
         ? sortWallet(walletComponents)
