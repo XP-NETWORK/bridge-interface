@@ -98,6 +98,11 @@ const addressValidateCosmos = (address) => {
     return regex.test(address);
 };
 
+const addressValidateVechain = (address) => {
+    console.log(address)
+    return true
+};
+
 export const validateFunctions = {
     EVM: addressValidateWeb3,
     TON: addressValidateTon,
@@ -108,4 +113,5 @@ export const validateFunctions = {
     Solana: addressValidateSolana,
     NEAR: addressValidateNear,
     Cosmos: addressValidateCosmos,
+    VeChain: addressValidateVechain
 };
