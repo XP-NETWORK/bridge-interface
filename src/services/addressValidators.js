@@ -72,7 +72,7 @@ const addressValidateSolana = (address) => {
 const charMatch = (e, str, char) => {
     const keyPressed = e.nativeEvent.data;
     const lastChar = str.charAt(str.length - 1);
-    return lastChar === char && keyPressed === char && lastChar !== keyPressed;
+    return lastChar === char && keyPressed === char && lastChar === keyPressed;
 };
 
 export const generalValidation = (e, receiver) => {
