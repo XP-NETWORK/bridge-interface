@@ -18,10 +18,7 @@ export default function ChangeWalletModal() {
     // const location = useLocation();
     const dispatch = useDispatch();
     const { deactivate } = useWeb3React();
-    // const { temporaryTo, temporaryFrom, testNet } = useSelector(
-    //     (state) => state.general
-    // );
-    const { testNet } = useSelector(
+    let { temporaryTo, temporaryFrom, testNet } = useSelector(
         (state) => state.general
     );
 
@@ -37,8 +34,8 @@ export default function ChangeWalletModal() {
         // eslint-disable-next-line no-debugger
         // debugger;
         deactivate();
-        dispatch(setFrom(null));
-        dispatch(setTo(null));
+        dispatch(setFrom(temporaryFrom));
+        dispatch(setTo(temporaryTo));
         dispatch(setAccount(""));
         dispatch(setChangeWallet(false));
         if (path === `${testNet ? "/testnet/connect" : "/connect"}`) {
