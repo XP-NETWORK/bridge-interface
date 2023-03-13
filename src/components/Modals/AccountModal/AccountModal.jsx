@@ -61,6 +61,7 @@ export default function AccountModal() {
         <button
           onClick={() => {
             window.safeLocalStorage?.removeItem("XP_MM_CONNECTED");
+            localStorage.clear("_wallet_auth_key")
             window.location.reload();
           }}
           className="changeBtn"
