@@ -8,17 +8,21 @@ import {
     setConnectedWallet,
     setFrom,
     setMyAlgo,
+    setWalletsModal,
 } from "../../../store/reducers/generalSlice";
 import { setSigner } from "../../../store/reducers/signersSlice";
 import { getRightPath } from "../../../wallet/helpers";
 import { withServices } from "../../App/hocs/withServices";
 import { getChainObject } from "../../values";
+import // connectAlgoSigner,
+// connectAlgoWallet,
+// connectMyAlgo,
+"../ConnectWalletHelper";
 import {
     connectAlgoSigner,
-    // connectAlgoWallet,
     connectMyAlgo,
-} from "../ConnectWalletHelper";
-import { connectPera } from "./AlgorandConnectors";
+    connectPera,
+} from "./AlgorandConnectors";
 
 export default function HigherAlgorand(OriginalComponent) {
     const updatedComponent = withServices((props) => {
@@ -51,15 +55,14 @@ export default function HigherAlgorand(OriginalComponent) {
             } else return OFF;
         };
 
-        const handleDisconnectPera = () => {
-            dispatch(setAccount(""));
-            dispatch(setConnectedWallet(""));
-            navigate("/");
-        };
+        // const handleDisconnectPera = () => {
+        //     dispatch(setAccount(""));
+        //     dispatch(setConnectedWallet(""));
+        //     navigate("/");
+        // };
 
         const connectionHandler = async (wallet) => {
             // eslint-disable-next-line no-debugger
-            debugger;
             const chainWrapper = await bridge.getChain(
                 from?.nonce || Chain.ALGORAND
             );
@@ -76,7 +79,7 @@ export default function HigherAlgorand(OriginalComponent) {
                     account && dispatch(setConnectedWallet("AlgoSigner"));
                     break;
                 case "Pera": //TODO
-                    account = await connectPera(handleDisconnectPera);
+                    account = await connectPera(chainWrapper.chain);
                     break;
                 default:
                     break;
@@ -88,6 +91,7 @@ export default function HigherAlgorand(OriginalComponent) {
                 dispatch(setSigner(account.signer));
                 console.log(account.address);
                 dispatch(setAccount(account.address));
+                dispatch(setWalletsModal(false));
                 if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                 if (account && to) navigateToAccountRoute();
                 if (!from) {
