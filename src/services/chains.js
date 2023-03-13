@@ -624,7 +624,7 @@ class Near extends AbstractChain {
         query: `
       query MyQuery {
         mb_views_nft_tokens(
-          distinct_on: metadata_id
+          
           where: {owner: {_eq: "${address}"}, _and: {burned_timestamp: {_is_null: true}}}
         ) {
           nft_contract_id

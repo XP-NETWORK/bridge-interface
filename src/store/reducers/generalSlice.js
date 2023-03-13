@@ -24,6 +24,7 @@ const initialState = {
     secretCred: initialSecretCred,
     NFTSetToggler: false,
     isInvalid: true,
+    afterNearRedirect: true
 };
 
 const generalSlice = createSlice({
@@ -535,6 +536,9 @@ const generalSlice = createSlice({
         setTonAccount(state, action) {
             state.tonAccount = action.payload;
         },
+        setNearRedirect(state) {
+            state.afterNearRedirect = false
+        },
     },
 });
 
@@ -653,6 +657,7 @@ export const {
     setStaging,
     setAptosAccount,
     setIsInvalidAddress,
+    setNearRedirect
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
