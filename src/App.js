@@ -99,7 +99,7 @@ function App({ network }) {
   }, [account])
 
   useEffect(() => {
-    localStorage.removeItem("walletconnect");
+    window.safeLocalStorage?.removeItem("walletconnect");
     dispatch(generalSlice.setInnerWidth(window.innerWidth));
     const from = new URLSearchParams(window.location.search).get("from");
     const to = new URLSearchParams(window.location.search).get("to");

@@ -103,7 +103,8 @@ class Bridge {
 
             if (isWNFT || !chain.isNftWhitelisted) return true;
             return await chain.isNftWhitelisted(nft);
-            //console.log(x, nft.native.name);
+            //const x = await chain.isNftWhitelisted(nft);
+            //console.log(x, nft);
             //return x;
         } catch (e) {
             console.log(e, "in isWhitelisted");
@@ -180,6 +181,7 @@ class Bridge {
                     uri: nft.uri + nft.native.tokenId,
                 };
             }
+     
             try {
                 const res = await axios(nft.uri);
 
