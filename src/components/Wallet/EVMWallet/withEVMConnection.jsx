@@ -42,32 +42,35 @@ export const withEVMConnection = (Wrapped) =>
                 const isSupported = wcSupportedChains.find(
                     (supported) => chain.id === supported.id
                 );
-
-                if (isSupported) {
-                    if (
-                        isSupported.id === from?.chainId ||
-                        isSupported.id === from?.tnChainId
-                    ) {
-                        dispatch(setConnectedWallet("WalletConnect"));
-                        dispatch(setAccount(address));
-                        const nonce = bridge.getNonce(chain.id);
-                        bridge.getChain(nonce).then((chainWrapper) => {
-                            chainWrapper.setSigner(signer);
-                            bridge.setCurrentType(chainWrapper);
-                            to && from && navigate(getRightPath());
-                        });
-                    } else
+                console.log('from: ',from)
+                if(from){
+                    if (isSupported) {
+                        if (
+                            isSupported.id === from?.chainId ||
+                            isSupported.id === from?.tnChainId
+                        ) {
+                            dispatch(setConnectedWallet("WalletConnect"));
+                            dispatch(setAccount(address));
+                            const nonce = bridge.getNonce(chain.id);
+                            bridge.getChain(nonce).then((chainWrapper) => {
+                                chainWrapper.setSigner(signer);
+                                bridge.setCurrentType(chainWrapper);
+                                to && from && navigate(getRightPath());
+                            });
+                        } else
+                            dispatch(
+                                setError({
+                                    message: `Departure chain and WalletConnect selected network must be the same.`,
+                                })
+                            );
+                    } else {
                         dispatch(
                             setError({
-                                message: `Departure chain and WalletConnect selected network must be the same.`,
+                                message: `${chain.name} is not supported by WalletConnect protocol.`,
                             })
                         );
-                } else
-                    dispatch(
-                        setError({
-                            message: `${chain.name} is not supported by WalletConnect protocol.`,
-                        })
-                    );
+                    }
+                }
             }
         }, [address, signer, chain]);
 
