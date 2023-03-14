@@ -46,6 +46,9 @@ export default function Modals() {
         (state) => state.general.transferModalLoader
     );
     const changeWallet = useSelector((state) => state.general.changeWallet);
+    const algorandAddresses = useSelector(
+        (state) => state.general.algorandAddresses
+    );
 
     const error = useSelector((state) => state.general.error);
     const tronError = useSelector((state) => state.general.tronLoginError);
@@ -95,16 +98,10 @@ export default function Modals() {
             <Modal
                 className="ChainModal switchWallet"
                 animation={false}
-                show={true}
+                show={algorandAddresses.length}
                 size="sm"
             >
-                <AlgorandAddresses
-                    addresses={[
-                        "QH3HE3VVPMWS5MFMNTQBIWVKAFOASCGSKBCARHL2ACSYY3RY7VC6RH5EMY",
-                        "QH3HE3VVPMWS5MFMNTQBIWVKAFOASCGSKBCARHL2ACSYY3RY7VC6RH5EMY",
-                        "QH3HE3VVPMWS5MFMNTQBIWVKAFOASCGSKBCARHL2ACSYY3RY7VC6RH5EMY",
-                    ]}
-                />
+                <AlgorandAddresses addresses={algorandAddresses} />
             </Modal>
             <Modal
                 className="ChainModal switchWallet"

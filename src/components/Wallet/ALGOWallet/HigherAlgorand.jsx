@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { Chain } from "xp.network";
 import {
     setAccount,
+    setAlgorandAddresses,
     setAlgoSigner,
     setConnectedWallet,
     setFrom,
@@ -55,14 +56,9 @@ export default function HigherAlgorand(OriginalComponent) {
             } else return OFF;
         };
 
-        // const handleDisconnectPera = () => {
-        //     dispatch(setAccount(""));
-        //     dispatch(setConnectedWallet(""));
-        //     navigate("/");
-        // };
-
         const connectionHandler = async (wallet) => {
             // eslint-disable-next-line no-debugger
+            // debugger;
             const chainWrapper = await bridge.getChain(
                 from?.nonce || Chain.ALGORAND
             );
@@ -70,6 +66,10 @@ export default function HigherAlgorand(OriginalComponent) {
             switch (wallet) {
                 case "MyAlgo":
                     account = await connectMyAlgo(chainWrapper.chain);
+                    console.log(
+                        "🚀 ~ file: HigherAlgorand.jsx:68 ~ connectionHandler ~ account:",
+                        account
+                    );
                     account && dispatch(setMyAlgo(true));
                     account && dispatch(setConnectedWallet("MyAlgo"));
                     break;
@@ -84,12 +84,13 @@ export default function HigherAlgorand(OriginalComponent) {
                 default:
                     break;
             }
-
-            if (account) {
+            if (!account.signer) {
+                dispatch(setAlgorandAddresses(account));
+                dispatch(setWalletsModal(false));
+            } else {
                 chainWrapper.setSigner(account.signer);
                 bridge.setCurrentType(chainWrapper);
                 dispatch(setSigner(account.signer));
-                console.log(account.address);
                 dispatch(setAccount(account.address));
                 dispatch(setWalletsModal(false));
                 if (temporaryFrom) dispatch(setFrom(temporaryFrom));

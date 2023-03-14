@@ -7,6 +7,8 @@ export const AlgorandChainIDs = {
     TestNet: 416002,
 };
 
+const myAlgoConnect = new MyAlgoConnect();
+
 export const peraWallet = new PeraWalletConnect({
     // Default chainId is "4160"
     chainId: window.location.pathname.includes("testnet")
@@ -16,16 +18,18 @@ export const peraWallet = new PeraWalletConnect({
 
 export const connectPera = async (chain) => {
     // debugger;
-    let account;
+
     try {
-        const addresses = await peraWallet.connect();
-        account = addresses[0];
+        const account = await peraWallet.connect();
+        const address = account[0];
+        const addresses = account.map((account) => account);
+        const res = addresses.length > 1 ? addresses : { address, signer };
+        const signer = await chain.myAlgoSigner(peraWallet, account);
+        return res;
     } catch (error) {
         console.log(error);
+        return false;
     }
-    const signer = await chain.myAlgoSigner(peraWallet, account);
-    console.log({ account });
-    return { address: account, signer };
 };
 
 export const connectAlgoSigner = async (testnet) => {
@@ -35,13 +39,14 @@ export const connectAlgoSigner = async (testnet) => {
             const algo = await window.AlgoSigner.accounts({
                 ledger: testnet ? "TestNet" : "MainNet",
             });
-            const address = algo[0].address;
-            const signer = {
-                address: algo[0],
-                algoSigner: window.AlgoSigner,
-                ledger: testnet ? "TestNet" : "MainNet",
-            };
-            return { signer, address };
+            // const address = algo[0].address;
+            const addresses = algo.map((account) => account.address);
+            // const signer = {
+            //     address: algo[0],
+            //     algoSigner: window.AlgoSigner,
+            //     ledger: testnet ? "TestNet" : "MainNet",
+            // };
+            return addresses;
         } catch (e) {
             console.error(e);
             return JSON.stringify(e, null, 2);
@@ -53,14 +58,16 @@ export const connectAlgoSigner = async (testnet) => {
 };
 
 export const connectMyAlgo = async (chain) => {
-    const myAlgoConnect = new MyAlgoConnect();
     try {
         const accountsSharedByUser = await myAlgoConnect.connect();
         const address = accountsSharedByUser[0].address;
-
+        const addresses = accountsSharedByUser.map(
+            (account) => account.address
+        );
         const signer = await chain.myAlgoSigner(myAlgoConnect, address);
+        const res = addresses.length > 1 ? addresses : { address, signer };
 
-        return { signer, address };
+        return res;
     } catch (error) {
         console.log(error);
         return false;

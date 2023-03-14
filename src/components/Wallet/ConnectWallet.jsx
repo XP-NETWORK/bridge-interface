@@ -48,6 +48,10 @@ function ConnectWallet() {
         (state) => state.general.connectedWallet
     );
 
+    const algorandAddresses = useSelector(
+        (state) => state.general.algorandAddresses
+    );
+
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const { address } = useAccount();
@@ -58,6 +62,7 @@ function ConnectWallet() {
     const inputElement = useRef(null);
 
     const connected =
+        algorandAddresses.length ||
         tonAccount ||
         hederaAccount ||
         secretAccount ||

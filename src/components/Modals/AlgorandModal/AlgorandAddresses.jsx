@@ -1,17 +1,81 @@
+/* eslint-disable no-debugger */
 import React from "react";
 import { Modal } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { ReactComponent as Close } from "../../../assets/img/icons/close.svg";
 import icon from "../../../assets/img/wallet/AlgorandWallet.svg";
+import { withServices } from "../../App/hocs/withServices";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    setAccount,
+    setAlgorandAddresses,
+} from "../../../store/reducers/generalSlice";
+import { Chain } from "xp.network";
+import { useNavigate } from "react-router";
+import { getRightPath } from "../../../wallet/helpers";
+import MyAlgoConnect from "@randlabs/myalgo-connect";
+import { peraWallet } from "../../Wallet/ALGOWallet/AlgorandConnectors";
 
-export default function AlgorandAddresses({ addresses }) {
+function AlgorandAddresses({ addresses, serviceContainer }) {
+    const from = useSelector((state) => state.general.from);
+    const to = useSelector((state) => state.general.to);
+    const connectedWallet = useSelector(
+        (state) => state.general.connectedWallet
+    );
+    const testnet = useSelector((state) => state.general.testNet);
+
+    const { bridge } = serviceContainer;
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleClose = () => {
+        dispatch(setAlgorandAddresses([]));
+    };
+
+    const navigateToAccountRoute = () => {
+        navigate(getRightPath());
+    };
+
+    const handleSelect = async (address) => {
+        debugger;
+        let signer;
+        const chainWrapper = await bridge.getChain(
+            from?.nonce || Chain.ALGORAND
+        );
+        const { chain } = chainWrapper;
+
+        switch (connectedWallet) {
+            case "AlgoSigner":
+                signer = {
+                    address: address,
+                    algoSigner: window.AlgoSigner,
+                    ledger: testnet ? "TestNet" : "MainNet",
+                };
+                break;
+            case "MyAlgo":
+                signer = await chain.myAlgoSigner(MyAlgoConnect, address);
+                break;
+            case "Pera":
+                signer = await chain.myAlgoSigner(peraWallet, address);
+                break;
+            default:
+                break;
+        }
+        if (from && to) navigateToAccountRoute();
+        dispatch(setAccount(address));
+        dispatch(setAlgorandAddresses([]));
+        chainWrapper.setSigner(signer);
+        bridge.setCurrentType(chainWrapper);
+    };
+
     return (
         <div className="algorand-addresses__modal">
             <Modal.Header>
                 <Modal.Title className="algo-opt-in__header">
                     Select Algorand Address
                 </Modal.Title>
-                <span className="CloseModal">
+                <span onClick={handleClose} className="CloseModal">
                     <Close className="svgWidget" />
                 </span>
             </Modal.Header>
@@ -21,7 +85,7 @@ export default function AlgorandAddresses({ addresses }) {
                         <div
                             key={index}
                             className="address"
-                            onClick={() => console.log({ address })}
+                            onClick={() => handleSelect(address)}
                         >
                             <span className="address-icon">
                                 <img src={icon} alt="" />
@@ -40,4 +104,6 @@ export default function AlgorandAddresses({ addresses }) {
 }
 AlgorandAddresses.propTypes = {
     addresses: PropTypes.array,
+    serviceContainer: PropTypes.any,
 };
+export default withServices(AlgorandAddresses);
