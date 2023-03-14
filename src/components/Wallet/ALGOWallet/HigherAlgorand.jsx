@@ -66,10 +66,6 @@ export default function HigherAlgorand(OriginalComponent) {
             switch (wallet) {
                 case "MyAlgo":
                     account = await connectMyAlgo(chainWrapper.chain);
-                    console.log(
-                        "🚀 ~ file: HigherAlgorand.jsx:68 ~ connectionHandler ~ account:",
-                        account
-                    );
                     account && dispatch(setMyAlgo(true));
                     account && dispatch(setConnectedWallet("MyAlgo"));
                     break;

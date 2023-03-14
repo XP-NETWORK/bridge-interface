@@ -38,7 +38,7 @@ function AlgorandAddresses({ addresses, serviceContainer }) {
     };
 
     const handleSelect = async (address) => {
-        debugger;
+        // debugger;
         let signer;
         const chainWrapper = await bridge.getChain(
             from?.nonce || Chain.ALGORAND

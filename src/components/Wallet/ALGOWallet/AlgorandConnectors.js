@@ -18,13 +18,13 @@ export const peraWallet = new PeraWalletConnect({
 
 export const connectPera = async (chain) => {
     // debugger;
-
+    //
     try {
         const account = await peraWallet.connect();
         const address = account[0];
         const addresses = account.map((account) => account);
-        const res = addresses.length > 1 ? addresses : { address, signer };
         const signer = await chain.myAlgoSigner(peraWallet, account);
+        const res = addresses.length > 1 ? addresses : { address, signer };
         return res;
     } catch (error) {
         console.log(error);
