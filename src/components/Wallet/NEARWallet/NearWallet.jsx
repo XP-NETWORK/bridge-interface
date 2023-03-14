@@ -16,7 +16,7 @@ function NearWallet({ serviceContainer }) {
     //const isMobile = innerWidth <= 480;
     //const dispatch = useDispatch();
     // const navigate = useNavigate();
-    const { from, testNet } = useSelector((state) => state.general);
+    const { from } = useSelector((state) => state.general);
 
     // const navigateToAccountRoute = () => {
     //  if (from && to) navigate(getRightPath());
@@ -49,8 +49,8 @@ function NearWallet({ serviceContainer }) {
         // eslint-disable-next-line no-debugger
         // debugger;
         const OFF = { pointerEvents: "none", opacity: "0.6" };
-        const NONE = { display: "none" };
-        if (!testNet) return NONE;
+        //const NONE = { display: "none" };
+        //if (!testNet) return NONE;
         if (!from) return {};
         else if (from && from?.type !== "NEAR") return OFF;
         // return {};
