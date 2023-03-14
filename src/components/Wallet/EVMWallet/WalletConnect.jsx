@@ -3,7 +3,10 @@ import icon from "../../../assets/img/wallet/WalletConnect.svg";
 import PropTypes from "prop-types";
 import HigherEVM from "./HigherEVM";
 import { useDispatch, useSelector } from "react-redux";
-import { useWeb3Modal } from "@web3modal/react";
+import { useWeb3Modal, Web3Button, Web3Modal } from "@web3modal/react";
+
+// import { useWeb3Modal } from "@web3modal/react";
+
 import {
     setAccountWalletModal,
     setWalletsModal,
@@ -19,7 +22,7 @@ function WalletConnect({ styles /*connectWallet*/ }) {
     const handleClick = async () => {
         dispatch(setWalletsModal(false));
         dispatch(setAccountWalletModal(false));
-        await open();
+        await open({});
     };
 
     const isSupported = wcSupportedChains.find(
@@ -41,6 +44,8 @@ function WalletConnect({ styles /*connectWallet*/ }) {
         >
             <img src={icon} alt="WalletConnect Icon" />
             <p>WalletConnect</p>
+            <Web3Modal enableNetworkView={false} themeMode={`dark`} style={{height:`500px`}}/>
+            <Web3Button />
         </li>
     );
 }
