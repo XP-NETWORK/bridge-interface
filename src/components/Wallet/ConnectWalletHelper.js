@@ -209,13 +209,49 @@ export const connectMetaMask = async (activate, from, to) => {
         store.dispatch(setMetaMask(true));
         return true;
     } catch (ex) {
-        store.dispatch(setError(ex));
+        if (ex.code !== 4001) {
+            store.dispatch(setError(ex));
+        }
         if (ex.data) {
             console.log(ex.data.message);
         } else console.log(ex);
         return false;
     }
 };
+
+// Algorand blockchain connection ( AlgoSigner )
+// export const connectAlgoSigner = async (testnet) => {
+//     if (typeof window.AlgoSigner !== undefined) {
+//         try {
+//             if (!window.ethereum && mobile) {
+//                 const link = `dapp://${window.location.host}?to=${to}&from=${from}/`;
+//                 window.open(link);
+//             }
+//             //d/
+//             if (!mobile && !window.safeLocalStorage?.getItem("XP_MM_CONNECTED"))
+//                 await window.ethereum.request({
+//                     method: "wallet_requestPermissions",
+//                     params: [
+//                         {
+//                             eth_accounts: {},
+//                         },
+//                     ],
+//                 });
+
+//             await activate(injected);
+//             !mobile &&
+//                 window.safeLocalStorage?.setItem("XP_MM_CONNECTED", "true");
+//             store.dispatch(setMetaMask(true));
+//             return true;
+//         } catch (ex) {
+//             store.dispatch(setError(ex));
+//             if (ex.data) {
+//                 console.log(ex.data.message);
+//             } else console.log(ex);
+//             return false;
+//         }
+//     }
+// };
 
 export const connectTrustWallet = async (activate, from, chainId) => {
     const rpc = MainNetRpcUri[from.toUpperCase()];

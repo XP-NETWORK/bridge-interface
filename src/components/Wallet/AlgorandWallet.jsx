@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import React, { useEffect } from "react";
 // import {
 //     connectAlgoSigner,
@@ -20,6 +21,31 @@
 // import { setSigner } from "../../store/reducers/signersSlice";
 // import PropTypes from "prop-types";
 // import { getRightPath } from "../../wallet/helpers";
+=======
+import React, { useEffect } from "react";
+import {
+    connectAlgoSigner,
+    connectMyAlgo,
+    connectAlgoWallet,
+} from "./ConnectWalletHelper";
+import AlgorandWalletIcon from "../../assets/img/wallet/AlgorandWallet.svg";
+import MyAlgoBlue from "../../assets/img/wallet/MyAlgoBlue.svg";
+import AlgoSignerIcon from "../../assets/img/wallet/Algo Signer.png";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+    setFrom,
+    setMyAlgo,
+    setAlgoSigner,
+    setAlgorandWallet,
+    setAccount,
+    setConnectedWallet,
+    setWalletsModal
+} from "../../store/reducers/generalSlice";
+import { setSigner } from "../../store/reducers/signersSlice";
+import PropTypes from "prop-types";
+import { getRightPath } from "../../wallet/helpers";
+>>>>>>> origin/temporary
 
 // import { Chain } from "xp.network";
 // import { getChainObject } from "../../components/values";
@@ -65,6 +91,7 @@
 //                 break;
 //         }
 
+<<<<<<< HEAD
 //         if (account) {
 //             close();
 //             chainWrapper.setSigner(account.signer);
@@ -79,6 +106,23 @@
 //             }
 //         }
 //     };
+=======
+        if (account) {
+            close();
+            chainWrapper.setSigner(account.signer);
+            bridge.setCurrentType(chainWrapper);
+            dispatch(setSigner(account.signer));
+            console.log(account.address);
+            dispatch(setAccount(account.address));
+            dispatch(setWalletsModal(false))
+            if (temporaryFrom) dispatch(setFrom(temporaryFrom));
+            if (account && to) navigateToAccountRoute();
+            if (!from) {
+                dispatch(setFrom(getChainObject(Chain.ALGORAND)));
+            }
+        }
+    };
+>>>>>>> origin/temporary
 
 //     const getStyle = () => {
 //         // debugger;

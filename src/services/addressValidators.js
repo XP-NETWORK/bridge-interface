@@ -31,17 +31,24 @@ const addressValidateElrd = (address) => {
 };
 
 const addressValidateTron = (address) => {
-    try {
-        TronWeb.address.toHex(address);
-        return true;
-    } catch (error) {
-        return false;
-    }
+  try {
+    let isValid = false;
+    TronWeb.address.toHex(address);
+
+    /**
+     * Tron address can either be base58 OR Hexadecimal strings
+     */
+    if (/^[A-HJ-NP-Za-km-z1-9]*$/.test(address)) isValid = true; // is base58
+    if (/^[a-fA-F0-9]+$/.test(address)) isValid = true; // is hex
+    return isValid;
+  } catch (error) {
+    return false;
+  }
 };
 
-const addressValidateNear = (address) => {
+const addressValidateNear = () => {
     // NEAR wallet address are simple base64 strings containing lowercase and numeric characters only
-    return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(address);
+    return  true   ///^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(address);
 };
 
 const addressValidateAlgo = (address) => {
@@ -65,7 +72,7 @@ const addressValidateSolana = (address) => {
 const charMatch = (e, str, char) => {
     const keyPressed = e.nativeEvent.data;
     const lastChar = str.charAt(str.length - 1);
-    return lastChar === char && keyPressed === char && lastChar !== keyPressed;
+    return lastChar === char && keyPressed === char && lastChar === keyPressed;
 };
 
 export const generalValidation = (e, receiver) => {
@@ -91,6 +98,11 @@ const addressValidateCosmos = (address) => {
     return regex.test(address);
 };
 
+const addressValidateVechain = (address) => {
+    console.log(address)
+    return true
+};
+
 export const validateFunctions = {
     EVM: addressValidateWeb3,
     TON: addressValidateTon,
@@ -101,4 +113,5 @@ export const validateFunctions = {
     Solana: addressValidateSolana,
     NEAR: addressValidateNear,
     Cosmos: addressValidateCosmos,
+    VeChain: addressValidateVechain
 };

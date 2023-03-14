@@ -31,6 +31,7 @@ import MaiarModal from "./MaiarModal/MaiarModal";
 import ChangeWalletModal from "./ChangeWallet/ChangeWalletModal";
 import { Web3Modal } from "@web3modal/react";
 import { ethereumClient, wcId } from "../Wallet/EVMWallet/evmConnectors";
+import AlgorandAddresses from "./AlgorandModal/AlgorandAddresses";
 
 export default function Modals() {
     const dispatch = useDispatch();
@@ -91,6 +92,20 @@ export default function Modals() {
     return (
         <>
             <Web3Modal projectId={wcId} ethereumClient={ethereumClient} />
+            <Modal
+                className="ChainModal switchWallet"
+                animation={false}
+                show={true}
+                size="sm"
+            >
+                <AlgorandAddresses
+                    addresses={[
+                        "QH3HE3VVPMWS5MFMNTQBIWVKAFOASCGSKBCARHL2ACSYY3RY7VC6RH5EMY",
+                        "QH3HE3VVPMWS5MFMNTQBIWVKAFOASCGSKBCARHL2ACSYY3RY7VC6RH5EMY",
+                        "QH3HE3VVPMWS5MFMNTQBIWVKAFOASCGSKBCARHL2ACSYY3RY7VC6RH5EMY",
+                    ]}
+                />
+            </Modal>
             <Modal
                 className="ChainModal switchWallet"
                 animation={false}

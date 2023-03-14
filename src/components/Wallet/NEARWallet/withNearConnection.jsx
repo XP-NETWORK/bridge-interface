@@ -14,6 +14,7 @@ import {
   setReceiver,
   updateApprovedNFTs,
   setTxnHash,
+  setNearRedirect
 } from "../../../store/reducers/generalSlice";
 import { setSigner } from "../../../store/reducers/signersSlice";
 
@@ -28,9 +29,10 @@ export const withNearConnection = (Wrapped) =>
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { NFTList, selectedNFTList } = useSelector((state) => ({
+    const { NFTList, selectedNFTList, afterNearRedirect } = useSelector((state) => ({
       NFTList: state.general.NFTList,
       selectedNFTList: state.general.selectedNFTList,
+      afterNearRedirect: state.general.afterNearRedirect
     }));
 
     const params = new URLSearchParams(location.search.replace("?", ""));
@@ -48,6 +50,8 @@ export const withNearConnection = (Wrapped) =>
             const chainWrapper = await serviceContainer?.bridge?.getChain(
               Chain.NEAR
             );
+
+           
             //const nearParams = serviceContainer?.bridge?.config?.nearParams;
             const walletConnection = await chainWrapper?.connect();
             const address = walletConnection.getAccountId();
@@ -76,7 +80,8 @@ export const withNearConnection = (Wrapped) =>
     }, [serviceContainer]);
 
     useEffect(() => {
-      if (NFTList?.length && nearTrx) {
+      if (NFTList?.length && nearTrx && afterNearRedirect) {
+        dispatch(setNearRedirect())
         const tokenId = params.get("tokenId");
         const contract = params.get("contract");
         const chainId = String(Chain.NEAR);
@@ -97,7 +102,7 @@ export const withNearConnection = (Wrapped) =>
           dispatch(updateApprovedNFTs(selectedNft));
         }
 
-        if (send && hash) {
+        if (send && hash && serviceContainer.bridge) {
           console.log("NEAR: in send");
 
           const nft = {
@@ -109,6 +114,14 @@ export const withNearConnection = (Wrapped) =>
             },
           };
 
+          serviceContainer.bridge.getChain(
+            Chain.NEAR
+          ).then(chainWrapper => {
+            console.log(`about to notify ${hash}`);
+              const {chain} = chainWrapper;
+              chain.notify(hash)
+          })
+
           dispatch(setSelectedNFTList(nft));
           dispatch(
             setTxnHash({
@@ -116,9 +129,11 @@ export const withNearConnection = (Wrapped) =>
               nft,
             })
           );
+
+
         }
       }
-    }, [NFTList]);
+    }, [NFTList, serviceContainer]);
 
     return <Wrapped {...props} />;
   };

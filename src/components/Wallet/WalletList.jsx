@@ -124,7 +124,7 @@ export default function WalletList({ connected, input, discount }) {
                     close={connected}
                 />
             ),
-            name: "Temple Wallet Tezos",
+            name: "Temple Wallet",
             type: "Tezos",
             mobile: true,
             desktop: true,
@@ -139,7 +139,7 @@ export default function WalletList({ connected, input, discount }) {
                     close={connected}
                 />
             ),
-            name: "Beacon Tezos",
+            name: "Beacon",
             type: "Tezos",
             mobile: true,
             desktop: true,
@@ -155,7 +155,7 @@ export default function WalletList({ connected, input, discount }) {
                     close={connected}
                 />
             ),
-            name: "Maiar Elrond",
+            name: "Maiar",
             type: "Elrond",
             mobile: true,
             desktop: true,
