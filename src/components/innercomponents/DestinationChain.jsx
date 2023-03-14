@@ -53,8 +53,8 @@ function DestinationChain() {
             dispatch(setReceiver(address));
           }
         } else {
-          dispatch(setIsInvalidAddress(true));
-          dispatch(setReceiver(address));
+          // dispatch(setIsInvalidAddress(true));
+          // dispatch(setReceiver(address));
         }
       }
     } catch (error) {
