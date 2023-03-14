@@ -564,6 +564,8 @@ class Cosmos extends AbstractChain {
 
     return secretNFTs;
   }
+
+ 
 }
 
 class TON extends AbstractChain {
@@ -624,7 +626,7 @@ class Near extends AbstractChain {
         query: `
       query MyQuery {
         mb_views_nft_tokens(
-          
+
           where: {owner: {_eq: "${address}"}, _and: {burned_timestamp: {_is_null: true}}}
         ) {
           nft_contract_id
@@ -640,7 +642,7 @@ class Near extends AbstractChain {
       }
     );
 
-    console.log(res.data);
+
 
     const {
       data: {
@@ -648,22 +650,41 @@ class Near extends AbstractChain {
       },
     } = res;
 
-    return nfts.map((nft) => ({
-      ...nft,
-      image: nft.media,
-      native: {
+    return nfts.map((nft) => {
+
+      const data = {
         ...nft.native,
         chainId: String(ChainNonce.NEAR),
         tokenId: nft.token_id || nft.native.token_id,
         contract: nft.nft_contract_id || nft.native.contract_id,
+      }
+      return {
+        ...nft,
+        image: nft.media,
+        native: data,
+      }
+    });
+  }
+
+
+  async unwrap(nft, data) {
+  
+
+    return {
+      contract: data.wrapped?.contract,
+      tokenId: data.wrapped?.source_mint_ident,
+      chainId: String(this.nonce),
+      nft: {
+        ...nft,
+        collectionIdent: data.wrapped?.contract,
+        native: {
+          ...nft.native,
+          chainId: String(this.nonce),
+          contract:data.wrapped?.contract,
+          tokenId:data.wrapped?.source_mint_ident,
+        },
       },
-      /*metaData: {
-        ...nft.native?.metadata,
-        name: nft.title || nft.native.metadata.title,
-        image: nft.media || nft.native.metadata.media,
-        imageFormat: nft.native.metadata.mime_type.split("/").at(1),
-      },*/
-    }));
+    };
   }
 }
 

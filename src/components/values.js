@@ -396,8 +396,8 @@ export const chains = [
         mainnet: biz,
         testNet: biz,
         test: false,
-        newChain: false,
-        coming: true,
+        newChain: biz,
+        coming: !biz,
     },
     {
         type: "Hedera",
@@ -473,7 +473,8 @@ export const chains = [
         image: { avatar: true, src: near },
         testNet: biz,
         mainnet: biz,
-        coming: false,
+        newChain: biz,
+        coming: !biz,
     },
     {
         type: "EVM",

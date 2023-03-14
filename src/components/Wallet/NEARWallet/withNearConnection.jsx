@@ -88,11 +88,11 @@ export const withNearConnection = (Wrapped) =>
         const receiver = params.get("receiver");
         const hash = params.get("transactionHashes");
 
+        const selectedNft = NFTList.find(
+          (nft) => nft.native.tokenId === tokenId
+        );
         if (approve) {
           console.log("NEAR: inApprove");
-          const selectedNft = NFTList.find(
-            (nft) => nft.native.tokenId === tokenId
-          );
           const alreadyS = selectedNFTList.some(
             (nft) => nft.native.tokenId === tokenId
           );
@@ -106,7 +106,9 @@ export const withNearConnection = (Wrapped) =>
           console.log("NEAR: in send");
 
           const nft = {
-            uri: "",
+            image: selectedNft.image || selectedNft.media,
+            name: selectedNft.title,
+            uri: '',
             native: {
               tokenId,
               contract,
@@ -121,7 +123,7 @@ export const withNearConnection = (Wrapped) =>
               const {chain} = chainWrapper;
               chain.notify(hash)
           })
-
+          dispatch(setReceiver(receiver));
           dispatch(setSelectedNFTList(nft));
           dispatch(
             setTxnHash({
