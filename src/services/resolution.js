@@ -21,7 +21,7 @@ export const getFromDomain = async (domain, to) => {
   const { chainParams } = to;
   const currency = chainParams.currencySymbol;
   const dotExist = domain.lastIndexOf(".");
-  if (dotExist === -1) return;
+  if (dotExist === -1 || /^\S+\.testnet$/.test(domain)) return;
   const ending = domain.slice(domain.lastIndexOf("."), domain.length);
   const isUnstoppableDomain = endings.some((e) => e === ending);
   let address;

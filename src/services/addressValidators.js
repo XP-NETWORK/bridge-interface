@@ -39,9 +39,9 @@ const addressValidateTron = (address) => {
     }
 };
 
-const addressValidateNear = (address) => {
+const addressValidateNear = () => {
     // NEAR wallet address are simple base64 strings containing lowercase and numeric characters only
-    return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(address);
+    return  true   ///^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(address);
 };
 
 const addressValidateAlgo = (address) => {
