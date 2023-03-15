@@ -1859,11 +1859,18 @@ span.closeBox:hover svg path {
 .link__items {
     display: flex;
     justify-content: center;
+    align-items: center;
     position: relative;
+    padding: 5px;
 }
 
 .tron-modal_address {
     color: #62718a;
+    user-select: text !important;
+}
+
+.tron-modal__link {
+    user-select: text !important;
 }
 
 .video-responsive iframe {
@@ -1893,7 +1900,7 @@ span.closeBox:hover svg path {
 .tron-modal__link {
     margin: 0 auto;
     width: 260px;
-    height: 40px;
+    height: 50px;
     background: #b4b0b077;
     border-radius: 6px;
     display: flex;

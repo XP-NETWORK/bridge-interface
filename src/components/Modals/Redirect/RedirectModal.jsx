@@ -14,10 +14,13 @@ import finaframe from "../../../assets/img/icons/finaframe.png";
 import solflare from "../../../assets/img/icons/solflare.png";
 import phantom from "../../../assets/img/icons/phantom.png";
 
+import { useCheckMobileScreen } from "../../Settings/hooks";
+
 export default function RedirectModal() {
     const dispatch = useDispatch();
     const [onHover, setOnHover] = useState();
     const [copied, setCopied] = useState();
+    const isMobile = useCheckMobileScreen()
     const redirectModal = useSelector((state) => state.general.redirectModal);
 
     const copy = () => {
@@ -85,7 +88,16 @@ export default function RedirectModal() {
                         {copied && (
                             <CopiedIcon className="svgWidget copyTronTTc" />
                         )}
-                        <CopyToClipboard text={"https://bridge.xp.network"}>
+{!isMobile &&                         <CopyToClipboard text={window.location.origin} onClick={
+                            () => {
+                                if (isMobile) {
+                                    var range = document.body.createTextRange();
+                                    range.selectNode(document.querySelector('.tron-modal_address'));
+                                    window.getSelection().removeAllRanges();
+                                    window.getSelection().addRange(range);
+                                }
+                            }
+                        }>
                             <div className="tron-modal__copyIcon">
                                 <img
                                     alt=""
@@ -97,7 +109,7 @@ export default function RedirectModal() {
                                     src={onHover ? CopyHover : FileCopy}
                                 />
                             </div>
-                        </CopyToClipboard>
+                        </CopyToClipboard>}
                     </div>
                 </div>
             </Modal.Body>

@@ -39,7 +39,7 @@ export default function Modals() {
     const show = useSelector((state) => state.general.about);
     const video = useSelector((state) => state.general.video);
     const maiarQRCodeImage = useSelector((state) => state.general.qrCodeImage);
-    const txnHashArr = useSelector((state) => state.general.txnHashArr);
+   const txnHashArr = useSelector((state) => state.general.txnHashArr);
     const qrCodeString = useSelector((state) => state.general.qrCodeString);
     const transferModalLoader = useSelector(
         (state) => state.general.transferModalLoader
@@ -65,7 +65,7 @@ export default function Modals() {
     };
     const toShowSuccess = () => {
         return txnHashArr?.length ? true : false;
-        // return true;
+         //return true;
     };
     function closeSupportModal() {
         dispatch(removeFromNotWhiteListed());

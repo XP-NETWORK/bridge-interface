@@ -669,9 +669,14 @@ class Near extends AbstractChain {
         tokenId: nft.token_id || nft.native.token_id,
         contract: nft.nft_contract_id || nft.native.contract_id,
       }
+
+      const image = /^https?/.test(nft.media)? nft.media : `https://ipfs.io/ipfs/${nft.media.replace(/^ipfs:\/\/(ipfs\/)?/, '')}`;
+      
+
       return {
         ...nft,
-        image: nft.media,
+        image,
+        media: image,
         native: data,
       }
     });

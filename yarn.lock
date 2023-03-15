@@ -20077,7 +20077,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "4.1.0"
-  resolved "git+https://github.com/xp-network/xpjs#d99c8f07ba568cf708f98312e5c65b7186d5ef2b"
+  resolved "git+https://github.com/xp-network/xpjs#f6477fbb8f9b3af9ef7a72da3f94ebf9f7b5faf7"
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"
