@@ -43,6 +43,7 @@ function DestinationChain() {
 
   const handleChange = (e) => {
     // debugger;
+    console.log('to: ',to)
     try {
       if (inputFilter(e)) {
         let address = e.target.value.trim();

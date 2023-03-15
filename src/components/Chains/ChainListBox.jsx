@@ -36,6 +36,7 @@ function ChainListBox({ serviceContainer }) {
     );
     const chainSearch = useSelector((state) => state.general.chainSearch);
     let from = useSelector((state) => state.general.from);
+    let temporaryFrom = useSelector((state) => state.general.temporaryFrom);
     let to = useSelector((state) => state.general.to);
     const globalTestnet = useSelector((state) => state.general.testNet);
     const show = useSelector((state) => state.general.showChainModal);
@@ -158,6 +159,7 @@ function ChainListBox({ serviceContainer }) {
             }
             handleClose();
         }
+        console.log('temporaryFrom: ',temporaryFrom)
     };
 
     useEffect(() => {

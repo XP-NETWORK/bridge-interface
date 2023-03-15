@@ -33,6 +33,14 @@ class AbstractChain {
 
   async setSigner(signer) {
     console.log(signer, this.nonce);
+    console.log('chain: ',this.chain)
+    console.log(this.chain.getApprovalFee())
+    console.log('this.chain.getNonce(): ',this.chain.getNonce())
+    if (this.chain.getNonce() == 31) {
+      console.log("this.chain.getApprovalFee(): ", this.chain.getApprovalFee());
+    }else{
+      console.log('nope')
+    }
     try {
       //if (!signer) throw new Error("no signer");
       this.signer = signer;
@@ -610,6 +618,17 @@ class Near extends AbstractChain {
     }
   }
 
+  async getApprovalFee() {
+    try {
+      const result = await this.chain.getApprovalFee();
+      console.log('result: ',await result)
+      return result
+    } catch (e) {
+      console.log(e, "in NEAR preTransfer");
+      throw e;
+    }
+  }
+
   async connect(wallet) {
     switch (wallet) {
       default:
@@ -619,6 +638,8 @@ class Near extends AbstractChain {
 
   async getNFTs(address) {
     //const nfts = await super.getNFTs(address);
+
+    console.log('this.chain.getApprovalFee(): ',this.chain.getApprovalFee())
 
     const res = await axios.post(
       `https://interop-mainnet.hasura.app/v1/graphql?rand=${Math.random()}`,
