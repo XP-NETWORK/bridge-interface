@@ -5,6 +5,8 @@ import { Chain } from "xp.network";
 
 import { useDispatch, useSelector } from "react-redux";
 
+
+
 import {
   setAccount,
   setConnectedWallet,
@@ -28,8 +30,9 @@ export const withNearConnection = (Wrapped) =>
     const { serviceContainer } = props;
     const dispatch = useDispatch();
     const navigate = useNavigate();
+   // const locationHook = useLocation()
 
-    const { NFTList, selectedNFTList, afterNearRedirect } = useSelector((state) => ({
+    const {NFTList, selectedNFTList, afterNearRedirect } = useSelector((state) => ({
       NFTList: state.general.NFTList,
       selectedNFTList: state.general.selectedNFTList,
       afterNearRedirect: state.general.afterNearRedirect
@@ -80,18 +83,20 @@ export const withNearConnection = (Wrapped) =>
     }, [serviceContainer]);
 
     useEffect(() => {
-      if (NFTList?.length && nearTrx && afterNearRedirect) {
+
+      if (Array.isArray(NFTList) &&  nearTrx && afterNearRedirect) {
         dispatch(setNearRedirect())
         const tokenId = params.get("tokenId");
         const contract = params.get("contract");
         const chainId = String(Chain.NEAR);
         const receiver = params.get("receiver");
         const hash = params.get("transactionHashes");
-
-        const selectedNft = NFTList.find(
-          (nft) => nft.native.tokenId === tokenId
-        );
+        
         if (approve) {
+            const selectedNft =  NFTList.find(
+                (nft) => nft.native.tokenId === tokenId
+              );
+
           console.log("NEAR: inApprove");
           const alreadyS = selectedNFTList.some(
             (nft) => nft.native.tokenId === tokenId
@@ -104,6 +109,17 @@ export const withNearConnection = (Wrapped) =>
 
         if (send && hash && serviceContainer.bridge) {
           console.log("NEAR: in send");
+
+          let selectedNft = NFTList.find(
+            (nft) => nft.native.tokenId === tokenId
+          );
+  
+          if (!selectedNft) {
+              const xp_near_transfered_nft = window.safeLocalStorage?.getItem('_xp_near_transfered_nft');
+              selectedNft = JSON.parse(xp_near_transfered_nft);
+           
+          }
+  
 
           const nft = {
             image: selectedNft.image || selectedNft.media,
@@ -122,6 +138,7 @@ export const withNearConnection = (Wrapped) =>
             console.log(`about to notify ${hash}`);
               const {chain} = chainWrapper;
               chain.notify(hash)
+
           })
           dispatch(setReceiver(receiver));
           dispatch(setSelectedNFTList(nft));

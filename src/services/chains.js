@@ -603,13 +603,24 @@ class Near extends AbstractChain {
 
   async preTransfer(nft, fees, params) {
     try {
+      //window.safeLocalStorage?.setItem('_xp_near_transfered_nft', JSON.stringify(nft));
       return await this.chain.preTransfer(this.signer, nft, fees, params);
     } catch (e) {
       console.log(e, "in NEAR preTransfer");
-      throw e;
+      await new Promise(r => setTimeout(r, 10_000))
+      throw e
     }
   }
 
+  async transfer(args) {
+    try {
+      window.safeLocalStorage?.setItem('_xp_near_transfered_nft', JSON.stringify(args.nft));
+      return await super.transfer(args);
+    } catch (e) {
+      await new Promise(r => setTimeout(r, 10_000));
+      throw e;
+    }
+  }
   async connect(wallet) {
     switch (wallet) {
       default:
