@@ -1,4 +1,4 @@
-import { useState, React } from "react";
+import { useState, React, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Search } from "../../assets/img/icons/Search.svg";
 import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
@@ -12,7 +12,7 @@ import { chains } from "../values";
 
 export default function NFTSearch() {
     const dispatch = useDispatch();
-    const nfts = useSelector((state) => state.general.NFTList);
+    let nfts = useSelector((state) => state.general.NFTList);
     const [openSearch, setOpen] = useState(false);
     const [searchInput, setInput] = useState("");
 
@@ -26,9 +26,17 @@ export default function NFTSearch() {
     const secretAccount = useSelector((state) => state.general.secretAccount);
     const from = useSelector((state) => state.general.from);
 
+    const clear = () => {
+      setInput("");
+      setOpen(false);
+      dispatch(setSearchNFTList(""));
+      dispatch(setFilteredNFTSList(nfts));
+    };
+    useEffect(clear, [from]);
+
     const handleSearch = (e) => {
-        const search = e.target.value.toLowerCase();
-        setInput(search);
+      const search = e.target.value;
+      setInput(search);
     };
 
     const handleKeyDown = async (e) => {
@@ -62,12 +70,7 @@ export default function NFTSearch() {
                     <div
                         id="SearchDrop"
                         className="CloseIcon"
-                        onClick={() => {
-                            dispatch(setSearchNFTList(""));
-                            dispatch(setFilteredNFTSList(nfts));
-                            setOpen(false);
-                            setInput("");
-                        }}
+                        onClick={clear}
                     >
                         <Close className="svgWidget " />
                     </div>

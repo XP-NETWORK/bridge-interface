@@ -273,7 +273,9 @@ export const connectMetaMask = async (activate) => {
     store.dispatch(setMetaMask(true));
     return true;
   } catch (ex) {
-    store.dispatch(setError(ex));
+    if(ex.code !== 4001){
+      store.dispatch(setError(ex));
+    }
     if (ex.data) {
       console.log(ex.data.message);
     } else console.log(ex);

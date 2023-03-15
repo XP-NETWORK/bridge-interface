@@ -45,6 +45,7 @@ export const availability = {
   Secret: ["Keplr"],
   TON: ["TonWallet", "TonHub", "TonKeeper"],
   APTOS: ["Petra"],
+  NEAR: ["NearWallet"]
 };
 
 export const wallets = [
@@ -61,9 +62,10 @@ export const wallets = [
   "MultiversX DeFi Wallet",
   "Sync2",
   "VeChainThor",
-  ...(biz ? ["TonWallet"] : []),
-  ...(biz ? ["TonHub"] : []),
-  ...(biz ? ["TonKeeper"] : []),
+  "TonWallet",
+  "TonHub",
+  "TonKeeper",
+  ...(biz ? ["NearWallet"] : []),
   ...(biz ? ["Keplr"] : []),
 
   //...(biz ? ["Sync2"] : []),

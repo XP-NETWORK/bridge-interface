@@ -14,13 +14,15 @@ import finaframe from "../../../assets/img/icons/finaframe.png";
 import solflare from "../../../assets/img/icons/solflare.png";
 import phantom from "../../../assets/img/icons/phantom.png";
 
+import { useCheckMobileScreen } from "../../Settings/hooks";
+
 export default function RedirectModal() {
   const dispatch = useDispatch();
   const [onHover, setOnHover] = useState();
   const [copied, setCopied] = useState();
   const redirectModal = useSelector((state) => state.general.redirectModal);
   const widget = useSelector((state) => state.widget.widget);
-
+  const isMobile = useCheckMobileScreen()
   const copy = () => {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -85,7 +87,7 @@ export default function RedirectModal() {
             <div className="tron-modal_address">{text}</div>
             {onHover && <CopyTT className="svgWidget copyTronTT" />}
             {copied && <CopiedIcon className="svgWidget copyTronTTc" />}
-            <CopyToClipboard text={link}>
+           {!isMobile &&  <CopyToClipboard text={link}>
               <div className="tron-modal__copyIcon">
                 <img
                   alt=""
@@ -97,7 +99,7 @@ export default function RedirectModal() {
                   src={onHover ? CopyHover : FileCopy}
                 />
               </div>
-            </CopyToClipboard>
+            </CopyToClipboard>}
           </div>
         </div>
       </Modal.Body>

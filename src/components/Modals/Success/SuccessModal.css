@@ -197,6 +197,23 @@
 }
 
 @media screen and (max-width: 500px) {
+
+    .tx-status.processing {
+        flex-direction: column;
+        height: unset;
+        padding-right: 30px;
+    }
+
+    .nft-image-name div {
+        white-space: unset;
+    }
+
+
+    .transferred-nft {
+     
+        max-height: unset;
+    }
+
     .success-modal .modal-content {
         padding: 0 10px;
     }

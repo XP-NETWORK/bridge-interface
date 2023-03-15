@@ -10,6 +10,8 @@ import copiedIcon from "../../assets/img/icons/copiedtoclip.svg";
 import { useDispatch } from "react-redux";
 import { setTronPopUp } from "../../store/reducers/generalSlice";
 
+
+
 export default function TronPopUp() {
   const [onHover, setOnHover] = useState();
   const [copied, setCopied] = useState();

@@ -50,11 +50,14 @@ export async function switchNetwork(chain) {
         return currentChainId == chainId;
       } catch (error) {
         console.log(error);
-        await window.ethereum.request({
-          method: "wallet_addEthereumChain",
-          params: [copyParams],
-        });
-
+        
+        //error code 4001 means the use rejeected (cancelled) the request 
+        if(error.code !== 4001) {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [copyParams],
+          });
+        }
         return false;
       }
   }
