@@ -14289,7 +14289,11 @@ moment@^2.29.1:
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
+<<<<<<< HEAD
 moralis@^2.7.0:
+=======
+moralis@^2.15.0:
+>>>>>>> temporary
   version "2.16.1"
   resolved "https://registry.yarnpkg.com/moralis/-/moralis-2.16.1.tgz#a2d159eeb5caa6ee38d8c4dcf07221045d54310c"
   integrity sha512-dO2olOTMId11bItbXoxsJd1AGVVLz76S3NH2ENj2wA70LuYiB+skYbdTKN5zlZfvgY2N91/zjITDsUMAEIrwdg==
@@ -14541,7 +14545,11 @@ next-tick@^1.1.0:
 
 "nft-parser@git+https://github.com/xp-network/nft-parser#bleeding-edge":
   version "0.2.0"
+<<<<<<< HEAD
   resolved "git+https://github.com/xp-network/nft-parser#df754b56eacb4d0e3c68c66079a64e965945094a"
+=======
+  resolved "git+https://github.com/xp-network/nft-parser#8f823010d552af77f9d6f82efd9bdce00ff53be5"
+>>>>>>> temporary
   dependencies:
     "@ethersproject/providers" "^5.7.2"
     "@moralisweb3/evm-utils" "^2.7.0"
@@ -14553,7 +14561,7 @@ next-tick@^1.1.0:
     ethers "5.7.2"
     file-type "16.5.3"
     js-base64 "^3.7.2"
-    moralis "^2.7.0"
+    moralis "^2.15.0"
     typescript "^4.7.2"
     xpnet-web3-contracts "git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#dist-erc1155"
 
