@@ -11,6 +11,7 @@ import { withServices } from "../App/hocs/withServices";
 
 import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
 import BigNumber from "bignumber.js";
+import {Chain as ChainXP, AppConfigs, ChainFactoryConfigs, ChainFactory} from 'xp.network'
 
 const intervalTm = 10_000;
 const deployFeeIntTm = 30_000;
@@ -45,9 +46,31 @@ function SendFees(props) {
     const deployFeeInterval = useRef(null);
 
     async function estimate(fromChain, toChain) {
+        // console.log('toChainWrapper: ', toChain)
+        // console.log('fromChain: ', fromChain)
+
+        const fromChainWrapper = await bridge.getChain(fromChain.nonce);
+        const toChainWrapper = await bridge.getChain(toChain.nonce);
+
+        console.log('fromChainWrapper: ',fromChainWrapper)
+        console.log('toChainWrapper: ',toChainWrapper)
+
+        const app = AppConfigs.MainNet()
+        const config = await ChainFactoryConfigs.MainNet()
+        const bridger = ChainFactory(app, config);
+
+        // console.log('estimate')
+        const fromChainX = await bridger.inner(ChainXP.NEAR)
+        // const toChainX = await bridger.inner(toChain.nonce)
+        // console.log('chainX: ',await fromChainX)
+        // console.log('fromChain: ',fromChain)
+        // console.log('toChain: ',toChain.chain)
+        console.log('selectedNFTList[0]: ',selectedNFTList[0])
+        console.log('getApprovalFee', await fromChainX.getApprovalFee(fromChainWrapper.chainParams.nonce.toString(),toChainWrapper.chainParams.nonce.toString(),selectedNFTList[0]))
+
         setLoading(true);
         const { fees, formatedFees } = await fromChain.estimate(
-            toChain,
+            toChain.chain,
             selectedNFTList[0],
             account
         );
@@ -111,7 +134,7 @@ function SendFees(props) {
                 ]);
 
                 const toChain = toChainWrapper.chain;
-                estimate(fromChainWrapper, toChain);
+                estimate(fromChainWrapper, toChainWrapper);
                 estimateDeploy(fromChainWrapper, toChain, selectedNFTList);
                 interval.current = setInterval(() => {
                     estimate(fromChainWrapper, toChain);

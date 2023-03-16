@@ -21,6 +21,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useLocation } from "react-router-dom";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import ScrollArrows from "./ScrollArrows";
+// import {Chain as ChainXP, AppConfigs, ChainFactoryConfigs, ChainFactory} from 'xp.network'
 
 import PropTypes from "prop-types";
 
@@ -83,7 +84,13 @@ function ChainListBox({ serviceContainer }) {
         // debugger;
 
         const chainWrapper = await bridge.getChain(chain.nonce);
+        // const app = AppConfigs.MainNet()
+        // const config = await ChainFactoryConfigs.MainNet()
+        // const bridger = ChainFactory(app, config);
 
+        // const chainX = await bridger.inner(ChainXP.NEAR)
+        // console.log('chainX: ',await chainX)
+    
         if (departureOrDestination === "departure") {
             if (
                 bridge.currentType === "EVM" &&

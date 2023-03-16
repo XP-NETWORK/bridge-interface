@@ -5,6 +5,7 @@ import {
     ChainFactory,
     ChainFactoryConfigs,
     ChainType,
+    Chain
 } from "xp.network";
 
 import ChainInterface from "./chains";
@@ -125,9 +126,12 @@ class Bridge {
             const params = {
                 nonce,
                 chainParams,
-                chain: await this.bridge.inner(nonce),
+                chain: await this.bridge.inner(31),
                 bridge: this.bridge,
             };
+
+            console.log('params.chain: ',params.chain)
+            // console.log('CHAIN_INFO.get(Chain.NEAR) : ', await CHAIN_INFO.get(Chain.NEAR).constructor(params.chainParams))
 
             switch (chainParams.type) {
                 case ChainType.EVM:

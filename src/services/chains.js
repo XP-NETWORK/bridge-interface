@@ -33,11 +33,11 @@ class AbstractChain {
 
   async setSigner(signer) {
     console.log(signer, this.nonce);
-    console.log('chain: ',this.chain)
-    console.log(this.chain.getApprovalFee())
-    console.log('this.chain.getNonce(): ',this.chain.getNonce())
+    console.log("chain: ", this.chain);
+    console.log("await this.chain.getApprovalFee(): ", await this.chain.getApprovalFee());
+    console.log("this.chain.getNonce(): ", this.chain.getNonce());
     if (this.chain.getNonce() == 31) {
-      console.log("this.chain.getApprovalFee(): ", this.chain.getApprovalFee());
+      console.log("this.chain.getApprovalFee(): ", await this.chain.getApprovalFee());
     }else{
       console.log('nope')
     }
