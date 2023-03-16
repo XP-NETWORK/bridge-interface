@@ -1,5 +1,5 @@
 /* eslint-disable no-debugger */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import RedClose from "../../assets/img/icons/RedClose.svg";
@@ -7,6 +7,7 @@ import {
   generalValidation,
   inputFilter,
   validateFunctions,
+  maxChainAddressLengths,
 } from "../../services/addressValidators";
 import {
   setDepartureOrDestination,
@@ -19,11 +20,12 @@ import ChainSwitch from "../Buttons/ChainSwitch";
 
 function DestinationChain() {
   let alert = useSelector((state) => state.general.pasteDestinationAlert);
-  const to = useSelector((state) => state.general.to);
+  let to = useSelector((state) => state.general.to);
   const isInvalid = useSelector((state) => state.general.isInvalid);
 
   const dispatch = useDispatch();
   let receiver = useSelector((state) => state.general.receiver);
+  let [ maxLength, setMaxLength] = useState(0)
 
   function handleSwitchChain() {
     dispatch(setDepartureOrDestination("destination"));
@@ -33,6 +35,7 @@ function DestinationChain() {
   useEffect(() => {
     dispatch(setReceiver(""));
     dispatch(setIsInvalidAddress(true));
+    setMaxLength(maxChainAddressLengths[to.type])
   }, [to]);
 
   useEffect(() => {
@@ -75,6 +78,7 @@ function DestinationChain() {
         }
       >
         <input
+        maxLength={maxLength}
           value={receiver}
           onChange={(e) => handleChange(e)}
           type="text"

@@ -33,13 +33,13 @@ const addressValidateElrd = (address) => {
 const addressValidateTron = (address) => {
   try {
     let isValid = false;
-    TronWeb.address.toHex(address);
-
+    TronWeb.isAddress(address)
     /**
      * Tron address can either be base58 OR Hexadecimal strings
      */
     if (/^[A-HJ-NP-Za-km-z1-9]*$/.test(address)) isValid = true; // is base58
     if (/^[a-fA-F0-9]+$/.test(address)) isValid = true; // is hex
+    isValid = lengthMatch(address ,34, 42)
     return isValid;
   } catch (error) {
     return false;
@@ -68,6 +68,10 @@ const addressValidateSolana = (address) => {
         return false;
     }
 };
+
+const lengthMatch = ((address, min, max)=>{
+    return address.length >= min && address.length <=max
+})
 
 const charMatch = (e, str, char) => {
     const keyPressed = e.nativeEvent.data;
@@ -114,4 +118,17 @@ export const validateFunctions = {
     NEAR: addressValidateNear,
     Cosmos: addressValidateCosmos,
     VeChain: addressValidateVechain
+};
+
+export const maxChainAddressLengths = {
+    EVM: 42,
+    TON: 48,
+    Elrond: 62,
+    Algorand: 58,
+    Tezos: 36,
+    Tron: 42,
+    Solana: 44,
+    NEAR: 64,
+    Cosmos: 45,
+    VeChain: 42
 };
