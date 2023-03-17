@@ -13,7 +13,7 @@ const addressValidateTon = (address) => {
     return TonWeb.Address.isValid(address);
 };
 
-const addressValidateWeb3 = (address) => {
+const addressValidateEVM = (address) => {
     return ethers.utils.isAddress(address);
 };
 
@@ -45,6 +45,7 @@ const addressValidateTron = (address) => {
     // } catch (error) {
     //     return false;
     // }
+
     if (typeof address !== "string") {
         return false;
     }
@@ -133,6 +134,15 @@ export const generalValidation = (e, receiver) => {
     ) {
         isValid = false;
     }
+
+    if(e.nativeEvent.inputType !== "deleteContentBackward"){
+        if(
+            /^[ A-Za-z/]*$/.test() && 
+            receiver.length >=3 && 
+            ((receiver.charAt[receiver.length-1] === receiver.charAt[receiver.length-2])) && (receiver.charAt[receiver.length-1] === receiver.charAt[receiver.length-3])){
+            isValid = false
+        }
+    }
     return isValid;
 };
 
@@ -146,8 +156,7 @@ const addressValidateCosmos = (address) => {
 };
 
 export const validateFunctions = {
-    EVM: addressValidateWeb3,
-
+    EVM: addressValidateEVM,
     TON: addressValidateTon,
     Elrond: addressValidateElrd,
     Algorand: addressValidateAlgo,

@@ -1,6 +1,15 @@
-@media only screen and (min-height: 1024px) {
+@media only screen and (min-height: 1025px) {
   .App {
     padding-top: 100px;
+  }
+}
+
+@media only screen and (max-height: 1024px) {
+  .App {
+    padding-top: 0px;
+  }
+  .nonftContainer{
+    top: 40%;
   }
 }
 
