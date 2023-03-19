@@ -76,6 +76,7 @@ export default function HigherAlgorand(OriginalComponent) {
                     break;
                 case "Pera": //TODO
                     account = await connectPera(chainWrapper.chain);
+                    account && dispatch(setConnectedWallet("Pera"));
                     break;
                 default:
                     break;

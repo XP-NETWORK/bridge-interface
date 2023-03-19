@@ -200,7 +200,7 @@ export default function WalletList({ connected, input, discount }) {
                     close={connected}
                 />
             ),
-            name: "Algo Signer",
+            name: "AlgoSigner",
             type: "Algorand",
             mobile: false,
             desktop: true,
@@ -215,12 +215,12 @@ export default function WalletList({ connected, input, discount }) {
                     close={connected}
                 />
             ),
-            name: "Algorand Wallet",
+            name: "Pera Wallet",
             type: "Algorand",
             mobile: true,
             desktop: true,
             order: 10,
-            keyName: "Algorand Wallet",
+            keyName: "Pera Wallet",
         },
         {
             Component: <TronWallet key="wallet-index-6" close={connected} />,

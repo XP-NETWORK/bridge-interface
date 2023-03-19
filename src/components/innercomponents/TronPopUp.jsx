@@ -10,10 +10,13 @@ import copiedIcon from "../../assets/img/icons/copiedtoclip.svg";
 import { useDispatch } from "react-redux";
 import { setTronPopUp } from "../../store/reducers/generalSlice";
 
+
+
 export default function TronPopUp() {
     const [onHover, setOnHover] = useState();
     const [copied, setCopied] = useState();
     const dispatch = useDispatch();
+
     const copy = () => {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
@@ -56,7 +59,7 @@ export default function TronPopUp() {
                         {copied && (
                             <img className="copyTronTTc" src={copiedIcon} />
                         )}
-                        <CopyToClipboard text={"https://bridge.xp.network"}>
+                        <CopyToClipboard text={"https://bridge.xp.network"} >
                             <div className="tron-modal__copyIcon">
                                 <img
                                     onClick={() => copy()}
