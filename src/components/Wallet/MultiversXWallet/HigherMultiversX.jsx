@@ -49,6 +49,14 @@ export default function HigherMultiversX(OriginalComponent) {
             },
             onClientLogout: async function() {
                 console.log("onClientLogout()");
+                navigate("/");
+                dispatch(setAccount(""));
+                dispatch(setConnectedWallet(""));
+                dispatch(
+                    setError({
+                        message: "You are disconnected from the xPortal.",
+                    })
+                );
             },
             onClientEvent: async function(event) {
                 console.log("onClientEvent()", event);
@@ -74,7 +82,7 @@ export default function HigherMultiversX(OriginalComponent) {
                 );
 
                 let account = {};
-                debugger;
+                // debugger;
                 switch (wallet) {
                     case "xPortal": {
                         walletConnected = "xPortal";
@@ -91,15 +99,31 @@ export default function HigherMultiversX(OriginalComponent) {
                     case "MultiversXDeFi": {
                         walletConnected = "MultiversX DeFi";
                         const instance = ExtensionProvider.getInstance();
-                        await instance
-                            .init()
-                            .catch(() =>
-                                window.open(
-                                    "https://getmaiar.com/defi",
-                                    "_blank"
+                        try {
+                            await instance
+                                .init()
+                                .catch(() =>
+                                    window.open(
+                                        "https://getmaiar.com/defi",
+                                        "_blank"
+                                    )
+                                );
+                            await instance.login();
+                        } catch (error) {
+                            // debugger;
+                            if (
+                                error.message.includes(
+                                    "Extension provider is not initialised"
                                 )
-                            );
-                        await instance.login();
+                            ) {
+                                dispatch(
+                                    setError({
+                                        message:
+                                            "MultiversX DeFi Extension required.",
+                                    })
+                                );
+                            }
+                        }
                         const {
                             account: { address },
                         } = instance;
