@@ -37,7 +37,7 @@ export default function MaiarModal({ strQR, qrCodeString, close }) {
                 <div className="maiarModal">
                     <Image src={strQR} />
                     <div className="maiarSubtitle">
-                        Scan the QR code to connect Maiar
+                        Scan the QR code to connect xPortal
                     </div>
                     {window.innerWidth <= 600 ? (
                         <a
@@ -46,7 +46,7 @@ export default function MaiarModal({ strQR, qrCodeString, close }) {
                             )}`}
                             className="maiarConnectBtn"
                         >
-                            Maiar Login
+                            xPortal Login
                         </a>
                     ) : (
                         ""

@@ -153,7 +153,7 @@ export default function WalletList({ connected, input, discount }) {
             mobile: true,
             desktop: true,
             order: 6,
-            keyName: "Maiar",
+            keyName: "xPortal",
         },
         {
             Component: (

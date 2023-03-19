@@ -5,6 +5,7 @@ import { withServices } from "../../App/hocs/withServices";
 import { Chain } from "xp.network";
 import {
     setAccount,
+    setConnectedWallet,
     setError,
     setFrom,
     // setQrCodeString,
@@ -66,32 +67,19 @@ export default function HigherMultiversX(OriginalComponent) {
 
         const handleConnect = async (wallet) => {
             // debugger;
+            let walletConnected;
             try {
                 const chainWrapper = await bridge.getChain(
                     from?.nonce || Chain.ELROND
                 );
 
                 let account = {};
-
+                debugger;
                 switch (wallet) {
                     case "xPortal": {
+                        walletConnected = "xPortal";
                         await provider.init();
-                        provider.onClientConnect = {
-                            onClientLogin: async () => {
-                                console.log("xPortal successful connected.");
-                            },
-                            onClientLogout: async () => {
-                                window.localStorage.clear();
-                                dispatch(setAccount(""));
-                                navigate("/");
-                                dispatch(
-                                    setError({
-                                        message:
-                                            "You have disconnected from Maiar, in order to transfer assets please login again",
-                                    })
-                                );
-                            },
-                        };
+                        dispatch(setWalletsModal(false));
                         const { uri, approval } = await provider.connect();
                         const qr = await QRCode.toDataURL(uri);
                         dispatch(setQrImage(qr));
@@ -101,6 +89,7 @@ export default function HigherMultiversX(OriginalComponent) {
                         break;
                     }
                     case "MultiversXDeFi": {
+                        walletConnected = "MultiversX DeFi";
                         const instance = ExtensionProvider.getInstance();
                         await instance
                             .init()
@@ -122,7 +111,7 @@ export default function HigherMultiversX(OriginalComponent) {
                         break;
                     }
                 }
-
+                dispatch(setConnectedWallet(walletConnected));
                 dispatch(setAccount(account.address));
                 chainWrapper.setSigner(account.signer);
                 bridge.setCurrentType(chainWrapper);
