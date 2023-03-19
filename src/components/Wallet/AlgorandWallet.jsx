@@ -16,6 +16,7 @@ import {
     setAlgorandWallet,
     setAccount,
     setConnectedWallet,
+    setWalletsModal
 } from "../../store/reducers/generalSlice";
 import { setSigner } from "../../store/reducers/signersSlice";
 import PropTypes from "prop-types";
@@ -72,6 +73,7 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
             dispatch(setSigner(account.signer));
             console.log(account.address);
             dispatch(setAccount(account.address));
+            dispatch(setWalletsModal(false))
             if (temporaryFrom) dispatch(setFrom(temporaryFrom));
             if (account && to) navigateToAccountRoute();
             if (!from) {

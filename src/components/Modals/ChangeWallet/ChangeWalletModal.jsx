@@ -18,7 +18,7 @@ export default function ChangeWalletModal() {
     // const location = useLocation();
     const dispatch = useDispatch();
     const { deactivate } = useWeb3React();
-    const { temporaryTo, temporaryFrom, testNet } = useSelector(
+    let { temporaryTo, temporaryFrom, testNet } = useSelector(
         (state) => state.general
     );
 

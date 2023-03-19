@@ -21,10 +21,6 @@ function DestinationChain() {
     let alert = useSelector((state) => state.general.pasteDestinationAlert);
     const to = useSelector((state) => state.general.to);
     const isInvalid = useSelector((state) => state.general.isInvalid);
-    console.log(
-        "🚀 ~ file: DestinationChain.jsx:24 ~ DestinationChain ~ isInvalid:",
-        isInvalid
-    );
 
     const dispatch = useDispatch();
     let receiver = useSelector((state) => state.general.receiver);
@@ -57,8 +53,8 @@ function DestinationChain() {
                         dispatch(setReceiver(address));
                     }
                 } else {
-                    dispatch(setIsInvalidAddress(true));
-                    dispatch(setReceiver(address));
+                    // dispatch(setIsInvalidAddress(true));
+                    // dispatch(setReceiver(address));
                 }
             }
         } catch (error) {

@@ -33,7 +33,6 @@ import arbitrum from "../assets/img/chain/arbitrum.svg";
 import arbitrumTestNet from "../assets/img/chain/arbitrumTN.svg";
 import brise from "../assets/img/chain/brise.png";
 import casper from "../assets/img/chain/casper.svg";
-import axios from "axios";
 
 export const EVM = "EVM";
 export const ELROND = "MultiversX";
@@ -64,17 +63,6 @@ export const BridgeModes = {
 export const getChainObject = (nonce) =>
     chains.find((chain) => chain.nonce === nonce);
 
-export const testnetSecretMintWith =
-    "secret1x4afa2shvq4uwwtl0ld8qnjfm3jkmyvap3yn9g";
-export const stagingSecretMintWith =
-    "secret1ggvqzks96k7hawhdx3harrtnffhttrrq2qxmdg";
-export const mainnetSecretMintWith =
-    "secret16zcej6asqrtfq08u3fdjhs03zpl7lgy7q32eps";
-
-export const scVerify = axios.create({
-    baseURL: "https://sc-verify.xp.network",
-});
-
 export const secretnodes = "https://secretnodes.com/secret/accounts";
 
 export const chains = [
@@ -86,7 +74,7 @@ export const chains = [
         nonce: 5,
         chainId: 1,
         tnChainId: 5,
-        order: 8,
+        order: 1,
         image: { avatar: true, src: Ethereum },
         maintenance: false,
         testNet: true,
@@ -100,7 +88,7 @@ export const chains = [
         nonce: 4,
         chainId: 56,
         tnChainId: 97,
-        order: 10,
+        order: 2,
         image: { avatar: true, src: Binance },
         maintenance: false,
         testNet: true,
@@ -139,7 +127,7 @@ export const chains = [
         nonce: 7,
         chainId: 137,
         tnChainId: 80001,
-        order: 9,
+        order: 3,
         image: { avatar: true, src: Polygon },
         maintenance: false,
         testNet: true,
@@ -231,12 +219,12 @@ export const chains = [
         text: "TON",
         value: "TON",
         chainId: undefined,
-        order: -100,
+        order: -1,
         nonce: 27,
         coming: false,
         image: { avatar: true, src: Ton },
         maintenance: false,
-        testNet: false,
+        testNet: true,
         mainnet: true,
         newChain: true,
     },
@@ -372,7 +360,7 @@ export const chains = [
         text: "ABEY",
         value: "Abeychain",
         nonce: 33,
-        order: 5,
+        order: 0,
         chainId: 179,
         tnChainId: 178,
         image: { avatar: true, src: Abey },
@@ -401,12 +389,12 @@ export const chains = [
         text: "Secret",
         value: "Secret",
         nonce: 24,
-        order: 9,
+        order: -1,
         tnChainId: "pulsar-2",
         chainId: "secret-4",
         image: { avatar: true, src: SCRT },
         mainnet: true,
-        testNet: false,
+        testNet: true,
         test: false,
         newChain: true,
         coming: false,
@@ -428,13 +416,13 @@ export const chains = [
         key: "Skale",
         text: "SKALE",
         nonce: 30,
-        order: -99,
+        order: 3,
         chainId: 1564830818,
         tnChainId: 344106930,
         image: { avatar: true, src: SKL },
         testNet: true,
         mainnet: true,
-        newChain: true,
+        newChain: false,
     },
     {
         type: "EVM",
@@ -442,7 +430,7 @@ export const chains = [
         text: "Caduceus",
         value: "Caduceus",
         nonce: 35,
-        order: 2,
+        order: 6,
         chainId: 256256,
         tnChainId: 512512,
         image: { avatar: true, src: Caduceus },
@@ -481,11 +469,12 @@ export const chains = [
         text: "NEAR",
         value: "NEAR",
         nonce: 31,
-        order: 0,
+        order: 7,
         image: { avatar: true, src: near },
         testNet: biz,
         mainnet: biz,
-        coming: false,
+        newChain: biz,
+        coming: !biz,
     },
     {
         type: "EVM",
@@ -493,12 +482,12 @@ export const chains = [
         text: "OKC",
         value: "OKC",
         nonce: 0x24,
-        order: 1,
+        order: 5,
         image: { avatar: true, src: okx },
         testNet: true,
         mainnet: true,
         coming: false,
-        newChain: true,
+        newChain: false,
         chainId: 66,
         tnChainId: 65,
     },
@@ -510,7 +499,7 @@ export const chains = [
             : "Arbitrum Nova",
         value: "Arbitrum",
         nonce: 0x25,
-        order: -1,
+        order: 4,
         image: {
             avatar: true,
             src: window.location.href.includes("testnet")

@@ -13,7 +13,7 @@ const feeMultiplier = 1.1;
 
 class AbstractChain {
     chain;
-    displayDefaultContract = false;
+    showMintWith = false;
     constructor({ chainParams, nonce, chain, bridge }) {
         this.chainParams = chainParams;
         this.nonce = nonce;
@@ -248,6 +248,7 @@ class AbstractChain {
             );
 
             let mintWith = undefined;
+            let mwToUI = undefined;
 
             // debugger;
             if (!wrapped.bool) {
@@ -257,10 +258,15 @@ class AbstractChain {
                     Number(this.nonce),
                     tokenId //tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
                 );
+                mwToUI = mintWith?.split(",")?.at(0);
             }
-            const mintWithToUI = mintWith
-                ? toChain.chain.XpNft.split(",")[0]
-                : mintWith;
+
+            if (
+                wrapped.bool &&
+                String(toChain.nonce) === wrapped.wrapped?.origin
+            ) {
+                mwToUI = wrapped.wrapped.source_mint_ident;
+            }
 
             const amount = nft.amountToTransfer;
 
@@ -279,7 +285,7 @@ class AbstractChain {
                 console.log(args);
                 const result = await this.bridge.transferNft(...args);
                 console.log(result, "res");
-                return { result, mintWith: mintWithToUI };
+                return { result, mintWith: mwToUI };
             } else {
                 const args = [
                     ...beforeAmountArgs,
@@ -290,7 +296,7 @@ class AbstractChain {
                 const result = await this.bridge.transferSft(...args);
                 console.log(result, "res");
 
-                return { result, mintWith };
+                return { result, mintWith: mwToUI };
             }
         } catch (e) {
             console.log(e, "in transfer");
@@ -299,7 +305,6 @@ class AbstractChain {
     }
 
     async preTransfer(nft, fees) {
-        console.log("preTransfer", this.signer);
         if (!this.signer)
             throw new Error("No signer for ", this.chainParams.text);
         try {
@@ -543,7 +548,7 @@ class Tezos extends AbstractChain {
 }
 
 class Cosmos extends AbstractChain {
-    displayDefaultContract = true;
+    showMintWith = true;
     XpNft = this.chain.XpNft.split(",")[0];
     constructor(params) {
         super(params);
@@ -573,13 +578,6 @@ class Cosmos extends AbstractChain {
         }));
 
         return secretNFTs;
-    }
-
-    async transfer(args) {
-        debugger;
-        let minWidth;
-
-        const resp = super.transfer(args);
     }
 }
 
@@ -618,13 +616,27 @@ class Near extends AbstractChain {
 
     async preTransfer(nft, fees, params) {
         try {
+            //window.safeLocalStorage?.setItem('_xp_near_transfered_nft', JSON.stringify(nft));
             return await this.chain.preTransfer(this.signer, nft, fees, params);
         } catch (e) {
             console.log(e, "in NEAR preTransfer");
+            await new Promise((r) => setTimeout(r, 10_000));
             throw e;
         }
     }
 
+    async transfer(args) {
+        try {
+            window.safeLocalStorage?.setItem(
+                "_xp_near_transfered_nft",
+                JSON.stringify(args.nft)
+            );
+            return await super.transfer(args);
+        } catch (e) {
+            await new Promise((r) => setTimeout(r, 10_000));
+            throw e;
+        }
+    }
     async connect(wallet) {
         switch (wallet) {
             default:
@@ -641,7 +653,7 @@ class Near extends AbstractChain {
                 query: `
       query MyQuery {
         mb_views_nft_tokens(
-          distinct_on: metadata_id
+
           where: {owner: {_eq: "${address}"}, _and: {burned_timestamp: {_is_null: true}}}
         ) {
           nft_contract_id
@@ -657,30 +669,52 @@ class Near extends AbstractChain {
             }
         );
 
-        console.log(res.data);
-
         const {
             data: {
                 data: { mb_views_nft_tokens: nfts },
             },
         } = res;
 
-        return nfts.map((nft) => ({
-            ...nft,
-            image: nft.media,
-            native: {
+        return nfts.map((nft) => {
+            const data = {
                 ...nft.native,
                 chainId: String(ChainNonce.NEAR),
                 tokenId: nft.token_id || nft.native.token_id,
                 contract: nft.nft_contract_id || nft.native.contract_id,
+            };
+
+            const image = /^https?/.test(nft.media)
+                ? nft.media
+                : `https://ipfs.io/ipfs/${nft.media.replace(
+                      /^ipfs:\/\/(ipfs\/)?/,
+                      ""
+                  )}`;
+
+            return {
+                ...nft,
+                image,
+                media: image,
+                native: data,
+            };
+        });
+    }
+
+    async unwrap(nft, data) {
+        return {
+            contract: data.wrapped?.contract,
+            tokenId: data.wrapped?.source_mint_ident,
+            chainId: String(this.nonce),
+            nft: {
+                ...nft,
+                collectionIdent: data.wrapped?.contract,
+                native: {
+                    ...nft.native,
+                    chainId: String(this.nonce),
+                    contract: data.wrapped?.contract,
+                    tokenId: data.wrapped?.source_mint_ident,
+                },
             },
-            /*metaData: {
-        ...nft.native?.metadata,
-        name: nft.title || nft.native.metadata.title,
-        image: nft.media || nft.native.metadata.media,
-        imageFormat: nft.native.metadata.mime_type.split("/").at(1),
-      },*/
-        }));
+        };
     }
 }
 

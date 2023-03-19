@@ -5,6 +5,8 @@ import { Chain } from "xp.network";
 
 import { useDispatch, useSelector } from "react-redux";
 
+
+
 import {
   setAccount,
   setConnectedWallet,
@@ -14,6 +16,7 @@ import {
   setReceiver,
   updateApprovedNFTs,
   setTxnHash,
+  setNearRedirect
 } from "../../../store/reducers/generalSlice";
 import { setSigner } from "../../../store/reducers/signersSlice";
 
@@ -27,10 +30,12 @@ export const withNearConnection = (Wrapped) =>
     const { serviceContainer } = props;
     const dispatch = useDispatch();
     const navigate = useNavigate();
+   // const locationHook = useLocation()
 
-    const { NFTList, selectedNFTList } = useSelector((state) => ({
+    const {NFTList, selectedNFTList, afterNearRedirect } = useSelector((state) => ({
       NFTList: state.general.NFTList,
       selectedNFTList: state.general.selectedNFTList,
+      afterNearRedirect: state.general.afterNearRedirect
     }));
 
     const params = new URLSearchParams(location.search.replace("?", ""));
@@ -48,6 +53,8 @@ export const withNearConnection = (Wrapped) =>
             const chainWrapper = await serviceContainer?.bridge?.getChain(
               Chain.NEAR
             );
+
+           
             //const nearParams = serviceContainer?.bridge?.config?.nearParams;
             const walletConnection = await chainWrapper?.connect();
             const address = walletConnection.getAccountId();
@@ -76,18 +83,21 @@ export const withNearConnection = (Wrapped) =>
     }, [serviceContainer]);
 
     useEffect(() => {
-      if (NFTList?.length && nearTrx) {
+
+      if (Array.isArray(NFTList) &&  nearTrx && afterNearRedirect) {
+        dispatch(setNearRedirect())
         const tokenId = params.get("tokenId");
         const contract = params.get("contract");
         const chainId = String(Chain.NEAR);
         const receiver = params.get("receiver");
         const hash = params.get("transactionHashes");
-
+        
         if (approve) {
+            const selectedNft =  NFTList.find(
+                (nft) => nft.native.tokenId === tokenId
+              );
+
           console.log("NEAR: inApprove");
-          const selectedNft = NFTList.find(
-            (nft) => nft.native.tokenId === tokenId
-          );
           const alreadyS = selectedNFTList.some(
             (nft) => nft.native.tokenId === tokenId
           );
@@ -97,11 +107,24 @@ export const withNearConnection = (Wrapped) =>
           dispatch(updateApprovedNFTs(selectedNft));
         }
 
-        if (send && hash) {
+        if (send && hash && serviceContainer.bridge) {
           console.log("NEAR: in send");
 
+          let selectedNft = NFTList.find(
+            (nft) => nft.native.tokenId === tokenId
+          );
+  
+          if (!selectedNft) {
+              const xp_near_transfered_nft = window.safeLocalStorage?.getItem('_xp_near_transfered_nft');
+              selectedNft = JSON.parse(xp_near_transfered_nft);
+           
+          }
+  
+
           const nft = {
-            uri: "",
+            image: selectedNft.image || selectedNft.media,
+            name: selectedNft.title,
+            uri: '',
             native: {
               tokenId,
               contract,
@@ -109,6 +132,15 @@ export const withNearConnection = (Wrapped) =>
             },
           };
 
+          serviceContainer.bridge.getChain(
+            Chain.NEAR
+          ).then(chainWrapper => {
+            console.log(`about to notify ${hash}`);
+              const {chain} = chainWrapper;
+              chain.notify(hash)
+
+          })
+          dispatch(setReceiver(receiver));
           dispatch(setSelectedNFTList(nft));
           dispatch(
             setTxnHash({
@@ -116,9 +148,11 @@ export const withNearConnection = (Wrapped) =>
               nft,
             })
           );
+
+
         }
       }
-    }, [NFTList]);
+    }, [NFTList, serviceContainer]);
 
     return <Wrapped {...props} />;
   };

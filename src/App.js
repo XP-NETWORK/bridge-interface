@@ -45,6 +45,7 @@ function App({ network }) {
   let changeWallet = useSelector((state) => state.general.changeWallet);
   let accountModal = useSelector((state) => state.general.accountModal);
   let walletsModal = useSelector((state) => state.general.walletsModal);
+  let account = useSelector((state) => state.general.account);
   let accountWalletModal = useSelector(
     (state) => state.general.accountWalletModal
   );
@@ -93,8 +94,12 @@ function App({ network }) {
     }
   }, [location]);
 
+  useEffect(()=>{
+    dispatch(setWalletsModal(false))
+  }, [account])
+
   useEffect(() => {
-    localStorage.removeItem("walletconnect");
+    window.safeLocalStorage?.removeItem("walletconnect");
     dispatch(generalSlice.setInnerWidth(window.innerWidth));
     const from = new URLSearchParams(window.location.search).get("from");
     const to = new URLSearchParams(window.location.search).get("to");
