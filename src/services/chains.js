@@ -564,8 +564,6 @@ class Cosmos extends AbstractChain {
 
     return secretNFTs;
   }
-
- 
 }
 
 class TON extends AbstractChain {
@@ -607,17 +605,20 @@ class Near extends AbstractChain {
       return await this.chain.preTransfer(this.signer, nft, fees, params);
     } catch (e) {
       console.log(e, "in NEAR preTransfer");
-      await new Promise(r => setTimeout(r, 10_000))
-      throw e
+      await new Promise((r) => setTimeout(r, 10_000));
+      throw e;
     }
   }
 
   async transfer(args) {
     try {
-      window.safeLocalStorage?.setItem('_xp_near_transfered_nft', JSON.stringify(args.nft));
+      window.safeLocalStorage?.setItem(
+        "_xp_near_transfered_nft",
+        JSON.stringify(args.nft)
+      );
       return await super.transfer(args);
     } catch (e) {
-      await new Promise(r => setTimeout(r, 10_000));
+      await new Promise((r) => setTimeout(r, 10_000));
       throw e;
     }
   }
@@ -653,8 +654,6 @@ class Near extends AbstractChain {
       }
     );
 
-
-
     const {
       data: {
         data: { mb_views_nft_tokens: nfts },
@@ -662,30 +661,30 @@ class Near extends AbstractChain {
     } = res;
 
     return nfts.map((nft) => {
-
       const data = {
         ...nft.native,
         chainId: String(ChainNonce.NEAR),
         tokenId: nft.token_id || nft.native.token_id,
         contract: nft.nft_contract_id || nft.native.contract_id,
-      }
+      };
 
-      const image = /^https?/.test(nft.media)? nft.media : `https://ipfs.io/ipfs/${nft.media.replace(/^ipfs:\/\/(ipfs\/)?/, '')}`;
-      
+      const image = /^https?/.test(nft.media)
+        ? nft.media
+        : `https://ipfs.io/ipfs/${nft.media.replace(
+            /^ipfs:\/\/(ipfs\/)?/,
+            ""
+          )}`;
 
       return {
         ...nft,
         image,
         media: image,
         native: data,
-      }
+      };
     });
   }
 
-
   async unwrap(nft, data) {
-  
-
     return {
       contract: data.wrapped?.contract,
       tokenId: data.wrapped?.source_mint_ident,
@@ -696,8 +695,8 @@ class Near extends AbstractChain {
         native: {
           ...nft.native,
           chainId: String(this.nonce),
-          contract:data.wrapped?.contract,
-          tokenId:data.wrapped?.source_mint_ident,
+          contract: data.wrapped?.contract,
+          tokenId: data.wrapped?.source_mint_ident,
         },
       },
     };

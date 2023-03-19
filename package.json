@@ -10,6 +10,8 @@
         "@elrondnetwork/erdjs": "9.2.3",
         "@emurgo/cardano-serialization-lib-nodejs": "^11.3.0",
         "@harmony-js/core": "^0.1.57",
+        "@multiversx/sdk-core": "^11.4.1",
+        "@multiversx/sdk-wallet-connect-provider": "^3.1.0",
         "@randlabs/myalgo-connect": "^1.1.1",
         "@reduxjs/toolkit": "^1.9.2",
         "@solana/web3.js": "^1.73.3",
