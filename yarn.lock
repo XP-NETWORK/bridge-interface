@@ -4312,10 +4312,10 @@
   resolved "https://registry.yarnpkg.com/@pedrouid/environment/-/environment-1.0.1.tgz#858f0f8a057340e0b250398b75ead77d6f4342ec"
   integrity sha512-HaW78NszGzRZd9SeoI3JD11JqY+lubnaOx7Pewj5pfjqWXOEATpeKIFb9Z4t2WBUK2iryiXX3lzWwmYWgUL0Ug==
 
-"@perawallet/connect@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@perawallet/connect/-/connect-1.1.1.tgz#6ff31e2bb334963d99ccc741bd18619f05226d50"
-  integrity sha512-1DRlJmJifjz0eA2xKfze7pGEBEu4DOOwdsuM3AEjIq67tmI1FT/wVd671bcbRsaJ+LJ3Q/r/ggL9lPnzC1nNnQ==
+"@perawallet/connect@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@perawallet/connect/-/connect-1.2.0.tgz#c8c8b0078ecb2cee63cc62219d892acc4bc544d5"
+  integrity sha512-NtbKys0Rr7uEbmsFN4IBdb+Tsvl7JqvHRIxKqawMAItwmtjjFXdvXwalOG3X1AA15nU9x0JmvX+O46lF4zQzDg==
   dependencies:
     "@evanhahn/lottie-web-light" "5.8.1"
     "@walletconnect/client" "^1.8.0"
