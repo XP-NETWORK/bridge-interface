@@ -332,6 +332,13 @@ function WSettings({
                           console.log(selectedChains);
                           console.log(chain);
                             */
+                          let img;
+                          try {
+                            img = require(`./assets/img/wallets/${wallet}.svg`);
+                          } catch (e) {
+                            img = require(`./assets/img/wallets/${wallet}.png`);
+                          }
+
                           const li = (
                             <li
                               key={i + "wallet"}
@@ -357,14 +364,7 @@ function WSettings({
                                 <span className="icon selectNfticon"></span>
                               </div>
                               <div className="blockChainItem">
-                                <img
-                                  src={
-                                    wallet === "AlgoSigner"
-                                      ? require(`./assets/img/wallets/${wallet}.png`)
-                                      : require(`./assets/img/wallets/${wallet}.svg`)
-                                  }
-                                  alt={wallet}
-                                />
+                                <img src={img} alt={wallet} />
 
                                 {wallet}
 

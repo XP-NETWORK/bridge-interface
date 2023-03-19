@@ -37,7 +37,7 @@ export const comingSoonChains = ["Cardano", "Solana"];
 
 export const availability = {
   Algorand: ["MyAlgo", "AlgoSigner"],
-  Elrond: ["Maiar", "MultiversX DeFi Wallet"],
+  Elrond: ["xPortal", "MultiversX DeFi Wallet"],
   Tron: ["TronLink"],
   Tezos: ["Beacon", "TempleWallet"],
   VeChain: ["Sync2", "VeChainThor"],
@@ -45,7 +45,7 @@ export const availability = {
   Secret: ["Keplr"],
   TON: ["TonWallet", "TonHub", "TonKeeper"],
   APTOS: ["Petra"],
-  NEAR: ["NearWallet"]
+  NEAR: ["NearWallet"],
 };
 
 export const wallets = [
@@ -56,7 +56,7 @@ export const wallets = [
   "MyAlgo",
   "AlgoSigner",
   "TronLink",
-  "Maiar",
+  "xPortal",
   "Beacon",
   "TempleWallet",
   "MultiversX DeFi Wallet",

@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Elrond from "../../assets/img/chain/multiverseX.png";
-import Maiar from "../../assets/img/wallet/Maiar.svg";
+import Maiar from "../../assets/img/chain/multiverseX.png";
 
 import {
   setAccount,
@@ -27,13 +28,16 @@ import {
 import { chains, getChainObject } from "../../components/values";
 import { getRightPath } from "../../wallet/helpers";
 
-function ElrondWallet({ wallet, close, serviceContainer }) {
+//import { WalletConnectV2Provider } from "@multiversx/sdk-wallet-connect-provider";
+import { wcId } from "./EVMWallet/evmConnectors";
+
+function ElrondWallet({ close, serviceContainer }) {
   const { bridge } = serviceContainer;
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const from = useSelector((state) => state.general.from);
   const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
   const to = useSelector((state) => state.general.to);
-  // const testnet = useSelector((state) => state.general.testNet);
+  const testnet = useSelector((state) => state.general.testNet);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -46,8 +50,71 @@ function ElrondWallet({ wallet, close, serviceContainer }) {
       let account = {};
 
       switch (wallet) {
-        case "Maiar": {
-          await new Promise((r) => {
+        case "xPortal": {
+          const xportal = await import(
+            "@multiversx/sdk-wallet-connect-provider"
+          );
+          console.log(xportal, "xportal");
+          const projectId = wcId;
+          // The default WalletConnect V2 Cloud Relay
+          const relayUrl = "wss://relay.walletconnect.com";
+          // T for Testnet, D for Devnet and 1 for Mainnet
+          const chainId = "1";
+
+          const callbacks = {
+            onClientLogin: async function() {
+              // closeModal() is defined above
+              // closeModal();
+              const address = await provider.getAddress();
+              console.log("Address:", address);
+            },
+            onClientLogout: async function() {
+              console.log("onClientLogout()");
+            },
+            onClientEvent: async function(event) {
+              console.log("onClientEvent()", event);
+            },
+          };
+
+          const provider = new xportal.WalletConnectV2Provider(
+            callbacks,
+            chainId,
+            relayUrl,
+            projectId
+          );
+
+          await provider.init();
+
+          provider.onClientConnect = {
+            onClientLogin: async (data) => {
+              console.log(data, "xPortal successful connected.");
+            },
+            onClientLogout: async () => {
+              window.safeLocalStorage?.clear();
+              //dispatch(setAccount(""));
+              //navigate("/");
+              dispatch(
+                setError({
+                  message:
+                    "You have disconnected from Maiar, in order to transfer assets please login again",
+                })
+              );
+            },
+          };
+
+          const { uri, approval } = await provider.connect();
+          const qr = await QRCode.toDataURL(uri);
+          dispatch(setQrImage(qr));
+          console.log(approval, "approval");
+          await provider.login({ approval });
+
+          account.address = provider.address;
+          account.signer = provider;
+          console.log(provider, "providerprovider");
+
+          console.log("gacha");
+          break;
+          /* await new Promise((r) => {
             (async () => {
               const provider = new ProxyProvider("https://gateway.elrond.com");
               const maiarProvider = new WalletConnectProvider(
@@ -88,8 +155,7 @@ function ElrondWallet({ wallet, close, serviceContainer }) {
               const qr = await QRCode.toDataURL(qrCodeString);
               dispatch(setQrImage(qr));
             })();
-          });
-          break;
+          });*/
         }
         case "Maiar Extension": {
           const instance = ExtensionProvider.getInstance();
@@ -139,26 +205,28 @@ function ElrondWallet({ wallet, close, serviceContainer }) {
     } else return OFF;
   };
 
-  return wallet === "Maiar" ? (
-    <li
-      style={getStyle()}
-      onClick={() => handleConnect("Maiar")}
-      className="wllListItem"
-      data-wallet="Maiar"
-    >
-      <img src={Maiar} alt="" />
-      <p>Maiar</p>
-    </li>
-  ) : (
-    <li
-      style={getStyle()}
-      onClick={() => handleConnect("Maiar Extension")}
-      className="wllListItem"
-      data-wallet="MultiversX DeFi Wallet"
-    >
-      <img src={Elrond} alt="Elrond Icon" />
-      <p>MultiversX DeFi Wallet</p>
-    </li>
+  return (
+    <>
+      {" "}
+      <li
+        style={getStyle()}
+        onClick={() => handleConnect("xPortal")}
+        className="wllListItem"
+        data-wallet="Maiar"
+      >
+        <img src={Maiar} alt="" />
+        <p>xPortal</p>
+      </li>
+      <li
+        style={getStyle()}
+        onClick={() => handleConnect("Maiar Extension")}
+        className="wllListItem"
+        data-wallet="MultiversX DeFi Wallet"
+      >
+        <img src={Elrond} alt="Elrond Icon" />
+        <p>MultiversX DeFi Wallet</p>
+      </li>
+    </>
   );
 }
 ElrondWallet.propTypes = {

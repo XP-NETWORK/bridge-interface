@@ -13,7 +13,7 @@ import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import {
   WalletConnectProvider,
   ProxyProvider,
-  ExtensionProvider,
+  // ExtensionProvider,
 } from "@elrondnetwork/erdjs";
 import QRCode from "qrcode";
 import { ethers } from "ethers";
@@ -273,7 +273,7 @@ export const connectMetaMask = async (activate) => {
     store.dispatch(setMetaMask(true));
     return true;
   } catch (ex) {
-    if(ex.code !== 4001){
+    if (ex.code !== 4001) {
       store.dispatch(setError(ex));
     }
     if (ex.data) {
@@ -425,27 +425,27 @@ export const connectMaiar = async () => {
 };
 
 // Elrond blockchain connection ( Maiar Extension )
-export const connectMaiarExtension = async () => {
-  // debugger;
-  const instance = ExtensionProvider.getInstance();
-  try {
-    await instance.init();
-    await instance.login();
-    const { account } = instance;
-    if (account?.name === "CanceledError") {
-      return false;
-    }
-    store.dispatch(setOnMaiar(true));
-    store.dispatch(setElrondAccount(account.address));
-    store.dispatch(setMaiarProvider(instance));
-    store.dispatch(setSigner(instance));
-    return true;
-  } catch (err) {
-    window.open("https://getmaiar.com/defi", "_blank");
-    console.log(err);
-    return false;
-  }
-};
+// export const connectMaiarExtension = async () => {
+//   // debugger;
+//   const instance = ExtensionProvider.getInstance();
+//   try {
+//     await instance.init();
+//     await instance.login();
+//     const { account } = instance;
+//     if (account?.name === "CanceledError") {
+//       return false;
+//     }
+//     store.dispatch(setOnMaiar(true));
+//     store.dispatch(setElrondAccount(account.address));
+//     store.dispatch(setMaiarProvider(instance));
+//     store.dispatch(setSigner(instance));
+//     return true;
+//   } catch (err) {
+//     window.open("https://getmaiar.com/defi", "_blank");
+//     console.log(err);
+//     return false;
+//   }
+// };
 
 // Tron blockchain connection ( TronLink )
 export const connectTronlink = async () => {
@@ -497,7 +497,7 @@ export const connectTronlink = async () => {
 
 // Algorand blockchain connection ( Algo Wallet )
 export const connectAlgoWallet = async () => {
-  if (!algoConnector?.connected) {
-    algoConnector?.createSession();
+  if (!algoConnector.connected) {
+    algoConnector.createSession();
   }
 };
