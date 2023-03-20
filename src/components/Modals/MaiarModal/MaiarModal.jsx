@@ -28,7 +28,7 @@ export default function MaiarModal({ strQR, close }) {
     return (
         <>
             <Modal.Header>
-                <Modal.Title>Maiar Login</Modal.Title>
+                <Modal.Title>xPortal Login</Modal.Title>
                 <span className="CloseModal" onClick={close}>
                     <Close className="svgWidget" />
                 </span>
@@ -39,7 +39,7 @@ export default function MaiarModal({ strQR, close }) {
                     <div className="maiarSubtitle">
                         Scan the QR code to connect xPortal
                     </div>
-                    {!(window.innerWidth <= 600) ? (
+                    {window.innerWidth <= 600 ? (
                         <a
                             href={`${walletConnectDeepLink}https://maiar.com/?wallet-connect=${encodeURIComponent(
                                 strQR
