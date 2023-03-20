@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -31,6 +31,7 @@ import MaiarModal from "./MaiarModal/MaiarModal";
 import ChangeWalletModal from "./ChangeWallet/ChangeWalletModal";
 import { Web3Modal } from "@web3modal/react";
 import { ethereumClient, wcId } from "../Wallet/EVMWallet/evmConnectors";
+import metaportConfig from "../../services/metaportConfig.json";
 
 export default function Modals() {
     const dispatch = useDispatch();
@@ -39,7 +40,7 @@ export default function Modals() {
     const show = useSelector((state) => state.general.about);
     const video = useSelector((state) => state.general.video);
     const maiarQRCodeImage = useSelector((state) => state.general.qrCodeImage);
-   const txnHashArr = useSelector((state) => state.general.txnHashArr);
+    const txnHashArr = useSelector((state) => state.general.txnHashArr);
     const qrCodeString = useSelector((state) => state.general.qrCodeString);
     const transferModalLoader = useSelector(
         (state) => state.general.transferModalLoader
@@ -50,6 +51,9 @@ export default function Modals() {
     const tronError = useSelector((state) => state.general.tronLoginError);
     const redirectModal = useSelector((state) => state.general.redirectModal);
     const loader = useSelector((state) => state.general.approveLoader);
+
+    const [metaport, setMetaport] = useState("");
+    console.log("🚀 ~ file: Modals.jsx:56 ~ Modals ~ metaport:", metaport);
 
     const handleCloseRedirectModal = () => {
         dispatch(setRedirectModal(false));
@@ -65,7 +69,7 @@ export default function Modals() {
     };
     const toShowSuccess = () => {
         return txnHashArr?.length ? true : false;
-         //return true;
+        //return true;
     };
     function closeSupportModal() {
         dispatch(removeFromNotWhiteListed());
@@ -88,8 +92,21 @@ export default function Modals() {
         //todo
     };
 
+    useEffect(() => {
+        !metaport &&
+            import("@skalenetwork/metaport").then((module) => {
+                const { Metaport } = module;
+                const m = new Metaport(metaportConfig);
+                // console.log("🚀 ~ file: Modals.jsx:100 ~ import ~ module:", m);
+                setMetaport(m);
+            });
+
+        return () => {};
+    }, []);
+
     return (
         <>
+            <div id="metaport"></div>
             <Web3Modal projectId={wcId} ethereumClient={ethereumClient} />
             <Modal
                 className="ChainModal switchWallet"
