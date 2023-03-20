@@ -37,6 +37,8 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    let algoConnector = getAlgoConnector()
+
     const navigateToAccountRoute = () => {
         navigate(getRightPath());
     };
@@ -108,7 +110,7 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
             const account = accounts[0];
             if (account) {
                 const signer = await chainWrapper.chain.walletConnectSigner(
-                    getAlgoConnector(),
+                    algoConnector,
                     account
                 );
 
@@ -120,8 +122,8 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
             }
         };
 
-        getAlgoConnector().on("connect", cb);
-        return () => getAlgoConnector().off("connect", cb);
+        algoConnector.on("connect", cb);
+        return () => algoConnector.off("connect", cb);
     }, []);
 
     return wallet === "MyAlgo" ? (
