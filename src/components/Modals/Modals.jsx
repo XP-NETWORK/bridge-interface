@@ -97,7 +97,6 @@ export default function Modals() {
             import("@skalenetwork/metaport").then((module) => {
                 const { Metaport } = module;
                 const m = new Metaport(metaportConfig);
-                // console.log("🚀 ~ file: Modals.jsx:100 ~ import ~ module:", m);
                 setMetaport(m);
             });
 
