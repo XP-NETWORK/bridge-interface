@@ -13,6 +13,7 @@ module.exports = function override(webpackConfig) {
     https: require.resolve("https-browserify"),
     buffer: require.resolve("buffer"),
     stream: require.resolve("stream-browserify"),
+    "@multiversx/sdk-core": require.resolve("@multiversx/sdk-core"),
   };
 
   webpackConfig.ignoreWarnings = [/Failed to parse source map/];
