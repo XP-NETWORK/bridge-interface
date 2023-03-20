@@ -1326,12 +1326,6 @@ span.statComp img {
   display: flex;
 }
 
-@media only screen and (min-height: 1024px) {
-    .nonftContainer{
-      top: 0%;
-    }
-  }
-
 .nonftAcc {
   position: absolute;
   left: 48%;

@@ -9,7 +9,7 @@
     padding-top: 0px;
   }
   .nonftContainer{
-    top: 40%;
+    top: 30%;
   }
 }
 
@@ -344,6 +344,10 @@
     padding: 16px 8px !important;
   }
 
+  .nonftContainer {
+    top: 40%;
+  }
+
   .accountBox {
     left: 50%;
     transform: translate(-50%, 0);
@@ -354,9 +358,6 @@
 }
 
 @media only screen and (max-width: 480px) {
-  .nonftContainer {
-    top: 30%;
-  }
 
   .loader {
     top: 0;
