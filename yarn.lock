@@ -2274,6 +2274,24 @@
     protobufjs "^7.1.2"
     utf8 "^3.0.0"
 
+"@hashgraph/sdk@^2.22.0":
+  version "2.22.0"
+  resolved "https://registry.yarnpkg.com/@hashgraph/sdk/-/sdk-2.22.0.tgz#48486f81ae7f50b6b3d019e0a7b82910b1965c69"
+  integrity sha512-7/uDS7n1W3PPz/dBtGzXjMGHr4NMYvc8M/DiL2JROj3ULU6GI/hhslkcztZ2SB6dgcdS88lu8An2gLWjiJrGHQ==
+  dependencies:
+    "@ethersproject/rlp" "^5.7.0"
+    "@grpc/grpc-js" "^1.7.3"
+    "@hashgraph/cryptography" "^1.4.3"
+    "@hashgraph/proto" "2.12.0"
+    axios "^1.3.1"
+    bignumber.js "^9.1.1"
+    crypto-js "^4.1.1"
+    js-base64 "^3.7.4"
+    js-logger "^1.6.1"
+    long "^4.0.0"
+    protobufjs "^7.1.2"
+    utf8 "^3.0.0"
+
 "@hethers/abstract-provider@1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@hethers/abstract-provider/-/abstract-provider-1.1.1.tgz#1f1f946f5970cd56dd9a46b09dfaa0f66e8074a6"
