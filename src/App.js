@@ -26,6 +26,8 @@ import {
   setTransferLoaderModal,
   setSwitchDestination,
   setIsInvalidAddress,
+  setShowAbout,
+  setShowVideo,
 } from "./store/reducers/generalSlice";
 //  import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
 import { chains } from "./components/values";
@@ -92,11 +94,16 @@ function App({ network }) {
     if (!location.pathname.includes("account")) {
       dispatch(setIsInvalidAddress(true));
     }
+    window.onpopstate = function() {
+      dispatch(setShowAbout(false));
+      dispatch(setShowVideo(false));
+      dispatch(setError(false));
+    };
   }, [location]);
 
-  useEffect(()=>{
-    dispatch(setWalletsModal(false))
-  }, [account])
+  useEffect(() => {
+    dispatch(setWalletsModal(false));
+  }, [account]);
 
   useEffect(() => {
     window.safeLocalStorage?.removeItem("walletconnect");
