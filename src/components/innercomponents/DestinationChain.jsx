@@ -1,12 +1,13 @@
 /* eslint-disable no-debugger */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import RedClose from "../../assets/img/icons/RedClose.svg";
 import {
-    generalValidation,
-    inputFilter,
-    validateFunctions,
+  generalValidation,
+  inputFilter,
+  validateFunctions,
+  maxChainAddressLengths,
 } from "../../services/addressValidators";
 import {
     setDepartureOrDestination,
@@ -18,22 +19,24 @@ import {
 import ChainSwitch from "../Buttons/ChainSwitch";
 
 function DestinationChain() {
-    let alert = useSelector((state) => state.general.pasteDestinationAlert);
-    const to = useSelector((state) => state.general.to);
-    const isInvalid = useSelector((state) => state.general.isInvalid);
+  let alert = useSelector((state) => state.general.pasteDestinationAlert);
+  let to = useSelector((state) => state.general.to);
+  const isInvalid = useSelector((state) => state.general.isInvalid);
 
-    const dispatch = useDispatch();
-    let receiver = useSelector((state) => state.general.receiver);
+  const dispatch = useDispatch();
+  let receiver = useSelector((state) => state.general.receiver);
+  let [ maxLength, setMaxLength] = useState(0)
 
     function handleSwitchChain() {
         dispatch(setDepartureOrDestination("destination"));
         dispatch(setSwitchDestination(true));
     }
 
-    useEffect(() => {
-        dispatch(setReceiver(""));
-        dispatch(setIsInvalidAddress(true));
-    }, [to]);
+  useEffect(() => {
+    dispatch(setReceiver(""));
+    dispatch(setIsInvalidAddress(true));
+    setMaxLength(maxChainAddressLengths[to.type])
+  }, [to]);
 
     useEffect(() => {
         if (receiver === "") {
@@ -69,30 +72,27 @@ function DestinationChain() {
                 <ChainSwitch assignment={"to"} func={handleSwitchChain} />
             </div>
 
-            <div
-                className={
-                    !alert
-                        ? "destination__address"
-                        : "destination__address desti-alert"
-                }
-            >
-                <input
-                    value={receiver}
-                    onChange={(e) => handleChange(e)}
-                    type="text"
-                    placeholder="Paste destination address"
-                    className={
-                        isInvalid ? "reciverAddress" : "reciverAddress invalid"
-                    }
-                />
-                {!isInvalid && (
-                    <span className={"invalid visible"}>
-                        <img src={RedClose} alt="Close" /> Invalid address
-                    </span>
-                )}
-            </div>
-        </div>
-    );
+      <div
+        className={
+          !alert ? "destination__address" : "destination__address desti-alert"
+        }
+      >
+        <input
+        maxLength={maxLength}
+          value={receiver}
+          onChange={(e) => handleChange(e)}
+          type="text"
+          placeholder="Paste destination address"
+          className={isInvalid ? "reciverAddress" : "reciverAddress invalid"}
+        />
+        {!isInvalid && (
+          <span className={"invalid visible"}>
+            <img src={RedClose} alt="Close" /> Invalid address
+          </span>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default DestinationChain;
