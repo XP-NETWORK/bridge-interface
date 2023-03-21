@@ -6,7 +6,7 @@ import { ReactComponent as Close } from "../../../assets/img/icons/close.svg";
 import PropTypes from "prop-types";
 import { getRightPath } from "../../../wallet/helpers";
 
-export default function MaiarModal({ strQR, qrCodeString, close }) {
+export default function MaiarModal({ strQR, close }) {
     const navigate = useNavigate();
 
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
@@ -28,7 +28,7 @@ export default function MaiarModal({ strQR, qrCodeString, close }) {
     return (
         <>
             <Modal.Header>
-                <Modal.Title>Maiar Login</Modal.Title>
+                <Modal.Title>xPortal Login</Modal.Title>
                 <span className="CloseModal" onClick={close}>
                     <Close className="svgWidget" />
                 </span>
@@ -37,16 +37,16 @@ export default function MaiarModal({ strQR, qrCodeString, close }) {
                 <div className="maiarModal">
                     <Image src={strQR} />
                     <div className="maiarSubtitle">
-                        Scan the QR code to connect Maiar
+                        Scan the QR code to connect xPortal
                     </div>
                     {window.innerWidth <= 600 ? (
                         <a
                             href={`${walletConnectDeepLink}https://maiar.com/?wallet-connect=${encodeURIComponent(
-                                qrCodeString
+                                strQR
                             )}`}
                             className="maiarConnectBtn"
                         >
-                            Maiar Login
+                            xPortal Login
                         </a>
                     ) : (
                         ""
