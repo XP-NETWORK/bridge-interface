@@ -10,13 +10,19 @@ export default function MaiarModal({ strQR, close }) {
     const navigate = useNavigate();
 
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
+    const deepLink = useSelector((state) => state.general.deepLink);
+    console.log(
+        "🚀 ~ file: MaiarModal.jsx:16 ~ MaiarModal ~ deepLink:",
+        deepLink
+    );
+    // deepLink
 
     const navigateToAccountRoute = () => {
         navigate(getRightPath());
     };
 
     const walletConnectDeepLink =
-        "https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet.dev&link=";
+        "https://maiar.page.link/?apn=com.multiversx.maiar.wallet&isi=1519405832&ibi=com.multiversx.maiar.wallet&link=";
 
     useEffect(() => {
         if (elrondAccount) {
@@ -41,9 +47,7 @@ export default function MaiarModal({ strQR, close }) {
                     </div>
                     {window.innerWidth <= 600 ? (
                         <a
-                            href={`${walletConnectDeepLink}https://maiar.com/?wallet-connect=${encodeURIComponent(
-                                strQR
-                            )}`}
+                            href={`${walletConnectDeepLink}https://maiar.com/?wallet-connect=${deepLink}`}
                             className="maiarConnectBtn"
                         >
                             xPortal Login
