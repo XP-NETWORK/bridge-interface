@@ -19,11 +19,11 @@ function CosmosWallet({ wallet, serviceContainer }) {
 
     const { bridge } = serviceContainer;
 
-    // const OFF = { opacity: 0.6, pointerEvents: "none" };
-    const NONE = { display: "none" };
+    const OFF = { opacity: 0.6, pointerEvents: "none" };
+    // const NONE = { display: "none" };
 
-    // const from = useSelector((state) => state.general.from);
-    // const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
+    const from = useSelector((state) => state.general.from);
+    const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
     const testnet = useSelector((state) => state.general.testNet);
     const navigate = useNavigate();
     const isMobile = useCheckMobileScreen();
@@ -54,16 +54,16 @@ function CosmosWallet({ wallet, serviceContainer }) {
     };
 
     const getStyle = () => {
-        return NONE;
-        // if (temporaryFrom?.type === "Cosmos") {
-        //   return {};
-        // } else if (temporaryFrom && temporaryFrom?.type !== "Cosmos") {
-        //   return OFF;
-        // } else if (!from) {
-        //   return {};
-        // } else if (from && from.type === "Cosmos") {
-        //   return {};
-        // } else return OFF;
+        // return NONE;
+        if (temporaryFrom?.type === "Cosmos") {
+            return {};
+        } else if (temporaryFrom && temporaryFrom?.type !== "Cosmos") {
+            return OFF;
+        } else if (!from) {
+            return {};
+        } else if (from && from.type === "Cosmos") {
+            return {};
+        } else return OFF;
     };
 
     switch (wallet) {
