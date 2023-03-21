@@ -11,7 +11,7 @@ var connector;
 export const connectTonKeeper = async (userId) => {
   // eslint-disable-next-line no-debugger
   const api = axios.create({
-    baseURL: "https://support-bot-xp.herokuapp.com",
+    baseURL: "https://tonkeeper.xp.network",
   });
 
   store.dispatch(setTonKeeperSession({ userId, message: "Connect TonKeeper" }));
