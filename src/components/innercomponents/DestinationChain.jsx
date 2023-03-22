@@ -10,11 +10,11 @@ import {
   maxChainAddressLengths,
 } from "../../services/addressValidators";
 import {
-    setDepartureOrDestination,
-    setReceiver,
-    setSwitchDestination,
-    setError,
-    setIsInvalidAddress,
+  setDepartureOrDestination,
+  setReceiver,
+  setSwitchDestination,
+  setError,
+  setIsInvalidAddress,
 } from "../../store/reducers/generalSlice";
 import ChainSwitch from "../Buttons/ChainSwitch";
 
@@ -25,52 +25,53 @@ function DestinationChain() {
 
   const dispatch = useDispatch();
   let receiver = useSelector((state) => state.general.receiver);
-  let [ maxLength, setMaxLength] = useState(0)
+  let [maxLength, setMaxLength] = useState(0);
 
-    function handleSwitchChain() {
-        dispatch(setDepartureOrDestination("destination"));
-        dispatch(setSwitchDestination(true));
-    }
+  function handleSwitchChain() {
+    dispatch(setDepartureOrDestination("destination"));
+    dispatch(setSwitchDestination(true));
+  }
 
   useEffect(() => {
     dispatch(setReceiver(""));
     dispatch(setIsInvalidAddress(true));
-    setMaxLength(maxChainAddressLengths[to.type])
+    setMaxLength(maxChainAddressLengths[to.type]);
   }, [to]);
 
-    useEffect(() => {
-        if (receiver === "") {
-            dispatch(setIsInvalidAddress(true));
-        }
-    }, [receiver]);
+  useEffect(() => {
+    if (receiver === "") {
+      dispatch(setIsInvalidAddress(true));
+    }
+  }, [receiver]);
 
-    const handleChange = (e) => {
-        // debugger;
-        try {
-            if (inputFilter(e)) {
-                let address = e.target.value.trim();
-                if (generalValidation(e, receiver)) {
-                    const validateFunc = validateFunctions[to.type];
-                    if (validateFunc) {
-                        dispatch(setIsInvalidAddress(validateFunc(address)));
-                        dispatch(setReceiver(address));
-                    }
-                } else {
-                    // dispatch(setIsInvalidAddress(true));
-                    // dispatch(setReceiver(address));
-                }
-            }
-        } catch (error) {
-            dispatch(setError(error));
+  const handleChange = (e) => {
+    // debugger;
+    try {
+      if (inputFilter(e)) {
+        let address = e.target.value.trim();
+        if (generalValidation(e, receiver)) {
+          const validateFunc = validateFunctions[to.type];
+          console.log("validateFunc :", to.type);
+          if (validateFunc) {
+            dispatch(setIsInvalidAddress(validateFunc(address)));
+            dispatch(setReceiver(address));
+          }
+        } else {
+          // dispatch(setIsInvalidAddress(true));
+          // dispatch(setReceiver(address));
         }
-    };
+      }
+    } catch (error) {
+      dispatch(setError(error));
+    }
+  };
 
-    return (
-        <div className="destination-props">
-            <div className="destination__header">
-                <span className="destination__title">Destination</span>
-                <ChainSwitch assignment={"to"} func={handleSwitchChain} />
-            </div>
+  return (
+    <div className="destination-props">
+      <div className="destination__header">
+        <span className="destination__title">Destination</span>
+        <ChainSwitch assignment={"to"} func={handleSwitchChain} />
+      </div>
 
       <div
         className={
@@ -78,7 +79,7 @@ function DestinationChain() {
         }
       >
         <input
-        maxLength={maxLength}
+          maxLength={maxLength}
           value={receiver}
           onChange={(e) => handleChange(e)}
           type="text"
