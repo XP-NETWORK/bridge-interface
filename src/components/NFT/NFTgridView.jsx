@@ -10,7 +10,9 @@ import { withSecretAuth } from "../Modals/ImportNFTModal/SecretAuth";
 import { withServices } from "../App/hocs/withServices";
 import { compose } from "redux";
 
-function NFTgridView({ serviceContainer }) {
+import {} from "../NFTsBoard/hocs/index";
+
+function NFTgridView({ serviceContainer, chainSpecificRender }) {
   const { bridge } = serviceContainer;
   const [chain, setChain] = useState(null);
 
@@ -40,6 +42,8 @@ function NFTgridView({ serviceContainer }) {
     wrapper?.current?.scrollTo(0, 0);
   }, [scrollToggler]);
 
+  const RenderClaimables = chainSpecificRender?.RenderClaimables;
+
   return (
     <div className="nftListBox">
       {loader ? (
@@ -50,6 +54,7 @@ function NFTgridView({ serviceContainer }) {
           style={currentsNFTs?.length > 0 ? auto : {}}
           className="nft-list__wrapper"
         >
+          {RenderClaimables && <RenderClaimables />}
           {algorandClaimables &&
             algorandClaimables.map((nft, index) => (
               <NFTcard
