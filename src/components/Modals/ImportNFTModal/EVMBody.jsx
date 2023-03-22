@@ -26,27 +26,26 @@ export default function EVMBody({
             <label htmlFor="contractAdd">1. Paste contract address</label>
             <input
               onBlur={() => setContractOnBlur(true)}
-              onChange={(e) => handleContractChange(e.target.value)}
+              onChange={(e) => {
+                handleContractChange(e.target.value);
+                setContractOnBlur(true);
+              }}
               type="text"
               id="contractAdd"
               name="contractAddress"
               placeholder="0x..."
               value={contract}
               className={
-                contractOnBlur && validContract
+                 validContract
                   ? "contract__input--valid"
                   : "contract__input--invalid"
               }
             />
-            <div
-              className={
-                contractOnBlur && !validContract
-                  ? "contract--invalid"
-                  : "contract--valid"
-              }
-            >
-              Error contract address
-            </div>
+            {contractOnBlur && !validContract && (
+              <span className={"contract--invalid"}>
+                Error Contract Address
+              </span>
+            )}
           </div>
           <div>
             <label htmlFor="tokeId">2. Paste Toked ID</label>
