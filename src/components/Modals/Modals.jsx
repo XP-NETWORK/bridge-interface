@@ -51,9 +51,11 @@ export default function Modals() {
     const tronError = useSelector((state) => state.general.tronLoginError);
     const redirectModal = useSelector((state) => state.general.redirectModal);
     const loader = useSelector((state) => state.general.approveLoader);
+    const from = useSelector((state) => state.general.from);
+    const fromSkale = from?.text === "SKALE";
+    const account = useSelector((state) => state.general.account);
 
     const [metaport, setMetaport] = useState("");
-    console.log("🚀 ~ file: Modals.jsx:56 ~ Modals ~ metaport:", metaport);
 
     const handleCloseRedirectModal = () => {
         dispatch(setRedirectModal(false));
@@ -93,15 +95,17 @@ export default function Modals() {
     };
 
     useEffect(() => {
-        !metaport &&
+        account &&
+            fromSkale &&
+            !metaport &&
             import("@skalenetwork/metaport").then((module) => {
                 const { Metaport } = module;
                 const m = new Metaport(metaportConfig);
                 setMetaport(m);
             });
-
+        !fromSkale && setMetaport("");
         return () => {};
-    }, []);
+    }, [from, account]);
 
     return (
         <>

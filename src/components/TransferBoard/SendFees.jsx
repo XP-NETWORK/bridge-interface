@@ -11,6 +11,7 @@ import { withServices } from "../App/hocs/withServices";
 
 import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
 import BigNumber from "bignumber.js";
+import SkaleFees from "./SkaleFees";
 
 const intervalTm = 10_000;
 const deployFeeIntTm = 30_000;
@@ -25,7 +26,7 @@ function SendFees(props) {
 
     const to = useSelector((state) => state.general.to);
     const from = useSelector((state) => state.general.from);
-    // const EVM = from?.type === "EVM";
+    const isFromSkale = from?.text === "SKALE";
     const account = useSelector((state) => state.general.account);
     const selectedNFTList = useSelector(
         (state) => state.general.selectedNFTList
@@ -129,33 +130,36 @@ function SendFees(props) {
 
     return (
         <div className="fees__container">
-            <div className="fees">
-                <div className="fees__title">Fees</div>
-                <div className="fees__bank">
-                    {balance ? (
-                        <span className="fees__balance">{`Balance: ${balance.toFixed(
-                            3
-                        )} ${chainParams?.currencySymbol ||
-                            (from?.text === "Gnosis" && "Gnosis")}`}</span>
-                    ) : (
-                        `Balance: 0 ${chainParams?.currencySymbol || ""}`
-                    )}
-                    {loading ? (
-                        <LittleLoader />
-                    ) : (
-                        <span>
-                            {`${
-                                fees && fees > 0
-                                    ? fees?.toFixed(getNumToFix(fees))
-                                    : "0"
-                            }
+            {!isFromSkale ? (
+                <div className="fees">
+                    <div className="fees__title">Fees</div>
+                    <div className="fees__bank">
+                        {balance ? (
+                            <span className="fees__balance">{`Balance: ${balance.toFixed(
+                                3
+                            )} ${chainParams?.currencySymbol ||
+                                (from?.text === "Gnosis" && "Gnosis")}`}</span>
+                        ) : (
+                            `Balance: 0 ${chainParams?.currencySymbol || ""}`
+                        )}
+                        {loading ? (
+                            <LittleLoader />
+                        ) : (
+                            <span>
+                                {`${
+                                    fees && fees > 0
+                                        ? fees?.toFixed(getNumToFix(fees))
+                                        : "0"
+                                }
                         ${chainParams?.currencySymbol || ""} 
                         `}
-                            {/* ${discountLeftUsd && showDiscount(fees).toFixed(2)} */}
-                        </span>
-                    )}
+                            </span>
+                        )}
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <SkaleFees loading={loading} balance={balance?.toFixed(3)} />
+            )}
             {deployFees && selectedNFTList?.length ? (
                 <div className="fees deploy-fees">
                     <div className="fees__title deploy-fees__tittle">

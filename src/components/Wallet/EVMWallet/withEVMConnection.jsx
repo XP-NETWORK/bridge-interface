@@ -32,6 +32,10 @@ export const withEVMConnection = (Wrapped) =>
         const navigate = useNavigate();
 
         const { chainId, account } = useWeb3React();
+        console.log(
+            "🚀 ~ file: withEVMConnection.jsx:35 ~ CB ~ chainId:",
+            chainId
+        );
         const { address } = useAccount();
         const { chain } = useNetwork();
         const { data: signer } = useSigner();
@@ -42,8 +46,8 @@ export const withEVMConnection = (Wrapped) =>
                 const isSupported = wcSupportedChains.find(
                     (supported) => chain.id === supported.id
                 );
-                console.log('from: ',from)
-                if(from){
+                console.log("from: ", from);
+                if (from) {
                     if (isSupported) {
                         if (
                             isSupported.id === from?.chainId ||

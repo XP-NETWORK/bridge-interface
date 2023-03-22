@@ -1,0 +1,103 @@
+.skale-fees {
+    color: #14161a;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: unset !important;
+    padding: 8px;
+    gap: 6px;
+}
+.skale-fees__title {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 126%;
+}
+.skale-fee__container {
+    width: 100%;
+}
+.skale-label,
+.eurEth-label {
+    display: flex;
+    align-items: center;
+}
+.sfuel__container,
+.eurEth__container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.skale-balance__container,
+.eurEth-balance__container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.skale-fees .stake-fee__inf {
+    position: relative;
+}
+.skale-fees .stake-fee__inf:hover::before {
+    content: "sFuel is a free token on SKALE used to prevent a denial of service attacks. It cannot be used to pay for the transactions on other chains.";
+    position: absolute;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16.8px;
+    width: 220px;
+    bottom: 30px;
+    left: -100px;
+    padding: 12px 12px 21px 12px;
+    background: #282829;
+    border-radius: 10px;
+    color: white;
+    z-index: 3;
+    /* box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.5); */
+}
+
+.skale-fees .stake-fee__inf:hover::after {
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    content: "";
+    width: 15px;
+    height: 15px;
+    /* box-shadow: 0px 4px 24px rgba(180, 185, 199); */
+    background: #282829;
+    border-left: 0;
+    border-top: 0;
+    transform: translate(-50%, -100%) rotate(45deg);
+}
+
+.skale-fees .stake-fee__inf {
+    position: relative;
+}
+.eurEth__container .stake-fee__inf:hover::before {
+    content: "Europe ETH is a wrapped Ethereum token used to pay for the transactions on foreign to SKALE chains..";
+    position: absolute;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16.8px;
+    width: 220px;
+    bottom: 30px;
+    left: -100px;
+    padding: 12px 12px 21px 12px;
+    background: #282829;
+    border-radius: 10px;
+    color: white;
+    z-index: 3;
+    /* box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.5); */
+}
+
+.eurEth__container .stake-fee__inf:hover::after {
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    content: "";
+    width: 15px;
+    height: 15px;
+    /* box-shadow: 0px 4px 24px rgba(180, 185, 199); */
+    background: #282829;
+    border-left: 0;
+    border-top: 0;
+    transform: translate(-50%, -100%) rotate(45deg);
+}
