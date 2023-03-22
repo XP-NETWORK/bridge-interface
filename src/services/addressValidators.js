@@ -125,7 +125,6 @@ const charMatch = (e, str, char) => {
 
 export const generalValidation = (e, receiver) => {
     let isValid = true;
-
     //cannot contain consecutive special characters
     if (
         charMatch(e, receiver, ".") ||
@@ -136,13 +135,20 @@ export const generalValidation = (e, receiver) => {
     }
 
     if(e.nativeEvent.inputType !== "deleteContentBackward"){
+      
         if(
             /^[ A-Za-z/]*$/.test() && 
             receiver.length >=3 && 
-            ((receiver.charAt[receiver.length-1] === receiver.charAt[receiver.length-2])) && (receiver.charAt[receiver.length-1] === receiver.charAt[receiver.length-3])){
-            isValid = false
+            (receiver.charAt(receiver.length-1) === receiver.charAt(receiver.length-2)) && (receiver.charAt(receiver.length-1) === receiver.charAt(receiver.length-3))){
+            isValid = false;
+
+            console.log( receiver.charAt(receiver.length-1), ':', receiver.charAt(receiver.length-2), ':', receiver.charAt(receiver.length-3))
+            
         }
     }
+
+    console.log(isValid)
+
     return isValid;
 };
 
