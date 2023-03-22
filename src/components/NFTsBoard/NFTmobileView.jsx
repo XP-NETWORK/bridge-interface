@@ -33,7 +33,7 @@ import { ELROND } from "../../components/values";
 const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
     const dispatch = useDispatch();
 
-    const [showNFTsSearch, setNFTsSearch] = useState(false);
+    let [showNFTsSearch, setNFTsSearch] = useState(false);
     const [showSelected, setShowSelected] = useState(false);
 
     const NFTListView = useSelector((state) => state.general.NFTListView);

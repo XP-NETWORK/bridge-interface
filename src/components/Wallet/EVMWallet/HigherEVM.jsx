@@ -59,7 +59,6 @@ export default function HigherEVM(OriginalComponent) {
                 window.ethereum?.chainId ||
                 chainId !== `0x${from?.chainId.toString(16)}`
               ) {
-                console.log(from, "from");
                 const switched = await switchNetwork(from);
                 if (switched) navigateToAccountRoute();
               } else navigateToAccountRoute();
