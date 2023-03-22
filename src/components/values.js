@@ -399,7 +399,7 @@ export const chains = [
         testNet: biz,
         test: false,
         newChain: false,
-        coming: false,
+        coming: true,
     },
     {
         type: "Hedera",
