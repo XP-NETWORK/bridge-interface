@@ -142,7 +142,6 @@ export const generalValidation = (e, receiver) => {
             (receiver.charAt(receiver.length-1) === receiver.charAt(receiver.length-2)) && (receiver.charAt(receiver.length-1) === receiver.charAt(receiver.length-3))){
             isValid = false;
 
-            console.log( receiver.charAt(receiver.length-1), ':', receiver.charAt(receiver.length-2), ':', receiver.charAt(receiver.length-3))
             
         }
     }
