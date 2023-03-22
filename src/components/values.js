@@ -34,6 +34,8 @@ import arbitrumTestNet from "../assets/img/chain/arbitrumTN.svg";
 import brise from "../assets/img/chain/brise.png";
 import casper from "../assets/img/chain/casper.svg";
 
+export const bridgeUrl = "https://bridge.walletconnect.org";
+
 export const EVM = "EVM";
 export const ELROND = "MultiversX";
 export const TEZOS = "TEZOS";

@@ -20,6 +20,8 @@ import { useNavigate } from "react-router";
 import { getRightPath } from "../../../wallet/helpers";
 import { WalletConnectV2Provider } from "@multiversx/sdk-wallet-connect-provider";
 import { wcId } from "../EVMWallet/evmConnectors";
+import QRCodeModal from "@walletconnect/qrcode-modal";
+console.log("🚀 ~ file: HigherMultiversX.jsx:24 ~ QRCodeModal:", QRCodeModal);
 
 export default function HigherMultiversX(OriginalComponent) {
     const updatedComponent = withServices((props) => {
