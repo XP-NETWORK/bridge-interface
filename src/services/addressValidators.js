@@ -156,5 +156,5 @@ export const validateFunctions = {
     Solana: addressValidateSolana,
     NEAR: addressValidateNear,
     Cosmos: addressValidateCosmos,
-    VeChain: addressValidateTon,
+    VeChain: addressValidateWeb3,
 };
