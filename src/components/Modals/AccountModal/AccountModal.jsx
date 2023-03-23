@@ -12,7 +12,7 @@ export default function AccountModal() {
   const dispatch = useDispatch();
   let account = useSelector((state) => state.general.account);
 
-  const connectedWallet = useSelector((state) => state.general.connectedWallet);
+  let connectedWallet = useSelector((state) => state.general.connectedWallet);
 
   const show = useSelector((state) => state.general.accountModal);
 
@@ -60,9 +60,11 @@ export default function AccountModal() {
       <div className="accountBtn">
         <button
           onClick={() => {
+            const nearWalletConncted = /\S*account_id\S*all_key\S*/.test(window.location.search);
             window.safeLocalStorage?.removeItem("XP_MM_CONNECTED");
-            localStorage.clear("_wallet_auth_key")
-            window.location.reload();
+            window.safeLocalStorage?.removeItem("_wallet_auth_key");
+            nearWalletConncted ? window.open(`${window.location.pathname}`, "_self"): window.location.reload();
+            
           }}
           className="changeBtn"
         >

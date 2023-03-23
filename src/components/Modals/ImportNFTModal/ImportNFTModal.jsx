@@ -6,6 +6,8 @@ import {
   addImportedNFTtoNFTlist,
 } from "../../../store/reducers/generalSlice";
 
+import { validateFunctions } from "../../../services/addressValidators";
+
 import axios from "axios";
 import "./importNFTModal.css";
 import EVMBody from "./EVMBody";
@@ -15,7 +17,7 @@ export default function ImportNFTModal() {
   const from = useSelector((state) => state.general.from);
   const account = useSelector((state) => state.general.account);
 
-  const [validContract, setValidContract] = useState(NaN);
+  const [validContract, setValidContract] = useState(true);
   const [contract, setContract] = useState();
   const [contractOnBlur, setContractOnBlur] = useState(false);
   const [tokenId, setTokenId] = useState();
@@ -30,9 +32,16 @@ export default function ImportNFTModal() {
 
   const handleContractChange = (value) => {
     setContract(value);
-    if (value.length !== 42) {
-      setValidContract(false);
-    } else setValidContract(true);
+    // if (value.length === 42 || value.length === 0) {
+    //   setValidContract(true);
+    // } else setValidContract(false);
+
+    if(value.length > 0){
+      setValidContract(validateFunctions.EVM(value))
+    }
+    else{
+      setValidContract(true)
+    }
   };
 
   //"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ";

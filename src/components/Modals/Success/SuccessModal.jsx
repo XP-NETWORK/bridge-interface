@@ -38,9 +38,23 @@ export default withServices(function SuccessModal({ serviceContainer }) {
     const account = useSelector((state) => state.general.account);
     const receiver = useSelector((state) => state.general.receiver);
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
-    const selectedNFTList = useSelector(
+    const selectedNFTList =    useSelector(
         (state) => state.general.selectedNFTList
-    );
+    );/*[
+        {
+            uri: '',
+            name: 'fsdfsdfsdfsd887364 56983465 983465983476598 346598347653 49865348934856f',
+                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Olympus_Mons_alt.jpg/1024px-Olympus_Mons_alt.jpg',
+                tokenId: '123',
+                chainId: '15',
+            native: {
+                name: 'fsdfsdfsdfsdf',
+
+                tokenId: '123',
+                chainId: '15'
+            }
+        },]*/
+  
     const testnet = useSelector((state) => state.general.testNet);
     const secretAccount = useSelector((state) => state.general.secretAccount);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
