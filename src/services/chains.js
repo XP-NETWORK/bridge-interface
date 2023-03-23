@@ -735,7 +735,7 @@ class APTOS extends AbstractChain {
 }
 
 class HEDERA extends AbstractChain {
-  htsToknen = "0x00000000000000000000000000000000003B5fF5";
+  htsToknen = "0x00000000000000000000000000000000003b22a5"; //"0x00000000000000000000000000000000003B5fF5";
   hashConnect;
 
   constructor(params) {
@@ -754,9 +754,17 @@ class HEDERA extends AbstractChain {
     }
   }
 
+  async assosiate() {
+    try {
+      await this.chain.assosiateToken(this.htsToknen, this.signer);
+    } catch (e) {
+      console.log(e, "im assosiate");
+    }
+  }
+
   async claim(token) {
     try {
-      this.chain.claimNFT(token, this.htsToknen, this.signer);
+      await this.chain.claimNFT(token, this.htsToknen, this.signer);
     } catch (e) {
       console.log(e, "im claim");
     }

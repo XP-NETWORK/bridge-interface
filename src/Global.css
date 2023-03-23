@@ -1067,6 +1067,7 @@ span.copyTokk img {
   border-radius: 28px;
   cursor: pointer;
   margin-left: 10px;
+  padding: 3px 8px;
 }
 
 .hederaCheckClaimBtn:hover {

@@ -3487,9 +3487,9 @@
   integrity sha512-O+6Gs8UeDbyFpbSh2CPEz/UOrrdWPTBYNblZK5CxxLisYt4kGX3Sc+czffFonyjiGSq3jWLwJS/CCJc7tBr4sQ==
 
 "@multiversx/sdk-core@^11.4.1":
-  version "11.4.1"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-11.4.1.tgz#fbb3165107bb27ee8c5efbfe51b63936b4867ff4"
-  integrity sha512-kGnSoEcygBUpOABJgpJIbeRBptQ54xq/OVHcw/pOAi0koLJHgu4xiwPihcsxMJ4jWN4PrWDy+zMo/ypeozYVGg==
+  version "11.5.0"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-11.5.0.tgz#ab17943de4129fd9a8b49f8355a5f2d85b30f101"
+  integrity sha512-VG5BKWX0TCFKVPYaQCi09354lpdiUBGmWZTogVLs0qJ6p+V0Q7eNHKJKiIHbslxHTBra4rzdJIS+1n7pVLcdYQ==
   dependencies:
     "@multiversx/sdk-transaction-decoder" "1.0.2"
     bech32 "1.1.4"
@@ -8938,9 +8938,9 @@ crypto-es@^1.2.7:
   resolved "https://registry.yarnpkg.com/crypto-es/-/crypto-es-1.2.7.tgz#754a6d52319a94fb4eb1f119297f17196b360f88"
   integrity sha512-UUqiVJ2gUuZFmbFsKmud3uuLcNP2+Opt+5ysmljycFCyhA0+T16XJmo1ev/t5kMChMqWh7IEvURNCqsg+SjZGQ==
 
-"crypto-exchange-rate@git+https://github.com/xp-network/exchange-rate#aedf7b2c152d6d25e9e6cec5d222c63a3ade18ab":
+"crypto-exchange-rate@git+https://github.com/xp-network/exchange-rate#a2915673342ee33aedd1cb4a12b304c36f55fa15":
   version "1.0.0"
-  resolved "git+https://github.com/xp-network/exchange-rate#aedf7b2c152d6d25e9e6cec5d222c63a3ade18ab"
+  resolved "git+https://github.com/xp-network/exchange-rate#a2915673342ee33aedd1cb4a12b304c36f55fa15"
   dependencies:
     axios "^0.21.1"
 
@@ -19759,9 +19759,9 @@ webpack-sources@^3.2.3:
   integrity sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==
 
 webpack@^5.64.4:
-  version "5.76.2"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.76.2.tgz#6f80d1c1d1e3bf704db571b2504a0461fac80230"
-  integrity sha512-Th05ggRm23rVzEOlX8y67NkYCHa9nTNcwHPBhdg+lKG+mtiW7XgggjAeeLnADAe7mLjJ6LUNfgHAuRRh+Z6J7w==
+  version "5.76.3"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.76.3.tgz#dffdc72c8950e5b032fddad9c4452e7787d2f489"
+  integrity sha512-18Qv7uGPU8b2vqGeEEObnfICyw2g39CHlDEK4I7NK13LOur1d0HGmGNKGT58Eluwddpn3oEejwvBPoP4M7/KSA==
   dependencies:
     "@types/eslint-scope" "^3.7.3"
     "@types/estree" "^0.0.51"
@@ -20254,7 +20254,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "4.1.0"
-  resolved "git+https://github.com/xp-network/xpjs#0c3c37bf8131304f84b65bd1da8c8a47376a3395"
+  resolved "git+https://github.com/xp-network/xpjs#8cd391515880ec508604dc745200dcf07728b7e5"
   dependencies:
     "@dfinity/agent" "^0.11.3"
     "@dfinity/candid" "^0.11.3"
@@ -20264,6 +20264,7 @@ xmlhttprequest@1.8.0:
     "@elrondnetwork/erdjs" "9.0.3"
     "@ethersproject/providers" "^5.7.0"
     "@hashgraph/hethers" "1.1.2"
+    "@hashgraph/sdk" "^2.23.0"
     "@json-rpc-tools/utils" "^1.7.6"
     "@metaplex-foundation/js" "0.17.6"
     "@multiversx/sdk-core" "^11.4.1"
@@ -20286,7 +20287,7 @@ xmlhttprequest@1.8.0:
     bignumber.js "=9.0.1"
     bn.js "^5.2.1"
     buffer "^6.0.3"
-    crypto-exchange-rate "git+https://github.com/xp-network/exchange-rate#aedf7b2c152d6d25e9e6cec5d222c63a3ade18ab"
+    crypto-exchange-rate "git+https://github.com/xp-network/exchange-rate#a2915673342ee33aedd1cb4a12b304c36f55fa15"
     ethers "^5.5.4"
     google-protobuf "^3.20.1"
     js-base64 "^3.6.1"

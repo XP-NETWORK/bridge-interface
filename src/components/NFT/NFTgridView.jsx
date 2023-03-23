@@ -23,6 +23,7 @@ function NFTgridView({ serviceContainer, chainSpecificRender }) {
   const algorandClaimables = useSelector(
     (state) => state.general.algorandClaimables
   );
+
   const nftsPlace = window.innerWidth <= 600 ? 2 : 6;
   const placeholders = new Array(
     currentsNFTs
@@ -76,9 +77,7 @@ function NFTgridView({ serviceContainer, chainSpecificRender }) {
                   serviceContainer={serviceContainer}
                 />
               ))
-            : (!algorandClaimables || algorandClaimables?.length < 1) && (
-                <NFTempty />
-              )}
+            : !algorandClaimables?.length && !RenderClaimables && <NFTempty />}
           {currentsNFTs?.length > 0 && currentsNFTs?.length < nftsPlace
             ? placeholders.map((n, index) => (
                 <Missing key={`missing-${index}-component`} />
