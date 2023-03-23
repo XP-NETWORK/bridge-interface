@@ -52,11 +52,16 @@ export async function switchNetwork(chain) {
         console.log(error);
         
         //error code 4001 means the use rejeected (cancelled) the request 
-        if(error.code !== 4001) {
-          await window.ethereum.request({
+        if(error.code !== 4001) {        
+          const value =  await window.ethereum.request({
             method: "wallet_addEthereumChain",
             params: [copyParams],
           });
+
+          // error code 4902 means  Unrecognized chain is selected and value null means user has add the network to wallet
+          if(error.code === 4902 && value === null){
+            return true
+          }
         }
         return false;
       }

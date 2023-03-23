@@ -104,7 +104,6 @@ class Bridge {
       if (isWNFT || !chain.isNftWhitelisted) return true;
       //return await chain.isNftWhitelisted(nft);
       const x = await chain.isNftWhitelisted(nft);
-      console.log(x, nft);
       return x;
     } catch (e) {
       console.log(e, "in isWhitelisted");
@@ -215,7 +214,6 @@ class Bridge {
   }
 
   setCurrentType({ chainParams }) {
-    console.log(chainParams, "chainParams");
     this.currentType = chainParams.type;
   }
 }

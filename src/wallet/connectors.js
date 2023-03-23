@@ -8,10 +8,12 @@ import UAuthSPA from "@uauth/js";
 
 export const injected = new InjectedConnector({});
 
-export const algoConnector = new WalletConnect({
+export function getAlgoConnector() {
+  return new WalletConnect({
     bridge: "https://bridge.walletconnect.org", // Required
     qrcodeModal: QRCodeModal,
-});
+  });
+}
 
 export const uauthOptions = {
     clientID: "f909d011-195c-4688-92b4-2cab4c550dcc",

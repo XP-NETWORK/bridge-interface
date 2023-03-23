@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchNFTList } from "../../store/reducers/generalSlice";
 import CloseButton from "../Buttons/CloseButton";
 import PropTypes from "prop-types";
 import { getSearched } from "../../wallet/helpers";
 import { chains } from "../values";
+import { setCurrentNFTs } from "../../store/reducers/generalSlice";
 
 export default function MobileNFTsSearch({ handleSearchTop }) {
     const dispatch = useDispatch();
     const [searchInput, setInput] = useState("");
-    const from = useSelector((state) => state.general.from);
+    let from = useSelector((state) => state.general.from);
+    let temporaryFrom = useSelector((state) => state.general.temporaryFrom);
 
     const checkWallet = useSelector((state) => state.general.checkWallet);
     const algorandAccount = useSelector((s) => s.general.algorandAccount);
@@ -19,6 +21,7 @@ export default function MobileNFTsSearch({ handleSearchTop }) {
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
     const secretAccount = useSelector((state) => state.general.secretAccount);
+    const nfts = useSelector((state) => state.general.NFTList);
 
     const handleSearch = (e) => {
         const search = e.target.value.toLowerCase();
@@ -42,6 +45,12 @@ export default function MobileNFTsSearch({ handleSearchTop }) {
         }
     };
 
+    useEffect(() => {
+      setInput("");
+      dispatch(setSearchNFTList(""));
+      dispatch(setCurrentNFTs(nfts));
+    }, [from, temporaryFrom]);
+
     return (
         <div onKeyDown={handleKeyDown} className="mobile-search__top">
             <CloseButton handleSearchTop={handleSearchTop} />
@@ -52,6 +61,7 @@ export default function MobileNFTsSearch({ handleSearchTop }) {
                     type="text"
                     placeholder="Search NFT"
                     className="serchInput"
+                    value={searchInput}
                 />
             </div>
         </div>

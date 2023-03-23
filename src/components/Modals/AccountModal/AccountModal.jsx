@@ -12,7 +12,7 @@ export default function AccountModal() {
   const dispatch = useDispatch();
   let account = useSelector((state) => state.general.account);
 
-  const connectedWallet = useSelector((state) => state.general.connectedWallet);
+  let connectedWallet = useSelector((state) => state.general.connectedWallet);
 
   const show = useSelector((state) => state.general.accountModal);
 
