@@ -11,10 +11,7 @@ export default function MaiarModal({ strQR, close }) {
 
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const deepLink = useSelector((state) => state.general.deepLink);
-    console.log(
-        "🚀 ~ file: MaiarModal.jsx:16 ~ MaiarModal ~ deepLink:",
-        deepLink
-    );
+
     // deepLink
 
     const navigateToAccountRoute = () => {
