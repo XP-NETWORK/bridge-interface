@@ -25,7 +25,7 @@ import { getRightPath } from "../../wallet/helpers";
 import { Chain } from "xp.network";
 import { getChainObject } from "../../components/values";
 import { withServices } from "../App/hocs/withServices";
-import { algoConnector } from "../../wallet/connectors";
+import { getAlgoConnector } from "../../wallet/connectors";
 
 function AlgorandWallet({ wallet, close, serviceContainer }) {
     const { bridge } = serviceContainer;
@@ -36,6 +36,8 @@ function AlgorandWallet({ wallet, close, serviceContainer }) {
     const testnet = useSelector((state) => state.general.testNet);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    let algoConnector = getAlgoConnector()
 
     const navigateToAccountRoute = () => {
         navigate(getRightPath());

@@ -12,7 +12,6 @@ export const withEVM = (Wrapped) =>
     const discounts = async (dispatch, _, account) => {
       if (account) {
         const data = await checkXpNetLocked(account);
-        console.log(data, "discounts");
         dispatch(setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25)));
       }
     };

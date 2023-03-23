@@ -181,7 +181,7 @@ export default function NFTcard({
             <div className="nft__main">
               <div className="nft-actions__container">
                 {originChainImg && <OriginChainMark icon={originChainImg} />}
-                {!nft.whitelisted && (
+                {!nft.whitelist && (
                   <WhitelistButton
                     isNFTWhitelisted={nft.whitelisted}
                     whitelist={onClickWhiteListButton}
