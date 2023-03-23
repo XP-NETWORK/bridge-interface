@@ -75,42 +75,42 @@ class Bridge {
     }
 
     async isWhitelisted(nonce, nft) {
-        return true;
-        // try {
-        //   const chainWrapper = await this.getChain(Number(nonce));
-        //   const { chain } = chainWrapper;
+        // return true;
+        try {
+            const chainWrapper = await this.getChain(Number(nonce));
+            const { chain } = chainWrapper;
 
-        //   const isWNFT = this.isWrapped(nft.uri);
+            const isWNFT = this.isWrapped(nft.uri);
 
-        //   if (chainWrapper.nativeNotWhitelised && !isWNFT) {
-        //     return false;
-        //   }
+            if (chainWrapper.nativeNotWhitelised && !isWNFT) {
+                return false;
+            }
 
-        //   if (
-        //     isWNFT &&
-        //     nft.uri.includes(stagingWNFT) &&
-        //     !window.location.pathname.includes(BridgeModes.Staging)
-        //   ) {
-        //     return false;
-        //   }
+            if (
+                isWNFT &&
+                nft.uri.includes(stagingWNFT) &&
+                !window.location.pathname.includes(BridgeModes.Staging)
+            ) {
+                return false;
+            }
 
-        //   if (
-        //     window.location.pathname.includes(BridgeModes.Staging) &&
-        //     isWNFT &&
-        //     wnft.some((url) => nft.uri.includes(url))
-        //   ) {
-        //     return false;
-        //   }
+            if (
+                window.location.pathname.includes(BridgeModes.Staging) &&
+                isWNFT &&
+                wnft.some((url) => nft.uri.includes(url))
+            ) {
+                return false;
+            }
 
-        //   if (isWNFT || !chain.isNftWhitelisted) return true;
-        //   //return await chain.isNftWhitelisted(nft);
-        //   const x = await chain.isNftWhitelisted(nft);
-        //   console.log(x, nft);
-        //   return x;
-        // } catch (e) {
-        //   console.log(e, "in isWhitelisted");
-        //   return false;
-        // }
+            if (isWNFT || !chain.isNftWhitelisted) return true;
+            //return await chain.isNftWhitelisted(nft);
+            const x = await chain.isNftWhitelisted(nft);
+            console.log(x, nft);
+            return x;
+        } catch (e) {
+            console.log(e, "in isWhitelisted");
+            return false;
+        }
     }
 
     async getChain(nonce, params = {}) {

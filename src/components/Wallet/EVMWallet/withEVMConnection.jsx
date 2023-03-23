@@ -32,10 +32,6 @@ export const withEVMConnection = (Wrapped) =>
         const navigate = useNavigate();
 
         const { chainId, account } = useWeb3React();
-        console.log(
-            "🚀 ~ file: withEVMConnection.jsx:35 ~ CB ~ chainId:",
-            chainId
-        );
         const { address } = useAccount();
         const { chain } = useNetwork();
         const { data: signer } = useSigner();

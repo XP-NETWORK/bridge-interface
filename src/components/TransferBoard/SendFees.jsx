@@ -36,6 +36,7 @@ function SendFees(props) {
     const [chainParams, setChainParams] = useState({});
 
     const [fees, setFees] = useState("");
+    console.log("🚀 ~ file: SendFees.jsx:39 ~ SendFees ~ fees:", typeof fees);
 
     const [loading, setLoading] = useState(false);
 
@@ -159,7 +160,11 @@ function SendFees(props) {
                     </div>
                 </div>
             ) : (
-                <SkaleFees loading={loading} balance={balance?.toFixed(3)} />
+                <SkaleFees
+                    loading={loading}
+                    balance={balance?.toFixed(3)}
+                    sFuelFee={fees}
+                />
             )}
             {deployFees && selectedNFTList?.length ? (
                 <div className="fees deploy-fees">
@@ -173,7 +178,7 @@ function SendFees(props) {
                         </span>
                     </div>
                     <div>
-                        <span>{deployFees.toFixed(2)}</span>
+                        <span>{deployFees?.toFixed(2)}</span>
                         <span>{` ${chainParams?.currencySymbol}`}</span>
                     </div>
                 </div>

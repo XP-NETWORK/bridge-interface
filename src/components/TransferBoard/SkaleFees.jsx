@@ -6,7 +6,11 @@ import "./SkaleFees.css";
 import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useSelector } from "react-redux";
 
-export default function SkaleFees({ loading, balance }) {
+export default function SkaleFees({ loading, balance, sFuelFee }) {
+    console.log(
+        "🚀 ~ file: SkaleFees.jsx:10 ~ SkaleFees ~ sFuelFee:",
+        sFuelFee
+    );
     const eurEthBalance = useSelector((state) => state.general.eurEthBalance);
 
     return (
@@ -36,12 +40,14 @@ export default function SkaleFees({ loading, balance }) {
                     </div>
                     <div className="eurEth-balance__container">
                         <div className="skale-balance fees__balance">
-                            {`Balance: ${eurEthBalance.toFixed(3)} EurETH`}
+                            {`Balance: ${eurEthBalance?.toFixed(3)} EurETH`}
                         </div>
-                        {loading ? (
+                        {sFuelFee ? (
                             <div className="transfer-fee">0 EurETH</div>
-                        ) : (
+                        ) : loading ? (
                             <LittleLoader />
+                        ) : (
+                            "0"
                         )}
                     </div>
                 </div>
@@ -53,4 +59,5 @@ export default function SkaleFees({ loading, balance }) {
 SkaleFees.propTypes = {
     loading: PropTypes.bool,
     balance: PropTypes.string,
+    sFuelFee: PropTypes.any,
 };

@@ -1,5 +1,5 @@
 // import React, { useEffect, useState } from "react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,7 +33,7 @@ import MaiarModal from "./MaiarModal/MaiarModal";
 import ChangeWalletModal from "./ChangeWallet/ChangeWalletModal";
 import { Web3Modal } from "@web3modal/react";
 import { ethereumClient, wcId } from "../Wallet/EVMWallet/evmConnectors";
-// import metaportConfig from "../../services/metaportConfig.json";
+import metaportConfig from "../../services/metaportConfig.json";
 
 export default function Modals() {
     const dispatch = useDispatch();
@@ -53,11 +53,11 @@ export default function Modals() {
     const tronError = useSelector((state) => state.general.tronLoginError);
     const redirectModal = useSelector((state) => state.general.redirectModal);
     const loader = useSelector((state) => state.general.approveLoader);
-    // const from = useSelector((state) => state.general.from);
-    // const fromSkale = from?.text === "SKALE";
-    // const account = useSelector((state) => state.general.account);
+    const from = useSelector((state) => state.general.from);
+    const fromSkale = from?.text === "SKALE";
+    const account = useSelector((state) => state.general.account);
 
-    // const [metaport, setMetaport] = useState("");
+    const [metaport, setMetaport] = useState("");
 
     const handleCloseRedirectModal = () => {
         dispatch(setRedirectModal(false));
@@ -96,18 +96,18 @@ export default function Modals() {
         //todo
     };
 
-    // useEffect(() => {
-    //     account &&
-    //         fromSkale &&
-    //         !metaport &&
-    //         import("@skalenetwork/metaport").then((module) => {
-    //             const { Metaport } = module;
-    //             const m = new Metaport(metaportConfig);
-    //             setMetaport(m);
-    //         });
-    //     !fromSkale && setMetaport("");
-    //     return () => {};
-    // }, [from, account]);
+    useEffect(() => {
+        account &&
+            fromSkale &&
+            !metaport &&
+            import("@skalenetwork/metaport").then((module) => {
+                const { Metaport } = module;
+                const m = new Metaport(metaportConfig);
+                setMetaport(m);
+            });
+        !fromSkale && setMetaport("");
+        return () => {};
+    }, [from, account]);
 
     return (
         <>
