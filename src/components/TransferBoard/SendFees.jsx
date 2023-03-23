@@ -18,6 +18,10 @@ const deployFeeIntTm = 30_000;
 
 function SendFees(props) {
     const { serviceContainer } = props;
+    console.log(
+        "🚀 ~ file: SendFees.jsx:21 ~ SendFees ~ serviceContainer:",
+        serviceContainer
+    );
 
     const { bridge } = serviceContainer;
 
