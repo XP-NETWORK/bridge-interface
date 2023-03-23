@@ -1,7 +1,7 @@
 /* eslint-disable no-debugger */
 /* eslint-disable valid-typeof */
 
-import { injected, algoConnector, web3Modal } from "../../wallet/connectors";
+import { injected, getAlgoConnector, web3Modal } from "../../wallet/connectors";
 import store from "../../store/store";
 
 import MyAlgoConnect from "@randlabs/myalgo-connect";
@@ -479,7 +479,9 @@ export const connectTronlink = async () => {
 
 // Algorand blockchain connection ( Algo Wallet )
 export const connectAlgoWallet = async () => {
-    if (!algoConnector.connected) {
-        algoConnector.createSession();
+
+    let connector = getAlgoConnector()
+    if (!connector.connected) {
+        connector.createSession();
     }
 };

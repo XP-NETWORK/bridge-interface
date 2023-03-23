@@ -863,7 +863,8 @@ li.nftSelecItem .Close:hover {
 }
 
 .modal-dialog {
-  margin-top: 10vh;
+    margin-top: 10vh;
+    padding: 0px 10px;
 }
 
 .NftDetails {
