@@ -5,7 +5,10 @@
     align-items: flex-start;
     height: unset !important;
     padding: 8px;
-    gap: 6px;
+    gap: 10px;
+}
+.skale-fees .lds-ellipsis {
+    margin-right: 8px !important;
 }
 .skale-fees__title {
     font-family: "Inter";
@@ -16,6 +19,9 @@
 }
 .skale-fee__container {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
 }
 .skale-label,
 .eurEth-label {

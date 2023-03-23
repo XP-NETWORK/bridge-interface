@@ -11,6 +11,7 @@ import {
     setBigLoader,
     setPreloadNFTs,
     setNFTList,
+    setEurEthBalance,
 } from "../../store/reducers/generalSlice";
 import { setIsEmpty } from "../../store/reducers/paginationSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -130,6 +131,11 @@ function NFTaccount(props) {
         dispatch(setBalance(_balance));
     };
 
+    const getEurEthBalance = async (fromChain) => {
+        const eurEthBalance = await fromChain.chain.getEurEthBalance(_account);
+        dispatch(setEurEthBalance(Number(eurEthBalance)));
+    };
+
     useDidUpdateEffect(() => {
         const checkLocked = async () => {
             const data = await checkXpNetLocked(account);
@@ -151,10 +157,6 @@ function NFTaccount(props) {
         let balanceInterval;
         (async () => {
             const fromChain = await bridge.getChain(_from.nonce);
-            console.log(
-                "🚀 ~ file: NFTaccount.jsx:153 ~ fromChain:",
-                fromChain
-            );
 
             //load nfts
             !secret &&
@@ -169,12 +171,14 @@ function NFTaccount(props) {
             // }
 
             //update Balance
+            const isFromSkale = fromChain?.chainParams.name === "Skale";
             getBalance(fromChain);
+            isFromSkale && getEurEthBalance(fromChain);
             chainSpecific && chainSpecific(dispatch, fromChain, _account);
-            balanceInterval = setInterval(
-                () => getBalance(fromChain),
-                intervalTm
-            );
+            balanceInterval = setInterval(() => {
+                getBalance(fromChain);
+                isFromSkale && getEurEthBalance(fromChain);
+            }, intervalTm);
             // const keyHandler = async (event) => {
             //     if (event.isComposing || event.keyCode === 229) {
             //         return;
