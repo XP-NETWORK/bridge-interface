@@ -38,7 +38,7 @@ export default function TonQeCodeModal() {
 
   const deepLink = isTonKeeper
     ? tonKeeperSession.deepLink ||
-      `https://app.tonkeeper.com/ton-login/support-bot-xp.herokuapp.com/tk?open=1&userId=${tonKeeperSession.userId}`
+      `https://app.tonkeeper.com/ton-login/tonkeeper.xp.network/tk?open=1&userId=${tonKeeperSession.userId}`
     : tonHubSession?.link;
 
   const linkElement = useRef(null);
