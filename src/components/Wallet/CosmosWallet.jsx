@@ -56,13 +56,13 @@ function CosmosWallet({ wallet, serviceContainer }) {
     const getStyle = () => {
         return NONE;
         // if (temporaryFrom?.type === "Cosmos") {
-        //   return {};
+        //     return {};
         // } else if (temporaryFrom && temporaryFrom?.type !== "Cosmos") {
-        //   return OFF;
+        //     return OFF;
         // } else if (!from) {
-        //   return {};
+        //     return {};
         // } else if (from && from.type === "Cosmos") {
-        //   return {};
+        //     return {};
         // } else return OFF;
     };
 

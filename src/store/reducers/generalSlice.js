@@ -35,6 +35,9 @@ const generalSlice = createSlice({
         setAlgorandAddresses(state, action) {
             state.algorandAddresses = action.payload;
         },
+        setDeepLink(state, action) {
+            state.deepLink = action.payload;
+        },
         setWhitelistingLoader(state, action) {
             state.whitelistingLoader = action.payload;
         },
@@ -548,6 +551,7 @@ const generalSlice = createSlice({
 
 export const {
     setAlgorandAddresses,
+    setDeepLink,
     setWhitelistingLoader,
     setWhiteListedCollection,
     setConnectedWallet,

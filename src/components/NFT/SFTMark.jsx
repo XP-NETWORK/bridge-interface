@@ -5,17 +5,18 @@ import PropTypes from "prop-types";
 export default function SFTMark({ amount }) {
     const numFormatter = (num) => {
         const str = num.toString();
+        const _num = typeof num === "string" && Number(num);
         let amount;
         switch (true) {
-            case str.length > 7:
-                amount = num / 10000000;
+            case str.length >= 7:
+                amount = _num / 10000000;
                 return `${amount.toString().slice(0, 3)} M`;
             case str.length > 6:
                 return `${amount.toString().slice(0, 3)} M`;
             case str.length > 5:
-                return `${(num / 100000).toFixed(1)} KK`;
+                return `${(_num / 100000).toFixed(1)} KK`;
             case str.length > 3:
-                return `${(num / 1000).toFixed(1)} K`;
+                return `${(_num / 1000).toFixed(1)} K`;
 
             default:
                 return num;

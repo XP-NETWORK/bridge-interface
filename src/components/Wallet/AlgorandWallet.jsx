@@ -47,10 +47,17 @@ import PropTypes from "prop-types";
 import { getRightPath } from "../../wallet/helpers";
 >>>>>>> origin/temporary
 
+<<<<<<< HEAD
 // import { Chain } from "xp.network";
 // import { getChainObject } from "../../components/values";
 // import { withServices } from "../App/hocs/withServices";
 // import { algoConnector } from "../../wallet/connectors";
+=======
+import { Chain } from "xp.network";
+import { getChainObject } from "../../components/values";
+import { withServices } from "../App/hocs/withServices";
+import { getAlgoConnector } from "../../wallet/connectors";
+>>>>>>> origin/temporary
 
 // function AlgorandWallet({ wallet, close, serviceContainer }) {
 //     const { bridge } = serviceContainer;
@@ -62,9 +69,17 @@ import { getRightPath } from "../../wallet/helpers";
 //     const dispatch = useDispatch();
 //     const navigate = useNavigate();
 
+<<<<<<< HEAD
 //     const navigateToAccountRoute = () => {
 //         navigate(getRightPath());
 //     };
+=======
+    let algoConnector = getAlgoConnector()
+
+    const navigateToAccountRoute = () => {
+        navigate(getRightPath());
+    };
+>>>>>>> origin/temporary
 
 //     const connectionHandler = async (wallet) => {
 //         // eslint-disable-next-line no-debugger
