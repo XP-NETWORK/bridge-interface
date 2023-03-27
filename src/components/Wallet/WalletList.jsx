@@ -218,6 +218,7 @@ export default function WalletList({ connected, input, discount }) {
       keyName: "Sync2",
     },
 
+<<<<<<< HEAD
     {
       Component: (
         <VeChainWallet
@@ -296,6 +297,90 @@ export default function WalletList({ connected, input, discount }) {
       ),
       name: "Hashpack",
       keyName: "Hashpack",
+=======
+        {
+            Component: (
+                <VeChainWallet
+                    key="wallet-index-15"
+                    wallet={"VeChainThor"}
+                    close={connected}
+                />
+            ),
+            name: "VeChainThor",
+            type: "VeChain",
+            mobile: biz,
+            desktop: false,
+            order: 13,
+            keyName: "VeChainThor",
+        },
+        {
+            Component: (
+                <CosmosWallet
+                    key="wallet-index-16"
+                    wallet={"Keplr"}
+                    close={connected}
+                />
+            ),
+            name: "Keplr",
+            type: "Cosmos",
+            mobile: true,
+            desktop: true,
+            order: 14,
+            keyName: "Keplr",
+        },
+        {
+            Component: (
+                <CosmosWallet
+                    key="wallet-index-17"
+                    wallet={"Fina"}
+                    close={connected}
+                />
+            ),
+            name: "Fina",
+            type: "Cosmos",
+            mobile: true,
+            desktop: false,
+            order: 14,
+            keyName: "Fina",
+        },
+        {
+            Component: <TonKeeper key="TonKeeper" close={connected} />,
+            name: "TonKeeper",
+            mobile: true,
+            desktop: true,
+            order: 14,
+            type: "TON",
+            keyName: "TonKeeper",
+        },
+        {
+            Component: <TonHub key="TonHub" close={connected} />,
+            name: "TonHub",
+            mobile: true,
+            desktop: true,
+            order: 14,
+            type: "TON",
+            keyName: "TonHub",
+        },
+        {
+            Component: <TonWallet key="TonWallet" close={connected} />,
+            name: "Ton Wallet",
+            mobile: false,
+            desktop: true,
+            order: 14,
+            type: "TON",
+            keyName: "Ton Wallet",
+        },
+        {
+            Component: (
+                <HederaWallet
+                    key="wallet-index-13"
+                    close={connected}
+                    wallet={"Hashpack"}
+                />
+            ),
+            name: "Hashpack",
+            keyName: "Hashpack",
+>>>>>>> c7259780 (ton wallets visible on mobile)
 
       mobile: biz,
       desktop: true,
