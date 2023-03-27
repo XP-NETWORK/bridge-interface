@@ -66,6 +66,7 @@ export const getChainObject = (nonce) =>
   chains.find((chain) => chain.nonce === nonce);
 
 export const secretnodes = "https://secretnodes.com/secret/accounts";
+export const tonAuth = "tonkeeper.xp.network";
 
 export const chains = [
   {
