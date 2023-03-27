@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { React, useState } from "react";
 
 import NFTgridView from "../NFT/NFTgridView";
@@ -7,22 +8,28 @@ import NFTlistTop from "./NFTlistTop";
 import { useSelector } from "react-redux";
 import Pagination from "./Pagination";
 
-const NFTscreen = () => {
-    const NFTListView = useSelector((state) => state.general.NFTListView);
+import withChains from "./hocs";
 
-    const [index, setIndex] = useState(0);
+const NFTscreen = ({ chainSpecificRender }) => {
+  const NFTListView = useSelector((state) => state.general.NFTListView);
 
-    return (
-        <div className="nft_selectBox">
-            <NFTlistTop />
-            {NFTListView ? (
-                <NFTlistView />
-            ) : (
-                <NFTgridView scrollIndex={index} setIndex={setIndex} />
-            )}
-            <Pagination />
-        </div>
-    );
+  const [index, setIndex] = useState(0);
+
+  return (
+    <div className="nft_selectBox">
+      <NFTlistTop chainSpecificRender={chainSpecificRender} />
+      {NFTListView ? (
+        <NFTlistView />
+      ) : (
+        <NFTgridView
+          scrollIndex={index}
+          setIndex={setIndex}
+          chainSpecificRender={chainSpecificRender}
+        />
+      )}
+      <Pagination />
+    </div>
+  );
 };
 
-export default NFTscreen;
+export default withChains(NFTscreen);

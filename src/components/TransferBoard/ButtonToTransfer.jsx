@@ -138,6 +138,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
         dispatch(setTxnHash({ txn: "failed", nft }));
       } else if (result) {
         const resultObject = fromChain.handlerResult(result);
+        console.log(resultObject, "resultObject");
         notifyExplorer(
           _from.nonce,
           resultObject.hash || resultObject.transactionHash
