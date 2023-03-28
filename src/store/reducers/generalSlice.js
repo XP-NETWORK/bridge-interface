@@ -405,6 +405,7 @@ const generalSlice = createSlice({
         },
         setError(state, action) {
             // debugger;
+            // handleGA4Event(googleAnalyticsCategories.Error, action.payload);
             if (action.payload) {
                 const { err, data, message } = action.payload;
 

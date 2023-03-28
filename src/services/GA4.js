@@ -3,4 +3,31 @@ import ReactGA from "react-ga4";
 ReactGA.initialize("G-TYDNW34NRR");
 ReactGA.set({ appName: "CROSS-CHAIN NFT BRIDGE" });
 
+export const googleAnalyticsCategories = {
+    Connect: "connect",
+    Approve: "approve",
+    Transfer: "transfer",
+    Content: "content",
+    Chain: "chain",
+    Error: "error",
+    UserInf: "userInf",
+};
+
+export const handleGA4Event = (
+    category,
+    action,
+    label,
+    value,
+    nonInteraction
+) => {
+    ReactGA.event({
+        category,
+        action,
+        label: label || undefined, // optional
+        value: value || undefined, // optional, must be a number
+        nonInteraction: nonInteraction || undefined, // optional, true/false
+        transport: "xhr", // optional, beacon/xhr/image
+    });
+};
+
 export default ReactGA;
