@@ -19,6 +19,7 @@ import Web3 from "web3";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import { getRightPath } from "../../wallet/helpers";
 import { useWeb3Modal } from "@web3modal/react";
+import { GA } from "../../services/GA4";
 
 function ConnectWallet() {
     const navigate = useNavigate();
@@ -89,6 +90,14 @@ function ConnectWallet() {
     const walletsModal = useSelector((state) => state.general.walletsModal);
 
     const handleConnect = async () => {
+        GA.event({
+            category: "Test",
+            action: "Click on connect button",
+            label: "Connect", // optional
+            value: 99, // optional, must be a number
+            nonInteraction: true, // optional, true/false
+            transport: "xhr", // optional, beacon/xhr/image
+        });
         let provider;
         let _chainId;
         if (bitKeep) {
