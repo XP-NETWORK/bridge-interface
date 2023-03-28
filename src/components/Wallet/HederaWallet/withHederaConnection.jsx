@@ -13,7 +13,7 @@ import {
 import { Chain } from "xp.network";
 import PropTypes from "prop-types";
 import { hashConnect } from "./hederaConnections";
-import * as hashSDK from "@hashgraph/sdk";
+//import * as hashSDK from "@hashgraph/sdk";
 
 import { BridgeModes } from "../../values";
 
@@ -23,18 +23,15 @@ export const withHederaConnection = (Wrapped) =>
   function CB(props) {
     const dispatch = useDispatch();
 
-    // const checkClaimables = useSelector((state) => state.hedera.checkClaimables);
-
     const {
       serviceContainer: { bridge },
     } = props;
     let provider;
     let signer;
 
-    const setSigner = async (signer) => {
+    const setSigner = async (signer, hashSDK) => {
       try {
         const chainWrapper = await getChain();
-
         chainWrapper.chain.injectSDK(hashSDK);
         chainWrapper.setSigner(signer);
         dispatch(setWalletsModal(false));
@@ -54,46 +51,42 @@ export const withHederaConnection = (Wrapped) =>
       return chain;
     };
 
-    useEffect(async () => {
+    useEffect(() => {
       hashConnect.pairingEvent.once((pairingData) => {
-        const topic = pairingData.topic;
-        const accountId = pairingData.accountIds[0];
-        const address = hashSDK.AccountId.fromString(
-          accountId
-        ).toSolidityAddress(); //hethers.utils.getAddressFromAccount(accountId);
-
-        dispatch(setAccount(address));
-        const isTestnet = window.location.pathname.includes(
-          BridgeModes.TestNet
-        );
-        try {
-          provider = hashConnect.getProvider(
-            isTestnet ? "testnet" : "mainnet",
-            topic,
+        import("@hashgraph/sdk").then((hashSDK) => {
+          const topic = pairingData.topic;
+          const accountId = pairingData.accountIds[0];
+          const address = hashSDK.AccountId.fromString(
             accountId
+          ).toSolidityAddress(); //hethers.utils.getAddressFromAccount(accountId);
+
+          dispatch(setAccount(address));
+          const isTestnet = window.location.pathname.includes(
+            BridgeModes.TestNet
           );
-          provider.client.setMaxQueryPayment(new hashSDK.Hbar(5));
-          provider.client.setDefaultMaxTransactionFee(new hashSDK.Hbar(5));
-          signer = hashConnect.getSigner(provider);
+          try {
+            provider = hashConnect.getProvider(
+              isTestnet ? "testnet" : "mainnet",
+              topic,
+              accountId
+            );
+            provider.client.setMaxQueryPayment(new hashSDK.Hbar(5));
+            provider.client.setDefaultMaxTransactionFee(new hashSDK.Hbar(5));
+            signer = hashConnect.getSigner(provider);
 
-          signer.address = address;
-          setSigner(signer);
+            signer.address = address;
+            setSigner(signer, hashSDK);
 
-          dispatch(setFrom(getChainObject(Chain.HEDERA)));
-          dispatch(setWalletsModal(false));
-          dispatch(setConnectedWallet("HashPack"));
-        } catch (error) {
-          console.log("pairingEvent error", error);
-        }
-      });
-      hashConnect.acknowledgeMessageEvent.once((acknowledgeData) => {
-        console.log("acknowledgeMessageEvent", { acknowledgeData });
-      });
-      hashConnect.connectionStatusChangeEvent.once((connectionStatus) => {
-        console.log("connectionStatusChangeEvent", {
-          connectionStatus,
+            dispatch(setFrom(getChainObject(Chain.HEDERA)));
+            dispatch(setWalletsModal(false));
+            dispatch(setConnectedWallet("HashPack"));
+          } catch (error) {
+            console.log("pairingEvent error", error);
+          }
         });
       });
+      //hashConnect.acknowledgeMessageEvent.once(() => {});
+      //hashConnect.connectionStatusChangeEvent.once(() => {});
     }, []);
 
     CB.propTypes = {

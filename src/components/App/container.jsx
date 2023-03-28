@@ -51,7 +51,6 @@ const Container = ({ children, serviceContainer, setContainer }) => {
 
       dispatch(setCheckWallet(checkWallet));
 
-      //navigate;
       navigate(`/${network ? network + "/" : ""}${query || ""}`);
     })();
   }, []);

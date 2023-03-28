@@ -29,11 +29,11 @@ function NearWallet({ serviceContainer }) {
 
       const nearWalletConnection = await chain?.connect();
 
-      const network = location.pathname.match(/(staging|testnet)/)?.at(0);
-      const successUrl = `${location.protocol}//${location.host}/${network}/connect?nearFlow=true`;
+      //const network = location.pathname.match(/(staging|testnet)/)?.at(0);
+      //const successUrl = `${location.protocol}//${location.host}/${network}/connect?nearFlow=true`;
       nearWalletConnection.requestSignIn({
         contractId: nearParams.bridge,
-        successUrl,
+        //successUrl,
       });
     } catch (e) {
       console.log(e, "e");
