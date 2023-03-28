@@ -13,7 +13,7 @@ export default function ChainSearch() {
     const handleChange = (e) => {
         console.log(e)
         e.preventDefault();
-        if(!(search === "" || search.length ===0) && e.target.value === " "){
+        if(e.nativeEvent.data === " " && search.length ===0){
             //do nothing
         }else{
             dispatch(setChainSearch(e.target.value));
