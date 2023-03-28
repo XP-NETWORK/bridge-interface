@@ -54,7 +54,7 @@ const { provider } = configureChains(wcSupportedChains, [
 ]);
 
 export const wagmiClient = createClient({
-  autoConnect: true,
+  // autoConnect: true,
 
   connectors: modalConnectors({
     projectId: wcId,
