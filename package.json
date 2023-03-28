@@ -20,6 +20,7 @@
     "@near-wallet-selector/near-wallet": "^7.9.2",
     "@near-wallet-selector/nightly": "^7.9.2",
     "@near-wallet-selector/sender": "^7.9.2",
+    "@perawallet/connect": "^1.2.1",
     "@randlabs/myalgo-connect": "^1.1.1",
     "@reduxjs/toolkit": "^1.9.2",
     "@solana/web3.js": "^1.73.3",

@@ -3,12 +3,8 @@
 
 import { injected, getAlgoConnector, web3Modal } from "../../wallet/connectors";
 import store from "../../store/store";
-
-import MyAlgoConnect from "@randlabs/myalgo-connect";
-
 // import { hethers } from "@hashgraph/hethers";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
-
 import {
     WalletConnectProvider,
     ProxyProvider,
@@ -128,13 +124,13 @@ export const connectKeplr = async (testnet, chain, wallet, isMobile) => {
 
             const { address } = accounts[0];
 
-      const signer = await SecretNetworkClient.create({
-        grpcWebUrl: testnet ? TestNetRpcUri[key] : MainNetRpcUri[key],
-        chainId,
-        wallet: offlineSigner,
-        walletAddress: address,
-        //encryptionUtils: window.getEnigmaUtils(chain),
-      });
+            const signer = await SecretNetworkClient.create({
+                grpcWebUrl: testnet ? TestNetRpcUri[key] : MainNetRpcUri[key],
+                chainId,
+                wallet: offlineSigner,
+                walletAddress: address,
+                //encryptionUtils: window.getEnigmaUtils(chain),
+            });
 
             store.dispatch(setAccount(address));
             store.dispatch(setKeplrWallet(signer));
@@ -196,39 +192,38 @@ export const connectBitKeep = async (from) => {
 };
 
 export const connectMetaMask = async (activate, from, to) => {
-  const mobile = window.innerWidth <= 600;
-  try {
-    if (!window.ethereum && mobile) {
-      const link = `dapp://${window.location.host}?to=${to}&from=${from}/`;
-      window.open(link);
-    }
-    //d/
-    if (!mobile && !window.safeLocalStorage?.getItem("XP_MM_CONNECTED"))
-      await window.ethereum.request({
-        method: "wallet_requestPermissions",
-        params: [
-          {
-            eth_accounts: {},
-          },
-        ],
-      });
+    const mobile = window.innerWidth <= 600;
+    try {
+        if (!window.ethereum && mobile) {
+            const link = `dapp://${window.location.host}?to=${to}&from=${from}/`;
+            window.open(link);
+        }
+        //d/
+        if (!mobile && !window.safeLocalStorage?.getItem("XP_MM_CONNECTED"))
+            await window.ethereum.request({
+                method: "wallet_requestPermissions",
+                params: [
+                    {
+                        eth_accounts: {},
+                    },
+                ],
+            });
 
-    await activate(injected);
-    !mobile && window.safeLocalStorage?.setItem("XP_MM_CONNECTED", "true");
-    store.dispatch(setMetaMask(true));
-    return true;
-  } catch (ex) {
-    if(ex.code !== 4001){
-      store.dispatch(setError(ex));
+        await activate(injected);
+        !mobile && window.safeLocalStorage?.setItem("XP_MM_CONNECTED", "true");
+        store.dispatch(setMetaMask(true));
+        return true;
+    } catch (ex) {
+        if (ex.code !== 4001) {
+            store.dispatch(setError(ex));
+        }
+        if (ex.data) {
+            console.log(ex.data.message);
+        } else console.log(ex);
+        return false;
     }
-    if (ex.data) {
-      console.log(ex.data.message);
-    } else console.log(ex);
-    return false;
-  }
 };
 
-// Algorand blockchain connection ( AlgoSigner )
 export const connectAlgoSigner = async (testnet) => {
     if (typeof window.AlgoSigner !== undefined) {
         try {
@@ -276,21 +271,6 @@ export const connectTrustWallet = async (activate, from, chainId) => {
         if (error.data) {
             console.log(error.data.message);
         } else console.log(error);
-        return false;
-    }
-};
-
-export const connectMyAlgo = async (chain) => {
-    const myAlgoConnect = new MyAlgoConnect();
-    try {
-        const accountsSharedByUser = await myAlgoConnect.connect();
-        const address = accountsSharedByUser[0].address;
-
-        const signer = await chain.myAlgoSigner(myAlgoConnect, address);
-
-        return { signer, address };
-    } catch (error) {
-        console.log(error);
         return false;
     }
 };
@@ -369,29 +349,6 @@ export const connectMaiar = async () => {
         } else console.log(error);
     }
 };
-
-// Elrond blockchain connection ( Maiar Extension )
-// export const connectMaiarExtension = async () => {
-//   // debugger;
-//   const instance = ExtensionProvider.getInstance();
-//   try {
-//     await instance.init();
-//     await instance.login();
-//     const { account } = instance;
-//     if (account?.name === "CanceledError") {
-//       return false;
-//     }
-//     store.dispatch(setOnMaiar(true));
-//     store.dispatch(setElrondAccount(account.address));
-//     store.dispatch(setMaiarProvider(instance));
-//     store.dispatch(setSigner(instance));
-//     return true;
-//   } catch (err) {
-//     window.open("https://getmaiar.com/defi", "_blank");
-//     console.log(err);
-//     return false;
-//   }
-// };
 
 // Tron blockchain connection ( TronLink )
 export const connectTronlink = async () => {

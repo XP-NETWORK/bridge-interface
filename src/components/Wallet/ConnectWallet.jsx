@@ -48,6 +48,10 @@ function ConnectWallet() {
         (state) => state.general.connectedWallet
     );
 
+    const algorandAddresses = useSelector(
+        (state) => state.general.algorandAddresses
+    );
+
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const { address } = useAccount();
@@ -58,6 +62,7 @@ function ConnectWallet() {
     const inputElement = useRef(null);
 
     const connected =
+        algorandAddresses.length ||
         tonAccount ||
         hederaAccount ||
         secretAccount ||
@@ -129,7 +134,7 @@ function ConnectWallet() {
 
     useEffect(() => {
         setShow(false);
-    }, [tonQRCodeModal, qrCodeImage]);
+    }, [tonQRCodeModal, qrCodeImage, connected]);
 
     useEffect(() => {
         if (isOpen) setShow(false);
@@ -180,7 +185,7 @@ function ConnectWallet() {
             >
                 <Modal.Header>
                     <Modal.Title style={{ minWidth: "max-content" }}>
-                        Connect Wallet 
+                        Connect Wallet
                     </Modal.Title>
                     <span className="CloseModal" onClick={handleClose}>
                         <div className="close-modal"></div>
@@ -199,7 +204,6 @@ function ConnectWallet() {
                 </div>
                 <Modal.Body>
                     <div className="walletListBox">
-                        
                         <WalletList
                             input={walletSearch}
                             connected={handleClose}

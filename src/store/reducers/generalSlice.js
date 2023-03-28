@@ -25,13 +25,17 @@ const initialState = {
     NFTSetToggler: false,
     isInvalid: true,
     afterNearRedirect: true,
-    hederaClaimables: []
+    hederaClaimables: [],
+    algorandAddresses: [],
 };
 
 const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setAlgorandAddresses(state, action) {
+            state.algorandAddresses = action.payload;
+        },
         setDeepLink(state, action) {
             state.deepLink = action.payload;
         },
@@ -544,12 +548,13 @@ const generalSlice = createSlice({
             state.afterNearRedirect = false;
         },
         setHederaClaimables(state, action) {
-          state.hederaClaimables = action.payload;
+            state.hederaClaimables = action.payload;
         },
     },
 });
 
 export const {
+    setAlgorandAddresses,
     setDeepLink,
     setWhitelistingLoader,
     setWhiteListedCollection,
@@ -666,7 +671,7 @@ export const {
     setAptosAccount,
     setIsInvalidAddress,
     setNearRedirect,
-    setHederaClaimables
+    setHederaClaimables,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
