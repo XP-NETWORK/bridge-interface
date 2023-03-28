@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
 import { setAlert } from "../../store/reducers/generalSlice";
@@ -12,35 +12,32 @@ function Alert() {
   const handleClose = () => {
     dispatch(setAlert(false));
   };
+
+  const timerRef = useRef(null);
+  useEffect(() => {
+    if (alert && !timerRef.current) {
+      timerRef.current = setTimeout(() => {
+        dispatch(setAlert(false));
+      }, 5000);
+    }
+    return () => {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    };
+  }, [alert]);
+
   return (
     <div id="alertb">
-      {(from && to === undefined) || !alert ? (
+      {!alert ? (
         ""
       ) : (
         <div className="aleartBox">
-          Select Departure Chain to continue bridging
-          <span onClick={() => handleClose()} className="closeBox">
-            {" "}
-            <Close className="svgWidget closeIcon" />
-          </span>
-        </div>
-      )}
-      {(from === undefined && to) || !alert ? (
-        ""
-      ) : (
-        <div className="aleartBox">
-          Select Destination Chain to continue bridging
-          <span onClick={() => handleClose()} className="closeBox">
-            {" "}
-            <Close className="svgWidget closeIcon" />
-          </span>
-        </div>
-      )}
-      {(from && to) === undefined || !alert ? (
-        ""
-      ) : (
-        <div className="aleartBox">
-          Select Departure and Destination Chain to continue bridging
+          {!from && to
+            ? "Select Departure Chain "
+            : from && !to
+            ? "Select Destination Chain "
+            : "Select Departure and Destination Chain "}
+          to continue bridging
           <span onClick={() => handleClose()} className="closeBox">
             {" "}
             <Close className="svgWidget closeIcon" />
