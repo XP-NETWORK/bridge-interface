@@ -25,6 +25,7 @@ const initialState = {
     NFTSetToggler: false,
     isInvalid: true,
     afterNearRedirect: true,
+    hederaClaimables: []
 };
 
 const generalSlice = createSlice({
@@ -542,6 +543,9 @@ const generalSlice = createSlice({
         setNearRedirect(state) {
             state.afterNearRedirect = false;
         },
+        setHederaClaimables(state, action) {
+          state.hederaClaimables = action.payload;
+        },
     },
 });
 
@@ -662,6 +666,7 @@ export const {
     setAptosAccount,
     setIsInvalidAddress,
     setNearRedirect,
+    setHederaClaimables
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

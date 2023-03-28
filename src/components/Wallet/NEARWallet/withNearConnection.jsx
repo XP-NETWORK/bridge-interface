@@ -1,11 +1,9 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from "react";
+import React, { useEffect /*useState*/ } from "react";
 
 import { Chain } from "xp.network";
 
 import { useDispatch, useSelector } from "react-redux";
-
-
 
 import {
   setAccount,
@@ -16,86 +14,153 @@ import {
   setReceiver,
   updateApprovedNFTs,
   setTxnHash,
-  setNearRedirect
+  setNearRedirect,
 } from "../../../store/reducers/generalSlice";
-import { setSigner } from "../../../store/reducers/signersSlice";
 
 import { chains } from "../../values";
 
 import { useNavigate } from "react-router";
 import { getRightPath } from "../../../wallet/helpers";
 
+import { setupWalletSelector } from "@near-wallet-selector/core";
+//import { setupNightly } from "@near-wallet-selector/nightly";
+import { setupNearWallet } from "@near-wallet-selector/near-wallet";
+//import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
+import { setupModal } from "@near-wallet-selector/modal-ui";
+import { setupHereWallet } from "@near-wallet-selector/here-wallet";
+import { setupMeteorWallet } from "@near-wallet-selector/meteor-wallet";
+import { setupSender } from "@near-wallet-selector/sender";
+import { distinctUntilChanged, map } from "rxjs";
+import { adaptToWalletSelector } from "./utils";
+
 export const withNearConnection = (Wrapped) =>
   function CB(props) {
     const { serviceContainer } = props;
+    //const [selector, setSelector] = useState(null);
+    //const [accounts, setAccounts] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-   // const locationHook = useLocation()
 
-    const {NFTList, selectedNFTList, afterNearRedirect } = useSelector((state) => ({
-      NFTList: state.general.NFTList,
-      selectedNFTList: state.general.selectedNFTList,
-      afterNearRedirect: state.general.afterNearRedirect
-    }));
+    const saveWallet = (address, bridge, chain, signer) => {
+      dispatch(setAccount(address));
+      chain.setSigner(signer);
+      bridge.setCurrentType(chain);
+      dispatch(setFrom(chains.find((c) => c.nonce === Chain.NEAR)));
+      dispatch(setConnectedWallet("Near Wallet"));
+    };
+
+    const { NFTList, selectedNFTList, afterNearRedirect } = useSelector(
+      (state) => ({
+        NFTList: state.general.NFTList,
+        selectedNFTList: state.general.selectedNFTList,
+        afterNearRedirect: state.general.afterNearRedirect,
+      })
+    );
 
     const params = new URLSearchParams(location.search.replace("?", ""));
-    const nearAuth = params.get("all_keys") && params.get("account_id");
+    const nearAuth =
+      params.get("all_keys") && params.get("account_id") && !params.get("WLS");
     const nearTrx = params.get("NEARTRX");
     const nearFlow = nearTrx || nearAuth;
     const approve = params.get("type") === "approve";
     const send =
       params.get("type") === "transfer" || params.get("type") === "unfreeze";
+    let network = location.pathname.match(/(staging|testnet)/)?.at(0);
 
+    //Selector store flow
     useEffect(() => {
-      (async () => {
-        if (serviceContainer.bridge) {
-          if (nearFlow && serviceContainer.bridge.config) {
-            const chainWrapper = await serviceContainer?.bridge?.getChain(
-              Chain.NEAR
-            );
+      if (serviceContainer.bridge.config) {
+        const { bridge } = serviceContainer;
+        (async () => {
+          const nearParams = bridge.config.nearParams;
+          const [_selector, chainWrapper] = await Promise.all([
+            setupWalletSelector({
+              network: "mainnet",
+              debug: true,
+              modules: [
+                setupNearWallet({
+                  successUrl: `${location.protocol}//${
+                    location.host
+                  }/${network ?? ""}/connect?WLS=true`,
+                }),
+                setupHereWallet(),
+                setupMeteorWallet(),
+                setupSender(),
+              ],
+            }),
+            bridge.getChain(Chain.NEAR),
+          ]);
 
-           
-            //const nearParams = serviceContainer?.bridge?.config?.nearParams;
-            const walletConnection = await chainWrapper?.connect();
-            const address = walletConnection.getAccountId();
-            console.log(address, "account");
-            const signer = walletConnection.account();
-            console.log(signer);
+          window.wallet_selector_modal = setupModal(_selector, {
+            contractId: nearParams?.bridge,
+          });
+          window.wallet_selector = _selector;
 
-            if (address && signer) {
-              dispatch(setAccount(address));
-              dispatch(setSigner(signer));
-              serviceContainer.bridge.setCurrentType(chainWrapper);
-              dispatch(setConnectedWallet("Near Wallet"));
-              chainWrapper.setSigner(signer);
-              dispatch(setFrom(chains.find((c) => c.nonce === Chain.NEAR)));
-
-              if (nearTrx) {
-                console.log("NEAR: jump to wallet");
-                const to = params.get("to");
-                dispatch(setTo(chains.find((c) => c.nonce === Number(to))));
-                navigate(getRightPath());
+          const sub = _selector.store.observable
+            .pipe(
+              map((state) => ({
+                nextAccounts: state.accounts,
+                nextWalletId: state.selectedWalletId,
+              })),
+              distinctUntilChanged()
+            )
+            .subscribe(async ({ nextAccounts, nextWalletId }) => {
+              console.log(nextWalletId);
+              if (!nextWalletId) return;
+              const signer = await _selector.wallet();
+              if (nextAccounts[0]) {
+                saveWallet(
+                  nextAccounts[0].accountId,
+                  bridge,
+                  chainWrapper,
+                  adaptToWalletSelector(signer)
+                );
               }
+            });
+
+          return () => sub.unsubscribe();
+        })();
+      }
+    }, [serviceContainer]);
+
+    //Near Wallet flow
+    useEffect(() => {
+      if (nearFlow && serviceContainer.bridge) {
+        (async () => {
+          const chainWrapper = await serviceContainer?.bridge?.getChain(
+            Chain.NEAR
+          );
+
+          const walletConnection = await chainWrapper?.connect();
+          const address = walletConnection.getAccountId();
+          const signer = walletConnection.account();
+          if (address && signer) {
+            saveWallet(address, serviceContainer.bridge, chainWrapper, signer);
+
+            if (nearTrx) {
+              console.log("NEAR: jump to wallet");
+              const to = params.get("to");
+              dispatch(setTo(chains.find((c) => c.nonce === Number(to))));
+              navigate(getRightPath());
             }
           }
-        }
-      })();
+        })();
+      }
     }, [serviceContainer]);
 
     useEffect(() => {
-
-      if (Array.isArray(NFTList) &&  nearTrx && afterNearRedirect) {
-        dispatch(setNearRedirect())
+      if (Array.isArray(NFTList) && nearTrx && afterNearRedirect) {
+        dispatch(setNearRedirect());
         const tokenId = params.get("tokenId");
         const contract = params.get("contract");
         const chainId = String(Chain.NEAR);
         const receiver = params.get("receiver");
         const hash = params.get("transactionHashes");
-        
+
         if (approve) {
-            const selectedNft =  NFTList.find(
-                (nft) => nft.native.tokenId === tokenId
-              );
+          const selectedNft = NFTList.find(
+            (nft) => nft.native.tokenId === tokenId
+          );
 
           console.log("NEAR: inApprove");
           const alreadyS = selectedNFTList.some(
@@ -113,18 +178,18 @@ export const withNearConnection = (Wrapped) =>
           let selectedNft = NFTList.find(
             (nft) => nft.native.tokenId === tokenId
           );
-  
+
           if (!selectedNft) {
-              const xp_near_transfered_nft = window.safeLocalStorage?.getItem('_xp_near_transfered_nft');
-              selectedNft = JSON.parse(xp_near_transfered_nft);
-           
+            const xp_near_transfered_nft = window.safeLocalStorage?.getItem(
+              "_xp_near_transfered_nft"
+            );
+            selectedNft = JSON.parse(xp_near_transfered_nft);
           }
-  
 
           const nft = {
             image: selectedNft.image || selectedNft.media,
             name: selectedNft.title,
-            uri: '',
+            uri: "",
             native: {
               tokenId,
               contract,
@@ -132,14 +197,11 @@ export const withNearConnection = (Wrapped) =>
             },
           };
 
-          serviceContainer.bridge.getChain(
-            Chain.NEAR
-          ).then(chainWrapper => {
+          serviceContainer.bridge.getChain(Chain.NEAR).then((chainWrapper) => {
             console.log(`about to notify ${hash}`);
-              const {chain} = chainWrapper;
-              chain.notify(hash)
-
-          })
+            const { chain } = chainWrapper;
+            chain.notify(hash);
+          });
           dispatch(setReceiver(receiver));
           dispatch(setSelectedNFTList(nft));
           dispatch(
@@ -148,46 +210,9 @@ export const withNearConnection = (Wrapped) =>
               nft,
             })
           );
-
-
         }
       }
     }, [NFTList, serviceContainer]);
 
     return <Wrapped {...props} />;
   };
-
-/****
-   * 
-   * 
-   *     const umt = await chain.chain.getUserMinter(
-                  "",
-                  "dimabrook-testnet.testnet"
-                );
-
-                console.log(umt);
-
-                const trx = await chain.chain.mintNft(
-                  await umt.account("dimabrook-testnet.testnet"),
-                  {
-                    contract: "usernftminter.testnet",
-                    token_id: `NFT#{${Math.ceil(Math.random() * 10000000)}}`,
-                    token_owner_id: address,
-                    metadata: {
-                      image:
-                        "https://ipfs.featured.market/ipfs/QmdUhQt8ksfgpxjCYNYFY9134j9H2VUUdNRNsKCs6wFZxb",
-                      name: "Halloween Party Girls ",
-                      description:
-                        "Halloween is all about supernatural, unrealistic and eccentric costumes.\nAdd this Rare NFT in your collection.",
-                      attributes: [
-                        {
-                          trait_type: "eyes",
-                          value: "green",
-                        },
-                      ],
-                    },
-                  }
-                );
-
-                console.log(trx);
-   */

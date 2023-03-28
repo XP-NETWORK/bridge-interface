@@ -113,6 +113,7 @@ class Bridge {
 
   async getChain(nonce, params = {}) {
     // eslint-disable-next-line no-debugger
+    // debugger;
     const chainParams = CHAIN_INFO.get(nonce);
     const chainId = String(nonce);
     const chain = this.chains[chainId];
@@ -158,6 +159,9 @@ class Bridge {
           return this.chains[chainId];
         case ChainType.APTOS:
           this.chains[chainId] = new ChainInterface.APTOS(params);
+          return this.chains[chainId];
+        case ChainType.HEDERA:
+          this.chains[chainId] = new ChainInterface.HEDERA(params);
           return this.chains[chainId];
         default:
           throw new Error("unsuported chain");
