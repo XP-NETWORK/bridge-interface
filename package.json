@@ -65,6 +65,7 @@
     "react-bootstrap": "^2.0.0",
     "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "^17.0.2",
+    "react-ga4": "^2.1.0",
     "react-jazzicon": "^1.0.3",
     "react-modal-image": "^2.5.0",
     "react-qrcode-logo": "^2.8.0",
