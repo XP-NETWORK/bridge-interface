@@ -26,16 +26,15 @@ function NearWallet({ serviceContainer }) {
     try {
       const chain = await serviceContainer?.bridge?.getChain(Chain.NEAR);
       const nearParams = serviceContainer?.bridge?.config?.nearParams;
+
       const nearWalletConnection = await chain?.connect();
 
       const network = location.pathname.match(/(staging|testnet)/)?.at(0);
-
-      nearWalletConnection.requestSignIn(
-        nearParams.bridge, // contract requesting access
-        "XP.NETWORK Bridge", // optional title
-        `${location.protocol}//${location.host}/${network}/connect?`,
-        `${location.protocol}//${location.host}/${network}/connect`
-      );
+      const successUrl = `${location.protocol}//${location.host}/${network}/connect?nearFlow=true`;
+      nearWalletConnection.requestSignIn({
+        contractId: nearParams.bridge,
+        successUrl,
+      });
     } catch (e) {
       console.log(e, "e");
     }

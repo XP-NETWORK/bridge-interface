@@ -58,8 +58,7 @@ export const withNearConnection = (Wrapped) =>
     );
 
     const params = new URLSearchParams(location.search.replace("?", ""));
-    const nearAuth =
-      params.get("all_keys") && params.get("account_id") && !params.get("WLS");
+    const nearAuth = params.get("all_keys") && params.get("account_id"); // && !params.get("WLS");
     const nearTrx = params.get("NEARTRX");
     const nearFlow = nearTrx || nearAuth;
     const approve = params.get("type") === "approve";
@@ -73,16 +72,19 @@ export const withNearConnection = (Wrapped) =>
         const { bridge } = serviceContainer;
         (async () => {
           const nearParams = bridge.config.nearParams;
+          const successUrl = `${location.protocol}/${location.host}/${network ??
+            ""}/connect?nearFlow=true`;
           const [_selector, chainWrapper] = await Promise.all([
             setupWalletSelector({
               network: "mainnet",
               debug: true,
               modules: [
                 setupNearWallet({
-                  successUrl: `${location.protocol}//${
-                    location.host
-                  }/${network ?? ""}/connect?WLS=true`,
+                  successUrl,
                 }),
+                /*setupMyNearWallet({
+                  successUrl,
+                }),*/
                 setupHereWallet(),
                 setupMeteorWallet(),
                 setupSender(),
@@ -98,22 +100,26 @@ export const withNearConnection = (Wrapped) =>
 
           const sub = _selector.store.observable
             .pipe(
-              map((state) => ({
-                nextAccounts: state.accounts,
-                nextWalletId: state.selectedWalletId,
-              })),
+              map((state) => state.accounts),
               distinctUntilChanged()
             )
-            .subscribe(async ({ nextAccounts, nextWalletId }) => {
-              console.log(nextWalletId);
-              if (!nextWalletId) return;
-              const signer = await _selector.wallet();
+            .subscribe(async (nextAccounts) => {
+              const wallet = await _selector.wallet().catch(() => undefined);
+
+              if (
+                wallet?.id === "near-wallet" ||
+                wallet?.id === "my-near-wallet"
+              ) {
+                wallet.signOut();
+                return;
+              }
+
               if (nextAccounts[0]) {
                 saveWallet(
                   nextAccounts[0].accountId,
                   bridge,
                   chainWrapper,
-                  adaptToWalletSelector(signer)
+                  adaptToWalletSelector(wallet)
                 );
               }
             });
@@ -125,15 +131,23 @@ export const withNearConnection = (Wrapped) =>
 
     //Near Wallet flow
     useEffect(() => {
-      if (nearFlow && serviceContainer.bridge) {
+      if (nearFlow && serviceContainer.bridge.config) {
         (async () => {
           const chainWrapper = await serviceContainer?.bridge?.getChain(
             Chain.NEAR
           );
-
+          /*const lastSignedWallet = localStorage.getItem(
+            "near-wallet-selector:recentlySignedInWallets"
+          );
+          console.log(lastSignedWallet, "lastSignedWallet");*/
           const walletConnection = await chainWrapper?.connect();
+          /*if (!window.safeLocalStorage?.getItem("_wallet_auth_key"))
+            await new Promise((r) => setTimeout(r, 1500));*/
+
+          //"https://app.mynearwallet.com/"
           const address = walletConnection.getAccountId();
           const signer = walletConnection.account();
+          console.log(walletConnection, "walletConnection", address, signer);
           if (address && signer) {
             saveWallet(address, serviceContainer.bridge, chainWrapper, signer);
 

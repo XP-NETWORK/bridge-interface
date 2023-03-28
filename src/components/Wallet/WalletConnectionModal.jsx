@@ -11,7 +11,7 @@ import WalletList from "./WalletList";
 
 export default function WalletConnectionModal() {
   const [walletSearch, setWalletSearch] = useState();
-  //   const navigate = useNavigate();
+
   const qrCodeImage = useSelector((state) => state.general.qrCodeImage);
   //   const testnet = useSelector((state) => state.general.testNet);
   const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
@@ -29,11 +29,6 @@ export default function WalletConnectionModal() {
     } else {
       dispatch(setTemporaryFrom(""));
       dispatch(setAccountWalletModal(false));
-      //   if (testnet) {
-      //     navigate("/testnet/connect");
-      //   } else {
-      //     navigate("/connect");
-      //   }
     }
   };
 

@@ -65,7 +65,9 @@ export default function AccountModal() {
             );
             window.safeLocalStorage?.removeItem("XP_MM_CONNECTED");
             window.safeLocalStorage?.removeItem("_wallet_auth_key");
-            const w = await window?.wallet_selector.wallet();
+            const w = await window?.wallet_selector
+              .wallet()
+              .catch(() => undefined);
             w && (await w.signOut());
             nearWalletConncted
               ? window.open(`${window.location.pathname}`, "_self")

@@ -11,7 +11,7 @@ import { withServices } from "../../App/hocs/withServices";
 function WalletSelector({ close }) {
   //const isMobile = innerWidth <= 480;
   //const dispatch = useDispatch();
-  // const navigate = useNavigate();
+
   //const { from } = useSelector((state) => state.general);
 
   const connectHandler = async () => {

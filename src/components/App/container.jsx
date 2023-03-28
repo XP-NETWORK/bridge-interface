@@ -51,8 +51,8 @@ const Container = ({ children, serviceContainer, setContainer }) => {
 
       dispatch(setCheckWallet(checkWallet));
 
-      !query.includes("NEARTRX=true") &&
-        navigate(`/${network ? network + "/" : ""}${query || ""}`);
+      //navigate;
+      navigate(`/${network ? network + "/" : ""}${query || ""}`);
     })();
   }, []);
 
@@ -66,8 +66,8 @@ Container.propTypes = {
 };
 
 export default compose(
-    withServices,
-    withNearConnection,
-    withEVMConnection,
-    withHederaConnection
+  withServices,
+  withNearConnection,
+  withEVMConnection,
+  withHederaConnection
 )(Container);
