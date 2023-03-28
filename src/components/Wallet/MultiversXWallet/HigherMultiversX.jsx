@@ -6,6 +6,7 @@ import { Chain } from "xp.network";
 import {
     setAccount,
     setConnectedWallet,
+    setDeepLink,
     setError,
     setFrom,
     // setQrCodeString,
@@ -31,6 +32,7 @@ export default function HigherMultiversX(OriginalComponent) {
         const OFF = { opacity: 0.6, pointerEvents: "none" };
         const from = useSelector((state) => state.general.from);
         const testnet = useSelector((state) => state.general.testNet);
+        const account = useSelector((state) => state.general.account);
 
         const to = useSelector((state) => state.general.to);
         const temporaryFrom = useSelector(
@@ -52,11 +54,12 @@ export default function HigherMultiversX(OriginalComponent) {
                 navigate("/");
                 dispatch(setAccount(""));
                 dispatch(setConnectedWallet(""));
-                dispatch(
-                    setError({
-                        message: "You are disconnected from the xPortal.",
-                    })
-                );
+                account &&
+                    dispatch(
+                        setError({
+                            message: "You are disconnected from the xPortal.",
+                        })
+                    );
             },
             onClientEvent: async function(event) {
                 console.log("onClientEvent()", event);
@@ -87,8 +90,10 @@ export default function HigherMultiversX(OriginalComponent) {
                     case "xPortal": {
                         walletConnected = "xPortal";
                         await provider.init();
+
                         dispatch(setWalletsModal(false));
                         const { uri, approval } = await provider.connect();
+                        dispatch(setDeepLink(uri));
                         const qr = await QRCode.toDataURL(uri);
                         dispatch(setQrImage(qr));
                         await provider.login({ approval });

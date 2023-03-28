@@ -24,13 +24,16 @@ const initialState = {
     secretCred: initialSecretCred,
     NFTSetToggler: false,
     isInvalid: true,
-    afterNearRedirect: true
+    afterNearRedirect: true,
 };
 
 const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setDeepLink(state, action) {
+            state.deepLink = action.payload;
+        },
         setWhitelistingLoader(state, action) {
             state.whitelistingLoader = action.payload;
         },
@@ -537,12 +540,13 @@ const generalSlice = createSlice({
             state.tonAccount = action.payload;
         },
         setNearRedirect(state) {
-            state.afterNearRedirect = false
+            state.afterNearRedirect = false;
         },
     },
 });
 
 export const {
+    setDeepLink,
     setWhitelistingLoader,
     setWhiteListedCollection,
     setConnectedWallet,
@@ -657,7 +661,7 @@ export const {
     setStaging,
     setAptosAccount,
     setIsInvalidAddress,
-    setNearRedirect
+    setNearRedirect,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
