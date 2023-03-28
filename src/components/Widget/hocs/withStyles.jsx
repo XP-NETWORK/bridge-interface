@@ -753,6 +753,14 @@ export const withStyles = (Wrapped) =>
     
     
             @media only screen and (max-width: 764px) {
+
+              .nftSlectContaine.container {
+                width: 96% !important;
+                max-width: 98% !important;
+            }
+
+            
+
     
               .nft__card, .nft__card--selected, .skeleton {
                 width: 172px;
@@ -817,6 +825,13 @@ export const withStyles = (Wrapped) =>
                 margin-top: 6vh;
               }
             }
+
+            @media only screen and (max-width: 480px) {
+.App {
+    padding-left: 0%;
+    padding-right: 0%;
+}
+      }
     
             `;
         document.body.classList.remove("widgetBlur");
