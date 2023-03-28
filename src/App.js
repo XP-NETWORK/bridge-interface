@@ -107,7 +107,11 @@ function App({ network }) {
     }, [account]);
 
     useEffect(() => {
-        ReactGA.pageview(window.location.pathname + window.location.search);
+        ReactGA.send({
+            hitType: "pageview",
+            page: location.pathname + window.location.search,
+            title: "Custom Title",
+        });
         window.safeLocalStorage?.removeItem("walletconnect");
         dispatch(generalSlice.setInnerWidth(window.innerWidth));
         const from = new URLSearchParams(window.location.search).get("from");
