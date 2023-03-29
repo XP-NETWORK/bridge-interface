@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 import { setNFTsListView } from "../../store/reducers/generalSlice";
 
 export default function ViewButton() {
@@ -8,6 +9,7 @@ export default function ViewButton() {
 
     const handleView = () => {
         dispatch(setNFTsListView());
+        handleGA4Event(googleAnalyticsCategories.Button, "Change view button");
     };
 
     return (
