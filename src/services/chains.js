@@ -8,7 +8,6 @@ import BigNumber from "bignumber.js";
 
 import { ethers, BigNumber as BN } from "ethers";
 import xpchallenge from "./xpchallenge";
-import { googleAnalyticsCategories, handleGA4Event } from "./GA4";
 const Xpchallenge = xpchallenge();
 const feeMultiplier = 1.1;
 
@@ -293,18 +292,10 @@ class AbstractChain {
                 console.log(args, "args");
                 const result = await this.bridge.transferSft(...args);
                 console.log(result, "res");
-                handleGA4Event(
-                    googleAnalyticsCategories.Transfer,
-                    `${receiver} succeed transferring`
-                );
                 return { result, mintWith: mwToUI };
             }
         } catch (e) {
             console.log(e, "in transfer");
-            handleGA4Event(
-                googleAnalyticsCategories.Error,
-                ` ${args.receiver} failed transferring.`
-            );
             throw e;
         }
     }
@@ -315,12 +306,10 @@ class AbstractChain {
         try {
             // console.log(this.signer, nft, fees);
             const res = await this.chain.preTransfer(this.signer, nft, fees);
-            handleGA4Event(googleAnalyticsCategories.Approve, `Approved`);
             console.log(res, "approval res");
             return res;
         } catch (e) {
             console.log(e, "in preTransfer");
-            handleGA4Event(googleAnalyticsCategories.Error, `Approve failed`);
             throw e;
         }
     }
