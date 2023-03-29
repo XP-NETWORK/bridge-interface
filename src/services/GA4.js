@@ -18,6 +18,7 @@ export const googleAnalyticsCategories = {
     Error: "error",
     UserInf: "userInf",
     Button: "button",
+    Whitelist: "whitelist",
 };
 
 export const handleGA4Event = (
