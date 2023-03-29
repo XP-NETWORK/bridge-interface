@@ -447,6 +447,20 @@
   outline: none;
 }
 
+/* IPAD MINI */
+@media only screen and (width: 768px) and (height: 1024px) and (orientation:portrait) {
+    .mobile-col {
+      margin-left: 15px;
+      margin-right: 15px;
+  }
+}
+/* IPAD AIR */
+@media only screen and (width: 820px) and (height: 1180px) and (orientation:portrait) {
+  .mobile-col {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+}
 @media screen and (min-width: 768px) {
   /* .mobile-col {
         display: none;

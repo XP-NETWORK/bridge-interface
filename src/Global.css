@@ -2186,6 +2186,13 @@ span.closeBox:hover svg path {
     bottom: 12.5vh;
   }
 }
+/* IPAD MINI */
+@media only screen and (width: 768px) and (height: 1024px) and (orientation:portrait) {
+  .first-step__container {
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+}
 
 @media screen and (max-width: 700px) {
   .first-step__container {
