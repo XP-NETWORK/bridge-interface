@@ -452,6 +452,12 @@
     .mobile-col {
       margin-left: 15px;
       margin-right: 15px;
+      margin-top: 115px;
+  
+  }
+
+  .mobile-col__tittle {
+    display: none !important;
   }
 }
 /* IPAD AIR */
