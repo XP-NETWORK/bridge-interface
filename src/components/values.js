@@ -34,6 +34,8 @@ import arbitrumTestNet from "../assets/img/chain/arbitrumTN.svg";
 import brise from "../assets/img/chain/brise.png";
 import casper from "../assets/img/chain/casper.svg";
 
+export const bridgeUrl = "https://bridge.walletconnect.org";
+
 export const EVM = "EVM";
 export const ELROND = "MultiversX";
 export const TEZOS = "TEZOS";
@@ -64,6 +66,7 @@ export const getChainObject = (nonce) =>
   chains.find((chain) => chain.nonce === nonce);
 
 export const secretnodes = "https://secretnodes.com/secret/accounts";
+export const tonAuth = "tonkeeper.xp.network";
 
 export const chains = [
   {
@@ -397,7 +400,7 @@ export const chains = [
     testNet: biz,
     test: false,
     newChain: false,
-    coming: true,
+    coming: false,
   },
   {
     type: "Hedera",
@@ -406,10 +409,10 @@ export const chains = [
     nonce: 29,
     order: 0,
     image: { avatar: true, src: HBAR },
-    testNet: false,
+    testNet: biz,
     mainnet: false,
     // newChain: true,
-    coming: true,
+    coming: false,
   },
   {
     type: "EVM",
@@ -469,7 +472,7 @@ export const chains = [
     text: "NEAR",
     value: "NEAR",
     nonce: 31,
-    order: 7,
+    order: -2,
     image: { avatar: true, src: near },
     testNet: biz,
     mainnet: biz,

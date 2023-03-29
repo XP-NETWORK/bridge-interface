@@ -24,6 +24,7 @@ export default function MaiarModal({ strQR, close }) {
   useEffect(() => {
     if (elrondAccount) {
       close();
+
       navigateToAccountRoute();
     }
   }, [elrondAccount]);

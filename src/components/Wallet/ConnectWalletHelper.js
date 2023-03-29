@@ -1,20 +1,11 @@
 /* eslint-disable no-debugger */
 /* eslint-disable valid-typeof */
 
-import { injected, algoConnector, web3Modal } from "../../wallet/connectors";
+import { injected, getAlgoConnector, web3Modal } from "../../wallet/connectors";
 import store from "../../store/store";
 
-import MyAlgoConnect from "@randlabs/myalgo-connect";
-
-// import { HashConnect } from "hashconnect";
-// import { hethers } from "@hashgraph/hethers";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
-
-import {
-  WalletConnectProvider,
-  ProxyProvider,
-  // ExtensionProvider,
-} from "@elrondnetwork/erdjs";
+import { WalletConnectProvider, ProxyProvider } from "@elrondnetwork/erdjs";
 import QRCode from "qrcode";
 import { ethers } from "ethers";
 
@@ -30,22 +21,16 @@ import {
   setMaiarProvider,
   setError,
   setTronPopUp,
-  // setAlgoSigner,
-  // setAlgorandAccount,
   setQrImage,
   setQrCodeString,
   setWC,
   setAccount,
-  setKeplrWallet,
-  // setHederaAccount,
-  // setHederaWallet,
   setRedirectModal,
 } from "../../store/reducers/generalSlice";
 
 import { getAddEthereumChain } from "../../wallet/chains";
 import Web3 from "web3";
 
-import { SecretNetworkClient } from "secretjs";
 import { setSigner } from "../../store/reducers/signersSlice";
 
 import { inIframe } from "../Settings/helpers";
@@ -71,41 +56,6 @@ export const wallets = [
 ];
 
 const { modalError } = store.getState();
-
-// const hashConnect = new HashConnect(true);
-
-// hashConnect.pairingEvent.once(async (pairingData) => {
-//     const {
-//         accountIds,
-//         topic,
-//         metadata: { name },
-//     } = pairingData;
-//     const address = await hethers.utils.getAddressFromAccount(accountIds[0]);
-//     const provider = hashConnect.getProvider("testnet", topic, accountIds[0]);
-//     const signer = hashConnect.getSigner(provider);
-
-//     store.dispatch(setHederaAccount(address));
-//     store.dispatch(setHederaWallet(name));
-//     store.dispatch(setSigner(signer));
-// });
-
-// export const connectHashpack = async () => {
-//     let appMetadata = {
-//         name: "XP.NETWORK Cross-Chain NFT Bridge",
-//         description:
-//             "Seamlessly move assets between chains | The first multichain NFT bridge to connect all major Blockchains into one ecosystem",
-//         icon: "%PUBLIC_URL%/favicon.ico",
-//     };
-
-//     try {
-//         const initData = await hashConnect.init(appMetadata, "testnet", false);
-//         const { pairingString } = initData;
-//         await hashConnect.connectToLocalWallet(pairingString, appMetadata);
-//         return true;
-//     } catch (error) {
-//         console.log("connectHashpack error: ", error);
-//     }
-// };
 
 export const connectUnstoppable = async () => {
   // eslint-disable-next-line no-debugger
@@ -150,48 +100,6 @@ export const switchNetWork = async (from) => {
       .catch((e) => {
         console.log(e);
       });
-};
-
-export const connectKeplr = async (testnet, chain, wallet, isMobile) => {
-  const chainId = testnet ? chain.tnChainId : chain.chainId;
-  const key = chain.key.toUpperCase();
-
-  if (window.keplr) {
-    try {
-      await window.keplr.enable(chainId);
-      const offlineSigner = window.keplr.getOfflineSigner(chainId);
-
-      const accounts = await offlineSigner.getAccounts();
-
-      const { address } = accounts[0];
-
-      const signer = await SecretNetworkClient.create({
-        grpcWebUrl: testnet ? TestNetRpcUri[key] : MainNetRpcUri[key],
-        chainId,
-        wallet: offlineSigner,
-        walletAddress: address,
-        //encryptionUtils: window.getEnigmaUtils(chain),
-      });
-
-      store.dispatch(setAccount(address));
-      store.dispatch(setKeplrWallet(signer));
-      store.dispatch(setSigner(signer));
-      return signer;
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  } else {
-    if (isMobile) {
-      store.dispatch(setRedirectModal("Fina"));
-    } else
-      store.dispatch(
-        setError({
-          message: "Please install Keplr extension",
-        })
-      );
-    return false;
-  }
 };
 
 const setBitKeepSigner = (account) => {
@@ -282,7 +190,6 @@ export const connectMetaMask = async (activate) => {
     return false;
   }
 };
-// Algorand blockchain connection ( AlgoSigner )
 export const connectAlgoSigner = async (testnet) => {
   if (typeof window.AlgoSigner !== undefined) {
     try {
@@ -330,21 +237,6 @@ export const connectTrustWallet = async (activate, from, chainId) => {
     if (error.data) {
       console.log(error.data.message);
     } else console.log(error);
-    return false;
-  }
-};
-
-export const connectMyAlgo = async (chain) => {
-  const myAlgoConnect = new MyAlgoConnect();
-  try {
-    const accountsSharedByUser = await myAlgoConnect.connect();
-    const address = accountsSharedByUser[0].address;
-
-    const signer = await chain.myAlgoSigner(myAlgoConnect, address);
-
-    return { signer, address };
-  } catch (error) {
-    console.log(error);
     return false;
   }
 };
@@ -424,29 +316,6 @@ export const connectMaiar = async () => {
   }
 };
 
-// Elrond blockchain connection ( Maiar Extension )
-// export const connectMaiarExtension = async () => {
-//   // debugger;
-//   const instance = ExtensionProvider.getInstance();
-//   try {
-//     await instance.init();
-//     await instance.login();
-//     const { account } = instance;
-//     if (account?.name === "CanceledError") {
-//       return false;
-//     }
-//     store.dispatch(setOnMaiar(true));
-//     store.dispatch(setElrondAccount(account.address));
-//     store.dispatch(setMaiarProvider(instance));
-//     store.dispatch(setSigner(instance));
-//     return true;
-//   } catch (err) {
-//     window.open("https://getmaiar.com/defi", "_blank");
-//     console.log(err);
-//     return false;
-//   }
-// };
-
 // Tron blockchain connection ( TronLink )
 export const connectTronlink = async () => {
   const {
@@ -497,7 +366,8 @@ export const connectTronlink = async () => {
 
 // Algorand blockchain connection ( Algo Wallet )
 export const connectAlgoWallet = async () => {
-  if (!algoConnector.connected) {
-    algoConnector.createSession();
+  let connector = getAlgoConnector();
+  if (!connector.connected) {
+    connector.createSession();
   }
 };

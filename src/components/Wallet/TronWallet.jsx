@@ -9,6 +9,7 @@ import {
   setTronLoginError,
   setAccount,
   setTronLink,
+  setConnectedWallet
 } from "../../store/reducers/generalSlice";
 import PropTypes from "prop-types";
 
@@ -69,6 +70,7 @@ function TronWallet({ close, serviceContainer }) {
         });
         dispatch(setAccount(address));
         dispatch(setTronLink(true));
+        dispatch(setConnectedWallet("TronLink"));
         chainWrapper.setSigner(extensionProvider);
         bridge.setCurrentType(chainWrapper);
 

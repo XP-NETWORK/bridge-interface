@@ -42,6 +42,7 @@ import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 //import { biz } from "../values";
 
 import withChains from "./hocs";
+import ReactGA from "../../services/GA4";
 
 import UserConnect from "../User/UserConnect";
 import AccountModal from "../Modals/AccountModal/AccountModal";
@@ -105,7 +106,6 @@ function NFTaccount(props) {
       let nfts = await fromChain.getNFTs(bridge.checkWallet || _account);
       nfts = fromChain.filterNFTs(nfts);
 
- 
       dispatch(setNFTList(nfts));
       dispatch(setPreloadNFTs(nfts.length));
       dispatch(setIsEmpty(nfts.length < 1));
@@ -119,17 +119,6 @@ function NFTaccount(props) {
       dispatch(setError(error.data ? error.data.message : error.message));
     }
   }
-
-  // const getAlgorandClaimables = async (fromChain) => {
-  //     // eslint-disable-next-line no-debugger
-  //     debugger;
-  //     try {
-  //         const claimables = await fromChain.getClaimables(account);
-  //         console.log({ claimables });
-  //     } catch (error) {
-  //         console.log(error);
-  //     }
-  // };
 
   const getBalance = async (fromChain) => {
     const _balance = await fromChain.balance(_account);
@@ -187,6 +176,15 @@ function NFTaccount(props) {
 
     return () => clearInterval(balanceInterval);
   }, [_from, _account, NFTSetToggler]);
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: "pageview",
+      page: "/account/",
+      title: "check",
+    });
+    return () => {};
+  }, []);
 
   const isMobile = useCheckMobileScreen();
 
@@ -249,16 +247,3 @@ function NFTaccount(props) {
 }
 
 export default withChains(NFTaccount);
-
-/**
- * 
- *   const widget = useSelector((state) => state.widget.widget);
-
-  {widget && (
-    <>
-      <UserConnect />
-      {window.innerWidth < 760 && <UserConnect mobile={true} />}
-      <AccountModal />
-    </>
-  )}
- */

@@ -225,7 +225,7 @@
   transform: unset;
 }
 
-@media screen and (min-width: 426px) {
+@media screen and (min-width: 769px) {
   .selected-nfts__button {
     display: none;
   }

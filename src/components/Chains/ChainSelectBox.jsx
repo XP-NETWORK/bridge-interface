@@ -13,15 +13,13 @@ import SetDestination from "./SetDestination";
 import ChainListBox from "./ChainListBox";
 import { ReactComponent as SwapComp } from "../../assets/img/icons/swapChain.svg";
 import { switchNetwork } from "../../services/chains/evm/evmService";
+import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 
 export default function ChainSelectBox() {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
   const account = useSelector((state) => state.general.account);
-  const { settings } = useSelector(({ settings }) => ({
-    settings,
-  }));
   // const algorandAccount = useSelector(
   //     (state) => state.general.algorandAccount
   // );
@@ -34,8 +32,6 @@ export default function ChainSelectBox() {
 
   const switchChains = async (e) => {
     // eslint-disable-next-line no-debugger
-    // debugger;
-
     if ((from && from.type === to.type) || !account) {
       handleSwitch(e);
     } else {
@@ -45,10 +41,11 @@ export default function ChainSelectBox() {
     }
   };
 
-  const lockedChains = settings.fromChain || settings.toChain;
-
   const handleSwitch = async (e) => {
-    // debugger
+    handleGA4Event(
+      googleAnalyticsCategories.Chain,
+      `Swap chains ${(from?.text, to?.text)}`
+    );
     e.preventDefault();
     const temp = to;
     let success;
@@ -73,14 +70,12 @@ export default function ChainSelectBox() {
       </div>
       <div className="nftSelectBox">
         <SetDeparture />
-        {!lockedChains && (
-          <span
-            className="swap-chain__btn"
-            onClick={(e) => (from && to ? switchChains(e) : undefined)}
-          >
-            <SwapComp className="svgWidget swpBtn" />
-          </span>
-        )}
+        <span
+          className="swap-chain__btn"
+          onClick={(e) => (from && to ? switchChains(e) : undefined)}
+        >
+          <SwapComp className="svgWidget swpBtn" />
+        </span>
         <span className="chain-sep__line"></span>
         <SetDestination />
       </div>

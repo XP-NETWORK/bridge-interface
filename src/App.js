@@ -6,6 +6,7 @@ import DepositAlert from "./components/Alerts/DepositAlert";
 import * as generalSlice from "./store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import ReactGA from "./services/GA4";
 
 import {
   checkValidators,
@@ -26,13 +27,16 @@ import {
   setTransferLoaderModal,
   setSwitchDestination,
   setIsInvalidAddress,
+  setShowAbout,
+  setShowVideo,
 } from "./store/reducers/generalSlice";
 //  import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
-import { chains } from "./components/values";
+import { bridgeUrl, chains } from "./components/values";
 
 import "./components/Modals/Modal.css";
 import Modals from "./components/Modals/Modals";
 import AppContainer from "./components/App/container";
+import { generateKey } from "./services/utils";
 
 import Widget from "./components/Widget";
 import { withConnect } from "./components/Widget/hocs/withConnect";
@@ -58,7 +62,6 @@ function App({ network }) {
   let switchDestination = useSelector(
     (state) => state.general.switchDestination
   );
-  // let showChainModal = useSelector((state) => state.general.showChainModal);
 
   let modalArray = [
     showChainModal,
@@ -95,13 +98,23 @@ function App({ network }) {
     if (!location.pathname.includes("account")) {
       dispatch(setIsInvalidAddress(true));
     }
+    window.onpopstate = function() {
+      dispatch(setShowAbout(false));
+      dispatch(setShowVideo(false));
+      dispatch(setError(false));
+    };
   }, [location]);
 
-  useEffect(()=>{
-    dispatch(setWalletsModal(false))
-  }, [account])
+  useEffect(() => {
+    dispatch(setWalletsModal(false));
+  }, [account]);
 
   useEffect(() => {
+    ReactGA.send({
+      hitType: "pageview",
+      page: location.pathname + window.location.search,
+      title: "Custom Title",
+    });
     window.safeLocalStorage?.removeItem("walletconnect");
     dispatch(generalSlice.setInnerWidth(window.innerWidth));
     const from = new URLSearchParams(window.location.search).get("from");
@@ -136,16 +149,12 @@ function App({ network }) {
       });
     }, 10000);
 
-    /*const tweb = new TonWeb(
-      new TonWeb.HttpProvider("https://toncenter.com/api/v2/jsonRPC", {
-        apiKey:
-          "05645d6b549f33bf80cee8822bd63df720c6781bd00020646deb7b2b2cd53b73",
-      })
-    )
-console.log(
-     tweb.provider.getTransactions('EQBABLUFRe95jzxV8E_XzTsLtK-3eggjs5eVXviA4VLY0UMW', 20).then(trxs => {
-      trxs, 'trxs')
-    })*/
+    const key = generateKey(10); // assuming generateKey() is a function that generates a random string
+
+    const deepLink = `wc:connect/xp?bridge=${encodeURIComponent(
+      bridgeUrl
+    )}&key=${encodeURIComponent(key)}`;
+    dispatch(generalSlice.setDeepLink(deepLink));
 
     return () => clearInterval(validatorsInt);
   }, []);
@@ -155,8 +164,8 @@ console.log(
       <AppContainer>
         <Modals />
         <XpBridge network={network} />
-        <Alert />
         <Widget />
+        <Alert />
         <DepositAlert />
       </AppContainer>
     </div>

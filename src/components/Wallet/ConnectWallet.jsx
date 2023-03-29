@@ -19,6 +19,7 @@ import Web3 from "web3";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import { getRightPath } from "../../wallet/helpers";
 import { useWeb3Modal } from "@web3modal/react";
+import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 
 function ConnectWallet() {
   const navigate = useNavigate();
@@ -44,6 +45,10 @@ function ConnectWallet() {
   const tonAccount = useSelector((state) => state.general.tonAccount);
   const connectedWallet = useSelector((state) => state.general.connectedWallet);
 
+  const algorandAddresses = useSelector(
+    (state) => state.general.algorandAddresses
+  );
+
   const hederaAccount = useSelector((state) => state.general.hederaAccount);
   const bitKeep = useSelector((state) => state.general.bitKeep);
   const { address } = useAccount();
@@ -54,6 +59,7 @@ function ConnectWallet() {
   const inputElement = useRef(null);
 
   const connected =
+    algorandAddresses.length ||
     tonAccount ||
     hederaAccount ||
     secretAccount ||
@@ -80,6 +86,10 @@ function ConnectWallet() {
   const walletsModal = useSelector((state) => state.general.walletsModal);
 
   const handleConnect = async () => {
+    handleGA4Event(
+      googleAnalyticsCategories.Connect,
+      `Clicked on connect. destination chain: ${from}`
+    );
     let provider;
     let _chainId;
     if (bitKeep) {
@@ -113,9 +123,11 @@ function ConnectWallet() {
   };
 
   function handleAboutClick() {
+    handleGA4Event(googleAnalyticsCategories.Content, "About text.");
     dispatch(setShowAbout(true));
   }
   function handleVideoClick() {
+    handleGA4Event(googleAnalyticsCategories.Content, "About video.");
     dispatch(setShowVideo(true));
   }
 
@@ -125,11 +137,15 @@ function ConnectWallet() {
 
   useEffect(() => {
     setShow(false);
-  }, [tonQRCodeModal, qrCodeImage]);
+  }, [tonQRCodeModal, qrCodeImage, connected]);
 
   useEffect(() => {
     if (isOpen) setShow(false);
   }, [isOpen]);
+
+  useEffect(() => {
+    if (evmAccount) setShow(false);
+  }, [evmAccount]);
 
   return (
     <div>
@@ -150,10 +166,7 @@ function ConnectWallet() {
         Continue bridging
       </div>
       <div id="aboutnft" className="aboutNft">
-        <div
-          onClick={() => handleVideoClick()}
-          className="about-btn about-video"
-        >
+        <div onClick={handleVideoClick} className="about-btn about-video">
           Learn how to use NFT bridge
         </div>
         <div

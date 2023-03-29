@@ -7,6 +7,7 @@ import { compose } from "redux";
 import { useDispatch } from "react-redux";
 import { withNearConnection } from "../Wallet/NEARWallet/withNearConnection";
 import { withEVMConnection } from "../Wallet/EVMWallet/withEVMConnection";
+import { withHederaConnection } from "../Wallet/HederaWallet/withHederaConnection";
 import { withServices } from "./hocs/withServices";
 
 import { BridgeModes } from "../values";
@@ -49,8 +50,7 @@ const Container = ({ children, serviceContainer, setContainer }) => {
 
       dispatch(setCheckWallet(checkWallet));
 
-      !query.includes("NEARTRX=true") &&
-        navigate(`/${network ? network + "/" : ""}${query || ""}`);
+      navigate(`/${network ? network + "/" : ""}${query || ""}`);
     })();
   }, []);
 
@@ -66,5 +66,6 @@ Container.propTypes = {
 export default compose(
   withServices,
   withNearConnection,
-  withEVMConnection
+  withEVMConnection,
+  withHederaConnection
 )(Container);

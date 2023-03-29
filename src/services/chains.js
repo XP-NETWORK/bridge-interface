@@ -32,7 +32,6 @@ class AbstractChain {
   }
 
   async setSigner(signer) {
-    console.log(signer, this.nonce);
     try {
       //if (!signer) throw new Error("no signer");
       this.signer = signer;
@@ -316,18 +315,20 @@ class AbstractChain {
   }
 
   handlerResult(res) {
+    console.log(res, "handlerResult");
     switch (true) {
       case typeof res === "string":
         return { hash: res };
-      case typeof res === "object":
-        return {
-          ...res,
-          hash: res.hash || res.transactionHash,
-        };
       case Array.isArray(res):
         return {
           ...res[0],
           hash: res[0].hash || res[0].transactionHash,
+        };
+
+      case typeof res === "object":
+        return {
+          ...res,
+          hash: res.hash || res.transactionHash,
         };
       default:
         return res;
@@ -614,7 +615,7 @@ class Near extends AbstractChain {
       return await this.chain.preTransfer(this.signer, nft, fees, params);
     } catch (e) {
       console.log(e, "in NEAR preTransfer");
-      await new Promise((r) => setTimeout(r, 10_000));
+      await new Promise((r) => setTimeout(r, 2_000));
       throw e;
     }
   }
@@ -627,22 +628,23 @@ class Near extends AbstractChain {
       );
       return await super.transfer(args);
     } catch (e) {
-      await new Promise((r) => setTimeout(r, 10_000));
+      await new Promise((r) => setTimeout(r, 2_000));
       throw e;
     }
   }
   async connect(wallet) {
     switch (wallet) {
       default:
-        return await this.chain.connectWallet();
+        return await this.chain.connectWallet(wallet);
     }
   }
 
   async getNFTs(address) {
-    //const nfts = await super.getNFTs(address);
-
+    const testnet = window.location.pathname.includes("testnet");
     const res = await axios.post(
-      `https://interop-mainnet.hasura.app/v1/graphql?rand=${Math.random()}`,
+      `https://interop-${
+        testnet ? "testnet" : "mainnet"
+      }.hasura.app/v1/graphql?rand=${Math.random()}`,
       {
         query: `
       query MyQuery {
@@ -657,6 +659,10 @@ class Near extends AbstractChain {
           token_id
           owner
           metadata_id
+          royalties
+          base_uri
+          copies
+          nft_contract_spec
         }
       }
       `,
@@ -689,6 +695,7 @@ class Near extends AbstractChain {
         image,
         media: image,
         native: data,
+        ...(nft.base_uri ? { uri: nft.base_uri + "/" + nft.token_id } : {}),
       };
     });
   }
@@ -800,6 +807,43 @@ class APTOS extends AbstractChain {
   }
 }
 
+class HEDERA extends AbstractChain {
+  htsToknen = "0x00000000000000000000000000000000003b22a5"; //"0x00000000000000000000000000000000003B5fF5";
+  hashConnect;
+
+  constructor(params) {
+    super(params);
+  }
+
+  async getClaimables() {
+    try {
+      this.chain.listHederaClaimableNFT(
+        this.chain.XpNft,
+        this.htsToknen,
+        this.signer
+      );
+    } catch (e) {
+      console.log(e, "e");
+    }
+  }
+
+  async assosiate() {
+    try {
+      await this.chain.assosiateToken(this.htsToknen, this.signer);
+    } catch (e) {
+      console.log(e, "im assosiate");
+    }
+  }
+
+  async claim(token) {
+    try {
+      await this.chain.claimNFT(token, this.htsToknen, this.signer);
+    } catch (e) {
+      console.log(e, "im claim");
+    }
+  }
+}
+
 export default {
   EVM,
   Elrond,
@@ -812,4 +856,5 @@ export default {
   TON,
   Solana,
   APTOS,
+  HEDERA,
 };

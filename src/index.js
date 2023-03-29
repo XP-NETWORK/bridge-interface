@@ -10,6 +10,7 @@ import "./components/Widget/Widget.css";
 import "./components/Settings/Settings.css";
 import "./Global.css";
 import "./Responsive.css";
+import "@near-wallet-selector/modal-ui/styles.css";
 import App from "./App";
 /**es */
 

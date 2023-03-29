@@ -7,7 +7,7 @@ export default function SelectedNFTs({ show, on }) {
 
 	return (
 		<div onClick={show} className="selected-nfts__button">
-			<span className="selected-nfts__title">{!on ? "Selected" : "Back"}</span>
+			<span className="selected-nfts__title">{!on ? "Selected NFTs" : "Selected NFTs"}</span>
 			{/* <span className="selected-nfts__selected">{`/ ${
                 selected ? selected.length : ""
             } `}</span> */}
