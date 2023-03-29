@@ -87,7 +87,7 @@ function ChainListBox({ serviceContainer }) {
         if (departureOrDestination === "departure") {
             handleGA4Event(
                 googleAnalyticsCategories.Chain,
-                `${chain} selected to departure`
+                `${chain.text} selected to departure`
             );
             if (
                 bridge.currentType === "EVM" &&
@@ -148,7 +148,7 @@ function ChainListBox({ serviceContainer }) {
         } else if (departureOrDestination === "destination") {
             handleGA4Event(
                 googleAnalyticsCategories.Chain,
-                `${chain} selected to destination`
+                `${chain.text} selected to destination`
             );
             if (from?.text === chain.text) {
                 if (to?.text === "Harmony" && bitKeep) {

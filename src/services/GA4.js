@@ -1,6 +1,12 @@
 import ReactGA from "react-ga4";
 
-ReactGA.initialize("G-TYDNW34NRR");
+const tagId = window.location.hostname.includes("temporary")
+    ? "G-28QX2ZF8PV"
+    : window.location.hostname.includes("staging")
+    ? "G-DWQH0ZR376"
+    : "G-28QX2ZF8PV";
+
+ReactGA.initialize(tagId);
 ReactGA.set({ appName: "CROSS-CHAIN NFT BRIDGE" });
 
 export const googleAnalyticsCategories = {
@@ -11,6 +17,7 @@ export const googleAnalyticsCategories = {
     Chain: "chain",
     Error: "error",
     UserInf: "userInf",
+    Button: "button",
 };
 
 export const handleGA4Event = (

@@ -146,12 +146,6 @@ class AbstractChain {
         try {
             const res = await this.chain.balance(account);
             const decimals = CHAIN_INFO.get(this.nonce)?.decimals;
-            handleGA4Event(
-                googleAnalyticsCategories.UserInf,
-                `Fetched balance. user: ${account} balance: ${res
-                    .dividedBy(decimals)
-                    .toNumber()}`
-            );
             return res.dividedBy(decimals).toNumber();
         } catch (e) {
             console.log(e, "error in balance");
@@ -301,7 +295,7 @@ class AbstractChain {
                 console.log(result, "res");
                 handleGA4Event(
                     googleAnalyticsCategories.Transfer,
-                    `${receiver} succeed transferring to: ${toChain}, nft: ${nft}, resp: ${result}`
+                    `${receiver} succeed transferring`
                 );
                 return { result, mintWith: mwToUI };
             }
@@ -309,7 +303,7 @@ class AbstractChain {
             console.log(e, "in transfer");
             handleGA4Event(
                 googleAnalyticsCategories.Error,
-                ` ${args.receiver} failed transferring to: ${args.toChain}, nft: ${args.nft} error: ${e}`
+                ` ${args.receiver} failed transferring.`
             );
             throw e;
         }
@@ -321,18 +315,12 @@ class AbstractChain {
         try {
             // console.log(this.signer, nft, fees);
             const res = await this.chain.preTransfer(this.signer, nft, fees);
-            handleGA4Event(
-                googleAnalyticsCategories.Approve,
-                `Approved: ${nft}, fees: ${fees}`
-            );
+            handleGA4Event(googleAnalyticsCategories.Approve, `Approved`);
             console.log(res, "approval res");
             return res;
         } catch (e) {
             console.log(e, "in preTransfer");
-            handleGA4Event(
-                googleAnalyticsCategories.Error,
-                `Failed approving: ${nft}`
-            );
+            handleGA4Event(googleAnalyticsCategories.Error, `Approve failed`);
             throw e;
         }
     }
