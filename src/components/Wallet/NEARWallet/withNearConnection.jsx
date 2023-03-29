@@ -70,7 +70,7 @@ export const withNearConnection = (Wrapped) =>
         const { bridge } = serviceContainer;
         (async () => {
           const nearParams = bridge.config.nearParams;
-
+          const url = window.location.href;
           const [_selector, chainWrapper] = await Promise.all([
             setupWalletSelector({
               network: window.location.pathname.includes("testnet")
@@ -79,12 +79,14 @@ export const withNearConnection = (Wrapped) =>
               debug: true,
               modules: [
                 setupNearWallet({
-                  //successUrl: window.location.href + "&nearWalletSelector=true",
-                  //failureUrl: window.location.href,
+                  //successUrl: url,
+                  //failureUrl: url,
                 }),
                 setupMyNearWallet({
-                  successUrl: window.location.href + "&mnw=true",
-                  failureUrl: window.location.href + "&mnw=true",
+                  successUrl:
+                    url +
+                    `${url.includes("?") ? "&" : "?"}selectedNearWallet=mnw`,
+                  failureUrl: url + `&selectedNearWallet=mnw`,
                 }),
                 setupHereWallet(),
                 setupMeteorWallet(),
@@ -138,7 +140,9 @@ export const withNearConnection = (Wrapped) =>
             Chain.NEAR
           );
 
-          const isMyNearWallet = window.location.search.includes("mnw=true");
+          const isMyNearWallet = window.location.search.includes(
+            "selectedNearWallet=mnw"
+          );
 
           const walletConnection = await chainWrapper?.connect(
             isMyNearWallet ? "https://app.mynearwallet.com/" : undefined

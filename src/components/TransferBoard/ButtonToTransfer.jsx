@@ -19,7 +19,7 @@ import { getFromDomain } from "../../services/resolution";
 import { withServices } from "../App/hocs/withServices";
 import { withWidget } from "../Widget/hocs/withWidget";
 import { notifyExplorer } from "../../services/explorer";
-
+import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 import { compose } from "redux";
 
 export default compose(
@@ -125,9 +125,17 @@ export default compose(
           targetAddress: unstoppabledomain || receiver,
         });
       }
+      handleGA4Event(
+        googleAnalyticsCategories.Transfer,
+        `${receiver} Success transfer`
+      );
     } catch (e) {
       console.log(e, "eee");
       dispatch(setError(e));
+      handleGA4Event(
+        googleAnalyticsCategories.Transfer,
+        `${receiver} Failed transfer`
+      );
     }
 
     setLoading(false);
@@ -135,6 +143,10 @@ export default compose(
   };
 
   const sendAllNFTs = async () => {
+    handleGA4Event(
+      googleAnalyticsCategories.Transfer,
+      `${receiver} trying to transfer ${selectedNFTList.length} nfts`
+    );
     if (!receiver) {
       dispatch(setPasteDestinationAlert(true));
     } else if (selectedNFTList.length < 1) {

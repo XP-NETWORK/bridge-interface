@@ -11,7 +11,8 @@ import { ReactComponent as INFComp } from "../../assets/img/icons/Inf.svg";
 
 import { chains } from "../values";
 import PropTypes from "prop-types";
-// import Tooltip from "../Modals/AccountModal/Tooltip";
+import Tooltip from "../Modals/AccountModal/Tooltip";
+import { StringShortener } from "../../wallet/helpers";
 
 function NFTdetails({ nftInf, details }) {
     const {
@@ -134,7 +135,12 @@ function NFTdetails({ nftInf, details }) {
                             </div>
                             <div className="nftToken nftInfBox">
                                 <label>Token ID</label>
-                                <p>{native?.tokenId}</p>
+                                <div className="token-id-inf">
+                                    <div className="id-copy">
+                                        {native?.tokenId}
+                                    </div>
+                                    <Tooltip text={native?.tokenId} />
+                                </div>
                             </div>
                             {original_uri && !isOriginUriExist && (
                                 <div className="nftInfDesc nftInfBox">
@@ -183,9 +189,15 @@ function NFTdetails({ nftInf, details }) {
                             )}
                             <div className="nftInfDesc nftInfBox">
                                 <label>Collection Identifier</label>
-
-                                <p>{nftInf.collectionIdent}</p>
-                                {/* <Tooltip text={nftInf.collectionIdent} /> */}
+                                <div className="coll-ident">
+                                    <p>
+                                        {StringShortener(
+                                            nftInf.collectionIdent,
+                                            10
+                                        )}
+                                    </p>
+                                    <Tooltip text={nftInf.collectionIdent} />
+                                </div>
                             </div>
                             {symbol && (
                                 <div className="nftInfDesc nftInfBox">

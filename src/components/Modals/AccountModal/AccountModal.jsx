@@ -67,6 +67,7 @@ export default function AccountModal() {
         <button
           onClick={async () => {
             const network = location.pathname.match(/(staging|testnet)/)?.at(0);
+
             window.safeLocalStorage?.removeItem("XP_MM_CONNECTED");
             window.safeLocalStorage?.removeItem("_wallet_auth_key");
             const w = await window.wallet_selector
