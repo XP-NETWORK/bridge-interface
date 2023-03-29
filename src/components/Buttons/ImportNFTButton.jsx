@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 import { setImportModal } from "../../store/reducers/generalSlice";
 import { ReactComponent as ImportNft } from "../../assets/img/icons/import.svg";
 
@@ -11,6 +12,7 @@ export default function ImportNFTButton() {
   const widget = useSelector((state) => state.widget.widget);
 
   const handleClick = () => {
+    handleGA4Event(googleAnalyticsCategories.Button, "Import NFT button");
     dispatch(setImportModal(true));
   };
   return (

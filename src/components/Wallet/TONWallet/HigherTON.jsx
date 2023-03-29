@@ -33,6 +33,10 @@ import { withServices } from "../../App/hocs/withServices";
 
 import { Chain } from "xp.network";
 import { getChainObject } from "../../../components/values";
+import {
+    googleAnalyticsCategories,
+    handleGA4Event,
+} from "../../../services/GA4";
 
 function HigherTON(OriginalComponent) {
     //
@@ -161,7 +165,10 @@ function HigherTON(OriginalComponent) {
             dispatch(setTonWallet(true));
             dispatch(setWalletsModal(false));
             dispatch(setQRCodeModal(false));
-
+            handleGA4Event(
+                googleAnalyticsCategories.Connect,
+                `Connected with: ${wallet}`
+            );
             if (!from) {
                 dispatch(setFrom(getChainObject(Chain.TON)));
             }

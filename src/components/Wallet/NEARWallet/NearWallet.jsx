@@ -8,6 +8,10 @@ import { withServices } from "../../App/hocs/withServices";
 
 import { Chain } from "xp.network";
 import { /*useDispatch,*/ useSelector } from "react-redux";
+import {
+  googleAnalyticsCategories,
+  handleGA4Event,
+} from "../../../services/GA4";
 /*import { setWalletsModal } from "../../../store/reducers/generalSlice";
 import { getRightPath } from "../../../wallet/helpers";
 import { useNavigate } from "react-router-dom";*/
@@ -36,6 +40,10 @@ function NearWallet({ serviceContainer }) {
         //successUrl: url,
         //failureUrl: window.location.href + "&failed=true",
       });
+      handleGA4Event(
+        googleAnalyticsCategories.Connect,
+        `Connected with: Near Wallet`
+      );
     } catch (e) {
       console.log(e, "e");
     }

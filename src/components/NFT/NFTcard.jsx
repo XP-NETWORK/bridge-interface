@@ -30,6 +30,7 @@ import { selected } from "./NFTHelper";
 
 import { WhitelistButton } from "./WhitelistButton";
 import SFTMark from "./SFTMark";
+import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 
 NFTcard.propTypes = {
     nft: PropTypes.object,
@@ -158,6 +159,10 @@ export default function NFTcard({
                 dispatch(setTransferLoaderModal(false));
                 clearInterval(interval);
             }, 80 * 1000);
+            handleGA4Event(
+                googleAnalyticsCategories.Whitelist,
+                `Whitelisted. Chain: ${from.text}`
+            );
         } catch (error) {
             dispatch(setWhitelistingLoader(false));
             dispatch(setTransferLoaderModal(false));
@@ -170,6 +175,10 @@ export default function NFTcard({
                 })
             );
             console.log(error.message);
+            handleGA4Event(
+                googleAnalyticsCategories.Whitelist,
+                `Whitelist failed. Chain: ${from.text}`
+            );
         }
     };
 

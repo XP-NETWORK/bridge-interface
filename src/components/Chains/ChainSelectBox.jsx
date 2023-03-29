@@ -12,6 +12,7 @@ import SetDeparture from "./SetDeparture";
 import SetDestination from "./SetDestination";
 import ChainListBox from "./ChainListBox";
 import { ReactComponent as SwapComp } from "../../assets/img/icons/swapChain.svg";
+
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 

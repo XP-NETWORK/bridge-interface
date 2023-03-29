@@ -9,6 +9,7 @@ import {
 
 import { getSearched } from "../../wallet/helpers";
 import { chains } from "../values";
+import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 
 export default function NFTSearch() {
     const dispatch = useDispatch();
@@ -27,16 +28,16 @@ export default function NFTSearch() {
     const from = useSelector((state) => state.general.from);
 
     const clear = () => {
-      setInput("");
-      setOpen(false);
-      dispatch(setSearchNFTList(""));
-      dispatch(setFilteredNFTSList(nfts));
+        setInput("");
+        setOpen(false);
+        dispatch(setSearchNFTList(""));
+        dispatch(setFilteredNFTSList(nfts));
     };
     useEffect(clear, [from]);
 
     const handleSearch = (e) => {
-      const search = e.target.value;
-      setInput(search);
+        const search = e.target.value;
+        setInput(search);
     };
 
     const handleKeyDown = async (e) => {
@@ -67,11 +68,7 @@ export default function NFTSearch() {
                         onChange={handleSearch}
                         value={searchInput}
                     />
-                    <div
-                        id="SearchDrop"
-                        className="CloseIcon"
-                        onClick={clear}
-                    >
+                    <div id="SearchDrop" className="CloseIcon" onClick={clear}>
                         <Close className="svgWidget " />
                     </div>
                 </div>
@@ -79,7 +76,13 @@ export default function NFTSearch() {
                 <div
                     id="SearchDrop"
                     className="SearchDrop"
-                    onClick={() => setOpen(true)}
+                    onClick={() => {
+                        handleGA4Event(
+                            googleAnalyticsCategories.Button,
+                            "Search Button"
+                        );
+                        setOpen(true);
+                    }}
                 >
                     <Search className="svgWidget " />
                 </div>

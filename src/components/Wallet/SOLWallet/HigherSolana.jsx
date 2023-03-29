@@ -19,6 +19,10 @@ import { onPhantom, onSolflare } from "./SoloanaConnectors";
 import { useNavigate } from "react-router-dom";
 import { getRightPath } from "../../../wallet/helpers";
 import { biz, chains } from "../../values";
+import {
+    googleAnalyticsCategories,
+    handleGA4Event,
+} from "../../../services/GA4";
 
 export default function HigherSolana(OriginalComponent) {
     const updatedComponent = withServices((props) => {
@@ -66,6 +70,10 @@ export default function HigherSolana(OriginalComponent) {
             close();
             dispatch(setFrom(solana));
             navigateToAccountRoute();
+            handleGA4Event(
+                googleAnalyticsCategories.Connect,
+                `Connected with: ${wallet}`
+            );
         };
 
         const getStyle = () => {

@@ -3,6 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Chain } from "xp.network";
 import {
+    googleAnalyticsCategories,
+    handleGA4Event,
+} from "../../../services/GA4";
+import {
     setAccount,
     setAlgorandAddresses,
     setAlgoSigner,
@@ -96,6 +100,10 @@ export default function HigherAlgorand(OriginalComponent) {
                     dispatch(setFrom(getChainObject(Chain.ALGORAND)));
                 }
             }
+            handleGA4Event(
+                googleAnalyticsCategories.Connect,
+                `Connected with: ${wallet}`
+            );
         };
 
         return (

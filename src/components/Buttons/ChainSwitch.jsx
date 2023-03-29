@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 import {
     setChainModal,
     setDepartureOrDestination,
@@ -19,11 +20,19 @@ export default function ChainSwitch({ assignment }) {
     function handleSwitchChain() {
         dispatch(setDepartureOrDestination("destination"));
         dispatch(setSwitchDestination(true));
+        handleGA4Event(
+            googleAnalyticsCategories.Chain,
+            `Switching destination from account route.`
+        );
     }
 
     const handleFromChainSwitch = () => {
         dispatch(setDepartureOrDestination("departure"));
         dispatch(setChainModal(true));
+        handleGA4Event(
+            googleAnalyticsCategories.Chain,
+            `Switching departure from account route.`
+        );
     };
 
     const show = () => {

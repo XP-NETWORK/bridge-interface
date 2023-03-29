@@ -4,7 +4,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { switchNetwork } from "../../../services/chains/evm/evmService";
-import ReactGA, {
+import {
     googleAnalyticsCategories,
     handleGA4Event,
 } from "../../../services/GA4";
@@ -54,10 +54,6 @@ export default function HigherEVM(OriginalComponent) {
         };
 
         const connectHandler = async (wallet) => {
-            ReactGA.event({
-                category: "Test",
-                action: "Click on EVM wallet button",
-            });
             let connected;
             switch (wallet) {
                 case "MetaMask":

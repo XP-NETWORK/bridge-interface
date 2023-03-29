@@ -25,6 +25,7 @@ import {
 } from "../store/reducers/generalSlice";
 import { biz } from "../components/values";
 import Network from "./Network";
+//import { googleAnalyticsCategories, handleGA4Event } from "../services/GA4";
 
 function NavBar() {
   const widget = useSelector((state) => state.widget.widget);
@@ -309,7 +310,14 @@ function NavBar() {
                                             href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"
                                             target="_blank"
                                         >
-                                            <div className="drop-item">
+                                            <div
+                                                onClick={() =>
+                                                    handleEventsForAnalytics(
+                                                        "Burger Help Center"
+                                                    )
+                                                }
+                                                className="drop-item"
+                                            >
                                                 <img src={message} alt="" />
                                                 <div className="drop-icon">
                                                     Help Center

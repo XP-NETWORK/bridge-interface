@@ -8,6 +8,7 @@ import BigNumber from "bignumber.js";
 
 import { ethers, BigNumber as BN } from "ethers";
 import xpchallenge from "./xpchallenge";
+
 const Xpchallenge = xpchallenge();
 const feeMultiplier = 1.1;
 
@@ -39,116 +40,6 @@ class AbstractChain {
     } catch (e) {
       console.log(e, "error in setSigner");
       throw e;
-    }
-  }
-
-  async getNFTs(address) {
-    try {
-      return await this.bridge.nftList(this.chain, address);
-    } catch (e) {
-      console.log(e, "e");
-      throw new Error("NFT-Indexer is temporarily under maintenance");
-    }
-  }
-
-  filterNFTs(nfts) {
-    const unique = {};
-    try {
-      const allNFTs = nfts.filter((n) => {
-        const { chainId, address } = n.native;
-        const tokenId = n.native.tokenId || n.native.token_id;
-        const contract = n.native.contract || n.native.contract_id;
-
-        if (
-          unique[
-            `${tokenId}_${contract?.toLowerCase() ||
-              address?.toLowerCase()}_${chainId}`
-          ]
-        ) {
-          return false;
-        } else {
-          unique[
-            `${tokenId}_${contract?.toLowerCase() ||
-              address?.toLowerCase()}_${chainId}`
-          ] = true;
-
-          return true;
-        }
-      });
-
-      return allNFTs;
-    } catch (err) {
-      return [];
-    }
-  }
-
-  async validateAddress(address) {
-    return true;
-  }
-
-  async preParse(nft) {
-    let uri = nft.uri;
-    const contract = nft.native?.contract || nft.collectionIdent;
-
-    if (!uri && this.chain.getTokenURI) {
-      uri = await this.chain.getTokenURI(contract, nft.native?.tokenId);
-    }
-
-    return {
-      ...nft,
-      uri,
-      collectionIdent: contract,
-      chainId: nft.native?.chainId,
-      tokenId: nft.native?.tokenId,
-      contract,
-    };
-  }
-
-  async unwrap(nft, data) {
-    let tokenId =
-      data.wrapped?.token_id ||
-      data.wrapped?.tokenId ||
-      data.wrapped?.item_address;
-
-    let contract = data.wrapped?.contract || data.wrapped?.source_mint_ident;
-
-    return {
-      nft: {
-        ...nft,
-        collectionIdent: contract,
-        uri: data.wrapped?.original_uri,
-        wrapped: data.wrapped,
-        native: {
-          ...nft.native,
-          chainId: data.wrapped?.origin,
-          contract,
-          tokenId,
-          uri: data.wrapped?.original_uri,
-        },
-      },
-      chainId: data.wrapped?.origin,
-      tokenId,
-      contract,
-    };
-  }
-
-  async mintNFT(uri) {
-    // console.log(this.signer);
-    const mint = await this.chain.mintNft(this.signer, {
-      contract: "0x34933A5958378e7141AA2305Cdb5cDf514896035",
-      uri,
-    });
-  }
-
-  async balance(account) {
-    try {
-      const res = await this.chain.balance(account);
-
-      const decimals = CHAIN_INFO.get(this.nonce)?.decimals;
-
-      return res.dividedBy(decimals).toNumber();
-    } catch (e) {
-      console.log(e, "error in balance");
     }
   }
 
@@ -297,6 +188,7 @@ class AbstractChain {
       }
     } catch (e) {
       console.log(e, "in transfer");
+
       throw e;
     }
   }
@@ -304,12 +196,14 @@ class AbstractChain {
   async preTransfer(nft, fees) {
     if (!this.signer) throw new Error("No signer for ", this.chainParams.text);
     try {
-      console.log(this.signer, nft, fees);
+      // console.log(this.signer, nft, fees);
       const res = await this.chain.preTransfer(this.signer, nft, fees);
+
       console.log(res, "approval res");
       return res;
     } catch (e) {
       console.log(e, "in preTransfer");
+
       throw e;
     }
   }
@@ -635,16 +529,15 @@ class Near extends AbstractChain {
   async connect(wallet) {
     switch (wallet) {
       default:
-        return await this.chain.connectWallet(wallet);
+        return await this.chain.connectWallet();
     }
   }
 
   async getNFTs(address) {
-    const testnet = window.location.pathname.includes("testnet");
+    //const nfts = await super.getNFTs(address);
+
     const res = await axios.post(
-      `https://interop-${
-        testnet ? "testnet" : "mainnet"
-      }.hasura.app/v1/graphql?rand=${Math.random()}`,
+      `https://interop-mainnet.hasura.app/v1/graphql?rand=${Math.random()}`,
       {
         query: `
       query MyQuery {

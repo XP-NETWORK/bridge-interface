@@ -23,6 +23,7 @@ import { ethers } from "ethers";
 import { inIframe } from "../Settings/helpers";
 
 import { getChainObject } from "../../components/values";
+import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 
 function VeChainWallet({ close, wallet, serviceContainer }) {
   const { bridge } = serviceContainer;
@@ -74,6 +75,7 @@ function VeChainWallet({ close, wallet, serviceContainer }) {
 
     const signer = await provider.getSigner(account.address);
     account.signer = signer;
+    handleGA4Event(googleAnalyticsCategories.Connect, `Connected with:`);
     return account;
   };
 

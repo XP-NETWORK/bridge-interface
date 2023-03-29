@@ -15,7 +15,7 @@ import { chains } from "../values";
 import Identicon from "./Identicon";
 import { setDepositWalletModal } from "../../store/reducers/discountSlice";
 import PropTypes from "prop-types";
-import ReactGA from "../../services/GA4";
+import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 
 export default function UserConnect({ mobile }) {
   const dispatch = useDispatch();
@@ -50,10 +50,7 @@ export default function UserConnect({ mobile }) {
     _account;
 
   const handleConnect = () => {
-    ReactGA.event({
-      category: "Test",
-      action: "Click on Connect Wallet button",
-    });
+    handleGA4Event(googleAnalyticsCategories.Button, "Connect");
     switch (location.pathname) {
       case "/discounts":
         if (!walletAccount) {

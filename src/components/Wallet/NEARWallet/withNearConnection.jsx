@@ -73,7 +73,9 @@ export const withNearConnection = (Wrapped) =>
 
           const [_selector, chainWrapper] = await Promise.all([
             setupWalletSelector({
-              network: "mainnet",
+              network: window.location.pathname.includes("testnet")
+                ? "testnet"
+                : "mainnet",
               debug: true,
               modules: [
                 setupNearWallet({
