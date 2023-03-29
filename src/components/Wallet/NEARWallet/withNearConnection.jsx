@@ -25,7 +25,7 @@ import { getRightPath } from "../../../wallet/helpers";
 import { setupWalletSelector } from "@near-wallet-selector/core";
 //import { setupNightly } from "@near-wallet-selector/nightly";
 import { setupNearWallet } from "@near-wallet-selector/near-wallet";
-//import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
+import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
 import { setupModal } from "@near-wallet-selector/modal-ui";
 import { setupHereWallet } from "@near-wallet-selector/here-wallet";
 import { setupMeteorWallet } from "@near-wallet-selector/meteor-wallet";
@@ -72,19 +72,21 @@ export const withNearConnection = (Wrapped) =>
         const { bridge } = serviceContainer;
         (async () => {
           const nearParams = bridge.config.nearParams;
-          const successUrl = `${location.protocol}/${location.host}/${network ??
-            ""}/connect?nearFlow=true`;
+          const url = `${location.protocol}/${location.host}/${network ??
+            ""}/connect?nearWalletSelector=true`;
           const [_selector, chainWrapper] = await Promise.all([
             setupWalletSelector({
               network: "mainnet",
               debug: true,
               modules: [
                 setupNearWallet({
-                  successUrl,
+                  successUrl: url,
+                  failureUrl: url,
                 }),
-                /*setupMyNearWallet({
-                  successUrl,
-                }),*/
+                setupMyNearWallet({
+                  successUrl: url + `&MyNearWallet=true`,
+                  failureUrl: url + `&MyNearWallet=true`,
+                }),
                 setupHereWallet(),
                 setupMeteorWallet(),
                 setupSender(),
@@ -136,16 +138,20 @@ export const withNearConnection = (Wrapped) =>
           const chainWrapper = await serviceContainer?.bridge?.getChain(
             Chain.NEAR
           );
-          /*const lastSignedWallet = localStorage.getItem(
-            "near-wallet-selector:recentlySignedInWallets"
-          );
-          console.log(lastSignedWallet, "lastSignedWallet");*/
-          const walletConnection = await chainWrapper?.connect();
-          /*if (!window.safeLocalStorage?.getItem("_wallet_auth_key"))
-            await new Promise((r) => setTimeout(r, 1500));*/
 
-          //"https://app.mynearwallet.com/"
-          const address = walletConnection.getAccountId();
+          const isMyNearWallet = window.location.search.includes(
+            "&MyNearWallet=true"
+          );
+          const walletConnection = await chainWrapper?.connect(
+            isMyNearWallet ? "https://app.mynearwallet.com/" : undefined
+          );
+
+          let address = walletConnection.getAccountId();
+          //race condition alert
+          if (!address) {
+            await new Promise((r) => setTimeout(r, 1000));
+            address = walletConnection.getAccountId();
+          }
           const signer = walletConnection.account();
           console.log(walletConnection, "walletConnection", address, signer);
           if (address && signer) {
