@@ -119,6 +119,12 @@ function ConnectWallet() {
     function handleAboutClick() {
         dispatch(setShowAbout(true));
     }
+
+    const handleChange = (e) => {
+      if (!(e.nativeEvent.data === " " && walletSearch.length === 0)) {
+        setWalletSearch(e.target.value);
+      }
+    };
     function handleVideoClick() {
         dispatch(setShowVideo(true));
     }
@@ -185,7 +191,7 @@ function ConnectWallet() {
                 <div className="wallet-search__container">
                     <input
                         ref={inputElement}
-                        onChange={(e) => setWalletSearch(e.target.value)}
+                        onChange={handleChange}
                         value={walletSearch}
                         className="wallet-search serchInput"
                         type="text"
