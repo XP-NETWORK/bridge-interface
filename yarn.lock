@@ -3402,14 +3402,6 @@
     "@near-wallet-selector/wallet-utils" "7.9.2"
     is-mobile "^3.1.1"
 
-"@near-wallet-selector/opto-wallet@^7.9.2":
-  version "7.9.2"
-  resolved "https://registry.yarnpkg.com/@near-wallet-selector/opto-wallet/-/opto-wallet-7.9.2.tgz#92765f6c28edf90cca50453baa9ac2eaeb95d103"
-  integrity sha512-BVPmqskbNtEle5mywGmPenxYTEs+itI0jgx6yXw8gaGPHV6LOT+gXdUwzh4iTuDygcZaSA+sjlquNEtNpXAOTg==
-  dependencies:
-    "@near-wallet-selector/core" "7.9.2"
-    "@near-wallet-selector/wallet-utils" "7.9.2"
-
 "@near-wallet-selector/sender@^7.9.2":
   version "7.9.2"
   resolved "https://registry.yarnpkg.com/@near-wallet-selector/sender/-/sender-7.9.2.tgz#422ebf68012406f85a1fd99310f608ae5a58636a"

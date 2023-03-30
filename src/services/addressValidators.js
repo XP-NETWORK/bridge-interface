@@ -4,7 +4,7 @@ import * as algo from "algosdk";
 import { ethers } from "ethers";
 import TonWeb from "tonweb";
 import * as erdjs from "@elrondnetwork/erdjs";
-
+import {bech32} from 'bech32'
 import { PublicKey } from "@solana/web3.js";
 
 const addressValidateTon = (address) => {
@@ -15,10 +15,6 @@ const addressValidateTon = (address) => {
 const addressValidateEVM = (address) => {
   return ethers.utils.isAddress(address);
 };
-
-// const addressValidateCardano = (address) => {
-//   return ByronAddress.from_bytes(address) ? true : false;
-// };
 
 const addressValidateElrd = (address) => {
   if (address === "") return false;
@@ -33,20 +29,6 @@ const addressValidateElrd = (address) => {
 };
 
 const addressValidateTron = (address) => {
-  // try {
-  //     let isValid = false;
-  //     TronWeb.address.toHex(address);
-
-  //     /**
-  //      * Tron address can either be base58 OR Hexadecimal strings
-  //      */
-  //     if (/^[A-HJ-NP-Za-km-z1-9]*$/.test(address)) isValid = true; // is base58
-  //     if (/^[a-fA-F0-9]+$/.test(address)) isValid = true; // is hex
-  //     console.log({ isValid });
-  //     return isValid;
-  // } catch (error) {
-  //     return false;
-  // }
 
   if (typeof address !== "string") {
     return false;
@@ -159,8 +141,13 @@ export const inputFilter = (e) => {
 };
 
 const addressValidateCosmos = (address) => {
-  const regex = /^secret1[0-9a-z]{38}$/;
-  return regex.test(address);
+  try {
+    bech32.decode(address)
+  } catch (error) {
+    console.log('COSMOS(Secret) Address validation error: ',error)
+    return false
+  }
+  return true
 };
 
 export const validateFunctions = {

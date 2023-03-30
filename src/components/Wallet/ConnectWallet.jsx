@@ -126,6 +126,12 @@ function ConnectWallet() {
     handleGA4Event(googleAnalyticsCategories.Content, "About text.");
     dispatch(setShowAbout(true));
   }
+
+  const handleChange = (e) => {
+    if (!(e.nativeEvent.data === " " && walletSearch.length === 0)) {
+      setWalletSearch(e.target.value);
+    }
+  };
   function handleVideoClick() {
     handleGA4Event(googleAnalyticsCategories.Content, "About video.");
     dispatch(setShowVideo(true));
@@ -194,7 +200,7 @@ function ConnectWallet() {
         <div className="wallet-search__container">
           <input
             ref={inputElement}
-            onChange={(e) => setWalletSearch(e.target.value)}
+            onChange={handleChange}
             value={walletSearch}
             className="wallet-search serchInput"
             type="text"

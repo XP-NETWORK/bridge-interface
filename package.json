@@ -16,7 +16,6 @@
     "@near-wallet-selector/math-wallet": "^7.9.2",
     "@near-wallet-selector/modal-ui": "^7.9.2",
     "@near-wallet-selector/nightly": "^7.9.2",
-    "@near-wallet-selector/opto-wallet": "^7.9.2",
     "@near-wallet-selector/sender": "^7.9.2",
     "@perawallet/connect": "^1.2.1",
     "@randlabs/myalgo-connect": "^1.1.1",

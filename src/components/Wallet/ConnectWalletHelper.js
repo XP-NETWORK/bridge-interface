@@ -37,6 +37,7 @@ import { inIframe } from "../Settings/helpers";
 
 // import AuthClient from "@walletconnect/auth-client";
 import { MainNetRpcUri, TestNetRpcUri } from "xp.network";
+import { switchNetwork } from "../../services/chains/evm/evmService";
 
 export const wallets = [
   "MetaMask",
@@ -140,7 +141,13 @@ export const connectBitKeep = async (from) => {
   }
 };
 
-export const connectMetaMask = async (activate) => {
+export const connectMetaMask = async (
+  activate,
+  from,
+  to,
+  chainId,
+  navigate
+) => {
   const mobile = window.innerWidth <= 600;
   try {
     if (!window.ethereum && mobile) {
@@ -175,6 +182,16 @@ export const connectMetaMask = async (activate) => {
           },
         ],
       });
+
+    if (to) {
+      if (
+        window.ethereum?.chainId ||
+        chainId !== `0x${from?.chainId.toString(16)}`
+      ) {
+        const switched = await switchNetwork(from);
+        if (switched) navigate();
+      } else navigate();
+    }
 
     await activate(injected);
     !mobile && window.safeLocalStorage?.setItem("XP_MM_CONNECTED", "true");

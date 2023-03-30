@@ -3,7 +3,6 @@ import { useWeb3React } from "@web3-react/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { switchNetwork } from "../../../services/chains/evm/evmService";
 import {
     googleAnalyticsCategories,
     handleGA4Event,
@@ -57,20 +56,11 @@ export default function HigherEVM(OriginalComponent) {
             let connected;
             switch (wallet) {
                 case "MetaMask":
-                    connected = await connectMetaMask(activate, from, to);
+                    connected = await connectMetaMask(activate, from, to, chainId, navigateToAccountRoute);
                     if (connected) {
                         dispatch(setMetaMask(true));
                         dispatch(setConnectedWallet("MetaMask"));
                         if (temporaryFrom) dispatch(setFrom(temporaryFrom));
-                        if (to) {
-                            if (
-                                window.ethereum?.chainId ||
-                                chainId !== `0x${from?.chainId.toString(16)}`
-                            ) {
-                                const switched = await switchNetwork(from);
-                                if (switched) navigateToAccountRoute();
-                            } else navigateToAccountRoute();
-                        }
                     }
                     break;
                 case "TrustWallet":
