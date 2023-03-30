@@ -14,10 +14,10 @@ import { setSigner } from "../../store/reducers/signersSlice";
 import { chains } from "../values";
 import Identicon from "./Identicon";
 import { setDepositWalletModal } from "../../store/reducers/discountSlice";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 
-export default function UserConnect({ mobile }) {
+export default function UserConnect() {
   const dispatch = useDispatch();
   const to = useSelector((state) => state.general.to);
   const elrondAccount = useSelector((state) => state.general.elrondAccount);
@@ -169,7 +169,7 @@ export default function UserConnect({ mobile }) {
       onClick={handleConnect}
       className={`${
         walletAccount ? "navbar-connect connected" : "navbar-connect"
-      } ${mobile ? "xmobile_only" : "xdesktop_only"}`}
+      } `}
     >
       {walletAccount ? getAccountString() : "Connect Wallet"}
       {walletAccount && <Identicon account={walletAccount} />}
@@ -177,6 +177,6 @@ export default function UserConnect({ mobile }) {
   );
 }
 UserConnect.propTypes = {
-  desktop: PropTypes.bool,
-  mobile: PropTypes.bool,
+  //desktop: PropTypes.bool,
+  //mobile: PropTypes.bool,
 };
