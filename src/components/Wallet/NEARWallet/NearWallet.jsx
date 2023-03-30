@@ -35,12 +35,12 @@ function NearWallet({ serviceContainer }) {
 
       const nearWalletConnection = await chain?.connect();
 
-      //const network = location.pathname.match(/(staging|testnet)/)?.at(0) || "";
-      //const url = `${location.protocol}//${location.host}/${network}/connect${window.location.search}`;
+      //const network = location.pathname.match(/(staging|testnet)/)?.at(0);
+      //const successUrl = `${location.protocol}//${location.host}/${network}/connect?nearFlow=true`;
+
       nearWalletConnection.requestSignIn({
         contractId: nearParams.bridge,
-        //successUrl: url,
-        //failureUrl: window.location.href + "&failed=true",
+        //successUrl,
       });
       handleGA4Event(
         googleAnalyticsCategories.Connect,
@@ -59,9 +59,9 @@ function NearWallet({ serviceContainer }) {
     // eslint-disable-next-line no-debugger
     // debugger;
     const OFF = { pointerEvents: "none", opacity: "0.6" };
+    if (lock) return OFF;
     //const NONE = { display: "none" };
     //if (!testNet) return NONE;
-    if (lock) return OFF;
     if (!from) return {};
     else if (from && from?.type !== "NEAR") return OFF;
     // return {};
