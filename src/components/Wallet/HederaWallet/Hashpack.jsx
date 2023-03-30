@@ -22,8 +22,6 @@ function Hashpack({ connect }) {
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
   const from = useSelector((state) => state.general.from);
-
-  console.log(loading)
   let hashConnect = new HashConnect(true);
   // let provider;
   // let signer;
