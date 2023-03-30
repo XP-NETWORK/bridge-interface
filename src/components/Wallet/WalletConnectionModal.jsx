@@ -32,6 +32,12 @@ export default function WalletConnectionModal() {
     }
   };
 
+  const handleChange = (e) => {
+    if (!(e.nativeEvent.data === " " && walletSearch.length === 0)) {
+      setWalletSearch(e.target.value);
+    }
+  };
+
   useEffect(() => {
     inputElement?.current?.focus();
   }, []);
@@ -49,7 +55,7 @@ export default function WalletConnectionModal() {
       <div className="wallet-search__container">
         <input
           ref={inputElement}
-          onChange={(e) => setWalletSearch(e.target.value)}
+          onChange={handleChange}
           value={walletSearch}
           className="wallet-search serchInput"
           type="text"

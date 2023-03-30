@@ -34,6 +34,7 @@ import Web3 from "web3";
 import { setSigner } from "../../store/reducers/signersSlice";
 
 import { MainNetRpcUri, TestNetRpcUri } from "xp.network";
+import { switchNetwork } from "../../services/chains/evm/evmService";
 
 export const wallets = [
   "MetaMask",
@@ -137,7 +138,7 @@ export const connectBitKeep = async (from) => {
   }
 };
 
-export const connectMetaMask = async (activate, from, to) => {
+export const connectMetaMask = async (activate, from, to, chainId, navigate) => {
   const mobile = window.innerWidth <= 600;
   try {
     if (!window.ethereum && mobile) {
@@ -154,6 +155,16 @@ export const connectMetaMask = async (activate, from, to) => {
           },
         ],
       });
+
+    if (to) {
+      if (
+        window.ethereum?.chainId ||
+        chainId !== `0x${from?.chainId.toString(16)}`
+      ) {
+        const switched = await switchNetwork(from);
+        if (switched) navigate();
+      } else navigate();
+    }
 
     await activate(injected);
     !mobile && window.safeLocalStorage?.setItem("XP_MM_CONNECTED", "true");

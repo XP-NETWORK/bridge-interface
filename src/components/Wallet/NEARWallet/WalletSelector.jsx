@@ -6,6 +6,8 @@ import near from "../../../assets/img/wallet/NearWallet.svg";
 
 import { withServices } from "../../App/hocs/withServices";
 
+import { useSelector } from "react-redux";
+
 //import /*useDispatch, useSelector*/ "react-redux";
 
 function WalletSelector({ close }) {
@@ -14,19 +16,33 @@ function WalletSelector({ close }) {
 
   //const { from } = useSelector((state) => state.general);
 
+  const OFF = { opacity: 0.6, pointerEvents: "none" };
+  const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
+  const from = useSelector((state) => state.general.from);
+
   const connectHandler = async () => {
     close();
     window.wallet_selector_modal?.show();
   };
+
 
   /**
    *
    * return bridge teach label resource cruel filter benefit region host chronic mountain
    */
 
+  const getStyle = () => {
+    if (temporaryFrom?.type === "NEAR") {
+        return {};
+    } else if (temporaryFrom && temporaryFrom?.type !== "NEAR") {
+        return OFF;
+    } else if (from && from?.text !== "NEAR") return OFF;
+    else return {};
+};
+
   return (
     <li
-      //style={getStyles()}
+      style={getStyle()}
       onClick={connectHandler}
       className="wllListItem"
       data-wallet="WalletSelector"

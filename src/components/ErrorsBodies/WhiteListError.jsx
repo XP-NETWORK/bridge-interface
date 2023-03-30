@@ -22,7 +22,7 @@ export default function WhiteListError() {
                     href="https://docs.xp.network/docs/Multibridge3.0/limitations"
                 >
                     {` here`}
-                </a>
+                </a>.
             </div>
             <div className="message">
                 If the smart contract meets the requirements, but the problem
@@ -33,7 +33,7 @@ export default function WhiteListError() {
                     href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"
                 >
                     {` here`}
-                </a>
+                </a>.
             </div>
         </div>
     );

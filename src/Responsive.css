@@ -45,6 +45,13 @@
     padding-bottom: 24px;
   }
 }
+
+@media only screen and (width: 912px) and (height: 1368px) and (orientation:portrait) {
+  .container {
+    max-width: 95%!important;
+}
+}
+
 @media only screen and (max-width: 860px) {
   .mobileOnly.seleNftMob {
     display: flex;
@@ -190,7 +197,7 @@
   }
 
   .container {
-    max-width: 100%;
+    max-width: 95%;
   }
 
   .priPoli a {
