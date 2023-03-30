@@ -45,7 +45,7 @@ export const availability = {
   Secret: ["Keplr"],
   TON: ["TonWallet", "TonHub", "TonKeeper"],
   APTOS: ["Petra"],
-  NEAR: ["NearWallet", "WalletSelector"],
+  NEAR: ["WalletSelector"],
 };
 
 export const wallets = [
@@ -65,7 +65,7 @@ export const wallets = [
   "TonWallet",
   "TonHub",
   "TonKeeper",
-  ...(biz ? ["NearWallet", "WalletSelector"] : []),
+  ...(biz ? ["WalletSelector"] : []),
   ...(biz ? ["Keplr"] : []),
 
   //...(biz ? ["Sync2"] : []),

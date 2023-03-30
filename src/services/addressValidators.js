@@ -4,7 +4,6 @@ import * as algo from "algosdk";
 import { ethers } from "ethers";
 import TonWeb from "tonweb";
 import * as erdjs from "@elrondnetwork/erdjs";
-import {bech32} from 'bech32'
 import { PublicKey } from "@solana/web3.js";
 
 const addressValidateTon = (address) => {
@@ -29,7 +28,6 @@ const addressValidateElrd = (address) => {
 };
 
 const addressValidateTron = (address) => {
-
   if (typeof address !== "string") {
     return false;
   }
@@ -49,34 +47,6 @@ const addressValidateTron = (address) => {
 
   return true;
 };
-
-// function isMultiversxElrondAddress(address) {
-//     if (typeof address !== 'string') {
-//       return false;
-//     }
-
-//     if (!address.startsWith('erd')) {
-//       return false;
-//     }
-
-//     if (address.length !== 62) {
-//       return false;
-//     }
-
-//     const bech32Regex = /^[a-z0-9]+$/i;
-//     const bech32Data = bech32.decode(address.substring(3));
-//     if (!bech32Data || !bech32Data.words || !bech32Data.words.length) {
-//       return false;
-//     }
-
-//     for (let i = 0; i < bech32Data.words.length; i++) {
-//       if (!bech32Regex.test(bech32Data.words[i])) {
-//         return false;
-//       }
-//     }
-
-//     return true;
-//   }
 
 const addressValidateNear = () => {
   // NEAR wallet address are simple base64 strings containing lowercase and numeric characters only
@@ -131,6 +101,19 @@ export const generalValidation = (e, receiver) => {
     }
   }
 
+  if (e.nativeEvent.inputType !== "deleteContentBackward") {
+    if (
+      /^[ A-Za-z/]*$/.test() &&
+      receiver.length >= 3 &&
+      receiver.charAt(receiver.length - 1) ===
+        receiver.charAt(receiver.length - 2) &&
+      receiver.charAt(receiver.length - 1) ===
+        receiver.charAt(receiver.length - 3)
+    ) {
+      isValid = false;
+    }
+  }
+
   console.log(isValid);
 
   return isValid;
@@ -141,13 +124,8 @@ export const inputFilter = (e) => {
 };
 
 const addressValidateCosmos = (address) => {
-  try {
-    bech32.decode(address)
-  } catch (error) {
-    console.log('COSMOS(Secret) Address validation error: ',error)
-    return false
-  }
-  return true
+  const regex = /^secret1[0-9a-z]{38}$/;
+  return regex.test(address);
 };
 
 export const validateFunctions = {

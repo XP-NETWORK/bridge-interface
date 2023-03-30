@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import PropTypes from "prop-types";
 
@@ -21,6 +21,7 @@ function NearWallet({ serviceContainer }) {
   //const dispatch = useDispatch();
   // const navigate = useNavigate();
   const { from } = useSelector((state) => state.general);
+  const [lock, setLock] = useState(false);
 
   // const navigateToAccountRoute = () => {
   //  if (from && to) navigate(getRightPath());
@@ -28,6 +29,7 @@ function NearWallet({ serviceContainer }) {
 
   const connectHandler = async () => {
     try {
+      setLock(true);
       const chain = await serviceContainer?.bridge?.getChain(Chain.NEAR);
       const nearParams = serviceContainer?.bridge?.config?.nearParams;
 
@@ -45,6 +47,7 @@ function NearWallet({ serviceContainer }) {
         `Connected with: Near Wallet`
       );
     } catch (e) {
+      setLock(false);
       console.log(e, "e");
     }
     // dispatch(setWalletsModal(false));
@@ -58,6 +61,7 @@ function NearWallet({ serviceContainer }) {
     const OFF = { pointerEvents: "none", opacity: "0.6" };
     //const NONE = { display: "none" };
     //if (!testNet) return NONE;
+    if (lock) return OFF;
     if (!from) return {};
     else if (from && from?.type !== "NEAR") return OFF;
     // return {};

@@ -50,12 +50,9 @@ export const wnft = [
 export const wnftPattern =
   "(wnfts.xp.network|nft.xp.network|staging-nft.xp.network|bridge-wnftapi)";
 
-export const biz =
-  window.location.hostname.includes("localhost") ||
-  window.location.hostname.includes("staging") ||
-  window.location.hostname.includes("development") ||
-  window.location.hostname.includes("temporary") ||
-  window.location.hostname.includes("10.0.0");
+export const biz = /(localhost|dev|staging|10\.0\.0)/.test(
+  window.location.hostname
+);
 
 export const BridgeModes = {
   Staging: "staging",
