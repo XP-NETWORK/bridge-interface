@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setDepartureOrDestination,
@@ -14,6 +14,7 @@ import {
   generalValidation,
   inputFilter,
   validateFunctions,
+  maxChainAddressLengths
 } from "../../services/addressValidators";
 
 // import * as near from 'near-sdk-js'
@@ -24,6 +25,7 @@ export default function MobileDestinationAddressBar() {
   const to = useSelector((state) => state.general.to);
   let receiver = useSelector((state) => state.general.receiver);
   const isInvalid = useSelector((state) => state.general.isInvalid);
+  let [maxLength, setMaxLength] = useState(0);
 
   const handleChange = (e) => {
     try {
@@ -53,6 +55,7 @@ export default function MobileDestinationAddressBar() {
   useEffect(() => {
     dispatch(setReceiver(""));
     dispatch(setIsInvalidAddress(true));
+    setMaxLength(maxChainAddressLengths[to.type]);
   }, [to]);
 
   useEffect(() => {
@@ -80,6 +83,7 @@ export default function MobileDestinationAddressBar() {
           value={receiver}
           onChange={(e) => handleChange(e)}
           type="text"
+          maxLength={maxLength}
           placeholder="Paste destination address"
           className={isInvalid ? "reciverAddress" : "reciverAddress invalid"}
         />
