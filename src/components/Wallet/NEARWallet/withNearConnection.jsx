@@ -24,12 +24,15 @@ import { getRightPath } from "../../../wallet/helpers";
 
 import { setupWalletSelector } from "@near-wallet-selector/core";
 
-import { setupNearWallet } from "@near-wallet-selector/near-wallet";
-import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
+//import { setupNearWallet } from "@near-wallet-selector/near-wallet";
+//import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
 import { setupModal } from "@near-wallet-selector/modal-ui";
 import { setupHereWallet } from "@near-wallet-selector/here-wallet";
-import { setupMeteorWallet } from "@near-wallet-selector/meteor-wallet";
+
 import { setupSender } from "@near-wallet-selector/sender";
+
+import { setupMathWallet } from "@near-wallet-selector/math-wallet";
+import { setupNightly } from "@near-wallet-selector/nightly";
 import { distinctUntilChanged, map } from "rxjs";
 import { adaptToWalletSelector } from "./utils";
 
@@ -70,7 +73,7 @@ export const withNearConnection = (Wrapped) =>
         const { bridge } = serviceContainer;
         (async () => {
           const nearParams = bridge.config.nearParams;
-          const url = window.location.href;
+          //const url = window.location.href;
           const [_selector, chainWrapper] = await Promise.all([
             setupWalletSelector({
               network: window.location.pathname.includes("testnet")
@@ -78,7 +81,7 @@ export const withNearConnection = (Wrapped) =>
                 : "mainnet",
               debug: true,
               modules: [
-                setupNearWallet({
+                /* setupNearWallet({
                   //successUrl: url,
                   //failureUrl: url,
                 }),
@@ -87,10 +90,11 @@ export const withNearConnection = (Wrapped) =>
                     url +
                     `${url.includes("?") ? "&" : "?"}selectedNearWallet=mnw`,
                   failureUrl: url + `&selectedNearWallet=mnw`,
-                }),
+                }),*/
                 setupHereWallet(),
-                setupMeteorWallet(),
                 setupSender(),
+                setupMathWallet(),
+                setupNightly(),
               ],
             }),
             bridge.getChain(Chain.NEAR),
@@ -122,7 +126,10 @@ export const withNearConnection = (Wrapped) =>
                   nextAccounts[0].accountId,
                   bridge,
                   chainWrapper,
-                  adaptToWalletSelector(wallet)
+                  adaptToWalletSelector(
+                    wallet,
+                    chainWrapper.chain.getProvider()
+                  )
                 );
               }
             });
