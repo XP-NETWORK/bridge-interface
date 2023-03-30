@@ -50,10 +50,12 @@ export default function AccountModal() {
       {/* <CopyToClipboard text={account}> */}
       <div onClick={copyTextToClipboard} className="account-modal__account">
         <img src={NftSelect} alt="#" />
-        {account &&
+        {
+          account.length > 12 ? account &&
           `${account.substring(0, 10)}...${account.substring(
             account.length - 2
-          )}`}
+          )}` : account
+        }
         <Tooltip />
       </div>
       {/* </CopyToClipboard> */}
