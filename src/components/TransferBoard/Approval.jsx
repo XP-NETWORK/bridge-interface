@@ -14,6 +14,7 @@ import {
 import { errorToLog, isALLNFTsApproved } from "../../wallet/helpers";
 
 import { withServices } from "../../components/App/hocs/withServices";
+import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 
 function Approval({ serviceContainer }) {
     const { bridge } = serviceContainer;
@@ -58,11 +59,16 @@ function Approval({ serviceContainer }) {
                 dispatch(updateApprovedNFTs(nft));
                 setFinishedApproving(arr);
             }
+            handleGA4Event(
+                googleAnalyticsCategories.Approve,
+                `Approve success`
+            );
         } catch (e) {
             dispatch(setApproveLoader(false));
             setApprovedLoading(false);
             setFinishedApproving(arr);
             dispatch(setError(e));
+            handleGA4Event(googleAnalyticsCategories.Approve, `Approve failed`);
             errorToLog({
                 type: "Approve",
                 walletAddress: account,
@@ -80,6 +86,10 @@ function Approval({ serviceContainer }) {
             dispatch(setApproveLoader(true));
             setApprovedLoading(true);
             setFinishedApproving([]);
+            handleGA4Event(
+                googleAnalyticsCategories.Approve,
+                `Approving ${selectedNFTList.length}`
+            );
             selectedNFTList.forEach((nft, index) => {
                 approveEach(nft, index);
             });

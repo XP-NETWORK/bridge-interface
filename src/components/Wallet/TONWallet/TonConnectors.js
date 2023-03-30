@@ -5,13 +5,14 @@ import { setQRCodeModal, setTonKeeperSession } from "./tonStore";
 
 import axios from "axios";
 import { setWalletsModal } from "../../../store/reducers/generalSlice";
+import { tonAuth } from "../../values";
 
 var connector;
 
 export const connectTonKeeper = async (userId) => {
   // eslint-disable-next-line no-debugger
   const api = axios.create({
-    baseURL: "https://tonkeeper.xp.network",
+    baseURL: `https://${tonAuth}`,
   });
 
   store.dispatch(setTonKeeperSession({ userId, message: "Connect TonKeeper" }));

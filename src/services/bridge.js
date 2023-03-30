@@ -77,7 +77,7 @@ class Bridge {
   async isWhitelisted(nonce, nft) {
     try {
       const chainWrapper = await this.getChain(Number(nonce));
-      const { chain } = chainWrapper;
+      const { chain, signer } = chainWrapper;
 
       const isWNFT = this.isWrapped(nft.uri);
 
@@ -103,7 +103,7 @@ class Bridge {
 
       if (isWNFT || !chain.isNftWhitelisted) return true;
       //return await chain.isNftWhitelisted(nft);
-      const x = await chain.isNftWhitelisted(nft);
+      const x = await chain.isNftWhitelisted(nft, signer);
       return x;
     } catch (e) {
       console.log(e, "in isWhitelisted");
@@ -113,6 +113,7 @@ class Bridge {
 
   async getChain(nonce, params = {}) {
     // eslint-disable-next-line no-debugger
+    // debugger;
     const chainParams = CHAIN_INFO.get(nonce);
     const chainId = String(nonce);
     const chain = this.chains[chainId];
@@ -158,6 +159,9 @@ class Bridge {
           return this.chains[chainId];
         case ChainType.APTOS:
           this.chains[chainId] = new ChainInterface.APTOS(params);
+          return this.chains[chainId];
+        case ChainType.HEDERA:
+          this.chains[chainId] = new ChainInterface.HEDERA(params);
           return this.chains[chainId];
         default:
           throw new Error("unsuported chain");

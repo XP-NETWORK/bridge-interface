@@ -108,31 +108,32 @@ const charMatch = (e, str, char) => {
 };
 
 export const generalValidation = (e, receiver) => {
-    let isValid = true;
-    //cannot contain consecutive special characters
+  let isValid = true;
+  //cannot contain consecutive special characters
+  if (
+    charMatch(e, receiver, ".") ||
+    charMatch(e, receiver, "$") ||
+    charMatch(e, receiver, "&")
+  ) {
+    isValid = false;
+  }
+
+  if (e.nativeEvent.inputType !== "deleteContentBackward") {
     if (
-        charMatch(e, receiver, ".") ||
-        charMatch(e, receiver, "$") ||
-        charMatch(e, receiver, "&")
+      /^[ A-Za-z/]*$/.test() &&
+      receiver.length >= 3 &&
+      receiver.charAt(receiver.length - 1) ===
+        receiver.charAt(receiver.length - 2) &&
+      receiver.charAt(receiver.length - 1) ===
+        receiver.charAt(receiver.length - 3)
     ) {
-        isValid = false;
+      isValid = false;
     }
+  }
 
-    if(e.nativeEvent.inputType !== "deleteContentBackward"){
-      
-        if(
-            /^[ A-Za-z/]*$/.test() && 
-            receiver.length >=3 && 
-            (receiver.charAt(receiver.length-1) === receiver.charAt(receiver.length-2)) && (receiver.charAt(receiver.length-1) === receiver.charAt(receiver.length-3))){
-            isValid = false;
+  console.log(isValid);
 
-            
-        }
-    }
-
-    console.log(isValid)
-
-    return isValid;
+  return isValid;
 };
 
 export const inputFilter = (e) => {

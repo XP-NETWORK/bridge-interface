@@ -54,8 +54,8 @@ function DestinationChain() {
           console.log("validateFunc :", to.type);
           if (validateFunc) {
             dispatch(setIsInvalidAddress(validateFunc(address)));
-            dispatch(setReceiver(address));
           }
+          dispatch(setReceiver(address));
         } else {
           // dispatch(setIsInvalidAddress(true));
           // dispatch(setReceiver(address));

@@ -6,6 +6,7 @@ import DepositAlert from "./components/Alerts/DepositAlert";
 import * as generalSlice from "./store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import ReactGA from "./services/GA4";
 
 import {
     checkValidators,
@@ -13,21 +14,21 @@ import {
     transformToDate,
 } from "./wallet/helpers";
 import {
-  setChainModal,
-  setImportModal,
-  setError,
-  setGetFeaturedModal,
-  setRedirectModal,
-  setApproveLoader,
-  setChangeWallet,
-  setAccountModal,
-  setWalletsModal,
-  setAccountWalletModal,
-  setTransferLoaderModal,
-  setSwitchDestination,
-  setIsInvalidAddress,
-  setShowAbout,
-  setShowVideo,
+    setChainModal,
+    setImportModal,
+    setError,
+    setGetFeaturedModal,
+    setRedirectModal,
+    setApproveLoader,
+    setChangeWallet,
+    setAccountModal,
+    setWalletsModal,
+    setAccountWalletModal,
+    setTransferLoaderModal,
+    setSwitchDestination,
+    setIsInvalidAddress,
+    setShowAbout,
+    setShowVideo,
 } from "./store/reducers/generalSlice";
 //  import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
 import { bridgeUrl, chains } from "./components/values";
@@ -58,7 +59,6 @@ function App({ network }) {
     let switchDestination = useSelector(
         (state) => state.general.switchDestination
     );
-    // let showChainModal = useSelector((state) => state.general.showChainModal);
 
     let modalArray = [
         showChainModal,
@@ -77,36 +77,41 @@ function App({ network }) {
 
     let location = useLocation();
 
-  useEffect(() => {
-    if (modalArray.indexOf(true) !== -1) {
-      dispatch(setChainModal(false));
-      dispatch(setImportModal(false));
-      dispatch(setError(false));
-      dispatch(setGetFeaturedModal(false));
-      dispatch(setRedirectModal(false));
-      dispatch(setApproveLoader(false));
-      dispatch(setChangeWallet(false));
-      dispatch(setAccountModal(false));
-      dispatch(setWalletsModal(false));
-      dispatch(setAccountWalletModal(false));
-      dispatch(setTransferLoaderModal(false));
-      dispatch(setSwitchDestination(false));
-    }
-    if (!location.pathname.includes("account")) {
-      dispatch(setIsInvalidAddress(true));
-    }
-    window.onpopstate = function() {
-      dispatch(setShowAbout(false));
-      dispatch(setShowVideo(false));
-      dispatch(setError(false));
-    };
-  }, [location]);
-
-  useEffect(() => {
-    dispatch(setWalletsModal(false));
-  }, [account]);
+    useEffect(() => {
+        if (modalArray.indexOf(true) !== -1) {
+            dispatch(setChainModal(false));
+            dispatch(setImportModal(false));
+            dispatch(setError(false));
+            dispatch(setGetFeaturedModal(false));
+            dispatch(setRedirectModal(false));
+            dispatch(setApproveLoader(false));
+            dispatch(setChangeWallet(false));
+            dispatch(setAccountModal(false));
+            dispatch(setWalletsModal(false));
+            dispatch(setAccountWalletModal(false));
+            dispatch(setTransferLoaderModal(false));
+            dispatch(setSwitchDestination(false));
+        }
+        if (!location.pathname.includes("account")) {
+            dispatch(setIsInvalidAddress(true));
+        }
+        window.onpopstate = function() {
+            dispatch(setShowAbout(false));
+            dispatch(setShowVideo(false));
+            dispatch(setError(false));
+        };
+    }, [location]);
 
     useEffect(() => {
+        dispatch(setWalletsModal(false));
+    }, [account]);
+
+    useEffect(() => {
+        ReactGA.send({
+            hitType: "pageview",
+            page: location.pathname + window.location.search,
+            title: "Custom Title",
+        });
         window.safeLocalStorage?.removeItem("walletconnect");
         dispatch(generalSlice.setInnerWidth(window.innerWidth));
         const from = new URLSearchParams(window.location.search).get("from");

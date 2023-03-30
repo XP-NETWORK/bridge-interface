@@ -13,12 +13,16 @@ import { ReactComponent as CloseComp } from "../../../assets/img/icons/close.svg
 import { Modal } from "react-bootstrap";
 import icon from "../../../assets/img/icons/book.svg";
 import { useWeb3React } from "@web3-react/core";
+import {
+    googleAnalyticsCategories,
+    handleGA4Event,
+} from "../../../services/GA4";
 
 export default function ChangeWalletModal() {
     // const location = useLocation();
     const dispatch = useDispatch();
     const { deactivate } = useWeb3React();
-    let { temporaryTo, temporaryFrom, testNet } = useSelector(
+    let { temporaryTo, temporaryFrom, testNet, from, to } = useSelector(
         (state) => state.general
     );
 
@@ -33,6 +37,10 @@ export default function ChangeWalletModal() {
     const handleClick = () => {
         // eslint-disable-next-line no-debugger
         // debugger;
+        handleGA4Event(
+            googleAnalyticsCategories.Chain,
+            `Changing chain from ${from?.text} to: ${to.text}`
+        );
         deactivate();
         dispatch(setFrom(temporaryFrom));
         dispatch(setTo(temporaryTo));

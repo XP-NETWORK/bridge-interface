@@ -10,6 +10,10 @@ import {
 import { getRightPath } from "../../../wallet/helpers";
 import { withServices } from "../../App/hocs/withServices";
 import { Chain } from "xp.network";
+import {
+    googleAnalyticsCategories,
+    handleGA4Event,
+} from "../../../services/GA4";
 
 export default function HigherAPTOS(OriginalComponent) {
     const updatedComponent = withServices((props) => {
@@ -19,14 +23,13 @@ export default function HigherAPTOS(OriginalComponent) {
         const navigate = useNavigate();
         const { from, to } = useSelector((state) => state.general);
 
-
         const navigateToAccountRoute = () => {
             if (from && to) navigate(getRightPath());
         };
 
         const getStyles = () => {
             let styles = {};
-                if (from && from.type !== "APTOS") {
+            if (from && from.type !== "APTOS") {
                 styles = {
                     pointerEvents: "none",
                     opacity: "0.6",
@@ -76,6 +79,10 @@ export default function HigherAPTOS(OriginalComponent) {
             dispatch(setWalletsModal(false));
             close();
             navigateToAccountRoute();
+            handleGA4Event(
+                googleAnalyticsCategories.Content,
+                `Connected with: ${wallet}`
+            );
         };
 
         return (

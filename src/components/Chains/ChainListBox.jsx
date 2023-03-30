@@ -25,6 +25,7 @@ import ScrollArrows from "./ScrollArrows";
 import PropTypes from "prop-types";
 
 import { withServices } from "../App/hocs/withServices";
+import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 
 function ChainListBox({ serviceContainer }) {
     const { bridge } = serviceContainer;
@@ -84,6 +85,10 @@ function ChainListBox({ serviceContainer }) {
         const chainWrapper = await bridge.getChain(chain.nonce);
 
         if (departureOrDestination === "departure") {
+            handleGA4Event(
+                googleAnalyticsCategories.Chain,
+                `${chain.text} selected to departure`
+            );
             if (
                 bridge.currentType === "EVM" &&
                 from?.text === "VeChain" &&
@@ -141,6 +146,10 @@ function ChainListBox({ serviceContainer }) {
             }
             handleClose();
         } else if (departureOrDestination === "destination") {
+            handleGA4Event(
+                googleAnalyticsCategories.Chain,
+                `${chain.text} selected to destination`
+            );
             if (from?.text === chain.text) {
                 if (to?.text === "Harmony" && bitKeep) {
                     dispatch(setTemporaryFrom(to));

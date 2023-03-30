@@ -25,12 +25,17 @@ const initialState = {
     NFTSetToggler: false,
     isInvalid: true,
     afterNearRedirect: true,
+    hederaClaimables: [],
+    algorandAddresses: [],
 };
 
 const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setAlgorandAddresses(state, action) {
+            state.algorandAddresses = action.payload;
+        },
         setDeepLink(state, action) {
             state.deepLink = action.payload;
         },
@@ -400,6 +405,7 @@ const generalSlice = createSlice({
         },
         setError(state, action) {
             // debugger;
+            // handleGA4Event(googleAnalyticsCategories.Error, action.payload);
             if (action.payload) {
                 const { err, data, message } = action.payload;
 
@@ -542,10 +548,14 @@ const generalSlice = createSlice({
         setNearRedirect(state) {
             state.afterNearRedirect = false;
         },
+        setHederaClaimables(state, action) {
+            state.hederaClaimables = action.payload;
+        },
     },
 });
 
 export const {
+    setAlgorandAddresses,
     setDeepLink,
     setWhitelistingLoader,
     setWhiteListedCollection,
@@ -662,6 +672,7 @@ export const {
     setAptosAccount,
     setIsInvalidAddress,
     setNearRedirect,
+    setHederaClaimables,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

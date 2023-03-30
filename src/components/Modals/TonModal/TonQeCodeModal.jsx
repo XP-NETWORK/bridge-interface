@@ -13,6 +13,7 @@ import { Modal } from "react-bootstrap";
 import { setTransferLoaderModal } from "../../../store/reducers/generalSlice";
 
 import { Emitter } from "xp.network";
+import { tonAuth } from "../../values";
 
 export default function TonQeCodeModal() {
   const dispatch = useDispatch();
@@ -38,7 +39,9 @@ export default function TonQeCodeModal() {
 
   const deepLink = isTonKeeper
     ? tonKeeperSession.deepLink ||
-      `https://app.tonkeeper.com/ton-login/tonkeeper.xp.network/tk?open=1&userId=${tonKeeperSession.userId}`
+      `https://app.tonkeeper.com/ton-login/${tonAuth}/tk?open=1&userId=${
+        tonKeeperSession.userId
+      }&url=${encodeURIComponent(tonAuth)}`
     : tonHubSession?.link;
 
   const linkElement = useRef(null);

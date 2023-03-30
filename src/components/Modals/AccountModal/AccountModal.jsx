@@ -59,12 +59,20 @@ export default function AccountModal() {
       {/* </CopyToClipboard> */}
       <div className="accountBtn">
         <button
-          onClick={() => {
-            const nearWalletConncted = /\S*account_id\S*all_key\S*/.test(window.location.search);
+          onClick={async () => {
+            const nearWalletConncted = window.location.search.includes(
+              "NEARTRX=true"
+            );
+
             window.safeLocalStorage?.removeItem("XP_MM_CONNECTED");
             window.safeLocalStorage?.removeItem("_wallet_auth_key");
-            nearWalletConncted ? window.open(`${window.location.pathname}`, "_self"): window.location.reload();
-            
+            const w = await window.wallet_selector
+              ?.wallet()
+              .catch(() => undefined);
+            w && (await w.signOut());
+            nearWalletConncted
+              ? window.open(`${window.location.pathname}`, "_self")
+              : window.location.reload();
           }}
           className="changeBtn"
         >
