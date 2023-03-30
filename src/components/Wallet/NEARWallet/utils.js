@@ -1,27 +1,17 @@
-//import BigNumber from "bignumber.js";
-
-export const adaptToWalletSelector = (signer) => {
+export const adaptToWalletSelector = (signer, provider) => {
   signer.viewFunction = async function(callArgs) {
-    const { methodName, contractId, args, walletCallbackUrl } = callArgs;
-    console.log(callArgs);
+    const { methodName, contractId, args } = callArgs;
 
-    const res = await signer.signAndSendTransaction({
-      receiverId: contractId,
-      actions: [
-        {
-          type: "FunctionCall",
-          params: {
-            methodName,
-            args,
-            gas: "3000000000000",
-            ...(walletCallbackUrl ? { walletCallbackUrl } : {}),
-          },
-        },
-      ],
+    let res = await provider.connection.provider.query({
+      request_type: "call_function",
+      account_id: contractId,
+      method_name: methodName,
+      args_base64: Buffer.from(JSON.stringify(args)).toString("base64"),
+      finality: "optimistic",
     });
-    console.log(res, "res");
-    return res.status.SuccessValue === "dHJ1ZQ=="; //means true
+    return JSON.parse(Buffer.from(res.result).toString());
   };
+
   signer.functionCall = async function(callArgs) {
     const {
       methodName,
@@ -31,7 +21,6 @@ export const adaptToWalletSelector = (signer) => {
       gas,
       walletCallbackUrl,
     } = callArgs;
-    console.log(callArgs);
 
     const res = await signer.signAndSendTransaction({
       receiverId: contractId,
@@ -54,7 +43,7 @@ export const adaptToWalletSelector = (signer) => {
       ? res.find((item) => typeof item === "object" && item.transaction)
       : res;
     x.hash = x.transaction.hash;
-    console.log(x);
+
     return x;
   };
   signer.account = signer.account || signer.getAccounts;
