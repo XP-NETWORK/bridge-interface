@@ -34,7 +34,7 @@ function NFTgridView({ serviceContainer, chainSpecificRender }) {
   const auto = { overflowX: "auto" };
   const loader = useSelector((state) => state.general.bigLoader);
   const RenderClaimables = chainSpecificRender?.RenderClaimables;
-
+  console.log(currentsNFTs, "RenderClaimables");
   useEffect(() => {
     bridge.getChain(from.nonce).then((fromChain) => setChain(fromChain));
   }, []);
@@ -65,7 +65,7 @@ function NFTgridView({ serviceContainer, chainSpecificRender }) {
                 serviceContainer={serviceContainer}
               />
             ))}
-          {Array.isArray(currentsNFTs)
+          {Array.isArray(currentsNFTs) && currentsNFTs.length
             ? currentsNFTs?.map((nft, index) => (
                 <NFTcard
                   nft={nft}
@@ -76,6 +76,7 @@ function NFTgridView({ serviceContainer, chainSpecificRender }) {
                 />
               ))
             : !algorandClaimables?.length && !RenderClaimables && <NFTempty />}
+
           {currentsNFTs?.length > 0 && currentsNFTs?.length < nftsPlace
             ? placeholders.map((n, index) => (
                 <Missing key={`missing-${index}-component`} />

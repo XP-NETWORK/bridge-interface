@@ -64,7 +64,6 @@ export const withNearConnection = (Wrapped) =>
     const approve = params.get("type") === "approve";
     const send =
       params.get("type") === "transfer" || params.get("type") === "unfreeze";
-    let network = location.pathname.match(/(staging|testnet)/)?.at(0);
 
     //Selector store flow
     useEffect(() => {
@@ -72,20 +71,23 @@ export const withNearConnection = (Wrapped) =>
         const { bridge } = serviceContainer;
         (async () => {
           const nearParams = bridge.config.nearParams;
-          const url = `${location.protocol}/${location.host}/${network ??
-            ""}/connect?nearWalletSelector=true`;
+          const url = window.location.href;
           const [_selector, chainWrapper] = await Promise.all([
             setupWalletSelector({
-              network: "mainnet",
+              network: window.location.pathname.includes("testnet")
+                ? "testnet"
+                : "mainnet",
               debug: true,
               modules: [
                 setupNearWallet({
-                  successUrl: url,
-                  failureUrl: url,
+                  //successUrl: url,
+                  //failureUrl: url,
                 }),
                 setupMyNearWallet({
-                  successUrl: url + `&MyNearWallet=true`,
-                  failureUrl: url + `&MyNearWallet=true`,
+                  successUrl:
+                    url +
+                    `${url.includes("?") ? "&" : "?"}selectedNearWallet=mnw`,
+                  failureUrl: url + `&selectedNearWallet=mnw`,
                 }),
                 setupHereWallet(),
                 setupMeteorWallet(),
@@ -140,8 +142,9 @@ export const withNearConnection = (Wrapped) =>
           );
 
           const isMyNearWallet = window.location.search.includes(
-            "&MyNearWallet=true"
+            "selectedNearWallet=mnw"
           );
+
           const walletConnection = await chainWrapper?.connect(
             isMyNearWallet ? "https://app.mynearwallet.com/" : undefined
           );
@@ -176,6 +179,7 @@ export const withNearConnection = (Wrapped) =>
         const chainId = String(Chain.NEAR);
         const receiver = params.get("receiver");
         const hash = params.get("transactionHashes");
+        const error = params.get("errorMessage") || params.get("errorCode");
 
         if (approve) {
           const selectedNft = NFTList.find(
@@ -189,7 +193,7 @@ export const withNearConnection = (Wrapped) =>
 
           !alreadyS && dispatch(setSelectedNFTList(selectedNft));
           dispatch(setReceiver(receiver));
-          dispatch(updateApprovedNFTs(selectedNft));
+          !error && dispatch(updateApprovedNFTs(selectedNft));
         }
 
         if (send && hash && serviceContainer.bridge) {

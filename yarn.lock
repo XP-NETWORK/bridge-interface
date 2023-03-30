@@ -3218,22 +3218,22 @@
     "@lezer/lr" "^0.15.4"
     json5 "^2.2.1"
 
-"@moralisweb3/common-core@^2.18.0":
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/@moralisweb3/common-core/-/common-core-2.18.0.tgz#781e83a55afed85f0ee7d0f811c6073a2b357dbd"
-  integrity sha512-gc4gWpcCZETTdyXsrSSk6Y+wPE+6wOCcfWf3aVodnL7PImWRHEyscTpK5nT3Q/wA2xn2Sa/Bj2Mwyu3cTRaopQ==
+"@moralisweb3/common-core@^2.18.1":
+  version "2.18.1"
+  resolved "https://registry.yarnpkg.com/@moralisweb3/common-core/-/common-core-2.18.1.tgz#f59fc44bb7e1913d7a2cf9adb147564181a03086"
+  integrity sha512-nqn6idEw1WoCNhrCywwTIHTQwm32g8OSyUjI4+3P1RgJW41vxwmHjrFS0lyrxVE+waQ0BZpmV5TmXeMBLm5vXQ==
   dependencies:
     axios "^1.2.1"
 
 "@moralisweb3/common-evm-utils@^2.17.0":
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/@moralisweb3/common-evm-utils/-/common-evm-utils-2.18.0.tgz#9e36664b3cddfa326bda7218604656e17fcc784a"
-  integrity sha512-AaLf3YO7PyqWUr9JHKUM0pkXLTenlHQ7dgdv02zcVj6JfpySuo7fES66g3dpT6k8nXodiq0CHeeRqIpwZUmUSQ==
+  version "2.18.1"
+  resolved "https://registry.yarnpkg.com/@moralisweb3/common-evm-utils/-/common-evm-utils-2.18.1.tgz#e9da73436f8f852ed7f5e2778839f48a0019c4d3"
+  integrity sha512-afIQMej/kZDU8wRcc5BhuG3ZY7/dpSlttXkYgKGfEWdRKfEbrUVLwvq9d8QYltxh6fl4iuZuXkLX3NwSNFTddQ==
   dependencies:
     "@ethersproject/address" "^5.7.0"
     "@ethersproject/bytes" "^5.7.0"
     "@ethersproject/transactions" "^5.7.0"
-    "@moralisweb3/common-core" "^2.18.0"
+    "@moralisweb3/common-core" "^2.18.1"
 
 "@motionone/animation@^10.15.1":
   version "10.15.1"
