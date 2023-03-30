@@ -143,7 +143,6 @@ export const withNearConnection = (Wrapped) =>
           const chainWrapper = await serviceContainer?.bridge?.getChain(
             Chain.NEAR
           );
-
           const isMyNearWallet = window.location.search.includes(
             "selectedNearWallet=mnw"
           );
