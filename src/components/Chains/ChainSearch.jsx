@@ -11,8 +11,10 @@ export default function ChainSearch() {
     const inputElement = useRef(null);
 
     const handleChange = (e) => {
-        e.preventDefault();
+      e.preventDefault();
+      if (!(e.nativeEvent.data === " " && (search === undefined || search.length === 0))) {
         dispatch(setChainSearch(e.target.value));
+      }
     };
 
     useEffect(() => {

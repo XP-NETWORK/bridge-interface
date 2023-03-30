@@ -25,6 +25,7 @@ import {
 } from "../store/reducers/generalSlice";
 // import { biz } from "../components/values";
 import Network from "./Network";
+import { googleAnalyticsCategories, handleGA4Event } from "../services/GA4";
 
 function NavBar() {
     const widget = useSelector((state) => state.general.widget);
@@ -35,6 +36,10 @@ function NavBar() {
     const [navMenuOpen, toggleNavMenu] = useState(false);
     const dispatch = useDispatch();
     const loc = useLocation();
+
+    const handleEventsForAnalytics = (e) => {
+        handleGA4Event(googleAnalyticsCategories.Button, e);
+    };
 
     useEffect(() => {
         if (loc.pathname === "/connect") {
@@ -143,6 +148,9 @@ function NavBar() {
                                 className="nav-link help-center"
                                 target="_blank"
                                 href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"
+                                onClick={() =>
+                                    handleEventsForAnalytics("Help Center")
+                                }
                             >
                                 <div className="nav-link__icon">
                                     <img src={message} alt="" />
@@ -153,6 +161,7 @@ function NavBar() {
                                 className="mob-link"
                                 target="_blank"
                                 href="https://docs.xp.network/docs/Multibridge2.0/faq"
+                                onClick={() => handleEventsForAnalytics("FAQ")}
                             >
                                 <div className="nav-link__icon">
                                     <img src={faq} alt="" />
@@ -163,6 +172,9 @@ function NavBar() {
                                 className="mob-link"
                                 target="_blank"
                                 href="https://docs.xp.network/docs/Multibridge2.0/bridge_security/"
+                                onClick={() =>
+                                    handleEventsForAnalytics("Bridge Security")
+                                }
                             >
                                 <div className="nav-link__icon">
                                     <img src={security} alt="" />
@@ -175,6 +187,7 @@ function NavBar() {
                                 className="mob-link"
                                 target="_blank"
                                 href="https://docs.xp.network/"
+                                onClick={() => handleEventsForAnalytics("Docs")}
                             >
                                 <div className="nav-link__icon">
                                     <img src={docs} alt="" />
@@ -185,6 +198,9 @@ function NavBar() {
                                 className="mob-link"
                                 target="_blank"
                                 href="https://github.com/xp-network/"
+                                onClick={() =>
+                                    handleEventsForAnalytics("Github")
+                                }
                             >
                                 <div className="nav-link__icon">
                                     <img src={github} alt="" />
@@ -205,7 +221,12 @@ function NavBar() {
                                 className="mob-link"
                                 target="_blank"
                                 href="#"
-                                onClick={() => dispatch(setShowVideo(true))}
+                                onClick={() => {
+                                    handleEventsForAnalytics(
+                                        "NavBar Video Tutorial"
+                                    );
+                                    dispatch(setShowVideo(true));
+                                }}
                             >
                                 <div className="nav-link__icon">
                                     <img src={video} alt="" />
@@ -280,7 +301,14 @@ function NavBar() {
                                             href="https://github.com/xp-network/"
                                             target="_blank"
                                         >
-                                            <div className="drop-item">
+                                            <div
+                                                onClick={() =>
+                                                    handleEventsForAnalytics(
+                                                        "Burger Github"
+                                                    )
+                                                }
+                                                className="drop-item"
+                                            >
                                                 <img src={github} alt="" />
                                                 <div className="drop-git">
                                                     <span>GitHub</span>
@@ -299,7 +327,14 @@ function NavBar() {
                                             href="https://docs.xp.network/docs/Multibridge2.0/bridge_security/"
                                             target="_blank"
                                         >
-                                            <div className="drop-item">
+                                            <div
+                                                onClick={() =>
+                                                    handleEventsForAnalytics(
+                                                        "Burger Bridge Security"
+                                                    )
+                                                }
+                                                className="drop-item"
+                                            >
                                                 <img src={security} alt="" />
                                                 <div className="drop-git">
                                                     <span>Bridge Security</span>
@@ -310,7 +345,14 @@ function NavBar() {
                                             href="https://docs.xp.network/docs/Multibridge2.0/faq"
                                             target="_blank"
                                         >
-                                            <div className="drop-item">
+                                            <div
+                                                onClick={() =>
+                                                    handleEventsForAnalytics(
+                                                        "Burger FAQ"
+                                                    )
+                                                }
+                                                className="drop-item"
+                                            >
                                                 <img src={faq} alt="" />
                                                 <div className="drop-icon">
                                                     FAQs
@@ -321,7 +363,14 @@ function NavBar() {
                                             href="https://docs.xp.network/"
                                             target="_blank"
                                         >
-                                            <div className="drop-item">
+                                            <div
+                                                onClick={() =>
+                                                    handleEventsForAnalytics(
+                                                        "Burger docs"
+                                                    )
+                                                }
+                                                className="drop-item"
+                                            >
                                                 <img src={docs} alt="" />
                                                 <div className="drop-icon">
                                                     DOCs
@@ -333,7 +382,14 @@ function NavBar() {
                                                 dispatch(setShowVideo(true))
                                             }
                                         >
-                                            <div className="drop-item">
+                                            <div
+                                                onClick={() =>
+                                                    handleEventsForAnalytics(
+                                                        "Burger tutorial"
+                                                    )
+                                                }
+                                                className="drop-item"
+                                            >
                                                 <img src={video} alt="" />
                                                 <div className="drop-icon">
                                                     Video Tutorial
@@ -344,7 +400,14 @@ function NavBar() {
                                             href="https://xp.network/"
                                             target="_blank"
                                         >
-                                            <div className="drop-item">
+                                            <div
+                                                onClick={() =>
+                                                    handleEventsForAnalytics(
+                                                        "Burger website"
+                                                    )
+                                                }
+                                                className="drop-item"
+                                            >
                                                 <img src={xpnet} alt="" />
                                                 <div className="drop-icon">
                                                     XP.NETWORK
@@ -355,7 +418,14 @@ function NavBar() {
                                             href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"
                                             target="_blank"
                                         >
-                                            <div className="drop-item">
+                                            <div
+                                                onClick={() =>
+                                                    handleEventsForAnalytics(
+                                                        "Burger Help Center"
+                                                    )
+                                                }
+                                                className="drop-item"
+                                            >
                                                 <img src={message} alt="" />
                                                 <div className="drop-icon">
                                                     Help Center

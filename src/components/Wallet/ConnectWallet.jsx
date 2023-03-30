@@ -19,6 +19,7 @@ import Web3 from "web3";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import { getRightPath } from "../../wallet/helpers";
 import { useWeb3Modal } from "@web3modal/react";
+import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 
 function ConnectWallet() {
     const navigate = useNavigate();
@@ -48,6 +49,10 @@ function ConnectWallet() {
         (state) => state.general.connectedWallet
     );
 
+    const algorandAddresses = useSelector(
+        (state) => state.general.algorandAddresses
+    );
+
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const { address } = useAccount();
@@ -58,6 +63,7 @@ function ConnectWallet() {
     const inputElement = useRef(null);
 
     const connected =
+        algorandAddresses.length ||
         tonAccount ||
         hederaAccount ||
         secretAccount ||
@@ -84,6 +90,10 @@ function ConnectWallet() {
     const walletsModal = useSelector((state) => state.general.walletsModal);
 
     const handleConnect = async () => {
+        handleGA4Event(
+            googleAnalyticsCategories.Connect,
+            `Clicked on connect. destination chain: ${from}`
+        );
         let provider;
         let _chainId;
         if (bitKeep) {
@@ -117,9 +127,17 @@ function ConnectWallet() {
     };
 
     function handleAboutClick() {
+        handleGA4Event(googleAnalyticsCategories.Content, "About text.");
         dispatch(setShowAbout(true));
     }
+
+    const handleChange = (e) => {
+      if (!(e.nativeEvent.data === " " && walletSearch.length === 0)) {
+        setWalletSearch(e.target.value);
+      }
+    };
     function handleVideoClick() {
+        handleGA4Event(googleAnalyticsCategories.Content, "About video.");
         dispatch(setShowVideo(true));
     }
 
@@ -129,11 +147,15 @@ function ConnectWallet() {
 
     useEffect(() => {
         setShow(false);
-    }, [tonQRCodeModal, qrCodeImage]);
+    }, [tonQRCodeModal, qrCodeImage, connected]);
 
     useEffect(() => {
         if (isOpen) setShow(false);
     }, [isOpen]);
+
+    useEffect(() => {
+        if (evmAccount) setShow(false);
+    }, [evmAccount]);
 
     return (
         <div>
@@ -155,7 +177,7 @@ function ConnectWallet() {
             </div>
             <div id="aboutnft" className="aboutNft">
                 <div
-                    onClick={() => handleVideoClick()}
+                    onClick={handleVideoClick}
                     className="about-btn about-video"
                 >
                     Learn how to use NFT bridge
@@ -176,7 +198,7 @@ function ConnectWallet() {
             >
                 <Modal.Header>
                     <Modal.Title style={{ minWidth: "max-content" }}>
-                        Connect Wallet 
+                        Connect Wallet
                     </Modal.Title>
                     <span className="CloseModal" onClick={handleClose}>
                         <div className="close-modal"></div>
@@ -185,7 +207,7 @@ function ConnectWallet() {
                 <div className="wallet-search__container">
                     <input
                         ref={inputElement}
-                        onChange={(e) => setWalletSearch(e.target.value)}
+                        onChange={handleChange}
                         value={walletSearch}
                         className="wallet-search serchInput"
                         type="text"
@@ -195,7 +217,6 @@ function ConnectWallet() {
                 </div>
                 <Modal.Body>
                     <div className="walletListBox">
-                        
                         <WalletList
                             input={walletSearch}
                             connected={handleClose}

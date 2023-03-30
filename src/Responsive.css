@@ -1,6 +1,15 @@
-@media only screen and (min-height: 1024px) {
+@media only screen and (min-height: 1025px) {
   .App {
     padding-top: 100px;
+  }
+}
+
+@media only screen and (max-height: 1024px) {
+  .App {
+    padding-top: 0px;
+  }
+  .nonftContainer{
+    top: 30%;
   }
 }
 
@@ -36,6 +45,13 @@
     padding-bottom: 24px;
   }
 }
+
+@media only screen and (width: 912px) and (height: 1368px) and (orientation:portrait) {
+  .container {
+    max-width: 95%!important;
+}
+}
+
 @media only screen and (max-width: 860px) {
   .mobileOnly.seleNftMob {
     display: flex;
@@ -181,7 +197,7 @@
   }
 
   .container {
-    max-width: 100%;
+    max-width: 95%;
   }
 
   .priPoli a {
@@ -335,6 +351,10 @@
     padding: 16px 8px !important;
   }
 
+  .nonftContainer {
+    top: 40%;
+  }
+
   .accountBox {
     left: 50%;
     transform: translate(-50%, 0);
@@ -345,9 +365,6 @@
 }
 
 @media only screen and (max-width: 480px) {
-  .nonftContainer {
-    top: 30%;
-  }
 
   .loader {
     top: 0;

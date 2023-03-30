@@ -6,6 +6,7 @@ import { Chain } from "xp.network";
 import {
     setAccount,
     setConnectedWallet,
+    setDeepLink,
     setError,
     setFrom,
     // setQrCodeString,
@@ -20,6 +21,10 @@ import { useNavigate } from "react-router";
 import { getRightPath } from "../../../wallet/helpers";
 import { WalletConnectV2Provider } from "@multiversx/sdk-wallet-connect-provider";
 import { wcId } from "../EVMWallet/evmConnectors";
+import {
+    googleAnalyticsCategories,
+    handleGA4Event,
+} from "../../../services/GA4";
 
 export default function HigherMultiversX(OriginalComponent) {
     const updatedComponent = withServices((props) => {
@@ -87,8 +92,10 @@ export default function HigherMultiversX(OriginalComponent) {
                     case "xPortal": {
                         walletConnected = "xPortal";
                         await provider.init();
+
                         dispatch(setWalletsModal(false));
                         const { uri, approval } = await provider.connect();
+                        dispatch(setDeepLink(uri));
                         const qr = await QRCode.toDataURL(uri);
                         dispatch(setQrImage(qr));
                         await provider.login({ approval });
@@ -148,6 +155,10 @@ export default function HigherMultiversX(OriginalComponent) {
             } catch (e) {
                 dispatch(setError(e));
             }
+            handleGA4Event(
+                googleAnalyticsCategories.Connect,
+                `COnnected with: ${wallet}`
+            );
         };
 
         const getStyle = () => {

@@ -42,7 +42,6 @@ export const withEVMConnection = (Wrapped) =>
                 const isSupported = wcSupportedChains.find(
                     (supported) => chain.id === supported.id
                 );
-                console.log("from: ", from);
                 if (from) {
                     if (isSupported) {
                         if (

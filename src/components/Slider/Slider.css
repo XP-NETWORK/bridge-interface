@@ -1,3 +1,13 @@
+/*Surface Pro 7*/
+@media only screen and (width: 912px) and (height: 1368px) and (orientation:portrait) {
+    .slider__wrapper {
+        width: 430px !important;
+    }
+    .NftSelect {
+        width: 430px !important;
+    }
+  }
+
 .multi-background {
     position: absolute;
     width: 100vw;

@@ -8,13 +8,17 @@ import tonkeeper from "../../../assets/img/wallet/tonkeeper.svg";
 
 import { useSelector } from "react-redux";
 
+import { tonAuth } from "../../values";
+
 function TonKeeper({ styles, connectWallet }) {
   const isMobile = innerWidth <= 480;
   const tonKeeperSession = useSelector(
     (state) => state.tonStore.tonKeeperSession
   );
 
-  const url = `tonkeeper://ton-login/support-bot-xp.herokuapp.com/tk?open=1&userId=${tonKeeperSession.userId}`;
+  const url = `tonkeeper://ton-login/${tonAuth}/tk?open=1&userId=${
+    tonKeeperSession.userId
+  }&url=${encodeURIComponent(tonAuth)}`;
 
   const connectHandler = () => {
     connectWallet("TonKeeper");

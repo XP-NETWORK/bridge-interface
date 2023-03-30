@@ -29,11 +29,12 @@ import UnwrapWegld from "../TransferBoard/UnwrapWegld";
 import Pagination from "./Pagination";
 import ChainListBox from "../Chains/ChainListBox";
 import { ELROND } from "../../components/values";
+import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 
 const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
     const dispatch = useDispatch();
 
-    const [showNFTsSearch, setNFTsSearch] = useState(false);
+    let [showNFTsSearch, setNFTsSearch] = useState(false);
     const [showSelected, setShowSelected] = useState(false);
 
     const NFTListView = useSelector((state) => state.general.NFTListView);
@@ -57,6 +58,10 @@ const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
     const handleSearchTop = () => {
         setNFTsSearch(!showNFTsSearch);
         dispatch(setSearchNFTList(""));
+        handleGA4Event(
+            googleAnalyticsCategories.Button,
+            "Search Mobile Button"
+        );
     };
 
     return (
