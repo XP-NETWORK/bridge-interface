@@ -6,6 +6,8 @@ import { HashConnect } from "hashconnect";
 
 import HigherHEDERA from "./HigherHEDERA";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+
 
 // import { useDispatch, useSelector } from "react-redux";
 // import {
@@ -16,6 +18,12 @@ import PropTypes from "prop-types";
 
 function Hashpack({ connect }) {
   const [loading, setLoading] = useState(false);
+
+  const OFF = { opacity: 0.6, pointerEvents: "none" };
+  const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
+  const from = useSelector((state) => state.general.from);
+
+  console.log(loading)
   let hashConnect = new HashConnect(true);
   // let provider;
   // let signer;
@@ -70,17 +78,24 @@ function Hashpack({ connect }) {
   //         console.log("connectionStatusChangeEvent", { connectionStatus });
   //     });
   // }, []);
-
+  const getStyle = () => {
+    if (temporaryFrom?.type === "Hedera") {
+        return {};
+    } else if (temporaryFrom && temporaryFrom?.type !== "Hedera") {
+        return OFF;
+    } else if (from && from?.text !== "Hedera") return OFF;
+    else if(loading) return OFF;
+    else return {};
+};
   return (
     <li
-      // style={getStyles()}
       onClick={() => {
         setLoading(true);
         connect("HashPack", hashConnect);
         setTimeout(() => setLoading(false), 2000);
       }}
       className="wllListItem"
-      style={{ ...(loading ? { pointerEvents: "none", opacity: ".6" } : {}) }}
+      style={getStyle()}
       data-wallet="Hashpack"
     >
       <img style={{ width: "28px" }} src={hashpack} alt="Hashpack Icon" />
