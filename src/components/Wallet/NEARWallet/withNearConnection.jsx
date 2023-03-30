@@ -123,7 +123,10 @@ export const withNearConnection = (Wrapped) =>
                   nextAccounts[0].accountId,
                   bridge,
                   chainWrapper,
-                  adaptToWalletSelector(wallet)
+                  adaptToWalletSelector(
+                    wallet,
+                    chainWrapper.chain.getProvider()
+                  )
                 );
               }
             });

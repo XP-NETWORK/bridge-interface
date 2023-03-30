@@ -34,7 +34,7 @@ function NFTgridView({ serviceContainer, chainSpecificRender }) {
   const auto = { overflowX: "auto" };
   const loader = useSelector((state) => state.general.bigLoader);
   const RenderClaimables = chainSpecificRender?.RenderClaimables;
-  console.log(currentsNFTs, "RenderClaimables");
+
   useEffect(() => {
     bridge.getChain(from.nonce).then((fromChain) => setChain(fromChain));
   }, []);
