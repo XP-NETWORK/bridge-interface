@@ -119,9 +119,9 @@ const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
                 </div>
             </div>
             <Pagination />
+            <MobileDestinationAddressBar />
             {nfts?.length ? (
                 <>
-                    <MobileDestinationAddressBar />
                     <Approval />
                     <SendFees />
                     <ButtonToTransfer />
