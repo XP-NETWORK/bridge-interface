@@ -1,10 +1,6 @@
 import ReactGA from "react-ga4";
 
-const tagId = window.location.hostname.includes("temporary")
-    ? "G-28QX2ZF8PV"
-    : window.location.hostname.includes("staging")
-    ? "G-DWQH0ZR376"
-    : "G-28QX2ZF8PV";
+const tagId = "G-28QX2ZF8PV";
 
 ReactGA.initialize(tagId);
 ReactGA.set({ appName: "CROSS-CHAIN NFT BRIDGE" });

@@ -9,12 +9,14 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     setAccount,
     setAlgorandAddresses,
+    setFrom,
 } from "../../../store/reducers/generalSlice";
 import { Chain } from "xp.network";
 import { useNavigate } from "react-router";
 import { getRightPath } from "../../../wallet/helpers";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { peraWallet } from "../../Wallet/ALGOWallet/AlgorandConnectors";
+import { chains } from "../../values";
 
 function AlgorandAddresses({ addresses, serviceContainer }) {
     const from = useSelector((state) => state.general.from);
@@ -36,7 +38,7 @@ function AlgorandAddresses({ addresses, serviceContainer }) {
     const navigateToAccountRoute = () => {
         navigate(getRightPath());
     };
-
+    const algorand = chains.find((chain) => chain.text === "Algorand");
     const handleSelect = async (address) => {
         // debugger;
         let signer;
@@ -67,6 +69,7 @@ function AlgorandAddresses({ addresses, serviceContainer }) {
         dispatch(setAlgorandAddresses([]));
         chainWrapper.setSigner(signer);
         bridge.setCurrentType(chainWrapper);
+        dispatch(setFrom(algorand));
     };
 
     return (
