@@ -94,6 +94,7 @@ export default function HigherEVM(OriginalComponent) {
                     connected = await connectBitKeep(from);
                     dispatch(setWalletsModal(false));
                     dispatch(setBitKeep(true));
+                    dispatch(setConnectedWallet("BitKeep"))
                     if (connected && to) {
                         navigateToAccountRoute();
                     }
