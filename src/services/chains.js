@@ -635,84 +635,28 @@ class Near extends AbstractChain {
         }
     }
 
-    async transfer(args) {
-        try {
-            window.safeLocalStorage?.setItem(
-                "_xp_near_transfered_nft",
-                JSON.stringify(args.nft)
-            );
-            return await super.transfer(args);
-        } catch (e) {
-            await new Promise((r) => setTimeout(r, 2_000));
-            throw e;
-        }
-    }
-    async connect(wallet) {
-        switch (wallet) {
-            default:
-                return await this.chain.connectWallet(wallet);
-        }
-    }
-
     async getNFTs(address) {
-        const testnet = window.location.pathname.includes("testnet");
-        const res = await axios.post(
-            `https://interop-${
-                testnet ? "testnet" : "mainnet"
-            }.hasura.app/v1/graphql?rand=${Math.random()}`,
-            {
-                query: `
-      query MyQuery {
-        mb_views_nft_tokens(
-
-          where: {owner: {_eq: "${address}"}, _and: {burned_timestamp: {_is_null: true}}}
-        ) {
-          nft_contract_id
-          title
-          description
-          media
-          token_id
-          owner
-          metadata_id
-          royalties
-          base_uri
-          copies
-          nft_contract_spec
-        }
-      }
-      `,
-            }
-        );
-
-        const {
-            data: {
-                data: { mb_views_nft_tokens: nfts },
-            },
-        } = res;
-
+        const nfts = await super.getNFTs(address);
         return nfts.map((nft) => {
-            const data = {
-                ...nft.native,
-                chainId: String(ChainNonce.NEAR),
-                tokenId: nft.token_id || nft.native.token_id,
-                contract: nft.nft_contract_id || nft.native.contract_id,
-            };
-
-            const image = /^https?/.test(nft.media)
-                ? nft.media
-                : `https://ipfs.io/ipfs/${nft.media.replace(
+            const media = nft.native.metadata.media;
+            const image = /^https?/.test(media)
+                ? media
+                : `https://ipfs.io/ipfs/${media.replace(
                       /^ipfs:\/\/(ipfs\/)?/,
                       ""
                   )}`;
 
             return {
-                ...nft,
+                ...nft.native.metadata,
                 image,
-                media: image,
-                native: data,
-                ...(nft.base_uri
-                    ? { uri: nft.base_uri + "/" + nft.token_id }
-                    : {}),
+                uri: nft.uri,
+                collectionIdent: nft.collectionIdent,
+                native: {
+                    ...nft.native,
+                    chainId: String(ChainNonce.NEAR),
+                    tokenId: nft.native.token_id,
+                    contract: nft.native.contract_id,
+                },
             };
         });
     }
