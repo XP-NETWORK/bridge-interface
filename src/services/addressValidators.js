@@ -48,9 +48,24 @@ const addressValidateTron = (address) => {
     return true;
 };
 
-const addressValidateNear = () => {
+const addressValidateNear = (address) => {
     // NEAR wallet address are simple base64 strings containing lowercase and numeric characters only
-    return true; ///^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(address);
+    // return true; ///^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(address);
+
+    if(address === "") return false;
+    if(String(address).includes('.') && address.length !== 64){
+    if(String(address).substring(address.length, address.length-5).toLowerCase() === '.near'){
+
+        return /^[a-zA-Z]+(\.[a-zA-Z]+)+$/.test(address)
+    }
+    return false;
+        
+    }
+    if(address.length === 64) {
+        return /^[a-zA-Z0-9]{64}$/.test(address)
+    }
+    else return false;
+    
 };
 
 const addressValidateAlgo = (address) => {
@@ -153,3 +168,4 @@ export const maxChainAddressLengths = {
     Cosmos: 45,
     VeChain: 42,
 };
+ 
