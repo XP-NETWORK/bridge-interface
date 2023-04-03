@@ -542,8 +542,8 @@ class Algorand extends AbstractChain {
 
     async getClaimables(account) {
         try {
-            const nfts = await this.bridge.claimableAlgorandNfts(account);
-            return nfts;
+            const x = await this.bridge.claimableAlgorandNfts(account);
+            return x;
         } catch (e) {
             console.log(e, "e");
             console.log("in getClaimables");
@@ -632,6 +632,25 @@ class Near extends AbstractChain {
             console.log(e, "in NEAR preTransfer");
             await new Promise((r) => setTimeout(r, 2_000));
             throw e;
+        }
+    }
+
+    async transfer(args) {
+        try {
+            window.safeLocalStorage?.setItem(
+                "_xp_near_transfered_nft",
+                JSON.stringify(args.nft)
+            );
+            return await super.transfer(args);
+        } catch (e) {
+            await new Promise((r) => setTimeout(r, 2_000));
+            throw e;
+        }
+    }
+    async connect(wallet) {
+        switch (wallet) {
+            default:
+                return await this.chain.connectWallet(wallet);
         }
     }
 
