@@ -442,6 +442,10 @@
     height: 40px;
 }
 
+.fmSSut {
+    margin-top: -500px;
+}
+
 @media screen and (max-width: 501px) {
     .copy-tooltip:hover .copy-tooltip__text {
         font-size: 10px;
