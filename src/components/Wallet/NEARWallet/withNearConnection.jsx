@@ -47,6 +47,9 @@ export const withNearConnection = (Wrapped) =>
       bridge.setCurrentType(chain);
       dispatch(setFrom(chains.find((c) => c.nonce === Chain.NEAR)));
       dispatch(setConnectedWallet("Near Wallet"));
+      dispatch(setFrom(chains.find((c) => c.nonce === Chain.NEAR)));
+      
+      dispatch(setTo(chains.find((c) => c.nonce === Chain.BSC)));
     };
 
     const { NFTList, selectedNFTList, afterNearRedirect } = useSelector(
