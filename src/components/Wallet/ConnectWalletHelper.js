@@ -55,9 +55,10 @@ export const wallets = [
 
 const { modalError } = store.getState();
 
-export const connectUnstoppable = async () => {
+export const connectUnstoppable = async (close) => {
   // eslint-disable-next-line no-debugger
   // debugger;
+  close()
   try {
     const provider = await web3Modal.connect();
     return provider.selectedAddress;

@@ -12,7 +12,7 @@ import VeChainWallet from "./VeChainWallet";
 import PropTypes from "prop-types";
 import CosmosWallet from "./CosmosWallet";
 // import HederaWallet from "./HederaWallet";
-import Unscopables from "./Unscopables";
+import Unstoppables from "./Unstoppables";
 import { sortWallet } from "./WalletListHelper";
 import TonWallet from "./TONWallet/TonWallet";
 import TonKeeper from "./TONWallet/TonKeeper";
@@ -296,7 +296,7 @@ export default function WalletList({ connected, input, discount }) {
     },
 
     {
-      Component: <Unscopables key="wallet-index-21" close={connected} />,
+      Component: <Unstoppables key="wallet-index-21" close={connected} />,
       name: "Unstoppable Domains",
       mobile: true,
       desktop: true,

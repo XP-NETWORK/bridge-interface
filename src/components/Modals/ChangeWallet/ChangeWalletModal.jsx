@@ -39,7 +39,7 @@ export default function ChangeWalletModal() {
         // debugger;
         handleGA4Event(
             googleAnalyticsCategories.Chain,
-            `Changing chain from ${from?.text} to: ${to.text}`
+            `Changing chain from ${from?.text} to: ${to?.text}`
         );
         deactivate();
         dispatch(setFrom(temporaryFrom));

@@ -87,7 +87,7 @@ function ConnectWallet() {
         dispatch(setTemporaryFrom(""));
     };
 
-    const walletsModal = useSelector((state) => state.general.walletsModal);
+    let walletsModal = useSelector((state) => state.general.walletsModal);
 
     const handleConnect = async () => {
         handleGA4Event(
@@ -150,12 +150,23 @@ function ConnectWallet() {
     }, [tonQRCodeModal, qrCodeImage, connected]);
 
     useEffect(() => {
+        if (unstoppableDomains) setShow(false);
+    }, [unstoppableDomains]);
+
+    useEffect(() => {
         if (isOpen) setShow(false);
     }, [isOpen]);
 
     useEffect(() => {
         if (evmAccount) setShow(false);
     }, [evmAccount]);
+
+    useEffect(() => {
+        if (unstoppableDomains) {
+            setShow(false);
+            setWalletsModal(false)
+        }
+    }, [unstoppableDomains]);
 
     return (
         <div>

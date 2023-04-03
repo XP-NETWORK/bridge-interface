@@ -51,7 +51,6 @@ function DestinationChain() {
         let address = e.target.value.trim();
         if (generalValidation(e, receiver)) {
           const validateFunc = validateFunctions[to.type];
-          console.log("validateFunc :", to.type);
           if (validateFunc) {
             dispatch(setIsInvalidAddress(validateFunc(address)));
           }
