@@ -7,7 +7,8 @@ import {
   setChangeWallet,
   setConnectedWallet,
   setWalletsModal,
-  setAccountWalletModal
+  setAccountWalletModal,
+  setUnstoppableDomains
 } from "../../store/reducers/generalSlice";
 import PropTypes from "prop-types";
 import { withServices } from "../App/hocs/withServices";
@@ -36,6 +37,7 @@ function Unstoppables({ serviceContainer }) {
     if (address) {
       dispatch(setAccount(address));
       dispatch(setConnectedWallet("MetaMask"))
+      dispatch(setUnstoppableDomains(true))
     }
     const nonce = bridge.getNonce(from?.chainId);
     const chainWrapper = await bridge.getChain(nonce);

@@ -172,7 +172,7 @@ function ConnectWallet() {
                         : "connect-wallet__button--disabled"
                 }
             >
-                Continue bridging
+                Continue Bridging
             </div>
             <div id="aboutnft" className="aboutNft">
                 <div
