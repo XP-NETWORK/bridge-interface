@@ -50,12 +50,12 @@ export default function AccountModal() {
       {/* <CopyToClipboard text={account}> */}
       <div onClick={copyTextToClipboard} className="account-modal__account">
         <img src={NftSelect} alt="#" />
-        {
-          account.length > 12 ? account &&
-          `${account.substring(0, 10)}...${account.substring(
-            account.length - 2
-          )}` : account
-        }
+        {account.length > 12
+          ? account &&
+            `${account.substring(0, 10)}...${account.substring(
+              account.length - 2
+            )}`
+          : account}
         <Tooltip />
       </div>
       {/* </CopyToClipboard> */}
@@ -66,12 +66,13 @@ export default function AccountModal() {
               "NEARTRX=true"
             );
 
-            window.safeLocalStorage?.removeItem("XP_MM_CONNECTED");
-            window.safeLocalStorage?.removeItem("_wallet_auth_key");
-            const w = await window.wallet_selector
+            //window.safeLocalStorage?.removeItem("XP_MM_CONNECTED");
+            window.safeLocalStorage?.clear();
+            //localStorage.clear()
+            /*const w = await window.wallet_selector
               ?.wallet()
               .catch(() => undefined);
-            w && (await w.signOut());
+            w && (await w.signOut());*/
             nearWalletConncted
               ? window.open(`${window.location.pathname}`, "_self")
               : window.location.reload();
