@@ -132,9 +132,9 @@ function ConnectWallet() {
     }
 
     const handleChange = (e) => {
-      if (!(e.nativeEvent.data === " " && walletSearch.length === 0)) {
-        setWalletSearch(e.target.value);
-      }
+        if (!(e.nativeEvent.data === " " && walletSearch.length === 0)) {
+            setWalletSearch(e.target.value);
+        }
     };
     function handleVideoClick() {
         handleGA4Event(googleAnalyticsCategories.Content, "About video.");

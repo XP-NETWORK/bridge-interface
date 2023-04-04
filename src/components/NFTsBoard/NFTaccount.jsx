@@ -115,16 +115,16 @@ function NFTaccount(props) {
         }
     }
 
-    // const getAlgorandClaimables = async (fromChain) => {
-    //     // eslint-disable-next-line no-debugger
-    //     debugger;
-    //     try {
-    //         const claimables = await fromChain.getClaimables(account);
-    //         console.log({ claimables });
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
+    const getAlgorandClaimables = async (fromChain) => {
+        // eslint-disable-next-line no-debugger
+        // debugger;
+        try {
+            const claimables = await fromChain.getClaimables(account);
+            console.log({ claimables });
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const getBalance = async (fromChain) => {
         const _balance = await fromChain.balance(_account);
@@ -161,9 +161,9 @@ function NFTaccount(props) {
                     NFTSetToggler !== prevNFTSetToggler) &&
                 getNFTsList(fromChain);
 
-            // if (_account && _from?.type === "Algorand") {
-            //     getAlgorandClaimables(fromChain);
-            // }
+            if (_account && _from?.type === "Algorand") {
+                getAlgorandClaimables(fromChain);
+            }
 
             //update Balance
             getBalance(fromChain);
