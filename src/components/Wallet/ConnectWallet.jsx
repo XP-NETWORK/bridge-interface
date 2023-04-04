@@ -3,7 +3,6 @@ import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
     setAlert,
-    // setCheckWallet,
     setQrCodeString,
     setShowAbout,
     setShowVideo,
@@ -150,23 +149,12 @@ function ConnectWallet() {
     }, [tonQRCodeModal, qrCodeImage, connected]);
 
     useEffect(() => {
-        if (unstoppableDomains) setShow(false);
-    }, [unstoppableDomains]);
-
-    useEffect(() => {
         if (isOpen) setShow(false);
     }, [isOpen]);
 
     useEffect(() => {
         if (evmAccount) setShow(false);
     }, [evmAccount]);
-
-    useEffect(() => {
-        if (unstoppableDomains) {
-            setShow(false);
-            setWalletsModal(false)
-        }
-    }, [unstoppableDomains]);
 
     return (
         <div>

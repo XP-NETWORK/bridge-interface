@@ -26,8 +26,6 @@ export default function SetDestination() {
     str === "departure"
       ? dispatch(setDepartureOrDestination("departure"))
       : dispatch(setDepartureOrDestination("destination"));
-      console.log(to);
-
 
   };
   return (

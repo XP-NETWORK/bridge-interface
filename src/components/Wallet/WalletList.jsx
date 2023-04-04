@@ -124,7 +124,7 @@ export default function WalletList({ connected, input, discount }) {
       mobile: true,
       desktop: true,
       order: 4,
-      keyName: "TempleWallet",
+      keyName: "Temple Wallet",
     },
     {
       Component: (
@@ -349,7 +349,7 @@ export default function WalletList({ connected, input, discount }) {
       desktop: true,
       order: -888,
       type: "NEAR",
-      keyName: "WalletSelector",
+      keyName: "Wallet Selector",
     },
     {
       Component: <Phantom key="Phantom" close={connected} />,

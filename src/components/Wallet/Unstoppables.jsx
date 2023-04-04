@@ -1,14 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import icon from "../../assets/img/wallet/unstoppable.svg";
 import { connectUnstoppable } from "./ConnectWalletHelper";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setAccount,
   setChangeWallet,
-  // setChangeWallet,
   setConnectedWallet,
-  setUnstoppableDomains,
-  setWalletsModal
+  setWalletsModal,
+  setAccountWalletModal
 } from "../../store/reducers/generalSlice";
 import PropTypes from "prop-types";
 import { withServices } from "../App/hocs/withServices";
@@ -17,41 +16,24 @@ import { ethers } from "ethers";
 function Unstoppables({ serviceContainer }) {
   const { bridge } = serviceContainer;
   const dispatch = useDispatch();
-  const from = useSelector((state) => state.general.from);
-  const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
-  let unstoppableDomains = useSelector((state) => state.general.unstoppableDomains);
-  let connectedWallet = useSelector((state) => state.general.connectedWallet);
+  let from = useSelector((state) => state.general.from);
+  let temporaryFrom = useSelector((state) => state.general.temporaryFrom);
   const OFF = { opacity: 0.6, pointerEvents: "none" };
 
-  
-
   const disp = (()=>{
-    console.log('closer')
     dispatch(setWalletsModal(false))
     dispatch(setChangeWallet(false))
+    dispatch(setAccountWalletModal(false))
   })
 
-  useEffect(()=>{
-    if(unstoppableDomains){
-      disp()
-    }
-  },[unstoppableDomains, connectedWallet])
-
-  useEffect(()=>{
-    setUnstoppableDomains(false)
-  },[from, connectedWallet])
-
   const handleConnect = async () => {
-    // close();
+
+    disp()
     dispatch(setWalletsModal(false));
 
-    
-
     window.safeLocalStorage?.clear();
-    const address = await connectUnstoppable(disp);
-    console.log('address: ',address)
+    const address = await connectUnstoppable();
     if (address) {
-      dispatch(setUnstoppableDomains(true))
       dispatch(setAccount(address));
       dispatch(setConnectedWallet("MetaMask"))
     }
