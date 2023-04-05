@@ -101,8 +101,8 @@ export const withNearConnection = (Wrapped) =>
                         }),
                         bridge.getChain(Chain.NEAR),
                     ]);
-                    const y = _selector.store.getState();
-                    console.log({ y });
+                    // const y = _selector.store.getState();
+                    // console.log({ y });
                     window.wallet_selector_modal = setupModal(_selector, {
                         contractId: nearParams?.bridge,
                     });
