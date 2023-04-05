@@ -7,6 +7,7 @@ import {
     setShowAbout,
     setShowVideo,
     setTemporaryFrom,
+    setUnstoppableDomainsIsSelected,
     setWalletsModal,
 } from "../../store/reducers/generalSlice";
 import { useAccount } from "wagmi";
@@ -28,13 +29,13 @@ function ConnectWallet() {
 
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
-    const [show, setShow] = useState();
+    let [show, setShow] = useState();
     const qrCodeImage = useSelector((state) => state.general.qrCodeImage);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
     const secretAccount = useSelector((state) => state.general.secretAccount);
     const tonQRCodeModal = useSelector((state) => state.tonStore.qrCode);
-
+    let unstoppableDomainsIsSelected = useSelector((state) => state.general.unstoppableDomainsIsSelected);
     const unstoppableDomains = useSelector(
         (state) => state.general.unstoppableDomains
     );
@@ -61,7 +62,14 @@ function ConnectWallet() {
 
     const inputElement = useRef(null);
 
-    const connected =
+    useEffect(() => {
+        if (unstoppableDomainsIsSelected) {
+            setShow(false);
+            setWalletsModal(false)
+        }
+    }, [unstoppableDomainsIsSelected]);
+
+    let connected =
         algorandAddresses.length ||
         tonAccount ||
         hederaAccount ||
@@ -80,6 +88,7 @@ function ConnectWallet() {
         setShow(false);
         setWalletSearch("");
         dispatch(setWalletsModal(false));
+        dispatch(setUnstoppableDomainsIsSelected(false))
         if (qrCodeImage) {
             dispatch(setQrCodeString(""));
         }

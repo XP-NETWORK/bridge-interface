@@ -27,6 +27,7 @@ const initialState = {
     afterNearRedirect: true,
     hederaClaimables: [],
     algorandAddresses: [],
+    unstoppableDomainsIsSelected: false
 };
 
 const generalSlice = createSlice({
@@ -103,6 +104,9 @@ const generalSlice = createSlice({
         },
         setBitKeep(state, action) {
             state.bitKeep = action.payload;
+        },
+        setUnstoppableDomainsIsSelected(state, action) {
+            state.unstoppableDomainsIsSelected = action.payload;
         },
         setTemporaryFrom(state, action) {
             state.temporaryFrom = action.payload;
@@ -570,6 +574,7 @@ export const {
     setKeplrAccount,
     setKeplrWallet,
     setBitKeep,
+    setUnstoppableDomainsIsSelected,
     setTemporaryFrom,
     setCheckWallet,
     addImportedNFTtoNFTlist,

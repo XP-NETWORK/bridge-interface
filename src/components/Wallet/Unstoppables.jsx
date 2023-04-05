@@ -8,7 +8,8 @@ import {
   setConnectedWallet,
   setWalletsModal,
   setAccountWalletModal,
-  setUnstoppableDomains
+  setUnstoppableDomains,
+  setUnstoppableDomainsIsSelected
 } from "../../store/reducers/generalSlice";
 import PropTypes from "prop-types";
 import { withServices } from "../App/hocs/withServices";
@@ -29,11 +30,12 @@ function Unstoppables({ serviceContainer }) {
 
   const handleConnect = async () => {
 
+    dispatch(setUnstoppableDomainsIsSelected(true))
     disp()
     dispatch(setWalletsModal(false));
 
     window.safeLocalStorage?.clear();
-    const address = await connectUnstoppable();
+    const address = await connectUnstoppable(disp);
     if (address) {
       dispatch(setAccount(address));
       dispatch(setConnectedWallet("MetaMask"))

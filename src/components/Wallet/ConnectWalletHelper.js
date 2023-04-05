@@ -55,7 +55,9 @@ export const wallets = [
 
 const { modalError } = store.getState();
 
-export const connectUnstoppable = async () => {
+export const connectUnstoppable = async (close) => {
+
+  close()
   try {
     const provider = await web3Modal.connect();
     return provider.selectedAddress;
