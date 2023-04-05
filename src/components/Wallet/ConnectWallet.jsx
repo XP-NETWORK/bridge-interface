@@ -66,6 +66,7 @@ function ConnectWallet() {
         if (unstoppableDomainsIsSelected) {
             setShow(false);
             setWalletsModal(false)
+            dispatch(setUnstoppableDomainsIsSelected(false))
         }
     }, [unstoppableDomainsIsSelected]);
 
