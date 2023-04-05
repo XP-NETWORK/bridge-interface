@@ -7,6 +7,7 @@ import near from "../../../assets/img/wallet/NearWallet.svg";
 import { withServices } from "../../App/hocs/withServices";
 
 import { useSelector } from "react-redux";
+import { biz } from "../../values";
 
 //import /*useDispatch, useSelector*/ "react-redux";
 
@@ -25,20 +26,22 @@ function WalletSelector({ close }) {
     window.wallet_selector_modal?.show();
   };
 
-
   /**
    *
    * return bridge teach label resource cruel filter benefit region host chronic mountain
    */
 
   const getStyle = () => {
+    if (!biz) {
+      return { display: "none" };
+    }
     if (temporaryFrom?.type === "NEAR") {
-        return {};
+      return {};
     } else if (temporaryFrom && temporaryFrom?.type !== "NEAR") {
-        return OFF;
+      return OFF;
     } else if (from && from?.text !== "NEAR") return OFF;
     else return {};
-};
+  };
 
   return (
     <li
