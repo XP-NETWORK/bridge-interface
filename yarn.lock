@@ -2132,10 +2132,10 @@
     "@types/bn.js" "^4.11.3"
     bn.js "^4.11.8"
 
-"@hashgraph/cryptography@=1.4.3":
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/@hashgraph/cryptography/-/cryptography-1.4.3.tgz#691d539e83e2a1d5d603701f6fd3b6f62ef21a5c"
-  integrity sha512-txU2SVz8mBJ5aHqkrIpmaerJSu0F/S9T/0eXpYAIC2USy/8oTisp54gKVDTETFdnCrq0tNgCJmWt2N8QHMMbcw==
+"@hashgraph/cryptography@^1.4.3":
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/@hashgraph/cryptography/-/cryptography-1.4.5.tgz#167d7ce24fe4624a86fec9b8fab23f5954e088fb"
+  integrity sha512-1zdgTgzWOqvu9Qn1BvAv2kLaglxd76ZDO4JDOPtwqCwZMhPZhvYMQyjHcEhrJg7rlvl0ZImbUwkJ7CVwbPp9hg==
   dependencies:
     bignumber.js "^9.1.1"
     crypto-js "^4.1.1"
@@ -5752,7 +5752,16 @@
     keyvaluestorage-interface "^1.0.0"
     tslib "1.14.1"
 
-"@walletconnect/jsonrpc-utils@^1.0.3", "@walletconnect/jsonrpc-utils@^1.0.4", "@walletconnect/jsonrpc-utils@^1.0.6":
+"@walletconnect/jsonrpc-utils@^1.0.3":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@walletconnect/jsonrpc-utils/-/jsonrpc-utils-1.0.7.tgz#1812d17c784f1ec0735bf03d0884287f60bfa2ce"
+  integrity sha512-zJziApzUF/Il4VcwabnaU+0yo1QI4eUkYX99zmCVTHJvZOf2l0zjADf/OpKqWyeNFC3Io56Z/8uJHVtcNVvyFA==
+  dependencies:
+    "@walletconnect/environment" "^1.0.1"
+    "@walletconnect/jsonrpc-types" "^1.0.2"
+    tslib "1.14.1"
+
+"@walletconnect/jsonrpc-utils@^1.0.4", "@walletconnect/jsonrpc-utils@^1.0.6":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@walletconnect/jsonrpc-utils/-/jsonrpc-utils-1.0.6.tgz#7fa58e6671247e64e189828103282e6258f5330f"
   integrity sha512-snp0tfkjPiDLQp/jrBewI+9SM33GPV4+Gjgldod6XQ7rFyQ5FZjnBxUkY4xWH0+arNxzQSi6v5iDXjCjSaorpg==
