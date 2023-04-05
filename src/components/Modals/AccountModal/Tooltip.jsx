@@ -25,5 +25,5 @@ export default function Tooltip({ text }) {
 }
 
 Tooltip.propTypes = {
-    text: PropTypes.text,
+    text: PropTypes.string,
 };
