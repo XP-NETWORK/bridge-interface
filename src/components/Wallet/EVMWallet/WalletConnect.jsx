@@ -16,6 +16,10 @@ function WalletConnect({ styles /*connectWallet*/ }) {
     const from = useSelector((state) => state.general.from);
     const testnet = useSelector((state) => state.general.testNet);
 
+    const unsupportedChains = [
+        'Godwoken', 'Fuse', 'Skale', 'Harmony', 'Abeychain', 'GateChain', 'Velas', 'Caduceus'
+    ]
+
     const handleClick = async () => {
         dispatch(setWalletsModal(false));
         dispatch(setAccountWalletModal(false));
@@ -25,7 +29,7 @@ function WalletConnect({ styles /*connectWallet*/ }) {
     return (
         <li
             style={
-                (!testnet && from?.key !== 'Godwoken') ? styles() : { pointerEvents: "none", opacity: "0.7" }
+                (!testnet && !unsupportedChains.includes(from?.key)) ? styles() : { pointerEvents: "none", opacity: "0.7" }
             }
             onClick={handleClick}
             className="wllListItem"
