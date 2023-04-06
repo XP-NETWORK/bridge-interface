@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect /*useState*/ } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Chain } from "xp.network";
 
@@ -35,18 +35,31 @@ import { adaptToWalletSelector } from "./utils";
 
 export const withNearConnection = (Wrapped) =>
     function CB(props) {
+        let [selectedNearWallet, setSelectedNearWallet] = useState('')
         const { serviceContainer } = props;
         //const [selector, setSelector] = useState(null);
         //const [accounts, setAccounts] = useState([]);
         const dispatch = useDispatch();
         const navigate = useNavigate();
+        const NEAR_WALLET_IDS = {
+            'meteor-wallet' : 'Meteor Wallet',
+            'sender' : 'Sender',
+            'here-wallet' : 'Here Wallet',
+            'my-near-wallet': 'My NEAR Wallet',
+            'near-wallet': 'NEAR Wallet'
+        }
+
+        useEffect(async ()=>{
+            dispatch(setConnectedWallet(NEAR_WALLET_IDS[await selectedNearWallet]))
+        },[selectedNearWallet])
+        
 
         const saveWallet = (address, bridge, chain, signer) => {
             dispatch(setAccount(address));
             chain.setSigner(signer);
             bridge.setCurrentType(chain);
             dispatch(setFrom(chains.find((c) => c.nonce === Chain.NEAR)));
-            dispatch(setConnectedWallet("Near Wallet"));
+            // dispatch(setConnectedWallet("Near Wallet"));
         };
 
         const { NFTList, selectedNFTList, afterNearRedirect } = useSelector(
@@ -125,6 +138,7 @@ export const withNearConnection = (Wrapped) =>
                             }
 
                             if (nextAccounts[0]) {
+                                await setSelectedNearWallet(await (await _selector.wallet()).id)
                                 saveWallet(
                                     nextAccounts[0].accountId,
                                     bridge,
@@ -173,6 +187,8 @@ export const withNearConnection = (Wrapped) =>
                         signer
                     );
                     if (address && signer) {
+
+                        dispatch(setConnectedWallet('NEAR Wallet'))
                         saveWallet(
                             address,
                             serviceContainer.bridge,

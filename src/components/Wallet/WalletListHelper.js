@@ -238,7 +238,6 @@ export const sortWallet = (components) => {
                 ...aptosWallets,
                 ...usbWallet,
             ];
-            console.log({ sortedWallets });
             return sortedWallets;
         default:
             break;
