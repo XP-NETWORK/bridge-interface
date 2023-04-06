@@ -12,6 +12,9 @@ import {
     setChangeWallet,
     setTemporaryFrom,
     setTemporaryTo,
+    setConnectedWallet,
+    setWalletsModal,
+    setConnected,
 } from "../../store/reducers/generalSlice";
 import Chain from "./Chain";
 import ChainSearch from "../Chains/ChainSearch";
@@ -21,7 +24,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useLocation } from "react-router-dom";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import ScrollArrows from "./ScrollArrows";
-
+import { useDisconnect } from "wagmi";
 import PropTypes from "prop-types";
 
 import { withServices } from "../App/hocs/withServices";
@@ -32,6 +35,7 @@ function ChainListBox({ serviceContainer }) {
 
     const dispatch = useDispatch();
     const location = useLocation();
+    const { disconnect } = useDisconnect();
     const departureOrDestination = useSelector(
         (state) => state.general.departureOrDestination
     );
@@ -52,6 +56,9 @@ function ChainListBox({ serviceContainer }) {
     const tronAccount = useSelector((state) => state.general.tronWallet);
     const { account } = useWeb3React();
     const bitKeep = useSelector((state) => state.general.bitKeep);
+    // const wc = useSelector((state) => state.general.WalletConnect);
+    const connectedWallet = useSelector((state) => state.general.connectedWallet);
+    const wc = connectedWallet === "WalletConnect";
     const nftChainListRef = useRef(null);
     const [reached, setReached] = useState(false);
 
@@ -144,7 +151,26 @@ function ChainListBox({ serviceContainer }) {
                 dispatch(setTemporaryTo(to));
                 handleClose();
             }
+
+            console.log("wc: ", wc);
+            console.log("location.pathname: ", location.pathname);
+            console.log("from.type: ", from?.type);
+
+            if (
+              !location.pathname.includes("account") &&
+              wc &&
+              from?.type !== "EVM"
+            ) {
+              dispatch(setChangeWallet(true));
+              dispatch(setWalletsModal(true));
+              dispatch(setConnectedWallet(undefined));
+              dispatch(setConnected(false))
+                disconnect()
+            }
+
             handleClose();
+
+
         } else if (departureOrDestination === "destination") {
             handleGA4Event(
                 googleAnalyticsCategories.Chain,

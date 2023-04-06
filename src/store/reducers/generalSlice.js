@@ -28,7 +28,8 @@ const initialState = {
     hederaClaimables: [],
     algorandAddresses: [],
     unstoppableDomainsIsSelected: false,
-    receiver : undefined
+    receiver : undefined,
+    connected:false
 };
 
 const generalSlice = createSlice({
@@ -232,6 +233,9 @@ const generalSlice = createSlice({
         },
         setDepartureOrDestination(state, action) {
             state.departureOrDestination = action.payload;
+        },
+        setConnected(state, action) {
+            state.connected = action.payload;
         },
         setChainSearch(state, action) {
             state.chainSearch = action.payload;
@@ -616,6 +620,7 @@ export const {
     setFrom,
     setChainModal,
     setDepartureOrDestination,
+    setConnected,
     setChainSearch,
     setStep,
     setAccount,

@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
     setAlert,
+    setConnected,
     setQrCodeString,
     setShowAbout,
     setShowVideo,
@@ -70,7 +71,8 @@ function ConnectWallet() {
         }
     }, [unstoppableDomainsIsSelected]);
 
-    let connected =
+    const connected = useSelector((state) => state.general.connected);
+
         algorandAddresses.length ||
         tonAccount ||
         hederaAccount ||
@@ -82,8 +84,8 @@ function ConnectWallet() {
         tronAccount ||
         account ||
         address
-            ? true
-            : false;
+          ? setConnected(true)
+          : setConnected(false);
 
     const handleClose = () => {
         setShow(false);
