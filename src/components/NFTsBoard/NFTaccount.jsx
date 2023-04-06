@@ -43,6 +43,7 @@ import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 
 import withChains from "./hocs";
 import ReactGA from "../../services/GA4";
+import InvalidAddressAlert from "../Alerts/InvalidAddressAlert";
 
 const intervalTm = 15_000;
 
@@ -228,6 +229,7 @@ function NFTaccount(props) {
             <UnsupportedNetwork />
             <SelectNFTAler />
             <PasteDestinationAlert />
+            <InvalidAddressAlert />
             <NoApprovedNFT />
             <Container className="nftSlectContaine">
                 <ReturnBtn />

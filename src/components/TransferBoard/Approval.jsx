@@ -10,6 +10,7 @@ import {
     setError,
     setSelectNFTAlert,
     setPasteDestinationAlert,
+    setInvalidAddressAlert,
 } from "../../store/reducers/generalSlice";
 import { errorToLog, isALLNFTsApproved } from "../../wallet/helpers";
 
@@ -23,6 +24,8 @@ function Approval({ serviceContainer }) {
     const [approvedLoading, setApprovedLoading] = useState();
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
+    let isInvalidAddress = useSelector((state) => state.general.isInvalid);
+
     //const testnet = useSelector((state) => state.general.testNet);
     const account = useSelector((state) => state.general.account);
 
@@ -97,9 +100,13 @@ function Approval({ serviceContainer }) {
     };
 
     const onClickHandler = async () => {
-        if (!receiver) {
+        if (!receiver || receiver.length === 0 || receiver === '') {
             dispatch(setPasteDestinationAlert(true));
-        } else if (selectedNFTList.length < 1) {
+        } 
+        else if(!isInvalidAddress){
+            dispatch(setInvalidAddressAlert(true));
+        }
+        else if (selectedNFTList.length < 1) {
             dispatch(setSelectNFTAlert(true));
         }
         // else if (!bigNumberFees) {

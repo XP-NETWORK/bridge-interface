@@ -27,7 +27,8 @@ const initialState = {
     afterNearRedirect: true,
     hederaClaimables: [],
     algorandAddresses: [],
-    unstoppableDomainsIsSelected: false
+    unstoppableDomainsIsSelected: false,
+    receiver : undefined
 };
 
 const generalSlice = createSlice({
@@ -524,6 +525,9 @@ const generalSlice = createSlice({
         setPasteDestinationAlert(state, action) {
             state.pasteDestinationAlert = action.payload;
         },
+        setInvalidAddressAlert(state, action) {
+            state.invalidAddressAlert = action.payload;
+        },
         setNoApprovedNFTAlert(state, action) {
             state.noApprovedNFTAlert = action.payload;
         },
@@ -583,6 +587,7 @@ export const {
     setChangeWallet,
     setNoApprovedNFTAlert,
     setPasteDestinationAlert,
+    setInvalidAddressAlert,
     setSelectNFTAlert,
     setAlgoAccountToClaim,
     setSync2,
