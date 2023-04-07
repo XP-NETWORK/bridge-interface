@@ -24,7 +24,7 @@ export default function MobileNFTsSearch({ handleSearchTop }) {
     const nfts = useSelector((state) => state.general.NFTList);
 
     const handleSearch = (e) => {
-        const search = e.target.value.toLowerCase();
+        const search = e.target.value;
         setInput(search);
     };
 
