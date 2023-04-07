@@ -29,7 +29,7 @@ function WalletConnect({ styles /*connectWallet*/ }) {
     return (
         <li
             style={
-                (!testnet && !unsupportedChains.includes(from?.key)) ? styles() : { pointerEvents: "none", opacity: "0.7" }
+                (!testnet && !unsupportedChains.includes(from?.key)) && from?.type === 'EVM' ? styles() : { pointerEvents: "none", opacity: "0.7" }
             }
             onClick={handleClick}
             className="wllListItem"
