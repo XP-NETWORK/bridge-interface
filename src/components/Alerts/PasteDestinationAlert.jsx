@@ -7,11 +7,16 @@ import { setPasteDestinationAlert } from "../../store/reducers/generalSlice";
 function PasteDestinationAlert() {
   const dispatch = useDispatch();
   const receiver = useSelector((state) => state.general.receiver);
-  const alert = useSelector((state) => state.general.pasteDestinationAlert);
+  let alert = useSelector((state) => state.general.pasteDestinationAlert);
+  let to = useSelector((state) => state.general.to);
 
   const handleClose = () => {
     dispatch(setPasteDestinationAlert(false));
   };
+
+  useEffect(() => {
+    dispatch(setPasteDestinationAlert(false));
+  }, [to]);
 
   useEffect(() => {
     if (receiver) {

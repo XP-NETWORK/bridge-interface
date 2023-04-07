@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
 import { setInvalidAddressAlert } from "../../store/reducers/generalSlice";
 
 function InvalidAddressAlert() {
   const dispatch = useDispatch();
-  const alert = useSelector((state) => state.general.invalidAddressAlert);
+  let alert = useSelector((state) => state.general.invalidAddressAlert);
+  let from = useSelector((state) => state.general.from);
+  let to = useSelector((state) => state.general.to); 
+  useEffect(()=>{
+    handleClose()
+  },[to, from])
 
   const handleClose = () => {
     dispatch(setInvalidAddressAlert(false));
