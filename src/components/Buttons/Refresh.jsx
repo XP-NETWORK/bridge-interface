@@ -48,7 +48,6 @@ export default withServices(function Refresh({ serviceContainer }) {
       }
     }
   };
-
   return (
     <span
       className={bigLoader ? "refresh-button--disabled" : "refresh-button"}

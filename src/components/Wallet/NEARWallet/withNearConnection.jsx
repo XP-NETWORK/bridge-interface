@@ -24,8 +24,6 @@ import { getRightPath } from "../../../wallet/helpers";
 
 import { setupWalletSelector } from "@near-wallet-selector/core";
 
-//import { setupNearWallet } from "@near-wallet-selector/near-wallet";
-//import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
 import { setupModal } from "@near-wallet-selector/modal-ui";
 import { setupHereWallet } from "@near-wallet-selector/here-wallet";
 
@@ -81,16 +79,6 @@ export const withNearConnection = (Wrapped) =>
                 : "mainnet",
               debug: true,
               modules: [
-                /* setupNearWallet({
-                  //successUrl: url,
-                  //failureUrl: url,
-                }),
-                setupMyNearWallet({
-                  successUrl:
-                    url +
-                    `${url.includes("?") ? "&" : "?"}selectedNearWallet=mnw`,
-                  failureUrl: url + `&selectedNearWallet=mnw`,
-                }),*/
                 setupHereWallet(),
                 setupSender(),
                 setupMathWallet(),

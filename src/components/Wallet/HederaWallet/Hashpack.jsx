@@ -8,6 +8,7 @@ import HigherHEDERA from "./HigherHEDERA";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 
+import { biz } from "../../values";
 
 // import { useDispatch, useSelector } from "react-redux";
 // import {
@@ -77,14 +78,17 @@ function Hashpack({ connect }) {
   //     });
   // }, []);
   const getStyle = () => {
+    if (!biz) {
+      return { display: "none" };
+    }
     if (temporaryFrom?.type === "Hedera") {
-        return {};
+      return {};
     } else if (temporaryFrom && temporaryFrom?.type !== "Hedera") {
-        return OFF;
+      return OFF;
     } else if (from && from?.text !== "Hedera") return OFF;
-    else if(loading) return OFF;
+    else if (loading) return OFF;
     else return {};
-};
+  };
   return (
     <li
       onClick={() => {
