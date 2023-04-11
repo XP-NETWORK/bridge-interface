@@ -19,8 +19,7 @@ function Unstoppables({ serviceContainer }) {
   const { bridge } = serviceContainer;
   const dispatch = useDispatch();
   let from = useSelector((state) => state.general.from);
-  let temporaryFrom = useSelector((state) => state.general.temporaryFrom);
-  const OFF = { opacity: 0.6, pointerEvents: "none" };
+  const OFF = { opacity: "0.7", pointerEvents: "none" };
 
   const disp = (()=>{
     dispatch(setWalletsModal(false))
@@ -50,13 +49,12 @@ function Unstoppables({ serviceContainer }) {
   };
 
   const getStyle = () => {
-    switch (true) {
-      case from && from.type !== "EVM":
+    if (from) {
+      if (from?.type !== "EVM") {
         return OFF;
-      case temporaryFrom && temporaryFrom.type !== "EVM":
-        return OFF;
-      default:
-        break;
+      }
+    } else {
+      return OFF;
     }
   };
 
