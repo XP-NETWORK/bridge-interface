@@ -92,11 +92,11 @@ export default function HigherEVM(OriginalComponent) {
                 case "BitKeep":
                     deactivate();
                     connected = await connectBitKeep(from);
-                    dispatch(setWalletsModal(false));
-                    dispatch(setBitKeep(true));
-                    dispatch(setConnectedWallet("BitKeep"))
                     if (connected && to) {
-                        navigateToAccountRoute();
+                      dispatch(setWalletsModal(false));
+                      dispatch(setBitKeep(true));
+                      dispatch(setConnectedWallet("BitKeep"));
+                      navigateToAccountRoute();
                     }
                     break;
                 default:
