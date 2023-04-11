@@ -147,6 +147,7 @@ export const connectMetaMask = async (activate, from, to, chainId, navigate) => 
     }
     //d/
     if (!mobile && !window.safeLocalStorage?.getItem("XP_MM_CONNECTED"))
+    console.log(await window.ethereum)
       await window.ethereum.request({
         method: "wallet_requestPermissions",
         params: [
@@ -309,6 +310,8 @@ export const connectMaiar = async () => {
 
 // Tron blockchain connection ( TronLink )
 export const connectTronlink = async () => {
+  console.log('window.tronLink: ',window.tronLink)
+  console.log('window.tronWeb: ',window.tronWeb)
   const {
     general: { factory },
   } = store.getState();

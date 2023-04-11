@@ -24,6 +24,7 @@ function WalletConnect({ styles /*connectWallet*/ }) {
         dispatch(setWalletsModal(false));
         dispatch(setAccountWalletModal(false));
         await open({ route: "SelectNetwork" });
+        // await close()
     };
 
     return (

@@ -38,6 +38,8 @@ export default function UserConnect({ mobile }) {
     const location = useLocation();
     const tonAccount = useSelector((state) => state.general.tonAccount);
     const aptosAccount = useSelector((state) => state.general.aptosAccount);
+    const signerX = useSelector((state) => state.signers.signer);
+
 
     const walletAccount =
         aptosAccount ||
@@ -158,6 +160,8 @@ export default function UserConnect({ mobile }) {
             );
             const signer = provider.getSigner(account);
             dispatch(setSigner(signer));
+            console.log('signer: ', signer)
+            console.log('state signer: ', signerX)
         }
     }, [chainId, WCProvider]);
 

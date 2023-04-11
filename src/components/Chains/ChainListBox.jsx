@@ -24,18 +24,37 @@ import { useWeb3React } from "@web3-react/core";
 import { useLocation } from "react-router-dom";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import ScrollArrows from "./ScrollArrows";
-import { useDisconnect } from "wagmi";
 import PropTypes from "prop-types";
+// import store from "../../store/store";
+// import { useSigner } from "wagmi";
+import WalletConnectProvider from '@walletconnect/web3-provider'
+// import { useDisconnect, useProvider } from "wagmi";
+// import { Web3Wallet } from "@walletconnect/web3wallet";
+// import { providerOptions } from "../../wallet/connectors";
+
+// import { useEthers as ue} from '@usedapp/core'
 
 import { withServices } from "../App/hocs/withServices";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
+// import {
+//     walletConnectProvider,
+// } from "@web3modal/ethereum";
+
+// import { providers } from "ethers";
 
 function ChainListBox({ serviceContainer }) {
     const { bridge } = serviceContainer;
 
+    // let {
+    //     signers: { signer }
+    // } = store.getState();
+
+    // const { data: signer } = useSigner();
+    
+
+
     const dispatch = useDispatch();
     const location = useLocation();
-    const { disconnect } = useDisconnect();
     const departureOrDestination = useSelector(
         (state) => state.general.departureOrDestination
     );
@@ -56,6 +75,8 @@ function ChainListBox({ serviceContainer }) {
     const tronAccount = useSelector((state) => state.general.tronWallet);
     const { account } = useWeb3React();
     const bitKeep = useSelector((state) => state.general.bitKeep);
+    // const signer = useSelector((state) => state.signers.signer);
+
     // const wc = useSelector((state) => state.general.WalletConnect);
     const connectedWallet = useSelector((state) => state.general.connectedWallet);
     const wc = connectedWallet === "WalletConnect";
@@ -68,6 +89,10 @@ function ChainListBox({ serviceContainer }) {
         dispatch(setSwitchDestination(false));
         dispatch(setChainSearch(""));
     };
+
+    // const { deactivate, accountX} = ue()
+    // const { accountX} = ue()
+
 
     const handleScroll = () => {
         const {
@@ -156,17 +181,96 @@ function ChainListBox({ serviceContainer }) {
             console.log("location.pathname: ", location.pathname);
             console.log("from.type: ", from?.type);
 
+
+            // console.log('connected: ',await new providerOptions.walletonnect.package().connected())
+
             if (
-              !location.pathname.includes("account") &&
-              wc &&
-              from?.type !== "EVM"
+            //   !location.pathname.includes("account") &&
+              wc
+            //   from?.type !== "EVM"
             ) {
+              console.log("we here");
               dispatch(setChangeWallet(true));
               dispatch(setWalletsModal(true));
               dispatch(setConnectedWallet(undefined));
-              dispatch(setConnected(false))
-                disconnect()
+              dispatch(setConnected(false));
+              
+            //   console.log(
+            //     "connected: ",
+            //     await new providerOptions.walletonnect.package().connected()
+            //   );
+            //   await new providerOptions.walletonnect.package().disconnect();
+              if(window.ethereum){
+                // console.log(await window.ethereum.request({
+                //     method: "eth_requestAccounts",
+                //     params: [{eth_accounts: {}}]
+                // }))
+
+                // console.log('window.ethereum: ', await window.ethereum)
+                // console.log('window.ethereum?.disconnect(): ',await window.ethereum?.disconnect())
+                window.ethereum?.on('disconnect', (error) => {
+                    console.log('METAMASK DICONNECT EVENT EMITTED', error)
+                });
+                // deactivate()
+                // console.log('account:',accountX)
+
+                const provider = new WalletConnectProvider({infuraId:'d61f00671338b982a0b8a236682e2b1d'})
+                provider.on("disconnect", () => {
+                    console.log('METMASK DISCONNECTED');
+                  });
+                await provider.disconnect()
+
+                // const prov = await walletConnectProvider({ projectId: wcId })().provider()
+                // const provide = new providers.Web3Provider(prov)
+                // await provide.disconnect()
+
+                // console.log('signer: ',signer)
+                // await new WalletConnectProvider({SI})
+                
+              }
+
+            
+
+            //   await window.ethereum.request({
+            //     method: "eth_requestAccounts",
+            //     params: [{ eth_accounts: {} }],
+            //   });
+
+            //   const { disconnect } = useDisconnect();
+            //   const provider = useProvider()
+            //   console.log('provider: ', provider)
+
+            //   const onSuccess = () => {
+            //     console.log("disconnected succesfully");
+            //   };
+            //   disconnect(undefined, {
+            //     onSuccess,
+            //   });
             }
+
+            // if (
+            //     !location.pathname.includes("account") &&
+            //     from?.type !== "EVM"
+            //   ) {
+            //     if (wc) {
+            //       console.log(
+            //         "connected: ",
+            //         await new providerOptions.walletonnect.package().connected()
+            //       );
+            //       await new providerOptions.walletonnect.package().disconnect();
+            //       window.ethereum?.disconnect();
+
+            //       await window.ethereum.request({
+            //         method: "eth_requestAccounts",
+            //         params: [{ eth_accounts: {} }],
+            //       });
+            //     }
+            //     console.log("we here");
+            //     dispatch(setChangeWallet(true));
+            //     dispatch(setWalletsModal(true));
+            //     dispatch(setConnectedWallet(undefined));
+            //     dispatch(setConnected(false));
+            //   }
 
             handleClose();
 
