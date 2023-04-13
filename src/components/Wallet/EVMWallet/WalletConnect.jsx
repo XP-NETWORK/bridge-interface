@@ -20,7 +20,7 @@ function WalletConnect({ styles /*connectWallet*/ }) {
         'Godwoken', 'Fuse', 'Skale', 'Harmony', 'Abeychain', 'GateChain', 'Velas', 'Caduceus'
     ]
 
-    const handleClick = async () => {
+    const handleClick = async () => {        
         dispatch(setWalletsModal(false));
         dispatch(setAccountWalletModal(false));
         await open({ route: "SelectNetwork" });

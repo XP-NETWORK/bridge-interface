@@ -51,6 +51,8 @@ export default function UserConnect({ mobile }) {
         tronWallet ||
         _account;
 
+
+
     const handleConnect = () => {
         handleGA4Event(googleAnalyticsCategories.Button, "Connect");
         switch (location.pathname) {

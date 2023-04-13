@@ -81,9 +81,9 @@ function ConnectWallet() {
         evmAccount ||
         tronAccount ||
         account ||
-        address
-            ? true
-            : false;
+        address && account ? true: false;
+
+
 
     const handleClose = () => {
         setShow(false);
@@ -99,6 +99,7 @@ function ConnectWallet() {
     let walletsModal = useSelector((state) => state.general.walletsModal);
 
     const handleConnect = async () => {
+    
         handleGA4Event(
             googleAnalyticsCategories.Connect,
             `Clicked on connect. destination chain: ${from}`
@@ -110,15 +111,18 @@ function ConnectWallet() {
             await provider.request({ method: "eth_requestAccounts" });
             const web3 = new Web3(provider);
             _chainId = await web3.eth.getChainId();
+
         }
         const chainID = chainId || _chainId;
 
         switch (true) {
             case connectedWallet === "WalletConnect":
                 navigate(`/account${location.search ? location.search : ""}`);
+
                 break;
             case unstoppableDomains:
                 navigate(`/account${location.search ? location.search : ""}`);
+
                 break;
             case from.tnChainId === chainID:
                 navigate(`${getRightPath()}`);
@@ -128,6 +132,7 @@ function ConnectWallet() {
                 break;
             case from.type !== "EVM":
                 navigate(`${getRightPath()}`);
+
                 break;
             default:
                 switchNetwork(from);
@@ -165,6 +170,9 @@ function ConnectWallet() {
     useEffect(() => {
         if (evmAccount) setShow(false);
     }, [evmAccount]);
+
+
+
 
     return (
         <div>

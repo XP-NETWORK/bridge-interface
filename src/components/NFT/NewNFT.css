@@ -199,11 +199,21 @@
   background: none;
   border: none;
 }
+
 .__react_modal_image__medium_img {
-  max-width: 600px !important;
-  max-height: 600px !important;
+
+  max-height: 400px !important;
   cursor: default !important;
 }
+
+@media screen and (min-width: 500px) {
+
+  .__react_modal_image__medium_img {
+    max-width: 600px !important;
+    max-height: 600px !important;
+    cursor: default !important;
+  }
+} 
 .__react_modal_image__modal_content {
   position: absolute;
   cursor: default !important;
