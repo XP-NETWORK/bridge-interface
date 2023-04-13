@@ -1,12 +1,14 @@
 import Web3 from "web3";
 import store from "../../../store/store.js";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
-
+import { chains } from "../../../components/values.js";
+import { setFrom } from "../../../store/reducers/generalSlice.js";
+import { setWalletAddress } from "../../../store/reducers/signersSlice.js";
 export async function switchNetwork(chain) {
   // eslint-disable-next-line no-debugger
 
   const {
-    general: { testNet, bitKeep },
+    general: { testNet, bitKeep, from },
   } = store.getState();
 
   const id = (testNet ? chain.tnChainId : chain.chainId).toString();
@@ -33,6 +35,14 @@ export async function switchNetwork(chain) {
         let provider = window.bitkeep?.ethereum
         const web3 = new Web3(provider)
         const currentBitkeepChainId = await web3.eth.getChainId()
+        const fromChain = chains.filter(
+          (n) => n.text === from?.replace("/", "")
+        )[0];
+        if (fromChain) {
+          store.dispatch(setFrom(fromChain));
+          const accounts = await web3.eth.getAccounts();
+          store.dispatch(setWalletAddress(await accounts[0]));
+        }
         return currentBitkeepChainId == chainId;
       } catch (error) {
         console.log(error);

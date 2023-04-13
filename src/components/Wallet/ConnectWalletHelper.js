@@ -26,6 +26,8 @@ import {
   setWC,
   setAccount,
   setRedirectModal,
+  setBitKeep,
+  setConnectedWallet,
 } from "../../store/reducers/generalSlice";
 
 // import { getAddEthereumChain } from "../../wallet/chains";
@@ -107,6 +109,7 @@ const setBitKeepSigner = (account) => {
 };
 
 export const connectBitKeep = async (from, navigate) => {
+  console.log('connecting bitkeep')
   // debugger;
   let provider;
   const isInstallBikeep = () => {
@@ -129,8 +132,15 @@ export const connectBitKeep = async (from, navigate) => {
     const address = await web3.eth.getAccounts();
     const chainId = await web3.eth.getChainId();
     if (from && from?.chainId !== chainId) {
+      store.dispatch(setBitKeep(true))
       const switched = await switchNetwork(from)
-      if(switched) navigate()
+      if(switched){
+        store.dispatch(setConnectedWallet('BitKeep'))
+        store.dispatch(setAccount(address[0]));
+        setBitKeepSigner(address[0]);
+        navigate()
+      } 
+
       else navigate()
     } else {
       store.dispatch(setAccount(address[0]));
