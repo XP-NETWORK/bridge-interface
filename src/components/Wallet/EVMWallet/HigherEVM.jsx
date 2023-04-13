@@ -66,8 +66,8 @@ export default function HigherEVM(OriginalComponent) {
                 case "TrustWallet":
                     connected = await connectTrustWallet(
                         activate,
-                        from.key,
-                        bridge.getChainIdByKey(from.key, testnet)
+                        from?.key,
+                        bridge.getChainIdByKey(from?.key, testnet)
                     );
                     dispatch(setWalletsModal(false));
                     if (connected && to) {
@@ -79,9 +79,9 @@ export default function HigherEVM(OriginalComponent) {
                 case "WalletConnect":
                     connected = await onWalletConnect(
                         activate,
-                        from.key,
+                        from?.key,
                         testnet,
-                        bridge.getChainIdByKey(from.key, testnet)
+                        bridge.getChainIdByKey(from?.key, testnet)
                     );
                     dispatch(setWalletsModal(false));
                     if (connected && to) {
@@ -91,7 +91,7 @@ export default function HigherEVM(OriginalComponent) {
                     break;
                 case "BitKeep":
                     deactivate();
-                    connected = await connectBitKeep(from);
+                    connected = await connectBitKeep(from, navigateToAccountRoute);
                     if (connected && to) {
                       dispatch(setWalletsModal(false));
                       dispatch(setBitKeep(true));

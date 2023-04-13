@@ -98,46 +98,60 @@ function ConnectWallet() {
 
     let walletsModal = useSelector((state) => state.general.walletsModal);
 
+ 
+
+   
+    const connectionMethod = async () => {
+      handleGA4Event(
+        googleAnalyticsCategories.Connect,
+        `Clicked on connect. destination chain: ${from}`
+      );
+      let provider;
+      let _chainId;
+      if (bitKeep) {
+        provider = window.bitkeep?.ethereum;
+        await provider.request({ method: "eth_requestAccounts" });
+        const web3 = new Web3(provider);
+        _chainId = await web3.eth.getChainId();
+      }
+      const chainID = chainId || _chainId;
+
+      switch (true) {
+        case connectedWallet === "WalletConnect":
+          navigate(`/account${location.search ? location.search : ""}`);
+          break;
+        case unstoppableDomains:
+          navigate(`/account${location.search ? location.search : ""}`);
+          break;
+        case from.tnChainId === chainID:
+          navigate(`${getRightPath()}`);
+          break;
+        case from.chainId === chainID: {
+          navigate(`${getRightPath()}`);
+          break;
+        }
+        case from.type !== "EVM":
+          navigate(`${getRightPath()}`);
+          break;
+        default: {
+          switchNetwork(from).then(()=>{
+            navigate(`${getRightPath()}`);
+          })
+          break;
+        }
+      }
+    };
+
     const handleConnect = async () => {
-    
-        handleGA4Event(
-            googleAnalyticsCategories.Connect,
-            `Clicked on connect. destination chain: ${from}`
-        );
-        let provider;
-        let _chainId;
-        if (bitKeep) {
-            provider = window.bitkeep?.ethereum;
-            await provider.request({ method: "eth_requestAccounts" });
-            const web3 = new Web3(provider);
-            _chainId = await web3.eth.getChainId();
-
+      if (from && to) {
+        if (!connected) {
+          setShow(true);
+        } else {
+          connectionMethod();
         }
-        const chainID = chainId || _chainId;
-
-        switch (true) {
-            case connectedWallet === "WalletConnect":
-                navigate(`/account${location.search ? location.search : ""}`);
-
-                break;
-            case unstoppableDomains:
-                navigate(`/account${location.search ? location.search : ""}`);
-
-                break;
-            case from.tnChainId === chainID:
-                navigate(`${getRightPath()}`);
-                break;
-            case from.chainId === chainID:
-                navigate(`${getRightPath()}`);
-                break;
-            case from.type !== "EVM":
-                navigate(`${getRightPath()}`);
-
-                break;
-            default:
-                switchNetwork(from);
-                break;
-        }
+      } else {
+        dispatch(setAlert(true));
+      }
     };
 
     function handleAboutClick() {
@@ -177,12 +191,8 @@ function ConnectWallet() {
     return (
         <div>
             <div
-                onClick={() =>
-                    from && to
-                        ? !connected
-                            ? setShow(true)
-                            : handleConnect()
-                        : dispatch(setAlert(true))
+                onClick={
+                    handleConnect
                 }
                 className={
                     from && to
