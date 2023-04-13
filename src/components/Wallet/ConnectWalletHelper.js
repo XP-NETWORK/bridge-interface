@@ -28,7 +28,7 @@ import {
   setRedirectModal,
 } from "../../store/reducers/generalSlice";
 
-import { getAddEthereumChain } from "../../wallet/chains";
+// import { getAddEthereumChain } from "../../wallet/chains";
 import Web3 from "web3";
 
 import { setSigner } from "../../store/reducers/signersSlice";
@@ -66,39 +66,39 @@ export const connectUnstoppable = async (close) => {
   }
 };
 
-export const switchNetWork = async (from) => {
-  // let fromChainId;
-  console.log(from, "from");
-  const chain = getAddEthereumChain()[parseInt(from.chainId).toString()];
-  console.log(chain);
-  const params = {
-    chainId: from.chainId, // A 0x-prefixed hexadecimal string
-    chainName: chain.name,
-    nativeCurrency: {
-      name: chain.nativeCurrency.name,
-      symbol: chain.nativeCurrency.symbol, // 2-6 characters long
-      decimals: chain.nativeCurrency.decimals,
-    },
-    rpcUrls: chain.rpc,
-    blockExplorerUrls: [
-      chain.explorers && chain.explorers.length > 0 && chain.explorers[0].url
-        ? chain.explorers[0].url
-        : chain.infoURL,
-    ],
-  };
-  window.bitkeep?.ethereum &&
-    window.bitkeep?.ethereum
-      .request({
-        method: "wallet_switchEthereumChain",
-        params,
-      })
-      .then(() => {
-        console.log("Network Switch Success");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-};
+// export const switchNetWork = async (from) => {
+//   // let fromChainId;
+//   console.log(from, "from");
+//   const chain = getAddEthereumChain()[parseInt(from.chainId).toString()];
+//   console.log(chain);
+//   const params = {
+//     chainId: from.chainId, // A 0x-prefixed hexadecimal string
+//     chainName: chain.name,
+//     nativeCurrency: {
+//       name: chain.nativeCurrency.name,
+//       symbol: chain.nativeCurrency.symbol, // 2-6 characters long
+//       decimals: chain.nativeCurrency.decimals,
+//     },
+//     rpcUrls: chain.rpc,
+//     blockExplorerUrls: [
+//       chain.explorers && chain.explorers.length > 0 && chain.explorers[0].url
+//         ? chain.explorers[0].url
+//         : chain.infoURL,
+//     ],
+//   };
+//   window.bitkeep?.ethereum &&
+//     window.bitkeep?.ethereum
+//       .request({
+//         method: "wallet_switchEthereumChain",
+//         params,
+//       })
+//       .then(() => {
+//         console.log("Network Switch Success");
+//       })
+//       .catch((e) => {
+//         console.log(e);
+//       });
+// };
 
 const setBitKeepSigner = (account) => {
   const provider = new ethers.providers.Web3Provider(window.bitkeep.ethereum);
@@ -106,7 +106,7 @@ const setBitKeepSigner = (account) => {
   store.dispatch(setSigner(signer));
 };
 
-export const connectBitKeep = async (from) => {
+export const connectBitKeep = async (from, navigate) => {
   // debugger;
   let provider;
   const isInstallBikeep = () => {
@@ -129,7 +129,9 @@ export const connectBitKeep = async (from) => {
     const address = await web3.eth.getAccounts();
     const chainId = await web3.eth.getChainId();
     if (from && from?.chainId !== chainId) {
-      switchNetWork(from, true);
+      const switched = await switchNetwork(from)
+      if(switched) navigate()
+      else navigate()
     } else {
       store.dispatch(setAccount(address[0]));
       setBitKeepSigner(address[0]);

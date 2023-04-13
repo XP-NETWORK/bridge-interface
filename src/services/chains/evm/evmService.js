@@ -1,3 +1,4 @@
+import Web3 from "web3";
 import store from "../../../store/store.js";
 import { getAddEthereumChain } from "../../../wallet/chains.js";
 
@@ -29,10 +30,10 @@ export async function switchNetwork(chain) {
           method: "wallet_switchEthereumChain",
           params: [{ chainId: +chainId }],
         });
-        const currentChainId = await window.ethereum.request({
-          method: "eth_chainId",
-        });
-        return currentChainId == chainId;
+        let provider = window.bitkeep?.ethereum
+        const web3 = new Web3(provider)
+        const currentBitkeepChainId = await web3.eth.getChainId()
+        return currentBitkeepChainId == chainId;
       } catch (error) {
         console.log(error);
         return false;
