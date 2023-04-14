@@ -15,8 +15,7 @@ export default function WalletConnectionModal() {
 
     const qrCodeImage = useSelector((state) => state.general.qrCodeImage);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
-    let walletsModal = useSelector((state) => state.general.walletsModal);
-
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const inputElement = useRef(null);
@@ -47,7 +46,7 @@ export default function WalletConnectionModal() {
     }, []);
 
     return (
-      <Modal show={walletsModal}>
+      <>
         <Modal.Header>
           <Modal.Title style={{ minWidth: "max-content" }}>
             Connect Wallet
@@ -72,6 +71,6 @@ export default function WalletConnectionModal() {
             <WalletList input={walletSearch} connected={handleClose} />
           </div>
         </Modal.Body>
-      </Modal>
+      </>
     );
 }

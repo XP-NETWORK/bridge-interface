@@ -1,7 +1,7 @@
 /* eslint-disable no-debugger */
 import { useEffect, useRef, React } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { chains } from "../../components/values";
+import { BridgeModes, chains } from "../../components/values";
 import {
     setChainModal,
     setDepartureOrDestination,
@@ -12,6 +12,8 @@ import {
     setChangeWallet,
     setTemporaryFrom,
     setTemporaryTo,
+    setConnectedWallet,
+    setAccount,
 } from "../../store/reducers/generalSlice";
 import Chain from "./Chain";
 import ChainSearch from "../Chains/ChainSearch";
@@ -26,9 +28,12 @@ import PropTypes from "prop-types";
 
 import { withServices } from "../App/hocs/withServices";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
+import { useNavigate } from "react-router-dom";
+import { setWalletAddress } from "../../store/reducers/signersSlice";
 
 function ChainListBox({ serviceContainer }) {
     const { bridge } = serviceContainer;
+    const navigate = useNavigate()
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -79,9 +84,6 @@ function ChainListBox({ serviceContainer }) {
     };
     // ! ref
     const chainSelectHandler = async (chain) => {
-        // eslint-disable-next-line no-debugger
-        // debugger;
-
         const chainWrapper = await bridge.getChain(chain.nonce);
 
         if (departureOrDestination === "departure") {
@@ -142,7 +144,29 @@ function ChainListBox({ serviceContainer }) {
             } else {
                 dispatch(setChangeWallet(true));
                 dispatch(setTemporaryFrom(chain));
+                dispatch(setFrom(chain))
                 dispatch(setTemporaryTo(to));
+
+                let currentPath = window.location.href;
+                if (currentPath.includes("account")) {
+                  let goToPath = "/";
+                  if (
+                    currentPath.includes(BridgeModes.Staging) ||
+                    currentPath.includes(BridgeModes.TestNet)
+                  ) {
+                    goToPath = currentPath.includes(BridgeModes.Staging)
+                      ? BridgeModes.Staging
+                      : BridgeModes.TestNet;
+                  }
+                  console.log(goToPath);
+                  navigate(goToPath);
+                  dispatch(setChangeWallet(false));
+                  dispatch(setConnectedWallet(''))
+                  dispatch(setWalletAddress(''))
+                  dispatch(setAccount(''))
+                  dispatch()
+                }
+
                 handleClose();
             }
             handleClose();
