@@ -199,15 +199,14 @@ function ChainListBox({ serviceContainer }) {
             ...withComing,
         ];
 
-        if (
-            location.pathname === "/connect" ||
-            location.pathname === "/testnet/connect" ||
-            location.pathname === "/account" ||
-            location.pathname === "/testnet/account" ||
-            location.pathname === "/staging" ||
-            location.pathname === "/staging/account" ||
-            location.pathname === "/"
-        ) {
+        // location.pathname === "/connect" ||
+            // location.pathname === "/testnet/connect" ||
+            // location.pathname === "/account" ||
+            // location.pathname === "/testnet/account" ||
+            // location.pathname === "/staging" ||
+            // location.pathname === "/staging/account" ||
+            // location.pathname === "/"
+        if (location) {
             setFromChains(sorted.filter((e) => e.text !== to?.text));
         } else setFromChains(sorted);
         if (sorted.length <= 5) setReached(true);
@@ -252,14 +251,14 @@ function ChainListBox({ serviceContainer }) {
             ...withMaintenance,
             ...withComing,
         ];
-        if (
-            location.pathname === "/connect" ||
-            location.pathname === "/testnet/connect" ||
-            location.pathname === "/account" ||
-            location.pathname === "/testnet/account" ||
-            location.pathname === "/staging" ||
-            location.pathname === "/staging/account" ||
-            location.pathname === "/"
+        if (location
+            // location.pathname === "/connect" ||
+            // location.pathname === "/testnet/connect" ||
+            // location.pathname === "/account" ||
+            // location.pathname === "/testnet/account" ||
+            // location.pathname === "/staging" ||
+            // location.pathname === "/staging/account" ||
+            // location.pathname === "/"
         ) {
             setToChains(sorted.filter((e) => e.text !== from?.text));
         } else {
