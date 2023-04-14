@@ -35,7 +35,7 @@ function DestinationChain() {
   useEffect(() => {
     dispatch(setReceiver(""));
     dispatch(setIsInvalidAddress(true));
-    setMaxLength(maxChainAddressLengths[to.type]);
+    setMaxLength(maxChainAddressLengths[to?.type]);
   }, [to]);
 
   useEffect(() => {

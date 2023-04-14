@@ -36,7 +36,7 @@ export async function switchNetwork(chain) {
         const web3 = new Web3(provider)
         const currentBitkeepChainId = await web3.eth.getChainId()
         const fromChain = chains.filter(
-          (n) => n.text === from?.replace("/", "")
+          (n) => n.text === from?.text
         )[0];
         if (fromChain) {
           store.dispatch(setFrom(fromChain));

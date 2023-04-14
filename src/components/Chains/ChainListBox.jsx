@@ -120,6 +120,7 @@ function ChainListBox({ serviceContainer }) {
                         (account || evmAccount) &&
                         from.text !== "VeChain"
                     ) {
+                        console.log('here 1')
                         const switched = await switchNetwork(chain);
                         if (switched) {
                             dispatch(setFrom(chain));

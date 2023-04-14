@@ -20,7 +20,7 @@ function BitKeep({ connectWallet }) {
 
     const isUnsupportedBitKeepChain = () => {
         const chain = from || temporaryFrom;
-        return ['Godwoken','Moonbeam', 'SKALE', 'ABEY'].includes(chain?.text)
+        return ['Godwoken','SKALE', 'ABEY'].includes(chain?.text)
     };
 
     return (

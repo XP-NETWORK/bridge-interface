@@ -110,6 +110,7 @@ const setBitKeepSigner = (account) => {
 
 export const connectBitKeep = async (from, navigate) => {
   console.log('connecting bitkeep')
+  let { to } = store.getState();
   // debugger;
   let provider;
   const isInstallBikeep = () => {
@@ -126,26 +127,37 @@ export const connectBitKeep = async (from, navigate) => {
       );
     }
   } else {
-    provider = window.bitkeep?.ethereum;
-    await provider.request({ method: "eth_requestAccounts" });
-    const web3 = new Web3(provider);
-    const address = await web3.eth.getAccounts();
-    const chainId = await web3.eth.getChainId();
-    if (from && from?.chainId !== chainId) {
-      store.dispatch(setBitKeep(true))
-      const switched = await switchNetwork(from)
-      if(switched){
-        store.dispatch(setConnectedWallet('BitKeep'))
-        store.dispatch(setAccount(address[0]));
-        setBitKeepSigner(address[0]);
-        navigate()
-      } 
+    try {
+      provider = window.bitkeep?.ethereum;
+      await provider.request({ method: "eth_requestAccounts" });
+      const web3 = new Web3(provider);
+      const address = await web3.eth.getAccounts();
+      const chainId = await web3.eth.getChainId();
 
-      else navigate()
-    } else {
+      store.dispatch(setBitKeep(true));
+      store.dispatch(setConnectedWallet("BitKeep"));
       store.dispatch(setAccount(address[0]));
       setBitKeepSigner(address[0]);
-      return true;
+
+      if (from && from?.chainId !== chainId) {
+        const switched = await switchNetwork(from);
+        if (switched) {
+          store.dispatch(setBitKeep(true))
+          store.dispatch(setConnectedWallet('BitKeep'))
+          store.dispatch(setAccount(address[0]));
+          setBitKeepSigner(address[0]);
+        }
+        if (from && to) {
+          navigate();
+        }
+      } else {
+        store.dispatch(setAccount(address[0]));
+        setBitKeepSigner(address[0]);
+        return true;
+      }
+    } catch (error) {
+      console.log(error)
+      return false
     }
   }
 };
