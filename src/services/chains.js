@@ -487,7 +487,12 @@ class Elrond extends AbstractChain {
         const tokenId =
             contract +
             "-" +
-            (nonce > 9 ? "0000" : "0" + Number(nonce).toString(16)).slice(-4);
+            (nonce > 9
+                ? nonce.toString(16).padStart(4, "0")
+                : "0" + Number(nonce).toString(16)
+            ).slice(-4);
+
+        console.log(tokenId, contract);
 
         return {
             contract,
@@ -496,12 +501,16 @@ class Elrond extends AbstractChain {
             nft: {
                 ...nft,
                 collectionIdent: contract,
+                uri: data.wrapped.original_uri,
                 native: {
                     ...nft.native,
                     chainId: String(this.nonce),
                     contract,
                     tokenId,
                     nonce,
+                    attributes: data.attributes,
+                    name: data.name,
+                    description: data.description,
                 },
             },
         };
