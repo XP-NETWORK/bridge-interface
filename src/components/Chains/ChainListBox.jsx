@@ -119,7 +119,8 @@ function ChainListBox({ serviceContainer }) {
                         dispatch(setChangeWallet(true));
                         handleClose();
                     } else if (
-                        (account || evmAccount) &&
+                        (evmAccount) &&
+                        // (account || evmAccount) &&
                         from.text !== "VeChain"
                     ) {
                         console.log('here 1')
@@ -164,7 +165,6 @@ function ChainListBox({ serviceContainer }) {
                   dispatch(setConnectedWallet(''))
                   dispatch(setWalletAddress(''))
                   dispatch(setAccount(''))
-                  dispatch()
                 }
 
                 handleClose();

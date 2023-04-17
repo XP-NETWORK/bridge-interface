@@ -55,6 +55,7 @@ function ConnectWallet() {
 
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
     const bitKeep = useSelector((state) => state.general.bitKeep);
+    const _account = useSelector((state) => state.general.account);
     const { address } = useAccount();
 
     const { account, chainId } = useWeb3React();
@@ -80,7 +81,7 @@ function ConnectWallet() {
         algorandAccount ||
         evmAccount ||
         tronAccount ||
-        account ||
+        // account ||
         address && account ? true: false;
 
 
@@ -130,13 +131,16 @@ function ConnectWallet() {
           navigate(`${getRightPath()}`);
           break;
         }
-        case from.type !== "EVM":
-          navigate(`${getRightPath()}`);
-          break;
-        default: {
-          switchNetwork(from).then(()=>{
+        case from.type !== "EVM": {
+          if (_account && _account?.length > 0) {
             navigate(`${getRightPath()}`);
-          })
+          }
+          break;
+        }
+        default: {
+          switchNetwork(from).then(() => {
+            navigate(`${getRightPath()}`);
+          });
           break;
         }
       }

@@ -39,12 +39,12 @@ export default function UserConnect({ mobile }) {
     const tonAccount = useSelector((state) => state.general.tonAccount);
     const aptosAccount = useSelector((state) => state.general.aptosAccount);
 
-    const walletAccount =
+    let walletAccount =
         aptosAccount ||
         tonAccount ||
         hederaAccount ||
         secretAccount ||
-        account ||
+        // account ||
         elrondAccount ||
         tezosAccount ||
         algorandAccount ||
