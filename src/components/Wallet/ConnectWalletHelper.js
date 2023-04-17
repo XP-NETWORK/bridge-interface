@@ -163,6 +163,10 @@ export const connectBitKeep = async (from, navigate) => {
 };
 
 export const connectMetaMask = async (activate, from, to, chainId, navigate) => {
+  let {
+    general : { account }
+  } = store.getState()
+  
   const mobile = window.innerWidth <= 600;
   try {
     if (!window.ethereum && mobile) {
@@ -185,14 +189,16 @@ export const connectMetaMask = async (activate, from, to, chainId, navigate) => 
         window.ethereum?.chainId ||
         chainId !== `0x${from?.chainId.toString(16)}`
       ) {
-        const switched = await switchNetwork(from);
-        if (switched) navigate();
-      } else navigate();
+        await switchNetwork(from);
+      } 
     }
 
     await activate(injected);
     !mobile && window.safeLocalStorage?.setItem("XP_MM_CONNECTED", "true");
     store.dispatch(setMetaMask(true));
+    if(from && to && account){
+      navigate()
+    }
     return true;
   } catch (ex) {
     if (ex.code !== 4001) {
