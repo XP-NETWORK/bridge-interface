@@ -96,10 +96,12 @@ function ChainListBox({ serviceContainer }) {
                 from?.text === "VeChain" &&
                 chainWrapper.chainParams.type === "EVM"
             ) {
-                dispatch(setChangeWallet(true));
-                dispatch(setTemporaryFrom(chain));
-                dispatch(setTemporaryTo(to));
-                handleClose();
+                // console.log('im here')
+                // dispatch(setChangeWallet(true));
+                // dispatch(setTemporaryFrom(chain));
+                // dispatch(setTemporaryTo(to));
+                // handleClose();
+                evmNonEvmInterchange(chain)
             } else if (
                 chainWrapper.chainParams.name === "VeChain" &&
                 bridge.currentType === "EVM"
@@ -117,7 +119,9 @@ function ChainListBox({ serviceContainer }) {
                     if (from?.text === "Harmony" && bitKeep) {
                         dispatch(setTemporaryFrom(chain));
 
-                        dispatch(setChangeWallet(true));
+                        if(!evmAccount || evmAccount?.length === 0 && window.location.href.includes('account')){
+                            dispatch(setChangeWallet(true));
+                        }
                         handleClose();
                     } else if (
                         (evmAccount) &&
@@ -179,7 +183,9 @@ function ChainListBox({ serviceContainer }) {
             if (from?.text === chain.text) {
                 if (to?.text === "Harmony" && bitKeep) {
                     dispatch(setTemporaryFrom(to));
-                    dispatch(setChangeWallet(true));
+                    if(!evmAccount || evmAccount?.length === 0 && window.location.href.includes('account')){
+                        dispatch(setChangeWallet(true));
+                    }
                     handleClose();
                 } else if (account || evmAccount) {
                     const switched = await switchNetwork(to);
