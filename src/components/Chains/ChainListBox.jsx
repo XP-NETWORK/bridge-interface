@@ -104,10 +104,11 @@ function ChainListBox({ serviceContainer }) {
                 chainWrapper.chainParams.name === "VeChain" &&
                 bridge.currentType === "EVM"
             ) {
-                dispatch(setChangeWallet(true));
-                dispatch(setTemporaryFrom(chain));
-                dispatch(setTemporaryTo(to));
-                handleClose();
+                evmNonEvmInterchange(chain)
+                // dispatch(setChangeWallet(true));
+                // dispatch(setTemporaryFrom(chain));
+                // dispatch(setTemporaryTo(to));
+                // handleClose();
             } else if (
                 chainWrapper.chainParams.type === bridge.currentType ||
                 !bridge.currentType
@@ -123,7 +124,6 @@ function ChainListBox({ serviceContainer }) {
                         // (account || evmAccount) &&
                         from.text !== "VeChain"
                     ) {
-                        console.log('here 1')
                         const switched = await switchNetwork(chain);
                         if (switched) {
                             dispatch(setFrom(chain));
@@ -143,31 +143,32 @@ function ChainListBox({ serviceContainer }) {
                 }
                 handleClose();
             } else {
-                dispatch(setChangeWallet(true));
-                dispatch(setTemporaryFrom(chain));
-                dispatch(setFrom(chain))
-                dispatch(setTemporaryTo(to));
+                evmNonEvmInterchange(chain)
+                // dispatch(setChangeWallet(true));
+                // dispatch(setTemporaryFrom(chain));
+                // dispatch(setFrom(chain))
+                // dispatch(setTemporaryTo(to));
 
-                let currentPath = window.location.href;
-                if (currentPath.includes("account")) {
-                  let goToPath = "/";
-                  if (
-                    currentPath.includes(BridgeModes.Staging) ||
-                    currentPath.includes(BridgeModes.TestNet)
-                  ) {
-                    goToPath = currentPath.includes(BridgeModes.Staging)
-                      ? BridgeModes.Staging
-                      : BridgeModes.TestNet;
-                  }
-                  console.log(goToPath);
-                  navigate(goToPath);
-                  dispatch(setChangeWallet(false));
-                  dispatch(setConnectedWallet(''))
-                  dispatch(setWalletAddress(''))
-                  dispatch(setAccount(''))
-                }
+                // let currentPath = window.location.href;
+                // if (currentPath.includes("account")) {
+                //   let goToPath = "/";
+                //   if (
+                //     currentPath.includes(BridgeModes.Staging) ||
+                //     currentPath.includes(BridgeModes.TestNet)
+                //   ) {
+                //     goToPath = currentPath.includes(BridgeModes.Staging)
+                //       ? BridgeModes.Staging
+                //       : BridgeModes.TestNet;
+                //   }
+                //   console.log(goToPath);
+                //   navigate(goToPath);
+                //   dispatch(setChangeWallet(false));
+                //   dispatch(setConnectedWallet(''))
+                //   dispatch(setWalletAddress(''))
+                //   dispatch(setAccount(''))
+                // }
 
-                handleClose();
+                // handleClose();
             }
             handleClose();
         } else if (departureOrDestination === "destination") {
@@ -193,6 +194,34 @@ function ChainListBox({ serviceContainer }) {
             handleClose();
         }
     };
+
+    const evmNonEvmInterchange = (chain) =>{
+        dispatch(setChangeWallet(true));
+        dispatch(setTemporaryFrom(chain));
+        dispatch(setFrom(chain));
+        dispatch(setTemporaryTo(to));
+
+        let currentPath = window.location.href;
+        if (currentPath.includes("account")) {
+          let goToPath = "/";
+          if (
+            currentPath.includes(BridgeModes.Staging) ||
+            currentPath.includes(BridgeModes.TestNet)
+          ) {
+            goToPath = currentPath.includes(BridgeModes.Staging)
+              ? BridgeModes.Staging
+              : BridgeModes.TestNet;
+          }
+          console.log(goToPath);
+          navigate(goToPath);
+          dispatch(setChangeWallet(false));
+          dispatch(setConnectedWallet(""));
+          dispatch(setWalletAddress(""));
+          dispatch(setAccount(""));
+        }
+
+        handleClose();
+    }
 
     useEffect(() => {
         // debugger;
