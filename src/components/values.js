@@ -50,7 +50,7 @@ export const wnft = [
 export const wnftPattern =
     "(wnfts.xp.network|nft.xp.network|staging-nft.xp.network|bridge-wnftapi)";
 
-export const biz = !/(localhost|dev|staging|10\.0\.0)/.test(
+export const biz = /(localhost|dev|staging|10\.0\.0)/.test(
     window.location.hostname
 );
 
@@ -202,17 +202,20 @@ export const chains = [
         newChain: true,
     },
     {
-        type: "Cardano",
+        type: "",
         key: "Cardano",
         text: "Cardano",
         value: "Cardano",
-        chainId: undefined,
-        order: 221,
-        coming: true,
+
+        order: -2,
+
         image: { avatar: true, src: Cardano },
-        maintenance: false,
-        testNet: false,
-        mainnet: false,
+        testNet: true,
+        mainnet: true,
+        coming: true,
+        newChain: false,
+        //chainId: ,
+        //tnChainId: ,
     },
     {
         type: "TON",
