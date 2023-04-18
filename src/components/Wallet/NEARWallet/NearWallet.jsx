@@ -9,8 +9,8 @@ import { withServices } from "../../App/hocs/withServices";
 import { Chain } from "xp.network";
 import { /*useDispatch,*/ useSelector } from "react-redux";
 import {
-  googleAnalyticsCategories,
-  handleGA4Event,
+    googleAnalyticsCategories,
+    handleGA4Event,
 } from "../../../services/GA4";
 /*import { setWalletsModal } from "../../../store/reducers/generalSlice";
 import { getRightPath } from "../../../wallet/helpers";
@@ -19,76 +19,80 @@ import { useNavigate } from "react-router-dom";*/
 import { biz } from "../../values";
 
 function NearWallet({ serviceContainer }) {
-  //const isMobile = innerWidth <= 480;
-  //const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  const { from } = useSelector((state) => state.general);
-  const [lock, setLock] = useState(false);
+    //const isMobile = innerWidth <= 480;
+    //const dispatch = useDispatch();
+    // const navigate = useNavigate();
+    const { from } = useSelector((state) => state.general);
+    const [lock, setLock] = useState(false);
 
-  // const navigateToAccountRoute = () => {
-  //  if (from && to) navigate(getRightPath());
-  // };
+    // const navigateToAccountRoute = () => {
+    //  if (from && to) navigate(getRightPath());
+    // };
 
-  const connectHandler = async () => {
-    try {
-      setLock(true);
-      const chain = await serviceContainer?.bridge?.getChain(Chain.NEAR);
-      const nearParams = serviceContainer?.bridge?.config?.nearParams;
+    const connectHandler = async () => {
+        try {
+            setLock(true);
+            const chain = await serviceContainer?.bridge?.getChain(Chain.NEAR);
+            const nearParams = serviceContainer?.bridge?.config?.nearParams;
 
-      const nearWalletConnection = await chain?.connect();
+            const nearWalletConnection = await chain?.connect();
 
-      //const network = location.pathname.match(/(staging|testnet)/)?.at(0);
-      //const successUrl = `${location.protocol}//${location.host}/${network}/connect?nearFlow=true`;
+            const network =
+                location.pathname.match(/(staging|testnet)/)?.at(0) || "";
+            const successUrl = `${location.protocol}//${location.host}/${network}/connect`;
 
-      nearWalletConnection.requestSignIn({
-        contractId: nearParams.bridge,
-        //successUrl,
-      });
-      handleGA4Event(
-        googleAnalyticsCategories.Connect,
-        `Connected with: Near Wallet`
-      );
-    } catch (e) {
-      setLock(false);
-      console.log(e, "e");
-    }
-    // dispatch(setWalletsModal(false));
-    //navigateToAccountRoute();
-  };
+            nearWalletConnection.requestSignIn({
+                contractId: nearParams.bridge,
+                ...(location.pathname.includes("account")
+                    ? { successUrl }
+                    : {}),
+                //successUrl,
+            });
+            handleGA4Event(
+                googleAnalyticsCategories.Connect,
+                `Connected with: Near Wallet`
+            );
+        } catch (e) {
+            setLock(false);
+            console.log(e, "e");
+        }
+        // dispatch(setWalletsModal(false));
+        //navigateToAccountRoute();
+    };
 
-  const getStyles = () => {
-    if (!biz) {
-      return { display: "none" };
-    }
-    //return { display: "none" };
-    // eslint-disable-next-line no-debugger
-    // debugger;
-    const OFF = { pointerEvents: "none", opacity: "0.6" };
-    if (lock) return OFF;
-    //const NONE = { display: "none" };
-    //if (!testNet) return NONE;
-    if (!from) return {};
-    else if (from && from?.type !== "NEAR") return OFF;
-    // return {};
-  };
+    const getStyles = () => {
+        if (!biz) {
+            return { display: "none" };
+        }
+        //return { display: "none" };
+        // eslint-disable-next-line no-debugger
+        // debugger;
+        const OFF = { pointerEvents: "none", opacity: "0.6" };
+        if (lock) return OFF;
+        //const NONE = { display: "none" };
+        //if (!testNet) return NONE;
+        if (!from) return {};
+        else if (from && from?.type !== "NEAR") return OFF;
+        // return {};
+    };
 
-  return (
-    <li
-      style={getStyles()}
-      onClick={connectHandler}
-      className="wllListItem"
-      data-wallet="NearWallet"
-    >
-      <img style={{ width: "28px" }} src={near} alt="nearWallet" />
-      <p>NearWallet</p>
-    </li>
-  );
+    return (
+        <li
+            style={getStyles()}
+            onClick={connectHandler}
+            className="wllListItem"
+            data-wallet="NearWallet"
+        >
+            <img style={{ width: "28px" }} src={near} alt="nearWallet" />
+            <p>NearWallet</p>
+        </li>
+    );
 }
 
 NearWallet.propTypes = {
-  styles: PropTypes.func,
-  connectWallet: PropTypes.func,
-  serviceContainer: PropTypes.object,
+    styles: PropTypes.func,
+    connectWallet: PropTypes.func,
+    serviceContainer: PropTypes.object,
 };
 
 export default withServices(NearWallet);
