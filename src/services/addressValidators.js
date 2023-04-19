@@ -131,8 +131,6 @@ export const generalValidation = (e, receiver) => {
         }
     }
 
-    console.log(isValid);
-
     return isValid;
 };
 

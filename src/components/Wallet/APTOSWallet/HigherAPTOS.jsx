@@ -5,11 +5,13 @@ import { useNavigate } from "react-router-dom";
 import {
   setAccount,
   setConnectedWallet,
+  setFrom,
   setWalletsModal,
 } from "../../../store/reducers/generalSlice";
 import { getRightPath } from "../../../wallet/helpers";
 import { withServices } from "../../App/hocs/withServices";
 import { Chain } from "xp.network";
+import { chains } from "../../values";
 import {
   googleAnalyticsCategories,
   handleGA4Event,
@@ -23,6 +25,7 @@ export default function HigherAPTOS(OriginalComponent) {
     const { bridge } = serviceContainer;
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const APTOS_CHAIN = chains.find((chains) => chains.type === "APTOS");
     const { from, to } = useSelector((state) => state.general);
 
     const navigateToAccountRoute = () => {
@@ -81,6 +84,7 @@ export default function HigherAPTOS(OriginalComponent) {
       bridge.setCurrentType(chainWrapper);
       dispatch(setAccount(address));
       dispatch(setWalletsModal(false));
+      dispatch(setFrom(APTOS_CHAIN))
       close();
       navigateToAccountRoute();
       handleGA4Event(
