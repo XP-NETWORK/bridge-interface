@@ -18,7 +18,7 @@ import {
 import { onPhantom, onSolflare } from "./SoloanaConnectors";
 import { useNavigate } from "react-router-dom";
 import { getRightPath } from "../../../wallet/helpers";
-import { biz, chains } from "../../values";
+import { chains } from "../../values";
 import {
     googleAnalyticsCategories,
     handleGA4Event,
@@ -26,9 +26,7 @@ import {
 
 export default function HigherSolana(OriginalComponent) {
     const updatedComponent = withServices((props) => {
-        const { innerWidth, from, testNet, to } = useSelector(
-            (state) => state.general
-        );
+        const { innerWidth, from, to } = useSelector((state) => state.general);
         const { serviceContainer, close } = props;
         const { bridge } = serviceContainer;
         const solana = chains.find((chains) => chains.type === "Solana");
@@ -77,13 +75,14 @@ export default function HigherSolana(OriginalComponent) {
         };
 
         const getStyle = () => {
+            return {};
             // eslint-disable-next-line no-debugger
-            if (biz || testNet) {
+            /*if (biz || testNet) {
                 if (!from) return {};
                 else if (from && from?.type !== "Solana")
                     return { pointerEvents: "none", opacity: "0.6" };
             } else return { pointerEvents: "none", opacity: "0.6" };
-            // if (!testNet) return { display: "none" };
+            // if (!testNet) return { display: "none" };*/
             // else if (!from && biz) return {};
             // else if (from && biz && from?.type !== "Solana")
             //     return { pointerEvents: "none", opacity: "0.6" };
