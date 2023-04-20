@@ -358,6 +358,7 @@ span.closeBox svg {
     color: white;
 }
 .chain--identifier {
+    white-space: nowrap;
     display: flex;
     gap: 2px;
     margin-left: auto;
@@ -1907,20 +1908,20 @@ span.closeBox:hover svg path {
 }
 
 .video-responsive {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
 }
 
 .video-responsive iframe {
-  /* width: 100%;
+    /* width: 100%;
   height: 100%; */
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 0; /* Remove the border around the iframe */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0; /* Remove the border around the iframe */
 }
 
 .tron-modal__copyIcon {
@@ -2219,11 +2220,11 @@ span.closeBox:hover svg path {
     }
 }
 /* IPAD MINI */
-@media only screen and (width: 768px) and (height: 1024px) and (orientation:portrait) {
-  .first-step__container {
-    margin-left: 14px;
-    margin-right: 14px;
-  }
+@media only screen and (width: 768px) and (height: 1024px) and (orientation: portrait) {
+    .first-step__container {
+        margin-left: 14px;
+        margin-right: 14px;
+    }
 }
 
 @media screen and (max-width: 700px) {
