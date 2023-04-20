@@ -109,7 +109,6 @@ const setBitKeepSigner = (account) => {
 };
 
 export const connectBitKeep = async (from, navigate) => {
-  console.log('connecting bitkeep')
   let { to } = store.getState();
   // debugger;
   let provider;

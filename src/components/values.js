@@ -175,9 +175,9 @@ export const chains = [
     },
     {
         type: "EVM",
-        key: "xDai",
+        key: "xDAI",
         text: "Gnosis",
-        value: "xDai",
+        value: "xDAI",
         nonce: 14,
         chainId: 100,
         order: 17,

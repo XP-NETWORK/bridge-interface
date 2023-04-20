@@ -274,6 +274,7 @@ export const allchains = [
     chain: "Gnosis",
     network: "mainnet",
     rpcUrls: [
+      "https://rpc.gnosischain.com",
       "https://rpc.xdaichain.com",
       "https://xdai.poanetwork.dev",
       "wss://rpc.xdaichain.com/wss",

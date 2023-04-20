@@ -169,7 +169,7 @@ export const handleChainFactory = async (someChain) => {
         return await factory.inner(Chain.FANTOM);
       case "Algorand":
         return await factory.inner(Chain.ALGORAND);
-      case "xDai":
+      case "xDAI":
         return await factory.inner(Chain.XDAI);
       case "Gnosis":
         return await factory.inner(Chain.XDAI);
