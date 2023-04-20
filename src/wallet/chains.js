@@ -865,7 +865,7 @@ export const allchains = [
     nativeCurrency: {
       name: "CKB",
       symbol: "CKB",
-      decimals: 8,
+      decimals: 18,
     },
     infoURL: "https://github.com/nervosnetwork/godwoken",
     shortName: "ckb",
@@ -880,7 +880,7 @@ export const allchains = [
     nativeCurrency: {
       name: "CKB",
       symbol: "CKB",
-      decimals: 8,
+      decimals: 18,
     },
     infoURL: "https://github.com/nervosnetwork/godwoken",
     shortName: "ckb",
