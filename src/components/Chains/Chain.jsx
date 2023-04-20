@@ -64,34 +64,36 @@ export default function Chain(props) {
     };
 
     return (
-        <li
-            style={getStyle()}
-            onClick={() => chainSelectHandler(filteredChain)}
-            className="nftChainItem"
-            data-chain={text}
-        >
-            <img
-                className="modalSelectOptionsImage"
-                src={image.src}
-                alt={text}
-            />
-            <div className="modalSelectOptionsText">
-                {text}
-                <div className="chain--identifier">
-                    {chainStatus === undefined && !coming && !maintenance ? (
-                        <Status status={"connecting"} />
-                    ) : (
-                        !chainStatus &&
-                        !coming &&
-                        !maintenance && <Status status={"off-line"} />
-                    )}
-                    {coming && <Status status={"coming"} />}
-                    {maintenance && <Status status={"maintenance"} />}
-                    {updated && <Status status={"updated"} />}
-                    {!maintenance && newChain && <Status status={"new"} />}
-                </div>
-            </div>
-        </li>
+      <li
+        style={getStyle()}
+        onClick={() => chainSelectHandler(filteredChain)}
+        className="nftChainItem"
+        data-chain={text}
+      >
+        <img className="modalSelectOptionsImage" src={image.src} alt={text} />
+        <div className="modalSelectOptionsText">
+          <div className="chain-div">
+            {coming ? (
+              <p className="chain-name">{`${text}`}</p>
+            ) : (
+              <p>{`${text}`}</p>
+            )}
+          </div>
+          <div className="chain--identifier">
+            {chainStatus === undefined && !coming && !maintenance ? (
+              <Status status={"connecting"} />
+            ) : (
+              !chainStatus &&
+              !coming &&
+              !maintenance && <Status status={"off-line"} />
+            )}
+            {coming && <Status status={"coming"} />}
+            {maintenance && <Status status={"maintenance"} />}
+            {updated && <Status status={"updated"} />}
+            {!maintenance && newChain && <Status status={"new"} />}
+          </div>
+        </div>
+      </li>
     );
 }
 
