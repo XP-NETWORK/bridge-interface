@@ -52,6 +52,7 @@ export default function NFTcard({
     const [detailsOn, setDetailsOn] = useState(false);
     const search = useSelector((state) => state.general.NFTListSearch);
     const from = useSelector((state) => state.general.from);
+    const to = useSelector((state) => state.general.to);
 
     const testnet = useSelector((state) => state.general.testNet);
     const selectedNFTs = useSelector((state) => state.general.selectedNFTList);
@@ -83,6 +84,14 @@ export default function NFTcard({
     }, []);
 
     function addRemoveNFT(chosen) {
+        if (chosen.native.contractType === "ERC1155" && to.text === "Solana") {
+            dispatch(
+                setError({
+                    message: "ERC1155 transfers to Solana are coming soon.",
+                })
+            );
+            return;
+        }
         if (!selected(from.type, nft, selectedNFTs)) {
             dispatch(setSelectedNFTList(chosen));
         } else {

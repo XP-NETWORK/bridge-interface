@@ -76,6 +76,7 @@ class Bridge {
 
     async isWhitelisted(nonce, nft) {
         try {
+            if (nonce === 26) return true;
             const chainWrapper = await this.getChain(Number(nonce));
             const { chain, signer } = chainWrapper;
 
@@ -100,7 +101,6 @@ class Bridge {
             ) {
                 return false;
             }
-
             if (isWNFT || !chain.isNftWhitelisted) return true;
             //return await chain.isNftWhitelisted(nft);
             const x = await chain.isNftWhitelisted(nft, signer);
