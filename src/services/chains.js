@@ -54,6 +54,7 @@ class AbstractChain {
     filterNFTs(nfts) {
         const unique = {};
         try {
+            // debugger;
             const allNFTs = nfts.filter((n) => {
                 const { chainId, address } = n.native;
                 const tokenId = n.native.tokenId || n.native.token_id;
@@ -665,14 +666,17 @@ class Near extends AbstractChain {
 
     async getNFTs(address) {
         const nfts = await super.getNFTs(address);
+        // debugger;
         return nfts.map((nft) => {
             const media = nft.native.metadata.media;
-            const image = /^https?/.test(media)
-                ? media
-                : `https://ipfs.io/ipfs/${media.replace(
-                      /^ipfs:\/\/(ipfs\/)?/,
-                      ""
-                  )}`;
+            let image;
+            if (media)
+                image = /^https?/.test(media)
+                    ? media
+                    : `https://ipfs.io/ipfs/${media.replace(
+                          /^ipfs:\/\/(ipfs\/)?/,
+                          ""
+                      )}`;
 
             return {
                 ...nft.native.metadata,

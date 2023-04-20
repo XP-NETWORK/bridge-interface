@@ -94,8 +94,9 @@ function NFTaccount(props) {
         tonAccount;
 
     const { bridge } = serviceContainer;
-
     async function getNFTsList(fromChain) {
+        // eslint-disable-next-line no-debugger
+        // debugger;
         dispatch(setBigLoader(true));
         try {
             let nfts = await fromChain.getNFTs(bridge.checkWallet || _account);
