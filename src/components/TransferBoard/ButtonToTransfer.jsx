@@ -114,8 +114,8 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
                 } else {
                     sendEach(selectedNFTList[index], index);
                 }
-                return stop;
             }
+            return stop;
         }
     };
 
