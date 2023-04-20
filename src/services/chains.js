@@ -753,6 +753,7 @@ class Solana extends AbstractChain {
             native: {
                 ...nft.native,
                 contract: nft.collectionIdent,
+
                 tokenId: encodeURIComponent(nft.native.name),
                 chainId: String(this.chainParams.nonce),
             },
@@ -766,6 +767,20 @@ class APTOS extends AbstractChain {
     }
     async preTransfer() {
         return true;
+    }
+
+    async preParse(nft) {
+        const contract = nft.native.collection_name;
+        return {
+            ...nft,
+            collectionIdent: contract,
+            collectionName: contract,
+            native: {
+                ...nft.native,
+                name: nft.native.token_name,
+                contract,
+            },
+        };
     }
 
     async mintNFT(uri) {

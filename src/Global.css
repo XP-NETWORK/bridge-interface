@@ -926,8 +926,6 @@ li.nftSelecItem .Close:hover {
     color: #14161a;
     white-space: nowrap;
     max-width: 200px !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .nftInfBox {
