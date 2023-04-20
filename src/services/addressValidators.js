@@ -5,6 +5,7 @@ import { ethers } from "ethers";
 import TonWeb from "tonweb";
 import * as erdjs from "@elrondnetwork/erdjs";
 import { PublicKey } from "@solana/web3.js";
+import { TxnBuilderTypes} from 'aptos'
 
 const addressValidateTon = (address) => {
     console.log("here: ", TonWeb.Address.isValid(address));
@@ -13,6 +14,22 @@ const addressValidateTon = (address) => {
 
 const addressValidateEVM = (address) => {
     return ethers.utils.isAddress(address);
+};
+
+const addressValidateAptos = (address) => {
+  try {
+    let valid = false;
+    const { AccountAddress } = TxnBuilderTypes;
+    if (address?.length === 66) {
+      valid = AccountAddress.isValid(address);
+    } else {
+      valid = false;
+    }
+    return valid;
+  } catch (error) {
+    console.log("APTOS ADDRESS INVALID: ", error);
+    return false;
+  }
 };
 
 const addressValidateElrd = (address) => {
@@ -152,6 +169,7 @@ export const validateFunctions = {
     NEAR: addressValidateNear,
     Cosmos: addressValidateCosmos,
     VeChain: addressValidateEVM,
+    APTOS: addressValidateAptos
 };
 
 export const maxChainAddressLengths = {
@@ -165,5 +183,6 @@ export const maxChainAddressLengths = {
     NEAR: 64,
     Cosmos: 45,
     VeChain: 42,
+    APTOS: 66
 };
  

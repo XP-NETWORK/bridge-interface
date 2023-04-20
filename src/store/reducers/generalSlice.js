@@ -433,7 +433,7 @@ const generalSlice = createSlice({
                             state.error = `You don't have enough funds to pay the fees`;
                         if (message?.includes("not whitelisted"))
                             state.error = `NFT contract is not whitelisted`;
-                        if (message.includes("user rejected transaction")) {
+                        if (message?.includes("user rejected transaction")) {
                             return;
                         } else state.error = message;
                         break;
