@@ -440,7 +440,7 @@ export const allchains = [
     name: "Moonbeam",
     chain: "MOON",
     network: "moonbeam",
-    rpcUrls: [],
+    rpcUrls: ['https://rpc.api.moonbeam.network'],
     faucets: [],
     nativeCurrency: {
       name: "Glimmer",
