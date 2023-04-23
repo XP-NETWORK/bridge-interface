@@ -347,6 +347,10 @@ class AbstractChain {
                 return res;
         }
     }
+
+    handlerError(e) {
+        return e;
+    }
 }
 
 class EVM extends AbstractChain {
@@ -813,6 +817,12 @@ class APTOS extends AbstractChain {
         } catch (err) {
             return [];
         }
+    }
+
+    handlerError(e) {
+        return {
+            message: e.name,
+        };
     }
 }
 

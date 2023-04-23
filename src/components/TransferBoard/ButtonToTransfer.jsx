@@ -121,15 +121,14 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
 
     const sendEach = async (nft) => {
         // debugger;
+        const [fromChain, toChain] = await Promise.all([
+            bridge.getChain(_from.nonce),
+            bridge.getChain(_to.nonce),
+        ]);
         try {
-            const [fromChain, toChain] = await Promise.all([
-                bridge.getChain(_from.nonce),
-                bridge.getChain(_to.nonce),
-            ]);
-
             const unstoppabledomain = await getFromDomain(receiver, toChain);
             if (unstoppabledomainSwitch(unstoppabledomain)) return;
-            console.log(toChain.XpNft);
+
             const res = await fromChain.transfer({
                 toChain,
                 nft,
@@ -158,8 +157,8 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
                 `${receiver} Success transfer`
             );
         } catch (e) {
-            console.log(e, "eee");
-            dispatch(setError(e));
+            const resultError = fromChain.handlerError(e);
+            dispatch(setError(resultError));
             handleGA4Event(
                 googleAnalyticsCategories.Transfer,
                 `${receiver} Failed transfer`

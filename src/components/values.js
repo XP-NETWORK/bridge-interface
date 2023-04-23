@@ -464,8 +464,9 @@ export const chains = [
         order: 0,
         image: { avatar: true, src: Aptos },
         testNet: biz,
-        mainnet: false,
+        mainnet: biz,
         coming: !biz,
+        newChain: biz,
     },
     {
         type: "NEAR",
