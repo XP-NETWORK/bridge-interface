@@ -36,6 +36,7 @@ export default function NFTSearch() {
     useEffect(clear, [from]);
 
     const handleSearch = (e) => {
+        if (e.target.value === "") clear();
         const search = e.target.value;
         setInput(search);
     };
