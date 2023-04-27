@@ -54,6 +54,7 @@ class AbstractChain {
     filterNFTs(nfts) {
         const unique = {};
         try {
+            // debugger;
             const allNFTs = nfts.filter((n) => {
                 const { chainId, address } = n.native;
                 const tokenId = n.native.tokenId || n.native.token_id;
@@ -345,6 +346,10 @@ class AbstractChain {
             default:
                 return res;
         }
+    }
+
+    handlerError(e) {
+        return e;
     }
 }
 
@@ -665,14 +670,17 @@ class Near extends AbstractChain {
 
     async getNFTs(address) {
         const nfts = await super.getNFTs(address);
+        // debugger;
         return nfts.map((nft) => {
             const media = nft.native.metadata.media;
-            const image = /^https?/.test(media)
-                ? media
-                : `https://ipfs.io/ipfs/${media.replace(
-                      /^ipfs:\/\/(ipfs\/)?/,
-                      ""
-                  )}`;
+            let image;
+            if (media)
+                image = /^https?/.test(media)
+                    ? media
+                    : `https://ipfs.io/ipfs/${media.replace(
+                          /^ipfs:\/\/(ipfs\/)?/,
+                          ""
+                      )}`;
 
             return {
                 ...nft.native.metadata,
@@ -749,6 +757,7 @@ class Solana extends AbstractChain {
             native: {
                 ...nft.native,
                 contract: nft.collectionIdent,
+
                 tokenId: encodeURIComponent(nft.native.name),
                 chainId: String(this.chainParams.nonce),
             },
@@ -762,6 +771,20 @@ class APTOS extends AbstractChain {
     }
     async preTransfer() {
         return true;
+    }
+
+    async preParse(nft) {
+        const contract = nft.native.collection_name;
+        return {
+            ...nft,
+            collectionIdent: contract,
+            collectionName: contract,
+            native: {
+                ...nft.native,
+                name: nft.native.token_name,
+                contract,
+            },
+        };
     }
 
     async mintNFT(uri) {
@@ -794,6 +817,12 @@ class APTOS extends AbstractChain {
         } catch (err) {
             return [];
         }
+    }
+
+    handlerError(e) {
+        return {
+            message: e.name,
+        };
     }
 }
 

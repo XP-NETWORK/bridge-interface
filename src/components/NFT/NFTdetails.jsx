@@ -137,7 +137,12 @@ function NFTdetails({ nftInf, details }) {
                                 <label>Token ID</label>
                                 <div className="token-id-inf">
                                     <div className="id-copy">
-                                        {native?.tokenId}
+                                        {native?.tokenId?.length > 30
+                                            ? StringShortener(
+                                                  native?.tokenId,
+                                                  10
+                                              )
+                                            : native?.tokenId}
                                     </div>
                                     <Tooltip text={native?.tokenId} />
                                 </div>
@@ -191,10 +196,12 @@ function NFTdetails({ nftInf, details }) {
                                 <label>Collection Identifier</label>
                                 <div className="coll-ident">
                                     <p>
-                                        {StringShortener(
-                                            nftInf.collectionIdent,
-                                            10
-                                        )}
+                                        {nftInf.collectionIdent?.length > 30
+                                            ? StringShortener(
+                                                  nftInf.collectionIdent,
+                                                  10
+                                              )
+                                            : nftInf.collectionIdent}
                                     </p>
                                     <Tooltip text={nftInf.collectionIdent} />
                                 </div>
