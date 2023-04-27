@@ -137,7 +137,7 @@ function NFTdetails({ nftInf, details }) {
                                 <label>Token ID</label>
                                 <div className="token-id-inf">
                                     <div className="id-copy">
-                                        {native?.tokenId?.length > 30
+                                        {native?.tokenId?.length > 15
                                             ? StringShortener(
                                                   native?.tokenId,
                                                   10

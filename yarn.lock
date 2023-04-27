@@ -1312,10 +1312,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/selector-specificity/-/selector-specificity-2.2.0.tgz#2cbcf822bf3764c9658c4d2e568bd0c0cb748016"
   integrity sha512-+OJ9konv95ClSTOJCmMZqpd5+YGsB2S+x6w3E1oaM8UuR5j8nTNHYSz8c9BEPGDOCMQYIEEGlVPj/VY64iTbGw==
 
-"@dfinity/agent@^0.15.5":
-  version "0.15.5"
-  resolved "https://registry.yarnpkg.com/@dfinity/agent/-/agent-0.15.5.tgz#56a46fe86ffe9dbb98e3aa8ee3200091ace2d925"
-  integrity sha512-Ytn8eo0Gk8QkaCX2X+CS1NYOdCr0ZjanqFyKbR5rY7LGQoVaNzdVHJufzheuTFMhTZs6i/OtaG2BQug4cNIocw==
+"@dfinity/agent@^0.15.5", "@dfinity/agent@^0.15.6":
+  version "0.15.6"
+  resolved "https://registry.yarnpkg.com/@dfinity/agent/-/agent-0.15.6.tgz#a22eb276956065184329c70bb3ef21be94983790"
+  integrity sha512-Ch+tXAszPap0zwRgr/oFEgJLDld4RDwBdFDqR1JUg38xhHWTFMrTkjMT6uQFvqf6d2wDXnh3zwhqbg5P7OCv7A==
   dependencies:
     base64-arraybuffer "^0.2.0"
     bignumber.js "^9.0.0"
@@ -1325,18 +1325,18 @@
     ts-node "^10.8.2"
 
 "@dfinity/candid@^0.15.5":
-  version "0.15.5"
-  resolved "https://registry.yarnpkg.com/@dfinity/candid/-/candid-0.15.5.tgz#f108bd6e4f7568a0db758d18111011c03eb270da"
-  integrity sha512-SWf70AuFJ+SphvOHPiyCXE2s5b63c8U/UVGIRhnxSR/xi8iiP3tjPL6Cfe+TPsuXQShX8pPJBJhKC9O20cua2Q==
+  version "0.15.6"
+  resolved "https://registry.yarnpkg.com/@dfinity/candid/-/candid-0.15.6.tgz#87a2247b39fb55a44f91514c0b8ae81ff874b54f"
+  integrity sha512-Q9PGvhTE/1dTLfSo0pu0+ifzA7NA4X1rgSy9TE6O1Glk6Kl8Nf+Pg2sCHS2hWt0RAiKfR2glEVlbUAm6S8vRxA==
   dependencies:
     ts-node "^10.8.2"
 
 "@dfinity/identity-secp256k1@^0.15.5":
-  version "0.15.5"
-  resolved "https://registry.yarnpkg.com/@dfinity/identity-secp256k1/-/identity-secp256k1-0.15.5.tgz#47b86c0988e9548e4aac8908c22c28309fc3a9b4"
-  integrity sha512-W0Y1bpuC6Nkl3zZlsFhYpLlaF6yw6uCZOEbLPqNfdUB5jv1fOS8SSsl557L3cG5d9utDLJOA9ejZ8cWxcTEMSw==
+  version "0.15.6"
+  resolved "https://registry.yarnpkg.com/@dfinity/identity-secp256k1/-/identity-secp256k1-0.15.6.tgz#0997ba2ffbd89045307e96f3ae58510c4f1fcfd7"
+  integrity sha512-rN3SM5AreO53fxYPjEo2ALPyEbwrq7HOY7Wvol+oEQo9uEziN7b87DfGLlQI7jB6yAdlkUDVB54678paHmcw1A==
   dependencies:
-    "@dfinity/agent" "^0.15.5"
+    "@dfinity/agent" "^0.15.6"
     bip39 "^3.0.4"
     bs58check "^2.1.2"
     secp256k1 "^4.0.3"
@@ -1353,9 +1353,9 @@
     randombytes "^2.1.0"
 
 "@dfinity/principal@^0.15.5":
-  version "0.15.5"
-  resolved "https://registry.yarnpkg.com/@dfinity/principal/-/principal-0.15.5.tgz#9db72b61ee7733b71850a2dfa8c985a4f9ec1886"
-  integrity sha512-K+oIH/zAuZf6JxQAZrPzkkGL+hPn96/CnFzjWNqwHADZjBShr9m1n2Sv/68hKoND5p/uMNVIAV0km39A03Se6g==
+  version "0.15.6"
+  resolved "https://registry.yarnpkg.com/@dfinity/principal/-/principal-0.15.6.tgz#c1260f8d09091eb5a4abfaf942940fe75184e4bb"
+  integrity sha512-eMsS5YofRk5Hm6LlhzyBvw1RzDxM5FWPtepQuYeZbZyD/ztq4TrUiScqoKBFw/LLODd0znt8rGnNgqtt+7JnQA==
   dependencies:
     js-sha256 "^0.9.0"
     ts-node "^10.8.2"
@@ -5290,9 +5290,9 @@
   integrity sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==
 
 "@types/node@*", "@types/node@>=12.12.47", "@types/node@>=13.7.0":
-  version "18.16.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.16.0.tgz#4668bc392bb6938637b47e98b1f2ed5426f33316"
-  integrity sha512-BsAaKhB+7X+H4GnSjGhJG9Qi8Tw+inU9nJDwmD5CgOmBLEI6ArdhikpLX7DjbjDRDTbqZzU2LSQNZg8WGPiSZQ==
+  version "18.16.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.16.1.tgz#5db121e9c5352925bb1f1b892c4ae620e3526799"
+  integrity sha512-DZxSZWXxFfOlx7k7Rv4LAyiMroaxa3Ly/7OOzZO8cBNho0YzAi4qlbrx8W27JGqG57IgR/6J7r+nOJWw6kcvZA==
 
 "@types/node@10.12.18":
   version "10.12.18"
@@ -12503,9 +12503,9 @@ jiti@^1.17.2:
   integrity sha512-QAdOptna2NYiSSpv0O/BwoHBSmz4YhpzJHyi+fnMRTXFjp7B8i/YG5Z8IfusxB1ufjcD2Sre1F3R+nX3fvy7gg==
 
 joi@^17.7.0:
-  version "17.9.1"
-  resolved "https://registry.yarnpkg.com/joi/-/joi-17.9.1.tgz#74899b9fa3646904afa984a11df648eca66c9018"
-  integrity sha512-FariIi9j6QODKATGBrEX7HZcja8Bsh3rfdGYy/Sb65sGlZWK/QWesU1ghk7aJWDj95knjXlQfSmzFSPPkLVsfw==
+  version "17.9.2"
+  resolved "https://registry.yarnpkg.com/joi/-/joi-17.9.2.tgz#8b2e4724188369f55451aebd1d0b1d9482470690"
+  integrity sha512-Itk/r+V4Dx0V3c7RLFdRh12IOjySm2/WGPMubBT92cQvRfYZhPM2W0hZlctjj72iES8jsRCwp7S/cRmWBnJ4nw==
   dependencies:
     "@hapi/hoek" "^9.0.0"
     "@hapi/topo" "^5.0.0"
@@ -13536,9 +13536,9 @@ mkdirp-promise@^5.0.1:
     mkdirp "*"
 
 mkdirp@*:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-3.0.0.tgz#758101231418bda24435c0888a91d9bd91f1372d"
-  integrity sha512-7+JDnNsyCvZXoUJdkMR0oUE2AmAdsNXGTmRbiOjYIwQ6q+bL6NwrozGQdPcmYaNcrhH37F50HHBUzoaBV6FITQ==
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-3.0.1.tgz#e44e4c5607fb279c168241713cc6e0fea9adcb50"
+  integrity sha512-+NsyUUAZDmo6YVHzL/stxSu3t9YS1iljliy3BSDrXJ/dkn1KYdmtZODGGjLcc9XLgVVpH4KshHB8XmZgMhaBXg==
 
 mkdirp@^0.5.1, mkdirp@^0.5.5, mkdirp@~0.5.1:
   version "0.5.6"
@@ -13805,7 +13805,7 @@ next-tick@^1.1.0:
 
 "nft-parser@git+https://github.com/xp-network/nft-parser#bleeding-edge":
   version "0.2.0"
-  resolved "git+https://github.com/xp-network/nft-parser#a6b085b4a9fd148df9a8c573835d63a2fd1703da"
+  resolved "git+https://github.com/xp-network/nft-parser#7c7e857e4394045e0019a6cab97fa5093a885030"
   dependencies:
     "@ethersproject/providers" "^5.7.2"
     "@moralisweb3/common-evm-utils" "^2.17.0"
@@ -19352,7 +19352,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "4.2.1"
-  resolved "git+https://github.com/xp-network/xpjs#b6f119da7112bef9a37161a9a8419d74f3a50a90"
+  resolved "git+https://github.com/xp-network/xpjs#8eb74bf60b2ca033ec4943f92d4316bea19089af"
   dependencies:
     "@dfinity/agent" "^0.15.5"
     "@dfinity/candid" "^0.15.5"
@@ -19399,13 +19399,13 @@ xmlhttprequest@1.8.0:
 
 "xpnet-web3-contracts@git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#dist-erc1155":
   version "0.1.0"
+  uid aa9473ea3b0f748bba54f5755abcfd17e3548237
   resolved "git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#aa9473ea3b0f748bba54f5755abcfd17e3548237"
   dependencies:
     ethers "^5.5.4"
 
 "xpnet-web3-contracts@git+https://github.com/xp-network/XP.network-HECO-Migration#aa9473ea3b0f748bba54f5755abcfd17e3548237":
   version "0.1.0"
-  uid aa9473ea3b0f748bba54f5755abcfd17e3548237
   resolved "git+https://github.com/xp-network/XP.network-HECO-Migration#aa9473ea3b0f748bba54f5755abcfd17e3548237"
   dependencies:
     ethers "^5.5.4"
