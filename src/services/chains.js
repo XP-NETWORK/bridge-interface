@@ -556,8 +556,7 @@ class Algorand extends AbstractChain {
 
     async getClaimables(account) {
         try {
-            const x = await this.bridge.claimableAlgorandNfts(account);
-            return x;
+            return await this.bridge.claimableAlgorandNfts(account);
         } catch (e) {
             console.log(e, "e");
             console.log("in getClaimables");
