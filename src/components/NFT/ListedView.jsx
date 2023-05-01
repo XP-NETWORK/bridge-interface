@@ -22,6 +22,7 @@ export default function ListedView({ nft, index }) {
                     <VideoAndImage
                         videoUrl={nft.animation_url}
                         imageUrl={nft.image}
+                        nft={nft}
                     />
                 ) : nft.image && !nft.animation_url ? (
                     <img

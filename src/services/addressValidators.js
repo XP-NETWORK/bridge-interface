@@ -5,6 +5,7 @@ import { ethers } from "ethers";
 import TonWeb from "tonweb";
 import * as erdjs from "@elrondnetwork/erdjs";
 import { PublicKey } from "@solana/web3.js";
+import Web3 from "web3";
 
 const addressValidateTon = (address) => {
     console.log("here: ", TonWeb.Address.isValid(address));
@@ -13,6 +14,12 @@ const addressValidateTon = (address) => {
 
 const addressValidateEVM = (address) => {
     return ethers.utils.isAddress(address);
+};
+
+export const checkIfContractAddress = async (address, provider) => {
+    // debugger;
+    const web3 = new Web3(provider);
+    return web3.eth.getCode(address);
 };
 
 const addressValidateElrd = (address) => {
