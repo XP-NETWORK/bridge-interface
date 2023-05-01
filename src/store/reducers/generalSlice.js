@@ -449,6 +449,9 @@ const generalSlice = createSlice({
         setBigNumFees(state, action) {
             state.bigNumberFees = action.payload;
         },
+        setBigNumDeployFees(state, action) {
+            state.bigNumberDeployFees = action.payload;
+        },
         setTronLoginError(state, action) {
             state.tronLoginError = action.payload;
         },
@@ -651,6 +654,7 @@ export const {
     setWidget,
     setError,
     setBigNumFees,
+    setBigNumDeployFees,
     setTronPopUp,
     setTronLoginError,
     setTrustWallet,

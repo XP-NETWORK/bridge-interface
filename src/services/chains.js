@@ -209,17 +209,26 @@ class AbstractChain {
 
     async estimateDeploy(toChain, nft) {
         try {
-            const res = await this.bridge.estimateWithContractDep(
-                this.chain,
-                toChain,
-                nft
-            );
-            return res.calcContractDep
-                ?.integerValue()
-                .dividedBy(this.chainParams.decimals)
-                .toNumber();
+            const res = (
+                await this.bridge.estimateWithContractDep(
+                    this.chain,
+                    toChain,
+                    nft
+                )
+            ).calcContractDep.integerValue();
+
+            return {
+                fees: res.toString(10),
+                formatedFees: res
+                    .dividedBy(this.chainParams.decimals)
+                    .toNumber(),
+            };
         } catch (e) {
             console.log("in estimateDeploy", e);
+            return {
+                fees: "",
+                formatedFees: 0,
+            };
         }
     }
 
@@ -328,7 +337,6 @@ class AbstractChain {
     }
 
     handlerResult(res) {
-        console.log(res, "handlerResult");
         switch (true) {
             case typeof res === "string":
                 return { hash: res };
@@ -794,7 +802,7 @@ class APTOS extends AbstractChain {
             uri,
             royalty_payee_address: this.signer.address,
         };
-        console.log(this.signer);
+
         const mint = await this.chain.mintNft(this.signer, options);
     }
 
