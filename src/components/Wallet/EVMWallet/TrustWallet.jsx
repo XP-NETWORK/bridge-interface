@@ -20,9 +20,9 @@ function TrustWallet({ connectWallet }) {
 
   return (
     <li
-      onClick={() => connectWallet("TrustWallet")}
+      onClick={() => connectWallet("Trust Wallet")}
       style={getStyle()}
-      data-wallet="TrustWallet"
+      data-wallet="Trust Wallet"
       className="wllListItem"
     >
       <img src={icon} alt="WalletConnect Icon" />

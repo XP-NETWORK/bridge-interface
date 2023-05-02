@@ -57,7 +57,7 @@ export default function WalletList({ connected, input, discount }) {
     {
       Component: (
         <TrustWallet
-          wallet={"TrustWallet"}
+          wallet={"Trust Wallet"}
           key="trust-wallet"
           close={connected}
         />
@@ -67,7 +67,7 @@ export default function WalletList({ connected, input, discount }) {
       mobile: true,
       desktop: false,
       order: 2,
-      keyName: "TrustWallet",
+      keyName: "Trust Wallet",
     },
     {
       Component: (

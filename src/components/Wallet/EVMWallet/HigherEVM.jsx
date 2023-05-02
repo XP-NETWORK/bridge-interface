@@ -63,7 +63,7 @@ export default function HigherEVM(OriginalComponent) {
                         if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                     }
                     break;
-                case "TrustWallet":
+                case "Trust Wallet":
                     connected = await connectTrustWallet(
                         activate,
                         from?.key,
@@ -71,7 +71,7 @@ export default function HigherEVM(OriginalComponent) {
                     );
                     dispatch(setWalletsModal(false));
                     if (connected && to) {
-                        dispatch(setConnectedWallet("TrustWallet"));
+                        dispatch(setConnectedWallet("Trust Wallet"));
                         navigateToAccountRoute();
                     }
                     if (temporaryFrom) dispatch(setFrom(temporaryFrom));
