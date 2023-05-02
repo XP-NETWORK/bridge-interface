@@ -33,6 +33,12 @@ const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setCheckDestinationAddress(state, action) {
+            state.checkDestinationAddress = action.payload;
+        },
+        setReceiverIsContract(state, action) {
+            state.receiverIsContract = action.payload;
+        },
         setAlgorandAddresses(state, action) {
             state.algorandAddresses = action.payload;
         },
@@ -557,6 +563,8 @@ const generalSlice = createSlice({
 });
 
 export const {
+    setCheckDestinationAddress,
+    setReceiverIsContract,
     setAlgorandAddresses,
     setDeepLink,
     setWhitelistingLoader,
