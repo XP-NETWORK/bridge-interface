@@ -16,7 +16,7 @@ import {
     setSwitchDestination,
     setError,
     setIsInvalidAddress,
-    // setReceiverIsContract,
+    setReceiverIsContract,
 } from "../../store/reducers/generalSlice";
 import ChainSwitch from "../Buttons/ChainSwitch";
 import { withServices } from "../App/hocs/withServices";
@@ -28,6 +28,13 @@ function DestinationChain({ serviceContainer }) {
     let alert = useSelector((state) => state.general.pasteDestinationAlert);
     let to = useSelector((state) => state.general.to);
     const isInvalid = useSelector((state) => state.general.isInvalid);
+    const receiverIsContract = useSelector(
+        (state) => state.general.receiverIsContract
+    );
+    console.log(
+        "🚀 ~ file: DestinationChain.jsx:32 ~ DestinationChain ~ receiverIsContract:",
+        receiverIsContract
+    );
 
     const dispatch = useDispatch();
     let receiver = useSelector((state) => state.general.receiver);
@@ -54,28 +61,29 @@ function DestinationChain({ serviceContainer }) {
         }
     }, [receiver]);
 
+    const checkIfReceiverIsContract = async (address) => {
+        let isContract = await checkIfContractAddress(
+            address,
+            destinationProvider.connection.url
+        );
+        dispatch(setReceiverIsContract(isContract));
+    };
+
     const handleChange = (e) => {
         try {
             if (inputFilter(e)) {
                 let address = e.target.value.trim();
                 if (generalValidation(e, receiver)) {
                     const validateFunc = validateFunctions[to.type];
-                    console.log("validateFunc :", to.type);
                     if (validateFunc) {
                         dispatch(setIsInvalidAddress(validateFunc(address)));
                         if (validateFunc(address) && to.type === "EVM") {
-                            let bc;
-                            checkIfContractAddress(
-                                address,
-                                destinationProvider
-                            ).then((res) => (bc = res));
-                            console.log({ bc });
+                            checkIfReceiverIsContract(address);
+                        } else {
+                            dispatch(setReceiverIsContract(false));
                         }
                     }
                     dispatch(setReceiver(address));
-                } else {
-                    // dispatch(setIsInvalidAddress(true));
-                    // dispatch(setReceiver(address));
                 }
             }
         } catch (error) {

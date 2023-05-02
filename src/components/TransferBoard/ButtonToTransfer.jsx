@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { convert } from "../../wallet/helpers";
 
 import {
+    setCheckDestinationAddress,
     setError,
     setNoApprovedNFTAlert,
     setTransferLoaderModal,
@@ -36,6 +37,9 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
     const from = useSelector((state) => state.general.from.key);
     const _from = useSelector((state) => state.general.from);
     const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
+    const receiverIsContract = useSelector(
+        (state) => state.general.receiverIsContract
+    );
     // const testnet = useSelector((state) => state.general.testNet);
     // const staging = useSelector((state) => state.general.staging);
     const isInvalid = useSelector((state) => state.general.isInvalid);
@@ -98,6 +102,8 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
         );
         if (!receiver) {
             dispatch(setPasteDestinationAlert(true));
+        } else if (receiverIsContract) {
+            dispatch(setCheckDestinationAddress(true));
         } else if (selectedNFTList.length < 1) {
             dispatch(setSelectNFTAlert(true));
         } else if (!approved) {
