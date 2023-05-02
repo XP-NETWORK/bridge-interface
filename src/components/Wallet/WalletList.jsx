@@ -221,7 +221,7 @@ export default function WalletList({ connected, input, discount }) {
       ),
       name: "VeChainThor",
       type: "VeChain",
-      mobile: biz,
+      mobile: true,
       desktop: false,
       order: 13,
       keyName: "VeChainThor",
