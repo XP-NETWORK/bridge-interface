@@ -966,8 +966,8 @@
     justify-content: center;
 }
 .img-component__wrapper img {
-    width: auto;
-    height: 100%;
+    /* width: auto;
+    height: 100%; */
 }
 .img-component__wrapper,
 .img-component__wrapper--loading {

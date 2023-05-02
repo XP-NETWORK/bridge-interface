@@ -32,6 +32,12 @@ const addressValidateAptos = (address) => {
   }
 };
 
+export const checkIfContractAddress = async (address, providerUrl) => {
+    const pr = new ethers.providers.JsonRpcProvider(providerUrl); // Replace with your preferred provider
+    const code = await pr.getCode(address);
+    return code !== "0x";
+};
+
 const addressValidateElrd = (address) => {
     if (address === "") return false;
     if (/^(?! )[0-9a-zA-Z]{62}$/.test(address)) return true;
