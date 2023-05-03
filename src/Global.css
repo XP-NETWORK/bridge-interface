@@ -2205,7 +2205,11 @@ span.closeBox:hover svg path {
         transform: translate(24px, 0);
     }
 }
-
+@media only screen and (width: 1024px) and (height: 600px){
+    .first-step__container {
+        margin: 39px 13% !important;
+    }
+}
 @media screen and (max-height: 750px) {
     .first-step__container {
         margin: 39px 0;

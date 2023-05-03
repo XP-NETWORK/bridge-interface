@@ -446,7 +446,15 @@
 .fieldsWrapper input:focus {
   outline: none;
 }
-
+@media only screen and (width: 1024px) and (height: 600px){
+  .nftListCol {
+    padding-left: 8% !important;
+    padding-right: 8% !important;
+  }
+  .sendNftCol{
+    margin-left: -8%;
+  }
+}
 /* IPAD MINI */
 @media only screen and (width: 768px) and (height: 1024px) and (orientation:portrait) {
     .mobile-col {
