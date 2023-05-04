@@ -54,6 +54,7 @@ class AbstractChain {
     filterNFTs(nfts) {
         const unique = {};
         try {
+            // debugger;
             const allNFTs = nfts.filter((n) => {
                 const { chainId, address } = n.native;
                 const tokenId = n.native.tokenId || n.native.token_id;
@@ -208,17 +209,26 @@ class AbstractChain {
 
     async estimateDeploy(toChain, nft) {
         try {
-            const res = await this.bridge.estimateWithContractDep(
-                this.chain,
-                toChain,
-                nft
-            );
-            return res.calcContractDep
-                ?.integerValue()
-                .dividedBy(this.chainParams.decimals)
-                .toNumber();
+            const res = (
+                await this.bridge.estimateWithContractDep(
+                    this.chain,
+                    toChain,
+                    nft
+                )
+            ).calcContractDep.integerValue();
+
+            return {
+                fees: res.toString(10),
+                formatedFees: res
+                    .dividedBy(this.chainParams.decimals)
+                    .toNumber(),
+            };
         } catch (e) {
             console.log("in estimateDeploy", e);
+            return {
+                fees: "",
+                formatedFees: 0,
+            };
         }
     }
 
@@ -327,7 +337,6 @@ class AbstractChain {
     }
 
     handlerResult(res) {
-        console.log(res, "handlerResult");
         switch (true) {
             case typeof res === "string":
                 return { hash: res };
@@ -345,6 +354,10 @@ class AbstractChain {
             default:
                 return res;
         }
+    }
+
+    handlerError(e) {
+        return e;
     }
 }
 
@@ -551,8 +564,7 @@ class Algorand extends AbstractChain {
 
     async getClaimables(account) {
         try {
-            const x = await this.bridge.claimableAlgorandNfts(account);
-            return x;
+            return await this.bridge.claimableAlgorandNfts(account);
         } catch (e) {
             console.log(e, "e");
             console.log("in getClaimables");
@@ -665,19 +677,23 @@ class Near extends AbstractChain {
 
     async getNFTs(address) {
         const nfts = await super.getNFTs(address);
+        // debugger;
         return nfts.map((nft) => {
             const media = nft.native.metadata.media;
-            const image = /^https?/.test(media)
-                ? media
-                : `https://ipfs.io/ipfs/${media.replace(
-                      /^ipfs:\/\/(ipfs\/)?/,
-                      ""
-                  )}`;
+            let image;
+            if (media)
+                image = /^https?/.test(media)
+                    ? media
+                    : `https://ipfs.io/ipfs/${media.replace(
+                          /^ipfs:\/\/(ipfs\/)?/,
+                          ""
+                      )}`;
 
             return {
                 ...nft.native.metadata,
                 image,
-                uri: nft.uri,
+                uri: nft.uri || nft.native.metadata?.reference,
+                name: nft.native.metadata?.title,
                 collectionIdent: nft.collectionIdent,
                 native: {
                     ...nft.native,
@@ -692,7 +708,7 @@ class Near extends AbstractChain {
     async unwrap(nft, data) {
         return {
             contract: data.wrapped?.contract,
-            tokenId: data.wrapped?.source_mint_ident,
+            tokenId: data.wrapped?.source_token_id,
             chainId: String(this.nonce),
             nft: {
                 ...nft,
@@ -701,7 +717,7 @@ class Near extends AbstractChain {
                     ...nft.native,
                     chainId: String(this.nonce),
                     contract: data.wrapped?.contract,
-                    tokenId: data.wrapped?.source_mint_ident,
+                    tokenId: data.wrapped?.source_token_id,
                 },
             },
         };
@@ -749,6 +765,7 @@ class Solana extends AbstractChain {
             native: {
                 ...nft.native,
                 contract: nft.collectionIdent,
+
                 tokenId: encodeURIComponent(nft.native.name),
                 chainId: String(this.chainParams.nonce),
             },
@@ -764,6 +781,20 @@ class APTOS extends AbstractChain {
         return true;
     }
 
+    async preParse(nft) {
+        const contract = nft.native.collection_name;
+        return {
+            ...nft,
+            collectionIdent: contract,
+            collectionName: contract,
+            native: {
+                ...nft.native,
+                name: nft.native.token_name,
+                contract,
+            },
+        };
+    }
+
     async mintNFT(uri) {
         const options = {
             name: "Name",
@@ -772,7 +803,7 @@ class APTOS extends AbstractChain {
             uri,
             royalty_payee_address: this.signer.address,
         };
-        console.log(this.signer);
+
         const mint = await this.chain.mintNft(this.signer, options);
     }
 
@@ -794,6 +825,12 @@ class APTOS extends AbstractChain {
         } catch (err) {
             return [];
         }
+    }
+
+    handlerError(e) {
+        return {
+            message: e.name,
+        };
     }
 }
 

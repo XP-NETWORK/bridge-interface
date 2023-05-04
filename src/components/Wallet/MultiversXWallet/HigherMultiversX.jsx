@@ -54,7 +54,6 @@ export default function HigherMultiversX(OriginalComponent) {
                 console.log("Address:", address);
             },
             onClientLogout: async function() {
-                console.log("onClientLogout()");
                 navigate("/");
                 dispatch(setAccount(""));
                 dispatch(setConnectedWallet(""));

@@ -132,7 +132,7 @@ function CosmosWallet({ wallet, serviceContainer }) {
                     style={getStyle()}
                     onClick={() => onClickHandler("Fina")}
                     className="wllListItem keplr"
-                    data-wallet="Keplr"
+                    data-wallet="Fina"
                 >
                     <img src={fina} alt="Keplr" />
                     <p>Fina</p>

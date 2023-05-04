@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { convert } from "../../wallet/helpers";
 
 import {
+    setCheckDestinationAddress,
     setError,
     setNoApprovedNFTAlert,
     setTransferLoaderModal,
@@ -21,6 +22,7 @@ import { withWidget } from "../Widget/hocs/withWidget";
 import { notifyExplorer } from "../../services/explorer";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 import { compose } from "redux";
+import BigNumber from "bignumber.js";
 
 export default compose(
     withServices,
@@ -37,8 +39,14 @@ export default compose(
     const _from = useSelector((state) => state.general.from);
     const account = useSelector((state) => state.general.account);
     const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
+    const receiverIsContract = useSelector(
+        (state) => state.general.receiverIsContract
+    );
 
-    //const isInvalid = useSelector((state) => state.general.isInvalid);
+    const bigNumberDeployFees = useSelector(
+        (state) => state.general.bigNumberDeployFees
+    );
+
     const [loading, setLoading] = useState();
     const dispatch = useDispatch();
 
@@ -91,21 +99,53 @@ export default compose(
         return stop;
     };
 
-    const sendEach = async (nft) => {
-        try {
-            const [fromChain, toChain] = await Promise.all([
-                bridge.getChain(_from.nonce),
-                bridge.getChain(_to.nonce),
-            ]);
+    const sendAllNFTs = async () => {
+        handleGA4Event(
+            googleAnalyticsCategories.Transfer,
+            `${receiver} trying to transfer ${selectedNFTList.length} nfts`
+        );
+        if (!receiver) {
+            dispatch(setPasteDestinationAlert(true));
+        } else if (receiverIsContract) {
+            dispatch(setCheckDestinationAddress(true));
+        } else if (selectedNFTList.length < 1) {
+            dispatch(setSelectNFTAlert(true));
+        } else if (!approved) {
+            dispatch(setNoApprovedNFTAlert(true));
+        } else if (!loading && approved) {
+            setLoading(true);
+            dispatch(setTransferLoaderModal(true));
 
+            for (let index = 0; index < selectedNFTList.length; index++) {
+                if (from === "VeChain" || from === "TON") {
+                    await sendEach(selectedNFTList[index], index);
+                } else {
+                    sendEach(selectedNFTList[index], index);
+                }
+            }
+            return stop;
+        }
+    };
+
+    const sendEach = async (nft) => {
+        // debugger;
+        const [fromChain, toChain] = await Promise.all([
+            bridge.getChain(_from.nonce),
+            bridge.getChain(_to.nonce),
+        ]);
+        try {
             const unstoppabledomain = await getFromDomain(receiver, toChain);
             if (unstoppabledomainSwitch(unstoppabledomain)) return;
+
+            const fee = new BigNumber(bigNumberFees || 0)
+                .plus(new BigNumber(bigNumberDeployFees || 0))
+                .toString(10);
 
             const res = await fromChain.transfer({
                 toChain,
                 nft,
                 receiver: unstoppabledomain || receiver,
-                fee: bigNumberFees,
+                fee,
                 discountLeftUsd,
                 extraFee: getExtraFee(from),
             });
@@ -133,8 +173,8 @@ export default compose(
                 `${receiver} Success transfer`
             );
         } catch (e) {
-            console.log(e, "eee");
-            dispatch(setError(e));
+            const resultError = fromChain.handlerError(e);
+            dispatch(setError(resultError));
             handleGA4Event(
                 googleAnalyticsCategories.Transfer,
                 `${receiver} Failed transfer`
@@ -143,31 +183,6 @@ export default compose(
 
         setLoading(false);
         dispatch(setTransferLoaderModal(false));
-    };
-
-    const sendAllNFTs = async () => {
-        handleGA4Event(
-            googleAnalyticsCategories.Transfer,
-            `${receiver} trying to transfer ${selectedNFTList.length} nfts`
-        );
-        if (!receiver) {
-            dispatch(setPasteDestinationAlert(true));
-        } else if (selectedNFTList.length < 1) {
-            dispatch(setSelectNFTAlert(true));
-        } else if (!approved) {
-            dispatch(setNoApprovedNFTAlert(true));
-        } else if (!loading && approved) {
-            setLoading(true);
-            dispatch(setTransferLoaderModal(true));
-
-            for (let index = 0; index < selectedNFTList.length; index++) {
-                if (from === "VeChain" || from === "TON") {
-                    await sendEach(selectedNFTList[index], index);
-                } else {
-                    sendEach(selectedNFTList[index], index);
-                }
-            }
-        }
     };
 
     return (
@@ -181,28 +196,3 @@ export default compose(
         </div>
     );
 });
-
-/***
- * 
- * 
- * import { withWidget } from "../Widget/hocs/withWidget";
-
-export default withWidget(function ButtonToTransfer({
-
-const params = {
-  extraFees: getExtraFee(from),
-}
-
-
-   } else if (result) {
-      setTxForWidget({
-        result,
-        fromNonce: _from.nonce,
-        toNonce: _to.nonce,
-        bigNumberFees,
-        from,
-        nft,
-        senderAddress: account || algorandAccount,
-        targetAddress: receiverAddress || unstoppabledomain || receiver,
-      });
- */
