@@ -708,7 +708,7 @@ class Near extends AbstractChain {
     async unwrap(nft, data) {
         return {
             contract: data.wrapped?.contract,
-            tokenId: data.wrapped?.source_token_id,
+            tokenId: data.wrapped.token_id || data.wrapped?.source_token_id,
             chainId: String(this.nonce),
             nft: {
                 ...nft,
@@ -717,7 +717,8 @@ class Near extends AbstractChain {
                     ...nft.native,
                     chainId: String(this.nonce),
                     contract: data.wrapped?.contract,
-                    tokenId: data.wrapped?.source_token_id,
+                    tokenId:
+                        data.wrapped.token_id || data.wrapped?.source_token_id,
                 },
             },
         };
