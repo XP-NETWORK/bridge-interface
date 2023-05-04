@@ -692,7 +692,8 @@ class Near extends AbstractChain {
             return {
                 ...nft.native.metadata,
                 image,
-                uri: nft.uri,
+                uri: nft.uri || nft.native.metadata?.reference,
+                name: nft.native.metadata?.title,
                 collectionIdent: nft.collectionIdent,
                 native: {
                     ...nft.native,
@@ -707,7 +708,7 @@ class Near extends AbstractChain {
     async unwrap(nft, data) {
         return {
             contract: data.wrapped?.contract,
-            tokenId: data.wrapped?.source_mint_ident,
+            tokenId: data.wrapped?.source_token_id,
             chainId: String(this.nonce),
             nft: {
                 ...nft,
@@ -716,7 +717,7 @@ class Near extends AbstractChain {
                     ...nft.native,
                     chainId: String(this.nonce),
                     contract: data.wrapped?.contract,
-                    tokenId: data.wrapped?.source_mint_ident,
+                    tokenId: data.wrapped?.source_token_id,
                 },
             },
         };
