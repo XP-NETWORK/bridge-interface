@@ -20,11 +20,9 @@ import { getFromDomain } from "../../services/resolution";
 
 import { withServices } from "../App/hocs/withServices";
 import { notifyExplorer } from "../../services/explorer";
-import // mainnetSecretMintWith,
-// stagingSecretMintWith,
-// testnetSecretMintWith,
-"../values";
+
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
+import BigNumber from "bignumber.js";
 
 export default withServices(function ButtonToTransfer({ serviceContainer }) {
     const { bridge } = serviceContainer;
@@ -40,9 +38,11 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
     const receiverIsContract = useSelector(
         (state) => state.general.receiverIsContract
     );
-    // const testnet = useSelector((state) => state.general.testNet);
-    // const staging = useSelector((state) => state.general.staging);
-    const isInvalid = useSelector((state) => state.general.isInvalid);
+
+    const bigNumberDeployFees = useSelector(
+        (state) => state.general.bigNumberDeployFees
+    );
+
     const [loading, setLoading] = useState();
     const dispatch = useDispatch();
 
@@ -108,8 +108,6 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
             dispatch(setSelectNFTAlert(true));
         } else if (!approved) {
             dispatch(setNoApprovedNFTAlert(true));
-        } else if (!isInvalid) {
-            // console.log(isInvalid)
         } else if (!loading && approved) {
             setLoading(true);
             dispatch(setTransferLoaderModal(true));
@@ -135,11 +133,15 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
             const unstoppabledomain = await getFromDomain(receiver, toChain);
             if (unstoppabledomainSwitch(unstoppabledomain)) return;
 
+            const fee = new BigNumber(bigNumberFees || 0)
+                .plus(new BigNumber(bigNumberDeployFees || 0))
+                .toString(10);
+
             const res = await fromChain.transfer({
                 toChain,
                 nft,
                 receiver: unstoppabledomain || receiver,
-                fee: bigNumberFees,
+                fee,
                 discountLeftUsd,
                 account,
             });

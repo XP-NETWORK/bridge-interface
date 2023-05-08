@@ -29,7 +29,8 @@ body {
     flex: 0 0 35% !important;
 }
 
-.widgetBlack {
+.widgetBlack,
+.address-text {
     color: black !important;
 }
 .widgetWhite {

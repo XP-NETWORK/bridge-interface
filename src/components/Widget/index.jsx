@@ -21,117 +21,118 @@ overlay.classList.add("bannerOverlay");
 overlay.innerHTML = mobileOnlyBanner;
 
 export default function Widget() {
-  const { widget, wsettings, settings } = useSelector(
-    ({ general: { widget, wsettings }, settings }) => ({
-      widget,
-      settings,
-      wsettings,
-    })
-  );
-  console.log(settings);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const p = new URLSearchParams(window.location.search);
-    const widget = p.get("widget") === "true";
-    const wsettings = p.get("wsettings") === "true";
-
-    if (widget && wsettings && window.innerWidth <= 600) {
-      document.body.appendChild(overlay);
-      document.body.style.pointerEvents = "none";
-    }
-
-    if (widget && wsettings && window.innerWidth > 600) {
-      dispatch(setWSettings(true));
-      document.querySelector(".nftContainer").style = "margin-left: 300px";
-    }
-
-    if (widget && !wsettings) {
-      const backgroundColor = p.get("background");
-      const color = p.get("color");
-      const secondaryColor = p.get("secondaryColor");
-      const fontFamily = p.get("fontFamily");
-      const fontSize = p.get("fontSize");
-      const btnColor = p.get("btnColor");
-      const btnBackground = p.get("btnBackground");
-      const btnRadius = p.get("btnRadius");
-      const cardBackground = p.get("cardBackground");
-      const cardRadius = p.get("cardRadius");
-      const accentColor = p.get("accentColor");
-      const borderColor = p.get("borderColor");
-      const iconColor = p.get("iconColor");
-      const showLink = p.get("showLink");
-      const chains = p.get("chains")?.split("-");
-      const wallets = p.get("wallets")?.split("-");
-
-      dispatch(
-        setSettings({
-          backgroundColor: "#" + backgroundColor,
-          color: "#" + color,
-          fontFamily,
-          fontSize,
-          btnColor: "#" + btnColor,
-          btnBackground: "#" + btnBackground,
-          btnRadius,
-          selectedChains: chains,
-          selectedWallets: wallets,
-          cardBackground: "#" + cardBackground,
-          cardRadius,
-          accentColor: "#" + accentColor,
-          secondaryColor: "#" + secondaryColor,
-          borderColor: "#" + borderColor,
-          iconColor: "#" + iconColor,
-          showLink: showLink === "true" ? true : false,
+    const { widget, wsettings, settings } = useSelector(
+        ({ general: { widget, wsettings }, settings }) => ({
+            widget,
+            settings,
+            wsettings,
         })
-      );
-    }
-    if (widget) {
-      onlyBridge();
-    }
-  }, []);
+    );
 
-  const {
-    backgroundColor,
-    color,
-    fontFamily,
-    fontSize,
-    btnColor,
-    btnBackground,
-    btnRadius,
-    selectedChains,
-    selectedWallets,
-    cardBackground,
-    cardRadius,
-    accentColor,
-    secondaryColor,
-    borderColor,
-    iconColor,
-    showLink,
-    collapsed,
-  } = settings;
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    document.getElementById("poweredId")?.remove();
-    const kssa = document.querySelector(".NftSelect");
-    const $img = document.createElement("svg");
-    $img.innerHTML = power(color);
-    if (widget) kssa?.appendChild($img);
-  }, [widget, color]);
+    useEffect(() => {
+        const p = new URLSearchParams(window.location.search);
+        const widget = p.get("widget") === "true";
+        const wsettings = p.get("wsettings") === "true";
 
-  useEffect(() => {
-    if (widget) {
-      document.getElementById("bridgeSettings")?.remove();
-      const $style = document.createElement("style");
-      $style.id = "bridgeSettings";
-      document.head.appendChild($style);
+        if (widget && wsettings && window.innerWidth <= 600) {
+            document.body.appendChild(overlay);
+            document.body.style.pointerEvents = "none";
+        }
 
-      //$img.onclick = window.open("https://xp.network/", "_blank").focus();
+        if (widget && wsettings && window.innerWidth > 600) {
+            dispatch(setWSettings(true));
+            document.querySelector(".nftContainer").style =
+                "margin-left: 300px";
+        }
 
-      $style.innerHTML = `
+        if (widget && !wsettings) {
+            const backgroundColor = p.get("background");
+            const color = p.get("color");
+            const secondaryColor = p.get("secondaryColor");
+            const fontFamily = p.get("fontFamily");
+            const fontSize = p.get("fontSize");
+            const btnColor = p.get("btnColor");
+            const btnBackground = p.get("btnBackground");
+            const btnRadius = p.get("btnRadius");
+            const cardBackground = p.get("cardBackground");
+            const cardRadius = p.get("cardRadius");
+            const accentColor = p.get("accentColor");
+            const borderColor = p.get("borderColor");
+            const iconColor = p.get("iconColor");
+            const showLink = p.get("showLink");
+            const chains = p.get("chains")?.split("-");
+            const wallets = p.get("wallets")?.split("-");
+
+            dispatch(
+                setSettings({
+                    backgroundColor: "#" + backgroundColor,
+                    color: "#" + color,
+                    fontFamily,
+                    fontSize,
+                    btnColor: "#" + btnColor,
+                    btnBackground: "#" + btnBackground,
+                    btnRadius,
+                    selectedChains: chains,
+                    selectedWallets: wallets,
+                    cardBackground: "#" + cardBackground,
+                    cardRadius,
+                    accentColor: "#" + accentColor,
+                    secondaryColor: "#" + secondaryColor,
+                    borderColor: "#" + borderColor,
+                    iconColor: "#" + iconColor,
+                    showLink: showLink === "true" ? true : false,
+                })
+            );
+        }
+        if (widget) {
+            onlyBridge();
+        }
+    }, []);
+
+    const {
+        backgroundColor,
+        color,
+        fontFamily,
+        fontSize,
+        btnColor,
+        btnBackground,
+        btnRadius,
+        selectedChains,
+        selectedWallets,
+        cardBackground,
+        cardRadius,
+        accentColor,
+        secondaryColor,
+        borderColor,
+        iconColor,
+        showLink,
+        collapsed,
+    } = settings;
+
+    useEffect(() => {
+        document.getElementById("poweredId")?.remove();
+        const kssa = document.querySelector(".NftSelect");
+        const $img = document.createElement("svg");
+        $img.innerHTML = power(color);
+        if (widget) kssa?.appendChild($img);
+    }, [widget, color]);
+
+    useEffect(() => {
+        if (widget) {
+            document.getElementById("bridgeSettings")?.remove();
+            const $style = document.createElement("style");
+            $style.id = "bridgeSettings";
+            document.head.appendChild($style);
+
+            //$img.onclick = window.open("https://xp.network/", "_blank").focus();
+
+            $style.innerHTML = `
 
       ${
-        wsettings
-          ? `
+          wsettings
+              ? `
           .modal-backdrop.show, .modal {
               width: calc(100% - ${collapsed ? "35" : "300"}px);
               left: initial;
@@ -139,7 +140,7 @@ export default function Widget() {
           }
       
       `
-          : ""
+              : ""
       }
 
       .setting_sidebar {
@@ -273,14 +274,14 @@ export default function Widget() {
         }
 
         ${selectedChains
-          ?.map((chain) => `.nftChainItem[data-chain="${chain}"]`)
-          .join(", ")} {
+            ?.map((chain) => `.nftChainItem[data-chain="${chain}"]`)
+            .join(", ")} {
           display: flex;
         }
 
         ${selectedWallets
-          ?.map((wallet) => `li[data-wallet="${wallet}"]`)
-          .join(", ")} {
+            ?.map((wallet) => `li[data-wallet="${wallet}"]`)
+            .join(", ")} {
           display: flex;
         }
 
@@ -454,33 +455,35 @@ export default function Widget() {
         }
 
         `;
-    }
-  }, [widget, settings]);
+        }
+    }, [widget, settings]);
 
-  const screenSize = useRef();
+    const screenSize = useRef();
 
-  useEffect(() => {
-    const handler = () => {
-      screenSize.current = window.innerWidth;
+    useEffect(() => {
+        const handler = () => {
+            screenSize.current = window.innerWidth;
 
-      if (screenSize.current < 600) {
-        dispatch(setWSettings(false));
-        document.querySelector(".nftContainer").style = "margin-left: 0px";
-      } else if (wsettings === false) {
-        dispatch(setWSettings(true));
-        document.querySelector(".nftContainer").style = "margin-left: 300px";
-      }
+            if (screenSize.current < 600) {
+                dispatch(setWSettings(false));
+                document.querySelector(".nftContainer").style =
+                    "margin-left: 0px";
+            } else if (wsettings === false) {
+                dispatch(setWSettings(true));
+                document.querySelector(".nftContainer").style =
+                    "margin-left: 300px";
+            }
+        };
+        if (new URLSearchParams(window.location.search).get("wsettings")) {
+            window.addEventListener("resize", handler);
+        }
+        return () => window.removeEventListener("resize", handler);
+    }, []);
+
+    const onlyBridge = () => {
+        dispatch(setWidget(true));
+        document.body.classList.add("widget");
     };
-    if (new URLSearchParams(window.location.search).get("wsettings")) {
-      window.addEventListener("resize", handler);
-    }
-    return () => window.removeEventListener("resize", handler);
-  }, []);
 
-  const onlyBridge = () => {
-    dispatch(setWidget(true));
-    document.body.classList.add("widget");
-  };
-
-  return <></>;
+    return <></>;
 }

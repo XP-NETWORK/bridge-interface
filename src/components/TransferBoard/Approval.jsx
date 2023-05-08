@@ -108,11 +108,7 @@ function Approval({ serviceContainer }) {
         }
         else if (selectedNFTList.length < 1) {
             dispatch(setSelectNFTAlert(true));
-        }
-        // else if (!bigNumberFees) {
-        //     console.log("no fees need to estimate");
-        // }
-        else {
+        } else {
             approveAllNFTs();
         }
     };
@@ -165,13 +161,10 @@ function Approval({ serviceContainer }) {
                     />
                     <label
                         style={
-                            // !receiver
-                            //   ? { pointerEvents: "none", opacity: "0.6" }
                             approved || checkWallet
                                 ? { pointerEvents: "none" }
                                 : {}
                         }
-                        // onClick={!bigNumberFees ? onClickHandler : undefined}
                         onClick={onClickHandler}
                         htmlFor="approveCheck"
                     >

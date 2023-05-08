@@ -4,7 +4,10 @@ import React, { useState, useRef } from "react";
 import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setBigNumFees } from "../../store/reducers/generalSlice";
+import {
+    setBigNumFees,
+    setBigNumDeployFees,
+} from "../../store/reducers/generalSlice";
 import { useEffect } from "react";
 
 import { withServices } from "../App/hocs/withServices";
@@ -25,7 +28,7 @@ function SendFees(props) {
 
     const to = useSelector((state) => state.general.to);
     const from = useSelector((state) => state.general.from);
-    // const EVM = from?.type === "EVM";
+
     const account = useSelector((state) => state.general.account);
     const selectedNFTList = useSelector(
         (state) => state.general.selectedNFTList
@@ -36,8 +39,6 @@ function SendFees(props) {
     const [fees, setFees] = useState("");
 
     const [loading, setLoading] = useState(false);
-
-    // const [deployFeeLoading, setDeployFeeLoading] = useState(false);
 
     const [deployFees, setDeployFees] = useState(0);
 
@@ -57,20 +58,40 @@ function SendFees(props) {
     }
 
     const estimateDeploy = async (fromChain, toChain, nfts) => {
-        // setDeployFeeLoading(true);
-        const promises = nfts.map((nft) =>
-            fromChain.estimateDeploy(toChain, nft)
+        nfts = nfts.reduce(
+            (acc, nft) => {
+                return {
+                    items: acc.usedContracts.includes(nft.native.contract)
+                        ? acc.items
+                        : acc.items.concat(nft),
+                    usedContracts: acc.usedContracts.concat(
+                        nft.native.contract
+                    ),
+                };
+            },
+            {
+                items: [],
+                usedContracts: [],
+            }
+        ).items;
+
+        const settled = await Promise.all(
+            nfts.map((nft) => fromChain.estimateDeploy(toChain, nft))
         );
-        const settled = await Promise.allSettled(promises);
 
-        let finalFee = new BigNumber(0);
-        settled.forEach((item) => {
-            const num = new BigNumber(item.value);
-            finalFee = finalFee.plus(num);
-        });
+        const finalFees = settled.reduce(
+            (acc, cur) => ({
+                fees: acc.fees.plus(new BigNumber(cur.fees)),
+                formatedFees: acc.formatedFees + cur.formatedFees,
+            }),
+            {
+                fees: new BigNumber("0"),
+                formatedFees: 0,
+            }
+        );
 
-        setDeployFees(Number(finalFee.toString()));
-        // setDeployFeeLoading(false);
+        dispatch(setBigNumDeployFees(finalFees.fees.toString(10)));
+        setDeployFees(finalFees.formatedFees);
     };
 
     function getNumToFix() {

@@ -3,35 +3,28 @@ import React from "react";
 
 import { setAlgorandClaimables } from "../../../store/reducers/generalSlice";
 
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
 
 import { ChainType } from "xp.network";
 
 export const withAlgo = (Wrapped) =>
-  function CBU(props) {
-    const algorandAccount = useSelector((s) => s.general.algorandAccount);
-    const algorandClaimables = useSelector(
-      (state) => state.general.algorandClaimables
-    );
+    function CBU(props) {
+        const getClaimables = (dispatch, chain, _account) =>
+            chain
+                .getClaimables(_account)
+                .then(
+                    (claimables) =>
+                        claimables &&
+                        dispatch(setAlgorandClaimables(claimables))
+                );
 
-    const getClaimables = (dispatch, chain, _account) =>
-      algorandAccount &&
-      !algorandClaimables?.some((nft) => nft.dataLoaded) &&
-      chain
-        .getClaimables(_account)
-        .then(
-          (claimables) =>
-            claimables && dispatch(setAlgorandClaimables(claimables))
+        return (
+            <Wrapped
+                {...props}
+                chainSpecific={{
+                    ...(props.chainSpecific || {}),
+                    [ChainType.ALGORAND]: getClaimables,
+                }}
+            />
         );
-
-    return (
-      <Wrapped
-        {...props}
-        algorandAccount={algorandAccount}
-        chainSpecific={{
-          ...(props.chainSpecific || {}),
-          [ChainType.ALGORAND]: getClaimables,
-        }}
-      />
-    );
-  };
+    };

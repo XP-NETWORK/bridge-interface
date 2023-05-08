@@ -209,17 +209,26 @@ class AbstractChain {
 
     async estimateDeploy(toChain, nft) {
         try {
-            const res = await this.bridge.estimateWithContractDep(
-                this.chain,
-                toChain,
-                nft
-            );
-            return res.calcContractDep
-                ?.integerValue()
-                .dividedBy(this.chainParams.decimals)
-                .toNumber();
+            const res = (
+                await this.bridge.estimateWithContractDep(
+                    this.chain,
+                    toChain,
+                    nft
+                )
+            ).calcContractDep.integerValue();
+
+            return {
+                fees: res.toString(10),
+                formatedFees: res
+                    .dividedBy(this.chainParams.decimals)
+                    .toNumber(),
+            };
         } catch (e) {
             console.log("in estimateDeploy", e);
+            return {
+                fees: "",
+                formatedFees: 0,
+            };
         }
     }
 
@@ -328,7 +337,6 @@ class AbstractChain {
     }
 
     handlerResult(res) {
-        console.log(res, "handlerResult");
         switch (true) {
             case typeof res === "string":
                 return { hash: res };
@@ -556,8 +564,7 @@ class Algorand extends AbstractChain {
 
     async getClaimables(account) {
         try {
-            const x = await this.bridge.claimableAlgorandNfts(account);
-            return x;
+            return await this.bridge.claimableAlgorandNfts(account);
         } catch (e) {
             console.log(e, "e");
             console.log("in getClaimables");
@@ -685,7 +692,8 @@ class Near extends AbstractChain {
             return {
                 ...nft.native.metadata,
                 image,
-                uri: nft.uri,
+                uri: nft.uri || nft.native.metadata?.reference,
+                name: nft.native.metadata?.title,
                 collectionIdent: nft.collectionIdent,
                 native: {
                     ...nft.native,
@@ -700,7 +708,7 @@ class Near extends AbstractChain {
     async unwrap(nft, data) {
         return {
             contract: data.wrapped?.contract,
-            tokenId: data.wrapped?.source_mint_ident,
+            tokenId: data.wrapped.token_id || data.wrapped?.source_token_id,
             chainId: String(this.nonce),
             nft: {
                 ...nft,
@@ -709,7 +717,8 @@ class Near extends AbstractChain {
                     ...nft.native,
                     chainId: String(this.nonce),
                     contract: data.wrapped?.contract,
-                    tokenId: data.wrapped?.source_mint_ident,
+                    tokenId:
+                        data.wrapped.token_id || data.wrapped?.source_token_id,
                 },
             },
         };
@@ -795,7 +804,7 @@ class APTOS extends AbstractChain {
             uri,
             royalty_payee_address: this.signer.address,
         };
-        console.log(this.signer);
+
         const mint = await this.chain.mintNft(this.signer, options);
     }
 
