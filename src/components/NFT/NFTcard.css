@@ -63,6 +63,13 @@
   } */
 }
 
+@media only screen and (width: 428px) and (height: 926px){
+  .nft__card,
+.nft__card--selected  { 
+  width: 100%;
+}
+}
+
 @media only screen and (max-width: 405px) {
   /* .nft__card,
   .nft__card--selected {
