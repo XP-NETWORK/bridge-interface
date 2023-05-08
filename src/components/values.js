@@ -411,8 +411,8 @@ export const chains = [
         order: 0,
         image: { avatar: true, src: HBAR },
         testNet: biz,
-        mainnet: false,
-        // newChain: true,
+        mainnet: biz,
+        newChain: biz,
         coming: !biz,
     },
     {

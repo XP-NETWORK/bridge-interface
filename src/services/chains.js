@@ -613,8 +613,6 @@ class Cosmos extends AbstractChain {
 }
 
 class TON extends AbstractChain {
-    nativeNotWhitelised = true;
-
     constructor(params) {
         super(params);
     }
