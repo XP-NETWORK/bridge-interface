@@ -367,7 +367,7 @@
   width: 100%;
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 950px) {
   .approval__inf:hover::before {
     bottom: 30px;
     left: -190px;

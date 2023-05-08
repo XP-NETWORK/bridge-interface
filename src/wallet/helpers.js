@@ -3,7 +3,10 @@ import io from "socket.io-client";
 import axios from "axios";
 
 import Harmony from "@harmony-js/core";
-
+import Chain from "../components/Chains/Chain";
+import { ChainFactoryConfigs, AppConfigs, ChainFactory } from "xp.network";
+import { setAlgorandClaimables, setFactory } from "../store/reducers/generalSlice";
+import { setChainFactoryConfig } from "../store/reducers/signersSlice";
 const testnet = window.location.pathname.includes("testnet");
 const socketUrl = "wss://dev-explorer-api.herokuapp.com"; //wss://dest-scraper.herokuapp.com/
 const scraperUrl = "wss://dest-scraper.herokuapp.com";
