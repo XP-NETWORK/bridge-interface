@@ -5,7 +5,7 @@ import icon from "./../../../assets/img/icons/XPNET.svg";
 
 export const hashConnect = new HashConnect(true);
 
-export const connectHashPack = async (network) => {
+export const connectHashPack = async (testnet) => {
     // debugger;
     let initData;
     let appMetadata = {
@@ -16,7 +16,10 @@ export const connectHashPack = async (network) => {
         icon: icon,
     };
     try {
-        initData = await hashConnect.init(appMetadata, "testnet", network);
+        initData = await hashConnect.init(
+            appMetadata,
+            testnet ? "testnet" : "mainnet"
+        );
         const { pairingString } = initData;
         hashConnect.connectToLocalWallet(pairingString, appMetadata);
         return initData;

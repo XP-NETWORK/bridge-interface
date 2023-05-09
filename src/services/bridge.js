@@ -82,9 +82,9 @@ class Bridge {
 
             const isWNFT = this.isWrapped(nft.uri);
 
-            if (chainWrapper.nativeNotWhitelised && !isWNFT) {
-                return false;
-            }
+            //if (chainWrapper.nativeNotWhitelised && !isWNFT) {
+            //return false;
+            //}
 
             if (
                 isWNFT &&
@@ -102,9 +102,10 @@ class Bridge {
                 return false;
             }
             if (isWNFT || !chain.isNftWhitelisted) return true;
-            //return await chain.isNftWhitelisted(nft);
-            const x = await chain.isNftWhitelisted(nft, signer);
-            return x;
+            return await chain.isNftWhitelisted(nft);
+            //const x = await chain.isNftWhitelisted(nft, signer);
+            //console.log(x, "x");
+            //return x;
         } catch (e) {
             console.log(e, "in isWhitelisted");
             return false;
