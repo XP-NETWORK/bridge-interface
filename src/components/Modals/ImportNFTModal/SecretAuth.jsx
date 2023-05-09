@@ -177,7 +177,7 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
               type="text"
               id="contractAdd"
               name="contractAddress"
-              placeholder="0x..."
+              placeholder="Paste Contract Address"
               value={contract}
               className={
                 validContract
