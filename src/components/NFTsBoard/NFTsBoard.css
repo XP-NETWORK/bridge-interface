@@ -478,9 +478,9 @@
     margin-right: 15px;
 }
 }
-@media screen and (min-width: 850px) {
+@media screen and (max-width: 850px) {
   .aboutNft {
-    padding-top: 5px;
+    padding-top: 1px;
   }
 }
 @media screen and (min-width: 768px) {
