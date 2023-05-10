@@ -13,7 +13,6 @@ import {
 import { Chain } from "xp.network";
 import PropTypes from "prop-types";
 import { hashConnect } from "./hederaConnections";
-//import * as hashSDK from "@hashgraph/sdk";
 
 import { BridgeModes } from "../../values";
 
@@ -70,10 +69,6 @@ export const withHederaConnection = (Wrapped) =>
                             topic,
                             accountId
                         );
-                        provider.client.setMaxQueryPayment(new hashSDK.Hbar(5));
-                        provider.client.setDefaultMaxTransactionFee(
-                            new hashSDK.Hbar(5)
-                        );
                         signer = hashConnect.getSigner(provider);
 
                         signer.address = address;
@@ -87,8 +82,6 @@ export const withHederaConnection = (Wrapped) =>
                     }
                 });
             });
-            //hashConnect.acknowledgeMessageEvent.once(() => {});
-            //hashConnect.connectionStatusChangeEvent.once(() => {});
         }, []);
 
         CB.propTypes = {

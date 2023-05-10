@@ -263,6 +263,12 @@ export const withNearConnection = (Wrapped) =>
                             nft,
                         })
                     );
+
+                    window.history.replaceState(
+                        {},
+                        "",
+                        window.location.pathname
+                    );
                 }
             }
         }, [NFTList, serviceContainer]);

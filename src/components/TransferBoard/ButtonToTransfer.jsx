@@ -39,9 +39,9 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
         (state) => state.general.receiverIsContract
     );
 
-    const bigNumberDeployFees = useSelector(
+    /*const bigNumberDeployFees = useSelector(
         (state) => state.general.bigNumberDeployFees
-    );
+    );*/
 
     const [loading, setLoading] = useState();
     const dispatch = useDispatch();
@@ -134,7 +134,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
             if (unstoppabledomainSwitch(unstoppabledomain)) return;
 
             const fee = new BigNumber(bigNumberFees || 0)
-                .plus(new BigNumber(bigNumberDeployFees || 0))
+                //.plus(new BigNumber(bigNumberDeployFees || 0))
                 .toString(10);
 
             const res = await fromChain.transfer({

@@ -101,7 +101,12 @@ class Bridge {
             ) {
                 return false;
             }
-            if (isWNFT || !chain.isNftWhitelisted) return true;
+            if (
+                isWNFT ||
+                !chain.isNftWhitelisted ||
+                nft.native.contract === "SingleNFt"
+            )
+                return true;
             return await chain.isNftWhitelisted(nft);
             //const x = await chain.isNftWhitelisted(nft, signer);
             //console.log(x, "x");
