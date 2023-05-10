@@ -28,7 +28,7 @@ function BitKeep({ connectWallet }) {
             style={getStyle()}
             onClick={() => connectWallet("BitKeep")}
             className="wllListItem"
-            data-wallet="MetaMask"
+            data-wallet="BitKeep"
         >
             <img src={icon} alt="BitKeep Icon" />
             <p>BitKeep</p>

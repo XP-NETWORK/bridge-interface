@@ -39,7 +39,7 @@ function CosmosWallet({ wallet, serviceContainer }) {
     const path = getRightPath();
     navigate(path);
   };
-  
+
   const connectKeplr = async (testnet, chain, wallet, isMobile) => {
     const chainId = testnet ? chain.tnChainId : chain.chainId;
     const key = chain.key.toUpperCase();
