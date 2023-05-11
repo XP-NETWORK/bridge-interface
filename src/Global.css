@@ -2234,6 +2234,9 @@ span.closeBox:hover svg path {
   .modal-open .modal {
     top: 15vh;
   }
+  .nonftAcc {
+    top: -150px;
+  }
 }
 @media only screen and (width: 820px) and (height: 1180px) {
   .modal-open .modal {
@@ -2257,6 +2260,9 @@ span.closeBox:hover svg path {
 @media screen and (max-width: 425px) {
   .nftContainer {
     margin-top: 30px !important;
+  }
+  .nonftAcc {
+    top: -100px;
   }
 }
 
