@@ -94,13 +94,38 @@ ul.socialLInks li img:hover {
         width: 768px;
     }
 }
+@media only screen and (width: 820px) and (height: 1180px) {
+    footer {
+        width: 768px;
+        height: 400px;
+    }
+  }
+  @media only screen and (width: 768px) and (height: 1024px) {
+    footer {
+        width: 768px;
+        height: 400px;
+    }
+    .footContainer{
+        gap: 200px !important;
+    }
+  }
+  @media only screen and (width: 912px) and (height: 1368px) {
+    footer {
+        width: 768px;
+        height: 600px;
+    }
+    .footContainer{
+        gap: 200px !important;
+    }
+  }
 @media screen and (max-width: 768px) {
     footer {
         width: calc(100% - 20px) !important;
+        height: 240px;
     }
     .footContainer {
         justify-content: center;
-        gap: 35px;
+        gap: 20px;
     }
     .footRight {
         flex-direction: column;
@@ -114,10 +139,12 @@ ul.socialLInks li img:hover {
 @media screen and (max-width: 425px) {
     footer {
         width: 375px;
+        height: 200px;
     }
 }
 @media screen and (max-width: 375px) {
     footer {
         width: 346px;
+        height: 120px;
     }
 }

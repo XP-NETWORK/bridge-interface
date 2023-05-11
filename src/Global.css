@@ -2231,8 +2231,15 @@ span.closeBox:hover svg path {
     margin-left: 14px;
     margin-right: 14px;
   }
+  .modal-open .modal {
+    top: 15vh;
+  }
 }
-
+@media only screen and (width: 820px) and (height: 1180px) {
+  .modal-open .modal {
+    top: 15vh;
+  }
+}
 @media screen and (max-width: 700px) {
   .first-step__container {
     margin-top: 0;
@@ -2294,7 +2301,7 @@ span.closeBox:hover svg path {
   }
 
   .aleartBox {
-    bottom: 2vh;
+    /* bottom: 2vh; */
   }
 
   .account__box {
