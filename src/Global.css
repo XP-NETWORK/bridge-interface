@@ -2235,7 +2235,7 @@ span.closeBox:hover svg path {
     top: 15vh;
   }
   .nonftAcc {
-    top: -150px;
+    top: -100px;
   }
 }
 @media only screen and (width: 820px) and (height: 1180px) {

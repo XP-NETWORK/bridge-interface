@@ -99,16 +99,27 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
   };
 
   const handleContractChange = (value) => {
+    value = value.trim();
+    let count = 0;
+    let lastChar = "";
+    for (let i = 0; i < value.length; i++) {
+      const currentChar = value[i];
+      if (currentChar === lastChar) {
+        count++;
+        if (count > 3) {
+          return;
+        }
+      } else {
+        count = 1;
+        lastChar = currentChar;
+      }
+    }
     setContract(value);
     if (value.length === 42 || value.length === 0) {
       setValidContract(true);
-    } else setValidContract(false);
-    // if(value.length > 0){
-    //   setValidContract(validateFunctions.Cosmos(value))
-    // }
-    // else{
-    //   setValidContract(true);
-    // }
+    } else {
+      setValidContract(false);
+    }
   };
 
   const hadleSelectToggle = (btn) => {
