@@ -26,7 +26,7 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
   const off = { opacity: 0.6, pointerEvents: "none" };
   const [toggle, setToggle] = useState("set");
   const [validContract, setValidContract] = useState(true);
-  const [contract, setContract] = useState();
+  // const [contract, setContract] = useState();
   const [contractOnBlur, setContractOnBlur] = useState(false);
   const [importBlocked, setImportBlocked] = useState(false);
   const { account, checkWallet, secretCred, NFTSetToggler, from } = useSelector(
@@ -107,14 +107,14 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
       if (currentChar === lastChar) {
         count++;
         if (count > 3) {
-          return; 
+          return;
         }
       } else {
         count = 1;
         lastChar = currentChar;
       }
     }
-    setContract(value);
+    dispatch(setSecretCred({ ...secretCred, contract: value }));
     if (value.length === 42 || value.length === 0) {
       setValidContract(true);
     } else {
@@ -189,7 +189,7 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
               id="contractAdd"
               name="contractAddress"
               placeholder="Paste Contract Address"
-              value={contract}
+              value={secretCred.contract}
               className={
                 validContract
                   ? "contract__input--valid"

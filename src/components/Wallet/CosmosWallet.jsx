@@ -136,8 +136,7 @@ function CosmosWallet({ wallet, serviceContainer }) {
     default:
       return (
         <li
-          // style={isMobile ? { display: "none" } : getStyle()}
-          style={getStyle()}
+          style={isMobile ? { display: "none" } : getStyle()}
           onClick={() => onClickHandler("Keplr")}
           className="wllListItem keplr"
           data-wallet="Keplr"
