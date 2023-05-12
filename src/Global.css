@@ -2243,6 +2243,11 @@ span.closeBox:hover svg path {
     top: 15vh;
   }
 }
+@media only screen and (width: 540px) and (height: 720px) {
+  .nonftAcc {
+    top: -100px;
+  }
+}
 @media screen and (max-width: 700px) {
   .first-step__container {
     margin-top: 0;

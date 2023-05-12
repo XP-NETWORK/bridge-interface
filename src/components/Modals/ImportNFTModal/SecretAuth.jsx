@@ -107,7 +107,7 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
       if (currentChar === lastChar) {
         count++;
         if (count > 3) {
-          return;
+          return; 
         }
       } else {
         count = 1;
