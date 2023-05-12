@@ -115,7 +115,7 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
       }
     }
     dispatch(setSecretCred({ ...secretCred, contract: value }));
-    if (value.length === 42 || value.length === 0) {
+    if (value.length === 0 || (value.length === 45 && value.startsWith("secret1"))) {
       setValidContract(true);
     } else {
       setValidContract(false);
