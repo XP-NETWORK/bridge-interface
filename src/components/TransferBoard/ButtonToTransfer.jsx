@@ -32,7 +32,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
     const account = convert(useSelector((state) => state.general.account));
     const approved = useSelector((state) => state.general.approved);
     const _to = useSelector((state) => state.general.to);
-    const from = useSelector((state) => state.general.from.key);
+    //const from = useSelector((state) => state.general.from.key);
     const _from = useSelector((state) => state.general.from);
     const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
     const receiverIsContract = useSelector(
@@ -111,14 +111,8 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
         } else if (!loading && approved) {
             setLoading(true);
             dispatch(setTransferLoaderModal(true));
-
-            for (let index = 0; index < selectedNFTList.length; index++) {
-                if (from === "VeChain" || from === "TON") {
-                    await sendEach(selectedNFTList[index], index);
-                } else {
-                    sendEach(selectedNFTList[index], index);
-                }
-            }
+            const fromChain = await bridge.getChain(_from.nonce);
+            await fromChain.transferAll(selectedNFTList, sendEach);
             return stop;
         }
     };
@@ -133,22 +127,20 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
             const unstoppabledomain = await getFromDomain(receiver, toChain);
             if (unstoppabledomainSwitch(unstoppabledomain)) return;
 
-            const fee = new BigNumber(bigNumberFees || 0)
-                .plus(new BigNumber(bigNumberDeployFees || 0))
-                .toString(10);
-
             const res = await fromChain.transfer({
                 toChain,
                 nft,
                 receiver: unstoppabledomain || receiver,
-                fee,
+                fee: new BigNumber(bigNumberFees || 0)
+                    .plus(new BigNumber(bigNumberDeployFees || 0))
+                    .toString(10),
                 discountLeftUsd,
                 account,
             });
 
             const { result, mintWith } = res;
 
-            let mw = toChain.showMintWith && (mintWith || toChain.XpNft);
+            const mw = toChain.showMintWith && (mintWith || toChain.XpNft);
             if (txnHashArr[0] && !result) {
                 dispatch(setTxnHash({ txn: "failed", nft }));
             } else if (result) {
