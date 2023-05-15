@@ -2224,6 +2224,7 @@ span.closeBox:hover svg path {
   .modal {
     top: 40px;
   }
+
 }
 /* IPAD MINI */
 @media only screen and (width: 768px) and (height: 1024px) and (orientation: portrait) {
