@@ -55,6 +55,15 @@ export default function WalletList({ connected, input, discount }) {
       keyName: "MetaMask",
     },
     {
+      Component: <Unstoppables key="wallet-index-21" close={connected} />,
+      name: "Unstoppable Domains",
+      mobile: true,
+      desktop: true,
+      order: 14,
+      type: "EVM",
+      keyName: "Unstoppable Domains",
+    },
+    {
       Component: (
         <TrustWallet
           wallet={"Trust Wallet"}
@@ -295,15 +304,6 @@ export default function WalletList({ connected, input, discount }) {
       type: "Hedera",
     },
 
-    {
-      Component: <Unstoppables key="wallet-index-21" close={connected} />,
-      name: "Unstoppable Domains",
-      mobile: true,
-      desktop: true,
-      order: 14,
-      type: "EVM",
-      keyName: "Unstoppable Domains",
-    },
     {
       Component: <Martioan key="martian" close={connected} />,
       name: "Martian",
