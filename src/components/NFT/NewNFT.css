@@ -963,6 +963,7 @@
   .__react_modal_image__modal_content img,
   .__react_modal_image__modal_content svg {
     width: 100%;
+    height: 50%;
   }
 }
 .img-component__wrapper {
