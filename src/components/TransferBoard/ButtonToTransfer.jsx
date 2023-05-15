@@ -104,6 +104,9 @@ export default compose(
             googleAnalyticsCategories.Transfer,
             `${receiver} trying to transfer ${selectedNFTList.length} nfts`
         );
+
+        const fromChain = await bridge.getChain(_from.nonce);
+
         if (!receiver) {
             dispatch(setPasteDestinationAlert(true));
         } else if (receiverIsContract) {
@@ -116,13 +119,15 @@ export default compose(
             setLoading(true);
             dispatch(setTransferLoaderModal(true));
 
-            for (let index = 0; index < selectedNFTList.length; index++) {
+            await fromChain.transferAll(selectedNFTList, sendEach);
+
+            /*for (let index = 0; index < selectedNFTList.length; index++) {
                 if (from === "VeChain" || from === "TON") {
-                    await sendEach(selectedNFTList[index], index);
+                    await sendEach(selectedNFTList[index]);
                 } else {
-                    sendEach(selectedNFTList[index], index);
+                    sendEach(selectedNFTList[index]);
                 }
-            }
+            }*/
             return stop;
         }
     };

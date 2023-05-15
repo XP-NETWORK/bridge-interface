@@ -232,6 +232,12 @@ class AbstractChain {
         }
     }
 
+    async transferAll(nfts, cb) {
+        for (const nft of nfts) {
+            cb(nft);
+        }
+    }
+
     async transfer(args) {
         try {
             if (!this.signer)
@@ -417,6 +423,12 @@ class EVM extends AbstractChain {
 class VeChain extends AbstractChain {
     constructor(params) {
         super(params);
+    }
+
+    async transferAll(nfts, cb) {
+        for (const nft of nfts) {
+            await cb(nft);
+        }
     }
 }
 
@@ -635,6 +647,12 @@ class TON extends AbstractChain {
                 nftItemAddr: nft.native.address,
             },
         };
+    }
+
+    async transferAll(nfts, cb) {
+        for (const nft of nfts) {
+            await cb(nft);
+        }
     }
 }
 
