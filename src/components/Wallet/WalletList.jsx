@@ -80,21 +80,6 @@ export default function WalletList({ connected, input, discount }) {
     },
     {
       Component: (
-        <WalletConnect
-          wallet={"WalletConnect"}
-          key="wallet-connect"
-          close={connected}
-        />
-      ),
-      name: "WalletConnect",
-      type: "EVM",
-      mobile: true,
-      desktop: true,
-      order: 1,
-      keyName: "WalletConnect",
-    },
-    {
-      Component: (
         <BitKeep
           wallet={"BitKeep"}
           key="bitKeep"
@@ -108,6 +93,21 @@ export default function WalletList({ connected, input, discount }) {
       desktop: true,
       order: 1,
       keyName: "BitKeep",
+    },
+    {
+      Component: (
+        <WalletConnect
+          wallet={"WalletConnect"}
+          key="wallet-connect"
+          close={connected}
+        />
+      ),
+      name: "WalletConnect",
+      type: "EVM",
+      mobile: true,
+      desktop: true,
+      order: 1,
+      keyName: "WalletConnect",
     },
     {
       Component: (
