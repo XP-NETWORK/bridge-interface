@@ -613,8 +613,6 @@ class Cosmos extends AbstractChain {
 }
 
 class TON extends AbstractChain {
-    nativeNotWhitelised = true;
-
     constructor(params) {
         super(params);
     }
@@ -708,7 +706,7 @@ class Near extends AbstractChain {
     async unwrap(nft, data) {
         return {
             contract: data.wrapped?.contract,
-            tokenId: data.wrapped?.source_token_id,
+            tokenId: data.wrapped.token_id || data.wrapped?.source_token_id,
             chainId: String(this.nonce),
             nft: {
                 ...nft,
@@ -717,7 +715,8 @@ class Near extends AbstractChain {
                     ...nft.native,
                     chainId: String(this.nonce),
                     contract: data.wrapped?.contract,
-                    tokenId: data.wrapped?.source_token_id,
+                    tokenId:
+                        data.wrapped.token_id || data.wrapped?.source_token_id,
                 },
             },
         };
@@ -835,7 +834,6 @@ class APTOS extends AbstractChain {
 }
 
 class HEDERA extends AbstractChain {
-    htsToknen = "0x00000000000000000000000000000000003b22a5"; //"0x00000000000000000000000000000000003B5fF5";
     hashConnect;
 
     constructor(params) {
@@ -844,9 +842,9 @@ class HEDERA extends AbstractChain {
 
     async getClaimables() {
         try {
-            this.chain.listHederaClaimableNFT(
-                this.chain.XpNft,
-                this.htsToknen,
+            return await this.chain.listHederaClaimableNFT(
+                undefined, //"0x00000000000000000000000000000000001fbea9",
+                undefined, //"0x00000000000000000000000000000000001FbEEf",
                 this.signer
             );
         } catch (e) {
@@ -856,18 +854,21 @@ class HEDERA extends AbstractChain {
 
     async assosiate() {
         try {
-            await this.chain.assosiateToken(this.htsToknen, this.signer);
+            await this.chain.assosiateToken(undefined, this.signer);
         } catch (e) {
             console.log(e, "im assosiate");
         }
     }
 
     async claim(token) {
-        try {
-            await this.chain.claimNFT(token, this.htsToknen, this.signer);
-        } catch (e) {
-            console.log(e, "im claim");
-        }
+        const error = new Error("Failed to Claim the NFT");
+
+        const success = await this.chain
+            .claimNFT(undefined, undefined, token, this.signer)
+            .catch(() => {
+                throw error;
+            });
+        if (!success) throw error;
     }
 }
 
