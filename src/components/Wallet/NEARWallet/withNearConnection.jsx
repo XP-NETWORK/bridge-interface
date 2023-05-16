@@ -255,7 +255,7 @@ export const withNearConnection = (Wrapped) =>
           );
         }
       }
-      window.addEventListener("beforeunload", function() {
+      window.addEventListener("load", function() {
         window.history.replaceState({}, "", window.location.pathname);
       });
     }, [NFTList, serviceContainer]);
