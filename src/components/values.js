@@ -64,7 +64,6 @@ export const getChainObject = (nonce) =>
 
 export const secretnodes = "https://secretnodes.com/secret/accounts";
 export const tonAuth = "tonkeeper.xp.network";
-
 export const chains = [
     {
         type: "EVM",
@@ -476,10 +475,10 @@ export const chains = [
         nonce: 31,
         order: -4,
         image: { avatar: true, src: near },
-        testNet: biz,
-        mainnet: biz,
-        newChain: biz,
-        coming: !biz,
+        testNet: true,
+        mainnet: true,
+        newChain: true,
+        coming: false,
     },
     {
         type: "EVM",

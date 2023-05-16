@@ -59,8 +59,6 @@ function NearWallet({ serviceContainer }) {
     };
 
     const getStyles = () => {
-        return { display: "none" };
-
         //return { display: "none" };
         // eslint-disable-next-line no-debugger
         // debugger;
