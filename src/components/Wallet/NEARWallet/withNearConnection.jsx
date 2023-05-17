@@ -72,7 +72,6 @@ export const withNearConnection = (Wrapped) =>
 
     const params = new URLSearchParams(location.search.replace("?", ""));
     const nearAuth = params.get("all_keys") && params.get("account_id"); // && !params.get("WLS");
-    console.log(nearAuth, "nearauth");
     const nearTrx = params.get("NEARTRX");
     const nearFlow = nearTrx || nearAuth;
     const approve = params.get("type") === "approve";
@@ -255,8 +254,10 @@ export const withNearConnection = (Wrapped) =>
           );
         }
       }
-      window.addEventListener("load", function() {
-        window.history.replaceState({}, "", window.location.pathname);
+      window.addEventListener("load", function(event) {
+        if (event.currentTarget.performance.navigation.type === 1) {
+          window.history.replaceState({}, "", window.location.pathname);
+        }
       });
     }, [NFTList, serviceContainer]);
 
