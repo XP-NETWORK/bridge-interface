@@ -132,7 +132,8 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
                 nft,
                 receiver: unstoppabledomain || receiver,
                 fee: new BigNumber(bigNumberFees || 0)
-                    .plus(new BigNumber(bigNumberDeployFees || 0))
+                    /*.div(5)*/
+                    .plus(new BigNumber(bigNumberDeployFees || 0) /*.div(10)*/)
                     .toString(10),
                 discountLeftUsd,
                 account,

@@ -1,52 +1,36 @@
 class WhitelistedPool {
-  whitelisted = {};
-  pool = [];
+    whitelisted = new Set();
+    pool = new Map();
 
-  check(contract) {
-    return this.whitelisted[contract] != undefined;
-  }
+    check = (contract) => this.whitelisted.has(contract);
 
-  whitelistContract(contract) {
-    this.whitelisted[contract] = true;
-  }
+    whitelistContract = (contract) => this.whitelisted.add(contract);
 
-  add(cb) {
-    return async (...args) => {
-      const contract = args[1]?.native?.contract;
+    add = (cb) => async (...args) => {
+        const contract = args[1]?.native?.contract;
 
-      if (this.check(contract)) {
-        return this.whitelisted[contract];
-      }
+        if (this.check(contract)) return true;
+        if (!contract) return false;
 
-      const pendingPromise = this.pool.find(
-        (item) => item.contract === contract
-      );
+        const alreadyPending = this.pool.get(contract);
 
-      const wl = pendingPromise
-        ? pendingPromise.prom.then(() => this.whitelisted[contract])
-        : await new Promise((resolve, reject) => {
-            this.pool.push({
-              contract,
-              prom: cb(...args)
-                .then((res) => {
-                  this.whitelisted[contract] = res;
-                  this.release(contract);
-                  resolve(res);
-                })
-                .catch(() => reject(undefined)),
-            });
-          });
+        return alreadyPending
+            ? alreadyPending.then(() => this.check(contract))
+            : new Promise((resolve, reject) => {
+                  const prom = cb(...args)
+                      .then((res) => {
+                          console.log(res, contract);
+                          res && this.whitelistContract(contract);
+                          this.release(contract);
+                          resolve(res);
+                      })
+                      .catch(() => reject(undefined));
 
-      return wl;
+                  this.pool.set(contract, prom);
+              });
     };
-  }
 
-  release(contract) {
-    const idx = this.pool.findIndex((item) => item.contract === contract);
-    if (idx && idx > -1) {
-      this.pool.splice(idx, 1);
-    }
-  }
+    release = (contract) => this.pool.delete(contract);
 }
 
 export default () => new WhitelistedPool();

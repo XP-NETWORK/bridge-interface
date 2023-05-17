@@ -110,6 +110,7 @@ export const parseNFT = async (
             ...nft,
             ...(nftData?.metaData || nftData),
             origin: nft.native.origin,
+            isWrappedNft: bridge.isWrapped(nft.uri),
             wrapped: nftData?.wrapped,
             dataLoaded: true,
             whitelisted,
