@@ -76,7 +76,7 @@ class Bridge {
 
     async isWhitelisted(nonce, nft) {
         try {
-            if (nonce === 26) return true;
+            if (this.currentType === ChainType.EVM || nonce === 26) return true;
             const chainWrapper = await this.getChain(Number(nonce));
             const { chain, signer } = chainWrapper;
 
@@ -202,8 +202,10 @@ class Bridge {
 
                 nft = {
                     ...nft,
+
                     native: {
                         ...nft.native,
+                        isWrappedNft: true,
                         origin,
                     },
                 };

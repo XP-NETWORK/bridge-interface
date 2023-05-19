@@ -11,10 +11,6 @@ function ReceiverIsContract() {
     const dispatch = useDispatch();
     const receiver = useSelector((state) => state.general.receiver);
     const alert = useSelector((state) => state.general.checkDestinationAddress);
-    console.log(
-        "🚀 ~ file: ReceiverIsContract.jsx:11 ~ PasteDestinationAlert ~ alert:",
-        alert
-    );
 
     const handleClose = () => {
         dispatch(setCheckDestinationAddress(false));

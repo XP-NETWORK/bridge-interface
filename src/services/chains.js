@@ -392,6 +392,7 @@ class EVM extends AbstractChain {
         if (!this.signer)
             throw new Error("No signer for ", this.chainParams.text);
         try {
+            if (!nft.isWrappedNft) return true;
             return await this.chain.approveForMinter(nft, this.signer, fees);
         } catch (e) {
             console.log(e, "EVM :in preTransfer");
