@@ -28,7 +28,7 @@ export default function MobileNFTsSearch({ handleSearchTop }) {
         setInput(search);
     };
 
-    const handleKeyDown = async (e) => {
+    const handleKeyDown = async () => {
         const chain = chains.find((e) => e.key === from.key);
         const _account =
             checkWallet ||
@@ -39,10 +39,8 @@ export default function MobileNFTsSearch({ handleSearchTop }) {
             elrondAccount ||
             tronWallet ||
             secretAccount;
-        if (e.key === "Enter") {
             const found = await getSearched(_account, searchInput, chain.nonce);
             if (found) dispatch(setSearchNFTList(found));
-        }
     };
 
     useEffect(() => {
