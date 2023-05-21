@@ -12,7 +12,7 @@ import { ReactComponent as INFComp } from "../../assets/img/icons/Inf.svg";
 import { chains } from "../values";
 import PropTypes from "prop-types";
 import Tooltip from "../Modals/AccountModal/Tooltip";
-import { StringShortener } from "../../wallet/helpers";
+import { StringShortener } from "../../utils";
 
 function NFTdetails({ nftInf, details }) {
     const {

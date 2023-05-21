@@ -7,7 +7,7 @@ import { Chain as ChainNonce, CHAIN_INFO } from "xp.network";
 import BigNumber from "bignumber.js";
 
 import { ethers, BigNumber as BN } from "ethers";
-import xpchallenge from "./xpchallenge";
+import xpchallenge from "../services/xpchallenge";
 const Xpchallenge = xpchallenge();
 const feeMultiplier = 1.1;
 

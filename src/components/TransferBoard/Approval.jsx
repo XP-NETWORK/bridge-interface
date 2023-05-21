@@ -12,7 +12,7 @@ import {
     setPasteDestinationAlert,
     setInvalidAddressAlert,
 } from "../../store/reducers/generalSlice";
-import { errorToLog, isALLNFTsApproved } from "../../wallet/helpers";
+import { errorToLog, isALLNFTsApproved } from "../../utils";
 
 import { withServices } from "../../components/App/hocs/withServices";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
@@ -100,13 +100,11 @@ function Approval({ serviceContainer }) {
     };
 
     const onClickHandler = async () => {
-        if (!receiver || receiver.length === 0 || receiver === '') {
+        if (!receiver || receiver.length === 0 || receiver === "") {
             dispatch(setPasteDestinationAlert(true));
-        } 
-        else if(!isInvalidAddress){
+        } else if (!isInvalidAddress) {
             dispatch(setInvalidAddressAlert(true));
-        }
-        else if (selectedNFTList.length < 1) {
+        } else if (selectedNFTList.length < 1) {
             dispatch(setSelectNFTAlert(true));
         } else {
             approveAllNFTs();

@@ -7,7 +7,7 @@ import {
     setSearchNFTList,
 } from "../../store/reducers/generalSlice";
 
-import { getSearched } from "../../wallet/helpers";
+import { getSearched } from "../../utils";
 import { chains } from "../values";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 

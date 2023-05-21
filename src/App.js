@@ -8,11 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ReactGA from "./services/GA4";
 
-import {
-    checkValidators,
-    fetchXPUpdate,
-    transformToDate,
-} from "./wallet/helpers";
+import { checkValidators, fetchXPUpdate, transformToDate } from "./utils";
 import {
     setChainModal,
     setImportModal,
@@ -36,7 +32,7 @@ import { bridgeUrl, chains } from "./components/values";
 import "./components/Modals/Modal.css";
 import Modals from "./components/Modals/Modals";
 import AppContainer from "./components/App/container";
-import { generateKey } from "./services/utils";
+import { generateKey } from "./utils";
 
 function App({ network }) {
     let dispatch = useDispatch();

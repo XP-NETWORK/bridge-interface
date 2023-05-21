@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
-import { convert } from "../../wallet/helpers";
+import { convert } from "../../utils";
 
 import {
     setCheckDestinationAddress,
@@ -132,8 +132,9 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
                 nft,
                 receiver: unstoppabledomain || receiver,
                 fee: new BigNumber(bigNumberFees || 0)
-                    .div(5)
-                    .plus(new BigNumber(bigNumberDeployFees || 0).div(10))
+                    .div(3)
+                    .plus(new BigNumber(bigNumberDeployFees || 0).div(5))
+                    .integerValue()
                     .toString(10),
                 discountLeftUsd,
                 account,

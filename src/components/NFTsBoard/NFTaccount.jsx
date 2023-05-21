@@ -14,7 +14,7 @@ import {
 } from "../../store/reducers/generalSlice";
 import { setIsEmpty } from "../../store/reducers/paginationSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { saveForSearch } from "../../wallet/helpers";
+import { saveForSearch } from "../../utils";
 import { ReturnBtn } from "../Settings/returnBtn";
 import DesktopTransferBoard from "../TransferBoard/DesktopTransferBoard";
 import "./NFTsBoard.css";

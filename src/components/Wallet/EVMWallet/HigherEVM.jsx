@@ -14,7 +14,7 @@ import {
     setMetaMask,
     setWalletsModal,
 } from "../../../store/reducers/generalSlice";
-import { getRightPath } from "../../../wallet/helpers";
+import { getRightPath } from "../../../utils";
 import { withServices } from "../../App/hocs/withServices";
 
 import {
@@ -56,7 +56,13 @@ export default function HigherEVM(OriginalComponent) {
             let connected;
             switch (wallet) {
                 case "MetaMask":
-                    connected = await connectMetaMask(activate, from, to, chainId, navigateToAccountRoute);
+                    connected = await connectMetaMask(
+                        activate,
+                        from,
+                        to,
+                        chainId,
+                        navigateToAccountRoute
+                    );
                     if (connected) {
                         dispatch(setMetaMask(true));
                         dispatch(setConnectedWallet("MetaMask"));
@@ -91,12 +97,15 @@ export default function HigherEVM(OriginalComponent) {
                     break;
                 case "BitKeep":
                     deactivate();
-                    connected = await connectBitKeep(from, navigateToAccountRoute);
+                    connected = await connectBitKeep(
+                        from,
+                        navigateToAccountRoute
+                    );
                     if (connected && to) {
-                      dispatch(setWalletsModal(false));
-                      dispatch(setBitKeep(true));
-                      dispatch(setConnectedWallet("BitKeep"));
-                      navigateToAccountRoute();
+                        dispatch(setWalletsModal(false));
+                        dispatch(setBitKeep(true));
+                        dispatch(setConnectedWallet("BitKeep"));
+                        navigateToAccountRoute();
                     }
                     break;
                 default:
