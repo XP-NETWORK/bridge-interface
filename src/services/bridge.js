@@ -50,12 +50,14 @@ class Bridge {
             switch (true) {
                 case testnet: {
                     config = await ChainFactoryConfigs.TestNet();
+
                     app = AppConfigs.TestNet();
                     break;
                 }
                 case staging: {
                     config = await ChainFactoryConfigs.Staging();
                     app = AppConfigs.Staging();
+
                     break;
                 }
                 default: {

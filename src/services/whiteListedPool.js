@@ -19,7 +19,6 @@ class WhitelistedPool {
             : new Promise((resolve, reject) => {
                   const prom = cb(...args)
                       .then((res) => {
-                          console.log(res, contract);
                           res && this.whitelistContract(contract);
                           this.release(contract);
                           resolve(res);

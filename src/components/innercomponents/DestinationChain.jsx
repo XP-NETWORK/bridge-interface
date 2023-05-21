@@ -28,13 +28,6 @@ function DestinationChain({ serviceContainer }) {
     let alert = useSelector((state) => state.general.pasteDestinationAlert);
     let to = useSelector((state) => state.general.to);
     const isInvalid = useSelector((state) => state.general.isInvalid);
-    const receiverIsContract = useSelector(
-        (state) => state.general.receiverIsContract
-    );
-    console.log(
-        "🚀 ~ file: DestinationChain.jsx:32 ~ DestinationChain ~ receiverIsContract:",
-        receiverIsContract
-    );
 
     const dispatch = useDispatch();
     let receiver = useSelector((state) => state.general.receiver);
