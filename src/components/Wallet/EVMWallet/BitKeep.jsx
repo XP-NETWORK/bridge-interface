@@ -3,32 +3,32 @@ import PropTypes from "prop-types";
 import HigherEVM from "./HigherEVM";
 import { useSelector } from "react-redux";
 import icon from "../../../assets/img/wallet/bitkeep.svg";
-
-function BitKeep({ styles, connectWallet }) {
-    const OFF = { opacity: 0.6, pointerEvents: "none" };
+function BitKeep({ connectWallet }) {
     const from = useSelector((state) => state.general.from);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
+
+    const OFF = { opacity: 0.7, pointerEvents: "none" };
+    const getStyle = () => {
+        if (from) {
+          if (from?.type !== "EVM" || isUnsupportedBitKeepChain()) {
+            return OFF;
+          }
+        } else {
+          return OFF;
+        }
+      };
+
     const isUnsupportedBitKeepChain = () => {
         const chain = from || temporaryFrom;
-
-        if (chain) {
-            switch (from?.text) {
-                case "Godwoken":
-                    return true;
-                case "Harmony":
-                    return true;
-                default:
-                    return false;
-            }
-        }
+        return ['Godwoken','SKALE', 'ABEY'].includes(chain?.text)
     };
 
     return (
         <li
-            style={isUnsupportedBitKeepChain() ? OFF : styles()}
+            style={getStyle()}
             onClick={() => connectWallet("BitKeep")}
             className="wllListItem"
-            data-wallet="MetaMask"
+            data-wallet="BitKeep"
         >
             <img src={icon} alt="BitKeep Icon" />
             <p>BitKeep</p>
@@ -36,7 +36,7 @@ function BitKeep({ styles, connectWallet }) {
     );
 }
 BitKeep.propTypes = {
-    styles: PropTypes.func,
+    // styles: PropTypes.func,
     connectWallet: PropTypes.func,
 };
 export default HigherEVM(BitKeep);

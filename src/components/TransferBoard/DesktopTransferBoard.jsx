@@ -22,7 +22,7 @@ export default function DesktopTransferBoard() {
     return (
         <div className="sendNftCol col-lg-4 desktopOnly">
             <div className="transfer-board">
-                <form action="#">
+                <form action="#" onSubmit={((e)=>{e.preventDefault()})}>
                     <DestinationChain />
                     {nfts?.length ? (
                         <>

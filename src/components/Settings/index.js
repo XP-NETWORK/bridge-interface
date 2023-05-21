@@ -257,7 +257,7 @@ function WSettings({
                                                             />
 
                                                             {chain.value ===
-                                                            "xDai"
+                                                            "xDAI"
                                                                 ? "Gnosis"
                                                                 : chain.value}
 

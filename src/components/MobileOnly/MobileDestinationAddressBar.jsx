@@ -16,6 +16,7 @@ import {
     generalValidation,
     inputFilter,
     validateFunctions,
+  maxChainAddressLengths
 } from "../../services/addressValidators";
 import { withServices } from "../App/hocs/withServices";
 import PropTypes from "prop-types";
@@ -28,6 +29,7 @@ function MobileDestinationAddressBar({ serviceContainer }) {
     const to = useSelector((state) => state.general.to);
     let receiver = useSelector((state) => state.general.receiver);
     const isInvalid = useSelector((state) => state.general.isInvalid);
+  let [maxLength, setMaxLength] = useState(0);
 
     const checkIfReceiverIsContract = async (address) => {
         let isContract = await checkIfContractAddress(
@@ -68,6 +70,7 @@ function MobileDestinationAddressBar({ serviceContainer }) {
     useEffect(() => {
         dispatch(setReceiver(""));
         dispatch(setIsInvalidAddress(true));
+    setMaxLength(maxChainAddressLengths[to.type]);
         bridge.getChain(to.nonce).then((chain) => {
             const provider = chain.chain.getProvider();
             setDestinationProvider(provider);
@@ -99,6 +102,7 @@ function MobileDestinationAddressBar({ serviceContainer }) {
                     value={receiver}
                     onChange={(e) => handleChange(e)}
                     type="text"
+          maxLength={maxLength}
                     placeholder="Paste destination address"
                     className={
                         isInvalid ? "reciverAddress" : "reciverAddress invalid"

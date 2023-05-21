@@ -1,7 +1,7 @@
 /* eslint-disable no-debugger */
 import { useEffect, useRef, React } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { chains } from "../../components/values";
+import { BridgeModes, chains } from "../../components/values";
 import {
     setChainModal,
     setDepartureOrDestination,
@@ -12,6 +12,8 @@ import {
     setChangeWallet,
     setTemporaryFrom,
     setTemporaryTo,
+    setConnectedWallet,
+    setAccount,
 } from "../../store/reducers/generalSlice";
 import Chain from "./Chain";
 import ChainSearch from "../Chains/ChainSearch";
@@ -26,9 +28,12 @@ import PropTypes from "prop-types";
 
 import { withServices } from "../App/hocs/withServices";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
+import { useNavigate } from "react-router-dom";
+import { setWalletAddress } from "../../store/reducers/signersSlice";
 
 function ChainListBox({ serviceContainer }) {
     const { bridge } = serviceContainer;
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -79,9 +84,7 @@ function ChainListBox({ serviceContainer }) {
     };
     // ! ref
     const chainSelectHandler = async (chain) => {
-        // eslint-disable-next-line no-debugger
-        // debugger;
-
+        console.log(chain, "chain");
         const chainWrapper = await bridge.getChain(chain.nonce);
 
         if (departureOrDestination === "departure") {
@@ -94,18 +97,21 @@ function ChainListBox({ serviceContainer }) {
                 from?.text === "VeChain" &&
                 chainWrapper.chainParams.type === "EVM"
             ) {
-                dispatch(setChangeWallet(true));
-                dispatch(setTemporaryFrom(chain));
-                dispatch(setTemporaryTo(to));
-                handleClose();
+                // console.log('im here')
+                // dispatch(setChangeWallet(true));
+                // dispatch(setTemporaryFrom(chain));
+                // dispatch(setTemporaryTo(to));
+                // handleClose();
+                evmNonEvmInterchange(chain);
             } else if (
                 chainWrapper.chainParams.name === "VeChain" &&
                 bridge.currentType === "EVM"
             ) {
-                dispatch(setChangeWallet(true));
-                dispatch(setTemporaryFrom(chain));
-                dispatch(setTemporaryTo(to));
-                handleClose();
+                evmNonEvmInterchange(chain);
+                // dispatch(setChangeWallet(true));
+                // dispatch(setTemporaryFrom(chain));
+                // dispatch(setTemporaryTo(to));
+                // handleClose();
             } else if (
                 chainWrapper.chainParams.type === bridge.currentType ||
                 !bridge.currentType
@@ -113,11 +119,17 @@ function ChainListBox({ serviceContainer }) {
                 if (from && from?.text !== chain.text) {
                     if (from?.text === "Harmony" && bitKeep) {
                         dispatch(setTemporaryFrom(chain));
-
-                        dispatch(setChangeWallet(true));
+                        if (
+                            !evmAccount ||
+                            (evmAccount?.length === 0 &&
+                                window.location.href.includes("account"))
+                        ) {
+                            dispatch(setChangeWallet(true));
+                        }
                         handleClose();
                     } else if (
-                        (account || evmAccount) &&
+                        evmAccount &&
+                        // (account || evmAccount) &&
                         from.text !== "VeChain"
                     ) {
                         const switched = await switchNetwork(chain);
@@ -139,10 +151,32 @@ function ChainListBox({ serviceContainer }) {
                 }
                 handleClose();
             } else {
-                dispatch(setChangeWallet(true));
-                dispatch(setTemporaryFrom(chain));
-                dispatch(setTemporaryTo(to));
-                handleClose();
+                evmNonEvmInterchange(chain);
+                // dispatch(setChangeWallet(true));
+                // dispatch(setTemporaryFrom(chain));
+                // dispatch(setFrom(chain))
+                // dispatch(setTemporaryTo(to));
+
+                // let currentPath = window.location.href;
+                // if (currentPath.includes("account")) {
+                //   let goToPath = "/";
+                //   if (
+                //     currentPath.includes(BridgeModes.Staging) ||
+                //     currentPath.includes(BridgeModes.TestNet)
+                //   ) {
+                //     goToPath = currentPath.includes(BridgeModes.Staging)
+                //       ? BridgeModes.Staging
+                //       : BridgeModes.TestNet;
+                //   }
+                //   console.log(goToPath);
+                //   navigate(goToPath);
+                //   dispatch(setChangeWallet(false));
+                //   dispatch(setConnectedWallet(''))
+                //   dispatch(setWalletAddress(''))
+                //   dispatch(setAccount(''))
+                // }
+
+                // handleClose();
             }
             handleClose();
         } else if (departureOrDestination === "destination") {
@@ -153,7 +187,13 @@ function ChainListBox({ serviceContainer }) {
             if (from?.text === chain.text) {
                 if (to?.text === "Harmony" && bitKeep) {
                     dispatch(setTemporaryFrom(to));
-                    dispatch(setChangeWallet(true));
+                    if (
+                        !evmAccount ||
+                        (evmAccount?.length === 0 &&
+                            window.location.href.includes("account"))
+                    ) {
+                        dispatch(setChangeWallet(true));
+                    }
                     handleClose();
                 } else if (account || evmAccount) {
                     const switched = await switchNetwork(to);
@@ -167,6 +207,34 @@ function ChainListBox({ serviceContainer }) {
             }
             handleClose();
         }
+    };
+
+    const evmNonEvmInterchange = (chain) => {
+        dispatch(setChangeWallet(true));
+        dispatch(setTemporaryFrom(chain));
+        dispatch(setFrom(chain));
+        dispatch(setTemporaryTo(to));
+
+        let currentPath = window.location.href;
+        if (currentPath.includes("account")) {
+            let goToPath = "/";
+            if (
+                currentPath.includes(BridgeModes.Staging) ||
+                currentPath.includes(BridgeModes.TestNet)
+            ) {
+                goToPath = currentPath.includes(BridgeModes.Staging)
+                    ? BridgeModes.Staging
+                    : BridgeModes.TestNet;
+            }
+            console.log(goToPath);
+            navigate(goToPath);
+            dispatch(setChangeWallet(false));
+            dispatch(setConnectedWallet(""));
+            dispatch(setWalletAddress(""));
+            dispatch(setAccount(""));
+        }
+
+        handleClose();
     };
 
     useEffect(() => {
@@ -199,15 +267,14 @@ function ChainListBox({ serviceContainer }) {
             ...withComing,
         ];
 
-        if (
-            location.pathname === "/connect" ||
-            location.pathname === "/testnet/connect" ||
-            location.pathname === "/account" ||
-            location.pathname === "/testnet/account" ||
-            location.pathname === "/staging" ||
-            location.pathname === "/staging/account" ||
-            location.pathname === "/"
-        ) {
+        // location.pathname === "/connect" ||
+        // location.pathname === "/testnet/connect" ||
+        // location.pathname === "/account" ||
+        // location.pathname === "/testnet/account" ||
+        // location.pathname === "/staging" ||
+        // location.pathname === "/staging/account" ||
+        // location.pathname === "/"
+        if (location) {
             setFromChains(sorted.filter((e) => e.text !== to?.text));
         } else setFromChains(sorted);
         if (sorted.length <= 5) setReached(true);
@@ -253,13 +320,14 @@ function ChainListBox({ serviceContainer }) {
             ...withComing,
         ];
         if (
-            location.pathname === "/connect" ||
-            location.pathname === "/testnet/connect" ||
-            location.pathname === "/account" ||
-            location.pathname === "/testnet/account" ||
-            location.pathname === "/staging" ||
-            location.pathname === "/staging/account" ||
-            location.pathname === "/"
+            location
+            // location.pathname === "/connect" ||
+            // location.pathname === "/testnet/connect" ||
+            // location.pathname === "/account" ||
+            // location.pathname === "/testnet/account" ||
+            // location.pathname === "/staging" ||
+            // location.pathname === "/staging/account" ||
+            // location.pathname === "/"
         ) {
             setToChains(sorted.filter((e) => e.text !== from?.text));
         } else {

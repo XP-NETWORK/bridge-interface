@@ -26,9 +26,11 @@ import {
     setWC,
     setAccount,
     setRedirectModal,
+    setBitKeep,
+    setConnectedWallet,
 } from "../../store/reducers/generalSlice";
 
-import { getAddEthereumChain } from "../../wallet/chains";
+// import { getAddEthereumChain } from "../../wallet/chains";
 import Web3 from "web3";
 
 import { setSigner } from "../../store/reducers/signersSlice";
@@ -55,9 +57,8 @@ export const wallets = [
 
 const { modalError } = store.getState();
 
-export const connectUnstoppable = async () => {
-    // eslint-disable-next-line no-debugger
-    // debugger;
+export const connectUnstoppable = async (close) => {
+    close();
     try {
         const provider = await web3Modal.connect();
         return provider.selectedAddress;
@@ -66,39 +67,39 @@ export const connectUnstoppable = async () => {
     }
 };
 
-export const switchNetWork = async (from) => {
-    // let fromChainId;
-
-    const chain = getAddEthereumChain()[parseInt(from.chainId).toString()];
-
-    const params = {
-        chainId: from.chainId, // A 0x-prefixed hexadecimal string
-        chainName: chain.name,
-        nativeCurrency: {
-            name: chain.nativeCurrency.name,
-            symbol: chain.nativeCurrency.symbol, // 2-6 characters long
-            decimals: chain.nativeCurrency.decimals,
-        },
-        rpcUrls: chain.rpc,
-        blockExplorerUrls: [
-            chain.explorers &&
-            chain.explorers.length > 0 &&
-            chain.explorers[0].url
-                ? chain.explorers[0].url
-                : chain.infoURL,
-        ],
-    };
-    window.bitkeep?.ethereum &&
-        window.bitkeep?.ethereum
-            .request({
-                method: "wallet_switchEthereumChain",
-                params,
-            })
-            .then(() => {})
-            .catch((e) => {
-                console.log(e);
-            });
-};
+// export const switchNetWork = async (from) => {
+//   // let fromChainId;
+//   console.log(from, "from");
+//   const chain = getAddEthereumChain()[parseInt(from.chainId).toString()];
+//   console.log(chain);
+//   const params = {
+//     chainId: from.chainId, // A 0x-prefixed hexadecimal string
+//     chainName: chain.name,
+//     nativeCurrency: {
+//       name: chain.nativeCurrency.name,
+//       symbol: chain.nativeCurrency.symbol, // 2-6 characters long
+//       decimals: chain.nativeCurrency.decimals,
+//     },
+//     rpcUrls: chain.rpc,
+//     blockExplorerUrls: [
+//       chain.explorers && chain.explorers.length > 0 && chain.explorers[0].url
+//         ? chain.explorers[0].url
+//         : chain.infoURL,
+//     ],
+//   };
+//   window.bitkeep?.ethereum &&
+//     window.bitkeep?.ethereum
+//       .request({
+//         method: "wallet_switchEthereumChain",
+//         params,
+//       })
+//       .then(() => {
+//         console.log("Network Switch Success");
+//       })
+//       .catch((e) => {
+//         console.log(e);
+//       });
+// };
 
 const setBitKeepSigner = (account) => {
     const provider = new ethers.providers.Web3Provider(window.bitkeep.ethereum);
@@ -106,7 +107,8 @@ const setBitKeepSigner = (account) => {
     store.dispatch(setSigner(signer));
 };
 
-export const connectBitKeep = async (from) => {
+export const connectBitKeep = async (from, navigate) => {
+    let { to } = store.getState();
     // debugger;
     let provider;
     const isInstallBikeep = () => {
@@ -123,17 +125,37 @@ export const connectBitKeep = async (from) => {
             );
         }
     } else {
-        provider = window.bitkeep?.ethereum;
-        await provider.request({ method: "eth_requestAccounts" });
-        const web3 = new Web3(provider);
-        const address = await web3.eth.getAccounts();
-        const chainId = await web3.eth.getChainId();
-        if (from && from?.chainId !== chainId) {
-            switchNetWork(from, true);
-        } else {
+        try {
+            provider = window.bitkeep?.ethereum;
+            await provider.request({ method: "eth_requestAccounts" });
+            const web3 = new Web3(provider);
+            const address = await web3.eth.getAccounts();
+            const chainId = await web3.eth.getChainId();
+
+            store.dispatch(setBitKeep(true));
+            store.dispatch(setConnectedWallet("BitKeep"));
             store.dispatch(setAccount(address[0]));
             setBitKeepSigner(address[0]);
-            return true;
+
+            if (from && from?.chainId !== chainId) {
+                const switched = await switchNetwork(from);
+                if (switched) {
+                    store.dispatch(setBitKeep(true));
+                    store.dispatch(setConnectedWallet("BitKeep"));
+                    store.dispatch(setAccount(address[0]));
+                    setBitKeepSigner(address[0]);
+                }
+                if (from && to) {
+                    navigate();
+                }
+            } else {
+                store.dispatch(setAccount(address[0]));
+                setBitKeepSigner(address[0]);
+                return true;
+            }
+        } catch (error) {
+            console.log(error);
+            return false;
         }
     }
 };
@@ -167,14 +189,16 @@ export const connectMetaMask = async (
                 window.ethereum?.chainId ||
                 chainId !== `0x${from?.chainId.toString(16)}`
             ) {
-                const switched = await switchNetwork(from);
-                if (switched) navigate();
-            } else navigate();
+                await switchNetwork(from);
+            }
         }
 
         await activate(injected);
         !mobile && window.safeLocalStorage?.setItem("XP_MM_CONNECTED", "true");
         store.dispatch(setMetaMask(true));
+        if (from && to) {
+            navigate();
+        }
         return true;
     } catch (ex) {
         if (ex.code !== 4001) {

@@ -10,7 +10,7 @@ import {
   initialSecretCred,
   cleanSelectedNFTList,
 } from "../../../store/reducers/generalSlice";
-
+// import { validateFunctions } from "../../../services/addressValidators";
 import "./importNFTModal.css";
 import { Chain, CHAIN_INFO } from "xp.network";
 import { useCheckMobileScreen } from "../../Settings/hooks";
@@ -25,8 +25,10 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
   const dispatch = useDispatch();
   const off = { opacity: 0.6, pointerEvents: "none" };
   const [toggle, setToggle] = useState("set");
+  const [validContract, setValidContract] = useState(true);
+  // const [contract, setContract] = useState();
+  const [contractOnBlur, setContractOnBlur] = useState(false);
   const [importBlocked, setImportBlocked] = useState(false);
-
   const { account, checkWallet, secretCred, NFTSetToggler, from } = useSelector(
     ({
       general: { account, checkWallet, secretCred, NFTSetToggler, from },
@@ -38,7 +40,6 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
       from,
     })
   );
-
   const fetchSecretNfts = async () => {
     if (!secretCred.viewKey || !secretCred.contract) return;
 
@@ -97,6 +98,30 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
     setImportBlocked(false);
   };
 
+  const handleContractChange = (value) => {
+    value = value.trim();
+    let count = 0;
+    let lastChar = "";
+    for (let i = 0; i < value.length; i++) {
+      const currentChar = value[i];
+      if (currentChar === lastChar) {
+        count++;
+        if (count > 3) {
+          return;
+        }
+      } else {
+        count = 1;
+        lastChar = currentChar;
+      }
+    }
+    dispatch(setSecretCred({ ...secretCred, contract: value }));
+    if (value.length === 0 || (value.length === 45 && value.startsWith("secret1"))) {
+      setValidContract(true);
+    } else {
+      setValidContract(false);
+    }
+  };
+
   const hadleSelectToggle = (btn) => {
     switch (btn) {
       case "set":
@@ -139,12 +164,13 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
         </div>
         <div className="fieldsWrapper">
           <div className="contract-input__wrapper">
-            <input
+            {/* <input
               // disabled={toggle === "set" ? true : false}
               type="text"
               placeholder="Paste contract address"
               value={secretCred.contract}
-              onChange={(e) =>
+              onChange={()=>{setContractOnBlur(true)}}
+              onBlur={(e) =>
                 dispatch(
                   setSecretCred({
                     ...secretCred,
@@ -152,7 +178,29 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
                   })
                 )
               }
+            /> */}
+            <input
+              onBlur={() => setContractOnBlur(true)}
+              onChange={(e) => {
+                handleContractChange(e.target.value);
+                setContractOnBlur(true);
+              }}
+              type="text"
+              id="contractAdd"
+              name="contractAddress"
+              placeholder="Paste Contract Address"
+              value={secretCred.contract}
+              className={
+                validContract
+                  ? "contract__input--valid"
+                  : "contract__input--invalid"
+              }
             />
+            {contractOnBlur && !validContract && (
+              <span className={"contract--invalid"}>
+                Error Contract Address
+              </span>
+            )}
             {/* {toggle === "set" && <SecretContractsDropdown />} */}
           </div>
           <div className="inputWrapper">

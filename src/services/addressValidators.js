@@ -5,7 +5,6 @@ import { ethers } from "ethers";
 import TonWeb from "tonweb";
 import * as erdjs from "@elrondnetwork/erdjs";
 import { PublicKey } from "@solana/web3.js";
-// import Web3 from "web3";
 
 const addressValidateTon = (address) => {
     console.log("here: ", TonWeb.Address.isValid(address));
@@ -14,6 +13,22 @@ const addressValidateTon = (address) => {
 
 const addressValidateEVM = (address) => {
     return ethers.utils.isAddress(address);
+};
+
+const addressValidateAptos = (address) => {
+    try {
+        let valid = false;
+
+        if (address?.length === 66) {
+            valid = true;
+        } else {
+            valid = false;
+        }
+        return valid;
+    } catch (error) {
+        console.log("APTOS ADDRESS INVALID: ", error);
+        return false;
+    }
 };
 
 export const checkIfContractAddress = async (address, providerUrl) => {
@@ -55,9 +70,24 @@ const addressValidateTron = (address) => {
     return true;
 };
 
-const addressValidateNear = () => {
+const addressValidateNear = (address) => {
     // NEAR wallet address are simple base64 strings containing lowercase and numeric characters only
-    return true; ///^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(address);
+    // return true; ///^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(address);
+
+    if (address === "") return false;
+    if (String(address).includes(".") && address.length !== 64) {
+        if (
+            String(address)
+                .substring(address.length, address.length - 5)
+                .toLowerCase() === ".near"
+        ) {
+            return /^[a-zA-Z]+(\.[a-zA-Z]+)+$/.test(address);
+        }
+        return false;
+    }
+    if (address.length === 64) {
+        return /^[a-zA-Z0-9]{64}$/.test(address);
+    } else return false;
 };
 
 const addressValidateAlgo = (address) => {
@@ -121,8 +151,6 @@ export const generalValidation = (e, receiver) => {
         }
     }
 
-    console.log(isValid);
-
     return isValid;
 };
 
@@ -146,6 +174,7 @@ export const validateFunctions = {
     NEAR: addressValidateNear,
     Cosmos: addressValidateCosmos,
     VeChain: addressValidateEVM,
+    APTOS: addressValidateAptos,
 };
 
 export const maxChainAddressLengths = {
@@ -159,4 +188,5 @@ export const maxChainAddressLengths = {
     NEAR: 64,
     Cosmos: 45,
     VeChain: 42,
+    APTOS: 66,
 };

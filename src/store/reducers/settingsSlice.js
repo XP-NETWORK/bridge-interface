@@ -31,13 +31,13 @@ export const availability = {
   Elrond: ["Maiar", "MaiarExtension"],
   Tron: ["TronLink"],
   Tezos: ["Beacon", "TempleWallet"],
-  //["BSC", "Velas", "Ethereum", "Polygon", ]: ["MetaMask", "WalletConnect", "TrustWallet", "Ledger", "Trezor"],
+  //["BSC", "Velas", "Ethereum", "Polygon", ]: ["MetaMask", "WalletConnect", "Trust Wallet", "Ledger", "Trezor"],
 };
 
 export const wallets = [
   "MetaMask",
   "WalletConnect",
-  "TrustWallet",
+  "Trust Wallet",
   "MyAlgo",
   "AlgoSigner",
   "TronLink",

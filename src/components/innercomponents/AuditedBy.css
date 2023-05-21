@@ -24,6 +24,13 @@
     margin-bottom: 20px;
 }
 
+
+@media only screen and (min-width: 850px) and (max-width: 1024px) {
+    .audited {
+        width: 600px;
+    }
+}
+
 @media only screen and (max-width: 1024px) {
     .audited__wrapper {
         width: 100%;

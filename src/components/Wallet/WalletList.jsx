@@ -12,7 +12,7 @@ import VeChainWallet from "./VeChainWallet";
 import PropTypes from "prop-types";
 import CosmosWallet from "./CosmosWallet";
 // import HederaWallet from "./HederaWallet";
-import Unscopables from "./Unscopables";
+import Unstoppables from "./Unstoppables";
 import { sortWallet } from "./WalletListHelper";
 import TonWallet from "./TONWallet/TonWallet";
 import TonKeeper from "./TONWallet/TonKeeper";
@@ -55,9 +55,18 @@ export default function WalletList({ connected, input, discount }) {
       keyName: "MetaMask",
     },
     {
+      Component: <Unstoppables key="wallet-index-21" close={connected} />,
+      name: "Unstoppable Domains",
+      mobile: true,
+      desktop: true,
+      order: 14,
+      type: "EVM",
+      keyName: "Unstoppable Domains",
+    },
+    {
       Component: (
         <TrustWallet
-          wallet={"TrustWallet"}
+          wallet={"Trust Wallet"}
           key="trust-wallet"
           close={connected}
         />
@@ -67,22 +76,7 @@ export default function WalletList({ connected, input, discount }) {
       mobile: true,
       desktop: false,
       order: 2,
-      keyName: "TrustWallet",
-    },
-    {
-      Component: (
-        <WalletConnect
-          wallet={"WalletConnect"}
-          key="wallet-connect"
-          close={connected}
-        />
-      ),
-      name: "WalletConnect",
-      type: "EVM",
-      mobile: true,
-      desktop: true,
-      order: 1,
-      keyName: "WalletConnect",
+      keyName: "Trust Wallet",
     },
     {
       Component: (
@@ -99,6 +93,21 @@ export default function WalletList({ connected, input, discount }) {
       desktop: true,
       order: 1,
       keyName: "BitKeep",
+    },
+    {
+      Component: (
+        <WalletConnect
+          wallet={"WalletConnect"}
+          key="wallet-connect"
+          close={connected}
+        />
+      ),
+      name: "WalletConnect",
+      type: "EVM",
+      mobile: true,
+      desktop: true,
+      order: 1,
+      keyName: "WalletConnect",
     },
     {
       Component: (
@@ -124,7 +133,7 @@ export default function WalletList({ connected, input, discount }) {
       mobile: true,
       desktop: true,
       order: 4,
-      keyName: "TempleWallet",
+      keyName: "Temple Wallet",
     },
     {
       Component: (
@@ -221,7 +230,7 @@ export default function WalletList({ connected, input, discount }) {
       ),
       name: "VeChainThor",
       type: "VeChain",
-      mobile: biz,
+      mobile: true,
       desktop: false,
       order: 13,
       keyName: "VeChainThor",
@@ -296,15 +305,6 @@ export default function WalletList({ connected, input, discount }) {
     },
 
     {
-      Component: <Unscopables key="wallet-index-21" close={connected} />,
-      name: "Unstoppable Domains",
-      mobile: true,
-      desktop: true,
-      order: 14,
-      type: "EVM",
-      keyName: "Unstoppable Domains",
-    },
-    {
       Component: <Martioan key="martian" close={connected} />,
       name: "Martian",
       keyName: "Martian",
@@ -349,7 +349,7 @@ export default function WalletList({ connected, input, discount }) {
       desktop: true,
       order: 888,
       type: "NEAR",
-      keyName: "WalletSelector",
+      keyName: "Wallet Selector",
     },
     {
       Component: <Phantom key="Phantom" close={connected} />,

@@ -66,7 +66,10 @@ export default function Chain(props) {
     return (
         <li
             style={getStyle()}
-            onClick={() => chainSelectHandler(filteredChain)}
+            onClick={() => {
+                console.log(filteredChain, "filteredChain");
+                chainSelectHandler(filteredChain);
+            }}
             className="nftChainItem"
             data-chain={text}
         >
@@ -76,7 +79,13 @@ export default function Chain(props) {
                 alt={text}
             />
             <div className="modalSelectOptionsText">
-                {text}
+                <div className="chain-div">
+                    {coming ? (
+                        <p className="chain-name">{`${text}`}</p>
+                    ) : (
+                        <p>{`${text}`}</p>
+                    )}
+                </div>
                 <div className="chain--identifier">
                     {chainStatus === undefined && !coming && !maintenance ? (
                         <Status status={"connecting"} />

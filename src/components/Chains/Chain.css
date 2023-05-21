@@ -77,6 +77,9 @@
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 5%;
+    max-lines: 1;
+    width: max-content;
+    display: inline-block;
     line-height: 15.12px;
     color: white;
     background: linear-gradient(283.28deg, #3763ff 0%, #8f37ff 111.38%);

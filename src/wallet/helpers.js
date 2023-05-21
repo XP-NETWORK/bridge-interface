@@ -3,7 +3,10 @@ import io from "socket.io-client";
 import axios from "axios";
 
 import Harmony from "@harmony-js/core";
-
+import Chain from "../components/Chains/Chain";
+import { ChainFactoryConfigs, AppConfigs, ChainFactory } from "xp.network";
+import { setAlgorandClaimables, setFactory } from "../store/reducers/generalSlice";
+import { setChainFactoryConfig } from "../store/reducers/signersSlice";
 const testnet = window.location.pathname.includes("testnet");
 const socketUrl = "wss://dev-explorer-api.herokuapp.com"; //wss://dest-scraper.herokuapp.com/
 const scraperUrl = "wss://dest-scraper.herokuapp.com";
@@ -71,6 +74,168 @@ export const checkValidators = () => {
             console.log(error);
         });
 };
+
+export const getAndSetFactory = async (network) => {
+  // eslint-disable-next-line no-debugger
+
+  let config;
+  let factory;
+  switch (network) {
+    case "testnet":
+      config = await ChainFactoryConfigs.TestNet();
+      factory = await ChainFactory(AppConfigs.TestNet(), config);
+      break;
+    case "staging":
+      config = await ChainFactoryConfigs.Staging();
+      factory = await ChainFactory(AppConfigs.Staging(), config);
+      break;
+    default:
+      config = await ChainFactoryConfigs.MainNet();
+      factory = await ChainFactory(AppConfigs.MainNet(), config);
+      break;
+  }
+  store.dispatch(setFactory(factory));
+  store.dispatch(setChainFactoryConfig(config));
+  return factory;
+};
+
+export const handleChainFactory = async (someChain) => {
+  const { factory } = store.getState().general;
+
+  try {
+    switch (someChain) {
+      case "Ethereum":
+        return await factory.inner(Chain.ETHEREUM);
+      case "BSC":
+        return await factory.inner(Chain.BSC);
+      case "Tron":
+        return await factory.inner(Chain.TRON);
+      case "Elrond":
+        return await factory.inner(Chain.ELROND);
+      case "Polygon":
+        return await factory.inner(Chain.POLYGON);
+      case "Avalanche":
+        return await factory.inner(Chain.AVALANCHE);
+      case "Fantom":
+        return await factory.inner(Chain.FANTOM);
+      case "Algorand":
+        return await factory.inner(Chain.ALGORAND);
+      case "xDAI":
+        return await factory.inner(Chain.XDAI);
+      case "Gnosis":
+        return await factory.inner(Chain.XDAI);
+      case "Solana":
+        return await factory.inner(Chain.SOLANA);
+      case "Cardano":
+        return await factory.inner(Chain.CARDANO);
+      case "Fuse":
+        return await factory.inner(Chain.FUSE);
+      case "Velas":
+        return await factory.inner(Chain.VELAS);
+      case "Tezos":
+        return await factory.inner(Chain.TEZOS);
+      case "Iotex":
+        return await factory.inner(Chain.IOTEX);
+      case "Harmony":
+        return await factory.inner(Chain.HARMONY);
+      case "Aurora":
+        return await factory.inner(Chain.AURORA);
+      case "GateChain":
+        return await factory.inner(Chain.GATECHAIN);
+      case "VeChain":
+        return await factory.inner(Chain.VECHAIN);
+      case "Godwoken":
+        return await factory.inner(Chain.GODWOKEN);
+      case "Secret":
+        return await factory.inner(Chain.SECRET);
+      case "Hedera":
+        return await factory.innner(Chain.HEDERA);
+      case "Skale":
+        return await factory.inner(Chain.SKALE);
+      case "ABEY":
+        return await factory.inner(Chain.ABEYCHAIN);
+      case "Moonbeam":
+        return await factory.inner(Chain.MOONBEAM);
+      case "TON":
+        return await factory.inner(Chain.TON);
+      case "NEAR":
+        return await factory.inner(Chain.NEAR);
+      default:
+        return "";
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/*export const mintForTestNet = async (from, signer) => {
+  const { factory } = store.getState().general;
+  const chain = await factory.inner(chainsConfig[from].Chain);
+  const uri = await prompt();
+
+  try {
+    const mint = await chain.mintNft(signer, {
+      contract: "0x34933A5958378e7141AA2305Cdb5cDf514896035",
+      uri,
+    });
+
+    return mint;
+  } catch (error) {
+    console.log(error);
+  }
+};*/
+
+export const checkIfSmartContract = async (c, address) => {
+  const { factory } = store.getState().general;
+  const chain = await factory.inner(c);
+  const isSC = await chain.isContractAddress(address);
+  return isSC;
+};
+
+export const setClaimablesAlgorand = async (algorandAccount, returnList) => {
+  const { factory } = store.getState().general;
+  let claimables;
+  try {
+    if (algorandAccount && algorandAccount.length > 50) {
+      claimables = await factory.claimableAlgorandNfts(algorandAccount);
+      console.log(claimables, "claimablesNFT");
+      if (claimables && claimables.length > 0) {
+        if (returnList) return claimables;
+        else store.dispatch(setAlgorandClaimables(claimables));
+      }
+    }
+    return [];
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+};
+
+export const getAlgorandClaimables = async (account) => {
+  const { checkWallet, factory } = store.getState().general;
+
+  let claimables;
+  try {
+    claimables = await factory.claimableAlgorandNfts(checkWallet || account);
+    store.dispatch(setAlgorandClaimables(claimables));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export function isValidHttpUrl(string) {
+  let url;
+  if (string.includes("data:image/") || string.includes("data:application/"))
+    return true;
+  if (string.includes("ipfs://")) return true;
+  if (string.includes("ipfs")) return true;
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;
+  }
+  return url.protocol === "http:" || url.protocol === "https:";
+}
 
 export const checkIfOne1 = (address) => {
     return address?.slice(0, 4) === "one1" ? true : false;

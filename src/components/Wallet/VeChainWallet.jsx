@@ -30,6 +30,7 @@ function VeChainWallet({ close, wallet, serviceContainer }) {
     const OFF = { opacity: 0.6, pointerEvents: "none" };
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
+    const _account = useSelector((state) => state.general.account);
     const testnet = useSelector((state) => state.general.testNet);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
     const [connecting, setConnecting] = useState(false);
@@ -116,18 +117,19 @@ function VeChainWallet({ close, wallet, serviceContainer }) {
                 }
             }
 
-            dispatch(setAccount(account.address));
-            dispatch(
+            if (await account) {
+              dispatch(setAccount(account.address));
+              dispatch(
                 setConnectedWallet(
-                    w === "VeChainThor" ? "VeChainThor" : "Sync2"
+                  w === "VeChainThor" ? "VeChainThor" : "Sync2"
                 )
-            );
-            chainWrapper.setSigner(account.signer);
-            bridge.setCurrentType(chainWrapper);
-            close();
-            if (!from) dispatch(setFrom(getChainObject(Chain.VECHAIN)));
-            if (temporaryFrom) dispatch(setFrom(temporaryFrom));
-            if (to) navigateToAccountRoute();
+              );
+              chainWrapper.setSigner(account.signer);
+              bridge.setCurrentType(chainWrapper);
+              close();
+              if (!from) dispatch(setFrom(getChainObject(Chain.VECHAIN)));
+              if (to && from && _account) navigateToAccountRoute();
+            }
         } catch (e) {
             console.log(e, "e");
             setConnecting(false);

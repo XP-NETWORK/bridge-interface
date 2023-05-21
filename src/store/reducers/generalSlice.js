@@ -27,6 +27,8 @@ const initialState = {
     afterNearRedirect: true,
     hederaClaimables: [],
     algorandAddresses: [],
+    unstoppableDomainsIsSelected: false,
+    receiver : undefined
 };
 
 const generalSlice = createSlice({
@@ -109,6 +111,9 @@ const generalSlice = createSlice({
         },
         setBitKeep(state, action) {
             state.bitKeep = action.payload;
+        },
+        setUnstoppableDomainsIsSelected(state, action) {
+            state.unstoppableDomainsIsSelected = action.payload;
         },
         setTemporaryFrom(state, action) {
             state.temporaryFrom = action.payload;
@@ -531,6 +536,9 @@ const generalSlice = createSlice({
         setPasteDestinationAlert(state, action) {
             state.pasteDestinationAlert = action.payload;
         },
+        setInvalidAddressAlert(state, action) {
+            state.invalidAddressAlert = action.payload;
+        },
         setNoApprovedNFTAlert(state, action) {
             state.noApprovedNFTAlert = action.payload;
         },
@@ -583,6 +591,7 @@ export const {
     setKeplrAccount,
     setKeplrWallet,
     setBitKeep,
+    setUnstoppableDomainsIsSelected,
     setTemporaryFrom,
     setCheckWallet,
     addImportedNFTtoNFTlist,
@@ -591,6 +600,7 @@ export const {
     setChangeWallet,
     setNoApprovedNFTAlert,
     setPasteDestinationAlert,
+    setInvalidAddressAlert,
     setSelectNFTAlert,
     setAlgoAccountToClaim,
     setSync2,

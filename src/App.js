@@ -50,6 +50,9 @@ function App({ network }) {
     let accountModal = useSelector((state) => state.general.accountModal);
     let walletsModal = useSelector((state) => state.general.walletsModal);
     let account = useSelector((state) => state.general.account);
+    let from = useSelector((state) => state.general.from);
+    let currentsNFTs = useSelector((state) => state.general.currentsNFTs);
+
     let accountWalletModal = useSelector(
         (state) => state.general.accountWalletModal
     );
@@ -105,6 +108,10 @@ function App({ network }) {
     useEffect(() => {
         dispatch(setWalletsModal(false));
     }, [account]);
+
+    useEffect(() => {
+        dispatch(setError(false));
+    }, [from, account, currentsNFTs]);
 
     useEffect(() => {
         ReactGA.send({

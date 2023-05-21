@@ -14,15 +14,19 @@ export default function SetDestination() {
   const [seed, setSeed] = useState();
 
   useEffect(() => {
+
     const _seed = Math.round(Math.random() * 10000000);
     if (!seed) setSeed(_seed);
+
   }, []);
 
   const handleShow = (str) => {
     dispatch(setChainModal(true));
+
     str === "departure"
       ? dispatch(setDepartureOrDestination("departure"))
       : dispatch(setDepartureOrDestination("destination"));
+
   };
   return (
     <div

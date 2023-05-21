@@ -1,6 +1,6 @@
 import store from "../../store/store";
 
-import Unscopables from "./Unscopables";
+import Unstoppables from "./Unstoppables";
 
 export const sortWallet = (components) => {
     // eslint-disable-next-line no-debugger
@@ -47,7 +47,7 @@ export const sortWallet = (components) => {
                 ...aptosWallets,
                 ...nearWallets,
                 ...usbWallet,
-                Unscopables,
+                Unstoppables,
             ];
             return sortedWallets;
         case "Skale":
@@ -238,7 +238,6 @@ export const sortWallet = (components) => {
                 ...aptosWallets,
                 ...usbWallet,
             ];
-            console.log({ sortedWallets });
             return sortedWallets;
         default:
             break;

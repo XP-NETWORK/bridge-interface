@@ -367,12 +367,19 @@
   width: 100%;
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 950px) {
   .approval__inf:hover::before {
     bottom: 30px;
     left: -190px;
   }
   .approval__inf:hover::after {
     left: 50%;
+  }
+}
+
+
+@media screen and (max-width: 1100px) and (min-width: 991px){
+  .approval__inf:hover::before {  
+    left: -162px;    
   }
 }
