@@ -12,11 +12,6 @@ import {
     googleAnalyticsCategories,
     handleGA4Event,
 } from "../../../services/GA4";
-/*import { setWalletsModal } from "../../../store/reducers/generalSlice";
-import { getRightPath } from "../../../wallet/helpers";
-import { useNavigate } from "react-router-dom";*/
-
-import { biz } from "../../values";
 
 function NearWallet({ serviceContainer }) {
     //const isMobile = innerWidth <= 480;
@@ -61,9 +56,6 @@ function NearWallet({ serviceContainer }) {
     };
 
     const getStyles = () => {
-        if (!biz) {
-            return { display: "none" };
-        }
         //return { display: "none" };
         // eslint-disable-next-line no-debugger
         // debugger;
