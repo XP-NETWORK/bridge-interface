@@ -7,7 +7,6 @@ import * as erdjs from "@elrondnetwork/erdjs";
 import { PublicKey } from "@solana/web3.js";
 
 const addressValidateTon = (address) => {
-    console.log("here: ", TonWeb.Address.isValid(address));
     return TonWeb.Address.isValid(address);
 };
 
