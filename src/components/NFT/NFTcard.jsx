@@ -83,7 +83,7 @@ export default function NFTcard({
         };
     }, []);
 
-    function addRemoveNFT(chosen) {
+    function addRemoveNFT(chosen, e) {
         if (chosen.native.contractType === "ERC1155" && to.text === "Solana") {
             dispatch(
                 setError({
@@ -92,7 +92,13 @@ export default function NFTcard({
             );
             return;
         }
+        const node = e.target.closest(".nft-box__wrapper");
+        document
+            .querySelectorAll(".nft-box__wrapper.selected")
+            .forEach((el) => el.classList.remove("selected"));
+
         if (!selected(from.type, nft, selectedNFTs)) {
+            node.classList.add("selected");
             dispatch(setSelectedNFTList(chosen));
         } else {
             dispatch(removeFromSelectedNFTList(nft));
@@ -198,9 +204,9 @@ export default function NFTcard({
                     <Preload />
                 ) : (
                     <div
-                        onClick={() =>
+                        onClick={(e) =>
                             nft.whitelisted && !detailsOn && !claimables
-                                ? addRemoveNFT(nft, index)
+                                ? addRemoveNFT(nft, e)
                                 : undefined
                         }
                         className={

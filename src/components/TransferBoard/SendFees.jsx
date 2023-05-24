@@ -3,14 +3,13 @@
 import React, { useState, useRef } from "react";
 import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useDispatch, useSelector } from "react-redux";
-import { compose } from "redux";
+
 import {
     setBigNumFees,
     setBigNumDeployFees,
 } from "../../store/reducers/generalSlice";
 import { useEffect } from "react";
 
-//import { withServices } from "../App/hocs/withServices";
 import withChains from "../NFTsBoard/hocs";
 
 import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
@@ -154,7 +153,7 @@ function SendFees(props) {
             {Boolean(selectedNFTList.length) && (
                 <DeployUserStore
                     serviceContainer={serviceContainer}
-                    nft={selectedNFTList[0]}
+                    nft={selectedNFTList.at(-1)}
                     chainParams={chainParams}
                 />
             )}
@@ -208,4 +207,4 @@ function SendFees(props) {
     );
 }
 
-export default compose(withChains)(SendFees);
+export default withChains(SendFees);

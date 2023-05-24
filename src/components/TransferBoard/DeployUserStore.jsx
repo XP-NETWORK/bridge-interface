@@ -5,9 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     setDeployUserEstimation,
     setTransferLoaderModal,
+    setLockMainPannel,
     setError,
     setUndeployedUserStore,
 } from "../../store/reducers/generalSlice";
+
+import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
 
 const DeployUserStore = ({ serviceContainer, nft, chainParams }) => {
     const { bridge } = serviceContainer;
@@ -23,22 +26,34 @@ const DeployUserStore = ({ serviceContainer, nft, chainParams }) => {
 
     useEffect(() => {
         if (nft && !nft.wrapped) {
-            bridge.getChain(from.nonce).then(async (fromChain) => {
-                const [mapping, userStore] = await fromChain.checkUserStore(
-                    nft,
-                    to.nonce
-                );
-                if (userStore || mapping) return;
-                setShow(true);
-                dispatch(setUndeployedUserStore(true));
-                const deployEstimation = await fromChain.estimateDeployUserStore();
-                if (deployEstimation) {
-                    dispatch(setDeployUserEstimation(deployEstimation));
-                }
-            });
+            try {
+                dispatch(setLockMainPannel(true));
+                bridge.getChain(from.nonce).then(async (fromChain) => {
+                    const [mapping, userStore] = await fromChain.checkUserStore(
+                        nft,
+                        to.nonce
+                    );
+
+                    dispatch(setLockMainPannel(false));
+
+                    if (userStore || mapping) return;
+
+                    dispatch(setUndeployedUserStore(true));
+                    setShow(true);
+                    const deployEstimation = await fromChain.estimateDeployUserStore();
+                    if (deployEstimation) {
+                        dispatch(setDeployUserEstimation(deployEstimation));
+                    }
+                });
+            } catch (e) {
+                dispatch(setLockMainPannel(false));
+                dispatch(setUndeployedUserStore(false));
+                dispatch(setError(e));
+            }
         }
 
         return () => {
+            setShow(false);
             dispatch(setUndeployedUserStore(false));
         };
     }, [nft]);
@@ -71,18 +86,25 @@ const DeployUserStore = ({ serviceContainer, nft, chainParams }) => {
     };
 
     return (
-        <div className="deploy-container fees" style={!show ? OFF : {}}>
-            <button
-                //style={locked ? { pointerEvents: "none", opacity: ".7" } : {}}
-                className="whitelist-btn"
-                onClick={deployHandler}
-            >
-                Deploy Minter Contract
-            </button>
-            <div className="deploy-container_fees">
-                <span>{estimation?.formatedFees.toFixed(3)}</span>
-                <span>{chainParams?.currencySymbol}</span>
+        <div className="deploy-container" style={!show ? OFF : {}}>
+            <div className="deploy-userStore_inf ">
+                {/* before */}
+                <InfLithComp className="svgWidget nftInfIcon" alt="info" />
+                {/* after */}
             </div>
+            <h3>Origin Deployment Fee</h3>
+            <p>
+                Pay one-time origin chain deployment fee to get your NFT
+                collection integrated with the bridge.{" "}
+            </p>
+            <div className="deploy-container_fees">
+                One Time Fee
+                <div>
+                    <span>{estimation?.formatedFees.toFixed(3)}</span>
+                    <span>{chainParams?.currencySymbol}</span>
+                </div>
+            </div>
+            <button onClick={deployHandler}>Pay</button>
         </div>
     );
 };

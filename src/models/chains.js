@@ -370,12 +370,8 @@ class EVM extends AbstractChain {
     }
 
     async deployUserStore(nft, fees) {
-        const pay = await this.chain.payForDeployUserStore(this.signer, fees);
-        console.log(pay);
-        if (pay.status !== 1) throw new Error("Tranaction failed");
-        const address = await this.chain.deployUserStore(nft);
-        console.log(address);
-        return address;
+        const res = await this.chain.getUserStore(this.signer, nft, fees);
+        return res?.address;
     }
 
     async checkUserStore(nft, toNonce) {

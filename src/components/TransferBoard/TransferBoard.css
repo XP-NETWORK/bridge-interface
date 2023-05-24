@@ -287,10 +287,45 @@
     display: flex;
     gap: 6px;
 }
-.deploy-fees__inf {
+
+.deploy-fees__inf,
+.deploy-userStore_inf {
     position: relative;
 }
-.deploy-fees__inf:hover::before {
+
+.deploy-userStore_inf svg {
+    position: absolute;
+    right: 0;
+}
+
+.sendNftCol,
+.deploy-container,
+.approval,
+.nft-box__wrapper {
+    position: relative;
+}
+
+.undeployedUserStore .sendNftCol::before,
+.undeployedUserStore .approval::before,
+.undeployedUserStore .nft-box__wrapper:not(.selected):before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 122;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.deploy-container {
+    position: relative;
+    z-index: 155;
+    border: 1px solid #e0e4eb;
+}
+
+.deploy-fees__inf:hover::before,
+.deploy-userStore_inf:hover::before {
     content: "One time fee for deploying a new smart contract on the destination chain.";
     position: absolute;
     font-size: 12px;
@@ -305,6 +340,13 @@
     color: white;
     /* box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.5); */
 }
+
+.deploy-userStore_inf:hover::before {
+    display: none;
+    content: "";
+    left: 100px;
+}
+
 .deploy-fees__inf:hover::after {
     position: absolute;
     z-index: 0;
@@ -351,13 +393,50 @@
 }
 
 .deploy-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding: 8px;
+    border-radius: 6px;
+    margin: 5px 0;
 }
 
-.deploy-container button.whitelist-btn {
-    margin-left: 0;
+.deploy-container {
+    background: white;
+    color: #14161a;
+    font-size: 14px;
+}
+
+.deploy-container h3 {
+    font-size: 14px;
+    margin-bottom: 14px;
+}
+
+.deploy-container p {
+    opacity: 0.7;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.deploy-container button {
+    width: 100%;
+    background: #395feb;
+    border: none;
+    border-radius: 66px;
+    color: white;
+    padding: 5px 0;
+}
+
+.deploy-container button:hover {
+    background: #2d51d0;
+}
+
+.deploy-container .deploy-container_fees {
+    border-top: 1px solid #eceef4;
+    padding: 10px 0;
+}
+
+.deploy-container_fees {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .deploy-container .deploy-container_fees span {

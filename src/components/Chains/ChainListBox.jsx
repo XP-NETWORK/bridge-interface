@@ -84,7 +84,6 @@ function ChainListBox({ serviceContainer }) {
     };
     // ! ref
     const chainSelectHandler = async (chain) => {
-        console.log(chain, "chain");
         const chainWrapper = await bridge.getChain(chain.nonce);
 
         if (departureOrDestination === "departure") {

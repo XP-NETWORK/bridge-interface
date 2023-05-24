@@ -83,6 +83,12 @@ function NFTaccount(props) {
         (state) => state.general.accountWalletModal
     );
 
+    const undeployedUserStore = useSelector(
+        (state) => state.general.undeployedUserStore
+    );
+
+    const lockMainPannel = useSelector((state) => state.general.lockMainPannel);
+
     let _account =
         checkWallet ||
         hederaAccount ||
@@ -216,7 +222,11 @@ function NFTaccount(props) {
             <PasteDestinationAlert />
             <ReceiverIsContract />
             <NoApprovedNFT />
-            <Container className="nftSlectContaine">
+            <Container
+                className={`nftSlectContaine ${
+                    undeployedUserStore ? " undeployedUserStore" : ""
+                } ${lockMainPannel ? " lockedX" : ""}`}
+            >
                 <ReturnBtn />
                 <div className="row account__container">
                     <div className="nftListCol col-lg-8">

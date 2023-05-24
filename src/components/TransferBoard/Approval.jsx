@@ -40,9 +40,6 @@ function Approval({ serviceContainer }) {
 
     const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
     const checkWallet = useSelector((state) => state.general.checkWallet);
-    const undeployedUserStore = useSelector(
-        (state) => state.general.undeployedUserStore
-    );
 
     const approveEach = async (nft, index) => {
         const arr = new Array(index + 1).fill(0);
@@ -109,8 +106,6 @@ function Approval({ serviceContainer }) {
             dispatch(setInvalidAddressAlert(true));
         } else if (selectedNFTList.length < 1) {
             dispatch(setSelectNFTAlert(true));
-        } else if (undeployedUserStore) {
-            alert("You have to deploy a contract");
         } else {
             approveAllNFTs();
         }

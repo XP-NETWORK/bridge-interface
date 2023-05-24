@@ -271,6 +271,9 @@ const generalSlice = createSlice({
         cleanSelectedNFTList(state) {
             state.selectedNFTList = [];
         },
+        setLockMainPannel(state, action) {
+            state.lockMainPannel = action.payload;
+        },
         removeFromSelectedNFTList(state, action) {
             const { tokenId, contract, chainId } = action.payload.native;
             state.selectedNFTList = state.selectedNFTList.filter(
@@ -705,6 +708,7 @@ export const {
     setIsInvalidAddress,
     setNearRedirect,
     setHederaClaimables,
+    setLockMainPannel,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
