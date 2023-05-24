@@ -50,9 +50,8 @@ export const wnft = [
 export const wnftPattern =
     "(wnfts.xp.network|nft.xp.network|staging-nft.xp.network|bridge-wnftapi)";
 
-export const biz = /(localhost|dev|staging|10\.0\.0)/.test(
-    window.location.hostname
-);
+export const dev = /(localhost|dev|10\.0\.0)/.test(window.location.hostname);
+export const biz = dev || /(staging)/.test(window.location.hostname);
 
 export const BridgeModes = {
     Staging: "staging",
@@ -443,18 +442,18 @@ export const chains = [
         newChain: false,
     },
     {
-        type: "EVM",
-        key: "Internet Computer",
-        text: "Internet Computer",
+        type: "ICP",
+        key: "ICP",
+        text: "ICP",
         nonce: 30,
-        order: 0,
-        chainId: 1564830818,
-        tnChainId: 1305754875840118,
+        order: -5,
+        // chainId: 1564830818,
+        //tnChainId: 1305754875840118,
         image: { avatar: true, src: InternetComputer },
         testNet: false,
         mainnet: false,
-        // newChain: true,
-        coming: true,
+        newChain: false,
+        coming: false,
     },
     {
         type: "APTOS",

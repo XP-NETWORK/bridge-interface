@@ -5,6 +5,7 @@ import {
     ChainFactory,
     ChainFactoryConfigs,
     ChainType,
+    Chain,
 } from "xp.network";
 
 import ChainInterface from "./chains";
@@ -78,9 +79,9 @@ class Bridge {
 
     async isWhitelisted(nonce, nft) {
         try {
-            if (this.currentType === ChainType.EVM || nonce === 26) return true;
             const chainWrapper = await this.getChain(Number(nonce));
-            const { chain, signer } = chainWrapper;
+            if (chainWrapper.disableWhiteList) return true;
+            const { chain } = chainWrapper;
 
             const isWNFT = this.isWrapped(nft.uri);
 
@@ -139,6 +140,20 @@ class Bridge {
 
             switch (chainParams.type) {
                 case ChainType.EVM:
+                    switch (params.nonce) {
+                        case Chain.ETHEREUM: {
+                            this.chains[chainId] = new ChainInterface.Ethereum(
+                                params
+                            );
+                            return this.chains[chainId];
+                        }
+                        case Chain.VECHAIN: {
+                            this.chains[chainId] = new ChainInterface.VeChain(
+                                params
+                            );
+                            return this.chains[chainId];
+                        }
+                    }
                     this.chains[chainId] = new ChainInterface.EVM(params);
                     return this.chains[chainId];
                 case ChainType.TRON:
@@ -170,6 +185,9 @@ class Bridge {
                     return this.chains[chainId];
                 case ChainType.HEDERA:
                     this.chains[chainId] = new ChainInterface.HEDERA(params);
+                    return this.chains[chainId];
+                case ChainType.DFINITY:
+                    this.chains[chainId] = new ChainInterface.ICP(params);
                     return this.chains[chainId];
                 default:
                     throw new Error("unsuported chain");
@@ -204,7 +222,6 @@ class Bridge {
 
                 nft = {
                     ...nft,
-
                     native: {
                         ...nft.native,
                         isWrappedNft: true,

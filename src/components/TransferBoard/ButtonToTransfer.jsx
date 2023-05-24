@@ -24,6 +24,8 @@ import { notifyExplorer } from "../../services/explorer";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 import BigNumber from "bignumber.js";
 
+import { dev } from "../values";
+
 export default withServices(function ButtonToTransfer({ serviceContainer }) {
     const { bridge } = serviceContainer;
 
@@ -132,8 +134,10 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
                 nft,
                 receiver: unstoppabledomain || receiver,
                 fee: new BigNumber(bigNumberFees || 0)
-                    .div(3)
-                    .plus(new BigNumber(bigNumberDeployFees || 0).div(5))
+                    .div(dev ? 3 : 1)
+                    .plus(
+                        new BigNumber(bigNumberDeployFees || 0).div(dev ? 5 : 1)
+                    )
                     .integerValue()
                     .toString(10),
                 discountLeftUsd,

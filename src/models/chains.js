@@ -1,13 +1,12 @@
 /* eslint-disable no-debugger */
 /* eslint-disable no-unused-vars */
 
-import axios from "axios";
-
 import { Chain as ChainNonce, CHAIN_INFO } from "xp.network";
 import BigNumber from "bignumber.js";
 
 import { ethers, BigNumber as BN } from "ethers";
 import xpchallenge from "../services/xpchallenge";
+
 const Xpchallenge = xpchallenge();
 const feeMultiplier = 1.1;
 
@@ -238,6 +237,14 @@ class AbstractChain {
         }
     }
 
+    async getMappedContract(nft, nonce) {
+        return await this.bridge.getVerifiedContract(
+            nft.native.contract || nft.collectionIdent,
+            Number(nonce),
+            Number(this.nonce)
+        );
+    }
+
     async transfer(args) {
         try {
             if (!this.signer)
@@ -266,30 +273,21 @@ class AbstractChain {
                 tokenId = nft.native.tokenId;
             }
 
-            const wrapped = await this.bridge.isWrappedNft(
+            /*const wrapped = await this.bridge.isWrappedNft(
                 nft,
                 Number(this.nonce)
-            );
+            );*/
 
             let mintWith = undefined;
             let mwToUI = undefined;
 
-            // debugger;
-            if (!wrapped.bool) {
-                mintWith = await this.bridge.getVerifiedContract(
-                    nft.native.contract || nft.collectionIdent,
-                    Number(toChain.nonce),
-                    Number(this.nonce),
-                    tokenId //tokenId && !isNaN(Number(tokenId)) ? tokenId.toString() : undefined
-                );
+            if (!nft.wrapped && toChain.showMintWith) {
+                mintWith = await this.getMappedContract(nft, toChain.nonce);
                 mwToUI = mintWith?.split(",")?.at(0);
             }
 
-            if (
-                wrapped.bool &&
-                String(toChain.nonce) === wrapped.wrapped?.origin
-            ) {
-                mwToUI = wrapped.wrapped.source_mint_ident;
+            if (nft.wrapped && String(toChain.nonce) === nft.wrapped?.origin) {
+                mwToUI = nft.wrapped.contract;
             }
 
             const amount = nft.amountToTransfer;
@@ -328,14 +326,11 @@ class AbstractChain {
         }
     }
 
-    async preTransfer(nft, fees) {
+    async preTransfer(nft, _, fees) {
         if (!this.signer)
             throw new Error("No signer for ", this.chainParams.text);
         try {
-            console.log(this.signer, nft, fees);
-            const res = await this.chain.preTransfer(this.signer, nft, fees);
-            console.log(res, "approval res");
-            return res;
+            return await this.chain.preTransfer(this.signer, nft, fees);
         } catch (e) {
             console.log(e, "in preTransfer");
             throw e;
@@ -368,12 +363,40 @@ class AbstractChain {
 }
 
 class EVM extends AbstractChain {
-    constructor(params) {
-        if (params.nonce === ChainNonce.VECHAIN) {
-            return new VeChain(params);
-        }
+    disableWhiteList = true;
 
+    constructor(params) {
         super(params);
+    }
+
+    async deployUserStore(nft, fees) {
+        const pay = await this.chain.payForDeployUserStore(this.signer, fees);
+        console.log(pay);
+        if (pay.status !== 1) throw new Error("Tranaction failed");
+        const address = await this.chain.deployUserStore(nft);
+        console.log(address);
+        return address;
+    }
+
+    async checkUserStore(nft, toNonce) {
+        return await Promise.all([
+            this.getMappedContract(nft, toNonce),
+            this.chain.checkUserStore(nft),
+        ]);
+    }
+
+    async estimateDeployUserStore() {
+        try {
+            const res = await this.chain.estimateUserStoreDeploy();
+            return {
+                fees: res.toString(10),
+                formatedFees: res
+                    .dividedBy(this.chainParams.decimals)
+                    .toNumber(),
+            };
+        } catch (e) {
+            console.log("in estimateDeployUserStore");
+        }
     }
 
     async checkSigner() {
@@ -388,12 +411,29 @@ class EVM extends AbstractChain {
         }
     }
 
-    async preTransfer(nft, fees) {
+    async preTransfer(nft, toNonce, fees) {
         if (!this.signer)
             throw new Error("No signer for ", this.chainParams.text);
         try {
-            if (!nft.isWrappedNft) return true;
-            return await this.chain.approveForMinter(nft, this.signer, fees);
+            let toApprove = "";
+
+            if (!nft.wrapped) {
+                const [mapping, userStore] = await this.checkUserStore(
+                    nft,
+                    toNonce
+                );
+
+                //support old nfts
+                toApprove = !userStore && mapping ? toApprove : userStore;
+            }
+
+            return await this.chain.approveForMinter(
+                nft,
+                this.signer,
+                fees,
+                undefined,
+                toApprove
+            );
         } catch (e) {
             console.log(e, "EVM :in preTransfer");
             throw e;
@@ -430,6 +470,14 @@ class VeChain extends AbstractChain {
         for (const nft of nfts) {
             await cb(nft);
         }
+    }
+}
+
+class Ethereum extends EVM {
+    disableWhiteList = false;
+
+    constructor(params) {
+        super(params);
     }
 }
 
@@ -662,7 +710,7 @@ class Near extends AbstractChain {
         super(params);
     }
 
-    async preTransfer(nft, fees, params) {
+    async preTransfer(nft, _, fees, params) {
         try {
             //window.safeLocalStorage?.setItem('_xp_near_transfered_nft', JSON.stringify(nft));
             return await this.chain.preTransfer(this.signer, nft, fees, params);
@@ -743,6 +791,8 @@ class Near extends AbstractChain {
 }
 
 class Solana extends AbstractChain {
+    disableWhiteList = true;
+
     constructor(params) {
         super(params);
     }
@@ -891,17 +941,25 @@ class HEDERA extends AbstractChain {
     }
 }
 
+class ICP extends AbstractChain {
+    constructor(params) {
+        super(params);
+    }
+}
+
 export default {
     EVM,
+    Ethereum,
+    VeChain,
     Elrond,
     Tron,
     Algorand,
     Tezos,
-    VeChain,
     Cosmos,
     Near,
     TON,
     Solana,
     APTOS,
     HEDERA,
+    ICP,
 };

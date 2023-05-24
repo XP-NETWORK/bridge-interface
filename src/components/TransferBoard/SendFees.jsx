@@ -3,14 +3,15 @@
 import React, { useState, useRef } from "react";
 import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useDispatch, useSelector } from "react-redux";
-
+import { compose } from "redux";
 import {
     setBigNumFees,
     setBigNumDeployFees,
 } from "../../store/reducers/generalSlice";
 import { useEffect } from "react";
 
-import { withServices } from "../App/hocs/withServices";
+//import { withServices } from "../App/hocs/withServices";
+import withChains from "../NFTsBoard/hocs";
 
 import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
 import BigNumber from "bignumber.js";
@@ -19,9 +20,9 @@ const intervalTm = 10_000;
 const deployFeeIntTm = 30_000;
 
 function SendFees(props) {
-    const { serviceContainer } = props;
-
+    const { serviceContainer, chainSpecificRender } = props;
     const { bridge } = serviceContainer;
+    const { DeployUserStore } = chainSpecificRender;
 
     const dispatch = useDispatch();
     const balance = useSelector((state) => state.general.balance);
@@ -150,6 +151,13 @@ function SendFees(props) {
 
     return (
         <div className="fees__container">
+            {Boolean(selectedNFTList.length) && (
+                <DeployUserStore
+                    serviceContainer={serviceContainer}
+                    nft={selectedNFTList[0]}
+                    chainParams={chainParams}
+                />
+            )}
             <div className="fees">
                 <div className="fees__title">Fees</div>
                 <div className="fees__bank">
@@ -189,7 +197,9 @@ function SendFees(props) {
                         </span>
                     </div>
                     <div>
-                        <span>{deployFees.toFixed(2)}</span>
+                        <span>
+                            {deployFees.toFixed(getNumToFix(deployFees))}
+                        </span>
                         <span>{` ${chainParams?.currencySymbol}`}</span>
                     </div>
                 </div>
@@ -198,4 +208,4 @@ function SendFees(props) {
     );
 }
 
-export default withServices(SendFees);
+export default compose(withChains)(SendFees);

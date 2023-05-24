@@ -28,7 +28,7 @@ const initialState = {
     hederaClaimables: [],
     algorandAddresses: [],
     unstoppableDomainsIsSelected: false,
-    receiver : undefined
+    receiver: undefined,
 };
 
 const generalSlice = createSlice({
@@ -457,6 +457,9 @@ const generalSlice = createSlice({
         setBigNumDeployFees(state, action) {
             state.bigNumberDeployFees = action.payload;
         },
+        setDeployUserEstimation(state, action) {
+            state.deployUserStoreEstimation = action.payload;
+        },
         setTronLoginError(state, action) {
             state.tronLoginError = action.payload;
         },
@@ -533,6 +536,9 @@ const generalSlice = createSlice({
         setSelectNFTAlert(state, action) {
             state.selectNFTAlert = action.payload;
         },
+        setUndeployedUserStore(state, action) {
+            state.undeployedUserStore = action.payload;
+        },
         setPasteDestinationAlert(state, action) {
             state.pasteDestinationAlert = action.payload;
         },
@@ -602,6 +608,7 @@ export const {
     setPasteDestinationAlert,
     setInvalidAddressAlert,
     setSelectNFTAlert,
+    setUndeployedUserStore,
     setAlgoAccountToClaim,
     setSync2,
     setSync2Connex,
@@ -665,6 +672,7 @@ export const {
     setError,
     setBigNumFees,
     setBigNumDeployFees,
+    setDeployUserEstimation,
     setTronPopUp,
     setTronLoginError,
     setTrustWallet,
