@@ -150,7 +150,7 @@ function SendFees(props) {
 
     return (
         <div className="fees__container">
-            {Boolean(selectedNFTList.length) && (
+            {DeployUserStore && Boolean(selectedNFTList.length) && (
                 <DeployUserStore
                     serviceContainer={serviceContainer}
                     nft={selectedNFTList.at(-1)}
