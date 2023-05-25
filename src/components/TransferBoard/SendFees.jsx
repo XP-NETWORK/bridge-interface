@@ -21,7 +21,7 @@ const deployFeeIntTm = 30_000;
 function SendFees(props) {
     const { serviceContainer, chainSpecificRender } = props;
     const { bridge } = serviceContainer;
-    const { DeployUserStore } = chainSpecificRender;
+    const DeployUserStore = chainSpecificRender?.DeployUserStore;
 
     const dispatch = useDispatch();
     const balance = useSelector((state) => state.general.balance);

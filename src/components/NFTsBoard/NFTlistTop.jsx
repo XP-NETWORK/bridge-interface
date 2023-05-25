@@ -17,7 +17,7 @@ function NFTlistTop({ chainSpecificRender }) {
     const dispatch = useDispatch();
     const nfts = useSelector((state) => state.general.NFTList);
     const from = useSelector((state) => state.general.from);
-    const { CheckClaimables } = chainSpecificRender;
+    const CheckClaimables = chainSpecificRender?.CheckClaimables;
 
     const handleFromChainSwitch = () => {
         dispatch(setDepartureOrDestination("departure"));
