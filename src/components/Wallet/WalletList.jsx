@@ -403,10 +403,10 @@ export default function WalletList({ connected, input, discount }) {
             Component: <IcpWallet key="ICP" close={connected} />,
             name: "ICP",
             mobile: false,
-            desktop: false,
+            desktop: true,
             order: 1,
             type: "ICP",
-            keyName: "ICP",
+            keyName: "ICPPlug",
         },
         // ////////////!!!!
         // {

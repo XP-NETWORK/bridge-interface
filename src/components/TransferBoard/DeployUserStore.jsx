@@ -85,6 +85,11 @@ const DeployUserStore = ({ serviceContainer, nft, chainParams }) => {
         display: "none",
     };
 
+    const DISABLED = {
+        pointerEvents: "none",
+        opacity: ".7",
+    };
+
     return (
         <div className="deploy-container" style={!show ? OFF : {}}>
             <div className="deploy-userStore_inf ">
@@ -104,7 +109,9 @@ const DeployUserStore = ({ serviceContainer, nft, chainParams }) => {
                     <span>{chainParams?.currencySymbol}</span>
                 </div>
             </div>
-            <button onClick={deployHandler}>Pay</button>
+            <button onClick={deployHandler} style={estimation ? {} : DISABLED}>
+                Pay
+            </button>
         </div>
     );
 };

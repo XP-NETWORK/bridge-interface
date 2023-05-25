@@ -15,6 +15,7 @@ import SecretContractPanel from "../innercomponents/SecretContractPannel";
 function NFTgridView({ serviceContainer, chainSpecificRender }) {
     const { bridge } = serviceContainer;
     const [chain, setChain] = useState(null);
+    const [hasClaimables, setClaimables] = useState(0);
 
     const from = useSelector((state) => state.general.from);
     const currentsNFTs = useSelector((state) => state.general.currentsNFTs);
@@ -78,8 +79,15 @@ function NFTgridView({ serviceContainer, chainSpecificRender }) {
                               />
                           ))
                         : !algorandClaimables?.length &&
-                          !RenderClaimables && <NFTempty />}
-                    {RenderClaimables && RenderClaimables()}
+                          !hasClaimables && <NFTempty />}
+
+                    {RenderClaimables && (
+                        <RenderClaimables
+                            setClaimables={(claimables) =>
+                                setClaimables(claimables)
+                            }
+                        />
+                    )}
                     {currentsNFTs?.length > 0 &&
                     currentsNFTs?.length < nftsPlace
                         ? placeholders.map((n, index) => (
