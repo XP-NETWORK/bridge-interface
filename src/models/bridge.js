@@ -140,14 +140,18 @@ class Bridge {
 
             switch (chainParams.type) {
                 case ChainType.EVM:
-                    switch (params.nonce) {
-                        case Chain.ETHEREUM: {
-                            this.chains[chainId] = new ChainInterface.Ethereum(
-                                params
-                            );
+                    switch (true) {
+                        case Object.values(this.config)
+                            .filter((params) => params.noWhitelist)
+                            .map((p) => p.nonce)
+                            .includes(params.nonce): {
+                            this.chains[
+                                chainId
+                            ] = new ChainInterface.NoWhiteListEVM(params);
                             return this.chains[chainId];
                         }
-                        case Chain.VECHAIN: {
+
+                        case Chain.VECHAIN === params.nonce: {
                             this.chains[chainId] = new ChainInterface.VeChain(
                                 params
                             );

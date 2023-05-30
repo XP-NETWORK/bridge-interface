@@ -67,7 +67,6 @@ export default function Chain(props) {
         <li
             style={getStyle()}
             onClick={() => {
-                console.log(filteredChain, "filteredChain");
                 chainSelectHandler(filteredChain);
             }}
             className="nftChainItem"

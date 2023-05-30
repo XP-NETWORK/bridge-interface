@@ -360,39 +360,15 @@ class AbstractChain {
     handlerError(e) {
         return e;
     }
+
+    async isContract() {
+        return false;
+    }
 }
 
 class EVM extends AbstractChain {
-    disableWhiteList = true;
-
     constructor(params) {
         super(params);
-    }
-
-    async deployUserStore(nft, fees) {
-        const res = await this.chain.getUserStore(this.signer, nft, fees);
-        return res?.address;
-    }
-
-    async checkUserStore(nft, toNonce) {
-        return await Promise.all([
-            this.getMappedContract(nft, toNonce),
-            this.chain.checkUserStore(nft),
-        ]);
-    }
-
-    async estimateDeployUserStore() {
-        try {
-            const res = await this.chain.estimateUserStoreDeploy();
-            return {
-                fees: res.toString(10),
-                formatedFees: res
-                    .dividedBy(this.chainParams.decimals)
-                    .toNumber(),
-            };
-        } catch (e) {
-            console.log("in estimateDeployUserStore");
-        }
     }
 
     async checkSigner() {
@@ -407,22 +383,10 @@ class EVM extends AbstractChain {
         }
     }
 
-    async preTransfer(nft, toNonce, fees) {
+    async preTransfer(nft, _, fees, __, toApprove = "") {
         if (!this.signer)
             throw new Error("No signer for ", this.chainParams.text);
         try {
-            let toApprove = "";
-
-            if (!nft.wrapped) {
-                const [mapping, userStore] = await this.checkUserStore(
-                    nft,
-                    toNonce
-                );
-
-                //support old nfts
-                toApprove = !userStore && mapping ? toApprove : userStore;
-            }
-
             return await this.chain.approveForMinter(
                 nft,
                 this.signer,
@@ -438,6 +402,9 @@ class EVM extends AbstractChain {
 
     async transfer(args) {
         try {
+            if (await this.isContract(args.receiver, args.toChain)) {
+                throw new Error("Destination address is Contract");
+            }
             return await super.transfer(args);
         } catch (e) {
             if (e.message?.includes("cannot estimate gas;")) {
@@ -455,6 +422,15 @@ class EVM extends AbstractChain {
         signer &&
             Xpchallenge.connectWallet(signer._address, this.chainParams.name);
     }
+
+    async isContract(address, toChain) {
+        if (!toChain.chain.getProvider) return false;
+        const code = await toChain.chain
+            .getProvider()
+            .getCode(address)
+            .catch(() => "0x");
+        return code !== "0x";
+    }
 }
 
 class VeChain extends AbstractChain {
@@ -469,11 +445,61 @@ class VeChain extends AbstractChain {
     }
 }
 
-class Ethereum extends EVM {
-    disableWhiteList = false;
+class NoWhiteListEVM extends EVM {
+    disableWhiteList = true;
 
     constructor(params) {
         super(params);
+    }
+
+    async deployUserStore(nft, fees) {
+        const res = await this.chain.getUserStore(this.signer, nft, fees);
+        return res?.address;
+    }
+
+    async checkUserStore(nft, toNonce) {
+        return await Promise.all([
+            this.getMappedContract(nft, toNonce),
+            this.chain.checkUserStore(nft),
+        ]);
+    }
+    async estimateDeployUserStore() {
+        try {
+            const res = await this.chain.estimateUserStoreDeploy();
+            return {
+                fees: res.toString(10),
+                formatedFees: res
+                    .dividedBy(this.chainParams.decimals)
+                    .toNumber(),
+            };
+        } catch (e) {
+            console.log("in estimateDeployUserStore");
+        }
+    }
+
+    async preTransfer(nft, toNonce, fees) {
+        try {
+            let toApprove = "";
+            if (!nft.wrapped) {
+                const [mapping, userStore] = await this.checkUserStore(
+                    nft,
+                    toNonce
+                );
+                //support old nfts
+                toApprove = !userStore && mapping ? toApprove : userStore;
+            }
+
+            return await super.preTransfer(
+                nft,
+                toNonce,
+                fees,
+                undefined,
+                toApprove
+            );
+        } catch (e) {
+            console.log(e, "noWitelistEVM :in preTransfer");
+            throw e;
+        }
     }
 }
 
@@ -945,7 +971,7 @@ class ICP extends AbstractChain {
 
 export default {
     EVM,
-    Ethereum,
+    NoWhiteListEVM,
     VeChain,
     Elrond,
     Tron,

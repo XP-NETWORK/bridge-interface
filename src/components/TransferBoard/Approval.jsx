@@ -39,7 +39,6 @@ function Approval({ serviceContainer }) {
     const receiver = useSelector((state) => state.general.receiver);
 
     const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
-    const checkWallet = useSelector((state) => state.general.checkWallet);
 
     const approveEach = async (nft, index) => {
         const arr = new Array(index + 1).fill(0);
@@ -158,11 +157,7 @@ function Approval({ serviceContainer }) {
                         id="approveCheck"
                     />
                     <label
-                        style={
-                            approved || checkWallet
-                                ? { pointerEvents: "none" }
-                                : {}
-                        }
+                        style={approved ? { pointerEvents: "none" } : {}}
                         onClick={onClickHandler}
                         htmlFor="approveCheck"
                     >

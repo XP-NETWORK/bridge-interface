@@ -446,6 +446,10 @@ const generalSlice = createSlice({
                             /(user rejected transaction|Rejected)/.test(message)
                         ) {
                             return;
+                        } else if (
+                            message.includes("does not support EIP-1559")
+                        ) {
+                            state.error = `EIP-1559 error. Please switch network to Ethereum and back and try again`;
                         } else state.error = message;
                         break;
                 }

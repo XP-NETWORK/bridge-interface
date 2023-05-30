@@ -447,7 +447,7 @@ export const chains = [
         type: "ICP",
         key: "ICP",
         text: "ICP",
-        nonce: 30,
+        nonce: 28,
         order: -5,
         // chainId: 1564830818,
         //tnChainId: 1305754875840118,

@@ -1,9 +1,9 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //import { useNavigate } from "react-router-dom";
 import plugIcon from "../../assets/img/wallet/plug.svg";
 //import { connectKeplr } from "./ConnectWalletHelper";
-//import { getChainObject } from "../values";
+import { getChainObject } from "../values";
 import { useCheckMobileScreen } from "../Settings/hooks";
 
 //import { getRightPath, promisify } from "../../utils";
@@ -12,8 +12,9 @@ import { withServices } from "../App/hocs/withServices";
 
 import { Chain } from "xp.network";
 import {
-    //setAccount,
+    setAccount,
     setError,
+    setFrom,
 } from "../../store/reducers/generalSlice";
 
 //import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
@@ -21,6 +22,7 @@ import {
 function IcpWallet({ serviceContainer }) {
     const { bridge } = serviceContainer;
     const isMobile = useCheckMobileScreen();
+    const from = useSelector((state) => state.general.from);
     const dispatch = useDispatch();
     /* const dispatch = useDispatch();
 
@@ -40,69 +42,118 @@ function IcpWallet({ serviceContainer }) {
     };*/
 
     const onClickHandler = async (wallet) => {
-        wallet;
         //lockBtn(true);
-        const account = {};
+
         const [chainWrapper] = await Promise.all([
             bridge.getChain(Chain.DFINITY),
         ]);
-        chainWrapper;
-        const { ic: provider } = window;
-        if (!provider?.plug) {
-            dispatch(
-                setError({
-                    message:
-                        "You have to install Plug wallet into your browser",
-                })
-            );
-            return;
+
+        const { ic } = window;
+        const connectores = {
+            Plug: async () => {
+                if (!ic?.plug) {
+                    dispatch(
+                        setError({
+                            message:
+                                "You have to install Plug wallet into your browser",
+                        })
+                    );
+                    return;
+                }
+
+                const account = {};
+                await ic.plug.requestConnect().catch((e) => {
+                    dispatch(setError(e));
+                });
+
+                const user = ic.plug.sessionManager.sessionData;
+                account.address = user.principalId;
+                account.signer = ic.plug;
+
+                return account;
+            },
+        };
+
+        const connect = connectores[wallet];
+
+        const account = await connect();
+        console.log(account, "account");
+
+        chainWrapper.setSigner(account.signer);
+        bridge.setCurrentType(chainWrapper);
+
+        dispatch(setAccount(account.address));
+
+        if (!from) {
+            dispatch(setFrom(getChainObject(Chain.DFINITY)));
         }
 
-        //let connected = await provider.plug.isConnected();
-        // console.log(connected, "connected");
-        //if (!connected) {
-        await provider.plug.requestConnect().catch((e) => {
-            dispatch(setError(e));
+        //navigateToAccountRoute();
+
+        //const agent = await provider.plug.agent._identity;
+
+        /* await provider.plug.createAgent({
+            host: "https://ic0.app",
+            whitelist: [
+                "evkdu-lqaaa-aaaak-qasva-cai",
+                "ryjl3-tyaaa-aaaaa-aaaba-cai",
+            ],
+        });
+        const signer = await provider.plug.agent;
+        signer.provider = window.ic.plug;
+
+        /*const res = await chainWrapper.chain.mintNft(signer, {
+            uri: "https://meta.polkamon.com/meta?id=10002366712",
         });
 
-        // if (connectionData) connected = true;
-        //}
+        console.log(res, "res");
 
-        //if (true) {
-        const user = provider.plug.sessionManager.sessionData;
-        account.address = user.principalId;
-        //const agent = await provider.plug.agent._identity;
-        const principalId = await provider.plug.agent.getPrincipal();
-        console.log(principalId, "principalId");
-
-        const address = chainWrapper.chain.getAccountIdentifier(
-            account.address
-        );
-        console.log(address, "address");
-        const signer = await provider.plug.agent._identity;
         const nfts = await chainWrapper.chain.nftList(
-            "tc446-lek6d-tkkcf-dqjfl-bax66-5wfwr-mgnyf-6u3dr-4ibue-zky4o-6qe",
+            "x7rsp-47alk-amnwa-5cvdj-hjghg-xgcpk-ztmob-s3vjd-ghice-yl2ic-qae",
             "evkdu-lqaaa-aaaak-qasva-cai"
         );
+
         console.log(nfts);
-        false &&
-            (await chainWrapper.chain.preTransfer(signer, {
-                collectionIdent: "rppv3-yqaaa-aaaan-qcx4q-cai",
-                native: {
-                    tokenId: "10666",
-                    canisterId: "ewuhj-dqaaa-aaaag-qahgq-cai",
-                },
-            }));
+        /*
+        
+        const res = await chainWrapper.chain.preTransfer(signer, {
+            collectionIdent: "evkdu-lqaaa-aaaak-qasva-cai",
+            native: {
+                tokenId: "11",
+                canisterId: "evkdu-lqaaa-aaaak-qasva-cai",
+            },
+        });
+
+        console.log(res, "res");
         //}
         //lockBtn(false);
+
+
 
         /*if (signer) {
             chainWrapper.setSigner(signer);
             bridge.setCurrentType(chainWrapper);
             navigateToAccountRoute();
             dispatch(setConnectedWallet(wallet));
-        }*/
+        }
         // close();
+
+        const res = await chainWrapper.chain.transferNftToForeign(
+            signer,
+            7,
+            "0xFe6bcdF43396A774836D98332d9eD5dA945f687e",
+            {
+                collectionIdent: "evkdu-lqaaa-aaaak-qasva-cai",
+                native: {
+                    tokenId: "11",
+                    canisterId: "evkdu-lqaaa-aaaak-qasva-cai",
+                },
+            },
+            new BigNumber("23"),
+            "0xFe6bcdF43396A774836D98332d9eD5dA945f687e"
+        );
+
+        console.log(res, "res");*/
     };
 
     const getStyle = () => {

@@ -9,13 +9,13 @@ import UAuthSPA from "@uauth/js";
 export const injected = new InjectedConnector({});
 
 export function getAlgoConnector() {
-  return new WalletConnect({
-    bridge: "https://bridge.walletconnect.org", // Required
-    qrcodeModal: QRCodeModal,
-  });
+    return new WalletConnect({
+        bridge: "https://bridge.walletconnect.org", // Required
+        qrcodeModal: QRCodeModal,
+    });
 }
 
-export const uauthOptions = {
+const uauthOptions = {
     clientID: "f909d011-195c-4688-92b4-2cab4c550dcc",
     // redirectUri: "http://localhost:3000/connect",
     // redirectUri: "https://bridge.xp.network",
@@ -24,7 +24,7 @@ export const uauthOptions = {
     scope: "openid wallet",
 };
 
-export const providerOptions = {
+const providerOptions = {
     walletonnect: {
         package: WalletConnectProvider,
         options: {

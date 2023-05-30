@@ -1,6 +1,5 @@
 /* eslint-disable no-debugger */
 import * as taquito from "@taquito/utils";
-import * as algo from "algosdk";
 import { ethers } from "ethers";
 import TonWeb from "tonweb";
 import * as erdjs from "@elrondnetwork/erdjs";
@@ -28,12 +27,6 @@ const addressValidateAptos = (address) => {
         console.log("APTOS ADDRESS INVALID: ", error);
         return false;
     }
-};
-
-export const checkIfContractAddress = async (address, providerUrl) => {
-    const pr = new ethers.providers.JsonRpcProvider(providerUrl); // Replace with your preferred provider
-    const code = await pr.getCode(address);
-    return code !== "0x";
 };
 
 const addressValidateElrd = (address) => {
@@ -89,8 +82,9 @@ const addressValidateNear = (address) => {
     } else return false;
 };
 
-const addressValidateAlgo = (address) => {
-    return algo.isValidAddress(address);
+const addressValidateAlgo = (address, toChainWrapper) => {
+    if (!toChainWrapper) return true;
+    return toChainWrapper.chain.validateAddress(address);
 };
 
 const addressValidateTezos = (address) => {

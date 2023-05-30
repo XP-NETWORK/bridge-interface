@@ -34,7 +34,7 @@ function SendFees(props) {
         (state) => state.general.selectedNFTList
     );
 
-    const [chainParams, setChainParams] = useState({});
+    const [chainWrapper, setChainWrapper] = useState(null);
 
     const [fees, setFees] = useState("");
 
@@ -110,9 +110,7 @@ function SendFees(props) {
     useEffect(() => {
         bridge
             .getChain(from.nonce)
-            .then((fromChainWrapper) =>
-                setChainParams(fromChainWrapper.chainParams)
-            );
+            .then((fromChainWrapper) => setChainWrapper(fromChainWrapper));
     }, [from]);
 
     useEffect(() => {
@@ -148,13 +146,17 @@ function SendFees(props) {
         };
     }, [selectedNFTList, to]);
 
+    const renderDeployUserStore =
+        chainWrapper?.disableWhiteList &&
+        DeployUserStore &&
+        Boolean(selectedNFTList.length);
+
     return (
         <div className="fees__container">
-            {DeployUserStore && Boolean(selectedNFTList.length) && (
+            {renderDeployUserStore && (
                 <DeployUserStore
-                    serviceContainer={serviceContainer}
                     nft={selectedNFTList.at(-1)}
-                    chainParams={chainParams}
+                    chainWrapper={chainWrapper}
                 />
             )}
             <div className="fees">
@@ -163,10 +165,11 @@ function SendFees(props) {
                     {balance ? (
                         <span className="fees__balance">{`Balance: ${balance.toFixed(
                             3
-                        )} ${chainParams?.currencySymbol ||
+                        )} ${chainWrapper?.chainParams.currencySymbol ||
                             (from?.text === "Gnosis" && "Gnosis")}`}</span>
                     ) : (
-                        `Balance: 0 ${chainParams?.currencySymbol || ""}`
+                        `Balance: 0 ${chainWrapper?.chainParams
+                            .currencySymbol || ""}`
                     )}
                     {loading ? (
                         <LittleLoader />
@@ -177,7 +180,7 @@ function SendFees(props) {
                                     ? fees?.toFixed(getNumToFix(fees))
                                     : "0"
                             }
-                        ${chainParams?.currencySymbol || ""} 
+                        ${chainWrapper?.chainParams.currencySymbol || ""} 
                         `}
                             {/* ${discountLeftUsd && showDiscount(fees).toFixed(2)} */}
                         </span>
@@ -199,7 +202,7 @@ function SendFees(props) {
                         <span>
                             {deployFees.toFixed(getNumToFix(deployFees))}
                         </span>
-                        <span>{` ${chainParams?.currencySymbol}`}</span>
+                        <span>{` ${chainWrapper?.chainParams.currencySymbol}`}</span>
                     </div>
                 </div>
             ) : null}

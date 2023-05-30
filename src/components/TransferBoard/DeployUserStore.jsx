@@ -12,27 +12,26 @@ import {
 
 import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
 
-const DeployUserStore = ({ serviceContainer, nft, chainParams }) => {
-    const { bridge } = serviceContainer;
+const DeployUserStore = ({ chainWrapper, nft, chainParams }) => {
     const [show, setShow] = useState(false);
     //const [locked, setLocked] = useState(true);
 
     const dispatch = useDispatch();
-    const { from, estimation, to } = useSelector((state) => ({
-        from: state.general.from,
+    const { estimation, to } = useSelector((state) => ({
         estimation: state.general.deployUserStoreEstimation,
         to: state.general.to,
     }));
 
     useEffect(() => {
-        if (nft && !nft.wrapped) {
-            try {
-                dispatch(setLockMainPannel(true));
-                bridge.getChain(from.nonce).then(async (fromChain) => {
-                    const [mapping, userStore] = await fromChain.checkUserStore(
-                        nft,
-                        to.nonce
-                    );
+        (async () => {
+            if (nft && !nft.wrapped) {
+                try {
+                    dispatch(setLockMainPannel(true));
+
+                    const [
+                        mapping,
+                        userStore,
+                    ] = await chainWrapper.checkUserStore(nft, to.nonce);
 
                     dispatch(setLockMainPannel(false));
 
@@ -40,45 +39,40 @@ const DeployUserStore = ({ serviceContainer, nft, chainParams }) => {
 
                     dispatch(setUndeployedUserStore(true));
                     setShow(true);
-                    const deployEstimation = await fromChain.estimateDeployUserStore();
+                    const deployEstimation = await chainWrapper.estimateDeployUserStore();
                     if (deployEstimation) {
                         dispatch(setDeployUserEstimation(deployEstimation));
                     }
-                });
-            } catch (e) {
-                dispatch(setLockMainPannel(false));
-                dispatch(setUndeployedUserStore(false));
-                dispatch(setError(e));
+                } catch (e) {
+                    dispatch(setLockMainPannel(false));
+                    dispatch(setUndeployedUserStore(false));
+                    dispatch(setError(e));
+                }
             }
-        }
-
+        })();
         return () => {
             setShow(false);
             dispatch(setUndeployedUserStore(false));
         };
     }, [nft]);
 
-    const deployHandler = () => {
+    const deployHandler = async () => {
         dispatch(setTransferLoaderModal(true));
-        bridge.getChain(from.nonce).then(async (fromChain) => {
-            try {
-                const address = await fromChain.deployUserStore(
-                    nft,
-                    String(estimation.formatedFees)
-                );
-                if (!address)
-                    throw new Error(
-                        "Could not deploy contract, come back later"
-                    );
+        try {
+            const address = await chainWrapper.deployUserStore(
+                nft,
+                String(estimation.formatedFees)
+            );
+            if (!address)
+                throw new Error("Could not deploy contract, come back later");
 
-                setShow(false);
-                dispatch(setUndeployedUserStore(false));
-            } catch (e) {
-                dispatch(setError(e));
-            }
+            setShow(false);
+            dispatch(setUndeployedUserStore(false));
+        } catch (e) {
+            dispatch(setError(e));
+        }
 
-            dispatch(setTransferLoaderModal(false));
-        });
+        dispatch(setTransferLoaderModal(false));
     };
 
     const OFF = {
