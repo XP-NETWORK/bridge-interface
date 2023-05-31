@@ -111,7 +111,7 @@ class Bridge {
             )
                 return true;
             return await chain.isNftWhitelisted(nft);
-            //const x = await chain.isNftWhitelisted(nft, signer);
+            //const x = await chain.isNftWhitelisted(nft);
             //console.log(x, "x");
             //return x;
         } catch (e) {

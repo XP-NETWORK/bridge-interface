@@ -19,7 +19,6 @@ import {
 import { getFromDomain } from "../../services/resolution";
 
 import { withServices } from "../App/hocs/withServices";
-import { notifyExplorer } from "../../services/explorer";
 
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 import BigNumber from "bignumber.js";
@@ -152,10 +151,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
             } else if (result) {
                 const resultObject = fromChain.handlerResult(result);
                 console.log(resultObject, "resultObject");
-                notifyExplorer(
-                    _from.nonce,
-                    resultObject.hash || resultObject.transactionHash
-                );
+
                 dispatch(setTxnHash({ txn: resultObject, nft, mw }));
             }
             handleGA4Event(

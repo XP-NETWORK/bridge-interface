@@ -967,6 +967,53 @@ class ICP extends AbstractChain {
     constructor(params) {
         super(params);
     }
+
+    /*async getNFTs() {
+        return [
+            {
+                collectionIdent: "54aho-4iaaa-aaaap-aa3va-cai",
+                native: {
+                    canisterId: "54aho-4iaaa-aaaap-aa3va-cai",
+                    tokenId: "4",
+                    chainId: "28",
+                },
+                uri: "https://meta.polkamon.com/meta?id=10002366777",
+            },
+        ];
+    }*/
+
+    async preParse(nft) {
+        return {
+            ...nft,
+            native: {
+                ...nft.native,
+                contract: nft.collectionIdent,
+            },
+        };
+    }
+
+    async prepareAgent(canisterId) {
+        await this.signer.createAgent({
+            host: "https://ic0.app",
+            whitelist: [
+                "ryjl3-tyaaa-aaaaa-aaaba-cai",
+                canisterId,
+                this.chain.getParams().bridgeContract.toText(),
+            ],
+        });
+    }
+
+    async preTransfer(...args) {
+        const nft = args[0];
+        await this.prepareAgent(nft.native.canisterId);
+        return await super.preTransfer(...args);
+    }
+
+    async transfer(args) {
+        const { nft } = args;
+        await this.prepareAgent(nft.native.canisterId);
+        return await super.transfer(args);
+    }
 }
 
 export default {

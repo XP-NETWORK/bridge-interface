@@ -1,12 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import plugIcon from "../../assets/img/wallet/plug.svg";
-//import { connectKeplr } from "./ConnectWalletHelper";
+
 import { getChainObject } from "../values";
 import { useCheckMobileScreen } from "../Settings/hooks";
 
-//import { getRightPath, promisify } from "../../utils";
+import { getRightPath } from "../../utils";
 
 import { withServices } from "../App/hocs/withServices";
 
@@ -23,7 +23,13 @@ function IcpWallet({ serviceContainer }) {
     const { bridge } = serviceContainer;
     const isMobile = useCheckMobileScreen();
     const from = useSelector((state) => state.general.from);
+    const to = useSelector((state) => state.general.to);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const navigateToAccountRoute = () => {
+        const path = getRightPath();
+        navigate(path);
+    };
     /* const dispatch = useDispatch();
 
 
@@ -77,83 +83,24 @@ function IcpWallet({ serviceContainer }) {
         const connect = connectores[wallet];
 
         const account = await connect();
-        console.log(account, "account");
 
         chainWrapper.setSigner(account.signer);
         bridge.setCurrentType(chainWrapper);
 
         dispatch(setAccount(account.address));
 
-        if (!from) {
-            dispatch(setFrom(getChainObject(Chain.DFINITY)));
-        }
-
-        //navigateToAccountRoute();
-
-        //const agent = await provider.plug.agent._identity;
-
-        /* await provider.plug.createAgent({
+        /*await account.signer.createAgent({
             host: "https://ic0.app",
-            whitelist: [
-                "evkdu-lqaaa-aaaak-qasva-cai",
-                "ryjl3-tyaaa-aaaaa-aaaba-cai",
-            ],
-        });
-        const signer = await provider.plug.agent;
-        signer.provider = window.ic.plug;
-
-        /*const res = await chainWrapper.chain.mintNft(signer, {
-            uri: "https://meta.polkamon.com/meta?id=10002366712",
+            whitelist: ["54aho-4iaaa-aaaap-aa3va-cai"],
         });
 
-        console.log(res, "res");
+        await chainWrapper.chain.mintNft(account.signer, {
+            uri: "https://meta.polkamon.com/meta?id=10002366777",
+        });*/
 
-        const nfts = await chainWrapper.chain.nftList(
-            "x7rsp-47alk-amnwa-5cvdj-hjghg-xgcpk-ztmob-s3vjd-ghice-yl2ic-qae",
-            "evkdu-lqaaa-aaaak-qasva-cai"
-        );
+        if (!from) dispatch(setFrom(getChainObject(Chain.DFINITY)));
 
-        console.log(nfts);
-        /*
-        
-        const res = await chainWrapper.chain.preTransfer(signer, {
-            collectionIdent: "evkdu-lqaaa-aaaak-qasva-cai",
-            native: {
-                tokenId: "11",
-                canisterId: "evkdu-lqaaa-aaaak-qasva-cai",
-            },
-        });
-
-        console.log(res, "res");
-        //}
-        //lockBtn(false);
-
-
-
-        /*if (signer) {
-            chainWrapper.setSigner(signer);
-            bridge.setCurrentType(chainWrapper);
-            navigateToAccountRoute();
-            dispatch(setConnectedWallet(wallet));
-        }
-        // close();
-
-        const res = await chainWrapper.chain.transferNftToForeign(
-            signer,
-            7,
-            "0xFe6bcdF43396A774836D98332d9eD5dA945f687e",
-            {
-                collectionIdent: "evkdu-lqaaa-aaaak-qasva-cai",
-                native: {
-                    tokenId: "11",
-                    canisterId: "evkdu-lqaaa-aaaak-qasva-cai",
-                },
-            },
-            new BigNumber("23"),
-            "0xFe6bcdF43396A774836D98332d9eD5dA945f687e"
-        );
-
-        console.log(res, "res");*/
+        if (from && to) navigateToAccountRoute();
     };
 
     const getStyle = () => {
