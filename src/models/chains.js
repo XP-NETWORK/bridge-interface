@@ -134,8 +134,7 @@ class AbstractChain {
     }
 
     async mintNFT(uri) {
-        // console.log(this.signer);
-        const mint = await this.chain.mintNft(this.signer, {
+        await this.chain.mintNft(this.signer, {
             contract: "0x34933A5958378e7141AA2305Cdb5cDf514896035",
             uri,
         });
@@ -378,7 +377,6 @@ class EVM extends AbstractChain {
         } catch (e) {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
-            console.log(signer, "ssSIGNEr");
             this.setSigner(signer);
         }
     }
@@ -588,8 +586,6 @@ class Elrond extends AbstractChain {
                 : "0" + Number(nonce).toString(16)
             ).slice(-4);
 
-        console.log(tokenId, contract);
-
         return {
             contract,
             tokenId,
@@ -649,8 +645,7 @@ class Algorand extends AbstractChain {
         try {
             return await this.bridge.claimableAlgorandNfts(account);
         } catch (e) {
-            console.log(e, "e");
-            console.log("in getClaimables");
+            console.log(e, "in getClaimables");
         }
     }
 }

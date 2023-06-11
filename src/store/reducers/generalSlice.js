@@ -28,7 +28,7 @@ const initialState = {
     hederaClaimables: [],
     algorandAddresses: [],
     unstoppableDomainsIsSelected: false,
-    receiver: undefined,
+    receiver: "",
 };
 
 const generalSlice = createSlice({

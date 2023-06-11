@@ -18,7 +18,7 @@ export default function SliderPagination({ index, current, setCurrent }) {
             animationFinishHandler
         );
         return () => {
-            node.current.removeEventListener(
+            node.current?.removeEventListener(
                 "animationiteration",
                 animationFinishHandler
             );
