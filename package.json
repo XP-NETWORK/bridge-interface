@@ -9,7 +9,7 @@
     "dependencies": {
         "@elrondnetwork/erdjs": "9.2.3",
         "@harmony-js/core": "^0.1.57",
-        "@hashgraph/sdk": "^2.24.2",
+        "@hashgraph/sdk": "2.22.0",
         "@multiversx/sdk-wallet-connect-provider": "^3.1.0",
         "@near-wallet-selector/core": "^7.9.2",
         "@near-wallet-selector/here-wallet": "^7.9.2",
@@ -80,7 +80,7 @@
     "scripts": {
         "analyze": "source-map-explorer 'build/static/js/*.js'",
         "start": "react-app-rewired start",
-        "build": "REACT_APP_GIT_SHA=`git rev-parse HEAD` react-app-rewired build --max_old_space_size=8192",
+        "build": "GENERATE_SOURCEMAP=false REACT_APP_GIT_SHA=`git rev-parse HEAD` react-app-rewired build --max-old-space-size=8192",
         "test": "react-app-rewired test",
         "eject": "react-app-rewired eject",
         "predeploy": "npm run build",

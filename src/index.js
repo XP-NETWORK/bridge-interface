@@ -50,22 +50,21 @@ const Services = ({ children }) => {
 };
 
 ReactDOM.render(
-    <React.StrictMode>
-        <WagmiConfig client={wagmiClient}>
-            <Web3ReactProvider getLibrary={getLibrary}>
-                <Services>
-                    <Provider store={store}>
-                        <BrowserRouter>
-                            <ErrorBoundary>
-                                <NavBar />
-                                <App />
-                                <Footer />
-                            </ErrorBoundary>
-                        </BrowserRouter>
-                    </Provider>
-                </Services>
-            </Web3ReactProvider>
-        </WagmiConfig>
-    </React.StrictMode>,
+    <WagmiConfig client={wagmiClient}>
+        <Web3ReactProvider getLibrary={getLibrary}>
+            <Services>
+                <Provider store={store}>
+                    <BrowserRouter>
+                        <ErrorBoundary>
+                            <NavBar />
+                            <App />
+                            <Footer />
+                        </ErrorBoundary>
+                    </BrowserRouter>
+                </Provider>
+            </Services>
+        </Web3ReactProvider>
+    </WagmiConfig>,
+
     document.getElementById("root")
 );
