@@ -5,6 +5,7 @@ import "../Widget.css";
 
 import Wservice from "../wservice";
 import { initialState as initialWidget } from "../../../store/reducers/settingsSlice";
+
 import mobileBanner from "../../Settings/assets/img/mobileOnlyBanner.svg";
 
 import { useSearchParams } from "react-router-dom";
@@ -25,61 +26,61 @@ overlay.classList.add("bannerOverlay");
 overlay.innerHTML = mobileOnlyBanner;
 
 const Connect = () => {
-  return (
-    <div className="connectWalletCompDiv">
-      <label className="connectWalletLabel">Connect your wallet </label>
+    const connecthandler = async () => {
+        const { signature, address } = await wservice.sign(undefined, true);
 
-      <button
-        className="WalletBtn"
-        onClick={async () => {
-          const { signature, address } = await wservice.sign(undefined, true);
-
-          const res = await wservice.add(
+        const res = await wservice.add(
             address,
             signature,
             initialWidget,
             new URLSearchParams(window.location.search).get("name")
-          );
+        );
 
-          if (!res?.newWidget) {
+        if (!res?.newWidget) {
             return;
-          } //show error msg
+        } //show error msg
 
-          return window.open(
+        return window.open(
             `/${window.location.search
-              .replace("create", res?.newWidget?._id)
-              .replace(/&name=\S*/, "")}`,
+                .replace("create", res?.newWidget?._id)
+                .replace(/&name=\S*/, "")}`,
             "_self"
-          );
-          //dispatch(setWConnect(true));
-        }}
-      >
-        <MetaIcon className="metaIcon" />
-        MetaMask
-      </button>
-    </div>
-  );
+        );
+
+        //dispatch(setWConnect(true));
+    };
+
+    return (
+        <div className="connectWalletCompDiv">
+            <label className="connectWalletLabel">Connect your wallet </label>
+
+            <button className="WalletBtn" onClick={connecthandler}>
+                <MetaIcon className="metaIcon" />
+                MetaMask
+            </button>
+        </div>
+    );
 };
 
 export const withConnect = (App) => {
-  return function Callback() {
-    const [searchParams] = useSearchParams();
+    return function Callback() {
+        const [searchParams] = useSearchParams();
 
-    const widget = searchParams.get("widget");
-    const wsettings = searchParams.get("wsettings");
-    const wid = searchParams.get("wid");
+        const widget = searchParams.get("widget");
+        const wsettings = searchParams.get("wsettings");
+        const wid = searchParams.get("wid");
 
-    const createMode = wsettings && widget && wid === "create";
+        const createMode = wsettings && widget && wid === "create";
 
-    if (wsettings && window.innerWidth <= 600) {
-      document.body.appendChild(overlay);
-      document.body.style.pointerEvents = "none";
-    }
+        if (wsettings && window.innerWidth <= 600) {
+            document.body.appendChild(overlay);
+            document.body.style.pointerEvents = "none";
+        }
 
-    if (createMode) {
-      document.body.classList.remove("widgetBlur");
-    }
+        if (createMode) {
+            document.body.classList.remove("widgetBlur");
+        }
 
-    return <>{createMode ? <Connect /> : <App />}</>;
-  };
+        return <>{createMode ? <Connect /> : <App />}</>;
+    };
 };

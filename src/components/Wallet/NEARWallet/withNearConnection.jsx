@@ -20,7 +20,7 @@ import {
 import { chains } from "../../values";
 
 import { useNavigate } from "react-router";
-import { getRightPath } from "../../../wallet/helpers";
+import { getRightPath } from "../../../utils";
 
 import { setupWalletSelector } from "@near-wallet-selector/core";
 

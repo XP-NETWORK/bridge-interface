@@ -17,7 +17,7 @@ import {
 } from "../../../store/reducers/generalSlice";
 import { onPhantom, onSolflare } from "./SoloanaConnectors";
 import { useNavigate } from "react-router-dom";
-import { getRightPath } from "../../../wallet/helpers";
+import { getRightPath } from "../../../utils";
 import { chains } from "../../values";
 import {
     googleAnalyticsCategories,

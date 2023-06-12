@@ -10,8 +10,9 @@ import {
     setError,
     setSelectNFTAlert,
     setPasteDestinationAlert,
+    setInvalidAddressAlert,
 } from "../../store/reducers/generalSlice";
-import { errorToLog, isALLNFTsApproved } from "../../wallet/helpers";
+import { errorToLog, isALLNFTsApproved } from "../../utils";
 
 import { withServices } from "../../components/App/hocs/withServices";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
@@ -23,6 +24,8 @@ function Approval({ serviceContainer }) {
     const [approvedLoading, setApprovedLoading] = useState();
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
+    let isInvalidAddress = useSelector((state) => state.general.isInvalid);
+
     //const testnet = useSelector((state) => state.general.testNet);
     const account = useSelector((state) => state.general.account);
 
@@ -36,7 +39,6 @@ function Approval({ serviceContainer }) {
     const receiver = useSelector((state) => state.general.receiver);
 
     const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
-    const checkWallet = useSelector((state) => state.general.checkWallet);
 
     const approveEach = async (nft, index) => {
         const arr = new Array(index + 1).fill(0);
@@ -52,7 +54,7 @@ function Approval({ serviceContainer }) {
             if (!alreadyApproved) {
                 const fromChain = await bridge.getChain(from.nonce);
                 await fromChain.checkSigner();
-                await fromChain.preTransfer(nft, bigNumberFees, {
+                await fromChain.preTransfer(nft, to.nonce, bigNumberFees, {
                     to: Number(to.nonce),
                     receiver: receiver.trim(),
                 });
@@ -97,8 +99,10 @@ function Approval({ serviceContainer }) {
     };
 
     const onClickHandler = async () => {
-        if (!receiver) {
+        if (!receiver || receiver.length === 0 || receiver === "") {
             dispatch(setPasteDestinationAlert(true));
+        } else if (!isInvalidAddress) {
+            dispatch(setInvalidAddressAlert(true));
         } else if (selectedNFTList.length < 1) {
             dispatch(setSelectNFTAlert(true));
         } else {
@@ -153,11 +157,7 @@ function Approval({ serviceContainer }) {
                         id="approveCheck"
                     />
                     <label
-                        style={
-                            approved || checkWallet
-                                ? { pointerEvents: "none" }
-                                : {}
-                        }
+                        style={approved ? { pointerEvents: "none" } : {}}
                         onClick={onClickHandler}
                         htmlFor="approveCheck"
                     >

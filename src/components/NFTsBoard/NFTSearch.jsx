@@ -7,7 +7,7 @@ import {
     setSearchNFTList,
 } from "../../store/reducers/generalSlice";
 
-import { getSearched } from "../../wallet/helpers";
+import { getSearched } from "../../utils";
 import { chains } from "../values";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 
@@ -36,7 +36,7 @@ export default function NFTSearch() {
     useEffect(clear, [from]);
 
     const handleSearch = (e) => {
-        if (e.target.value === "") clear();
+        // if (e.target.value === "") clear();
         const search = e.target.value;
         setInput(search);
     };

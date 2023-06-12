@@ -21,7 +21,7 @@ export default function EVMBody({
     <Modal.Body className="import-nft__body">
       {error && <div className="import-error">{error}</div>}
       <div className="import-nft__form">
-        <form action="">
+        <form action="" onSubmit={((e)=>{e.preventDefault()})}>
           <div>
             <label htmlFor="contractAdd">1. Paste contract address</label>
             <input

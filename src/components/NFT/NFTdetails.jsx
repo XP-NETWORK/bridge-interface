@@ -12,7 +12,7 @@ import { ReactComponent as INFComp } from "../../assets/img/icons/Inf.svg";
 import { chains } from "../values";
 import PropTypes from "prop-types";
 import Tooltip from "../Modals/AccountModal/Tooltip";
-import { StringShortener } from "../../wallet/helpers";
+import { StringShortener } from "../../utils";
 
 function NFTdetails({ nftInf, details }) {
     const {
@@ -24,7 +24,7 @@ function NFTdetails({ nftInf, details }) {
         wrapped,
         image,
         animation_url,
-        originChain,
+        origin,
     } = nftInf;
 
     const isOriginUriExist =
@@ -41,7 +41,7 @@ function NFTdetails({ nftInf, details }) {
     });*/
 
     const original_uri = wrapped && wrapped.original_uri;
-    const origin = chains.find((e) => e.nonce === Number(originChain));
+    const originalChain = chains.find((e) => e.nonce === Number(origin));
 
     // const { video, videoUrl, image, imageUrl, ipfsArr } = getUrl(nftInf);
     const [show, setShow] = useState(false);
@@ -153,7 +153,7 @@ function NFTdetails({ nftInf, details }) {
                                     <p>{original_uri}</p>
                                 </div>
                             )}
-                            {origin && (
+                            {originalChain && (
                                 <div className="nftInfDesc nftInfBox">
                                     <label>Original Chain</label>
                                     <div style={{ display: "flex" }}>
@@ -162,12 +162,13 @@ function NFTdetails({ nftInf, details }) {
                                                 marginRight: "4px",
                                                 width: "29px",
                                             }}
-                                            src={origin.image?.src}
+                                            src={originalChain.image?.src}
                                             alt={
-                                                origin.key + "originIconDetails"
+                                                originalChain.key +
+                                                "originIconDetails"
                                             }
                                         />
-                                        <p>{origin.key}</p>
+                                        <p>{originalChain.key}</p>
                                     </div>
                                 </div>
                             )}

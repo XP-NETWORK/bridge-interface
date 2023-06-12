@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import "./SuccessNFT.css";
 import TxStatus from "./TxStatus";
 
-import { StringShortener } from "../../../wallet/helpers";
+import { StringShortener } from "../../../utils";
 import Tooltip from "../AccountModal/Tooltip";
 
 export default function TransferredNft({ nft, links }) {

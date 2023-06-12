@@ -10,7 +10,7 @@ import {
 } from "../../store/reducers/generalSlice";
 import { useEffect } from "react";
 
-import { withServices } from "../App/hocs/withServices";
+import withChains from "../NFTsBoard/hocs";
 
 import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
 import BigNumber from "bignumber.js";
@@ -21,9 +21,9 @@ const intervalTm = 10_000;
 const deployFeeIntTm = 30_000;
 
 function SendFees(props) {
-    const { serviceContainer } = props;
-
+    const { serviceContainer, chainSpecificRender } = props;
     const { bridge } = serviceContainer;
+    const DeployUserStore = chainSpecificRender?.DeployUserStore;
 
     const dispatch = useDispatch();
     const balance = useSelector((state) => state.general.balance);
@@ -43,7 +43,7 @@ function SendFees(props) {
         })
     );
 
-    const [chainParams, setChainParams] = useState({});
+    const [chainWrapper, setChainWrapper] = useState(null);
 
     const [fees, setFees] = useState("");
 
@@ -129,9 +129,7 @@ function SendFees(props) {
     useEffect(() => {
         bridge
             .getChain(from.nonce)
-            .then((fromChainWrapper) =>
-                setChainParams(fromChainWrapper.chainParams)
-            );
+            .then((fromChainWrapper) => setChainWrapper(fromChainWrapper));
     }, [from]);
 
     useEffect(() => {
@@ -167,18 +165,30 @@ function SendFees(props) {
         };
     }, [selectedNFTList, to]);
 
+    const renderDeployUserStore =
+        chainWrapper?.disableWhiteList &&
+        DeployUserStore &&
+        Boolean(selectedNFTList.length);
+
     return (
         <div className="fees__container">
+            {renderDeployUserStore && (
+                <DeployUserStore
+                    nft={selectedNFTList.at(-1)}
+                    chainWrapper={chainWrapper}
+                />
+            )}
             <div className="fees">
                 <div className="fees__title">Fees</div>
                 <div className="fees__bank">
                     {balance ? (
                         <span className="fees__balance">{`Balance: ${balance.toFixed(
                             3
-                        )} ${chainParams?.currencySymbol ||
+                        )} ${chainWrapper?.chainParams.currencySymbol ||
                             (from?.text === "Gnosis" && "Gnosis")}`}</span>
                     ) : (
-                        `Balance: 0 ${chainParams?.currencySymbol || ""}`
+                        `Balance: 0 ${chainWrapper?.chainParams
+                            .currencySymbol || ""}`
                     )}
                     {loading ? (
                         <LittleLoader />
@@ -189,7 +199,7 @@ function SendFees(props) {
                                     ? fees?.toFixed(getNumToFix(fees))
                                     : "0"
                             }
-                        ${chainParams?.currencySymbol || ""} 
+                        ${chainWrapper?.chainParams.currencySymbol || ""} 
                         `}
                             {/* ${discountLeftUsd && showDiscount(fees).toFixed(2)} */}
                         </span>
@@ -208,8 +218,10 @@ function SendFees(props) {
                         </span>
                     </div>
                     <div>
-                        <span>{deployFees.toFixed(2)}</span>
-                        <span>{` ${chainParams?.currencySymbol}`}</span>
+                        <span>
+                            {deployFees.toFixed(getNumToFix(deployFees))}
+                        </span>
+                        <span>{` ${chainWrapper?.chainParams.currencySymbol}`}</span>
                     </div>
                 </div>
             ) : null}
@@ -217,27 +229,4 @@ function SendFees(props) {
     );
 }
 
-export default withServices(SendFees);
-
-/**
- * const widget = useSelector((state) => state.widget.widget);
-  const { affiliationFees, affiliationSettings } = useSelector(
-    ({ settings }) => ({
-      affiliationFees: settings.affiliationFees,
-      affiliationSettings: settings.affiliationSettings,
-    })
-  );
- * 
- *   let bigNum = fee ? fee.multipliedBy(1.1) : undefined; //.integerValue().toString(10) : undefined;
-
-      if (widget) {
-        bigNum = wservice.calcExtraFees(
-          bigNum,
-          from,
-          affiliationSettings,
-          affiliationFees
-        );
-      }
-
-      bigNum = bigNum ? bigNum.integerValue().toString(10) : undefined;
- */
+export default withChains(SendFees);

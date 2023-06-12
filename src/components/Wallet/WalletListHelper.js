@@ -1,6 +1,6 @@
 import store from "../../store/store";
 
-import Unscopables from "./Unscopables";
+import Unstoppables from "./Unstoppables";
 
 export const sortWallet = (components) => {
     // eslint-disable-next-line no-debugger
@@ -26,6 +26,7 @@ export const sortWallet = (components) => {
     const aptosWallets = components.filter((e) => e.type === "APTOS");
     const solanaWallet = components.filter((e) => e.type === "Solana");
     const nearWallets = components.filter((e) => e.type === "NEAR");
+    const icpWallets = components.filter((e) => e.type === "ICP");
 
     if (discount) {
         sortedWallets = [...evmWallets];
@@ -46,8 +47,9 @@ export const sortWallet = (components) => {
                 ...tonWallets,
                 ...aptosWallets,
                 ...nearWallets,
+                ...icpWallets,
                 ...usbWallet,
-                Unscopables,
+                Unstoppables,
             ];
             return sortedWallets;
         case "Skale":
@@ -61,6 +63,7 @@ export const sortWallet = (components) => {
                 ...tronWallets,
                 ...VeChainWallets,
                 ...tonWallets,
+                ...icpWallets,
                 ...aptosWallets,
                 ...nearWallets,
                 ...usbWallet,
@@ -77,6 +80,7 @@ export const sortWallet = (components) => {
                 ...tronWallets,
                 ...VeChainWallets,
                 ...tonWallets,
+                ...icpWallets,
                 ...nearWallets,
                 ...aptosWallets,
                 ...usbWallet,
@@ -92,6 +96,7 @@ export const sortWallet = (components) => {
                 ...algodWallets,
                 ...tronWallets,
                 ...VeChainWallets,
+                ...icpWallets,
                 ...tonWallets,
                 ...aptosWallets,
                 ...nearWallets,
@@ -108,6 +113,7 @@ export const sortWallet = (components) => {
                 ...tezosWallets,
                 ...tronWallets,
                 ...VeChainWallets,
+                ...icpWallets,
                 ...tonWallets,
                 ...aptosWallets,
                 ...nearWallets,
@@ -157,6 +163,7 @@ export const sortWallet = (components) => {
                 ...VeChainWallets,
                 ...tronWallets,
                 ...tonWallets,
+                ...icpWallets,
                 ...aptosWallets,
                 ...nearWallets,
                 ...usbWallet,
@@ -170,6 +177,7 @@ export const sortWallet = (components) => {
                 ...elrondWallets,
                 ...tezosWallets,
                 ...VeChainWallets,
+                ...icpWallets,
                 ...tronWallets,
                 ...tonWallets,
                 ...nearWallets,
@@ -183,6 +191,7 @@ export const sortWallet = (components) => {
                 ...hederaWallets,
                 ...evmWallets,
                 ...algodWallets,
+                ...icpWallets,
                 ...elrondWallets,
                 ...tezosWallets,
                 ...VeChainWallets,
@@ -199,6 +208,7 @@ export const sortWallet = (components) => {
                 ...algodWallets,
                 ...elrondWallets,
                 ...tezosWallets,
+                ...icpWallets,
                 ...VeChainWallets,
                 ...tronWallets,
                 ...tonWallets,
@@ -217,6 +227,7 @@ export const sortWallet = (components) => {
                 ...VeChainWallets,
                 ...tronWallets,
                 ...tonWallets,
+                ...icpWallets,
                 ...hederaWallets,
                 ...aptosWallets,
                 ...nearWallets,
@@ -230,6 +241,7 @@ export const sortWallet = (components) => {
                 ...algodWallets,
                 ...elrondWallets,
                 ...tezosWallets,
+                ...icpWallets,
                 ...solanaWallet,
                 ...VeChainWallets,
                 ...tronWallets,
@@ -238,7 +250,10 @@ export const sortWallet = (components) => {
                 ...aptosWallets,
                 ...usbWallet,
             ];
-            console.log({ sortedWallets });
+            return sortedWallets;
+
+        case "ICP":
+            sortedWallets = [...icpWallets];
             return sortedWallets;
         default:
             break;

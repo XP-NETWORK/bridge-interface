@@ -450,7 +450,18 @@
 .fieldsWrapper input:focus {
   outline: none;
 }
-
+@media only screen and (width: 1024px) and (height: 600px){
+  .nftListCol {
+    padding-left: 8% !important;
+    padding-right: 8% !important;
+  }
+  .sendNftCol{
+    margin-left: -8%;
+  }
+  .aboutNft{
+    padding-top: 5px;
+  }
+}
 /* IPAD MINI */
 @media only screen and (width: 768px) and (height: 1024px) and (orientation:portrait) {
     .mobile-col {
@@ -470,6 +481,11 @@
     margin-left: 15px;
     margin-right: 15px;
 }
+}
+@media screen and (max-width: 850px) {
+  .aboutNft {
+    padding-top: 1px;
+  }
 }
 @media screen and (min-width: 768px) {
   /* .mobile-col {
@@ -525,7 +541,7 @@
     margin: 0;
   }
   .aboutNft {
-    padding-top: 0;
+    padding-top: 20px;
   }
   .nftListBox {
     border-radius: unset;

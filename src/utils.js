@@ -1,4 +1,4 @@
-import store from "../store/store";
+import store from "./store/store";
 import io from "socket.io-client";
 import axios from "axios";
 
@@ -187,3 +187,15 @@ export const StringShortener = (str, length) =>
         : "";
 
 export const promisify = (cb) => new Promise((r) => cb().then((res) => r(res)));
+
+export function generateKey(length) {
+    const characters =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(
+            Math.floor(Math.random() * characters.length)
+        );
+    }
+    return result;
+}

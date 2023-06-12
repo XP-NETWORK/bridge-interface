@@ -16,7 +16,7 @@ import {
     setWalletsModal,
 } from "../../../store/reducers/generalSlice";
 import { setSigner } from "../../../store/reducers/signersSlice";
-import { getRightPath } from "../../../wallet/helpers";
+import { getRightPath } from "../../../utils";
 import { withServices } from "../../App/hocs/withServices";
 import { getChainObject } from "../../values";
 import // connectAlgoSigner,

@@ -5,60 +5,60 @@ import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 
 export const withStyles = (Wrapped) =>
-  function CallBack(props) {
-    CallBack.propTypes = {
-      widget: PropTypes.bool,
-      wsettings: PropTypes.bool,
-      settings: PropTypes.any,
-    };
+    function CallBack(props) {
+        CallBack.propTypes = {
+            widget: PropTypes.bool,
+            wsettings: PropTypes.bool,
+            settings: PropTypes.any,
+        };
 
-    const { widget, wsettings, settings } = props;
+        const { widget, wsettings, settings } = props;
 
-    const [chainsLengthEqauls2, setChainsLengthEqauls2] = useState(false);
-    const [isFrom, setIsFrom] = useState(false);
-    const [isTo, setIsTo] = useState(false);
+        const [chainsLengthEqauls2, setChainsLengthEqauls2] = useState(false);
+        const [isFrom, setIsFrom] = useState(false);
+        const [isTo, setIsTo] = useState(false);
 
-    const location = useLocation();
+        const location = useLocation();
 
-    const {
-      backgroundColor,
-      panelBackground,
-      modalBackground,
-      color,
-      fontFamily,
-      fontSize,
-      btnColor,
-      btnBackground,
-      btnRadius,
-      selectedChains,
-      selectedWallets,
-      cardBackground,
-      cardBackgroundBot,
-      cardColor,
-      cardRadius,
-      accentColor,
-      secondaryColor,
-      borderColor,
-      iconColor,
-      tooltipColor,
-      tooltipBg,
+        const {
+            backgroundColor,
+            panelBackground,
+            modalBackground,
+            color,
+            fontFamily,
+            fontSize,
+            btnColor,
+            btnBackground,
+            btnRadius,
+            selectedChains,
+            selectedWallets,
+            cardBackground,
+            cardBackgroundBot,
+            cardColor,
+            cardRadius,
+            accentColor,
+            secondaryColor,
+            borderColor,
+            iconColor,
+            tooltipColor,
+            tooltipBg,
 
-      showLink,
-      collapsed,
-    } = settings;
+            showLink,
+            collapsed,
+        } = settings;
 
-    useEffect(() => {
-      if (widget) {
-        document.getElementById("bridgeSettings")?.remove();
-        const $style = document.createElement("style");
-        $style.id = "bridgeSettings";
-        document.head.appendChild($style);
+        useEffect(() => {
+            if (widget) {
+                document.getElementById("bridgeSettings")?.remove();
+                const $style = document.createElement("style");
+                $style.id = "bridgeSettings";
+                document.head.appendChild($style);
 
-        $style.innerHTML = `
+                $style.innerHTML = `
     
           ${
-            wsettings
-              ? `
+              wsettings
+                  ? `
               .modal-backdrop.show, .modal {
                   width: calc(100% - ${collapsed ? "35" : "300"}px);
                   left: initial;
@@ -66,7 +66,7 @@ export const withStyles = (Wrapped) =>
               }
           
           `
-              : ""
+                  : ""
           }
     
           .setting_sidebar {
@@ -83,7 +83,7 @@ export const withStyles = (Wrapped) =>
             
           
             overflow-y: ${
-              !location.pathname.includes("account") ? "hidden" : "auto"
+                !location.pathname.includes("account") ? "hidden" : "auto"
             };
 
 
@@ -169,7 +169,7 @@ export const withStyles = (Wrapped) =>
               border-color: ${backgroundColor ? backgroundColor : ""};
             }
     
-            .NftSelect, .navbar-connect, .mobile-col, .mobile-col__tittle, .mobile-col__header, .mobile-nfts__header, .mobile-search__top {
+            .NftSelect, .navbar-connect, .mobile-col, .mobile-col__tittle, .mobile-col__header, .mobile-nfts__header, .mobile-search__top, .deploy-container {
               background: ${panelBackground ? panelBackground : ""};
             
             }
@@ -187,7 +187,7 @@ export const withStyles = (Wrapped) =>
           
             .swap-chain__btn{
               display: ${
-                isFrom !== isTo && !wsettings ? "none" : "inline"
+                  isFrom !== isTo && !wsettings ? "none" : "inline"
               } !important;
             }
             .seleDepat{
@@ -274,7 +274,7 @@ export const withStyles = (Wrapped) =>
              .desAddress input, .nftWornTop h3, .nftWornTop p, .nftInfBox p, .about__text, .ComentBox p, .nonftAcc, .yourNft__title, .destination__title, .nftListed__info .name,
               .nonftAcc  h2,  .transfer-loader__title, .transfer-loader__text, .transfer-loader__sub, .txn-hash, .sucesList span, .selected-nfts__header, .approval__header, .fees__title, .clip p,
               .fees span, .listed-view__not-whitelisted__button, .success-info-box, .accountTit, .accountBox p, .mobile-destination__address input,
-              .info-item-chain, .chain-select__box, .desktop__header span, .account-modal__account,  .navbar-connect, 
+              .info-item-chain, .chain-select__box, .desktop__header span, .account-modal__account,  .navbar-connect,  .deploy-container,
               .import-nft__form, .import-nft__form form, .import-nft__form input[type="text"], .mobile-destination__address input::placeholder {
                 color: ${color ? color : ""};
             }
@@ -327,7 +327,7 @@ export const withStyles = (Wrapped) =>
               font-family: ${fontFamily ? fontFamily : ""};
             }
     
-            .transfer-button, .transfer-button--disabled{
+            .transfer-button, .transfer-button--disabled, .deploy-container button{
               opacity: .8;
               background:  ${btnBackground ? btnBackground : ""};
               color:  ${btnColor ? btnColor : ""};
@@ -413,14 +413,14 @@ export const withStyles = (Wrapped) =>
             }
     
             ${selectedChains
-              ?.map((chain) => `.nftChainItem[data-chain="${chain}"]`)
-              .join(", ")} {
+                ?.map((chain) => `.nftChainItem[data-chain="${chain}"]`)
+                .join(", ")} {
               display: flex;
             }
     
             ${selectedWallets
-              ?.map((wallet) => `li[data-wallet="${wallet}"]`)
-              .join(", ")} {
+                ?.map((wallet) => `li[data-wallet="${wallet}"]`)
+                .join(", ")} {
               display: flex;
             }
     
@@ -834,18 +834,18 @@ export const withStyles = (Wrapped) =>
       }
     
             `;
-        document.body.classList.remove("widgetBlur");
-      }
-    }, [settings, location, chainsLengthEqauls2, isFrom, isTo]);
+                document.body.classList.remove("widgetBlur");
+            }
+        }, [settings, location, chainsLengthEqauls2, isFrom, isTo]);
 
-    return (
-      <Wrapped
-        {...props}
-        setState={{
-          setChainsLengthEqauls2,
-          setIsFrom,
-          setIsTo,
-        }}
-      />
-    );
-  };
+        return (
+            <Wrapped
+                {...props}
+                setState={{
+                    setChainsLengthEqauls2,
+                    setIsFrom,
+                    setIsTo,
+                }}
+            />
+        );
+    };

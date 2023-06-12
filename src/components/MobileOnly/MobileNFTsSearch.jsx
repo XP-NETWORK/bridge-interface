@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSearchNFTList } from "../../store/reducers/generalSlice";
 import CloseButton from "../Buttons/CloseButton";
 import PropTypes from "prop-types";
-import { getSearched } from "../../wallet/helpers";
+import { getSearched } from "../../utils";
 import { chains } from "../values";
 import { setCurrentNFTs } from "../../store/reducers/generalSlice";
 
@@ -24,11 +24,11 @@ export default function MobileNFTsSearch({ handleSearchTop }) {
     const nfts = useSelector((state) => state.general.NFTList);
 
     const handleSearch = (e) => {
-        const search = e.target.value.toLowerCase();
+        const search = e.target.value;
         setInput(search);
     };
 
-    const handleKeyDown = async (e) => {
+    const handleKeyDown = async () => {
         const chain = chains.find((e) => e.key === from.key);
         const _account =
             checkWallet ||
@@ -39,16 +39,14 @@ export default function MobileNFTsSearch({ handleSearchTop }) {
             elrondAccount ||
             tronWallet ||
             secretAccount;
-        if (e.key === "Enter") {
-            const found = await getSearched(_account, searchInput, chain.nonce);
-            if (found) dispatch(setSearchNFTList(found));
-        }
+        const found = await getSearched(_account, searchInput, chain.nonce);
+        if (found) dispatch(setSearchNFTList(found));
     };
 
     useEffect(() => {
-      setInput("");
-      dispatch(setSearchNFTList(""));
-      dispatch(setCurrentNFTs(nfts));
+        setInput("");
+        dispatch(setSearchNFTList(""));
+        dispatch(setCurrentNFTs(nfts));
     }, [from, temporaryFrom]);
 
     return (

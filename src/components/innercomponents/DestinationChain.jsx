@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -8,7 +7,6 @@ import {
     inputFilter,
     validateFunctions,
     maxChainAddressLengths,
-    checkIfContractAddress,
 } from "../../services/addressValidators";
 import {
     setDepartureOrDestination,
@@ -16,7 +14,7 @@ import {
     setSwitchDestination,
     setError,
     setIsInvalidAddress,
-    setReceiverIsContract,
+    //setReceiverIsContract,
 } from "../../store/reducers/generalSlice";
 import ChainSwitch from "../Buttons/ChainSwitch";
 import { withServices } from "../App/hocs/withServices";
@@ -24,17 +22,11 @@ import PropTypes from "prop-types";
 
 function DestinationChain({ serviceContainer }) {
     const { bridge } = serviceContainer;
-    const [destinationProvider, setDestinationProvider] = useState("");
-    let alert = useSelector((state) => state.general.pasteDestinationAlert);
-    let to = useSelector((state) => state.general.to);
+    const [toChainWrapper, setChainWrapper] = useState(null);
+    const alert = useSelector((state) => state.general.pasteDestinationAlert);
+    const to = useSelector((state) => state.general.to);
+
     const isInvalid = useSelector((state) => state.general.isInvalid);
-    const receiverIsContract = useSelector(
-        (state) => state.general.receiverIsContract
-    );
-    console.log(
-        "🚀 ~ file: DestinationChain.jsx:32 ~ DestinationChain ~ receiverIsContract:",
-        receiverIsContract
-    );
 
     const dispatch = useDispatch();
     let receiver = useSelector((state) => state.general.receiver);
@@ -49,10 +41,7 @@ function DestinationChain({ serviceContainer }) {
         dispatch(setReceiver(""));
         dispatch(setIsInvalidAddress(true));
         setMaxLength(maxChainAddressLengths[to.type]);
-        bridge.getChain(to.nonce).then((chain) => {
-            const provider = chain.chain.getProvider();
-            setDestinationProvider(provider);
-        });
+        bridge.getChain(to.nonce).then((chain) => setChainWrapper(chain));
     }, [to]);
 
     useEffect(() => {
@@ -61,14 +50,6 @@ function DestinationChain({ serviceContainer }) {
         }
     }, [receiver]);
 
-    const checkIfReceiverIsContract = async (address) => {
-        let isContract = await checkIfContractAddress(
-            address,
-            destinationProvider.connection.url
-        );
-        dispatch(setReceiverIsContract(isContract));
-    };
-
     const handleChange = (e) => {
         try {
             if (inputFilter(e)) {
@@ -76,12 +57,8 @@ function DestinationChain({ serviceContainer }) {
                 if (generalValidation(e, receiver)) {
                     const validateFunc = validateFunctions[to.type];
                     if (validateFunc) {
-                        dispatch(setIsInvalidAddress(validateFunc(address)));
-                        if (validateFunc(address) && to.type === "EVM") {
-                            checkIfReceiverIsContract(address);
-                        } else {
-                            dispatch(setReceiverIsContract(false));
-                        }
+                        const res = validateFunc(address, toChainWrapper);
+                        dispatch(setIsInvalidAddress(res));
                     }
                     dispatch(setReceiver(address));
                 }

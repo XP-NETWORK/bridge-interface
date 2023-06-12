@@ -59,6 +59,11 @@ export default function ChainSelectBox() {
     } else {
       dispatch(setTo(from));
       dispatch(setFrom(temp));
+
+      dispatch(setTemporaryFrom(temp));
+      dispatch(setTemporaryTo(from));
+      // dispatch(setChangeWallet(true));
+
     }
   };
 

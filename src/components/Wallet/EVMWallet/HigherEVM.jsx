@@ -14,7 +14,7 @@ import {
     setMetaMask,
     setWalletsModal,
 } from "../../../store/reducers/generalSlice";
-import { getRightPath } from "../../../wallet/helpers";
+import { getRightPath } from "../../../utils";
 import { withServices } from "../../App/hocs/withServices";
 
 import {
@@ -56,22 +56,28 @@ export default function HigherEVM(OriginalComponent) {
             let connected;
             switch (wallet) {
                 case "MetaMask":
-                    connected = await connectMetaMask(activate, from, to, chainId, navigateToAccountRoute);
+                    connected = await connectMetaMask(
+                        activate,
+                        from,
+                        to,
+                        chainId,
+                        navigateToAccountRoute
+                    );
                     if (connected) {
                         dispatch(setMetaMask(true));
                         dispatch(setConnectedWallet("MetaMask"));
                         if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                     }
                     break;
-                case "TrustWallet":
+                case "Trust Wallet":
                     connected = await connectTrustWallet(
                         activate,
-                        from.key,
-                        bridge.getChainIdByKey(from.key, testnet)
+                        from?.key,
+                        bridge.getChainIdByKey(from?.key, testnet)
                     );
                     dispatch(setWalletsModal(false));
                     if (connected && to) {
-                        dispatch(setConnectedWallet("TrustWallet"));
+                        dispatch(setConnectedWallet("Trust Wallet"));
                         navigateToAccountRoute();
                     }
                     if (temporaryFrom) dispatch(setFrom(temporaryFrom));
@@ -79,9 +85,9 @@ export default function HigherEVM(OriginalComponent) {
                 case "WalletConnect":
                     connected = await onWalletConnect(
                         activate,
-                        from.key,
+                        from?.key,
                         testnet,
-                        bridge.getChainIdByKey(from.key, testnet)
+                        bridge.getChainIdByKey(from?.key, testnet)
                     );
                     dispatch(setWalletsModal(false));
                     if (connected && to) {
@@ -91,10 +97,14 @@ export default function HigherEVM(OriginalComponent) {
                     break;
                 case "BitKeep":
                     deactivate();
-                    connected = await connectBitKeep(from);
-                    dispatch(setWalletsModal(false));
-                    dispatch(setBitKeep(true));
+                    connected = await connectBitKeep(
+                        from,
+                        navigateToAccountRoute
+                    );
                     if (connected && to) {
+                        dispatch(setWalletsModal(false));
+                        dispatch(setBitKeep(true));
+                        dispatch(setConnectedWallet("BitKeep"));
                         navigateToAccountRoute();
                     }
                     break;

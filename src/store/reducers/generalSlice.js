@@ -27,6 +27,8 @@ const initialState = {
     afterNearRedirect: true,
     hederaClaimables: [],
     algorandAddresses: [],
+    unstoppableDomainsIsSelected: false,
+    receiver: "",
 };
 
 const generalSlice = createSlice({
@@ -109,6 +111,9 @@ const generalSlice = createSlice({
         },
         setBitKeep(state, action) {
             state.bitKeep = action.payload;
+        },
+        setUnstoppableDomainsIsSelected(state, action) {
+            state.unstoppableDomainsIsSelected = action.payload;
         },
         setTemporaryFrom(state, action) {
             state.temporaryFrom = action.payload;
@@ -265,6 +270,9 @@ const generalSlice = createSlice({
         },
         cleanSelectedNFTList(state) {
             state.selectedNFTList = [];
+        },
+        setLockMainPannel(state, action) {
+            state.lockMainPannel = action.payload;
         },
         removeFromSelectedNFTList(state, action) {
             const { tokenId, contract, chainId } = action.payload.native;
@@ -438,6 +446,10 @@ const generalSlice = createSlice({
                             /(user rejected transaction|Rejected)/.test(message)
                         ) {
                             return;
+                        } else if (
+                            message.includes("does not support EIP-1559")
+                        ) {
+                            state.error = `EIP-1559 error. Please switch network to Ethereum and back and try again`;
                         } else state.error = message;
                         break;
                 }
@@ -451,6 +463,9 @@ const generalSlice = createSlice({
         },
         setBigNumDeployFees(state, action) {
             state.bigNumberDeployFees = action.payload;
+        },
+        setDeployUserEstimation(state, action) {
+            state.deployUserStoreEstimation = action.payload;
         },
         setTronLoginError(state, action) {
             state.tronLoginError = action.payload;
@@ -528,8 +543,14 @@ const generalSlice = createSlice({
         setSelectNFTAlert(state, action) {
             state.selectNFTAlert = action.payload;
         },
+        setUndeployedUserStore(state, action) {
+            state.undeployedUserStore = action.payload;
+        },
         setPasteDestinationAlert(state, action) {
             state.pasteDestinationAlert = action.payload;
+        },
+        setInvalidAddressAlert(state, action) {
+            state.invalidAddressAlert = action.payload;
         },
         setNoApprovedNFTAlert(state, action) {
             state.noApprovedNFTAlert = action.payload;
@@ -583,6 +604,7 @@ export const {
     setKeplrAccount,
     setKeplrWallet,
     setBitKeep,
+    setUnstoppableDomainsIsSelected,
     setTemporaryFrom,
     setCheckWallet,
     addImportedNFTtoNFTlist,
@@ -591,7 +613,9 @@ export const {
     setChangeWallet,
     setNoApprovedNFTAlert,
     setPasteDestinationAlert,
+    setInvalidAddressAlert,
     setSelectNFTAlert,
+    setUndeployedUserStore,
     setAlgoAccountToClaim,
     setSync2,
     setSync2Connex,
@@ -655,6 +679,7 @@ export const {
     setError,
     setBigNumFees,
     setBigNumDeployFees,
+    setDeployUserEstimation,
     setTronPopUp,
     setTronLoginError,
     setTrustWallet,
@@ -687,6 +712,7 @@ export const {
     setIsInvalidAddress,
     setNearRedirect,
     setHederaClaimables,
+    setLockMainPannel,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

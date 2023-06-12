@@ -39,12 +39,12 @@ export default function UserConnect({ mobile }) {
     const tonAccount = useSelector((state) => state.general.tonAccount);
     const aptosAccount = useSelector((state) => state.general.aptosAccount);
 
-    const walletAccount =
+    let walletAccount =
         aptosAccount ||
         tonAccount ||
         hederaAccount ||
         secretAccount ||
-        account ||
+        // account ||
         elrondAccount ||
         tezosAccount ||
         algorandAccount ||
@@ -165,8 +165,7 @@ export default function UserConnect({ mobile }) {
         if (!account && WalletConnect) {
             active !== undefined && window.location.reload();
         }
-
-        account && dispatch(setAccount(account));
+        dispatch(setAccount(account));
     }, [active]);
 
     return (

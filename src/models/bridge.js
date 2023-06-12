@@ -5,6 +5,7 @@ import {
     ChainFactory,
     ChainFactoryConfigs,
     ChainType,
+    Chain,
 } from "xp.network";
 
 import ChainInterface from "./chains";
@@ -50,12 +51,14 @@ class Bridge {
             switch (true) {
                 case testnet: {
                     config = await ChainFactoryConfigs.TestNet();
+
                     app = AppConfigs.TestNet();
                     break;
                 }
                 case staging: {
                     config = await ChainFactoryConfigs.Staging();
                     app = AppConfigs.Staging();
+
                     break;
                 }
                 default: {
@@ -76,9 +79,9 @@ class Bridge {
 
     async isWhitelisted(nonce, nft) {
         try {
-            if (nonce === 26) return true;
             const chainWrapper = await this.getChain(Number(nonce));
-            const { chain, signer } = chainWrapper;
+            if (chainWrapper.disableWhiteList) return true;
+            const { chain } = chainWrapper;
 
             const isWNFT = this.isWrapped(nft.uri);
 
@@ -108,7 +111,7 @@ class Bridge {
             )
                 return true;
             return await chain.isNftWhitelisted(nft);
-            //const x = await chain.isNftWhitelisted(nft, signer);
+            //const x = await chain.isNftWhitelisted(nft);
             //console.log(x, "x");
             //return x;
         } catch (e) {
@@ -137,6 +140,24 @@ class Bridge {
 
             switch (chainParams.type) {
                 case ChainType.EVM:
+                    switch (true) {
+                        case Object.values(this.config)
+                            .filter((params) => params.noWhitelist)
+                            .map((p) => p.nonce)
+                            .includes(params.nonce): {
+                            this.chains[
+                                chainId
+                            ] = new ChainInterface.NoWhiteListEVM(params);
+                            return this.chains[chainId];
+                        }
+
+                        case Chain.VECHAIN === params.nonce: {
+                            this.chains[chainId] = new ChainInterface.VeChain(
+                                params
+                            );
+                            return this.chains[chainId];
+                        }
+                    }
                     this.chains[chainId] = new ChainInterface.EVM(params);
                     return this.chains[chainId];
                 case ChainType.TRON:
@@ -168,6 +189,9 @@ class Bridge {
                     return this.chains[chainId];
                 case ChainType.HEDERA:
                     this.chains[chainId] = new ChainInterface.HEDERA(params);
+                    return this.chains[chainId];
+                case ChainType.DFINITY:
+                    this.chains[chainId] = new ChainInterface.ICP(params);
                     return this.chains[chainId];
                 default:
                     throw new Error("unsuported chain");
@@ -204,6 +228,7 @@ class Bridge {
                     ...nft,
                     native: {
                         ...nft.native,
+                        isWrappedNft: true,
                         origin,
                     },
                 };

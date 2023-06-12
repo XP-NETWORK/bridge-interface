@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
-import { convert } from "../../wallet/helpers";
+import { convert } from "../../utils";
 
 import {
     setCheckDestinationAddress,
@@ -19,10 +19,12 @@ import { getFromDomain } from "../../services/resolution";
 
 import { withServices } from "../App/hocs/withServices";
 import { withWidget } from "../Widget/hocs/withWidget";
-import { notifyExplorer } from "../../services/explorer";
+
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 import { compose } from "redux";
 import BigNumber from "bignumber.js";
+
+import { dev } from "../values";
 
 export default compose(
     withServices,
@@ -105,8 +107,6 @@ export default compose(
             `${receiver} trying to transfer ${selectedNFTList.length} nfts`
         );
 
-        const fromChain = await bridge.getChain(_from.nonce);
-
         if (!receiver) {
             dispatch(setPasteDestinationAlert(true));
         } else if (receiverIsContract) {
@@ -118,16 +118,8 @@ export default compose(
         } else if (!loading && approved) {
             setLoading(true);
             dispatch(setTransferLoaderModal(true));
-
+            const fromChain = await bridge.getChain(_from.nonce);
             await fromChain.transferAll(selectedNFTList, sendEach);
-
-            /*for (let index = 0; index < selectedNFTList.length; index++) {
-                if (from === "VeChain" || from === "TON") {
-                    await sendEach(selectedNFTList[index]);
-                } else {
-                    sendEach(selectedNFTList[index]);
-                }
-            }*/
             return stop;
         }
     };
@@ -142,25 +134,29 @@ export default compose(
             const unstoppabledomain = await getFromDomain(receiver, toChain);
             if (unstoppabledomainSwitch(unstoppabledomain)) return;
 
-            const fee = new BigNumber(bigNumberFees || 0)
-                .plus(new BigNumber(bigNumberDeployFees || 0))
-                .toString(10);
-
             const res = await fromChain.transfer({
                 toChain,
                 nft,
                 receiver: unstoppabledomain || receiver,
-                fee,
+                fee: new BigNumber(bigNumberFees || 0)
+                    .div(dev ? 3 : 1)
+                    .plus(
+                        new BigNumber(bigNumberDeployFees || 0).div(dev ? 5 : 1)
+                    )
+                    .integerValue()
+                    .toString(10),
                 discountLeftUsd,
                 extraFee: getExtraFee(from),
             });
             const { result, mintWith } = res;
-            let mw = toChain.showMintWith && (mintWith || toChain.XpNft);
+
+            const mw = toChain.showMintWith && (mintWith || toChain.XpNft);
             if (txnHashArr[0] && !result) {
                 dispatch(setTxnHash({ txn: "failed", nft }));
             } else if (result) {
                 const resultObject = fromChain.handlerResult(result);
-                notifyExplorer(_from.nonce, resultObject.hash);
+                console.log(resultObject, "resultObject");
+
                 dispatch(setTxnHash({ txn: resultObject, nft, mw }));
                 setTxForWidget({
                     result: resultObject,

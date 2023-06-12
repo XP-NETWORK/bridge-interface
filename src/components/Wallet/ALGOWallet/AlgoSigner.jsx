@@ -13,7 +13,7 @@ function AlgoSigner({ styles, connectWallet }) {
             className="wllListItem algo"
         >
             <img src={AlgoSignerIcon} alt="Algor Signer Icon" />
-            <p>Algo Signer</p>
+            <p>AlgoSigner</p>
         </li>
     );
 }

@@ -7,42 +7,42 @@ import { useAccount, useNetwork, useSigner } from "wagmi";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 import {
-  setAccount,
-  setConnectedWallet,
-  setError,
+    setAccount,
+    setConnectedWallet,
+    setError,
 } from "../../../store/reducers/generalSlice";
 import { wcSupportedChains } from "./evmConnectors";
 
 import { useNavigate } from "react-router";
-import { getRightPath } from "../../../wallet/helpers";
+import { getRightPath } from "../../../utils";
 
 export const withEVMConnection = (Wrapped) =>
-  function CB(props) {
-    const { serviceContainer } = props;
-    const dispatch = useDispatch();
-    const bitKeep = useSelector((state) => state.general.bitKeep);
-    const WCProvider = useSelector((state) => state.general.WCProvider);
-    const from = useSelector((state) => state.general.from);
-    const to = useSelector((state) => state.general.to);
+    function CB(props) {
+        const { serviceContainer } = props;
+        const dispatch = useDispatch();
+        const bitKeep = useSelector((state) => state.general.bitKeep);
+        const WCProvider = useSelector((state) => state.general.WCProvider);
+        const from = useSelector((state) => state.general.from);
+        const to = useSelector((state) => state.general.to);
 
-    const connectedWallet = useSelector(
-      (state) => state.general.connectedWallet
-    );
+        const connectedWallet = useSelector(
+            (state) => state.general.connectedWallet
+        );
 
-    const navigate = useNavigate();
+        const navigate = useNavigate();
 
-    const { chainId, account } = useWeb3React();
-    const { address } = useAccount();
-    const { chain } = useNetwork();
-    const { data: signer } = useSigner();
-    const { bridge } = serviceContainer;
+        const { chainId, account } = useWeb3React();
+        const { address } = useAccount();
+        const { chain } = useNetwork();
+        const { data: signer } = useSigner();
+        const { bridge } = serviceContainer;
 
         useEffect(() => {
             if (address && signer && !connectedWallet) {
                 const isSupported = wcSupportedChains.find(
                     (supported) => chain.id === supported.id
                 );
-                if(from){
+                if (from) {
                     if (isSupported) {
                         if (
                             isSupported.id === from?.chainId ||
@@ -73,30 +73,31 @@ export const withEVMConnection = (Wrapped) =>
             }
         }, [address, signer, chain]);
 
-    useEffect(() => {
-      if (bridge && account && chainId) {
-        (async () => {
-          const nonce = bridge.getNonce(chainId);
+        useEffect(() => {
+            if (bridge && account && chainId) {
+                (async () => {
+                    const nonce = bridge.getNonce(chainId);
 
-          bridge.getChain(nonce).then((chainWrapper) => {
-            const provider = bitKeep
-              ? window.bitkeep?.ethereum
-              : WCProvider?.walletConnectProvider || window.ethereum;
+                    bridge.getChain(nonce).then((chainWrapper) => {
+                        const provider = bitKeep
+                            ? window.bitkeep?.ethereum
+                            : WCProvider?.walletConnectProvider ||
+                              window.ethereum;
 
-            if (!provider) return;
+                        if (!provider) return;
 
-            const upgradedProvider = new ethers.providers.Web3Provider(
-              provider
-            );
-            const signer = upgradedProvider.getSigner(account);
+                        const upgradedProvider = new ethers.providers.Web3Provider(
+                            provider
+                        );
+                        const signer = upgradedProvider.getSigner(account);
 
-            chainWrapper.setSigner(signer);
-            dispatch(setAccount(account));
-            bridge.setCurrentType(chainWrapper);
-          });
-        })();
-      }
-    }, [bridge, account, chainId, WCProvider]);
+                        chainWrapper.setSigner(signer);
+                        dispatch(setAccount(account));
+                        bridge.setCurrentType(chainWrapper);
+                    });
+                })();
+            }
+        }, [bridge, account, chainId, WCProvider]);
 
-    return <Wrapped {...props} />;
-  };
+        return <Wrapped {...props} />;
+    };

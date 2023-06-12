@@ -24,7 +24,7 @@ import {
     setTonKeeperSession,
 } from "./tonStore";
 
-import { getRightPath } from "../../../wallet/helpers";
+import { getRightPath } from "../../../utils";
 
 import store from "../../../store/store";
 import { useNavigate } from "react-router";

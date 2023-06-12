@@ -1,12 +1,12 @@
 /*Surface Pro 7*/
-@media only screen and (width: 912px) and (height: 1368px) and (orientation:portrait) {
+@media only screen and (width: 912px) and (height: 1368px) and (orientation: portrait) {
     .slider__wrapper {
         width: 430px !important;
     }
     .NftSelect {
         width: 430px !important;
     }
-  }
+}
 
 .multi-background {
     position: absolute;
@@ -115,7 +115,12 @@
     height: 100%;
     background-color: white;
     border-radius: 40px;
+    animation: fillProggressBar 8s infinite linear;
     /* transition: width 0.2s; */
+}
+
+.pagination__progress.paused {
+    animation: none;
 }
 .slider-nft__info {
     z-index: 1;
@@ -123,17 +128,29 @@
 .pagination__bg {
     /* cursor: pointer; */
 }
+
+@keyframes fillProggressBar {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
 @media screen and (max-width: 1024px) {
     .slider__wrapper {
         width: 390px;
     }
 }
-
-@media screen and (max-width: 725px) {
+@media only screen and (width: 1024px) and (height: 600px) {
     .slider__pagination {
         transform: translateX(-50%) scale(0.8);
     }
-
+}
+@media screen and (max-width: 850px) {
+    .slider__pagination {
+        transform: translateX(-50%) scale(0.8);
+    }
     .pagination__bg {
         transform: scale(0.9);
     }

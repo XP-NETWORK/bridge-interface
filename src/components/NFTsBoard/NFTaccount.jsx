@@ -14,7 +14,7 @@ import {
 } from "../../store/reducers/generalSlice";
 import { setIsEmpty } from "../../store/reducers/paginationSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { saveForSearch } from "../../wallet/helpers";
+import { saveForSearch } from "../../utils";
 import { ReturnBtn } from "../Settings/returnBtn";
 import DesktopTransferBoard from "../TransferBoard/DesktopTransferBoard";
 import "./NFTsBoard.css";
@@ -76,17 +76,23 @@ function NFTaccount(props) {
     const NFTSetToggler = useSelector((state) => state.general.NFTSetToggler);
     const prevNFTSetToggler = usePrevious(NFTSetToggler);
 
+    const widget = useSelector((state) => state.widget.widget);
+
     let selectedNFTs = useSelector((state) => state.general.selectedNFTList);
 
     const unwrappedEGold = useSelector((state) => state.general.unwrappedEGold);
 
     const checkWallet = useSelector((state) => state.general.checkWallet);
 
-    const widget = useSelector((state) => state.widget.widget);
-
     const accountWalletModal = useSelector(
         (state) => state.general.accountWalletModal
     );
+
+    const undeployedUserStore = useSelector(
+        (state) => state.general.undeployedUserStore
+    );
+
+    const lockMainPannel = useSelector((state) => state.general.lockMainPannel);
 
     let _account =
         checkWallet ||
@@ -100,8 +106,9 @@ function NFTaccount(props) {
         tonAccount;
 
     const { bridge } = serviceContainer;
-
     async function getNFTsList(fromChain) {
+        // eslint-disable-next-line no-debugger
+        // debugger;
         dispatch(setBigLoader(true));
         try {
             let nfts = await fromChain.getNFTs(bridge.checkWallet || _account);
@@ -113,7 +120,6 @@ function NFTaccount(props) {
 
             dispatch(setBigLoader(false));
         } catch (error) {
-            console.log(error);
             dispatch(setBigLoader(false));
             dispatch(setNFTList([]));
             console.log(error);
@@ -156,10 +162,6 @@ function NFTaccount(props) {
                     NFTSetToggler !== prevNFTSetToggler) &&
                 getNFTsList(fromChain);
 
-            // if (_account && _from?.type === "Algorand") {
-            //     getAlgorandClaimables(fromChain);
-            // }
-
             //update Balance
             getBalance(fromChain);
             chainSpecific && chainSpecific(dispatch, fromChain, _account);
@@ -167,6 +169,17 @@ function NFTaccount(props) {
                 () => getBalance(fromChain),
                 intervalTm
             );
+            // const keyHandler = async (event) => {
+            //     if (event.isComposing || event.keyCode === 229) {
+            //         return;
+            //     }
+            //     if (event.key === "4") {
+            //         fromChain.mintNFT(
+            //             "https://meta.polkamon.com/meta?id=10001852306"
+            //         );
+            //     }
+            // };
+            // biz && window.addEventListener("keydown", keyHandler);
         })();
 
         return () => clearInterval(balanceInterval);
@@ -212,9 +225,13 @@ function NFTaccount(props) {
             <UnsupportedNetwork />
             <SelectNFTAler />
             <PasteDestinationAlert />
-            <NoApprovedNFT />
             <ReceiverIsContract />
-            <Container className="nftSlectContaine">
+            <NoApprovedNFT />
+            <Container
+                className={`nftSlectContaine ${
+                    undeployedUserStore ? " undeployedUserStore" : ""
+                } ${lockMainPannel ? " lockedX" : ""}`}
+            >
                 <ReturnBtn />
                 {widget && (
                     <>
@@ -225,7 +242,7 @@ function NFTaccount(props) {
                         <AccountModal />
                     </>
                 )}
-                <div className="row">
+                <div className="row account__container">
                     <div className="nftListCol col-lg-8">
                         {!isMobile && <NFTscreen />}
                         {/*isMobile && <MobileTransferBoard />*/}

@@ -50,9 +50,10 @@ export const wnft = [
 export const wnftPattern =
     "(wnfts.xp.network|nft.xp.network|staging-nft.xp.network|bridge-wnftapi)";
 
-export const biz = /(localhost|dev|staging|10\.0\.0)/.test(
+export const dev = /(localhost|dev|10\.0\.0|trycloudflare)/.test(
     window.location.hostname
 );
+export const biz = dev || /(staging)/.test(window.location.hostname);
 
 export const BridgeModes = {
     Staging: "staging",
@@ -174,9 +175,9 @@ export const chains = [
     },
     {
         type: "EVM",
-        key: "xDai",
+        key: "xDAI",
         text: "Gnosis",
-        value: "xDai",
+        value: "xDAI",
         nonce: 14,
         chainId: 100,
         order: 17,
@@ -442,18 +443,18 @@ export const chains = [
         newChain: false,
     },
     {
-        type: "EVM",
-        key: "Internet Computer",
-        text: "Internet Computer",
-        nonce: 30,
-        order: 0,
-        chainId: 1564830818,
-        tnChainId: 1305754875840118,
+        type: "ICP",
+        key: "ICP",
+        text: "ICP",
+        nonce: 28,
+        order: -5,
+        // chainId: 1564830818,
+        //tnChainId: 1305754875840118,
         image: { avatar: true, src: InternetComputer },
-        testNet: false,
-        mainnet: false,
-        // newChain: true,
-        coming: true,
+        testNet: dev,
+        mainnet: dev,
+        newChain: dev,
+        coming: !biz,
     },
     {
         type: "APTOS",
@@ -462,10 +463,9 @@ export const chains = [
         nonce: 0x22,
         order: 0,
         image: { avatar: true, src: Aptos },
-        testNet: biz,
-        mainnet: biz,
-        coming: !biz,
-        newChain: biz,
+        testNet: dev,
+        mainnet: dev,
+        coming: !dev,
     },
     {
         type: "NEAR",

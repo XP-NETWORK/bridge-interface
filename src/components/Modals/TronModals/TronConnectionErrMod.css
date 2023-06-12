@@ -33,6 +33,7 @@
     font-weight: 400;
     line-height: 26px;
     text-align: center;
+    margin: 1px;
 }
 
 .tron-connection-error__body.install{

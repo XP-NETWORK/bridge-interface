@@ -3,6 +3,7 @@ import {
     modalConnectors,
     walletConnectProvider,
 } from "@web3modal/ethereum";
+
 import * as allChains from "wagmi/chains";
 import { configureChains, createClient } from "wagmi";
 import { chains } from "../../values";

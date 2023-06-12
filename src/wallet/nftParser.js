@@ -49,8 +49,6 @@ export const parseNFT = async (
                     nft: { native },
                 } = unwraped;
 
-                const originChain = native.chainId;
-
                 let nftData;
 
                 try {
@@ -67,11 +65,6 @@ export const parseNFT = async (
                     console.log(nftData, "");
                 }
                 if (nftData === "no NFT with that data was found") {
-                    /*if (!nft.uri) {
-            evm.init(factory);
-            nft = await evm.getUri(nft, nft.collectionIdent);
-          }*/
-
                     nftData = await cache.add(
                         unwraped.nft,
                         account,
@@ -86,7 +79,15 @@ export const parseNFT = async (
                         return undefined;
                 }
 
-                return { ...nftData, originChain };
+                return {
+                    ...nftData,
+                    wrapped: native.isWrappedNft
+                        ? {
+                              origin: native.chainId,
+                              contract: native.contract,
+                          }
+                        : undefined,
+                };
             })(),
             !testnet
                 ? !cache.isRestricted(nft.uri)
@@ -109,7 +110,7 @@ export const parseNFT = async (
         nftObj = {
             ...nft,
             ...(nftData?.metaData || nftData),
-            origin: nft.native.origin,
+            origin: nftData?.wrapped?.origin || nft.native.chainId,
             wrapped: nftData?.wrapped,
             dataLoaded: true,
             whitelisted,

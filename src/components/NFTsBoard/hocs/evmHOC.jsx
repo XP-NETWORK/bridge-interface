@@ -7,22 +7,32 @@ import { setDiscountLeftUsd } from "../../../store/reducers/discountSlice";
 
 import { ChainType } from "xp.network";
 
-export const withEVM = (Wrapped) =>
-  function CBU(props) {
-    const discounts = async (dispatch, _, account) => {
-      if (account) {
-        const data = await checkXpNetLocked(account);
-        dispatch(setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25)));
-      }
-    };
+import DeployUserStore from "../../TransferBoard/DeployUserStore";
 
-    return (
-      <Wrapped
-        {...props}
-        chainSpecific={{
-          ...(props.chainSpecific || {}),
-          [ChainType.EVM]: discounts,
-        }}
-      />
-    );
-  };
+export const withEVM = (Wrapped) =>
+    function CBU(props) {
+        const discounts = async (dispatch, _, account) => {
+            if (account) {
+                const data = await checkXpNetLocked(account);
+                dispatch(
+                    setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25))
+                );
+            }
+        };
+
+        return (
+            <Wrapped
+                {...props}
+                chainSpecificRender={{
+                    ...(props.chainSpecificRender || {}),
+                    [ChainType.EVM]: {
+                        DeployUserStore,
+                    },
+                }}
+                chainSpecific={{
+                    ...(props.chainSpecific || {}),
+                    [ChainType.EVM]: discounts,
+                }}
+            />
+        );
+    };

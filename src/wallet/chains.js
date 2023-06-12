@@ -271,41 +271,42 @@ export const allchains = [
         ],
     },
 
-    {
-        name: "Gnosis",
-        chain: "Gnosis",
-        network: "mainnet",
-        rpcUrls: [
-            "https://rpc.xdaichain.com",
-            "https://xdai.poanetwork.dev",
-            "wss://rpc.xdaichain.com/wss",
-            "wss://xdai.poanetwork.dev/wss",
-            "http://xdai.poanetwork.dev",
-            "https://dai.poa.network",
-            "ws://xdai.poanetwork.dev:8546",
-        ],
-        faucets: [
-            "https://free-online-app.com/faucet-for-eth-evm-chains/",
-            "https://xdai-app.herokuapp.com/faucet",
-        ],
-        nativeCurrency: {
-            name: "xDAI",
-            symbol: "xDAI",
-            decimals: 18,
-        },
-        infoURL: "https://forum.poa.network/c/xdai-chain",
-        shortName: "xdai",
-        chainId: 100,
-        networkId: 100,
-        slip44: 700,
-        explorers: [
-            {
-                name: "blockscout",
-                url: "https://blockscout.com/poa/xdai",
-                standard: "EIP3091",
-            },
-        ],
+  {
+    name: "Gnosis",
+    chain: "Gnosis",
+    network: "mainnet",
+    rpcUrls: [
+      "https://rpc.gnosischain.com",
+      "https://rpc.xdaichain.com",
+      "https://xdai.poanetwork.dev",
+      "wss://rpc.xdaichain.com/wss",
+      "wss://xdai.poanetwork.dev/wss",
+      "http://xdai.poanetwork.dev",
+      "https://dai.poa.network",
+      "ws://xdai.poanetwork.dev:8546",
+    ],
+    faucets: [
+      "https://free-online-app.com/faucet-for-eth-evm-chains/",
+      "https://xdai-app.herokuapp.com/faucet",
+    ],
+    nativeCurrency: {
+      name: "xDAI",
+      symbol: "xDAI",
+      decimals: 18,
     },
+    infoURL: "https://forum.poa.network/c/xdai-chain",
+    shortName: "xdai",
+    chainId: 100,
+    networkId: 100,
+    slip44: 700,
+    explorers: [
+      {
+        name: "blockscout",
+        url: "https://blockscout.com/poa/xdai",
+        standard: "EIP3091",
+      },
+    ],
+  },
 
     {
         name: "Velas EVM Mainnet",

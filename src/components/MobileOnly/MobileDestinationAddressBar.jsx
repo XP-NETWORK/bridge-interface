@@ -6,36 +6,25 @@ import {
     setSwitchDestination,
     setError,
     setIsInvalidAddress,
-    setReceiverIsContract,
 } from "../../store/reducers/generalSlice";
 import ChainSwitch from "../Buttons/ChainSwitch";
 import RedClose from "../../assets/img/icons/RedClose.svg";
 import "./Mobile.css";
 import {
-    checkIfContractAddress,
     generalValidation,
     inputFilter,
     validateFunctions,
+    maxChainAddressLengths,
 } from "../../services/addressValidators";
-import { withServices } from "../App/hocs/withServices";
+
 import PropTypes from "prop-types";
 
-function MobileDestinationAddressBar({ serviceContainer }) {
-    const { bridge } = serviceContainer;
-    const [destinationProvider, setDestinationProvider] = useState("");
-
+function MobileDestinationAddressBar() {
     const dispatch = useDispatch();
     const to = useSelector((state) => state.general.to);
     let receiver = useSelector((state) => state.general.receiver);
     const isInvalid = useSelector((state) => state.general.isInvalid);
-
-    const checkIfReceiverIsContract = async (address) => {
-        let isContract = await checkIfContractAddress(
-            address,
-            destinationProvider.connection.url
-        );
-        dispatch(setReceiverIsContract(isContract));
-    };
+    let [maxLength, setMaxLength] = useState(0);
 
     const handleChange = (e) => {
         try {
@@ -46,11 +35,6 @@ function MobileDestinationAddressBar({ serviceContainer }) {
                     if (validateFunc) {
                         dispatch(setIsInvalidAddress(validateFunc(address)));
                         dispatch(setReceiver(address));
-                        if (validateFunc(address) && to.type === "EVM") {
-                            checkIfReceiverIsContract(address);
-                        } else {
-                            dispatch(setReceiverIsContract(false));
-                        }
                     }
                 }
             }
@@ -68,10 +52,7 @@ function MobileDestinationAddressBar({ serviceContainer }) {
     useEffect(() => {
         dispatch(setReceiver(""));
         dispatch(setIsInvalidAddress(true));
-        bridge.getChain(to.nonce).then((chain) => {
-            const provider = chain.chain.getProvider();
-            setDestinationProvider(provider);
-        });
+        setMaxLength(maxChainAddressLengths[to.type]);
     }, [to]);
 
     useEffect(() => {
@@ -99,6 +80,7 @@ function MobileDestinationAddressBar({ serviceContainer }) {
                     value={receiver}
                     onChange={(e) => handleChange(e)}
                     type="text"
+                    maxLength={maxLength}
                     placeholder="Paste destination address"
                     className={
                         isInvalid ? "reciverAddress" : "reciverAddress invalid"
@@ -121,4 +103,4 @@ MobileDestinationAddressBar.propTypes = {
     serviceContainer: PropTypes.object,
 };
 
-export default withServices(MobileDestinationAddressBar);
+export default MobileDestinationAddressBar;

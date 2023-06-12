@@ -7,7 +7,7 @@ import fina from "../../assets/img/wallet/fina.svg";
 import { getChainObject } from "../values";
 import { useCheckMobileScreen } from "../Settings/hooks";
 import PropTypes from "prop-types";
-import { getRightPath, promisify } from "../../wallet/helpers";
+import { getRightPath, promisify } from "../../utils";
 
 import { withServices } from "../App/hocs/withServices";
 
@@ -45,6 +45,7 @@ function CosmosWallet({ wallet, serviceContainer }) {
         const key = chain.key.toUpperCase();
         lockBtn(true);
         if (window.keplr) {
+            console.log(window.keplr, "keplr");
             try {
                 await window.keplr.enable(chainId);
                 const offlineSigner = window.keplr.getOfflineSigner(chainId);
@@ -63,7 +64,7 @@ function CosmosWallet({ wallet, serviceContainer }) {
                     walletAddress: address,
                     //encryptionUtils: window.getEnigmaUtils(chain),
                 });
-
+                console.log(signer, "signer");
                 dispatch(setAccount(address));
                 dispatch(setKeplrWallet(signer));
                 handleGA4Event(

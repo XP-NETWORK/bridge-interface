@@ -13,7 +13,7 @@ import {
 } from "../../../store/reducers/generalSlice";
 import { Chain } from "xp.network";
 import { useNavigate } from "react-router";
-import { getRightPath } from "../../../wallet/helpers";
+import { getRightPath } from "../../../utils";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { peraWallet } from "../../Wallet/ALGOWallet/AlgorandConnectors";
 import { chains } from "../../values";

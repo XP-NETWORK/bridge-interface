@@ -18,7 +18,7 @@ import { getChainObject } from "../../../components/values";
 import QRCode from "qrcode";
 import { ExtensionProvider } from "@elrondnetwork/erdjs";
 import { useNavigate } from "react-router";
-import { getRightPath } from "../../../wallet/helpers";
+import { getRightPath } from "../../../utils";
 import { WalletConnectV2Provider } from "@multiversx/sdk-wallet-connect-provider";
 import { wcId } from "../EVMWallet/evmConnectors";
 import {

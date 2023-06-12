@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import BigNumber from "bignumber.js";
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
     setHederaClaimables,
     setNFTSetToggler,
-    setTransferLoaderModal,
+    ///setTransferLoaderModal,
 } from "../../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,48 +18,10 @@ const CheckClaimables = withServices(({ serviceContainer }) => {
     const dispatch = useDispatch();
     const getClaimables = () => {
         bridge.getChain(Chain.HEDERA).then(async (wrapper) => {
-            //const hashConnect = 9.signer.hashconnect;
-            /*const cb = async (payload) => {
-                if (!payload) return;
-                const message = await hashConnect.messages.decode(
-                    payload,
-                    hashConnect
-                );
-                if (!message.data?.receipt || message.data.response) return;
-                if (message.data?.receipt) {
-                    let notEmpty = true;
-                    let index = 1;
-                    const tokens = [];
-
-                    while (notEmpty) {
-                        const claimableIndex = new Uint8Array(
-                            Buffer.from(message.data.receipt, "base64")
-                        ).subarray(
-                            (index != null ? index : 0) * 32,
-                            (index != null ? index : 0) * 32 + 32
-                        );
-
-                        const token = Buffer.from(claimableIndex).toString(
-                            "hex"
-                        );
-                        const hexToken = "0x" + token;
-
-                        token &&
-                            new BigNumber(hexToken).gt(new BigNumber(0)) &&
-                            tokens.push(hexToken);
-
-                        if (!token) notEmpty = false;
-                        index++;
-                    }
-
-                    tokens.length &&
-                        dispatch(setHederaClaimables(tokens.slice(1)));
-                }
-            };*/
-            // hashConnect.relay.payload.on(cb);
-            dispatch(setTransferLoaderModal(true));
+            //dispatch(setTransferLoaderModal(true));
             const claimables = await wrapper.getClaimables().catch(() => []);
-            dispatch(setTransferLoaderModal(false));
+            //dispatch(setTransferLoaderModal(false));
+
             claimables?.length &&
                 dispatch(
                     setHederaClaimables(
@@ -77,11 +39,16 @@ const CheckClaimables = withServices(({ serviceContainer }) => {
     );
 });
 
-const RenderClaimables = withServices(({ serviceContainer }) => {
+const RenderClaimables = withServices(({ serviceContainer, setClaimables }) => {
     const { bridge } = serviceContainer;
     const hederaClaimables = useSelector(
         (state) => state.general.hederaClaimables
     );
+
+    useEffect(() => {
+        setClaimables(hederaClaimables.length);
+    }, [hederaClaimables]);
+
     const dispatch = useDispatch();
     const clickClaim = (token) => {
         bridge.getChain(Chain.HEDERA).then(async (wrapper) => {
@@ -95,6 +62,7 @@ const RenderClaimables = withServices(({ serviceContainer }) => {
                     ...hederaClaimables.slice(index + 1),
                 ])
             );
+
             await new Promise((r) => setTimeout(r, 1000));
             dispatch(setNFTSetToggler());
         });
