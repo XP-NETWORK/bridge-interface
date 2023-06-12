@@ -23,6 +23,7 @@ body {
 
 .sendNftCol {
     padding: 0 !important;
+    overflow: hidden;
 }
 
 .nftListCol {
@@ -441,6 +442,7 @@ span.closeBox svg {
     appearance: none;
     margin: 1px 0px;
     margin-bottom: 20px;
+    overflow: hidden;
     margin-bottom: 10px;
 }
 

@@ -318,6 +318,10 @@
     background: rgba(255, 255, 255, 0.7);
 }
 
+.undeployedUserStore .sendNftCol::before {
+    border-radius: 20px;
+}
+
 .deploy-container {
     position: relative;
     z-index: 155;
