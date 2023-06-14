@@ -41,11 +41,7 @@ export const ELROND = "MultiversX";
 export const TEZOS = "TEZOS";
 
 export const stagingWNFT = "https://staging-nft.xp.network";
-export const wnft = [
-    "https://wnfts.xp.network",
-    "https://nft.xp.network",
-    "https://bridge-wnftapi",
-];
+export const wnft = ["https://wnfts.xp.network", "https://nft.xp.network"];
 
 export const wnftPattern =
     "(wnfts.xp.network|nft.xp.network|staging-nft.xp.network|bridge-wnftapi)";

@@ -110,8 +110,9 @@ class Bridge {
                 nft.native.contract === "SingleNFt"
             )
                 return true;
+
             return await chain.isNftWhitelisted(nft);
-            //const x = await chain.isNftWhitelisted(nft);
+            // const x = await chain.isNftWhitelisted(nft);
             //console.log(x, "x");
             //return x;
         } catch (e) {

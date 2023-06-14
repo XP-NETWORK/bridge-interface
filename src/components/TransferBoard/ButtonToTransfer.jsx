@@ -149,7 +149,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
             if (txnHashArr[0] && !result) {
                 dispatch(setTxnHash({ txn: "failed", nft }));
             } else if (result) {
-                const resultObject = fromChain.handlerResult(result);
+                const resultObject = fromChain.handlerResult(result, account);
                 console.log(resultObject, "resultObject");
 
                 dispatch(setTxnHash({ txn: resultObject, nft, mw }));

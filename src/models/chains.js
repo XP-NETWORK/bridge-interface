@@ -20,6 +20,10 @@ class AbstractChain {
         this.bridge = bridge;
     }
 
+    adaptAddress(address) {
+        return address;
+    }
+
     async connect() {
         throw new Error("connect method not implemented");
     }
@@ -280,7 +284,10 @@ class AbstractChain {
             let mintWith = undefined;
             let mwToUI = undefined;
 
-            if (!nft.wrapped && toChain.showMintWith) {
+            if (
+                !nft.wrapped //&&
+                //(this.chain.forceGetMintWith || toChain.showMintWith)
+            ) {
                 mintWith = await this.getMappedContract(nft, toChain.nonce);
                 mwToUI = mintWith?.split(",")?.at(0);
             }
@@ -963,26 +970,28 @@ class ICP extends AbstractChain {
         super(params);
     }
 
-    /*async getNFTs() {
-        return [
-            {
-                collectionIdent: "54aho-4iaaa-aaaap-aa3va-cai",
-                native: {
-                    canisterId: "54aho-4iaaa-aaaap-aa3va-cai",
-                    tokenId: "4",
-                    chainId: "28",
-                },
-                uri: "https://meta.polkamon.com/meta?id=10002366777",
-            },
-        ];
-    }*/
+    async getNFTs(address) {
+        const [nfts, wrappedNfts] = await Promise.all([
+            super.getNFTs(address),
+            this.chain.nftList(address),
+        ]);
+
+        return nfts.concat(wrappedNfts);
+    }
 
     async preParse(nft) {
+        const metadata = nft.native.metadata || {};
+        const { url, image, thumb } = metadata;
+
         return {
             ...nft,
             native: {
                 ...nft.native,
                 contract: nft.collectionIdent,
+            },
+            metaData: {
+                ...metadata,
+                image: url || image || thumb,
             },
         };
     }
@@ -1008,6 +1017,20 @@ class ICP extends AbstractChain {
         const { nft } = args;
         await this.prepareAgent(nft.native.canisterId);
         return await super.transfer(args);
+    }
+
+    adaptAddress(address) {
+        try {
+            return this.chain.getAccountIdentifier(address);
+        } catch {
+            return address;
+        }
+    }
+
+    handlerResult(_, address) {
+        return {
+            hash: this.adaptAddress(address),
+        };
     }
 }
 

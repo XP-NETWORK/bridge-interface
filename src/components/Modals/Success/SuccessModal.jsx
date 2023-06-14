@@ -26,11 +26,6 @@ export default withServices(function SuccessModal({ serviceContainer }) {
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
 
-    const algorandAccount = useSelector(
-        (state) => state.general.algorandAccount
-    );
-    const elrondAccount = useSelector((state) => state.general.elrondAccount);
-    const tronWallet = useSelector((state) => state.general.tronWallet);
     const account = useSelector((state) => state.general.account);
     const receiver = useSelector((state) => state.general.receiver);
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
@@ -52,19 +47,9 @@ export default withServices(function SuccessModal({ serviceContainer }) {
         },]*/
 
     const testnet = useSelector((state) => state.general.testNet);
-    const secretAccount = useSelector((state) => state.general.secretAccount);
-    const tezosAccount = useSelector((state) => state.general.tezosAccount);
-    const tonAccount = useSelector((state) => state.general.tonAccount);
 
-    const address =
-        tonAccount ||
-        account ||
-        algorandAccount ||
-        elrondAccount ||
-        tronWallet ||
-        secretAccount ||
-        tezosAccount ||
-        "";
+    const [formatedAddress, setAddress] = useState(account);
+    const [formatedReceiver, setReceiver] = useState(receiver);
 
     const [links, setLinks] = useState({
         txFrom: "",
@@ -103,8 +88,8 @@ export default withServices(function SuccessModal({ serviceContainer }) {
 
     const tx = getTX();
     const shortTx = StringShortener(tx, 6);
-    const shortAddress = StringShortener(address, 6);
-    const shortReceiver = StringShortener(receiver, 6);
+    const shortAddress = StringShortener(formatedAddress, 6);
+    const shortReceiver = StringShortener(formatedReceiver, 6);
 
     useEffect(() => {
         const incoming = async (e) => {
@@ -142,6 +127,9 @@ export default withServices(function SuccessModal({ serviceContainer }) {
             const addressBaseTo = testnet
                 ? toChainParams?.tnBlockExplorerUrlAddr
                 : toChainParams?.blockExplorerUrlAddr;
+
+            setAddress(fromChain.adaptAddress(formatedAddress));
+            setReceiver(toChain.adaptAddress(formatedReceiver));
 
             setLinks({
                 txFrom: txBaseFrom,
@@ -221,8 +209,8 @@ export default withServices(function SuccessModal({ serviceContainer }) {
                         <a
                             href={
                                 typeof links.addressFrom === "function"
-                                    ? links.addressFrom(address)
-                                    : links.addressFrom + address
+                                    ? links.addressFrom(formatedAddress)
+                                    : links.addressFrom + formatedAddress
                             }
                             className="success-hash"
                             target="_blank"
@@ -246,8 +234,8 @@ export default withServices(function SuccessModal({ serviceContainer }) {
                             className="success-hash"
                             href={
                                 typeof links.addressTo === "function"
-                                    ? links.addressTo(receiver)
-                                    : links.addressTo + receiver
+                                    ? links.addressTo(formatedReceiver)
+                                    : links.addressTo + formatedReceiver
                             }
                             target="_blank"
                             rel="noreferrer"

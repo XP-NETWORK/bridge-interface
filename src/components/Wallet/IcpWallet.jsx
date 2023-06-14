@@ -89,15 +89,6 @@ function IcpWallet({ serviceContainer }) {
 
         dispatch(setAccount(account.address));
 
-        /*await account.signer.createAgent({
-            host: "https://ic0.app",
-            whitelist: ["54aho-4iaaa-aaaap-aa3va-cai"],
-        });
-
-        await chainWrapper.chain.mintNft(account.signer, {
-            uri: "https://meta.polkamon.com/meta?id=10002366777",
-        });*/
-
         if (!from) dispatch(setFrom(getChainObject(Chain.DFINITY)));
 
         if (from && to) navigateToAccountRoute();
