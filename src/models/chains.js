@@ -24,6 +24,10 @@ class AbstractChain {
         return address;
     }
 
+    normalizeReceiver(address) {
+        return address;
+    }
+
     async connect() {
         throw new Error("connect method not implemented");
     }
@@ -226,7 +230,6 @@ class AbstractChain {
                     .toNumber(),
             };
         } catch (e) {
-            console.log("in estimateDeploy", e);
             return {
                 fees: "",
                 formatedFees: 0,
@@ -429,12 +432,17 @@ class EVM extends AbstractChain {
     }
 
     async isContract(address, toChain) {
-        if (!toChain.chain.getProvider) return false;
-        const code = await toChain.chain
-            .getProvider()
-            .getCode(address)
-            .catch(() => "0x");
-        return code !== "0x";
+        if (!toChain.chain?.getProvider?.getCode) return false;
+        try {
+            const code = await toChain.chain
+                .getProvider()
+                .getCode(address)
+                .catch(() => "0x");
+
+            return code !== "0x";
+        } catch (e) {
+            return false;
+        }
     }
 }
 
@@ -933,6 +941,10 @@ class HEDERA extends AbstractChain {
         super(params);
     }
 
+    normalizeReceiver(address) {
+        return this.chain.toSolidityAddress(address);
+    }
+
     async getClaimables() {
         try {
             return await this.chain.listHederaClaimableNFT(
@@ -971,12 +983,13 @@ class ICP extends AbstractChain {
     }
 
     async getNFTs(address) {
-        const [nfts, wrappedNfts] = await Promise.all([
+        const [nfts, wrappedNfts, umts] = await Promise.all([
             super.getNFTs(address),
             this.chain.nftList(address),
+            this.chain.nftList(address, this.chain.getParams().umt.toText()),
         ]);
 
-        return nfts.concat(wrappedNfts);
+        return nfts.concat(wrappedNfts).concat(umts);
     }
 
     async preParse(nft) {
@@ -988,11 +1001,18 @@ class ICP extends AbstractChain {
             native: {
                 ...nft.native,
                 contract: nft.collectionIdent,
+                chainId: "28",
             },
-            metaData: {
-                ...metadata,
-                image: url || image || thumb,
-            },
+            chainId: "28",
+            tokenId: nft.native?.tokenId,
+            contract: nft.collectionIdent,
+            metaData:
+                Object.keys(metadata) > 0
+                    ? {
+                          ...metadata,
+                          image: url || image || thumb,
+                      }
+                    : undefined,
         };
     }
 

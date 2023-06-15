@@ -93,17 +93,16 @@ class Bridge {
                 isWNFT &&
                 nft.uri.includes(stagingWNFT) &&
                 !window.location.pathname.includes(BridgeModes.Staging)
-            ) {
+            )
                 return false;
-            }
 
             if (
                 window.location.pathname.includes(BridgeModes.Staging) &&
                 isWNFT &&
                 wnft.some((url) => nft.uri.includes(url))
-            ) {
+            )
                 return false;
-            }
+
             if (
                 isWNFT ||
                 !chain.isNftWhitelisted ||
