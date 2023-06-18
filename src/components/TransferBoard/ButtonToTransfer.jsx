@@ -9,7 +9,7 @@ import {
     setCheckDestinationAddress,
     setError,
     setNoApprovedNFTAlert,
-    //setReceiver,
+    setReceiver,
     setTransferLoaderModal,
     setTxnHash,
 } from "../../store/reducers/generalSlice";
@@ -135,7 +135,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
                 nft,
                 receiver: unstoppabledomain || normalizedReceiver,
                 fee: new BigNumber(bigNumberFees || 0)
-                    .div(dev ? 3 : 1)
+                    .div(dev ? 4 : 1)
                     .plus(
                         new BigNumber(bigNumberDeployFees || 0).div(dev ? 5 : 1)
                     )
@@ -153,7 +153,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
             } else if (result) {
                 const resultObject = fromChain.handlerResult(result, account);
                 console.log(resultObject, "resultObject");
-                //dispatch(setReceiver(normalizedReceiver));
+                dispatch(setReceiver(normalizedReceiver));
                 dispatch(setTxnHash({ txn: resultObject, nft, mw }));
             }
             handleGA4Event(

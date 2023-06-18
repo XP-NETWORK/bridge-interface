@@ -8,9 +8,10 @@ import {
     setLockMainPannel,
     setError,
     setUndeployedUserStore,
+    cleanSelectedNFTList,
 } from "../../store/reducers/generalSlice";
 
-import { ReactComponent as InfLithComp } from "../../assets/img/icons/Inf.svg";
+import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
 
 const DeployUserStore = ({ chainWrapper, nft, chainParams }) => {
     const [show, setShow] = useState(false);
@@ -56,6 +57,14 @@ const DeployUserStore = ({ chainWrapper, nft, chainParams }) => {
         };
     }, [nft]);
 
+    const cancelDeployHandler = () => {
+        document
+            .querySelectorAll(".nft-box__wrapper.selected")
+            .forEach((el) => el.classList.remove("selected"));
+
+        dispatch(cleanSelectedNFTList());
+    };
+
     const deployHandler = async () => {
         dispatch(setTransferLoaderModal(true));
         try {
@@ -86,12 +95,15 @@ const DeployUserStore = ({ chainWrapper, nft, chainParams }) => {
 
     return (
         <div className="deploy-container" style={!show ? OFF : {}}>
-            <div className="deploy-userStore_inf ">
-                {/* before */}
-                <InfLithComp className="svgWidget nftInfIcon" alt="info" />
-                {/* after */}
+            <div className="approval__header">
+                {" "}
+                <h3>Origin Deployment Fee</h3>
+                <Close
+                    onClick={cancelDeployHandler}
+                    className="svgWidget closeIcon"
+                />
             </div>
-            <h3>Origin Deployment Fee</h3>
+
             <p>
                 Pay one-time origin chain deployment fee to get your NFT
                 collection integrated with the bridge.{" "}

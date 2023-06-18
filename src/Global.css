@@ -1802,7 +1802,7 @@ span.transPend {
 }
 
 span.CloseModal:hover svg path,
-.closeIcon:hover svg path,
+.closeIcon:hover path,
 span.closeBox:hover svg path {
     fill: #5b6472;
     fill-opacity: 1;

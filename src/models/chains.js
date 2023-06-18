@@ -28,6 +28,10 @@ class AbstractChain {
         return address;
     }
 
+    adaptDestHash(hash) {
+        return hash;
+    }
+
     async connect() {
         throw new Error("connect method not implemented");
     }
@@ -656,6 +660,29 @@ class Algorand extends AbstractChain {
         super(params);
     }
 
+    async unwrap(nft, data) {
+        let tokenId = data.wrapped?.assetID || data.wrapped?.source_token_id;
+        let contract = tokenId;
+        return {
+            nft: {
+                ...nft,
+                collectionIdent: contract,
+                uri: data.wrapped?.original_uri,
+                wrapped: data.wrapped,
+                native: {
+                    ...nft.native,
+                    chainId: data.wrapped?.origin,
+                    contract,
+                    tokenId,
+                    uri: data.wrapped?.original_uri,
+                },
+            },
+            chainId: data.wrapped?.origin,
+            tokenId,
+            contract,
+        };
+    }
+
     async getClaimables(account) {
         try {
             return await this.bridge.claimableAlgorandNfts(account);
@@ -1045,6 +1072,10 @@ class ICP extends AbstractChain {
         } catch {
             return address;
         }
+    }
+
+    adaptDestHash(_, receiver) {
+        return this.adaptAddress(receiver);
     }
 
     handlerResult(_, address) {

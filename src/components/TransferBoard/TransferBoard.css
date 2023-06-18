@@ -16,6 +16,7 @@
 .transfer-board > form {
     display: contents;
 }
+
 .destination-props {
     padding: 0 0 22px 0;
     margin-bottom: 20px;
@@ -410,7 +411,6 @@
 
 .deploy-container h3 {
     font-size: 14px;
-    margin-bottom: 14px;
 }
 
 .deploy-container p {

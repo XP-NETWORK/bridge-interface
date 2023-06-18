@@ -256,6 +256,7 @@ export default withServices(function SuccessModal({ serviceContainer }) {
                                       nft={nft}
                                       links={links}
                                       testnet={testnet}
+                                      receiver={formatedReceiver}
                                   />
                               ))
                             : ""}

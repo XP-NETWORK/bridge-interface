@@ -6,7 +6,7 @@ import HigherHEDERA from "./HigherHEDERA";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 
-import { biz } from "../../values";
+//import { biz } from "../../values";
 
 function Hashpack({ connect }) {
     const [loading, setLoading] = useState(false);
@@ -17,9 +17,9 @@ function Hashpack({ connect }) {
     let hashConnect = new HashConnect(true);
 
     const getStyle = () => {
-        if (!biz) {
+        /*if (!biz) {
             return { display: "none" };
-        }
+        }*/
         if (temporaryFrom?.type === "Hedera") {
             return {};
         } else if (temporaryFrom && temporaryFrom?.type !== "Hedera") {
