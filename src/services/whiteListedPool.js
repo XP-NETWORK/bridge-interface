@@ -7,7 +7,7 @@ class WhitelistedPool {
     whitelistContract = (contract) => this.whitelisted.add(contract);
 
     add = (cb) => async (...args) => {
-        const contract = args[1]?.native?.contract;
+        const contract = args[1]?.native?.contract || args[1].contract;
 
         if (this.check(contract)) return true;
         if (!contract) return false;

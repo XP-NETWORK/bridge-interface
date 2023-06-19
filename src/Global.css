@@ -921,6 +921,7 @@ li.nftSelecItem .Close:hover {
     padding: 0 30px 0 15px;
     max-height: 297px;
     overflow: auto;
+    overflow-x: hidden;
 }
 
 .token-id-inf {
@@ -1802,7 +1803,7 @@ span.transPend {
 }
 
 span.CloseModal:hover svg path,
-.closeIcon:hover svg path,
+.closeIcon:hover path,
 span.closeBox:hover svg path {
     fill: #5b6472;
     fill-opacity: 1;

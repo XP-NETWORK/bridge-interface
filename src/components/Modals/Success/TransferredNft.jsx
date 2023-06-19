@@ -1,20 +1,29 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import { useSelector } from "react-redux";
-import PropTypes from "prop-types";
 import "./SuccessNFT.css";
 import TxStatus from "./TxStatus";
 
 import { StringShortener } from "../../../utils";
 import Tooltip from "../AccountModal/Tooltip";
 
-export default function TransferredNft({ nft, links }) {
+import { withServices } from "../../App/hocs/withServices";
+
+export default withServices(function TransferredNft({
+    nft,
+    links,
+    serviceContainer,
+    receiver,
+}) {
+    const { bridge } = serviceContainer;
     const { image, animation_url, txn, name, mintWith } = nft;
     const from = useSelector((state) => state.general.from);
+    const to = useSelector((state) => state.general.to);
 
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
 
     const [txnStatus, setTxnStatus] = useState("pending");
+    const [toChain, setToChain] = useState(null);
     const [hashes, setHashes] = useState({
         depHash: "",
         destHash: "",
@@ -51,7 +60,7 @@ export default function TransferredNft({ nft, links }) {
 
                     setHashes({
                         depHash: tx.hash,
-                        destHash: tx.toHash,
+                        destHash: toChain.adaptDestHash(tx.toHash, receiver),
                     });
                 }
             }
@@ -61,8 +70,12 @@ export default function TransferredNft({ nft, links }) {
     };
 
     useEffect(() => {
-        checkStatus();
-    }, [txnHashArr]);
+        bridge.getChain(to.nonce).then((chain) => setToChain(chain));
+    }, []);
+
+    useEffect(() => {
+        toChain && checkStatus();
+    }, [txnHashArr, toChain]);
 
     const depHash = hashes?.depHash || txn?.hash;
 
@@ -140,9 +153,4 @@ export default function TransferredNft({ nft, links }) {
             )}
         </div>
     );
-}
-TransferredNft.propTypes = {
-    nft: PropTypes.object,
-    testnet: PropTypes.bool,
-    links: PropTypes.object,
-};
+});

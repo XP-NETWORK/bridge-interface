@@ -20,6 +20,18 @@ class AbstractChain {
         this.bridge = bridge;
     }
 
+    adaptAddress(address) {
+        return address;
+    }
+
+    normalizeReceiver(address) {
+        return address;
+    }
+
+    adaptDestHash(hash) {
+        return hash;
+    }
+
     async connect() {
         throw new Error("connect method not implemented");
     }
@@ -142,10 +154,9 @@ class AbstractChain {
 
     async balance(account) {
         try {
+            if (!account) return 0;
             const res = await this.chain.balance(account);
-
             const decimals = CHAIN_INFO.get(this.nonce)?.decimals;
-
             return res.dividedBy(decimals).toNumber();
         } catch (e) {
             console.log(e, "error in balance");
@@ -222,7 +233,6 @@ class AbstractChain {
                     .toNumber(),
             };
         } catch (e) {
-            console.log("in estimateDeploy", e);
             return {
                 fees: "",
                 formatedFees: 0,
@@ -280,7 +290,10 @@ class AbstractChain {
             let mintWith = undefined;
             let mwToUI = undefined;
 
-            if (!nft.wrapped && toChain.showMintWith) {
+            if (
+                !nft.wrapped //&&
+                //(this.chain.forceGetMintWith || toChain.showMintWith)
+            ) {
                 mintWith = await this.getMappedContract(nft, toChain.nonce);
                 mwToUI = mintWith?.split(",")?.at(0);
             }
@@ -422,12 +435,17 @@ class EVM extends AbstractChain {
     }
 
     async isContract(address, toChain) {
-        if (!toChain.chain.getProvider) return false;
-        const code = await toChain.chain
-            .getProvider()
-            .getCode(address)
-            .catch(() => "0x");
-        return code !== "0x";
+        if (!toChain.chain?.getProvider?.getCode) return false;
+        try {
+            const code = await toChain.chain
+                .getProvider()
+                .getCode(address)
+                .catch(() => "0x");
+
+            return code !== "0x";
+        } catch (e) {
+            return false;
+        }
     }
 }
 
@@ -639,6 +657,29 @@ class Tron extends AbstractChain {
 class Algorand extends AbstractChain {
     constructor(params) {
         super(params);
+    }
+
+    async unwrap(nft, data) {
+        let tokenId = data.wrapped?.assetID || data.wrapped?.source_token_id;
+        let contract = tokenId;
+        return {
+            nft: {
+                ...nft,
+                collectionIdent: contract,
+                uri: data.wrapped?.original_uri,
+                wrapped: data.wrapped,
+                native: {
+                    ...nft.native,
+                    chainId: data.wrapped?.origin,
+                    contract,
+                    tokenId,
+                    uri: data.wrapped?.original_uri,
+                },
+            },
+            chainId: data.wrapped?.origin,
+            tokenId,
+            contract,
+        };
     }
 
     async getClaimables(account) {
@@ -926,6 +967,10 @@ class HEDERA extends AbstractChain {
         super(params);
     }
 
+    normalizeReceiver(address) {
+        return this.chain.toSolidityAddress(address);
+    }
+
     async getClaimables() {
         try {
             return await this.chain.listHederaClaimableNFT(
@@ -963,27 +1008,37 @@ class ICP extends AbstractChain {
         super(params);
     }
 
-    /*async getNFTs() {
-        return [
-            {
-                collectionIdent: "54aho-4iaaa-aaaap-aa3va-cai",
-                native: {
-                    canisterId: "54aho-4iaaa-aaaap-aa3va-cai",
-                    tokenId: "4",
-                    chainId: "28",
-                },
-                uri: "https://meta.polkamon.com/meta?id=10002366777",
-            },
-        ];
-    }*/
+    async getNFTs(address) {
+        const [nfts, wrappedNfts, umts] = await Promise.all([
+            super.getNFTs(address),
+            this.chain.nftList(address),
+            this.chain.nftList(address, this.chain.getParams().umt.toText()),
+        ]);
+
+        return nfts.concat(wrappedNfts).concat(umts);
+    }
 
     async preParse(nft) {
+        const metadata = nft.native.metadata || {};
+        const { url, image, thumb } = metadata;
+
         return {
             ...nft,
             native: {
                 ...nft.native,
                 contract: nft.collectionIdent,
+                chainId: "28",
             },
+            chainId: "28",
+            tokenId: nft.native?.tokenId,
+            contract: nft.collectionIdent,
+            metaData:
+                Object.keys(metadata) > 0
+                    ? {
+                          ...metadata,
+                          image: url || image || thumb,
+                      }
+                    : undefined,
         };
     }
 
@@ -1008,6 +1063,24 @@ class ICP extends AbstractChain {
         const { nft } = args;
         await this.prepareAgent(nft.native.canisterId);
         return await super.transfer(args);
+    }
+
+    adaptAddress(address) {
+        try {
+            return this.chain.getAccountIdentifier(address);
+        } catch {
+            return address;
+        }
+    }
+
+    adaptDestHash(_, receiver) {
+        return this.adaptAddress(receiver);
+    }
+
+    handlerResult(_, address) {
+        return {
+            hash: this.adaptAddress(address),
+        };
     }
 }
 

@@ -8,6 +8,7 @@ import {
     setCheckDestinationAddress,
     setError,
     setNoApprovedNFTAlert,
+    setReceiver,
     setTransferLoaderModal,
     setTxnHash,
 } from "../../store/reducers/generalSlice";
@@ -134,12 +135,13 @@ export default compose(
             const unstoppabledomain = await getFromDomain(receiver, toChain);
             if (unstoppabledomainSwitch(unstoppabledomain)) return;
 
+            const normalizedReceiver = toChain.normalizeReceiver(receiver);
             const res = await fromChain.transfer({
                 toChain,
                 nft,
-                receiver: unstoppabledomain || receiver,
+                receiver: unstoppabledomain || normalizedReceiver,
                 fee: new BigNumber(bigNumberFees || 0)
-                    .div(dev ? 3 : 1)
+                    .div(dev ? 4 : 1)
                     .plus(
                         new BigNumber(bigNumberDeployFees || 0).div(dev ? 5 : 1)
                     )
@@ -154,9 +156,9 @@ export default compose(
             if (txnHashArr[0] && !result) {
                 dispatch(setTxnHash({ txn: "failed", nft }));
             } else if (result) {
-                const resultObject = fromChain.handlerResult(result);
+                const resultObject = fromChain.handlerResult(result, account);
                 console.log(resultObject, "resultObject");
-
+                dispatch(setReceiver(normalizedReceiver));
                 dispatch(setTxnHash({ txn: resultObject, nft, mw }));
                 setTxForWidget({
                     result: resultObject,

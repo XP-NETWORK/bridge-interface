@@ -86,7 +86,6 @@ export const checkXpNetLocked = async (account) => {
             const { data } = resp;
             return data;
         } catch (error) {
-            console.log(error);
             return;
         }
     }

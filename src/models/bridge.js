@@ -93,26 +93,26 @@ class Bridge {
                 isWNFT &&
                 nft.uri.includes(stagingWNFT) &&
                 !window.location.pathname.includes(BridgeModes.Staging)
-            ) {
+            )
                 return false;
-            }
 
             if (
                 window.location.pathname.includes(BridgeModes.Staging) &&
                 isWNFT &&
                 wnft.some((url) => nft.uri.includes(url))
-            ) {
+            )
                 return false;
-            }
+
             if (
                 isWNFT ||
                 !chain.isNftWhitelisted ||
                 nft.native.contract === "SingleNFt"
             )
                 return true;
+
             return await chain.isNftWhitelisted(nft);
             //const x = await chain.isNftWhitelisted(nft);
-            //console.log(x, "x");
+            //console.log(x, nft);
             //return x;
         } catch (e) {
             console.log(e, "in isWhitelisted");

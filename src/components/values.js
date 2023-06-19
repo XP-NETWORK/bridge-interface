@@ -41,11 +41,7 @@ export const ELROND = "MultiversX";
 export const TEZOS = "TEZOS";
 
 export const stagingWNFT = "https://staging-nft.xp.network";
-export const wnft = [
-    "https://wnfts.xp.network",
-    "https://nft.xp.network",
-    "https://bridge-wnftapi",
-];
+export const wnft = ["https://wnfts.xp.network", "https://nft.xp.network"];
 
 export const wnftPattern =
     "(wnfts.xp.network|nft.xp.network|staging-nft.xp.network|bridge-wnftapi)";
@@ -364,7 +360,7 @@ export const chains = [
         text: "ABEY",
         value: "Abeychain",
         nonce: 33,
-        order: 23,
+        order: 54,
         chainId: 179,
         tnChainId: 178,
         image: { avatar: true, src: Abey },
@@ -408,12 +404,12 @@ export const chains = [
         key: "Hedera",
         text: "Hedera",
         nonce: 29,
-        order: 0,
+        order: -6,
         image: { avatar: true, src: HBAR },
-        testNet: biz,
-        mainnet: biz,
-        newChain: biz,
-        coming: !biz,
+        testNet: true,
+        mainnet: true,
+        newChain: true,
+        coming: false,
     },
     {
         type: "EVM",

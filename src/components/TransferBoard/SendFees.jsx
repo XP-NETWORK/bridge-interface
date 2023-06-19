@@ -30,6 +30,8 @@ function SendFees(props) {
 
     const to = useSelector((state) => state.general.to);
     const from = useSelector((state) => state.general.from);
+    const testnet = useSelector((state) => state.general.testNet);
+
     const account = useSelector((state) => state.general.account);
     const selectedNFTList = useSelector(
         (state) => state.general.selectedNFTList
@@ -166,6 +168,7 @@ function SendFees(props) {
     }, [selectedNFTList, to]);
 
     const renderDeployUserStore =
+        !testnet &&
         chainWrapper?.disableWhiteList &&
         DeployUserStore &&
         Boolean(selectedNFTList.length);
