@@ -57,19 +57,20 @@ function NFTdetails({ nftInf, details }) {
 
     const symbol = nftInf.symbol || native?.symbol;
 
-    const attrs = useMemo(
-        () =>
-            Array.isArray(attributes) &&
-            attributes?.map((attr) =>
-                attr?.key
-                    ? {
-                          ...attr,
-                          trait_type: attr?.key,
-                      }
-                    : attr
-            ),
-        [attributes]
-    );
+    const attrs =
+        useMemo(
+            () =>
+                Array.isArray(attributes) &&
+                attributes?.map((attr) =>
+                    attr?.key
+                        ? {
+                              ...attr,
+                              trait_type: attr?.key,
+                          }
+                        : attr
+                ),
+            [attributes]
+        ) || [];
 
     return (
         <>
@@ -153,25 +154,28 @@ function NFTdetails({ nftInf, details }) {
                                     <p>{original_uri}</p>
                                 </div>
                             )}
-                            {originalChain && (
-                                <div className="nftInfDesc nftInfBox">
-                                    <label>Original Chain</label>
-                                    <div style={{ display: "flex" }}>
-                                        <img
-                                            style={{
-                                                marginRight: "4px",
-                                                width: "29px",
-                                            }}
-                                            src={originalChain.image?.src}
-                                            alt={
-                                                originalChain.key +
-                                                "originIconDetails"
-                                            }
-                                        />
-                                        <p>{originalChain.key}</p>
+                            {originalChain &&
+                                !attrs.find(
+                                    (a) => a.trait_type === "Original Chain"
+                                ) && (
+                                    <div className="nftInfDesc nftInfBox">
+                                        <label>Original Chain</label>
+                                        <div style={{ display: "flex" }}>
+                                            <img
+                                                style={{
+                                                    marginRight: "4px",
+                                                    width: "29px",
+                                                }}
+                                                src={originalChain.image?.src}
+                                                alt={
+                                                    originalChain.key +
+                                                    "originIconDetails"
+                                                }
+                                            />
+                                            <p>{originalChain.key}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            )}
+                                )}
                             {/*minted && minted?.length > 0 ? false && (
                                 <div className="nftInfDesc nftInfBox">
                                     <label>Minted With</label>

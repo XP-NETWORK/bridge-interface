@@ -154,10 +154,9 @@ class AbstractChain {
 
     async balance(account) {
         try {
+            if (!account) return 0;
             const res = await this.chain.balance(account);
-
             const decimals = CHAIN_INFO.get(this.nonce)?.decimals;
-
             return res.dividedBy(decimals).toNumber();
         } catch (e) {
             console.log(e, "error in balance");

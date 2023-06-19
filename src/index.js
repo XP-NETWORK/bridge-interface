@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
+
+import { createRoot } from "react-dom/client";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
@@ -49,7 +50,10 @@ const Services = ({ children }) => {
     );
 };
 
-ReactDOM.render(
+const container = document.getElementById("root");
+const root = createRoot(container);
+
+root.render(
     <WagmiConfig client={wagmiClient}>
         <Web3ReactProvider getLibrary={getLibrary}>
             <Services>
@@ -64,7 +68,5 @@ ReactDOM.render(
                 </Provider>
             </Services>
         </Web3ReactProvider>
-    </WagmiConfig>,
-
-    document.getElementById("root")
+    </WagmiConfig>
 );

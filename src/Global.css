@@ -921,6 +921,7 @@ li.nftSelecItem .Close:hover {
     padding: 0 30px 0 15px;
     max-height: 297px;
     overflow: auto;
+    overflow-x: hidden;
 }
 
 .token-id-inf {
