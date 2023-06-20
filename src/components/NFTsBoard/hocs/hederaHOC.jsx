@@ -6,6 +6,7 @@ import {
     setHederaClaimables,
     setNFTSetToggler,
     ///setTransferLoaderModal,
+    setError,
 } from "../../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -22,14 +23,19 @@ const CheckClaimables = withServices(({ serviceContainer }) => {
             const claimables = await wrapper.getClaimables().catch(() => []);
             //dispatch(setTransferLoaderModal(false));
 
-            claimables?.length &&
-                dispatch(
-                    setHederaClaimables(
-                        claimables.map((token) =>
-                            new BigNumber(token._hex).toString(16)
-                        )
-                    )
-                );
+            const flatClaimables = claimables.reduce((acc, cur) => {
+                return [
+                    ...acc,
+                    ...cur.tokens.map((item) => ({
+                        contract: cur.contract,
+                        htsToken: cur.htsToken,
+                        tokenId: new BigNumber(item._hex).toString(16),
+                    })),
+                ];
+            }, []);
+
+            flatClaimables?.length &&
+                dispatch(setHederaClaimables(flatClaimables));
         });
     };
     return (
@@ -50,9 +56,18 @@ const RenderClaimables = withServices(({ serviceContainer, setClaimables }) => {
     }, [hederaClaimables]);
 
     const dispatch = useDispatch();
+
     const clickClaim = (token) => {
         bridge.getChain(Chain.HEDERA).then(async (wrapper) => {
-            await wrapper.assosiate();
+            const assosiated = await wrapper.assosiate(token);
+
+            if (!assosiated) {
+                dispatch(
+                    setError({ message: "User rejected token assosiation" })
+                );
+                return;
+            }
+
             await wrapper.claim(token);
             const index = hederaClaimables.findIndex((t) => t === token);
 
@@ -77,7 +92,7 @@ const RenderClaimables = withServices(({ serviceContainer, setClaimables }) => {
                             <div className="claimable-card__text">
                                 The NFT is not claimed
                             </div>
-                            {new BigNumber(item).toString()}
+                            {new BigNumber(item.tokenId).toString()}
                             <div
                                 onClick={() => clickClaim(item)}
                                 style={{ background: "black" }}

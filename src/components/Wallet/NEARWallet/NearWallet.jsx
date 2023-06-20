@@ -16,8 +16,6 @@ import {
 import { getRightPath } from "../../../wallet/helpers";
 import { useNavigate } from "react-router-dom";*/
 
-import { biz } from "../../values";
-
 function NearWallet({ serviceContainer }) {
     //const isMobile = innerWidth <= 480;
     //const dispatch = useDispatch();
@@ -61,9 +59,6 @@ function NearWallet({ serviceContainer }) {
     };
 
     const getStyles = () => {
-        if (!biz) {
-            return { display: "none" };
-        }
         //return { display: "none" };
         // eslint-disable-next-line no-debugger
         // debugger;

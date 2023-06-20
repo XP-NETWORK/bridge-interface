@@ -52,7 +52,7 @@ export const withHederaConnection = (Wrapped) =>
 
         useEffect(() => {
             hashConnect.pairingEvent.once((pairingData) => {
-                import("@hashgraph/sdk").then((hashSDK) => {
+                import("@hashgraph/sdk").then(async (hashSDK) => {
                     const topic = pairingData.topic;
                     const accountId = pairingData.accountIds[0];
                     const address = hashSDK.AccountId.fromString(
