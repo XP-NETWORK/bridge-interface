@@ -481,9 +481,7 @@ class NoWhiteListEVM extends EVM {
     }
     async estimateDeployUserStore() {
         try {
-            console.log(this.signer);
-            const res = await this.chain.estimateUserStoreDeploy(this.signer);
-            console.log(res.toString(10), "res.toString(10)");
+            const res = await this.chain.estimateUserStoreDeploy();
             return {
                 fees: res.toString(10),
                 formatedFees: res
@@ -491,7 +489,7 @@ class NoWhiteListEVM extends EVM {
                     .toNumber(),
             };
         } catch (e) {
-            console.log(e, "in estimateDeployUserStore");
+            console.log("in estimateDeployUserStore");
         }
     }
 
@@ -985,13 +983,11 @@ class HEDERA extends AbstractChain {
         }
     }
 
-    async assosiate(token) {
+    async assosiate() {
         try {
-            await this.chain.assosiateToken(token.htsToken, this.signer);
-            return true;
+            await this.chain.assosiateToken(undefined, this.signer);
         } catch (e) {
-            console.log(e, "in assosiate");
-            return false;
+            console.log(e, "im assosiate");
         }
     }
 
@@ -999,12 +995,7 @@ class HEDERA extends AbstractChain {
         const error = new Error("Failed to Claim the NFT");
 
         const success = await this.chain
-            .claimNFT(
-                token.contract,
-                token.htsToken,
-                token.tokenId,
-                this.signer
-            )
+            .claimNFT(undefined, undefined, token, this.signer)
             .catch(() => {
                 throw error;
             });
