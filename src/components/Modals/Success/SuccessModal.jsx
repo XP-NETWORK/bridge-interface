@@ -5,7 +5,10 @@ import moment from "moment";
 import TransferredNft from "./TransferredNft";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useEffect } from "react";
-import { socket, StringShortener, scraperSocket } from "../../../utils";
+import { StringShortener } from "../../../utils";
+import { sockets } from "../../values";
+
+import io from "socket.io-client";
 
 import {
     cleanTxnHashArr,
@@ -18,6 +21,15 @@ import Tooltip from "../AccountModal/Tooltip";
 
 import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
 import { withServices } from "../../App/hocs/withServices";
+
+/*const socket1 = io("wss://tools.xp.network/explorer", {
+    path: "/",
+});
+
+setTimeout(() => {
+    console.log("x");
+    console.log(socket1);
+}, 5000);*/
 
 export default withServices(function SuccessModal({ serviceContainer }) {
     const { bridge } = serviceContainer;
@@ -92,6 +104,17 @@ export default withServices(function SuccessModal({ serviceContainer }) {
     const shortReceiver = StringShortener(formatedReceiver, 6);
 
     useEffect(() => {
+        console.log(sockets[bridge.network]);
+        const socket = io(sockets[bridge.network], {
+            path: "/socket.io",
+        });
+
+        socket.on("");
+
+        const scraperSocket = io(sockets["scraper"], {
+            path: "/socket.io",
+        });
+
         const incoming = async (e) => {
             dispatch(setTxnStatus(e));
             console.log("Incoming Event: ", e);

@@ -56,6 +56,14 @@ export const BridgeModes = {
     TestNet: "testnet",
     CheckWallet: "checkWallet",
 };
+
+export const sockets = {
+    mainnet: "wss://dev-explorer-api.herokuapp.com", //wss://dest-scraper.herokuapp.com/
+    scraper: "wss://dest-scraper.herokuapp.com",
+    staging: "wss://tools.xp.network/explorer",
+    testnet: "wss://testnet-bridge-explorer.herokuapp.com/",
+};
+
 export const getChainObject = (nonce) =>
     chains.find((chain) => chain.nonce === nonce);
 

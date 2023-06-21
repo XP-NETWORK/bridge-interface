@@ -885,12 +885,13 @@ class Solana extends AbstractChain {
 
     async preParse(nft) {
         nft = await super.preParse(nft);
-
+        const contract = nft.collectionIdent || nft.native.nftMint;
         return {
             ...nft,
+            collectionIdent: contract,
             native: {
                 ...nft.native,
-                contract: nft.collectionIdent,
+                contract,
 
                 tokenId: encodeURIComponent(nft.native.name),
                 chainId: String(this.chainParams.nonce),
