@@ -481,7 +481,7 @@ class NoWhiteListEVM extends EVM {
     }
     async estimateDeployUserStore() {
         try {
-            const res = await this.chain.estimateUserStoreDeploy();
+            const res = await this.chain.estimateUserStoreDeploy(this.signer);
             return {
                 fees: res.toString(10),
                 formatedFees: res
