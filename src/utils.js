@@ -176,7 +176,7 @@ export const StringShortener = (str, length) =>
     str
         ? `${str.substring(
               0,
-              getSubstringValue(length) || 10
+              getSubstringValue(length) || 5
           )}...${str.substring(str.length - length)}`
         : "";
 

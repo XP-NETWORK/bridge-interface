@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import {
     setHederaClaimables,
     setNFTSetToggler,
-    ///setTransferLoaderModal,
+    setTransferLoaderModal,
 } from "../../../store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -13,23 +13,37 @@ import { ChainType, Chain } from "xp.network";
 
 import { withServices } from "../../App/hocs/withServices";
 
+import { StringShortener } from "../../../utils";
+
 const CheckClaimables = withServices(({ serviceContainer }) => {
     const { bridge } = serviceContainer;
     const dispatch = useDispatch();
     const getClaimables = () => {
         bridge.getChain(Chain.HEDERA).then(async (wrapper) => {
-            //dispatch(setTransferLoaderModal(true));
-            const claimables = await wrapper.getClaimables().catch(() => []);
-            //dispatch(setTransferLoaderModal(false));
+            dispatch(setTransferLoaderModal(true));
+            const claimables =
+                [
+                    {
+                        contract: "0x0000000000000000000000000167",
+                        htsToken: "",
+                        tokens: [{ _hex: "0x4" }],
+                    },
+                ] || (await wrapper.getClaimables().catch(() => []));
 
-            claimables?.length &&
-                dispatch(
-                    setHederaClaimables(
-                        claimables.map((token) =>
-                            new BigNumber(token._hex).toString(16)
-                        )
-                    )
-                );
+            const flatClaimables = claimables.reduce((acc, cur) => {
+                return [
+                    ...acc,
+                    ...cur.tokens.map((item) => ({
+                        contract: cur.contract,
+                        htsToken: cur.htsToken,
+                        tokenId: new BigNumber(item._hex).toString(16),
+                    })),
+                ];
+            }, []);
+
+            flatClaimables?.length &&
+                dispatch(setHederaClaimables(flatClaimables));
+            dispatch(setTransferLoaderModal(false));
         });
     };
     return (
@@ -50,9 +64,18 @@ const RenderClaimables = withServices(({ serviceContainer, setClaimables }) => {
     }, [hederaClaimables]);
 
     const dispatch = useDispatch();
+
     const clickClaim = (token) => {
         bridge.getChain(Chain.HEDERA).then(async (wrapper) => {
-            await wrapper.assosiate();
+            /*const assosiated = await wrapper.assosiate(token);
+
+            if (!assosiated) {
+                dispatch(
+                    setError({ message: "User rejected token assosiation" })
+                );
+                return;
+            }*/
+
             await wrapper.claim(token);
             const index = hederaClaimables.findIndex((t) => t === token);
 
@@ -77,7 +100,8 @@ const RenderClaimables = withServices(({ serviceContainer, setClaimables }) => {
                             <div className="claimable-card__text">
                                 The NFT is not claimed
                             </div>
-                            {new BigNumber(item).toString()}
+                            <div>{StringShortener(item.contract, 5)}</div>
+                            {new BigNumber(item.tokenId).toString()}
                             <div
                                 onClick={() => clickClaim(item)}
                                 style={{ background: "black" }}
