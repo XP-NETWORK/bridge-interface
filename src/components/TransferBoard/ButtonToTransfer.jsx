@@ -141,9 +141,9 @@ export default compose(
                 nft,
                 receiver: unstoppabledomain || normalizedReceiver,
                 fee: new BigNumber(bigNumberFees || 0)
-                    .div(dev ? 4 : 1)
+                    .div(dev ? 3 : 1)
                     .plus(
-                        new BigNumber(bigNumberDeployFees || 0).div(dev ? 5 : 1)
+                        new BigNumber(bigNumberDeployFees || 0).div(dev ? 4 : 1)
                     )
                     .integerValue()
                     .toString(10),

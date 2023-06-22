@@ -24,6 +24,7 @@ class Bridge {
     config;
     checkWallet = null;
     currentType;
+    network;
 
     getChainIdByKey(key, testnet) {
         const c = chains.find((chain) => chain.key === key);
@@ -51,18 +52,20 @@ class Bridge {
             switch (true) {
                 case testnet: {
                     config = await ChainFactoryConfigs.TestNet();
-
+                    this.network = "testnet";
                     app = AppConfigs.TestNet();
                     break;
                 }
                 case staging: {
                     config = await ChainFactoryConfigs.Staging();
+                    this.network = "staging";
                     app = AppConfigs.Staging();
 
                     break;
                 }
                 default: {
                     config = await ChainFactoryConfigs.MainNet();
+                    this.network = "mainnet";
                     app = AppConfigs.MainNet();
                 }
             }

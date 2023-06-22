@@ -114,6 +114,8 @@ function NFTaccount(props) {
             let nfts = await fromChain.getNFTs(bridge.checkWallet || _account);
             nfts = fromChain.filterNFTs(nfts);
 
+            //fromChain.estimateDeployUserStore();
+
             dispatch(setNFTList(nfts));
             dispatch(setPreloadNFTs(nfts.length));
             dispatch(setIsEmpty(nfts.length < 1));

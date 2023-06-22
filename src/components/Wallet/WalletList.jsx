@@ -329,7 +329,7 @@ export default function WalletList({ connected, input, discount }) {
             name: "Hashpack",
             keyName: "Hashpack",
             mobile: biz,
-            desktop: true,
+            desktop: biz,
             order: 17,
             type: "Hedera",
         },

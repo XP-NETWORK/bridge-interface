@@ -9,6 +9,8 @@ import Tooltip from "../AccountModal/Tooltip";
 
 import { withServices } from "../../App/hocs/withServices";
 
+import { biz } from "../../values";
+
 export default withServices(function TransferredNft({
     nft,
     links,
@@ -91,7 +93,7 @@ export default withServices(function TransferredNft({
                     <div className="transferred-nft-name">{name}</div>
                 </div>
 
-                <TxStatus status={txn ? txnStatus : "processing"} />
+                {biz && <TxStatus status={txn ? txnStatus : "processing"} />}
             </div>
 
             <div className="transferred-nft-hashes">
@@ -113,22 +115,24 @@ export default withServices(function TransferredNft({
                             : "..."}
                     </a>
                 </div>
-                <div className="chain-hash">
-                    <span>{desText}:</span>
-                    <a
-                        target="_blank"
-                        rel="noreferrer"
-                        href={
-                            typeof links.txTo === "function"
-                                ? links.txTo(hashes.destHash)
-                                : links.txTo + hashes.destHash
-                        }
-                    >
-                        {hashes.destHash
-                            ? StringShortener(hashes.destHash, 3)
-                            : "..."}
-                    </a>
-                </div>
+                {biz && (
+                    <div className="chain-hash">
+                        <span>{desText}:</span>
+                        <a
+                            target="_blank"
+                            rel="noreferrer"
+                            href={
+                                typeof links.txTo === "function"
+                                    ? links.txTo(hashes.destHash)
+                                    : links.txTo + hashes.destHash
+                            }
+                        >
+                            {hashes.destHash
+                                ? StringShortener(hashes.destHash, 3)
+                                : "..."}
+                        </a>
+                    </div>
+                )}
             </div>
             {mintWith && (
                 <div className="transferred-nft-hashes secret-hashes">
