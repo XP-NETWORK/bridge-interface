@@ -21,14 +21,7 @@ const CheckClaimables = withServices(({ serviceContainer }) => {
     const getClaimables = () => {
         bridge.getChain(Chain.HEDERA).then(async (wrapper) => {
             dispatch(setTransferLoaderModal(true));
-            const claimables =
-                [
-                    {
-                        contract: "0x0000000000000000000000000167",
-                        htsToken: "",
-                        tokens: [{ _hex: "0x4" }],
-                    },
-                ] || (await wrapper.getClaimables().catch(() => []));
+            const claimables = await wrapper.getClaimables().catch(() => []);
 
             const flatClaimables = claimables.reduce((acc, cur) => {
                 return [
