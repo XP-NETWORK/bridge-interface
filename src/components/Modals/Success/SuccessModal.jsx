@@ -22,7 +22,7 @@ import Tooltip from "../AccountModal/Tooltip";
 import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
 import { withServices } from "../../App/hocs/withServices";
 
-/*const socket1 = io("https://tools.xp.network/explorer");
+/*const socket1 = io("wss://tools.xp.network/explorer");
 
 setTimeout(() => {
     console.log("x");

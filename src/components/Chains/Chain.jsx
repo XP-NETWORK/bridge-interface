@@ -13,6 +13,7 @@ export default function Chain(props) {
         filteredChain,
         chainSelectHandler,
         text,
+        chainKey,
         image,
         coming,
         newChain,
@@ -70,7 +71,7 @@ export default function Chain(props) {
                 chainSelectHandler(filteredChain);
             }}
             className="nftChainItem"
-            data-chain={text}
+            data-chain={chainKey}
         >
             <img
                 className="modalSelectOptionsImage"
