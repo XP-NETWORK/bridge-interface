@@ -247,7 +247,7 @@ export const withStyles = (Wrapped) =>
     
             .wallet-search__container {
               margin-bottom: 5px;
-              width:auto;
+           
             }
     
             .magnify {
@@ -723,7 +723,7 @@ export const withStyles = (Wrapped) =>
               }
     
               .serchInput {
-                width: 200px;
+              
               }
     
               .sendNftCol {

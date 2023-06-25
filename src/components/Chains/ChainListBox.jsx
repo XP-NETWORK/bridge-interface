@@ -226,7 +226,7 @@ function ChainListBox({ serviceContainer }) {
                     : BridgeModes.TestNet;
             }
             console.log(goToPath);
-            navigate(goToPath);
+            navigate(goToPath + window.location.search);
             dispatch(setChangeWallet(false));
             dispatch(setConnectedWallet(""));
             dispatch(setWalletAddress(""));
