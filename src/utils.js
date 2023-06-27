@@ -193,3 +193,16 @@ export function generateKey(length) {
     }
     return result;
 }
+
+export const fixify = (number) => {
+    if (!number) return "0";
+    const digitsAfterDot =
+        String(number)
+            .split(".")
+            .at(1)?.length || 0;
+
+    return number
+        .toFixed(Math.min(digitsAfterDot))
+        .match(/\d*\.(0*)(\d{0,3})/)
+        .at(0);
+};

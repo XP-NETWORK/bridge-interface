@@ -12,8 +12,9 @@ import {
 } from "../../store/reducers/generalSlice";
 
 import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
+import { fixify } from "../../utils";
 
-const DeployUserStore = ({ chainWrapper, nft, chainParams }) => {
+const DeployUserStore = ({ chainWrapper, nft }) => {
     const [show, setShow] = useState(false);
     //const [locked, setLocked] = useState(true);
 
@@ -111,8 +112,8 @@ const DeployUserStore = ({ chainWrapper, nft, chainParams }) => {
             <div className="deploy-container_fees">
                 One Time Fee
                 <div>
-                    <span>{estimation?.formatedFees.toFixed(3)}</span>
-                    <span>{chainParams?.currencySymbol}</span>
+                    <span>{fixify(estimation?.formatedFees)}</span>
+                    <span>{chainWrapper?.chainParams.currencySymbol}</span>
                 </div>
             </div>
             <button onClick={deployHandler} style={estimation ? {} : DISABLED}>

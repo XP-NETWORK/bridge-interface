@@ -1009,6 +1009,19 @@ class HEDERA extends AbstractChain {
             });
         if (!success) throw error;
     }
+
+    async preTransfer(nft, _, fees, __) {
+        if (!nft.uri) {
+            throw new Error("NFT metadata issue");
+        }
+        return await this.chain.approveForMinter(
+            nft,
+            this.signer,
+            fees,
+            undefined,
+            Boolean(nft.wrapped)
+        );
+    }
 }
 
 class ICP extends AbstractChain {
