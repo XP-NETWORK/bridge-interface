@@ -27,7 +27,7 @@ import Pontem from "./APTOSWallet/Pontem";
 import NearWallet from "./NEARWallet/NearWallet";
 import WalletSelector from "./NEARWallet/WalletSelector";
 // import Solana from "./SOLWallet";
-import { biz } from "../values";
+//import { biz } from "../values";
 import Phantom from "./SOLWallet/Phantom";
 import Solflare from "./SOLWallet/Solflare";
 import OKX from "./EVMWallet/OKX";
@@ -328,8 +328,8 @@ export default function WalletList({ connected, input, discount }) {
             ),
             name: "Hashpack",
             keyName: "Hashpack",
-            mobile: biz,
-            desktop: biz,
+            mobile: true,
+            desktop: true,
             order: 17,
             type: "Hedera",
         },
