@@ -5,6 +5,7 @@ import { withElrond as Elrond } from "./elrondHOC";
 import { withAlgo as Algo } from "./algoHOC";
 import { withEVM as EVM } from "./evmHOC";
 import { withHedera as Hedera } from "./hederaHOC";
+import { withICP as ICP } from "./icpHOC";
 import { withServices } from "../../App/hocs/withServices";
 
 import { useSelector } from "react-redux";
@@ -27,4 +28,12 @@ const withChains = (NFTaccount) =>
         );
     };
 
-export default compose(withServices, Hedera, Elrond, Algo, EVM, withChains);
+export default compose(
+    withServices,
+    Hedera,
+    ICP,
+    Elrond,
+    Algo,
+    EVM,
+    withChains
+);

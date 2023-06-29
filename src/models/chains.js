@@ -886,13 +886,13 @@ class Solana extends AbstractChain {
 
     async preParse(nft) {
         nft = await super.preParse(nft);
-
+        const contract = nft.collectionIdent || nft.native.nftMint;
         return {
             ...nft,
+            collectionIdent: contract,
             native: {
                 ...nft.native,
-                contract: nft.collectionIdent,
-
+                contract: contract,
                 tokenId: encodeURIComponent(nft.native.name),
                 chainId: String(this.chainParams.nonce),
             },
@@ -1033,6 +1033,7 @@ class ICP extends AbstractChain {
         const [nfts, wrappedNfts, umts] = await Promise.all([
             super.getNFTs(address),
             this.chain.nftList(address),
+            //this.chain.nftList(address, "k5osr-jyaaa-aaaam-qaoxq-cai"),
             this.chain.nftList(address, this.chain.getParams().umt.toText()),
         ]);
 

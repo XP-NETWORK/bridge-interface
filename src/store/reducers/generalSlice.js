@@ -100,6 +100,9 @@ const generalSlice = createSlice({
         setKeplrAccount(state, action) {
             state.secretAccount = action.payload;
         },
+        setPreFetchData(state, action) {
+            state.preFetchData = action.payload;
+        },
         setSecretCred(state, action) {
             state.secretCred = {
                 contract: action.payload.contract,
@@ -713,6 +716,7 @@ export const {
     setNearRedirect,
     setHederaClaimables,
     setLockMainPannel,
+    setPreFetchData,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

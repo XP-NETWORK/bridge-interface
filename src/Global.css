@@ -942,6 +942,7 @@ li.nftSelecItem .Close:hover {
     padding: 8px 12px;
     border-radius: 6px;
     margin-bottom: 9px;
+    min-height: 65px;
 }
 
 .nftInfBox p {
@@ -995,7 +996,6 @@ li.nftSelecItem .Close:hover {
     width: 50%;
     padding: 0 30px 0 15px;
     max-height: 297px;
-    overflow: auto;
 }
 
 .nftSuccessMod .modal-dialog {
