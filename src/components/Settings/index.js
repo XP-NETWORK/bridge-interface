@@ -249,6 +249,14 @@ function WSettings({
                                                 </button>
 
                                                 {chains
+                                                    .sort((a, b) => {
+                                                        return a.newChain ===
+                                                            b.newChain
+                                                            ? 0
+                                                            : a.newChain
+                                                            ? -1
+                                                            : 1;
+                                                    })
                                                     .filter(
                                                         (c) =>
                                                             c.coming ||

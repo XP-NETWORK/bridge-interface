@@ -16,9 +16,11 @@ export default function Tooltip({ text }) {
 
     return (
         <div onClick={copyTextToClipboard} className="copy-tooltip">
-            <span className="copy-tooltip__text">
-                {copied ? "Address copied" : "Copy address"}
-            </span>
+            {false && (
+                <span className="copy-tooltip__text">
+                    {copied ? "Address copied" : "Copy address"}
+                </span>
+            )}
             <span className="copy-tooltip__icon"></span>
         </div>
     );
