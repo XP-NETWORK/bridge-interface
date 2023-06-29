@@ -19582,10 +19582,14 @@ xmlhttprequest@1.8.0:
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "4.3.1"
 <<<<<<< HEAD
+<<<<<<< HEAD
   resolved "git+https://github.com/xp-network/xpjs#f91738b2ab827aac2d81668fe3cf0c4d51236a8a"
 =======
   resolved "git+https://github.com/xp-network/xpjs#938ca653cb77d2a6e6e1486733d3d2c4df8e899c"
 >>>>>>> 7d7dffb8 (Solana wl fix, copy icon blob remove, icpHOC functions)
+=======
+  resolved "git+https://github.com/xp-network/xpjs#f91738b2ab827aac2d81668fe3cf0c4d51236a8a"
+>>>>>>> b8558440 (Solana wl fix, copy icon blob remove, icpHOC functions)
   dependencies:
     "@dfinity/agent" "^0.15.5"
     "@dfinity/candid" "^0.15.5"
