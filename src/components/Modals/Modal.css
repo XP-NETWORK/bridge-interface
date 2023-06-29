@@ -259,7 +259,11 @@
 .copy-tooltip__icon:hover {
     background-image: url("../../assets/img/copy_hovered.svg");
 }
-.copy-tooltip:hover .copy-tooltip__text {
+
+.copy-tooltip__icon:active {
+    transform: scale(1.18);
+}
+/*.copy-tooltip:hover .copy-tooltip__text {
     position: absolute;
     visibility: visible;
     top: -40px;
@@ -273,7 +277,7 @@
     border-radius: 6px;
     text-align: center;
     color: white;
-}
+}*/
 .copy-tooltip__text::after {
     content: " ";
     position: absolute;
