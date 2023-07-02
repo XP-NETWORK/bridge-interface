@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import { ChainType, CHAIN_INFO, Chain } from "xp.network";
 import { useDispatch, useSelector } from "react-redux";
-import { setPreFetchData } from "../../../store/reducers/generalSlice";
+import {
+    setPreFetchData,
+    cleanSelectedNFTList,
+} from "../../../store/reducers/generalSlice";
 import { useCheckMobileScreen } from "../../Settings/hooks";
 import { StringShortener } from "../../../utils";
 
 const CollectionPannel = () => {
-    const { preFetchData } = useSelector(({ general: { preFetchData } }) => ({
-        preFetchData,
-    }));
+    const preFetchData = useSelector((state) => state.general.preFetchData);
 
     //const dispatch = useDispatch();
 
     const isMobile = useCheckMobileScreen();
 
     const chain = CHAIN_INFO.get(Chain.DFINITY);
-
+    const dispatch = useDispatch();
+    const dab = preFetchData.contract === "default";
     return (
         <div className="scretPannelWrap collectionPannelWrap">
             <div className="collectionPannel">
@@ -24,9 +26,15 @@ const CollectionPannel = () => {
                     <a
                         target="_blank"
                         rel="noreferrer"
-                        href={`${chain.blockExplorerUrlAddr}${preFetchData.contract}`}
+                        href={
+                            dab
+                                ? "https://dab.ooo/nfts/"
+                                : `${chain.blockExplorerUrlAddr}${preFetchData.contract}`
+                        }
                     >
-                        {isMobile
+                        {dab
+                            ? "DAB NFT list"
+                            : isMobile
                             ? StringShortener(preFetchData.contract, 10)
                             : preFetchData.contract}
                     </a>
@@ -34,9 +42,8 @@ const CollectionPannel = () => {
                 <div
                     className="clear-selected"
                     onClick={() => {
-                        /*dispatch(cleanSelectedNFTList());
-          dispatch(setSecretCred(initialSecretCred));
-          dispatch(setSecretLoggedIn(false));*/
+                        dispatch(cleanSelectedNFTList());
+                        dispatch(setPreFetchData(null));
                     }}
                 >
                     Change contract
@@ -50,13 +57,15 @@ const PreNftFech = ({ show }) => {
     const dispatch = useDispatch();
 
     const [input, setInput] = useState();
-    const handleLoadAssets = () => {
-        if (!input) return;
+
+    const handleLoadAssets = (defaultColletions) => {
+        if (!input && !defaultColletions) return;
         dispatch(
             setPreFetchData({
-                contract: input,
+                contract: input || defaultColletions,
             })
         );
+        setInput("");
     };
 
     return (
@@ -89,8 +98,11 @@ const PreNftFech = ({ show }) => {
                     <div className="transfer-button" onClick={handleLoadAssets}>
                         Load assets
                     </div>
-                    <div className="transfer-button secondary">
-                        Show Default collections
+                    <div
+                        className="transfer-button secondary"
+                        onClick={() => handleLoadAssets("default")}
+                    >
+                        Show DAB collections
                     </div>
                 </div>
             </div>

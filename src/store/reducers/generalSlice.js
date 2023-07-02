@@ -29,6 +29,7 @@ const initialState = {
     algorandAddresses: [],
     unstoppableDomainsIsSelected: false,
     receiver: "",
+    preFetchData: null,
 };
 
 const generalSlice = createSlice({
