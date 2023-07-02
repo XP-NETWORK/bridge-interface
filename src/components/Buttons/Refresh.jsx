@@ -14,9 +14,14 @@ import { setIsEmpty } from "../../store/reducers/paginationSlice";
 import { withServices } from "../App/hocs/withServices";
 
 export default withServices(function Refresh({ serviceContainer }) {
-    const { from, nfts, account, bigLoader, secretCred } = useSelector(
-        (state) => state.general
-    );
+    const {
+        from,
+        nfts,
+        account,
+        bigLoader,
+        preFetchData,
+        secretCred,
+    } = useSelector((state) => state.general);
     const dispatch = useDispatch();
 
     const { bridge } = serviceContainer;
@@ -30,7 +35,7 @@ export default withServices(function Refresh({ serviceContainer }) {
             try {
                 let nfts = await fromChain.getNFTs(
                     bridge.checkWallet || w,
-                    secretCred
+                    secretCred.contract || preFetchData?.contract
                 );
                 nfts = fromChain.filterNFTs(nfts);
 

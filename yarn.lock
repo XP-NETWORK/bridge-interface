@@ -3286,12 +3286,13 @@
   dependencies:
     rxjs "^7.8.0"
 
-"@near-wallet-selector/core@8.1.3":
-  version "8.1.3"
-  resolved "https://registry.yarnpkg.com/@near-wallet-selector/core/-/core-8.1.3.tgz#f56f480e18394497d5a353ed5af10a21a0f8e692"
-  integrity sha512-XPQ/EV+vTRc8oLDoAHeQ6SU/EYkDl9EVLbqsHaV/x1nnX6PR6dt7n6uzrukNt/WeH/KjoePtgi8CT3XhhsnERw==
+"@near-wallet-selector/core@8.2.0":
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/@near-wallet-selector/core/-/core-8.2.0.tgz#5be2f5e371d84bba99edfcef2b056c03fc99d0c7"
+  integrity sha512-IHIGfT2Ce7CI5z9srC4tQkhHw/2acAIrZWIcTWLbfzN9u6eWB143hLxTe3eTD1hUVeJBXVxfZR+Ano9nKKBypw==
   dependencies:
-    rxjs "^7.8.1"
+    events "3.3.0"
+    rxjs "7.8.1"
 
 "@near-wallet-selector/here-wallet@^7.9.2":
   version "7.9.3"
@@ -3303,13 +3304,13 @@
     bn.js "^5.2.0"
 
 "@near-wallet-selector/math-wallet@^8.1.3":
-  version "8.1.3"
-  resolved "https://registry.yarnpkg.com/@near-wallet-selector/math-wallet/-/math-wallet-8.1.3.tgz#9e6a23fdc7becd71cc1430680e6410ca37fff8e1"
-  integrity sha512-Qeux+Jbpd6Z24yONGop362/vaUP0fo6XpljS5dtLAXJ3vMO3CopSwQK3+bEsZ1j/qp1JDm6AK673ifeTAlsk3w==
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/@near-wallet-selector/math-wallet/-/math-wallet-8.2.0.tgz#a72413a916af561a454f753386bece7cffb606d0"
+  integrity sha512-wdFTuCTkuK951LFGrYrAwNKBcAAnEhTaEhK0uwrPc9Cva3AgNiljHvMWSlG2srH6Po4BtIYoG3UkZdqbcGvy0w==
   dependencies:
-    "@near-wallet-selector/core" "8.1.3"
-    "@near-wallet-selector/wallet-utils" "8.1.3"
-    is-mobile "^4.0.0"
+    "@near-wallet-selector/core" "8.2.0"
+    "@near-wallet-selector/wallet-utils" "8.2.0"
+    is-mobile "4.0.0"
 
 "@near-wallet-selector/meteor-wallet@^7.9.2":
   version "7.9.3"
@@ -3348,13 +3349,13 @@
     "@near-wallet-selector/my-near-wallet" "7.9.3"
 
 "@near-wallet-selector/nightly@^8.1.3":
-  version "8.1.3"
-  resolved "https://registry.yarnpkg.com/@near-wallet-selector/nightly/-/nightly-8.1.3.tgz#10dedb6eba2e93c1b509547f2ad9d48bdbcd980d"
-  integrity sha512-bbTMLRt4HHlgupV9RNcEAzuP/UaVEA5i+4BYSgpehJzIDS8uF7kFNc7o7dJ+eUOfvXJCPUL2qzYRuyV6gRV3Iw==
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/@near-wallet-selector/nightly/-/nightly-8.2.0.tgz#61b741e78b3cfc8129b42689681bc1742d642b0f"
+  integrity sha512-Nr4mrimIOAxq6q0Oz1wIZ1R1ezj9qPCfvP27r/XD8f8JtacN9D72KczeRYDoR5Lf7fOtjYGScFWaG3I4+JuluA==
   dependencies:
-    "@near-wallet-selector/core" "8.1.3"
-    "@near-wallet-selector/wallet-utils" "8.1.3"
-    is-mobile "^4.0.0"
+    "@near-wallet-selector/core" "8.2.0"
+    "@near-wallet-selector/wallet-utils" "8.2.0"
+    is-mobile "4.0.0"
 
 "@near-wallet-selector/sender@^7.9.2":
   version "7.9.3"
@@ -3372,13 +3373,13 @@
     "@near-wallet-selector/core" "7.9.3"
     bn.js "^5.2.0"
 
-"@near-wallet-selector/wallet-utils@8.1.3":
-  version "8.1.3"
-  resolved "https://registry.yarnpkg.com/@near-wallet-selector/wallet-utils/-/wallet-utils-8.1.3.tgz#5e7aca307b4b8060b6ce386db05a04201a3d6535"
-  integrity sha512-BAOvJV7y2e7gniASVV9JFLK2U0zT1zEmdSCBTz2ruYdCg9+IPPtPiN3N50RNaQjFh86ecMEiiAwbFUpzBYpMtQ==
+"@near-wallet-selector/wallet-utils@8.2.0":
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/@near-wallet-selector/wallet-utils/-/wallet-utils-8.2.0.tgz#49e36ae13944fb6ff6877a31a1c709235961ca2f"
+  integrity sha512-vNwYDBpYK1VRVpHtsDEPFxpgGZJsx9mBdN3tS+Z30ou1sUGhd8MAynejLWJjh1LSMZD+PHBmIynExMLtYwy9YA==
   dependencies:
-    "@near-wallet-selector/core" "8.1.3"
-    bn.js "^5.2.0"
+    "@near-wallet-selector/core" "8.2.0"
+    bn.js "5.2.1"
 
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
@@ -10454,7 +10455,7 @@ eventemitter3@^3.1.0:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
   integrity sha512-tvtQIeLVHjDkJYnzf2dgVMxfuSGJeM/7UCG17TT4EumTfNtF+0nebF/4zWOIkCreAbtNqhGEboB6BWrwqNaw4Q==
 
-events@^3.0.0, events@^3.2.0, events@^3.3.0:
+events@3.3.0, events@^3.0.0, events@^3.2.0, events@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
   integrity sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==
@@ -12003,15 +12004,15 @@ is-json@^2.0.1:
   resolved "https://registry.yarnpkg.com/is-json/-/is-json-2.0.1.tgz#6be166d144828a131d686891b983df62c39491ff"
   integrity sha512-6BEnpVn1rcf3ngfmViLM6vjUjGErbdrL4rwlv+u1NO1XO8kqT4YGL8+19Q+Z/bas8tY90BTWMk2+fW1g6hQjbA==
 
+is-mobile@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/is-mobile/-/is-mobile-4.0.0.tgz#bba396eb9656e2739afde3053d7191da310fc758"
+  integrity sha512-mlcHZA84t1qLSuWkt2v0I2l61PYdyQDt4aG1mLIXF5FDMm4+haBCxCPYSr/uwqQNRk1MiTizn0ypEuRAOLRAew==
+
 is-mobile@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/is-mobile/-/is-mobile-3.1.1.tgz#3b9e48f40068e4ea2da411f5009779844ce8d6aa"
   integrity sha512-RRoXXR2HNFxNkUnxtaBdGBXtFlUMFa06S0NUKf/LCF+MuGLu13gi9iBCkoEmc6+rpXuwi5Mso5V8Zf7mNynMBQ==
-
-is-mobile@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/is-mobile/-/is-mobile-4.0.0.tgz#bba396eb9656e2739afde3053d7191da310fc758"
-  integrity sha512-mlcHZA84t1qLSuWkt2v0I2l61PYdyQDt4aG1mLIXF5FDMm4+haBCxCPYSr/uwqQNRk1MiTizn0ypEuRAOLRAew==
 
 is-module@^1.0.0:
   version "1.0.0"
@@ -16589,7 +16590,7 @@ rxjs@6, rxjs@^6.6.3, rxjs@^6.6.7:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@^7.8.0, rxjs@^7.8.1:
+rxjs@7.8.1, rxjs@^7.8.0:
   version "7.8.1"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.8.1.tgz#6f6f3d99ea8044291efd92e7c7fcf562c4057543"
   integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==
@@ -19628,27 +19629,8 @@ xmlhttprequest@1.8.0:
   integrity sha512-58Im/U0mlVBLM38NdZjHyhuMtCqa61469k2YP/AaPbvCoV9aQGUpbJBj1QRm2ytRiVQBD/fsw7L2bJGDVQswBA==
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
-<<<<<<< HEAD
-  version "4.3.1"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d0e46e03 (Solana wl fix, copy icon blob remove, icpHOC functions)
-  resolved "git+https://github.com/xp-network/xpjs#f91738b2ab827aac2d81668fe3cf0c4d51236a8a"
-=======
-  resolved "git+https://github.com/xp-network/xpjs#938ca653cb77d2a6e6e1486733d3d2c4df8e899c"
->>>>>>> 7d7dffb8 (Solana wl fix, copy icon blob remove, icpHOC functions)
-<<<<<<< HEAD
-=======
-  resolved "git+https://github.com/xp-network/xpjs#f91738b2ab827aac2d81668fe3cf0c4d51236a8a"
->>>>>>> b8558440 (Solana wl fix, copy icon blob remove, icpHOC functions)
-=======
->>>>>>> d0e46e03 (Solana wl fix, copy icon blob remove, icpHOC functions)
-=======
   version "4.3.3"
-  resolved "git+https://github.com/xp-network/xpjs#fa1c64cc03f81e1d9fdb4fe4941f58cf085e1cc8"
->>>>>>> e17ba3b1 (preTransferFetch, put destHash back)
+  resolved "git+https://github.com/xp-network/xpjs#3865f4e482740509975c8a920efced06664c65d2"
   dependencies:
     "@dfinity/agent" "^0.15.5"
     "@dfinity/candid" "^0.15.5"

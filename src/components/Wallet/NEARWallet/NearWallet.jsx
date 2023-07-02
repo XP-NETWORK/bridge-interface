@@ -20,7 +20,8 @@ function NearWallet({ serviceContainer }) {
     //const isMobile = innerWidth <= 480;
     //const dispatch = useDispatch();
     // const navigate = useNavigate();
-    const { from } = useSelector((state) => state.general);
+    const { from, to } = useSelector((state) => state.general);
+
     const [lock, setLock] = useState(false);
 
     // const navigateToAccountRoute = () => {
@@ -37,13 +38,15 @@ function NearWallet({ serviceContainer }) {
 
             const network =
                 location.pathname.match(/(staging|testnet)/)?.at(0) || "";
-            const successUrl = `${location.protocol}//${location.host}/${network}/connect`;
+            const successUrl = `${location.protocol}//${
+                location.host
+            }/${network}/connect?${to ? `toChain=${to.nonce}` : ""}`;
 
             nearWalletConnection.requestSignIn({
                 contractId: nearParams.bridge,
                 ...(location.pathname.includes("account")
                     ? { successUrl }
-                    : {}),
+                    : { successUrl }),
                 //successUrl,
             });
             handleGA4Event(
