@@ -248,96 +248,109 @@ function WSettings({
                                                     Unselect all
                                                 </button>
 
-                                                {chains
-                                                    .sort((a, b) => {
-                                                        return a.newChain ===
-                                                            b.newChain
-                                                            ? 0
-                                                            : a.newChain
-                                                            ? -1
-                                                            : 1;
-                                                    })
-                                                    .filter(
-                                                        (c) =>
-                                                            c.coming ||
-                                                            c.maintenance ||
-                                                            c.mainnet ||
-                                                            (window.location.pathname.includes(
-                                                                "testnet"
-                                                            ) &&
-                                                                c.testNet)
-                                                    )
-                                                    ?.map((chain, i) => (
-                                                        <li
-                                                            key={i}
-                                                            className="blockChain_item"
-                                                            onClick={() =>
-                                                                chainCheck(
-                                                                    chain.key
-                                                                )
-                                                            }
-                                                        >
-                                                            <div className="select_nft">
-                                                                <input
-                                                                    type="checkbox"
-                                                                    name=""
-                                                                    id=""
-                                                                    readOnly
-                                                                    checked={selectedChains.includes(
+                                                {Array.isArray(chains) &&
+                                                    chains
+                                                        .filter(
+                                                            (a) => !a.outOfOrder
+                                                        )
+                                                        .sort((a, b) => {
+                                                            return a.newChain ===
+                                                                b.newChain
+                                                                ? 0
+                                                                : a.newChain
+                                                                ? -1
+                                                                : 1;
+                                                        })
+                                                        .filter(
+                                                            (c) =>
+                                                                c.coming ||
+                                                                c.maintenance ||
+                                                                c.mainnet ||
+                                                                (window.location.pathname.includes(
+                                                                    "testnet"
+                                                                ) &&
+                                                                    c.testNet)
+                                                        )
+                                                        .reduce(
+                                                            (a, c) => [...a, c],
+                                                            [
+                                                                chains.find(
+                                                                    (a) =>
+                                                                        a.outOfOrder
+                                                                ),
+                                                            ]
+                                                        )
+                                                        ?.map((chain, i) => (
+                                                            <li
+                                                                key={i}
+                                                                className="blockChain_item"
+                                                                onClick={() =>
+                                                                    chainCheck(
                                                                         chain.key
+                                                                    )
+                                                                }
+                                                            >
+                                                                <div className="select_nft">
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        name=""
+                                                                        id=""
+                                                                        readOnly
+                                                                        checked={selectedChains.includes(
+                                                                            chain.key
+                                                                        )}
+                                                                    />
+                                                                    <span className="icon selectNfticon"></span>
+                                                                </div>
+                                                                <div className="blockChainItem">
+                                                                    <img
+                                                                        src={
+                                                                            chain
+                                                                                .image
+                                                                                .src
+                                                                        }
+                                                                        alt={
+                                                                            chain.key
+                                                                        }
+                                                                    />
+
+                                                                    {chain.text}
+
+                                                                    {chain.newChain && (
+                                                                        <span>
+                                                                            New
+                                                                            chain
+                                                                        </span>
                                                                     )}
-                                                                />
-                                                                <span className="icon selectNfticon"></span>
-                                                            </div>
-                                                            <div className="blockChainItem">
-                                                                <img
-                                                                    src={
-                                                                        chain
-                                                                            .image
-                                                                            .src
-                                                                    }
-                                                                    alt={
-                                                                        chain.key
-                                                                    }
-                                                                />
 
-                                                                {chain.text}
+                                                                    {chain.maintenance ? (
+                                                                        <span
+                                                                            style={{
+                                                                                color:
+                                                                                    "grey",
+                                                                                borderColor:
+                                                                                    "grey",
+                                                                                fontSize:
+                                                                                    "11px",
+                                                                            }}
+                                                                        >
+                                                                            Maintenance
+                                                                        </span>
+                                                                    ) : (
+                                                                        ""
+                                                                    )}
 
-                                                                {chain.newChain && (
-                                                                    <span>
-                                                                        New
-                                                                        chain
-                                                                    </span>
-                                                                )}
-
-                                                                {chain.maintenance ? (
-                                                                    <span
-                                                                        style={{
-                                                                            color:
-                                                                                "grey",
-                                                                            borderColor:
-                                                                                "grey",
-                                                                            fontSize:
-                                                                                "11px",
-                                                                        }}
-                                                                    >
-                                                                        Maintenance
-                                                                    </span>
-                                                                ) : (
-                                                                    ""
-                                                                )}
-
-                                                                {chain.coming ? (
-                                                                    <span className="comingSoon">
-                                                                        coming
-                                                                        soon
-                                                                    </span>
-                                                                ) : (
-                                                                    ""
-                                                                )}
-                                                            </div>
-                                                        </li>
-                                                    ))}
+                                                                    {chain.coming ? (
+                                                                        <span className="comingSoon">
+                                                                            coming
+                                                                            soon
+                                                                        </span>
+                                                                    ) : (
+                                                                        ""
+                                                                    )}
+                                                                </div>
+                                                            </li>
+                                                        ))}
                                                 <li>
                                                     <div
                                                         className="select_font"

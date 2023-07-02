@@ -83,6 +83,7 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
+        outOfOrder: true,
     },
     {
         type: "EVM",
