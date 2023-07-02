@@ -1029,15 +1029,19 @@ class ICP extends AbstractChain {
         super(params);
     }
 
-    async getNFTs(address) {
-        const [nfts, wrappedNfts, umts] = await Promise.all([
-            super.getNFTs(address),
+    async getNFTs(address, contract) {
+        const dab = contract === "default";
+        const [defaults, wrappedNfts, userCanister, umts] = await Promise.all([
+            dab && super.getNFTs(address),
             this.chain.nftList(address),
-            //this.chain.nftList(address, "k5osr-jyaaa-aaaam-qaoxq-cai"),
-            this.chain.nftList(address, this.chain.getParams().umt.toText()),
+            contract && !dab && this.chain.nftList(address, contract),
+            //this.chain.nftList(address, this.chain.getParams().umt.toText()),
         ]);
 
-        return nfts.concat(wrappedNfts).concat(umts);
+        return (defaults || [])
+            .concat(wrappedNfts || [])
+            .concat(umts || [])
+            .concat(userCanister || []);
     }
 
     async preParse(nft) {

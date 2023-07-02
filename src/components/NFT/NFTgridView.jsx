@@ -52,14 +52,18 @@ function NFTgridView({ serviceContainer, chainSpecificRender }) {
         wrapper?.current?.scrollTo(0, 0);
     }, [scrollToggler]);
 
+    //const withCollectionSelector = CollectionPannel && preFetchData;
     //const hidden = !PreNftFetch || preFetchData ? "" : "hidden";
 
+    /**${hidden} ${
+                    withCollectionSelector ? "withCollectionSelector" : ""
+                } */
     return (
         <>
             {/*PreNftFetch && <PreNftFetch show={!hidden} />*/}
-            <div className={`nftListBox ${/*hidden*/ ""}`}>
-                {/*CollectionPannel && preFetchData && <CollectionPannel />*/}
+            <div className={`nftListBox `}>
                 {from?.type === "Cosmos" && <SecretContractPanel />}
+                {/*withCollectionSelector && <CollectionPannel />*/}
                 {loader ? (
                     <BigLoader />
                 ) : (

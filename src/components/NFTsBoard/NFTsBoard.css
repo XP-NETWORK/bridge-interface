@@ -375,6 +375,10 @@
     align-items: center;
 }
 
+.buttonContainer .transfer-button {
+    height: 44px;
+}
+
 .preScreen .transfer-button.secondary {
     font-size: 14px;
     color: white;
@@ -411,15 +415,14 @@
     color: #14161a;
     font-family: "Inter";
 }
-.secretContainer .nftListBox {
+.secretContainer .nftListBox,
+.withCollectionSelector.nftListBox {
     position: relative;
-}
-
-.secretContainer .nftListBox {
     padding-top: 55px;
 }
 
-.secretContainer .nft-list__wrapper {
+.secretContainer .nft-list__wrapper,
+.withCollectionSelector .nft-list__wrapper {
     padding-top: 15px;
 }
 

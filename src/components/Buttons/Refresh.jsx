@@ -18,7 +18,7 @@ export default withServices(function Refresh({ serviceContainer }) {
         nfts,
         account,
         bigLoader,
-
+        preFetchData,
         secretCred,
     } = useSelector((state) => state.general);
     const dispatch = useDispatch();
@@ -35,7 +35,7 @@ export default withServices(function Refresh({ serviceContainer }) {
             try {
                 let nfts = await fromChain.getNFTs(
                     bridge.checkWallet || w,
-                    secretCred
+                    secretCred.contract || preFetchData?.contract
                 );
                 nfts = fromChain.filterNFTs(nfts);
 

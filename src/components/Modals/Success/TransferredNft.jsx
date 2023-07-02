@@ -9,7 +9,7 @@ import Tooltip from "../AccountModal/Tooltip";
 
 import { withServices } from "../../App/hocs/withServices";
 
-import { biz } from "../../values";
+//import { biz } from "../../values";
 
 export default withServices(function TransferredNft({
     nft,
@@ -35,9 +35,6 @@ export default withServices(function TransferredNft({
     const desText = window.innerWidth <= 600 ? "Des" : "Destination Hash";
 
     const checkStatus = () => {
-        // eslint-disable-next-line no-debugger
-        // debugger;
-
         const { tokenId, token_id, uri, address } = nft.native;
 
         const t = tokenId || token_id;
@@ -93,7 +90,7 @@ export default withServices(function TransferredNft({
                     <div className="transferred-nft-name">{name}</div>
                 </div>
 
-                {biz && <TxStatus status={txn ? txnStatus : "processing"} />}
+                <TxStatus status={txn ? txnStatus : "processing"} />
             </div>
 
             <div className="transferred-nft-hashes">
@@ -115,24 +112,23 @@ export default withServices(function TransferredNft({
                             : "..."}
                     </a>
                 </div>
-                {biz && (
-                    <div className="chain-hash">
-                        <span>{desText}:</span>
-                        <a
-                            target="_blank"
-                            rel="noreferrer"
-                            href={
-                                typeof links.txTo === "function"
-                                    ? links.txTo(hashes.destHash)
-                                    : links.txTo + hashes.destHash
-                            }
-                        >
-                            {hashes.destHash
-                                ? StringShortener(hashes.destHash, 3)
-                                : "..."}
-                        </a>
-                    </div>
-                )}
+
+                <div className="chain-hash">
+                    <span>{desText}:</span>
+                    <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href={
+                            typeof links.txTo === "function"
+                                ? links.txTo(hashes.destHash)
+                                : links.txTo + hashes.destHash
+                        }
+                    >
+                        {hashes.destHash
+                            ? StringShortener(hashes.destHash, 3)
+                            : "..."}
+                    </a>
+                </div>
             </div>
             {mintWith && (
                 <div className="transferred-nft-hashes secret-hashes">

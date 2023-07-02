@@ -24,7 +24,7 @@ import SelectNFTAler from "../Alerts/SelectNFTAler";
 import PasteDestinationAlert from "../Alerts/PasteDestinationAlert";
 import NoApprovedNFT from "../Alerts/NoApprovedNFT";
 import {
-    usePrevious,
+    // usePrevious,
     useCheckMobileScreen,
     useDidUpdateEffect,
 } from "../Settings/hooks";
@@ -54,7 +54,7 @@ function NFTaccount(props) {
 
     const from = _from.key;
     const secret = from === "Secret";
-    const prevSelected = usePrevious(from);
+    //const prevSelected = usePrevious(from);
 
     let nfts = useSelector((state) => state.general.NFTList);
     let currentsNFTs = useSelector((state) => state.general.currentsNFTs);
@@ -64,14 +64,14 @@ function NFTaccount(props) {
     const tronWallet = useSelector((state) => state.general.tronWallet);
     const account = useSelector((state) => state.general.account);
 
-    const prevAccount = usePrevious(account);
+    //const prevAccount = usePrevious(account);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
     const secretAccount = useSelector((state) => state.general.secretAccount);
     const tonAccount = useSelector((state) => state.general.tonAccount);
     const NFTSetToggler = useSelector((state) => state.general.NFTSetToggler);
-    const prevNFTSetToggler = usePrevious(NFTSetToggler);
+    //const prevNFTSetToggler = usePrevious(NFTSetToggler);
 
     let selectedNFTs = useSelector((state) => state.general.selectedNFTList);
 
@@ -89,6 +89,8 @@ function NFTaccount(props) {
 
     const lockMainPannel = useSelector((state) => state.general.lockMainPannel);
 
+    //const preFetchData = useSelector((state) => state.general.preFetchData);
+
     let _account =
         checkWallet ||
         hederaAccount ||
@@ -101,12 +103,14 @@ function NFTaccount(props) {
         tonAccount;
 
     const { bridge } = serviceContainer;
-    async function getNFTsList(fromChain) {
-        // eslint-disable-next-line no-debugger
-        // debugger;
+
+    async function getNFTsList(fromChain, contract) {
         dispatch(setBigLoader(true));
         try {
-            let nfts = await fromChain.getNFTs(bridge.checkWallet || _account);
+            let nfts = await fromChain.getNFTs(
+                bridge.checkWallet || _account,
+                contract
+            );
             nfts = fromChain.filterNFTs(nfts);
 
             //fromChain.estimateDeployUserStore();
@@ -154,10 +158,7 @@ function NFTaccount(props) {
             //load nfts
             !secret &&
                 _account &&
-                (prevSelected !== _from.key ||
-                    prevAccount !== _account ||
-                    NFTSetToggler !== prevNFTSetToggler) &&
-                getNFTsList(fromChain);
+                getNFTsList(fromChain /*preFetchData?.contract*/);
 
             //update Balance
             getBalance(fromChain);
@@ -166,21 +167,10 @@ function NFTaccount(props) {
                 () => getBalance(fromChain),
                 intervalTm
             );
-            // const keyHandler = async (event) => {
-            //     if (event.isComposing || event.keyCode === 229) {
-            //         return;
-            //     }
-            //     if (event.key === "4") {
-            //         fromChain.mintNFT(
-            //             "https://meta.polkamon.com/meta?id=10001852306"
-            //         );
-            //     }
-            // };
-            // biz && window.addEventListener("keydown", keyHandler);
         })();
 
         return () => clearInterval(balanceInterval);
-    }, [_from, _account, NFTSetToggler]);
+    }, [_from, _account, NFTSetToggler /*preFetchData?.contract*/]);
 
     useEffect(() => {
         ReactGA.send({
