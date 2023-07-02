@@ -60,6 +60,7 @@ export const withNearConnection = (Wrapped) =>
         const params = new URLSearchParams(location.search.replace("?", ""));
         const nearAuth = params.get("all_keys") && params.get("account_id"); // && !params.get("WLS");
         const nearTrx = params.get("NEARTRX");
+        const toChain = params.get("toChain");
         const nearFlow = nearTrx || nearAuth;
         const approve = params.get("type") === "approve";
         const send =
@@ -181,6 +182,16 @@ export const withNearConnection = (Wrapped) =>
                             chainWrapper,
                             signer
                         );
+
+                        if (toChain && !nearTrx) {
+                            dispatch(
+                                setTo(
+                                    chains.find(
+                                        (c) => c.nonce === Number(toChain)
+                                    )
+                                )
+                            );
+                        }
 
                         if (nearTrx) {
                             console.log("NEAR: jump to wallet");
