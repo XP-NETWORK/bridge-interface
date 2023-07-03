@@ -89,7 +89,7 @@ function NFTaccount(props) {
 
     const lockMainPannel = useSelector((state) => state.general.lockMainPannel);
 
-    //const preFetchData = useSelector((state) => state.general.preFetchData);
+    const preFetchData = useSelector((state) => state.general.preFetchData);
 
     let _account =
         checkWallet ||
@@ -111,8 +111,9 @@ function NFTaccount(props) {
                 bridge.checkWallet || _account,
                 contract
             );
-            nfts = fromChain.filterNFTs(nfts);
 
+            nfts = fromChain.filterNFTs(nfts);
+            console.log(nfts, "nfts");
             //fromChain.estimateDeployUserStore();
 
             dispatch(setNFTList(nfts));
@@ -158,7 +159,7 @@ function NFTaccount(props) {
             //load nfts
             !secret &&
                 _account &&
-                getNFTsList(fromChain /*preFetchData?.contract*/);
+                getNFTsList(fromChain, preFetchData?.contract);
 
             //update Balance
             getBalance(fromChain);
@@ -170,7 +171,7 @@ function NFTaccount(props) {
         })();
 
         return () => clearInterval(balanceInterval);
-    }, [_from, _account, NFTSetToggler /*preFetchData?.contract*/]);
+    }, [_from, _account, NFTSetToggler, preFetchData?.contract]);
 
     useEffect(() => {
         ReactGA.send({

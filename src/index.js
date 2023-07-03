@@ -54,7 +54,7 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
-    <WagmiConfig client={wagmiClient}>
+    <WagmiConfig config={wagmiClient}>
         <Web3ReactProvider getLibrary={getLibrary}>
             <Services>
                 <Provider store={store}>

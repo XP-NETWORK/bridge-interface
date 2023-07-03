@@ -1031,22 +1031,32 @@ class ICP extends AbstractChain {
 
     async getNFTs(address, contract) {
         const dab = contract === "default";
-        const [defaults, wrappedNfts, userCanister, umts] = await Promise.all([
+        const [defaults, wrappedNfts, userCanister] = await Promise.allSettled([
             dab && super.getNFTs(address),
             this.chain.nftList(address),
             contract && !dab && this.chain.nftList(address, contract),
             //this.chain.nftList(address, this.chain.getParams().umt.toText()),
         ]);
 
-        return (defaults || [])
-            .concat(wrappedNfts || [])
-            .concat(umts || [])
-            .concat(userCanister || []);
+        return (defaults.status === "fulfilled" ? defaults.value || [] : [])
+            .concat(
+                wrappedNfts.status === "fulfilled"
+                    ? wrappedNfts.value || []
+                    : []
+            )
+            .concat(
+                userCanister.status === "fulfilled"
+                    ? userCanister.value || []
+                    : []
+            );
     }
 
     async preParse(nft) {
         const metadata = nft.native.metadata || {};
-        const { url, image, thumb } = metadata;
+
+        const { url, image, thumb, mimeType } = metadata;
+        const uri = url || image || thumb;
+        const format = uri?.match(/(?:\.([^.]+))?$/)?.at(1) || "";
 
         return {
             ...nft,
@@ -1059,10 +1069,15 @@ class ICP extends AbstractChain {
             tokenId: nft.native?.tokenId,
             contract: nft.collectionIdent,
             metaData:
-                Object.keys(metadata) > 0
+                Object.keys(metadata).length > 0
                     ? {
                           ...metadata,
-                          image: url || image || thumb,
+                          ...(mimeType === "video"
+                              ? {
+                                    animation_url: uri,
+                                    animation_url_format: format,
+                                }
+                              : { image: uri, imageFormat: format }),
                       }
                     : undefined,
         };

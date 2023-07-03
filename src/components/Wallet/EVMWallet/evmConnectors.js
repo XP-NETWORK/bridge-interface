@@ -1,11 +1,11 @@
 import {
     EthereumClient,
-    modalConnectors,
-    walletConnectProvider,
+    w3mConnectors,
+    w3mProvider,
 } from "@web3modal/ethereum";
 
 import * as allChains from "wagmi/chains";
-import { configureChains, createClient } from "wagmi";
+import { configureChains, createConfig } from "wagmi";
 import { chains } from "../../values";
 
 export const wcId = "d61f00671338b982a0b8a236682e2b1d";
@@ -29,16 +29,14 @@ export const wcSupportedChains = allWc2Chains.filter((wcChain) => {
 });
 
 const { provider } = configureChains(wcSupportedChains, [
-    walletConnectProvider({ projectId: wcId }),
+    w3mProvider({ projectId: wcId }),
 ]);
 
-export const wagmiClient = createClient({
-    // autoConnect: true,
+export const wagmiClient = createConfig({
+    autoConnect: true,
 
-    connectors: modalConnectors({
+    connectors: w3mConnectors({
         projectId: wcId,
-        version: "1",
-
         appName: "XP.NETWORK Multi-chain NFT bridge",
         chains: wcSupportedChains,
     }),

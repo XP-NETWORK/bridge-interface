@@ -16,8 +16,8 @@ function NFTgridView({ serviceContainer, chainSpecificRender }) {
     const { bridge } = serviceContainer;
     const [chain, setChain] = useState(null);
 
-    //const PreNftFetch = chainSpecificRender?.PreNftFech;
-    //const CollectionPannel = chainSpecificRender?.CollectionPannel;
+    const PreNftFetch = chainSpecificRender?.PreNftFech;
+    const CollectionPannel = chainSpecificRender?.CollectionPannel;
     const [hasClaimables, setClaimables] = useState(0);
 
     const from = useSelector((state) => state.general.from);
@@ -30,7 +30,7 @@ function NFTgridView({ serviceContainer, chainSpecificRender }) {
         (state) => state.general.algorandClaimables
     );
 
-    //const preFetchData = useSelector((state) => state.general.preFetchData);
+    const preFetchData = useSelector((state) => state.general.preFetchData);
 
     const nftsPlace = window.innerWidth <= 600 ? 2 : 6;
     const placeholders = new Array(
@@ -52,18 +52,22 @@ function NFTgridView({ serviceContainer, chainSpecificRender }) {
         wrapper?.current?.scrollTo(0, 0);
     }, [scrollToggler]);
 
-    //const withCollectionSelector = CollectionPannel && preFetchData;
-    //const hidden = !PreNftFetch || preFetchData ? "" : "hidden";
+    const withCollectionSelector = CollectionPannel && preFetchData;
+    const hidden = !PreNftFetch || preFetchData ? "" : "hidden";
 
     /**${hidden} ${
                     withCollectionSelector ? "withCollectionSelector" : ""
                 } */
     return (
         <>
-            {/*PreNftFetch && <PreNftFetch show={!hidden} />*/}
-            <div className={`nftListBox `}>
+            {PreNftFetch && <PreNftFetch show={!hidden} />}
+            <div
+                className={`nftListBox ${hidden} ${
+                    withCollectionSelector ? "withCollectionSelector" : ""
+                }`}
+            >
                 {from?.type === "Cosmos" && <SecretContractPanel />}
-                {/*withCollectionSelector && <CollectionPannel />*/}
+                {withCollectionSelector && <CollectionPannel />}
                 {loader ? (
                     <BigLoader />
                 ) : (

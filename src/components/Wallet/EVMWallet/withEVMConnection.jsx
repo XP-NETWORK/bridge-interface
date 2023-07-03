@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useAccount, useNetwork, useSigner } from "wagmi";
+import { useAccount, useNetwork } from "wagmi";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 import {
@@ -15,6 +15,9 @@ import { wcSupportedChains } from "./evmConnectors";
 
 import { useNavigate } from "react-router";
 import { getRightPath } from "../../../utils";
+
+import { createWalletClient, custom } from "viem";
+import { mainnet } from "viem/chains";
 
 export const withEVMConnection = (Wrapped) =>
     function CB(props) {
@@ -34,11 +37,12 @@ export const withEVMConnection = (Wrapped) =>
         const { chainId, account } = useWeb3React();
         const { address } = useAccount();
         const { chain } = useNetwork();
-        const { data: signer } = useSigner();
+
+        //const signer = false;
         const { bridge } = serviceContainer;
 
         useEffect(() => {
-            if (address && signer && !connectedWallet) {
+            if (address && !connectedWallet) {
                 const isSupported = wcSupportedChains.find(
                     (supported) => chain.id === supported.id
                 );
@@ -52,6 +56,11 @@ export const withEVMConnection = (Wrapped) =>
                             dispatch(setAccount(address));
                             const nonce = bridge.getNonce(chain.id);
                             bridge.getChain(nonce).then((chainWrapper) => {
+                                const signer = createWalletClient({
+                                    chain: mainnet,
+                                    transport: custom(window.ethereum),
+                                    account: address,
+                                });
                                 chainWrapper.setSigner(signer);
                                 bridge.setCurrentType(chainWrapper);
                                 to && from && navigate(getRightPath());
@@ -71,7 +80,7 @@ export const withEVMConnection = (Wrapped) =>
                     }
                 }
             }
-        }, [address, signer, chain]);
+        }, [address, chain]);
 
         useEffect(() => {
             if (bridge && account && chainId) {
