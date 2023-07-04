@@ -239,6 +239,13 @@ export const withStyles = (Wrapped) =>
               background: ${panelBackground ? panelBackground : ""};
               filter: brightness(92%);
             }
+
+            .undeployedUserStore .sendNftCol::before,
+            .undeployedUserStore .approval::before,
+            .undeployedUserStore .nft-box__wrapper:not(.selected):before {
+              background: ${panelBackground ? panelBackground : ""};
+              opacity: .8;
+            }
     
             .mobile-destination__address input:focus, .fieldsWrapper input, .nftListBox.withSecret, .change-view__button, .SearchDrop, .CloseIcon {
               outline:none;
