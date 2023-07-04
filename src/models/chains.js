@@ -7,6 +7,8 @@ import BigNumber from "bignumber.js";
 import { ethers, BigNumber as BN } from "ethers";
 import xpchallenge from "../services/xpchallenge";
 
+import { wnftPattern } from "../components/values";
+
 const Xpchallenge = xpchallenge();
 const feeMultiplier = 1.1;
 
@@ -105,6 +107,19 @@ class AbstractChain {
         if (!uri && this.chain.getTokenURI) {
             uri = await this.chain.getTokenURI(contract, nft.native?.tokenId);
         }
+
+        if (/0x\{id\}$/.test(uri))
+            uri = uri.replace("0x{id}", nft.native.tokenId);
+
+        /*const rg = new RegExp(
+            wnftPattern.slice(0, 1) + "?<=" + wnftPattern.slice(1) + `/d*`
+        );
+
+        if (rg.test(uri)) {
+            console.log(uri);
+            uri = uri.replace(uri.match(rg).at(0), `w/${uri.match(rg).at(0)}`);
+            console.log(uri);
+        }*/
 
         return {
             ...nft,
