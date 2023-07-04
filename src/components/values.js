@@ -75,6 +75,7 @@ export const chains = [
         key: "Ethereum",
         text: "Ethereum",
         value: "Ethereum",
+        wagmi: "mainnet",
         nonce: 5,
         chainId: 1,
         tnChainId: 5,
@@ -181,6 +182,7 @@ export const chains = [
     {
         type: "EVM",
         key: "xDAI",
+        wagmi: "gnosis",
         text: "Gnosis",
         value: "xDAI",
         nonce: 14,
@@ -299,6 +301,7 @@ export const chains = [
         key: "Harmony",
         text: "Harmony",
         value: "Harmony",
+        wagmi: "harmonyOne",
         nonce: 12,
         chainId: 1666600000,
         tnChainId: 1666700000,

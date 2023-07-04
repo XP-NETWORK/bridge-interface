@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useAccount, useNetwork, useSigner } from "wagmi";
+import { useAccount, useNetwork } from "wagmi";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 import {
@@ -11,7 +11,7 @@ import {
     setConnectedWallet,
     setError,
 } from "../../../store/reducers/generalSlice";
-import { wcSupportedChains } from "./evmConnectors";
+import { chains as WCSupportedChains } from "./evmConnectors";
 
 import { useNavigate } from "react-router";
 import { getRightPath } from "../../../utils";
@@ -32,46 +32,71 @@ export const withEVMConnection = (Wrapped) =>
         const navigate = useNavigate();
 
         const { chainId, account } = useWeb3React();
-        const { address } = useAccount();
+        const { address, connector } = useAccount();
+
         const { chain } = useNetwork();
-        const { data: signer } = useSigner();
+
         const { bridge } = serviceContainer;
 
+        const connected = connectedWallet === "WalletConnect";
+
         useEffect(() => {
-            if (address && signer && !connectedWallet) {
-                const isSupported = wcSupportedChains.find(
+            if (address && connector && !connected) {
+                const isSupported = WCSupportedChains.find(
                     (supported) => chain.id === supported.id
                 );
-                if (from) {
-                    if (isSupported) {
-                        if (
-                            isSupported.id === from?.chainId ||
-                            isSupported.id === from?.tnChainId
-                        ) {
-                            dispatch(setConnectedWallet("WalletConnect"));
-                            dispatch(setAccount(address));
-                            const nonce = bridge.getNonce(chain.id);
-                            bridge.getChain(nonce).then((chainWrapper) => {
-                                chainWrapper.setSigner(signer);
+
+                if (isSupported) {
+                    if (
+                        isSupported.id === from?.chainId ||
+                        isSupported.id === from?.tnChainId
+                    ) {
+                        const nonce = bridge.getNonce(chain.id);
+                        bridge.getChain(nonce).then((chainWrapper) => {
+                            connector.getWalletClient().then((signer) => {
+                                const { account, chain, transport } = signer;
+
+                                const network = chain
+                                    ? {
+                                          chainId: chain.id,
+                                          name: chain.name,
+                                          ensAddress:
+                                              chain.contracts?.ensRegistry
+                                                  ?.address,
+                                      }
+                                    : undefined;
+
+                                const provider = new ethers.providers.Web3Provider(
+                                    transport,
+                                    network
+                                );
+                                const adaptedSigner = provider.getSigner(
+                                    account.address
+                                );
+
+                                dispatch(setConnectedWallet("WalletConnect"));
+                                dispatch(setAccount(address));
+                                chainWrapper.setSigner(adaptedSigner);
                                 bridge.setCurrentType(chainWrapper);
                                 to && from && navigate(getRightPath());
                             });
-                        } else
-                            dispatch(
-                                setError({
-                                    message: `Departure chain and WalletConnect selected network must be the same.`,
-                                })
-                            );
+                        });
                     } else {
                         dispatch(
                             setError({
-                                message: `${chain.name} is not supported by WalletConnect protocol.`,
+                                message: `Departure chain and WalletConnect selected network must be the same.`,
                             })
                         );
                     }
+                } else {
+                    dispatch(
+                        setError({
+                            message: `${chain.name} is not supported by WalletConnect protocol.`,
+                        })
+                    );
                 }
             }
-        }, [address, signer, chain]);
+        }, [address, chain, connector]);
 
         useEffect(() => {
             if (bridge && account && chainId) {

@@ -27,7 +27,7 @@ import Pontem from "./APTOSWallet/Pontem";
 import NearWallet from "./NEARWallet/NearWallet";
 import WalletSelector from "./NEARWallet/WalletSelector";
 // import Solana from "./SOLWallet";
-import { biz } from "../values";
+import { biz, dev } from "../values";
 import Phantom from "./SOLWallet/Phantom";
 import Solflare from "./SOLWallet/Solflare";
 import OKX from "./EVMWallet/OKX";
@@ -403,7 +403,7 @@ export default function WalletList({ connected, input, discount }) {
             Component: <IcpWallet key="ICP" close={connected} />,
             name: "ICP",
             mobile: false,
-            desktop: true,
+            desktop: dev,
             order: 1,
             type: "ICP",
             keyName: "ICPPlug",

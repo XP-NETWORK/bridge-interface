@@ -7,6 +7,8 @@ import BigNumber from "bignumber.js";
 import { ethers, BigNumber as BN } from "ethers";
 import xpchallenge from "../services/xpchallenge";
 
+import { wnftPattern } from "../components/values";
+
 const Xpchallenge = xpchallenge();
 const feeMultiplier = 1.1;
 
@@ -105,6 +107,19 @@ class AbstractChain {
         if (!uri && this.chain.getTokenURI) {
             uri = await this.chain.getTokenURI(contract, nft.native?.tokenId);
         }
+
+        if (/0x\{id\}$/.test(uri))
+            uri = uri.replace("0x{id}", nft.native.tokenId);
+
+        /*const rg = new RegExp(
+            wnftPattern.slice(0, 1) + "?<=" + wnftPattern.slice(1) + `/d*`
+        );
+
+        if (rg.test(uri)) {
+            console.log(uri);
+            uri = uri.replace(uri.match(rg).at(0), `w/${uri.match(rg).at(0)}`);
+            console.log(uri);
+        }*/
 
         return {
             ...nft,
@@ -1031,22 +1046,32 @@ class ICP extends AbstractChain {
 
     async getNFTs(address, contract) {
         const dab = contract === "default";
-        const [defaults, wrappedNfts, userCanister, umts] = await Promise.all([
+        const [defaults, wrappedNfts, userCanister] = await Promise.allSettled([
             dab && super.getNFTs(address),
             this.chain.nftList(address),
             contract && !dab && this.chain.nftList(address, contract),
             //this.chain.nftList(address, this.chain.getParams().umt.toText()),
         ]);
 
-        return (defaults || [])
-            .concat(wrappedNfts || [])
-            .concat(umts || [])
-            .concat(userCanister || []);
+        return (defaults.status === "fulfilled" ? defaults.value || [] : [])
+            .concat(
+                wrappedNfts.status === "fulfilled"
+                    ? wrappedNfts.value || []
+                    : []
+            )
+            .concat(
+                userCanister.status === "fulfilled"
+                    ? userCanister.value || []
+                    : []
+            );
     }
 
     async preParse(nft) {
         const metadata = nft.native.metadata || {};
-        const { url, image, thumb } = metadata;
+
+        const { url, image, thumb, mimeType } = metadata;
+        const uri = url || image || thumb;
+        const format = uri?.match(/(?:\.([^.]+))?$/)?.at(1) || "";
 
         return {
             ...nft,
@@ -1059,10 +1084,15 @@ class ICP extends AbstractChain {
             tokenId: nft.native?.tokenId,
             contract: nft.collectionIdent,
             metaData:
-                Object.keys(metadata) > 0
+                Object.keys(metadata).length > 0
                     ? {
                           ...metadata,
-                          image: url || image || thumb,
+                          ...(mimeType === "video"
+                              ? {
+                                    animation_url: uri,
+                                    animation_url_format: format,
+                                }
+                              : { image: uri, imageFormat: format }),
                       }
                     : undefined,
         };

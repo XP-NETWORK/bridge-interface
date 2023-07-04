@@ -46,7 +46,7 @@ const CollectionPannel = () => {
                         dispatch(setPreFetchData(null));
                     }}
                 >
-                    Change contract
+                    Change canister
                 </div>
             </div>
         </div>
