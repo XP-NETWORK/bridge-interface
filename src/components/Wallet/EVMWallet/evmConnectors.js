@@ -4,49 +4,29 @@ import {
     w3mProvider,
 } from "@web3modal/ethereum";
 
-import * as allChains from "wagmi/chains";
 import { configureChains, createConfig } from "wagmi";
-import { chains } from "../../values";
+import * as wagamiChains from "wagmi/chains";
+import { chains as bridgeChains } from "../../values";
+
+export const chains = bridgeChains
+    .filter(
+        (chain) =>
+            chain.type === "EVM" &&
+            wagamiChains[chain.wagmi || chain.key.toLowerCase()]
+    )
+    .map((chain) => wagamiChains[chain.wagmi || chain.key.toLowerCase()]);
 
 export const wcId = "d61f00671338b982a0b8a236682e2b1d";
-export const allWc2Chains = Object.keys(allChains).map((key) => allChains[key]);
 
-export const wcSupportedChains = allWc2Chains.filter((wcChain) => {
-    const find = chains.filter((chain) => {
-        if (
-            chain.type === "EVM" &&
-            (chain.text.toLowerCase().includes(wcChain.name.toLowerCase()) ||
-                chain.text
-                    .toLowerCase()
-                    .includes(wcChain.network.toLowerCase()))
-        ) {
-            return chain;
-        }
-    });
-    if (find.length > 0) {
-        return wcChain;
-    }
-});
-
-const { provider } = configureChains(wcSupportedChains, [
+const { publicClient } = configureChains(chains, [
     w3mProvider({ projectId: wcId }),
 ]);
 
-export const wagmiClient = createConfig({
-    autoConnect: true,
-
-    connectors: w3mConnectors({
-        projectId: wcId,
-        appName: "XP.NETWORK Multi-chain NFT bridge",
-        chains: wcSupportedChains,
-    }),
-    provider,
+export const wagmiConfig = createConfig({
+    connectors: w3mConnectors({ chains, projectId: wcId }),
+    publicClient,
 });
-
-export const ethereumClient = new EthereumClient(
-    wagmiClient,
-    wcSupportedChains
-);
+export const ethereumClient = new EthereumClient(wagmiConfig, chains);
 
 export const createSafeStorage = () => {
     window.safeLocalStorage = {

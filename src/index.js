@@ -28,7 +28,7 @@ import WhiteListedPool from "./services/whiteListedPool";
 
 import { WagmiConfig } from "wagmi";
 import {
-    wagmiClient,
+    wagmiConfig,
     createSafeStorage,
 } from "./components/Wallet/EVMWallet/evmConnectors";
 
@@ -54,7 +54,7 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
-    <WagmiConfig config={wagmiClient}>
+    <WagmiConfig config={wagmiConfig}>
         <Web3ReactProvider getLibrary={getLibrary}>
             <Services>
                 <Provider store={store}>
