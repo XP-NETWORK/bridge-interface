@@ -16,27 +16,16 @@ function WalletConnect({ styles /*connectWallet*/ }) {
     const from = useSelector((state) => state.general.from);
     const testnet = useSelector((state) => state.general.testNet);
 
-    const unsupportedChains = [
-        "Godwoken",
-        "Fuse",
-        "Skale",
-        "Harmony",
-        "Abeychain",
-        "GateChain",
-        "Velas",
-        "Caduceus",
-    ];
-
     const handleClick = async () => {
         dispatch(setWalletsModal(false));
         dispatch(setAccountWalletModal(false));
-        await open({ route: "SelectNetwork" });
+        open({ route: "SelectNetwork" });
     };
 
     return (
         <li
             style={
-                !testnet && from && !unsupportedChains.includes(from?.key)
+                !testnet && from
                     ? styles()
                     : { pointerEvents: "none", opacity: "0.7" }
             }
