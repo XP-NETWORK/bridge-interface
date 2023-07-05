@@ -293,7 +293,7 @@ export const withStyles = (Wrapped) =>
     
             .desAddress input,  .desAddress input:focus,  .desAddress input:active, .empty__box, .nftChainItem, .mobile-search-input__box input.serchInput,
             .destination__address input, .chain-switch, .destination-props, .NftSelect, .mobile-destination__address input, .close__btn .CloseIcon,
-            .serchInput, .navbar-connect, .navbar-connect:hover, .import-nft__form input[type="text"], .selected-nfts__button {
+            .serchInput, .navbar-connect, .navbar-connect:hover, .import-nft__form input[type="text"], .selected-nfts__button, .deploy-container, .deploy-container .deploy-container_fees {
               border-color: ${borderColor ? borderColor : ""};
             }
     
