@@ -148,6 +148,7 @@ export default function Modals() {
             >
                 <Video />
             </Modal>
+
             <Modal
                 show={false}
                 onHide={closeAlgorandClaimModal}

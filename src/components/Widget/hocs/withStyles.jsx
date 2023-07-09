@@ -158,7 +158,29 @@ export const withStyles = (Wrapped) =>
                 font-size: ${fontSize ? fontSize + "px" : ""};
                 font-family: ${fontFamily ? fontFamily : ""};
             }
-    
+
+            .fullScreen.modal,  .modal-open .fullScreen.modal {
+              top: 0 !important;
+            }
+
+            .fullScreen .modal-dialog, .fullScreen .modal-content {
+              width: 100% !important;
+              height: 100% !important;
+              max-width: unset !important;
+              margin: 0 !important;
+            }
+
+            .fullScreen .nftChainList {
+              margin-top: 30px;
+            }
+
+       
+            .fullScreen .nftChainList, .fullScreen .walletListBox {
+           
+              max-height: 450px !important;
+            }
+
+          
     
             .modal-content, .modal-content .walletListBox, .nftInfBox, .success-nft-info__wrapper, .accountBox, .serchInput  {
                 background: ${modalBackground ? modalBackground : ""};
@@ -230,7 +252,7 @@ export const withStyles = (Wrapped) =>
             
     
     
-            .approval, .fees, .scretPannel, .fieldsWrapper input, .selected-nfts-item, .nftListed:hover, .mobile-destination__address input, .mobile-search-input__box input.serchInput, .selected-nfts__button, .success-info-box, .chain-switch, .destination__address input, .navbar-connect:hover, .import-nft__form input[type="text"]{
+            .approval, input.serchInput, .fees, .scretPannel, .fieldsWrapper input, .selected-nfts-item, .nftListed:hover, .mobile-destination__address input, .mobile-search-input__box input.serchInput, .selected-nfts__button, .success-info-box, .chain-switch, .destination__address input, .navbar-connect:hover, .import-nft__form input[type="text"]{
               background: ${panelBackground ? panelBackground : ""};
               filter: brightness(94%);
             }
@@ -516,6 +538,8 @@ export const withStyles = (Wrapped) =>
             .searchChain input:focus, input.serchInput:focus {
               background: transparent;
             }
+
+        
     
             ::-webkit-scrollbar-thumb, .approveBtn input:checked + label {
               background: ${iconColor ? iconColor : ""};
@@ -729,9 +753,7 @@ export const withStyles = (Wrapped) =>
                 width: 180px;
               }
     
-              .serchInput {
-              
-              }
+          
     
               .sendNftCol {
                 margin-top: 0;

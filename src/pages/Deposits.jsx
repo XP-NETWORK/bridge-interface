@@ -55,7 +55,7 @@ export default function Deposits() {
                 show={walletsModal}
                 onHide={handleClose}
                 animation={null}
-                className="ChainModal wallet-modal"
+                className="ChainModal wallet-modal fullScreen"
             >
                 <DiscountWalletModal handleClose={handleClose} />
             </Modal>

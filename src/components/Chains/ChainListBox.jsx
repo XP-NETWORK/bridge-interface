@@ -351,7 +351,7 @@ function ChainListBox({ serviceContainer }) {
             animation={false}
             show={show || switchChain}
             onHide={handleClose}
-            className="ChainModal"
+            className="ChainModal fullScreen"
         >
             <Modal.Header className="text-left">
                 <Modal.Title>{`Select ${

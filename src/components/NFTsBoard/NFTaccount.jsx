@@ -202,7 +202,7 @@ function NFTaccount(props) {
                 show={accountWalletModal}
                 // onHide={handleClose}
                 animation={null}
-                className="ChainModal wallet-modal"
+                className="ChainModal wallet-modal fullScreen"
             >
                 <WalletConnectionModal />
             </Modal>
