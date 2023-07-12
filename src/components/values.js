@@ -68,6 +68,7 @@ export const getChainObject = (nonce) =>
     chains.find((chain) => chain.nonce === nonce);
 
 export const secretnodes = "https://secretnodes.com/secret/accounts";
+export const proxy = "https://sheltered-crag-76748.herokuapp.com/";
 export const tonAuth = "tonkeeper.xp.network";
 
 export const chains = [
@@ -459,9 +460,9 @@ export const chains = [
         // chainId: 1564830818,
         //tnChainId: 1305754875840118,
         image: { avatar: true, src: InternetComputer },
-        testNet: dev,
-        mainnet: dev,
-        newChain: dev,
+        testNet: biz,
+        mainnet: biz,
+        newChain: biz,
         coming: !biz,
     },
     {
@@ -541,18 +542,16 @@ export const chains = [
         tnChainId: 64668,
     },
     {
-        type: "",
+        type: "Casper",
         key: "Casper",
         text: "Casper",
         value: "Casper",
-        nonce: 0x26,
-        order: -1,
+        nonce: 39,
+        order: -8,
         image: { avatar: true, src: casper },
-        testNet: true,
-        mainnet: true,
-        coming: true,
-        newChain: false,
-        chainId: 32520,
-        tnChainId: 64668,
+        testNet: dev,
+        mainnet: false,
+        coming: !dev,
+        newChain: dev,
     },
 ];

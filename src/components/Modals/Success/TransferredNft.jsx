@@ -21,10 +21,11 @@ export default withServices(function TransferredNft({
     const { image, animation_url, txn, name, mintWith } = nft;
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
-
+    const account = useSelector((state) => state.general.account);
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
 
     const [txnStatus, setTxnStatus] = useState("pending");
+    const [fromChain, setFromChain] = useState(null);
     const [toChain, setToChain] = useState(null);
     const [hashes, setHashes] = useState({
         depHash: "",
@@ -59,7 +60,7 @@ export default withServices(function TransferredNft({
 
                     setHashes({
                         depHash: tx.hash,
-                        destHash: toChain.adaptDestHash(tx.toHash, receiver),
+                        destHash: toChain.adaptHashView(tx.toHash, receiver),
                     });
                 }
             }
@@ -70,13 +71,17 @@ export default withServices(function TransferredNft({
 
     useEffect(() => {
         bridge.getChain(to.nonce).then((chain) => setToChain(chain));
+        bridge.getChain(from.nonce).then((chain) => setFromChain(chain));
     }, []);
 
     useEffect(() => {
         toChain && checkStatus();
     }, [txnHashArr, toChain]);
 
-    const depHash = hashes?.depHash || txn?.hash;
+    const depHash = fromChain?.adaptHashView(
+        hashes?.depHash || txn?.hash,
+        account
+    );
 
     return (
         <div className="success-nft-info__wrapper">
@@ -92,7 +97,7 @@ export default withServices(function TransferredNft({
 
                 <TxStatus status={txn ? txnStatus : "processing"} />
             </div>
-
+            git
             <div className="transferred-nft-hashes">
                 <div className="chain-hash">
                     <span>{depText}:</span>
@@ -105,11 +110,7 @@ export default withServices(function TransferredNft({
                                 : links.txFrom + depHash
                         }`}
                     >
-                        {txn?.hash
-                            ? StringShortener(txn?.hash, 3)
-                            : hashes.depHash
-                            ? StringShortener(hashes.depHash, 3)
-                            : "..."}
+                        {depHash ? StringShortener(depHash, 3) : "..."}
                     </a>
                 </div>
 

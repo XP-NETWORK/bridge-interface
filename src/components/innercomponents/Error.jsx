@@ -14,7 +14,10 @@ export default function Error() {
     const handleClose = () => {
         dispatch(setError(false));
     };
-    let error = useSelector((state) => state.general.error);
+    let { error, errorLink } = useSelector((state) => ({
+        error: state.general.error,
+        errorLink: state.general.errorLink,
+    }));
     const whitelistErr = error?.includes("automatically whitelisted");
 
     if (error && whitelistErr) {
@@ -46,7 +49,20 @@ export default function Error() {
                     className="wrongNFT"
                 >
                     {error}
+                    {errorLink && (
+                        <span>
+                            ,{" "}
+                            <a
+                                target="_blank"
+                                rel="noreferrer"
+                                href={errorLink.href}
+                            >
+                                {errorLink.text}
+                            </a>
+                        </span>
+                    )}
                 </div>
+
                 {URLToOptIn && (
                     <CopyToClipboard text={URLToOptIn}>
                         <div className="opt-in__error">

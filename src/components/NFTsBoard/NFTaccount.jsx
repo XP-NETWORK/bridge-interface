@@ -113,7 +113,7 @@ function NFTaccount(props) {
             );
 
             nfts = fromChain.filterNFTs(nfts);
-            console.log(nfts, "nfts");
+
             //fromChain.estimateDeployUserStore();
 
             dispatch(setNFTList(nfts));

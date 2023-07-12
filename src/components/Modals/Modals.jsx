@@ -45,6 +45,9 @@ export default function Modals() {
     const transferModalLoader = useSelector(
         (state) => state.general.transferModalLoader
     );
+    const authModalLoader = useSelector(
+        (state) => state.general.authModalLoader
+    );
     const changeWallet = useSelector((state) => state.general.changeWallet);
     const algorandAddresses = useSelector(
         (state) => state.general.algorandAddresses
@@ -184,6 +187,15 @@ export default function Modals() {
                 size="sm"
             >
                 <TransferLoader />
+            </Modal>
+
+            <Modal
+                className="transfer-loader-modal"
+                animation={false}
+                show={authModalLoader}
+                size="sm"
+            >
+                <TransferLoader mode={"auth"} />
             </Modal>
             <Modal
                 className="tron-connection-error"

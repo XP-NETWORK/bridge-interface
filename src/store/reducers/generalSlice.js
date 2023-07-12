@@ -185,6 +185,7 @@ const generalSlice = createSlice({
                 initialTokenId,
                 nftUri,
                 contract,
+
                 createdAt,
             } = action.payload;
 
@@ -425,7 +426,7 @@ const generalSlice = createSlice({
             // debugger;
             // handleGA4Event(googleAnalyticsCategories.Error, action.payload);
             if (action.payload) {
-                const { err, data, message } = action.payload;
+                const { err, data, message, link } = action.payload;
 
                 switch (true) {
                     case typeof data === "object":
@@ -454,7 +455,10 @@ const generalSlice = createSlice({
                             message?.includes("does not support EIP-1559")
                         ) {
                             state.error = `EIP-1559 error. Please switch network to Ethereum and back and try again`;
-                        } else state.error = message;
+                        } else {
+                            state.error = message;
+                            link && (state.errorLink = link);
+                        }
                         break;
                 }
             } else state.error = false;
@@ -516,6 +520,10 @@ const generalSlice = createSlice({
         setTransferLoaderModal(state, action) {
             state.transferModalLoader = action.payload;
         },
+        setAuthModalLoader(state, action) {
+            state.authModalLoader = action.payload;
+        },
+        //authModalLoader
         setValidatorsInf(state, action) {
             state.validatorsInfo = action.payload;
         },
@@ -718,6 +726,7 @@ export const {
     setHederaClaimables,
     setLockMainPannel,
     setPreFetchData,
+    setAuthModalLoader,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
