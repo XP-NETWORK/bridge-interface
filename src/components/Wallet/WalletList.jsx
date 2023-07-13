@@ -38,6 +38,7 @@ import XPortal from "./MultiversXWallet/XPortal";
 import MultiversXDeFi from "./MultiversXWallet/MultiversXDeFi";
 import HederaWallet from "./HederaWallet/Hashpack";
 import IcpWallet from "./IcpWallet";
+import CasperWallet from "./CasperWallet/casperWallet";
 
 export default function WalletList({ connected, input, discount }) {
     const from = useSelector((state) => state.general.from);
@@ -403,10 +404,19 @@ export default function WalletList({ connected, input, discount }) {
             Component: <IcpWallet key="ICP" close={connected} />,
             name: "ICP",
             mobile: false,
-            desktop: dev,
+            desktop: biz,
             order: 1,
             type: "ICP",
             keyName: "ICPPlug",
+        },
+        {
+            Component: <CasperWallet key="Casper" close={connected} />,
+            name: "Casper",
+            mobile: false,
+            desktop: dev,
+            order: 223,
+            type: "Casper",
+            keyName: "Casper",
         },
         // ////////////!!!!
         // {

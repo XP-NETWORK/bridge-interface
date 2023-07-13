@@ -25,8 +25,6 @@ class WService {
                     ? document.referrer
                     : undefined;
 
-            console.log(parentHost, "parentHost", data.widgetName);
-
             !data.widgetName &&
                 parentHost &&
                 this.axios

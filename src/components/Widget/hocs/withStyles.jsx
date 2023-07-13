@@ -176,15 +176,19 @@ export const withStyles = (Wrapped) =>
 
        
             .fullScreen .nftChainList, .fullScreen .walletListBox {
-           
-              max-height: 450px !important;
+              max-height: ${window.innerHeight - 150}px !important;
             }
 
           
     
-            .modal-content, .modal-content .walletListBox, .nftInfBox, .success-nft-info__wrapper, .accountBox, .serchInput  {
+            .modal-content,  .nftInfBox, .success-nft-info__wrapper, .accountBox, .serchInput {
                 background: ${modalBackground ? modalBackground : ""};
                 filter: brightness(90%);
+            }
+
+            .show--selected, .set--selected {
+              background: ${panelBackground ? panelBackground : ""};
+              filter: brightness(85%);
             }
     
             .success-nft-info__wrapper {
@@ -252,7 +256,7 @@ export const withStyles = (Wrapped) =>
             
     
     
-            .approval, input.serchInput, .fees, .scretPannel, .fieldsWrapper input, .selected-nfts-item, .nftListed:hover, .mobile-destination__address input, .mobile-search-input__box input.serchInput, .selected-nfts__button, .success-info-box, .chain-switch, .destination__address input, .navbar-connect:hover, .import-nft__form input[type="text"]{
+            .approval, input.serchInput, .fees, .scretPannel, .collectionPannel, .fieldsWrapper input, .selected-nfts-item, .nftListed:hover, .mobile-destination__address input, .mobile-search-input__box input.serchInput, .selected-nfts__button, .success-info-box, .chain-switch, .destination__address input, .navbar-connect:hover, .import-nft__form input[type="text"]{
               background: ${panelBackground ? panelBackground : ""};
               filter: brightness(94%);
             }
@@ -292,7 +296,7 @@ export const withStyles = (Wrapped) =>
             }
     
             .nft_selectBox, .transfer-board, .destination__address input:focus, .accountBox , .mobile-col .approval,
-            .mobile-nfts__header, .mobile-col__header, .mobile-col__tittle, .mobile-destination__container, .mobile-col .fees {
+            .mobile-nfts__header, .mobile-col__header, .mobile-col__tittle, .mobile-destination__container, .mobile-col .fees,  .secret-toggle {
               background: ${panelBackground ? panelBackground : ""};
               border-color: ${borderColor ? borderColor : ""};
               
@@ -303,8 +307,8 @@ export const withStyles = (Wrapped) =>
              .desAddress input, .nftWornTop h3, .nftWornTop p, .nftInfBox p, .about__text, .ComentBox p, .nonftAcc, .yourNft__title, .destination__title, .nftListed__info .name,
               .nonftAcc  h2,  .transfer-loader__title, .transfer-loader__text, .transfer-loader__sub, .txn-hash, .sucesList span, .selected-nfts__header, .approval__header, .fees__title, .clip p,
               .fees span, .listed-view__not-whitelisted__button, .success-info-box, .accountTit, .accountBox p, .mobile-destination__address input,
-              .info-item-chain, .chain-select__box, .desktop__header span, .account-modal__account,  .navbar-connect,  .deploy-container,
-              .import-nft__form, .import-nft__form form, .import-nft__form input[type="text"], .mobile-destination__address input::placeholder {
+              .info-item-chain, .chain-select__box, .desktop__header span, .account-modal__account,  .navbar-connect,  .deploy-container, .secret-toggle .show, .secret-toggle .set,
+              .fieldsWrapper input::placeholder, .import-nft__form, .import-nft__form form, .import-nft__form input[type="text"], .mobile-destination__address input::placeholder {
                 color: ${color ? color : ""};
             }
     
@@ -333,7 +337,7 @@ export const withStyles = (Wrapped) =>
                 border-radius: ${btnRadius ? btnRadius + "px" : ""};
             }
     
-            a.themBtn:hover, .switching:hover, .connect-wallet__button:hover,.transfer-button,  .transfer-button:hover, .import-nft__buttons .btn-import {
+            a.themBtn:hover, .switching:hover,  .connect-wallet__button:hover,.transfer-button,  .transfer-button:hover, .import-nft__buttons .btn-import {
               filter: brightness(115%);
               background:  ${btnBackground ? btnBackground : ""};
               color:  ${btnColor ? btnColor : ""};
@@ -356,14 +360,14 @@ export const withStyles = (Wrapped) =>
               font-family: ${fontFamily ? fontFamily : ""};
             }
     
-            .transfer-button, .transfer-button--disabled, .deploy-container button{
+             .transfer-button, .transfer-button--disabled, .deploy-container button{
               opacity: .8;
               background:  ${btnBackground ? btnBackground : ""};
               color:  ${btnColor ? btnColor : ""};
             }
             
            .connectNft a.themBtn.disabled, .sendNftBox :not(.nftSendBtn.disabled) > a.themBtn, .switching, 
-           .mobileOnly  .nftSendBtn > a.themBtn, .connect-wallet__button, .accountBtn button {
+           .mobileOnly  .nftSendBtn > a.themBtn, .connect-wallet__button, .accountBtn button, .clear-selected {
                 background: ${btnBackground ? btnBackground : ""};
                 color:  ${btnColor ? btnColor : ""};
                 border-color: ${btnBackground ? btnBackground : ""};   
@@ -376,7 +380,7 @@ export const withStyles = (Wrapped) =>
                 filter: brightness(92%);
             }
     
-             .transfer-button--disabled, .transfer-button {
+             .transfer-button--disabled, .transfer-button, .clear-selected,.preScreen .transfer-button.secondary {
               border-color: ${btnColor ? btnColor : ""};   
               color:  ${btnColor ? btnColor : ""};
             }
@@ -489,13 +493,13 @@ export const withStyles = (Wrapped) =>
     
             .approvTop, .nftFees, .SearchDrop.dropdown input,
              .destiAddress input::placeholder, .nftInfBox label, .sucesList label, .switchingAcc p, .transferTable.table thead th,
-             .transferTable.table tr td, .brocken-url, .clearNft, .clear-selected {
+             .transferTable.table tr td, .brocken-url, .clearNft {
               color: ${secondaryColor ? secondaryColor : ""};
             }
     
     
     
-            .listed-view__not-whitelisted__button {
+            .listed-view__not-whitelisted__button, .preScreen .transfer-button.secondary {
               background: ${secondaryColor ? secondaryColor : ""};
             } 
     
@@ -669,7 +673,7 @@ export const withStyles = (Wrapped) =>
              
             }
     
-             .refresh-button, .SearchDrop, .change-view__button, .listed-nft-radio::after,
+             .refresh-button, .refresh-button--disabled, .SearchDrop, .change-view__button, .listed-nft-radio::after,
              .select-all, .checkCircle, .CloseIcon, .delete-all , .nftList, .import-nft-button, .search-button {
               background: ${backgroundColor ? backgroundColor : ""};
              

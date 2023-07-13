@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { chains as valuesChains } from "../../components/values";
 
-//import { biz } from "../../components/values";
+import { biz } from "../../components/values";
 
 export const fonts = [
     "Open Sans",
@@ -49,6 +49,7 @@ export const availability = {
     NEAR: ["WalletSelector"],
     Solana: ["Phantom", "Solflare"],
     Hedera: ["Hashpack"],
+    ICP: ["Plug", "Stoic", "Bitfinity"],
 };
 
 export const wallets = [
@@ -74,6 +75,7 @@ export const wallets = [
     "Keplr",
     "Fina",
     "Hashpack",
+    ...(biz ? ["Plug", "Stoic", "Bitfinity"] : []),
 ];
 
 export const initialChainFees = {

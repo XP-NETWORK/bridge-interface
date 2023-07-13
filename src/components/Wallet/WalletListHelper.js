@@ -27,7 +27,7 @@ export const sortWallet = (components) => {
     const solanaWallet = components.filter((e) => e.type === "Solana");
     const nearWallets = components.filter((e) => e.type === "NEAR");
     const icpWallets = components.filter((e) => e.type === "ICP");
-
+    const casperWallets = components.filter((e) => e.type === "Casper");
     if (discount) {
         sortedWallets = [...evmWallets];
         return;
@@ -251,7 +251,10 @@ export const sortWallet = (components) => {
                 ...usbWallet,
             ];
             return sortedWallets;
-
+        case "Casper": {
+            sortedWallets = [...casperWallets];
+            return sortedWallets;
+        }
         case "ICP":
             sortedWallets = [...icpWallets];
             return sortedWallets;

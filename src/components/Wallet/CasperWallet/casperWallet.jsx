@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { getChainObject } from "../../values";
+import { getChainObject, proxy } from "../../values";
 import { useCheckMobileScreen } from "../../Settings/hooks";
 
 import { getRightPath } from "../../../utils";
@@ -56,6 +56,7 @@ function CasperWallet({ serviceContainer }) {
         ]);
 
         const provider = CasperWalletProvider();
+        console.log(provider);
 
         const connection = await provider.requestConnection(); //boolean
 
@@ -66,14 +67,24 @@ function CasperWallet({ serviceContainer }) {
 
         account.address = await provider.getActivePublicKey();
         account.signer = provider;
-        console.log(provider);
+        /*console.log(provider);
         const x = await chainWrapper.chain.mintNft(account.signer, {
             name: "bane",
             description: "yuha",
             uri: "https://meta.polkamon.com/meta?id=10002366666",
         });
 
-        console.log(x, "x");
+        console.log(x, "x");*/
+
+        chainWrapper.chain.setProxy(proxy);
+
+        /* const x = await chainWrapper.chain.mintNft(account.signer, {
+            name: "varenyk",
+            description: "bakh",
+            uri: "https://meta.polkamon.com/meta?id=10002366655",
+        });
+
+        console.log(x, "x");*/
 
         chainWrapper.setSigner(account.signer);
         bridge.setCurrentType(chainWrapper);

@@ -162,9 +162,12 @@ export default function UserConnect({ mobile }) {
     }, [chainId, WCProvider]);
 
     useEffect(() => {
+        if (account === undefined) return;
+
         if (!account && WalletConnect) {
             active !== undefined && window.location.reload();
         }
+
         dispatch(setAccount(account));
     }, [active]);
 

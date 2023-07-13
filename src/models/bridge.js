@@ -196,6 +196,9 @@ class Bridge {
                 case ChainType.DFINITY:
                     this.chains[chainId] = new ChainInterface.ICP(params);
                     return this.chains[chainId];
+                case ChainType.CASPER:
+                    this.chains[chainId] = new ChainInterface.Casper(params);
+                    return this.chains[chainId];
                 default:
                     throw new Error("unsuported chain");
             }

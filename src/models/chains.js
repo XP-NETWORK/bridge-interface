@@ -30,7 +30,7 @@ class AbstractChain {
         return address;
     }
 
-    adaptDestHash(hash) {
+    adaptHashView(hash) {
         return hash;
     }
 
@@ -1098,16 +1098,7 @@ class ICP extends AbstractChain {
         };
     }
 
-    async prepareAgent(canisterId) {
-        await this.signer.createAgent({
-            host: "https://ic0.app",
-            whitelist: [
-                "ryjl3-tyaaa-aaaaa-aaaba-cai",
-                canisterId,
-                this.chain.getParams().bridgeContract.toText(),
-            ],
-        });
-    }
+    prepareAgent = async () => {};
 
     async preTransfer(...args) {
         const nft = args[0];
@@ -1129,14 +1120,27 @@ class ICP extends AbstractChain {
         }
     }
 
-    adaptDestHash(_, receiver) {
+    adaptHashView(_, receiver) {
         return this.adaptAddress(receiver);
     }
 
-    handlerResult(_, address) {
+    /*handlerResult(_, address) {
         return {
             hash: this.adaptAddress(address),
         };
+    }*/
+}
+
+class Casper extends AbstractChain {
+    constructor(params) {
+        super(params);
+    }
+
+    async getNFTs(address) {
+        return await this.bridge.nftList(
+            this.chain,
+            this.chain.toAccountHash(address)
+        );
     }
 }
 
@@ -1155,4 +1159,5 @@ export default {
     APTOS,
     HEDERA,
     ICP,
+    Casper,
 };
