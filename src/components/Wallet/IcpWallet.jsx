@@ -19,6 +19,7 @@ import {
 
 import plugIcon from "../../assets/img/wallet/plug.svg";
 import stoic from "../../assets/img/wallet/stoic.svg";
+import bitfinity from "../../assets/img/wallet/bitfinity.svg";
 //import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 
 function IcpWallet({ serviceContainer }) {
@@ -32,58 +33,73 @@ function IcpWallet({ serviceContainer }) {
         const path = getRightPath();
         navigate(path);
     };
-    /* const dispatch = useDispatch();
 
+    const connectPlugType = async (wallet, name, chainWrapper) => {
+        const { ic } = window;
 
-    const [lockedBtn, lockBtn] = useState(false);
-    const OFF = { opacity: 0.6, pointerEvents: "none" };
-    //const NONE = { display: "none" };
+        const provider = ic[wallet];
 
-    const from = useSelector((state) => state.general.from);
-    const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
-    const testnet = useSelector((state) => state.general.testNet);
-    const navigate = useNavigate();
+        if (!provider) {
+            dispatch(
+                setError({
+                    message: `You have to install ${name} wallet into your browser`,
+                })
+            );
+            return;
+        }
 
-    const navigateToAccountRoute = () => {
-        const path = getRightPath();
-        navigate(path);
-    };*/
+        const account = {};
 
-    const connectors = {
-        Plug: async (chainWrapper) => {
-            const { ic } = window;
-            if (!ic?.plug) {
-                dispatch(
-                    setError({
-                        message:
-                            "You have to install Plug wallet into your browser",
-                    })
-                );
-                return;
-            }
-
-            const account = {};
-            await ic.plug.requestConnect().catch((e) => {
+        await provider
+            .requestConnect({
+                host: "https://ic0.app",
+                whitelist: [
+                    "ryjl3-tyaaa-aaaaa-aaaba-cai",
+                    chainWrapper.chain.getParams().bridgeContract.toText(),
+                ],
+                timeout: 6e4,
+            })
+            .catch((e) => {
+                console.log(e, "em");
                 dispatch(setError(e));
             });
 
-            const user = ic.plug.sessionManager.sessionData;
-            account.address = user.principalId;
-            account.signer = ic.plug;
-            const prepareAgent = async (canisterId) => {
-                await ic.plug.createAgent({
-                    host: "https://ic0.app",
-                    whitelist: [
-                        "ryjl3-tyaaa-aaaaa-aaaba-cai",
-                        canisterId,
-                        chainWrapper.chain.getParams().bridgeContract.toText(),
-                    ],
-                });
-                console.log("2");
-            };
-            chainWrapper.prepareAgent = prepareAgent;
+        const principalId = await provider.getPrincipal();
 
+        account.address = principalId.toText();
+        account.signer = provider;
+
+        if (!provider.createAgent) {
+            chainWrapper.chain.setActorCreator(provider);
+            account.signer.agent = {};
             return account;
+        }
+
+        const prepareAgent = async (canisterId) => {
+            await provider.createAgent({
+                host: "https://ic0.app",
+                whitelist: [
+                    "ryjl3-tyaaa-aaaaa-aaaba-cai",
+                    canisterId,
+                    chainWrapper.chain.getParams().bridgeContract.toText(),
+                ],
+            });
+        };
+        chainWrapper.prepareAgent = prepareAgent;
+
+        return account;
+    };
+
+    const connectors = {
+        Bitfinity: async (chainWrapper) => {
+            return await connectPlugType(
+                "infinityWallet",
+                "Bitfinity",
+                chainWrapper
+            );
+        },
+        Plug: async (chainWrapper) => {
+            return await connectPlugType("plug", "Plug", chainWrapper);
         },
         Stoic: async () => {
             const lib = await import("ic-stoic-identity");
@@ -141,6 +157,15 @@ function IcpWallet({ serviceContainer }) {
 
     return (
         <>
+            <li
+                style={isMobile ? { display: "none" } : getStyle()}
+                onClick={() => onClickHandler("Bitfinity")}
+                className="wllListItem keplr"
+                data-wallet="Bitfinity"
+            >
+                <img src={bitfinity} alt="Bitfinity" />
+                <p>Bitfinity</p>
+            </li>
             <li
                 style={isMobile ? { display: "none" } : getStyle()}
                 onClick={() => onClickHandler("Plug")}

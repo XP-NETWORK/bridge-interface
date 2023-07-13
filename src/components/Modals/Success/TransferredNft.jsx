@@ -97,7 +97,7 @@ export default withServices(function TransferredNft({
 
                 <TxStatus status={txn ? txnStatus : "processing"} />
             </div>
-            git
+
             <div className="transferred-nft-hashes">
                 <div className="chain-hash">
                     <span>{depText}:</span>
