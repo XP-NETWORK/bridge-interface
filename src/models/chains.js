@@ -58,6 +58,8 @@ class AbstractChain {
     async getNFTs(address) {
         try {
             return await this.bridge.nftList(this.chain, address);
+            //console.log(nfts, "nfts");
+            //return nfts;
         } catch (e) {
             console.log(e, "e");
             throw new Error("NFT-Indexer is temporarily under maintenance");
@@ -757,7 +759,7 @@ class TON extends AbstractChain {
     }
 
     async preParse(nft) {
-        nft = await super.preParse(nft);
+        /* nft = await super.preParse(nft);
 
         const contract = nft.native?.collectionAddress || "SingleNFt";
         return {
@@ -768,6 +770,23 @@ class TON extends AbstractChain {
                 contract: contract,
                 tokenId: nft.native?.address,
                 nftItemAddr: nft.native.address,
+            },
+        };*/
+        const _contract = nft.collectionIdent || "SingleNFt";
+        const data = JSON.stringify(nft.native.metadata);
+
+        const uri = `data:application/json;base64,${btoa(
+            unescape(encodeURIComponent(data))
+        )}`;
+
+        return {
+            collectionIdent: _contract,
+            uri,
+            metaData: nft.native.metadata,
+            native: {
+                ...nft.native,
+                tokenId: nft.native.nftItemAddr,
+                contract: _contract,
             },
         };
     }
