@@ -267,7 +267,7 @@ class AbstractChain {
         return await this.bridge.getVerifiedContract(
             nft.native.contract || nft.collectionIdent,
             Number(nonce),
-            Number(this.nonce)
+            this.chain
         );
     }
 
