@@ -17,7 +17,7 @@ import {
     handleGA4Event,
 } from "../../../services/GA4";
 
-import { biz } from "../../values";
+//import { biz } from "../../values";
 
 export default function HigherAPTOS(OriginalComponent) {
     const updatedComponent = withServices((props) => {
@@ -33,9 +33,9 @@ export default function HigherAPTOS(OriginalComponent) {
         };
 
         const getStyles = () => {
-            if (!biz) {
+            /*if (!biz) {
                 return { display: "none" };
-            }
+            }*/
             let styles = {};
             if (from && from.type !== "APTOS") {
                 styles = {

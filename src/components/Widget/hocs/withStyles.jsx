@@ -159,7 +159,7 @@ export const withStyles = (Wrapped) =>
                 font-family: ${fontFamily ? fontFamily : ""};
             }
 
-            .fullScreen.modal,  .modal-open .fullScreen.modal {
+            /*.fullScreen.modal,  .modal-open .fullScreen.modal {
               top: 0 !important;
             }
 
@@ -177,7 +177,7 @@ export const withStyles = (Wrapped) =>
        
             .fullScreen .nftChainList, .fullScreen .walletListBox {
               max-height: ${window.innerHeight - 150}px !important;
-            }
+            }*/
 
           
     

@@ -58,6 +58,8 @@ class AbstractChain {
     async getNFTs(address) {
         try {
             return await this.bridge.nftList(this.chain, address);
+            //console.log(nfts, "nfts");
+            //return nfts;
         } catch (e) {
             console.log(e, "e");
             throw new Error("NFT-Indexer is temporarily under maintenance");
@@ -262,11 +264,13 @@ class AbstractChain {
     }
 
     async getMappedContract(nft, nonce) {
-        return await this.bridge.getVerifiedContract(
+        const x = await this.bridge.getVerifiedContract(
             nft.native.contract || nft.collectionIdent,
             Number(nonce),
-            Number(this.nonce)
+            this.chain
         );
+
+        return x;
     }
 
     async transfer(args) {
@@ -757,7 +761,7 @@ class TON extends AbstractChain {
     }
 
     async preParse(nft) {
-        nft = await super.preParse(nft);
+        /* nft = await super.preParse(nft);
 
         const contract = nft.native?.collectionAddress || "SingleNFt";
         return {
@@ -768,6 +772,27 @@ class TON extends AbstractChain {
                 contract: contract,
                 tokenId: nft.native?.address,
                 nftItemAddr: nft.native.address,
+            },
+        };*/
+        const _contract = nft.collectionIdent || "SingleNFt";
+        const withMetadata = Object.keys(nft.native?.metadata).length > 0;
+        let uri = "";
+        if (withMetadata) {
+            const data = JSON.stringify(nft.native.metadata);
+
+            uri = `data:application/json;base64,${btoa(
+                unescape(encodeURIComponent(data))
+            )}`;
+        }
+
+        return {
+            collectionIdent: _contract,
+            uri,
+            metaData: withMetadata ? nft.native.metadata : undefined,
+            native: {
+                ...nft.native,
+                tokenId: nft.native.nftItemAddr,
+                contract: _contract,
             },
         };
     }

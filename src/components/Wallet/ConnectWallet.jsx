@@ -219,7 +219,7 @@ function ConnectWallet() {
                 show={show || walletsModal}
                 onHide={handleClose}
                 animation={null}
-                className="ChainModal wallet-modal fullScreen"
+                className="ChainModal wallet-modal"
             >
                 <Modal.Header>
                     <Modal.Title style={{ minWidth: "max-content" }}>

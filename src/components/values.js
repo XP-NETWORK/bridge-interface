@@ -33,6 +33,7 @@ import arbitrum from "../assets/img/chain/arbitrum.svg";
 import arbitrumTestNet from "../assets/img/chain/arbitrumTN.svg";
 import brise from "../assets/img/chain/brise.png";
 import casper from "../assets/img/chain/casper.svg";
+import optimism from "../assets/img/chain/optimism.svg";
 
 export const bridgeUrl = "https://bridge.walletconnect.org";
 
@@ -109,7 +110,7 @@ export const chains = [
         nonce: 9,
         order: 12,
         image: { avatar: true, src: Tron },
-        maintenance: false,
+        maintenance: true,
         testNet: true,
         mainnet: true,
         updated: false,
@@ -472,9 +473,9 @@ export const chains = [
         nonce: 0x22,
         order: 0,
         image: { avatar: true, src: Aptos },
-        testNet: dev,
-        mainnet: dev,
-        coming: !dev,
+        testNet: biz,
+        mainnet: biz,
+        coming: !biz,
     },
     {
         type: "NEAR",
@@ -549,9 +550,24 @@ export const chains = [
         nonce: 39,
         order: -8,
         image: { avatar: true, src: casper },
-        testNet: dev,
+        testNet: true,
         mainnet: false,
-        coming: !dev,
-        newChain: dev,
+        coming: true,
+        newChain: false,
+    },
+    {
+        type: "EVM",
+        key: "Optimism",
+        text: "Optimism",
+        value: "Optimism",
+        nonce: 0x28,
+        order: -8,
+        image: { avatar: true, src: optimism },
+        testNet: false,
+        mainnet: false,
+        coming: false,
+        newChain: false,
+        chainId: 420,
+        tnChainId: 420,
     },
 ];

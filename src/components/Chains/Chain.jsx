@@ -41,7 +41,8 @@ export default function Chain(props) {
             (location.pathname.includes("testnet")
                 ? false
                 : !checkIfLive(nonce, validatorsInfo)) ||
-            coming
+            coming ||
+            maintenance
         ) {
             return OFF;
         } else if (

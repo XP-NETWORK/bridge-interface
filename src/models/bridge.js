@@ -86,7 +86,7 @@ class Bridge {
             if (chainWrapper.disableWhiteList) return true;
             const { chain } = chainWrapper;
 
-            const isWNFT = this.isWrapped(nft.uri);
+            const isWNFT = await this.isWrapped(nft.uri);
 
             //if (chainWrapper.nativeNotWhitelised && !isWNFT) {
             //return false;
@@ -115,7 +115,7 @@ class Bridge {
 
             return await chain.isNftWhitelisted(nft);
             //const x = await chain.isNftWhitelisted(nft);
-            //console.log(x, nft);
+            //console.log(x, nft.native.contract);
             //return x;
         } catch (e) {
             console.log(e, "in isWhitelisted");
@@ -208,12 +208,18 @@ class Bridge {
         }
     }
 
-    isWrapped(uri) {
+    async isWrapped(uri) {
+        if (/^data:application\/json/.test(uri)) {
+            const res = await (await axios(uri)).data;
+            return Boolean(res.wrapped) && res;
+        }
         return new RegExp(wnftPattern).test(uri);
     }
 
     async unwrap(nft) {
-        if (this.isWrapped(nft.uri)) {
+        const wnft = await this.isWrapped(nft.uri);
+
+        if (wnft) {
             if (/.+\/$/.test(nft.uri)) {
                 nft = {
                     ...nft,
@@ -222,13 +228,27 @@ class Bridge {
             }
 
             try {
-                const res = await axios(nft.uri);
+                const res =
+                    typeof wnft === "object"
+                        ? { data: wnft }
+                        : await axios(nft.uri);
 
                 const { data } = res;
 
                 const origin = data.wrapped?.origin;
 
-                const chain = await this.getChain(Number(origin));
+                const chain = await this.getChain(Number(origin)).catch(
+                    async (e) => {
+                        if (
+                            e.message.includes(
+                                "Cannot read properties of undefined "
+                            )
+                        ) {
+                            const mainnetBridge = await this.init();
+                            return await mainnetBridge.getChain(Number(origin));
+                        }
+                    }
+                );
 
                 nft = {
                     ...nft,
