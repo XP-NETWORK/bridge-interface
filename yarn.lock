@@ -103,6 +103,14 @@
     jsonpointer "^5.0.0"
     leven "^3.1.0"
 
+"@aptos-labs/aptos-client@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@aptos-labs/aptos-client/-/aptos-client-0.0.2.tgz#e8266a731a9a906d1e8aefc04539ae548dead750"
+  integrity sha512-FgKZb5zDPz8MmAcVxXzYhxP6OkzuIPoDRJp48YJ8+vrZ9EOZ35HaWGN2M3u+GPdnFE9mODFqkxw3azh3kHGZjQ==
+  dependencies:
+    axios "0.27.2"
+    got "^11.0.0"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.16.0", "@babel/code-frame@^7.16.7", "@babel/code-frame@^7.22.5", "@babel/code-frame@^7.8.3":
   version "7.22.5"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.22.5.tgz#234d98e1551960604f1246e6475891a570ad5658"
@@ -3220,22 +3228,22 @@
     "@lezer/lr" "^0.15.4"
     json5 "^2.2.1"
 
-"@moralisweb3/common-core@^2.22.3":
-  version "2.22.3"
-  resolved "https://registry.yarnpkg.com/@moralisweb3/common-core/-/common-core-2.22.3.tgz#2d5aa4170063148450ecc8af5c92c7bc8742cf0f"
-  integrity sha512-yEsxZQXmzwQTFfKpI2NzuUf6z41IG8o81JsO65zELu9oyIdBwhqu4XAcjHpfNhNhN6oB2Q2zbyp3Y9W5R5ahQQ==
+"@moralisweb3/common-core@^2.22.4":
+  version "2.22.4"
+  resolved "https://registry.yarnpkg.com/@moralisweb3/common-core/-/common-core-2.22.4.tgz#2ce2d0910ace1643de1e13a902670152065ba300"
+  integrity sha512-E/gsjutGYHs28tTJPDppO2Zw5WKWdQiBHVjYtT8RfV+p7TD5rxmaK1kAdvj1cP2JZAbhW8K41OGBm+ekyzR/2w==
   dependencies:
     axios "^1.2.1"
 
 "@moralisweb3/common-evm-utils@^2.17.0":
-  version "2.22.3"
-  resolved "https://registry.yarnpkg.com/@moralisweb3/common-evm-utils/-/common-evm-utils-2.22.3.tgz#b6d16bbb46a91cedff2ea4559613d392d1dc6080"
-  integrity sha512-ksri/8Kbv41gD6O4INcA82ZygJSeJfg3O8nb1Ir9wKer3E+reElrNVjNWGEh9ZOISDmXpdZ0JXAK36EWgJnO7w==
+  version "2.22.4"
+  resolved "https://registry.yarnpkg.com/@moralisweb3/common-evm-utils/-/common-evm-utils-2.22.4.tgz#655f574b074c41b9e826b70f48e73e82d5dfc3a9"
+  integrity sha512-hghNO3xksq6TmDgbwoURTzir7h/Ipg/8DlZa/6kb5/fDvGR9kyY+HbKcQyVNGc9PoykQO1BSEv1LLq47BD8w1w==
   dependencies:
     "@ethersproject/address" "^5.7.0"
     "@ethersproject/bytes" "^5.7.0"
     "@ethersproject/transactions" "^5.7.0"
-    "@moralisweb3/common-core" "^2.22.3"
+    "@moralisweb3/common-core" "^2.22.4"
 
 "@motionone/animation@^10.15.1":
   version "10.15.1"
@@ -5724,10 +5732,10 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
   integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
-"@types/node@*", "@types/node@>=12.12.47", "@types/node@>=13.7.0":
-  version "20.4.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.4.2.tgz#129cc9ae69f93824f92fac653eebfb4812ab4af9"
-  integrity sha512-Dd0BYtWgnWJKwO1jkmTrzofjK2QXXcai0dmtzvIBhcA+RsG5h8R3xlyta0kGOZRNfL9GuRtb1knmPEhQrePCEw==
+"@types/node@*", "@types/node@>=12.12.47", "@types/node@>=13.7.0", "@types/node@^20.4.2":
+  version "20.4.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.4.5.tgz#9dc0a5cb1ccce4f7a731660935ab70b9c00a5d69"
+  integrity sha512-rt40Nk13II9JwQBdeYqmbn2Q6IVTA5uPhvSO+JVqdXw/6/4glI6oR9ezty/A9Hg5u7JH4OmYmuQ+XvjKm0Datg==
 
 "@types/node@10.12.18":
   version "10.12.18"
@@ -5753,11 +5761,6 @@
   version "13.13.52"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.52.tgz#03c13be70b9031baaed79481c0c0cfb0045e53f7"
   integrity sha512-s3nugnZumCC//n4moGGe6tkNMyYEdaDBitVjwPxXmR5lnMG5dHePinH2EdxkG3Rh1ghFHHixAG4NJhpJW1rthQ==
-
-"@types/node@^17.0.35":
-  version "17.0.45"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.45.tgz#2c0fafd78705e7a18b7906b5201a522719dc5190"
-  integrity sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -7255,13 +7258,13 @@ aproba@^1.0.3:
   integrity sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw==
 
 aptos@^1.6.0:
-  version "1.13.2"
-  resolved "https://registry.yarnpkg.com/aptos/-/aptos-1.13.2.tgz#c5ba83b648bf3479465f14f4fa6e0c1cf011569e"
-  integrity sha512-UjZSxMPuyG2mQU/fhx5mqtuJZlPwk2EWxRH45271kiph0FugJhgqC54zX7IAvpD3ZKZsZZg3OVKiOiE7pr6MCg==
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/aptos/-/aptos-1.14.0.tgz#32b9d0f13d6f6134d9738e86b784158497daa008"
+  integrity sha512-Lg3gq27gytHgiwB3l2X9vX0E/zxmJMnafLw8bBMyeojutv5vbMj88ZtgH2jAKZ/nNwepUzLZLtv76I4nkljoCA==
   dependencies:
+    "@aptos-labs/aptos-client" "^0.0.2"
     "@noble/hashes" "1.1.3"
     "@scure/bip39" "1.1.0"
-    axios "0.27.2"
     form-data "4.0.0"
     tweetnacl "1.0.3"
 
@@ -10918,10 +10921,21 @@ fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
   integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
 
-fast-glob@^3.2.12, fast-glob@^3.2.5, fast-glob@^3.2.9:
+fast-glob@^3.2.12, fast-glob@^3.2.9:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.3.0.tgz#7c40cb491e1e2ed5664749e87bfb516dbe8727c0"
   integrity sha512-ChDuvbOypPuNjO8yIDf36x7BlZX1smcUMTTcyoIjycexOxd6DFsKsg21qVBzEmr3G7fUKIRy2/psii+CIUt7FA==
+  dependencies:
+    "@nodelib/fs.stat" "^2.0.2"
+    "@nodelib/fs.walk" "^1.2.3"
+    glob-parent "^5.1.2"
+    merge2 "^1.3.0"
+    micromatch "^4.0.4"
+
+fast-glob@^3.2.5:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.3.1.tgz#784b4e897340f3dbbef17413b3f11acf03c874c4"
+  integrity sha512-kNFPyjhh5cKjrUltxs+wFx+ZkbRaxxmZ+X0ZU31SOsxCEtP9VPgtq2teZw1DebupL5GmDaNQ6yKMMVcM41iqDg==
   dependencies:
     "@nodelib/fs.stat" "^2.0.2"
     "@nodelib/fs.walk" "^1.2.3"
@@ -11595,7 +11609,7 @@ got@12.1.0:
     p-cancelable "^3.0.0"
     responselike "^2.0.0"
 
-got@^11.8.5:
+got@^11.0.0, got@^11.8.5:
   version "11.8.6"
   resolved "https://registry.yarnpkg.com/got/-/got-11.8.6.tgz#276e827ead8772eddbcfc97170590b841823233a"
   integrity sha512-6tfZ91bOr7bOXnK7PRDCGBLa1H4U080YHNaAQ2KsMGlLEzRbk44nsZF2E1IeRc3vtJHPVbKCYgdFbaGO2ljd8g==
@@ -14418,19 +14432,19 @@ next-tick@^1.1.0:
 
 "nft-parser@git+https://github.com/xp-network/nft-parser#bleeding-edge":
   version "0.2.0"
-  resolved "git+https://github.com/xp-network/nft-parser#dcde7e266d1d0bdafbe93ff9663ea31c317dde27"
+  resolved "git+https://github.com/xp-network/nft-parser#af46464de80f137794aa8d697c0031c7cefc31b5"
   dependencies:
     "@ethersproject/providers" "^5.7.2"
     "@moralisweb3/common-evm-utils" "^2.17.0"
     "@taquito/taquito" "^13.0.0"
-    "@types/node" "^17.0.35"
+    "@types/node" "^20.4.2"
     axios "^0.27.2"
     bignumber.js "^9.0.2"
     cherio "^1.0.0-rc.2"
     ethers "5.7.2"
     file-type "16.5.3"
     js-base64 "^3.7.2"
-    typescript "^4.7.2"
+    typescript "^5.1.6"
     xpnet-web3-contracts "git+https://github.com/XP-NETWORK/XP.network-HECO-Migration.git#dist-erc1155"
 
 no-case@^3.0.4:
@@ -15084,9 +15098,9 @@ pino-abstract-transport@v0.5.0:
     split2 "^4.0.0"
 
 pino-pretty@^10.0.0:
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/pino-pretty/-/pino-pretty-10.0.1.tgz#54a11182068949ff3069f1f7857f297a14926e58"
-  integrity sha512-yrn00+jNpkvZX/NrPVCPIVHAfTDy3ahF0PND9tKqZk4j9s+loK8dpzrJj4dGb7i+WLuR50ussuTAiWoMWU+qeA==
+  version "10.2.0"
+  resolved "https://registry.yarnpkg.com/pino-pretty/-/pino-pretty-10.2.0.tgz#c674a153e15c08d7032a826d0051d786feace1d9"
+  integrity sha512-tRvpyEmGtc2D+Lr3FulIZ+R1baggQ4S3xD2Ar93KixFEDx6SEAUP3W5aYuEw1C73d6ROrNcB2IXLteW8itlwhA==
   dependencies:
     colorette "^2.0.7"
     dateformat "^4.6.3"
@@ -18614,7 +18628,12 @@ tslib@1.14.1, tslib@^1, tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.1, tslib@^2.4.0, tslib@^2.4.1, tslib@^2.5.0:
+tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3, tslib@^2.4.0, tslib@^2.4.1, tslib@^2.5.0:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.1.tgz#fd8c9a0ff42590b25703c0acb3de3d3f4ede0410"
+  integrity sha512-t0hLfiEKfMUoqhG+U1oid7Pva4bbDPHYfJNiB7BiIjRkj1pyC++4N3huJfqY6aRH6VTB0rvtzQwjM4K6qpfOig==
+
+tslib@^2.1.0, tslib@^2.3.1:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.0.tgz#b295854684dbda164e181d259a22cd779dcd7bc3"
   integrity sha512-7At1WUettjcSRHXCyYtTselblcHl9PJFFVKiCAy/bY97+BPZXSQ2wbq0P9s8tK2G7dFQfNnlJnPAiArVBVBsfA==
@@ -18745,10 +18764,10 @@ typescript-compiler@^1.4.1-2:
   resolved "https://registry.yarnpkg.com/typescript-compiler/-/typescript-compiler-1.4.1-2.tgz#ba4f7db22d91534a1929d90009dce161eb72fd3f"
   integrity sha512-EMopKmoAEJqA4XXRFGOb7eSBhmQMbBahW6P1Koayeatp0b4AW2q/bBqYWkpG7QVQc9HGQUiS4trx2ZHcnAaZUg==
 
-typescript@^4.7.2:
-  version "4.9.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
-  integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
+typescript@^5.1.6:
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.6.tgz#02f8ac202b6dad2c0dd5e0913745b47a37998274"
+  integrity sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==
 
 typescript@~4.4.4:
   version "4.4.4"
@@ -19635,9 +19654,9 @@ whatwg-fetch@^2.0.4:
   integrity sha512-dcQ1GWpOD/eEQ97k66aiEVpNnapVj90/+R+SXTPYGHpYBBypfKJEQjLrvMZ7YXbKm21gXd4NcuxUTjiv1YtLng==
 
 whatwg-fetch@^3.4.1:
-  version "3.6.16"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.6.16.tgz#2cf24cd621459be8137f9e3c6afb60262d78f963"
-  integrity sha512-83avoGbZ0qtjtNrU3UTT3/Xd3uZ7DyfSYLuc1fL5iYs+93P+UkIVF6/6xpRVWeQcvbc7kSnVybSAVbd6QFW5Fg==
+  version "3.6.17"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.6.17.tgz#009bbbfc122b227b74ba1ff31536b3a1a0e0e212"
+  integrity sha512-c4ghIvG6th0eudYwKZY5keb81wtFz9/WeAHAoy8+r18kcWlitUIrmGFQ2rWEl4UCKUilD3zCLHOIPheHx5ypRQ==
 
 whatwg-fetch@^3.6.2:
   version "3.6.2"
@@ -20073,7 +20092,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
   version "4.3.3"
-  resolved "git+https://github.com/xp-network/xpjs#131f63d27cab1b660519a84b6983ff93a19a8768"
+  resolved "git+https://github.com/xp-network/xpjs#262a6db0550cd69a860c17436dd744304234f5d3"
   dependencies:
     "@dfinity/agent" "^0.15.5"
     "@dfinity/candid" "^0.15.5"

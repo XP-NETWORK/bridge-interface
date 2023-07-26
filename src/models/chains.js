@@ -264,11 +264,13 @@ class AbstractChain {
     }
 
     async getMappedContract(nft, nonce) {
-        return await this.bridge.getVerifiedContract(
+        const x = await this.bridge.getVerifiedContract(
             nft.native.contract || nft.collectionIdent,
             Number(nonce),
             this.chain
         );
+
+        return x;
     }
 
     async transfer(args) {
