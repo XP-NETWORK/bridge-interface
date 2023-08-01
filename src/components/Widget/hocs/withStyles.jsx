@@ -836,7 +836,17 @@ export const withStyles = (Wrapped) =>
             }
     
     
-    
+            @media only screen and (max-width: 600px) {
+              .modal-content, .ton-modal__connect .modal-content {
+                margin-top: 0;
+              }
+
+              .modal-open .modal {
+                backdrop-filter: blur(10px);
+            }
+
+             
+            }
     
             @media only screen and (max-width: 400px) {
     

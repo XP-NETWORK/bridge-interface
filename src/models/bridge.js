@@ -221,10 +221,7 @@ class Bridge {
 
         if (wnft) {
             if (/.+\/$/.test(nft.uri)) {
-                nft = {
-                    ...nft,
-                    uri: nft.uri + nft.native.tokenId,
-                };
+                nft.uri = nft.uri + nft.native.tokenId;
             }
 
             try {
@@ -250,19 +247,12 @@ class Bridge {
                     }
                 );
 
-                nft = {
-                    ...nft,
-                    native: {
-                        ...nft.native,
-                        isWrappedNft: true,
-                        origin,
-                    },
-                };
+                nft.isWrappedNft = true;
+                //nft.origin = origin;
 
                 return chain.unwrap(nft, data);
             } catch (e) {
-                console.log(origin + "in unwrap");
-                console.log(e);
+                console.log(e.message);
             }
         }
 

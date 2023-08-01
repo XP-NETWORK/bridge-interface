@@ -39,6 +39,7 @@ import MultiversXDeFi from "./MultiversXWallet/MultiversXDeFi";
 import HederaWallet from "./HederaWallet/Hashpack";
 import IcpWallet from "./IcpWallet";
 import CasperWallet from "./CasperWallet/casperWallet";
+import { isMobile } from "../../utils";
 
 export default function WalletList({ connected, input, discount }) {
     const from = useSelector((state) => state.general.from);
@@ -488,7 +489,7 @@ export default function WalletList({ connected, input, discount }) {
         default:
             return (
                 <ul className="walletList scrollSty">
-                    {window.innerWidth < 600
+                    {isMobile.any()
                         ? filteredWallets
                               .filter((wallet) => wallet.mobile)
                               .map((wallet) => wallet.Component)
