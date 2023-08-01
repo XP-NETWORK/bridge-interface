@@ -206,3 +206,9 @@ export const fixify = (number) => {
         .match(/\d*\.(0*)(\d{0,3})/)
         .at(0);
 };
+
+export const setupURI = (uri) => {
+    if (/^ipfs:\/\//.test(uri) || uri[0] === "Q")
+        return uri.replace(/ipfs:\/\/(?:ipfs)?/, "https://ipfs.io/ipfs/");
+    return uri;
+};
