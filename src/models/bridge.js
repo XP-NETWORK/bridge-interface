@@ -221,15 +221,12 @@ class Bridge {
 
         if (wnft) {
             if (/.+\/$/.test(nft.uri)) {
-                nft = {
-                    ...nft,
-                    uri: nft.uri + nft.native.tokenId,
-                };
+                nft.uri = nft.uri + nft.native.tokenId;
             }
 
             try {
                 const res =
-                    typeof _wrapped === "object"
+                    typeof wnft === "object"
                         ? { data: wnft }
                         : await axios(nft.uri);
 
@@ -237,21 +234,25 @@ class Bridge {
 
                 const origin = data.wrapped?.origin;
 
-                const chain = await this.getChain(Number(origin));
+                const chain = await this.getChain(Number(origin)).catch(
+                    async (e) => {
+                        if (
+                            e.message.includes(
+                                "Cannot read properties of undefined "
+                            )
+                        ) {
+                            const mainnetBridge = await this.init();
+                            return await mainnetBridge.getChain(Number(origin));
+                        }
+                    }
+                );
 
-                nft = {
-                    ...nft,
-                    native: {
-                        ...nft.native,
-                        isWrappedNft: true,
-                        origin,
-                    },
-                };
+                nft.isWrappedNft = true;
+                //nft.origin = origin;
 
                 return chain.unwrap(nft, data);
             } catch (e) {
-                console.log(origin + "in unwrap");
-                console.log(e);
+                console.log(e.message);
             }
         }
 

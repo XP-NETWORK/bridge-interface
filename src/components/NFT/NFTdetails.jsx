@@ -12,7 +12,7 @@ import { ReactComponent as INFComp } from "../../assets/img/icons/Inf.svg";
 import { chains } from "../values";
 import PropTypes from "prop-types";
 import Tooltip from "../Modals/AccountModal/Tooltip";
-import { StringShortener } from "../../utils";
+import { setupURI, StringShortener } from "../../utils";
 
 function NFTdetails({ nftInf, details }) {
     const {
@@ -114,7 +114,7 @@ function NFTdetails({ nftInf, details }) {
                                         src={animation_url}
                                     />
                                 ) : (
-                                    <img alt="NFTss" src={image} />
+                                    <img alt="NFTss" src={setupURI(image)} />
                                 )
                             ) : (
                                 <div className="brocken-url">

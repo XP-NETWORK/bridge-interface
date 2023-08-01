@@ -206,3 +206,39 @@ export const fixify = (number) => {
         .match(/\d*\.(0*)(\d{0,3})/)
         .at(0);
 };
+
+export const setupURI = (uri) => {
+    if (/^ipfs:\/\//.test(uri) || uri[0] === "Q")
+        return uri.replace(/ipfs:\/\/(?:ipfs)?/, "https://ipfs.io/ipfs/");
+    return uri;
+};
+
+export const isMobile = {
+    Android: function() {
+        return navigator.userAgent.match(/Android/i);
+    },
+    BlackBerry: function() {
+        return navigator.userAgent.match(/BlackBerry/i);
+    },
+    iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    },
+    Opera: function() {
+        return navigator.userAgent.match(/Opera Mini/i);
+    },
+    Windows: function() {
+        return (
+            navigator.userAgent.match(/IEMobile/i) ||
+            navigator.userAgent.match(/WPDesktop/i)
+        );
+    },
+    any: function() {
+        return (
+            isMobile.Android() ||
+            isMobile.BlackBerry() ||
+            isMobile.iOS() ||
+            isMobile.Opera() ||
+            isMobile.Windows()
+        );
+    },
+};

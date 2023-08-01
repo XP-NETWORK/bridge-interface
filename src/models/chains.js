@@ -264,11 +264,13 @@ class AbstractChain {
     }
 
     async getMappedContract(nft, nonce) {
-        return await this.bridge.getVerifiedContract(
+        const x = await this.bridge.getVerifiedContract(
             nft.native.contract || nft.collectionIdent,
             Number(nonce),
-            Number(this.nonce)
+            this.chain
         );
+
+        return x;
     }
 
     async transfer(args) {
@@ -773,16 +775,20 @@ class TON extends AbstractChain {
             },
         };*/
         const _contract = nft.collectionIdent || "SingleNFt";
-        const data = JSON.stringify(nft.native.metadata);
+        const withMetadata = Object.keys(nft.native?.metadata).length > 0;
+        let uri = "";
+        if (withMetadata) {
+            const data = JSON.stringify(nft.native.metadata);
 
-        const uri = `data:application/json;base64,${btoa(
-            unescape(encodeURIComponent(data))
-        )}`;
+            uri = `data:application/json;base64,${btoa(
+                unescape(encodeURIComponent(data))
+            )}`;
+        }
 
         return {
             collectionIdent: _contract,
             uri,
-            metaData: nft.native.metadata,
+            metaData: withMetadata ? nft.native.metadata : undefined,
             native: {
                 ...nft.native,
                 tokenId: nft.native.nftItemAddr,

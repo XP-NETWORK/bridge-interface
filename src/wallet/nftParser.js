@@ -13,7 +13,7 @@ export const parseNFT = async (
     testnet,
     claimable
 ) => {
-    const { uri } = nft;
+    //const { uri } = nft;
 
     // console.log(serviceContainer);
     const { bridge, whitelistedPool } = serviceContainer;
@@ -23,16 +23,6 @@ export const parseNFT = async (
             ? false
             : undefined
         : true;
-
-    let nftObj = {
-        uri,
-        collectionIdent: nft.collectionIdent || undefined,
-        native: { ...nft.native },
-        dataLoaded: true,
-        whitelisted,
-        nftId: nft.nftId || undefined,
-        appId: nft.appId || undefined,
-    };
 
     const {
         general: { from, NFTList, account },
@@ -46,7 +36,7 @@ export const parseNFT = async (
                     chainId,
                     tokenId,
                     contract,
-                    nft: { native },
+                    nft: { native, isWrappedNft },
                 } = unwraped;
 
                 let nftData;
@@ -80,7 +70,7 @@ export const parseNFT = async (
 
                 return {
                     ...nftData,
-                    wrapped: native.isWrappedNft
+                    wrapped: isWrappedNft
                         ? {
                               origin: native.chainId,
                               contract: native.contract,
@@ -106,7 +96,7 @@ export const parseNFT = async (
                 ? whitelistedRes.value
                 : undefined;
 
-        nftObj = {
+        const nftObj = {
             ...nft,
             ...(nftData?.metaData || nftData),
             origin: nftData?.wrapped?.origin || nft.native.chainId,
