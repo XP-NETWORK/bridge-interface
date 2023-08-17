@@ -31,7 +31,7 @@ export const EventPage = withServices(({ serviceContainer }) => {
                 <Modal
                     animation={false}
                     show={success}
-                    className="error__modal"
+                    className="error__modal event_modal_window"
                 >
                     <div className="event_success_modal">
                         <img

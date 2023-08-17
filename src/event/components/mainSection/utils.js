@@ -4,11 +4,6 @@ import moonbeamIcon from "../../assets/mainSection/chainSelect/moonbeamIcon.svg"
 //import nearIcon from "../../assets/mainSection/chainSelect/nearIcon.svg";
 import polygonIcon from "../../assets/mainSection/chainSelect/polygonIcon.svg";
 
-//import auroraNFT from "../../assets/mainSection/nfts/XPNFT-Aurora.gif";
-//import BSCnFT from "../../assets/mainSection/nfts/XPNFT-BSC.gif";
-//import moonbeamNFT from "../../assets/mainSection/nfts/XPNFT-moonbeam.gif";
-//import nearNFT from "../../assets/mainSection/nfts/XPNFT-Near.gif";
-//import polygonNFT from "../../assets/mainSection/nfts/XPNFT-Polygon.gif";
 
 export const chainData = [
     {
