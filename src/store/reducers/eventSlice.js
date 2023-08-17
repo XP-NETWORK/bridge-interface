@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     totalMinted: 0,
-    success: true,
+    success: false,
 };
 
 const eventSlice = createSlice({
