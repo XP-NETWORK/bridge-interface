@@ -7,6 +7,7 @@ import signersSlice from "./reducers/signersSlice";
 import sliderSlice from "./reducers/sliderSlice";
 import transferResultsSlice from "./reducers/transferResultsSlice";
 import tonStore from "../components/Wallet/TONWallet/tonStore";
+import eventSlice from "./reducers/eventSlice";
 
 const middleware = [
     ...getDefaultMiddleware({
@@ -22,6 +23,7 @@ export default configureStore({
         settings: settingSlice,
         slider: sliderSlice,
         signers: signersSlice,
+        events: eventSlice,
         pagination: paginationSlice,
         transferResults: transferResultsSlice,
     },

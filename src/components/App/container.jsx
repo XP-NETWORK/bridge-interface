@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
 import { compose } from "redux";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { withNearConnection } from "../Wallet/NEARWallet/withNearConnection";
 import { withEVMConnection } from "../Wallet/EVMWallet/withEVMConnection";
 import { withHederaConnection } from "../Wallet/HederaWallet/withHederaConnection";
@@ -12,31 +12,32 @@ import { withTronConnection } from "../Wallet/withTronConnection";
 import { withServices } from "./hocs/withServices";
 
 import { BridgeModes } from "../values";
-import {
-    setTestNet,
-    setStaging,
-    setCheckWallet,
-} from "../../store/reducers/generalSlice";
+// import {
+//     setTestNet,
+//     setStaging,
+//     setCheckWallet,
+// } from "../../store/reducers/generalSlice";
 
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 
-const Container = ({ children, serviceContainer, setContainer }) => {
-    const dispatch = useDispatch();
+// const Container = ({ children, serviceContainer, setContainer }) => {
+const Container = ({ children, serviceContainer }) => {
+    // const dispatch = useDispatch();
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     useEffect(() => {
         (async () => {
             let network;
-            // debugger;
+            // // debugger;
 
-            if (window.location.pathname.includes(BridgeModes.Staging)) {
-                network = BridgeModes.Staging;
-                dispatch(setStaging(true));
-            } else if (window.location.pathname.includes(BridgeModes.TestNet)) {
-                network = BridgeModes.TestNet;
-                dispatch(setTestNet(true));
-            }
+            // if (window.location.pathname.includes(BridgeModes.Staging)) {
+            //     network = BridgeModes.Staging;
+            //     dispatch(setStaging(true));
+            // } else if (window.location.pathname.includes(BridgeModes.TestNet)) {
+            //     network = BridgeModes.TestNet;
+            //     dispatch(setTestNet(true));
+            // }
             const params = new URLSearchParams(window.location.search);
 
             let checkWallet = params.get(BridgeModes.CheckWallet.toLowerCase());
@@ -45,14 +46,15 @@ const Container = ({ children, serviceContainer, setContainer }) => {
                 : checkWallet;
 
             const bridge = await serviceContainer?.bridge?.init(network);
+
             checkWallet && bridge.setCheckWallet(checkWallet);
-            setContainer({ ...serviceContainer, bridge });
+            // setContainer({ ...serviceContainer, bridge });
 
-            const query = window.location.search;
+            // const query = window.location.search;
 
-            dispatch(setCheckWallet(checkWallet));
+            // dispatch(setCheckWallet(checkWallet));
 
-            navigate(`/${network ? network + "/" : ""}${query || ""}`);
+            // navigate(`/${network ? network + "/" : ""}${query || ""}`);
         })();
     }, []);
 

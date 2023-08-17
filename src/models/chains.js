@@ -44,6 +44,10 @@ class AbstractChain {
         }
     }
 
+    getSigner() {
+        return this.signer;
+    }
+
     async setSigner(signer) {
         try {
             //if (!signer) throw new Error("no signer");

@@ -10,6 +10,8 @@ import { getRightPath } from "../utils";
 
 import { useSelector } from "react-redux";
 
+import { EventPage } from "../event";
+
 function XpBridge() {
     const [nftAccountPath, setPath] = useState("/account");
 
@@ -41,6 +43,17 @@ function XpBridge() {
                     <Route path={nftAccountPath} element={<NFTaccount />} />
                 </Route>
                 <Route path="/discounts" element={<Deposits />} />
+                <Route
+                    path="/crossroads"
+                    element={
+                        <>
+                            <EventPage />
+                            <div className="alex">
+                                <ConnectWallet />
+                            </div>
+                        </>
+                    }
+                />
                 {<Route path="*" element={<PageNotFound />} />}
             </Routes>
         </div>
