@@ -189,8 +189,11 @@ export const connectMetaMask = async (
                     }
                 });
             }
+            const event = window.location.pathname === "/crossroads";
 
-            const link = `dapp://${window.location.host}${window.location.search}`;
+            const link = `dapp://${window.location.host}${
+                event ? "/crossroads" : ""
+            }${window.location.search}`;
 
             timer = setTimeout(() => {
                 window.open(link);

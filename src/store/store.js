@@ -8,24 +8,26 @@ import sliderSlice from "./reducers/sliderSlice";
 import widgetSlice from "./reducers/widgetSlice";
 import transferResultsSlice from "./reducers/transferResultsSlice";
 import tonStore from "../components/Wallet/TONWallet/tonStore";
+import eventSlice from "./reducers/eventSlice";
 
 const middleware = [
-  ...getDefaultMiddleware({
-    serializableCheck: false,
-  }),
+    ...getDefaultMiddleware({
+        serializableCheck: false,
+    }),
 ];
 
 export default configureStore({
-  reducer: {
-    tonStore: tonStore,
-    general: generalSlice,
-    discount: discountSlice,
-    settings: settingSlice,
-    slider: sliderSlice,
-    signers: signersSlice,
-    pagination: paginationSlice,
-    transferResults: transferResultsSlice,
-    widget: widgetSlice,
-  },
-  middleware,
+    reducer: {
+        tonStore: tonStore,
+        general: generalSlice,
+        discount: discountSlice,
+        settings: settingSlice,
+        slider: sliderSlice,
+        signers: signersSlice,
+        pagination: paginationSlice,
+        transferResults: transferResultsSlice,
+        widget: widgetSlice,
+        events: eventSlice,
+    },
+    middleware,
 });

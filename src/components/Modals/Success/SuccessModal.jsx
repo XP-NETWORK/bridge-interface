@@ -102,12 +102,9 @@ export default withServices(function SuccessModal({ serviceContainer }) {
     const shortReceiver = StringShortener(formatedReceiver, 6);
 
     useEffect(() => {
-        console.log(sockets[bridge.network]);
         const socket = io(sockets[bridge.network], {
             path: "/socket.io",
         });
-
-        socket.on("");
 
         const scraperSocket = io(sockets["scraper"], {
             path: "/socket.io",

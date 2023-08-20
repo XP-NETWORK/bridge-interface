@@ -117,6 +117,7 @@ export const withStyles = (Wrapped) =>
             position:relative;
             margin-top: 0;
             display: ${wsettings ? "flex" : "block"};
+            ${location.pathname === "/crossroads" ? "overflow: auto;" : ""}
           }
 
           
@@ -296,7 +297,7 @@ export const withStyles = (Wrapped) =>
             }
     
             .nft_selectBox, .transfer-board, .destination__address input:focus, .accountBox , .mobile-col .approval,
-            .mobile-nfts__header, .mobile-col__header, .mobile-col__tittle, .mobile-destination__container, .mobile-col .fees,  .secret-toggle {
+            .mobile-nfts__header, .mobile-col__header, .mobile-col__tittle, .main-section-container, .mobile-destination__container, .mobile-col .fees,  .secret-toggle {
               background: ${panelBackground ? panelBackground : ""};
               border-color: ${borderColor ? borderColor : ""};
               
@@ -308,7 +309,7 @@ export const withStyles = (Wrapped) =>
               .nonftAcc  h2,  .transfer-loader__title, .transfer-loader__text, .transfer-loader__sub, .txn-hash, .sucesList span, .selected-nfts__header, .approval__header, .fees__title, .clip p,
               .fees span, .listed-view__not-whitelisted__button, .success-info-box, .accountTit, .accountBox p, .mobile-destination__address input,
               .info-item-chain, .chain-select__box, .desktop__header span, .account-modal__account,  .navbar-connect,  .deploy-container, .secret-toggle .show, .secret-toggle .set,
-              .fieldsWrapper input::placeholder, .import-nft__form, .import-nft__form form, .import-nft__form input[type="text"], .mobile-destination__address input::placeholder {
+              .fieldsWrapper input::placeholder, /*crossroads*/ .multichain-bridge-nft-line, .chain-select-container div:first-child,  .xp-crossroads, .info-section-container,/*crossroads*/ .import-nft__form, .import-nft__form form, .import-nft__form input[type="text"], .mobile-destination__address input::placeholder {
                 color: ${color ? color : ""};
             }
     
@@ -337,7 +338,7 @@ export const withStyles = (Wrapped) =>
                 border-radius: ${btnRadius ? btnRadius + "px" : ""};
             }
     
-            a.themBtn:hover, .switching:hover,  .connect-wallet__button:hover,.transfer-button,  .transfer-button:hover, .import-nft__buttons .btn-import {
+            a.themBtn:hover, .switching:hover, .mint-nft-container button, .event_success_modal button,  .connect-wallet__button:hover,.transfer-button,  .transfer-button:hover, .import-nft__buttons .btn-import {
               filter: brightness(115%);
               background:  ${btnBackground ? btnBackground : ""};
               color:  ${btnColor ? btnColor : ""};
@@ -662,6 +663,22 @@ export const withStyles = (Wrapped) =>
               border: 1px solid ${borderColor ? borderColor : ""};
              
             }
+
+            /*crossroads*/
+            .event-header {
+              margin-top: 0px;
+              border-radius: 30px;
+            }
+
+            .event-header::after {
+              content: '';
+
+
+            }
+
+            .event-page-wrapper {
+              overflow: auto;
+            }
     
             .svgWidgetBorder line {
                 stroke: ${borderColor ? borderColor : ""};
@@ -837,7 +854,7 @@ export const withStyles = (Wrapped) =>
     
     
             @media only screen and (max-width: 600px) {
-              .modal-content, .ton-modal__connect .modal-content {
+              .modal-content, .ton-modal__connect .modal-content, .modal-dialog {
                 margin-top: 0;
               }
 
@@ -864,9 +881,6 @@ export const withStyles = (Wrapped) =>
                 transform: translateX(-100%);
               }
     
-              .modal-dialog {
-                margin-top: 6vh;
-              }
             }
 
             @media only screen and (max-width: 480px) {

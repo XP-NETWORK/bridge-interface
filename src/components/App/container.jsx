@@ -28,14 +28,19 @@ const Container = ({ children, serviceContainer, setContainer }) => {
     useEffect(() => {
         (async () => {
             let network;
-            // debugger;
 
-            if (window.location.pathname.includes(BridgeModes.Staging)) {
-                network = BridgeModes.Staging;
-                dispatch(setStaging(true));
-            } else if (window.location.pathname.includes(BridgeModes.TestNet)) {
-                network = BridgeModes.TestNet;
-                dispatch(setTestNet(true));
+            const event = window.location.pathname === "/crossroads";
+
+            if (!event) {
+                if (window.location.pathname.includes(BridgeModes.Staging)) {
+                    network = BridgeModes.Staging;
+                    dispatch(setStaging(true));
+                } else if (
+                    window.location.pathname.includes(BridgeModes.TestNet)
+                ) {
+                    network = BridgeModes.TestNet;
+                    dispatch(setTestNet(true));
+                }
             }
             const params = new URLSearchParams(window.location.search);
 
@@ -45,14 +50,18 @@ const Container = ({ children, serviceContainer, setContainer }) => {
                 : checkWallet;
 
             const bridge = await serviceContainer?.bridge?.init(network);
+
             checkWallet && bridge.setCheckWallet(checkWallet);
-            setContainer({ ...serviceContainer, bridge });
 
-            const query = window.location.search;
+            if (!event) {
+                setContainer({ ...serviceContainer, bridge });
 
-            dispatch(setCheckWallet(checkWallet));
+                const query = window.location.search;
 
-            navigate(`/${network ? network + "/" : ""}${query || ""}`);
+                dispatch(setCheckWallet(checkWallet));
+
+                navigate(`/${network ? network + "/" : ""}${query || ""}`);
+            }
         })();
     }, []);
 
