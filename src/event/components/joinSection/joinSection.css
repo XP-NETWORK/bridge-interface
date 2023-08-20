@@ -29,6 +29,10 @@
     pointer-events: none;
 }
 
+.failed_valid {
+    border: 2px solid red !important;
+}
+
 .join-section-container img {
     position: absolute;
     left: auto;
@@ -175,5 +179,9 @@
         width: 100%;
         left: 0;
         right: auto;
+    }
+
+    .join-section-container .join-section-left-side .alexdiv button {
+        margin-top: 20px;
     }
 }

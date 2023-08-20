@@ -8,9 +8,11 @@ import { switchNetwork } from "../../../../services/chains/evm/evmService";
 import {
     setWalletsModal,
     setApproveLoader,
+    setError,
+    setFrom,
 } from "../../../../store/reducers/generalSlice";
 
-import { setTotal } from "../../../../store/reducers/eventSlice";
+import { setTotal, setSuccess } from "../../../../store/reducers/eventSlice";
 
 import { useDispatch } from "react-redux";
 
@@ -19,12 +21,11 @@ import xpnetClaimAbi from "../../../assets/abi/mintAbi.json";
 import { useWeb3React } from "@web3-react/core";
 
 import { REST_API } from "../utils";
+import { chains } from "../../../../components/values";
 
 export const MintNft = ({ choosenChain, bridge, account }) => {
     const MAX_MINT = 5;
     const [countMint, setCountMint] = useState(1);
-
-    const [contract, setContract] = useState(null);
 
     const { chainId: x } = useWeb3React();
 
@@ -38,6 +39,32 @@ export const MintNft = ({ choosenChain, bridge, account }) => {
     );
 
     //const {totalMinted} = useSelector((state) => state.event)
+
+    useEffect(() => {
+        (async () => {
+            const [total] = await Promise.all([
+                (await fetch(`${REST_API}/get-claims`)).json(),
+            ]);
+
+            dispatch(
+                setTotal(
+                    total
+                        ? Object.keys(total).reduce(
+                              (acc, cur) => acc + total[cur].total,
+                              0
+                          )
+                        : 0
+                )
+            );
+        })();
+    }, []);
+
+    useEffect(() => {
+        const chain = chainData[choosenChain];
+        dispatch(
+            setFrom(chains.find((i) => String(i.nonce) === chain.chainNonce))
+        );
+    }, [choosenChain]);
 
     useEffect(() => {
         (async () => {
@@ -58,8 +85,7 @@ export const MintNft = ({ choosenChain, bridge, account }) => {
                         throw new Error("Chain does not match");
                     }
 
-                    const [total, claims] = await Promise.all([
-                        (await fetch(`${REST_API}/get-claims`)).json(),
+                    const [claims] = await Promise.all([
                         (
                             await fetch(
                                 `${REST_API}/get-chain-claims/${chainNonce}/${account}`
@@ -67,13 +93,6 @@ export const MintNft = ({ choosenChain, bridge, account }) => {
                         ).json(),
                     ]);
 
-                    console.log(total, claims);
-
-                    console.log(
-                        total[name].total,
-                        Number(claims?.claimed || 0)
-                    );
-                    dispatch(setTotal(total[name].total));
                     setMintLimit({
                         ...mintLimits,
                         [chainNonce]: MAX_MINT - Number(claims?.claimed || 0),
@@ -125,12 +144,30 @@ export const MintNft = ({ choosenChain, bridge, account }) => {
             if (!contract) {
                 throw Error("Contract instance is not created");
             }
-            const res = await contract["claim"]();
-            dispatch(setApproveLoader(false));
-            console.log(res);
+
+            const results = [];
+            for (let i = 0; i < countMint; i++) {
+                const res = await contract["claim"]();
+                results.push(res);
+            }
+            const singleSuccess = results.find((x) => x.hash);
+
+            if (singleSuccess.hash) {
+                dispatch(setSuccess(true));
+                // setCountMint(Math.max(countMint - results.length, 1));
+                setMintLimit({
+                    ...mintLimits,
+                    [chainNonce]: Math.max(
+                        mintLimits[chainNonce] - results.length,
+                        0
+                    ),
+                });
+            }
         } catch (e) {
             console.error(e);
+            dispatch(setError({ message: e.message }));
         }
+        dispatch(setApproveLoader(false));
     };
     const dispatch = useDispatch();
 
@@ -153,7 +190,14 @@ export const MintNft = ({ choosenChain, bridge, account }) => {
 
     return (
         <>
-            <div className="mint-nft-container line-down-margin-24">
+            <div
+                style={
+                    mintLimits[chainData[choosenChain].chainNonce] !== 0
+                        ? {}
+                        : { opacity: 0.6, pointerEvents: "none" }
+                }
+                className="mint-nft-container line-down-margin-24"
+            >
                 <div
                     className="amount-mint-nft"
                     style={

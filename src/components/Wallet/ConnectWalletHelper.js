@@ -170,7 +170,10 @@ export const connectMetaMask = async (
     const mobile = window.innerWidth <= 600;
     try {
         if (!window.ethereum && mobile) {
-            const link = `dapp://${window.location.host}?to=${to}&from=${from}/`;
+            const event = window.location.pathname === "/crossroads";
+            const link = `dapp://${window.location.host}${
+                event ? "/crossroads" : ""
+            }?to=${to}&from=${from}/`;
             window.open(link);
         }
         //d/

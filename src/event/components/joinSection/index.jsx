@@ -13,37 +13,46 @@ const links = [
     { name: "Youtube", link: "https://www.youtube.com/@xpnetwork_" },
     { name: "Instagram", link: "https://www.instagram.com/xp_network/" },
 ];
-const sitekey = "6LccdVEnAAAAANSW6lxc02242JDAhGysZP6is4EK";
-//const BACKEND_URL = "https://xpnetwork-staging.herokuapp.com";
+const sitekey = "6LdHILQnAAAAAM45eajMO7KGpIjtmCaZdDFgQgrr";
+const BACKEND_URL = "https://xpnetwork-staging.herokuapp.com";
 
 export const JoinSection = () => {
     const [renderButton, setRenderButton] = useState(true);
     const [captcha, setCaptcha] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [validFail, setValid] = useState(false);
     const [email, setEmail] = useState("");
 
     const onSubscribe = async (email) => {
+        if (!/^\S+@\S+\.\S+$/.test(email)) {
+            console.log("failed validation");
+            setValid(true);
+            return;
+        }
+
         setRenderButton(false);
         setCaptcha(true);
+        setValid(false);
         window.grecaptcha.render("captcha3", {
             sitekey: sitekey,
             callback: async (token) => {
-                console.log(token, email);
-                /*const res = await fetch(`${BACKEND_URL}/subscriber`, {
+                token;
+                const res = await fetch(`${BACKEND_URL}/subscriber`, {
                     method: "POST",
+                    headers: {
+                        Accept: "*",
+                        "Content-Type": "application/json",
+                    },
                     body: JSON.stringify({
                         email,
                         token,
                     }),
                 });
 
-                if ((await res.json()).ok) {
-                    input.parentElement.classList.add("succeded");
-              document.getElementById("captcha3").style.display =
-                  "none";
-              e.target.style.display = "initial";*/
                 setCaptcha(false);
-                setSuccess(true);
+                if ((await res.json()).ok) {
+                    setSuccess(true);
+                }
             },
         });
     };
@@ -61,7 +70,9 @@ export const JoinSection = () => {
                         Subscribe to stay updated on our <br /> giveaways and
                         news
                     </span>
-                    <div className="alexdiv">
+                    <div
+                        className={`alexdiv ${validFail ? "failed_valid" : ""}`}
+                    >
                         <input
                             placeholder="Email"
                             onChange={(e) => setEmail(e.target.value)}
