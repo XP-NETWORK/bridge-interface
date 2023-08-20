@@ -37,6 +37,9 @@
     position: absolute;
     left: auto;
     top: 0;
+    height: 100%;
+    margin: auto;
+    bottom: 0;
     right: 0;
     mix-blend-mode: hard-light;
     z-index: -1;

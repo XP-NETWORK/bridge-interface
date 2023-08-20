@@ -61,7 +61,7 @@ export const RightSide = ({ setChoosenChain, choosenChain, bridge }) => {
                 <div className="info-section-container ">
                     <span>{totalMinted} minted</span>
                     <div className="dot-separate"></div>
-                    <span>Up tp 5 mints per wallet</span>
+                    <span>Up to 5 mints per wallet</span>
                     <div className="dot-separate"></div>
                     {Date.now() > startDate && (
                         <ProjectTimer

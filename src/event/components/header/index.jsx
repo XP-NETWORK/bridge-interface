@@ -7,7 +7,11 @@ import "./header.css";
 
 export const HeaderEvent = () => {
     return (
-        <>
+        <a
+            href="https://galxe.com/aurora/campaign/GCo35UjkS8"
+            target="_blank"
+            rel="noreferrer"
+        >
             <header className="event-header">
                 <div>
                     <div className="rotator">
@@ -18,6 +22,6 @@ export const HeaderEvent = () => {
                     )*/}
                 </div>
             </header>
-        </>
+        </a>
     );
 };
