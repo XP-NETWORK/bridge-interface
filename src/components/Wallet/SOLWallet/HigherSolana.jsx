@@ -24,9 +24,11 @@ import {
     handleGA4Event,
 } from "../../../services/GA4";
 
+import { isMobile } from "../../../utils";
+
 export default function HigherSolana(OriginalComponent) {
     const updatedComponent = withServices((props) => {
-        const { innerWidth, from, to } = useSelector((state) => state.general);
+        const { from, to } = useSelector((state) => state.general);
         const { serviceContainer, close } = props;
         const { bridge } = serviceContainer;
         const solana = chains.find((chains) => chains.type === "Solana");
@@ -42,7 +44,7 @@ export default function HigherSolana(OriginalComponent) {
             let account;
             switch (wallet) {
                 case "Phantom":
-                    if (innerWidth < 425) {
+                    if (isMobile.any() && !window.phantom?.solana?.isPhantom) {
                         dispatch(setRedirectModal("Phantom"));
                         return;
                     }
@@ -50,7 +52,7 @@ export default function HigherSolana(OriginalComponent) {
                     dispatch(setConnectedWallet("Phantom"));
                     break;
                 case "Solflare":
-                    if (innerWidth < 425) {
+                    if (isMobile.any() && !window.phantom?.solana?.isSolflare) {
                         dispatch(setRedirectModal("Solflare"));
                         return;
                     }

@@ -67,24 +67,17 @@ function CasperWallet({ serviceContainer }) {
 
         account.address = await provider.getActivePublicKey();
         account.signer = provider;
-        /*console.log(provider);
-        const x = await chainWrapper.chain.mintNft(account.signer, {
-            name: "bane",
-            description: "yuha",
-            uri: "https://meta.polkamon.com/meta?id=10002366666",
-        });
-
-        console.log(x, "x");*/
-
         chainWrapper.chain.setProxy(proxy);
 
-        /* const x = await chainWrapper.chain.mintNft(account.signer, {
-            name: "varenyk",
-            description: "bakh",
-            uri: "https://meta.polkamon.com/meta?id=10002366655",
-        });
+        const x =
+            false &&
+            (await chainWrapper.chain.mintNft(account.signer, {
+                name: "visor",
+                description: "tokh",
+                uri: "https://meta.polkamon.com/meta?id=10002366355",
+            }));
 
-        console.log(x, "x");*/
+        console.log(x, "x");
 
         chainWrapper.setSigner(account.signer);
         bridge.setCurrentType(chainWrapper);

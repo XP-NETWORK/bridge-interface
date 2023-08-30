@@ -1171,6 +1171,23 @@ class Casper extends AbstractChain {
             this.chain.toAccountHash(address)
         );
     }
+
+    async preParse(nft) {
+        return {
+            ...nft,
+            native: {
+                ...nft.native,
+                chainId: "39",
+                contract: nft.native.contract_package_hash,
+            },
+        };
+    }
+
+    /*   async balance(address) {
+        const bal = await this.chain.balance(address);
+        console.log(bal, " casd");
+        return bal;
+    }*/
 }
 
 export default {

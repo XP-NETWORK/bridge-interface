@@ -76,6 +76,16 @@ function App({ network }) {
 
     let location = useLocation();
 
+    useEffect(async () => {
+        /*let client = new CasperClient(
+            proxy + "https://rpc.testnet.casperlabs.io/rpc"
+        );
+        const [_, raw] = await client.getDeploy(
+            "f4ade6282e7a90b37e36c4241b94ba85bc6f96e6870cff0c7ed5d5c6887edc7b"
+        );
+        console.log(_, raw, "raw");*/
+    }, []);
+
     useEffect(() => {
         if (modalArray.indexOf(true) !== -1) {
             dispatch(setChainModal(false));
