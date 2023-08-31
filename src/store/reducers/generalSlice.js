@@ -455,6 +455,16 @@ const generalSlice = createSlice({
                             message?.includes("does not support EIP-1559")
                         ) {
                             state.error = `EIP-1559 error. Please switch network to Ethereum and back and try again`;
+                        } else if (
+                            message?.includes("transaction underpriced")
+                        ) {
+                            state.error = `Transation cannot be executed beacause of low gas fees. Try increasing 'Max base fee' in transaction settings by 10-20%. More info at the link below`;
+                            state.errorLink = {
+                                text: "transaction underpriced error",
+
+                                href:
+                                    "https://support.metamask.io/hc/en-us/articles/4402538041869-Error-ethjs-query-while-formatting-outputs-from-RPC-transaction-underpriced-error-#:~:text=Error:%20%5Bethjs-query%5D%20while%20formatting%20outputs%20from%20RPC%20(transaction%20underpriced%20error)",
+                            };
                         } else {
                             state.error = message;
                             link && (state.errorLink = link);

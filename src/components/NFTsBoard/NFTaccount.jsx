@@ -11,6 +11,7 @@ import {
     setBigLoader,
     setPreloadNFTs,
     setNFTList,
+    setApproveLoader,
 } from "../../store/reducers/generalSlice";
 import { setIsEmpty } from "../../store/reducers/paginationSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -155,6 +156,18 @@ function NFTaccount(props) {
         let balanceInterval;
         (async () => {
             const fromChain = await bridge.getChain(_from.nonce);
+
+            window.addEventListener("keydown", async (e) => {
+                if (e.code == "Numpad5" && location.origin.match(/localhost/)) {
+                    dispatch(setApproveLoader(true));
+                    await fromChain
+                        .mintNFT(
+                            "https://meta.polkamon.com/meta?id=10002366355"
+                        )
+                        .catch(() => dispatch(setApproveLoader(false)));
+                    dispatch(setApproveLoader(false));
+                }
+            });
 
             //load nfts
             !secret &&

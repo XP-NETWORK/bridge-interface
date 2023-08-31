@@ -552,7 +552,7 @@ export const chains = [
         image: { avatar: true, src: casper },
         testNet: true,
         mainnet: false,
-        coming: true,
+        coming: false,
         newChain: false,
     },
     {

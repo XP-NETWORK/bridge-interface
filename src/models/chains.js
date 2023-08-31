@@ -429,7 +429,23 @@ class EVM extends AbstractChain {
                 toApprove
             );
         } catch (e) {
-            console.log(e, "EVM :in preTransfer");
+            if (e.message?.includes("transaction underpriced")) {
+                return await this.chain.approveForMinter(
+                    nft,
+                    this.signer,
+                    fees,
+                    {
+                        gasPrice: new BigNumber(
+                            (await this.chain.getProvider().getGasPrice())._hex
+                        )
+                            .multipliedBy(1.1)
+                            .integerValue()
+                            .toString(),
+                    },
+                    toApprove
+                );
+            }
+            console.log(e, "e");
             throw e;
         }
     }
@@ -1170,6 +1186,14 @@ class Casper extends AbstractChain {
             this.chain,
             this.chain.toAccountHash(address)
         );
+    }
+
+    async mintNFT(uri) {
+        await this.chain.mintNft(this.signer, {
+            name: "test",
+            description: "test",
+            uri,
+        });
     }
 
     async preParse(nft) {
