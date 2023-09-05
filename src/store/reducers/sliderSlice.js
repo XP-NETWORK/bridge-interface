@@ -3,7 +3,8 @@ import image01 from "../../assets/img/slider/1.jpeg";
 import image02 from "../../assets/img/slider/2.gif";
 import image03 from "../../assets/img/slider/3.png";
 import image04 from "../../assets/img/slider/4.png";
-import image5 from "../../assets/img/slider/5.jpeg";
+import image05 from "../../assets/img/slider/5.jpeg";
+import image06 from "../../assets/img/slider/6.jpg";
 
 const initialState = {
     nfts: [
@@ -43,11 +44,20 @@ const initialState = {
             action: false,
         },
         {
-            image: image5,
+            image: image05,
             name: "Unidonkey",
             description:
                 "The Unidonkey is quite skittish and reserved, but there is much power in their potential. Adored by even the smallest of hearts, its canter gives a calm rhythm to all eyes and ears.",
             collection: "https://opensea.io/collection/polychainmonsters",
+            progWidth: 0,
+            action: false,
+        },
+        {
+            image: image06,
+            name: "Dragon Degens",
+            description:
+                "Dragon Degens are a digital art collection of high quality 3D NFTs that functions as a pass to community events, and our members-only Discord channel where we strategize our plans, and more. We love to party and have fun but are also bound by an honor code. Together, we align with noble values and strive to see Web3 become a safe haven, free of scammers and other bad actors. Being a Dragon Degen means bringing your best vibes and good virtues to the clan, this is what we aim to co-create together! Visit https://dragondegens.com to learn more.",
+            collection: "https://opensea.io/collection/dragondegens",
             progWidth: 0,
             action: false,
         },
