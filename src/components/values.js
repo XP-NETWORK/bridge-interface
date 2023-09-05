@@ -35,6 +35,7 @@ import brise from "../assets/img/chain/brise.png";
 import casper from "../assets/img/chain/casper.svg";
 import optimism from "../assets/img/chain/optimism.svg";
 import zeta from "../assets/img/chain/zeta.svg";
+import Energi from "../assets/img/chain/NRG.svg";
 
 export const bridgeUrl = "https://bridge.walletconnect.org";
 
@@ -195,6 +196,21 @@ export const chains = [
         maintenance: false,
         testNet: false,
         mainnet: true,
+    },
+    {
+        type: "EVM",
+        key: "Energi",
+        text: "Energi",
+        value: "Energi",
+        nonce: 42,
+        chainId: 39797,
+        tnChainId: 49797,
+        order: -4,
+        image: { avatar: true, src: Energi },
+        maintenance: false,
+        testNet: true,
+        mainnet: false,
+        newChain: false,
     },
     {
         type: "Solana",
