@@ -672,10 +672,10 @@ export const allchains = [
         chain: "Energi",
         network: "testnet",
         rpcUrls: ["https://nodeapi.test.energi.network"],
-        faucets: [],
+        faucets: ["https://faucet.energi.network/"],
         nativeCurrency: {
             name: "Energi",
-            symbol: "NRG",
+            symbol: "tNRG",
             decimals: 18,
         },
         infoURL: "https://www.energi.world/",
