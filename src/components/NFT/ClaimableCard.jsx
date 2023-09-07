@@ -80,7 +80,7 @@ function ClaimableCard({ nft, serviceContainer }) {
 
     useEffect(() => {
         chainWrapper && checkIfOptIn();
-    }, []);
+    }, [chainWrapper]);
 
     useEffect(() => {
         if (bridge) {

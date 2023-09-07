@@ -8,6 +8,16 @@ export const getAddEthereumChain = () => {
 
 export const allchains = [
     {
+        chainName: "ZetaChain Testnet",
+        rpcUrls: ["https://zetachain-athens-evm.blockpi.network/v1/rpc/public"],
+        chainId: 7001,
+        nativeCurrency: {
+            name: "AZETA",
+            symbol: "AZETA",
+            decimals: 18,
+        },
+    },
+    {
         chainName: "Goerli Optimism",
         rpcUrls: ["https://goerli.optimism.io"],
         chainId: 420,

@@ -13,6 +13,7 @@ export const ProjectTimer = ({ text, date, onTimeUp }) => {
     //const project = useSelector((state) => state.global.project);
     const [tick, setTick] = useState("");
     // const timeLeft = "30:360:21600";
+
     const time = tick.split(":");
 
     // const size = useWindowSize();
@@ -54,7 +55,9 @@ export const ProjectTimer = ({ text, date, onTimeUp }) => {
     return (
         <span>
             {text}
-            {time.map((digit, i) => `${digit}${period[i]} `)}
+            {time.map((digit, i) =>
+                digit !== "" ? `${digit}${period[i]} ` : ""
+            )}
         </span>
     );
 };

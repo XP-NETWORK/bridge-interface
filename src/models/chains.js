@@ -524,9 +524,10 @@ class NoWhiteListEVM extends EVM {
 
             return {
                 fees: res.toString(10),
-                formatedFees: res
-                    .dividedBy(this.chainParams.decimals)
-                    .toNumber(),
+                formatedFees: Math.max(
+                    res.dividedBy(this.chainParams.decimals).toNumber(),
+                    0.00001
+                ),
             };
         } catch (e) {
             console.log("in estimateDeployUserStore");

@@ -24,7 +24,7 @@ import { withServices } from "../App/hocs/withServices";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 import BigNumber from "bignumber.js";
 
-import { dev } from "../values";
+import { dev, isTestnet, biz } from "../values";
 
 export default withServices(function ButtonToTransfer({ serviceContainer }) {
     const { bridge } = serviceContainer;
@@ -135,9 +135,11 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
                 nft,
                 receiver: unstoppabledomain || normalizedReceiver,
                 fee: new BigNumber(bigNumberFees || 0)
-                    .div(dev ? 3 : 1)
+                    .div(isTestnet && biz ? 10 : dev ? 3 : 1)
                     .plus(
-                        new BigNumber(bigNumberDeployFees || 0).div(dev ? 4 : 1)
+                        new BigNumber(bigNumberDeployFees || 0).div(
+                            isTestnet && biz ? 10 : dev ? 4 : 1
+                        )
                     )
                     .integerValue()
                     .toString(10),

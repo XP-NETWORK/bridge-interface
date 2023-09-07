@@ -34,6 +34,7 @@ import arbitrumTestNet from "../assets/img/chain/arbitrumTN.svg";
 import brise from "../assets/img/chain/brise.png";
 import casper from "../assets/img/chain/casper.svg";
 import optimism from "../assets/img/chain/optimism.svg";
+import zeta from "../assets/img/chain/zeta.svg";
 
 export const bridgeUrl = "https://bridge.walletconnect.org";
 
@@ -46,7 +47,7 @@ export const wnft = ["https://wnfts.xp.network", "https://nft.xp.network"];
 
 export const wnftPattern =
     "(wnfts.xp.network|nft.xp.network|staging-nft.xp.network|bridge-wnftapi)";
-
+export const isTestnet = /testnet/.test(window.location.pathname);
 export const dev = /(localhost|dev|10\.0\.0|trycloudflare)/.test(
     window.location.hostname
 );
@@ -569,5 +570,20 @@ export const chains = [
         newChain: false,
         chainId: 420,
         tnChainId: 420,
+    },
+    {
+        type: "EVM",
+        key: "ZetaChain",
+        text: "ZetaChain",
+        value: "ZetaChain",
+        nonce: 0x29,
+        order: -9,
+        image: { avatar: true, src: zeta },
+        testNet: true,
+        mainnet: false,
+        coming: false,
+        newChain: false,
+        chainId: 7000,
+        tnChainId: 7001,
     },
 ];
