@@ -952,7 +952,7 @@ export const allchains = [
     {
         name: "Polygon Testnet Mumbai",
         chainName: "Polygon",
-        // network: "testnet",
+        //network: "testnet",
         rpcUrls: [
             "https://matic-mumbai.chainstacklabs.com",
             "https://rpc-mumbai.maticvigil.com",
