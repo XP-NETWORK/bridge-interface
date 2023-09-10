@@ -1,6 +1,7 @@
 {
     "name": "xp-network-bridge",
     "version": "0.1.0",
+    "homepage": "https://smartnfts.github.io/bridge-interface",
     "private": true,
     "browser": {
         "electron": false,
@@ -82,11 +83,11 @@
     "scripts": {
         "analyze": "source-map-explorer 'build/static/js/*.js'",
         "start": "react-app-rewired start",
-        "build": "GENERATE_SOURCEMAP=false REACT_APP_GIT_SHA=`git rev-parse HEAD` react-app-rewired build --max-old-space-size=8192",
+        "build": "react-app-rewired build --max-old-space-size=8192",
         "test": "react-app-rewired test",
         "eject": "react-app-rewired eject",
         "predeploy": "npm run build",
-        "deploy": "gh-pages -d build"
+        "deploy": "gh-pages -d build -o master -r https://github.com/smartnfts/bridge-interface.git"
     },
     "resolutions": {
         "react-error-overlay": "6.0.9"

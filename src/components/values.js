@@ -199,7 +199,7 @@ export const chains = [
     {
         type: "EVM",
         key: "Energi",
-        text: "Energi",
+        text: "Energi Testnet",
         value: "Energi",
         nonce: 14,
         chainId: 39797,

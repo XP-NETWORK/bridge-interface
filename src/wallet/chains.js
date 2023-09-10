@@ -675,7 +675,7 @@ export const allchains = [
         faucets: ["https://faucet.energi.network/"],
         nativeCurrency: {
             name: "Energi",
-            symbol: "tNRG",
+            symbol: "NRG",
             decimals: 18,
         },
         infoURL: "https://www.energi.world/",
@@ -952,7 +952,7 @@ export const allchains = [
     {
         name: "Polygon Testnet Mumbai",
         chainName: "Polygon",
-        //network: "testnet",
+        network: "testnet",
         rpcUrls: [
             "https://matic-mumbai.chainstacklabs.com",
             "https://rpc-mumbai.maticvigil.com",
