@@ -87,7 +87,7 @@
         "test": "react-app-rewired test",
         "eject": "react-app-rewired eject",
         "predeploy": "npm run build",
-        "deploy": "gh-pages -d build -o master -r https://github.com/smartnfts/bridge-interface.git"
+        "deploy": "gh-pages -d build"
     },
     "resolutions": {
         "react-error-overlay": "6.0.9"
