@@ -650,6 +650,7 @@ export const allchains = [
         ],
         infoURL: "https://docs.celo.org/",
     },
+
     {
         name: "Energi Mainnet",
         chain: "Energi",
@@ -657,7 +658,7 @@ export const allchains = [
         rpcUrls: ["https://nodeapi.energi.network"],
         faucets: [],
         nativeCurrency: {
-            name: "Energi",
+            name: "NRG",
             symbol: "NRG",
             decimals: 18,
         },
@@ -666,6 +667,13 @@ export const allchains = [
         chainId: 39797,
         networkId: 39797,
         slip44: 39797,
+        explorers: [
+            {
+                name: "Mainnet Energi Explorer",
+                url: "https://explorer.energi.network/",
+                standard: "EIP3091",
+            },
+        ],
     },
     {
         name: "Energi Testnet",
@@ -679,11 +687,19 @@ export const allchains = [
             decimals: 18,
         },
         infoURL: "https://www.energi.world/",
-        shortName: "tnrg",
+        shortName: "nrg",
         chainId: 49797,
         networkId: 49797,
         slip44: 49797,
+        explorers: [
+            {
+                name: "Testnet Energi Explorer",
+                url: "https://explorer.test.energi.network/",
+                standard: "EIP3091",
+            },
+        ],
     },
+
     {
         name: "Thinkium Testnet Chain 0",
         chain: "Thinkium",
