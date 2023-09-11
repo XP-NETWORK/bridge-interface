@@ -8,9 +8,11 @@ import { setAccountModal } from "../../../store/reducers/generalSlice";
 import Tooltip from "./Tooltip";
 import { DetectOutsideClick } from "./accountModalHelper";
 
-import { ethereumClient } from "../../Wallet/EVMWallet/evmConnectors";
+import { withWalletConnect } from "../../App/hocs/withServices";
 
-export default function AccountModal() {
+export default withWalletConnect(function AccountModal({
+    walletConnectClient,
+}) {
     const dispatch = useDispatch();
     let account = useSelector((state) => state.general.account);
 
@@ -72,7 +74,15 @@ export default function AccountModal() {
                         const nearWalletConncted = window.location.search.includes(
                             "NEARTRX=true"
                         );
-                        ethereumClient.disconnect();
+
+                        if (walletConnectClient) {
+                            walletConnectClient.disconnect();
+                            window.history.replaceState(
+                                {},
+                                "",
+                                window.location.pathname
+                            );
+                        }
                         //window.safeLocalStorage?.removeItem("XP_MM_CONNECTED");
                         window.safeLocalStorage?.clear();
                         //localStorage.clear()
@@ -96,4 +106,4 @@ export default function AccountModal() {
     ) : (
         ""
     );
-}
+});

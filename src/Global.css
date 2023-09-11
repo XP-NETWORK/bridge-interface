@@ -1553,7 +1553,7 @@ span.invalid img {
     background: #f7f8f9;
     top: 70px;
     right: 15px;
-    z-index: 2;
+    z-index: 200;
     border: 1px solid #ffffff;
     box-sizing: border-box;
     border-radius: 20px;

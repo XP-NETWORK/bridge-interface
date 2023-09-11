@@ -10,7 +10,7 @@ import {
     setUnstoppableDomainsIsSelected,
     setWalletsModal,
 } from "../../store/reducers/generalSlice";
-import { useAccount } from "wagmi";
+//import { useAccount } from "wagmi";
 import WalletList from "./WalletList";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
@@ -58,7 +58,7 @@ function ConnectWallet() {
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
     const bitKeep = useSelector((state) => state.general.bitKeep);
     const _account = useSelector((state) => state.general.account);
-    const { address } = useAccount();
+    //const { address } = useAccount();
 
     const { account, chainId } = useWeb3React();
     const { isOpen } = useWeb3Modal();
@@ -84,7 +84,7 @@ function ConnectWallet() {
         evmAccount ||
         tronAccount ||
         // account ||
-        (address && account)
+        /*address &&*/ account
             ? true
             : false;
 

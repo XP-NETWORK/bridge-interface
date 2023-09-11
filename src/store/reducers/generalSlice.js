@@ -30,6 +30,7 @@ const initialState = {
     unstoppableDomainsIsSelected: false,
     receiver: "",
     preFetchData: null,
+    messageLoader: "",
 };
 
 const generalSlice = createSlice({
@@ -413,6 +414,9 @@ const generalSlice = createSlice({
         setApproveLoader(state, action) {
             state.approveLoader = action.payload;
         },
+        setMessageLoader(state, action) {
+            state.messageLoader = action.payload;
+        },
         setTronLink(state, action) {
             state.tronLink = action.payload;
         },
@@ -716,6 +720,7 @@ export const {
     setQrImage,
     setWSettings,
     setWalletsModal,
+    setMessageLoader,
     setGitLatestCommit,
     setBalance,
     setWrappedEGold,

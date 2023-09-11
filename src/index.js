@@ -26,11 +26,8 @@ import { ServiceProvider } from "./components/App/hocs/serviceProvider";
 import Bridge from "./models/bridge";
 import WhiteListedPool from "./services/whiteListedPool";
 
-import { WagmiConfig } from "wagmi";
-import {
-    wagmiConfig,
-    createSafeStorage,
-} from "./components/Wallet/EVMWallet/evmConnectors";
+import { WrapWithWalletConnect } from "./components/Wallet/EVMWallet/WalletConnect";
+import { createSafeStorage } from "./utils";
 
 function getLibrary(provider) {
     return new Web3(provider);
@@ -52,21 +49,22 @@ const Services = ({ children }) => {
 
 const container = document.getElementById("root");
 const root = createRoot(container);
-
-root.render(
-    <WagmiConfig config={wagmiConfig}>
-        <Web3ReactProvider getLibrary={getLibrary}>
-            <Services>
-                <Provider store={store}>
-                    <BrowserRouter>
-                        <ErrorBoundary>
-                            <NavBar />
-                            <App />
-                            <Footer />
-                        </ErrorBoundary>
-                    </BrowserRouter>
-                </Provider>
-            </Services>
-        </Web3ReactProvider>
-    </WagmiConfig>
+const app = (
+    <Web3ReactProvider getLibrary={getLibrary}>
+        <Services>
+            <Provider store={store}>
+                <BrowserRouter>
+                    <ErrorBoundary>
+                        <NavBar />
+                        <App />
+                        <Footer />
+                    </ErrorBoundary>
+                </BrowserRouter>
+            </Provider>
+        </Services>
+    </Web3ReactProvider>
 );
+
+const walletConnectMode = /wallet_connect_mode/.test(location.search);
+
+root.render(walletConnectMode ? WrapWithWalletConnect(app) : app);
