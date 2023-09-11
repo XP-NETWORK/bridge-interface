@@ -1,7 +1,6 @@
 {
     "name": "xp-network-bridge",
     "version": "0.1.0",
-    "homepage": "https://smartnfts.github.io/bridge-interface",
     "private": true,
     "browser": {
         "electron": false,
