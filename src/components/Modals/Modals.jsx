@@ -98,6 +98,7 @@ export default function Modals() {
     return (
         <>
             <Web3Modal projectId={wcId} ethereumClient={ethereumClient} />
+
             <Modal
                 className="ChainModal switchWallet"
                 animation={false}

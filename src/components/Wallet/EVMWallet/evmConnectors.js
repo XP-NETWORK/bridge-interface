@@ -64,3 +64,5 @@ export const createSafeStorage = () => {
         },
     };
 };
+
+//1. install wagmi @web3modal/ethereum @web3modal/react
