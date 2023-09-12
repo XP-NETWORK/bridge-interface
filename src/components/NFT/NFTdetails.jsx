@@ -279,10 +279,10 @@ function Attribute(props) {
                         alt="#"
                         style={{ marginRight: "4px", width: "29px" }}
                         src={
-                            chains.find(
-                                (chain) =>
-                                    chain.key.toLowerCase() ===
-                                    value.toLowerCase()
+                            chains.find((chain) =>
+                                chain.key
+                                    .toLowerCase()
+                                    .includes(value.toLowerCase())
                             )?.image.src
                         }
                     />

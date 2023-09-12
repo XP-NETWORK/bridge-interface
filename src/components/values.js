@@ -36,6 +36,7 @@ import casper from "../assets/img/chain/casper.svg";
 import optimism from "../assets/img/chain/optimism.svg";
 import zeta from "../assets/img/chain/zeta.svg";
 import Energi from "../assets/img/chain/NRG.svg";
+import Base from "../assets/img/chain/base.svg";
 
 export const bridgeUrl = "https://bridge.walletconnect.org";
 
@@ -601,5 +602,20 @@ export const chains = [
         newChain: false,
         chainId: 7000,
         tnChainId: 7001,
+    },
+    {
+        type: "EVM",
+        key: "Base Goerli",
+        text: "Base Goerli",
+        value: "Base Goerli",
+        nonce: 43,
+        order: -5,
+        image: { avatar: true, src: Base },
+        testNet: true,
+        mainnet: false,
+        coming: false,
+        newChain: false,
+        chainId: 8453,
+        tnChainId: 84531,
     },
 ];

@@ -8,6 +8,16 @@ export const getAddEthereumChain = () => {
 
 export const allchains = [
     {
+        chainName: "Base Goerli",
+        rpcUrls: ["https://base-goerli.diamondswap.org/rpc"],
+        chainId: 84531,
+        nativeCurrency: {
+            name: "ETH",
+            symbol: "ETH",
+            decimals: 18,
+        },
+    },
+    {
         chainName: "ZetaChain Testnet",
         rpcUrls: ["https://zetachain-athens-evm.blockpi.network/v1/rpc/public"],
         chainId: 7001,
