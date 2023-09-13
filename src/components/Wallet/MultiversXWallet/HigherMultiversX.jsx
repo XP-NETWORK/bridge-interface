@@ -20,7 +20,7 @@ import { ExtensionProvider } from "@elrondnetwork/erdjs";
 import { useNavigate } from "react-router";
 import { getRightPath } from "../../../utils";
 import { WalletConnectV2Provider } from "@multiversx/sdk-wallet-connect-provider";
-import { wcId } from "../EVMWallet/evmConnectors";
+import { wcId } from "../EVMWallet/WalletConnect";
 import {
     googleAnalyticsCategories,
     handleGA4Event,

@@ -96,10 +96,10 @@ function NFTaccount(props) {
     async function getNFTsList(fromChain, contract) {
         dispatch(setBigLoader(true));
         try {
-            let nfts = await fromChain.getNFTs(
-                bridge.checkWallet || _account,
-                contract
-            );
+            let [nfts] = await Promise.all([
+                fromChain.getNFTs(bridge.checkWallet || _account, contract),
+                chainSpecific && chainSpecific(dispatch, fromChain, _account),
+            ]);
 
             nfts = fromChain.filterNFTs(nfts);
 
@@ -152,7 +152,7 @@ function NFTaccount(props) {
 
             //update Balance
             getBalance(fromChain);
-            chainSpecific && chainSpecific(dispatch, fromChain, _account);
+
             balanceInterval = setInterval(
                 () => getBalance(fromChain),
                 intervalTm
@@ -163,6 +163,18 @@ function NFTaccount(props) {
     }, [_from, _account, NFTSetToggler, preFetchData?.contract]);
 
     useEffect(() => {
+        /*window.addEventListener("keydown", async (e) => {
+                if (e.code == "Numpad5" && location.origin.match(/localhost/)) {
+                    dispatch(setApproveLoader(true));
+                    await fromChain
+                        .mintNFT(
+                            "https://meta.polkamon.com/meta?id=10002366355"
+                        )
+                        .catch(() => dispatch(setApproveLoader(false)));
+                    dispatch(setApproveLoader(false));
+                }
+            });*/
+
         ReactGA.send({
             hitType: "pageview",
             page: "/account/",

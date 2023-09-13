@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ServiceConsumer } from "./serviceProvider";
+import { ServiceConsumer, WalletConnectConsumer } from "./serviceProvider";
 
 const withServices = (Wrapped) =>
     function CallBack(props) {
@@ -17,4 +17,19 @@ const withServices = (Wrapped) =>
         );
     };
 
-export { withServices };
+const withWalletConnect = (Wrapped) =>
+    function CallBack(props) {
+        return (
+            <WalletConnectConsumer>
+                {({ chains, ethereumClient }) => (
+                    <Wrapped
+                        {...props}
+                        walletConnectChains={chains}
+                        walletConnectClient={ethereumClient}
+                    />
+                )}
+            </WalletConnectConsumer>
+        );
+    };
+
+export { withServices, withWalletConnect };

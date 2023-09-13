@@ -8,6 +8,26 @@ export const getAddEthereumChain = () => {
 
 export const allchains = [
     {
+        chainName: "Base Goerli",
+        rpcUrls: ["https://base-goerli.diamondswap.org/rpc"],
+        chainId: 84531,
+        nativeCurrency: {
+            name: "ETH",
+            symbol: "ETH",
+            decimals: 18,
+        },
+    },
+    {
+        chainName: "ZetaChain Testnet",
+        rpcUrls: ["https://zetachain-athens-evm.blockpi.network/v1/rpc/public"],
+        chainId: 7001,
+        nativeCurrency: {
+            name: "AZETA",
+            symbol: "AZETA",
+            decimals: 18,
+        },
+    },
+    {
         chainName: "Goerli Optimism",
         rpcUrls: ["https://goerli.optimism.io"],
         chainId: 420,
@@ -651,8 +671,25 @@ export const allchains = [
         infoURL: "https://docs.celo.org/",
     },
     {
+        name: "Energi Mainnet",
+        chain: "Energi",
+        network: "mainnet",
+        rpcUrls: ["https://nodeapi.energi.network"],
+        faucets: [],
+        nativeCurrency: {
+            name: "Energi",
+            symbol: "NRG",
+            decimals: 18,
+        },
+        infoURL: "https://www.energi.world/",
+        shortName: "nrg",
+        chainId: 39797,
+        networkId: 39797,
+        slip44: 39797,
+    },
+    {
         name: "Energi Testnet",
-        chain: "NRG",
+        chain: "Energi",
         network: "testnet",
         rpcUrls: ["https://nodeapi.test.energi.network"],
         faucets: [],

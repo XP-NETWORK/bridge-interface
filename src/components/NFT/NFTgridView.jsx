@@ -26,6 +26,7 @@ function NFTgridView({ serviceContainer, chainSpecificRender }) {
         (state) => state.pagination.scrollToggler
     );
     const wrapper = useRef(null);
+
     const algorandClaimables = useSelector(
         (state) => state.general.algorandClaimables
     );
@@ -76,19 +77,22 @@ function NFTgridView({ serviceContainer, chainSpecificRender }) {
                         style={currentsNFTs?.length > 0 ? auto : {}}
                         className="nft-list__wrapper"
                     >
-                        {algorandClaimables &&
-                            algorandClaimables.map((nft, index) => (
-                                <NFTcard
-                                    nft={nft}
-                                    index={index}
-                                    key={`nft-${index}`}
-                                    claimables={true}
-                                    chain={chain}
-                                    serviceContainer={serviceContainer}
-                                />
-                            ))}
+                        {Array.isArray(algorandClaimables) &&
+                        algorandClaimables.length
+                            ? algorandClaimables.map((nft, index) => (
+                                  <NFTcard
+                                      nft={nft}
+                                      index={index}
+                                      key={`nft-${index}`}
+                                      claimables={true}
+                                      chain={chain}
+                                      serviceContainer={serviceContainer}
+                                  />
+                              ))
+                            : ""}
+
                         {Array.isArray(currentsNFTs) && currentsNFTs.length
-                            ? currentsNFTs?.map((nft, index) => (
+                            ? currentsNFTs.map((nft, index) => (
                                   <NFTcard
                                       nft={nft}
                                       index={index}

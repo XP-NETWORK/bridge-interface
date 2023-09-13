@@ -34,6 +34,9 @@ import arbitrumTestNet from "../assets/img/chain/arbitrumTN.svg";
 import brise from "../assets/img/chain/brise.png";
 import casper from "../assets/img/chain/casper.svg";
 import optimism from "../assets/img/chain/optimism.svg";
+import zeta from "../assets/img/chain/zeta.svg";
+import Energi from "../assets/img/chain/NRG.svg";
+import Base from "../assets/img/chain/base.svg";
 
 export const bridgeUrl = "https://bridge.walletconnect.org";
 
@@ -46,7 +49,7 @@ export const wnft = ["https://wnfts.xp.network", "https://nft.xp.network"];
 
 export const wnftPattern =
     "(wnfts.xp.network|nft.xp.network|staging-nft.xp.network|bridge-wnftapi)";
-
+export const isTestnet = /testnet/.test(window.location.pathname);
 export const dev = /(localhost|dev|10\.0\.0|trycloudflare)/.test(
     window.location.hostname
 );
@@ -194,6 +197,21 @@ export const chains = [
         maintenance: false,
         testNet: false,
         mainnet: true,
+    },
+    {
+        type: "EVM",
+        key: "Energi",
+        text: "Energi",
+        value: "Energi",
+        nonce: 42,
+        chainId: 39797,
+        tnChainId: 49797,
+        order: -4,
+        image: { avatar: true, src: Energi },
+        maintenance: false,
+        testNet: true,
+        mainnet: false,
+        newChain: false,
     },
     {
         type: "Solana",
@@ -552,7 +570,7 @@ export const chains = [
         image: { avatar: true, src: casper },
         testNet: true,
         mainnet: false,
-        coming: true,
+        coming: false,
         newChain: false,
     },
     {
@@ -569,5 +587,35 @@ export const chains = [
         newChain: false,
         chainId: 420,
         tnChainId: 420,
+    },
+    {
+        type: "EVM",
+        key: "ZetaChain",
+        text: "ZetaChain",
+        value: "ZetaChain",
+        nonce: 0x29,
+        order: -9,
+        image: { avatar: true, src: zeta },
+        testNet: true,
+        mainnet: false,
+        coming: false,
+        newChain: false,
+        chainId: 7000,
+        tnChainId: 7001,
+    },
+    {
+        type: "EVM",
+        key: "Base Goerli",
+        text: "Base Goerli",
+        value: "Base Goerli",
+        nonce: 43,
+        order: -5,
+        image: { avatar: true, src: Base },
+        testNet: true,
+        mainnet: false,
+        coming: false,
+        newChain: false,
+        chainId: 8453,
+        tnChainId: 84531,
     },
 ];

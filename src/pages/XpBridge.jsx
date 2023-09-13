@@ -12,6 +12,10 @@ import { useSelector } from "react-redux";
 
 import { EventPage } from "../event";
 
+//import { Helmet } from "react-helmet";
+
+//import meta from "../event/a.png";
+
 function XpBridge() {
     const [nftAccountPath, setPath] = useState("/account");
 
@@ -53,6 +57,12 @@ function XpBridge() {
                     path="/crossroads"
                     element={
                         <>
+                            {/*                            <Helmet>
+                                <title>My Title</title>
+                                <meta name="twitter:image:src" content={meta} />
+                                <meta property="og:image" content={meta} />
+                                <meta property="image" content={meta} />
+</Helmet>*/}
                             <EventPage />
                             <div className="alex">
                                 <ConnectWallet />

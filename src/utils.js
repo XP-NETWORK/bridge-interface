@@ -242,3 +242,42 @@ export const isMobile = {
         );
     },
 };
+
+export const createSafeStorage = () => {
+    window.safeLocalStorage = {
+        getItem(key) {
+            try {
+                return localStorage.getItem(key);
+            } catch (e) {
+                console.log("error in safeLocalStorage", e);
+                return undefined;
+            }
+        },
+        setItem(key, val) {
+            try {
+                return localStorage.setItem(key, val);
+            } catch (e) {
+                console.log("error in safeLocalStorage", e);
+                return undefined;
+            }
+        },
+        removeItem(key) {
+            try {
+                return localStorage.removeItem(key);
+            } catch (e) {
+                console.log("error in safeLocalStorage", e);
+                return undefined;
+            }
+        },
+        clear() {
+            try {
+                return localStorage.clear();
+            } catch (e) {
+                console.log("error in safeLocalStorage", e);
+                return undefined;
+            }
+        },
+    };
+};
+
+//1. install wagmi @web3modal/ethereum @web3modal/react

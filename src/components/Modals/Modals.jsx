@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+//import { useWeb3Modal } from "@web3modal/react";
 import {
     connectAlgorandWalletClaim,
     removeFromNotWhiteListed,
+    setFrom,
     setQrCodeString,
     setQrImage,
     setRedirectModal,
@@ -11,6 +13,8 @@ import {
     setShowVideo,
     setTronLoginError,
     setTronPopUp,
+    setTo,
+    setMessageLoader,
 } from "../../store/reducers/generalSlice";
 import TonQeCodeModal from "./TonModal/TonQeCodeModal";
 import About from "../../components/innercomponents/About";
@@ -30,8 +34,13 @@ import {
 import MaiarModal from "./MaiarModal/MaiarModal";
 import ChangeWalletModal from "./ChangeWallet/ChangeWalletModal";
 import { Web3Modal } from "@web3modal/react";
-import { ethereumClient, wcId } from "../Wallet/EVMWallet/evmConnectors";
+import { wcId } from "../Wallet/EVMWallet/WalletConnect";
 import AlgorandAddresses from "./AlgorandModal/AlgorandAddresses";
+
+import { withWalletConnect } from "../App/hocs/withServices";
+import { getChainObject } from "../values";
+
+import { useWeb3Modal } from "@web3modal/react";
 
 export default function Modals() {
     const dispatch = useDispatch();
@@ -57,6 +66,7 @@ export default function Modals() {
     const tronError = useSelector((state) => state.general.tronLoginError);
     const redirectModal = useSelector((state) => state.general.redirectModal);
     const loader = useSelector((state) => state.general.approveLoader);
+    const messageLoader = useSelector((state) => state.general.messageLoader);
 
     const handleCloseRedirectModal = () => {
         dispatch(setRedirectModal(false));
@@ -95,9 +105,55 @@ export default function Modals() {
         //todo
     };
 
+    const WalletConnectModal = useMemo(
+        () =>
+            withWalletConnect(({ walletConnectClient }) => {
+                if (!walletConnectClient) return "";
+                const { open } = useWeb3Modal();
+
+                const from = useSelector((state) => state.general.from);
+                const to = useSelector((state) => state.general.to);
+
+                useEffect(() => {
+                    const params = new URLSearchParams(
+                        location.search.replace("?", "")
+                    );
+                    const from = params.get("from");
+                    const to = params.get("to");
+
+                    dispatch(setFrom(getChainObject(+from)));
+                    dispatch(setTo(getChainObject(+to)));
+                }, []);
+
+                useEffect(() => {
+                    if (from && to) {
+                        dispatch(setMessageLoader("Connecting..."));
+                        open({ route: "SelectNetwork" })
+                            .catch((e) => {
+                                console.log(e, "eee");
+                            })
+                            .finally(() => {
+                                dispatch(setMessageLoader(""));
+                            });
+                    }
+                }, [from, to]);
+
+                return (
+                    walletConnectClient && (
+                        <Web3Modal
+                            projectId={wcId}
+                            ethereumClient={walletConnectClient}
+                        />
+                    )
+                );
+            }),
+        []
+    );
+
     return (
         <>
-            <Web3Modal projectId={wcId} ethereumClient={ethereumClient} />
+            <WalletConnectModal />
+
             <Modal
                 className="ChainModal switchWallet"
                 animation={false}
@@ -221,11 +277,11 @@ export default function Modals() {
                 style={{
                     overflow: "hidden",
                 }}
-                show={loader}
+                show={messageLoader || loader}
             >
                 <div className="content">
                     <div className="clip">
-                        <p>Approving</p>
+                        <p>{messageLoader || "Approving"}</p>
                     </div>
                 </div>
             </Modal>

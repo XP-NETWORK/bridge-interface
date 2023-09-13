@@ -25,7 +25,7 @@ import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 import { compose } from "redux";
 import BigNumber from "bignumber.js";
 
-import { dev } from "../values";
+import { dev, isTestnet, biz } from "../values";
 
 export default compose(
     withServices,
@@ -141,9 +141,11 @@ export default compose(
                 nft,
                 receiver: unstoppabledomain || normalizedReceiver,
                 fee: new BigNumber(bigNumberFees || 0)
-                    .div(dev ? 3 : 1)
+                    .div(isTestnet && biz ? 10 : dev ? 3 : 1)
                     .plus(
-                        new BigNumber(bigNumberDeployFees || 0).div(dev ? 4 : 1)
+                        new BigNumber(bigNumberDeployFees || 0).div(
+                            isTestnet && biz ? 10 : dev ? 4 : 1
+                        )
                     )
                     .integerValue()
                     .toString(10),

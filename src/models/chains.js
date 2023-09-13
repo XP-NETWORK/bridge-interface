@@ -429,7 +429,23 @@ class EVM extends AbstractChain {
                 toApprove
             );
         } catch (e) {
-            console.log(e, "EVM :in preTransfer");
+            if (e.message?.includes("transaction underpriced")) {
+                return await this.chain.approveForMinter(
+                    nft,
+                    this.signer,
+                    fees,
+                    {
+                        gasPrice: new BigNumber(
+                            (await this.chain.getProvider().getGasPrice())._hex
+                        )
+                            .multipliedBy(1.1)
+                            .integerValue()
+                            .toString(),
+                    },
+                    toApprove
+                );
+            }
+            console.log(e, "e");
             throw e;
         }
     }
@@ -508,9 +524,10 @@ class NoWhiteListEVM extends EVM {
 
             return {
                 fees: res.toString(10),
-                formatedFees: res
-                    .dividedBy(this.chainParams.decimals)
-                    .toNumber(),
+                formatedFees: Math.max(
+                    res.dividedBy(this.chainParams.decimals).toNumber(),
+                    0.00001
+                ),
             };
         } catch (e) {
             console.log("in estimateDeployUserStore");
@@ -1171,6 +1188,31 @@ class Casper extends AbstractChain {
             this.chain.toAccountHash(address)
         );
     }
+
+    async mintNFT(uri) {
+        await this.chain.mintNft(this.signer, {
+            name: "test",
+            description: "test",
+            uri,
+        });
+    }
+
+    async preParse(nft) {
+        return {
+            ...nft,
+            native: {
+                ...nft.native,
+                chainId: "39",
+                contract: nft.native.contract_package_hash,
+            },
+        };
+    }
+
+    /*   async balance(address) {
+        const bal = await this.chain.balance(address);
+        console.log(bal, " casd");
+        return bal;
+    }*/
 }
 
 export default {

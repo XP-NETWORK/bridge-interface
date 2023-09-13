@@ -22,7 +22,6 @@ export default function RedirectModal() {
     const [copied, setCopied] = useState();
     const isMobile = useCheckMobileScreen();
     const redirectModal = useSelector((state) => state.general.redirectModal);
-
     const widget = useSelector((state) => state.widget.widget);
 
     const copy = () => {
@@ -47,6 +46,21 @@ export default function RedirectModal() {
         }
     };
 
+    const getLink = () => {
+        switch (redirectModal) {
+            case "Phantom": {
+                const url =
+                    "https://phantom.app/ul/browse/" + window.location.hostname;
+                return <a href={url}>{url}</a>;
+            }
+
+            default:
+                return widget
+                    ? `${window.location.origin}${window.location.search}`
+                    : window.location.origin;
+        }
+    };
+
     // const getWalletName = () => {
     //     switch (redirectModal) {
     //         case "Fina":
@@ -59,12 +73,6 @@ export default function RedirectModal() {
     //             break;
     //     }
     // };
-
-    const link = !widget
-        ? window.location.origin
-        : `${window.location.origin}${window.location.search}`;
-
-    const text = link.length > 26 ? `${link.substr(0, 25)}...` : link;
 
     return (
         <>
@@ -89,14 +97,14 @@ export default function RedirectModal() {
                 </div>
                 <div className="tron-modal__link">
                     <div className="link__items">
-                        <div className="tron-modal_address">{text}</div>
+                        <div className="tron-modal_address">{getLink()}</div>
                         {onHover && <CopyTT className="svgWidget copyTronTT" />}
                         {copied && (
                             <CopiedIcon className="svgWidget copyTronTTc" />
                         )}
                         {!isMobile && (
                             <CopyToClipboard
-                                text={link}
+                                text={window.location.origin}
                                 onClick={() => {
                                     if (isMobile) {
                                         var range = document.body.createTextRange();
@@ -129,11 +137,3 @@ export default function RedirectModal() {
         </>
     );
 }
-
-/**
- * 
- *   const link = !widget
-    ? "https://bridge.xp.network"
-    : `${window.location.origin}${window.location.search}`;
-
- */
