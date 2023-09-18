@@ -809,7 +809,15 @@ class TON extends AbstractChain {
         return {
             collectionIdent: _contract,
             uri,
-            metaData: withMetadata ? nft.native.metadata : undefined,
+            metaData: withMetadata
+                ? {
+                      ...nft.native.metadata,
+                      ...(nft.native.previews
+                          ? { image: nft.native.previews.at(-1).url }
+                          : {}),
+                  }
+                : undefined,
+
             native: {
                 ...nft.native,
                 tokenId: nft.native.nftItemAddr,
