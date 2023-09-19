@@ -18,8 +18,11 @@ export default function Chain(props) {
         newChain,
         maintenance,
         updated,
+        maintenanceTo,
         nonce,
     } = props;
+
+    const _maintenance = maintenance || maintenanceTo;
 
     const validatorsInfo = useSelector((state) => state.general.validatorsInfo);
     const testnet = useSelector((state) => state.general.testNet);
@@ -41,7 +44,7 @@ export default function Chain(props) {
                 ? false
                 : !checkIfLive(nonce, validatorsInfo)) ||
             coming ||
-            maintenance
+            _maintenance
         ) {
             return OFF;
         } else if (
@@ -87,17 +90,17 @@ export default function Chain(props) {
                     )}
                 </div>
                 <div className="chain--identifier">
-                    {chainStatus === undefined && !coming && !maintenance ? (
+                    {chainStatus === undefined && !coming && !_maintenance ? (
                         <Status status={"connecting"} />
                     ) : (
                         !chainStatus &&
                         !coming &&
-                        !maintenance && <Status status={"off-line"} />
+                        !_maintenance && <Status status={"off-line"} />
                     )}
                     {coming && <Status status={"coming"} />}
-                    {maintenance && <Status status={"maintenance"} />}
+                    {_maintenance && <Status status={"maintenance"} />}
                     {updated && <Status status={"updated"} />}
-                    {!maintenance && newChain && <Status status={"new"} />}
+                    {!_maintenance && newChain && <Status status={"new"} />}
                 </div>
             </div>
         </li>

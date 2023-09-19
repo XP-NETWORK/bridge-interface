@@ -1156,7 +1156,9 @@ class ICP extends AbstractChain {
                                 }
                               : { image: uri, imageFormat: format }),
                       }
-                    : undefined,
+                    : {
+                          image: nft.uri,
+                      },
         };
     }
 

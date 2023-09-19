@@ -4,17 +4,18 @@ import moonbeamIcon from "../../assets/mainSection/chainSelect/moonbeamIcon.svg"
 //import nearIcon from "../../assets/mainSection/chainSelect/nearIcon.svg";
 import polygonIcon from "../../assets/mainSection/chainSelect/polygonIcon.svg";
 
-import aurora from "../../assets/mainSection/nfts/XP NFT AURORA (1).gif";
+/*import aurora from "../../assets/mainSection/nfts/XP NFT AURORA (1).gif";
 import poly from "../../assets/mainSection/nfts/XP NFT Polygon (1).gif";
 import bsc from "../../assets/mainSection/nfts/XP NFT BSC (1).gif";
 import moon from "../../assets/mainSection/nfts/XP NFT Moonbeam.gif";
-//import near from "../../assets/mainSection/nfts/XP NFT NEAR (1).gif";
+//import near from "../../assets/mainSection/nfts/XP NFT NEAR (1).gif";*/
 
 export const chainData = [
     {
         name: "Aurora",
         image: auroraIcon,
-        nft: aurora,
+        nft:
+            "https://ipfs.io/ipfs/QmZjTpC4NB1fKNa6aRE7ruTbBvw3YmYjT3nkTzsJWnnDuw/Aurora.gif",
         chainNonce: "21",
         chainId: "1313161554",
         creationBlock: 98782777,
@@ -33,7 +34,8 @@ export const chainData = [
     {
         name: "Polygon",
         image: polygonIcon,
-        nft: poly,
+        nft:
+            "https://ipfs.io/ipfs/QmZjTpC4NB1fKNa6aRE7ruTbBvw3YmYjT3nkTzsJWnnDuw/Polygon.gif",
         chainNonce: "7",
         creationBlock: 46291138,
         chainId: "137",
@@ -44,7 +46,8 @@ export const chainData = [
     {
         name: "BSC",
         image: BSCicon,
-        nft: bsc,
+        nft:
+            "https://ipfs.io/ipfs/QmZjTpC4NB1fKNa6aRE7ruTbBvw3YmYjT3nkTzsJWnnDuw/BSC.gif",
         chainNonce: "4",
         chainId: "56",
         creationBlock: 30841932,
@@ -55,7 +58,8 @@ export const chainData = [
     {
         name: "Moonbeam",
         image: moonbeamIcon,
-        nft: moon,
+        nft:
+            "https://ipfs.io/ipfs/QmZjTpC4NB1fKNa6aRE7ruTbBvw3YmYjT3nkTzsJWnnDuw/BSC.gif",
         chainNonce: "32",
         chainId: "1284",
         creationBlock: 4211259,

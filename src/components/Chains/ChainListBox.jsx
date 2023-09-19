@@ -422,6 +422,7 @@ function ChainListBox({ serviceContainer }) {
                                     coming,
                                     newChain,
                                     maintenance,
+                                    maintenanceTo,
                                     mainnet,
                                     updated,
                                     nonce,
@@ -440,6 +441,7 @@ function ChainListBox({ serviceContainer }) {
                                                 updated={updated}
                                                 newChain={newChain}
                                                 maintenance={maintenance}
+                                                maintenanceTo={maintenanceTo}
                                                 coming={coming}
                                                 text={text}
                                                 chainKey={key}
@@ -503,6 +505,7 @@ function ChainListBox({ serviceContainer }) {
                                     coming,
                                     newChain,
                                     maintenance,
+                                    maintenanceTo,
                                     testNet,
                                     updated,
                                     nonce,
@@ -520,6 +523,7 @@ function ChainListBox({ serviceContainer }) {
                                                 updated={updated}
                                                 newChain={newChain}
                                                 maintenance={maintenance}
+                                                maintenanceTo={maintenanceTo}
                                                 coming={coming}
                                                 text={text}
                                                 chainKey={key}
