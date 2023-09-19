@@ -2,10 +2,7 @@ import { useState, React, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Search } from "../../assets/img/icons/Search.svg";
 import { ReactComponent as Close } from "../../assets/img/icons/close.svg";
-import {
-    setFilteredNFTSList,
-    setSearchNFTList,
-} from "../../store/reducers/generalSlice";
+import { setSearchNFTList } from "../../store/reducers/generalSlice";
 
 import { getSearched } from "../../utils";
 import { chains } from "../values";
@@ -13,7 +10,7 @@ import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 
 export default function NFTSearch() {
     const dispatch = useDispatch();
-    let nfts = useSelector((state) => state.general.NFTList);
+
     const [openSearch, setOpen] = useState(false);
     const [searchInput, setInput] = useState("");
 
@@ -31,7 +28,6 @@ export default function NFTSearch() {
         setInput("");
         setOpen(false);
         dispatch(setSearchNFTList(""));
-        dispatch(setFilteredNFTSList(nfts));
     };
     useEffect(clear, [from]);
 

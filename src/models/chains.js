@@ -7,7 +7,7 @@ import BigNumber from "bignumber.js";
 import { ethers, BigNumber as BN } from "ethers";
 import xpchallenge from "../services/xpchallenge";
 
-import { wnftPattern } from "../components/values";
+import { extractType } from "../utils";
 
 const Xpchallenge = xpchallenge();
 const feeMultiplier = 1.1;
@@ -777,6 +777,10 @@ class TON extends AbstractChain {
         super(params);
     }
 
+    filterNFTs(nfts) {
+        return nfts;
+    }
+
     async validateAddress(address) {
         return this.chain.validateAddress(address).catch(() => false);
     }
@@ -798,12 +802,18 @@ class TON extends AbstractChain {
         const _contract = nft.collectionIdent || "SingleNFt";
         const withMetadata = Object.keys(nft.native?.metadata).length > 0;
         let uri = "";
+        let native_metadata = {};
         if (withMetadata) {
             const data = JSON.stringify(nft.native.metadata);
 
             uri = `data:application/json;base64,${btoa(
                 unescape(encodeURIComponent(data))
             )}`;
+
+            if (nft.native.previews?.length) {
+                const image = nft.native.previews.at(-1).url;
+                native_metadata = { image, imageFormat: extractType(image) };
+            }
         }
 
         return {
@@ -812,9 +822,7 @@ class TON extends AbstractChain {
             metaData: withMetadata
                 ? {
                       ...nft.native.metadata,
-                      ...(nft.native.previews
-                          ? { image: nft.native.previews.at(-1).url }
-                          : {}),
+                      ...native_metadata,
                   }
                 : undefined,
 

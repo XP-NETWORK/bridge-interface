@@ -95,7 +95,10 @@ const PreNftFech = ({ show }) => {
                     </div>
                 </div>
                 <div className="buttonContainer">
-                    <div className="transfer-button" onClick={handleLoadAssets}>
+                    <div
+                        className="transfer-button"
+                        onClick={() => handleLoadAssets()}
+                    >
                         Load assets
                     </div>
                     <div
