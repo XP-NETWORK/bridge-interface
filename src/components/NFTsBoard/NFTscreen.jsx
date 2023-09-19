@@ -11,25 +11,25 @@ import Pagination from "./Pagination";
 import withChains from "./hocs";
 
 const NFTscreen = ({ chainSpecificRender }) => {
-  const NFTListView = useSelector((state) => state.general.NFTListView);
+    const NFTListView = useSelector((state) => state.general.NFTListView);
 
-  const [index, setIndex] = useState(0);
+    const [index, setIndex] = useState(0);
 
-  return (
-    <div className="nft_selectBox">
-      <NFTlistTop chainSpecificRender={chainSpecificRender} />
-      {NFTListView ? (
-        <NFTlistView />
-      ) : (
-        <NFTgridView
-          scrollIndex={index}
-          setIndex={setIndex}
-          chainSpecificRender={chainSpecificRender}
-        />
-      )}
-      <Pagination />
-    </div>
-  );
+    return (
+        <div className="nft_selectBox">
+            <NFTlistTop chainSpecificRender={chainSpecificRender} />
+            {NFTListView ? (
+                <NFTlistView />
+            ) : (
+                <NFTgridView
+                    scrollIndex={index}
+                    setIndex={setIndex}
+                    chainSpecificRender={chainSpecificRender}
+                />
+            )}
+            <Pagination />
+        </div>
+    );
 };
 
 export default withChains(NFTscreen);

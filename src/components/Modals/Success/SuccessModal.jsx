@@ -106,9 +106,9 @@ export default withServices(function SuccessModal({ serviceContainer }) {
             path: "/socket.io",
         });
 
-        const scraperSocket = io(sockets["scraper"], {
+        /*const scraperSocket = io(sockets["scraper"], {
             path: "/socket.io",
-        });
+        });*/
 
         const incoming = async (e) => {
             dispatch(setTxnStatus(e));
@@ -121,10 +121,10 @@ export default withServices(function SuccessModal({ serviceContainer }) {
         };
 
         const updateOld = update("Update Event: ");
-        const updateScraper = update("Update Event ScraperSocket: ");
+        //const updateScraper = update("Update Event ScraperSocket: ");
 
         socket.on("incomingEvent", incoming);
-        scraperSocket.on("updateEvent", updateScraper);
+        // scraperSocket.on("updateEvent", updateScraper);
         socket.on("updateEvent", updateOld);
 
         Promise.all([
@@ -161,7 +161,7 @@ export default withServices(function SuccessModal({ serviceContainer }) {
             if (socket) {
                 socket.off("incomingEvent", incoming);
                 socket.off("updateEvent", updateOld);
-                scraperSocket.off("updateEvent", updateScraper);
+                //scraperSocket.off("updateEvent", updateScraper);
             }
         };
     }, []);

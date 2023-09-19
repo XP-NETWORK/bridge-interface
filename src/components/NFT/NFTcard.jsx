@@ -142,7 +142,7 @@ export default function NFTcard({
         dispatch(setWhitelistingLoader(true));
         dispatch(setTransferLoaderModal(true));
         try {
-            const tx = await bridgeWrapper.bridge.whitelistEVM(
+            await bridgeWrapper.bridge.whitelistEVM(
                 from.nonce,
                 nft.native.contract
             );

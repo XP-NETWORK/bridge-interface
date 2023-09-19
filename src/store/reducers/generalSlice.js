@@ -307,7 +307,9 @@ const generalSlice = createSlice({
         setCurrentNFTs(state, action) {
             state.currentsNFTs = action.payload;
         },
-
+        setCurrentNFT(state, action) {
+            state.currentsNFTs[action.payload.index] = action.payload.nft;
+        },
         allSelected(state) {
             state.selectedNFTList = state.currentsNFTs.filter(
                 (n) => n.whitelisted
@@ -738,6 +740,7 @@ export const {
     setLockMainPannel,
     setPreFetchData,
     setAuthModalLoader,
+    setCurrentNFT,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

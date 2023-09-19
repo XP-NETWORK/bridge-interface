@@ -1,6 +1,9 @@
 import { nftGeneralParser } from "nft-parser/dist/src/index";
 import store from "../store/store";
-import { setEachNFT, setEachClaimables } from "../store/reducers/generalSlice";
+import {
+    setEachClaimables,
+    setCurrentNFT,
+} from "../store/reducers/generalSlice";
 
 import CacheService from "../services/cacheService";
 
@@ -18,14 +21,8 @@ export const parseNFT = async (
     // console.log(serviceContainer);
     const { bridge, whitelistedPool } = serviceContainer;
 
-    let whitelisted = !testnet
-        ? nft?.native?.contract === "0xED1eFC6EFCEAAB9F6d609feC89c9E675Bf1efB0a"
-            ? false
-            : undefined
-        : true;
-
     const {
-        general: { from, NFTList, account },
+        general: { from, account },
     } = store.getState();
 
     if (!claimable) {
@@ -51,14 +48,10 @@ export const parseNFT = async (
                     ).data;
                     if (!nftData) throw new Error("No data exc");
                 } catch (e) {
-                    nftData = await nftGeneralParser(nft, account, whitelisted);
+                    nftData = await nftGeneralParser(nft, account, undefined);
                 }
                 if (nftData === "no NFT with that data was found") {
-                    nftData = await cache.add(
-                        unwraped.nft,
-                        account,
-                        whitelisted
-                    );
+                    nftData = await cache.add(unwraped.nft, account, undefined);
 
                     if (
                         /(That nft is already caching|key parameter missing)/.test(
@@ -91,7 +84,7 @@ export const parseNFT = async (
         const nftData =
             nftRes.status === "fulfilled" ? nftRes.value : undefined;
 
-        whitelisted =
+        const whitelisted =
             whitelistedRes.status === "fulfilled"
                 ? whitelistedRes.value
                 : undefined;
@@ -105,13 +98,13 @@ export const parseNFT = async (
             whitelisted,
         };
 
-        if (
+        /*if (
             !NFTList[index]?.dataLoaded ||
             !NFTList[index]?.image ||
             !NFTList[index]?.animation_url
-        ) {
-            store.dispatch(setEachNFT({ nftObj, index }));
-        }
+        ) {*/
+        store.dispatch(setCurrentNFT({ nft: nftObj, index }));
+        //}
     } else {
         const unwraped = await bridge.unwrap(nft);
 
