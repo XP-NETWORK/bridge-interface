@@ -474,7 +474,11 @@ class EVM extends AbstractChain {
     }
 
     async isContract(address, toChain) {
-        if (!toChain.chain?.getProvider?.getCode) return false;
+        if (
+            typeof toChain.chain?.getProvider !== "function" ||
+            !toChain.chain?.getProvider()?.getCode
+        )
+            return false;
         try {
             const code = await toChain.chain
                 .getProvider()
@@ -786,19 +790,6 @@ class TON extends AbstractChain {
     }
 
     async preParse(nft) {
-        /* nft = await super.preParse(nft);
-
-        const contract = nft.native?.collectionAddress || "SingleNFt";
-        return {
-            ...nft,
-            collectionIdent: nft.native?.collectionAddress || "SingleNFt",
-            native: {
-                ...nft.native,
-                contract: contract,
-                tokenId: nft.native?.address,
-                nftItemAddr: nft.native.address,
-            },
-        };*/
         const _contract = nft.collectionIdent || "SingleNFt";
         const withMetadata = Object.keys(nft.native?.metadata).length > 0;
         let uri = "";

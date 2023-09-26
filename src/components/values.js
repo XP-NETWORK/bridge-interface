@@ -37,6 +37,7 @@ import optimism from "../assets/img/chain/optimism.svg";
 import zeta from "../assets/img/chain/zeta.svg";
 import Energi from "../assets/img/chain/NRG.svg";
 import Base from "../assets/img/chain/base.svg";
+import Findora from "../assets/img/chain/Findora_Symbol.svg";
 
 export const bridgeUrl = "https://bridge.walletconnect.org";
 
@@ -618,5 +619,20 @@ export const chains = [
         newChain: false,
         chainId: 8453,
         tnChainId: 84531,
+    },
+    {
+        type: "EVM",
+        key: "Findora",
+        text: "Findora",
+        value: "Findora",
+        nonce: 44,
+        order: -6,
+        image: { avatar: true, src: Findora },
+        testNet: biz,
+        mainnet: false,
+        coming: !biz,
+        newChain: biz,
+        chainId: 2152,
+        tnChainId: 2153,
     },
 ];

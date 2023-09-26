@@ -40,17 +40,16 @@ export const parseNFT = async (
 
                 try {
                     if (testnet) throw new Error("Testnet exception");
-                    nftData = (
-                        await cache.get(
-                            { chainId, tokenId, contract },
-                            unwraped.nft
-                        )
-                    ).data;
-                    if (!nftData) throw new Error("No data exc");
+                    const res = await cache.get(
+                        { chainId, tokenId, contract },
+                        unwraped.nft
+                    );
+
+                    nftData = res.data;
                 } catch (e) {
                     nftData = await nftGeneralParser(nft, account, undefined);
                 }
-                if (nftData === "no NFT with that data was found") {
+                if (!nftData || nftData === "no NFT with that data was found") {
                     nftData = await cache.add(unwraped.nft, account, undefined);
 
                     if (

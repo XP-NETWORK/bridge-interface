@@ -34,6 +34,8 @@ import Modals from "./components/Modals/Modals";
 import AppContainer from "./components/App/container";
 import { generateKey } from "./utils";
 
+//import { providers } from "ethers";
+
 function App({ network }) {
     let dispatch = useDispatch();
     let showChainModal = useSelector((state) => state.general.showChainModal);
@@ -76,7 +78,7 @@ function App({ network }) {
 
     let location = useLocation();
 
-    /* useEffect(async () => {
+    /*l useEffect(async () => {
         /*let client = new CasperClient(
             proxy + "https://rpc.testnet.casperlabs.io/rpc"
         );
@@ -84,6 +86,10 @@ function App({ network }) {
             "f4ade6282e7a90b37e36c4241b94ba85bc6f96e6870cff0c7ed5d5c6887edc7b"
         );
         console.log(_, raw, "raw");
+
+        //const x = new providers.JsonRpcProvider(window.ethereum);
+
+       // console.log(x.getCode, "ds");
     }, []);*/
 
     useEffect(() => {
