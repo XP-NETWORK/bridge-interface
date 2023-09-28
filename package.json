@@ -9,7 +9,7 @@
     "dependencies": {
         "@elrondnetwork/erdjs": "9.2.3",
         "@harmony-js/core": "^0.1.57",
-        "@hashgraph/sdk": "2.22.0",
+        "@hashgraph/sdk": "^2.34.1",
         "@multiversx/sdk-wallet-connect-provider": "^3.1.0",
         "@near-wallet-selector/core": "^7.9.2",
         "@near-wallet-selector/here-wallet": "^7.9.2",
