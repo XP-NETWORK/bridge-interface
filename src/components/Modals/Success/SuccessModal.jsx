@@ -14,6 +14,7 @@ import {
     cleanTxnHashArr,
     removeFromSelectedNFTList,
     setNFTSetToggler,
+    setSelectedNFT,
     setTxnStatus,
 } from "../../../store/reducers/generalSlice";
 import "./SuccessModal.css";
@@ -106,10 +107,6 @@ export default withServices(function SuccessModal({ serviceContainer }) {
             path: "/socket.io",
         });
 
-        /*const scraperSocket = io(sockets["scraper"], {
-            path: "/socket.io",
-        });*/
-
         const incoming = async (e) => {
             dispatch(setTxnStatus(e));
             console.log("Incoming Event: ", e);
@@ -143,8 +140,10 @@ export default withServices(function SuccessModal({ serviceContainer }) {
                 ? fromChainParams?.tnBlockExplorerUrlAddr
                 : fromChainParams?.blockExplorerUrlAddr;
             const addressBaseTo = testnet
-                ? toChainParams?.tnBlockExplorerUrlAddr
-                : toChainParams?.blockExplorerUrlAddr;
+                ? toChainParams?.tnBlockExplorerUrlCollection ||
+                  toChainParams?.tnBlockExplorerUrlAddr
+                : toChainParams?.blockExplorerUrlCollection ||
+                  toChainParams?.blockExplorerUrlAddr;
 
             setAddress(fromChain.adaptAddress(formatedAddress));
             setReceiver(toChain.adaptAddress(formatedReceiver));
@@ -155,6 +154,27 @@ export default withServices(function SuccessModal({ serviceContainer }) {
                 addressFrom: addressBaseFrom,
                 addressTo: addressBaseTo,
             });
+
+            if (bridge.network === "staging" /*"testnet"*/) {
+                toChain
+                    .listetnExecutedSocket(socket, from.nonce)
+                    .then((tagetCanister) => {
+                        console.log(tagetCanister, "d");
+                        if (tagetCanister) {
+                            dispatch(
+                                setSelectedNFT({
+                                    index: 0,
+                                    nft: {
+                                        ...selectedNFTList[0],
+                                        tagetCanister,
+                                    },
+                                })
+                            );
+
+                            //vpczs-4iaaa-aaaap-ablra-cai
+                        }
+                    });
+            }
         });
 
         return () => {
@@ -164,7 +184,7 @@ export default withServices(function SuccessModal({ serviceContainer }) {
                 //scraperSocket.off("updateEvent", updateScraper);
             }
         };
-    }, []);
+    }, [bridge?.network]);
 
     return (
         <>

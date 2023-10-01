@@ -65,8 +65,8 @@ export const BridgeModes = {
 export const sockets = {
     mainnet: "wss://dev-explorer-api.herokuapp.com", //wss://dest-scraper.herokuapp.com/
     scraper: "wss://dest-scraper.herokuapp.com",
-    staging: "wss://tools.xp.network/explorer",
-    testnet: "wss://testnet-bridge-explorer.herokuapp.com/",
+    staging: "https://staging-tx-socket-925db65784a7.herokuapp.com/",
+    testnet: "wss://testnet-bridge-explorer.herokuapp.com/", //"wss://testnet-bridge-explorer.herokuapp.com/",
 };
 
 export const getChainObject = (nonce) =>
@@ -103,7 +103,7 @@ export const chains = [
         order: 2,
         image: { avatar: true, src: Binance },
         maintenance: false,
-        maintenanceTo: !biz,
+        //maintenanceTo: !biz,
         testNet: true,
         mainnet: true,
     },

@@ -87,6 +87,11 @@ const addressValidateAlgo = (address, toChainWrapper) => {
     return toChainWrapper.chain.validateAddress(address);
 };
 
+const addressValidateICP = (address, toChainWrapper) => {
+    if (!toChainWrapper) return true;
+    return toChainWrapper.chain.validateAddress(address);
+};
+
 const addressValidateTezos = (address) => {
     return taquito.validateAddress(address) == taquito.ValidationResult.VALID;
 };
@@ -168,6 +173,7 @@ export const validateFunctions = {
     Cosmos: addressValidateCosmos,
     VeChain: addressValidateEVM,
     APTOS: addressValidateAptos,
+    ICP: addressValidateICP,
 };
 
 export const maxChainAddressLengths = {

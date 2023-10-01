@@ -18,7 +18,7 @@ export default withServices(function TransferredNft({
     receiver,
 }) {
     const { bridge } = serviceContainer;
-    const { image, animation_url, txn, name, mintWith } = nft;
+    const { image, animation_url, txn, name, mintWith, tagetCanister } = nft;
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const account = useSelector((state) => state.general.account);
@@ -83,6 +83,14 @@ export default withServices(function TransferredNft({
         account
     );
 
+    useEffect(() => {
+        if (tagetCanister) {
+            setTxnStatus("completed");
+        }
+    }, [tagetCanister]);
+
+    const targetCollection = mintWith || tagetCanister;
+
     return (
         <div className="success-nft-info__wrapper">
             <div className="transferred-nft">
@@ -131,7 +139,8 @@ export default withServices(function TransferredNft({
                     </a>
                 </div>
             </div>
-            {mintWith && (
+
+            {targetCollection && (
                 <div className="transferred-nft-hashes secret-hashes">
                     <div className="chain-hash">
                         <span>Collection address:</span>
@@ -139,16 +148,16 @@ export default withServices(function TransferredNft({
                             <a
                                 href={`${
                                     typeof links.addressTo === "function"
-                                        ? links.addressTo(mintWith)
-                                        : links.addressTo + mintWith
+                                        ? links.addressTo(targetCollection)
+                                        : links.addressTo + targetCollection
                                 }`}
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                {StringShortener(mintWith, 8)}
+                                {StringShortener(targetCollection, 8)}
                             </a>
                         </span>
-                        <Tooltip text={mintWith} />
+                        <Tooltip text={targetCollection} />
                     </div>
                 </div>
             )}
