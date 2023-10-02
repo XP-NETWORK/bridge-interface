@@ -31,6 +31,7 @@ const initialState = {
     receiver: "",
     preFetchData: null,
     messageLoader: "",
+    ICPCanisterSearch: "",
 };
 
 const generalSlice = createSlice({
@@ -273,6 +274,9 @@ const generalSlice = createSlice({
                 amountToTransfer: action.payload.native?.amount ? 1 : undefined,
             };
             state.selectedNFTList = [...state.selectedNFTList, nft];
+        },
+        setSelectedNFT(state, action) {
+            state.selectedNFTList[action.payload.index] = action.payload.nft;
         },
         cleanSelectedNFTList(state) {
             state.selectedNFTList = [];
@@ -608,6 +612,12 @@ const generalSlice = createSlice({
         setHederaClaimables(state, action) {
             state.hederaClaimables = action.payload;
         },
+        setShowSearchNFTCanisterModal(state, action) {
+            state.showSearchNFTCanisterModal = action.payload;
+        },
+        setICPCanisterSearch(state, action) {
+            state.ICPCanisterSearch = action.payload;
+        },
     },
 });
 
@@ -741,6 +751,9 @@ export const {
     setPreFetchData,
     setAuthModalLoader,
     setCurrentNFT,
+    setSelectedNFT,
+    setShowSearchNFTCanisterModal,
+    setICPCanisterSearch,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

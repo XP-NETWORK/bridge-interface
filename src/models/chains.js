@@ -7,7 +7,7 @@ import BigNumber from "bignumber.js";
 import { ethers, BigNumber as BN } from "ethers";
 import xpchallenge from "../services/xpchallenge";
 
-import { extractType } from "../utils";
+import { extractType, setupURI } from "../utils";
 
 const Xpchallenge = xpchallenge();
 const feeMultiplier = 1.1;
@@ -33,6 +33,8 @@ class AbstractChain {
     adaptHashView(hash) {
         return hash;
     }
+
+    async listetnExecutedSocket() {}
 
     async connect() {
         throw new Error("connect method not implemented");
@@ -474,7 +476,11 @@ class EVM extends AbstractChain {
     }
 
     async isContract(address, toChain) {
-        if (!toChain.chain?.getProvider?.getCode) return false;
+        if (
+            typeof toChain.chain?.getProvider !== "function" ||
+            !toChain.chain?.getProvider()?.getCode
+        )
+            return false;
         try {
             const code = await toChain.chain
                 .getProvider()
@@ -786,19 +792,6 @@ class TON extends AbstractChain {
     }
 
     async preParse(nft) {
-        /* nft = await super.preParse(nft);
-
-        const contract = nft.native?.collectionAddress || "SingleNFt";
-        return {
-            ...nft,
-            collectionIdent: nft.native?.collectionAddress || "SingleNFt",
-            native: {
-                ...nft.native,
-                contract: contract,
-                tokenId: nft.native?.address,
-                nftItemAddr: nft.native.address,
-            },
-        };*/
         const _contract = nft.collectionIdent || "SingleNFt";
         const withMetadata = Object.keys(nft.native?.metadata).length > 0;
         let uri = "";
@@ -1133,16 +1126,25 @@ class ICP extends AbstractChain {
 
         const { url, image, thumb, mimeType } = metadata;
         const uri = url || image || thumb;
-        const format = uri?.match(/(?:\.([^.]+))?$/)?.at(1) || "";
+        let format = uri?.match(/(?:\.([^.]+))?$/)?.at(1) || "";
+
+        if (Object.keys(metadata).length === 0) {
+            const contentType = (await fetch(setupURI(nft.uri))).headers.get(
+                "Content-Type"
+            );
+            if (contentType.includes("application/json")) {
+                format = "json";
+            }
+        }
 
         return {
             ...nft,
             native: {
                 ...nft.native,
                 contract: nft.collectionIdent,
-                chainId: "28",
+                chainId: String(ChainNonce.DFINITY),
             },
-            chainId: "28",
+            chainId: String(ChainNonce.DFINITY),
             tokenId: nft.native?.tokenId,
             contract: nft.collectionIdent,
             metaData:
@@ -1156,9 +1158,9 @@ class ICP extends AbstractChain {
                                 }
                               : { image: uri, imageFormat: format }),
                       }
-                    : {
-                          image: nft.uri,
-                      },
+                    : format !== "json"
+                    ? { image: nft.uri }
+                    : undefined,
         };
     }
 
@@ -1186,6 +1188,42 @@ class ICP extends AbstractChain {
 
     adaptHashView(_, receiver) {
         return this.adaptAddress(receiver);
+    }
+
+    async listetnExecutedSocket(executedSocket, from) {
+        return new Promise((resolve, reject) => {
+            const handler = async (
+                fromChain, //: number,
+                toChain, //: number,
+                action_id, //: string,
+                hash //: string
+            ) => {
+                console.log(
+                    fromChain,
+                    toChain,
+                    action_id,
+                    hash,
+                    "tx_executed_event"
+                );
+
+                if (toChain === this.nonce && fromChain === from) {
+                    const targetCanister = await this.chain
+                        .validatedMint(hash)
+                        .catch((e) => {
+                            console.log(e, "e in listetnExecutedSocket");
+                            reject(e);
+                        });
+
+                    console.log(targetCanister, "targetCanister");
+                    executedSocket.off("tx_executed_event", handler);
+                    return resolve(targetCanister);
+                }
+                resolve("");
+                executedSocket.off("tx_executed_event", handler);
+            };
+
+            executedSocket.on("tx_executed_event", handler);
+        });
     }
 
     /*handlerResult(_, address) {

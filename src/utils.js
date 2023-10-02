@@ -210,7 +210,8 @@ export const fixify = (number) => {
 export const setupURI = (uri) => {
     if (/^ipfs:\/\//.test(uri) || uri[0] === "Q")
         return uri.replace(/ipfs:\/\/(?:ipfs)?/, "https://ipfs.io/ipfs/");
-    return uri;
+
+    return uri.replace(/^http:\/\//, "https://");
 };
 
 export const isMobile = {

@@ -80,6 +80,10 @@
     line-height: 17px;
 }
 
+.import-nft-button.icp-search:hover::before {
+    content: "Find canister";
+}
+
 .import-nft-button:hover::after {
     position: absolute;
     top: -17px;
@@ -107,8 +111,19 @@
     transform: translate(-50%, -50%);
 }
 
+.import-nft-button.icp-search .import-icon {
+    background-image: url("../../assets/img/icons/Search.svg");
+    width: 17px;
+    height: 17px;
+}
+
 .import-nft-button:hover .import-icon {
     background-image: url("../../assets/img/icons/importHovered.svg");
+}
+
+.import-nft-button.icp-search:hover .import-icon {
+    background-image: url("../../assets/img/icons/Search.svg");
+    filter: brightness(85%);
 }
 
 .search-dropdown .dropdown-toggle {

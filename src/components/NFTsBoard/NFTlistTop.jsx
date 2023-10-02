@@ -18,6 +18,7 @@ function NFTlistTop({ chainSpecificRender }) {
     const nfts = useSelector((state) => state.general.NFTList);
     const from = useSelector((state) => state.general.from);
     const CheckClaimables = chainSpecificRender?.CheckClaimables;
+    const NFTListTopButton = chainSpecificRender?.NFTListTopButton;
 
     const handleFromChainSwitch = () => {
         dispatch(setDepartureOrDestination("departure"));
@@ -45,6 +46,7 @@ function NFTlistTop({ chainSpecificRender }) {
                 </div>
                 <SelectedNFTs />
                 {from.type === "EVM" && nfts?.length < 1 && <ImportNFTButton />}
+                {NFTListTopButton && NFTListTopButton()}
                 {(nfts?.length > 0 || from?.type === "Cosmos") && (
                     <div className="nftTopRIght">
                         <NFTSearch />
