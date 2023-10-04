@@ -49,7 +49,7 @@ export default function HigherEVM(OriginalComponent) {
                 : false;
 
         const navigateToAccountRoute = () => {
-            navigate(getRightPath());
+            navigate(getRightPath(bridge.network));
         };
 
         const connectHandler = async (wallet) => {

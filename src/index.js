@@ -49,7 +49,7 @@ const Services = ({ children }) => {
 
 const container = document.getElementById("root");
 const root = createRoot(container);
-const app = (
+/*export*/ const app = (
     <Web3ReactProvider getLibrary={getLibrary}>
         <Services>
             <Provider store={store}>

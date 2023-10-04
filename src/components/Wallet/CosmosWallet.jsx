@@ -36,8 +36,7 @@ function CosmosWallet({ wallet, serviceContainer }) {
     const isMobile = useCheckMobileScreen();
 
     const navigateToAccountRoute = () => {
-        const path = getRightPath();
-        navigate(path);
+        navigate(getRightPath(bridge.network));
     };
 
     const connectKeplr = async (testnet, chain, wallet, isMobile) => {

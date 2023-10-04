@@ -2,7 +2,6 @@
 import * as taquito from "@taquito/utils";
 import { ethers } from "ethers";
 import TonWeb from "tonweb";
-import * as erdjs from "@elrondnetwork/erdjs";
 import { PublicKey } from "@solana/web3.js";
 
 const addressValidateTon = (address) => {
@@ -29,16 +28,9 @@ const addressValidateAptos = (address) => {
     }
 };
 
-const addressValidateElrd = (address) => {
-    if (address === "") return false;
-    if (/^(?! )[0-9a-zA-Z]{62}$/.test(address)) return true;
-
-    try {
-        const elrd = new erdjs.Address(address);
-        return elrd ? true : false;
-    } catch (_) {
-        return false;
-    }
+const addressValidateElrd = (address, toChainWrapper) => {
+    if (!toChainWrapper) return true;
+    return toChainWrapper.chain.validateAddress(address);
 };
 
 const addressValidateTron = (address) => {

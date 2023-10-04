@@ -20,13 +20,14 @@ import { switchNetwork } from "../../services/chains/evm/evmService";
 import { getRightPath } from "../../utils";
 import { useWeb3Modal } from "@web3modal/react";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
+import { withServices } from "../App/hocs/withServices";
 
-function ConnectWallet() {
+function ConnectWallet({ serviceContainer }) {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
     const [walletSearch, setWalletSearch] = useState("");
-
+    const { bridge } = serviceContainer;
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     let [show, setShow] = useState();
@@ -124,21 +125,21 @@ function ConnectWallet() {
                 navigate(`/account${location.search ? location.search : ""}`);
                 break;
             case from.tnChainId === chainID:
-                navigate(`${getRightPath()}`);
+                navigate(`${getRightPath(bridge.network)}`);
                 break;
             case from.chainId === chainID: {
-                navigate(`${getRightPath()}`);
+                navigate(`${getRightPath(bridge.network)}`);
                 break;
             }
             case from.type !== "EVM": {
                 if (_account && _account?.length > 0) {
-                    navigate(`${getRightPath()}`);
+                    navigate(`${getRightPath(bridge.network)}`);
                 }
                 break;
             }
             default: {
                 switchNetwork(from).then(() => {
-                    navigate(`${getRightPath()}`);
+                    navigate(`${getRightPath(bridge.network)}`);
                 });
                 break;
             }
@@ -263,4 +264,4 @@ function ConnectWallet() {
     );
 }
 //
-export default ConnectWallet;
+export default withServices(ConnectWallet);

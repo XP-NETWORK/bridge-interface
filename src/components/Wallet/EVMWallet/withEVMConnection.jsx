@@ -63,7 +63,12 @@ const WalletConnect = ({ from, to, bridge, walletConnectChains }) => {
                             dispatch(setAccount(address));
                             chainWrapper.setSigner(adaptedSigner);
                             bridge.setCurrentType(chainWrapper);
-                            to && from && navigate(getRightPath());
+
+                            to &&
+                                from &&
+                                navigate(
+                                    getRightPath(bridge.network, from, to)
+                                );
                         });
                     });
                 } else {

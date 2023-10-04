@@ -44,7 +44,7 @@ export default function HigherAlgorand(OriginalComponent) {
         const navigate = useNavigate();
 
         const navigateToAccountRoute = () => {
-            navigate(getRightPath());
+            navigate(getRightPath(bridge.network));
         };
 
         const getStyles = () => {

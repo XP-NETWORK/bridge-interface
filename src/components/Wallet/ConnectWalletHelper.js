@@ -5,24 +5,16 @@ import { injected, getAlgoConnector, web3Modal } from "../../wallet/connectors";
 import store from "../../store/store";
 
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
-import { WalletConnectProvider, ProxyProvider } from "@elrondnetwork/erdjs";
-import QRCode from "qrcode";
+
 import { ethers } from "ethers";
 
 import {
     setTronWallet,
-    setConfirmMaiarMob,
     setTronLink,
     setMetaMask,
     setTronLoginError,
-    setStep,
-    setOnMaiar,
-    setElrondAccount,
-    setMaiarProvider,
     setError,
     setTronPopUp,
-    setQrImage,
-    setQrCodeString,
     setWC,
     setAccount,
     setRedirectModal,
@@ -292,7 +284,7 @@ export const onWalletConnect = async (activate, from, testnet, chainId) => {
     }
 };
 
-const onClientConnect = (maiarProvider) => {
+/*const onClientConnect = (maiarProvider) => {
     return {
         onClientLogin: async () => {
             const add = await maiarProvider.getAddress();
@@ -318,7 +310,7 @@ const generateQR = async (text) => {
     }
 };
 // Elrond blockchain connection ( Maiar )
-export const connectMaiar = async () => {
+/*export const connectMaiar = async () => {
     // debugger
     const provider = new ProxyProvider("https://gateway.elrond.com");
     const maiarProvider = new WalletConnectProvider(
@@ -338,7 +330,7 @@ export const connectMaiar = async () => {
             console.log(error.data.message);
         } else console.log(error);
     }
-};
+};*/
 
 // Tron blockchain connection ( TronLink )
 export const connectTronlink = async () => {

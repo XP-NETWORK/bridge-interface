@@ -17,16 +17,9 @@ import { getRightPath } from "../../../wallet/helpers";
 import { useNavigate } from "react-router-dom";*/
 
 function NearWallet({ serviceContainer }) {
-    //const isMobile = innerWidth <= 480;
-    //const dispatch = useDispatch();
-    // const navigate = useNavigate();
     const { from, to } = useSelector((state) => state.general);
 
     const [lock, setLock] = useState(false);
-
-    // const navigateToAccountRoute = () => {
-    //  if (from && to) navigate(getRightPath());
-    // };
 
     const connectHandler = async () => {
         try {

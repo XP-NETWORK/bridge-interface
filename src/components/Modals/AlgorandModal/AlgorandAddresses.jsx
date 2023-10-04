@@ -24,7 +24,6 @@ function AlgorandAddresses({ addresses, serviceContainer }) {
     const connectedWallet = useSelector(
         (state) => state.general.connectedWallet
     );
-    const testnet = useSelector((state) => state.general.testNet);
 
     const { bridge } = serviceContainer;
 
@@ -36,7 +35,7 @@ function AlgorandAddresses({ addresses, serviceContainer }) {
     };
 
     const navigateToAccountRoute = () => {
-        navigate(getRightPath());
+        navigate(getRightPath(bridge.network));
     };
     const algorand = chains.find((chain) => chain.text === "Algorand");
     const handleSelect = async (address) => {
@@ -52,7 +51,8 @@ function AlgorandAddresses({ addresses, serviceContainer }) {
                 signer = {
                     address: address,
                     algoSigner: window.AlgoSigner,
-                    ledger: testnet ? "TestNet" : "MainNet",
+                    ledger:
+                        bridge.network === "testnet" ? "TestNet" : "MainNet",
                 };
                 break;
             case "MyAlgo":

@@ -1,8 +1,4 @@
 import React from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
-
-// import { getRightPath } from "../../../wallet/helpers";
 
 import { withServices } from "../../App/hocs/withServices";
 import { Chain } from "xp.network";
@@ -37,7 +33,7 @@ export default function HigherSolana(OriginalComponent) {
         const navigate = useNavigate();
 
         const navigateToAccountRoute = () => {
-            if (from && to) navigate(getRightPath());
+            if (from && to) navigate(getRightPath(bridge.network, from, to));
         };
 
         const connectHandler = async (wallet) => {

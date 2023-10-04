@@ -28,8 +28,7 @@ function CasperWallet({ serviceContainer }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const navigateToAccountRoute = () => {
-        const path = getRightPath();
-        navigate(path);
+        navigate(getRightPath(bridge.network));
     };
 
     const onClickHandler = async () => {

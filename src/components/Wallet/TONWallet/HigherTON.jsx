@@ -174,7 +174,7 @@ function HigherTON(OriginalComponent) {
             }
 
             if (from && to) {
-                navigate(getRightPath("TON"));
+                navigate(getRightPath(bridge.network, from, to, "TON"));
             }
         };
 
