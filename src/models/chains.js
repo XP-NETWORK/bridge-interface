@@ -1042,25 +1042,28 @@ class HEDERA extends AbstractChain {
         return this.chain.toSolidityAddress(address);
     }
 
-    async getClaimables() {
+    async getClaimables(tokens) {
         try {
-            return await this.chain.listHederaClaimableNFT(
-                undefined, //"0x00000000000000000000000000000000001fbea9",
-                undefined, //"0x00000000000000000000000000000000001FbEEf",
-                this.signer
-            );
+            return await this.chain.listHederaClaimableNFT(tokens, this.signer);
         } catch (e) {
-            console.log(e, "e");
+            if (e.message === "No matching tokens") {
+                e.message = "Nothing to claim";
+                throw e;
+            }
         }
     }
 
-    async assosiate(token) {
+    async checkAndAssociate(tokens) {
+        await this.chain.checkAndAssociate(tokens, this.signer);
+        return true;
+    }
+
+    async associate(tokens) {
         try {
-            await this.chain.assosiateToken(token.htsToken, this.signer);
+            await this.chain.associateToken([tokens], this.signer);
             return true;
         } catch (e) {
-            console.log(e, "in assosiate");
-            return false;
+            console.log(e, "sdfds");
         }
     }
 

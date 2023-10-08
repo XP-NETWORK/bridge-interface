@@ -42,6 +42,8 @@ import { getChainObject } from "../values";
 
 import { useWeb3Modal } from "@web3modal/react";
 
+import PlainChainListBox from "../Chains/PlainChainListBox";
+
 export default function Modals() {
     const dispatch = useDispatch();
     const tronPopUp = useSelector((state) => state.general.tronPopUp);
@@ -50,6 +52,7 @@ export default function Modals() {
     const video = useSelector((state) => state.general.video);
     const maiarQRCodeImage = useSelector((state) => state.general.qrCodeImage);
     const txnHashArr = useSelector((state) => state.general.txnHashArr);
+
     const qrCodeString = useSelector((state) => state.general.qrCodeString);
     const transferModalLoader = useSelector(
         (state) => state.general.transferModalLoader
@@ -82,7 +85,6 @@ export default function Modals() {
     };
     const toShowSuccess = () => {
         return txnHashArr?.length ? true : false;
-        //return true;
     };
     function closeSupportModal() {
         dispatch(removeFromNotWhiteListed());
@@ -153,7 +155,7 @@ export default function Modals() {
     return (
         <>
             <WalletConnectModal />
-
+            <PlainChainListBox />
             <Modal
                 className="ChainModal switchWallet"
                 animation={false}

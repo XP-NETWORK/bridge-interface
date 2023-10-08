@@ -39,6 +39,8 @@ import EGoldSuccess from "./../Modals/eGoldSuccess/EGoldSuccess";
 import { checkXpNetLocked } from "../../services/deposits";
 import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 
+import { RenderClaimInDestination } from "./hocs/hederaHOC";
+
 //import { biz } from "../values";
 
 import withChains from "./hocs";
@@ -233,6 +235,13 @@ function NFTaccount(props) {
                 } ${lockMainPannel ? " lockedX" : ""}`}
             >
                 <ReturnBtn />
+                {false && (
+                    <RenderClaimInDestination
+                        serviceContainer={serviceContainer}
+                        fromChain={6}
+                        receiver={"0x00000000000000000000000000000000002b22a1"}
+                    />
+                )}
                 <div className="row account__container">
                     <div className="nftListCol col-lg-8">
                         {!isMobile && <NFTscreen />}

@@ -32,6 +32,8 @@ const initialState = {
     preFetchData: null,
     messageLoader: "",
     ICPCanisterSearch: "",
+    showChainSelect: false,
+    selectedChain: undefined,
 };
 
 const generalSlice = createSlice({
@@ -621,6 +623,12 @@ const generalSlice = createSlice({
         setICPCanisterSearch(state, action) {
             state.ICPCanisterSearch = action.payload;
         },
+        toggleChainSelect(state, action) {
+            state.showChainSelect = action.payload;
+        },
+        setSelectedChain(state, action) {
+            state.selectedChain = action.payload;
+        },
     },
 });
 
@@ -758,6 +766,8 @@ export const {
     setSelectedNFT,
     setShowSearchNFTCanisterModal,
     setICPCanisterSearch,
+    toggleChainSelect,
+    setSelectedChain,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

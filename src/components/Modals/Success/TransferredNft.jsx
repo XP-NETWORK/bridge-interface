@@ -7,16 +7,17 @@ import TxStatus from "./TxStatus";
 import { StringShortener } from "../../../utils";
 import Tooltip from "../AccountModal/Tooltip";
 
-import { withServices } from "../../App/hocs/withServices";
+import withChains from "../../NFTsBoard/hocs";
 
 //import { biz } from "../../values";
 
-export default withServices(function TransferredNft({
+const TransferredNft = ({
     nft,
     links,
     serviceContainer,
     receiver,
-}) {
+    chainSpecificRender,
+}) => {
     const { bridge } = serviceContainer;
     const { image, animation_url, txn, name, mintWith, tagetCanister } = nft;
     const from = useSelector((state) => state.general.from);
@@ -34,6 +35,9 @@ export default withServices(function TransferredNft({
 
     const depText = window.innerWidth <= 600 ? "Dep" : "Departure Hash";
     const desText = window.innerWidth <= 600 ? "Des" : "Destination Hash";
+
+    const RenderClaimInDestination =
+        chainSpecificRender?.RenderClaimInDestination;
 
     const checkStatus = () => {
         const { tokenId, token_id, uri, address } = nft.native;
@@ -90,6 +94,7 @@ export default withServices(function TransferredNft({
     }, [tagetCanister]);
 
     const targetCollection = mintWith || tagetCanister;
+    const completed = txnStatus === "completed";
 
     return (
         <div className="success-nft-info__wrapper">
@@ -140,6 +145,14 @@ export default withServices(function TransferredNft({
                 </div>
             </div>
 
+            {RenderClaimInDestination && completed && (
+                <RenderClaimInDestination
+                    serviceContainer={serviceContainer}
+                    fromChain={from.nonce}
+                    receiver={receiver}
+                />
+            )}
+
             {targetCollection && (
                 <div className="transferred-nft-hashes secret-hashes">
                     <div className="chain-hash">
@@ -163,4 +176,6 @@ export default withServices(function TransferredNft({
             )}
         </div>
     );
-});
+};
+
+export default withChains(TransferredNft, { withDestinationChains: true });

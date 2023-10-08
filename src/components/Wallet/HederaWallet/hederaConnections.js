@@ -3,7 +3,7 @@ import { HashConnect } from "hashconnect";
 
 import icon from "./../../../assets/img/icons/XPNET.svg";
 
-export const hashConnect = new HashConnect(true);
+export const hashConnect = new HashConnect();
 
 export const connectHashPack = async (testnet) => {
     // debugger;
@@ -18,12 +18,14 @@ export const connectHashPack = async (testnet) => {
     try {
         initData = await hashConnect.init(
             appMetadata,
-            testnet ? "testnet" : "mainnet"
+            testnet ? "testnet" : "mainnet",
+            false
         );
-        const { pairingString } = initData;
-        hashConnect.connectToLocalWallet(pairingString, appMetadata);
+
+        hashConnect.connectToLocalWallet();
         return initData;
     } catch (error) {
+        console.log(error, "err2or");
         return false;
     }
 };

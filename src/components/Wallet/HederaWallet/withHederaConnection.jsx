@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 //import { hethers } from "@hashgraph/hethers";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     setAccount,
     setConnectedWallet,
@@ -21,37 +21,17 @@ import { getChainObject } from "../../values";
 export const withHederaConnection = (Wrapped) =>
     function CB(props) {
         const dispatch = useDispatch();
-
+        const hederaQuietConnection = useSelector(
+            (state) => state.signers.hederaQuietConnection
+        );
         const {
             serviceContainer: { bridge },
         } = props;
         let provider;
         let signer;
 
-        const setSigner = async (signer, hashSDK) => {
-            try {
-                const chainWrapper = await getChain();
-                chainWrapper.chain.injectSDK(hashSDK);
-                chainWrapper.setSigner(signer);
-                dispatch(setWalletsModal(false));
-                dispatch(setConnectedWallet("HashPack"));
-                // connected();
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        const getChain = async () => {
-            let chain;
-            try {
-                chain = await bridge.getChain(Chain.HEDERA);
-            } catch (error) {
-                console.log(error);
-            }
-            return chain;
-        };
-
         useEffect(() => {
-            hashConnect.pairingEvent.once((pairingData) => {
+            const handler = (pairingData) => {
                 import("@hashgraph/sdk").then((hashSDK) => {
                     const topic = pairingData.topic;
                     const accountId = pairingData.accountIds[0];
@@ -59,7 +39,6 @@ export const withHederaConnection = (Wrapped) =>
                         accountId
                     ).toSolidityAddress(); //hethers.utils.getAddressFromAccount(accountId);
 
-                    dispatch(setAccount(address));
                     const isTestnet = window.location.pathname.includes(
                         BridgeModes.TestNet
                     );
@@ -72,17 +51,27 @@ export const withHederaConnection = (Wrapped) =>
                         signer = hashConnect.getSigner(provider);
 
                         signer.address = address;
-                        setSigner(signer, hashSDK);
 
-                        dispatch(setFrom(getChainObject(Chain.HEDERA)));
-                        dispatch(setWalletsModal(false));
-                        dispatch(setConnectedWallet("HashPack"));
+                        bridge.getChain(Chain.HEDERA).then((chainWrapper) => {
+                            chainWrapper.chain.injectSDK(hashSDK);
+                            chainWrapper.setSigner(signer);
+
+                            if (!hederaQuietConnection) {
+                                dispatch(setAccount(address));
+                                dispatch(setWalletsModal(false));
+                                dispatch(setConnectedWallet("HashPack"));
+                                dispatch(setFrom(getChainObject(Chain.HEDERA)));
+                                dispatch(setWalletsModal(false));
+                            }
+                        });
                     } catch (error) {
                         console.log("pairingEvent error", error);
                     }
                 });
-            });
-        }, []);
+            };
+            hashConnect.pairingEvent.once(handler);
+            return () => hashConnect.pairingEvent.off(handler);
+        }, [hederaQuietConnection]);
 
         CB.propTypes = {
             serviceContainer: PropTypes.object,
