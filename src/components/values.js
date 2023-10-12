@@ -66,7 +66,7 @@ export const sockets = {
     mainnet: "wss://dev-explorer-api.herokuapp.com", //wss://dest-scraper.herokuapp.com/
     scraper: "wss://dest-scraper.herokuapp.com",
     staging: "https://staging-tx-socket-925db65784a7.herokuapp.com/",
-    testnet: "wss://testnet-bridge-explorer.herokuapp.com/", //"wss://testnet-bridge-explorer.herokuapp.com/",
+    testnet: "wss://testnet-bridge-explorer.herokuapp.com/", //"https://testnet-tx-socket.herokuapp.com/", //"wss://testnet-bridge-explorer.herokuapp.com/",
 };
 
 export const getChainObject = (nonce) =>

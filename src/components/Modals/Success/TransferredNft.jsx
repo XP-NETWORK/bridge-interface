@@ -19,7 +19,15 @@ const TransferredNft = ({
     chainSpecificRender,
 }) => {
     const { bridge } = serviceContainer;
-    const { image, animation_url, txn, name, mintWith, tagetCanister } = nft;
+    const {
+        image,
+        animation_url,
+        txn,
+        name,
+        mintWith,
+        tagetCanister,
+        workarond_dest_hash,
+    } = nft;
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const account = useSelector((state) => state.general.account);
@@ -88,10 +96,18 @@ const TransferredNft = ({
     );
 
     useEffect(() => {
-        if (tagetCanister) {
+        if (tagetCanister || workarond_dest_hash) {
             setTxnStatus("completed");
+
+            workarond_dest_hash &&
+                setHashes({
+                    destHash: toChain.adaptHashView(
+                        workarond_dest_hash,
+                        receiver
+                    ),
+                });
         }
-    }, [tagetCanister]);
+    }, [tagetCanister, workarond_dest_hash]);
 
     const targetCollection = mintWith || tagetCanister;
     const completed = txnStatus === "completed";

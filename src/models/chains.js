@@ -1095,6 +1095,29 @@ class HEDERA extends AbstractChain {
             Boolean(nft.wrapped)
         );
     }
+
+    async listetnExecutedSocket(executedSocket, from) {
+        return new Promise((resolve) => {
+            const handler = async (fromChain, toChain, action_id, hash) => {
+                console.log(
+                    fromChain,
+                    toChain,
+                    action_id,
+                    hash,
+                    "tx_executed_event_hedera"
+                );
+
+                if (toChain === this.nonce && fromChain === from && hash) {
+                    executedSocket.off("tx_executed_event", handler);
+                    return resolve({ workarond_dest_hash: hash });
+                }
+                resolve(undefined);
+                executedSocket.off("tx_executed_event", handler);
+            };
+
+            executedSocket.on("tx_executed_event", handler);
+        });
+    }
 }
 
 class ICP extends AbstractChain {
@@ -1217,11 +1240,14 @@ class ICP extends AbstractChain {
                             reject(e);
                         });
 
-                    console.log(targetCanister, "targetCanister");
                     executedSocket.off("tx_executed_event", handler);
-                    return resolve(targetCanister);
+                    return resolve(
+                        targetCanister
+                            ? { tagetCanister: targetCanister }
+                            : undefined
+                    );
                 }
-                resolve("");
+                resolve(undefined);
                 executedSocket.off("tx_executed_event", handler);
             };
 

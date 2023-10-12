@@ -16,7 +16,7 @@ import { errorToLog, isALLNFTsApproved } from "../../utils";
 
 import { withServices } from "../../components/App/hocs/withServices";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
-import BigNumber from "bignumber.js";
+//import BigNumber from "bignumber.js";
 
 function Approval({ serviceContainer }) {
     const { bridge } = serviceContainer;
@@ -58,10 +58,11 @@ function Approval({ serviceContainer }) {
                 await fromChain.preTransfer(
                     nft,
                     to.nonce,
-                    new BigNumber(bigNumberFees)
+                    bigNumberFees,
+                    /*new BigNumber(bigNumberFees)
                         .div(10)
                         .integerValue()
-                        .toString(10),
+                        .toString(10)*/
                     {
                         to: Number(to.nonce),
                         receiver: receiver.trim(),

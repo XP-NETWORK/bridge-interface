@@ -50,7 +50,7 @@ import ReceiverIsContract from "../Alerts/ReceiverIsContract";
 const intervalTm = 15_000;
 
 function NFTaccount(props) {
-    const { serviceContainer, chainSpecific, _from, algorandAccount } = props;
+    const { serviceContainer, chainSpecific, _from } = props;
 
     const dispatch = useDispatch();
 
@@ -63,15 +63,10 @@ function NFTaccount(props) {
 
     const importModal = useSelector((state) => state.general.importModal);
 
-    const tronWallet = useSelector((state) => state.general.tronWallet);
     const account = useSelector((state) => state.general.account);
 
     //const prevAccount = usePrevious(account);
-    const tezosAccount = useSelector((state) => state.general.tezosAccount);
-    const elrondAccount = useSelector((state) => state.general.elrondAccount);
-    const hederaAccount = useSelector((state) => state.general.hederaAccount);
-    const secretAccount = useSelector((state) => state.general.secretAccount);
-    const tonAccount = useSelector((state) => state.general.tonAccount);
+
     const NFTSetToggler = useSelector((state) => state.general.NFTSetToggler);
     //const prevNFTSetToggler = usePrevious(NFTSetToggler);
 
@@ -93,16 +88,7 @@ function NFTaccount(props) {
 
     const preFetchData = useSelector((state) => state.general.preFetchData);
 
-    let _account =
-        checkWallet ||
-        hederaAccount ||
-        account ||
-        algorandAccount ||
-        tezosAccount ||
-        elrondAccount ||
-        tronWallet ||
-        secretAccount ||
-        tonAccount;
+    let _account = checkWallet || account;
 
     const { bridge } = serviceContainer;
 
@@ -133,6 +119,7 @@ function NFTaccount(props) {
 
     const getBalance = async (fromChain) => {
         const _balance = await fromChain.balance(_account);
+
         dispatch(setBalance(_balance));
     };
 
@@ -152,24 +139,21 @@ function NFTaccount(props) {
         }
     }, [nfts]);
 
+    let balanceInterval;
+
     useEffect(() => {
         dispatch(cleanSelectedNFTList());
-        let balanceInterval;
         (async () => {
             const fromChain = await bridge.getChain(_from.nonce);
 
-            //load nfts
-            !secret &&
-                _account &&
-                getNFTsList(fromChain, preFetchData?.contract);
-
-            //update Balance
-            getBalance(fromChain);
-
-            balanceInterval = setInterval(
-                () => getBalance(fromChain),
-                intervalTm
-            );
+            if (_account) {
+                getBalance(fromChain);
+                !secret && getNFTsList(fromChain, preFetchData?.contract);
+                balanceInterval = setInterval(
+                    () => getBalance(fromChain),
+                    intervalTm
+                );
+            }
         })();
 
         return () => clearInterval(balanceInterval);
