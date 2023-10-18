@@ -2,15 +2,36 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withServices } from "../../App/hocs/withServices";
 import { connectHashPack } from "./hederaConnections";
+
+import {
+    setConnectedWallet,
+    setMetaMask,
+    setFrom,
+    setError,
+} from "../../../store/reducers/generalSlice";
+
+import { getChainObject } from "../../values";
+import { connectMetaMask } from "../ConnectWalletHelper";
+
+import { useWeb3React } from "@web3-react/core";
+
+import { useNavigate } from "react-router";
+
+import { getRightPath } from "../../../utils";
+
 import { Chain } from "xp.network";
-import { setAccount } from "../../../store/reducers/generalSlice";
-import { ethers } from "ethers";
 
 function HigherHEDERA(OriginalComponent) {
     function updatedComponent({ serviceContainer }) {
         const { bridge } = serviceContainer;
         const dispatch = useDispatch();
         const network = useSelector((state) => state.general.testNet);
+        const to = useSelector((state) => state.general.to);
+        const { activate, chainId } = useWeb3React();
+        const navigate = useNavigate();
+        const temporaryFrom = useSelector(
+            (state) => state.general.temporaryFrom
+        );
 
         const getStyles = () => {};
 
@@ -20,23 +41,29 @@ function HigherHEDERA(OriginalComponent) {
                     await connectHashPack(network);
                     break;
                 case "MM": {
-                    const chainWrapper = await bridge.getChain(Chain.HEDERA);
                     const provider = window.ethereum;
-                    if (!provider) return;
+                    if (!provider) {
+                        return dispatch(
+                            setError({ message: "Meta Mask is not installed" })
+                        );
+                    }
 
-                    const upgradedProvider = new ethers.providers.Web3Provider(
-                        provider
+                    const from = getChainObject(Chain.HEDERA);
+
+                    const connected = await connectMetaMask(
+                        activate,
+                        from,
+                        to,
+                        chainId
                     );
+                    if (connected) {
+                        dispatch(setMetaMask(true));
+                        dispatch(setConnectedWallet("MetaMask"));
+                        if (temporaryFrom) dispatch(setFrom(temporaryFrom));
+                        if (to)
+                            navigate(getRightPath(bridge.network, from, to));
+                    }
 
-                    const accounts = await provider.request({
-                        method: "eth_requestAccounts",
-                    });
-
-                    const signer = upgradedProvider.getSigner(accounts[0]);
-                    signer.address = await signer.getAddress();
-                    chainWrapper.setSigner(signer);
-                    dispatch(setAccount(accounts[0]));
-                    bridge.setCurrentType(chainWrapper);
                     break;
                 }
 

@@ -129,7 +129,10 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
             const unstoppabledomain = await getFromDomain(receiver, toChain);
             if (unstoppabledomainSwitch(unstoppabledomain)) return;
 
-            const normalizedReceiver = toChain.normalizeReceiver(receiver);
+            const normalizedReceiver = await toChain.normalizeReceiver(
+                receiver
+            );
+
             const res = await fromChain.transfer({
                 toChain,
                 nft,

@@ -191,7 +191,7 @@ export const connectMetaMask = async (
         await activate(injected);
         !mobile && window.safeLocalStorage?.setItem("XP_MM_CONNECTED", "true");
         store.dispatch(setMetaMask(true));
-        if (from && to) {
+        if (from && to && navigate) {
             navigate();
         }
         return true;

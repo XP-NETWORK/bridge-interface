@@ -444,6 +444,8 @@ export const chains = [
         mainnet: biz,
         newChain: biz,
         coming: !biz,
+        chainId: 295,
+        tnChainId: 296,
     },
     {
         type: "EVM",

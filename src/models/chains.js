@@ -26,7 +26,7 @@ class AbstractChain {
         return address;
     }
 
-    normalizeReceiver(address) {
+    async normalizeReceiver(address) {
         return address;
     }
 
@@ -515,7 +515,7 @@ class NoWhiteListEVM extends EVM {
     }
 
     async deployUserStore(nft, fees) {
-        const res = await this.chain.getUserStore(this.signer, nft, 1);
+        const res = await this.chain.getUserStore(this.signer, nft, fees);
 
         return res?.address;
     }
@@ -1040,8 +1040,8 @@ class HEDERA extends NoWhiteListEVM {
         super(params);
     }
 
-    normalizeReceiver(address) {
-        return this.chain.toSolidityAddress(address);
+    async normalizeReceiver(address) {
+        return await this.chain.toSolidityAddress(address);
     }
 
     async getClaimables(tokens) {
