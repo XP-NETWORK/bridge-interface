@@ -187,12 +187,14 @@ export const fixify = (number) => {
     const digitsAfterDot =
         String(number)
             .split(".")
-            .at(1)?.length || 0;
+            ?.at(1)?.length || 0;
 
-    return number
-        .toFixed(Math.min(digitsAfterDot))
-        .match(/\d*\.(0*)(\d{0,3})/)
-        .at(0);
+    return digitsAfterDot
+        ? number
+              .toFixed(Math.min(digitsAfterDot))
+              .match(/\d*\.(0*)(\d{0,3})/)
+              .at(0)
+        : number;
 };
 
 export const setupURI = (uri) => {

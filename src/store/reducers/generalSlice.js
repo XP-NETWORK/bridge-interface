@@ -67,9 +67,7 @@ const generalSlice = createSlice({
                 return n;
             });
         },
-        setAptosAccount(state, action) {
-            state.aptosAccount = action.payload;
-        },
+
         setConnectedWallet(state, action) {
             state.connectedWallet = action.payload;
         },
@@ -117,9 +115,10 @@ const generalSlice = createSlice({
         setKeplrWallet(state, action) {
             state.keplrWallet = action.payload;
         },
-        setBitKeep(state, action) {
-            state.bitKeep = action.payload;
+        setEVMProvider(state, action) {
+            state.evmProvider = action.payload;
         },
+
         setUnstoppableDomainsIsSelected(state, action) {
             state.unstoppableDomainsIsSelected = action.payload;
         },
@@ -649,7 +648,7 @@ export const {
     setSecretLoggedIn,
     setKeplrAccount,
     setKeplrWallet,
-    setBitKeep,
+    setEVMProvider,
     setUnstoppableDomainsIsSelected,
     setTemporaryFrom,
     setCheckWallet,
@@ -755,7 +754,6 @@ export const {
     setTonAccount,
     setTonWallet,
     setStaging,
-    setAptosAccount,
     setIsInvalidAddress,
     setNearRedirect,
     setHederaClaimables,

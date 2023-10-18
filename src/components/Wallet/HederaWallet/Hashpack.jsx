@@ -5,7 +5,7 @@ import { HashConnect } from "hashconnect";
 import HigherHEDERA from "./HigherHEDERA";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-
+import icon from "../../../assets/img/wallet/MetaMask.svg";
 //import { biz } from "../../values";
 
 function Hashpack({ connect }) {
@@ -29,19 +29,35 @@ function Hashpack({ connect }) {
         else return {};
     };
     return (
-        <li
-            onClick={() => {
-                setLoading(true);
-                connect("HashPack", hashConnect);
-                setTimeout(() => setLoading(false), 2000);
-            }}
-            className="wllListItem"
-            style={getStyle()}
-            data-wallet="Hashpack"
-        >
-            <img style={{ width: "28px" }} src={hashpack} alt="Hashpack Icon" />
-            <p>Hashpack</p>
-        </li>
+        <>
+            <li
+                onClick={() => {
+                    setLoading(true);
+                    connect("HashPack", hashConnect);
+                    setTimeout(() => setLoading(false), 2000);
+                }}
+                className="wllListItem"
+                style={getStyle()}
+                data-wallet="Hashpack"
+            >
+                <img
+                    style={{ width: "28px" }}
+                    src={hashpack}
+                    alt="Hashpack Icon"
+                />
+                <p>Hashpack</p>
+            </li>
+
+            <li
+                onClick={() => connect("MM")}
+                className="wllListItem"
+                style={getStyle()}
+                data-wallet="MetaMask"
+            >
+                <img src={icon} alt="MetaMask Icon" />
+                <p>MetaMask</p>
+            </li>
+        </>
     );
 }
 

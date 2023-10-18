@@ -1,6 +1,5 @@
 /* eslint-disable no-debugger */
 import React, { useEffect } from "react";
-//import { hethers } from "@hashgraph/hethers";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -53,8 +52,16 @@ export const withHederaConnection = (Wrapped) =>
                         signer.address = address;
 
                         bridge.getChain(Chain.HEDERA).then((chainWrapper) => {
-                            chainWrapper.chain.injectSDK(hashSDK);
-                            chainWrapper.setSigner(signer);
+                            const injectedChainWrapper = bridge.setInnerChain(
+                                Chain.HEDERA,
+                                chainWrapper.chain.injectSDK(hashSDK)
+                            );
+
+                            injectedChainWrapper.setSigner(signer);
+
+                            //chainWrapper.chain.injectSDK(hashSDK);
+
+                            // chainWrapper.setSigner(signer);
 
                             if (!hederaQuietConnection) {
                                 dispatch(setAccount(address));

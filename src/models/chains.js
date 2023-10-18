@@ -179,6 +179,7 @@ class AbstractChain {
         try {
             if (!account) return 0;
             const res = await this.chain.balance(account);
+
             const decimals = CHAIN_INFO.get(this.nonce)?.decimals;
             return res.dividedBy(decimals).toNumber();
         } catch (e) {
@@ -514,7 +515,8 @@ class NoWhiteListEVM extends EVM {
     }
 
     async deployUserStore(nft, fees) {
-        const res = await this.chain.getUserStore(this.signer, nft, fees);
+        const res = await this.chain.getUserStore(this.signer, nft, 1);
+
         return res?.address;
     }
 
@@ -640,7 +642,7 @@ class Elrond extends AbstractChain {
         }
 
         if (!nonce || nonce.split("-")?.length > 1) {
-            nonce = data.wrapped.source_token_id || data.wrapped.nonce;
+            nonce = data.wrapped.source_token_id || Number(data.wrapped.nonce);
         }
 
         const tokenId =
@@ -1031,7 +1033,7 @@ class APTOS extends AbstractChain {
     }
 }
 
-class HEDERA extends AbstractChain {
+class HEDERA extends NoWhiteListEVM {
     hashConnect;
 
     constructor(params) {
@@ -1083,7 +1085,7 @@ class HEDERA extends AbstractChain {
         if (!success) throw error;
     }
 
-    async preTransfer(nft, _, fees, __) {
+    /* async preTransfer(nft, _, fees, __) {
         if (!nft.uri) {
             throw new Error("NFT metadata issue");
         }
@@ -1094,7 +1096,7 @@ class HEDERA extends AbstractChain {
             undefined,
             Boolean(nft.wrapped)
         );
-    }
+    }*/
 
     async listetnExecutedSocket(executedSocket, from) {
         return new Promise((resolve) => {

@@ -34,8 +34,6 @@ import Modals from "./components/Modals/Modals";
 import AppContainer from "./components/App/container";
 import { generateKey } from "./utils";
 
-//import { providers } from "ethers";
-
 function App() {
     let dispatch = useDispatch();
     let showChainModal = useSelector((state) => state.general.showChainModal);

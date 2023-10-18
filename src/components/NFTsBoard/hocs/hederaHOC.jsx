@@ -19,11 +19,20 @@ import { StringShortener } from "../../../utils";
 
 import { connectHashPack } from "../../Wallet/HederaWallet/hederaConnections";
 import { setHederaQuietConnection } from "../../../store/reducers/signersSlice";
+import DeployUserStore from "../../TransferBoard/DeployUserStore";
 
 const CheckClaimables = withServices(({ serviceContainer }) => {
     const { bridge } = serviceContainer;
     const dispatch = useDispatch();
+    const [visible, setVisisble] = useState(false);
     const selectedChain = useSelector((state) => state.general.selectedChain);
+
+    useEffect(() => {
+        (async () => {
+            const chainWapper = await bridge.getChain(Chain.HEDERA);
+            if (chainWapper.chain?.isInjected) setVisisble(true);
+        })();
+    }, []);
 
     useEffect(() => {
         if (selectedChain) {
@@ -118,7 +127,11 @@ const CheckClaimables = withServices(({ serviceContainer }) => {
     };*/
 
     return (
-        <button className="hederaCheckClaimBtn" onClick={getClaimables}>
+        <button
+            className="hederaCheckClaimBtn"
+            onClick={getClaimables}
+            style={{ display: visible ? "initial" : "none" }}
+        >
             Check Claimables
         </button>
     );
@@ -269,6 +282,7 @@ export const withHedera = (Wrapped) =>
                         CheckClaimables,
                         RenderClaimables,
                         RenderClaimInDestination,
+                        DeployUserStore,
                     },
                 }}
                 chainSpecific={{

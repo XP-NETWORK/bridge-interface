@@ -8,11 +8,11 @@ import {
     handleGA4Event,
 } from "../../../services/GA4";
 import {
-    setBitKeep,
     setConnectedWallet,
     setFrom,
     setMetaMask,
     setWalletsModal,
+    setEVMProvider,
 } from "../../../store/reducers/generalSlice";
 import { getRightPath } from "../../../utils";
 import { withServices } from "../../App/hocs/withServices";
@@ -103,7 +103,7 @@ export default function HigherEVM(OriginalComponent) {
                     );
                     if (connected && to) {
                         dispatch(setWalletsModal(false));
-                        dispatch(setBitKeep(true));
+                        dispatch(setEVMProvider(window.bitkeep?.ethereum));
                         dispatch(setConnectedWallet("BitKeep"));
                         navigateToAccountRoute();
                     }
