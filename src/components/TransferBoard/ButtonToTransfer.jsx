@@ -64,7 +64,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
                                 "Your domain does not explicitly support the chain you selected.",
                         })
                     );
-                    dispatch(dispatch(setTransferLoaderModal(false)));
+                    dispatch(setTransferLoaderModal(false));
                     setLoading(false);
                     stop = true;
                     break;
@@ -75,7 +75,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
                                 "Domain names are currently not supported for Non-EVM chains.",
                         })
                     );
-                    dispatch(dispatch(setTransferLoaderModal(false)));
+                    dispatch(setTransferLoaderModal(false));
                     setLoading(false);
                     stop = true;
                     break;

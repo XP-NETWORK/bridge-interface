@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import { useWeb3React } from "@web3-react/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,14 +10,13 @@ import {
     setConnectedWallet,
     setFrom,
     setMetaMask,
-    setWalletsModal,
     setEVMProvider,
+    setWalletsModal,
 } from "../../../store/reducers/generalSlice";
 import { getRightPath } from "../../../utils";
 import { withServices } from "../../App/hocs/withServices";
 
 import {
-    connectBitKeep,
     connectMetaMask,
     connectTrustWallet,
     onWalletConnect,
@@ -29,7 +27,7 @@ export default function HigherEVM(OriginalComponent) {
         const {
             serviceContainer: { bridge },
         } = props;
-        const { activate, chainId, deactivate } = useWeb3React();
+        const { activate, chainId } = useWeb3React();
         const OFF = { opacity: 0.6, pointerEvents: "none" };
         const from = useSelector((state) => state.general.from);
         const to = useSelector((state) => state.general.to);
@@ -96,17 +94,8 @@ export default function HigherEVM(OriginalComponent) {
                     }
                     break;
                 case "BitKeep":
-                    deactivate();
-                    connected = await connectBitKeep(
-                        from,
-                        navigateToAccountRoute
-                    );
-                    if (connected && to) {
-                        dispatch(setWalletsModal(false));
-                        dispatch(setEVMProvider(window.bitkeep?.ethereum));
-                        dispatch(setConnectedWallet("BitKeep"));
-                        navigateToAccountRoute();
-                    }
+                    dispatch(setEVMProvider(window.bitkeep?.ethereum));
+
                     break;
                 default:
                     break;

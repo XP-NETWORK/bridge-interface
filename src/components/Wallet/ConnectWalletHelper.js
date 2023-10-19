@@ -6,8 +6,6 @@ import store from "../../store/store";
 
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 
-import { ethers } from "ethers";
-
 import {
     setTronWallet,
     setTronLink,
@@ -17,15 +15,7 @@ import {
     setTronPopUp,
     setWC,
     setAccount,
-    setRedirectModal,
-    setConnectedWallet,
-    setEVMProvider,
 } from "../../store/reducers/generalSlice";
-
-// import { getAddEthereumChain } from "../../wallet/chains";
-import Web3 from "web3";
-
-import { setSigner } from "../../store/reducers/signersSlice";
 
 import { MainNetRpcUri, TestNetRpcUri } from "xp.network";
 import { switchNetwork } from "../../services/chains/evm/evmService";
@@ -56,99 +46,6 @@ export const connectUnstoppable = async (close) => {
         return provider.selectedAddress;
     } catch (error) {
         console.log(error);
-    }
-};
-
-// export const switchNetWork = async (from) => {
-//   // let fromChainId;
-//   console.log(from, "from");
-//   const chain = getAddEthereumChain()[parseInt(from.chainId).toString()];
-//   console.log(chain);
-//   const params = {
-//     chainId: from.chainId, // A 0x-prefixed hexadecimal string
-//     chainName: chain.name,
-//     nativeCurrency: {
-//       name: chain.nativeCurrency.name,
-//       symbol: chain.nativeCurrency.symbol, // 2-6 characters long
-//       decimals: chain.nativeCurrency.decimals,
-//     },
-//     rpcUrls: chain.rpc,
-//     blockExplorerUrls: [
-//       chain.explorers && chain.explorers.length > 0 && chain.explorers[0].url
-//         ? chain.explorers[0].url
-//         : chain.infoURL,
-//     ],
-//   };
-//   window.bitkeep?.ethereum &&
-//     window.bitkeep?.ethereum
-//       .request({
-//         method: "wallet_switchEthereumChain",
-//         params,
-//       })
-//       .then(() => {
-//         console.log("Network Switch Success");
-//       })
-//       .catch((e) => {
-//         console.log(e);
-//       });
-// };
-
-const setBitKeepSigner = (account) => {
-    const provider = new ethers.providers.Web3Provider(window.bitkeep.ethereum);
-    const signer = provider.getSigner(account);
-    store.dispatch(setSigner(signer));
-};
-
-export const connectBitKeep = async (from, navigate) => {
-    let { to } = store.getState();
-    // debugger;
-    let provider;
-    const isInstallBikeep = () => {
-        return window.bitkeep && window.bitkeep?.ethereum;
-    };
-    if (!isInstallBikeep()) {
-        if (window.innerWidth <= 600) {
-            store.dispatch(setRedirectModal("BitKeep"));
-        } else {
-            window.open(
-                "https://chrome.google.com/webstore/detail/bitkeep-bitcoin-crypto-wa/jiidiaalihmmhddjgbnbgdfflelocpak",
-                "bitkeep installer",
-                "width=500,height=500"
-            );
-        }
-    } else {
-        try {
-            provider = window.bitkeep?.ethereum;
-            await provider.request({ method: "eth_requestAccounts" });
-            const web3 = new Web3(provider);
-            const address = await web3.eth.getAccounts();
-            const chainId = await web3.eth.getChainId();
-
-            store.dispatch(setEVMProvider(window.bitkeep?.ethereum));
-            store.dispatch(setConnectedWallet("BitKeep"));
-            store.dispatch(setAccount(address[0]));
-            setBitKeepSigner(address[0]);
-
-            if (from && from?.chainId !== chainId) {
-                const switched = await switchNetwork(from);
-                if (switched) {
-                    store.dispatch(setEVMProvider(window.bitkeep?.ethereum));
-                    store.dispatch(setConnectedWallet("BitKeep"));
-                    store.dispatch(setAccount(address[0]));
-                    setBitKeepSigner(address[0]);
-                }
-                if (from && to) {
-                    navigate();
-                }
-            } else {
-                store.dispatch(setAccount(address[0]));
-                setBitKeepSigner(address[0]);
-                return true;
-            }
-        } catch (error) {
-            console.log(error);
-            return false;
-        }
     }
 };
 

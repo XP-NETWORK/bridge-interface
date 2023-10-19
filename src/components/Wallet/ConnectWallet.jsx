@@ -15,7 +15,7 @@ import WalletList from "./WalletList";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import { useDidUpdateEffect } from "../Settings/hooks";
-import Web3 from "web3";
+
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import { getRightPath } from "../../utils";
 import { useWeb3Modal } from "@web3modal/react";
@@ -57,7 +57,7 @@ function ConnectWallet({ serviceContainer }) {
     );
 
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
-    const bitKeep = useSelector((state) => state.general.bitKeep);
+
     const _account = useSelector((state) => state.general.account);
     //const { address } = useAccount();
 
@@ -107,14 +107,9 @@ function ConnectWallet({ serviceContainer }) {
             googleAnalyticsCategories.Connect,
             `Clicked on connect. destination chain: ${from}`
         );
-        let provider;
+
         let _chainId;
-        if (bitKeep) {
-            provider = window.bitkeep?.ethereum;
-            await provider.request({ method: "eth_requestAccounts" });
-            const web3 = new Web3(provider);
-            _chainId = await web3.eth.getChainId();
-        }
+
         const chainID = chainId || _chainId;
 
         switch (true) {

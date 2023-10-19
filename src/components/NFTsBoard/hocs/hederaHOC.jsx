@@ -3,6 +3,7 @@ import BigNumber from "bignumber.js";
 import React, { useEffect, useState } from "react";
 
 import {
+    setTransferLoaderModal,
     setError,
     setHederaClaimables,
     setNFTSetToggler,
@@ -24,15 +25,15 @@ import DeployUserStore from "../../TransferBoard/DeployUserStore";
 const CheckClaimables = withServices(({ serviceContainer }) => {
     const { bridge } = serviceContainer;
     const dispatch = useDispatch();
-    const [visible, setVisisble] = useState(false);
+
     const selectedChain = useSelector((state) => state.general.selectedChain);
 
-    useEffect(() => {
+    /*useEffect(() => {
         (async () => {
             const chainWapper = await bridge.getChain(Chain.HEDERA);
             if (chainWapper.chain?.isInjected) setVisisble(true);
         })();
-    }, []);
+    }, []);*/
 
     useEffect(() => {
         if (selectedChain) {
@@ -127,11 +128,7 @@ const CheckClaimables = withServices(({ serviceContainer }) => {
     };*/
 
     return (
-        <button
-            className="hederaCheckClaimBtn"
-            onClick={getClaimables}
-            style={{ display: visible ? "initial" : "none" }}
-        >
+        <button className="hederaCheckClaimBtn" onClick={getClaimables}>
             Check Claimables
         </button>
     );
@@ -150,31 +147,38 @@ const RenderClaimables = withServices(({ serviceContainer, setClaimables }) => {
     const dispatch = useDispatch();
 
     const clickClaim = (token) => {
-        bridge.getChain(Chain.HEDERA).then(async (wrapper) => {
-            const assosiated = token.associated
-                ? true
-                : await wrapper.associate(token);
+        dispatch(setTransferLoaderModal(true));
+        try {
+            bridge.getChain(Chain.HEDERA).then(async (wrapper) => {
+                const assosiated = token.associated
+                    ? true
+                    : await wrapper.associate(token);
 
-            if (!assosiated) {
-                dispatch(setError({ message: "Token assosiation error" }));
-                return;
-            }
+                if (!assosiated) {
+                    dispatch(setError({ message: "Token assosiation error" }));
+                    return;
+                }
 
-            await wrapper
-                .claim(token)
-                .catch((e) => dispatch(setError({ message: e.message })));
-            const index = hederaClaimables.findIndex((t) => t === token);
+                await wrapper
+                    .claim(token)
+                    .catch((e) => dispatch(setError({ message: e.message })));
+                const index = hederaClaimables.findIndex((t) => t === token);
 
-            dispatch(
-                setHederaClaimables([
-                    ...hederaClaimables.slice(0, index),
-                    ...hederaClaimables.slice(index + 1),
-                ])
-            );
+                dispatch(
+                    setHederaClaimables([
+                        ...hederaClaimables.slice(0, index),
+                        ...hederaClaimables.slice(index + 1),
+                    ])
+                );
 
-            await new Promise((r) => setTimeout(r, 1000));
-            dispatch(setNFTSetToggler());
-        });
+                await new Promise((r) => setTimeout(r, 1000));
+                dispatch(setNFTSetToggler());
+                dispatch(setTransferLoaderModal(false));
+            });
+        } catch (e) {
+            dispatch(setTransferLoaderModal(false));
+            throw e;
+        }
     };
 
     return (
