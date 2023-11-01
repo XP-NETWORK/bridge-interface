@@ -251,11 +251,7 @@ class Bridge {
 
                 const chain = await this.getChain(Number(origin)).catch(
                     async (e) => {
-                        if (
-                            e.message.includes(
-                                "Cannot read properties of undefined "
-                            )
-                        ) {
+                        if (e.message?.includes("constructor")) {
                             if (!origin) return;
                             const mainnetBridge = await this.init();
                             return await mainnetBridge.getChain(Number(origin));

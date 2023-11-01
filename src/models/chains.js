@@ -1033,7 +1033,7 @@ class APTOS extends AbstractChain {
     }
 }
 
-class HEDERA extends NoWhiteListEVM {
+class HEDERA extends EVM {
     hashConnect;
 
     constructor(params) {
@@ -1084,19 +1084,6 @@ class HEDERA extends NoWhiteListEVM {
             });
         if (!success) throw error;
     }
-
-    /* async preTransfer(nft, _, fees, __) {
-        if (!nft.uri) {
-            throw new Error("NFT metadata issue");
-        }
-        return await this.chain.approveForMinter(
-            nft,
-            this.signer,
-            fees,
-            undefined,
-            Boolean(nft.wrapped)
-        );
-    }*/
 
     async listetnExecutedSocket(executedSocket, from) {
         return new Promise((resolve) => {
