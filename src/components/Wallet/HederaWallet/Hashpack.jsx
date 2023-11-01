@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import icon from "../../../assets/img/wallet/MetaMask.svg";
 //import { biz } from "../../values";
 
+import { isMobile } from "../../../utils";
+
 function Hashpack({ connect }) {
     const [loading, setLoading] = useState(false);
 
@@ -16,10 +18,11 @@ function Hashpack({ connect }) {
     const from = useSelector((state) => state.general.from);
     let hashConnect = new HashConnect(true);
 
-    const getStyle = () => {
-        /*if (!biz) {
-            return { display: "none" };
-        }*/
+    const getStyle = (isMobile) => {
+        if (isMobile === true) {
+            return OFF;
+        }
+
         if (temporaryFrom?.type === "Hedera") {
             return {};
         } else if (temporaryFrom && temporaryFrom?.type !== "Hedera") {
@@ -37,7 +40,7 @@ function Hashpack({ connect }) {
                     setTimeout(() => setLoading(false), 2000);
                 }}
                 className="wllListItem"
-                style={getStyle()}
+                style={getStyle(isMobile.any())}
                 data-wallet="Hashpack"
             >
                 <img

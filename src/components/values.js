@@ -48,8 +48,7 @@ export const TEZOS = "TEZOS";
 export const stagingWNFT = "https://staging-nft.xp.network";
 export const wnft = ["https://wnfts.xp.network", "https://nft.xp.network"];
 
-export const wnftPattern =
-    "(wnfts.xp.network|nft.xp.network|staging-nft.xp.network|bridge-wnftapi)";
+export const wnftPattern = /(\S+xp\.network)/;
 export const isTestnet = /testnet/.test(window.location.pathname);
 export const dev = /(localhost|dev|10\.0\.0|trycloudflare)/.test(
     window.location.hostname
@@ -438,12 +437,12 @@ export const chains = [
         key: "Hedera",
         text: "Hedera",
         nonce: 29,
-        order: -6,
+        order: -16,
         image: { avatar: true, src: HBAR },
-        testNet: biz,
-        mainnet: biz,
-        newChain: biz,
-        coming: !biz,
+        testNet: true,
+        mainnet: true,
+        newChain: true,
+        coming: false,
         chainId: 295,
         tnChainId: 296,
     },
