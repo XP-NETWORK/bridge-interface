@@ -1,6 +1,6 @@
 /* eslint-disable no-debugger */
 /* eslint-disable react/prop-types */
-
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +17,8 @@ import { useNavigate } from "react-router";
 import { getRightPath } from "../../../utils";
 
 import { withWalletConnect } from "../../App/hocs/withServices";
+import { switchNetwork } from "../../../services/chains/evm/evmService";
+import { getChainObject } from "../../values";
 
 const WalletConnect = ({ from, to, bridge, walletConnectChains }) => {
     const dispatch = useDispatch();
@@ -63,7 +65,12 @@ const WalletConnect = ({ from, to, bridge, walletConnectChains }) => {
                             dispatch(setAccount(address));
                             chainWrapper.setSigner(adaptedSigner);
                             bridge.setCurrentType(chainWrapper);
-                            to && from && navigate(getRightPath());
+
+                            to &&
+                                from &&
+                                navigate(
+                                    getRightPath(bridge.network, from, to)
+                                );
                         });
                     });
                 } else {
@@ -90,39 +97,94 @@ export const withEVMConnection = (Wrapped) =>
     withWalletConnect(function CB(props) {
         const { serviceContainer, walletConnectChains } = props;
         const dispatch = useDispatch();
-        const bitKeep = useSelector((state) => state.general.bitKeep);
-        const WCProvider = useSelector((state) => state.general.WCProvider);
+        const evmProvider = useSelector((state) => state.general.evmProvider);
+        //const WCProvider = useSelector((state) => state.general.WCProvider);
         const from = useSelector((state) => state.general.from);
         const to = useSelector((state) => state.general.to);
-
+        const navigate = useNavigate();
         const { chainId, account } = useWeb3React();
         const { bridge } = serviceContainer;
 
+        async function connect(account, nonce, provider) {
+            const chainWrapper = await bridge.getChain(nonce);
+
+            const jsonRPCProvider = new ethers.providers.Web3Provider(provider);
+            const signer = jsonRPCProvider.getSigner(account);
+            chainWrapper.setSigner(signer);
+            bridge.setCurrentType(chainWrapper);
+            dispatch(setAccount(account));
+            from && to && navigate(getRightPath(bridge.network, from, to));
+        }
+
         useEffect(() => {
-            if (bridge && account && chainId) {
-                (async () => {
-                    const nonce = bridge.getNonce(chainId);
+            if (!bridge) return;
 
-                    bridge.getChain(nonce).then((chainWrapper) => {
-                        const provider = bitKeep
-                            ? window.bitkeep?.ethereum
-                            : WCProvider?.walletConnectProvider ||
-                              window.ethereum;
-
-                        if (!provider) return;
-
-                        const upgradedProvider = new ethers.providers.Web3Provider(
-                            provider
-                        );
-                        const signer = upgradedProvider.getSigner(account);
-
-                        chainWrapper.setSigner(signer);
-                        dispatch(setAccount(account));
-                        bridge.setCurrentType(chainWrapper);
-                    });
-                })();
+            if (account && chainId) {
+                console.log("mm way");
+                connect(account, bridge.getNonce(chainId), window.ethereum);
+                return;
             }
-        }, [bridge, account, chainId, WCProvider]);
+
+            if (evmProvider) {
+                console.log("evmProvider ");
+
+                const accountsChangedHandler = async function(accounts) {
+                    const chainId = await evmProvider.request({
+                        method: "eth_chainId",
+                    });
+
+                    connect(accounts[0], bridge.getNonce(chainId), evmProvider);
+                };
+
+                const chainChangedHandler = async function(chainId) {
+                    const accounts = await evmProvider.request({
+                        method: "eth_requestAccounts",
+                    });
+
+                    connect(accounts[0], bridge.getNonce(chainId), evmProvider);
+                };
+
+                evmProvider
+                    .request({ method: "eth_requestAccounts" })
+                    .then(async (accounts) => {
+                        let nonce = from?.nonce;
+
+                        if (!nonce) {
+                            const chainId = await evmProvider.request({
+                                method: "eth_chainId",
+                            });
+                            nonce = bridge.getNonce(chainId);
+                        }
+
+                        await switchNetwork(getChainObject(nonce));
+                        await evmProvider.request({
+                            method: "wallet_requestPermissions",
+                            params: [
+                                {
+                                    eth_accounts: {},
+                                },
+                            ],
+                        });
+                        if (typeof evmProvider.on === "function") {
+                            evmProvider.on(
+                                "accountsChanged",
+                                accountsChangedHandler
+                            );
+                            evmProvider.on("chainChanged", chainChangedHandler);
+                        }
+                        connect(accounts[0], nonce, evmProvider);
+                    });
+                return () => {
+                    if (typeof evmProvider.off === "function") {
+                        evmProvider.off(
+                            "accountsChanged",
+                            accountsChangedHandler
+                        );
+                        evmProvider.off("chainChanged", chainChangedHandler);
+                    }
+                };
+            }
+        }, [bridge, account, chainId, evmProvider]);
 
         return (
             <>

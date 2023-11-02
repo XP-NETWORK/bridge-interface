@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import HigherEVM from "./HigherEVM";
 import { useSelector } from "react-redux";
-import icon from "../../../assets/img/wallet/Bitkeep.svg";
+import icon from "../../../assets/img/wallet/bitget wallet_Transparent_circle 1.svg";
 function BitKeep({ connectWallet }) {
     const from = useSelector((state) => state.general.from);
     const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
@@ -31,7 +31,7 @@ function BitKeep({ connectWallet }) {
             data-wallet="BitKeep"
         >
             <img src={icon} alt="BitKeep Icon" />
-            <p>BitKeep</p>
+            <p>Bitget Wallet</p>
         </li>
     );
 }

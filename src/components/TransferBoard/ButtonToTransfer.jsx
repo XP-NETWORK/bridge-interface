@@ -69,7 +69,7 @@ export default compose(
                                 "Your domain does not explicitly support the chain you selected.",
                         })
                     );
-                    dispatch(dispatch(setTransferLoaderModal(false)));
+                    dispatch(setTransferLoaderModal(false));
                     setLoading(false);
                     stop = true;
                     break;
@@ -80,7 +80,7 @@ export default compose(
                                 "Domain names are currently not supported for Non-EVM chains.",
                         })
                     );
-                    dispatch(dispatch(setTransferLoaderModal(false)));
+                    dispatch(setTransferLoaderModal(false));
                     setLoading(false);
                     stop = true;
                     break;
@@ -135,7 +135,10 @@ export default compose(
             const unstoppabledomain = await getFromDomain(receiver, toChain);
             if (unstoppabledomainSwitch(unstoppabledomain)) return;
 
-            const normalizedReceiver = toChain.normalizeReceiver(receiver);
+            const normalizedReceiver = await toChain.normalizeReceiver(
+                receiver
+            );
+
             const res = await fromChain.transfer({
                 toChain,
                 nft,

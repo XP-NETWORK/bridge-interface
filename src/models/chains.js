@@ -26,7 +26,7 @@ class AbstractChain {
         return address;
     }
 
-    normalizeReceiver(address) {
+    async normalizeReceiver(address) {
         return address;
     }
 
@@ -179,6 +179,7 @@ class AbstractChain {
         try {
             if (!account) return 0;
             const res = await this.chain.balance(account);
+
             const decimals = CHAIN_INFO.get(this.nonce)?.decimals;
             return res.dividedBy(decimals).toNumber();
         } catch (e) {
@@ -515,6 +516,7 @@ class NoWhiteListEVM extends EVM {
 
     async deployUserStore(nft, fees) {
         const res = await this.chain.getUserStore(this.signer, nft, fees);
+
         return res?.address;
     }
 
@@ -640,7 +642,7 @@ class Elrond extends AbstractChain {
         }
 
         if (!nonce || nonce.split("-")?.length > 1) {
-            nonce = data.wrapped.source_token_id || data.wrapped.nonce;
+            nonce = data.wrapped.source_token_id || Number(data.wrapped.nonce);
         }
 
         const tokenId =
@@ -1031,36 +1033,39 @@ class APTOS extends AbstractChain {
     }
 }
 
-class HEDERA extends AbstractChain {
+class HEDERA extends EVM {
     hashConnect;
 
     constructor(params) {
         super(params);
     }
 
-    normalizeReceiver(address) {
-        return this.chain.toSolidityAddress(address);
+    async normalizeReceiver(address) {
+        return await this.chain.toSolidityAddress(address);
     }
 
-    async getClaimables() {
+    async getClaimables(tokens) {
         try {
-            return await this.chain.listHederaClaimableNFT(
-                undefined, //"0x00000000000000000000000000000000001fbea9",
-                undefined, //"0x00000000000000000000000000000000001FbEEf",
-                this.signer
-            );
+            return await this.chain.listHederaClaimableNFT(tokens, this.signer);
         } catch (e) {
-            console.log(e, "e");
+            if (e.message === "No matching tokens") {
+                e.message = "Nothing to claim";
+                throw e;
+            }
         }
     }
 
-    async assosiate(token) {
+    async checkAndAssociate(tokens) {
+        await this.chain.checkAndAssociate(tokens, this.signer);
+        return true;
+    }
+
+    async associate(tokens) {
         try {
-            await this.chain.assosiateToken(token.htsToken, this.signer);
+            await this.chain.associateToken([tokens], this.signer);
             return true;
         } catch (e) {
-            console.log(e, "in assosiate");
-            return false;
+            console.log(e, "sdfds");
         }
     }
 
@@ -1080,17 +1085,27 @@ class HEDERA extends AbstractChain {
         if (!success) throw error;
     }
 
-    async preTransfer(nft, _, fees, __) {
-        if (!nft.uri) {
-            throw new Error("NFT metadata issue");
-        }
-        return await this.chain.approveForMinter(
-            nft,
-            this.signer,
-            fees,
-            undefined,
-            Boolean(nft.wrapped)
-        );
+    async listetnExecutedSocket(executedSocket, from) {
+        return new Promise((resolve) => {
+            const handler = async (fromChain, toChain, action_id, hash) => {
+                console.log(
+                    fromChain,
+                    toChain,
+                    action_id,
+                    hash,
+                    "tx_executed_event_hedera"
+                );
+
+                if (toChain === this.nonce && fromChain === from && hash) {
+                    executedSocket.off("tx_executed_event", handler);
+                    return resolve({ workarond_dest_hash: hash });
+                }
+                resolve(undefined);
+                executedSocket.off("tx_executed_event", handler);
+            };
+
+            executedSocket.on("tx_executed_event", handler);
+        });
     }
 }
 
@@ -1214,11 +1229,14 @@ class ICP extends AbstractChain {
                             reject(e);
                         });
 
-                    console.log(targetCanister, "targetCanister");
                     executedSocket.off("tx_executed_event", handler);
-                    return resolve(targetCanister);
+                    return resolve(
+                        targetCanister
+                            ? { tagetCanister: targetCanister }
+                            : undefined
+                    );
                 }
-                resolve("");
+                resolve(undefined);
                 executedSocket.off("tx_executed_event", handler);
             };
 

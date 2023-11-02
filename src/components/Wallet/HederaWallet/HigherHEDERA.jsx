@@ -1,13 +1,37 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { withServices } from "../../App/hocs/withServices";
 import { connectHashPack } from "./hederaConnections";
+
+import {
+    setConnectedWallet,
+    setMetaMask,
+    setFrom,
+    setError,
+} from "../../../store/reducers/generalSlice";
+
+import { getChainObject } from "../../values";
+import { connectMetaMask } from "../ConnectWalletHelper";
+
+import { useWeb3React } from "@web3-react/core";
+
+import { useNavigate } from "react-router";
+
+import { getRightPath } from "../../../utils";
+
+import { Chain } from "xp.network";
 
 function HigherHEDERA(OriginalComponent) {
     function updatedComponent({ serviceContainer }) {
         const { bridge } = serviceContainer;
-
+        const dispatch = useDispatch();
         const network = useSelector((state) => state.general.testNet);
+        const to = useSelector((state) => state.general.to);
+        const { activate, chainId } = useWeb3React();
+        const navigate = useNavigate();
+        const temporaryFrom = useSelector(
+            (state) => state.general.temporaryFrom
+        );
 
         const getStyles = () => {};
 
@@ -16,6 +40,32 @@ function HigherHEDERA(OriginalComponent) {
                 case "HashPack":
                     await connectHashPack(network);
                     break;
+                case "MM": {
+                    const provider = window.ethereum;
+                    if (!provider) {
+                        return dispatch(
+                            setError({ message: "Meta Mask is not installed" })
+                        );
+                    }
+
+                    const from = getChainObject(Chain.HEDERA);
+
+                    const connected = await connectMetaMask(
+                        activate,
+                        from,
+                        to,
+                        chainId
+                    );
+                    if (connected) {
+                        dispatch(setMetaMask(true));
+                        dispatch(setConnectedWallet("MetaMask"));
+                        if (temporaryFrom) dispatch(setFrom(temporaryFrom));
+                        if (to)
+                            navigate(getRightPath(bridge.network, from, to));
+                    }
+
+                    break;
+                }
 
                 default:
                     break;

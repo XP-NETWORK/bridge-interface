@@ -32,6 +32,8 @@ const initialState = {
     preFetchData: null,
     messageLoader: "",
     ICPCanisterSearch: "",
+    showChainSelect: false,
+    selectedChain: undefined,
 };
 
 const generalSlice = createSlice({
@@ -65,9 +67,7 @@ const generalSlice = createSlice({
                 return n;
             });
         },
-        setAptosAccount(state, action) {
-            state.aptosAccount = action.payload;
-        },
+
         setConnectedWallet(state, action) {
             state.connectedWallet = action.payload;
         },
@@ -115,9 +115,10 @@ const generalSlice = createSlice({
         setKeplrWallet(state, action) {
             state.keplrWallet = action.payload;
         },
-        setBitKeep(state, action) {
-            state.bitKeep = action.payload;
+        setEVMProvider(state, action) {
+            state.evmProvider = action.payload;
         },
+
         setUnstoppableDomainsIsSelected(state, action) {
             state.unstoppableDomainsIsSelected = action.payload;
         },
@@ -618,6 +619,12 @@ const generalSlice = createSlice({
         setICPCanisterSearch(state, action) {
             state.ICPCanisterSearch = action.payload;
         },
+        toggleChainSelect(state, action) {
+            state.showChainSelect = action.payload;
+        },
+        setSelectedChain(state, action) {
+            state.selectedChain = action.payload;
+        },
     },
 });
 
@@ -638,7 +645,7 @@ export const {
     setSecretLoggedIn,
     setKeplrAccount,
     setKeplrWallet,
-    setBitKeep,
+    setEVMProvider,
     setUnstoppableDomainsIsSelected,
     setTemporaryFrom,
     setCheckWallet,
@@ -743,7 +750,6 @@ export const {
     setSelectedNFTAmount,
     setTonWallet,
     setStaging,
-    setAptosAccount,
     setIsInvalidAddress,
     setNearRedirect,
     setHederaClaimables,
@@ -754,6 +760,8 @@ export const {
     setSelectedNFT,
     setShowSearchNFTCanisterModal,
     setICPCanisterSearch,
+    toggleChainSelect,
+    setSelectedChain,
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

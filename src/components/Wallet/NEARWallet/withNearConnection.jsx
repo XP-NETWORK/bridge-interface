@@ -189,7 +189,9 @@ export const withNearConnection = (Wrapped) =>
                                     chains.find((c) => c.nonce === Number(to))
                                 )
                             );
-                            navigate(getRightPath());
+                            navigate(
+                                getRightPath(serviceContainer.bridge.network)
+                            );
                         }
                     }
                 })();

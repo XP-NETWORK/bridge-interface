@@ -30,7 +30,7 @@ import WalletSelector from "./NEARWallet/WalletSelector";
 import { biz, dev } from "../values";
 import Phantom from "./SOLWallet/Phantom";
 import Solflare from "./SOLWallet/Solflare";
-import OKX from "./EVMWallet/OKX";
+import OKXWallet from "./EVMWallet/OKXWallet";
 import MyAlgo from "./ALGOWallet/MyAlgo";
 import AlgoSigner from "./ALGOWallet/AlgoSigner";
 import Pera from "./ALGOWallet/Pera";
@@ -69,6 +69,21 @@ export default function WalletList({ connected, input, discount }) {
             order: 14,
             type: "EVM",
             keyName: "Unstoppable Domains",
+        },
+        {
+            Component: (
+                <OKXWallet
+                    wallet={"OKX Wallet"}
+                    key="okx-wallet"
+                    close={connected}
+                />
+            ),
+            name: "OKX Wallet",
+            type: "EVM",
+            mobile: false,
+            desktop: true,
+            order: 2,
+            keyName: "OKX Wallet",
         },
         {
             Component: (
@@ -116,22 +131,7 @@ export default function WalletList({ connected, input, discount }) {
             order: 1,
             keyName: "WalletConnect",
         },
-        {
-            Component: (
-                <OKX
-                    wallet={"OKX"}
-                    key="OKX"
-                    close={connected}
-                    discount={discount}
-                />
-            ),
-            name: "OKX",
-            type: "EVM",
-            mobile: false,
-            desktop: false,
-            order: 1,
-            keyName: "OKX",
-        },
+
         {
             Component: (
                 <TezosWallet
@@ -330,8 +330,8 @@ export default function WalletList({ connected, input, discount }) {
             ),
             name: "Hashpack",
             keyName: "Hashpack",
-            mobile: biz,
-            desktop: biz,
+            mobile: true,
+            desktop: true,
             order: 17,
             type: "Hedera",
         },

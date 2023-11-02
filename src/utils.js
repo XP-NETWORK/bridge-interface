@@ -139,13 +139,9 @@ export const errorToLog = async (error) => {
     }
 };
 
-export const getRightPath = (checkFrom, checkTo) => {
-    const {
-        general: { testNet, staging, from, to },
-    } = store.getState();
+export const getRightPath = (network, from, to, checkFrom, checkTo) => {
+    network = network !== "mainnet" ? network : "";
 
-    // eslint-disable-next-line no-debugger
-    // debugger;
     if (checkFrom && checkFrom !== from.key) {
         return;
     }
@@ -154,16 +150,8 @@ export const getRightPath = (checkFrom, checkTo) => {
         return;
     }
 
-    const query = window.location.search;
-
-    switch (true) {
-        case testNet:
-            return `/testnet/account${query || ""}`;
-        case staging:
-            return `/staging/account${query || ""}`;
-        default:
-            return `/account${query || ""}`;
-    }
+    return `${network ? `/${network}` : ""}/account${window.location.search ||
+        ""}`;
 };
 
 const getSubstringValue = (length) => {
@@ -199,12 +187,14 @@ export const fixify = (number) => {
     const digitsAfterDot =
         String(number)
             .split(".")
-            .at(1)?.length || 0;
+            ?.at(1)?.length || 0;
 
-    return number
-        .toFixed(Math.min(digitsAfterDot))
-        .match(/\d*\.(0*)(\d{0,3})/)
-        .at(0);
+    return digitsAfterDot
+        ? number
+              .toFixed(Math.min(digitsAfterDot))
+              .match(/\d*\.(0*)(\d{0,3})/)
+              .at(0)
+        : number;
 };
 
 export const setupURI = (uri) => {

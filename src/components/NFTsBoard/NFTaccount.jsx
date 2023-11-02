@@ -120,6 +120,7 @@ function NFTaccount(props) {
 
     const getBalance = async (fromChain) => {
         const _balance = await fromChain.balance(_account);
+
         dispatch(setBalance(_balance));
     };
 
@@ -139,24 +140,21 @@ function NFTaccount(props) {
         }
     }, [nfts]);
 
+    let balanceInterval;
+
     useEffect(() => {
         dispatch(cleanSelectedNFTList());
-        let balanceInterval;
         (async () => {
             const fromChain = await bridge.getChain(_from.nonce);
 
-            //load nfts
-            !secret &&
-                _account &&
-                getNFTsList(fromChain, preFetchData?.contract);
-
-            //update Balance
-            getBalance(fromChain);
-
-            balanceInterval = setInterval(
-                () => getBalance(fromChain),
-                intervalTm
-            );
+            if (_account) {
+                getBalance(fromChain);
+                !secret && getNFTsList(fromChain, preFetchData?.contract);
+                balanceInterval = setInterval(
+                    () => getBalance(fromChain),
+                    intervalTm
+                );
+            }
         })();
 
         return () => clearInterval(balanceInterval);
@@ -216,6 +214,7 @@ function NFTaccount(props) {
             <PasteDestinationAlert />
             <ReceiverIsContract />
             <NoApprovedNFT />
+
             <Container
                 className={`nftSlectContaine ${
                     undeployedUserStore ? " undeployedUserStore" : ""

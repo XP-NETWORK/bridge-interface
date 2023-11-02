@@ -8,6 +8,36 @@ export const getAddEthereumChain = () => {
 
 export const allchains = [
     {
+        chainName: "Hedera",
+        rpcUrls: ["https://mainnet.hashio.io/api"],
+        chainId: 295,
+        nativeCurrency: {
+            name: "Hbar",
+            symbol: "HBAR",
+            decimals: 18,
+        },
+    },
+    {
+        chainName: "Hedera Testnet",
+        rpcUrls: ["https://testnet.hashio.io/api"],
+        chainId: 296,
+        nativeCurrency: {
+            name: "Hbar",
+            symbol: "HBAR",
+            decimals: 18,
+        },
+    },
+    {
+        chainName: "Findora Testnet",
+        rpcUrls: ["https://prod-testnet.prod.findora.org:8545"],
+        chainId: 2153,
+        nativeCurrency: {
+            name: "FRA",
+            symbol: "FRA",
+            decimals: 18,
+        },
+    },
+    {
         chainName: "Base Goerli",
         rpcUrls: ["https://base-goerli.diamondswap.org/rpc"],
         chainId: 84531,

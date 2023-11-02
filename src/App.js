@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, React } from "react";
+import React, { useEffect } from "react";
 import XpBridge from "./pages/XpBridge";
 import Alert from "./components/Alerts/Alert.jsx";
 import DepositAlert from "./components/Alerts/DepositAlert";
@@ -37,7 +37,7 @@ import { generateKey } from "./utils";
 import Widget from "./components/Widget";
 import { withConnect } from "./components/Widget/hocs/withConnect";
 
-function App({ network }) {
+function App() {
     let dispatch = useDispatch();
     let showChainModal = useSelector((state) => state.general.showChainModal);
     let importModal = useSelector((state) => state.general.importModal);
@@ -182,7 +182,7 @@ function App({ network }) {
         <div className={"App"}>
             <AppContainer>
                 <Modals />
-                <XpBridge network={network} />
+                <XpBridge />
                 <Widget />
                 <Alert />
                 <DepositAlert />

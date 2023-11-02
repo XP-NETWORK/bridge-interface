@@ -48,7 +48,7 @@ export const availability = {
     APTOS: ["Petra"],
     NEAR: ["WalletSelector"],
     Solana: ["Phantom", "Solflare"],
-    Hedera: ["Hashpack"],
+    Hedera: ["Hashpack", "MetaMask"],
     ICP: ["Plug", "Stoic", "Bitfinity"],
 };
 

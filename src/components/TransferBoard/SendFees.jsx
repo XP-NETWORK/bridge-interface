@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import React, { useState, useRef } from "react";
-import { LittleLoader } from "../innercomponents/LittleLoader";
+//import { LittleLoader } from "../innercomponents/LittleLoader";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -49,7 +49,7 @@ function SendFees(props) {
 
     const [fees, setFees] = useState("");
 
-    const [loading, setLoading] = useState(false);
+    //const [loading, setLoading] = useState(false);
 
     // const [deployFeeLoading, setDeployFeeLoading] = useState(false);
 
@@ -59,7 +59,7 @@ function SendFees(props) {
     const deployFeeInterval = useRef(null);
 
     async function estimate(fromChain, toChain) {
-        setLoading(true);
+        //setLoading(true);
         const { fees, formatedFees } = await fromChain.estimate(
             toChain,
             selectedNFTList[0],
@@ -75,7 +75,7 @@ function SendFees(props) {
         );
         dispatch(setBigNumFees(fees));
         setFees(formatedFees * selectedNFTList.length);
-        setLoading(false);
+        //setLoading(false);
     }
 
     const estimateDeploy = async (fromChain, toChain, nfts) => {
@@ -184,29 +184,22 @@ function SendFees(props) {
             <div className="fees">
                 <div className="fees__title">Fees</div>
                 <div className="fees__bank">
-                    {balance ? (
-                        <span className="fees__balance">{`Balance: ${balance.toFixed(
-                            3
-                        )} ${chainWrapper?.chainParams.currencySymbol ||
-                            (from?.text === "Gnosis" && "Gnosis")}`}</span>
-                    ) : (
-                        `Balance: 0 ${chainWrapper?.chainParams
-                            .currencySymbol || ""}`
-                    )}
-                    {loading ? (
-                        <LittleLoader />
-                    ) : (
-                        <span>
-                            {`${
-                                fees && fees > 0
-                                    ? fees?.toFixed(getNumToFix(fees))
-                                    : "0"
-                            }
+                    <span className="fees__balance">
+                        Balance: {balance?.toFixed(3) || 0}{" "}
+                        {chainWrapper?.chainParams.currencySymbol ||
+                            (from?.text === "Gnosis" && "Gnosis")}
+                    </span>
+
+                    <span>
+                        {`${
+                            fees && fees > 0
+                                ? fees?.toFixed(getNumToFix(fees))
+                                : "0"
+                        }
                         ${chainWrapper?.chainParams.currencySymbol || ""} 
                         `}
-                            {/* ${discountLeftUsd && showDiscount(fees).toFixed(2)} */}
-                        </span>
-                    )}
+                        {/* ${discountLeftUsd && showDiscount(fees).toFixed(2)} */}
+                    </span>
                 </div>
             </div>
             {deployFees && selectedNFTList?.length ? (

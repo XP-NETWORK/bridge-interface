@@ -2,7 +2,7 @@ import axios from "axios";
 import { ethers } from "ethers";
 
 class WService {
-    widgetApi = "https://xpnetwork-widget.herokuapp.com"; //"http://localhost:3030"; //"https://xpnetwork-widget.herokuapp.com";dsds
+    widgetApi = "https://widget-app.xp.network/"; //"http://localhost:3030";
     msg = "Please sign in order to see your widgets";
     maxExtraFees = 2;
 

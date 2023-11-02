@@ -29,7 +29,7 @@ export default function HigherAPTOS(OriginalComponent) {
         const { from, to } = useSelector((state) => state.general);
 
         const navigateToAccountRoute = () => {
-            if (from && to) navigate(getRightPath());
+            if (from && to) navigate(getRightPath(bridge.network, from, to));
         };
 
         const getStyles = () => {

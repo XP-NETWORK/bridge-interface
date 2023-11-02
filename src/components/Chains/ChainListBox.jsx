@@ -56,7 +56,7 @@ function ChainListBox({ serviceContainer }) {
     const evmAccount = useSelector((state) => state.general.account);
     const tronAccount = useSelector((state) => state.general.tronWallet);
     const { account } = useWeb3React();
-    const bitKeep = useSelector((state) => state.general.bitKeep);
+
     const nftChainListRef = useRef(null);
     const [reached, setReached] = useState(false);
 
@@ -116,17 +116,7 @@ function ChainListBox({ serviceContainer }) {
                 !bridge.currentType
             ) {
                 if (from && from?.text !== chain.text) {
-                    if (from?.text === "Harmony" && bitKeep) {
-                        dispatch(setTemporaryFrom(chain));
-                        if (
-                            !evmAccount ||
-                            (evmAccount?.length === 0 &&
-                                window.location.href.includes("account"))
-                        ) {
-                            dispatch(setChangeWallet(true));
-                        }
-                        handleClose();
-                    } else if (
+                    if (
                         evmAccount &&
                         // (account || evmAccount) &&
                         from.text !== "VeChain"
@@ -184,17 +174,7 @@ function ChainListBox({ serviceContainer }) {
                 `${chain.text} selected to destination`
             );
             if (from?.text === chain.text) {
-                if (to?.text === "Harmony" && bitKeep) {
-                    dispatch(setTemporaryFrom(to));
-                    if (
-                        !evmAccount ||
-                        (evmAccount?.length === 0 &&
-                            window.location.href.includes("account"))
-                    ) {
-                        dispatch(setChangeWallet(true));
-                    }
-                    handleClose();
-                } else if (account || evmAccount) {
+                if (account || evmAccount) {
                     const switched = await switchNetwork(to);
                     if (switched) {
                         dispatch(setTo(from));

@@ -48,8 +48,7 @@ export const TEZOS = "TEZOS";
 export const stagingWNFT = "https://staging-nft.xp.network";
 export const wnft = ["https://wnfts.xp.network", "https://nft.xp.network"];
 
-export const wnftPattern =
-    "(wnfts.xp.network|nft.xp.network|staging-nft.xp.network|bridge-wnftapi)";
+export const wnftPattern = /(\S+xp\.network)/;
 export const isTestnet = /testnet/.test(window.location.pathname);
 export const dev = /(localhost|dev|10\.0\.0|trycloudflare)/.test(
     window.location.hostname
@@ -66,7 +65,7 @@ export const sockets = {
     mainnet: "wss://dev-explorer-api.herokuapp.com", //wss://dest-scraper.herokuapp.com/
     scraper: "wss://dest-scraper.herokuapp.com",
     staging: "https://staging-tx-socket-925db65784a7.herokuapp.com/",
-    testnet: "wss://testnet-bridge-explorer.herokuapp.com/", //"wss://testnet-bridge-explorer.herokuapp.com/",
+    testnet: "wss://testnet-bridge-explorer.herokuapp.com/", //"https://testnet-tx-socket.herokuapp.com/", //"wss://testnet-bridge-explorer.herokuapp.com/",
 };
 
 export const getChainObject = (nonce) =>
@@ -239,8 +238,8 @@ export const chains = [
         order: -2,
 
         image: { avatar: true, src: Cardano },
-        testNet: true,
-        mainnet: true,
+        testNet: false,
+        mainnet: false,
         coming: true,
         newChain: false,
         //chainId: ,
@@ -438,12 +437,14 @@ export const chains = [
         key: "Hedera",
         text: "Hedera",
         nonce: 29,
-        order: -6,
+        order: -16,
         image: { avatar: true, src: HBAR },
-        testNet: biz,
-        mainnet: biz,
-        newChain: biz,
-        coming: !biz,
+        testNet: true,
+        mainnet: true,
+        newChain: true,
+        coming: false,
+        chainId: 295,
+        tnChainId: 296,
     },
     {
         type: "EVM",
@@ -555,8 +556,8 @@ export const chains = [
         nonce: 0x26,
         order: -1,
         image: { avatar: true, src: brise },
-        testNet: biz,
-        mainnet: biz,
+        testNet: false,
+        mainnet: false,
         coming: true,
         newChain: false,
         chainId: 32520,

@@ -15,18 +15,19 @@ import WalletList from "./WalletList";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import { useDidUpdateEffect } from "../Settings/hooks";
-import Web3 from "web3";
+
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import { getRightPath } from "../../utils";
 import { useWeb3Modal } from "@web3modal/react";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
+import { withServices } from "../App/hocs/withServices";
 
-function ConnectWallet() {
+function ConnectWallet({ serviceContainer }) {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
     const [walletSearch, setWalletSearch] = useState("");
-
+    const { bridge } = serviceContainer;
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     let [show, setShow] = useState();
@@ -56,7 +57,7 @@ function ConnectWallet() {
     );
 
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
-    const bitKeep = useSelector((state) => state.general.bitKeep);
+
     const _account = useSelector((state) => state.general.account);
     //const { address } = useAccount();
 
@@ -106,14 +107,9 @@ function ConnectWallet() {
             googleAnalyticsCategories.Connect,
             `Clicked on connect. destination chain: ${from}`
         );
-        let provider;
+
         let _chainId;
-        if (bitKeep) {
-            provider = window.bitkeep?.ethereum;
-            await provider.request({ method: "eth_requestAccounts" });
-            const web3 = new Web3(provider);
-            _chainId = await web3.eth.getChainId();
-        }
+
         const chainID = chainId || _chainId;
 
         switch (true) {
@@ -124,21 +120,21 @@ function ConnectWallet() {
                 navigate(`/account${location.search ? location.search : ""}`);
                 break;
             case from.tnChainId === chainID:
-                navigate(`${getRightPath()}`);
+                navigate(`${getRightPath(bridge.network)}`);
                 break;
             case from.chainId === chainID: {
-                navigate(`${getRightPath()}`);
+                navigate(`${getRightPath(bridge.network)}`);
                 break;
             }
             case from.type !== "EVM": {
                 if (_account && _account?.length > 0) {
-                    navigate(`${getRightPath()}`);
+                    navigate(`${getRightPath(bridge.network)}`);
                 }
                 break;
             }
             default: {
                 switchNetwork(from).then(() => {
-                    navigate(`${getRightPath()}`);
+                    navigate(`${getRightPath(bridge.network)}`);
                 });
                 break;
             }
@@ -263,4 +259,4 @@ function ConnectWallet() {
     );
 }
 //
-export default ConnectWallet;
+export default withServices(ConnectWallet);

@@ -7,18 +7,27 @@ import TxStatus from "./TxStatus";
 import { StringShortener } from "../../../utils";
 import Tooltip from "../AccountModal/Tooltip";
 
-import { withServices } from "../../App/hocs/withServices";
+import withChains from "../../NFTsBoard/hocs";
 
 //import { biz } from "../../values";
 
-export default withServices(function TransferredNft({
+const TransferredNft = ({
     nft,
     links,
     serviceContainer,
     receiver,
-}) {
+    chainSpecificRender,
+}) => {
     const { bridge } = serviceContainer;
-    const { image, animation_url, txn, name, mintWith, tagetCanister } = nft;
+    const {
+        image,
+        animation_url,
+        txn,
+        name,
+        mintWith,
+        tagetCanister,
+        workarond_dest_hash,
+    } = nft;
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
     const account = useSelector((state) => state.general.account);
@@ -34,6 +43,9 @@ export default withServices(function TransferredNft({
 
     const depText = window.innerWidth <= 600 ? "Dep" : "Departure Hash";
     const desText = window.innerWidth <= 600 ? "Des" : "Destination Hash";
+
+    const RenderClaimInDestination =
+        chainSpecificRender?.RenderClaimInDestination;
 
     const checkStatus = () => {
         const { tokenId, token_id, uri, address } = nft.native;
@@ -84,12 +96,21 @@ export default withServices(function TransferredNft({
     );
 
     useEffect(() => {
-        if (tagetCanister) {
+        if (tagetCanister || workarond_dest_hash) {
             setTxnStatus("completed");
+
+            workarond_dest_hash &&
+                setHashes({
+                    destHash: toChain.adaptHashView(
+                        workarond_dest_hash,
+                        receiver
+                    ),
+                });
         }
-    }, [tagetCanister]);
+    }, [tagetCanister, workarond_dest_hash]);
 
     const targetCollection = mintWith || tagetCanister;
+    const completed = txnStatus === "completed";
 
     return (
         <div className="success-nft-info__wrapper">
@@ -140,6 +161,14 @@ export default withServices(function TransferredNft({
                 </div>
             </div>
 
+            {RenderClaimInDestination && completed && (
+                <RenderClaimInDestination
+                    serviceContainer={serviceContainer}
+                    fromChain={from.nonce}
+                    receiver={receiver}
+                />
+            )}
+
             {targetCollection && (
                 <div className="transferred-nft-hashes secret-hashes">
                     <div className="chain-hash">
@@ -163,4 +192,6 @@ export default withServices(function TransferredNft({
             )}
         </div>
     );
-});
+};
+
+export default withChains(TransferredNft, { withDestinationChains: true });

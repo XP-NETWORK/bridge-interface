@@ -8,29 +8,23 @@ import Deposits from "./Deposits";
 import PageNotFound from "./PageNotFound";
 import { getRightPath } from "../utils";
 
-import { useSelector } from "react-redux";
-
 import { EventPage } from "../event";
 
-//import { Helmet } from "react-helmet";
+import { withServices } from "../components/App/hocs/withServices";
+import { useSelector } from "react-redux";
 
-//import meta from "../event/a.png";
-
-function XpBridge() {
+function XpBridge({ serviceContainer }) {
     const [nftAccountPath, setPath] = useState("/account");
-
-    const { testNet, staging } = useSelector((state) => ({
-        testNet: state.general.testNet,
-        staging: state.general.staging,
-    }));
+    const { bridge } = serviceContainer;
+    //console.log(network, "network");
 
     useEffect(() => {
         setPath(
-            getRightPath()
+            getRightPath(bridge?.network)
                 .split("?")
                 ?.at(0)
         );
-    }, [testNet, staging]);
+    }, [bridge?.network]);
 
     const { widget, wsettings } = useSelector(({ widget }) => ({
         widget: widget.widget,
@@ -76,4 +70,4 @@ function XpBridge() {
     );
 }
 
-export default XpBridge;
+export default withServices(XpBridge);

@@ -16,7 +16,7 @@ import {
 import { getChainObject } from "../../../components/values";
 // import { chains } from "../../components/values";
 import QRCode from "qrcode";
-import { ExtensionProvider } from "@elrondnetwork/erdjs";
+import { ExtensionProvider } from "@multiversx/sdk-extension-provider";
 import { useNavigate } from "react-router";
 import { getRightPath } from "../../../utils";
 import { WalletConnectV2Provider } from "@multiversx/sdk-wallet-connect-provider";
@@ -76,7 +76,7 @@ export default function HigherMultiversX(OriginalComponent) {
         );
 
         const navigateToAccountRoute = () => {
-            navigate(getRightPath());
+            navigate(getRightPath(bridge.network));
         };
 
         const handleConnect = async (wallet) => {
@@ -107,6 +107,7 @@ export default function HigherMultiversX(OriginalComponent) {
                     case "MultiversXDeFi": {
                         walletConnected = "MultiversX DeFi";
                         const instance = ExtensionProvider.getInstance();
+
                         try {
                             await instance
                                 .init()
@@ -135,6 +136,9 @@ export default function HigherMultiversX(OriginalComponent) {
                         const {
                             account: { address },
                         } = instance;
+
+                        instance.chainId = chainId;
+
                         if (account?.name === "CanceledError") {
                             throw new Error("CanceledError");
                         }

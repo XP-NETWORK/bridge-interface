@@ -1,17 +1,17 @@
-import { useWeb3React } from "@web3-react/core";
-import React, { useEffect } from "react";
+//import { useWeb3React } from "@web3-react/core";
+import React /*{ useEffect }*/ from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { ethers } from "ethers";
+//import { ethers } from "ethers";
 import {
-    setAccount,
+    // setAccount,
     setAccountModal,
-    setFrom,
-    setUnsupportedNetwork,
+    //setFrom,
+    // setUnsupportedNetwork,
     setWalletsModal,
 } from "../../store/reducers/generalSlice";
-import { setSigner } from "../../store/reducers/signersSlice";
-import { chains } from "../values";
+//import { setSigner } from "../../store/reducers/signersSlice";
+//import { chains } from "../values";
 import Identicon from "./Identicon";
 import { setDepositWalletModal } from "../../store/reducers/discountSlice";
 import PropTypes from "prop-types";
@@ -19,21 +19,21 @@ import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 
 export default function UserConnect({ mobile }) {
     const dispatch = useDispatch();
-    const to = useSelector((state) => state.general.to);
+    ////const to = useSelector((state) => state.general.to);
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
     const tezosAccount = useSelector((state) => state.general.tezosAccount);
     const algorandAccount = useSelector(
         (state) => state.general.algorandAccount
     );
-    const WCProvider = useSelector((state) => state.general.WCProvider);
+    // const WCProvider = useSelector((state) => state.general.WCProvider);
     const _account = useSelector((state) => state.general.account);
     const innerWidth = useSelector((state) => state.general.innerWidth);
     const tronWallet = useSelector((state) => state.general.tronWallet);
-    const bitKeep = useSelector((state) => state.general.bitKeep);
-    const WalletConnect = useSelector((state) => state.general.WalletConnect);
-    const { account, chainId, active } = useWeb3React();
+
+    //const WalletConnect = useSelector((state) => state.general.WalletConnect);
+    // const { account, chainId, active } = useWeb3React();
     const hederaAccount = useSelector((state) => state.general.hederaAccount);
-    const testnet = useSelector((state) => state.general.testNet);
+    // const testnet = useSelector((state) => state.general.testNet);
     const secretAccount = useSelector((state) => state.general.secretAccount);
     const location = useLocation();
     const tonAccount = useSelector((state) => state.general.tonAccount);
@@ -85,91 +85,6 @@ export default function UserConnect({ mobile }) {
             )}...${walletAccount.substring(walletAccount.length - 4)}`;
         }
     };
-
-    const getChain = async (id) => {
-        if (testnet) {
-            return chains.find((chain) => chain.tnChainId === id);
-        } else {
-            return chains.find((chain) => chain.chainId === id);
-        }
-    };
-
-    const handleChangeAccountOrChainId = async (hex) => {
-        const hexToDecimal = (hex) => parseInt(hex, 16);
-        const decimal = hexToDecimal(hex);
-        const chainConnected = await getChain(decimal);
-
-        switch (true) {
-            case testnet:
-                if (
-                    !chainConnected?.testNet ||
-                    !chains.some((chain) => chain.tnChainId === decimal)
-                ) {
-                    dispatch(setUnsupportedNetwork(true));
-                } else if (decimal === to.tnChainId) {
-                    dispatch(setUnsupportedNetwork(true));
-                } else {
-                    dispatch(setUnsupportedNetwork(false));
-                    dispatch(setFrom(chainConnected));
-                }
-                break;
-            default:
-                if (
-                    !chainConnected?.mainnet ||
-                    !chains.some((chain) => chain?.chainId === decimal)
-                ) {
-                    dispatch(setUnsupportedNetwork(true));
-                } else if (decimal === to.chainId) {
-                    dispatch(setUnsupportedNetwork(true));
-                } else {
-                    dispatch(setUnsupportedNetwork(false));
-                    dispatch(setFrom(chainConnected));
-                }
-                break;
-        }
-    };
-
-    useEffect(() => {
-        if (bitKeep && _account) {
-            window.bitkeep?.ethereum?.on("chainChanged", (chainId) => {
-                handleChangeAccountOrChainId(chainId);
-            });
-
-            window.bitkeep?.ethereum?.on("accountsChanged", () => {
-                handleChangeAccountOrChainId();
-            });
-        } else {
-            if (account) {
-                window.ethereum.on("chainChanged", (chainId) => {
-                    handleChangeAccountOrChainId(chainId);
-                });
-
-                window.ethereum.on("accountsChanged", () => {
-                    handleChangeAccountOrChainId();
-                });
-            }
-        }
-    }, []);
-
-    useEffect(() => {
-        if (account && WCProvider) {
-            const provider = new ethers.providers.Web3Provider(
-                WCProvider?.walletConnectProvider || window.ethereum
-            );
-            const signer = provider.getSigner(account);
-            dispatch(setSigner(signer));
-        }
-    }, [chainId, WCProvider]);
-
-    useEffect(() => {
-        if (account === undefined) return;
-
-        if (!account && WalletConnect) {
-            active !== undefined && window.location.reload();
-        }
-
-        dispatch(setAccount(account));
-    }, [active]);
 
     return (
         <div

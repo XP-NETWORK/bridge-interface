@@ -3,10 +3,17 @@ import { Image, Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Close } from "../../../assets/img/icons/close.svg";
-import PropTypes from "prop-types";
+
 import { getRightPath } from "../../../utils";
 
-export default function MaiarModal({ strQR, close }) {
+import { withServices } from "../../App/hocs/withServices";
+
+export default withServices(function MaiarModal({
+    strQR,
+    close,
+    serviceContainer,
+}) {
+    const { bridge } = serviceContainer;
     const navigate = useNavigate();
 
     const elrondAccount = useSelector((state) => state.general.elrondAccount);
@@ -15,7 +22,7 @@ export default function MaiarModal({ strQR, close }) {
     // deepLink
 
     const navigateToAccountRoute = () => {
-        navigate(getRightPath());
+        navigate(getRightPath(bridge.network));
     };
 
     const walletConnectDeepLink =
@@ -57,11 +64,4 @@ export default function MaiarModal({ strQR, close }) {
             </Modal.Body>
         </>
     );
-}
-MaiarModal.propTypes = {
-    strQR: PropTypes.string,
-    qrCodeString: PropTypes.string,
-    show: PropTypes.any,
-    handleClose: PropTypes.any,
-    close: PropTypes.func,
-};
+});

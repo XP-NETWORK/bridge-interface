@@ -338,7 +338,7 @@ export const withStyles = (Wrapped) =>
                 border-radius: ${btnRadius ? btnRadius + "px" : ""};
             }
     
-            a.themBtn:hover, .switching:hover, .mint-nft-container button, .event_success_modal button,  .connect-wallet__button:hover,.transfer-button,  .transfer-button:hover, .import-nft__buttons .btn-import {
+            a.themBtn:hover, .switching:hover, .hederaCheckClaimBtn,  .mint-nft-container button, .event_success_modal button,  .connect-wallet__button:hover,.transfer-button,  .transfer-button:hover, .import-nft__buttons .btn-import {
               filter: brightness(115%);
               background:  ${btnBackground ? btnBackground : ""};
               color:  ${btnColor ? btnColor : ""};

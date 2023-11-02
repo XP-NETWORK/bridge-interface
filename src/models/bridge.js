@@ -33,6 +33,8 @@ class Bridge {
     }
 
     getNonce(chainId) {
+        chainId = Number(chainId);
+
         return chains.find(
             (chain) => chain.chainId === chainId || chain.tnChainId === chainId
         )?.nonce;
@@ -208,6 +210,19 @@ class Bridge {
         }
     }
 
+    setInnerChain(nonce, chain) {
+        const chainParams = CHAIN_INFO.get(nonce);
+        const params = {
+            nonce,
+            chainParams,
+            chain,
+            bridge: this.bridge,
+        };
+        const chainWrapper = new ChainInterface[chainParams.type](params);
+        this.chains[String(nonce)] = chainWrapper;
+        return chainWrapper;
+    }
+
     async isWrapped(uri) {
         if (/^data:application\/json/.test(uri)) {
             const res = await (await axios(uri)).data;
@@ -236,11 +251,8 @@ class Bridge {
 
                 const chain = await this.getChain(Number(origin)).catch(
                     async (e) => {
-                        if (
-                            e.message.includes(
-                                "Cannot read properties of undefined "
-                            )
-                        ) {
+                        if (e.message?.includes("constructor")) {
+                            if (!origin) return;
                             const mainnetBridge = await this.init();
                             return await mainnetBridge.getChain(Number(origin));
                         }
@@ -250,7 +262,7 @@ class Bridge {
                 nft.isWrappedNft = true;
                 //nft.origin = origin;
 
-                return chain.unwrap(nft, data);
+                return chain?.unwrap(nft, data);
             } catch (e) {
                 console.log(e.message);
             }

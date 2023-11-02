@@ -18,7 +18,8 @@ export default function Error() {
         error: state.general.error,
         errorLink: state.general.errorLink,
     }));
-    const whitelistErr = error?.includes("automatically whitelisted");
+    const whitelistErr = /automatically whitelisted/gi.test(error);
+    const infoError = /nothing to claim/gi.test(error);
 
     if (error && whitelistErr) {
         error = <WhiteListError />;
@@ -31,11 +32,13 @@ export default function Error() {
                     <img
                         style={{ margin: "30px auto", width: "120px" }}
                         alt=""
-                        src={!whitelistErr ? ERR : WHERROR}
+                        src={whitelistErr || infoError ? WHERROR : ERR}
                     />
                     <Modal.Title style={{ textAlign: "center" }}>
                         {!whitelistErr
-                            ? "An error has occurred"
+                            ? infoError
+                                ? ""
+                                : "An error has occurred"
                             : "Smart contract cannot be automatically whitelisted"}
                     </Modal.Title>
                     <span className="CloseModal" onClick={handleClose}>

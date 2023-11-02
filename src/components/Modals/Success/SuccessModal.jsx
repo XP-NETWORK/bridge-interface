@@ -155,18 +155,18 @@ export default withServices(function SuccessModal({ serviceContainer }) {
                 addressTo: addressBaseTo,
             });
 
-            if (bridge.network === "staging" /*"testnet"*/) {
+            if (bridge.network === "staging" /*"staging" /*"testnet"*/) {
                 toChain
                     .listetnExecutedSocket(socket, from.nonce)
-                    .then((tagetCanister) => {
-                        console.log(tagetCanister, "d");
-                        if (tagetCanister) {
+                    .then((res) => {
+                        console.log(res, "socket_res");
+                        if (res) {
                             dispatch(
                                 setSelectedNFT({
                                     index: 0,
                                     nft: {
                                         ...selectedNFTList[0],
-                                        tagetCanister,
+                                        ...res,
                                     },
                                 })
                             );
@@ -181,6 +181,7 @@ export default withServices(function SuccessModal({ serviceContainer }) {
             if (socket) {
                 socket.off("incomingEvent", incoming);
                 socket.off("updateEvent", updateOld);
+                socket.removeAllListeners("tx_executed_event");
                 //scraperSocket.off("updateEvent", updateScraper);
             }
         };
