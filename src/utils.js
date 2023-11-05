@@ -44,7 +44,7 @@ export const transformToDate = (date) => {
 
 export const fetchXPUpdate = () => {
     return axios
-        .get("https://xpvitaldata.herokuapp.com/last-commit")
+        .get("https://case-studies.xp.network/last-commit")
         .then((response) => {
             return response.data;
         })
@@ -89,7 +89,7 @@ export const convert = (address) => {
 };
 
 export const saveForSearch = async (address, chain, data) => {
-    const baseUrl = "https://server-bridge.herokuapp.com/saveUser";
+    const baseUrl = "https://search-service.xp.network/saveUser";
     const body = {
         address,
         chain,
@@ -105,7 +105,7 @@ export const saveForSearch = async (address, chain, data) => {
 };
 
 export const getSearched = async (address, searched, nonce) => {
-    const url = `https://server-bridge.herokuapp.com/nft?address=${address}&nft=${searched}&chain=${nonce}`;
+    const url = `https://search-service.xp.network/nft?address=${address}&nft=${searched}&chain=${nonce}`;
     try {
         const response = await axios.get(url);
         return response.data;

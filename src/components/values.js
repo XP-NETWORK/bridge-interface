@@ -62,8 +62,7 @@ export const BridgeModes = {
 };
 
 export const sockets = {
-    mainnet: "wss://dev-explorer-api.herokuapp.com", //wss://dest-scraper.herokuapp.com/
-    scraper: "wss://dest-scraper.herokuapp.com",
+    mainnet: "wss://explorer-app.xp.network::/ws", //"wss://dev-explorer-api.herokuapp.com", //wss://dest-scraper.herokuapp.com/
     staging: "https://staging-tx-socket-925db65784a7.herokuapp.com/",
     testnet: "wss://tools.xp.network::/testnet-explorer/ws", //"https://testnet-tx-socket.herokuapp.com/", //"wss://testnet-bridge-explorer.herokuapp.com/",
 };
