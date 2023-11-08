@@ -111,9 +111,7 @@ const TransferredNft = ({
 
     const targetCollection = mintWith || tagetCanister;
     const v3BridgeTx = Boolean(
-        depHash &&
-            bridge.getParamsByNonce(from.nonce).v3_bridge &&
-            bridge.getParamsByNonce(to.nonce).v3_bridge
+        depHash && fromChain?.v3Bridge && toChain?.v3Bridge
     );
     const completed = Boolean(
         txnStatus === "completed" || (v3BridgeTx && txnStatus !== "claimed")

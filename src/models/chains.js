@@ -586,6 +586,7 @@ class NoWhiteListEVM extends EVM {
 }
 
 class V3_EVM extends EVM {
+    v3Bridge = true;
     async preTransfer(...args) {
         args[4] = this.chain.getParams()?.v3_bridge;
 

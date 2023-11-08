@@ -150,7 +150,7 @@ class Bridge {
             switch (chainParams.type) {
                 case ChainType.EVM:
                     switch (true) {
-                        case Object.values(this.config)
+                        /*case Object.values(this.config)
                             .filter((params) => params.v3_bridge)
                             .map((p) => p.nonce)
                             .includes(params.nonce): {
@@ -158,7 +158,7 @@ class Bridge {
                                 params
                             );
                             return this.chains[chainId];
-                        }
+                        }*/
 
                         case Object.values(this.config)
                             .filter((params) => params.noWhitelist)
