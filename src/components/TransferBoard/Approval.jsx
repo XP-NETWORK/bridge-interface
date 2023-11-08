@@ -25,6 +25,7 @@ function Approval({ serviceContainer }) {
     const [approvedLoading, setApprovedLoading] = useState();
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
+    const account = useSelector((state) => state.general.account);
     let isInvalidAddress = useSelector((state) => state.general.isInvalid);
 
     const selectedNFTList = useSelector(
@@ -80,7 +81,7 @@ function Approval({ serviceContainer }) {
             handleGA4Event(googleAnalyticsCategories.Approve, `Approve failed`);
             errorToLog({
                 type: "Approve",
-                walletAddress: await fromChain.signer.getAddress(),
+                walletAddress: account,
                 time: new Date(),
                 fromChain: from.text,
                 toChain: to.text,
