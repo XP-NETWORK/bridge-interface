@@ -50,7 +50,6 @@ const Container = ({ children, serviceContainer, setContainer }) => {
                 : checkWallet;
 
             const bridge = await serviceContainer?.bridge?.init(network);
-
             checkWallet && bridge.setCheckWallet(checkWallet);
 
             if (!event) {

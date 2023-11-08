@@ -8,6 +8,7 @@ import { setDiscountLeftUsd } from "../../../store/reducers/discountSlice";
 import { ChainType } from "xp.network";
 
 import DeployUserStore from "../../TransferBoard/DeployUserStore";
+import { ClaimInDestination } from "../../TransferBoard/ClaimInDestination";
 
 export const withEVM = (Wrapped) =>
     function CBU(props) {
@@ -27,6 +28,7 @@ export const withEVM = (Wrapped) =>
                     ...(props.chainSpecificRender || {}),
                     [ChainType.EVM]: {
                         DeployUserStore,
+                        RenderClaimInDestination: ClaimInDestination,
                     },
                 }}
                 chainSpecific={{

@@ -40,6 +40,10 @@ class Bridge {
         )?.nonce;
     }
 
+    getParamsByNonce(nonce) {
+        return Object.values(this.config).find((v) => v.nonce === nonce);
+    }
+
     setCheckWallet(wallet) {
         this.checkWallet = wallet;
     }
@@ -78,7 +82,7 @@ class Bridge {
 
             return this;
         } catch (e) {
-            console.log(e, "on Init bridge");
+            console.log(e.message, "on Init bridge");
         }
     }
 
@@ -146,6 +150,16 @@ class Bridge {
             switch (chainParams.type) {
                 case ChainType.EVM:
                     switch (true) {
+                        case Object.values(this.config)
+                            .filter((params) => params.v3_bridge)
+                            .map((p) => p.nonce)
+                            .includes(params.nonce): {
+                            this.chains[chainId] = new ChainInterface.V3_EVM(
+                                params
+                            );
+                            return this.chains[chainId];
+                        }
+
                         case Object.values(this.config)
                             .filter((params) => params.noWhitelist)
                             .map((p) => p.nonce)

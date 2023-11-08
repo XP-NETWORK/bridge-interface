@@ -19,7 +19,7 @@ import { withServices } from "../../App/hocs/withServices";
 import { StringShortener } from "../../../utils";
 
 import { connectHashPack } from "../../Wallet/HederaWallet/hederaConnections";
-import { setHederaQuietConnection } from "../../../store/reducers/signersSlice";
+import { setQuietConnection } from "../../../store/reducers/signersSlice";
 import DeployUserStore from "../../TransferBoard/DeployUserStore";
 
 const CheckClaimables = withServices(({ serviceContainer }) => {
@@ -229,14 +229,14 @@ export const RenderClaimInDestination = ({
 
         () => {
             console.log("unmount RenderClaimInDestination");
-            dispatch(setHederaQuietConnection(false));
+            dispatch(setQuietConnection(false));
         };
     }, []);
 
     const handler = async () => {
         //setVisisble(false);
         // localStorage.setItem("XP_HEDERA_QUIET_CONNECTION", true);
-        dispatch(setHederaQuietConnection(true));
+        dispatch(setQuietConnection(true));
         connectHashPack(bridge.network === "testnet" ? true : false);
 
         const chainWapper = await new Promise((r) => {
@@ -256,7 +256,7 @@ export const RenderClaimInDestination = ({
             })();
         });
 
-        dispatch(setHederaQuietConnection(false));
+        dispatch(setQuietConnection(false));
 
         await chainWapper.checkAndAssociate(tokens).catch((e) => {
             dispatch(setError({ message: e.message }));

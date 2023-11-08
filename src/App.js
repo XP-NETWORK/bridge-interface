@@ -97,7 +97,7 @@ function App() {
             dispatch(setError(false));
             dispatch(setGetFeaturedModal(false));
             dispatch(setRedirectModal(false));
-            dispatch(setApproveLoader(false));
+            false && dispatch(setApproveLoader(false));
             dispatch(setChangeWallet(false));
             dispatch(setAccountModal(false));
             dispatch(setWalletsModal(false));

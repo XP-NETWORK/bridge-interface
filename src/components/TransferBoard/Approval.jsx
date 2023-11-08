@@ -27,9 +27,6 @@ function Approval({ serviceContainer }) {
     const to = useSelector((state) => state.general.to);
     let isInvalidAddress = useSelector((state) => state.general.isInvalid);
 
-    //const testnet = useSelector((state) => state.general.testNet);
-    const account = useSelector((state) => state.general.account);
-
     const selectedNFTList = useSelector(
         (state) => state.general.selectedNFTList
     );
@@ -43,6 +40,7 @@ function Approval({ serviceContainer }) {
 
     const approveEach = async (nft, index) => {
         const arr = new Array(index + 1).fill(0);
+        const fromChain = await bridge.getChain(from.nonce);
         try {
             const { tokenId, contract, chainId } = nft.native;
             const alreadyApproved = approvedNFTList.find(
@@ -53,7 +51,6 @@ function Approval({ serviceContainer }) {
             );
 
             if (!alreadyApproved) {
-                const fromChain = await bridge.getChain(from.nonce);
                 await fromChain.checkSigner();
                 await fromChain.preTransfer(
                     nft,
@@ -83,7 +80,7 @@ function Approval({ serviceContainer }) {
             handleGA4Event(googleAnalyticsCategories.Approve, `Approve failed`);
             errorToLog({
                 type: "Approve",
-                walletAddress: account,
+                walletAddress: await fromChain.signer.getAddress(),
                 time: new Date(),
                 fromChain: from.text,
                 toChain: to.text,

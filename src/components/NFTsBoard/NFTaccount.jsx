@@ -39,7 +39,7 @@ import EGoldSuccess from "./../Modals/eGoldSuccess/EGoldSuccess";
 import { checkXpNetLocked } from "../../services/deposits";
 import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 
-import { RenderClaimInDestination } from "./hocs/hederaHOC";
+//import { RenderClaimInDestination } from "./hocs/hederaHOC";
 
 //import { biz } from "../values";
 
@@ -50,7 +50,12 @@ import ReceiverIsContract from "../Alerts/ReceiverIsContract";
 const intervalTm = 15_000;
 
 function NFTaccount(props) {
-    const { serviceContainer, chainSpecific, _from } = props;
+    const {
+        serviceContainer,
+        chainSpecific,
+        _from,
+        //chainSpecificRender,
+    } = props;
 
     const dispatch = useDispatch();
 
@@ -87,6 +92,8 @@ function NFTaccount(props) {
     const lockMainPannel = useSelector((state) => state.general.lockMainPannel);
 
     const preFetchData = useSelector((state) => state.general.preFetchData);
+
+    //const Claim = chainSpecificRender?.RenderClaimInDestination;
 
     let _account = checkWallet || account;
 
@@ -219,13 +226,18 @@ function NFTaccount(props) {
                 } ${lockMainPannel ? " lockedX" : ""}`}
             >
                 <ReturnBtn />
-                {false && (
-                    <RenderClaimInDestination
+
+                {/*false && (
+                    <Claim
                         serviceContainer={serviceContainer}
-                        fromChain={6}
-                        receiver={"0x00000000000000000000000000000000002b22a1"}
+                        fromChain={_from.nonce}
+                        toChain={7}
+                        hash={
+                            "0x7d742e959c2c375a672c56dc08769101da94c10f64875cd47d8735ff8b16ab72"
+                        }
                     />
-                )}
+                    )*/}
+
                 <div className="row account__container">
                     <div className="nftListCol col-lg-8">
                         {!isMobile && <NFTscreen />}

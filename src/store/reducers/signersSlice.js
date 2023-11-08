@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    hederaQuietConnection: false,
+    quietConnection: false,
 };
 
 const signersSlice = createSlice({
@@ -17,8 +17,8 @@ const signersSlice = createSlice({
         setWalletAddress(state, action) {
             state.walletAddress = action.payload;
         },
-        setHederaQuietConnection(state, action) {
-            state.hederaQuietConnection = action.payload;
+        setQuietConnection(state, action) {
+            state.quietConnection = action.payload;
         },
     },
 });
@@ -27,7 +27,7 @@ export const {
     setSigner,
     setChainFactoryConfig,
     setWalletAddress,
-    setHederaQuietConnection,
+    setQuietConnection,
 } = signersSlice.actions;
 
 export default signersSlice.reducer;

@@ -20,8 +20,8 @@ import { getChainObject } from "../../values";
 export const withHederaConnection = (Wrapped) =>
     function CB(props) {
         const dispatch = useDispatch();
-        const hederaQuietConnection = useSelector(
-            (state) => state.signers.hederaQuietConnection
+        const quietConnection = useSelector(
+            (state) => state.signers.quietConnection
         );
         const {
             serviceContainer: { bridge },
@@ -63,7 +63,7 @@ export const withHederaConnection = (Wrapped) =>
 
                             // chainWrapper.setSigner(signer);
 
-                            if (!hederaQuietConnection) {
+                            if (!quietConnection) {
                                 dispatch(setAccount(address));
                                 dispatch(setWalletsModal(false));
                                 dispatch(setConnectedWallet("HashPack"));
@@ -78,7 +78,7 @@ export const withHederaConnection = (Wrapped) =>
             };
             hashConnect.pairingEvent.once(handler);
             return () => hashConnect.pairingEvent.off(handler);
-        }, [hederaQuietConnection]);
+        }, [quietConnection]);
 
         CB.propTypes = {
             serviceContainer: PropTypes.object,
