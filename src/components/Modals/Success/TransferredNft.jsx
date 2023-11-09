@@ -110,7 +110,12 @@ const TransferredNft = ({
     }, [tagetCanister, workarond_dest_hash]);
 
     const targetCollection = mintWith || tagetCanister;
-    const completed = txnStatus === "completed";
+    const v3BridgeTx = Boolean(
+        depHash && fromChain?.v3Bridge && toChain?.v3Bridge
+    );
+    const completed = Boolean(
+        txnStatus === "completed" || (v3BridgeTx && txnStatus !== "claimed")
+    );
 
     return (
         <div className="success-nft-info__wrapper">
@@ -165,6 +170,15 @@ const TransferredNft = ({
                 <RenderClaimInDestination
                     serviceContainer={serviceContainer}
                     fromChain={from.nonce}
+                    toChain={to.nonce}
+                    hash={depHash}
+                    setDestHash={(hash) => {
+                        setHashes({
+                            ...hashes,
+                            destHash: toChain.adaptHashView(hash, receiver),
+                        });
+                        setTxnStatus("claimed");
+                    }}
                     receiver={receiver}
                 />
             )}

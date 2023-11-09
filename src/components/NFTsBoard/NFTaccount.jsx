@@ -39,6 +39,8 @@ import EGoldSuccess from "./../Modals/eGoldSuccess/EGoldSuccess";
 import { checkXpNetLocked } from "../../services/deposits";
 import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 
+//import { RenderClaimInDestination } from "./hocs/hederaHOC";
+
 //import { biz } from "../values";
 
 import withChains from "./hocs";
@@ -51,7 +53,12 @@ import AccountModal from "../Modals/AccountModal/AccountModal";
 const intervalTm = 15_000;
 
 function NFTaccount(props) {
-    const { serviceContainer, chainSpecific, _from } = props;
+    const {
+        serviceContainer,
+        chainSpecific,
+        _from,
+        //chainSpecificRender,
+    } = props;
 
     const dispatch = useDispatch();
 
@@ -89,7 +96,11 @@ function NFTaccount(props) {
 
     const preFetchData = useSelector((state) => state.general.preFetchData);
 
+    //const Claim = chainSpecificRender?.RenderClaimInDestination;
+
     let _account = checkWallet || account;
+
+    console.log(_account, "_account");
 
     const { bridge } = serviceContainer;
 

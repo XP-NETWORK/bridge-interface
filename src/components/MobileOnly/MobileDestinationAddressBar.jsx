@@ -22,6 +22,8 @@ import PropTypes from "prop-types";
 function MobileDestinationAddressBar() {
     const dispatch = useDispatch();
     const to = useSelector((state) => state.general.to);
+    const from = useSelector((state) => state.general.from);
+    const account = useSelector((state) => state.general.account);
     let receiver = useSelector((state) => state.general.receiver);
     const isInvalid = useSelector((state) => state.general.isInvalid);
     let [maxLength, setMaxLength] = useState(0);
@@ -50,10 +52,17 @@ function MobileDestinationAddressBar() {
     const alert = useSelector((state) => state.general.pasteDestinationAlert);
 
     useEffect(() => {
-        dispatch(setReceiver(""));
-        dispatch(setIsInvalidAddress(true));
-        setMaxLength(maxChainAddressLengths[to.type]);
-    }, [to]);
+        if (from && to) {
+            if (from.type === "EVM" && to.type === "EVM" && account) {
+                dispatch(setReceiver(account));
+            } else {
+                dispatch(setReceiver(""));
+            }
+
+            dispatch(setIsInvalidAddress(true));
+            setMaxLength(maxChainAddressLengths[to.type]);
+        }
+    }, [from, to, account]);
 
     useEffect(() => {
         if (receiver === "") {

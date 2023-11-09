@@ -25,10 +25,8 @@ function Approval({ serviceContainer }) {
     const [approvedLoading, setApprovedLoading] = useState();
     const from = useSelector((state) => state.general.from);
     const to = useSelector((state) => state.general.to);
-    let isInvalidAddress = useSelector((state) => state.general.isInvalid);
-
-    //const testnet = useSelector((state) => state.general.testNet);
     const account = useSelector((state) => state.general.account);
+    let isInvalidAddress = useSelector((state) => state.general.isInvalid);
 
     const selectedNFTList = useSelector(
         (state) => state.general.selectedNFTList
@@ -43,6 +41,7 @@ function Approval({ serviceContainer }) {
 
     const approveEach = async (nft, index) => {
         const arr = new Array(index + 1).fill(0);
+        const fromChain = await bridge.getChain(from.nonce);
         try {
             const { tokenId, contract, chainId } = nft.native;
             const alreadyApproved = approvedNFTList.find(
@@ -53,7 +52,6 @@ function Approval({ serviceContainer }) {
             );
 
             if (!alreadyApproved) {
-                const fromChain = await bridge.getChain(from.nonce);
                 await fromChain.checkSigner();
                 await fromChain.preTransfer(
                     nft,

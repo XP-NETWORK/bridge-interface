@@ -80,7 +80,7 @@ export default function WalletList({ connected, input, discount }) {
             ),
             name: "OKX Wallet",
             type: "EVM",
-            mobile: false,
+            mobile: true,
             desktop: true,
             order: 2,
             keyName: "OKX Wallet",

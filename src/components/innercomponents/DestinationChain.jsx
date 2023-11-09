@@ -25,7 +25,8 @@ function DestinationChain({ serviceContainer }) {
     const [toChainWrapper, setChainWrapper] = useState(null);
     const alert = useSelector((state) => state.general.pasteDestinationAlert);
     const to = useSelector((state) => state.general.to);
-
+    const from = useSelector((state) => state.general.from);
+    const account = useSelector((state) => state.general.account);
     const isInvalid = useSelector((state) => state.general.isInvalid);
 
     const dispatch = useDispatch();
@@ -38,11 +39,18 @@ function DestinationChain({ serviceContainer }) {
     }
 
     useEffect(() => {
-        dispatch(setReceiver(""));
-        dispatch(setIsInvalidAddress(true));
-        setMaxLength(maxChainAddressLengths[to.type]);
-        bridge.getChain(to.nonce).then((chain) => setChainWrapper(chain));
-    }, [to]);
+        if (from && to) {
+            if (from.type === "EVM" && to.type === "EVM" && account) {
+                dispatch(setReceiver(account));
+            } else {
+                dispatch(setReceiver(""));
+            }
+
+            dispatch(setIsInvalidAddress(true));
+            setMaxLength(maxChainAddressLengths[to.type]);
+            bridge.getChain(to.nonce).then((chain) => setChainWrapper(chain));
+        }
+    }, [from, to, account]);
 
     useEffect(() => {
         if (receiver === "") {

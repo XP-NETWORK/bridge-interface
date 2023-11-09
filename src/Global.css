@@ -1223,6 +1223,8 @@ span.statComp img {
     /* overflow-x: unset; */
     /* overflow-y: unset; */
     /* max-height: 300px; */
+    overflow-y: auto;
+    max-height: 300px;
     word-break: break-all;
 }
 

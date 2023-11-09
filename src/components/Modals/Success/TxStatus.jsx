@@ -71,6 +71,15 @@ export default function TxStatus({ status }) {
                         <div className="tx-txt">Completed</div>
                     </div>
                 );
+            case "claimed":
+                return (
+                    <div className="tx-status completed">
+                        <div className="tx-icon">
+                            <img src={complete} alt="" />
+                        </div>
+                        <div className="tx-txt">Claimed</div>
+                    </div>
+                );
             default:
                 return (
                     <div className="tx-status pending">

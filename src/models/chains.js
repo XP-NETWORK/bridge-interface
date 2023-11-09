@@ -8,6 +8,8 @@ import { ethers, BigNumber as BN } from "ethers";
 import xpchallenge from "../services/xpchallenge";
 
 import { extractType, setupURI } from "../utils";
+import { switchNetwork } from "../services/chains/evm/evmService";
+import { getChainObject } from "../components/values";
 
 const Xpchallenge = xpchallenge();
 const feeMultiplier = 1.1;
@@ -420,7 +422,8 @@ class EVM extends AbstractChain {
         }
     }
 
-    async preTransfer(nft, _, fees, __, toApprove = "") {
+    async preTransfer(...args) {
+        const [nft, _, fees, __, toApprove = ""] = args;
         if (!this.signer)
             throw new Error("No signer for ", this.chainParams.text);
         try {
@@ -432,21 +435,35 @@ class EVM extends AbstractChain {
                 toApprove
             );
         } catch (e) {
-            if (e.message?.includes("transaction underpriced")) {
-                return await this.chain.approveForMinter(
-                    nft,
-                    this.signer,
-                    fees,
-                    {
-                        gasPrice: new BigNumber(
-                            (await this.chain.getProvider().getGasPrice())._hex
-                        )
-                            .multipliedBy(1.1)
-                            .integerValue()
-                            .toString(),
-                    },
-                    toApprove
-                );
+            if (typeof e.message === "string") {
+                if (e.message.includes("transaction underpriced")) {
+                    return await this.chain.approveForMinter(
+                        nft,
+                        this.signer,
+                        fees,
+                        {
+                            gasPrice: new BigNumber(
+                                (
+                                    await this.chain.getProvider().getGasPrice()
+                                )._hex
+                            )
+                                .multipliedBy(1.1)
+                                .integerValue()
+                                .toString(),
+                        },
+                        toApprove
+                    );
+                }
+
+                if (e.message.match(/underlying network changed/gi)) {
+                    const switched = await switchNetwork(
+                        getChainObject(Number(nft.native.chainId))
+                    );
+
+                    if (switched) {
+                        return await this.preTransfer(...args);
+                    }
+                }
             }
             console.log(e, "e");
             throw e;
@@ -565,6 +582,40 @@ class NoWhiteListEVM extends EVM {
             console.log(e, "noWitelistEVM :in preTransfer");
             throw e;
         }
+    }
+}
+
+class V3_EVM extends EVM {
+    v3Bridge = true;
+    async preTransfer(...args) {
+        args[4] = this.chain.getParams()?.v3_bridge;
+
+        return await super.preTransfer(...args);
+    }
+
+    async transfer(args) {
+        const { nft, toChain, receiver } = args;
+
+        const result = await this.bridge.lockNFT(
+            this.chain,
+            toChain.chain,
+            nft,
+            this.signer,
+            receiver
+        );
+
+        return { result };
+    }
+
+    async claim(from, hash, fee) {
+        const result = await this.bridge.claimNFT(
+            from.chain,
+            this.chain,
+            hash,
+            this.signer,
+            fee
+        );
+        return { result };
     }
 }
 
@@ -1291,6 +1342,7 @@ class Casper extends AbstractChain {
 
 export default {
     EVM,
+    V3_EVM,
     NoWhiteListEVM,
     VeChain,
     Elrond,

@@ -23,7 +23,7 @@ import Tooltip from "../AccountModal/Tooltip";
 import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
 import { withServices } from "../../App/hocs/withServices";
 
-/*const socket1 = io("wss://tools.xp.network/explorer");
+/*const socket1 = io("wss://tools.xp.network", { path: "/testnet-explorer/ws" });
 
 setTimeout(() => {
     console.log("x");
@@ -103,8 +103,10 @@ export default withServices(function SuccessModal({ serviceContainer }) {
     const shortReceiver = StringShortener(formatedReceiver, 6);
 
     useEffect(() => {
-        const socket = io(sockets[bridge.network], {
-            path: "/socket.io",
+        const url = sockets[bridge.network].split("::");
+
+        const socket = io(url[0], {
+            path: url[1] || "/socket.io",
         });
 
         const incoming = async (e) => {
