@@ -745,6 +745,37 @@ class Elrond extends AbstractChain {
     }
 }
 
+class V3_Multiversex extends Elrond {
+    v3Bridge = true;
+    async preTransfer() {
+        return true;
+    }
+
+    async transfer(args) {
+        const { nft, toChain, receiver } = args;
+        const result = await this.bridge.lockNFT(
+            this.chain,
+            toChain.chain,
+            nft,
+            this.signer,
+            receiver
+        );
+
+        return { result };
+    }
+
+    async claim(from, hash, fee) {
+        const result = await this.bridge.claimNFT(
+            from.chain,
+            this.chain,
+            hash,
+            this.signer,
+            fee
+        );
+        return { result };
+    }
+}
+
 class Tron extends AbstractChain {
     constructor(params) {
         super(params);
@@ -1307,6 +1338,17 @@ class Casper extends AbstractChain {
         super(params);
     }
 
+    async validateAddress(address) {
+        return this.chain.validateAddress(address).catch(() => false);
+    }
+
+    async normalizeReceiver(adr) {
+        if (await this.chain.validateAddress(adr)) {
+            return this.chain.convertToAccountHash(adr);
+        }
+        return adr;
+    }
+
     async getNFTs(address) {
         return await this.bridge.nftList(
             this.chain,
@@ -1343,6 +1385,7 @@ class Casper extends AbstractChain {
 export default {
     EVM,
     V3_EVM,
+    V3_Multiversex,
     NoWhiteListEVM,
     VeChain,
     Elrond,

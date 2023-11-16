@@ -21,10 +21,17 @@ import { useNavigate } from "react-router";
 import { getRightPath } from "../../../utils";
 import { WalletConnectV2Provider } from "@multiversx/sdk-wallet-connect-provider";
 import { wcId } from "../EVMWallet/WalletConnect";
-import {
-    googleAnalyticsCategories,
-    handleGA4Event,
-} from "../../../services/GA4";
+import { googleAnalyticsCategories, handleGA4Event } from "../../../services/GA4";
+
+export const connectExtension = async (chainId) => {
+    const instance = ExtensionProvider.getInstance();
+
+    await instance.init().catch(() => window.open("https://getmaiar.com/defi", "_blank"));
+    await instance.login();
+
+    instance.chainId = chainId;
+    return instance;
+};
 
 export default function HigherMultiversX(OriginalComponent) {
     const updatedComponent = withServices((props) => {
@@ -38,9 +45,7 @@ export default function HigherMultiversX(OriginalComponent) {
         const testnet = useSelector((state) => state.general.testNet);
 
         const to = useSelector((state) => state.general.to);
-        const temporaryFrom = useSelector(
-            (state) => state.general.temporaryFrom
-        );
+        const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
 
         const projectId = wcId;
         const relayUrl = "wss://relay.walletconnect.com";
@@ -66,12 +71,7 @@ export default function HigherMultiversX(OriginalComponent) {
                 console.log("onClientEvent()", event);
             },
         };
-        const provider = new WalletConnectV2Provider(
-            callbacks,
-            chainId,
-            relayUrl,
-            projectId
-        );
+        const provider = new WalletConnectV2Provider(callbacks, chainId, relayUrl, projectId);
 
         const navigateToAccountRoute = () => {
             navigate(getRightPath(bridge.network));
@@ -81,9 +81,7 @@ export default function HigherMultiversX(OriginalComponent) {
             // debugger;
             let walletConnected;
             try {
-                const chainWrapper = await bridge.getChain(
-                    from?.nonce || Chain.ELROND
-                );
+                const chainWrapper = await bridge.getChain(from?.nonce || Chain.ELROND);
 
                 let account = {};
                 // debugger;
@@ -104,38 +102,22 @@ export default function HigherMultiversX(OriginalComponent) {
                     }
                     case "MultiversXDeFi": {
                         walletConnected = "MultiversX DeFi";
-                        const instance = ExtensionProvider.getInstance();
-
+                        let instance;
                         try {
-                            await instance
-                                .init()
-                                .catch(() =>
-                                    window.open(
-                                        "https://getmaiar.com/defi",
-                                        "_blank"
-                                    )
-                                );
-                            await instance.login();
+                            instance = await connectExtension(chainId);
                         } catch (error) {
-                            // debugger;
-                            if (
-                                error.message.includes(
-                                    "Extension provider is not initialised"
-                                )
-                            ) {
+                            if (error.message.includes("Extension provider is not initialised")) {
                                 dispatch(
                                     setError({
-                                        message:
-                                            "MultiversX DeFi Extension required.",
+                                        message: "MultiversX DeFi Extension required.",
                                     })
                                 );
                             }
                         }
+
                         const {
                             account: { address },
                         } = instance;
-
-                        instance.chainId = chainId;
 
                         if (account?.name === "CanceledError") {
                             throw new Error("CanceledError");
@@ -149,6 +131,11 @@ export default function HigherMultiversX(OriginalComponent) {
                 dispatch(setAccount(account.address));
                 chainWrapper.setSigner(account.signer);
                 bridge.setCurrentType(chainWrapper);
+                /*return await chainWrapper.claim(
+                    await bridge.getChain(4),
+                    "0x6544a7661e4a75a80c08ee2c27bc16387c4fb571216c28938b30e734e0d55e22"
+                );*/
+
                 dispatch(setWalletsModal(false));
                 dispatch(setQrImage(false));
                 if (to) navigateToAccountRoute();
@@ -158,10 +145,7 @@ export default function HigherMultiversX(OriginalComponent) {
             } catch (e) {
                 dispatch(setError(e));
             }
-            handleGA4Event(
-                googleAnalyticsCategories.Connect,
-                `COnnected with: ${wallet}`
-            );
+            handleGA4Event(googleAnalyticsCategories.Connect, `COnnected with: ${wallet}`);
         };
 
         const getStyle = () => {
@@ -176,12 +160,7 @@ export default function HigherMultiversX(OriginalComponent) {
             } else return OFF;
         };
 
-        return (
-            <OriginalComponent
-                connectWallet={handleConnect}
-                styles={getStyle}
-            />
-        );
+        return <OriginalComponent connectWallet={handleConnect} styles={getStyle} />;
     });
     return updatedComponent;
 }

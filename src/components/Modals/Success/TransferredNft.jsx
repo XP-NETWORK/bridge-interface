@@ -110,11 +110,14 @@ const TransferredNft = ({
     }, [tagetCanister, workarond_dest_hash]);
 
     const targetCollection = mintWith || tagetCanister;
+
     const v3BridgeTx = Boolean(
         depHash && fromChain?.v3Bridge && toChain?.v3Bridge
     );
+
     const completed = Boolean(
-        txnStatus === "completed" || (v3BridgeTx && txnStatus !== "claimed")
+        (to.type === "Hedera" && txnStatus === "completed") ||
+            (v3BridgeTx && txnStatus !== "claimed")
     );
 
     return (

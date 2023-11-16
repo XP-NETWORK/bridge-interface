@@ -150,7 +150,7 @@ class Bridge {
             switch (chainParams.type) {
                 case ChainType.EVM:
                     switch (true) {
-                        /*case Object.values(this.config)
+                        case Object.values(this.config)
                             .filter((params) => params.v3_bridge)
                             .map((p) => p.nonce)
                             .includes(params.nonce): {
@@ -158,7 +158,7 @@ class Bridge {
                                 params
                             );
                             return this.chains[chainId];
-                        }*/
+                        }
 
                         case Object.values(this.config)
                             .filter((params) => params.noWhitelist)
@@ -182,9 +182,22 @@ class Bridge {
                 case ChainType.TRON:
                     this.chains[chainId] = new ChainInterface.Tron(params);
                     return this.chains[chainId];
-                case ChainType.ELROND:
+                case ChainType.ELROND: {
+                    const v3 = Object.values(this.config)
+                        .filter((params) => params.v3_bridge)
+                        .map((p) => p.nonce)
+                        .includes(params.nonce);
+
+                    if (v3) {
+                        this.chains[
+                            chainId
+                        ] = new ChainInterface.V3_Multiversex(params);
+                        return this.chains[chainId];
+                    }
+
                     this.chains[chainId] = new ChainInterface.Elrond(params);
                     return this.chains[chainId];
+                }
                 case ChainType.ALGORAND:
                     this.chains[chainId] = new ChainInterface.Algorand(params);
                     return this.chains[chainId];
