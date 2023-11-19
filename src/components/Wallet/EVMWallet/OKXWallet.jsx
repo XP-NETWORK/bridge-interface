@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { setEVMProvider, setError } from "../../../store/reducers/generalSlice";
 import { isMobile } from "../../../utils";
 
-function OKXWallet({ styles, key }) {
+function OKXWallet() {
     const disaptch = useDispatch();
 
     const handleconnect = async () => {
@@ -17,21 +17,14 @@ function OKXWallet({ styles, key }) {
                 );
             }
 
-            return disaptch(
-                setError({ message: "OKX Wallet extension is not installed" })
-            );
+            return disaptch(setError({ message: "OKX Wallet extension is not installed" }));
         }
 
         disaptch(setEVMProvider(provider));
     };
 
     return (
-        <li
-            style={styles()}
-            onClick={handleconnect}
-            className="wllListItem"
-            data-wallet={key}
-        >
+        <li onClick={handleconnect} className="wllListItem" data-wallet={"OKXWallet"}>
             <img src={icon} alt="OKX Wallet Icon" />
             <p>OKX Wallet</p>
         </li>

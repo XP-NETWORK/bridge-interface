@@ -84,13 +84,9 @@ function NFTaccount(props) {
 
     const checkWallet = useSelector((state) => state.general.checkWallet);
 
-    const accountWalletModal = useSelector(
-        (state) => state.general.accountWalletModal
-    );
+    const accountWalletModal = useSelector((state) => state.general.accountWalletModal);
 
-    const undeployedUserStore = useSelector(
-        (state) => state.general.undeployedUserStore
-    );
+    const undeployedUserStore = useSelector((state) => state.general.undeployedUserStore);
 
     const lockMainPannel = useSelector((state) => state.general.lockMainPannel);
 
@@ -99,8 +95,6 @@ function NFTaccount(props) {
     //const Claim = chainSpecificRender?.RenderClaimInDestination;
 
     let _account = checkWallet || account;
-
-    console.log(_account, "_account");
 
     const { bridge } = serviceContainer;
 
@@ -138,9 +132,7 @@ function NFTaccount(props) {
     useDidUpdateEffect(() => {
         const checkLocked = async () => {
             const data = await checkXpNetLocked(account);
-            dispatch(
-                setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25))
-            );
+            dispatch(setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25)));
         };
         account && checkLocked();
     }, [account]);
@@ -161,10 +153,7 @@ function NFTaccount(props) {
             if (_account) {
                 getBalance(fromChain);
                 !secret && getNFTsList(fromChain, preFetchData?.contract);
-                balanceInterval = setInterval(
-                    () => getBalance(fromChain),
-                    intervalTm
-                );
+                balanceInterval = setInterval(() => getBalance(fromChain), intervalTm);
             }
         })();
 
@@ -196,11 +185,7 @@ function NFTaccount(props) {
 
     return (
         <div className="NFTaccount">
-            <Modal
-                show={importModal}
-                animation={null}
-                className=" ChainModal import-nft__modal"
-            >
+            <Modal show={importModal} animation={null} className=" ChainModal import-nft__modal">
                 <ImportNFTModal />
             </Modal>
             <Modal
@@ -211,11 +196,7 @@ function NFTaccount(props) {
             >
                 <WalletConnectionModal />
             </Modal>
-            <Modal
-                show={unwrappedEGold}
-                animation={null}
-                className="eGold-success ChainModal"
-            >
+            <Modal show={unwrappedEGold} animation={null} className="eGold-success ChainModal">
                 <EGoldSuccess />
             </Modal>
             <ChangeNetworkModal />
@@ -227,17 +208,15 @@ function NFTaccount(props) {
             <NoApprovedNFT />
 
             <Container
-                className={`nftSlectContaine ${
-                    undeployedUserStore ? " undeployedUserStore" : ""
-                } ${lockMainPannel ? " lockedX" : ""}`}
+                className={`nftSlectContaine ${undeployedUserStore ? " undeployedUserStore" : ""} ${
+                    lockMainPannel ? " lockedX" : ""
+                }`}
             >
                 <ReturnBtn />
                 {widget && (
                     <>
                         <UserConnect />
-                        {window.innerWidth < 760 && (
-                            <UserConnect mobile={true} />
-                        )}
+                        {window.innerWidth < 760 && <UserConnect mobile={true} />}
                         <AccountModal />
                     </>
                 )}
@@ -248,13 +227,7 @@ function NFTaccount(props) {
                     </div>
                     {!isMobile && <DesktopTransferBoard />}
                 </div>
-                {isMobile && (
-                    <NFTmobileView
-                        selectedNFTs={selectedNFTs}
-                        _from={_from}
-                        nfts={currentsNFTs}
-                    />
-                )}
+                {isMobile && <NFTmobileView selectedNFTs={selectedNFTs} _from={_from} nfts={currentsNFTs} />}
             </Container>
         </div>
     );

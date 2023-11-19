@@ -136,7 +136,6 @@ class WService {
     calcExtraFees(bigNum, from, affiliationSettings, affiliationFees) {
         if (bigNum) {
             if (affiliationSettings) {
-                console.log(affiliationSettings, "affiliationSettings");
                 const feeSetting = affiliationSettings.find(
                     ({ chain }) =>
                         chain.toLowerCase() === from.text?.toLowerCase() ||

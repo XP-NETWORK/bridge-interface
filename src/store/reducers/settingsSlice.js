@@ -28,9 +28,7 @@ export const chains = [
     .sort((a, b) => b.order - a.order)
     .sort((a, b) => (a.coming && !b.coming ? 1 : -1));
 
-export const activeChains = [
-    ...chains.filter((chain) => !chain.maintenance).map((c) => c.key),
-];
+export const activeChains = [...chains.filter((chain) => !chain.maintenance).map((c) => c.key)];
 
 //export const newChains = ["Caduceus", "SKALE", "TON", ""];
 
@@ -42,7 +40,7 @@ export const availability = {
     Tron: ["TronLink"],
     Tezos: ["Beacon", "TempleWallet"],
     VeChain: ["Sync2", "VeChainThor"],
-    Evms: ["MetaMask", "WalletConnect", "TrustWallet", "BitKeep"],
+    Evms: ["MetaMask", "WalletConnect", "TrustWallet", "BitKeep", "OKXWallet"],
     Secret: ["Keplr", "Fina"],
     TON: ["TonWallet", "TonHub", "TonKeeper"],
     APTOS: ["Petra"],
@@ -50,10 +48,12 @@ export const availability = {
     Solana: ["Phantom", "Solflare"],
     Hedera: ["Hashpack", "MetaMask"],
     ICP: ["Plug", "Stoic", "Bitfinity"],
+    Casper: ["CasperWallet"],
 };
 
 export const wallets = [
     "MetaMask",
+    "OKXWallet",
     "BitKeep",
     "WalletConnect",
     "TrustWallet",
@@ -76,6 +76,7 @@ export const wallets = [
     "Fina",
     "Hashpack",
     ...(biz ? ["Plug", "Stoic", "Bitfinity"] : []),
+    ...(biz ? ["CasperWallet"] : []),
 ];
 
 export const initialChainFees = {

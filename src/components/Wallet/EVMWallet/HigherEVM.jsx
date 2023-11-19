@@ -2,10 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-    googleAnalyticsCategories,
-    handleGA4Event,
-} from "../../../services/GA4";
+import { googleAnalyticsCategories, handleGA4Event } from "../../../services/GA4";
 import {
     setConnectedWallet,
     setFrom,
@@ -16,11 +13,7 @@ import {
 import { getRightPath } from "../../../utils";
 import { withServices } from "../../App/hocs/withServices";
 
-import {
-    connectMetaMask,
-    connectTrustWallet,
-    onWalletConnect,
-} from "../ConnectWalletHelper";
+import { connectMetaMask, connectTrustWallet, onWalletConnect } from "../ConnectWalletHelper";
 
 export default function HigherEVM(OriginalComponent) {
     const updatedComponent = withServices((props) => {
@@ -31,20 +24,14 @@ export default function HigherEVM(OriginalComponent) {
         const OFF = { opacity: 0.6, pointerEvents: "none" };
         const from = useSelector((state) => state.general.from);
         const to = useSelector((state) => state.general.to);
-        const temporaryFrom = useSelector(
-            (state) => state.general.temporaryFrom
-        );
+        const temporaryFrom = useSelector((state) => state.general.temporaryFrom);
 
         const testnet = useSelector((state) => state.general.testNet);
         const dispatch = useDispatch();
         const navigate = useNavigate();
 
         const getMobOps = () =>
-            /android/i.test(
-                navigator.userAgent || navigator.vendor || window.opera
-            )
-                ? true
-                : false;
+            /android/i.test(navigator.userAgent || navigator.vendor || window.opera) ? true : false;
 
         const navigateToAccountRoute = () => {
             navigate(getRightPath(bridge.network));
@@ -54,13 +41,7 @@ export default function HigherEVM(OriginalComponent) {
             let connected;
             switch (wallet) {
                 case "MetaMask":
-                    connected = await connectMetaMask(
-                        activate,
-                        from,
-                        to,
-                        chainId,
-                        navigateToAccountRoute
-                    );
+                    connected = await connectMetaMask(activate, from, to, chainId, navigateToAccountRoute);
                     if (connected) {
                         dispatch(setMetaMask(true));
                         dispatch(setConnectedWallet("MetaMask"));
@@ -100,36 +81,22 @@ export default function HigherEVM(OriginalComponent) {
                 default:
                     break;
             }
-            handleGA4Event(
-                googleAnalyticsCategories.Content,
-                `Connecting to EVM wallet: ${wallet}`
-            );
+            handleGA4Event(googleAnalyticsCategories.Content, `Connecting to EVM wallet: ${wallet}`);
             dispatch(setWalletsModal(false));
         };
 
         const getStyle = () => {
             const evmDeparture = () => {
                 if (from && from.type === "EVM") return true;
-                else if (temporaryFrom && temporaryFrom.type === "EVM")
-                    return true;
+                else if (temporaryFrom && temporaryFrom.type === "EVM") return true;
                 else false;
             };
             switch (true) {
                 case !from && !temporaryFrom:
                     return {};
                 case from !== undefined || temporaryFrom !== undefined:
-                    if (
-                        evmDeparture() &&
-                        getMobOps() &&
-                        window.innerWidth <= 600
-                    )
-                        return {};
-                    else if (
-                        evmDeparture() &&
-                        window.ethereum &&
-                        window.innerWidth <= 600
-                    )
-                        return {};
+                    if (evmDeparture() && getMobOps() && window.innerWidth <= 600) return {};
+                    else if (evmDeparture() && window.ethereum && window.innerWidth <= 600) return {};
                     else if (!evmDeparture()) return OFF;
                     else return {};
                 default:
@@ -137,12 +104,7 @@ export default function HigherEVM(OriginalComponent) {
             }
         };
 
-        return (
-            <OriginalComponent
-                connectWallet={connectHandler}
-                styles={getStyle}
-            />
-        );
+        return <OriginalComponent connectWallet={connectHandler} styles={getStyle} />;
     });
     return updatedComponent;
 }
