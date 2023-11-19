@@ -5,63 +5,48 @@ import {
     setError,
     setTransferLoaderModal,
 } from "../../store/reducers/generalSlice";
-import { getChainObject } from "../values";
-import { switchNetwork } from "../../services/chains/evm/evmService";
 
-export const ClaimInDestination = ({
-    serviceContainer,
-    fromChain,
-    toChain,
-    hash,
-    setDestHash,
-    //receiver,
-}) => {
-    const { bridge } = serviceContainer;
-    const dispatch = useDispatch();
-    const [fromChainWapper, setFromChainWapper] = useState(null);
+export const ClaimInDestination = (connection) => {
+    return function CB({
+        serviceContainer,
+        fromChain,
+        toChain,
+        hash,
+        setDestHash,
+        //receiver,
+    }) {
+        const { bridge } = serviceContainer;
+        const dispatch = useDispatch();
+        const [fromChainWapper, setFromChainWapper] = useState(null);
 
-    useState(async () => {
-        const _from = await bridge.getChain(fromChain);
-        setFromChainWapper(_from);
-    }, []);
+        useState(async () => {
+            const _from = await bridge.getChain(fromChain);
+            setFromChainWapper(_from);
+        }, []);
 
-    const handler = async () => {
-        dispatch(setQuietConnection(true));
+        const handler = async () => {
+            dispatch(setQuietConnection(true));
+            dispatch(setTransferLoaderModal(true));
+            const chainWapper = await connection(bridge, toChain);
 
-        await switchNetwork(getChainObject(toChain));
+            try {
+                const { result } = await chainWapper.claim(
+                    fromChainWapper,
+                    hash
+                );
+                const resultObject = chainWapper.handlerResult(result);
+                setDestHash(resultObject.hash);
+                dispatch(setTransferLoaderModal(false));
+            } catch (e) {
+                dispatch(setError({ message: e.message }));
+                dispatch(setTransferLoaderModal(false));
+            }
+        };
 
-        const chainWapper = await new Promise((r) => {
-            (async () => {
-                let chainWapper = await bridge.getChain(toChain, {
-                    overwrite: true,
-                });
-                while (!chainWapper.signer) {
-                    console.log(chainWapper.signer, "signer");
-                    chainWapper = await bridge.getChain(toChain, {
-                        overwrite: true,
-                    });
-                    await new Promise((r) => setTimeout(r, 2000));
-                }
-
-                r(chainWapper);
-            })();
-        });
-        dispatch(setTransferLoaderModal(true));
-        try {
-            const { result } = await chainWapper.claim(fromChainWapper, hash);
-            const resultObject = chainWapper.handlerResult(result);
-
-            setDestHash(resultObject.hash);
-            dispatch(setTransferLoaderModal(false));
-        } catch (e) {
-            dispatch(setError({ message: e.message }));
-            dispatch(setTransferLoaderModal(false));
-        }
+        return (
+            <button className="changeBtn ClaimInDestination" onClick={handler}>
+                Claim
+            </button>
+        );
     };
-
-    return (
-        <button className="changeBtn ClaimInDestination" onClick={handler}>
-            Claim
-        </button>
-    );
 };

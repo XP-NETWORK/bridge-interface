@@ -6,6 +6,7 @@ import { withAlgo as Algo } from "./algoHOC";
 import { withEVM as EVM } from "./evmHOC";
 import { withHedera as Hedera } from "./hederaHOC";
 import { withICP as ICP } from "./icpHOC";
+import { withCasper as Casper } from "./casperHOC";
 import { withServices } from "../../App/hocs/withServices";
 
 import { useSelector } from "react-redux";
@@ -34,6 +35,7 @@ const withChains = (NFTaccount, options = {}) =>
 export default compose(
     withServices,
     Hedera,
+    Casper,
     ICP,
     Elrond,
     Algo,

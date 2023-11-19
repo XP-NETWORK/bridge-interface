@@ -7,11 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAccount, useNetwork } from "wagmi";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
-import {
-    setAccount,
-    setConnectedWallet,
-    setError,
-} from "../../../store/reducers/generalSlice";
+import { setAccount, setConnectedWallet, setError } from "../../../store/reducers/generalSlice";
 
 import { useNavigate } from "react-router";
 import { getRightPath } from "../../../utils";
@@ -30,15 +26,10 @@ const WalletConnect = ({ from, to, bridge, walletConnectChains }) => {
 
     useEffect(() => {
         if (address && connector) {
-            const isSupported = walletConnectChains.find(
-                (supported) => chain.id === supported.id
-            );
+            const isSupported = walletConnectChains.find((supported) => chain.id === supported.id);
 
             if (isSupported) {
-                if (
-                    isSupported.id === from?.chainId ||
-                    isSupported.id === from?.tnChainId
-                ) {
+                if (isSupported.id === from?.chainId || isSupported.id === from?.tnChainId) {
                     const nonce = bridge.getNonce(chain.id);
                     bridge.getChain(nonce).then((chainWrapper) => {
                         connector.getWalletClient().then((signer) => {
@@ -48,29 +39,19 @@ const WalletConnect = ({ from, to, bridge, walletConnectChains }) => {
                                 ? {
                                       chainId: chain.id,
                                       name: chain.name,
-                                      ensAddress:
-                                          chain.contracts?.ensRegistry?.address,
+                                      ensAddress: chain.contracts?.ensRegistry?.address,
                                   }
                                 : undefined;
 
-                            const provider = new ethers.providers.Web3Provider(
-                                transport,
-                                network
-                            );
-                            const adaptedSigner = provider.getSigner(
-                                account.address
-                            );
+                            const provider = new ethers.providers.Web3Provider(transport, network);
+                            const adaptedSigner = provider.getSigner(account.address);
 
                             dispatch(setConnectedWallet("WalletConnect"));
                             dispatch(setAccount(address));
                             chainWrapper.setSigner(adaptedSigner);
                             bridge.setCurrentType(chainWrapper);
 
-                            to &&
-                                from &&
-                                navigate(
-                                    getRightPath(bridge.network, from, to)
-                                );
+                            to && from && navigate(getRightPath(bridge.network, from, to));
                         });
                     });
                 } else {
@@ -101,6 +82,7 @@ export const withEVMConnection = (Wrapped) =>
         //const WCProvider = useSelector((state) => state.general.WCProvider);
         const from = useSelector((state) => state.general.from);
         const to = useSelector((state) => state.general.to);
+        const quietConnection = useSelector((state) => state.signers.quietConnection);
         const navigate = useNavigate();
         const { chainId, account } = useWeb3React();
         const { bridge } = serviceContainer;
@@ -111,9 +93,16 @@ export const withEVMConnection = (Wrapped) =>
             const jsonRPCProvider = new ethers.providers.Web3Provider(provider);
             const signer = jsonRPCProvider.getSigner(account);
             chainWrapper.setSigner(signer);
-            bridge.setCurrentType(chainWrapper);
-            dispatch(setAccount(account));
-            from && to && navigate(getRightPath(bridge.network, from, to));
+            //console.log(quietConnection, "quietConnection");
+            if (!quietConnection) {
+                bridge.setCurrentType(chainWrapper);
+                dispatch(setAccount(account));
+                /*return await chainWrapper.claim(
+                    await bridge.getChain(2),
+                    "5b05b43ad9d26b5416075e4611bed46c96e2f861620c0234fd4a853131193426"
+                );*/
+                from && to && navigate(getRightPath(bridge.network, from, to));
+            }
         }
 
         useEffect(() => {
@@ -144,42 +133,34 @@ export const withEVMConnection = (Wrapped) =>
                     connect(accounts[0], bridge.getNonce(chainId), evmProvider);
                 };
 
-                evmProvider
-                    .request({ method: "eth_requestAccounts" })
-                    .then(async (accounts) => {
-                        let nonce = from?.nonce;
+                evmProvider.request({ method: "eth_requestAccounts" }).then(async (accounts) => {
+                    let nonce = from?.nonce;
 
-                        if (!nonce) {
-                            const chainId = await evmProvider.request({
-                                method: "eth_chainId",
-                            });
-                            nonce = bridge.getNonce(chainId);
-                        }
-
-                        await switchNetwork(getChainObject(nonce));
-                        await evmProvider.request({
-                            method: "wallet_requestPermissions",
-                            params: [
-                                {
-                                    eth_accounts: {},
-                                },
-                            ],
+                    if (!nonce) {
+                        const chainId = await evmProvider.request({
+                            method: "eth_chainId",
                         });
-                        if (typeof evmProvider.on === "function") {
-                            evmProvider.on(
-                                "accountsChanged",
-                                accountsChangedHandler
-                            );
-                            evmProvider.on("chainChanged", chainChangedHandler);
-                        }
-                        connect(accounts[0], nonce, evmProvider);
+                        nonce = bridge.getNonce(chainId);
+                    }
+
+                    await switchNetwork(getChainObject(nonce));
+                    await evmProvider.request({
+                        method: "wallet_requestPermissions",
+                        params: [
+                            {
+                                eth_accounts: {},
+                            },
+                        ],
                     });
+                    if (typeof evmProvider.on === "function") {
+                        evmProvider.on("accountsChanged", accountsChangedHandler);
+                        evmProvider.on("chainChanged", chainChangedHandler);
+                    }
+                    connect(accounts[0], nonce, evmProvider);
+                });
                 return () => {
                     if (typeof evmProvider.off === "function") {
-                        evmProvider.off(
-                            "accountsChanged",
-                            accountsChangedHandler
-                        );
+                        evmProvider.off("accountsChanged", accountsChangedHandler);
                         evmProvider.off("chainChanged", chainChangedHandler);
                     }
                 };
@@ -189,12 +170,7 @@ export const withEVMConnection = (Wrapped) =>
         return (
             <>
                 {walletConnectChains && (
-                    <WalletConnect
-                        from={from}
-                        to={to}
-                        bridge={bridge}
-                        walletConnectChains={walletConnectChains}
-                    />
+                    <WalletConnect from={from} to={to} bridge={bridge} walletConnectChains={walletConnectChains} />
                 )}
                 <Wrapped {...props} />
             </>

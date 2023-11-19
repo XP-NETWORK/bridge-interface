@@ -8,6 +8,16 @@ export const getAddEthereumChain = () => {
 
 export const allchains = [
     {
+        chainName: "Sepolia",
+        rpcUrls: ["https://eth-sepolia.g.alchemy.com/v2/demo"],
+        chainId: 11155111,
+        nativeCurrency: {
+            name: "ETH",
+            symbol: "ETH",
+            decimals: 18,
+        },
+    },
+    {
         chainName: "Hedera",
         rpcUrls: ["https://mainnet.hashio.io/api"],
         chainId: 295,

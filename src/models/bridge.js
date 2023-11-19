@@ -1,23 +1,10 @@
 /* eslint-disable no-unused-vars */
-import {
-    CHAIN_INFO,
-    AppConfigs,
-    ChainFactory,
-    ChainFactoryConfigs,
-    ChainType,
-    Chain,
-} from "xp.network";
+import { CHAIN_INFO, AppConfigs, ChainFactory, ChainFactoryConfigs, ChainType, Chain } from "xp.network";
 
 import ChainInterface from "./chains";
 
 import axios from "axios";
-import {
-    BridgeModes,
-    chains,
-    stagingWNFT,
-    wnft,
-    wnftPattern,
-} from "../components/values";
+import { BridgeModes, chains, stagingWNFT, wnft, wnftPattern } from "../components/values";
 
 class Bridge {
     chains = {};
@@ -35,9 +22,7 @@ class Bridge {
     getNonce(chainId) {
         chainId = Number(chainId);
 
-        return chains.find(
-            (chain) => chain.chainId === chainId || chain.tnChainId === chainId
-        )?.nonce;
+        return chains.find((chain) => chain.chainId === chainId || chain.tnChainId === chainId)?.nonce;
     }
 
     getParamsByNonce(nonce) {
@@ -98,11 +83,7 @@ class Bridge {
             //return false;
             //}
 
-            if (
-                isWNFT &&
-                nft.uri.includes(stagingWNFT) &&
-                !window.location.pathname.includes(BridgeModes.Staging)
-            )
+            if (isWNFT && nft.uri.includes(stagingWNFT) && !window.location.pathname.includes(BridgeModes.Staging))
                 return false;
 
             if (
@@ -112,12 +93,7 @@ class Bridge {
             )
                 return false;
 
-            if (
-                isWNFT ||
-                !chain.isNftWhitelisted ||
-                nft.native.contract === "SingleNFt"
-            )
-                return true;
+            if (isWNFT || !chain.isNftWhitelisted || nft.native.contract === "SingleNFt") return true;
 
             return await chain.isNftWhitelisted(nft);
             //const x = await chain.isNftWhitelisted(nft);
@@ -164,16 +140,12 @@ class Bridge {
                             .filter((params) => params.noWhitelist)
                             .map((p) => p.nonce)
                             .includes(params.nonce): {
-                            this.chains[
-                                chainId
-                            ] = new ChainInterface.NoWhiteListEVM(params);
+                            this.chains[chainId] = new ChainInterface.NoWhiteListEVM(params);
                             return this.chains[chainId];
                         }
 
                         case Chain.VECHAIN === params.nonce: {
-                            this.chains[chainId] = new ChainInterface.VeChain(
-                                params
-                            );
+                            this.chains[chainId] = new ChainInterface.VeChain(params);
                             return this.chains[chainId];
                         }
                     }
@@ -182,9 +154,20 @@ class Bridge {
                 case ChainType.TRON:
                     this.chains[chainId] = new ChainInterface.Tron(params);
                     return this.chains[chainId];
-                case ChainType.ELROND:
+                case ChainType.ELROND: {
+                    /*const v3 = Object.values(this.config)
+                        .filter((params) => params.v3_bridge)
+                        .map((p) => p.nonce)
+                        .includes(params.nonce);
+
+                    if (v3) {
+                        this.chains[chainId] = new ChainInterface.V3_Multiversex(params);
+                        return this.chains[chainId];
+                    }*/
+
                     this.chains[chainId] = new ChainInterface.Elrond(params);
                     return this.chains[chainId];
+                }
                 case ChainType.ALGORAND:
                     this.chains[chainId] = new ChainInterface.Algorand(params);
                     return this.chains[chainId];
@@ -254,24 +237,19 @@ class Bridge {
             }
 
             try {
-                const res =
-                    typeof wnft === "object"
-                        ? { data: wnft }
-                        : await axios(nft.uri);
+                const res = typeof wnft === "object" ? { data: wnft } : await axios(nft.uri);
 
                 const { data } = res;
 
                 const origin = data.wrapped?.origin;
 
-                const chain = await this.getChain(Number(origin)).catch(
-                    async (e) => {
-                        if (e.message?.includes("constructor")) {
-                            if (!origin) return;
-                            const mainnetBridge = await this.init();
-                            return await mainnetBridge.getChain(Number(origin));
-                        }
+                const chain = await this.getChain(Number(origin)).catch(async (e) => {
+                    if (e.message?.includes("constructor")) {
+                        if (!origin) return;
+                        const mainnetBridge = await this.init();
+                        return await mainnetBridge.getChain(Number(origin));
                     }
-                );
+                });
 
                 nft.isWrappedNft = true;
                 //nft.origin = origin;

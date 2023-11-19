@@ -12,10 +12,7 @@ import {
     setTransferLoaderModal,
     setTxnHash,
 } from "../../store/reducers/generalSlice";
-import {
-    setPasteDestinationAlert,
-    setSelectNFTAlert,
-} from "../../store/reducers/generalSlice";
+import { setPasteDestinationAlert, setSelectNFTAlert } from "../../store/reducers/generalSlice";
 import { getFromDomain } from "../../services/resolution";
 
 import { withServices } from "../App/hocs/withServices";
@@ -42,20 +39,14 @@ export default compose(
     const _from = useSelector((state) => state.general.from);
     const account = useSelector((state) => state.general.account);
     const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
-    const receiverIsContract = useSelector(
-        (state) => state.general.receiverIsContract
-    );
+    const receiverIsContract = useSelector((state) => state.general.receiverIsContract);
 
-    const bigNumberDeployFees = useSelector(
-        (state) => state.general.bigNumberDeployFees
-    );
+    const bigNumberDeployFees = useSelector((state) => state.general.bigNumberDeployFees);
 
     const [loading, setLoading] = useState();
     const dispatch = useDispatch();
 
-    const selectedNFTList = useSelector(
-        (state) => state.general.selectedNFTList
-    );
+    const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
     const discountLeftUsd = useSelector((state) => state.discount.discount);
 
     const unstoppabledomainSwitch = (unstoppabledomain) => {
@@ -65,8 +56,7 @@ export default compose(
                 case "undefined":
                     dispatch(
                         setError({
-                            message:
-                                "Your domain does not explicitly support the chain you selected.",
+                            message: "Your domain does not explicitly support the chain you selected.",
                         })
                     );
                     dispatch(setTransferLoaderModal(false));
@@ -76,8 +66,7 @@ export default compose(
                 case "notEVM":
                     dispatch(
                         setError({
-                            message:
-                                "Domain names are currently not supported for Non-EVM chains.",
+                            message: "Domain names are currently not supported for Non-EVM chains.",
                         })
                     );
                     dispatch(setTransferLoaderModal(false));
@@ -87,8 +76,7 @@ export default compose(
                 case "invalid":
                     dispatch(
                         setError({
-                            message:
-                                "Domain does not exist. Please, check the spelling.",
+                            message: "Domain does not exist. Please, check the spelling.",
                         })
                     );
                     dispatch(dispatch(setTransferLoaderModal(false)));
@@ -127,17 +115,12 @@ export default compose(
 
     const sendEach = async (nft) => {
         // debugger;
-        const [fromChain, toChain] = await Promise.all([
-            bridge.getChain(_from.nonce),
-            bridge.getChain(_to.nonce),
-        ]);
+        const [fromChain, toChain] = await Promise.all([bridge.getChain(_from.nonce), bridge.getChain(_to.nonce)]);
         try {
             const unstoppabledomain = await getFromDomain(receiver, toChain);
             if (unstoppabledomainSwitch(unstoppabledomain)) return;
 
-            const normalizedReceiver = await toChain.normalizeReceiver(
-                receiver
-            );
+            const normalizedReceiver = await toChain.normalizeReceiver(receiver);
 
             const res = await fromChain.transfer({
                 toChain,
@@ -145,11 +128,7 @@ export default compose(
                 receiver: unstoppabledomain || normalizedReceiver,
                 fee: new BigNumber(bigNumberFees || 0)
                     .div(isTestnet && biz ? 10 : dev ? 3 : 1)
-                    .plus(
-                        new BigNumber(bigNumberDeployFees || 0).div(
-                            isTestnet && biz ? 10 : dev ? 4 : 1
-                        )
-                    )
+                    .plus(new BigNumber(bigNumberDeployFees || 0).div(isTestnet && biz ? 10 : dev ? 4 : 1))
                     .integerValue()
                     .toString(10),
                 discountLeftUsd,
@@ -176,17 +155,11 @@ export default compose(
                     targetAddress: unstoppabledomain || receiver,
                 });
             }
-            handleGA4Event(
-                googleAnalyticsCategories.Transfer,
-                `${receiver} Success transfer`
-            );
+            handleGA4Event(googleAnalyticsCategories.Transfer, `${receiver} Success transfer`);
         } catch (e) {
             const resultError = fromChain.handlerError(e);
             dispatch(setError(resultError));
-            handleGA4Event(
-                googleAnalyticsCategories.Transfer,
-                `${receiver} Failed transfer`
-            );
+            handleGA4Event(googleAnalyticsCategories.Transfer, `${receiver} Failed transfer`);
         }
 
         setLoading(false);
@@ -194,12 +167,7 @@ export default compose(
     };
 
     return (
-        <div
-            onClick={sendAllNFTs}
-            className={
-                !loading ? "transfer-button" : "transfer-button--disabled"
-            }
-        >
+        <div onClick={sendAllNFTs} className={!loading ? "transfer-button" : "transfer-button--disabled"}>
             {loading ? "Processing" : "Send"}
         </div>
     );
