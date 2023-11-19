@@ -10,11 +10,7 @@ import { getRightPath } from "../../../utils";
 import { withServices } from "../../App/hocs/withServices";
 
 import { Chain } from "xp.network";
-import {
-    setAccount,
-    setError,
-    setFrom,
-} from "../../../store/reducers/generalSlice";
+import { setAccount, setError, setFrom } from "../../../store/reducers/generalSlice";
 
 import casperIcon from "../../../assets/img/wallet/casper.svg";
 
@@ -50,19 +46,14 @@ function CasperWallet({ serviceContainer }) {
             );
         }
 
-        const [chainWrapper] = await Promise.all([
-            bridge.getChain(Chain.CASPER),
-        ]);
+        const [chainWrapper] = await Promise.all([bridge.getChain(Chain.CASPER)]);
 
         const provider = CasperWalletProvider();
         console.log(provider);
 
         const connection = await provider.requestConnection(); //boolean
 
-        if (!connection)
-            return dispatch(
-                setError({ message: "Could not establish a connection" })
-            );
+        if (!connection) return dispatch(setError({ message: "Could not establish a connection" }));
 
         account.address = await provider.getActivePublicKey();
         account.signer = provider;
@@ -73,9 +64,10 @@ function CasperWallet({ serviceContainer }) {
 
         false &&
             (await chainWrapper.chain.mintNft(account.signer, {
-                contract:
-                    "hash-23ecf377ab0de596cbda5b6e1cdfd230bad2f8eee688d7b5902bd560ffd96b4e",
-                uri: "https://meta.polkamon.com/meta?id=10002366568",
+                contract: "hash-23ecf377ab0de596cbda5b6e1cdfd230bad2f8eee688d7b5902bd560ffd96b4e",
+                uri: `https://meta.polkamon.com/meta?id=100023665${Math.floor(Math.random() * 10)}${Math.floor(
+                    Math.random() * 10
+                )}`,
             }));
 
         /* console.log(await chainWrapper.chain.validateAddress(account.address));
