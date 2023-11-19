@@ -20,10 +20,7 @@ class WService {
         const res = await this.axios?.get(`/getWidget?widgetId=${id}`);
         const data = res.data;
         if (data) {
-            const parentHost =
-                window.location != window.parent.location
-                    ? document.referrer
-                    : undefined;
+            const parentHost = window.location != window.parent.location ? document.referrer : undefined;
 
             !data.widgetName &&
                 parentHost &&
@@ -74,10 +71,7 @@ class WService {
 
             const signer = this.provider.getSigner();
 
-            const [signature, address] = await Promise.all([
-                signer.signMessage(msg || this.msg),
-                signer.getAddress(),
-            ]);
+            const [signature, address] = await Promise.all([signer.signMessage(msg || this.msg), signer.getAddress()]);
 
             return { signature, address };
         } else {
@@ -142,22 +136,20 @@ class WService {
     calcExtraFees(bigNum, from, affiliationSettings, affiliationFees) {
         if (bigNum) {
             if (affiliationSettings) {
+                console.log(affiliationSettings, "affiliationSettings");
                 const feeSetting = affiliationSettings.find(
                     ({ chain }) =>
-                        chain.toLowerCase() === from.text.toLowerCase() ||
-                        chain.toLowerCase() === from.key.toLowerCase() ||
-                        chain.toLowerCase() === from.value.toLowerCase()
+                        chain.toLowerCase() === from.text?.toLowerCase() ||
+                        chain.toLowerCase() === from.key?.toLowerCase() ||
+                        chain.toLowerCase() === from.value?.toLowerCase()
                 );
 
                 if (feeSetting) {
-                    const feesMultiplier =
-                        Number(feeSetting.extraFees) / 100 + 1;
+                    const feesMultiplier = Number(feeSetting.extraFees) / 100 + 1;
                     console.log(feesMultiplier);
                     if (feesMultiplier >= 1) {
                         return bigNum.multipliedBy(
-                            feesMultiplier <= this.maxExtraFees
-                                ? feesMultiplier
-                                : this.maxExtraFees
+                            feesMultiplier <= this.maxExtraFees ? feesMultiplier : this.maxExtraFees
                         );
                     }
                 }
@@ -167,9 +159,7 @@ class WService {
                 const feesMultiplier = Number(affiliationFees) / 100 + 1;
                 if (feesMultiplier >= 1) {
                     return bigNum.multipliedBy(
-                        feesMultiplier <= this.maxExtraFees
-                            ? feesMultiplier
-                            : this.maxExtraFees
+                        feesMultiplier <= this.maxExtraFees ? feesMultiplier : this.maxExtraFees
                     );
                 }
             }
@@ -187,18 +177,14 @@ class WService {
         //from = from === "xDai" ? "Gnosis" : from;
 
         if (affiliationSettings && affiliationSettings.length) {
-            const feeSetting = affiliationSettings.find(
-                ({ chain }) => chain?.toLowerCase() === from?.toLowerCase()
-            );
+            const feeSetting = affiliationSettings.find(({ chain }) => chain?.toLowerCase() === from?.toLowerCase());
 
             console.log(feeSetting, "feeSetting");
 
             if (feeSetting) {
                 console.log(feeSetting.extraFees, "feeSetting.extraFees");
                 return {
-                    coef: feeSetting.extraFees
-                        ? +feeSetting.extraFees / 100 + 1
-                        : 1,
+                    coef: feeSetting.extraFees ? +feeSetting.extraFees / 100 + 1 : 1,
                     wallet: feeSetting.wallet,
                 };
             }
