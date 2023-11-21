@@ -1204,12 +1204,41 @@ class Casper extends AbstractChain {
     }
 
     async preParse(nft) {
+        let metaData = undefined;
+
+        if (nft.native.metadata) {
+            metaData = {
+                image: nft.native.metadata.asset,
+                ...nft.native.metadata,
+            };
+        }
+
         return {
             ...nft,
             native: {
                 ...nft.native,
-                chainId: "39",
+                chainId: String(ChainNonce.CASPER),
                 contract: nft.native.contract_package_hash,
+            },
+            metaData,
+        };
+    }
+
+    async unwrap(nft, data) {
+        return {
+            contract: data.wrapped?.contract,
+            tokenId: data.wrapped.token_id || data.wrapped?.source_token_id,
+            chainId: String(this.nonce),
+            nft: {
+                ...nft,
+                collectionIdent: data.wrapped?.contract,
+                native: {
+                    ...nft.native,
+                    chainId: String(this.nonce),
+                    contract: data.wrapped?.contract,
+                    tokenId: data.wrapped.token_id || data.wrapped?.source_token_id,
+                },
+                metaData: data,
             },
         };
     }
