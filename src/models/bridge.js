@@ -130,9 +130,7 @@ class Bridge {
                             .filter((params) => params.v3_bridge)
                             .map((p) => p.nonce)
                             .includes(params.nonce): {
-                            this.chains[chainId] = new ChainInterface.V3_EVM(
-                                params
-                            );
+                            this.chains[chainId] = new ChainInterface.V3_EVM(params);
                             return this.chains[chainId];
                         }*/
 

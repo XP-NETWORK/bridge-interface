@@ -49,7 +49,6 @@ function CasperWallet({ serviceContainer }) {
         const [chainWrapper] = await Promise.all([bridge.getChain(Chain.CASPER)]);
 
         const provider = CasperWalletProvider();
-        console.log(provider);
 
         const connection = await provider.requestConnection(); //boolean
 

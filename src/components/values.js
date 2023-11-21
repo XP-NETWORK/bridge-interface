@@ -50,9 +50,7 @@ export const wnft = ["https://wnfts.xp.network", "https://nft.xp.network"];
 
 export const wnftPattern = /(\S+xp\.network)/;
 export const isTestnet = /testnet/.test(window.location.pathname);
-export const dev = /(localhost|dev|10\.0\.0|trycloudflare)/.test(
-    window.location.hostname
-);
+export const dev = /(localhost|dev|10\.0\.0|trycloudflare)/.test(window.location.hostname);
 export const biz = dev || /(staging)/.test(window.location.hostname);
 
 export const BridgeModes = {
@@ -67,8 +65,7 @@ export const sockets = {
     testnet: "wss://tools.xp.network::/testnet-explorer/ws", //"https://testnet-tx-socket.herokuapp.com/", //"wss://testnet-bridge-explorer.herokuapp.com/",
 };
 
-export const getChainObject = (nonce) =>
-    chains.find((chain) => chain.nonce === nonce);
+export const getChainObject = (nonce) => chains.find((chain) => chain.nonce === nonce);
 
 export const secretnodes = "https://secretnodes.com/secret/accounts";
 export const proxy = "https://sheltered-crag-76748.herokuapp.com/";
@@ -528,17 +525,13 @@ export const chains = [
     {
         type: "EVM",
         key: "Arbitrum",
-        text: window.location.href.includes("testnet")
-            ? "Arbitrum"
-            : "Arbitrum Nova",
+        text: window.location.href.includes("testnet") ? "Arbitrum" : "Arbitrum Nova",
         value: "Arbitrum",
         nonce: 0x25,
         order: -5,
         image: {
             avatar: true,
-            src: window.location.href.includes("testnet")
-                ? arbitrumTestNet
-                : arbitrum,
+            src: window.location.href.includes("testnet") ? arbitrumTestNet : arbitrum,
         },
         testNet: true,
         mainnet: true,
@@ -571,7 +564,7 @@ export const chains = [
         order: -8,
         image: { avatar: true, src: casper },
         testNet: biz,
-        mainnet: false,
+        mainnet: biz,
         coming: false,
         newChain: biz,
     },
