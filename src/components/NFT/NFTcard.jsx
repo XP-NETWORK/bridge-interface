@@ -40,14 +40,9 @@ NFTcard.propTypes = {
     serviceContainer: PropTypes.object,
 };
 
-export default function NFTcard({
-    serviceContainer,
-    chain,
-    nft,
-    index,
-    claimables,
-}) {
+export default function NFTcard({ serviceContainer, chain, nft, index, claimables, chainSpecificRender }) {
     const { bridge: bridgeWrapper, whitelistedPool } = serviceContainer;
+
     const dispatch = useDispatch();
     const [detailsOn, setDetailsOn] = useState(false);
     const search = useSelector((state) => state.general.NFTListSearch);
@@ -93,12 +88,12 @@ export default function NFTcard({
             return;
         }
         const node = e.target.closest(".nft-box__wrapper");
-        document
-            .querySelectorAll(".nft-box__wrapper.selected")
-            .forEach((el) => el.classList.remove("selected"));
+        document.querySelectorAll(".nft-box__wrapper.selected").forEach((el) => el.classList.remove("selected"));
 
         if (!selected(from.type, nft, selectedNFTs)) {
             node.classList.add("selected");
+
+            chainSpecificRender?.clearSelectedNFTs && chainSpecificRender?.clearSelectedNFTs(dispatch);
             dispatch(setSelectedNFTList(chosen));
         } else {
             dispatch(removeFromSelectedNFTList(nft));
@@ -106,10 +101,7 @@ export default function NFTcard({
     }
 
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            callBackWhenObserver,
-            options
-        );
+        const observer = new IntersectionObserver(callBackWhenObserver, options);
         const currentTarget = cardRef.current;
 
         if (currentTarget) observer.observe(currentTarget);
@@ -124,13 +116,7 @@ export default function NFTcard({
         if (isVisible) {
             if (!nft.dataLoaded) {
                 chain.preParse(nft).then((_nft) => {
-                    parseNFT(
-                        serviceContainer,
-                        _nft,
-                        index,
-                        testnet,
-                        claimables
-                    );
+                    parseNFT(serviceContainer, _nft, index, testnet, claimables);
                 });
             }
         }
@@ -142,30 +128,23 @@ export default function NFTcard({
         dispatch(setWhitelistingLoader(true));
         dispatch(setTransferLoaderModal(true));
         try {
-            await bridgeWrapper.bridge.whitelistEVM(
-                from.nonce,
-                nft.native.contract
-            );
+            await bridgeWrapper.bridge.whitelistEVM(from.nonce, nft.native.contract);
 
             const interval = setInterval(
                 () =>
-                    bridgeWrapper
-                        .isWhitelisted(from.nonce, nft)
-                        .then((result) => {
-                            if (result) {
-                                dispatch(setTransferLoaderModal(false));
-                                dispatch(setWhitelistingLoader(false));
-                                dispatch(
-                                    setWhiteListedCollection({
-                                        contract: nft.native.contract,
-                                    })
-                                );
-                                whitelistedPool.whitelistContract(
-                                    nft.native.contract
-                                );
-                                clearInterval(interval);
-                            }
-                        }),
+                    bridgeWrapper.isWhitelisted(from.nonce, nft).then((result) => {
+                        if (result) {
+                            dispatch(setTransferLoaderModal(false));
+                            dispatch(setWhitelistingLoader(false));
+                            dispatch(
+                                setWhiteListedCollection({
+                                    contract: nft.native.contract,
+                                })
+                            );
+                            whitelistedPool.whitelistContract(nft.native.contract);
+                            clearInterval(interval);
+                        }
+                    }),
                 5000
             );
 
@@ -174,10 +153,7 @@ export default function NFTcard({
                 dispatch(setTransferLoaderModal(false));
                 clearInterval(interval);
             }, 80 * 1000);
-            handleGA4Event(
-                googleAnalyticsCategories.Whitelist,
-                `Whitelisted. Chain: ${from.text}`
-            );
+            handleGA4Event(googleAnalyticsCategories.Whitelist, `Whitelisted. Chain: ${from.text}`);
         } catch (error) {
             dispatch(setWhitelistingLoader(false));
             dispatch(setTransferLoaderModal(false));
@@ -190,10 +166,7 @@ export default function NFTcard({
                 })
             );
             console.log(error.message);
-            handleGA4Event(
-                googleAnalyticsCategories.Whitelist,
-                `Whitelist failed. Chain: ${from.text}`
-            );
+            handleGA4Event(googleAnalyticsCategories.Whitelist, `Whitelist failed. Chain: ${from.text}`);
         }
     };
 
@@ -205,27 +178,17 @@ export default function NFTcard({
                 ) : (
                     <div
                         onClick={(e) =>
-                            nft.whitelisted && !detailsOn && !claimables
-                                ? addRemoveNFT(nft, e)
-                                : undefined
+                            nft.whitelisted && !detailsOn && !claimables ? addRemoveNFT(nft, e) : undefined
                         }
-                        className={
-                            nft.whitelisted
-                                ? "nft__card--selected"
-                                : "nft__card"
-                        }
+                        className={nft.whitelisted ? "nft__card--selected" : "nft__card"}
                     >
-                        {nft.native?.amount && (
-                            <SFTMark amount={nft?.native.amount} />
-                        )}
+                        {nft.native?.amount && <SFTMark amount={nft?.native.amount} />}
                         {/* {originChainImg && (
                             <OriginChainMark icon={originChainImg} />
                         )} */}
                         <div className="nft__main">
                             <div className="nft-actions__container">
-                                {originChainImg && (
-                                    <OriginChainMark icon={originChainImg} />
-                                )}
+                                {originChainImg && <OriginChainMark icon={originChainImg} />}
                                 {!nft.whitelist && (
                                     <WhitelistButton
                                         isNFTWhitelisted={nft.whitelisted}
@@ -242,11 +205,7 @@ export default function NFTcard({
                                     nft={nft}
                                 />
                             ) : nft.image && !imageErr ? (
-                                <Image
-                                    onError={setImageErr}
-                                    nft={nft}
-                                    index={index}
-                                />
+                                <Image onError={setImageErr} nft={nft} index={index} />
                             ) : !nft.image && nft.animation_url ? (
                                 <OnlyVideo videoUrl={nft.animation_url} />
                             ) : (
@@ -263,12 +222,8 @@ export default function NFTcard({
                                 ""
                             )}
 
-                            {!nft.whitelisted /*|| !verifiedContract*/ && (
-                                <NotWhiteListed />
-                            )}
-                            {claimables && (
-                                <ClaimableCard nft={nft} index={index} />
-                            )}
+                            {!nft.whitelisted /*|| !verifiedContract*/ && <NotWhiteListed />}
+                            {claimables && <ClaimableCard nft={nft} index={index} />}
                         </div>
                         <div className="nft__footer">
                             {localhost === "localhost" && (
@@ -282,21 +237,10 @@ export default function NFTcard({
                                 </span>
                             )}
                             <span className="nft-name">
-                                <span className="name">
-                                    {nft.name || nft.native?.name}
-                                </span>
-                                <NFTdetails
-                                    details={setDetailsOn}
-                                    nftInf={nft}
-                                    index={index}
-                                    claimables={claimables}
-                                />
+                                <span className="name">{nft.name || nft.native?.name}</span>
+                                <NFTdetails details={setDetailsOn} nftInf={nft} index={index} claimables={claimables} />
                             </span>
-                            {from?.text !== "Solana" && (
-                                <span className="nft-number">
-                                    {nft.native?.tokenId}
-                                </span>
-                            )}
+                            {from?.text !== "Solana" && <span className="nft-number">{nft.native?.tokenId}</span>}
                         </div>
                     </div>
                 )}

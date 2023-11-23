@@ -47,13 +47,7 @@ export default function WalletList({ connected, input, discount }) {
 
     const walletComponents = [
         {
-            Component: (
-                <MetaMask
-                    wallet={"MetaMask"}
-                    key="metamask"
-                    close={connected}
-                />
-            ),
+            Component: <MetaMask wallet={"MetaMask"} key="metamask" close={connected} />,
             name: "MetaMask",
             type: "EVM",
             mobile: true,
@@ -71,13 +65,7 @@ export default function WalletList({ connected, input, discount }) {
             keyName: "Unstoppable Domains",
         },
         {
-            Component: (
-                <OKXWallet
-                    wallet={"OKX Wallet"}
-                    key="okx-wallet"
-                    close={connected}
-                />
-            ),
+            Component: <OKXWallet wallet={"OKX Wallet"} key="okx-wallet" close={connected} />,
             name: "OKX Wallet",
             type: "EVM",
             mobile: true,
@@ -86,13 +74,7 @@ export default function WalletList({ connected, input, discount }) {
             keyName: "OKX Wallet",
         },
         {
-            Component: (
-                <TrustWallet
-                    wallet={"Trust Wallet"}
-                    key="trust-wallet"
-                    close={connected}
-                />
-            ),
+            Component: <TrustWallet wallet={"Trust Wallet"} key="trust-wallet" close={connected} />,
             name: "Trust Wallet",
             type: "EVM",
             mobile: true,
@@ -101,14 +83,7 @@ export default function WalletList({ connected, input, discount }) {
             keyName: "Trust Wallet",
         },
         {
-            Component: (
-                <BitKeep
-                    wallet={"BitKeep"}
-                    key="bitKeep"
-                    close={connected}
-                    discount={discount}
-                />
-            ),
+            Component: <BitKeep wallet={"BitKeep"} key="bitKeep" close={connected} discount={discount} />,
             name: "BitKeep",
             type: "EVM",
             mobile: true,
@@ -117,13 +92,7 @@ export default function WalletList({ connected, input, discount }) {
             keyName: "BitKeep",
         },
         {
-            Component: (
-                <WalletConnect
-                    wallet={"WalletConnect"}
-                    key="wallet-connect"
-                    close={connected}
-                />
-            ),
+            Component: <WalletConnect wallet={"WalletConnect"} key="wallet-connect" close={connected} />,
             name: "WalletConnect",
             type: "EVM",
             mobile: true,
@@ -133,13 +102,7 @@ export default function WalletList({ connected, input, discount }) {
         },
 
         {
-            Component: (
-                <TezosWallet
-                    wallet={"TempleWallet"}
-                    key="wallet-index-7"
-                    close={connected}
-                />
-            ),
+            Component: <TezosWallet wallet={"TempleWallet"} key="wallet-index-7" close={connected} />,
             name: "Temple Wallet",
             type: "Tezos",
             mobile: true,
@@ -148,13 +111,7 @@ export default function WalletList({ connected, input, discount }) {
             keyName: "Temple Wallet",
         },
         {
-            Component: (
-                <TezosWallet
-                    wallet={"Beacon"}
-                    key="wallet-index-8"
-                    close={connected}
-                />
-            ),
+            Component: <TezosWallet wallet={"Beacon"} key="wallet-index-8" close={connected} />,
             name: "Beacon",
             type: "Tezos",
             mobile: true,
@@ -173,9 +130,7 @@ export default function WalletList({ connected, input, discount }) {
             keyName: "xPortal",
         },
         {
-            Component: (
-                <MultiversXDeFi wallet={undefined} key="wallet-index-10" />
-            ),
+            Component: <MultiversXDeFi wallet={undefined} key="wallet-index-10" />,
             name: "MultiversX DeFi Wallet",
             type: "Elrond",
             mobile: false,
@@ -184,13 +139,7 @@ export default function WalletList({ connected, input, discount }) {
             keyName: "MultiversX DeFi Wallet",
         },
         {
-            Component: (
-                <MyAlgo
-                    wallet={"MyAlgo"}
-                    key="wallet-index-3"
-                    close={connected}
-                />
-            ),
+            Component: <MyAlgo wallet={"MyAlgo"} key="wallet-index-3" close={connected} />,
             name: "MyAlgo",
             type: "Algorand",
             mobile: false,
@@ -199,13 +148,7 @@ export default function WalletList({ connected, input, discount }) {
             keyName: "MyAlgo",
         },
         {
-            Component: (
-                <AlgoSigner
-                    wallet={"AlgoSigner"}
-                    key="wallet-index-4"
-                    close={connected}
-                />
-            ),
+            Component: <AlgoSigner wallet={"AlgoSigner"} key="wallet-index-4" close={connected} />,
             name: "AlgoSigner",
             type: "Algorand",
             mobile: false,
@@ -214,13 +157,7 @@ export default function WalletList({ connected, input, discount }) {
             keyName: "AlgoSigner",
         },
         {
-            Component: (
-                <Pera
-                    wallet={undefined}
-                    key="wallet-index-5"
-                    close={connected}
-                />
-            ),
+            Component: <Pera wallet={undefined} key="wallet-index-5" close={connected} />,
             name: "Pera Wallet",
             type: "Algorand",
             mobile: true,
@@ -238,9 +175,7 @@ export default function WalletList({ connected, input, discount }) {
             keyName: "TronLink",
         },
         {
-            Component: (
-                <VeChainWallet key="wallet-index-14" close={connected} />
-            ),
+            Component: <VeChainWallet key="wallet-index-14" close={connected} />,
             name: "Sync2",
             type: "VeChain",
             mobile: true,
@@ -249,13 +184,7 @@ export default function WalletList({ connected, input, discount }) {
             keyName: "Sync2",
         },
         {
-            Component: (
-                <VeChainWallet
-                    key="wallet-index-15"
-                    wallet={"VeChainThor"}
-                    close={connected}
-                />
-            ),
+            Component: <VeChainWallet key="wallet-index-15" wallet={"VeChainThor"} close={connected} />,
             name: "VeChainThor",
             type: "VeChain",
             mobile: true,
@@ -264,13 +193,7 @@ export default function WalletList({ connected, input, discount }) {
             keyName: "VeChainThor",
         },
         {
-            Component: (
-                <CosmosWallet
-                    key="wallet-index-16"
-                    wallet={"Keplr"}
-                    close={connected}
-                />
-            ),
+            Component: <CosmosWallet key="wallet-index-16" wallet={"Keplr"} close={connected} />,
             name: "Keplr",
             type: "Cosmos",
             mobile: true,
@@ -279,13 +202,7 @@ export default function WalletList({ connected, input, discount }) {
             keyName: "Keplr",
         },
         {
-            Component: (
-                <CosmosWallet
-                    key="wallet-index-17"
-                    wallet={"Fina"}
-                    close={connected}
-                />
-            ),
+            Component: <CosmosWallet key="wallet-index-17" wallet={"Fina"} close={connected} />,
             name: "Fina",
             type: "Cosmos",
             mobile: true,
@@ -321,13 +238,7 @@ export default function WalletList({ connected, input, discount }) {
             keyName: "Ton Wallet",
         },
         {
-            Component: (
-                <HederaWallet
-                    key="wallet-index-13"
-                    close={connected}
-                    wallet={"Hashpack"}
-                />
-            ),
+            Component: <HederaWallet key="wallet-index-13" close={connected} wallet={"Hashpack"} />,
             name: "Hashpack",
             keyName: "Hashpack",
             mobile: true,
@@ -405,7 +316,7 @@ export default function WalletList({ connected, input, discount }) {
             Component: <IcpWallet key="ICP" close={connected} />,
             name: "ICP",
             mobile: false,
-            desktop: biz,
+            desktop: true,
             order: 1,
             type: "ICP",
             keyName: "ICPPlug",
@@ -459,9 +370,7 @@ export default function WalletList({ connected, input, discount }) {
     const filteredWallets = input
         ? walletComponents
               .sort((a, b) => b.order - a.order)
-              .filter((wallet) =>
-                  wallet.keyName.toLowerCase().includes(input.toLowerCase())
-              )
+              .filter((wallet) => wallet.keyName.toLowerCase().includes(input.toLowerCase()))
         : from
         ? sortWallet(walletComponents)
         : walletComponents.sort((a, b) => a.order - b.order);
@@ -472,15 +381,11 @@ export default function WalletList({ connected, input, discount }) {
                 <ul className="walletList scrollSty">
                     {window.innerWidth < 600
                         ? walletComponents
-                              .filter(
-                                  (e) => e.type === "EVM" || e.type === "Skale"
-                              )
+                              .filter((e) => e.type === "EVM" || e.type === "Skale")
                               .filter((wallet) => wallet.mobile)
                               .map((wallet) => wallet.Component)
                         : walletComponents
-                              .filter(
-                                  (e) => e.type === "EVM" || e.type === "Skale"
-                              )
+                              .filter((e) => e.type === "EVM" || e.type === "Skale")
                               .filter((wallet) => wallet.desktop)
                               .map((wallet) => wallet.Component)}
                 </ul>
@@ -490,9 +395,7 @@ export default function WalletList({ connected, input, discount }) {
             return (
                 <ul className="walletList scrollSty">
                     {isMobile.any()
-                        ? filteredWallets
-                              .filter((wallet) => wallet.mobile)
-                              .map((wallet) => wallet.Component)
+                        ? filteredWallets.filter((wallet) => wallet.mobile).map((wallet) => wallet.Component)
                         : filteredWallets
                               .filter((wallet) => wallet.desktop)
                               .map((wallet) => {

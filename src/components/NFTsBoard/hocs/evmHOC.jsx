@@ -20,23 +20,20 @@ export const withEVM = (Wrapped) =>
         const discounts = async (dispatch, _, account) => {
             if (account) {
                 const data = await checkXpNetLocked(account);
-                dispatch(
-                    setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25))
-                );
+                dispatch(setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25)));
             }
         };
 
         const { activate } = useWeb3React();
 
         const connectionCallback = async (bridge, toChain) => {
-            bridge.currentType === "EVM"
-                ? await switchNetwork(getChainObject(toChain))
-                : await activate(injected);
+            bridge.currentType === "EVM" ? await switchNetwork(getChainObject(toChain)) : await activate(injected);
+            await new Promise((r) => setTimeout(r, 3000));
 
             return await new Promise((r) => {
                 (async () => {
                     let chainWapper = await bridge.getChain(toChain, {
-                        overwrite: true,
+                        overwrite: bridge.currentType === "EVM" ? true : false,
                     });
                     while (!chainWapper.signer) {
                         console.log(chainWapper.signer, "signer");
@@ -58,9 +55,7 @@ export const withEVM = (Wrapped) =>
                     ...(props.chainSpecificRender || {}),
                     [ChainType.EVM]: {
                         DeployUserStore,
-                        RenderClaimInDestination: ClaimInDestination(
-                            connectionCallback
-                        ),
+                        RenderClaimInDestination: ClaimInDestination(connectionCallback),
                     },
                 }}
                 chainSpecific={{
