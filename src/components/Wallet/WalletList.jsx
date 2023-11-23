@@ -316,7 +316,7 @@ export default function WalletList({ connected, input, discount }) {
             Component: <IcpWallet key="ICP" close={connected} />,
             name: "ICP",
             mobile: false,
-            desktop: biz,
+            desktop: true,
             order: 1,
             type: "ICP",
             keyName: "ICPPlug",

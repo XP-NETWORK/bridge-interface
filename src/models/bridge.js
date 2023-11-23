@@ -126,7 +126,7 @@ class Bridge {
             switch (chainParams.type) {
                 case ChainType.EVM:
                     switch (true) {
-                        /*case Object.values(this.config)
+                        /* case Object.values(this.config)
                             .filter((params) => params.v3_bridge)
                             .map((p) => p.nonce)
                             .includes(params.nonce): {
@@ -153,7 +153,7 @@ class Bridge {
                     this.chains[chainId] = new ChainInterface.Tron(params);
                     return this.chains[chainId];
                 case ChainType.ELROND: {
-                    /*const v3 = Object.values(this.config)
+                    /* const v3 = Object.values(this.config)
                         .filter((params) => params.v3_bridge)
                         .map((p) => p.nonce)
                         .includes(params.nonce);

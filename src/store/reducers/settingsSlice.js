@@ -75,7 +75,7 @@ export const wallets = [
     "Keplr",
     "Fina",
     "Hashpack",
-    ...(biz ? ["Plug", "Stoic", "Bitfinity"] : []),
+    ...["Plug", "Stoic", "Bitfinity"],
     ...(biz ? ["CasperWallet"] : []),
 ];
 
