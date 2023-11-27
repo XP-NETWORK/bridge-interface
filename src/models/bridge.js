@@ -4,7 +4,7 @@ import { CHAIN_INFO, AppConfigs, ChainFactory, ChainFactoryConfigs, ChainType, C
 import ChainInterface from "./chains";
 
 import axios from "axios";
-import { BridgeModes, chains, stagingWNFT, wnft, wnftPattern } from "../components/values";
+import { BridgeModes, chains, stagingWNFT, wnft, wnftPattern, v3_bridge_mode } from "../components/values";
 
 class Bridge {
     chains = {};
@@ -126,13 +126,14 @@ class Bridge {
             switch (chainParams.type) {
                 case ChainType.EVM:
                     switch (true) {
-                        /* case Object.values(this.config)
-                            .filter((params) => params.v3_bridge)
-                            .map((p) => p.nonce)
-                            .includes(params.nonce): {
+                        case v3_bridge_mode &&
+                            Object.values(this.config)
+                                .filter((params) => params.v3_bridge)
+                                .map((p) => p.nonce)
+                                .includes(params.nonce): {
                             this.chains[chainId] = new ChainInterface.V3_EVM(params);
                             return this.chains[chainId];
-                        }*/
+                        }
 
                         case Object.values(this.config)
                             .filter((params) => params.noWhitelist)
@@ -153,15 +154,17 @@ class Bridge {
                     this.chains[chainId] = new ChainInterface.Tron(params);
                     return this.chains[chainId];
                 case ChainType.ELROND: {
-                    /* const v3 = Object.values(this.config)
-                        .filter((params) => params.v3_bridge)
-                        .map((p) => p.nonce)
-                        .includes(params.nonce);
+                    const v3 =
+                        v3_bridge_mode &&
+                        Object.values(this.config)
+                            .filter((params) => params.v3_bridge)
+                            .map((p) => p.nonce)
+                            .includes(params.nonce);
 
                     if (v3) {
                         this.chains[chainId] = new ChainInterface.V3_Multiversex(params);
                         return this.chains[chainId];
-                    }*/
+                    }
 
                     this.chains[chainId] = new ChainInterface.Elrond(params);
                     return this.chains[chainId];
@@ -264,6 +267,51 @@ class Bridge {
             tokenId: nft.native?.tokenId,
             contract: nft.collectionIdent,
         };
+    }
+
+    async v3_unwrap(nft) {
+        const chainId = nft.native.chainId;
+        const contract = nft.native.contract || nft.collectionIdent;
+        const tokenId = nft.native.tokenId;
+        const data = {
+            chainId,
+            contract,
+            tokenId,
+        };
+        try {
+            const chainWrapper = await this.getChain(Number(chainId));
+
+            if (chainWrapper.chain.getNftOrigin) {
+                const res = await chainWrapper.chain.getNftOrigin(contract).catch((e) => {
+                    console.log(e);
+                });
+
+                const origin = res.origin;
+                if (origin !== chainId) {
+                    const contract = res.contract;
+
+                    return {
+                        nft: {
+                            uri: nft.uri,
+                            collectionIdent: contract,
+                            isWrappedNft: true,
+                            native: {
+                                ...nft.native,
+                                uri: nft.uri,
+                                chainId: origin,
+                                contract,
+                            },
+                        },
+                        ...data,
+                        chainId: origin,
+                        contract,
+                    };
+                }
+                return { nft, ...data };
+            }
+        } catch {
+            return { nft, ...data };
+        }
     }
 
     setCurrentType({ chainParams }) {

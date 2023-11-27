@@ -97,10 +97,7 @@ export const withEVMConnection = (Wrapped) =>
             if (!quietConnection) {
                 bridge.setCurrentType(chainWrapper);
                 dispatch(setAccount(account));
-                /*return await chainWrapper.claim(
-                    await bridge.getChain(2),
-                    "5b05b43ad9d26b5416075e4611bed46c96e2f861620c0234fd4a853131193426"
-                );*/
+
                 from && to && navigate(getRightPath(bridge.network, from, to));
             }
         }

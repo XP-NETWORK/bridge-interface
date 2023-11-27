@@ -47,11 +47,19 @@ export const TEZOS = "TEZOS";
 
 export const stagingWNFT = "https://staging-nft.xp.network";
 export const wnft = ["https://wnfts.xp.network", "https://nft.xp.network"];
+export const cacheService = "https://nft-cache.xp.network/";
 
 export const wnftPattern = /(\S+xp\.network)/;
+
+//testnet in any bucket
 export const isTestnet = /testnet/.test(window.location.pathname);
+//if on https://dev.bridge.xp.network/ domain
 export const dev = /(localhost|dev|10\.0\.0|trycloudflare)/.test(window.location.hostname);
+//if on https://staging.bridge.xp.network/  or https://dev.bridge.xp.network/ domains
 export const biz = dev || /(staging)/.test(window.location.hostname);
+
+//v3 bridge activation (currenly workig only for BSC, Multiversx, Polygon in testnet)
+export const v3_bridge_mode = false;
 
 export const BridgeModes = {
     Staging: "staging",

@@ -23,6 +23,13 @@ module.exports = function override(webpackConfig) {
     "@hashgraph/proto": "@hashgraph/proto/lib/proto.js",
   };*/
 
+    webpackConfig.module.rules = webpackConfig.module.rules.map((rule) => {
+        if (rule.oneOf instanceof Array) {
+            rule.oneOf[rule.oneOf.length - 1].exclude = [/\.(js|mjs|jsx|cjs|ts|tsx)$/, /\.html$/, /\.json$/];
+        }
+        return rule;
+    });
+
     webpackConfig.module.rules.push({
         test: /\.m?js/,
         resolve: {
