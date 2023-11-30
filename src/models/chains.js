@@ -800,6 +800,15 @@ class TON extends AbstractChain {
     }
 }
 
+class V3_TON extends TON {
+    v3Bridge = true;
+
+    async claim(from, hash, fee) {
+        const result = await this.bridge.claimNFT(from.chain, this.chain, hash, this.signer, fee);
+        return { result };
+    }
+}
+
 class Near extends AbstractChain {
     constructor(params) {
         super(params);
@@ -1254,6 +1263,7 @@ export default {
     EVM,
     V3_EVM,
     V3_Multiversex,
+    V3_TON,
     NoWhiteListEVM,
     VeChain,
     Elrond,

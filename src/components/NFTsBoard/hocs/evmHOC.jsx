@@ -32,14 +32,10 @@ export const withEVM = (Wrapped) =>
 
             return await new Promise((r) => {
                 (async () => {
-                    let chainWapper = await bridge.getChain(toChain, {
-                        overwrite: bridge.currentType === "EVM" ? true : false,
-                    });
+                    let chainWapper = await bridge.getChain(toChain);
                     while (!chainWapper.signer) {
                         console.log(chainWapper.signer, "signer");
-                        chainWapper = await bridge.getChain(toChain, {
-                            overwrite: true,
-                        });
+                        chainWapper = await bridge.getChain(toChain);
                         await new Promise((r) => setTimeout(r, 2000));
                     }
 

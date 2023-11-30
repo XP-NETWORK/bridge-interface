@@ -27,6 +27,8 @@
         "@taquito/beacon-wallet": "^13.0.0",
         "@taquito/taquito": "^12.1.1",
         "@temple-wallet/dapp": "^7.0.0",
+        "@ton/core": "^0.53.0",
+        "@ton/crypto": "^3.2.0",
         "@uauth/js": "^2.4.0",
         "@uauth/web3modal": "^2.4.0",
         "@vechain/connex": "^2.0.14",

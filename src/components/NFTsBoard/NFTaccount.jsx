@@ -53,12 +53,7 @@ import AccountModal from "../Modals/AccountModal/AccountModal";
 const intervalTm = 15_000;
 
 function NFTaccount(props) {
-    const {
-        serviceContainer,
-        chainSpecific,
-        _from,
-        //chainSpecificRender,
-    } = props;
+    const { serviceContainer, chainSpecific, _from } = props;
 
     const dispatch = useDispatch();
 
@@ -233,4 +228,4 @@ function NFTaccount(props) {
     );
 }
 
-export default withChains(NFTaccount);
+export default withChains(NFTaccount /*, { withDestinationChains: true }*/);

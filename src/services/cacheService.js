@@ -1,7 +1,8 @@
 import axios from "axios";
+import { cacheService } from "../components/values";
 
 class CacheService {
-    cacheApi = "https://nft-cache.xp.network/"; //"https://nft-cache-testing.herokuapp.com"; //"http://localhost:3030"; //"https://nft-cache.herokuapp.com";
+    cacheApi = cacheService || "http://localhost:3030";
     retryInterval = 6000;
     totalTry = 6;
     retryStatues = [429];
@@ -10,14 +11,11 @@ class CacheService {
     async get({ chainId, tokenId, contract }, nft) {
         try {
             const _tokenId = encodeURIComponent(tokenId || nft.native?.tokenId);
-            const _contract = encodeURIComponent(
-                contract || nft.native?.contract
-            );
+            const _contract = encodeURIComponent(contract || nft.native?.contract);
             return axios
                 .get(
                     `${this.cacheApi}/nft/data?chainId=${chainId ||
-                        nft.native
-                            ?.chainId}&tokenId=${_tokenId}&contract=${_contract}`,
+                        nft.native?.chainId}&tokenId=${_tokenId}&contract=${_contract}`,
                     {
                         timeout: 5000,
                     }
@@ -29,8 +27,7 @@ class CacheService {
     }
 
     async add(nft, account, whitelisted, times = 1) {
-        if (typeof nft.native?.tokenId === "undefined")
-            return "key parameter missing";
+        if (typeof nft.native?.tokenId === "undefined") return "key parameter missing";
         return axios
             .post(`${this.cacheApi}/nft/add`, {
                 nft,
@@ -38,16 +35,9 @@ class CacheService {
                 whitelisted,
             })
             .then(async (res) => {
-                if (
-                    this.retryStatues.includes(res.data?.errorStatus) &&
-                    times < this.totalTry
-                ) {
+                if (this.retryStatues.includes(res.data?.errorStatus) && times < this.totalTry) {
                     await new Promise((resolve) =>
-                        setTimeout(
-                            () => resolve(""),
-                            this.retryInterval +
-                                (this.retryInterval * times) / 5
-                        )
+                        setTimeout(() => resolve(""), this.retryInterval + (this.retryInterval * times) / 5)
                     );
                     return this.add(nft, account, whitelisted, times++);
                 } else {
