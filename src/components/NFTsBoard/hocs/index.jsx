@@ -7,6 +7,7 @@ import { withEVM as EVM } from "./evmHOC";
 import { withHedera as Hedera } from "./hederaHOC";
 import { withICP as ICP } from "./icpHOC";
 import { withCasper as Casper } from "./casperHOC";
+import { withTon as Ton } from "./tonHOC";
 import { withServices } from "../../App/hocs/withServices";
 
 import { useSelector } from "react-redux";
@@ -17,9 +18,7 @@ const withChains = (NFTaccount, options = {}) =>
     function CB(props) {
         const { withDestinationChains } = options;
         const { chainSpecific, chainSpecificRender } = props;
-        const _chain = useSelector((state) =>
-            withDestinationChains ? state.general.to : state.general.from
-        );
+        const _chain = useSelector((state) => (withDestinationChains ? state.general.to : state.general.from));
         const type = CHAIN_INFO.get(_chain.nonce).type;
 
         return (
@@ -32,13 +31,4 @@ const withChains = (NFTaccount, options = {}) =>
         );
     };
 
-export default compose(
-    withServices,
-    Hedera,
-    Casper,
-    ICP,
-    Elrond,
-    Algo,
-    EVM,
-    withChains
-);
+export default compose(withServices, Hedera, Casper, ICP, Elrond, Ton, Algo, EVM, withChains);

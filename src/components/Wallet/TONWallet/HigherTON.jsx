@@ -7,22 +7,9 @@ import {
     setWalletsModal,
     setFrom,
 } from "../../../store/reducers/generalSlice";
-import {
-    setSigner,
-    setWalletAddress,
-} from "../../../store/reducers/signersSlice";
-import {
-    connectTonHub,
-    connectTonKeeper,
-    connectTonWallet,
-    awaitTonHubReady,
-} from "./TonConnectors";
-import {
-    setActiveTonWalletConnection,
-    setQRCodeModal,
-    setTonHubSession,
-    setTonKeeperSession,
-} from "./tonStore";
+import { setSigner, setWalletAddress } from "../../../store/reducers/signersSlice";
+import { connectTonHub, connectTonKeeper, connectTonWallet, awaitTonHubReady } from "./TonConnectors";
+import { setActiveTonWalletConnection, setQRCodeModal, setTonHubSession, setTonKeeperSession } from "./tonStore";
 
 import { getRightPath } from "../../../utils";
 
@@ -33,10 +20,7 @@ import { withServices } from "../../App/hocs/withServices";
 
 import { Chain } from "xp.network";
 import { getChainObject } from "../../../components/values";
-import {
-    googleAnalyticsCategories,
-    handleGA4Event,
-} from "../../../services/GA4";
+import { googleAnalyticsCategories, handleGA4Event } from "../../../services/GA4";
 
 function HigherTON(OriginalComponent) {
     //
@@ -44,13 +28,9 @@ function HigherTON(OriginalComponent) {
         const { bridge } = serviceContainer;
         const dispatch = useDispatch();
         const navigate = useNavigate();
-        const { from, to, temporaryFrom } = useSelector(
-            (state) => state.general
-        );
+        const { from, to, temporaryFrom } = useSelector((state) => state.general);
 
-        const tonKeeperSession = useSelector(
-            (state) => state.tonStore.tonKeeperSession
-        );
+        const tonKeeperSession = useSelector((state) => state.tonStore.tonKeeperSession);
 
         const ifTypeIsTonOrNotSelected = () => {
             switch (true) {
@@ -79,9 +59,7 @@ function HigherTON(OriginalComponent) {
             let signer;
             let connectedWallet;
             //const fromChain = await factory.inner(27);
-            const chainWrapper = await bridge.getChain(
-                from?.nonce || Chain.TON
-            );
+            const chainWrapper = await bridge.getChain(from?.nonce || Chain.TON);
             const { chain: fromChain } = chainWrapper;
 
             switch (wallet) {
@@ -104,13 +82,8 @@ function HigherTON(OriginalComponent) {
                     signer = fromChain.tonKeeperWrapper({
                         wallet: {
                             send: (deepLink) => {
-                                deepLink = deepLink.replace(
-                                    "https://app.tonkeeper.com/",
-                                    "tonkeeper://"
-                                );
-                                store.dispatch(
-                                    setActiveTonWalletConnection("TonKeeper")
-                                );
+                                deepLink = deepLink.replace("https://app.tonkeeper.com/", "tonkeeper://");
+                                store.dispatch(setActiveTonWalletConnection("TonKeeper"));
 
                                 store.dispatch(
                                     setTonKeeperSession({
@@ -133,9 +106,7 @@ function HigherTON(OriginalComponent) {
                     break;
                 case "TonHub": {
                     store.dispatch(setActiveTonWalletConnection("TonHub"));
-                    const { connector, session } = await connectTonHub(
-                        isMobile
-                    );
+                    const { connector, session } = await connectTonHub(isMobile);
                     dispatch(setTonHubSession(session));
                     signer = connector;
                     account = await awaitTonHubReady(session);
@@ -156,6 +127,11 @@ function HigherTON(OriginalComponent) {
                     break;
             }
 
+            /*console.log(
+                await chainWrapper.chain.getTokenInfo({
+                    sourceNftContractAddress: "EQC_firgWJkGg8E9_IPPHaHstPtZMN-Avc0Lvs6krO3jOQrk",
+                })
+            );*/
             chainWrapper.setSigner(signer);
             bridge.setCurrentType(chainWrapper);
             dispatch(setAccount(account.address));
@@ -165,10 +141,7 @@ function HigherTON(OriginalComponent) {
             dispatch(setTonWallet(true));
             dispatch(setWalletsModal(false));
             dispatch(setQRCodeModal(false));
-            handleGA4Event(
-                googleAnalyticsCategories.Connect,
-                `Connected with: ${wallet}`
-            );
+            handleGA4Event(googleAnalyticsCategories.Connect, `Connected with: ${wallet}`);
             if (!from) {
                 dispatch(setFrom(getChainObject(Chain.TON)));
             }
@@ -178,12 +151,7 @@ function HigherTON(OriginalComponent) {
             }
         };
 
-        return (
-            <OriginalComponent
-                styles={getStyles}
-                connectWallet={connectWallet}
-            />
-        );
+        return <OriginalComponent styles={getStyles} connectWallet={connectWallet} />;
     }
 
     return withServices(updatedComponent);

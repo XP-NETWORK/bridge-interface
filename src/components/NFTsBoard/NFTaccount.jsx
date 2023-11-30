@@ -50,12 +50,7 @@ import ReceiverIsContract from "../Alerts/ReceiverIsContract";
 const intervalTm = 15_000;
 
 function NFTaccount(props) {
-    const {
-        serviceContainer,
-        chainSpecific,
-        _from,
-        //chainSpecificRender,
-    } = props;
+    const { serviceContainer, chainSpecific, _from, chainSpecificRender } = props;
 
     const dispatch = useDispatch();
 
@@ -69,7 +64,7 @@ function NFTaccount(props) {
     const importModal = useSelector((state) => state.general.importModal);
 
     const account = useSelector((state) => state.general.account);
-
+    const ff = useSelector((state) => state.general.from);
     //const prevAccount = usePrevious(account);
 
     const NFTSetToggler = useSelector((state) => state.general.NFTSetToggler);
@@ -81,19 +76,15 @@ function NFTaccount(props) {
 
     const checkWallet = useSelector((state) => state.general.checkWallet);
 
-    const accountWalletModal = useSelector(
-        (state) => state.general.accountWalletModal
-    );
+    const accountWalletModal = useSelector((state) => state.general.accountWalletModal);
 
-    const undeployedUserStore = useSelector(
-        (state) => state.general.undeployedUserStore
-    );
+    const undeployedUserStore = useSelector((state) => state.general.undeployedUserStore);
 
     const lockMainPannel = useSelector((state) => state.general.lockMainPannel);
 
     const preFetchData = useSelector((state) => state.general.preFetchData);
 
-    //const Claim = chainSpecificRender?.RenderClaimInDestination;
+    const Claim = chainSpecificRender?.RenderClaimInDestination;
 
     let _account = checkWallet || account;
 
@@ -133,9 +124,7 @@ function NFTaccount(props) {
     useDidUpdateEffect(() => {
         const checkLocked = async () => {
             const data = await checkXpNetLocked(account);
-            dispatch(
-                setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25))
-            );
+            dispatch(setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25)));
         };
         account && checkLocked();
     }, [account]);
@@ -156,10 +145,7 @@ function NFTaccount(props) {
             if (_account) {
                 getBalance(fromChain);
                 !secret && getNFTsList(fromChain, preFetchData?.contract);
-                balanceInterval = setInterval(
-                    () => getBalance(fromChain),
-                    intervalTm
-                );
+                balanceInterval = setInterval(() => getBalance(fromChain), intervalTm);
             }
         })();
 
@@ -191,11 +177,7 @@ function NFTaccount(props) {
 
     return (
         <div className="NFTaccount">
-            <Modal
-                show={importModal}
-                animation={null}
-                className=" ChainModal import-nft__modal"
-            >
+            <Modal show={importModal} animation={null} className=" ChainModal import-nft__modal">
                 <ImportNFTModal />
             </Modal>
             <Modal
@@ -206,11 +188,7 @@ function NFTaccount(props) {
             >
                 <WalletConnectionModal />
             </Modal>
-            <Modal
-                show={unwrappedEGold}
-                animation={null}
-                className="eGold-success ChainModal"
-            >
+            <Modal show={unwrappedEGold} animation={null} className="eGold-success ChainModal">
                 <EGoldSuccess />
             </Modal>
             <ChangeNetworkModal />
@@ -221,22 +199,20 @@ function NFTaccount(props) {
             <ReceiverIsContract />
             <NoApprovedNFT />
             <Container
-                className={`nftSlectContaine ${
-                    undeployedUserStore ? " undeployedUserStore" : ""
-                } ${lockMainPannel ? " lockedX" : ""}`}
+                className={`nftSlectContaine ${undeployedUserStore ? " undeployedUserStore" : ""} ${
+                    lockMainPannel ? " lockedX" : ""
+                }`}
             >
                 <ReturnBtn />
 
-                {/*false && (
+                {false && (
                     <Claim
                         serviceContainer={serviceContainer}
-                        fromChain={_from.nonce}
-                        toChain={7}
-                        hash={
-                            "0x7d742e959c2c375a672c56dc08769101da94c10f64875cd47d8735ff8b16ab72"
-                        }
+                        fromChain={ff.nonce}
+                        toChain={27}
+                        hash={"0x984e0c85404bd5419b33026f507b0e432e4ab35687e9478bf26bf234be41fed1"}
                     />
-                    )*/}
+                )}
 
                 <div className="row account__container">
                     <div className="nftListCol col-lg-8">
@@ -245,16 +221,10 @@ function NFTaccount(props) {
                     </div>
                     {!isMobile && <DesktopTransferBoard />}
                 </div>
-                {isMobile && (
-                    <NFTmobileView
-                        selectedNFTs={selectedNFTs}
-                        _from={_from}
-                        nfts={currentsNFTs}
-                    />
-                )}
+                {isMobile && <NFTmobileView selectedNFTs={selectedNFTs} _from={_from} nfts={currentsNFTs} />}
             </Container>
         </div>
     );
 }
 
-export default withChains(NFTaccount);
+export default withChains(NFTaccount /*, { withDestinationChains: true }*/);

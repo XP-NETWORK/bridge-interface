@@ -178,9 +178,22 @@ class Bridge {
                 case ChainType.COSMOS:
                     this.chains[chainId] = new ChainInterface.Cosmos(params);
                     return this.chains[chainId];
-                case ChainType.TON:
+                case ChainType.TON: {
+                    const v3 =
+                        v3_bridge_mode &&
+                        Object.values(this.config)
+                            .filter((params) => params.v3_bridge)
+                            .map((p) => p.nonce)
+                            .includes(params.nonce);
+
+                    if (v3) {
+                        this.chains[chainId] = new ChainInterface.V3_TON(params);
+                        return this.chains[chainId];
+                    }
+
                     this.chains[chainId] = new ChainInterface.TON(params);
                     return this.chains[chainId];
+                }
                 case ChainType.NEAR:
                     this.chains[chainId] = new ChainInterface.Near(params);
                     return this.chains[chainId];

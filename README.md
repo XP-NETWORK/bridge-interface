@@ -12,7 +12,9 @@ main dependancy is **xp.network(xpjs)** (_yarn upgrade xp.network_ before build)
 
 If you upgrade xp.network dependancy by building(or editing) directly in /node_modules/xp.network/dist (this is fast way to do upgrade), do not forget to delete node_modules/.cache folder before restarting
 
-Config constants are located in src/components/values.js (don't forget to update it when adding new chains)
+**_ Config constants _** are located in src/components/values.js (don't forget to update it when adding new chains)
+
+**_ To show/hide chains from UI - edit config file _**
 
 # Main concepts
 
@@ -65,13 +67,10 @@ Wrap your component with _withChains_ higher order component and it will know wh
 
     with :
 
-    ```
-        crypto-js@4.1.1, crypto-js@^4.1.1:
+```
+crypto-js@4.1.1, crypto-js@^4.1.1:
+    version "4.1.1"
+    resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.1.1.tgz#9e485bcf03521041bd85844786b83fb7619736cf"
+    integrity sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
 
-            version "4.1.1"
-            resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.1.1.tgz#9e485bcf03521041bd85844786b83fb7619736cf"
-            integrity sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
-
-    ```
-
-y
+```

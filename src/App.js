@@ -49,15 +49,9 @@ function App() {
     let from = useSelector((state) => state.general.from);
     let currentsNFTs = useSelector((state) => state.general.currentsNFTs);
 
-    let accountWalletModal = useSelector(
-        (state) => state.general.accountWalletModal
-    );
-    let transferModalLoader = useSelector(
-        (state) => state.general.transferModalLoader
-    );
-    let switchDestination = useSelector(
-        (state) => state.general.switchDestination
-    );
+    let accountWalletModal = useSelector((state) => state.general.accountWalletModal);
+    let transferModalLoader = useSelector((state) => state.general.transferModalLoader);
+    let switchDestination = useSelector((state) => state.general.switchDestination);
 
     let modalArray = [
         showChainModal,
@@ -75,20 +69,6 @@ function App() {
     ];
 
     let location = useLocation();
-
-    /*l useEffect(async () => {
-        /*let client = new CasperClient(
-            proxy + "https://rpc.testnet.casperlabs.io/rpc"
-        );
-        const [_, raw] = await client.getDeploy(
-            "f4ade6282e7a90b37e36c4241b94ba85bc6f96e6870cff0c7ed5d5c6887edc7b"
-        );
-        console.log(_, raw, "raw");
-
-        //const x = new providers.JsonRpcProvider(window.ethereum);
-
-       // console.log(x.getCode, "ds");
-    }, []);*/
 
     useEffect(() => {
         if (modalArray.indexOf(true) !== -1) {
@@ -136,17 +116,13 @@ function App() {
 
         if (from !== to) {
             if (from) {
-                const fromChain = chains.filter(
-                    (n) => n.text === from.replace("/", "")
-                )[0];
+                const fromChain = chains.filter((n) => n.text === from.replace("/", ""))[0];
                 if (fromChain) {
                     dispatch(generalSlice.setFrom(fromChain));
                 }
             }
             if (to) {
-                const toChain = chains.filter(
-                    (n) => n.text === to.replace("/", "")
-                )[0];
+                const toChain = chains.filter((n) => n.text === to.replace("/", ""))[0];
                 if (toChain) {
                     dispatch(generalSlice.setTo(toChain));
                 }
@@ -167,9 +143,7 @@ function App() {
 
         const key = generateKey(10); // assuming generateKey() is a function that generates a random string
 
-        const deepLink = `wc:connect/xp?bridge=${encodeURIComponent(
-            bridgeUrl
-        )}&key=${encodeURIComponent(key)}`;
+        const deepLink = `wc:connect/xp?bridge=${encodeURIComponent(bridgeUrl)}&key=${encodeURIComponent(key)}`;
         dispatch(generalSlice.setDeepLink(deepLink));
 
         return () => clearInterval(validatorsInt);

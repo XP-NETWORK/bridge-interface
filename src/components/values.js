@@ -59,7 +59,7 @@ export const dev = /(localhost|dev|10\.0\.0|trycloudflare)/.test(window.location
 export const biz = dev || /(staging)/.test(window.location.hostname);
 
 //v3 bridge activation (currenly workig only for BSC, Multiversx, Polygon in testnet)
-export const v3_bridge_mode = false;
+export const v3_bridge_mode = true;
 
 export const BridgeModes = {
     Staging: "staging",
