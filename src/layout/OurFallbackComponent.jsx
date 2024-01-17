@@ -22,7 +22,7 @@ export default function OurFallbackComponent() {
             <div className="page-nt-found__help-btn">
                 <a
                     target="_blanc"
-                    href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"
+                    href="https://t.me/XP_NETWORK_Technical_Support"
                 >
                     Contact help center -&gt;
                 </a>
