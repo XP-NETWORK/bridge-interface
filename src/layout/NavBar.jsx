@@ -147,7 +147,7 @@ function NavBar() {
                                 rel="noreferrer"
                                 className="nav-link help-center"
                                 target="_blank"
-                                href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"
+                                href="https://t.me/XP_NETWORK_Technical_Support"
                                 onClick={() =>
                                     handleEventsForAnalytics("Help Center")
                                 }
@@ -415,7 +415,7 @@ function NavBar() {
                                             </div>
                                         </Dropdown.Item>
                                         <Dropdown.Item
-                                            href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"
+                                            href="https://t.me/XP_NETWORK_Technical_Support"
                                             target="_blank"
                                         >
                                             <div
