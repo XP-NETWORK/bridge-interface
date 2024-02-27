@@ -556,7 +556,7 @@ export const chains = [
         nonce: 0x26,
         order: -1,
         image: { avatar: true, src: brise },
-        testNet: false,
+        testNet: true,
         mainnet: true,
         coming: false,
         newChain: true,
