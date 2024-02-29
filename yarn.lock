@@ -21002,9 +21002,9 @@ xmlhttprequest@1.8.0:
   resolved "https://registry.yarnpkg.com/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz#67fe075c5c24fef39f9d65f5f7b7fe75171968fc"
   integrity sha512-58Im/U0mlVBLM38NdZjHyhuMtCqa61469k2YP/AaPbvCoV9aQGUpbJBj1QRm2ytRiVQBD/fsw7L2bJGDVQswBA==
 
-"xp.network@git+https://github.com/xp-network/xpjs#bleeding-edge":
+"xp.network@git+https://github.com/XP-NETWORK/xpjs#bleeding-edge":
   version "4.3.3"
-  resolved "git+https://github.com/xp-network/xpjs#80195f23577e05d2b6ed8d118d547949693e496d"
+  resolved "git+https://github.com/XP-NETWORK/xpjs#fc0a1386708e05496b390af03d6d6367b1dba3a0"
   dependencies:
     "@dfinity/agent" "^0.15.5"
     "@dfinity/candid" "^0.15.5"
