@@ -30,7 +30,7 @@ export default function WhiteListError() {
                 <a
                     target="_blank"
                     rel="noreferrer"
-                    href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"
+                    href="https://t.me/XP_NETWORK_Technical_Support"
                 >
                     {` here`}
                 </a>.

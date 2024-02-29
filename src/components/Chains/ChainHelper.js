@@ -6,7 +6,8 @@ export const checkIfLive = (nonce, validatorsInfo) => {
 
   if (localhost) return true;
   else if (validatorsInfo) {
-    return validatorsInfo[Number(nonce)]?.bridge_alive;
+    // return validatorsInfo[Number(nonce)]?.bridge_alive;
+    return true;
   }
 };
 

@@ -83,6 +83,11 @@ export const allchains = [
         chainId: 64668,
     },
     {
+        chainName: "Bitgert MainNet",
+        rpcUrls: ["https://rpc.icecreamswap.com"],
+        chainId: 32520,
+    },
+    {
         chainName: "Arbitrum Nova",
         rpcUrls: ["https://nova.arbitrum.io/rpc"],
         chainId: 42170,

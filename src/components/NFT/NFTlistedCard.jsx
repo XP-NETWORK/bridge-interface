@@ -106,7 +106,7 @@ export default function NFTlistedCard({ serviceContainer, chain, nft, index }) {
           ) : (
             <a
               rel="noreferrer"
-              href="https://t.me/XP_NETWORK_Bridge_Support_Bot?start=startwithxpbot"
+              href="https://t.me/XP_NETWORK_Technical_Support"
               className="listed-view__not-whitelisted__button"
               target="_blank"
             >
