@@ -7,7 +7,7 @@ import * as generalSlice from "./store/reducers/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ReactGA from "./services/GA4";
-
+//
 import { checkValidators, fetchXPUpdate, transformToDate } from "./utils";
 import {
     setChainModal,
