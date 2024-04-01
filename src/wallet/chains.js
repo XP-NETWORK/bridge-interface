@@ -48,6 +48,16 @@ export const allchains = [
         },
     },
     {
+        chainName: "Base",
+        rpcUrls: ["https://base.llamarpc.com"],
+        chainId: 8453,
+        nativeCurrency: {
+            name: "ETH",
+            symbol: "ETH",
+            decimals: 18,
+        },
+    },
+    {
         chainName: "Base Goerli",
         rpcUrls: ["https://base-goerli.diamondswap.org/rpc"],
         chainId: 84531,
