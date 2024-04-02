@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -6,14 +5,17 @@ import { useSelector } from "react-redux";
 import { convert } from "../../utils";
 
 import {
-    setCheckDestinationAddress,
-    setError,
-    setNoApprovedNFTAlert,
-    setReceiver,
-    setTransferLoaderModal,
-    setTxnHash,
+  setCheckDestinationAddress,
+  setError,
+  setNoApprovedNFTAlert,
+  setReceiver,
+  setTransferLoaderModal,
+  setTxnHash,
 } from "../../store/reducers/generalSlice";
-import { setPasteDestinationAlert, setSelectNFTAlert } from "../../store/reducers/generalSlice";
+import {
+  setPasteDestinationAlert,
+  setSelectNFTAlert,
+} from "../../store/reducers/generalSlice";
 import { getFromDomain } from "../../services/resolution";
 
 import { withServices } from "../App/hocs/withServices";
@@ -21,139 +23,186 @@ import { withServices } from "../App/hocs/withServices";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 import BigNumber from "bignumber.js";
 
-import { dev, isTestnet, biz } from "../values";
+import { dev, isTestnet, biz, v3_bridge_mode } from "../values";
+import { ChainFactory, ChainFactoryConfigs } from "xp-decentralized-sdk";
 
 export default withServices(function ButtonToTransfer({ serviceContainer }) {
-    const { bridge } = serviceContainer;
+  const { bridge } = serviceContainer;
 
-    const txnHashArr = useSelector((state) => state.general.txnHashArr);
-    const receiver = convert(useSelector((state) => state.general.receiver));
-    const account = convert(useSelector((state) => state.general.account));
-    const approved = useSelector((state) => state.general.approved);
-    const _to = useSelector((state) => state.general.to);
-    //const from = useSelector((state) => state.general.from.key);
-    const _from = useSelector((state) => state.general.from);
-    const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
-    const receiverIsContract = useSelector((state) => state.general.receiverIsContract);
+  const txnHashArr = useSelector((state) => state.general.txnHashArr);
+  const receiver = convert(useSelector((state) => state.general.receiver));
+  const account = convert(useSelector((state) => state.general.account));
+  const approved = useSelector((state) => state.general.approved);
+  const _to = useSelector((state) => state.general.to);
+  //const from = useSelector((state) => state.general.from.key);
+  const _from = useSelector((state) => state.general.from);
+  const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
+  const receiverIsContract = useSelector(
+    (state) => state.general.receiverIsContract
+  );
 
-    const bigNumberDeployFees = useSelector((state) => state.general.bigNumberDeployFees);
+  const bigNumberDeployFees = useSelector(
+    (state) => state.general.bigNumberDeployFees
+  );
 
-    const [loading, setLoading] = useState();
-    const dispatch = useDispatch();
+  const [loading, setLoading] = useState();
+  const dispatch = useDispatch();
 
-    const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
-    const discountLeftUsd = useSelector((state) => state.discount.discount);
+  const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
+  const discountLeftUsd = useSelector((state) => state.discount.discount);
 
-    const unstoppabledomainSwitch = (unstoppabledomain) => {
-        let stop;
-        if (unstoppabledomain) {
-            switch (unstoppabledomain) {
-                case "undefined":
-                    dispatch(
-                        setError({
-                            message: "Your domain does not explicitly support the chain you selected.",
-                        })
-                    );
-                    dispatch(setTransferLoaderModal(false));
-                    setLoading(false);
-                    stop = true;
-                    break;
-                case "notEVM":
-                    dispatch(
-                        setError({
-                            message: "Domain names are currently not supported for Non-EVM chains.",
-                        })
-                    );
-                    dispatch(setTransferLoaderModal(false));
-                    setLoading(false);
-                    stop = true;
-                    break;
-                case "invalid":
-                    dispatch(
-                        setError({
-                            message: "Domain does not exist. Please, check the spelling.",
-                        })
-                    );
-                    dispatch(dispatch(setTransferLoaderModal(false)));
-                    setLoading(false);
-                    stop = true;
-                    break;
-                default:
-                    break;
-            }
-        }
-        return stop;
-    };
+  const factory = ChainFactory(ChainFactoryConfigs.TestNet());
 
-    const sendAllNFTs = async () => {
-        handleGA4Event(
-            googleAnalyticsCategories.Transfer,
-            `${receiver} trying to transfer ${selectedNFTList.length} nfts`
-        );
-        if (!receiver) {
-            dispatch(setPasteDestinationAlert(true));
-        } else if (receiverIsContract) {
-            dispatch(setCheckDestinationAddress(true));
-        } else if (selectedNFTList.length < 1) {
-            dispatch(setSelectNFTAlert(true));
-        } else if (!approved) {
-            dispatch(setNoApprovedNFTAlert(true));
-        } else if (!loading && approved) {
-            setLoading(true);
-            dispatch(setTransferLoaderModal(true));
-            const fromChain = await bridge.getChain(_from.nonce);
-            await fromChain.transferAll(selectedNFTList, sendEach);
-            return stop;
-        }
-    };
+  const unstoppabledomainSwitch = (unstoppabledomain) => {
+    let stop;
+    if (unstoppabledomain) {
+      switch (unstoppabledomain) {
+        case "undefined":
+          dispatch(
+            setError({
+              message:
+                "Your domain does not explicitly support the chain you selected.",
+            })
+          );
+          dispatch(setTransferLoaderModal(false));
+          setLoading(false);
+          stop = true;
+          break;
+        case "notEVM":
+          dispatch(
+            setError({
+              message:
+                "Domain names are currently not supported for Non-EVM chains.",
+            })
+          );
+          dispatch(setTransferLoaderModal(false));
+          setLoading(false);
+          stop = true;
+          break;
+        case "invalid":
+          dispatch(
+            setError({
+              message: "Domain does not exist. Please, check the spelling.",
+            })
+          );
+          dispatch(dispatch(setTransferLoaderModal(false)));
+          setLoading(false);
+          stop = true;
+          break;
+        default:
+          break;
+      }
+    }
+    return stop;
+  };
 
-    const sendEach = async (nft) => {
-        // debugger;
-        const [fromChain, toChain] = await Promise.all([bridge.getChain(_from.nonce), bridge.getChain(_to.nonce)]);
-        try {
-            const unstoppabledomain = await getFromDomain(receiver, toChain);
-            if (unstoppabledomainSwitch(unstoppabledomain)) return;
-
-            const normalizedReceiver = await toChain.normalizeReceiver(receiver);
-
-            const res = await fromChain.transfer({
-                toChain,
-                nft,
-                receiver: unstoppabledomain || normalizedReceiver,
-                fee: new BigNumber(bigNumberFees || 0)
-                    .div(isTestnet && biz ? 10 : dev ? 3 : 1)
-                    .plus(new BigNumber(bigNumberDeployFees || 0).div(isTestnet && biz ? 10 : dev ? 4 : 1))
-                    .integerValue()
-                    .toString(10),
-                discountLeftUsd,
-                account,
-            });
-
-            const { result, mintWith } = res;
-
-            const mw = toChain.showMintWith && (mintWith || toChain.XpNft);
-            if (txnHashArr[0] && !result) {
-                dispatch(setTxnHash({ txn: "failed", nft }));
-            } else if (result) {
-                const resultObject = fromChain.handlerResult(result, account);
-                console.log(resultObject, "resultObject");
-                dispatch(setReceiver(normalizedReceiver));
-                dispatch(setTxnHash({ txn: resultObject, nft, mw }));
-            }
-            handleGA4Event(googleAnalyticsCategories.Transfer, `${receiver} Success transfer`);
-        } catch (e) {
-            const resultError = fromChain.handlerError(e);
-            dispatch(setError(resultError));
-            handleGA4Event(googleAnalyticsCategories.Transfer, `${receiver} Failed transfer`);
-        }
-
-        setLoading(false);
-        dispatch(setTransferLoaderModal(false));
-    };
-
-    return (
-        <div onClick={sendAllNFTs} className={!loading ? "transfer-button" : "transfer-button--disabled"}>
-            {loading ? "Processing" : "Send"}
-        </div>
+  const sendAllNFTs = async () => {
+    handleGA4Event(
+      googleAnalyticsCategories.Transfer,
+      `${receiver} trying to transfer ${selectedNFTList.length} nfts`
     );
+    if (!receiver) {
+      dispatch(setPasteDestinationAlert(true));
+    } else if (receiverIsContract) {
+      dispatch(setCheckDestinationAddress(true));
+    } else if (selectedNFTList.length < 1) {
+      dispatch(setSelectNFTAlert(true));
+    } else if (!approved) {
+      dispatch(setNoApprovedNFTAlert(true));
+    } else if (!loading && approved) {
+      setLoading(true);
+      dispatch(setTransferLoaderModal(true));
+      const fromChain = await bridge.getChain(_from.nonce);
+      await fromChain.transferAll(selectedNFTList, sendEach);
+      return stop;
+    }
+  };
+
+  const sendEach = async (nft) => {
+    // debugger;
+    const [fromChain, toChain] = await Promise.all([
+      bridge.getChain(_from.nonce),
+      bridge.getChain(_to.nonce),
+    ]);
+    try {
+      const unstoppabledomain = await getFromDomain(receiver, toChain);
+      if (unstoppabledomainSwitch(unstoppabledomain)) return;
+
+      const normalizedReceiver = await toChain.normalizeReceiver(receiver);
+      let result = null;
+      let mintWith = null;
+
+      if (v3_bridge_mode) {
+        const { tokenId } = nft.native;
+        const signer = fromChain.getSigner();
+        const originChain = await factory.inner(
+          fromChain?.chainParams?.v3_chainId
+        );
+
+        const res = await originChain.lockNft(
+          signer,
+          nft.contract,
+          toChain?.chainParams?.v3_chainId,
+          unstoppabledomain || normalizedReceiver,
+          tokenId
+        );
+        const { tx: lockNftResult, lockNftMintWith } = res;
+        result = lockNftResult;
+        mintWith = lockNftMintWith;
+      } else {
+        const res = await fromChain.transfer({
+          toChain,
+          nft,
+          receiver: unstoppabledomain || normalizedReceiver,
+          fee: new BigNumber(bigNumberFees || 0)
+            .div(isTestnet && biz ? 10 : dev ? 3 : 1)
+            .plus(
+              new BigNumber(bigNumberDeployFees || 0).div(
+                isTestnet && biz ? 10 : dev ? 4 : 1
+              )
+            )
+            .integerValue()
+            .toString(10),
+          discountLeftUsd,
+          account,
+        });
+        const { result: transferResult, mintWith: transferMintWith } = res;
+        result = transferResult;
+        mintWith = transferMintWith;
+      }
+
+      const mw = toChain.showMintWith && (mintWith || toChain.XpNft);
+      if (txnHashArr[0] && !result) {
+        dispatch(setTxnHash({ txn: "failed", nft }));
+      } else if (result) {
+        const resultObject = fromChain.handlerResult(result, account);
+        console.log(resultObject, "resultObject");
+        dispatch(setReceiver(normalizedReceiver));
+        dispatch(setTxnHash({ txn: resultObject, nft, mw }));
+      }
+      handleGA4Event(
+        googleAnalyticsCategories.Transfer,
+        `${receiver} Success transfer`
+      );
+    } catch (e) {
+      const resultError = fromChain.handlerError(e);
+      dispatch(setError(resultError));
+      handleGA4Event(
+        googleAnalyticsCategories.Transfer,
+        `${receiver} Failed transfer`
+      );
+    }
+
+    setLoading(false);
+    dispatch(setTransferLoaderModal(false));
+  };
+
+  return (
+    <div
+      onClick={sendAllNFTs}
+      className={!loading ? "transfer-button" : "transfer-button--disabled"}
+    >
+      {loading ? "Processing" : "Send"}
+    </div>
+  );
 });

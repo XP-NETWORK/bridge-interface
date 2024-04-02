@@ -275,3 +275,7 @@ export const extractType = (imageUri) =>
     imageUri.match(/(?:\.([^.]+))?$/)?.at(1) || "";
 
 //1. install wagmi @web3modal/ethereum @web3modal/react
+
+export async function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }

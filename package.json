@@ -3,8 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "browser": {
-        "electron": false,
-        "crypto": false
+        "crypto": false,
+        "electron": false
     },
     "dependencies": {
         "@harmony-js/core": "^0.1.57",
@@ -81,6 +81,7 @@
         "web3": "^1.8.2",
         "web3-providers-connex": "^0.7.4",
         "web3modal": "^1.9.12",
+        "xp-decentralized-sdk": "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#bleeding-edge",
         "xp.network": "git+https://github.com/XP-NETWORK/xpjs#bleeding-edge"
     },
     "scripts": {
@@ -124,5 +125,6 @@
     "main": "index.js",
     "repository": "https://github.com/XP-NETWORK/bridge-interface.git",
     "author": "YuraDXPNetwork <yurad@xp.network>",
-    "license": "MIT"
+    "license": "MIT",
+    "packageManager": "yarn@3.6.3"
 }

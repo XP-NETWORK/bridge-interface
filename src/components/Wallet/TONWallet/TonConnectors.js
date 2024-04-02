@@ -6,6 +6,7 @@ import { setQRCodeModal, setTonKeeperSession } from "./tonStore";
 import axios from "axios";
 import { setWalletsModal } from "../../../store/reducers/generalSlice";
 import { tonAuth } from "../../values";
+import {Address} from '@ton/core';
 
 var connector;
 
@@ -91,16 +92,34 @@ export const awaitTonHubReady = async (tonHubSession) => {
   }
 };
 
+export async function senderFromWindow(wallet) {
+  const connect = await wallet.send('ton_requestAccounts', undefined)
+  return {
+    address: Address.parse(connect[0]),
+    send:async  (args) => {
+      const response = await wallet.send("ton_sendTransaction", [{
+        data: args.body,
+        to: args.to.toString(),
+        value: args.value.toString(),
+      }]);
+      return response
+    },
+  };
+}
+
 export const connectTonWallet = async () => {
   if (window.ton) {
-    const ton = window.ton;
-    const address = (await ton.send("ton_requestWallets"))?.at(0)?.address;
-    if (address) {
-      return {
-        address,
-        signer: ton,
-      };
-    }
+    const ton = await senderFromWindow(window.ton);
+    return ton;
+    // const ton = window.ton;
+    // const address = (await ton.send("ton_requestWallets"))?.at(0)?.address;
+    // console.log('address: ', address)
+    // if (address) {
+    //   return {
+    //     address,
+    //     signer: ton,
+    //   };
+    // }
   } else {
     alert("You have to install tonWallet extension");
   }
