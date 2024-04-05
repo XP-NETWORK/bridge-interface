@@ -12,14 +12,13 @@ import {
   setPasteDestinationAlert,
   setInvalidAddressAlert,
 } from "../../store/reducers/generalSlice";
-import { errorToLog, isALLNFTsApproved, sleep } from "../../utils";
+import { errorToLog, isALLNFTsApproved } from "../../utils";
 
 import { withServices } from "../../components/App/hocs/withServices";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 //import BigNumber from "bignumber.js";
 
-import { ChainFactory, ChainFactoryConfigs } from "xp-decentralized-sdk";
-import { v3_bridge_mode } from "../values";
+import { XPDecentralizedUtility } from "../../utils/xpDecentralizedUtility";
 
 function Approval({ serviceContainer }) {
   const { bridge } = serviceContainer;
@@ -38,11 +37,10 @@ function Approval({ serviceContainer }) {
 
   const bigNumberFees = useSelector((state) => state.general.bigNumberFees);
 
-  const factory = ChainFactory(ChainFactoryConfigs.TestNet());
-
   const approveEach = async (nft, index) => {
     const arr = new Array(index + 1).fill(0);
     const fromChain = await bridge.getChain(from.nonce);
+    const xPDecentralizedUtility = new XPDecentralizedUtility();
 
     try {
       const { tokenId, contract, chainId } = nft.native;
@@ -54,30 +52,14 @@ function Approval({ serviceContainer }) {
       );
 
       if (!alreadyApproved) {
-        await fromChain.checkSigner();
-        if (v3_bridge_mode) {
-          const signer = fromChain.getSigner();
-          const originChain = await factory.inner(
-            fromChain?.chainParams?.v3_chainId
-          );
+        await xPDecentralizedUtility.approveNFT(
+          fromChain,
+          nft,
+          to,
+          bigNumberFees,
+          receiver
+        );
 
-          await originChain.approveNft(signer, tokenId, contract);
-          await sleep(10000);
-        } else {
-          await fromChain.preTransfer(
-            nft,
-            to.nonce,
-            bigNumberFees,
-            /*new BigNumber(bigNumberFees)
-                          .div(10)
-                          .integerValue()
-                          .toString(10)*/
-            {
-              to: Number(to.nonce),
-              receiver: receiver.trim(),
-            }
-          );
-        }
         dispatch(updateApprovedNFTs(nft));
         setFinishedApproving(arr);
       }

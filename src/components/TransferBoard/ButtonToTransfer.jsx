@@ -23,8 +23,8 @@ import { withServices } from "../App/hocs/withServices";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 import BigNumber from "bignumber.js";
 
-import { dev, isTestnet, biz, v3_bridge_mode } from "../values";
-import { ChainFactory, ChainFactoryConfigs } from "xp-decentralized-sdk";
+import { dev, isTestnet, biz } from "../values";
+import { XPDecentralizedUtility } from "../../utils/xpDecentralizedUtility";
 
 export default withServices(function ButtonToTransfer({ serviceContainer }) {
   const { bridge } = serviceContainer;
@@ -50,8 +50,6 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
 
   const selectedNFTList = useSelector((state) => state.general.selectedNFTList);
   const discountLeftUsd = useSelector((state) => state.discount.discount);
-
-  const factory = ChainFactory(ChainFactoryConfigs.TestNet());
 
   const unstoppabledomainSwitch = (unstoppabledomain) => {
     let stop;
@@ -124,52 +122,32 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
       bridge.getChain(_from.nonce),
       bridge.getChain(_to.nonce),
     ]);
+
     try {
+      const xPDecentralizedUtility = new XPDecentralizedUtility();
       const unstoppabledomain = await getFromDomain(receiver, toChain);
       if (unstoppabledomainSwitch(unstoppabledomain)) return;
 
       const normalizedReceiver = await toChain.normalizeReceiver(receiver);
-      let result = null;
-      let mintWith = null;
+      const fee = new BigNumber(bigNumberFees || 0)
+        .div(isTestnet && biz ? 10 : dev ? 3 : 1)
+        .plus(
+          new BigNumber(bigNumberDeployFees || 0).div(
+            isTestnet && biz ? 10 : dev ? 4 : 1
+          )
+        )
+        .integerValue()
+        .toString(10);
 
-      if (v3_bridge_mode) {
-        const { tokenId } = nft.native;
-        const signer = fromChain.getSigner();
-        const originChain = await factory.inner(
-          fromChain?.chainParams?.v3_chainId
-        );
-
-        const res = await originChain.lockNft(
-          signer,
-          nft.contract,
-          toChain?.chainParams?.v3_chainId,
-          unstoppabledomain || normalizedReceiver,
-          tokenId
-        );
-        const { tx: lockNftResult, lockNftMintWith } = res;
-        result = lockNftResult;
-        mintWith = lockNftMintWith;
-      } else {
-        const res = await fromChain.transfer({
-          toChain,
-          nft,
-          receiver: unstoppabledomain || normalizedReceiver,
-          fee: new BigNumber(bigNumberFees || 0)
-            .div(isTestnet && biz ? 10 : dev ? 3 : 1)
-            .plus(
-              new BigNumber(bigNumberDeployFees || 0).div(
-                isTestnet && biz ? 10 : dev ? 4 : 1
-              )
-            )
-            .integerValue()
-            .toString(10),
-          discountLeftUsd,
-          account,
-        });
-        const { result: transferResult, mintWith: transferMintWith } = res;
-        result = transferResult;
-        mintWith = transferMintWith;
-      }
+      const { result, mintWith } = await xPDecentralizedUtility.lockNFT(
+        fromChain,
+        toChain,
+        nft,
+        unstoppabledomain || normalizedReceiver,
+        fee,
+        discountLeftUsd,
+        account
+      );
 
       const mw = toChain.showMintWith && (mintWith || toChain.XpNft);
       if (txnHashArr[0] && !result) {
