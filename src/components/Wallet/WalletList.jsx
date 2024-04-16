@@ -27,7 +27,6 @@ import Pontem from "./APTOSWallet/Pontem";
 import NearWallet from "./NEARWallet/NearWallet";
 import WalletSelector from "./NEARWallet/WalletSelector";
 // import Solana from "./SOLWallet";
-import { biz } from "../values";
 import Phantom from "./SOLWallet/Phantom";
 import Solflare from "./SOLWallet/Solflare";
 import OKXWallet from "./EVMWallet/OKXWallet";
@@ -325,7 +324,7 @@ export default function WalletList({ connected, input, discount }) {
             Component: <CasperWallet key="Casper" close={connected} />,
             name: "Casper",
             mobile: false,
-            desktop: biz,
+            desktop: true,
             order: 223,
             type: "Casper",
             keyName: "Casper",
