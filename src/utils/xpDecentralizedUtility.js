@@ -83,7 +83,7 @@ export class XPDecentralizedUtility {
         const res = await originChain.lockNft(
           signer,
           nft.contract,
-          toChain?.chainParams?.type,
+          toChain?.chainParams?.v3_chainId,
           receiver,
           tokenId
         );
@@ -197,7 +197,7 @@ export class XPDecentralizedUtility {
           targetChain.transform(nftData),
           signatures
         );
-        console.log("claimed: ", claim);
-        return claim;
+        console.log("claimed: ", claim?.ret);
+        return claim?.ret;
     }
 }
