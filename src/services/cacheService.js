@@ -26,25 +26,38 @@ class CacheService {
         }
     }
 
-    async add(nft, account, whitelisted, times = 1) {
-        if (typeof nft.native?.tokenId === "undefined") return "key parameter missing";
-        return axios
-            .post(`${this.cacheApi}/nft/add`, {
-                nft,
-                account,
-                whitelisted,
-            })
-            .then(async (res) => {
-                if (this.retryStatues.includes(res.data?.errorStatus) && times < this.totalTry) {
-                    await new Promise((resolve) =>
-                        setTimeout(() => resolve(""), this.retryInterval + (this.retryInterval * times) / 5)
-                    );
-                    return this.add(nft, account, whitelisted, times++);
-                } else {
-                    return res.data;
-                }
-            });
+  async add(nft, account, whitelisted, times = 1) {
+    if (typeof nft.native?.tokenId === "undefined")
+      return "key parameter missing";
+
+    if (nft.metaData) {
+      console.log("already has metadata");
+      return nft;
     }
+
+    return axios
+      .post(`${this.cacheApi}/nft/add`, {
+        nft,
+        account,
+        whitelisted,
+      })
+      .then(async (res) => {
+        if (
+          this.retryStatues.includes(res.data?.errorStatus) &&
+          times < this.totalTry
+        ) {
+          await new Promise((resolve) =>
+            setTimeout(
+              () => resolve(""),
+              this.retryInterval + (this.retryInterval * times) / 5
+            )
+          );
+          return this.add(nft, account, whitelisted, times++);
+        } else {
+          return res.data;
+        }
+      });
+  }
 
     isHex(num) {
         return Boolean(num.match(/^0x[0-9a-f]+$/i));
