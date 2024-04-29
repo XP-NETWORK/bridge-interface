@@ -240,7 +240,7 @@ class AbstractChain {
 
     async transferAll(nfts, cb) {
         for (const nft of nfts) {
-            cb(nft);
+            await cb(nft);
         }
     }
 
@@ -329,7 +329,7 @@ class AbstractChain {
 
     async preTransfer(nft, _, fees) {
         if (!this.signer) throw new Error("No signer for ", this.chainParams.text);
-        try {
+                try {
             return await this.chain.preTransfer(this.signer, nft, fees);
         } catch (e) {
             console.log(e, "in preTransfer");
