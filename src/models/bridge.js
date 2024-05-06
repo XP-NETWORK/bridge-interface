@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { CHAIN_INFO, AppConfigs, ChainFactory, ChainFactoryConfigs, ChainType, Chain } from "xp.network";
+import { CHAIN_INFO, AppConfigs, ChainFactory, ChainFactoryConfigs } from "xp.network";
 
 import ChainInterface from "./chains";
 
 import axios from "axios";
 import { BridgeModes, chains, stagingWNFT, wnft, wnftPattern, v3_bridge_mode } from "../components/values";
+import { Chain, ChainType } from "../utils/chainsTypes";
 
 class Bridge {
     chains = {};
@@ -12,6 +13,10 @@ class Bridge {
     checkWallet = null;
     currentType;
     network;
+
+    getV3ChainIdenty(nonce){
+        return chains.find(item=>item.nonce === nonce)
+    }
 
     getChainIdByKey(key, testnet) {
         const c = chains.find((chain) => chain.key === key);
@@ -172,9 +177,20 @@ class Bridge {
                 case ChainType.ALGORAND:
                     this.chains[chainId] = new ChainInterface.Algorand(params);
                     return this.chains[chainId];
-                case ChainType.TEZOS:
+                case ChainType.TEZOS:{
+                    const v3 =
+                        v3_bridge_mode &&
+                        Object.values(this.config)
+                            .filter((params) => params.v3_bridge)
+                            .map((p) => p.nonce)
+                            .includes(params.nonce);
+                    if (v3) {
+                        this.chains[chainId] = new ChainInterface.V3_Tezos(params);
+                        return this.chains[chainId];
+                    }
                     this.chains[chainId] = new ChainInterface.Tezos(params);
                     return this.chains[chainId];
+                }
                 case ChainType.COSMOS:
                     this.chains[chainId] = new ChainInterface.Cosmos(params);
                     return this.chains[chainId];

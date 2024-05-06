@@ -2,6 +2,8 @@ import { ChainFactory, ChainFactoryConfigs } from "xp-decentralized-sdk";
 import { sleep } from "../utils";
 import { TIME } from "../constants/time";
 import { v3_bridge_mode } from "../components/values";
+import { v3_ChainId } from "./chainsTypes";
+import { ethers } from "ethers";
 
 export class XPDecentralizedUtility {
     isV3Enabled = false;
@@ -12,7 +14,7 @@ export class XPDecentralizedUtility {
     }
 
     approveNFT = async (fromChain, nft, to=null, bigNumberFees=null, receiver=null) => {
-        await fromChain.checkSigner();
+                await fromChain.checkSigner();
         this.isV3Enabled ? await this.approveNFT_V3(fromChain, nft) : await this.approveNFT_V2(fromChain, nft, to, bigNumberFees, receiver)
     }
 
@@ -83,7 +85,7 @@ export class XPDecentralizedUtility {
         const res = await originChain.lockNft(
           signer,
           nft.contract,
-          toChain?.chainParams?.v3_chainId,
+          v3_ChainId[toChain?.chainParams?.type],
           receiver,
           tokenId
         );
@@ -169,10 +171,11 @@ export class XPDecentralizedUtility {
     }
     claimNFT_V3 = async(originChainIdentifier, targetChainIdentifier, hash) => {
         const originChain = await this.factory.inner(
-          originChainIdentifier?.chainParams?.v3_chainId
+          v3_ChainId[originChainIdentifier?.chainParams?.type]
         );
+        console.log({originChain})
         const targetChain = await this.factory.inner(
-          targetChainIdentifier?.chainParams?.v3_chainId
+          v3_ChainId[targetChainIdentifier?.chainParams?.type]
         );
         console.log("chains: ", {
           originChain,
@@ -183,7 +186,7 @@ export class XPDecentralizedUtility {
 
         await targetChainIdentifier.checkSigner();
         const targetChainSigner = targetChainIdentifier.getSigner();
-        console.log("targetChainSigner", targetChainSigner);
+        console.log("targetChainSigner", {targetChainSigner, targetChainIdentifier});
 
         const nftData = await this.getClaimData(originChain, hash)
 
@@ -199,5 +202,12 @@ export class XPDecentralizedUtility {
         );
         console.log("claimed: ", claim?.ret);
         return claim?.ret;
+    }
+
+    decodeParams = async(data) => {
+      return ethers.utils.defaultAbiCoder.decode(
+        ['uint256', 'string', 'string', 'address'],
+        ethers.utils.hexDataSlice(data, 4)
+      )
     }
 }

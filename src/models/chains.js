@@ -716,6 +716,27 @@ class Tezos extends AbstractChain {
     }
 }
 
+class V3_Tezos extends AbstractChain {
+    v3Bridge = true;
+
+    async preTransfer() {
+        return true;
+    }
+
+    async transfer(args) {
+        const { nft, toChain, receiver } = args;
+
+        const result = await this.bridge.lockNFT(this.chain, toChain.chain, nft, this.signer, receiver);
+
+        return { result };
+    }
+
+    async claim(from, hash, fee) {
+        const result = await this.bridge.claimNFT(from.chain, this.chain, hash, this.signer, fee);
+        return { result };
+    }
+}
+
 class Cosmos extends AbstractChain {
     showMintWith = true;
     XpNft = this.chain.XpNft.split(",")[0];
@@ -1270,6 +1291,7 @@ export default {
     Tron,
     Algorand,
     Tezos,
+    V3_Tezos,
     Cosmos,
     Near,
     TON,
