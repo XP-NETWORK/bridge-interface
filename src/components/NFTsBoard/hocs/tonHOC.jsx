@@ -13,7 +13,7 @@ export const withTon = (Wrapped) =>
       const chainWrapper = await bridge.getChain(Chain.TON);
       const account = await connectTonWallet();
 
-      chainWrapper.setSigner(account);
+      chainWrapper.setSigner(account.signer);
       return chainWrapper;
     };
 

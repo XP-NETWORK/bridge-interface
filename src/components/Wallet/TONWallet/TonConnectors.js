@@ -6,7 +6,8 @@ import { setQRCodeModal, setTonKeeperSession } from "./tonStore";
 import axios from "axios";
 import { setWalletsModal } from "../../../store/reducers/generalSlice";
 import { tonAuth } from "../../values";
-import {Address} from '@ton/core';
+import { Address } from "@ton/core";
+import TonConnect, { toUserFriendlyAddress } from "@tonconnect/sdk";
 
 var connector;
 
@@ -93,34 +94,73 @@ export const awaitTonHubReady = async (tonHubSession) => {
 };
 
 export async function senderFromWindow(wallet) {
-  const connect = await wallet.send('ton_requestAccounts', undefined)
+  const connect = await wallet.send("ton_requestAccounts", undefined);
   return {
     address: Address.parse(connect[0]),
-    send:async  (args) => {
-      const response = await wallet.send("ton_sendTransaction", [{
-        data: args.body,
-        to: args.to.toString(),
-        value: args.value.toString(),
-      }]);
-      return response
+    send: async (args) => {
+      const response = await wallet.send("ton_sendTransaction", [
+        {
+          data: args.body,
+          to: args.to.toString(),
+          value: args.value.toString(),
+        },
+      ]);
+      return response;
     },
   };
 }
 
+// export const connectTonWallet = async () => {
+//   console.log("connectTonWallet");
+//   if (window.ton) {
+//     const ton = await senderFromWindow(window.ton);
+//     return ton;
+//     // const ton = window.ton;
+//     // const address = (await ton.send("ton_requestWallets"))?.at(0)?.address;
+//     // console.log('address: ', address)
+//     // if (address) {
+//     //   return {
+//     //     address,
+//     //     signer: ton,
+//     //   };
+//     // }
+//   } else {
+//     alert("You have to install tonWallet extension");
+//   }
+// };
+
 export const connectTonWallet = async () => {
-  if (window.ton) {
-    const ton = await senderFromWindow(window.ton);
-    return ton;
-    // const ton = window.ton;
-    // const address = (await ton.send("ton_requestWallets"))?.at(0)?.address;
-    // console.log('address: ', address)
-    // if (address) {
-    //   return {
-    //     address,
-    //     signer: ton,
-    //   };
-    // }
-  } else {
-    alert("You have to install tonWallet extension");
-  }
+  const connector = new TonConnect({
+    manifestUrl: {
+      url: "http://localhost:3000/", // required
+      name: "name", // required
+      iconUrl: "./../../../assets/img/icons/XPNET.svg", // required
+    },
+  });
+  const wallets = await connector.getWallets();
+  const tonwallet = wallets.find((e) => e.appName === "tonwallet");
+
+  connector.connect(tonwallet);
+
+  await new Promise((e) => setTimeout(e, 1000));
+
+  console.log("tonwallet", connector.account);
+
+  return {
+    address: toUserFriendlyAddress(connector.account.address),
+    signer: {
+      send: async (args) => {
+        await connector.sendTransaction({
+          messages: [
+            {
+              address: args.to.toString(),
+              amount: args.value.toString(),
+              payload: args.body?.toBoc().toString("base64"),
+            },
+          ],
+          validUntil: Date.now() + 5 * 60 * 1000, // 5 minutes for user to approve
+        });
+      },
+    },
+  };
 };

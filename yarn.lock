@@ -8029,6 +8029,45 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tonconnect/isomorphic-eventsource@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "@tonconnect/isomorphic-eventsource@npm:0.0.2"
+  dependencies:
+    eventsource: ^2.0.2
+  checksum: e19ab965129e6be8a019c8d8d3a2e2b88aca4b9b42389b747370f96a2411de79676b96122040e068396f8fd54662e0dab947d9d6bd41dc403172343cc6de8796
+  languageName: node
+  linkType: hard
+
+"@tonconnect/isomorphic-fetch@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "@tonconnect/isomorphic-fetch@npm:0.0.3"
+  dependencies:
+    node-fetch: ^2.6.9
+  checksum: cb9c72d760263b92a17fdba05c5888d650fcaad7df1f91770ee6c218e829f02256e695e4a2086c62f27cabece8c0952fab2d00f7a613060a8d433ff1b8dd8c37
+  languageName: node
+  linkType: hard
+
+"@tonconnect/protocol@npm:^2.2.6":
+  version: 2.2.6
+  resolution: "@tonconnect/protocol@npm:2.2.6"
+  dependencies:
+    tweetnacl: ^1.0.3
+    tweetnacl-util: ^0.15.1
+  checksum: 9e46951a6c5f26d45220ddfe23899c432969de1d319dc383e6eb68958beb2cd8a07adc731e5fa3f2640c41b698d526d605950b81ea2473b356a0f8c2b96fa60b
+  languageName: node
+  linkType: hard
+
+"@tonconnect/sdk@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@tonconnect/sdk@npm:3.0.2"
+  dependencies:
+    "@tonconnect/isomorphic-eventsource": ^0.0.2
+    "@tonconnect/isomorphic-fetch": ^0.0.3
+    "@tonconnect/protocol": ^2.2.6
+  checksum: c56e6839961ec6e5c05eced51d1cfb8ac07db24aa534e83b127e5a08486d746c72afd9053dfab1b080cfb301fd05f47134c939e1dab77d682acd113f0f85d11c
+  languageName: node
+  linkType: hard
+
 "@tootallnate/once@npm:1":
   version: 1.1.2
   resolution: "@tootallnate/once@npm:1.1.2"
@@ -21408,7 +21447,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.6.0, node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.12, node-fetch@npm:^2.6.7, node-fetch@npm:^2.7.0":
+"node-fetch@npm:^2.6.0, node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.12, node-fetch@npm:^2.6.7, node-fetch@npm:^2.6.9, node-fetch@npm:^2.7.0":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
   dependencies:
@@ -27682,6 +27721,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tweetnacl-util@npm:^0.15.1":
+  version: 0.15.1
+  resolution: "tweetnacl-util@npm:0.15.1"
+  checksum: ae6aa8a52cdd21a95103a4cc10657d6a2040b36c7a6da7b9d3ab811c6750a2d5db77e8c36969e75fdee11f511aa2b91c552496c6e8e989b6e490e54aca2864fc
+  languageName: node
+  linkType: hard
+
 "tweetnacl@npm:1.0.3, tweetnacl@npm:1.x.x, tweetnacl@npm:^1.0.1, tweetnacl@npm:^1.0.3":
   version: 1.0.3
   resolution: "tweetnacl@npm:1.0.3"
@@ -29856,9 +29902,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xp-decentralized-sdk@git+https://github.com/XP-NETWORK/xp-decentralized-client-library#947edc8cca4984ce5a363fc8f0549bf42487701e":
+"xp-decentralized-sdk@git+https://github.com/XP-NETWORK/xp-decentralized-client-library#bleeding-edge":
   version: 1.0.0
-  resolution: "xp-decentralized-sdk@https://github.com/XP-NETWORK/xp-decentralized-client-library.git#commit=947edc8cca4984ce5a363fc8f0549bf42487701e"
+  resolution: "xp-decentralized-sdk@https://github.com/XP-NETWORK/xp-decentralized-client-library.git#commit=66cfaa66f847ea21fad764f3f9c5f0a922a99deb"
   dependencies:
     "@cosmjs/amino": ^0.32.3
     "@cosmjs/cosmwasm-stargate": ^0.32.3
@@ -29876,7 +29922,7 @@ __metadata:
     axios: ^1.6.7
     ethers: ^6.10.0
     secretjs: ^1.12.4-beta.0
-  checksum: e2b82f367b412c1c20d2e79beff53b08ab10ca8963069485c1f2719d2746674d5ee001ee8d1d5229ab491e55ea1b4fcb620d17771e0dd76aaad6de03385221da
+  checksum: 2770d5a1e59f41b25e63cd0b80890031181600de8e357e9ff720cc88da98fba80ed43f72e317af61519ad58b71ec672911e916989d0182199326ef18f6872f12
   languageName: node
   linkType: hard
 
@@ -29904,6 +29950,7 @@ __metadata:
     "@temple-wallet/dapp": ^7.0.0
     "@ton/core": ^0.53.0
     "@ton/crypto": ^3.2.0
+    "@tonconnect/sdk": ^3.0.2
     "@uauth/js": ^2.4.0
     "@uauth/web3modal": ^2.4.0
     "@vechain/connex": ^2.0.14
@@ -29965,7 +30012,7 @@ __metadata:
     web3: ^1.8.2
     web3-providers-connex: ^0.7.4
     web3modal: ^1.9.12
-    xp-decentralized-sdk: "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#947edc8cca4984ce5a363fc8f0549bf42487701e"
+    xp-decentralized-sdk: "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#bleeding-edge"
     xp.network: "git+https://github.com/XP-NETWORK/xpjs#bleeding-edge"
   languageName: unknown
   linkType: soft
