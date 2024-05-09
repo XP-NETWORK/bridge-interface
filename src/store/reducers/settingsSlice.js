@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { chains as valuesChains } from "../../components/values";
 
-import { biz } from "../../components/values";
+// import { biz } from "../../components/values";
 
 export const fonts = [
     "Open Sans",
@@ -76,7 +76,7 @@ export const wallets = [
     "Fina",
     "Hashpack",
     ...["Plug", "Stoic", "Bitfinity"],
-    ...(biz ? ["CasperWallet"] : []),
+    ...["CasperWallet"],
 ];
 
 export const initialChainFees = {
