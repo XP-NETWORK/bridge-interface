@@ -57,7 +57,7 @@ export const isTestnet = /testnet/.test(window.location.pathname);
 export const dev = /(localhost|dev|10\.0\.0|trycloudflare)/.test(window.location.hostname);
 //if on https://staging.bridge.xp.network/  or https://dev.bridge.xp.network/ domains
 export const biz = dev || /(staging)/.test(window.location.hostname);
-
+console.log("biz",biz);
 //v3 bridge activation (currenly workig only for BSC, Multiversx, Polygon in testnet)
 export const v3_bridge_mode = false;
 
@@ -571,10 +571,10 @@ export const chains = [
         nonce: 39,
         order: -8,
         image: { avatar: true, src: casper },
-        testNet: biz,
-        mainnet: biz,
+        testNet: true,
+        mainnet: true,
         coming: false,
-        newChain: biz,
+        newChain: true,
     },
     {
         type: "EVM",
