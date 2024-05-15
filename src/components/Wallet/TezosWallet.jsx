@@ -10,6 +10,7 @@ import {
   setError,
   setKukaiWallet,
   setConnectedWallet,
+  setTempleWalletData,
 } from "../../store/reducers/generalSlice";
 import { setSigner } from "../../store/reducers/signersSlice";
 import PropTypes from "prop-types";
@@ -38,6 +39,10 @@ function TezosWallet({ wallet, close, serviceContainer }) {
   const navigateToAccountRoute = () => {
     navigate(testnet ? `/testnet/account${query}` : `/account${query}`);
   };
+
+  const { isTempleWallet } = useSelector(
+    (state) => state.general.templeWalletData
+  );
 
   const handleConnect = async (wallet) => {
     try {
@@ -76,25 +81,33 @@ function TezosWallet({ wallet, close, serviceContainer }) {
           break;
       }
 
-      dispatch(setSigner(account.signer));
-      dispatch(setAccount(account.address));
-      dispatch(
-        setConnectedWallet(
-          wallet === "TempleWallet" ? "Temple Wallet" : "Beacon "
-        )
-      );
-      chain.setSigner(account.signer);
-      bridge.setCurrentType(chain);
-      close();
-      if (temporaryFrom) dispatch(setFrom(temporaryFrom));
-      if (connected && to) navigateToAccountRoute();
-      if (!from) {
-        dispatch(setFrom(getChainObject(Chain.TEZOS)));
+      if (!isTempleWallet) {
+        dispatch(setSigner(account.signer));
+        dispatch(setAccount(account.address));
+        dispatch(
+          setConnectedWallet(
+            wallet === "TempleWallet" ? "Temple Wallet" : "Beacon "
+          )
+        );
+        chain.setSigner(account.signer);
+        bridge.setCurrentType(chain);
+
+        if (temporaryFrom) dispatch(setFrom(temporaryFrom));
+
+        if (connected && to) navigateToAccountRoute();
+
+        if (!from) {
+          dispatch(setFrom(getChainObject(Chain.TEZOS)));
+        }
+        handleGA4Event(
+          googleAnalyticsCategories.Connect,
+          `Connected with: ${wallet}`
+        );
+      } else {
+        dispatch(setTempleWalletData({ isTempleWallet, account }));
       }
-      handleGA4Event(
-        googleAnalyticsCategories.Connect,
-        `Connected with: ${wallet}`
-      );
+
+      close();
     } catch (e) {
       dispatch(setError(e));
     }
