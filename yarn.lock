@@ -15120,7 +15120,7 @@ next-tick@^1.1.0:
 
 "nft-parser@git+https://github.com/xp-network/nft-parser#bleeding-edge":
   version "0.2.0"
-  resolved "git+https://github.com/xp-network/nft-parser#8914891531c0eba627047dcb7a4cad77bad0a105"
+  resolved "git+https://github.com/xp-network/nft-parser#2a684016c8463e454348cce1d1c43e615bd31867"
   dependencies:
     "@ethersproject/providers" "^5.7.2"
     "@moralisweb3/common-evm-utils" "^2.17.0"
@@ -21075,7 +21075,6 @@ xmlhttprequest@1.8.0:
 
 "xpnet-web3-contracts@git+https://github.com/xp-network/XP.network-HECO-Migration#dist-erc1155":
   version "0.1.0"
-  uid "5dae79f652a0e55383933df18e691b3d76800e6c"
   resolved "git+https://github.com/xp-network/XP.network-HECO-Migration#5dae79f652a0e55383933df18e691b3d76800e6c"
   dependencies:
     ethers "^5.5.4"
