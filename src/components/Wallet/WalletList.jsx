@@ -323,7 +323,7 @@ export default function WalletList({ connected, input, discount }) {
         {
             Component: <CasperWallet key="Casper" close={connected} />,
             name: "Casper",
-            mobile: false,
+            mobile: true,
             desktop: true,
             order: 223,
             type: "Casper",
