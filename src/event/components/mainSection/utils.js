@@ -100,26 +100,26 @@ export const chainDataMintingPath = [
     image: avax,
     nft:
       "https://ipfs.io/ipfs/QmZjTpC4NB1fKNa6aRE7ruTbBvw3YmYjT3nkTzsJWnnDuw/BSC.gif", // TODO: NEEDS TO CHANGE FOR AVAX
-    chainNonce: "32", // TODO: NEEDS TO CHANGE FOR AVAX
+    chainNonce: "6", // TODO: NEEDS TO CHANGE FOR AVAX
     chainId: "43114",
     creationBlock: 4211259, // TODO: NEEDS TO CHANGE FOR AVAX
     evm: true,
     rpc: "https://api.avax.network/ext/bc/C/rpc",
-    contract: "0xfa32100d09fd5143AB8a10bE20FaC3227f391684", // TODO: NEEDS TO CHANGE FOR AVAX
+    contract: "0x4F124d278186b86b056643F82F0fAf282b349646", // TODO: NEEDS TO CHANGE FOR AVAX
   },
 ];
 
 export const chainDataMintingPathTestnet = [
   {
-    name: "Mumbai Polygon",
+    name: "Polygon Amoy Testnet",
     image: polygonIcon,
     nft:
       "https://ipfs.io/ipfs/QmZjTpC4NB1fKNa6aRE7ruTbBvw3YmYjT3nkTzsJWnnDuw/Polygon.gif",
     chainNonce: "7",
     creationBlock: 46291138,
-    chainId: "80001",
+    chainId: "80002",
     evm: true,
-    rpc: "https://polygon-testnet.public.blastapi.io",
+    rpc: "https://rpc-amoy.polygon.technology/",
     contract: "0xce715Ab3E0A40Bd718e6C4c9cd9c41D874494054",
   },
   {
@@ -144,7 +144,7 @@ export const chainDataMintingPathTestnet = [
     creationBlock: 4211259, // TODO: NEEDS TO CHANGE FOR AVAX
     evm: true,
     rpc: "https://ava-testnet.public.blastapi.io/ext/bc/C/rpc",
-    contract: "0xfa32100d09fd5143AB8a10bE20FaC3227f391684", // TODO: NEEDS TO CHANGE FOR AVAX
+    contract: "0x4F124d278186b86b056643F82F0fAf282b349646", // TODO: NEEDS TO CHANGE FOR AVAX
   },
 ];
 

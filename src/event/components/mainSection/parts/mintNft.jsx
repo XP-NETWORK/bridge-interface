@@ -16,7 +16,6 @@ import { REST_API } from "../utils";
 import { chains as allChains, isTestnet } from "../../../../components/values";
 
 export const MintNft = ({ choosenChain, bridge, account, chains }) => {
-  console.log({ chains, choosenChain, isTestnet });
   const MAX_MINT = 5;
   const [countMint, setCountMint] = useState(1);
 
@@ -30,8 +29,6 @@ export const MintNft = ({ choosenChain, bridge, account, chains }) => {
       };
     }, {})
   );
-
-  //const {totalMinted} = useSelector((state) => state.event)
 
   useEffect(() => {
     (async () => {
@@ -60,12 +57,10 @@ export const MintNft = ({ choosenChain, bridge, account, chains }) => {
     (async () => {
       const chain = chains[choosenChain];
       if (account && chain.evm && x) {
-        const { chainId, chainNonce, name } = chain;
-        console.log({ chainAfter: chainId });
+        const { chainId, chainNonce } = chain;
         dispatch(setApproveLoader(true));
         try {
           if (String(x) !== chain.chainId) {
-            console.log("WHAT IS THIS STRING(X)", String(x));
             try {
               await switchNetwork({ chainId: Number(chainId) });
             } catch {
@@ -98,13 +93,6 @@ export const MintNft = ({ choosenChain, bridge, account, chains }) => {
         dispatch(setApproveLoader(false));
       }
     })();
-
-    /*setMintLimit;
-
-
-
-        console.log(mintLimits);
-        console.log(choosenChain);*/
   }, [account, choosenChain, x]);
 
   const increase = () => {
@@ -115,13 +103,11 @@ export const MintNft = ({ choosenChain, bridge, account, chains }) => {
     if (countMint > 1) setCountMint((countMint) => countMint - 1);
   };
 
-  //const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-
   const mintNft = async () => {
     try {
       dispatch(setApproveLoader(true));
       const chain = chains[choosenChain];
-      const { chainId, chainNonce, contract: address, name } = chain;
+      const { chainNonce, contract: address } = chain;
 
       let chainWrapper = await bridge.getChain(Number(chainNonce));
 
