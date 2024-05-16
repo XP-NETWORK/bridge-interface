@@ -120,7 +120,7 @@ export const chainDataMintingPathTestnet = [
     chainId: "80002",
     evm: true,
     rpc: "https://rpc-amoy.polygon.technology/",
-    contract: "0xce715Ab3E0A40Bd718e6C4c9cd9c41D874494054",
+    contract: "0xC9e7627990B4ECD659545b5b8A1907C96435d87f",
   },
   {
     name: "BSC Testnet",
@@ -132,7 +132,7 @@ export const chainDataMintingPathTestnet = [
     creationBlock: 30841932,
     evm: true,
     rpc: "https://data-seed-prebsc-1-s3.bnbchain.org:8545",
-    contract: "0x9abBC52450Cb0B313139fD32752Dd3D87555D5A3",
+    contract: "0xA97e8feB2AdC3E71a15F804d6d73863DEEf8bc65",
   },
   {
     name: "Fuji AVAX",
@@ -144,7 +144,7 @@ export const chainDataMintingPathTestnet = [
     creationBlock: 4211259, // TODO: NEEDS TO CHANGE FOR AVAX
     evm: true,
     rpc: "https://ava-testnet.public.blastapi.io/ext/bc/C/rpc",
-    contract: "0x4F124d278186b86b056643F82F0fAf282b349646", // TODO: NEEDS TO CHANGE FOR AVAX
+    contract: "0x70369eFBa459D8EA67EBeB6EAb20ACa5dCDED938", // TODO: NEEDS TO CHANGE FOR AVAX
   },
 ];
 
