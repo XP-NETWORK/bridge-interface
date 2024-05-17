@@ -1,288 +1,293 @@
 .line-down-margin {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 .line-down-margin-24 {
-    margin-bottom: 24px;
+  margin-bottom: 24px;
 }
 
 .main-section-container {
-    height: 518px;
-    border-radius: 20px;
-    border: 1px solid #fff;
-    background: #f7f7f9;
-    display: flex;
-    padding: 24px;
-    justify-content: space-between;
+  height: 518px;
+  border-radius: 20px;
+  border: 1px solid #fff;
+  background: #f7f7f9;
+  display: flex;
+  padding: 24px;
+  justify-content: space-between;
 }
 
 .main-section-container .right-side {
-    padding: 14px 0px 0px 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+  padding: 14px 0px 0px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .minting-line {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .minting-line span {
-    width: 400px;
+  width: 400px;
 }
 
 .minting-line:last-child {
-    color: #000;
-    font-weight: 500;
-    opacity: 0.6;
+  color: #000;
+  font-weight: 500;
+  opacity: 0.6;
 }
 
 .blink_me {
-    animation: blinker 1s linear infinite;
-    background-color: rgba(76, 206, 31, 1);
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    margin-right: 10px;
+  animation: blinker 1s linear infinite;
+  background-color: rgba(76, 206, 31, 1);
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
 .xp-crossroads {
-    color: #14161a;
-    font-family: "Inter";
-    font-size: 28px;
-    font-weight: 500;
+  color: #14161a;
+  font-family: "Inter";
+  font-size: 28px;
+  font-weight: 500;
 }
 
 .xp-sign-line {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .xp-sign-line div:first-child {
-    color: #14161a;
-    font-weight: 400;
-    font-size: 16px;
-    opacity: 0.8;
-    margin-right: 10px;
+  color: #14161a;
+  font-weight: 400;
+  font-size: 16px;
+  opacity: 0.8;
+  margin-right: 10px;
 }
 
 .xp-sign-line div:last-child {
-    border-radius: 5px;
-    background: #f0f0f3;
-    padding: 3px;
+  border-radius: 5px;
+  background: #f0f0f3;
+  padding: 3px;
 }
 
 .xp-sign-line img:first-child {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 .xp-sign-line img:last-child {
-    padding-right: 8px;
+  padding-right: 8px;
 }
 
 .multichain-bridge-nft-line {
-    color: #14161a;
-    font-size: 16px;
-    opacity: 0.8;
+  color: #14161a;
+  font-size: 16px;
+  opacity: 0.8;
 }
 
 .chain-select-container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .chain-select-container div:first-child {
-    color: #14161a;
-    font-weight: 500;
-    opacity: 0.6;
+  color: #14161a;
+  font-weight: 500;
+  opacity: 0.6;
 }
 
 .chain-select-container ul {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .chain-select-container ul li {
-    margin-right: 6px;
-    border: 1px solid transparent;
-    padding: 6px;
-    border-radius: 50%;
-    transition: opacity 0.5s;
+  margin-right: 6px;
+  border: 1px solid transparent;
+  padding: 6px;
+  border-radius: 50%;
+  transition: opacity 0.5s;
 }
 
 .chain-select-container ul li:hover {
-    cursor: pointer;
-    opacity: 1;
+  cursor: pointer;
+  opacity: 1;
 }
 
 .chain-select-active {
-    border: 1px solid #395feb !important;
+  border: 1px solid #395feb !important;
 }
 
 .chain-select-not-active {
-    border: 1px solid transparent;
-    opacity: 0.6;
+  border: 1px solid transparent;
+  opacity: 0.6;
 }
 
 .mint-nft-container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .amount-mint-nft {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 14px;
-    border: 1px solid #fff;
-    background: #f0f0f3;
-    padding: 10px 16px;
-    width: 111px;
-    height: 49px;
-    color: #141619;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 14px;
+  border: 1px solid #fff;
+  background: #f0f0f3;
+  padding: 10px 16px;
+  width: 111px;
+  height: 49px;
+  color: #141619;
 }
 
 .amount-mint-nft span {
-    border-radius: 25px;
-    background: #f7f7f9;
-    opacity: 0.6;
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-    background: #f7f7f9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  border-radius: 25px;
+  background: #f7f7f9;
+  opacity: 0.6;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  background: #f7f7f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mint-nft-container button,
 .event_success_modal button {
-    border-radius: 34px;
-    background: #395feb;
-    border: none;
-    padding: 10px 20px;
-    color: #fff;
-    min-width: 152px;
-    margin-left: 10px;
-    transition: opacity 0.5s;
+  border-radius: 34px;
+  background: #395feb;
+  border: none;
+  padding: 10px 20px;
+  color: #fff;
+  min-width: 152px;
+  margin-left: 10px;
+  transition: opacity 0.5s;
 }
 
 .info-section-container {
-    display: flex;
-    align-items: center;
-    color: #141619;
-    opacity: 0.5;
+  display: flex;
+  align-items: center;
+  color: #141619;
+  opacity: 0.5;
 }
 
 .mint-nft-container button:hover {
-    opacity: 0.6;
+  opacity: 0.6;
 }
 
 .dot-separate {
-    width: 4px;
-    height: 4px;
-    background-color: #414346;
-    opacity: 0.4;
-    margin: 0 10px;
-    border-radius: 50%;
+  width: 4px;
+  height: 4px;
+  background-color: #414346;
+  opacity: 0.4;
+  margin: 0 10px;
+  border-radius: 50%;
 }
 
 .left-side,
 .right-side {
-    width: 100%;
+  width: 100%;
 }
 
 .nft-image {
-    width: 467px;
-    height: 467px;
-    border-radius: 20px;
+  width: 467px;
+  height: 467px;
+  border-radius: 20px;
+}
+
+.nft-image-minting {
+  height: 467px;
+  border-radius: 20px;
 }
 
 .event_success_modal {
-    padding: 40px 24px 0 24px;
+  padding: 40px 24px 0 24px;
 }
 
 .event_modal_window .modal-content {
-    width: 348px;
-    height: fit-content;
-    margin: 0 auto;
+  width: 348px;
+  height: fit-content;
+  margin: 0 auto;
 }
 
 .event_success_modal h3 {
-    color: #14161a;
-    text-align: center;
-    padding: 24px 0;
+  color: #14161a;
+  text-align: center;
+  padding: 24px 0;
 }
 
 .event_success_modal button {
-    width: fit-content;
-    margin-bottom: 10px;
+  width: fit-content;
+  margin-bottom: 10px;
 }
 
 .event_success_modal button:last-child {
-    margin-bottom: 24px;
+  margin-bottom: 24px;
 }
 
 .event_success_modal img.successImg {
-    width: 301px;
-    height: 301px;
-    margin: 0 auto;
-    display: flex;
-    border-radius: 20px;
-    margin-top: 16px;
+  width: 301px;
+  height: 301px;
+  margin: 0 auto;
+  display: flex;
+  border-radius: 20px;
+  margin-top: 16px;
 }
 
 .event_success_modal img.closeBtn {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    width: 12px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 12px;
 }
 
 .event_success_modal .controls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .event_success_modal button.transparent {
-    background: white;
-    color: #395feb;
+  background: white;
+  color: #395feb;
 }
 
 @keyframes blinker {
-    50% {
-        opacity: 0;
-    }
+  50% {
+    opacity: 0;
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .main-section-container {
-        flex-direction: column;
-        height: fit-content;
-    }
-    .multichain-bridge-nft-line br {
-        display: none;
-    }
+  .main-section-container {
+    flex-direction: column;
+    height: fit-content;
+  }
+  .multichain-bridge-nft-line br {
+    display: none;
+  }
 
-    .nft-image {
-        height: 329px;
-        display: block;
-        margin: auto;
-    }
+  .nft-image {
+    height: 329px;
+    display: block;
+    margin: auto;
+  }
 
-    .info-section-container {
-        flex-wrap: wrap;
-    }
-    .mint-nft-container {
-        flex-direction: column;
-    }
-    .amount-mint-nft {
-        width: 100%;
-        margin-bottom: 10px;
-    }
+  .info-section-container {
+    flex-wrap: wrap;
+  }
+  .mint-nft-container {
+    flex-direction: column;
+  }
+  .amount-mint-nft {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 
-    .mint-nft-container button {
-        width: 100%;
-        margin-left: 0;
-    }
+  .mint-nft-container button {
+    width: 100%;
+    margin-left: 0;
+  }
 }

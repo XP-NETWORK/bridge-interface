@@ -5,13 +5,23 @@ import { LeftSide } from "./parts/leftSide";
 
 import "./mainSection.css";
 
-export const MainSection = ({ bridge, chains, title, description }) => {
+export const MainSection = ({
+  bridge,
+  chains,
+  title,
+  description,
+  className,
+}) => {
   const [choosenChain, setChoosenChain] = useState(0);
 
   return (
     <>
       <article className="main-section-container">
-        <LeftSide choosenChain={choosenChain} chains={chains} />
+        <LeftSide
+          choosenChain={choosenChain}
+          chains={chains}
+          className={className}
+        />
         <RightSide
           setChoosenChain={setChoosenChain}
           choosenChain={choosenChain}

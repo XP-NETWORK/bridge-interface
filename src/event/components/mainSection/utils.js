@@ -74,38 +74,35 @@ export const chainDataMintingPath = [
   {
     name: "Polygon",
     image: polygonIcon,
-    nft:
-      "https://ipfs.io/ipfs/QmZjTpC4NB1fKNa6aRE7ruTbBvw3YmYjT3nkTzsJWnnDuw/Polygon.gif",
+    nft: "https://ipfs.io/ipfs/QmZMkXd7hm9DPNnQTXbpJfi67kKaasm4EQQQLsVuHjQL7Y",
     chainNonce: "7",
     creationBlock: 46291138,
     chainId: "137",
     evm: true,
     rpc: "https://polygon-rpc.com",
-    contract: "0xce715Ab3E0A40Bd718e6C4c9cd9c41D874494054",
+    contract: "0xce715Ab3E0A40Bd718e6C4c9cd9c41D874494054", //TODO: NEEDS TO CHANGE FOR MAINNET
   },
   {
     name: "BSC",
     image: BSCicon,
-    nft:
-      "https://ipfs.io/ipfs/QmZjTpC4NB1fKNa6aRE7ruTbBvw3YmYjT3nkTzsJWnnDuw/BSC.gif",
+    nft: "https://ipfs.io/ipfs/QmZEM3mvhvxEjRi2f9wDcvQ2msdX6uR2GTt9ntTrTfiH1q",
     chainNonce: "4",
     chainId: "56",
     creationBlock: 30841932,
     evm: true,
     rpc: "https://bsc-dataseed.binance.org",
-    contract: "0x9abBC52450Cb0B313139fD32752Dd3D87555D5A3",
+    contract: "0x9abBC52450Cb0B313139fD32752Dd3D87555D5A3", //TODO: NEEDS TO CHANGE FOR MAINNET
   },
   {
     name: "Avalanche",
     image: avax,
-    nft:
-      "https://ipfs.io/ipfs/QmZjTpC4NB1fKNa6aRE7ruTbBvw3YmYjT3nkTzsJWnnDuw/BSC.gif", // TODO: NEEDS TO CHANGE FOR AVAX
-    chainNonce: "6", // TODO: NEEDS TO CHANGE FOR AVAX
+    nft: "https://ipfs.io/ipfs/QmRw6udf6Wkqo38kVXekxTCgMu6o1gJigP77ujSi1erVLX",
+    chainNonce: "6",
     chainId: "43114",
     creationBlock: 4211259, // TODO: NEEDS TO CHANGE FOR AVAX
     evm: true,
     rpc: "https://api.avax.network/ext/bc/C/rpc",
-    contract: "0x4F124d278186b86b056643F82F0fAf282b349646", // TODO: NEEDS TO CHANGE FOR AVAX
+    contract: "0x4F124d278186b86b056643F82F0fAf282b349646", //TODO: NEEDS TO CHANGE FOR MAINNET
   },
 ];
 
@@ -113,38 +110,35 @@ export const chainDataMintingPathTestnet = [
   {
     name: "Polygon Amoy Testnet",
     image: polygonIcon,
-    nft:
-      "https://ipfs.io/ipfs/QmZjTpC4NB1fKNa6aRE7ruTbBvw3YmYjT3nkTzsJWnnDuw/Polygon.gif",
+    nft: "https://ipfs.io/ipfs/QmZMkXd7hm9DPNnQTXbpJfi67kKaasm4EQQQLsVuHjQL7Y",
     chainNonce: "7",
     creationBlock: 46291138,
     chainId: "80002",
     evm: true,
     rpc: "https://rpc-amoy.polygon.technology/",
-    contract: "0xC9e7627990B4ECD659545b5b8A1907C96435d87f",
+    contract: "0xa660A20C6F1CbbF6A618126eA5DEf33dCDB2581c",
   },
   {
     name: "BSC Testnet",
     image: BSCicon,
-    nft:
-      "https://ipfs.io/ipfs/QmZjTpC4NB1fKNa6aRE7ruTbBvw3YmYjT3nkTzsJWnnDuw/BSC.gif",
+    nft: "https://ipfs.io/ipfs/QmZEM3mvhvxEjRi2f9wDcvQ2msdX6uR2GTt9ntTrTfiH1q",
     chainNonce: "4",
     chainId: "97",
     creationBlock: 30841932,
     evm: true,
     rpc: "https://data-seed-prebsc-1-s3.bnbchain.org:8545",
-    contract: "0xA97e8feB2AdC3E71a15F804d6d73863DEEf8bc65",
+    contract: "0x73b3c7B79eE6E71292e45DeCa621e1e8fC2b0D77",
   },
   {
     name: "Fuji AVAX",
     image: avax,
-    nft:
-      "https://ipfs.io/ipfs/QmZjTpC4NB1fKNa6aRE7ruTbBvw3YmYjT3nkTzsJWnnDuw/BSC.gif", // TODO: NEEDS TO CHANGE FOR AVAX
-    chainNonce: "6", // TODO: NEEDS TO CHANGE FOR AVAX
+    nft: "https://ipfs.io/ipfs/QmRw6udf6Wkqo38kVXekxTCgMu6o1gJigP77ujSi1erVLX",
+    chainNonce: "6",
     chainId: "43113",
-    creationBlock: 4211259, // TODO: NEEDS TO CHANGE FOR AVAX
+    creationBlock: 4211259,
     evm: true,
     rpc: "https://ava-testnet.public.blastapi.io/ext/bc/C/rpc",
-    contract: "0x70369eFBa459D8EA67EBeB6EAb20ACa5dCDED938", // TODO: NEEDS TO CHANGE FOR AVAX
+    contract: "0xf92057F89B87bad969194877f037E3ff65F3e346",
   },
 ];
 

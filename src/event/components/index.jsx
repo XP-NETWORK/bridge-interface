@@ -20,7 +20,14 @@ import { setSuccess } from "../../store/reducers/eventSlice";
 import { useNavigate } from "react-router";
 
 export const EventPage = withServices(
-  ({ serviceContainer, chains, title, description }) => {
+  ({
+    serviceContainer,
+    chains,
+    title,
+    description,
+    headerClass,
+    className,
+  }) => {
     const { bridge } = serviceContainer;
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -56,12 +63,13 @@ export const EventPage = withServices(
               </div>
             </div>
           </Modal>
-          <HeaderEvent />
+          <HeaderEvent headerClass={headerClass} />
           <MainSection
             bridge={bridge}
             chains={chains}
             title={title}
             description={description}
+            className={className}
           />
           <JoinSection />
         </div>

@@ -31,10 +31,13 @@ export const MintNft = ({ choosenChain, bridge, account, chains }) => {
   );
 
   useEffect(() => {
+    console.log("INSIDE USE EFFECT....");
     (async () => {
       const [total] = await Promise.all([
         (await fetch(`${REST_API}/get-claims`)).json(),
       ]);
+
+      console.log({ total });
 
       dispatch(
         setTotal(
