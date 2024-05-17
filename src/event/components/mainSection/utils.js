@@ -80,7 +80,7 @@ export const chainDataMintingPath = [
     chainId: "137",
     evm: true,
     rpc: "https://polygon-rpc.com",
-    contract: "0xce715Ab3E0A40Bd718e6C4c9cd9c41D874494054", //TODO: NEEDS TO CHANGE FOR MAINNET
+    contract: "0x49AAb026be38c3d72f99945719485Be605539932",
   },
   {
     name: "BSC",
@@ -91,7 +91,7 @@ export const chainDataMintingPath = [
     creationBlock: 30841932,
     evm: true,
     rpc: "https://bsc-dataseed.binance.org",
-    contract: "0x9abBC52450Cb0B313139fD32752Dd3D87555D5A3", //TODO: NEEDS TO CHANGE FOR MAINNET
+    contract: "0x7646786E6bC5C0D2D33B198738a64AdB398531d7", //TODO: NEEDS TO CHANGE FOR MAINNET
   },
   {
     name: "Avalanche",
@@ -102,7 +102,7 @@ export const chainDataMintingPath = [
     creationBlock: 4211259, // TODO: NEEDS TO CHANGE FOR AVAX
     evm: true,
     rpc: "https://api.avax.network/ext/bc/C/rpc",
-    contract: "0x4F124d278186b86b056643F82F0fAf282b349646", //TODO: NEEDS TO CHANGE FOR MAINNET
+    contract: "0xa80F3BB9a06065e41369E3d8e11655d91d01D9C9", //TODO: NEEDS TO CHANGE FOR MAINNET
   },
 ];
 

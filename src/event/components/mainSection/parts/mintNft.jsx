@@ -11,13 +11,15 @@ import {
 import { setTotal, setSuccess } from "../../../../store/reducers/eventSlice";
 import { useDispatch } from "react-redux";
 import xpnetClaimAbi from "../../../assets/abi/mintAbi.json";
+import campaignMintAbi from "../../../assets/abi/campaignMintAbi.json";
 import { useWeb3React } from "@web3-react/core";
 import { REST_API } from "../utils";
-import { chains as allChains, isTestnet } from "../../../../components/values";
+import { chains as allChains } from "../../../../components/values";
 
 export const MintNft = ({ choosenChain, bridge, account, chains }) => {
   const MAX_MINT = 5;
   const [countMint, setCountMint] = useState(1);
+  const [refresh, setRefresh] = useState(false);
 
   const { chainId: x } = useWeb3React();
 
@@ -31,13 +33,10 @@ export const MintNft = ({ choosenChain, bridge, account, chains }) => {
   );
 
   useEffect(() => {
-    console.log("INSIDE USE EFFECT....");
     (async () => {
       const [total] = await Promise.all([
         (await fetch(`${REST_API}/get-claims`)).json(),
       ]);
-
-      console.log({ total });
 
       dispatch(
         setTotal(
@@ -73,6 +72,31 @@ export const MintNft = ({ choosenChain, bridge, account, chains }) => {
             throw new Error("Chain does not match");
           }
 
+          if (window.location.pathname.includes("minting")) {
+            const { contract: address } = chain;
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const mintContract = new ethers.Contract(
+              address,
+              campaignMintAbi,
+              provider
+            );
+            console.log({ mintContract });
+
+            const userMinted1 = await mintContract.functions.name();
+            console.log({ userMinted1 });
+
+            let accounts = await provider.send("eth_requestAccounts", []);
+            let account = accounts[0];
+
+            const userMinted = await mintContract.functions.userMinted(account);
+            console.log({ userMinted });
+
+            dispatch(setTotal(Number(userMinted)));
+            setMintLimit({
+              ...mintLimits,
+              [chainNonce]: MAX_MINT - Number(userMinted || 0),
+            });
+          }
           const [claims] = await Promise.all([
             (
               await fetch(
@@ -96,7 +120,7 @@ export const MintNft = ({ choosenChain, bridge, account, chains }) => {
         dispatch(setApproveLoader(false));
       }
     })();
-  }, [account, choosenChain, x]);
+  }, [account, choosenChain, x, refresh]);
 
   const increase = () => {
     if (countMint < mintLimits[chains[choosenChain].chainNonce])
@@ -127,6 +151,7 @@ export const MintNft = ({ choosenChain, bridge, account, chains }) => {
       const results = [];
       for (let i = 0; i < countMint; i++) {
         const res = await contract["claim"]();
+        await res.wait();
         results.push(res);
       }
       const singleSuccess = results.find((x) => x.hash);
@@ -144,6 +169,7 @@ export const MintNft = ({ choosenChain, bridge, account, chains }) => {
       dispatch(setError({ message: e.message }));
     }
     dispatch(setApproveLoader(false));
+    setRefresh(!refresh);
   };
   const dispatch = useDispatch();
 
