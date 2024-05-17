@@ -80,16 +80,11 @@ export const MintNft = ({ choosenChain, bridge, account, chains }) => {
               campaignMintAbi,
               provider
             );
-            console.log({ mintContract });
-
-            const userMinted1 = await mintContract.functions.name();
-            console.log({ userMinted1 });
 
             let accounts = await provider.send("eth_requestAccounts", []);
             let account = accounts[0];
 
             const userMinted = await mintContract.functions.userMinted(account);
-            console.log({ userMinted });
 
             dispatch(setTotal(Number(userMinted)));
             setMintLimit({
