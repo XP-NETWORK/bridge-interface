@@ -17,6 +17,7 @@ export const RightSide = ({
   title,
   description,
   chains,
+  useContractVariable,
 }) => {
   const account = useSelector((state) => state.general.account);
   const { totalMinted } = useSelector((state) => state.events);
@@ -62,6 +63,7 @@ export const RightSide = ({
           bridge={bridge}
           account={account}
           chains={chains}
+          useContractVariable={useContractVariable}
         />
         <div className="info-section-container ">
           <span>{totalMinted} minted</span>

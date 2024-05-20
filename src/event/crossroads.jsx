@@ -10,6 +10,7 @@ const Crossroads = () => {
         "A unique multi-chain NFT collection that celebrates the bridging campaign between XP.NETWORK and Aurora."
       }
       chains={chainData}
+      useContractVariable={false}
     />
   );
 };

@@ -18,6 +18,7 @@ const Minting = () => {
       chains={chains}
       headerClass={"event-header-mint"}
       className={"nft-image-minting"}
+      useContractVariable={true}
     />
   );
 };

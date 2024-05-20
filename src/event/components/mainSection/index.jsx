@@ -11,6 +11,7 @@ export const MainSection = ({
   title,
   description,
   className,
+  useContractVariable,
 }) => {
   const [choosenChain, setChoosenChain] = useState(0);
 
@@ -29,6 +30,7 @@ export const MainSection = ({
           title={title}
           chains={chains}
           description={description}
+          useContractVariable={useContractVariable}
         />
       </article>
     </>

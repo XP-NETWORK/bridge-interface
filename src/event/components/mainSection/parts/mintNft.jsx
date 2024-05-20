@@ -16,7 +16,13 @@ import { useWeb3React } from "@web3-react/core";
 import { REST_API } from "../utils";
 import { chains as allChains } from "../../../../components/values";
 
-export const MintNft = ({ choosenChain, bridge, account, chains }) => {
+export const MintNft = ({
+  choosenChain,
+  bridge,
+  account,
+  chains,
+  useContractVariable,
+}) => {
   const MAX_MINT = 5;
   const [countMint, setCountMint] = useState(1);
   const [refresh, setRefresh] = useState(false);
@@ -72,7 +78,7 @@ export const MintNft = ({ choosenChain, bridge, account, chains }) => {
             throw new Error("Chain does not match");
           }
 
-          if (window.location.pathname.includes("minting")) {
+          if (useContractVariable) {
             const { contract: address } = chain;
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const mintContract = new ethers.Contract(

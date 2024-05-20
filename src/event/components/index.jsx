@@ -27,6 +27,7 @@ export const EventPage = withServices(
     description,
     headerClass,
     className,
+    useContractVariable,
   }) => {
     const { bridge } = serviceContainer;
     const dispatch = useDispatch();
@@ -70,6 +71,7 @@ export const EventPage = withServices(
             title={title}
             description={description}
             className={className}
+            useContractVariable={useContractVariable}
           />
           <JoinSection />
         </div>
