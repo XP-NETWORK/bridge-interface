@@ -4,6 +4,7 @@ import {
   chainDataMintingPath,
   chainDataMintingPathTestnet,
 } from "./components/mainSection/utils";
+import successImage from "./assets/mainSection/image.png";
 
 const Minting = () => {
   const chains = window.location.pathname.includes("testnet")
@@ -19,6 +20,7 @@ const Minting = () => {
       headerClass={"event-header-mint"}
       className={"nft-image-minting"}
       useContractVariable={true}
+      successImage={successImage}
     />
   );
 };

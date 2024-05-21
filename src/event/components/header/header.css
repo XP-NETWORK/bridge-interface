@@ -57,6 +57,13 @@
   background-size: 100%;
   margin-top: 35px;
 }
+@media screen and (max-width: 768px) {
+  .event-header-mint {
+    background: url("../../assets/header/image-mob.png") no-repeat;
+    background-size: 100%;
+    background-position: center;
+  }
+}
 
 .event-header-mint .rotator {
   width: 46px;

@@ -12,7 +12,6 @@ import { Modal } from "react-bootstrap";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import successImage from "../assets/mainSection/CUSTOM xp nft (1) 1-min.png";
 import close from "../../assets/img/icons/close.svg";
 
 import { setSuccess } from "../../store/reducers/eventSlice";
@@ -28,6 +27,7 @@ export const EventPage = withServices(
     headerClass,
     className,
     useContractVariable,
+    successImage
   }) => {
     const { bridge } = serviceContainer;
     const dispatch = useDispatch();

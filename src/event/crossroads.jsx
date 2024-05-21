@@ -1,6 +1,7 @@
 import React from "react";
 import { EventPage } from "./components";
 import { chainData } from "./components/mainSection/utils";
+import successImage from "./assets/mainSection/CUSTOM xp nft (1) 1-min.png";
 
 const Crossroads = () => {
   return (
@@ -11,6 +12,9 @@ const Crossroads = () => {
       }
       chains={chainData}
       useContractVariable={false}
+      headerClass={"event-header"}
+      className={"nft-image"}
+      successImage={successImage}
     />
   );
 };

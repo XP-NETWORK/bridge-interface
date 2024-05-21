@@ -3,8 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "browser": {
-        "electron": false,
-        "crypto": false
+        "crypto": false,
+        "electron": false
     },
     "dependencies": {
         "@harmony-js/core": "^0.1.57",

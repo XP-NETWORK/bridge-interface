@@ -10,3 +10,4 @@ yarn-error.log
 bridge.code-workspace
 **/workspace.code-workspace
 **/bridge.code-workspace
+.yarn
