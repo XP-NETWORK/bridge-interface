@@ -13,7 +13,7 @@ import { withServices } from "../../App/hocs/withServices";
 
 import { useSelector } from "react-redux";
 
-import { CHAIN_INFO } from "xp.network";
+import { v3_ChainId } from "../../../utils/chainsTypes";
 
 const withChains = (NFTaccount, options = {}) =>
   function CB(props) {
@@ -22,7 +22,7 @@ const withChains = (NFTaccount, options = {}) =>
     const _chain = useSelector((state) =>
       withDestinationChains ? state.general.to : state.general.from
     );
-    const type = CHAIN_INFO.get(_chain.nonce).type;
+    const type = v3_ChainId[_chain.nonce].type;
 
     return (
       <NFTaccount

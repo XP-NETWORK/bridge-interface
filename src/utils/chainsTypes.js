@@ -123,8 +123,13 @@ export function getChainName(chainNumber) {
 
 
 export const v3_ChainId = {
-  EVM: 'ETH',
-  TEZOS : "TEZOS",
-  TON : "TON"
+  2: {name: "MULTIVERSX", type:"ELROND"},
+  4: {name: 'BSC', type: "EVM"},
+  5: {name: 'ETH', type: "EVM"},
+  7: {name: 'MATIC', type: "EVM"},
+  18: {name: 'TEZOS', type: "TEZOS"},
+  24: {name: 'SECRET', type: "COSMOS"},
+  27: {name: 'TON', type: "TON"},
+  29: {name: 'HEDERA', type: "HEDERA"},
 }
   
