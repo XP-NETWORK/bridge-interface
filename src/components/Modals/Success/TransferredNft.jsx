@@ -148,7 +148,8 @@ const TransferredNft = ({
   const completed = Boolean(
     (to.type === "Hedera" && txnStatus === "completed") ||
       (v3BridgeTx && txnStatus !== "claimed") ||
-      (to.type === "Tezos" && txnStatus === "completed")
+      (to.type === "Tezos" && txnStatus === "completed") ||
+      (to.type === "Cosmos" && txnStatus === "completed")
   );
   console.log({
     to,

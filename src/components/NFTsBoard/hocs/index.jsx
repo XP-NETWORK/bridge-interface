@@ -10,6 +10,7 @@ import { withICP as ICP } from "./icpHOC";
 import { withCasper as Casper } from "./casperHOC";
 import { withTon as Ton } from "./tonHOC";
 import { withServices } from "../../App/hocs/withServices";
+import { withCosmos as Cosmos } from "./cosmosHOC";
 
 import { useSelector } from "react-redux";
 
@@ -41,6 +42,7 @@ export default compose(
   ICP,
   Elrond,
   Tezos,
+  Cosmos,
   Ton,
   Algo,
   EVM,
