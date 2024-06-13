@@ -136,11 +136,11 @@ export class XPDecentralizedUtility {
     console.log({ res });
     const hash = await res.hash();
     console.log({ hash });
-    const { ret: result, lockNftMintWith: mintWith } = res;
+    const { tx: result, lockNftMintWith: mintWith } = res;
     await sleep(TIME.TEN_SECONDS);
     return {
       result,
-      mintWith: "abc",
+      mintWith: mintWith,
     };
   };
 
