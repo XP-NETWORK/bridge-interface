@@ -31,6 +31,7 @@ const Container = ({ children, serviceContainer, setContainer }) => {
 
       const event = window.location.pathname === "/crossroads";
       const eventMinting = window.location.pathname.includes("/minting");
+      const eventMintingHedera = window.location.pathname.includes("/hedera");
 
       if (!event) {
         if (window.location.pathname.includes(BridgeModes.Staging)) {
@@ -51,7 +52,7 @@ const Container = ({ children, serviceContainer, setContainer }) => {
       const bridge = await serviceContainer?.bridge?.init(network);
       checkWallet && bridge.setCheckWallet(checkWallet);
 
-      if (!event && !eventMinting) {
+      if (!event && !eventMinting && !eventMintingHedera) {
         setContainer({ ...serviceContainer, bridge });
 
         const query = window.location.search;

@@ -4,6 +4,7 @@ import moonbeamIcon from "../../assets/mainSection/chainSelect/moonbeamIcon.svg"
 import avax from "../../assets/mainSection/chainSelect/avax.svg";
 //import nearIcon from "../../assets/mainSection/chainSelect/nearIcon.svg";
 import polygonIcon from "../../assets/mainSection/chainSelect/polygonIcon.svg";
+import hederaIcon from "../../assets/mainSection/chainSelect/hedera.svg";
 
 /*import aurora from "../../assets/mainSection/nfts/XP NFT AURORA (1).gif";
 import poly from "../../assets/mainSection/nfts/XP NFT Polygon (1).gif";
@@ -139,6 +140,56 @@ export const chainDataMintingPathTestnet = [
     evm: true,
     rpc: "https://ava-testnet.public.blastapi.io/ext/bc/C/rpc",
     contract: "0xf92057F89B87bad969194877f037E3ff65F3e346",
+  },
+];
+
+export const chainDataMintingPathHedera = [
+  {
+    name: "BSC",
+    image: BSCicon,
+    nft: "https://ipfs.io/ipfs/QmZEM3mvhvxEjRi2f9wDcvQ2msdX6uR2GTt9ntTrTfiH1q",
+    chainNonce: "4",
+    chainId: "56",
+    creationBlock: 30841932,
+    evm: true,
+    rpc: "https://bsc-dataseed.binance.org",
+    contract: "0x7646786E6bC5C0D2D33B198738a64AdB398531d7",
+  },
+  {
+    name: "Hedera",
+    image: hederaIcon,
+    nft: "https://ipfs.io/ipfs/QmUZK5BoEMFxpa7RZBX4Qcp5wS9njesCsNas6kTJZQTb4S",
+    chainNonce: "29",
+    chainId: "295",
+    creationBlock: 4211259,
+    evm: true,
+    rpc: "https://mainnet.hashio.io/api",
+    contract: "0xC9e7627990B4ECD659545b5b8A1907C96435d87f",
+  },
+];
+
+export const chainDataMintingPathHederaTestnet = [
+  {
+    name: "BSC Testnet",
+    image: BSCicon,
+    nft: "https://ipfs.io/ipfs/QmZEM3mvhvxEjRi2f9wDcvQ2msdX6uR2GTt9ntTrTfiH1q",
+    chainNonce: "4",
+    chainId: "97",
+    creationBlock: 30841932,
+    evm: true,
+    rpc: "https://data-seed-prebsc-1-s3.bnbchain.org:8545",
+    contract: "0x73b3c7B79eE6E71292e45DeCa621e1e8fC2b0D77",
+  },
+  {
+    name: "Hedera Testnet",
+    image: hederaIcon,
+    nft: "https://ipfs.io/ipfs/QmUZK5BoEMFxpa7RZBX4Qcp5wS9njesCsNas6kTJZQTb4S",
+    chainNonce: "29",
+    chainId: "296",
+    creationBlock: 4211259,
+    evm: true,
+    rpc: "https://testnet.hashio.io/api",
+    contract: "0xC9e7627990B4ECD659545b5b8A1907C96435d87f",
   },
 ];
 

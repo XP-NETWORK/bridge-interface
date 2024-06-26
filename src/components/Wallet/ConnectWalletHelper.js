@@ -73,6 +73,14 @@ export const connectMetaMask = async (
       }?to=${to}&from=${from}/`;
       window.open(link);
     }
+
+    if (!window.ethereum && mobile) {
+      const event = window.location.pathname === "/hedera";
+      const link = `dapp://${window.location.host}${
+        event ? "/hedera" : ""
+      }?to=${to}&from=${from}/`;
+      window.open(link);
+    }
     //d/
     if (!mobile && !window.safeLocalStorage?.getItem("XP_MM_CONNECTED"))
       await window.ethereum.request({
