@@ -30,8 +30,8 @@ export const withCosmos = (Wrapped) =>
       const { address } = accounts[0];
 
       const secretjs = await promisify(() => import("secretjs"));
-      const signer = await secretjs.SecretNetworkClient.create({
-        grpcWebUrl: testnet ? TestNetRpcUri[key] : MainNetRpcUri[key],
+      const signer = new secretjs.SecretNetworkClient({
+        url: testnet ? TestNetRpcUri[key] : MainNetRpcUri[key],
         chainId,
         wallet: offlineSigner,
         walletAddress: address,

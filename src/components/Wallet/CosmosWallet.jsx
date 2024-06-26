@@ -54,8 +54,8 @@ function CosmosWallet({ wallet, serviceContainer }) {
                 const { address } = accounts[0];
 
                 const secretjs = await promisify(() => import("secretjs"));
-                const signer = await secretjs.SecretNetworkClient.create({
-                    grpcWebUrl: testnet
+                const signer = new secretjs.SecretNetworkClient({
+                    url: testnet
                         ? TestNetRpcUri[key]
                         : MainNetRpcUri[key],
                     chainId,
