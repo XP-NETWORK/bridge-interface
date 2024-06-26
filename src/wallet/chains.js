@@ -1025,13 +1025,14 @@ export const allchains = [
         networkId: 78110,
     },
     {
-        name: "Polygon Testnet Mumbai",
+        name: "Polygon Testnet Amoy",
         chainName: "Polygon",
-        //network: "testnet",
+        network: "testnet",
         rpcUrls: [
-            "https://matic-mumbai.chainstacklabs.com",
-            "https://rpc-mumbai.maticvigil.com",
-            "https://matic-testnet-archive-rpc.bwarelabs.com",
+            "https://rpc-amoy.polygon.technology/",
+            // "https://matic-mumbai.chainstacklabs.com",
+            // "https://rpc-mumbai.maticvigil.com",
+            // "https://matic-testnet-archive-rpc.bwarelabs.com",
         ],
         //faucets: ["https://faucet.polygon.technology/"],
         nativeCurrency: {
@@ -1041,7 +1042,7 @@ export const allchains = [
         },
         //infoURL: "https://polygon.technology/",
         //shortName: "maticmum",
-        chainId: 80001,
+        chainId: 80002,
         //networkId: 80001,
         /*explorers: [
       {
