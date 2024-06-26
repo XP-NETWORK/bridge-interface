@@ -1,15 +1,13 @@
 import React from "react";
 
-import { chainData } from "../utils";
-
-export const LeftSide = ({ choosenChain }) => {
+export const LeftSide = ({ choosenChain, chains, className }) => {
   return (
     <>
       <div className="left-side">
         <img
-          className="nft-image"
-          src={chainData[choosenChain].nft}
-          alt={chainData[choosenChain].name}
+          className={className ?? "nft-image"}
+          src={chains[choosenChain].nft}
+          alt={chains[choosenChain].name}
         />
       </div>
     </>
