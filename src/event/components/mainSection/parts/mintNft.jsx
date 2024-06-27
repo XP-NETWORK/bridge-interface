@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars*/
 import React, { useState, useEffect } from "react";
-import { ethers } from "ethers";
+import { Contract, ethers } from "ethers";
 import { switchNetwork } from "../../../../services/chains/evm/evmService";
 import {
   setWalletsModal,
@@ -15,6 +15,9 @@ import campaignMintAbi from "../../../assets/abi/campaignMintAbi.json";
 import { useWeb3React } from "@web3-react/core";
 import { REST_API } from "../utils";
 import { chains as allChains } from "../../../../components/values";
+import { hashConnect } from "../../../../components/Wallet/HederaWallet/hederaConnections";
+import { ContractId, ContractExecuteTransaction } from "@hashgraph/sdk";
+import { hederaContracId, contractSign } from "./hashpack";
 
 export const MintNft = ({
   choosenChain,
@@ -23,6 +26,8 @@ export const MintNft = ({
   chains,
   useContractVariable,
 }) => {
+  let isHashPack = false;
+  const HEDERA_ID = "0.0.6270190";
   const MAX_MINT = 5;
   const [countMint, setCountMint] = useState(1);
   const [refresh, setRefresh] = useState(false);
@@ -137,13 +142,30 @@ export const MintNft = ({
       const chain = chains[choosenChain];
       const { chainNonce, contract: address } = chain;
 
+      console.log({
+        chain,
+      });
+
       let chainWrapper = await bridge.getChain(Number(chainNonce));
 
-      const contract = new ethers.Contract(
-        address,
-        xpnetClaimAbi,
-        chainWrapper.signer
-      );
+      console.log({ chainWrapper });
+      console.log({ signer: chainWrapper?.signer?.accountToSign });
+
+      let contract;
+      const hederaSigner = hashConnect.getSigner(chainWrapper?.signer);
+      console.log({ hederaSigner });
+
+      if (chain.chainId === "295" || chain.chainId === "296") {
+        isHashPack = true;
+        contract = true;
+      } else {
+        isHashPack = false;
+        contract = new ethers.Contract(
+          address,
+          xpnetClaimAbi,
+          chainWrapper.signer
+        );
+      }
 
       if (!contract) {
         throw Error("Contract instance is not created");
@@ -151,10 +173,23 @@ export const MintNft = ({
 
       const results = [];
       for (let i = 0; i < countMint; i++) {
-        const res = await contract["claim"]();
-        await res.wait();
-        results.push(res);
+        if (!isHashPack) {
+          const res = await contract["claim"]();
+          await res.wait();
+          results.push(res);
+        } else {
+          console.log("in else block");
+          hederaContracId(HEDERA_ID);
+          console.log({ "MINT FILE HEDERA SIGNER": hederaSigner.provider });
+          const res = await contractSign(
+            hederaSigner.provider.provider,
+            HEDERA_ID
+          );
+          results.push(res);
+        }
       }
+      console.log({ results });
+
       const singleSuccess = results.find((x) => x.hash);
 
       if (singleSuccess.hash) {
