@@ -102,6 +102,8 @@ function NFTaccount(props) {
 
             //fromChain.estimateDeployUserStore();
 
+            throw new Error("test");
+
             dispatch(setNFTList(nfts));
             dispatch(setPreloadNFTs(nfts.length));
             dispatch(setIsEmpty(nfts.length < 1));

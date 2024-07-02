@@ -4,6 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setImportModal,
   addImportedNFTtoNFTlist,
+  setPreloadNFTs,
+  setBigLoader,
+  setSearchNFTList,
+  setCurrentNFTs,
 } from "../../../store/reducers/generalSlice";
 
 import { validateFunctions } from "../../../services/addressValidators";
@@ -11,11 +15,13 @@ import { validateFunctions } from "../../../services/addressValidators";
 import axios from "axios";
 import "./importNFTModal.css";
 import EVMBody from "./EVMBody";
+import { setIsEmpty } from "../../../store/reducers/paginationSlice";
 
 export default function ImportNFTModal() {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
   const account = useSelector((state) => state.general.account);
+  const preloadNFTs = useSelector((state) => state.general.preloadNFTs);
 
   const [validContract, setValidContract] = useState(true);
   const [contract, setContract] = useState();
@@ -36,18 +42,19 @@ export default function ImportNFTModal() {
     //   setValidContract(true);
     // } else setValidContract(false);
 
-    if(value.length > 0){
-      setValidContract(validateFunctions.EVM(value))
-    }
-    else{
-      setValidContract(true)
+    if (value.length > 0) {
+      setValidContract(validateFunctions.EVM(value));
+    } else {
+      setValidContract(true);
     }
   };
 
   //"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ";
   //"http://192.168.129.241:3000/nfts/nftCheck";
   const handleImport = async () => {
-    const baseURL = "https://indexnft.herokuapp.com/nfts/nftCheck";
+    dispatch(setBigLoader(true));
+    // const baseURL = "https://indexnft.herokuapp.com/nfts/nftCheck";
+    const baseURL = "https://tools.xp.network/testnet-indexer/nfts/nftCheck";
     const _headers = {
       Accept: "*",
       "Content-Type": "application/json",
@@ -71,7 +78,19 @@ export default function ImportNFTModal() {
       });
       setImportBlocked(false);
       if (typeof imported.data === "object") {
-        dispatch(addImportedNFTtoNFTlist(imported.data));
+        if (imported.data.status === "ok") {
+          dispatch(setIsEmpty(false));
+          dispatch(setPreloadNFTs(preloadNFTs + 1));
+          // console.log({nftArr});
+          dispatch(addImportedNFTtoNFTlist(imported.data.data));
+          dispatch(setSearchNFTList(""));
+          dispatch(setCurrentNFTs([imported.data.data]));
+          dispatch(setBigLoader(false));
+        } else if (imported.data.status === "error") {
+          setError(imported.data.data);
+          dispatch(setBigLoader(false));
+          return;
+        }
       } else setError(imported.data);
       dispatch(setImportModal(false));
     } catch (error) {

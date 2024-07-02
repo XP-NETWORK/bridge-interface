@@ -591,8 +591,11 @@ const generalSlice = createSlice({
     setImportModal(state, action) {
       state.importModal = action.payload;
     },
-    addImportedNFTtoNFTlist(state, action) {
-      state.NFTList = action.payload;
+    addImportedNFTtoNFTlist(state, action) {      
+      const isNFTExist = state.NFTList.find(
+        (n) => n.uri === action.payload.uri
+      );
+      if (!isNFTExist) state.NFTList.push(action.payload);
     },
     setTonWallet(state, action) {
       state.TonWallet = action.payload;

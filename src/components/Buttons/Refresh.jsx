@@ -44,7 +44,7 @@ export default withServices(function Refresh({ serviceContainer }) {
                 } else {
                     dispatch(setIsEmpty(false));
                 }
-
+                
                 dispatch(setPreloadNFTs(nfts.length));
                 dispatch(setNFTList(nfts));
                 dispatch(setBigLoader(false));
