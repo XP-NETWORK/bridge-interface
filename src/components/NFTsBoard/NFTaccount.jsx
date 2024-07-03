@@ -6,13 +6,10 @@ import { Modal } from "react-bootstrap";
 import ImportNFTModal from "../Modals/ImportNFTModal/ImportNFTModal";
 import {
     setBalance,
-    setError,
     cleanSelectedNFTList,
     setBigLoader,
-    setPreloadNFTs,
     setNFTList,
 } from "../../store/reducers/generalSlice";
-import { setIsEmpty } from "../../store/reducers/paginationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { saveForSearch } from "../../utils";
 import { ReturnBtn } from "../Settings/returnBtn";
@@ -50,12 +47,14 @@ import ReceiverIsContract from "../Alerts/ReceiverIsContract";
 const intervalTm = 15_000;
 
 function NFTaccount(props) {
-    const { serviceContainer, chainSpecific, _from, chainSpecificRender } = props;
+    const { serviceContainer,
+        //  chainSpecific,
+         _from, chainSpecificRender } = props;
 
     const dispatch = useDispatch();
 
-    const from = _from.key;
-    const secret = from === "Secret";
+    // const from = _from.key;
+    // const secret = from === "Secret";
     //const prevSelected = usePrevious(from);
 
     let nfts = useSelector((state) => state.general.NFTList);
@@ -90,30 +89,30 @@ function NFTaccount(props) {
 
     const { bridge } = serviceContainer;
 
-    async function getNFTsList(fromChain, contract) {
-        dispatch(setBigLoader(true));
-        try {
-            let [nfts] = await Promise.all([
-                fromChain.getNFTs(bridge.checkWallet || _account, contract),
-                chainSpecific && chainSpecific(dispatch, fromChain, _account),
-            ]);
+    // async function getNFTsList() {
+        // dispatch(setBigLoader(true));
+        // try {
+        //     let [nfts] = await Promise.all([
+        //         fromChain.getNFTs(bridge.checkWallet || _account, contract),
+        //         chainSpecific && chainSpecific(dispatch, fromChain, _account),
+        //     ]);
 
-            nfts = fromChain.filterNFTs(nfts);
+        //     nfts = fromChain.filterNFTs(nfts);
 
-            //fromChain.estimateDeployUserStore();
+        //     //fromChain.estimateDeployUserStore();
 
-            dispatch(setNFTList(nfts));
-            dispatch(setPreloadNFTs(nfts.length));
-            dispatch(setIsEmpty(nfts.length < 1));
+        //     dispatch(setNFTList(nfts));
+        //     dispatch(setPreloadNFTs(nfts.length));
+        //     dispatch(setIsEmpty(nfts.length < 1));
 
-            dispatch(setBigLoader(false));
-        } catch (error) {
-            dispatch(setBigLoader(false));
-            dispatch(setNFTList([]));
-            console.log(error);
-            dispatch(setError(error.data ? error.data.message : error.message));
-        }
-    }
+        //     dispatch(setBigLoader(false));
+        // } catch (error) {
+            // dispatch(setBigLoader(false));
+            // dispatch(setNFTList([]));
+            // console.log(error);
+            // dispatch(setError(error.data ? error.data.message : error.message));
+        // }
+    // }
 
     const getBalance = async (fromChain) => {
         const _balance = await fromChain.balance(_account);
@@ -144,7 +143,8 @@ function NFTaccount(props) {
 
             if (_account) {
                 getBalance(fromChain);
-                !secret && getNFTsList(fromChain, preFetchData?.contract);
+                dispatch(setBigLoader(false));
+                dispatch(setNFTList([]));
                 balanceInterval = setInterval(() => getBalance(fromChain), intervalTm);
             }
         })();
