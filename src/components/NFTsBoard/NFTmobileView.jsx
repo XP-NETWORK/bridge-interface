@@ -74,9 +74,6 @@ const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
                 <ChainSwitch assignment={"from"} func={handleFromChainSwitch} />
             </div>
             <div className="mobile-nfts__list">
-                {_from.type === "EVM" && nfts?.length < 1 && (
-                    <ImportNFTButton />
-                )}
                 {!showNFTsSearch ? (
                     <div className="mobile-nfts__header">
                         <SelectedNFTs
@@ -90,7 +87,9 @@ const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
                             showSelected={showSelected}
                             setOff={setShowSelected}
                         />
-
+                        {_from.type === "EVM" && (nfts?.length === undefined  || nfts?.length < 1) && (
+                            <ImportNFTButton />
+                        )}
                         {nfts?.length > 0 && (
                             <div className="mobile-nfts__buttons">
                                 <SearchButton
