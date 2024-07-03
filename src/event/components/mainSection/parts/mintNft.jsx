@@ -27,7 +27,8 @@ export const MintNft = ({
   useContractVariable,
 }) => {
   let isHashPack = false;
-  const HEDERA_ID = "0.0.6270190";
+  const HEDERA_ID = "0.0.6290945";
+  const HEDERA_ID_TESTNET = "0.0.4489141";
   const MAX_MINT = 5;
   const [countMint, setCountMint] = useState(1);
   const [refresh, setRefresh] = useState(false);
@@ -118,7 +119,6 @@ export const MintNft = ({
 
           dispatch(setApproveLoader(false));
         } catch (e) {
-          console.log(e, "e");
           if (e.message === "Chain does not match") {
             return;
           }
@@ -142,20 +142,17 @@ export const MintNft = ({
       const chain = chains[choosenChain];
       const { chainNonce, contract: address } = chain;
 
-      console.log({
-        chain,
-      });
-
       let chainWrapper = await bridge.getChain(Number(chainNonce));
 
-      console.log({ chainWrapper });
-      console.log({ signer: chainWrapper?.signer?.accountToSign });
-
       let contract;
-      const hederaSigner = hashConnect.getSigner(chainWrapper?.signer);
-      console.log({ hederaSigner });
+      const hederaSigner = hashConnect.getSigner(chainWrapper?.signer.provider);
 
-      if (chain.chainId === "295" || chain.chainId === "296") {
+      const isProviderMM = chainWrapper?.signer?.provider?.connection?.url;
+
+      if (
+        !(isProviderMM == "metamask") &&
+        (chain.chainId === "295" || chain.chainId === "296")
+      ) {
         isHashPack = true;
         contract = true;
       } else {
@@ -178,17 +175,19 @@ export const MintNft = ({
           await res.wait();
           results.push(res);
         } else {
-          console.log("in else block");
-          hederaContracId(HEDERA_ID);
-          console.log({ "MINT FILE HEDERA SIGNER": hederaSigner.provider });
+          let hederaContractId;
+          if (window.location.pathname.includes("testnet")) {
+            hederaContractId = HEDERA_ID_TESTNET;
+          } else {
+            hederaContractId = HEDERA_ID;
+          }
           const res = await contractSign(
-            hederaSigner.provider.provider,
-            HEDERA_ID
+            hederaSigner.provider,
+            hederaContractId
           );
           results.push(res);
         }
       }
-      console.log({ results });
 
       const singleSuccess = results.find((x) => x.hash);
 
