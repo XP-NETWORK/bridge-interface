@@ -268,7 +268,13 @@ export class XPDecentralizedUtility {
         gasLimit: 5_000_000,
       }
     );
-    console.log("claimed: ", claim?.ret);
+
+    console.log("claimed: ", claim?.ret ?? claim);
+    if (v3_ChainId[targetChainIdentifier?.nonce].name === "TON") {
+      return {
+        hash: claim.hash(),
+      };
+    }
     return claim?.ret;
   };
 
