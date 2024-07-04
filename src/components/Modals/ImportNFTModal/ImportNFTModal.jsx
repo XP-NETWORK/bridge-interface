@@ -5,11 +5,11 @@ import {
   setImportModal,
   setPreloadNFTs,
   setNFTList,
-
 } from "../../../store/reducers/generalSlice";
 
 import { validateFunctions } from "../../../services/addressValidators";
 import ABI from '../../../event/assets/abi/mintAbi.json'
+import ABI1155 from '../../../event/assets/abi/erc1155Abi.json'
 
 import "./importNFTModal.css";
 import EVMBody from "./EVMBody";
@@ -33,9 +33,7 @@ function ImportNFTModal({
   const [importBlocked, setImportBlocked] = useState(false);
   const [error, setError] = useState("");
   const validForm = contract?.length === 42 && tokenId;
-  const chainNonce = from.nonce;
-  console.log({ chainNonce })
-
+ 
   const handleClose = () => {
     dispatch(setImportModal(false));
   };
@@ -54,41 +52,66 @@ function ImportNFTModal({
     }
   };
 
-  //"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ";
-  //"http://192.168.129.241:3000/nfts/nftCheck";
+  /**
+   * 
+   * IMPORTING TOKEN 
+   */
   const handleImport = async () => {
-    setImportBlocked(true);
-    setTimeout(() => {
-      setImportBlocked(false);
-    }, 10000);
-
-
-    const fromChain = await serviceContainer.bridge.getChain(from.nonce)
-    const signer = fromChain.signer
-    const Contract = new ethers.Contract(contract, ABI, signer);
-
     try {
+      setImportBlocked(true);
 
-      const owner = await Contract.ownerOf(tokenId);
+      // Assuming 'serviceContainer.bridge.getChain' is correct syntax
+      const fromChain = await serviceContainer.bridge.getChain(from.nonce);
+      const signer = fromChain.signer;
+      const Contract = new ethers.Contract(contract, ABI, signer);
 
-      if (owner !== account) {
-        setImportBlocked(false);
-        setError("You dont own this NFT!")
-        return;
-      }
 
-      console.log({ NFTList })
+      let owner;
+      let tokenURI;
+      let contractType;
 
       if (NFTList.find(n => n.native.contract === contract && n.native.tokenId === tokenId)) {
         setImportBlocked(false);
-        setError("This NFT already exists!")
+        setError("This NFT already exists!");
         return;
       }
 
-      setError('')
-      const tokenURI = await Contract.tokenURI(tokenId);
+      try {
+        // Check if the token is ERC721
+        owner = await Contract.ownerOf(tokenId);
+        tokenURI = await Contract.tokenURI(tokenId);
+        contractType = 'ERC721';
 
-      const formatedData = {
+        if (owner !== account) {
+          setImportBlocked(false);
+          setError("You don't own this NFT!");
+          return;
+        }
+      } catch (err721) {
+        console.log({ err721 })
+        // If ERC721 check fails, try ERC1155
+        try {
+          const contract1155 = new ethers.Contract(contract, ABI1155, signer);
+          const balance1155 = await contract1155.balanceOf(account, tokenId);
+
+          if (balance1155.toNumber() <= 0) {
+            setImportBlocked(false);
+            setError("You don't own this NFT!");
+            return;
+          }
+
+          owner = account;
+          tokenURI = await contract1155.uri(tokenId);
+          contractType = 'ERC1155';
+        } catch (err) {
+          console.log(err);
+          setImportBlocked(false);
+          setError("You don't own this NFT!");
+          return;
+        }
+      }
+
+      const formattedData = {
         collectionIdent: contract,
         uri: tokenURI,
         native: {
@@ -98,23 +121,23 @@ function ImportNFTModal({
           contract,
           name: 'NFTs',
           chainId: from.chainId,
-          contractType: 'ERC721',
-        }
-      }
+          contractType,
+        },
+      };
 
       dispatch(setPreloadNFTs(NFTList ? NFTList.length + 1 : 1));
-      dispatch(setNFTList(NFTList ? [...NFTList, formatedData] : [formatedData]));
+      dispatch(setNFTList(NFTList ? [...NFTList, formattedData] : [formattedData]));
       dispatch(setImportModal(false));
-      setImportModal(false)
       setImportBlocked(false);
+      setError('');
 
     } catch (err) {
-      console.log({ err })
+      console.log(err);
       setImportBlocked(false);
-      setError("NFT doesn't exist!")
+      setError("Error importing NFT. Please try again.");
     }
-
   };
+
 
   return (
     <div>

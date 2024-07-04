@@ -42,8 +42,11 @@ function NFTlistTop({ chainSpecificRender }) {
 
                     {CheckClaimables && CheckClaimables()}
                 </div>
+              
                 <SelectedNFTs />
-                {from.type === "EVM" && nfts?.length < 1 && <ImportNFTButton />}
+                {
+                // from.type === "EVM" &&
+                 nfts?.length < 1 && <ImportNFTButton />}
                 {NFTListTopButton && NFTListTopButton()}
                 {(nfts?.length > 0 || from?.type === "Cosmos") && (
                     <div className="nftTopRIght">
