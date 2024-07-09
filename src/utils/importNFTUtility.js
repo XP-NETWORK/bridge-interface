@@ -1,0 +1,135 @@
+import { ethers } from "ethers";
+
+// import store from "../store/store";
+import ABI from "../event/assets/abi/mintAbi.json";
+import ABI1155 from "../event/assets/abi/erc1155Abi.json";
+import axios from "axios";
+
+/**
+ * FORMAT DATA
+ */
+const formatData = (
+  contractAddress,
+  tokenURI,
+  account,
+  tokenId,
+  contractType,
+  chainId
+) => {
+  return {
+    collectionIdent: contractAddress,
+    uri: tokenURI,
+    native: {
+      owner: account,
+      tokenId,
+      uri: tokenURI,
+      contract: contractAddress,
+      name: "NFTs",
+      chainId,
+      contractType,
+    },
+  };
+};
+
+export const validForm = (from, contract, tokenId) => {
+
+  switch (from.type) {
+    case "EVM":
+      return contract?.length === 42 && tokenId;
+    case "Elrond":
+      return tokenId;
+    default:
+      return false;
+  }
+}
+
+/**
+ * IMPORT NFT URI
+ */
+export const importNFTURI = async (
+  contract,
+  tokenId,
+  account,
+  signer,
+  from
+) => {
+  switch (from.type) {
+    case "EVM":
+      return await importNFTURI_EVM(contract, tokenId, account, signer, from);
+    case "Elrond":
+      return await importNFTURI_Elrond(contract, tokenId, account, from);
+    default:
+      throw new Error("Invalid chain");
+  }
+};
+
+/**
+ * IMPORT NFT URI FROM EVM CHAIN
+ */
+export const importNFTURI_EVM = async (
+  contract,
+  tokenId,
+  account,
+  signer,
+  from
+) => {
+  const Contract721 = new ethers.Contract(contract, ABI, signer);
+  const Contract1155 = new ethers.Contract(contract, ABI1155, signer);
+
+  try {
+    // EVM CHAIN for ERC721
+    const owner721 = await Contract721.ownerOf(tokenId);
+    if (owner721 !== account) throw new Error("You don't own this NFT!");
+
+    const tokenURI = await Contract721.tokenURI(tokenId);
+    return formatData(
+      contract,
+      tokenURI,
+      account,
+      tokenId,
+      "ERC721",
+      from.chainId
+    );
+  } catch (error) {
+    try {
+      // CHECK IF THE USER HAS THE NFT ON ERC1155 CHAIN
+      const balance1155 = await Contract1155.balanceOf(account, tokenId);
+      if (balance1155 <= 0) throw new Error("You don't own this NFT!");
+
+      const tokenURI = await Contract1155.uri(tokenId);
+      return formatData(
+        contract,
+        tokenURI,
+        account,
+        tokenId,
+        "ERC1155",
+        from.chainId
+      );
+    } catch (error) {
+      throw new Error("You don't own this NFT!");
+    }
+  }
+};
+
+/**
+ * IMPORT NFT URI FROM ELROND CHAIN
+ */
+export const importNFTURI_Elrond = async (contract, tokenId, account, from) => {
+  try {
+    const id = tokenId.toString();
+    const { data } = await axios.get(
+      `https://devnet-api.multiversx.com/nfts/${
+        contract + "-" + (id.length < 2 ? "0" + id : id)
+      }`
+    );
+
+    if (data.owner !== account) {
+      return Promise.reject(new Error("You don't own this NFT!"));
+    }
+
+    return formatData(contract, data.url, account, id, "", from.chainId || 0);
+  } catch (error) {
+    console.log({ error });
+    throw new Error(error.response?.data?.message || error.message || "An error occurred while importing the NFT!");
+  }
+};
