@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 //import { biz } from "../../values";
 
 import { isMobile } from "../../../utils";
+import icon from "../../../assets/img/wallet/MetaMask.svg";
 
 function Hashpack({ connect }) {
   const [loading, setLoading] = useState(false);
@@ -46,15 +47,15 @@ function Hashpack({ connect }) {
         <p>Hashpack</p>
       </li>
 
-      {/* <li
-                onClick={() => connect("MM")}
-                className="wllListItem"
-                style={getStyle()}
-                data-wallet="MetaMask"
-            >
-                <img src={icon} alt="MetaMask Icon" />
-                <p>MetaMask</p>
-            </li> */}
+      <li
+        onClick={() => connect("MM")}
+        className="wllListItem"
+        style={getStyle()}
+        data-wallet="MetaMask"
+      >
+        <img src={icon} alt="MetaMask Icon" />
+        <p>MetaMask</p>
+      </li>
     </>
   );
 }

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars*/
 import React, { useState, useEffect } from "react";
-import { Contract, ethers } from "ethers";
+import { ethers } from "ethers";
 import { switchNetwork } from "../../../../services/chains/evm/evmService";
 import {
   setWalletsModal,
@@ -13,11 +13,10 @@ import { useDispatch } from "react-redux";
 import xpnetClaimAbi from "../../../assets/abi/mintAbi.json";
 import campaignMintAbi from "../../../assets/abi/campaignMintAbi.json";
 import { useWeb3React } from "@web3-react/core";
-import { REST_API } from "../utils";
+import { HEDERA_ABI, REST_API } from "../utils";
 import { chains as allChains } from "../../../../components/values";
 import { hashConnect } from "../../../../components/Wallet/HederaWallet/hederaConnections";
-import { ContractId, ContractExecuteTransaction } from "@hashgraph/sdk";
-import { hederaContracId, contractSign } from "./hashpack";
+import { contractSign, isAssociatedMetamask } from "./hashpack";
 
 export const MintNft = ({
   choosenChain,
@@ -29,6 +28,7 @@ export const MintNft = ({
   let isHashPack = false;
   const HEDERA_ID = "0.0.6290945";
   const HEDERA_ID_TESTNET = "0.0.4489141";
+  const HEDERA_ID_EVM = "0x805f23918ceecb11e7952b22d6e05763ff0007c2";
   const MAX_MINT = 5;
   const [countMint, setCountMint] = useState(1);
   const [refresh, setRefresh] = useState(false);
@@ -143,12 +143,26 @@ export const MintNft = ({
       const { chainNonce, contract: address } = chain;
 
       let chainWrapper = await bridge.getChain(Number(chainNonce));
-
       let contract;
+      let hederaContractEVM;
+
       const hederaSigner = hashConnect.getSigner(chainWrapper?.signer.provider);
+
+      const metamaskHederaProvider = new ethers.providers.Web3Provider(
+        window.ethereum
+      );
+
+      const hederammSigner = await metamaskHederaProvider.getSigner();
 
       const isProviderMM = chainWrapper?.signer?.provider?.connection?.url;
 
+      if (chain.chainId === "295" || chain.chainId === "296") {
+        hederaContractEVM = new ethers.Contract(
+          HEDERA_ID_EVM,
+          HEDERA_ABI,
+          hederammSigner
+        );
+      }
       if (
         !(isProviderMM == "metamask") &&
         (chain.chainId === "295" || chain.chainId === "296")
@@ -171,9 +185,26 @@ export const MintNft = ({
       const results = [];
       for (let i = 0; i < countMint; i++) {
         if (!isHashPack) {
-          const res = await contract["claim"]();
-          await res.wait();
-          results.push(res);
+          if (
+            isProviderMM == "metamask" &&
+            (chain.chainId === "295" || chain.chainId === "296")
+          ) {
+            await isAssociatedMetamask(metamaskHederaProvider);
+            const res = await hederaContractEVM["mint"](
+              chainWrapper.signer._address,
+              ethers.BigNumber.from(0),
+              [],
+              {
+                gasLimit: 1_500_000,
+              }
+            );
+            await res.wait();
+            results.push(res);
+          } else {
+            const res = await contract["claim"]();
+            await res.wait();
+            results.push(res);
+          }
         } else {
           let hederaContractId;
           if (window.location.pathname.includes("testnet")) {

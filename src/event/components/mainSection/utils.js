@@ -435,8 +435,24 @@ export const HEDERA_ABI = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "claim",
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
+    ],
+    name: "mint",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
