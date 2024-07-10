@@ -11,7 +11,11 @@ import { validateFunctions } from "../../../services/addressValidators";
 import "./importNFTModal.css";
 import EVMBody from "./EVMBody";
 import { withServices } from "../../App/hocs/withServices";
-import { importNFTURI, validForm } from "../../../utils/importNFTUtility";
+import {
+  checkNFTExist,
+  importNFTURI,
+  validForm,
+} from "../../../utils/importNFTUtility";
 
 function ImportNFTModal({ serviceContainer }) {
   const dispatch = useDispatch();
@@ -57,11 +61,7 @@ function ImportNFTModal({ serviceContainer }) {
       const fromChain = await serviceContainer.bridge.getChain(from.nonce);
       const signer = fromChain.signer;
 
-      if (
-        NFTList.find(
-          (n) => n.native.contract === contract && n.native.tokenId === tokenId
-        )
-      )
+      if (checkNFTExist(NFTList, contract, tokenId, from))
         throw new Error("NFT already imported!");
 
       const formattedData = await importNFTURI(

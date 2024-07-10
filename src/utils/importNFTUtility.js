@@ -14,7 +14,8 @@ const formatData = (
   account,
   tokenId,
   contractType,
-  chainId
+  chainId,
+  native
 ) => {
   return {
     collectionIdent: contractAddress,
@@ -27,12 +28,15 @@ const formatData = (
       name: "NFTs",
       chainId,
       contractType,
+      ...native,
     },
   };
 };
 
+/**
+ * CHECK VALID FORM
+ */
 export const validForm = (from, contract, tokenId) => {
-
   switch (from.type) {
     case "EVM":
       return contract?.length === 42 && tokenId;
@@ -41,7 +45,26 @@ export const validForm = (from, contract, tokenId) => {
     default:
       return false;
   }
-}
+};
+
+/**
+ * CHECK NFT EXIST
+ */
+export const checkNFTExist = (NFTList, contractAddress, tokenId, from) => {
+  const id = tokenId.toString();
+  const fomatedID = id.length < 2 ? "0" + id : id;
+  switch (from.type) {
+    case "Elrond":
+      return NFTList.find(
+        (n) =>
+          n.native.contract === contractAddress && n.native.tokenId == fomatedID
+      );
+    default:
+      return NFTList.find(
+        (n) => n.native.contract === contractAddress && n.native.tokenId == id
+      );
+  }
+};
 
 /**
  * IMPORT NFT URI
@@ -117,19 +140,61 @@ export const importNFTURI_EVM = async (
 export const importNFTURI_Elrond = async (contract, tokenId, account, from) => {
   try {
     const id = tokenId.toString();
+    const fomatedID = id.length < 2 ? "0" + id : id;
+    const tokenIdentifier = `${contract}-${fomatedID}`;
     const { data } = await axios.get(
-      `https://devnet-api.multiversx.com/nfts/${
-        contract + "-" + (id.length < 2 ? "0" + id : id)
-      }`
+      // TODO: put the correct URL
+      `https://devnet-api.multiversx.com/nfts/${tokenIdentifier}`
     );
 
     if (data.owner !== account) {
       return Promise.reject(new Error("You don't own this NFT!"));
     }
 
-    return formatData(contract, data.url, account, id, "", from.chainId || 0);
+    return formatData(
+      contract,
+      data.url,
+      account,
+      fomatedID,
+      "",
+      from.nonce,
+      data
+    );
   } catch (error) {
     console.log({ error });
-    throw new Error(error.response?.data?.message || error.message || "An error occurred while importing the NFT!");
+    throw new Error(
+      error.response?.data?.message ||
+        error.message ||
+        "An error occurred while importing the NFT!"
+    );
+  }
+};
+
+/**
+ *  IMPORT NFT FROM HEDERA CHAIN
+ */
+export const importNFTURI_Hedera = async (serialNumber, tokenId, account, from) => {
+  try {
+    const { data } = await axios.get(`/api/v1/tokens/${tokenId}/nfts/${serialNumber}`);
+    if (data.owner !== account) {
+      return Promise.reject(new Error("You don't own this NFT!"));
+    }
+
+    return formatData(
+      contract,
+      data.url,
+      account,
+      fomatedID,
+      "",
+      from.nonce,
+      data
+    );
+  } catch (error) {
+    console.log({ error });
+    throw new Error(
+      error.response?.data?.message ||
+        error.message ||
+        "An error occurred while importing the NFT!"
+    );
   }
 };

@@ -51,11 +51,11 @@ function NFTlistTop({ chainSpecificRender }) {
                 {(nfts?.length > 0 || from?.type === "Cosmos") && (
                     <div className="nftTopRIght">
                         <NFTSearch />
-                        {from.type === "EVM" && (
-                            // ||
-                            // from?.type !== "Cosmos"
+                        {/* {from.type === "EVM" && ( */}
+                            {/* // ||
+                            // from?.type !== "Cosmos" */}
                             <ImportNFTButton />
-                        )}
+                        {/* )} */}
                         <ViewButton />
                         {/* {onlyWhiteListedNFTs?.length === selectedNFTs?.length &&
                         selectedNFTs?.length ? (
