@@ -42,8 +42,10 @@ export const validForm = (from, contract, tokenId) => {
       return contract?.length === 42 && tokenId;
     case "Elrond":
       return tokenId;
+    case "Hedera":
+      return contract && tokenId;
     default:
-      return false;
+      return true;
   }
 };
 
@@ -81,6 +83,8 @@ export const importNFTURI = async (
       return await importNFTURI_EVM(contract, tokenId, account, signer, from);
     case "Elrond":
       return await importNFTURI_Elrond(contract, tokenId, account, from);
+    case "Hedera":
+      return await importNFTURI_Hedera(contract, tokenId, account, from);
     default:
       throw new Error("Invalid chain");
   }
@@ -173,21 +177,41 @@ export const importNFTURI_Elrond = async (contract, tokenId, account, from) => {
 /**
  *  IMPORT NFT FROM HEDERA CHAIN
  */
-export const importNFTURI_Hedera = async (serialNumber, tokenId, account, from) => {
+export const importNFTURI_Hedera = async (
+  tokenId,
+  serialNumber,
+  account,
+  from
+) => {
   try {
-    const { data } = await axios.get(`/api/v1/tokens/${tokenId}/nfts/${serialNumber}`);
-    if (data.owner !== account) {
+    const { data } = await axios.get(
+      `https://testnet.mirrornode.hedera.com/api/v1/tokens/${tokenId}/nfts/${serialNumber}`
+    );
+
+    if (data.account_id !== account) {
       return Promise.reject(new Error("You don't own this NFT!"));
     }
 
+    const decodeMetadata = await Buffer.from(
+      data.metadata,
+      "base64"
+    ).toLocaleString();
+    console.log({
+      decodeMetadata,
+    });
+
+    const { data: metadata } = await axios.get(
+      `https://ipfs.io/ipfs/${decodeMetadata.split("ipfs://")[1]}`
+    );
+
     return formatData(
-      contract,
-      data.url,
+      tokenId,
+      metadata.imageUrl,
       account,
-      fomatedID,
+      serialNumber,
       "",
       from.nonce,
-      data
+      metadata
     );
   } catch (error) {
     console.log({ error });
