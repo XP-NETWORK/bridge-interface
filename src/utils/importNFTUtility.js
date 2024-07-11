@@ -147,7 +147,7 @@ export const importNFTURI_Elrond = async (contract, tokenId, account, from) => {
     const fomatedID = id.length < 2 ? "0" + id : id;
     const tokenIdentifier = `${contract}-${fomatedID}`;
     const { data } = await axios.get(
-      // TODO: put the correct URL
+      // TODO: put the mainnet URL
       `https://devnet-api.multiversx.com/nfts/${tokenIdentifier}`
     );
 
@@ -185,6 +185,7 @@ export const importNFTURI_Hedera = async (
 ) => {
   try {
     const { data } = await axios.get(
+      // TODO: put the mainnet URL
       `https://testnet.mirrornode.hedera.com/api/v1/tokens/${tokenId}/nfts/${serialNumber}`
     );
 

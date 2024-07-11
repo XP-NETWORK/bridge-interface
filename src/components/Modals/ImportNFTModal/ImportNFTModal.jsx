@@ -9,7 +9,7 @@ import {
 
 import { validateFunctions } from "../../../services/addressValidators";
 import "./importNFTModal.css";
-import EVMBody from "./EVMBody";
+import EVMBody from "./importBodies/EVMBody";
 import { withServices } from "../../App/hocs/withServices";
 import {
   checkNFTExist,
