@@ -14,6 +14,9 @@ import { injected } from "../../../wallet/connectors";
 import { useWeb3React } from "@web3-react/core";
 import { getChainObject, v3_bridge_mode } from "../../values";
 import { switchNetwork } from "../../../services/chains/evm/evmService";
+import { useSelector } from "react-redux";
+import { connectHashPack } from "../../Wallet/HederaWallet/hederaConnections";
+import { sleep } from "../../../utils";
 
 export const withHedera = (Wrapped) =>
   function CBU(props) {
@@ -23,14 +26,26 @@ export const withHedera = (Wrapped) =>
         dispatch(setDiscountLeftUsd(Math.round(data?.discountLeftUsd / 0.25)));
       }
     };
+    const network = useSelector((state) => state.general.testNet);
+    // const isClaiming = useSelector((state) => state.general.isClaiming);
+
 
     const { activate } = useWeb3React();
+    const destWalletAddress = useSelector(
+      (state) => state.general.destWalletAddress
+    );
 
     const connectionCallback = async (bridge, toChain) => {
-      bridge.currentType === "EVM"
-        ? await switchNetwork(getChainObject(toChain))
-        : await activate(injected);
-      await new Promise((r) => setTimeout(r, 3000));
+      if (destWalletAddress.includes(".")) {
+        await connectHashPack(network)
+        console.log("inside connection");
+        await sleep(10000)
+      } else {
+        bridge.currentType === "EVM"
+          ? await switchNetwork(getChainObject(toChain))
+          : await activate(injected);
+        await new Promise((r) => setTimeout(r, 3000));
+      }
 
       if (v3_bridge_mode) {
         return;

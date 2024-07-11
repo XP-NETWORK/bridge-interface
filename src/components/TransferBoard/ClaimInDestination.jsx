@@ -54,9 +54,20 @@ export const ClaimInDestination = (connection) => {
 
       const xPDecentralizedUtility = new XPDecentralizedUtility();
 
-      const chainWapper = await connection(bridge, toChain, fromChain, hash);
+      const chainWapper = await connection(bridge, toChain);
       console.log("chainWrapper: ", chainWapper);
       console.log("hash: ", hash);
+      console.log({ destWalletAddress });
+      // if (to.text === "Hedera" && destWalletAddress.includes(".")) {
+      //   let signer;
+      //   while (!signer?.accountToSign) {
+      //     signer = hashConnect.getSigner(destWalletAddress);
+      //     console.log({ signer });
+      //     sleep(3000)
+      //   }
+      // }
+
+      console.log({ account });
 
       try {
         const originChainIdentifier = await bridge.getChain(fromChain);
@@ -104,6 +115,10 @@ export const ClaimInDestination = (connection) => {
         dispatch(setTempleClaimed(false));
       }
     }, [account, isTempleWallet]);
+
+    const destWalletAddress = useSelector(
+      (state) => state.general.destWalletAddress
+    );
 
     const claim = async () => {
       dispatch(setQuietConnection(true));

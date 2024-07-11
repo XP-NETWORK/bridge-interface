@@ -14,6 +14,7 @@ import {
     setSwitchDestination,
     setError,
     setIsInvalidAddress,
+    setDestWalletAddress,
     //setReceiverIsContract,
 } from "../../store/reducers/generalSlice";
 import ChainSwitch from "../Buttons/ChainSwitch";
@@ -62,10 +63,15 @@ function DestinationChain({ serviceContainer }) {
         try {
             if (inputFilter(e)) {
                 let address = e.target.value.trim();
+                console.log({address});
+                if(address){
+                    dispatch(setDestWalletAddress(address))
+                }
                 if (generalValidation(e, receiver)) {
                     const validateFunc = validateFunctions[to.type];
                     if (validateFunc) {
                         const res = validateFunc(address, toChainWrapper);
+                        console.log({res});
                         dispatch(setIsInvalidAddress(res));
                     }
                     dispatch(setReceiver(address));

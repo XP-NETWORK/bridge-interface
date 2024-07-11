@@ -247,7 +247,7 @@ export class XPDecentralizedUtility {
     );
 
     await targetChainIdentifier.checkSigner();
-    const targetChainSigner = targetChainIdentifier.getSigner();
+    const targetChainSigner = await targetChainIdentifier.getSigner();
     console.log("targetChainSigner", {
       targetChainSigner,
       targetChainIdentifier,
@@ -260,14 +260,27 @@ export class XPDecentralizedUtility {
       targetChain,
       signatures,
     });
-    const claim = await targetChain.claimNft(
-      targetChainSigner,
-      targetChain.transform(nftData),
-      signatures,
-      {
-        gasLimit: 5_000_000,
-      }
-    );
+    let claim;
+
+    if (targetChainIdentifier.nonce === 29) {
+      claim = await targetChain.claimHashPackNft(
+        targetChainSigner,
+        targetChain.transform(nftData),
+        signatures,
+        {
+          gasLimit: 5_000_000,
+        }
+      );
+    } else {
+      claim = await targetChain.claimNft(
+        targetChainSigner,
+        targetChain.transform(nftData),
+        signatures,
+        {
+          gasLimit: 5_000_000,
+        }
+      );
+    }
 
     console.log("claimed: ", claim?.ret ?? claim);
     if (v3_ChainId[targetChainIdentifier?.nonce].name === "TON") {
