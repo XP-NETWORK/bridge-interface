@@ -1,38 +1,38 @@
 import Ethereum from "../assets/img/chain/Etherium.svg";
-import Ton from "../assets/img/chain/ton.svg";
-import Elrond from "../assets/img/chain/multiverseX.png";
+// import Ton from "../assets/img/chain/ton.svg";
+// import Elrond from "../assets/img/chain/multiverseX.png";
 import Binance from "../assets/img/chain/Binance.svg";
-import Cardano from "../assets/img/chain/Cardano.svg";
-import Algorand from "../assets/img/chain/Algarand.svg";
-import Tron from "../assets/img/chain/Tron.svg";
+// import Cardano from "../assets/img/chain/Cardano.svg";
+// import Algorand from "../assets/img/chain/Algarand.svg";
+// import Tron from "../assets/img/chain/Tron.svg";
 import Polygon from "../assets/img/chain/Polygon.svg";
 import Avalanche from "../assets/img/chain/Avalanche.svg";
 import Fantom from "../assets/img/chain/Fantom.svg";
 import Gnosis from "../assets/img/chain/Gnosis.png";
-import Solana from "../assets/img/chain/Solana.svg";
+// import Solana from "../assets/img/chain/Solana.svg";
 import Fuse from "../assets/img/chain/Fuse.svg";
 import Velas from "../assets/img/chain/velas.svg";
-import Tezos from "../assets/img/chain/Tezos.svg";
+// import Tezos from "../assets/img/chain/Tezos.svg";
 import Iotex from "../assets/img/chain/iotx.svg";
 import One from "../assets/img/chain/One.svg";
 import Aurora from "../assets/img/chain/aurora.svg";
 import GT from "../assets/img/chain/GateChain.svg";
-import VET from "../assets/img/chain/Vechain.png";
-import SCRT from "../assets/img/chain/secret.svg";
+// import VET from "../assets/img/chain/Vechain.png";
+// import SCRT from "../assets/img/chain/secret.svg";
 import CKB from "../assets/img/chain/godwoken.svg";
 import HBAR from "../assets/img/chain/Hedera.svg";
 import SKL from "../assets/img/chain/SFUEL.svg";
 import Moon from "../assets/img/chain/Moonbeam.svg";
 import Abey from "../assets/img/chain/Abey.svg";
 import Caduceus from "../assets/img/chain/caduceus.svg";
-import Aptos from "../assets/img/chain/aptos.svg";
-import InternetComputer from "../assets/img/chain/InternetComputer.svg";
-import near from "../assets/img/wallet/NearWallet.svg";
+// import Aptos from "../assets/img/chain/aptos.svg";
+// import InternetComputer from "../assets/img/chain/InternetComputer.svg";
+// import near from "../assets/img/wallet/NearWallet.svg";
 import okx from "../assets/img/chain/okx.svg";
 import arbitrum from "../assets/img/chain/arbitrum.svg";
 import arbitrumTestNet from "../assets/img/chain/arbitrumTN.svg";
 import brise from "../assets/img/chain/brise.png";
-import casper from "../assets/img/chain/casper.svg";
+// import casper from "../assets/img/chain/casper.svg";
 import optimism from "../assets/img/chain/optimism.svg";
 import zeta from "../assets/img/chain/zeta.svg";
 import Energi from "../assets/img/chain/NRG.svg";
@@ -110,31 +110,31 @@ export const chains = [
         testNet: true,
         mainnet: true,
     },
-    {
-        type: "Tron",
-        key: "Tron",
-        text: "Tron",
-        value: "Tron",
-        nonce: 9,
-        order: 12,
-        image: { avatar: true, src: Tron },
-        maintenance: false,
-        testNet: true,
-        mainnet: true,
-        updated: false,
-    },
-    {
-        type: "Elrond",
-        key: "Elrond",
-        text: ELROND,
-        value: "Elrond",
-        nonce: 2,
-        order: 15,
-        image: { avatar: true, src: Elrond },
-        maintenance: false,
-        testNet: true,
-        mainnet: true,
-    },
+    // {
+    //     type: "Tron",
+    //     key: "Tron",
+    //     text: "Tron",
+    //     value: "Tron",
+    //     nonce: 9,
+    //     order: 12,
+    //     image: { avatar: true, src: Tron },
+    //     maintenance: false,
+    //     testNet: true,
+    //     mainnet: true,
+    //     updated: false,
+    // },
+    // {
+    //     type: "Elrond",
+    //     key: "Elrond",
+    //     text: ELROND,
+    //     value: "Elrond",
+    //     nonce: 2,
+    //     order: 15,
+    //     image: { avatar: true, src: Elrond },
+    //     maintenance: false,
+    //     testNet: true,
+    //     mainnet: true,
+    // },
     {
         type: "EVM",
         key: "Polygon",
@@ -176,19 +176,19 @@ export const chains = [
         testNet: false,
         mainnet: true,
     },
-    {
-        type: "Algorand",
-        key: "Algorand",
-        text: "Algorand",
-        value: "Algorand",
-        nonce: 15,
-        order: 13,
-        image: { avatar: true, src: Algorand },
-        maintenance: false,
-        testNet: true,
-        mainnet: true,
-        updated: false,
-    },
+    // {
+    //     type: "Algorand",
+    //     key: "Algorand",
+    //     text: "Algorand",
+    //     value: "Algorand",
+    //     nonce: 15,
+    //     order: 13,
+    //     image: { avatar: true, src: Algorand },
+    //     maintenance: false,
+    //     testNet: true,
+    //     mainnet: true,
+    //     updated: false,
+    // },
     {
         type: "EVM",
         key: "xDAI",
@@ -218,52 +218,52 @@ export const chains = [
         mainnet: false,
         newChain: false,
     },
-    {
-        type: "Solana",
-        key: "Solana",
-        text: "Solana",
-        value: "Solana",
-        chainId: undefined,
-        order: -2,
-        nonce: 26,
-        coming: false,
-        image: { avatar: true, src: Solana },
-        maintenance: false,
-        testNet: true,
-        mainnet: true,
-        newChain: true,
-    },
-    {
-        type: "",
-        key: "Cardano",
-        text: "Cardano",
-        value: "Cardano",
+    // {
+    //     type: "Solana",
+    //     key: "Solana",
+    //     text: "Solana",
+    //     value: "Solana",
+    //     chainId: undefined,
+    //     order: -2,
+    //     nonce: 26,
+    //     coming: false,
+    //     image: { avatar: true, src: Solana },
+    //     maintenance: false,
+    //     testNet: true,
+    //     mainnet: true,
+    //     newChain: true,
+    // },
+    // {
+    //     type: "",
+    //     key: "Cardano",
+    //     text: "Cardano",
+    //     value: "Cardano",
 
-        order: -2,
+    //     order: -2,
 
-        image: { avatar: true, src: Cardano },
-        testNet: false,
-        mainnet: false,
-        coming: true,
-        newChain: false,
-        //chainId: ,
-        //tnChainId: ,
-    },
-    {
-        type: "TON",
-        key: "TON",
-        text: "TON",
-        value: "TON",
-        chainId: undefined,
-        order: -1,
-        nonce: 27,
-        coming: false,
-        image: { avatar: true, src: Ton },
-        maintenance: false,
-        testNet: true,
-        mainnet: true,
-        newChain: true,
-    },
+    //     image: { avatar: true, src: Cardano },
+    //     testNet: false,
+    //     mainnet: false,
+    //     coming: true,
+    //     newChain: false,
+    //     //chainId: ,
+    //     //tnChainId: ,
+    // },
+    // {
+    //     type: "TON",
+    //     key: "TON",
+    //     text: "TON",
+    //     value: "TON",
+    //     chainId: undefined,
+    //     order: -1,
+    //     nonce: 27,
+    //     coming: false,
+    //     image: { avatar: true, src: Ton },
+    //     maintenance: false,
+    //     testNet: true,
+    //     mainnet: true,
+    //     newChain: true,
+    // },
     {
         type: "EVM",
         key: "Fuse",
@@ -292,20 +292,20 @@ export const chains = [
         testNet: true,
         mainnet: true,
     },
-    {
-        type: "Tezos",
-        key: "Tezos",
-        text: "Tezos",
-        value: "Tezos",
-        nonce: 18,
-        order: 12,
-        image: { avatar: true, src: Tezos },
-        newChain: false,
-        coming: false,
-        maintenance: false,
-        testNet: true,
-        mainnet: true,
-    },
+    // {
+    //     type: "Tezos",
+    //     key: "Tezos",
+    //     text: "Tezos",
+    //     value: "Tezos",
+    //     nonce: 18,
+    //     order: 12,
+    //     image: { avatar: true, src: Tezos },
+    //     newChain: false,
+    //     coming: false,
+    //     maintenance: false,
+    //     testNet: true,
+    //     mainnet: true,
+    // },
     {
         type: "EVM",
         key: "Iotex",
@@ -406,36 +406,36 @@ export const chains = [
         newChain: false,
         coming: false,
     },
-    {
-        type: "VeChain",
-        key: "VeChain",
-        text: "VeChain",
-        value: "VeChain",
-        nonce: 25,
-        tnChainId: 39,
-        chainId: undefined,
-        order: 5,
-        image: { avatar: true, src: VET },
-        maintenance: false,
-        mainnet: true,
-        testNet: false,
-    },
-    {
-        type: "Cosmos",
-        key: "Secret",
-        text: "Secret",
-        value: "Secret",
-        nonce: 24,
-        order: -3,
-        tnChainId: "pulsar-3",
-        chainId: "secret-4",
-        image: { avatar: true, src: SCRT },
-        mainnet: true,
-        testNet: true,
-        test: false,
-        newChain: false,
-        coming: false,
-    },
+    // {
+    //     type: "VeChain",
+    //     key: "VeChain",
+    //     text: "VeChain",
+    //     value: "VeChain",
+    //     nonce: 25,
+    //     tnChainId: 39,
+    //     chainId: undefined,
+    //     order: 5,
+    //     image: { avatar: true, src: VET },
+    //     maintenance: false,
+    //     mainnet: true,
+    //     testNet: false,
+    // },
+    // {
+    //     type: "Cosmos",
+    //     key: "Secret",
+    //     text: "Secret",
+    //     value: "Secret",
+    //     nonce: 24,
+    //     order: -3,
+    //     tnChainId: "pulsar-3",
+    //     chainId: "secret-4",
+    //     image: { avatar: true, src: SCRT },
+    //     mainnet: true,
+    //     testNet: true,
+    //     test: false,
+    //     newChain: false,
+    //     coming: false,
+    // },
     {
         type: "Hedera",
         key: "Hedera",
@@ -477,44 +477,44 @@ export const chains = [
         mainnet: true,
         newChain: false,
     },
-    {
-        type: "ICP",
-        key: "ICP",
-        text: "ICP",
-        nonce: 28,
-        order: -7,
-        // chainId: 1564830818,
-        //tnChainId: 1305754875840118,
-        image: { avatar: true, src: InternetComputer },
-        testNet: true,
-        mainnet: true,
-        newChain: true,
-        coming: false,
-    },
-    {
-        type: "APTOS",
-        key: "Aptos",
-        text: "Aptos",
-        nonce: 0x22,
-        order: 0,
-        image: { avatar: true, src: Aptos },
-        testNet: biz,
-        mainnet: biz,
-        coming: !biz,
-    },
-    {
-        type: "NEAR",
-        key: "NEAR",
-        text: "NEAR",
-        value: "NEAR",
-        nonce: 31,
-        order: -4,
-        image: { avatar: true, src: near },
-        testNet: true,
-        mainnet: true,
-        newChain: true,
-        coming: false,
-    },
+    // {
+    //     type: "ICP",
+    //     key: "ICP",
+    //     text: "ICP",
+    //     nonce: 28,
+    //     order: -7,
+    //     // chainId: 1564830818,
+    //     //tnChainId: 1305754875840118,
+    //     image: { avatar: true, src: InternetComputer },
+    //     testNet: true,
+    //     mainnet: true,
+    //     newChain: true,
+    //     coming: false,
+    // },
+    // {
+    //     type: "APTOS",
+    //     key: "Aptos",
+    //     text: "Aptos",
+    //     nonce: 0x22,
+    //     order: 0,
+    //     image: { avatar: true, src: Aptos },
+    //     testNet: biz,
+    //     mainnet: biz,
+    //     coming: !biz,
+    // },
+    // {
+    //     type: "NEAR",
+    //     key: "NEAR",
+    //     text: "NEAR",
+    //     value: "NEAR",
+    //     nonce: 31,
+    //     order: -4,
+    //     image: { avatar: true, src: near },
+    //     testNet: true,
+    //     mainnet: true,
+    //     newChain: true,
+    //     coming: false,
+    // },
     {
         type: "EVM",
         key: "OKC",
@@ -563,19 +563,19 @@ export const chains = [
         chainId: 32520,
         tnChainId: 64668,
     },
-    {
-        type: "Casper",
-        key: "Casper",
-        text: "Casper",
-        value: "Casper",
-        nonce: 39,
-        order: -8,
-        image: { avatar: true, src: casper },
-        testNet: true,
-        mainnet: true,
-        coming: false,
-        newChain: biz,
-    },
+    // {
+    //     type: "Casper",
+    //     key: "Casper",
+    //     text: "Casper",
+    //     value: "Casper",
+    //     nonce: 39,
+    //     order: -8,
+    //     image: { avatar: true, src: casper },
+    //     testNet: true,
+    //     mainnet: true,
+    //     coming: false,
+    //     newChain: biz,
+    // },
     {
         type: "EVM",
         key: "Optimism",
