@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import MobileDestinationAddressBar from "../MobileOnly/MobileDestinationAddressBar";
 import "./NFTsBoard.css";
-import Refresh from "../Buttons/Refresh";
 import ChainSwitch from "../Buttons/ChainSwitch";
 import SelectedNFTs from "../Buttons/SelectedNFTs";
 import ViewButton from "../Buttons/ViewButton";
@@ -71,7 +70,6 @@ const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
             </div>
             <div className="mobile-col__header">
                 <div>Your NFTs on</div>
-                <Refresh />
                 <ChainListBox />
                 <ChainSwitch assignment={"from"} func={handleFromChainSwitch} />
             </div>
@@ -89,7 +87,7 @@ const NFTmobileView = ({ selectedNFTs, _from, nfts }) => {
                             showSelected={showSelected}
                             setOff={setShowSelected}
                         />
-                        {_from.type === "EVM" && nfts?.length < 1 && (
+                        {_from.type === "EVM" && (nfts?.length === undefined  || nfts?.length < 1) && (
                             <ImportNFTButton />
                         )}
                         {nfts?.length > 0 && (

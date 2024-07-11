@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import ChainListBox from "../Chains/ChainListBox";
 import NFTSearch from "./NFTSearch";
 import ChainSwitch from "../Buttons/ChainSwitch";
-import Refresh from "../Buttons/Refresh";
 import SelectedNFTs from "../Buttons/SelectedNFTs";
 import ViewButton from "../Buttons/ViewButton";
 import ImportNFTButton from "../Buttons/ImportNFTButton";
@@ -40,21 +39,23 @@ function NFTlistTop({ chainSpecificRender }) {
                         assignment={"from"}
                         func={handleFromChainSwitch}
                     />
-                    <Refresh />
 
                     {CheckClaimables && CheckClaimables()}
                 </div>
+              
                 <SelectedNFTs />
-                {from.type === "EVM" && nfts?.length < 1 && <ImportNFTButton />}
+                {
+                // from.type === "EVM" &&
+                 nfts?.length < 1 && <ImportNFTButton />}
                 {NFTListTopButton && NFTListTopButton()}
                 {(nfts?.length > 0 || from?.type === "Cosmos") && (
                     <div className="nftTopRIght">
                         <NFTSearch />
-                        {from.type === "EVM" && (
-                            // ||
-                            // from?.type !== "Cosmos"
+                        {/* {from.type === "EVM" && ( */}
+                            {/* // ||
+                            // from?.type !== "Cosmos" */}
                             <ImportNFTButton />
-                        )}
+                        {/* )} */}
                         <ViewButton />
                         {/* {onlyWhiteListedNFTs?.length === selectedNFTs?.length &&
                         selectedNFTs?.length ? (

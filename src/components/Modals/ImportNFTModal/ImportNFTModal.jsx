@@ -3,19 +3,25 @@ import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setImportModal,
-  addImportedNFTtoNFTlist,
+  setPreloadNFTs,
+  setNFTList,
 } from "../../../store/reducers/generalSlice";
 
 import { validateFunctions } from "../../../services/addressValidators";
-
-import axios from "axios";
 import "./importNFTModal.css";
-import EVMBody from "./EVMBody";
+import EVMBody from "./importBodies/EVMBody";
+import { withServices } from "../../App/hocs/withServices";
+import {
+  checkNFTExist,
+  importNFTURI,
+  validForm,
+} from "../../../utils/importNFTUtility";
 
-export default function ImportNFTModal() {
+function ImportNFTModal({ serviceContainer }) {
   const dispatch = useDispatch();
   const from = useSelector((state) => state.general.from);
   const account = useSelector((state) => state.general.account);
+  const NFTList = useSelector((state) => state.general.NFTList);
 
   const [validContract, setValidContract] = useState(true);
   const [contract, setContract] = useState();
@@ -23,8 +29,6 @@ export default function ImportNFTModal() {
   const [tokenId, setTokenId] = useState();
   const [importBlocked, setImportBlocked] = useState(false);
   const [error, setError] = useState("");
-  const validForm = contract?.length === 42 && tokenId;
-  const chainNonce = from.nonce;
 
   const handleClose = () => {
     dispatch(setImportModal(false));
@@ -36,50 +40,51 @@ export default function ImportNFTModal() {
     //   setValidContract(true);
     // } else setValidContract(false);
 
-    if(value.length > 0){
-      setValidContract(validateFunctions.EVM(value))
-    }
-    else{
-      setValidContract(true)
+    if (value.length > 0 && from.type === "EVM") {
+      setValidContract(validateFunctions.EVM(value));
+    } else if (from.type === "Elrond") {
+      console.log("Elrond");
+      setValidContract(validateFunctions.Elrond(value));
+    } else {
+      setValidContract(true);
     }
   };
 
-  //"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ";
-  //"http://192.168.129.241:3000/nfts/nftCheck";
+  /**
+   *
+   * IMPORTING TOKEN
+   */
   const handleImport = async () => {
-    const baseURL = "https://indexnft.herokuapp.com/nfts/nftCheck";
-    const _headers = {
-      Accept: "*",
-      "Content-Type": "application/json",
-      // Authorization: `Bearer ${process.env.REACT_APP_BEARER}`,
-    };
     try {
       setImportBlocked(true);
-      setTimeout(() => {
-        setImportBlocked(false);
-      }, 10000);
-      const imported = await axios({
-        method: "post",
-        url: baseURL,
-        headers: _headers,
-        data: JSON.stringify({
-          chainNonce,
-          tokenId,
-          contract,
-          address: account,
-        }),
-      });
-      setImportBlocked(false);
-      if (typeof imported.data === "object") {
-        dispatch(addImportedNFTtoNFTlist(imported.data));
-      } else setError(imported.data);
+
+      const fromChain = await serviceContainer.bridge.getChain(from.nonce);
+      const signer = fromChain.signer;
+
+      if (checkNFTExist(NFTList, contract, tokenId, from))
+        throw new Error("NFT already imported!");
+
+      const formattedData = await importNFTURI(
+        contract,
+        tokenId,
+        account,
+        signer,
+        from
+      );
+
+      dispatch(setPreloadNFTs(NFTList ? NFTList.length + 1 : 1));
+      dispatch(setNFTList(NFTList ? [...NFTList, formattedData] : [formattedData]));
       dispatch(setImportModal(false));
-    } catch (error) {
-      setError(error.message);
       setImportBlocked(false);
-      console.error(error);
+      setError('');
+
+    } catch (err) {
+      console.log(err);
+      setImportBlocked(false);
+      setError(err.message || "You don't own this NFT!");
     }
   };
+
 
   return (
     <div>
@@ -98,7 +103,7 @@ export default function ImportNFTModal() {
         setTokenId={setTokenId}
         importBlocked={importBlocked}
         error={error}
-        validForm={validForm}
+        validForm={validForm(from, contract, tokenId)}
         // OFF={OFF}
         handleClose={handleClose}
         handleContractChange={handleContractChange}
@@ -107,3 +112,7 @@ export default function ImportNFTModal() {
     </div>
   );
 }
+
+
+
+export default withServices(ImportNFTModal)
