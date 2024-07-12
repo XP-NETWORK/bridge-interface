@@ -126,6 +126,5 @@
     "main": "index.js",
     "repository": "https://github.com/XP-NETWORK/bridge-interface.git",
     "author": "YuraDXPNetwork <yurad@xp.network>",
-    "license": "MIT",
-    "packageManager": "yarn@3.6.3"
+    "license": "MIT"
 }
