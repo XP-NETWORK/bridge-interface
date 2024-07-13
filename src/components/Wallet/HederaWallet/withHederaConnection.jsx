@@ -13,10 +13,10 @@ import {
 import { Chain } from "xp.network";
 import PropTypes from "prop-types";
 import { hashConnect } from "./hederaConnections";
-
-import { BridgeModes } from "../../values";
-
+// import { BridgeModes } from "../../values";
+// import { ChainFactory, ChainFactoryConfigs } from "xp-decentralized-sdk";
 import { getChainObject } from "../../values";
+// import { v3_ChainId } from "../../../utils/chainsTypes";
 
 export const withHederaConnection = (Wrapped) =>
   function CB(props) {
@@ -27,39 +27,52 @@ export const withHederaConnection = (Wrapped) =>
     const {
       serviceContainer: { bridge },
     } = props;
-    let provider;
+    // let provider;
     let signer;
 
     useEffect(() => {
       const handler = (pairingData) => {
         console.log("inside hedera connection");
+        // const factory = ChainFactory(ChainFactoryConfigs.TestNet());
+
         import("@hashgraph/sdk").then((hashSDK) => {
-          const topic = pairingData.topic;
+          // const topic = pairingData.topic;
           const accountId = pairingData.accountIds[0];
           const address = hashSDK.AccountId.fromString(
             accountId
           ).toSolidityAddress(); //hethers.utils.getAddressFromAccount(accountId);
 
-          const isTestnet = window.location.pathname.includes(
-            BridgeModes.TestNet
-          );
+          // const isTestnet = window.location.pathname.includes(
+          //   BridgeModes.TestNet
+          // );
           try {
-            provider = hashConnect.getProvider(
-              isTestnet ? "testnet" : "mainnet",
-              topic,
-              accountId
-            );
-            signer = hashConnect.getSigner(provider);
+            console.log("PROV", hashConnect);
+            // provider = hashConnect.getProvider(
+            //   isTestnet ? "testnet" : "mainnet",
+            //   topic,
+            //   accountId
+            // );
+            signer = hashConnect.getSigner(accountId);
 
             signer.address = address;
 
-            bridge.getChain(Chain.HEDERA).then((chainWrapper) => {
-              const injectedChainWrapper = bridge.setInnerChain(
-                Chain.HEDERA,
-                chainWrapper.chain.injectSDK(hashSDK)
-              );
+            bridge.getChain(Chain.HEDERA).then(async (chainWrapper) => {
+              console.log(chainWrapper.chain);
 
-              injectedChainWrapper.setSigner(signer);
+              if (!chainWrapper.chain?.isInjected) {
+                const injectedChainWrapper = bridge.setInnerChain(
+                  Chain.HEDERA,
+                  chainWrapper.chain.injectSDK(hashSDK)
+                );
+
+                injectedChainWrapper.setSigner(signer);
+              }
+
+              // const targetChain = await factory.inner(
+              //   v3_ChainId[29].name
+              // );
+
+              // targetChain.injectSDK(hashSDK);
 
               //chainWrapper.chain.injectSDK(hashSDK);
 
@@ -81,7 +94,7 @@ export const withHederaConnection = (Wrapped) =>
           }
         });
       };
-      hashConnect.pairingEvent.once(handler);
+      hashConnect.pairingEvent.on(handler);
       return () => hashConnect.pairingEvent.off(handler);
     }, [quietConnection]);
 
