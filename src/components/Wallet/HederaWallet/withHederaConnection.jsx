@@ -3,86 +3,104 @@ import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-    setAccount,
-    setConnectedWallet,
-    setWalletsModal,
-    setFrom,
+  setAccount,
+  setConnectedWallet,
+  setWalletsModal,
+  setFrom,
+  setIsClaiming,
 } from "../../../store/reducers/generalSlice";
 //import { setClaimable } from "../../../store/reducers/hederaSlice";
 import { Chain } from "xp.network";
 import PropTypes from "prop-types";
 import { hashConnect } from "./hederaConnections";
-
-import { BridgeModes } from "../../values";
-
+// import { BridgeModes } from "../../values";
+// import { ChainFactory, ChainFactoryConfigs } from "xp-decentralized-sdk";
 import { getChainObject } from "../../values";
+// import { v3_ChainId } from "../../../utils/chainsTypes";
 
 export const withHederaConnection = (Wrapped) =>
-    function CB(props) {
-        const dispatch = useDispatch();
-        const quietConnection = useSelector(
-            (state) => state.signers.quietConnection
-        );
-        const {
-            serviceContainer: { bridge },
-        } = props;
-        let provider;
-        let signer;
+  function CB(props) {
+    const dispatch = useDispatch();
+    const quietConnection = useSelector(
+      (state) => state.signers.quietConnection
+    );
+    const {
+      serviceContainer: { bridge },
+    } = props;
+    // let provider;
+    let signer;
 
-        useEffect(() => {
-            const handler = (pairingData) => {
-                import("@hashgraph/sdk").then((hashSDK) => {
-                    const topic = pairingData.topic;
-                    const accountId = pairingData.accountIds[0];
-                    const address = hashSDK.AccountId.fromString(
-                        accountId
-                    ).toSolidityAddress(); //hethers.utils.getAddressFromAccount(accountId);
+    useEffect(() => {
+      const handler = (pairingData) => {
+        console.log("inside hedera connection");
+        // const factory = ChainFactory(ChainFactoryConfigs.TestNet());
 
-                    const isTestnet = window.location.pathname.includes(
-                        BridgeModes.TestNet
-                    );
-                    try {
-                        provider = hashConnect.getProvider(
-                            isTestnet ? "testnet" : "mainnet",
-                            topic,
-                            accountId
-                        );
-                        signer = hashConnect.getSigner(provider);
+        import("@hashgraph/sdk").then((hashSDK) => {
+          // const topic = pairingData.topic;
+          const accountId = pairingData.accountIds[0];
+          const address = hashSDK.AccountId.fromString(
+            accountId
+          ).toSolidityAddress(); //hethers.utils.getAddressFromAccount(accountId);
 
-                        signer.address = address;
+          // const isTestnet = window.location.pathname.includes(
+          //   BridgeModes.TestNet
+          // );
+          try {
+            console.log("PROV", hashConnect);
+            // provider = hashConnect.getProvider(
+            //   isTestnet ? "testnet" : "mainnet",
+            //   topic,
+            //   accountId
+            // );
+            signer = hashConnect.getSigner(accountId);
 
-                        bridge.getChain(Chain.HEDERA).then((chainWrapper) => {
-                            const injectedChainWrapper = bridge.setInnerChain(
-                                Chain.HEDERA,
-                                chainWrapper.chain.injectSDK(hashSDK)
-                            );
+            signer.address = address;
 
-                            injectedChainWrapper.setSigner(signer);
+            bridge.getChain(Chain.HEDERA).then(async (chainWrapper) => {
+              console.log(chainWrapper.chain);
 
-                            //chainWrapper.chain.injectSDK(hashSDK);
+              if (!chainWrapper.chain?.isInjected) {
+                const injectedChainWrapper = bridge.setInnerChain(
+                  Chain.HEDERA,
+                  chainWrapper.chain.injectSDK(hashSDK)
+                );
 
-                            // chainWrapper.setSigner(signer);
+                injectedChainWrapper.setSigner(signer);
+              }
 
-                            if (!quietConnection) {
-                                dispatch(setAccount(address));
-                                dispatch(setWalletsModal(false));
-                                dispatch(setConnectedWallet("HashPack"));
-                                dispatch(setFrom(getChainObject(Chain.HEDERA)));
-                                dispatch(setWalletsModal(false));
-                            }
-                        });
-                    } catch (error) {
-                        console.log("pairingEvent error", error);
-                    }
-                });
-            };
-            hashConnect.pairingEvent.once(handler);
-            return () => hashConnect.pairingEvent.off(handler);
-        }, [quietConnection]);
+              // const targetChain = await factory.inner(
+              //   v3_ChainId[29].name
+              // );
 
-        CB.propTypes = {
-            serviceContainer: PropTypes.object,
-        };
+              // targetChain.injectSDK(hashSDK);
 
-        return <Wrapped {...props} />;
+              //chainWrapper.chain.injectSDK(hashSDK);
+
+              // chainWrapper.setSigner(signer);
+
+              if (!quietConnection) {
+                dispatch(setAccount(address));
+                dispatch(setWalletsModal(false));
+                dispatch(setConnectedWallet("HashPack"));
+                dispatch(setFrom(getChainObject(Chain.HEDERA)));
+                dispatch(setWalletsModal(false));
+              }
+            });
+
+            console.log("before toggle");
+            dispatch(setIsClaiming(true));
+          } catch (error) {
+            console.log("pairingEvent error", error);
+          }
+        });
+      };
+      hashConnect.pairingEvent.on(handler);
+      return () => hashConnect.pairingEvent.off(handler);
+    }, [quietConnection]);
+
+    CB.propTypes = {
+      serviceContainer: PropTypes.object,
     };
+
+    return <Wrapped {...props} />;
+  };

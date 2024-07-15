@@ -4,7 +4,6 @@ import { TIME } from "../constants/time";
 import { v3_bridge_mode } from "../components/values";
 import { v3_ChainId } from "./chainsTypes";
 import { ethers } from "ethers";
-
 export class XPDecentralizedUtility {
   isV3Enabled = false;
   factory = ChainFactory(ChainFactoryConfigs.TestNet());
@@ -247,7 +246,7 @@ export class XPDecentralizedUtility {
     );
 
     await targetChainIdentifier.checkSigner();
-    const targetChainSigner = targetChainIdentifier.getSigner();
+    const targetChainSigner = await targetChainIdentifier.getSigner();
     console.log("targetChainSigner", {
       targetChainSigner,
       targetChainIdentifier,
@@ -260,7 +259,13 @@ export class XPDecentralizedUtility {
       targetChain,
       signatures,
     });
-    const claim = await targetChain.claimNft(
+    let claim;
+    if (targetChainIdentifier.nonce === 29) {
+      const sdk = await import("@hashgraph/sdk");
+      targetChain.injectSDK(sdk);
+    }
+    console.log("transformed data", targetChain.transform(nftData));
+    claim = await targetChain.claimNft(
       targetChainSigner,
       targetChain.transform(nftData),
       signatures,

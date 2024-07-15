@@ -36,12 +36,22 @@ const initialState = {
   selectedChain: undefined,
   templeWalletData: { account: {}, isTempleWallet: false },
   templeIsClaimed: false,
+  destWalletAddress: "",
+  isClaiming: false,
 };
 
 const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
+    setIsClaiming(state, action) {
+      console.log("payload before", action.payload, state.isClaiming);
+      state.isClaiming = action.payload;
+      console.log("payload after", state.isClaiming);
+    },
+    setDestWalletAddress(state, action) {
+      state.destWalletAddress = action.payload;
+    },
     setTempleWalletData(state, action) {
       state.templeWalletData = action.payload;
     },
@@ -464,7 +474,8 @@ const generalSlice = createSlice({
               state.errorLink = {
                 text: "transaction underpriced error",
 
-                href: "https://support.metamask.io/hc/en-us/articles/4402538041869-Error-ethjs-query-while-formatting-outputs-from-RPC-transaction-underpriced-error-#:~:text=Error:%20%5Bethjs-query%5D%20while%20formatting%20outputs%20from%20RPC%20(transaction%20underpriced%20error)",
+                href:
+                  "https://support.metamask.io/hc/en-us/articles/4402538041869-Error-ethjs-query-while-formatting-outputs-from-RPC-transaction-underpriced-error-#:~:text=Error:%20%5Bethjs-query%5D%20while%20formatting%20outputs%20from%20RPC%20(transaction%20underpriced%20error)",
               };
             } else {
               state.error = message;
@@ -622,6 +633,8 @@ const generalSlice = createSlice({
 });
 
 export const {
+  setIsClaiming,
+  setDestWalletAddress,
   setTempleWalletData,
   setTempleClaimed,
   setCheckDestinationAddress,
