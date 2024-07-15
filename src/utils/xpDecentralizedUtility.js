@@ -49,6 +49,11 @@ export class XPDecentralizedUtility {
       v3_ChainId[fromChain.nonce].name
     );
 
+    if (fromChain.nonce === 29) {
+      const sdk = await import("@hashgraph/sdk");
+      originChain.injectSDK(sdk);
+    }
+
     await originChain.approveNft(signer, tokenId, contract, {
       gasLimit: 5_000_000,
     });
@@ -122,6 +127,10 @@ export class XPDecentralizedUtility {
       signer,
       receiver,
     });
+    if (fromChain.nonce === 29) {
+      const sdk = await import("@hashgraph/sdk");
+      originChain.injectSDK(sdk);
+    }
     const res = await originChain.lockNft(
       signer,
       nft.contract,
@@ -274,8 +283,8 @@ export class XPDecentralizedUtility {
       }
     );
 
-    console.log("claimed: ", claim?.ret ?? claim);
-    if (v3_ChainId[targetChainIdentifier?.nonce].name === "TON") {
+    console.log("claimed: ", claim);
+    if (v3_ChainId[targetChainIdentifier?.nonce].name === "TON" || v3_ChainId[targetChainIdentifier?.nonce].name === "HEDERA") {
       return {
         hash: claim.hash(),
       };

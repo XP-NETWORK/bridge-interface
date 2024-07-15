@@ -87,7 +87,7 @@ const TransferredNft = ({
           (from.type === "Elrond" && new RegExp(`^${tx.tokenId}`).test(t)) ||
           (from.type === "TON" && address === tx.contract)
         ) {
-          if (txnStatus !== "Completed") {
+          if (txnStatus !== "Completed" && from.type !== "Hedera") {
             console.log("inside try:", tx, txnStatus);
             setTxnStatus(tx?.status?.toLowerCase());
           }
@@ -129,15 +129,19 @@ const TransferredNft = ({
   }, [tagetCanister, workarond_dest_hash]);
 
   useEffect(() => {
-    evmTxStatus(txn.provider, txn.hash)
-      .then((res) => {
-        if (res) {
-          setTxnStatus("completed");
-        }
-      })
-      .catch((err) => {
-        console.log("error: ", err);
-      });
+    if (from.type === "Hedera") {
+      setTxnStatus("completed");
+    } else {
+      evmTxStatus(txn.provider, txn.hash)
+        .then((res) => {
+          if (res) {
+            setTxnStatus("completed");
+          }
+        })
+        .catch((err) => {
+          console.log("error: ", err);
+        });
+    }
   }, []);
 
   const targetCollection = mintWith || tagetCanister;
@@ -149,7 +153,8 @@ const TransferredNft = ({
     (to.type === "Hedera" && txnStatus === "completed") ||
       (v3BridgeTx && txnStatus !== "claimed") ||
       (to.type === "Tezos" && txnStatus === "completed") ||
-      (to.type === "Cosmos" && txnStatus === "completed")
+      (to.type === "Cosmos" && txnStatus === "completed") ||
+      (to.type === "EVM" && txnStatus === "completed")
   );
   console.log({
     to,
@@ -159,6 +164,8 @@ const TransferredNft = ({
     from: fromChain,
     depHash,
     completed,
+    hashes,
+    txnHashArr
   });
 
   return (

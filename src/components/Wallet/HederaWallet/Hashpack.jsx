@@ -5,7 +5,7 @@ import { HashConnect } from "hashconnect";
 import HigherHEDERA from "./HigherHEDERA";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import icon from "../../../assets/img/wallet/MetaMask.svg";
+// import icon from "../../../assets/img/wallet/MetaMask.svg";
 //import { biz } from "../../values";
 
 import { isMobile } from "../../../utils";
@@ -47,17 +47,17 @@ function Hashpack({ connect }) {
         <p>Hashpack</p>
       </li>
 
-      {from && from?.text === "Hedera" && (
-        <li
-          onClick={() => connect("MM")}
-          className="wllListItem"
-          style={getStyle()}
-          data-wallet="MetaMask"
-        >
-          <img src={icon} alt="MetaMask Icon" />
-          <p>MetaMask</p>
-        </li>
-      )}
+      {/* {from && from?.text === "Hedera" && (
+        // <li
+        //   onClick={() => connect("MM")}
+        //   className="wllListItem"
+        //   style={getStyle()}
+        //   data-wallet="MetaMask"
+        // >
+        //   <img src={icon} alt="MetaMask Icon" />
+        //   <p>MetaMask</p>
+        // </li>
+      )} */}
     </>
   );
 }

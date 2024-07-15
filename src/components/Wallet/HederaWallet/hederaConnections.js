@@ -23,7 +23,6 @@ export const connectHashPack = async (testnet) => {
     console.log("asdfasdf", testnet);
     initData = await hashConnect.init();
     hashConnect.openPairingModal();
-    // hashConnect.connectToLocalWallet();
     return initData;
   } catch (error) {
     console.log(error, "err2or");
