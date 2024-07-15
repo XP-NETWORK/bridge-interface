@@ -54,6 +54,7 @@ export default function HigherEVM(OriginalComponent) {
             let connected;
             switch (wallet) {
                 case "MetaMask":
+                    console.log("gando");
                     connected = await connectMetaMask(
                         activate,
                         from,

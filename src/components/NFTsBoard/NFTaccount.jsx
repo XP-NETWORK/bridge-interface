@@ -230,7 +230,7 @@ function NFTaccount(props) {
         } ${lockMainPannel ? " lockedX" : ""}`}
       >
         {dest?.type === "Hedera" && (
-          <Alert variant={"warning"}>This is a INFO alert—check it out!</Alert>
+          <Alert variant={"warning"}>Kindly make auto association on of your hashpack wallet before transfer nfts to hedera, thank you.</Alert>
         )}
         <Modal show={isSrcHedera} animation={null}>
           <ConnectMetamaskWithHaspack handleClose={handleClose}/>

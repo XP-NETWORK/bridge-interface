@@ -48,7 +48,6 @@ function App() {
     let account = useSelector((state) => state.general.account);
     let from = useSelector((state) => state.general.from);
     let currentsNFTs = useSelector((state) => state.general.currentsNFTs);
-
     let accountWalletModal = useSelector((state) => state.general.accountWalletModal);
     let transferModalLoader = useSelector((state) => state.general.transferModalLoader);
     let switchDestination = useSelector((state) => state.general.switchDestination);

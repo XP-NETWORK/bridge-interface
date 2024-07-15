@@ -1,28 +1,49 @@
 import { ethers } from "ethers";
 import React, { useState } from "react";
 import { Button, Modal, Spinner } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { notifyExplorerForHederaAssociation } from "../../../services/explorer";
 
 export default function ConnectMetamaskWithHaspack({ handleClose }) {
   const [loading, setLoading] = useState(false);
-
+  const account = useSelector((state) => state.general.account);
   const onConnectClick = async () => {
     if (window.ethereum) {
       try {
         setLoading(true);
-        await window.ethereum.request({ method: "eth_requestAccounts" });
+        await window.ethereum.request({
+          method: "wallet_requestPermissions",
+          params: [
+            {
+              eth_accounts: {},
+            },
+          ],
+        });
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
         const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-        const signer = provider.getSigner();
+        const signer = provider.getSigner(accounts[0]);
 
         const address = await signer.getAddress();
-        console.log({ address });
-        await new Promise((r) => setTimeout(r, 1000));
-
+        await signer.signMessage(
+          "This account is going to associate with ur hedera account."
+        );
         //POST api call here...
+        console.log("from", account, address);
 
-        await new Promise((r) => setTimeout(r, 2000));
-        setLoading(false);
-        handleClose();
+        const res = await notifyExplorerForHederaAssociation(account, address);
+
+        if (res.message === "Success") {
+          setLoading(false);
+          handleClose();
+        } else {
+          alert(
+            res.message
+          );
+          setLoading(false);
+        }
       } catch (error) {
         setLoading(false);
         console.error("Error connecting to MetaMask:", error);
