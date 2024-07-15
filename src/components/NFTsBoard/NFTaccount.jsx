@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Container } from "react-bootstrap";
 
 import { Modal } from "react-bootstrap";
@@ -46,6 +46,7 @@ import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 import withChains from "./hocs";
 import ReactGA from "../../services/GA4";
 import ReceiverIsContract from "../Alerts/ReceiverIsContract";
+import ConnectMetamaskWithHaspack from "../Modals/ConnectMetamaskModal";
 
 const intervalTm = 15_000;
 
@@ -181,6 +182,17 @@ function NFTaccount(props) {
 
   const dest = useSelector((state) => state.general.to);
 
+  const [isSrcHedera, setisSrcHedera] = useState(false);
+  useEffect(() => {
+    if (ff.type === "Hedera") {
+      setisSrcHedera(true);
+    }
+  }, []);
+
+  const handleClose = () => {
+    setisSrcHedera(false);
+  }
+
   return (
     <div className="NFTaccount">
       <Modal
@@ -218,8 +230,12 @@ function NFTaccount(props) {
         } ${lockMainPannel ? " lockedX" : ""}`}
       >
         {dest?.type === "Hedera" && (
-        <Alert variant={"warning"}>This is a INFO alert—check it out!</Alert>
-      )}
+          <Alert variant={"warning"}>This is a INFO alert—check it out!</Alert>
+        )}
+        <Modal show={isSrcHedera} animation={null}>
+          <ConnectMetamaskWithHaspack handleClose={handleClose}/>
+        </Modal>
+
         <ReturnBtn />
 
         {false && (
