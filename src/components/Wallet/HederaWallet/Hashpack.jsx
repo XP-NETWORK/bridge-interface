@@ -48,15 +48,15 @@ function Hashpack({ connect }) {
       </li>
 
       {/* {from && from?.text === "Hedera" && (
-        // <li
-        //   onClick={() => connect("MM")}
-        //   className="wllListItem"
-        //   style={getStyle()}
-        //   data-wallet="MetaMask"
-        // >
-        //   <img src={icon} alt="MetaMask Icon" />
-        //   <p>MetaMask</p>
-        // </li>
+        <li
+          onClick={() => connect("MM")}
+          className="wllListItem"
+          style={getStyle()}
+          data-wallet="MetaMask"
+        >
+          <img src={icon} alt="MetaMask Icon" />
+          <p>MetaMask</p>
+        </li>
       )} */}
     </>
   );
