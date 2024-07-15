@@ -354,7 +354,7 @@ function ChainListBox({ serviceContainer }) {
                         {//! Show only mainnet FROM chains //
                         departureOrDestination === "departure" &&
                             !globalTestnet &&
-                            fromChains.map((chain) => {
+                            fromChains.filter(chain=>!chain.isDisabled).map((chain) => {
                                 const {
                                     image,
                                     text,
@@ -394,7 +394,7 @@ function ChainListBox({ serviceContainer }) {
                         {//! Show only mainnet TO chains //
                         departureOrDestination === "destination" &&
                             !globalTestnet &&
-                            toChains.map((chain) => {
+                            toChains.filter(chain=>!chain.isDisabled).map((chain) => {
                                 const {
                                     image,
                                     text,
@@ -437,7 +437,7 @@ function ChainListBox({ serviceContainer }) {
                         {//! Show only testnet FROM chains //
                         departureOrDestination === "departure" &&
                             globalTestnet &&
-                            fromChains.map((chain) => {
+                            fromChains.filter(chain=>!chain.isDisabled).map((chain) => {
                                 const {
                                     image,
                                     text,
@@ -477,7 +477,7 @@ function ChainListBox({ serviceContainer }) {
                         {//! Show only testnet TO chains //
                         departureOrDestination === "destination" &&
                             globalTestnet &&
-                            toChains.map((chain) => {
+                            toChains.filter(chain=>!chain.isDisabled).map((chain) => {
                                 const {
                                     image,
                                     text,

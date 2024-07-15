@@ -94,6 +94,7 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
+        isDisabled: false,
     },
     {
         type: "EVM",
@@ -109,6 +110,7 @@ export const chains = [
         //maintenanceTo: !biz,
         testNet: true,
         mainnet: true,
+        isDisabled: false,
     },
     {
         type: "Tron",
@@ -122,6 +124,7 @@ export const chains = [
         testNet: true,
         mainnet: true,
         updated: false,
+        isDisabled: true,
     },
     {
         type: "Elrond",
@@ -134,6 +137,7 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -148,6 +152,7 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
+        isDisabled: false,
     },
     {
         type: "EVM",
@@ -162,6 +167,7 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -175,6 +181,7 @@ export const chains = [
         maintenance: false,
         testNet: false,
         mainnet: true,
+        isDisabled: true,
     },
     {
         type: "Algorand",
@@ -188,6 +195,7 @@ export const chains = [
         testNet: true,
         mainnet: true,
         updated: false,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -202,6 +210,7 @@ export const chains = [
         maintenance: false,
         testNet: false,
         mainnet: true,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -217,6 +226,7 @@ export const chains = [
         testNet: biz,
         mainnet: false,
         newChain: false,
+        isDisabled: true,
     },
     {
         type: "Solana",
@@ -232,6 +242,7 @@ export const chains = [
         testNet: true,
         mainnet: true,
         newChain: true,
+        isDisabled: true,
     },
     {
         type: "",
@@ -248,6 +259,7 @@ export const chains = [
         newChain: false,
         //chainId: ,
         //tnChainId: ,
+        isDisabled: true,
     },
     {
         type: "TON",
@@ -263,6 +275,7 @@ export const chains = [
         testNet: true,
         mainnet: true,
         newChain: true,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -276,6 +289,7 @@ export const chains = [
         maintenance: false,
         testNet: false,
         mainnet: true,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -291,6 +305,7 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
+        isDisabled: true,
     },
     {
         type: "Tezos",
@@ -305,6 +320,7 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -320,6 +336,7 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
+        isDisabled: false,
     },
     {
         type: "EVM",
@@ -335,6 +352,7 @@ export const chains = [
         maintenance: false,
         testNet: false,
         mainnet: true,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -349,6 +367,7 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -363,6 +382,7 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -377,6 +397,7 @@ export const chains = [
         maintenance: false,
         testNet: false,
         mainnet: true,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -390,6 +411,7 @@ export const chains = [
         image: { avatar: true, src: Moon },
         testNet: true,
         mainnet: true,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -405,6 +427,7 @@ export const chains = [
         mainnet: true,
         newChain: false,
         coming: false,
+        isDisabled: true,
     },
     {
         type: "VeChain",
@@ -419,6 +442,7 @@ export const chains = [
         maintenance: false,
         mainnet: true,
         testNet: false,
+        isDisabled: true,
     },
     {
         type: "Cosmos",
@@ -435,6 +459,7 @@ export const chains = [
         test: false,
         newChain: false,
         coming: false,
+        isDisabled: true,
     },
     {
         type: "Hedera",
@@ -449,6 +474,7 @@ export const chains = [
         coming: false,
         chainId: 295,
         tnChainId: 296,
+        isDisabled: false,
     },
     {
         type: "EVM",
@@ -462,6 +488,7 @@ export const chains = [
         testNet: true,
         mainnet: true,
         newChain: false,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -476,6 +503,7 @@ export const chains = [
         testNet: true,
         mainnet: true,
         newChain: false,
+        isDisabled: true,
     },
     {
         type: "ICP",
@@ -490,6 +518,7 @@ export const chains = [
         mainnet: true,
         newChain: true,
         coming: false,
+        isDisabled: true,
     },
     {
         type: "APTOS",
@@ -501,6 +530,7 @@ export const chains = [
         testNet: biz,
         mainnet: biz,
         coming: !biz,
+        isDisabled: true,
     },
     {
         type: "NEAR",
@@ -514,6 +544,7 @@ export const chains = [
         mainnet: true,
         newChain: true,
         coming: false,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -529,6 +560,7 @@ export const chains = [
         newChain: false,
         chainId: 66,
         tnChainId: 65,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -547,6 +579,7 @@ export const chains = [
         newChain: false,
         chainId: 42170,
         tnChainId: 421613,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -562,6 +595,7 @@ export const chains = [
         newChain: true,
         chainId: 32520,
         tnChainId: 64668,
+        isDisabled: true,
     },
     {
         type: "Casper",
@@ -575,6 +609,7 @@ export const chains = [
         mainnet: true,
         coming: false,
         newChain: biz,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -590,6 +625,7 @@ export const chains = [
         newChain: false,
         chainId: 420,
         tnChainId: 420,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -605,6 +641,7 @@ export const chains = [
         newChain: false,
         chainId: 7000,
         tnChainId: 7001,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -620,6 +657,7 @@ export const chains = [
         newChain: true,
         chainId: 8453,
         tnChainId: 84531,
+        isDisabled: true,
     },
     {
         type: "EVM",
@@ -635,5 +673,6 @@ export const chains = [
         newChain: biz,
         chainId: 2152,
         tnChainId: 2153,
+        isDisabled: true,
     },
 ];
