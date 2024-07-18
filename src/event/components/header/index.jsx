@@ -8,7 +8,7 @@ import "./header.css";
 export const HeaderEvent = ({ headerClass }) => {
   return (
     <a
-      href="https://galxe.com/aurora/campaign/GCo35UjkS8"
+      href="https://app.galxe.com/quest/xpnet"
       target="_blank"
       rel="noreferrer"
     >

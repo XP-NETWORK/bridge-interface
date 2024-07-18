@@ -155,17 +155,17 @@ export const chainDataMintingPathHedera = [
     rpc: "https://bsc-dataseed.binance.org",
     contract: "0x7646786E6bC5C0D2D33B198738a64AdB398531d7",
   },
-  {
-    name: "Hedera",
-    image: hederaIcon,
-    nft: "https://ipfs.io/ipfs/QmUZK5BoEMFxpa7RZBX4Qcp5wS9njesCsNas6kTJZQTb4S",
-    chainNonce: "29",
-    chainId: "295",
-    creationBlock: 4211259,
-    evm: true,
-    rpc: "https://mainnet.hashio.io/api",
-    contract: "0xC9e7627990B4ECD659545b5b8A1907C96435d87f",
-  },
+  // {
+  //   name: "Hedera",
+  //   image: hederaIcon,
+  //   nft: "https://ipfs.io/ipfs/QmUZK5BoEMFxpa7RZBX4Qcp5wS9njesCsNas6kTJZQTb4S",
+  //   chainNonce: "29",
+  //   chainId: "295",
+  //   creationBlock: 4211259,
+  //   evm: true,
+  //   rpc: "https://mainnet.hashio.io/api",
+  //   contract: "0xC9e7627990B4ECD659545b5b8A1907C96435d87f",
+  // },
 ];
 
 export const chainDataMintingPathHederaTestnet = [
