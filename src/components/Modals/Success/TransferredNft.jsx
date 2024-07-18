@@ -19,7 +19,6 @@ const evmTxStatus = async (provider, txHash) => {
   while (!foundedData) {
     try {
       const txRecipt = await provider.getTransactionReceipt(txHash);
-      console.log({ txRecipt });
       status = txRecipt?.status === 1;
 
       if (status) foundedData = true;
@@ -88,7 +87,6 @@ const TransferredNft = ({
           (from.type === "TON" && address === tx.contract)
         ) {
           if (txnStatus !== "Completed" && from.type !== "Hedera") {
-            console.log("inside try:", tx, txnStatus);
             setTxnStatus(tx?.status?.toLowerCase());
           }
 
@@ -156,17 +154,6 @@ const TransferredNft = ({
       (to.type === "Cosmos" && txnStatus === "completed") ||
       (to.type === "EVM" && txnStatus === "completed")
   );
-  console.log({
-    to,
-    txnStatus,
-    txn,
-    v3BridgeTx,
-    from: fromChain,
-    depHash,
-    completed,
-    hashes,
-    txnHashArr
-  });
 
   return (
     <div className="success-nft-info__wrapper">

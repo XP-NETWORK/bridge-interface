@@ -55,9 +55,6 @@ export const ClaimInDestination = (connection) => {
       const xPDecentralizedUtility = new XPDecentralizedUtility();
 
       const chainWapper = await connection(bridge, toChain);
-      console.log("chainWrapper: ", chainWapper);
-      console.log("hash: ", hash);
-      console.log({ destWalletAddress });
       // if (to.text === "Hedera" && destWalletAddress.includes(".")) {
       //   let signer;
       //   while (!signer?.accountToSign) {
@@ -66,8 +63,6 @@ export const ClaimInDestination = (connection) => {
       //     sleep(3000)
       //   }
       // }
-
-      console.log({ account });
 
       try {
         const originChainIdentifier = await bridge.getChain(fromChain);
@@ -88,8 +83,7 @@ export const ClaimInDestination = (connection) => {
         setDestHash(claimedHash);
         dispatch(setTransferLoaderModal(false));
       } catch (e) {
-        console.log("in catch block");
-        console.log(e);
+        console.log("in catch block", e);
         dispatch(setError({ message: e.message }));
         dispatch(setTransferLoaderModal(false));
       }
@@ -116,10 +110,6 @@ export const ClaimInDestination = (connection) => {
       }
     }, [account, isTempleWallet]);
 
-    const destWalletAddress = useSelector(
-      (state) => state.general.destWalletAddress
-    );
-
     const claim = async () => {
       dispatch(setQuietConnection(true));
       dispatch(setTransferLoaderModal(true));
@@ -130,10 +120,6 @@ export const ClaimInDestination = (connection) => {
       try {
         const originChainIdentifier = await bridge.getChain(fromChain);
         const targetChainIdentifier = await bridge.getChain(toChain);
-        console.log("identifiers: ", {
-          originChainIdentifier,
-          targetChainIdentifier,
-        });
 
         const xPDecentralizedUtility = new XPDecentralizedUtility();
 
@@ -144,8 +130,6 @@ export const ClaimInDestination = (connection) => {
           chainWapper,
           fromChainWapper
         );
-
-        console.log("claimedHash", claimedHash);
 
         setDestHash(claimedHash);
         dispatch(setTransferLoaderModal(false));

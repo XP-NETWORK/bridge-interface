@@ -144,8 +144,6 @@ export const connectTonWallet = async () => {
 
   await new Promise((e) => setTimeout(e, 1000));
 
-  console.log("tonwallet", connector.account);
-
   return {
     address: toUserFriendlyAddress(connector.account.address),
     signer: {

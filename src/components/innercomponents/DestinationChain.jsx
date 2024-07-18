@@ -63,7 +63,6 @@ function DestinationChain({ serviceContainer }) {
         try {
             if (inputFilter(e)) {
                 let address = e.target.value.trim();
-                console.log({address});
                 if(address){
                     dispatch(setDestWalletAddress(address))
                 }
@@ -71,7 +70,6 @@ function DestinationChain({ serviceContainer }) {
                     const validateFunc = validateFunctions[to.type];
                     if (validateFunc) {
                         const res = validateFunc(address, toChainWrapper);
-                        console.log({res});
                         dispatch(setIsInvalidAddress(res));
                     }
                     dispatch(setReceiver(address));

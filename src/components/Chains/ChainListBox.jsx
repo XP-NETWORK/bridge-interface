@@ -94,7 +94,6 @@ function ChainListBox({ serviceContainer }) {
         from?.text === "VeChain" &&
         chainWrapper.chainParams.type === "EVM"
       ) {
-        // console.log('im here')
         // dispatch(setChangeWallet(true));
         // dispatch(setTemporaryFrom(chain));
         // dispatch(setTemporaryTo(to));
@@ -155,7 +154,6 @@ function ChainListBox({ serviceContainer }) {
         //       ? BridgeModes.Staging
         //       : BridgeModes.TestNet;
         //   }
-        //   console.log(goToPath);
         //   navigate(goToPath);
         //   dispatch(setChangeWallet(false));
         //   dispatch(setConnectedWallet(''))
@@ -203,7 +201,6 @@ function ChainListBox({ serviceContainer }) {
           ? BridgeModes.Staging
           : BridgeModes.TestNet;
       }
-      console.log(goToPath);
       navigate(goToPath);
       dispatch(setChangeWallet(false));
       dispatch(setConnectedWallet(""));

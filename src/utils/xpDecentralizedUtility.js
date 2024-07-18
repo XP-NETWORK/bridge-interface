@@ -183,9 +183,6 @@ export class XPDecentralizedUtility {
       );
     }
 
-    console.log("signatures after loop: ", {
-      signatures,
-    });
     return signatures;
   };
 
@@ -202,7 +199,6 @@ export class XPDecentralizedUtility {
       try {
         nftData = await this.factory.getClaimData(originChain, hash);
         console.log("nftData: ", nftData);
-        console.log("Got Claim Data");
         foundedData = true;
       } catch (e) {
         console.log(`Retrying to find Claim Data for Lock Hash: ${hash}`, e);

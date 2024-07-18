@@ -45,7 +45,6 @@ function CosmosWallet({ wallet, serviceContainer }) {
     const key = chain.key.toUpperCase();
     lockBtn(true);
     if (window.keplr) {
-      console.log(window.keplr, "keplr");
       try {
         await window.keplr.enable(chainId);
         const offlineSigner = window.keplr.getOfflineSigner(chainId);
@@ -62,7 +61,6 @@ function CosmosWallet({ wallet, serviceContainer }) {
           walletAddress: address,
           //encryptionUtils: window.getEnigmaUtils(chain),
         });
-        console.log(signer, "signer");
         dispatch(setAccount(address));
         dispatch(setKeplrWallet(signer));
         handleGA4Event(

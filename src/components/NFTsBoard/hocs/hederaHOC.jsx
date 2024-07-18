@@ -27,7 +27,6 @@ export const withHedera = (Wrapped) =>
 
     const connectionCallback = async (bridge, toChain) => {
       await connectHashPack(network);
-      console.log("inside connection");
       await sleep(10000);
 
       if (v3_bridge_mode) {
@@ -38,7 +37,6 @@ export const withHedera = (Wrapped) =>
         (async () => {
           let chainWapper = await bridge.getChain(toChain);
           while (!chainWapper.signer) {
-            console.log(chainWapper.signer, "signer");
             chainWapper = await bridge.getChain(toChain);
             await new Promise((r) => setTimeout(r, 2000));
           }

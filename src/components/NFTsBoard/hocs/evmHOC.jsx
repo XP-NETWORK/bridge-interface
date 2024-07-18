@@ -40,7 +40,6 @@ export const withEVM = (Wrapped) =>
         (async () => {
           let chainWapper = await bridge.getChain(toChain);
           while (!chainWapper.signer) {
-            console.log(chainWapper.signer, "signer");
             chainWapper = await bridge.getChain(toChain);
             await new Promise((r) => setTimeout(r, 2000));
           }

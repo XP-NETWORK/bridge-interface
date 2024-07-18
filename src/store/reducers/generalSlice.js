@@ -46,9 +46,7 @@ const generalSlice = createSlice({
   initialState,
   reducers: {
     setIsClaiming(state, action) {
-      console.log("payload before", action.payload, state.isClaiming);
       state.isClaiming = action.payload;
-      console.log("payload after", state.isClaiming);
     },
     setDestWalletAddress(state, action) {
       state.destWalletAddress = action.payload;

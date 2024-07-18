@@ -30,8 +30,6 @@ export default function ConnectMetamaskWithHaspack({ handleClose }) {
         await signer.signMessage(
           "This account is going to associate with ur hedera account."
         );
-        //POST api call here...
-        console.log("from", account, address);
 
         const res = await notifyExplorerForHederaAssociation(account, address);
 

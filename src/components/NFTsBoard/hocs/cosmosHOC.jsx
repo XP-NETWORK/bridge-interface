@@ -37,7 +37,6 @@ export const withCosmos = (Wrapped) =>
         walletAddress: address,
         //encryptionUtils: window.getEnigmaUtils(chain),
       });
-      console.log("aa- signer--->", signer);
 
       chainWrapper.setSigner(signer);
 
