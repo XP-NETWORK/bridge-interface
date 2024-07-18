@@ -66,7 +66,11 @@ export const RightSide = ({
           useContractVariable={useContractVariable}
         />
         <div className="info-section-container ">
-          <span>{totalMinted} minted</span>
+          <span>
+            {window.location.pathname.includes("/hedera") && choosenChain == 1
+              ? ""
+              : totalMinted + " minted"}
+          </span>
           <div className="dot-separate"></div>
           <span>Up to 5 mints per wallet</span>
           <div className="dot-separate"></div>
