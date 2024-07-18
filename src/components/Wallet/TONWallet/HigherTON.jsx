@@ -6,6 +6,7 @@ import {
     setTonWallet,
     setWalletsModal,
     setFrom,
+    setConnectedWalletType,
 } from "../../../store/reducers/generalSlice";
 import { setSigner, setWalletAddress } from "../../../store/reducers/signersSlice";
 import { connectTonHub, connectTonKeeper, connectTonWallet, awaitTonHubReady } from "./TonConnectors";
@@ -136,6 +137,7 @@ function HigherTON(OriginalComponent) {
             bridge.setCurrentType(chainWrapper);
             dispatch(setAccount(account.address));
             dispatch(setConnectedWallet(connectedWallet));
+            dispatch(setConnectedWalletType("TON"));
             dispatch(setWalletAddress(account.address));
             dispatch(setSigner(signer));
             dispatch(setTonWallet(true));

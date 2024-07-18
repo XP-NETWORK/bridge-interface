@@ -3,17 +3,18 @@ import { useEffect, useRef, React } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BridgeModes, chains } from "../../components/values";
 import {
-    setChainModal,
-    setDepartureOrDestination,
-    setTo,
-    setFrom,
-    setChainSearch,
-    setSwitchDestination,
-    setChangeWallet,
-    setTemporaryFrom,
-    setTemporaryTo,
-    setConnectedWallet,
-    setAccount,
+  setChainModal,
+  setDepartureOrDestination,
+  setTo,
+  setFrom,
+  setChainSearch,
+  setSwitchDestination,
+  setChangeWallet,
+  setTemporaryFrom,
+  setTemporaryTo,
+  setConnectedWallet,
+  setAccount,
+  setConnectedWalletType,
 } from "../../store/reducers/generalSlice";
 import Chain from "./Chain";
 import ChainSearch from "../Chains/ChainSearch";
@@ -32,500 +33,496 @@ import { useNavigate } from "react-router-dom";
 import { setWalletAddress } from "../../store/reducers/signersSlice";
 
 function ChainListBox({ serviceContainer }) {
-    const { bridge } = serviceContainer;
-    const navigate = useNavigate();
+  const { bridge } = serviceContainer;
+  const navigate = useNavigate();
 
-    const dispatch = useDispatch();
-    const location = useLocation();
-    const departureOrDestination = useSelector(
-        (state) => state.general.departureOrDestination
-    );
-    const chainSearch = useSelector((state) => state.general.chainSearch);
-    let from = useSelector((state) => state.general.from);
-    let to = useSelector((state) => state.general.to);
-    const globalTestnet = useSelector((state) => state.general.testNet);
-    const show = useSelector((state) => state.general.showChainModal);
-    const switchChain = useSelector((state) => state.general.switchDestination);
-    const [fromChains, setFromChains] = useState(chains);
-    const [toChains, setToChains] = useState(chains);
-    const elrondAccount = useSelector((state) => state.general.elrondAccount);
-    const tezosAccount = useSelector((state) => state.general.tezosAccount);
-    const algorandAccount = useSelector(
-        (state) => state.general.algorandAccount
-    );
-    const evmAccount = useSelector((state) => state.general.account);
-    const tronAccount = useSelector((state) => state.general.tronWallet);
-    const { account } = useWeb3React();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const departureOrDestination = useSelector(
+    (state) => state.general.departureOrDestination
+  );
+  const chainSearch = useSelector((state) => state.general.chainSearch);
+  let from = useSelector((state) => state.general.from);
+  let to = useSelector((state) => state.general.to);
+  const globalTestnet = useSelector((state) => state.general.testNet);
+  const show = useSelector((state) => state.general.showChainModal);
+  const switchChain = useSelector((state) => state.general.switchDestination);
+  const [fromChains, setFromChains] = useState(chains);
+  const [toChains, setToChains] = useState(chains);
+  const elrondAccount = useSelector((state) => state.general.elrondAccount);
+  const tezosAccount = useSelector((state) => state.general.tezosAccount);
+  const algorandAccount = useSelector((state) => state.general.algorandAccount);
+  const evmAccount = useSelector((state) => state.general.account);
+  const tronAccount = useSelector((state) => state.general.tronWallet);
+  const connectedWalletType = useSelector(
+    (state) => state.general.connectedWalletType
+  );
+  const { account } = useWeb3React();
 
-    const nftChainListRef = useRef(null);
-    const [reached, setReached] = useState(false);
+  const nftChainListRef = useRef(null);
+  const [reached, setReached] = useState(false);
 
-    const handleClose = () => {
-        dispatch(setChainModal(false));
-        dispatch(setDepartureOrDestination(""));
-        dispatch(setSwitchDestination(false));
-        dispatch(setChainSearch(""));
-    };
+  const handleClose = () => {
+    dispatch(setChainModal(false));
+    dispatch(setDepartureOrDestination(""));
+    dispatch(setSwitchDestination(false));
+    dispatch(setChainSearch(""));
+  };
 
-    const handleScroll = () => {
-        const {
-            scrollTop,
-            scrollHeight,
-            clientHeight,
-        } = nftChainListRef.current;
-        if (nftChainListRef?.current) {
-            if (
-                Math.ceil(scrollTop) + clientHeight === scrollHeight ||
-                Math.ceil(scrollTop) - 1 + clientHeight === scrollHeight
-            ) {
-                setReached(true);
-            } else setReached(false);
-        }
-    };
-    // ! ref
-    const chainSelectHandler = async (chain) => {
-        const chainWrapper = await bridge.getChain(chain.nonce);
+  const handleScroll = () => {
+    const { scrollTop, scrollHeight, clientHeight } = nftChainListRef.current;
+    if (nftChainListRef?.current) {
+      if (
+        Math.ceil(scrollTop) + clientHeight === scrollHeight ||
+        Math.ceil(scrollTop) - 1 + clientHeight === scrollHeight
+      ) {
+        setReached(true);
+      } else setReached(false);
+    }
+  };
+  // ! ref
+  const chainSelectHandler = async (chain) => {
+    const chainWrapper = await bridge.getChain(chain.nonce);
 
-        if (departureOrDestination === "departure") {
-            handleGA4Event(
-                googleAnalyticsCategories.Chain,
-                `${chain.text} selected to departure`
-            );
-            if (
-                bridge.currentType === "EVM" &&
-                from?.text === "VeChain" &&
-                chainWrapper.chainParams.type === "EVM"
-            ) {
-                // console.log('im here')
-                // dispatch(setChangeWallet(true));
-                // dispatch(setTemporaryFrom(chain));
-                // dispatch(setTemporaryTo(to));
-                // handleClose();
-                evmNonEvmInterchange(chain);
-            } else if (
-                chainWrapper.chainParams.name === "VeChain" &&
-                bridge.currentType === "EVM"
-            ) {
-                evmNonEvmInterchange(chain);
-                // dispatch(setChangeWallet(true));
-                // dispatch(setTemporaryFrom(chain));
-                // dispatch(setTemporaryTo(to));
-                // handleClose();
-            } else if (
-                chainWrapper.chainParams.type === bridge.currentType ||
-                !bridge.currentType
-            ) {
-                if (from && from?.text !== chain.text) {
-                    if (
-                        evmAccount &&
-                        // (account || evmAccount) &&
-                        from.text !== "VeChain"
-                    ) {
-                        const switched = await switchNetwork(chain);
-                        if (switched) {
-                            dispatch(setFrom(chain));
-                            if (to?.text === chain.text) {
-                                dispatch(setTo(from));
-                            }
-                        }
-                        handleClose();
-                    } else {
-                        dispatch(setFrom(chain));
-
-                        handleClose();
-                    }
-                } else {
-                    dispatch(setFrom(chain));
-                    handleClose();
-                }
-                handleClose();
-            } else {
-                evmNonEvmInterchange(chain);
-                // dispatch(setChangeWallet(true));
-                // dispatch(setTemporaryFrom(chain));
-                // dispatch(setFrom(chain))
-                // dispatch(setTemporaryTo(to));
-
-                // let currentPath = window.location.href;
-                // if (currentPath.includes("account")) {
-                //   let goToPath = "/";
-                //   if (
-                //     currentPath.includes(BridgeModes.Staging) ||
-                //     currentPath.includes(BridgeModes.TestNet)
-                //   ) {
-                //     goToPath = currentPath.includes(BridgeModes.Staging)
-                //       ? BridgeModes.Staging
-                //       : BridgeModes.TestNet;
-                //   }
-                //   console.log(goToPath);
-                //   navigate(goToPath);
-                //   dispatch(setChangeWallet(false));
-                //   dispatch(setConnectedWallet(''))
-                //   dispatch(setWalletAddress(''))
-                //   dispatch(setAccount(''))
-                // }
-
-                // handleClose();
+    if (departureOrDestination === "departure") {
+      handleGA4Event(
+        googleAnalyticsCategories.Chain,
+        `${chain.text} selected to departure`
+      );
+      if (
+        bridge.currentType === "EVM" &&
+        from?.text === "VeChain" &&
+        chainWrapper.chainParams.type === "EVM"
+      ) {
+        // console.log('im here')
+        // dispatch(setChangeWallet(true));
+        // dispatch(setTemporaryFrom(chain));
+        // dispatch(setTemporaryTo(to));
+        // handleClose();
+        evmNonEvmInterchange(chain);
+      } else if (
+        chainWrapper.chainParams.name === "VeChain" &&
+        bridge.currentType === "EVM"
+      ) {
+        evmNonEvmInterchange(chain);
+        // dispatch(setChangeWallet(true));
+        // dispatch(setTemporaryFrom(chain));
+        // dispatch(setTemporaryTo(to));
+        // handleClose();
+      } else if (
+        chainWrapper.chainParams.type === bridge.currentType ||
+        !bridge.currentType
+      ) {
+        if (from && from?.text !== chain.text) {
+          if (
+            evmAccount &&
+            // (account || evmAccount) &&
+            from.text !== "VeChain"
+          ) {
+            const switched = await switchNetwork(chain);
+            if (switched) {
+              dispatch(setFrom(chain));
+              if (to?.text === chain.text) {
+                dispatch(setTo(from));
+              }
             }
             handleClose();
-        } else if (departureOrDestination === "destination") {
-            handleGA4Event(
-                googleAnalyticsCategories.Chain,
-                `${chain.text} selected to destination`
-            );
-            if (from?.text === chain.text) {
-                if (account || evmAccount) {
-                    const switched = await switchNetwork(to);
-                    if (switched) {
-                        dispatch(setTo(from));
-                        dispatch(setFrom(to));
-                    }
-                }
-            } else {
-                dispatch(setTo(chain));
-            }
+          } else {
+            dispatch(setFrom(chain));
+
             handleClose();
-        }
-    };
-
-    const evmNonEvmInterchange = (chain) => {
-        dispatch(setChangeWallet(true));
-        dispatch(setTemporaryFrom(chain));
-        dispatch(setFrom(chain));
-        dispatch(setTemporaryTo(to));
-
-        let currentPath = window.location.href;
-        if (currentPath.includes("account")) {
-            let goToPath = "/";
-            if (
-                currentPath.includes(BridgeModes.Staging) ||
-                currentPath.includes(BridgeModes.TestNet)
-            ) {
-                goToPath = currentPath.includes(BridgeModes.Staging)
-                    ? BridgeModes.Staging
-                    : BridgeModes.TestNet;
-            }
-            console.log(goToPath);
-            navigate(goToPath);
-            dispatch(setChangeWallet(false));
-            dispatch(setConnectedWallet(""));
-            dispatch(setWalletAddress(""));
-            dispatch(setAccount(""));
-        }
-
-        handleClose();
-    };
-
-    useEffect(() => {
-        // debugger;
-        let filteredChains = chains;
-        if (chainSearch && departureOrDestination === "departure") {
-            filteredChains = chains.filter((chain) =>
-                chain.text.toLowerCase().includes(chainSearch.toLowerCase())
-            );
-        }
-        const withNew = filteredChains
-            .filter((chain) => chain.newChain)
-            .sort((a, b) => a.order - b.order);
-        const withComing = filteredChains
-            .filter((chain) => chain.coming && !chain.newChain)
-            .sort((a, b) => b.order - a.order);
-        const withMaintenance = filteredChains.filter(
-            (chain) => chain.maintenance && !chain.newChain
-        );
-        const noComingNoMaintenance = filteredChains
-            .filter(
-                (chain) =>
-                    !chain.coming && !chain.maintenance && !chain.newChain
-            )
-            .sort((a, b) => a.order - b.order);
-        let sorted = [
-            ...withNew,
-            ...noComingNoMaintenance,
-            ...withMaintenance,
-            ...withComing,
-        ];
-
-        // location.pathname === "/connect" ||
-        // location.pathname === "/testnet/connect" ||
-        // location.pathname === "/account" ||
-        // location.pathname === "/testnet/account" ||
-        // location.pathname === "/staging" ||
-        // location.pathname === "/staging/account" ||
-        // location.pathname === "/"
-        if (location) {
-            setFromChains(sorted.filter((e) => e.text !== to?.text));
-        } else setFromChains(sorted);
-        if (sorted.length <= 5) setReached(true);
-        return () => setReached(false);
-    }, [
-        elrondAccount,
-        tezosAccount,
-        algorandAccount,
-        tronAccount,
-        evmAccount,
-        chainSearch,
-        to,
-        departureOrDestination,
-        location.pathname,
-    ]);
-
-    useEffect(() => {
-        let filteredChains = chains;
-        if (chainSearch && departureOrDestination === "destination") {
-            filteredChains = chains.filter((chain) =>
-                chain.text.toLowerCase().includes(chainSearch.toLowerCase())
-            );
-        }
-        const withNew = filteredChains
-            .filter((chain) => chain.newChain)
-            .sort((a, b) => a.order - b.order);
-        const withComing = filteredChains
-            .filter((chain) => chain.coming && !chain.newChain)
-            .sort((a, b) => b.order - a.order);
-        const withMaintenance = filteredChains.filter(
-            (chain) => chain.maintenance && !chain.newChain
-        );
-        const noComingNoMaintenance = filteredChains
-            .filter(
-                (chain) =>
-                    !chain.coming && !chain.maintenance && !chain.newChain
-            )
-            .sort((a, b) => a.order - b.order);
-        let sorted = [
-            ...withNew,
-            ...noComingNoMaintenance,
-            ...withMaintenance,
-            ...withComing,
-        ];
-        if (
-            location
-            // location.pathname === "/connect" ||
-            // location.pathname === "/testnet/connect" ||
-            // location.pathname === "/account" ||
-            // location.pathname === "/testnet/account" ||
-            // location.pathname === "/staging" ||
-            // location.pathname === "/staging/account" ||
-            // location.pathname === "/"
-        ) {
-            setToChains(sorted.filter((e) => e.text !== from?.text));
+          }
         } else {
-            setToChains(sorted);
+          dispatch(setFrom(chain));
+          handleClose();
         }
-        if (sorted.length <= 5) setReached(true);
-        return () => setReached(false);
-    }, [from, chainSearch, departureOrDestination, location.pathname]);
+        handleClose();
+      } else {
+        evmNonEvmInterchange(chain);
+        // dispatch(setChangeWallet(true));
+        // dispatch(setTemporaryFrom(chain));
+        // dispatch(setFrom(chain))
+        // dispatch(setTemporaryTo(to));
 
-    useEffect(() => {
-        if (
-            from?.text === to?.text &&
-            (!location.pathname === "/account" ||
-                !location.pathname === "/testnet/account")
-        ) {
-            dispatch(setTo(""));
+        // let currentPath = window.location.href;
+        // if (currentPath.includes("account")) {
+        //   let goToPath = "/";
+        //   if (
+        //     currentPath.includes(BridgeModes.Staging) ||
+        //     currentPath.includes(BridgeModes.TestNet)
+        //   ) {
+        //     goToPath = currentPath.includes(BridgeModes.Staging)
+        //       ? BridgeModes.Staging
+        //       : BridgeModes.TestNet;
+        //   }
+        //   console.log(goToPath);
+        //   navigate(goToPath);
+        //   dispatch(setChangeWallet(false));
+        //   dispatch(setConnectedWallet(''))
+        //   dispatch(setWalletAddress(''))
+        //   dispatch(setAccount(''))
+        // }
+
+        // handleClose();
+      }
+      handleClose();
+    } else if (departureOrDestination === "destination") {
+      handleGA4Event(
+        googleAnalyticsCategories.Chain,
+        `${chain.text} selected to destination`
+      );
+      if (from?.text === chain.text) {
+        if (account || evmAccount) {
+          const switched = await switchNetwork(to);
+          if (switched) {
+            dispatch(setTo(from));
+            dispatch(setFrom(to));
+          }
         }
-    }, [to, from, dispatch, location.pathname]);
+      } else {
+        dispatch(setTo(chain));
+      }
+      handleClose();
+    }
+  };
 
-    return (
-        <Modal
-            animation={false}
-            show={show || switchChain}
-            onHide={handleClose}
-            className="ChainModal"
-        >
-            <Modal.Header className="text-left">
-                <Modal.Title>{`Select ${
-                    departureOrDestination === "destination"
-                        ? "destination"
-                        : "departure"
-                } chain`}</Modal.Title>
-                <span className="CloseModal" onClick={handleClose}>
-                    <div className="close-modal"></div>
-                </span>
-            </Modal.Header>
-            <Modal.Body>
-                <div className="nftChainListBox">
-                    <ChainSearch />
-                    <ul
-                        onScroll={handleScroll}
-                        ref={nftChainListRef}
-                        className="nftChainList scrollSty"
-                    >
-                        {//! Show only mainnet FROM chains //
-                        departureOrDestination === "departure" &&
-                            !globalTestnet &&
-                            fromChains.filter(chain=>!chain.isDisabled).map((chain) => {
-                                const {
-                                    image,
-                                    text,
-                                    key,
-                                    coming,
-                                    newChain,
-                                    maintenance,
-                                    mainnet,
-                                    updated,
-                                    nonce,
-                                } = chain;
-                                if (
-                                    String(from?.text).toLowerCase() !==
-                                    String(text).toLowerCase()
-                                )
-                                    return (
-                                        (mainnet || coming) && (
-                                            <Chain
-                                                chainSelectHandler={
-                                                    chainSelectHandler
-                                                }
-                                                updated={updated}
-                                                newChain={newChain}
-                                                maintenance={maintenance}
-                                                coming={coming}
-                                                text={text}
-                                                chainKey={key}
-                                                filteredChain={chain}
-                                                image={image}
-                                                key={`chain-${key}`}
-                                                nonce={nonce}
-                                            />
-                                        )
-                                    );
-                                return null;
-                            })}
-                        {//! Show only mainnet TO chains //
-                        departureOrDestination === "destination" &&
-                            !globalTestnet &&
-                            toChains.filter(chain=>!chain.isDisabled).map((chain) => {
-                                const {
-                                    image,
-                                    text,
-                                    key,
-                                    coming,
-                                    newChain,
-                                    maintenance,
-                                    maintenanceTo,
-                                    mainnet,
-                                    updated,
-                                    nonce,
-                                } = chain;
+  const evmNonEvmInterchange = (chain) => {
+    dispatch(setChangeWallet(true));
+    dispatch(setTemporaryFrom(chain));
+    dispatch(setFrom(chain));
+    dispatch(setTemporaryTo(to));
 
-                                if (
-                                    String(to?.text).toLowerCase() !==
-                                    String(text).toLowerCase()
-                                )
-                                    return (
-                                        (mainnet || coming) && (
-                                            <Chain
-                                                chainSelectHandler={
-                                                    chainSelectHandler
-                                                }
-                                                updated={updated}
-                                                newChain={newChain}
-                                                maintenance={maintenance}
-                                                maintenanceTo={maintenanceTo}
-                                                coming={coming}
-                                                text={text}
-                                                chainKey={key}
-                                                filteredChain={chain}
-                                                image={image}
-                                                nonce={nonce}
-                                                key={`chain-${key}`}
-                                            />
-                                        )
-                                    );
-                                return null;
-                            })}
-                        {//! Show only testnet FROM chains //
-                        departureOrDestination === "departure" &&
-                            globalTestnet &&
-                            fromChains.filter(chain=>!chain.isDisabled).map((chain) => {
-                                const {
-                                    image,
-                                    text,
-                                    key,
-                                    coming,
-                                    newChain,
-                                    maintenance,
-                                    testNet,
-                                    updated,
-                                    nonce,
-                                } = chain;
-                                if (
-                                    String(from?.text).toLowerCase() !==
-                                    String(text).toLowerCase()
-                                )
-                                    return (
-                                        testNet && (
-                                            <Chain
-                                                chainSelectHandler={
-                                                    chainSelectHandler
-                                                }
-                                                updated={updated}
-                                                newChain={newChain}
-                                                maintenance={maintenance}
-                                                coming={coming}
-                                                text={text}
-                                                chainKey={key}
-                                                filteredChain={chain}
-                                                image={image}
-                                                nonce={nonce}
-                                                key={`chain-${key}`}
-                                            />
-                                        )
-                                    );
-                                return null;
-                            })}
-                        {//! Show only testnet TO chains //
-                        departureOrDestination === "destination" &&
-                            globalTestnet &&
-                            toChains.filter(chain=>!chain.isDisabled).map((chain) => {
-                                const {
-                                    image,
-                                    text,
-                                    key,
-                                    coming,
-                                    newChain,
-                                    maintenance,
-                                    maintenanceTo,
-                                    testNet,
-                                    updated,
-                                    nonce,
-                                } = chain;
-                                if (
-                                    String(to?.text).toLowerCase() !==
-                                    String(text).toLowerCase()
-                                )
-                                    return (
-                                        testNet && (
-                                            <Chain
-                                                chainSelectHandler={
-                                                    chainSelectHandler
-                                                }
-                                                updated={updated}
-                                                newChain={newChain}
-                                                maintenance={maintenance}
-                                                maintenanceTo={maintenanceTo}
-                                                coming={coming}
-                                                text={text}
-                                                chainKey={key}
-                                                filteredChain={chain}
-                                                image={image}
-                                                nonce={nonce}
-                                                key={`chain-${key}`}
-                                            />
-                                        )
-                                    );
-                                return null;
-                            })}
-                    </ul>
-                    {!reached && <ScrollArrows />}
-                </div>
-            </Modal.Body>
-        </Modal>
+    let currentPath = window.location.href;
+    if (currentPath.includes("account")) {
+      let goToPath = "/";
+      if (
+        currentPath.includes(BridgeModes.Staging) ||
+        currentPath.includes(BridgeModes.TestNet)
+      ) {
+        goToPath = currentPath.includes(BridgeModes.Staging)
+          ? BridgeModes.Staging
+          : BridgeModes.TestNet;
+      }
+      console.log(goToPath);
+      navigate(goToPath);
+      dispatch(setChangeWallet(false));
+      dispatch(setConnectedWallet(""));
+      dispatch(setConnectedWalletType(""));
+      dispatch(setWalletAddress(""));
+      dispatch(setAccount(""));
+    }
+
+    handleClose();
+  };
+
+  useEffect(() => {
+    // debugger;
+    let filteredChains = chains;
+    if (chainSearch && departureOrDestination === "departure") {
+      filteredChains = chains.filter((chain) =>
+        chain.text.toLowerCase().includes(chainSearch.toLowerCase())
+      );
+    }
+    const withNew = filteredChains
+      .filter((chain) => chain.newChain)
+      .sort((a, b) => a.order - b.order);
+    const withComing = filteredChains
+      .filter((chain) => chain.coming && !chain.newChain)
+      .sort((a, b) => b.order - a.order);
+    const withMaintenance = filteredChains.filter(
+      (chain) => chain.maintenance && !chain.newChain
     );
+    const noComingNoMaintenance = filteredChains
+      .filter((chain) => !chain.coming && !chain.maintenance && !chain.newChain)
+      .sort((a, b) => a.order - b.order);
+    let sorted = [
+      ...withNew,
+      ...noComingNoMaintenance,
+      ...withMaintenance,
+      ...withComing,
+    ];
+
+    // location.pathname === "/connect" ||
+    // location.pathname === "/testnet/connect" ||
+    // location.pathname === "/account" ||
+    // location.pathname === "/testnet/account" ||
+    // location.pathname === "/staging" ||
+    // location.pathname === "/staging/account" ||
+    // location.pathname === "/"
+    if (location) {
+      setFromChains(sorted.filter((e) => e.text !== to?.text));
+    } else setFromChains(sorted);
+    if (sorted.length <= 5) setReached(true);
+    return () => setReached(false);
+  }, [
+    elrondAccount,
+    tezosAccount,
+    algorandAccount,
+    tronAccount,
+    evmAccount,
+    chainSearch,
+    to,
+    departureOrDestination,
+    location.pathname,
+  ]);
+
+  useEffect(() => {
+    let filteredChains = chains;
+    if (chainSearch && departureOrDestination === "destination") {
+      filteredChains = chains.filter((chain) =>
+        chain.text.toLowerCase().includes(chainSearch.toLowerCase())
+      );
+    }
+    const withNew = filteredChains
+      .filter((chain) => chain.newChain)
+      .sort((a, b) => a.order - b.order);
+    const withComing = filteredChains
+      .filter((chain) => chain.coming && !chain.newChain)
+      .sort((a, b) => b.order - a.order);
+    const withMaintenance = filteredChains.filter(
+      (chain) => chain.maintenance && !chain.newChain
+    );
+    const noComingNoMaintenance = filteredChains
+      .filter((chain) => !chain.coming && !chain.maintenance && !chain.newChain)
+      .sort((a, b) => a.order - b.order);
+    let sorted = [
+      ...withNew,
+      ...noComingNoMaintenance,
+      ...withMaintenance,
+      ...withComing,
+    ];
+    if (
+      location
+      // location.pathname === "/connect" ||
+      // location.pathname === "/testnet/connect" ||
+      // location.pathname === "/account" ||
+      // location.pathname === "/testnet/account" ||
+      // location.pathname === "/staging" ||
+      // location.pathname === "/staging/account" ||
+      // location.pathname === "/"
+    ) {
+      setToChains(sorted.filter((e) => e.text !== from?.text));
+    } else {
+      setToChains(sorted);
+    }
+    if (sorted.length <= 5) setReached(true);
+    return () => setReached(false);
+  }, [from, chainSearch, departureOrDestination, location.pathname]);
+
+  useEffect(() => {
+    if (
+      from?.text === to?.text &&
+      (!location.pathname === "/account" ||
+        !location.pathname === "/testnet/account")
+    ) {
+      dispatch(setTo(""));
+    }
+  }, [to, from, dispatch, location.pathname]);
+
+  return (
+    <Modal
+      animation={false}
+      show={show || switchChain}
+      onHide={handleClose}
+      className="ChainModal"
+    >
+      <Modal.Header className="text-left">
+        <Modal.Title>{`Select ${
+          departureOrDestination === "destination" ? "destination" : "departure"
+        } chain`}</Modal.Title>
+        <span className="CloseModal" onClick={handleClose}>
+          <div className="close-modal"></div>
+        </span>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="nftChainListBox">
+          <ChainSearch />
+          <ul
+            onScroll={handleScroll}
+            ref={nftChainListRef}
+            className="nftChainList scrollSty"
+          >
+            {//! Show only mainnet FROM chains //
+            departureOrDestination === "departure" &&
+              !globalTestnet &&
+              fromChains
+                .filter(
+                  (chain) =>
+                    connectedWalletType ? (connectedWalletType === chain?.type && !chain.isDisabled) : (!chain.isDisabled)
+                )
+                .map((chain) => {
+                  const {
+                    image,
+                    text,
+                    key,
+                    coming,
+                    newChain,
+                    maintenance,
+                    mainnet,
+                    updated,
+                    nonce,
+                  } = chain;
+                  if (
+                    String(from?.text).toLowerCase() !==
+                    String(text).toLowerCase()
+                  )
+                    return (
+                      (mainnet || coming) && (
+                        <Chain
+                          chainSelectHandler={chainSelectHandler}
+                          updated={updated}
+                          newChain={newChain}
+                          maintenance={maintenance}
+                          coming={coming}
+                          text={text}
+                          chainKey={key}
+                          filteredChain={chain}
+                          image={image}
+                          key={`chain-${key}`}
+                          nonce={nonce}
+                        />
+                      )
+                    );
+                  return null;
+                })}
+            {//! Show only mainnet TO chains //
+            departureOrDestination === "destination" &&
+              !globalTestnet &&
+              toChains
+                .filter((chain) => !chain.isDisabled)
+                .map((chain) => {
+                  const {
+                    image,
+                    text,
+                    key,
+                    coming,
+                    newChain,
+                    maintenance,
+                    maintenanceTo,
+                    mainnet,
+                    updated,
+                    nonce,
+                  } = chain;
+
+                  if (
+                    String(to?.text).toLowerCase() !==
+                    String(text).toLowerCase()
+                  )
+                    return (
+                      (mainnet || coming) && (
+                        <Chain
+                          chainSelectHandler={chainSelectHandler}
+                          updated={updated}
+                          newChain={newChain}
+                          maintenance={maintenance}
+                          maintenanceTo={maintenanceTo}
+                          coming={coming}
+                          text={text}
+                          chainKey={key}
+                          filteredChain={chain}
+                          image={image}
+                          nonce={nonce}
+                          key={`chain-${key}`}
+                        />
+                      )
+                    );
+                  return null;
+                })}
+            {//! Show only testnet FROM chains //
+            departureOrDestination === "departure" &&
+              globalTestnet &&
+              fromChains
+                .filter(
+                  (chain) =>
+                    connectedWalletType ? (connectedWalletType === chain?.type && !chain.isDisabled) : (!chain.isDisabled)
+                )
+                .map((chain) => {
+                  const {
+                    image,
+                    text,
+                    key,
+                    coming,
+                    newChain,
+                    maintenance,
+                    testNet,
+                    updated,
+                    nonce,
+                  } = chain;
+                  if (
+                    String(from?.text).toLowerCase() !==
+                    String(text).toLowerCase()
+                  )
+                    return (
+                      testNet && (
+                        <Chain
+                          chainSelectHandler={chainSelectHandler}
+                          updated={updated}
+                          newChain={newChain}
+                          maintenance={maintenance}
+                          coming={coming}
+                          text={text}
+                          chainKey={key}
+                          filteredChain={chain}
+                          image={image}
+                          nonce={nonce}
+                          key={`chain-${key}`}
+                        />
+                      )
+                    );
+                  return null;
+                })}
+            {//! Show only testnet TO chains //
+            departureOrDestination === "destination" &&
+              globalTestnet &&
+              toChains
+                .filter((chain) => !chain.isDisabled)
+                .map((chain) => {
+                  const {
+                    image,
+                    text,
+                    key,
+                    coming,
+                    newChain,
+                    maintenance,
+                    maintenanceTo,
+                    testNet,
+                    updated,
+                    nonce,
+                  } = chain;
+                  if (
+                    String(to?.text).toLowerCase() !==
+                    String(text).toLowerCase()
+                  )
+                    return (
+                      testNet && (
+                        <Chain
+                          chainSelectHandler={chainSelectHandler}
+                          updated={updated}
+                          newChain={newChain}
+                          maintenance={maintenance}
+                          maintenanceTo={maintenanceTo}
+                          coming={coming}
+                          text={text}
+                          chainKey={key}
+                          filteredChain={chain}
+                          image={image}
+                          nonce={nonce}
+                          key={`chain-${key}`}
+                        />
+                      )
+                    );
+                  return null;
+                })}
+          </ul>
+          {!reached && <ScrollArrows />}
+        </div>
+      </Modal.Body>
+    </Modal>
+  );
 }
 
 ChainListBox.propTypes = {
-    serviceContainer: PropTypes.object,
+  serviceContainer: PropTypes.object,
 };
 
 export default withServices(ChainListBox);

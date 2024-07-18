@@ -12,6 +12,7 @@ import {
     setMetaMask,
     setEVMProvider,
     setWalletsModal,
+    setConnectedWalletType,
 } from "../../../store/reducers/generalSlice";
 import { getRightPath } from "../../../utils";
 import { withServices } from "../../App/hocs/withServices";
@@ -65,6 +66,7 @@ export default function HigherEVM(OriginalComponent) {
                     if (connected) {
                         dispatch(setMetaMask(true));
                         dispatch(setConnectedWallet("MetaMask"));
+                        dispatch(setConnectedWalletType("EVM"));
                         if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                     }
                     break;
@@ -77,6 +79,7 @@ export default function HigherEVM(OriginalComponent) {
                     dispatch(setWalletsModal(false));
                     if (connected && to) {
                         dispatch(setConnectedWallet("Trust Wallet"));
+                        dispatch(setConnectedWalletType("EVM"));
                         navigateToAccountRoute();
                     }
                     if (temporaryFrom) dispatch(setFrom(temporaryFrom));
@@ -91,6 +94,7 @@ export default function HigherEVM(OriginalComponent) {
                     dispatch(setWalletsModal(false));
                     if (connected && to) {
                         dispatch(setConnectedWallet("WalletConnect"));
+                        dispatch(setConnectedWalletType("EVM"));
                         navigateToAccountRoute();
                     }
                     break;

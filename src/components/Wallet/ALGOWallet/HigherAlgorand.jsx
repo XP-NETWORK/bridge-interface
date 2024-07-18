@@ -11,6 +11,7 @@ import {
     setAlgorandAddresses,
     setAlgoSigner,
     setConnectedWallet,
+    setConnectedWalletType,
     setFrom,
     setMyAlgo,
     setWalletsModal,
@@ -72,15 +73,18 @@ export default function HigherAlgorand(OriginalComponent) {
                     account = await connectMyAlgo(chainWrapper.chain);
                     account && dispatch(setMyAlgo(true));
                     account && dispatch(setConnectedWallet("MyAlgo"));
+                    account && dispatch(setConnectedWalletType("Algorand"));
                     break;
                 case "AlgoSigner":
                     account = await connectAlgoSigner(testnet);
                     account && dispatch(setAlgoSigner(true));
                     account && dispatch(setConnectedWallet("AlgoSigner"));
+                    account && dispatch(setConnectedWalletType("Algorand"));
                     break;
                 case "Pera": //TODO
                     account = await connectPera(chainWrapper.chain);
                     account && dispatch(setConnectedWallet("Pera"));
+                    account && dispatch(setConnectedWalletType("Algorand"));
                     break;
                 default:
                     break;

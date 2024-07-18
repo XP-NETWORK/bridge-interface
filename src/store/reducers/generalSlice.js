@@ -38,6 +38,7 @@ const initialState = {
   templeIsClaimed: false,
   destWalletAddress: "",
   isClaiming: false,
+  connectedWalletType: "",
 };
 
 const generalSlice = createSlice({
@@ -88,6 +89,9 @@ const generalSlice = createSlice({
 
     setConnectedWallet(state, action) {
       state.connectedWallet = action.payload;
+    },
+    setConnectedWalletType(state, action) {
+      state.connectedWalletType = action.payload;
     },
     setStaging(state, action) {
       state.staging = action.payload;
@@ -644,6 +648,7 @@ export const {
   setWhitelistingLoader,
   setWhiteListedCollection,
   setConnectedWallet,
+  setConnectedWalletType,
   setUnstoppableDomains,
   setRedirectModal,
   setHederaAccount,

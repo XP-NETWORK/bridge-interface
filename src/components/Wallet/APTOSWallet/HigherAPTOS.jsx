@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {
     setAccount,
     setConnectedWallet,
+    setConnectedWalletType,
     setFrom,
     setWalletsModal,
 } from "../../../store/reducers/generalSlice";
@@ -68,6 +69,7 @@ export default function HigherAPTOS(OriginalComponent) {
                     chainWrapper.chain.setPetraSigner(signer);
                     dispatch(setWalletsModal(false));
                     dispatch(setConnectedWallet("Petra"));
+                    dispatch(setConnectedWalletType("APTOS"));
 
                     break;
                 }

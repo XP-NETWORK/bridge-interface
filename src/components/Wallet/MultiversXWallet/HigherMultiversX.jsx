@@ -6,6 +6,7 @@ import { Chain } from "xp.network";
 import {
     setAccount,
     setConnectedWallet,
+    setConnectedWalletType,
     setDeepLink,
     setError,
     setFrom,
@@ -61,6 +62,7 @@ export default function HigherMultiversX(OriginalComponent) {
                 navigate("/");
                 dispatch(setAccount(""));
                 dispatch(setConnectedWallet(""));
+                dispatch(setConnectedWalletType(""));
                 dispatch(
                     setError({
                         message: "You are disconnected from the xPortal.",
@@ -128,6 +130,7 @@ export default function HigherMultiversX(OriginalComponent) {
                     }
                 }
                 dispatch(setConnectedWallet(walletConnected));
+                dispatch(setConnectedWalletType('Elrond'));
                 dispatch(setAccount(account.address));
                 chainWrapper.setSigner(account.signer);
                 bridge.setCurrentType(chainWrapper);

@@ -11,6 +11,7 @@ import {
   setKukaiWallet,
   setConnectedWallet,
   setTempleWalletData,
+  setConnectedWalletType,
 } from "../../store/reducers/generalSlice";
 import { setSigner } from "../../store/reducers/signersSlice";
 import PropTypes from "prop-types";
@@ -89,6 +90,7 @@ function TezosWallet({ wallet, close, serviceContainer }) {
             wallet === "TempleWallet" ? "Temple Wallet" : "Beacon "
           )
         );
+        dispatch(setConnectedWalletType("Tezos"));
         chain.setSigner(account.signer);
         bridge.setCurrentType(chain);
 

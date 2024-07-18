@@ -8,6 +8,7 @@ import {
   setWalletsModal,
   setFrom,
   setIsClaiming,
+  setConnectedWalletType,
 } from "../../../store/reducers/generalSlice";
 //import { setClaimable } from "../../../store/reducers/hederaSlice";
 import { Chain } from "xp.network";
@@ -82,6 +83,7 @@ export const withHederaConnection = (Wrapped) =>
                 dispatch(setAccount(address));
                 dispatch(setWalletsModal(false));
                 dispatch(setConnectedWallet("HashPack"));
+                dispatch(setConnectedWalletType("Hedera"));
                 dispatch(setFrom(getChainObject(Chain.HEDERA)));
                 dispatch(setWalletsModal(false));
               }

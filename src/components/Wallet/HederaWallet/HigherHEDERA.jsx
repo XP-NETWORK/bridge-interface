@@ -8,6 +8,7 @@ import {
     setMetaMask,
     setFrom,
     setError,
+    setConnectedWalletType,
 } from "../../../store/reducers/generalSlice";
 
 import { getChainObject } from "../../values";
@@ -39,6 +40,8 @@ function HigherHEDERA(OriginalComponent) {
             switch (wallet) {
                 case "HashPack":
                     await connectHashPack(network);
+                    dispatch(setConnectedWallet("HashPack"));
+                    dispatch(setConnectedWalletType("Hedera"));
                     break;
                 case "MM": {
                     const provider = window.ethereum;
@@ -59,6 +62,7 @@ function HigherHEDERA(OriginalComponent) {
                     if (connected) {
                         dispatch(setMetaMask(true));
                         dispatch(setConnectedWallet("MetaMask"));
+                        dispatch(setConnectedWalletType("Hedera"));
                         if (temporaryFrom) dispatch(setFrom(temporaryFrom));
                         if (to)
                             navigate(getRightPath(bridge.network, from, to));

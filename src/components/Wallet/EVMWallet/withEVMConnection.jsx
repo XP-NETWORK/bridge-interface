@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAccount, useNetwork } from "wagmi";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
-import { setAccount, setConnectedWallet, setError } from "../../../store/reducers/generalSlice";
+import { setAccount, setConnectedWallet, setConnectedWalletType, setError } from "../../../store/reducers/generalSlice";
 
 import { useNavigate } from "react-router";
 import { getRightPath } from "../../../utils";
@@ -47,6 +47,7 @@ const WalletConnect = ({ from, to, bridge, walletConnectChains }) => {
                             const adaptedSigner = provider.getSigner(account.address);
 
                             dispatch(setConnectedWallet("WalletConnect"));
+                            dispatch(setConnectedWalletType("EVM"));
                             dispatch(setAccount(address));
                             chainWrapper.setSigner(adaptedSigner);
                             bridge.setCurrentType(chainWrapper);
