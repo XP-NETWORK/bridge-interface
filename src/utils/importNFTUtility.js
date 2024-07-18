@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 import ABI from "../event/assets/abi/mintAbi.json";
 import ABI1155 from "../event/assets/abi/erc1155Abi.json";
 import axios from "axios";
+import { setupURI } from "../utils";
 
 /**
  * FORMAT DATA
@@ -20,12 +21,12 @@ const formatData = (
   return {
     collectionIdent: contractAddress,
     uri: tokenURI,
+    image: tokenURI,
     native: {
       owner: account,
       tokenId,
       uri: tokenURI,
       contract: contractAddress,
-      name: "NFTs",
       chainId,
       contractType,
       ...native,
@@ -42,8 +43,10 @@ export const validForm = (from, contract, tokenId) => {
       return contract?.length === 42 && tokenId;
     case "Elrond":
       return tokenId;
-    case "Hedera":
+    case "Hedera" || "Tezos":
       return contract && tokenId;
+    case "Ton":
+      return contract;
     default:
       return true;
   }
@@ -85,6 +88,8 @@ export const importNFTURI = async (
       return await importNFTURI_Elrond(contract, tokenId, account, from);
     case "Hedera":
       return await importNFTURI_Hedera(contract, tokenId, account, from);
+    case "Tezos":
+      return await importNFTURI_Tezos(contract, tokenId, account, from);
     default:
       throw new Error("Invalid chain");
   }
@@ -197,13 +202,8 @@ export const importNFTURI_Hedera = async (
       data.metadata,
       "base64"
     ).toLocaleString();
-    console.log({
-      decodeMetadata,
-    });
 
-    const { data: metadata } = await axios.get(
-      `https://ipfs.io/ipfs/${decodeMetadata.split("ipfs://")[1]}`
-    );
+    const { data: metadata } = await axios.get(setupURI(decodeMetadata));
 
     return formatData(
       tokenId,
@@ -213,6 +213,75 @@ export const importNFTURI_Hedera = async (
       "",
       from.nonce,
       metadata
+    );
+  } catch (error) {
+    console.log({ error });
+    throw new Error(
+      error.response?.data?.message ||
+        error.message ||
+        "An error occurred while importing the NFT!"
+    );
+  }
+};
+
+/**
+ *  IMPORT NFT FROM TEZOS CHAIN
+ */
+export const importNFTURI_Tezos = async (contract, tokenId, account, from) => {
+  try {
+    const { data } = await axios.get(
+      `https://api.ghostnet.tzkt.io/v1/tokens/balances?account=${account}&tokenId=${tokenId}&token.contract=${contract}&token.standard=fa2&limit=10000`
+    );
+    console.log({ data, uri: setupURI(data[0].token.metadata.displayUri) });
+
+    if (data.length <= 0) {
+      return Promise.reject(new Error("You don't own this NFT!"));
+    }
+
+    return formatData(
+      contract,
+      setupURI(data[0].token.metadata.displayUri),
+      account,
+      tokenId,
+      "FA2",
+      from.nonce,
+      data[0].token.metadata
+    );
+  } catch (error) {
+    console.log({ error });
+    throw new Error(
+      error.response?.data?.message ||
+        error.message ||
+        "An error occurred while importing the NFT!"
+    );
+  }
+};
+
+/**
+ * IMPORT NFT FROM TON CHAIN
+ */
+export const importNFTURI_TON = async (contract, tokenId, account, from) => {
+  try {
+    const { data } = await axios.get(
+      `https://testnet.tonapi.io/v2/accounts/${account}/nfts?collection=${contract}&token_id=${tokenId}`
+    );
+
+    // if (data.owner !== account) {
+    //   return Promise.reject(new Error("You don't own this NFT!"));
+    // }
+
+    console.log({
+      data,
+    });
+
+    return formatData(
+      contract,
+      data.uri,
+      account,
+      tokenId,
+      "TON",
+      from.nonce,
+      data
     );
   } catch (error) {
     console.log({ error });
