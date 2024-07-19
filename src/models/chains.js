@@ -782,8 +782,8 @@ class TON extends AbstractChain {
 
     async preParse(nft) {
         const _contract = nft.collectionIdent || "SingleNFt";
-        const withMetadata = Object.keys(nft.native?.metadata).length > 0;
-        let uri = "";
+        const withMetadata = Object.keys(nft.native?.metaData ?? {}).length > 0;
+        let uri = nft?.uri ?? "";
         let native_metadata = {};
         if (withMetadata) {
             const data = JSON.stringify(nft.native.metadata);
@@ -799,6 +799,7 @@ class TON extends AbstractChain {
         return {
             collectionIdent: _contract,
             uri,
+            image: nft.image,
             metaData: withMetadata
                 ? {
                       ...nft.native.metadata,
@@ -808,7 +809,7 @@ class TON extends AbstractChain {
 
             native: {
                 ...nft.native,
-                tokenId: nft.native.nftItemAddr,
+                tokenId: nft?.native?.nftItemAddr ?? nft.native.name?.split("#")?.[1],
                 contract: _contract,
             },
         };

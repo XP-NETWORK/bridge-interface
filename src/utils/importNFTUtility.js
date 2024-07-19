@@ -11,27 +11,32 @@ import { setupURI } from "../utils";
  */
 const formatData = (
   contractAddress,
-  tokenURI,
-  account,
+  uri,
+  owner,
   tokenId,
   contractType,
   chainId,
   native
 ) => {
-  return {
+  const obj = {
     collectionIdent: contractAddress,
-    uri: tokenURI,
-    image: tokenURI,
+    uri,
     native: {
-      owner: account,
+      owner,
       tokenId,
-      uri: tokenURI,
+      uri,
       contract: contractAddress,
       chainId,
       contractType,
       ...native,
     },
   };
+
+  if (native?.image) {
+    obj.image = native.image;
+  }
+
+  return obj;
 };
 
 /**
@@ -45,8 +50,8 @@ export const validForm = (from, contract, tokenId) => {
       return tokenId;
     case "Hedera" || "Tezos":
       return contract && tokenId;
-    case "Ton":
-      return contract;
+    case "TON":
+      return contract && contract.length > 10;
     default:
       return true;
   }
@@ -56,17 +61,21 @@ export const validForm = (from, contract, tokenId) => {
  * CHECK NFT EXIST
  */
 export const checkNFTExist = (NFTList, contractAddress, tokenId, from) => {
-  const id = tokenId.toString();
-  const fomatedID = id.length < 2 ? "0" + id : id;
   switch (from.type) {
     case "Elrond":
-      return NFTList.find(
-        (n) =>
-          n.native.contract === contractAddress && n.native.tokenId == fomatedID
+      return NFTList.find((n) =>
+        n.native.contract === contractAddress &&
+        n.native.tokenId == tokenId.toString().length < 2
+          ? "0" + tokenId.toString()
+          : tokenId.toString()
       );
+    case "TON":
+      return NFTList.find((n) => n.native.contract === contractAddress);
     default:
       return NFTList.find(
-        (n) => n.native.contract === contractAddress && n.native.tokenId == id
+        (n) =>
+          n.native.contract === contractAddress &&
+          n.native.tokenId == tokenId?.toString()
       );
   }
 };
@@ -90,6 +99,8 @@ export const importNFTURI = async (
       return await importNFTURI_Hedera(contract, tokenId, account, from);
     case "Tezos":
       return await importNFTURI_Tezos(contract, tokenId, account, from);
+    case "TON":
+      return await importNFTURI_TON(contract, account, from);
     default:
       throw new Error("Invalid chain");
   }
@@ -123,6 +134,7 @@ export const importNFTURI_EVM = async (
       from.chainId
     );
   } catch (error) {
+    console.log("Error 721", error);
     try {
       // CHECK IF THE USER HAS THE NFT ON ERC1155 CHAIN
       const balance1155 = await Contract1155.balanceOf(account, tokenId);
@@ -138,6 +150,7 @@ export const importNFTURI_EVM = async (
         from.chainId
       );
     } catch (error) {
+      console.log({ error });
       throw new Error("You don't own this NFT!");
     }
   }
@@ -152,7 +165,7 @@ export const importNFTURI_Elrond = async (contract, tokenId, account, from) => {
     const fomatedID = id.length < 2 ? "0" + id : id;
     const tokenIdentifier = `${contract}-${fomatedID}`;
     const { data } = await axios.get(
-      // TODO: put the mainnet URL
+      // TODO: put the mainnet URL : https://api.multiversx.com
       `https://devnet-api.multiversx.com/nfts/${tokenIdentifier}`
     );
 
@@ -160,15 +173,10 @@ export const importNFTURI_Elrond = async (contract, tokenId, account, from) => {
       return Promise.reject(new Error("You don't own this NFT!"));
     }
 
-    return formatData(
-      contract,
-      data.url,
-      account,
-      fomatedID,
-      "",
-      from.nonce,
-      data
-    );
+    return formatData(contract, data.url, account, fomatedID, "", from.nonce, {
+      ...data,
+      image: data.url,
+    });
   } catch (error) {
     console.log({ error });
     throw new Error(
@@ -230,22 +238,28 @@ export const importNFTURI_Hedera = async (
 export const importNFTURI_Tezos = async (contract, tokenId, account, from) => {
   try {
     const { data } = await axios.get(
-      `https://api.ghostnet.tzkt.io/v1/tokens/balances?account=${account}&tokenId=${tokenId}&token.contract=${contract}&token.standard=fa2&limit=10000`
+      // TODO: put the mainnet URL : https://api.tzkt.io
+      `https://api.ghostnet.tzkt.io/v1/tokens/balances?account=${account}&token.tokenId=${tokenId}&token.contract=${contract}&token.standard=fa2&limit=10000`
     );
-    console.log({ data, uri: setupURI(data[0].token.metadata.displayUri) });
 
-    if (data.length <= 0) {
+    const {token} = data.find((t) => t.token.tokenId === tokenId);
+
+    if (data.length <= 0 || !token) {
       return Promise.reject(new Error("You don't own this NFT!"));
     }
 
     return formatData(
       contract,
-      setupURI(data[0].token.metadata.displayUri),
+      setupURI(token.metadata?.artifactUri),
       account,
       tokenId,
       "FA2",
       from.nonce,
-      data[0].token.metadata
+      {
+        ...token.metadata,
+        image: setupURI(token.metadata?.displayUri ?? token.metadata?.artifactUri),
+        animation_url: setupURI(token.metadata?.artifactUri),
+      }
     );
   } catch (error) {
     console.log({ error });
@@ -260,28 +274,33 @@ export const importNFTURI_Tezos = async (contract, tokenId, account, from) => {
 /**
  * IMPORT NFT FROM TON CHAIN
  */
-export const importNFTURI_TON = async (contract, tokenId, account, from) => {
+export const importNFTURI_TON = async (contract, account, from) => {
   try {
     const { data } = await axios.get(
-      `https://testnet.tonapi.io/v2/accounts/${account}/nfts?collection=${contract}&token_id=${tokenId}`
+      // TODO: put the testnet URL 
+      `https://api.ton.cat/v2/contracts/nft/${contract}`
     );
 
-    // if (data.owner !== account) {
-    //   return Promise.reject(new Error("You don't own this NFT!"));
-    // }
+    if (data[data.type].owner_address !== account) {
+      return Promise.reject(new Error("You don't own this NFT!"));
+    }
 
-    console.log({
-      data,
-    });
+    if (data.type !== "nft_item") {
+      return Promise.reject(new Error("Please enter the item address!"));
+    }
 
     return formatData(
       contract,
-      data.uri,
+      data.nft_item.content_url,
       account,
-      tokenId,
+      contract,
       "TON",
       from.nonce,
-      data
+      {
+        ...data.nft_item.metadata,
+        image: data.nft_item.metadata.image.original,
+        ...data.nft_item.metadata.image,
+      }
     );
   } catch (error) {
     console.log({ error });
@@ -290,5 +309,80 @@ export const importNFTURI_TON = async (contract, tokenId, account, from) => {
         error.message ||
         "An error occurred while importing the NFT!"
     );
+  }
+};
+
+/**
+ * IMPORT INPUTS
+ */
+export const importInputs = (from) => {
+  switch (from.type) {
+    case "EVM":
+      return {
+        contract: {
+          label: "1. Paste contract address",
+          placeholder: "0x...",
+        },
+        tokenId: {
+          label: "2. Paste Token ID",
+          placeholder: "Enter Token ID",
+        },
+      };
+    case "Elrond":
+      return {
+        contract: {
+          label: "1. Paste Collection address",
+          placeholder: "0x...",
+        },
+        tokenId: {
+          label: "2. Paste Token ID",
+          placeholder: "Enter Token ID",
+        },
+      };
+    case "Hedera":
+      return {
+        contract: {
+          label: "1. Paste contract address",
+          placeholder: "EBSD-...",
+        },
+        tokenId: {
+          label: "2. Paste Token ID",
+          placeholder: "01",
+        },
+      };
+    case "Tezos":
+      return {
+        contract: {
+          label: "1. Paste contract address",
+          placeholder: "0x...",
+        },
+        tokenId: {
+          label: "2. Paste Token ID",
+          placeholder: "Enter Token ID",
+        },
+      };
+    case "TON":
+      return {
+        contract: {
+          label: "1. Paste item address",
+          placeholder: "EQD...",
+        },
+        tokenId: {
+          label: "",
+          placeholder: "",
+        },
+      };
+
+    default:
+      return {
+        contract: {
+          label: "1. Paste contract address",
+          placeholder: "0x...",
+        },
+        tokenId: {
+          label: "2. Paste Token ID",
+          placeholder: "Enter Token ID",
+        },
+      };
   }
 };

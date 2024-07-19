@@ -1,6 +1,8 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import { importInputs } from "../../../../utils/importNFTUtility";
 
 export default function EVMBody({
   error,
@@ -16,6 +18,7 @@ export default function EVMBody({
   contractOnBlur,
   handleContractChange,
 }) {
+  const from = useSelector((state) => state.general.from);
   const OFF = { opacity: 0.6, pointerEvents: "none" };
   return (
     <Modal.Body className="import-nft__body">
@@ -23,7 +26,9 @@ export default function EVMBody({
       <div className="import-nft__form">
         <form action="" onSubmit={((e)=>{e.preventDefault()})}>
           <div>
-            <label htmlFor="contractAdd">1. Paste contract address</label>
+            <label htmlFor="contractAdd">
+              {importInputs(from).contract.label}
+            </label>
             <input
               onBlur={() => setContractOnBlur(true)}
               onChange={(e) => {
@@ -33,7 +38,7 @@ export default function EVMBody({
               type="text"
               id="contractAdd"
               name="contractAddress"
-              placeholder="0x..."
+              placeholder={importInputs(from).contract.placeholder}
               value={contract}
               className={
                  validContract
@@ -47,17 +52,19 @@ export default function EVMBody({
               </span>
             )}
           </div>
-          <div>
-            <label htmlFor="tokeId">2. Paste Toked ID</label>
+          {from.type !== "TON" ? <div>
+            <label htmlFor="tokeId">
+              {importInputs(from).tokenId.label}
+            </label>
             <input
               onChange={(e) => setTokenId(e.target.value)}
               type="text"
               id="tokedId"
               name="tokenId"
-              placeholder="Enter Token ID"
+              placeholder={importInputs(from).tokenId.placeholder}
               value={tokenId}
             />
-          </div>
+          </div>:""}
           <div className="import-nft__buttons">
             <div
               onClick={handleImport}
