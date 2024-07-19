@@ -54,7 +54,7 @@ export default function ConnectMetamaskWithHaspack({ handleClose }) {
   return (
     <div>
       <Modal.Header className="border-0 pt-5">
-        <Modal.Title>Connect Metamask For Galax Campaign</Modal.Title>
+        <Modal.Title>Connect Metamask For Galaxy Campaign</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="d-flex justify-content-center align-items-center px-5 py-3">

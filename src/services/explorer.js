@@ -18,8 +18,7 @@ export const notifyExplorerForHederaAssociation = async (hederaAddress, evmAddre
         evmAddress,
     };
     const explorerService = axios.create({
-        baseURL: "https://dev-explorer-api.herokuapp.com",
-        timeout: 1000,
+        baseURL: "https://explorer-app.xp.network",
     });
     const response = (await explorerService.post("/createHederaAssociation", body)).data;
     return response;

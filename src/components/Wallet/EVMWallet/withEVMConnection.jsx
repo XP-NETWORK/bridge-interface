@@ -105,7 +105,7 @@ export const withEVMConnection = (Wrapped) =>
 
         useEffect(() => {
             if (!bridge) return;
-
+            if(to?.type === "Hedera") return;
             if (account && chainId) {
                 console.log("mm way");
                 connect(account, bridge.getNonce(chainId), window.ethereum);

@@ -3,9 +3,12 @@ import { HashConnect } from "hashconnect";
 import { LedgerId } from "@hashgraph/sdk";
 import icon from "./../../../assets/img/icons/XPNET.svg";
 
+let network = location.pathname.includes("testnet");
 export const hashConnect = new HashConnect(
-  LedgerId.TESTNET,
-  "bfa190dbe93fcf30377b932b31129d05",
+  network ? LedgerId.TESTNET : LedgerId.MAINNET,
+  network
+    ? "bfa190dbe93fcf30377b932b31129d05"
+    : "03182f28980fc53e57d43b0af01fc044",
   {
     url: location.origin,
     name: "XP.NETWORK Multi-chain NFT bridge",
@@ -17,10 +20,9 @@ export const hashConnect = new HashConnect(
 );
 
 export const connectHashPack = async (testnet) => {
-  // debugger;
   let initData;
   try {
-    console.log("asdfasdf", testnet);
+    console.log("network", testnet);
     initData = await hashConnect.init();
     hashConnect.openPairingModal();
     return initData;

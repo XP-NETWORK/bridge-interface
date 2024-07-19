@@ -19,9 +19,9 @@ const intervalTm = 10_000;
 const deployFeeIntTm = 30_000;
 
 function SendFees(props) {
-    const { serviceContainer, chainSpecificRender } = props;
+    const { serviceContainer } = props;
     const { bridge } = serviceContainer;
-    const DeployUserStore = chainSpecificRender?.DeployUserStore;
+    // const DeployUserStore = chainSpecificRender?.DeployUserStore;
 
     const dispatch = useDispatch();
     const balance = useSelector((state) => state.general.balance);
@@ -147,20 +147,20 @@ function SendFees(props) {
         };
     }, [selectedNFTList, to]);
 
-    const renderDeployUserStore =
-        /*!testnet &&*/
-        chainWrapper?.disableWhiteList &&
-        DeployUserStore &&
-        Boolean(selectedNFTList.length);
+    // const renderDeployUserStore =
+    //     /*!testnet &&*/
+    //     chainWrapper?.disableWhiteList &&
+    //     DeployUserStore &&
+    //     Boolean(selectedNFTList.length);
 
     return (
         <div className="fees__container">
-            {renderDeployUserStore && (
+            {/* {renderDeployUserStore && (
                 <DeployUserStore
                     nft={selectedNFTList.at(-1)}
                     chainWrapper={chainWrapper}
                 />
-            )}
+            )} */}
             <div className="fees">
                 <div className="fees__title">Fees</div>
                 <div className="fees__bank">

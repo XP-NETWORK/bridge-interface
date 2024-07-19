@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
-import { Alert, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 import { Modal } from "react-bootstrap";
 import ImportNFTModal from "../Modals/ImportNFTModal/ImportNFTModal";
@@ -230,7 +230,8 @@ function NFTaccount(props) {
         } ${lockMainPannel ? " lockedX" : ""}`}
       >
         {dest?.type === "Hedera" && (
-          <Alert variant={"warning"}>Kindly make auto association on of your hashpack wallet before transfer nfts to hedera, thank you.</Alert>
+          // <Alert variant={"warning"}>Kindly make auto association on of your hashpack wallet before transfer nfts to hedera, thank you.</Alert>
+          <></>
         )}
         <Modal show={isSrcHedera} animation={null}>
           <ConnectMetamaskWithHaspack handleClose={handleClose}/>

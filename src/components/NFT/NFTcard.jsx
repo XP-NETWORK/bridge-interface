@@ -178,9 +178,10 @@ export default function NFTcard({ serviceContainer, chain, nft, index, claimable
                 ) : (
                     <div
                         onClick={(e) =>
-                            nft.whitelisted && !detailsOn && !claimables ? addRemoveNFT(nft, e) : undefined
+                            true && !detailsOn && !claimables ? addRemoveNFT(nft, e) : undefined
                         }
-                        className={nft.whitelisted ? "nft__card--selected" : "nft__card"}
+                        // eslint-disable-next-line no-constant-condition
+                        className={true ? "nft__card--selected" : "nft__card"}
                     >
                         {nft.native?.amount && <SFTMark amount={nft?.native.amount} />}
                         {/* {originChainImg && (
@@ -191,7 +192,7 @@ export default function NFTcard({ serviceContainer, chain, nft, index, claimable
                                 {originChainImg && <OriginChainMark icon={originChainImg} />}
                                 {!nft.whitelist && (
                                     <WhitelistButton
-                                        isNFTWhitelisted={nft.whitelisted}
+                                        isNFTWhitelisted={true}
                                         whitelist={onClickWhiteListButton}
                                     />
                                 )}
@@ -212,7 +213,7 @@ export default function NFTcard({ serviceContainer, chain, nft, index, claimable
                                 <BrockenUtlGridView />
                             )}
 
-                            {!claimables && nft.whitelisted ? (
+                            {!claimables && true ? (
                                 !selected(from.type, nft, selectedNFTs) ? (
                                     <div className="nft-radio"></div>
                                 ) : (
@@ -222,7 +223,7 @@ export default function NFTcard({ serviceContainer, chain, nft, index, claimable
                                 ""
                             )}
 
-                            {!nft.whitelisted /*|| !verifiedContract*/ && <NotWhiteListed />}
+                            {false /*|| !verifiedContract*/ && <NotWhiteListed />}
                             {claimables && <ClaimableCard nft={nft} index={index} />}
                         </div>
                         <div className="nft__footer">

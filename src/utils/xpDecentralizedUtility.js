@@ -6,7 +6,7 @@ import { v3_ChainId } from "./chainsTypes";
 import { ethers } from "ethers";
 export class XPDecentralizedUtility {
   isV3Enabled = false;
-  factory = ChainFactory(ChainFactoryConfigs.TestNet());
+  factory = ChainFactory(ChainFactoryConfigs.MainNet());
 
   constructor() {
     this.isV3Enabled = v3_bridge_mode;
@@ -154,6 +154,7 @@ export class XPDecentralizedUtility {
 
   getLockNftSignatures = async (targetChain, hash, originChainIdentifier) => {
     await sleep(TIME.FIVE_SECONDS);
+    console.log("hash", hash, v3_ChainId[originChainIdentifier.nonce].name);
     let signatures = await targetChain
       .getStorageContract()
       .getLockNftSignatures(hash, v3_ChainId[originChainIdentifier.nonce].name);
@@ -231,7 +232,9 @@ export class XPDecentralizedUtility {
     const resultObject = chainWapper.handlerResult(result);
     return resultObject;
   };
-  claimNFT_V3 = async (originChainIdentifier, targetChainIdentifier, hash) => {
+  claimNFT_V3 = async (originChainIdentifier, targetChainIdentifier, hashs) => {
+    const hash =
+      originChainIdentifier.nonce == 29 ? "0x" + hashs.slice(0, 64) : hashs;
     const originChain = await this.factory.inner(
       v3_ChainId[originChainIdentifier?.nonce].name
     );
@@ -280,7 +283,10 @@ export class XPDecentralizedUtility {
     );
 
     console.log("claimed: ", claim);
-    if (v3_ChainId[targetChainIdentifier?.nonce].name === "TON" || v3_ChainId[targetChainIdentifier?.nonce].name === "HEDERA") {
+    if (
+      v3_ChainId[targetChainIdentifier?.nonce].name === "TON" ||
+      v3_ChainId[targetChainIdentifier?.nonce].name === "HEDERA"
+    ) {
       return {
         hash: claim.hash(),
       };
