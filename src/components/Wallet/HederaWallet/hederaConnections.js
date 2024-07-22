@@ -24,10 +24,24 @@ export const connectHashPack = async (testnet) => {
   try {
     console.log("network", testnet);
     initData = await hashConnect.init();
-    hashConnect.openPairingModal();
+    if (hashConnect.connectedAccountIds.length > 0) {
+      console.log(hashConnect.connectedAccountIds);
+    } else {
+      hashConnect.openPairingModal();
+    }
     return initData;
   } catch (error) {
     console.log(error, "err2or");
     return false;
+  }
+};
+
+export const disconnect = async () => {
+  try {
+    await hashConnect.disconnect();
+    console.log("disconnect");
+  } catch (ex) {
+    console.log(ex, "disconnect err2or");
+    return true;
   }
 };
