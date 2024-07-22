@@ -53,10 +53,7 @@ export class XPDecentralizedUtility {
       const sdk = await import("@hashgraph/sdk");
       originChain.injectSDK(sdk);
     }
-
-    await originChain.approveNft(signer, tokenId, contract, {
-      gasLimit: 5_000_000,
-    });
+    await originChain.approveNft(signer, tokenId, contract);
 
     await sleep(TIME.TEN_SECONDS);
   };
@@ -136,10 +133,7 @@ export class XPDecentralizedUtility {
       nft.contract,
       v3_ChainId[toChain?.nonce].name,
       receiver,
-      tokenId,
-      {
-        gasLimit: 5_000_000,
-      }
+      tokenId
     );
     console.log({ res });
     const hash = await res.hash();
@@ -276,10 +270,7 @@ export class XPDecentralizedUtility {
     claim = await targetChain.claimNft(
       targetChainSigner,
       targetChain.transform(nftData),
-      signatures,
-      {
-        gasLimit: 5_000_000,
-      }
+      signatures  
     );
 
     console.log("claimed: ", claim);
