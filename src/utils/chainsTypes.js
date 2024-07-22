@@ -133,3 +133,13 @@ export const v3_ChainId = {
   29: {name: 'HEDERA', type: "HEDERA"},
 }
   
+export const v3_getChainNonce = {
+  "MULTIVERSX" : 2,
+  'BSC' : 4,
+  'ETH' : 5,
+  'MATIC' : 7,
+  'TEZOS' : 18,
+  'SECRET' : 24,
+  'TON' : 27,
+  'HEDERA' : 29,
+}
