@@ -24,11 +24,11 @@ export const connectHashPack = async (testnet) => {
   try {
     console.log("network", testnet);
     initData = await hashConnect.init();
-    if (hashConnect.connectedAccountIds.length > 0) {
-      console.log(hashConnect.connectedAccountIds);
-    } else {
-      hashConnect.openPairingModal();
-    }
+    // if (hashConnect.connectedAccountIds.length > 0) {
+    //   console.log(hashConnect.connectedAccountIds);
+    // } else {
+    await hashConnect.openPairingModal();
+    // }
     return initData;
   } catch (error) {
     console.log(error, "err2or");

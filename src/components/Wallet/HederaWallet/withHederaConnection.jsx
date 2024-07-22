@@ -44,7 +44,7 @@ export const withHederaConnection = (Wrapped) =>
                   Chain.HEDERA,
                   chainWrapper.chain.injectSDK(hashSDK)
                 );
-
+                console.log("asdasdasdas", signer);
                 injectedChainWrapper.setSigner(signer);
               }
 

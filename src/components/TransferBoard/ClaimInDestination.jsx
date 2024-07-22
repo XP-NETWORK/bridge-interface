@@ -74,7 +74,7 @@ export const ClaimInDestination = (connection) => {
 
         const { hash: claimedHash } = await xPDecentralizedUtility.claimNFT(
           originChainIdentifier,
-          targetChainIdentifier,
+          bridge,
           hash,
           chainWapper,
           fromChainWapper
