@@ -470,7 +470,7 @@ export const chains = [
         image: { avatar: true, src: HBAR },
         testNet: true,
         mainnet: true,
-        newChain: true,
+        newChain: false,
         coming: false,
         chainId: 295,
         tnChainId: 296,

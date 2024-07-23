@@ -122,14 +122,12 @@ class Bridge {
 
         console.log(this.bridge)
         try {
-            console.log("trying")
             const params = {
                 nonce,
                 chainParams,
                 chain: await this.bridge.inner(nonce),
                 bridge: this.bridge,
             };
-            console.log("trying not")
 
             switch (chainParams.type) {
                 case ChainType.EVM:

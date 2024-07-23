@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { setQuietConnection } from "../../store/reducers/signersSlice";
 import {
   setError,
+  setIsAssciated,
   setTempleClaimed,
   setTempleWalletData,
   setTemporaryFrom,
   setTransferLoaderModal,
 } from "../../store/reducers/generalSlice";
 import { XPDecentralizedUtility } from "../../utils/xpDecentralizedUtility";
-import { Modal } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import WalletList from "../Wallet/WalletList";
 
 export const ClaimInDestination = (connection) => {
@@ -39,6 +40,8 @@ export const ClaimInDestination = (connection) => {
     const templeIsClaimed = useSelector(
       (state) => state.general.templeIsClaimed
     );
+
+    const isAssociated = useSelector((state) => state.general.isAssociated);
 
     const handler = async () => {
       if (to.text === "Tezos") {
@@ -71,6 +74,16 @@ export const ClaimInDestination = (connection) => {
           originChainIdentifier,
           targetChainIdentifier,
         });
+
+        if (to?.type === "Hedera" && !isAssociated) {
+          console.log("inside association");
+          await xPDecentralizedUtility.associateTokens(
+            targetChainIdentifier
+          );
+          dispatch(setIsAssciated(true));
+          dispatch(setTransferLoaderModal(false));
+          return;
+        }
 
         const { hash: claimedHash } = await xPDecentralizedUtility.claimNFT(
           originChainIdentifier,
@@ -150,6 +163,10 @@ export const ClaimInDestination = (connection) => {
       }
     };
 
+    const transferModalLoader = useSelector(
+      (state) => state.general.transferModalLoader
+    );
+
     return (
       <>
         <Modal
@@ -183,8 +200,15 @@ export const ClaimInDestination = (connection) => {
             </div>
           </Modal.Body>
         </Modal>
-        <button className="changeBtn ClaimInDestination" onClick={handler}>
-          Claim
+        <button
+          className="changeBtn ClaimInDestination"
+          onClick={handler}
+          disabled={transferModalLoader}
+        >
+          {to?.type !== "Hedera" ? "Claim" : isAssociated ? "Claim" : "Associate Token"}
+          {transferModalLoader && (
+            <Spinner animation="border" size="sm" className="ml-3" />
+          )}
         </button>
       </>
     );

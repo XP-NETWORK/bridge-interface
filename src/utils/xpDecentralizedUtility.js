@@ -1,13 +1,13 @@
 import { ChainFactory, ChainFactoryConfigs } from "xp-decentralized-sdk";
 import { sleep } from "../utils";
 import { TIME } from "../constants/time";
-import { v3_bridge_mode } from "../components/values";
+import { isTestnet, v3_bridge_mode } from "../components/values";
 import { v3_ChainId, v3_getChainNonce } from "./chainsTypes";
 import { ethers } from "ethers";
 
 export class XPDecentralizedUtility {
   isV3Enabled = false;
-  factory = ChainFactory(ChainFactoryConfigs.MainNet());
+  factory = ChainFactory(isTestnet ? ChainFactoryConfigs.TestNet() : ChainFactoryConfigs.MainNet());
 
   constructor() {
     this.isV3Enabled = v3_bridge_mode;
@@ -208,11 +208,7 @@ export class XPDecentralizedUtility {
     fromChainWapper = null
   ) => {
     if (this.isV3Enabled) {
-      return await this.claimNFT_V3(
-        originChainIdentifier,
-        hash,
-        bridge
-      );
+      return await this.claimNFT_V3(originChainIdentifier, hash, bridge);
     } else {
       return await this.claimNFT_V2(chainWapper, fromChainWapper, hash);
     }
@@ -223,28 +219,26 @@ export class XPDecentralizedUtility {
     const resultObject = chainWapper.handlerResult(result);
     return resultObject;
   };
-  claimNFT_V3 = async (originChainIdentifier, hashs,bridge) => {
+  claimNFT_V3 = async (originChainIdentifier, hashs, bridge) => {
     const hash =
       originChainIdentifier.nonce == 29 ? "0x" + hashs.slice(0, 64) : hashs;
     const originChain = await this.factory.inner(
       v3_ChainId[originChainIdentifier?.nonce].name
     );
-    console.log(originChain)
+    console.log(originChain);
     const nftData = await this.getClaimData(originChain, hash);
 
-
-    const targetChain = await this.factory.inner(
-      nftData.destinationChain
-    );
+    const targetChain = await this.factory.inner(nftData.destinationChain);
 
     const signatures = await this.getLockNftSignatures(
       targetChain,
       hash,
       originChainIdentifier
     );
-    console.log("nonce", v3_getChainNonce[nftData.destinationChain])
 
-    const targetChainIdentifier = await bridge.getChain(v3_getChainNonce[nftData.destinationChain]);
+    const targetChainIdentifier = await bridge.getChain(
+      v3_getChainNonce[nftData.destinationChain]
+    );
 
     await targetChainIdentifier.checkSigner();
     const targetChainSigner = await targetChainIdentifier.getSigner();
@@ -252,7 +246,6 @@ export class XPDecentralizedUtility {
       targetChainSigner,
       targetChainIdentifier,
     });
-
 
     console.log("claimNft: ", {
       targetChainSigner,
@@ -268,7 +261,7 @@ export class XPDecentralizedUtility {
     claim = await targetChain.claimNft(
       targetChainSigner,
       targetChain.transform(nftData),
-      signatures  
+      signatures
     );
 
     console.log("claimed: ", claim);
@@ -281,6 +274,21 @@ export class XPDecentralizedUtility {
       };
     }
     return claim?.ret;
+  };
+
+  associateTokens = async (targetChainIdentifier) => {
+    const targetChain = await this.factory.inner(v3_ChainId[targetChainIdentifier?.nonce].name);
+
+    const sdk = await import("@hashgraph/sdk");
+    targetChain.injectSDK(sdk);
+
+    await targetChainIdentifier.checkSigner();
+    const targetChainSigner = await targetChainIdentifier.getSigner();
+
+    const isAssociated = await targetChain.associateTokens(targetChainSigner);
+    console.log({ isAssociated });
+
+    return isAssociated;
   };
 
   decodeParams = async (data) => {

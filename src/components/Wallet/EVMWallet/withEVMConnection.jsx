@@ -88,6 +88,9 @@ export const withEVMConnection = (Wrapped) =>
         const { chainId, account } = useWeb3React();
         const { bridge } = serviceContainer;
 
+        const isClaiming = useSelector((state) => state.general.isClaiming);
+
+
         async function connect(account, nonce, provider) {
             const chainWrapper = await bridge.getChain(nonce);
 
@@ -105,7 +108,8 @@ export const withEVMConnection = (Wrapped) =>
 
         useEffect(() => {
             if (!bridge) return;
-            if(to?.type === "Hedera") return;
+            if(to?.type === "Hedera" && isClaiming) return;
+
             if (account && chainId) {
                 console.log("mm way");
                 connect(account, bridge.getNonce(chainId), window.ethereum);
