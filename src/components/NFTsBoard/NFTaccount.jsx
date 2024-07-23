@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 
 import { Modal } from "react-bootstrap";
 import ImportNFTModal from "../Modals/ImportNFTModal/ImportNFTModal";
@@ -11,10 +11,12 @@ import {
   setBigLoader,
   setPreloadNFTs,
   setNFTList,
+  setTransferLoaderModal,
+  setIsAssociated,
 } from "../../store/reducers/generalSlice";
 import { setIsEmpty } from "../../store/reducers/paginationSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { saveForSearch } from "../../utils";
+import { saveForSearch, sleep } from "../../utils";
 import { ReturnBtn } from "../Settings/returnBtn";
 import DesktopTransferBoard from "../TransferBoard/DesktopTransferBoard";
 import "./NFTsBoard.css";
@@ -47,6 +49,9 @@ import withChains from "./hocs";
 import ReactGA from "../../services/GA4";
 import ReceiverIsContract from "../Alerts/ReceiverIsContract";
 import ConnectMetamaskWithHaspack from "../Modals/ConnectMetamaskModal";
+import { XPDecentralizedUtility } from "../../utils/xpDecentralizedUtility";
+import { connectHashPack } from "../Wallet/HederaWallet/hederaConnections";
+import { setQuietConnection } from "../../store/reducers/signersSlice";
 
 const intervalTm = 15_000;
 
@@ -180,7 +185,13 @@ function NFTaccount(props) {
 
   const isMobile = useCheckMobileScreen();
 
+  const origin = useSelector((state) => state.general.from);
   const dest = useSelector((state) => state.general.to);
+  const isAssociated = useSelector((state) => state.general.isAssociated);
+  const transferModalLoader = useSelector(
+    (state) => state.general.transferModalLoader
+  );
+  const network = useSelector((state) => state.general.testNet);
 
   const [isSrcHedera, setisSrcHedera] = useState(false);
   useEffect(() => {
@@ -191,7 +202,50 @@ function NFTaccount(props) {
 
   const handleClose = () => {
     setisSrcHedera(false);
-  }
+  };
+
+  const [hash, setHash] = useState("");
+
+  const claimHandler = async () => {
+    dispatch(setQuietConnection(true));
+    dispatch(setTransferLoaderModal(true));
+
+    await connectHashPack(network);
+    await sleep(10000);
+
+    try {
+      console.log(origin.nonce);
+      console.log(dest.nonce);
+      const originChainIdentifier = await bridge.getChain(origin.nonce);
+      const targetChainIdentifier = await bridge.getChain(dest.nonce);
+
+      const xpDecentralizedUtility = new XPDecentralizedUtility();
+
+      if (dest?.type === "Hedera" && !isAssociated) {
+        console.log("inside association");
+        await xpDecentralizedUtility.associateTokens(targetChainIdentifier);
+        dispatch(setIsAssociated(true));
+        dispatch(setTransferLoaderModal(false));
+        return;
+      }
+
+      const claimed = await xpDecentralizedUtility.claimNFT_V3(
+        originChainIdentifier,
+        hash,
+        bridge
+      );
+
+      console.log({ claimed });
+      setHash("")
+      dispatch(setTransferLoaderModal(false));
+
+    } catch (e) {
+      console.log("in catch block", e);
+      dispatch(setError({ message: e.message }));
+      setHash("")
+      dispatch(setTransferLoaderModal(false));
+    }
+  };
 
   return (
     <div className="NFTaccount">
@@ -229,12 +283,39 @@ function NFTaccount(props) {
           undeployedUserStore ? " undeployedUserStore" : ""
         } ${lockMainPannel ? " lockedX" : ""}`}
       >
+        <div
+          className={
+            "destination__address px-5 py-3 d-flex justify-content-between align-items-center"
+          }
+        >
+          <input
+            value={hash}
+            onChange={(e) => setHash(e.target.value)}
+            type="text"
+            placeholder="Paste tx hash here"
+            className={"reciverAddress"}
+          />
+          <button
+            className="changeBtn ClaimInDestination d-flex justify-content-center m-0 ml-3 text-nowrap"
+            onClick={claimHandler}
+            disabled={!hash || transferModalLoader}
+          >
+            {dest?.type !== "Hedera"
+              ? "Claim"
+              : isAssociated
+              ? "Claim"
+              : "Associate Token"}
+            {transferModalLoader && (
+              <Spinner animation="border" size="sm" className="ml-3" />
+            )}
+          </button>
+        </div>
         {dest?.type === "Hedera" && (
           // <Alert variant={"warning"}>Kindly make auto association on of your hashpack wallet before transfer nfts to hedera, thank you.</Alert>
           <></>
         )}
         <Modal show={isSrcHedera} animation={null}>
-          <ConnectMetamaskWithHaspack handleClose={handleClose}/>
+          <ConnectMetamaskWithHaspack handleClose={handleClose} />
         </Modal>
 
         <ReturnBtn />

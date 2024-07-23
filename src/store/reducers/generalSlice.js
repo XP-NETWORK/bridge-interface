@@ -46,7 +46,7 @@ const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
-    setIsAssciated(state, action) {
+    setIsAssociated(state, action) {
       state.isAssociated = action.payload;
     },
     setIsClaiming(state, action) {
@@ -639,7 +639,7 @@ const generalSlice = createSlice({
 });
 
 export const {
-  setIsAssciated,
+  setIsAssociated,
   setIsClaiming,
   setDestWalletAddress,
   setTempleWalletData,

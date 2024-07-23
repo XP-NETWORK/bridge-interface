@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setQuietConnection } from "../../store/reducers/signersSlice";
 import {
   setError,
-  setIsAssciated,
+  setIsAssociated,
   setTempleClaimed,
   setTempleWalletData,
   setTemporaryFrom,
@@ -77,10 +77,8 @@ export const ClaimInDestination = (connection) => {
 
         if (to?.type === "Hedera" && !isAssociated) {
           console.log("inside association");
-          await xPDecentralizedUtility.associateTokens(
-            targetChainIdentifier
-          );
-          dispatch(setIsAssciated(true));
+          await xPDecentralizedUtility.associateTokens(targetChainIdentifier);
+          dispatch(setIsAssociated(true));
           dispatch(setTransferLoaderModal(false));
           return;
         }
@@ -205,7 +203,11 @@ export const ClaimInDestination = (connection) => {
           onClick={handler}
           disabled={transferModalLoader}
         >
-          {to?.type !== "Hedera" ? "Claim" : isAssociated ? "Claim" : "Associate Token"}
+          {to?.type !== "Hedera"
+            ? "Claim"
+            : isAssociated
+            ? "Claim"
+            : "Associate Token"}
           {transferModalLoader && (
             <Spinner animation="border" size="sm" className="ml-3" />
           )}
