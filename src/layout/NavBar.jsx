@@ -143,13 +143,13 @@ function NavBar() {
                                 </LinkContainer>
                             )} */}
               {from && to && account && (
-                <div className={"destination__address pb-2"}>
-                  <button
-                    className="changeBtn ClaimInDestination"
+                <div className={"nav-link help-center"}>
+                  <div
+                    className="nav-link__txt"
                     onClick={() => dispatch(setIsClaimViaHash(true))}
                   >
                     Claim NFT
-                  </button>
+                  </div>
                 </div>
               )}
               <a
