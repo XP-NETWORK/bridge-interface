@@ -41,7 +41,7 @@ export default function EVMBody({
               placeholder={importInputs(from).contract.placeholder}
               value={contract}
               className={
-                 validContract
+                validContract
                   ? "contract__input--valid"
                   : "contract__input--invalid"
               }
@@ -52,19 +52,21 @@ export default function EVMBody({
               </span>
             )}
           </div>
-          {from.type !== "TON" ? <div>
-            <label htmlFor="tokeId">
-              {importInputs(from).tokenId.label}
-            </label>
-            <input
-              onChange={(e) => setTokenId(e.target.value)}
-              type="text"
-              id="tokedId"
-              name="tokenId"
-              placeholder={importInputs(from).tokenId.placeholder}
-              value={tokenId}
-            />
-          </div>:""}
+          {from.type !== "TON" && from.type !== "Solana" ? (
+            <div>
+              <label htmlFor="tokeId">{importInputs(from).tokenId.label}</label>
+              <input
+                onChange={(e) => setTokenId(e.target.value)}
+                type="text"
+                id="tokedId"
+                name="tokenId"
+                placeholder={importInputs(from).tokenId.placeholder}
+                value={tokenId}
+              />
+            </div>
+          ) : (
+            ""
+          )}
           <div className="import-nft__buttons">
             <div
               onClick={handleImport}

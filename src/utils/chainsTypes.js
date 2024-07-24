@@ -129,6 +129,7 @@ export const v3_ChainId = {
   7: {name: 'MATIC', type: "EVM"},
   18: {name: 'TEZOS', type: "TEZOS"},
   24: {name: 'SECRET', type: "COSMOS"},
+  26: {name: 'SOLANA', type: "SOLANA"},
   27: {name: 'TON', type: "TON"},
   29: {name: 'HEDERA', type: "HEDERA"},
 }
