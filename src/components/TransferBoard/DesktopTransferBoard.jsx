@@ -12,6 +12,7 @@ import SecureTX from "./SecureTX.jsx";
 import { ELROND } from "../../components/values";
 
 import { useCheckMobileScreen } from "../Settings/hooks";
+import { ButtonToClaim } from "./ButtonToClaim.jsx";
 
 export default function DesktopTransferBoard() {
     const nfts = useSelector((state) => state.general.NFTList);
@@ -41,6 +42,7 @@ export default function DesktopTransferBoard() {
                     ) : (
                         <Comment />
                     )}
+                    <ButtonToClaim/>
                 </form>
             </div>
         </div>

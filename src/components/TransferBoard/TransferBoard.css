@@ -67,6 +67,10 @@
     opacity: 0.7;
 }
 
+.spaced-item {
+    margin-bottom: 1.5rem;
+}
+
 .desChain span img:nth-child(2) {
     margin-left: 4px;
 }

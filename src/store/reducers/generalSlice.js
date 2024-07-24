@@ -39,13 +39,17 @@ const initialState = {
   destWalletAddress: "",
   isClaiming: false,
   connectedWalletType: "",
-  isAssociated: false
+  isAssociated: false,
+  isClaimViaHash: false,
 };
 
 const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
+    setIsClaimViaHash(state, action) {
+      state.isClaimViaHash = action.payload;
+    },
     setIsAssociated(state, action) {
       state.isAssociated = action.payload;
     },
@@ -639,6 +643,7 @@ const generalSlice = createSlice({
 });
 
 export const {
+  setIsClaimViaHash,
   setIsAssociated,
   setIsClaiming,
   setDestWalletAddress,
