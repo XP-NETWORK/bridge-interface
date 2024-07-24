@@ -384,30 +384,37 @@ export const importNFTURI_Tezos = async (contract, tokenId, account, from) => {
  */
 export const importNFTURI_TON = async (contract, account, from) => {
   try {
+    const {
+      general: { testNet },
+    } = store.getState();
     const { data } = await axios.get(
-      // TODO: put the testnet URL
-      `https://api.ton.cat/v2/contracts/nft/${contract}`
+      testNet
+        ? `https://testnet.toncenter.com/api/v3/nft/items?address=${contract}`
+        : `https://toncenter.com/api/v3/nft/items?address=${contract}`
     );
-
-    if (data[data.type].owner_address !== account) {
-      return Promise.reject(new Error("You don't own this NFT!"));
+    
+    if (data.nft_items?.length === 0) {
+      return Promise.reject(new Error("Invalid item address!"));
     }
-
-    if (data.type !== "nft_item") {
-      return Promise.reject(new Error("Please enter the item address!"));
-    }
+    
+    const item = data.nft_items[0];
+    
+    if (item.owner_address !== account) {
+        return Promise.reject(new Error("You don't own this NFT!"));
+      }
+      
+    const metadata = await axios.get(setupURI(item.content.uri));
 
     return formatData(
       contract,
-      data.nft_item.content_url,
+      setupURI(item.content.uri),
       account,
       contract,
       "TON",
       from.nonce,
       {
-        ...data.nft_item.metadata,
-        image: data.nft_item.metadata.image.original,
-        ...data.nft_item.metadata.image,
+        ...metadata.data,
+        image: metadata.data.image,
       }
     );
   } catch (error) {
@@ -458,18 +465,20 @@ export const importNFTURI_Solana = async (contract, account, from) => {
 
     const { data: metadata } = await axios.get(data.result.content.json_uri);
 
-    console.log(formatData(
-      contract,
-      metadata.image,
-      account,
-      contract,
-      "SPL",
-      from.nonce,
-      {
-        ...metadata,
-        image: metadata.image,
-      }
-    ));
+    console.log(
+      formatData(
+        contract,
+        metadata.image,
+        account,
+        contract,
+        "SPL",
+        from.nonce,
+        {
+          ...metadata,
+          image: metadata.image,
+        }
+      )
+    );
 
     return formatData(
       contract,
