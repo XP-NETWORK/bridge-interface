@@ -197,13 +197,8 @@ function NFTaccount(props) {
 
   const isClaimViaHash = useSelector((state) => state.general.isClaimViaHash);
 
-
-  const openClaimModal = () => {
-    dispatch(setIsClaimViaHash(true))
-  };
-
   const closeClaimModal = () => {
-    dispatch(setIsClaimViaHash(false))
+    dispatch(setIsClaimViaHash(false));
   };
 
   return (
@@ -250,19 +245,6 @@ function NFTaccount(props) {
         >
           <ClaimNFTViaHashModal handleClose={closeClaimModal} bridge={bridge} />
         </Modal>
-
-        <div
-          className={
-            "destination__address pb-3 d-flex flex-column justify-content-around align-items-center"
-          }
-        >
-          <button
-            className="changeBtn ClaimInDestination m-0"
-            onClick={openClaimModal}
-          >
-            Claim NFT
-          </button>
-        </div>
 
         {dest?.type === "Hedera" && (
           // <Alert variant={"warning"}>Kindly make auto association on of your hashpack wallet before transfer nfts to hedera, thank you.</Alert>
