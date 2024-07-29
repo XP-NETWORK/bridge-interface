@@ -310,7 +310,7 @@ export default function WalletList({ connected, input, discount }) {
       order: 14,
       type: "TON",
       keyName: "Ton Wallet",
-      isDisabled: true,
+      isDisabled: false,
     },
     {
       Component: (

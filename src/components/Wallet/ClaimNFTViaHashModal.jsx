@@ -3,14 +3,17 @@ import { Modal, Spinner } from "react-bootstrap";
 import { XPDecentralizedUtility } from "../../utils/xpDecentralizedUtility";
 import { useDispatch, useSelector } from "react-redux";
 import { setQuietConnection } from "../../store/reducers/signersSlice";
-import { setError, setIsAssociated, setTransferLoaderModal } from "../../store/reducers/generalSlice";
+import {
+  setError,
+  setIsAssociated,
+  setTransferLoaderModal,
+} from "../../store/reducers/generalSlice";
 import { connectHashPack } from "./HederaWallet/hederaConnections";
 import { sleep } from "../../utils";
 
 export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
   const [hash, setHash] = useState("");
   const dispatch = useDispatch();
-
 
   const origin = useSelector((state) => state.general.from);
   const dest = useSelector((state) => state.general.to);
@@ -24,8 +27,10 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
     dispatch(setQuietConnection(true));
     dispatch(setTransferLoaderModal(true));
 
-    await connectHashPack(network);
-    await sleep(10000);
+    if (origin?.type === "Hedera") {
+      await connectHashPack(network);
+      await sleep(10000);
+    }
 
     try {
       const originChainIdentifier = await bridge.getChain(origin.nonce);

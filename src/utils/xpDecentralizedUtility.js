@@ -1,13 +1,20 @@
 import { ChainFactory, ChainFactoryConfigs } from "xp-decentralized-sdk";
 import { sleep } from "../utils";
 import { TIME } from "../constants/time";
-import { isTestnet, v3_bridge_mode } from "../components/values";
+import {
+  getChainObject,
+  isTestnet,
+  v3_bridge_mode,
+} from "../components/values";
 import { v3_ChainId, v3_getChainNonce } from "./chainsTypes";
 import { ethers } from "ethers";
+import { switchNetwork } from "../services/chains/evm/evmService";
 
 export class XPDecentralizedUtility {
   isV3Enabled = false;
-  factory = ChainFactory(isTestnet ? ChainFactoryConfigs.TestNet() : ChainFactoryConfigs.MainNet());
+  factory = ChainFactory(
+    isTestnet ? ChainFactoryConfigs.TestNet() : ChainFactoryConfigs.MainNet()
+  );
 
   constructor() {
     this.isV3Enabled = v3_bridge_mode;
@@ -120,7 +127,8 @@ export class XPDecentralizedUtility {
       v3_ChainId[fromChain.nonce]
     );
     console.log({
-      contract: nft.contract,
+      nft,
+      contract: nft.contract || nft.collectionIdent,
       tokenId,
       signer,
       receiver,
@@ -131,7 +139,7 @@ export class XPDecentralizedUtility {
     }
     const res = await originChain.lockNft(
       signer,
-      nft.contract,
+      nft.contract || nft.collectionIdent,
       v3_ChainId[toChain?.nonce].name,
       receiver,
       tokenId
@@ -139,10 +147,13 @@ export class XPDecentralizedUtility {
     console.log({ res });
     const hash = await res.hash();
     console.log({ hash });
-    const { ret: result, lockNftMintWith: mintWith } = res;
+    // const {
+    //   // ret: { result },
+    //   lockNftMintWith: mintWith,
+    // } = res;
     await sleep(TIME.TEN_SECONDS);
     return {
-      result,
+      result: { hash },
       mintWith: mintWith,
     };
   };
@@ -225,7 +236,7 @@ export class XPDecentralizedUtility {
     const originChain = await this.factory.inner(
       v3_ChainId[originChainIdentifier?.nonce].name
     );
-    console.log(originChain);
+    console.log({originChain});
     const nftData = await this.getClaimData(originChain, hash);
 
     const targetChain = await this.factory.inner(nftData.destinationChain);
@@ -246,6 +257,21 @@ export class XPDecentralizedUtility {
       targetChainSigner,
       targetChainIdentifier,
     });
+
+    console.log(
+      targetChainSigner?.provider,
+      targetChainSigner?.provider?._network,
+      targetChainSigner?.provider?._network?.chainId
+    );
+
+    if (
+      targetChainIdentifier.chainParams.chainId !==
+      targetChainSigner?.provider?._network?.chainId
+    ) {
+      console.log("inside if");
+      await switchNetwork(getChainObject(targetChainIdentifier?.nonce));
+    }
+    console.log("if skipped");
 
     console.log("claimNft: ", {
       targetChainSigner,
@@ -277,7 +303,9 @@ export class XPDecentralizedUtility {
   };
 
   associateTokens = async (targetChainIdentifier) => {
-    const targetChain = await this.factory.inner(v3_ChainId[targetChainIdentifier?.nonce].name);
+    const targetChain = await this.factory.inner(
+      v3_ChainId[targetChainIdentifier?.nonce].name
+    );
 
     const sdk = await import("@hashgraph/sdk");
     targetChain.injectSDK(sdk);
