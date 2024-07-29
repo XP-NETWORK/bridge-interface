@@ -147,10 +147,7 @@ export class XPDecentralizedUtility {
     console.log({ res });
     const hash = await res.hash();
     console.log({ hash });
-    // const {
-    //   // ret: { result },
-    //   lockNftMintWith: mintWith,
-    // } = res;
+    const { lockNftMintWith: mintWith } = res;
     await sleep(TIME.TEN_SECONDS);
     return {
       result: { hash },
@@ -236,7 +233,7 @@ export class XPDecentralizedUtility {
     const originChain = await this.factory.inner(
       v3_ChainId[originChainIdentifier?.nonce].name
     );
-    console.log({originChain});
+    console.log({ originChain });
     const nftData = await this.getClaimData(originChain, hash);
 
     const targetChain = await this.factory.inner(nftData.destinationChain);

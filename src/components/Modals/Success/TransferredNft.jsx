@@ -18,7 +18,7 @@ const evmTxStatus = async (provider, txHash) => {
   let status = null;
   while (!foundedData) {
     try {
-      const txRecipt = await provider.getTransactionReceipt(txHash);
+      const txRecipt = await provider?.getTransactionReceipt(txHash);
       status = txRecipt?.status === 1;
 
       if (status) foundedData = true;
