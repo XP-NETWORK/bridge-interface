@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Spinner } from "react-bootstrap";
 import { XPDecentralizedUtility } from "../../utils/xpDecentralizedUtility";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,37 +8,63 @@ import {
   setIsAssociated,
   setTransferLoaderModal,
 } from "../../store/reducers/generalSlice";
-import { connectHashPack } from "./HederaWallet/hederaConnections";
-import { sleep } from "../../utils";
+import { connectWalletByChain } from "../../utils";
+import { useWeb3React } from "@web3-react/core";
+import { v3_ChainId, v3_getChainNonce } from "../../utils/chainsTypes";
 
 export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
+  const xpDecentralizedUtility = new XPDecentralizedUtility();
+
   const [hash, setHash] = useState("");
   const dispatch = useDispatch();
 
   const origin = useSelector((state) => state.general.from);
-  const dest = useSelector((state) => state.general.to);
+  // const dest = useSelector((state) => state.general.to);
   const isAssociated = useSelector((state) => state.general.isAssociated);
   const transferModalLoader = useSelector(
     (state) => state.general.transferModalLoader
   );
   const network = useSelector((state) => state.general.testNet);
 
+  const [nftData, setNFTData] = useState(null);
+
+  const { activate } = useWeb3React();
+
+  useEffect(() => {
+    hash && origin?.nonce && getNFTData();
+  }, [hash, origin]);
+
+  const getNFTData = async () => {
+    const originChain = await xpDecentralizedUtility.getChainFromFactory(
+      v3_ChainId[origin.nonce].name
+    );
+    const res = await xpDecentralizedUtility.getClaimData(originChain, hash);
+    setNFTData(res);
+  };
+
   const claimHandler = async () => {
+    if (!nftData) {
+      return;
+    }
     dispatch(setQuietConnection(true));
     dispatch(setTransferLoaderModal(true));
 
-    if (origin?.type === "Hedera") {
-      await connectHashPack(network);
-      await sleep(10000);
-    }
-
     try {
       const originChainIdentifier = await bridge.getChain(origin.nonce);
-      const targetChainIdentifier = await bridge.getChain(dest.nonce);
 
-      const xpDecentralizedUtility = new XPDecentralizedUtility();
+      const targetChainIdentifier = await bridge.getChain(
+        v3_getChainNonce[nftData.destinationChain]
+      );
 
-      if (dest?.type === "Hedera" && !isAssociated) {
+      await connectWalletByChain(
+        nftData?.destinationChain,
+        v3_getChainNonce[nftData?.destinationChain],
+        network,
+        bridge,
+        activate
+      );
+
+      if (nftData.destinationChain === "HEDERA" && !isAssociated) {
         console.log("inside association");
         await xpDecentralizedUtility.associateTokens(targetChainIdentifier);
         dispatch(setIsAssociated(true));
@@ -85,20 +111,24 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
             placeholder="Paste tx hash here"
             className={"reciverAddress spaced-item"}
           />
-          <button
-            className="changeBtn ClaimInDestination d-flex justify-content-center m-0 ml-3 text-nowrap"
-            onClick={claimHandler}
-            disabled={!hash || transferModalLoader}
-          >
-            {dest?.type !== "Hedera"
-              ? "Claim"
-              : isAssociated
-              ? "Claim"
-              : "Associate Token"}
-            {transferModalLoader && (
-              <Spinner animation="border" size="sm" className="ml-3" />
-            )}
-          </button>
+          {!hash ? (
+            ""
+          ) : !nftData ? (
+            <Spinner animation="border" size="sm" />
+          ) : (
+            <button
+              className="changeBtn ClaimInDestination d-flex justify-content-center m-0 ml-3 text-nowrap"
+              onClick={claimHandler}
+              disabled={!hash || transferModalLoader}
+            >
+              {nftData.destinationChain === "HEDERA" && !isAssociated
+                ? "Associate Token"
+                : "Claim"}
+              {transferModalLoader && (
+                <Spinner animation="border" size="sm" className="ml-3" />
+              )}
+            </button>
+          )}
         </div>
       </Modal.Body>
     </>

@@ -4,6 +4,11 @@ import axios from "axios";
 
 import Harmony from "@harmony-js/core";
 import TonWeb from "tonweb";
+import { connectHashPack } from "./components/Wallet/HederaWallet/hederaConnections";
+import { connectTonWallet } from "./components/Wallet/TONWallet/TonConnectors";
+import { switchNetwork } from "./services/chains/evm/evmService";
+import { getChainObject } from "./components/values";
+import { injected } from "./wallet/connectors";
 
 /*const testnet = window.location.pathname.includes("testnet");
 const staging = window.location.pathname.includes("staging");
@@ -282,3 +287,47 @@ export function formatAddress(address) {
   const Address = TonWeb.utils.Address;
   return new Address(address).toString(true, false, true, false);
 }
+
+const connectWallet = {
+  HEDERA: async (network) => {
+    await connectHashPack(network);
+  },
+
+  TON: async (bridge, nonce) => {
+    const chainWrapper = await bridge.getChain(nonce);
+    const account = await connectTonWallet();
+
+    chainWrapper.setSigner({
+      address: account.address,
+      send: account.signer.send,
+    });
+  },
+
+  EVM: async (bridge, nonce, activate) => {
+    bridge.currentType === "EVM"
+      ? await switchNetwork(getChainObject(nonce))
+      : (await activate(injected), await switchNetwork(getChainObject(nonce)));
+  },
+};
+
+export const connectWalletByChain = async (
+  type,
+  nonce,
+  network,
+  bridge,
+  activate
+) => {
+  console.log("inside: ", type);
+  switch (type) {
+    case "HEDERA":
+      await connectWallet[type](network);
+      break;
+    case "TON":
+      await connectWallet[type](bridge, nonce);
+      break;
+    case "EVM":
+      await connectWallet[type](bridge, nonce, activate);
+      break;
+  }
+  await sleep(10000);
+};

@@ -53,7 +53,8 @@ export class XPDecentralizedUtility {
 
     const signer = fromChain.getSigner();
     console.log({ fromChain, chain: v3_ChainId[fromChain.nonce].name });
-    const originChain = await this.factory.inner(
+
+    const originChain = await this.getChainFromFactory(
       v3_ChainId[fromChain.nonce].name
     );
 
@@ -116,7 +117,8 @@ export class XPDecentralizedUtility {
   lockNFT_V3 = async (fromChain, toChain, nft, receiver) => {
     const { tokenId } = nft.native;
     const signer = fromChain.getSigner();
-    const originChain = await this.factory.inner(
+
+    const originChain = await this.getChainFromFactory(
       v3_ChainId[fromChain.nonce].name
     );
 
@@ -230,13 +232,17 @@ export class XPDecentralizedUtility {
   claimNFT_V3 = async (originChainIdentifier, hashs, bridge) => {
     const hash =
       originChainIdentifier.nonce == 29 ? "0x" + hashs.slice(0, 64) : hashs;
-    const originChain = await this.factory.inner(
+
+    const originChain = await this.getChainFromFactory(
       v3_ChainId[originChainIdentifier?.nonce].name
     );
+
     console.log({ originChain });
     const nftData = await this.getClaimData(originChain, hash);
 
-    const targetChain = await this.factory.inner(nftData.destinationChain);
+    const targetChain = await this.getChainFromFactory(
+      nftData?.destinationChain
+    );
 
     const signatures = await this.getLockNftSignatures(
       targetChain,
@@ -321,5 +327,9 @@ export class XPDecentralizedUtility {
       ["uint256", "string", "string", "address"],
       ethers.utils.hexDataSlice(data, 4)
     );
+  };
+
+  getChainFromFactory = async (chain) => {
+    return await this.factory.inner(chain);
   };
 }
