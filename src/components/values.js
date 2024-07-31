@@ -274,7 +274,7 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
-        newChain: true,
+        newChain: false,
         isDisabled: false,
     },
     {
@@ -320,7 +320,7 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
-        isDisabled: true,
+        isDisabled: false,
     },
     {
         type: "EVM",

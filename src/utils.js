@@ -9,6 +9,7 @@ import { connectTonWallet } from "./components/Wallet/TONWallet/TonConnectors";
 import { switchNetwork } from "./services/chains/evm/evmService";
 import { getChainObject } from "./components/values";
 import { injected } from "./wallet/connectors";
+import { TempleWallet } from "@temple-wallet/dapp";
 
 /*const testnet = window.location.pathname.includes("testnet");
 const staging = window.location.pathname.includes("staging");
@@ -308,6 +309,22 @@ const connectWallet = {
       ? await switchNetwork(getChainObject(nonce))
       : (await activate(injected), await switchNetwork(getChainObject(nonce)));
   },
+
+  TEZOS: async (bridge, nonce) => {
+    const chain = await bridge.getChain(nonce);
+    let account = {};
+    const available = await TempleWallet.isAvailable();
+    if (!available) {
+      throw new Error("Temple Wallet not installed");
+    }
+    const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
+    await wallet.connect("ghostnet");
+    const tezos = wallet.toTezos();
+    const accountPkh = await tezos.wallet.pkh();
+    account.signer = wallet;
+    account.address = accountPkh;
+    chain.setSigner(account);
+  },
 };
 
 export const connectWalletByChain = async (
@@ -327,6 +344,9 @@ export const connectWalletByChain = async (
       break;
     case "EVM":
       await connectWallet[type](bridge, nonce, activate);
+      break;
+    case "TEZOS":
+      await connectWallet[type](bridge, nonce);
       break;
   }
   await sleep(10000);
