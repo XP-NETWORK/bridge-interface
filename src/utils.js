@@ -319,10 +319,7 @@ const connectWallet = {
     }
     const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
     await wallet.connect("ghostnet");
-    const tezos = wallet.toTezos();
-    const accountPkh = await tezos.wallet.pkh();
-    account.signer = wallet;
-    account.address = accountPkh;
+    account = wallet;
     chain.setSigner(account);
   },
 };

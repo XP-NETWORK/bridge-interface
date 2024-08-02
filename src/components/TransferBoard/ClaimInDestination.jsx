@@ -130,13 +130,12 @@ export const ClaimInDestination = (connection) => {
 
       try {
         const originChainIdentifier = await bridge.getChain(fromChain);
-        const targetChainIdentifier = await bridge.getChain(toChain);
 
         const xPDecentralizedUtility = new XPDecentralizedUtility();
 
         const { hash: claimedHash } = await xPDecentralizedUtility.claimNFT(
           originChainIdentifier,
-          targetChainIdentifier,
+          bridge,
           hash,
           chainWapper,
           fromChainWapper
