@@ -144,12 +144,13 @@ export class XPDecentralizedUtility {
       nft.contract || nft.collectionIdent,
       v3_ChainId[toChain?.nonce].name,
       receiver,
-      tokenId
+      tokenId,
+      nft.uri
     );
     console.log({ res });
     const hash = await res.hash();
     console.log({ hash });
-    const { lockNftMintWith: mintWith , ret: result} = res;
+    const { lockNftMintWith: mintWith, ret: result } = res;
     await sleep(TIME.TEN_SECONDS);
     return {
       result: result ?? hash,
