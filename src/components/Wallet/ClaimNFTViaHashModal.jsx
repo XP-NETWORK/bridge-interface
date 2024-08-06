@@ -6,6 +6,7 @@ import { setQuietConnection } from "../../store/reducers/signersSlice";
 import {
   setError,
   setIsAssociated,
+  setSuccess,
   setTransferLoaderModal,
 } from "../../store/reducers/generalSlice";
 import { connectWalletByChain } from "../../utils";
@@ -29,6 +30,12 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
   const [nftData, setNFTData] = useState(null);
 
   const { activate } = useWeb3React();
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(setSuccess(null));
+    }, 3000);
+  }, []);
 
   useEffect(() => {
     hash && origin?.nonce && getNFTData();
@@ -81,6 +88,7 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
       console.log({ claimed });
       setHash("");
       dispatch(setTransferLoaderModal(false));
+      dispatch(setSuccess("NFT Claimed Successfully"));
     } catch (e) {
       console.log("in catch block", e);
       dispatch(setError({ message: e.message }));
