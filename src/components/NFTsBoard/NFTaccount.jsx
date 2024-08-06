@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 
 import { Modal } from "react-bootstrap";
@@ -47,7 +47,6 @@ import { setDiscountLeftUsd } from "../../store/reducers/discountSlice";
 import withChains from "./hocs";
 import ReactGA from "../../services/GA4";
 import ReceiverIsContract from "../Alerts/ReceiverIsContract";
-import ConnectMetamaskWithHaspack from "../Modals/ConnectMetamaskModal";
 import ClaimNFTViaHashModal from "../Wallet/ClaimNFTViaHashModal";
 
 const intervalTm = 15_000;
@@ -184,16 +183,6 @@ function NFTaccount(props) {
 
   const dest = useSelector((state) => state.general.to);
 
-  const [isSrcHedera, setisSrcHedera] = useState(false);
-  useEffect(() => {
-    if (ff.type === "Hedera") {
-      setisSrcHedera(true);
-    }
-  }, []);
-
-  const handleClose = () => {
-    setisSrcHedera(false);
-  };
 
   const isClaimViaHash = useSelector((state) => state.general.isClaimViaHash);
 
@@ -250,9 +239,6 @@ function NFTaccount(props) {
           // <Alert variant={"warning"}>Kindly make auto association on of your hashpack wallet before transfer nfts to hedera, thank you.</Alert>
           <></>
         )}
-        <Modal show={isSrcHedera} animation={null}>
-          <ConnectMetamaskWithHaspack handleClose={handleClose} />
-        </Modal>
 
         <ReturnBtn />
 
