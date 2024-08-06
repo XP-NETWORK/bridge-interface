@@ -43,6 +43,7 @@ import { getChainObject } from "../values";
 import { useWeb3Modal } from "@web3modal/react";
 
 import PlainChainListBox from "../Chains/PlainChainListBox";
+import Success from "../innercomponents/Success";
 
 export default function Modals() {
     const dispatch = useDispatch();
@@ -66,6 +67,7 @@ export default function Modals() {
     );
 
     const error = useSelector((state) => state.general.error);
+    const successMsg = useSelector((state) => state.general.successMsg);
     const tronError = useSelector((state) => state.general.tronLoginError);
     const redirectModal = useSelector((state) => state.general.redirectModal);
     const loader = useSelector((state) => state.general.approveLoader);
@@ -288,6 +290,9 @@ export default function Modals() {
             </Modal>
             <Modal animation={false} show={error} className="error__modal">
                 <Error />
+            </Modal>
+            <Modal animation={false} show={successMsg} className="error__modal">
+                <Success />
             </Modal>
         </>
     );
