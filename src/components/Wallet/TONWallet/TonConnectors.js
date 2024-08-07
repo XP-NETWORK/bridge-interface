@@ -130,6 +130,8 @@ export async function senderFromWindow(wallet) {
 // };
 
 export const connectTonWallet = async () => {
+  // eslint-disable-next-line no-debugger
+  debugger;
   const connector = new TonConnect({
     manifestUrl: {
       url: "http://localhost:3000/", // required

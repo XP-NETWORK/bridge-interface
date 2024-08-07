@@ -45,7 +45,7 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
     const originChain = await xpDecentralizedUtility.getChainFromFactory(
       v3_ChainId[origin.nonce].name
     );
-    const res = await xpDecentralizedUtility.getClaimData(originChain, hash);
+    const res = await xpDecentralizedUtility.getClaimData(origin.nonce, originChain, hash);
     setNFTData(res);
   };
 
