@@ -1,14 +1,9 @@
 import { ChainFactory, ChainFactoryConfigs } from "xp-decentralized-sdk";
 import { sleep } from "../utils";
 import { TIME } from "../constants/time";
-import {
-  getChainObject,
-  isTestnet,
-  v3_bridge_mode,
-} from "../components/values";
+import { isTestnet, v3_bridge_mode } from "../components/values";
 import { v3_ChainId, v3_getChainNonce } from "./chainsTypes";
 import { ethers } from "ethers";
-import { switchNetwork } from "../services/chains/evm/evmService";
 
 export class XPDecentralizedUtility {
   isV3Enabled = false;
@@ -262,21 +257,6 @@ export class XPDecentralizedUtility {
       targetChainIdentifier,
     });
 
-    console.log(
-      targetChainSigner?.provider,
-      targetChainSigner?.provider?._network,
-      targetChainSigner?.provider?._network?.chainId
-    );
-
-    if (
-      targetChainIdentifier.chainParams.chainId !==
-      targetChainSigner?.provider?._network?.chainId
-    ) {
-      console.log("inside if");
-      await switchNetwork(getChainObject(targetChainIdentifier?.nonce));
-    }
-    console.log("if skipped");
-
     console.log("claimNft: ", {
       targetChainSigner,
       targetChain,
@@ -300,7 +280,7 @@ export class XPDecentralizedUtility {
       v3_ChainId[targetChainIdentifier?.nonce].name === "HEDERA"
     ) {
       return {
-        hash: claim.hash(),
+        hash: claim?.hash(),
       };
     }
     return claim?.ret;
