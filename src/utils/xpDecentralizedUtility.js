@@ -1,14 +1,9 @@
 import { ChainFactory, ChainFactoryConfigs } from "xp-decentralized-sdk";
 import { sleep } from "../utils";
 import { TIME } from "../constants/time";
-import {
-  getChainObject,
-  isTestnet,
-  v3_bridge_mode,
-} from "../components/values";
+import { isTestnet, v3_bridge_mode } from "../components/values";
 import { v3_ChainId, v3_getChainNonce } from "./chainsTypes";
 import { ethers } from "ethers";
-import { switchNetwork } from "../services/chains/evm/evmService";
 
 export class XPDecentralizedUtility {
   isV3Enabled = false;
@@ -139,6 +134,7 @@ export class XPDecentralizedUtility {
       const sdk = await import("@hashgraph/sdk");
       originChain.injectSDK(sdk);
     }
+    console.log("originChain", originChain);
     const res = await originChain.lockNft(
       signer,
       nft.contract || nft.collectionIdent,
@@ -193,19 +189,28 @@ export class XPDecentralizedUtility {
     return signatures;
   };
 
-  getClaimData = async (originChain, hash) => {
-    console.log("getClaimData: ", { originChain, hash });
+  getClaimData = async (originNonce, originChain, hash) => {
+    if (originNonce == 29) {
+      hash = hash.replace("0x", "").slice(0, 64);
+      hash = "0x" + hash;
+    }
+
+    console.log("originChain", originChain);
+    console.log("hash", hash);
 
     let foundedData = false;
+    let count = 0;
     let nftData = null;
-    while (!foundedData) {
+    while (!foundedData && count <= 20) {
       try {
         nftData = await this.factory.getClaimData(originChain, hash);
         console.log("nftData: ", nftData);
         foundedData = true;
+        count++;
       } catch (e) {
         console.log(`Retrying to find Claim Data for Lock Hash: ${hash}`, e);
         await sleep(TIME.FIVE_SECONDS);
+        count++;
       }
     }
     return nftData;
@@ -239,7 +244,11 @@ export class XPDecentralizedUtility {
     );
 
     console.log({ originChain });
-    const nftData = await this.getClaimData(originChain, hash);
+    const nftData = await this.getClaimData(
+      originChainIdentifier?.nonce,
+      originChain,
+      hash
+    );
 
     const targetChain = await this.getChainFromFactory(
       nftData?.destinationChain
@@ -261,21 +270,6 @@ export class XPDecentralizedUtility {
       targetChainSigner,
       targetChainIdentifier,
     });
-
-    console.log(
-      targetChainSigner?.provider,
-      targetChainSigner?.provider?._network,
-      targetChainSigner?.provider?._network?.chainId
-    );
-
-    if (
-      targetChainIdentifier.chainParams.chainId !==
-      targetChainSigner?.provider?._network?.chainId
-    ) {
-      console.log("inside if");
-      await switchNetwork(getChainObject(targetChainIdentifier?.nonce));
-    }
-    console.log("if skipped");
 
     console.log("claimNft: ", {
       targetChainSigner,
@@ -300,7 +294,7 @@ export class XPDecentralizedUtility {
       v3_ChainId[targetChainIdentifier?.nonce].name === "HEDERA"
     ) {
       return {
-        hash: claim.hash(),
+        hash: claim?.hash(),
       };
     }
     return claim?.ret;

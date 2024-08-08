@@ -27,7 +27,7 @@ export const withHedera = (Wrapped) =>
 
     const connectionCallback = async (bridge, toChain) => {
       await connectHashPack(network);
-      await sleep(10000);
+      await sleep(15000);
 
       if (v3_bridge_mode) {
         return;
