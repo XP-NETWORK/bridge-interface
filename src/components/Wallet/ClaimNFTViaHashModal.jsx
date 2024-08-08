@@ -57,18 +57,17 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
     dispatch(setTransferLoaderModal(true));
 
     try {
-      const originChainIdentifier = await bridge.getChain(origin.nonce);
-
-      const targetChainIdentifier = await bridge.getChain(
-        v3_getChainNonce[nftData.destinationChain]
-      );
-
       await connectWalletByChain(
         nftData?.destinationChain,
         v3_getChainNonce[nftData?.destinationChain],
         network,
         bridge,
         activate
+      );
+
+      const originChainIdentifier = await bridge.getChain(origin.nonce);
+      const targetChainIdentifier = await bridge.getChain(
+        v3_getChainNonce[nftData.destinationChain]
       );
 
       if (nftData.destinationChain === "HEDERA" && !isAssociated) {
