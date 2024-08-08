@@ -292,6 +292,7 @@ export function formatAddress(address) {
 const connectWallet = {
   HEDERA: async (network) => {
     await connectHashPack(network);
+    await sleep(10000);
   },
 
   TON: async (bridge, nonce) => {
@@ -346,5 +347,5 @@ export const connectWalletByChain = async (
       await connectWallet[type](bridge, nonce);
       break;
   }
-  await sleep(10000);
+  await sleep(5000);
 };
