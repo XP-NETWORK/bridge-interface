@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Spinner } from "react-bootstrap";
+import { useWeb3React } from "@web3-react/core";
 import { XPDecentralizedUtility } from "../../utils/xpDecentralizedUtility";
 import { useDispatch, useSelector } from "react-redux";
 import { setQuietConnection } from "../../store/reducers/signersSlice";
@@ -9,9 +10,8 @@ import {
   setSuccess,
   setTransferLoaderModal,
 } from "../../store/reducers/generalSlice";
-import { connectWalletByChain } from "../../utils";
-import { useWeb3React } from "@web3-react/core";
 import { v3_ChainId, v3_getChainNonce } from "../../utils/chainsTypes";
+import { ConnectWalletByChain } from "../../utils/walletConnectUtility.ts";
 
 export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
   const xpDecentralizedUtility = new XPDecentralizedUtility();
@@ -20,7 +20,6 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
   const dispatch = useDispatch();
 
   const origin = useSelector((state) => state.general.from);
-  // const dest = useSelector((state) => state.general.to);
   const isAssociated = useSelector((state) => state.general.isAssociated);
   const transferModalLoader = useSelector(
     (state) => state.general.transferModalLoader
@@ -45,7 +44,11 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
     const originChain = await xpDecentralizedUtility.getChainFromFactory(
       v3_ChainId[origin.nonce].name
     );
-    const res = await xpDecentralizedUtility.getClaimData(origin.nonce, originChain, hash);
+    const res = await xpDecentralizedUtility.getClaimData(
+      origin.nonce,
+      originChain,
+      hash
+    );
     setNFTData(res);
   };
 
@@ -56,19 +59,20 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
     dispatch(setQuietConnection(true));
     dispatch(setTransferLoaderModal(true));
 
+    const nonce = v3_getChainNonce[nftData?.destinationChain];
+    const { type } = v3_ChainId[nonce];
+
     try {
-      await connectWalletByChain(
-        nftData?.destinationChain,
-        v3_getChainNonce[nftData?.destinationChain],
+      await ConnectWalletByChain({
+        type,
+        nonce,
         network,
         bridge,
-        activate
-      );
+        activate,
+      });
 
       const originChainIdentifier = await bridge.getChain(origin.nonce);
-      const targetChainIdentifier = await bridge.getChain(
-        v3_getChainNonce[nftData.destinationChain]
-      );
+      const targetChainIdentifier = await bridge.getChain(nonce);
 
       if (nftData.destinationChain === "HEDERA" && !isAssociated) {
         console.log("inside association");

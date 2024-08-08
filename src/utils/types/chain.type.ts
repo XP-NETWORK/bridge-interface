@@ -1,0 +1,1 @@
+export type TChain = "HEDERA" | "TON" | "EVM" | "TEZOS";
