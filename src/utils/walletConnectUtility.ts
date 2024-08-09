@@ -6,7 +6,7 @@ import { switchNetwork } from "../services/chains/evm/evmService";
 import { sleep } from "../utils";
 import { injected } from "../wallet/connectors";
 import { TChainConnect } from "./types/chainConnect.type.ts";
-import { TConnectWallet } from "./types/connectWallet.type";
+import { TConnectWallet } from "./types/connectWallet.type.ts";
 
 const connectWallet: TConnectWallet = {
   HEDERA: async ({ network }) => {
