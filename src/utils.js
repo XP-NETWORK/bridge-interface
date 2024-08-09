@@ -10,6 +10,7 @@ import { switchNetwork } from "./services/chains/evm/evmService";
 import { getChainObject } from "./components/values";
 import { injected } from "./wallet/connectors";
 import { TempleWallet } from "@temple-wallet/dapp";
+import { connectExtension } from "./components/Wallet/MultiversXWallet/HigherMultiversX";
 
 /*const testnet = window.location.pathname.includes("testnet");
 const staging = window.location.pathname.includes("staging");
@@ -323,6 +324,14 @@ const connectWallet = {
     account = wallet;
     chain.setSigner(account);
   },
+
+  ELROND: async (bridge, nonce) => {
+    const chain = await bridge.getChain(nonce);
+    const signer = await connectExtension(
+      bridge.network === "testnet" ? "D" : "1"
+    );
+    chain.setSigner(signer);
+  },
 };
 
 export const connectWalletByChain = async (
@@ -344,6 +353,9 @@ export const connectWalletByChain = async (
       await connectWallet[type](bridge, nonce, activate);
       break;
     case "TEZOS":
+      await connectWallet[type](bridge, nonce);
+      break;
+    case "ELROND":
       await connectWallet[type](bridge, nonce);
       break;
   }

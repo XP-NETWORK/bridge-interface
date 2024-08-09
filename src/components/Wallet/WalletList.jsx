@@ -176,7 +176,7 @@ export default function WalletList({ connected, input, discount }) {
       desktop: true,
       order: 7,
       keyName: "MultiversX DeFi Wallet",
-      isDisabled: true,
+      isDisabled: false,
     },
     {
       Component: (
