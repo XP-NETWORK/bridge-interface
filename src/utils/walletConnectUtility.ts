@@ -7,7 +7,6 @@ import { sleep } from "../utils";
 import { injected } from "../wallet/connectors";
 import { TChainConnect } from "./types/chainConnect.type.ts";
 import { TConnectWallet } from "./types/connectWallet.type";
-import { Chain } from "./chains.ts";
 
 const connectWallet: TConnectWallet = {
   HEDERA: async ({ network }) => {
@@ -26,13 +25,12 @@ const connectWallet: TConnectWallet = {
   },
 
   EVM: async ({ bridge, nonce, activate }) => {
-    bridge.currentType === "EVM"
-      ? await switchNetwork(getChainObject(nonce))
-      : (activate && (await activate(injected)),
-        await switchNetwork(getChainObject(nonce)));
+    bridge.currentType !== "EVM" && (await activate(injected));
+    await switchNetwork(getChainObject(nonce));
   },
 
   TEZOS: async ({ bridge, nonce }) => {
+    console.log({ bridge, nonce });
     const chain = await bridge.getChain(nonce);
     let account = {};
     const available = await TempleWallet.isAvailable();
@@ -40,33 +38,15 @@ const connectWallet: TConnectWallet = {
       throw new Error("Temple Wallet not installed");
     }
     const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
-    await wallet.connect({ name: "ghostnet", rpc: "" });
+    await wallet.connect({ name: "ghostnet", rpc: "https://rpc.ghostnet.teztnets.com/" });
     account = wallet;
     chain.setSigner(account);
   },
 };
 
-export const ConnectWalletByChain: TChainConnect = async ({
-  type,
-  nonce,
-  network,
-  bridge,
-  activate,
-}) => {
+export const ConnectWalletByChain: TChainConnect = async (params) => {
+  const { type } = params;
   console.log("inside: ", type);
-  switch (type) {
-    case Chain.HEDERA:
-      await connectWallet[type]({ network });
-      break;
-    case Chain.TON:
-      await connectWallet[type]({ bridge, nonce });
-      break;
-    case Chain.EVM:
-      await connectWallet[type]({ bridge, nonce, activate });
-      break;
-    case Chain.TEZOS:
-      await connectWallet[type]({ bridge, nonce });
-      break;
-  }
+  await connectWallet[type](params);
   await sleep(5000);
 };
