@@ -22727,36 +22727,9 @@ xmlhttprequest@1.8.0:
   resolved "https://registry.yarnpkg.com/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz#67fe075c5c24fef39f9d65f5f7b7fe75171968fc"
   integrity sha512-58Im/U0mlVBLM38NdZjHyhuMtCqa61469k2YP/AaPbvCoV9aQGUpbJBj1QRm2ytRiVQBD/fsw7L2bJGDVQswBA==
 
-"xp-decentralized-sdk@file:../xp-decentralized-client-library":
+"xp-decentralized-sdk@git+https://github.com/XP-NETWORK/xp-decentralized-client-library#bleeding-edge":
   version "1.0.0"
-  dependencies:
-    "@aptos-labs/ts-sdk" "^1.22.2"
-    "@cosmjs/amino" "^0.32.3"
-    "@cosmjs/cosmwasm-stargate" "^0.32.3"
-    "@dfinity/agent" "^1.4.0"
-    "@dfinity/candid" "^1.4.0"
-    "@dfinity/ledger-icp" "^2.3.1"
-    "@dfinity/nns" "^5.1.2"
-    "@dfinity/principal" "^1.4.0"
-    "@multiversx/sdk-core" "^13.2.1"
-    "@multiversx/sdk-network-providers" "^2.2.1"
-    "@multiversx/sdk-wallet" "^4.3.0"
-    "@taquito/taquito" "^19.0.0"
-    "@taquito/tzip16" "^19.0.0"
-    "@taquito/utils" "^19.0.0"
-    "@ton/core" "=0.56.3"
-    "@ton/crypto" "=3.2.0"
-    "@ton/ton" "=13.11.1"
-    "@tzkt/sdk-api" "^2.2.1"
-    "@xp/cosmos-client" "git+https://github.com/XP-NETWORK/cosmos-client#bleeding-edge"
-    aptos "^1.21.0"
-    axios "^1.6.7"
-    ethers "^6.10.0"
-    hashconnect "^0.2.9"
-    secretjs "^1.12.4-beta.0"
-
-"xp-decentralized-sdk@file:../xp-decentralized-client-library/":
-  version "1.0.0"
+  resolved "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#002e9067766151d266830f5c0ae905b06bc5ab7f"
   dependencies:
     "@aptos-labs/ts-sdk" "^1.22.2"
     "@cosmjs/amino" "^0.32.3"

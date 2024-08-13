@@ -134,8 +134,8 @@ export const connectTonWallet = async () => {
   debugger;
   const connector = new TonConnect({
     manifestUrl: {
-      url: "http://localhost:3000/", // required
-      name: "name", // required
+      url: location.origin, // required
+      name: "XP.NETWORK", // required
       iconUrl: "./../../../assets/img/icons/XPNET.svg", // required
     },
   });
