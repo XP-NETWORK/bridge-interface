@@ -141,7 +141,10 @@ export class XPDecentralizedUtility {
       v3_ChainId[toChain?.nonce].name,
       receiver,
       tokenId,
-      nft.uri
+      nft.uri,
+      {
+        gasLimit: 5_000_000
+      }
     );
     console.log({ res });
     const hash = await res.hash();
@@ -285,7 +288,10 @@ export class XPDecentralizedUtility {
     claim = await targetChain.claimNft(
       targetChainSigner,
       targetChain.transform(nftData),
-      signatures
+      signatures,
+      {
+        gasLimit: 5_000_000
+      }
     );
 
     console.log("claimed: ", claim);
