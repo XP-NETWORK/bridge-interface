@@ -16494,7 +16494,7 @@ next-tick@^1.1.0:
 
 "nft-parser@git+https://github.com/xp-network/nft-parser#bleeding-edge":
   version "0.2.0"
-  resolved "git+https://github.com/xp-network/nft-parser#2a684016c8463e454348cce1d1c43e615bd31867"
+  resolved "git+https://github.com/xp-network/nft-parser#ddc9d939392e3d2d3a252ea002ec897be232511f"
   dependencies:
     "@ethersproject/providers" "^5.7.2"
     "@moralisweb3/common-evm-utils" "^2.17.0"
@@ -22727,7 +22727,7 @@ xmlhttprequest@1.8.0:
   resolved "https://registry.yarnpkg.com/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz#67fe075c5c24fef39f9d65f5f7b7fe75171968fc"
   integrity sha512-58Im/U0mlVBLM38NdZjHyhuMtCqa61469k2YP/AaPbvCoV9aQGUpbJBj1QRm2ytRiVQBD/fsw7L2bJGDVQswBA==
 
-"xp-decentralized-sdk@file:../xp-decentralized-client-library":
+"xp-decentralized-sdk@file:../../xp-decentralized-client-library":
   version "1.0.0"
   dependencies:
     "@aptos-labs/ts-sdk" "^1.22.2"
@@ -22755,7 +22755,7 @@ xmlhttprequest@1.8.0:
     hashconnect "^0.2.9"
     secretjs "^1.12.4-beta.0"
 
-"xp-decentralized-sdk@file:../xp-decentralized-client-library/":
+"xp-decentralized-sdk@file:../../xp-decentralized-client-library/":
   version "1.0.0"
   dependencies:
     "@aptos-labs/ts-sdk" "^1.22.2"
@@ -22856,7 +22856,6 @@ xmlhttprequest@1.8.0:
 
 "xpnet-web3-contracts@git+https://github.com/xp-network/XP.network-HECO-Migration#dist-erc1155":
   version "0.1.0"
-  uid "5dae79f652a0e55383933df18e691b3d76800e6c"
   resolved "git+https://github.com/xp-network/XP.network-HECO-Migration#5dae79f652a0e55383933df18e691b3d76800e6c"
   dependencies:
     ethers "^5.5.4"

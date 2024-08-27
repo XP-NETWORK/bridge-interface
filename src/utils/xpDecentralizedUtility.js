@@ -256,7 +256,7 @@ export class XPDecentralizedUtility {
 
     const signatures = await this.getLockNftSignatures(
       targetChain,
-      hash,
+      nftData.lockTxChain === "TEZOS" ? nftData.transactionHash : hash,
       originChainIdentifier
     );
 

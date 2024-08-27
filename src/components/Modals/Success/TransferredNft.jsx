@@ -127,7 +127,7 @@ const TransferredNft = ({
   }, [tagetCanister, workarond_dest_hash]);
 
   useEffect(() => {
-    if (from.type === "Hedera") {
+    if (from.type === "Hedera" || from.type === "Tezos") {
       setTxnStatus("completed");
     } else {
       evmTxStatus(txn.provider, txn.hash)
