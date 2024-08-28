@@ -143,7 +143,8 @@ export class XPDecentralizedUtility {
       tokenId,
       nft.uri,
       {
-        gasLimit: 5_000_000
+        gasLimit: 5_000_000,
+        nonce: nft?.native?.nonce
       }
     );
     console.log({ res });
