@@ -141,7 +141,10 @@ export class XPDecentralizedUtility {
       v3_ChainId[toChain?.nonce].name,
       receiver,
       tokenId,
-      nft.uri
+      nft.uri,
+      {
+        gasLimit: 5_000_000_0
+      }
     );
     console.log({ res });
     const hash = await res.hash();
@@ -174,11 +177,11 @@ export class XPDecentralizedUtility {
       signatures = window.sigs
         ? window.sigs
         : await targetChain
-            .getStorageContract()
-            .getLockNftSignatures(
-              hash,
-              v3_ChainId[originChainIdentifier.nonce].name
-            );
+          .getStorageContract()
+          .getLockNftSignatures(
+            hash,
+            v3_ChainId[originChainIdentifier.nonce].name
+          );
       console.log("inside loop signatures: ", signatures);
       console.log(
         "inside loop validatorCount: ",
