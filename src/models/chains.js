@@ -36,7 +36,7 @@ class AbstractChain {
     return hash;
   }
 
-  async listetnExecutedSocket() {}
+  async listetnExecutedSocket() { }
 
   async connect() {
     throw new Error("connect method not implemented");
@@ -85,15 +85,15 @@ class AbstractChain {
 
         if (
           unique[
-            `${tokenId}_${contract?.toLowerCase() ||
-              address?.toLowerCase()}_${chainId}`
+          `${tokenId}_${contract?.toLowerCase() ||
+          address?.toLowerCase()}_${chainId}`
           ]
         ) {
           return false;
         } else {
           unique[
             `${tokenId}_${contract?.toLowerCase() ||
-              address?.toLowerCase()}_${chainId}`
+            address?.toLowerCase()}_${chainId}`
           ] = true;
 
           return true;
@@ -857,10 +857,10 @@ class Cosmos extends AbstractChain {
       },
       metaData: !nft?.uri
         ? {
-            ...nft?.native?.metadata,
-            image: nft?.native?.metadata?.media[0]?.url,
-            imageFormat: nft?.native?.metadata?.media[0]?.extension,
-          }
+          ...nft?.native?.metadata,
+          image: nft?.native?.metadata?.media[0]?.url,
+          imageFormat: nft?.native?.metadata?.media[0]?.extension,
+        }
         : null,
     }));
 
@@ -906,9 +906,9 @@ class TON extends AbstractChain {
       animation_url: nft?.native?.metadata?.animation_url,
       metaData: withMetadata
         ? {
-            ...nft?.native?.metadata,
-            ...native_metadata,
-          }
+          ...nft?.native?.metadata,
+          ...native_metadata,
+        }
         : undefined,
 
       native: {
@@ -1210,6 +1210,8 @@ class HEDERA extends EVM {
 }
 
 class ICP extends AbstractChain {
+  v3Bridge = true;
+
   constructor(params) {
     super(params);
   }
@@ -1259,21 +1261,21 @@ class ICP extends AbstractChain {
       metaData:
         Object.keys(metadata).length > 0
           ? {
-              ...metadata,
-              ...(mimeType === "video"
-                ? {
-                    animation_url: uri,
-                    animation_url_format: format,
-                  }
-                : { image: uri, imageFormat: format }),
-            }
+            ...metadata,
+            ...(mimeType === "video"
+              ? {
+                animation_url: uri,
+                animation_url_format: format,
+              }
+              : { image: uri, imageFormat: format }),
+          }
           : format !== "json"
-          ? { image: nft.uri }
-          : undefined,
+            ? { image: nft.uri }
+            : undefined,
     };
   }
 
-  prepareAgent = async () => {};
+  prepareAgent = async () => { };
 
   async preTransfer(...args) {
     const nft = args[0];
@@ -1295,9 +1297,9 @@ class ICP extends AbstractChain {
     }
   }
 
-  adaptHashView(_, receiver) {
-    return this.adaptAddress(receiver);
-  }
+  // adaptHashView(_, receiver) {
+  //   return this.adaptAddress(receiver);
+  // }
 
   async listetnExecutedSocket(executedSocket, from) {
     return new Promise((resolve, reject) => {
