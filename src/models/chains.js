@@ -1297,9 +1297,9 @@ class ICP extends AbstractChain {
     }
   }
 
-  // adaptHashView(_, receiver) {
-  //   return this.adaptAddress(receiver);
-  // }
+  adaptHashView(_, receiver) {
+    return this.adaptAddress(receiver);
+  }
 
   async listetnExecutedSocket(executedSocket, from) {
     return new Promise((resolve, reject) => {

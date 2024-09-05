@@ -12,6 +12,7 @@ import { StringShortener } from "../../../utils";
 import { withServices } from "../../App/hocs/withServices";
 import { Modal } from "react-bootstrap";
 import { ClaimInDestination } from "../../TransferBoard/ClaimInDestination";
+import { connectPlugWallet } from "../../Wallet/IcpConnections";
 
 const CollectionPannel = () => {
   const preFetchData = useSelector((state) => state.general.preFetchData);
@@ -218,6 +219,8 @@ export const withICP = (Wrapped) =>
 
     const connectionCallback = async (bridge) => {
       const chainWrapper = await bridge.getChain(Chain.DFINITY);
+      const signer = await connectPlugWallet(chainWrapper); // Connect to the ICP wallet and get the signer
+      chainWrapper.setSigner(signer); // Set the signer in the chainWrapper
       return chainWrapper;
     };
 

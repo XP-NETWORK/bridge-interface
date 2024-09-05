@@ -4,6 +4,7 @@ import { setQuietConnection } from "../../store/reducers/signersSlice";
 import {
   setError,
   setIsAssociated,
+  setSuccess,
   setTempleClaimed,
   setTempleWalletData,
   setTemporaryFrom,
@@ -12,6 +13,8 @@ import {
 import { XPDecentralizedUtility } from "../../utils/xpDecentralizedUtility";
 import { Modal, Spinner } from "react-bootstrap";
 import WalletList from "../Wallet/WalletList";
+import { sleep } from "../../utils";
+import { TIME } from "../../constants/time";
 
 export const ClaimInDestination = (connection) => {
   return function CB({
@@ -83,13 +86,27 @@ export const ClaimInDestination = (connection) => {
           return;
         }
 
-        const { hash: claimedHash } = await xPDecentralizedUtility.claimNFT(
+        const claimResponse = await xPDecentralizedUtility.claimNFT(
           originChainIdentifier,
           bridge,
           hash,
           chainWapper,
           fromChainWapper
         );
+        const claimedHash = claimResponse?.hash || claimResponse;
+        if (to.text === "ICP") {
+          await sleep(TIME.FIVE_SECONDS);
+          const claimData = await xPDecentralizedUtility.readClaimed721Event(
+            targetChainIdentifier,
+            claimedHash
+          );
+          dispatch(setTransferLoaderModal(false));
+          dispatch(
+            setSuccess(
+              `NFT Claimed Successfully: Canister ID: ${claimData?.nft_contract}`
+            )
+          );
+        }
 
         setDestHash(claimedHash);
         dispatch(setTransferLoaderModal(false));

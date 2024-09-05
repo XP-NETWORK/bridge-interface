@@ -330,4 +330,11 @@ export class XPDecentralizedUtility {
   getChainFromFactory = async (chain) => {
     return await this.factory.inner(chain);
   };
+
+  readClaimed721Event = async (destChainIdentifier, hash) => {
+    const destChain = await this.getChainFromFactory(
+      v3_ChainId[destChainIdentifier?.nonce].name
+    );
+    return await destChain.readClaimed721Event(hash)
+  }
 }
