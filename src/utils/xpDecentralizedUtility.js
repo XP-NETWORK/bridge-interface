@@ -110,7 +110,10 @@ export class XPDecentralizedUtility {
     };
   };
   lockNFT_V3 = async (fromChain, toChain, nft, receiver) => {
-    const { tokenId } = nft.native;
+    let { tokenId } = nft.native;
+    if (fromChain.nonce === 28) {
+      tokenId = BigInt(tokenId)
+    }
     const signer = fromChain.getSigner();
 
     const originChain = await this.getChainFromFactory(
