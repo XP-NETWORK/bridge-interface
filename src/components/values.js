@@ -73,6 +73,11 @@ export const sockets = {
     testnet: "wss://tools.xp.network::/testnet-explorer/ws", //"https://testnet-tx-socket.herokuapp.com/", //"wss://testnet-bridge-explorer.herokuapp.com/",
 };
 
+export const icpNetworks = {
+    testnet: "https://tools.xp.network/",
+    mainnet: "https://ic0.app"
+}
+
 export const getChainObject = (nonce) => chains.find((chain) => chain.nonce === nonce);
 
 export const secretnodes = "https://secretnodes.com/secret/accounts";

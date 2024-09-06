@@ -10,6 +10,7 @@ import xpchallenge from "../services/xpchallenge";
 import { extractType, formatAddress, setupURI } from "../utils";
 import { switchNetwork } from "../services/chains/evm/evmService";
 import { getChainObject } from "../components/values";
+import { XPDecentralizedUtility } from "../utils/xpDecentralizedUtility";
 
 const Xpchallenge = xpchallenge();
 const feeMultiplier = 1.1;
@@ -1217,19 +1218,12 @@ class ICP extends AbstractChain {
   }
 
   async getNFTs(address, contract) {
-    const dab = contract === "default";
-    const [defaults, wrappedNfts, userCanister] = await Promise.allSettled([
-      dab && super.getNFTs(address),
-      this.chain.nftList(address),
-      contract && !dab && this.chain.nftList(address, contract),
-      //this.chain.nftList(address, this.chain.getParams().umt.toText()),
-    ]);
+    const xPDecentralizedUtility = new XPDecentralizedUtility();
+    return xPDecentralizedUtility.nftList(ChainNonce.DFINITY, address, contract)
+  }
 
-    return (defaults.status === "fulfilled" ? defaults.value || [] : [])
-      .concat(wrappedNfts.status === "fulfilled" ? wrappedNfts.value || [] : [])
-      .concat(
-        userCanister.status === "fulfilled" ? userCanister.value || [] : []
-      );
+  filterNFTs(nfts) {
+    return nfts;
   }
 
   async preParse(nft) {
@@ -1252,11 +1246,12 @@ class ICP extends AbstractChain {
       ...nft,
       native: {
         ...nft.native,
+        tokenId: nft.native?.tokenId || nft?.tokenId,
         contract: nft.collectionIdent,
         chainId: String(ChainNonce.DFINITY),
       },
       chainId: String(ChainNonce.DFINITY),
-      tokenId: nft.native?.tokenId,
+      tokenId: nft.native?.tokenId || nft?.tokenId,
       contract: nft.collectionIdent,
       metaData:
         Object.keys(metadata).length > 0

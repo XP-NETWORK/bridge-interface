@@ -213,13 +213,15 @@ const NFTListTopButton = withServices(({ serviceContainer }) => {
 
 export const withICP = (Wrapped) =>
   function CBU(props) {
+    const testnet = useSelector((state) => state.general.testNet);
+
     const clearSelectedNFTs = async (dispatch) => {
       dispatch(cleanSelectedNFTList());
     };
 
     const connectionCallback = async (bridge) => {
       const chainWrapper = await bridge.getChain(Chain.DFINITY);
-      const signer = await connectPlugWallet(chainWrapper); // Connect to the ICP wallet and get the signer
+      const signer = await connectPlugWallet(chainWrapper, testnet); // Connect to the ICP wallet and get the signer
       chainWrapper.setSigner(signer); // Set the signer in the chainWrapper
       return chainWrapper;
     };

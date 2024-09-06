@@ -1,4 +1,6 @@
-export const connectPlugWallet = async (chainWrapper) => {
+import { icpNetworks } from "../values";
+
+export const connectPlugWallet = async (chainWrapper, testnet) => {
   try {
     const provider = window.ic?.plug; // Assuming Plug wallet is used for ICP
     if (!provider) {
@@ -6,7 +8,7 @@ export const connectPlugWallet = async (chainWrapper) => {
       return;
     }
     await provider.requestConnect({
-      host: "https://tools.xp.network/",
+      host: testnet ? icpNetworks.testnet : icpNetworks.mainnet,
       whitelist: [
         "ryjl3-tyaaa-aaaaa-aaaba-cai",
         chainWrapper.chain.getParams().bridgeContract.toText(),

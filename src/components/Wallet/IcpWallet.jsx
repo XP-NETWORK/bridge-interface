@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { getChainObject } from "../values";
+import { getChainObject, icpNetworks } from "../values";
 import { useCheckMobileScreen } from "../Settings/hooks";
 
 import { getRightPath } from "../../utils";
@@ -27,6 +27,7 @@ function IcpWallet({ serviceContainer }) {
   const isMobile = useCheckMobileScreen();
   const from = useSelector((state) => state.general.from);
   const to = useSelector((state) => state.general.to);
+  const testnet = useSelector((state) => state.general.testNet);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const navigateToAccountRoute = () => {
@@ -51,7 +52,7 @@ function IcpWallet({ serviceContainer }) {
 
     await provider
       .requestConnect({
-        host: "https://tools.xp.network/",
+        host: testnet ? icpNetworks.testnet : icpNetworks.mainnet,
         whitelist: [
           "ryjl3-tyaaa-aaaaa-aaaba-cai",
           chainWrapper.chain.getParams().bridgeContract.toText(),
@@ -76,7 +77,7 @@ function IcpWallet({ serviceContainer }) {
 
     const prepareAgent = async (canisterId) => {
       await provider.createAgent({
-        host: "https://tools.xp.network/",
+        host: testnet ? icpNetworks.testnet : icpNetworks.mainnet,
         whitelist: [
           "ryjl3-tyaaa-aaaaa-aaaba-cai",
           canisterId,

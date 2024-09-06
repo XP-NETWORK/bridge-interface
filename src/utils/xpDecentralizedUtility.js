@@ -337,4 +337,11 @@ export class XPDecentralizedUtility {
     );
     return await destChain.readClaimed721Event(hash)
   }
+
+  nftList = async (chainNonce, address, contract) => {
+    const destChain = await this.getChainFromFactory(
+      v3_ChainId[chainNonce].name
+    );
+    return await destChain.nftList(address, contract)
+  };
 }
