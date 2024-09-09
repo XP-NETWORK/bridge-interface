@@ -67,7 +67,11 @@ function IcpWallet({ serviceContainer }) {
     const principalId = await provider.getPrincipal();
 
     account.address = principalId.toText();
-    account.signer = window.ic?.plug?.agent;
+    if (wallet === "plug") {
+      account.signer = window.ic?.[wallet]?.agent;
+    } else {
+      account.signer = provider;
+    }
     if (!provider.createAgent) {
       chainWrapper.chain.setActorCreator(provider);
       account.signer.agent = {};
