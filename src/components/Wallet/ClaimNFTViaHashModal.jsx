@@ -53,7 +53,7 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
 
   const claimHandler = async () => {
 
-    if(bridge.currentType === "EVM" && nftData?.destinationChain !== "HEDERA"){
+    if(bridge.currentType === "EVM" && nftData?.destinationChain !== "HEDERA" && nftData?.destinationChain !== "TON"){
       await switchNetwork(getChainObject(v3_getChainNonce[nftData?.destinationChain]))
     }
 
