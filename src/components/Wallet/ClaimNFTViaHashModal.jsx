@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setQuietConnection } from "../../store/reducers/signersSlice";
 import {
   setError,
+  setIcpClaimSuccess,
   setIsAssociated,
   setSuccess,
   setTransferLoaderModal,
@@ -45,7 +46,11 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
     const originChain = await xpDecentralizedUtility.getChainFromFactory(
       v3_ChainId[origin.nonce].name
     );
-    const res = await xpDecentralizedUtility.getClaimData(origin.nonce, originChain, hash);
+    const res = await xpDecentralizedUtility.getClaimData(
+      origin.nonce,
+      originChain,
+      hash
+    );
     setNFTData(res);
   };
 
@@ -86,8 +91,22 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
 
       console.log({ claimed });
       setHash("");
-      dispatch(setTransferLoaderModal(false));
-      dispatch(setSuccess("NFT Claimed Successfully"));
+      if (nftData?.destinationChain === "ICP") {
+        const claimData = await xpDecentralizedUtility.readClaimed721Event(
+          targetChainIdentifier,
+          claimed
+        );
+        dispatch(setTransferLoaderModal(false));
+        dispatch(
+          setIcpClaimSuccess({
+            showModal: true,
+            canisterId: claimData?.nft_contract,
+          })
+        );
+      } else {
+        dispatch(setTransferLoaderModal(false));
+        dispatch(setSuccess("NFT Claimed Successfully"));
+      }
     } catch (e) {
       console.log("in catch block", e);
       dispatch(setError({ message: e.message }));

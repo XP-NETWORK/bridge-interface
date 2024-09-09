@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setQuietConnection } from "../../store/reducers/signersSlice";
 import {
   setError,
+  setIcpClaimSuccess,
   setIsAssociated,
-  setSuccess,
   setTempleClaimed,
   setTempleWalletData,
   setTemporaryFrom,
@@ -102,14 +102,16 @@ export const ClaimInDestination = (connection) => {
           );
           dispatch(setTransferLoaderModal(false));
           dispatch(
-            setSuccess(
-              `NFT Claimed Successfully: Canister ID: ${claimData?.nft_contract}`
-            )
+            setIcpClaimSuccess({
+              showModal: true,
+              canisterId: claimData?.nft_contract,
+            })
           );
+        } else {
+          dispatch(setTransferLoaderModal(false));
         }
 
         setDestHash(claimedHash);
-        dispatch(setTransferLoaderModal(false));
       } catch (e) {
         console.log("in catch block", e);
         dispatch(setError({ message: e.message }));
