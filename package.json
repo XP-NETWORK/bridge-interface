@@ -89,7 +89,7 @@
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "NODE_OPTIONS='--max_old_space_size=4096' react-app-rewired start",
-    "build": "GENERATE_SOURCEMAP=false REACT_APP_GIT_SHA=`git rev-parse HEAD` react-app-rewired build --max-old-space-size=8192",
+    "build": "NODE_OPTIONS='--max_old_space_size=100000' GENERATE_SOURCEMAP=false REACT_APP_GIT_SHA=`git rev-parse HEAD` react-app-rewired build",
     "eject": "react-app-rewired eject",
     "predeploy": "npm run build",
     "test": "react-app-rewired test --transformIgnorePatterns 'node_modules/(?!@codemirror)/'",

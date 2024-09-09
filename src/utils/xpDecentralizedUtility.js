@@ -236,9 +236,10 @@ export class XPDecentralizedUtility {
     return resultObject;
   };
   claimNFT_V3 = async (originChainIdentifier, hashs, bridge) => {
-    const hash =
-      originChainIdentifier.nonce == 29 ? "0x" + hashs.slice(0, 64) : hashs;
-
+    let hash = hashs;
+    if (originChainIdentifier.nonce == 29) {
+      hash = "0x" + hashs.replace("0x", "").slice(0, 64);
+    }
     const originChain = await this.getChainFromFactory(
       v3_ChainId[originChainIdentifier?.nonce].name
     );
