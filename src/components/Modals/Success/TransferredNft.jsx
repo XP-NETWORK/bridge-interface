@@ -86,7 +86,11 @@ const TransferredNft = ({
           (from.type === "Elrond" && new RegExp(`^${tx.tokenId}`).test(t)) ||
           (from.type === "TON" && address === tx.contract)
         ) {
-          if (txnStatus !== "Completed" && from.type !== "Hedera") {
+          if (
+            txnStatus !== "Completed" &&
+            from.type !== "Hedera" &&
+            from.type !== "Tezos"
+          ) {
             setTxnStatus(tx?.status?.toLowerCase());
           }
 
