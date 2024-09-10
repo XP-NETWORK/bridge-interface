@@ -86,14 +86,13 @@ export const ClaimInDestination = (connection) => {
           return;
         }
 
-        const claimResponse = await xPDecentralizedUtility.claimNFT(
+        const { hash: claimedHash } = await xPDecentralizedUtility.claimNFT(
           originChainIdentifier,
           bridge,
           hash,
           chainWapper,
           fromChainWapper
         );
-        const claimedHash = claimResponse?.hash || claimResponse;
         if (to.text === "ICP") {
           await sleep(TIME.FIVE_SECONDS);
           const claimData = await xPDecentralizedUtility.readClaimed721Event(

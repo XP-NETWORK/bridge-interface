@@ -43,7 +43,7 @@ function IcpWallet({ serviceContainer }) {
       dispatch(
         setError({
           message: `You have to install ${name} wallet into your browser`,
-        })
+        }),
       );
       return;
     }
@@ -67,11 +67,7 @@ function IcpWallet({ serviceContainer }) {
     const principalId = await provider.getPrincipal();
 
     account.address = principalId.toText();
-    if (wallet === "plug") {
-      account.signer = window.ic?.[wallet]?.agent;
-    } else {
-      account.signer = provider;
-    }
+    account.signer = window.ic?.[wallet];
     if (!provider.createAgent) {
       chainWrapper.chain.setActorCreator(provider);
       account.signer.agent = {};

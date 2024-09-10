@@ -297,7 +297,8 @@ export class XPDecentralizedUtility {
     console.log("claimed: ", claim);
     if (
       v3_ChainId[targetChainIdentifier?.nonce].name === "TON" ||
-      v3_ChainId[targetChainIdentifier?.nonce].name === "HEDERA"
+      v3_ChainId[targetChainIdentifier?.nonce].name === "HEDERA" ||
+      v3_ChainId[targetChainIdentifier?.nonce].name === "ICP"
     ) {
       return {
         hash: claim?.hash(),

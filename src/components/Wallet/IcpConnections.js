@@ -16,7 +16,7 @@ export const connectPlugWallet = async (chainWrapper, testnet) => {
       timeout: 6e4,
     });
 
-    const signer = window.ic?.plug?.agent;
+    const signer = window.ic?.plug;
     return signer;
   } catch (error) {
     console.error("Error connecting to Plug wallet:", error);
