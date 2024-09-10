@@ -524,6 +524,7 @@ export const chains = [
         newChain: true,
         coming: false,
         isDisabled: false,
+        hideOnMobile: true
     },
     {
         type: "APTOS",

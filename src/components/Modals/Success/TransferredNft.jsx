@@ -86,7 +86,11 @@ const TransferredNft = ({
           (from.type === "Elrond" && new RegExp(`^${tx.tokenId}`).test(t)) ||
           (from.type === "TON" && address === tx.contract)
         ) {
-          if (txnStatus !== "Completed" && from.type !== "Hedera") {
+          if (
+            txnStatus !== "Completed" &&
+            from.type !== "Hedera" &&
+            from.type !== "DFINITY"
+          ) {
             setTxnStatus(tx?.status?.toLowerCase());
           }
 
@@ -127,7 +131,7 @@ const TransferredNft = ({
   }, [tagetCanister, workarond_dest_hash]);
 
   useEffect(() => {
-    if (from.type === "Hedera") {
+    if (from.type === "Hedera" || from.type === "DFINITY") {
       setTxnStatus("completed");
     } else {
       evmTxStatus(txn.provider, txn.hash)
@@ -208,7 +212,7 @@ const TransferredNft = ({
           serviceContainer={serviceContainer}
           fromChain={from.nonce}
           toChain={to.nonce}
-          hash={depHash}
+          hash={from.type === "DFINITY" ? txn?.hash : depHash}
           setDestHash={(hash) => {
             setHashes({
               ...hashes,
