@@ -7,6 +7,8 @@
     "electron": false
   },
   "dependencies": {
+    "@dfinity/agent": "^2.0.0",
+    "@dfinity/ledger-icp": "^2.5.0",
     "@dfinity/utils": "^2.5.0",
     "@harmony-js/core": "^0.1.57",
     "@hashgraph/sdk": "^2.34.1",

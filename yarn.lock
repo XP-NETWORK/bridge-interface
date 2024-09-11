@@ -1633,6 +1633,18 @@
     buffer "^6.0.3"
     simple-cbor "^0.4.1"
 
+"@dfinity/agent@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@dfinity/agent/-/agent-2.0.0.tgz#2c28d52b179af09f8b8998761ddaf81fcbd6d9c6"
+  integrity sha512-Cc2VDAMfxCNIQoaEeKPf0rbS/Y21HAF+eEFj6GfijNnUxS42i4zwUF2PUvEJZqaB2FQwA9SC7MDyuwL8BR2oJA==
+  dependencies:
+    "@noble/curves" "^1.4.0"
+    "@noble/hashes" "^1.3.1"
+    base64-arraybuffer "^0.2.0"
+    borc "^2.1.1"
+    buffer "^6.0.3"
+    simple-cbor "^0.4.1"
+
 "@dfinity/candid@^0.15.5":
   version "0.15.7"
   resolved "https://registry.yarnpkg.com/@dfinity/candid/-/candid-0.15.7.tgz#c395d0fa353c4df653edd0aaebc9ff1f253cc5ba"
@@ -1669,6 +1681,11 @@
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@dfinity/ledger-icp/-/ledger-icp-2.4.0.tgz#3e8305fe708e0585aa3ee867528ccf62f9df8c6c"
   integrity sha512-uWw9gsPwvrmviI6mp0wXUX59D3ytiwOsEgoXAWFOwybO9qVbwLb/ucZYcNYso7GpI91hXawT/jd2A/fcGTXebQ==
+
+"@dfinity/ledger-icp@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@dfinity/ledger-icp/-/ledger-icp-2.5.0.tgz#f563779f39e346d2e6365554e15727f9d99ba906"
+  integrity sha512-1IItBQDSFAJRXrH0CUO6DqhgU9wzE2ChUkqjreJ7h41bVDBhVP0xMwMQHXiP88pdAAdpITw8RGzKYoZg7Bhcwg==
 
 "@dfinity/nns@^0.14.0":
   version "0.14.0"
@@ -22759,7 +22776,7 @@ xmlhttprequest@1.8.0:
 
 "xp-decentralized-sdk@git+https://github.com/XP-NETWORK/xp-decentralized-client-library#bleeding-edge":
   version "1.0.0"
-  resolved "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#7acc76c0a0d85bea1ac317b37764b67041f39108"
+  resolved "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#282b214428b8b4b8e3231578ee81306b2d2be38d"
   dependencies:
     "@aptos-labs/ts-sdk" "^1.22.2"
     "@cosmjs/amino" "^0.32.3"

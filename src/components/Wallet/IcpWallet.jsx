@@ -21,6 +21,7 @@ import plugIcon from "../../assets/img/wallet/plug.svg";
 import stoic from "../../assets/img/wallet/stoic.svg";
 import bitfinity from "../../assets/img/wallet/bitfinity.svg";
 //import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
+import { HttpAgent } from "@dfinity/agent";
 
 function IcpWallet({ serviceContainer }) {
   const { bridge } = serviceContainer;
@@ -112,7 +113,9 @@ function IcpWallet({ serviceContainer }) {
           const account = {};
           //console.log(identity.getPrincipal().toText());
           account.address = identity.getPrincipal().toText();
-          account.signer = identity;
+          account.signer = new HttpAgent({
+            identity,
+          });
 
           resolve(account);
         });
