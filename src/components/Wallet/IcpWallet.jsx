@@ -115,6 +115,7 @@ function IcpWallet({ serviceContainer }) {
           account.address = identity.getPrincipal().toText();
           account.signer = new HttpAgent({
             identity,
+            host: "https://tools.xp.network",
           });
 
           resolve(account);
