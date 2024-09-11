@@ -53,12 +53,6 @@ export const wnftPattern = /(\S+xp\.network)/;
 
 //testnet in any bucket
 export const isTestnet = /testnet/.test(window.location.pathname);
-export const bridgeV = /decentralized/.test(window.location.host) ? "V4" : "V3";
-
-export const bridgeVUrls = {
-    V3: "https://bridge.xp.network/",
-    V4: "https://decentralized.bridge.xp.network"
-}
 //if on https://dev.bridge.xp.network/ domain
 export const dev = /(localhost|dev|10\.0\.0|trycloudflare)/.test(window.location.hostname);
 //if on https://staging.bridge.xp.network/  or https://dev.bridge.xp.network/ domains

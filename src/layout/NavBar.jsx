@@ -32,7 +32,6 @@ import {
 // import { biz } from "../components/values";
 import Network from "./Network";
 import { googleAnalyticsCategories, handleGA4Event } from "../services/GA4";
-import { bridgeV, bridgeVUrls } from "../components/values";
 
 function NavBar() {
   const widget = useSelector((state) => state.general.widget);
@@ -67,7 +66,7 @@ function NavBar() {
           <LinkContainer to={testnet ? "/testnet/connect" : "/connect"}>
             <Navbar.Brand>
               <img src={Logo} alt="Xp Network" />
-              <div>MULTICHAIN NFT BRIDGE {bridgeV}</div>
+              <div>MULTICHAIN NFT BRIDGE V3</div>
               <Network />
             </Navbar.Brand>
           </LinkContainer>
@@ -176,7 +175,7 @@ function NavBar() {
                 rel="noreferrer"
                 className="nav-link help-center"
                 target="_blank"
-                href={bridgeVUrls[bridgeV]}
+                href="https://decentralized.bridge.xp.network"
               >
                 <div className="nav-link__icon" style={{ marginTop: "-2px" }}>
                   <img
@@ -185,9 +184,7 @@ function NavBar() {
                     alt=""
                   />
                 </div>
-                <div className="nav-link__txt">
-                  Multichain NFT bridge {bridgeV}
-                </div>
+                <div className="nav-link__txt">Multichain NFT bridge V4</div>
               </a>
               <Nav.Link
                 className="mob-link"
