@@ -57,7 +57,7 @@ function NavBar() {
           <LinkContainer to={testnet ? "/testnet/connect" : "/connect"}>
             <Navbar.Brand>
               <img src={Logo} alt="Xp Network" />
-              <div>MULTICHAIN NFT BRIDGE V4</div>
+              <div>MULTICHAIN NFT BRIDGE V3</div>
               <Network />
             </Navbar.Brand>
           </LinkContainer>
@@ -151,7 +151,7 @@ function NavBar() {
                 rel="noreferrer"
                 className="nav-link help-center"
                 target="_blank"
-                href="https://bridge.xp.network/"
+                href="https://decentralized.bridge.xp.network/"
               >
                 <div className="nav-link__icon" style={{ marginTop: "-2px" }}>
                   <img
@@ -160,7 +160,7 @@ function NavBar() {
                     alt=""
                   />
                 </div>
-                <div className="nav-link__txt">Multichain NFT bridge V3</div>
+                <div className="nav-link__txt">Multichain NFT bridge V4</div>
               </a>
               <Nav.Link
                 className="mob-link"
