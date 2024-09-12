@@ -4,6 +4,7 @@ import { TIME } from "../constants/time";
 import { isTestnet, v3_bridge_mode } from "../components/values";
 import { v3_ChainId, v3_getChainNonce } from "./chainsTypes";
 import { ethers } from "ethers";
+import { CHAIN_INFO } from "xp.network";
 
 export class XPDecentralizedUtility {
   isV3Enabled = false;
@@ -347,5 +348,14 @@ export class XPDecentralizedUtility {
       v3_ChainId[chainNonce].name
     );
     return await destChain.nftList(address, contract)
+  };
+
+  getBalance = async (chainNonce, signer) => {
+    const destChain = await this.getChainFromFactory(
+      v3_ChainId[chainNonce].name
+    );
+    const res = await destChain.getBalance(signer)
+    const decimals = CHAIN_INFO.get(chainNonce)?.decimals;
+    return Number(res) / decimals;
   };
 }

@@ -113,11 +113,13 @@ function IcpWallet({ serviceContainer }) {
           const account = {};
           //console.log(identity.getPrincipal().toText());
           account.address = identity.getPrincipal().toText();
-          account.signer = new HttpAgent({
+          const agent = await HttpAgent.create({
             identity,
             host: testnet ? icpNetworks.testnet : icpNetworks.mainnet,
           });
 
+          await agent.fetchRootKey();
+          account.signer = agent;
           resolve(account);
         });
       });

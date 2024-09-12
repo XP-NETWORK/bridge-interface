@@ -1327,6 +1327,19 @@ class ICP extends AbstractChain {
     });
   }
 
+  async balance() {
+    if (!this.signer)
+      throw new Error("No signer for ", this.chainParams.text);
+    try {
+      const xPDecentralizedUtility = new XPDecentralizedUtility();
+      const bal = xPDecentralizedUtility.getBalance(ChainNonce.DFINITY, this.signer)
+      return bal;
+    } catch (e) {
+      console.log(e)
+      return 0;
+    }
+  }
+
   /*handlerResult(_, address) {
         return {
             hash: this.adaptAddress(address),
