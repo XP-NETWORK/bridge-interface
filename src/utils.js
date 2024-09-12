@@ -56,7 +56,7 @@ export const fetchXPUpdate = () => {
     .then((response) => {
       return response.data;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       // handle error
       console.log(error);
     });
@@ -68,7 +68,7 @@ export const checkValidators = () => {
     .then((response) => {
       return response.data;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       // handle error
       console.log(error);
     });
@@ -171,8 +171,8 @@ const getSubstringValue = (length) => {
 export const StringShortener = (str, length) =>
   str
     ? `${str.substring(0, getSubstringValue(length) || 5)}...${str.substring(
-        str.length - length
-      )}`
+      str.length - length
+    )}`
     : "";
 
 export const promisify = (cb) => new Promise((r) => cb().then((res) => r(res)));
@@ -196,9 +196,9 @@ export const fixify = (number) => {
 
   return digitsAfterDot
     ? number
-        .toFixed(Math.min(digitsAfterDot))
-        .match(/\d*\.(0*)(\d{0,3})/)
-        .at(0)
+      .toFixed(Math.min(digitsAfterDot))
+      .match(/\d*\.(0*)(\d{0,3})/)
+      .at(0)
     : number;
 };
 
@@ -210,25 +210,25 @@ export const setupURI = (uri) => {
 };
 
 export const isMobile = {
-  Android: function() {
+  Android: function () {
     return navigator.userAgent.match(/Android/i);
   },
-  BlackBerry: function() {
+  BlackBerry: function () {
     return navigator.userAgent.match(/BlackBerry/i);
   },
-  iOS: function() {
+  iOS: function () {
     return navigator.userAgent.match(/iPhone|iPad|iPod/i);
   },
-  Opera: function() {
+  Opera: function () {
     return navigator.userAgent.match(/Opera Mini/i);
   },
-  Windows: function() {
+  Windows: function () {
     return (
       navigator.userAgent.match(/IEMobile/i) ||
       navigator.userAgent.match(/WPDesktop/i)
     );
   },
-  any: function() {
+  any: function () {
     return (
       isMobile.Android() ||
       isMobile.BlackBerry() ||
@@ -325,7 +325,7 @@ const connectWallet = {
     chain.setSigner(account);
   },
 
-  ELROND: async (bridge, nonce) => {
+  MULTIVERSX: async (bridge, nonce) => {
     const chain = await bridge.getChain(nonce);
     const signer = await connectExtension(
       bridge.network === "testnet" ? "D" : "1"
@@ -355,7 +355,7 @@ export const connectWalletByChain = async (
     case "TEZOS":
       await connectWallet[type](bridge, nonce);
       break;
-    case "ELROND":
+    case "MULTIVERSX":
       await connectWallet[type](bridge, nonce);
       break;
   }
