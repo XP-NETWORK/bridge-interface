@@ -110,7 +110,7 @@ export class XPDecentralizedUtility {
     };
   };
   lockNFT_V3 = async (fromChain, toChain, nft, receiver) => {
-    const { tokenId } = nft.native;
+    let { tokenId } = nft.native;
     const signer = fromChain.getSigner();
 
     const originChain = await this.getChainFromFactory(
@@ -134,6 +134,9 @@ export class XPDecentralizedUtility {
       const sdk = await import("@hashgraph/sdk");
       originChain.injectSDK(sdk);
     }
+    if (fromChain.nonce === 2) {
+      tokenId = nft?.native?.nonce || tokenId
+    }
     console.log("originChain", originChain);
     const res = await originChain.lockNft(
       signer,
@@ -143,8 +146,7 @@ export class XPDecentralizedUtility {
       tokenId,
       nft.uri,
       {
-        gasLimit: 5_000_000,
-        nonce: nft?.native?.nonce
+        gasLimit: 5_000_000
       }
     );
     console.log({ res });
@@ -178,11 +180,11 @@ export class XPDecentralizedUtility {
       signatures = window.sigs
         ? window.sigs
         : await targetChain
-            .getStorageContract()
-            .getLockNftSignatures(
-              hash,
-              v3_ChainId[originChainIdentifier.nonce].name
-            );
+          .getStorageContract()
+          .getLockNftSignatures(
+            hash,
+            v3_ChainId[originChainIdentifier.nonce].name
+          );
       console.log("inside loop signatures: ", signatures);
       console.log(
         "inside loop validatorCount: ",
