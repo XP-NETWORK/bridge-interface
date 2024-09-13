@@ -379,7 +379,7 @@ export default function WalletList({ connected, input, discount }) {
       order: 888,
       type: "NEAR",
       keyName: "Wallet Selector",
-      isDisabled: true,
+      isDisabled: false,
     },
     {
       Component: <Phantom key="Phantom" close={connected} />,
@@ -465,7 +465,7 @@ export default function WalletList({ connected, input, discount }) {
         .filter(
           (wallet) =>
             wallet.keyName.toLowerCase().includes(input.toLowerCase()) &&
-            !wallet.isDisabled
+            !wallet.isDisabled,
         )
     : from
     ? sortWallet(walletComponents)

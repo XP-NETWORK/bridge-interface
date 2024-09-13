@@ -131,6 +131,7 @@ export const v3_ChainId = {
   27: { name: "TON", type: "TON" },
   29: { name: "HEDERA", type: "HEDERA" },
   43: { name: "BASE", type: "EVM" },
+  31: { name: "NEAR", type: "NEAR" },
 };
 
 export const v3_getChainNonce = {
@@ -142,5 +143,6 @@ export const v3_getChainNonce = {
   SECRET: 24,
   TON: 27,
   HEDERA: 29,
-  BASE: 43
+  BASE: 43,
+  NEAR: 31
 };
