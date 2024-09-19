@@ -9,6 +9,7 @@ import Tooltip from "../AccountModal/Tooltip";
 
 import withChains from "../../NFTsBoard/hocs";
 import { TIME } from "../../../constants/time";
+import { XPDecentralizedUtility } from "../../../utils/xpDecentralizedUtility";
 
 //import { biz } from "../../values";
 
@@ -63,6 +64,7 @@ const TransferredNft = ({
 
   const depText = window.innerWidth <= 600 ? "Dep" : "Departure Hash";
   const desText = window.innerWidth <= 600 ? "Des" : "Destination Hash";
+  const xPDecentralizedUtility = new XPDecentralizedUtility();
 
   const RenderClaimInDestination =
     chainSpecificRender?.RenderClaimInDestination;
@@ -112,7 +114,7 @@ const TransferredNft = ({
 
   const depHash = fromChain?.adaptHashView(
     hashes?.depHash || txn?.hash,
-    account
+    account,
   );
 
   useEffect(() => {
@@ -125,6 +127,21 @@ const TransferredNft = ({
         });
     }
   }, [tagetCanister, workarond_dest_hash]);
+
+  useEffect(() => {
+    if (txn && from.type === "Elrond") {
+      xPDecentralizedUtility
+        .getTransactionStatus(from.nonce, txn.hash)
+        .then((res) => {
+          if (res === "success") {
+            setTxnStatus("completed");
+          }
+        })
+        .catch((err) => {
+          console.log("error: ", err);
+        });
+    }
+  }, []);
 
   useEffect(() => {
     if (from.type === "Hedera") {
@@ -145,7 +162,7 @@ const TransferredNft = ({
   const targetCollection = mintWith || tagetCanister;
 
   const v3BridgeTx = Boolean(
-    depHash && fromChain?.v3Bridge && toChain?.v3Bridge
+    depHash && fromChain?.v3Bridge && toChain?.v3Bridge,
   );
   const completed = Boolean(
     (to.type === "TON" && txnStatus === "completed") ||
@@ -153,7 +170,7 @@ const TransferredNft = ({
       (v3BridgeTx && txnStatus !== "claimed") ||
       (to.type === "Tezos" && txnStatus === "completed") ||
       (to.type === "Cosmos" && txnStatus === "completed") ||
-      (to.type === "EVM" && txnStatus === "completed")
+      (to.type === "EVM" && txnStatus === "completed"),
   );
 
   return (

@@ -35,10 +35,10 @@ export const ClaimInDestination = (connection) => {
     const [showModal, setShowModal] = useState(false);
 
     const { account, isTempleWallet } = useSelector(
-      (state) => state.general.templeWalletData
+      (state) => state.general.templeWalletData,
     );
     const templeIsClaimed = useSelector(
-      (state) => state.general.templeIsClaimed
+      (state) => state.general.templeIsClaimed,
     );
 
     const isAssociated = useSelector((state) => state.general.isAssociated);
@@ -88,7 +88,7 @@ export const ClaimInDestination = (connection) => {
           bridge,
           hash,
           chainWapper,
-          fromChainWapper
+          fromChainWapper,
         );
 
         const claimedHash = claimRes?.hash || claimRes;
@@ -140,7 +140,7 @@ export const ClaimInDestination = (connection) => {
           bridge,
           hash,
           chainWapper,
-          fromChainWapper
+          fromChainWapper,
         );
 
         setDestHash(claimedHash);
@@ -152,7 +152,7 @@ export const ClaimInDestination = (connection) => {
             account: {},
             isTempleWallet: false,
             isClaimed: false,
-          })
+          }),
         );
       } catch (e) {
         console.log("in catch block");
@@ -163,7 +163,7 @@ export const ClaimInDestination = (connection) => {
     };
 
     const transferModalLoader = useSelector(
-      (state) => state.general.transferModalLoader
+      (state) => state.general.transferModalLoader,
     );
 
     return (

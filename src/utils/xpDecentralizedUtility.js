@@ -336,4 +336,11 @@ export class XPDecentralizedUtility {
   getChainFromFactory = async (chain) => {
     return await this.factory.inner(chain);
   };
+
+  getTransactionStatus = async (chainNonce, txHash) => {
+    const originChain = await this.getChainFromFactory(
+      v3_ChainId[chainNonce].name
+    );
+    return originChain.getTransactionStatus(txHash)
+  }
 }
