@@ -22,7 +22,7 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
   const dispatch = useDispatch();
 
   const origin = useSelector((state) => state.general.from);
-  // const dest = useSelector((state) => state.general.to);
+  const dest = useSelector((state) => state.general.to);
   const isAssociated = useSelector((state) => state.general.isAssociated);
   const transferModalLoader = useSelector(
     (state) => state.general.transferModalLoader
@@ -52,8 +52,7 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
   };
 
   const claimHandler = async () => {
-
-    if(bridge.currentType === "EVM" && nftData?.destinationChain !== "HEDERA" && nftData?.destinationChain !== "TON"){
+    if(dest.type.toLowerCase() === "evm"){
       await switchNetwork(getChainObject(v3_getChainNonce[nftData?.destinationChain]))
     }
 

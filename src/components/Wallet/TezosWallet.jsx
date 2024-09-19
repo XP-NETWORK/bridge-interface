@@ -58,7 +58,7 @@ function TezosWallet({ wallet, close, serviceContainer }) {
             throw new Error("Temple Wallet not installed");
           }
           const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
-          await wallet.connect("ghostnet");
+          await wallet.connect("mainnet");
           const tezos = wallet.toTezos();
           const accountPkh = await tezos.wallet.pkh();
           account.signer = wallet;

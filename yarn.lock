@@ -16494,7 +16494,7 @@ next-tick@^1.1.0:
 
 "nft-parser@git+https://github.com/xp-network/nft-parser#bleeding-edge":
   version "0.2.0"
-  resolved "git+https://github.com/xp-network/nft-parser#ddc9d939392e3d2d3a252ea002ec897be232511f"
+  resolved "git+https://github.com/xp-network/nft-parser#372024a5940f8027ee9761615c4c0a94671ab078"
   dependencies:
     "@ethersproject/providers" "^5.7.2"
     "@moralisweb3/common-evm-utils" "^2.17.0"
@@ -22729,7 +22729,7 @@ xmlhttprequest@1.8.0:
 
 "xp-decentralized-sdk@git+https://github.com/XP-NETWORK/xp-decentralized-client-library#decentralized-bleeding-edge":
   version "1.0.0"
-  resolved "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#9d2baf707b3d0cc31c37bc1d816bcdafac220bff"
+  resolved "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#82a3dabe18d19bad9c5f9cc333735d2cb750432a"
   dependencies:
     "@aptos-labs/ts-sdk" "^1.22.2"
     "@cosmjs/amino" "^0.32.3"
