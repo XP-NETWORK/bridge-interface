@@ -13,6 +13,8 @@ import {
 import { connectWalletByChain } from "../../utils";
 import { useWeb3React } from "@web3-react/core";
 import { v3_ChainId, v3_getChainNonce } from "../../utils/chainsTypes";
+import { switchNetwork } from "../../services/chains/evm/evmService";
+import { getChainObject } from "../values";
 
 export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
   const xpDecentralizedUtility = new XPDecentralizedUtility();
@@ -21,7 +23,7 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
   const dispatch = useDispatch();
 
   const origin = useSelector((state) => state.general.from);
-  // const dest = useSelector((state) => state.general.to);
+  const dest = useSelector((state) => state.general.to);
   const isAssociated = useSelector((state) => state.general.isAssociated);
   const transferModalLoader = useSelector(
     (state) => state.general.transferModalLoader
@@ -55,6 +57,10 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
   };
 
   const claimHandler = async () => {
+    if(dest.type.toLowerCase() === "evm"){
+      await switchNetwork(getChainObject(v3_getChainNonce[nftData?.destinationChain]))
+    }
+
     if (!nftData) {
       return;
     }

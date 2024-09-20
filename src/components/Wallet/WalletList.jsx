@@ -143,7 +143,7 @@ export default function WalletList({ connected, input, discount }) {
       desktop: true,
       order: 4,
       keyName: "Temple Wallet",
-      isDisabled: true,
+      isDisabled: false,
     },
     {
       Component: (

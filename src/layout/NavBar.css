@@ -312,6 +312,10 @@
 .nav-about::before {
 }
 
+.nav-link__icon__image {
+    max-width: unset !important;
+}
+
 @media screen and (max-width: 1024px) {
     .navbar {
         width: 768px;

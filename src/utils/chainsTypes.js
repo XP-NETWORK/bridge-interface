@@ -64,7 +64,7 @@ export const ChainType = {
 
 CHAIN_INFO = {
   set,
-  get
+  get,
 };
 
 export var Chain = {
@@ -109,7 +109,7 @@ export var Chain = {
   ZETA: 41,
   ENERGI: 42,
   BASE: 43,
-  FINDORA: 44
+  FINDORA: 44,
 };
 
 export function getChainName(chainNumber) {
@@ -131,6 +131,7 @@ export const v3_ChainId = {
   24: { name: 'SECRET', type: "COSMOS" },
   27: { name: 'TON', type: "TON" },
   29: { name: 'HEDERA', type: "HEDERA" },
+  43: { name: "BASE", type: "EVM" },
   28: { name: 'ICP', type: "DFINITY" },
 }
 
@@ -143,5 +144,6 @@ export const v3_getChainNonce = {
   'SECRET': 24,
   'TON': 27,
   'HEDERA': 29,
+  'BASE': 43
   'ICP': 28,
 }
