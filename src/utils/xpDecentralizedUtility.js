@@ -4,6 +4,7 @@ import { TIME } from "../constants/time";
 import { isTestnet, v3_bridge_mode } from "../components/values";
 import { v3_ChainId, v3_getChainNonce } from "./chainsTypes";
 import { ethers } from "ethers";
+import { CHAIN_INFO } from "xp.network";
 
 export class XPDecentralizedUtility {
   isV3Enabled = false;
@@ -110,7 +111,10 @@ export class XPDecentralizedUtility {
     };
   };
   lockNFT_V3 = async (fromChain, toChain, nft, receiver) => {
-    const { tokenId } = nft.native;
+    let { tokenId } = nft.native;
+    if (fromChain.nonce === 28) {
+      tokenId = BigInt(tokenId)
+    }
     const signer = fromChain.getSigner();
 
     const originChain = await this.getChainFromFactory(
@@ -141,7 +145,10 @@ export class XPDecentralizedUtility {
       v3_ChainId[toChain?.nonce].name,
       receiver,
       tokenId,
-      nft.uri
+      nft.uri,
+      {
+        gasLimit: 5_000_000
+      }
     );
     console.log({ res });
     const hash = await res.hash();
@@ -174,11 +181,11 @@ export class XPDecentralizedUtility {
       signatures = window.sigs
         ? window.sigs
         : await targetChain
-            .getStorageContract()
-            .getLockNftSignatures(
-              hash,
-              v3_ChainId[originChainIdentifier.nonce].name
-            );
+          .getStorageContract()
+          .getLockNftSignatures(
+            hash,
+            v3_ChainId[originChainIdentifier.nonce].name
+          );
       console.log("inside loop signatures: ", signatures);
       console.log(
         "inside loop validatorCount: ",
@@ -293,6 +300,7 @@ export class XPDecentralizedUtility {
     if (
       v3_ChainId[targetChainIdentifier?.nonce].name === "TON" ||
       v3_ChainId[targetChainIdentifier?.nonce].name === "HEDERA" ||
+      v3_ChainId[targetChainIdentifier?.nonce].name === "ICP" ||
       v3_ChainId[targetChainIdentifier?.nonce].name === "TEZOS"
     ) {
       return {
@@ -328,5 +336,28 @@ export class XPDecentralizedUtility {
 
   getChainFromFactory = async (chain) => {
     return await this.factory.inner(chain);
+  };
+
+  readClaimed721Event = async (destChainIdentifier, hash) => {
+    const destChain = await this.getChainFromFactory(
+      v3_ChainId[destChainIdentifier?.nonce].name
+    );
+    return await destChain.readClaimed721Event(hash)
+  }
+
+  nftList = async (chainNonce, address, contract) => {
+    const destChain = await this.getChainFromFactory(
+      v3_ChainId[chainNonce].name
+    );
+    return await destChain.nftList(address, contract)
+  };
+
+  getBalance = async (chainNonce, signer) => {
+    const destChain = await this.getChainFromFactory(
+      v3_ChainId[chainNonce].name
+    );
+    const res = await destChain.getBalance(signer)
+    const decimals = CHAIN_INFO.get(chainNonce)?.decimals;
+    return Number(res) / decimals;
   };
 }

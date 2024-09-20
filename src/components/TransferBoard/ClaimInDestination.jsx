@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setQuietConnection } from "../../store/reducers/signersSlice";
 import {
   setError,
+  setIcpClaimSuccess,
   setIsAssociated,
   setTempleClaimed,
   setTempleWalletData,
@@ -12,6 +13,8 @@ import {
 import { XPDecentralizedUtility } from "../../utils/xpDecentralizedUtility";
 import { Modal, Spinner } from "react-bootstrap";
 import WalletList from "../Wallet/WalletList";
+import { sleep } from "../../utils";
+import { TIME } from "../../constants/time";
 
 export const ClaimInDestination = (connection) => {
   return function CB({
@@ -90,9 +93,24 @@ export const ClaimInDestination = (connection) => {
           chainWapper,
           fromChainWapper
         );
+        if (to.text === "ICP") {
+          await sleep(TIME.FIVE_SECONDS);
+          const claimData = await xPDecentralizedUtility.readClaimed721Event(
+            targetChainIdentifier,
+            claimedHash
+          );
+          dispatch(setTransferLoaderModal(false));
+          dispatch(
+            setIcpClaimSuccess({
+              showModal: true,
+              canisterId: claimData?.nft_contract,
+            })
+          );
+        } else {
+          dispatch(setTransferLoaderModal(false));
+        }
 
         setDestHash(claimedHash);
-        dispatch(setTransferLoaderModal(false));
       } catch (e) {
         console.log("in catch block", e);
         dispatch(setError({ message: e.message }));

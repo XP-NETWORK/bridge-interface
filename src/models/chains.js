@@ -10,6 +10,7 @@ import xpchallenge from "../services/xpchallenge";
 import { extractType, formatAddress, setupURI } from "../utils";
 import { switchNetwork } from "../services/chains/evm/evmService";
 import { getChainObject } from "../components/values";
+import { XPDecentralizedUtility } from "../utils/xpDecentralizedUtility";
 
 const Xpchallenge = xpchallenge();
 const feeMultiplier = 1.1;
@@ -36,7 +37,7 @@ class AbstractChain {
     return hash;
   }
 
-  async listetnExecutedSocket() {}
+  async listetnExecutedSocket() { }
 
   async connect() {
     throw new Error("connect method not implemented");
@@ -85,15 +86,15 @@ class AbstractChain {
 
         if (
           unique[
-            `${tokenId}_${contract?.toLowerCase() ||
-              address?.toLowerCase()}_${chainId}`
+          `${tokenId}_${contract?.toLowerCase() ||
+          address?.toLowerCase()}_${chainId}`
           ]
         ) {
           return false;
         } else {
           unique[
             `${tokenId}_${contract?.toLowerCase() ||
-              address?.toLowerCase()}_${chainId}`
+            address?.toLowerCase()}_${chainId}`
           ] = true;
 
           return true;
@@ -857,10 +858,10 @@ class Cosmos extends AbstractChain {
       },
       metaData: !nft?.uri
         ? {
-            ...nft?.native?.metadata,
-            image: nft?.native?.metadata?.media[0]?.url,
-            imageFormat: nft?.native?.metadata?.media[0]?.extension,
-          }
+          ...nft?.native?.metadata,
+          image: nft?.native?.metadata?.media[0]?.url,
+          imageFormat: nft?.native?.metadata?.media[0]?.extension,
+        }
         : null,
     }));
 
@@ -906,9 +907,9 @@ class TON extends AbstractChain {
       animation_url: nft?.native?.metadata?.animation_url,
       metaData: withMetadata
         ? {
-            ...nft?.native?.metadata,
-            ...native_metadata,
-          }
+          ...nft?.native?.metadata,
+          ...native_metadata,
+        }
         : undefined,
 
       native: {
@@ -1210,24 +1211,19 @@ class HEDERA extends EVM {
 }
 
 class ICP extends AbstractChain {
+  v3Bridge = true;
+
   constructor(params) {
     super(params);
   }
 
   async getNFTs(address, contract) {
-    const dab = contract === "default";
-    const [defaults, wrappedNfts, userCanister] = await Promise.allSettled([
-      dab && super.getNFTs(address),
-      this.chain.nftList(address),
-      contract && !dab && this.chain.nftList(address, contract),
-      //this.chain.nftList(address, this.chain.getParams().umt.toText()),
-    ]);
+    const xPDecentralizedUtility = new XPDecentralizedUtility();
+    return xPDecentralizedUtility.nftList(ChainNonce.DFINITY, address, contract)
+  }
 
-    return (defaults.status === "fulfilled" ? defaults.value || [] : [])
-      .concat(wrappedNfts.status === "fulfilled" ? wrappedNfts.value || [] : [])
-      .concat(
-        userCanister.status === "fulfilled" ? userCanister.value || [] : []
-      );
+  filterNFTs(nfts) {
+    return nfts;
   }
 
   async preParse(nft) {
@@ -1250,30 +1246,31 @@ class ICP extends AbstractChain {
       ...nft,
       native: {
         ...nft.native,
+        tokenId: nft.native?.tokenId || nft?.tokenId,
         contract: nft.collectionIdent,
         chainId: String(ChainNonce.DFINITY),
       },
       chainId: String(ChainNonce.DFINITY),
-      tokenId: nft.native?.tokenId,
+      tokenId: nft.native?.tokenId || nft?.tokenId,
       contract: nft.collectionIdent,
       metaData:
         Object.keys(metadata).length > 0
           ? {
-              ...metadata,
-              ...(mimeType === "video"
-                ? {
-                    animation_url: uri,
-                    animation_url_format: format,
-                  }
-                : { image: uri, imageFormat: format }),
-            }
+            ...metadata,
+            ...(mimeType === "video"
+              ? {
+                animation_url: uri,
+                animation_url_format: format,
+              }
+              : { image: uri, imageFormat: format }),
+          }
           : format !== "json"
-          ? { image: nft.uri }
-          : undefined,
+            ? { image: nft.uri }
+            : undefined,
     };
   }
 
-  prepareAgent = async () => {};
+  prepareAgent = async () => { };
 
   async preTransfer(...args) {
     const nft = args[0];
@@ -1328,6 +1325,19 @@ class ICP extends AbstractChain {
 
       executedSocket.on("tx_executed_event", handler);
     });
+  }
+
+  async balance() {
+    if (!this.signer)
+      throw new Error("No signer for ", this.chainParams.text);
+    try {
+      const xPDecentralizedUtility = new XPDecentralizedUtility();
+      const bal = xPDecentralizedUtility.getBalance(ChainNonce.DFINITY, this.signer)
+      return bal;
+    } catch (e) {
+      console.log(e)
+      return 0;
+    }
   }
 
   /*handlerResult(_, address) {

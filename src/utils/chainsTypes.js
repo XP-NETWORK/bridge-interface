@@ -43,8 +43,8 @@ export const ChainType = {
   NEAR: "NEAR",
   HEDERA: "HEDERA",
   APTOS: "APTOS",
-  CASPER: "CASPER",
-};
+  CASPER: "CASPER"
+}
 
 // (function (ChainType) {
 //   ChainType["EVM"] = "EVM";
@@ -121,26 +121,29 @@ export function getChainName(chainNumber) {
   return null; // If no matching key is found
 }
 
+
 export const v3_ChainId = {
   2: { name: "MULTIVERSX", type: "ELROND" },
-  4: { name: "BSC", type: "EVM" },
-  5: { name: "ETH", type: "EVM" },
-  7: { name: "MATIC", type: "EVM" },
-  18: { name: "TEZOS", type: "TEZOS" },
-  24: { name: "SECRET", type: "COSMOS" },
-  27: { name: "TON", type: "TON" },
-  29: { name: "HEDERA", type: "HEDERA" },
+  4: { name: 'BSC', type: "EVM" },
+  5: { name: 'ETH', type: "EVM" },
+  7: { name: 'MATIC', type: "EVM" },
+  18: { name: 'TEZOS', type: "TEZOS" },
+  24: { name: 'SECRET', type: "COSMOS" },
+  27: { name: 'TON', type: "TON" },
+  29: { name: 'HEDERA', type: "HEDERA" },
   43: { name: "BASE", type: "EVM" },
-};
+  28: { name: 'ICP', type: "DFINITY" },
+}
 
 export const v3_getChainNonce = {
-  MULTIVERSX: 2,
-  BSC: 4,
-  ETH: 5,
-  MATIC: 7,
-  TEZOS: 18,
-  SECRET: 24,
-  TON: 27,
-  HEDERA: 29,
-  BASE: 43
-};
+  "MULTIVERSX": 2,
+  'BSC': 4,
+  'ETH': 5,
+  'MATIC': 7,
+  'TEZOS': 18,
+  'SECRET': 24,
+  'TON': 27,
+  'HEDERA': 29,
+  'BASE': 43
+  'ICP': 28,
+}

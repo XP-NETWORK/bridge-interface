@@ -42,11 +42,11 @@ export const sortWallet = (components) => {
     (e) => e.type === "Solana" && !e.isDisabled
   );
   const nearWallets = components.filter((e) => e.type === "NEAR" && !e.isDisabled);
-  const icpWallets = components.filter((e) => e.type === "ICP" && !e.isDisabled);
+  const icpWallets = components.filter((e) => e.type === "DFINITY" && !e.isDisabled);
   const casperWallets = components.filter(
     (e) => e.type === "Casper" && !e.isDisabled
   );
-  
+
   if (discount) {
     sortedWallets = [...evmWallets];
     return;
@@ -274,7 +274,7 @@ export const sortWallet = (components) => {
       sortedWallets = [...casperWallets];
       return sortedWallets;
     }
-    case "ICP":
+    case "DFINITY":
       sortedWallets = [...icpWallets];
       return sortedWallets;
     default:

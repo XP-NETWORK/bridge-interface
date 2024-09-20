@@ -89,6 +89,7 @@ const TransferredNft = ({
           if (
             txnStatus !== "Completed" &&
             from.type !== "Hedera" &&
+            from.type !== "DFINITY"
             from.type !== "Tezos"
           ) {
             setTxnStatus(tx?.status?.toLowerCase());
@@ -131,7 +132,7 @@ const TransferredNft = ({
   }, [tagetCanister, workarond_dest_hash]);
 
   useEffect(() => {
-    if (from.type === "Hedera" || from.type === "Tezos") {
+    if (from.type === "Hedera" || from.type === "Tezos" || from.type === "DFINITY") {
       setTxnStatus("completed");
     } else {
       evmTxStatus(txn.provider, txn.hash)
@@ -212,7 +213,7 @@ const TransferredNft = ({
           serviceContainer={serviceContainer}
           fromChain={from.nonce}
           toChain={to.nonce}
-          hash={depHash}
+          hash={from.type === "DFINITY" ? txn?.hash : depHash}
           setDestHash={(hash) => {
             setHashes({
               ...hashes,
