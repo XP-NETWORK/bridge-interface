@@ -144,6 +144,6 @@ export const v3_getChainNonce = {
   'SECRET': 24,
   'TON': 27,
   'HEDERA': 29,
-  'BASE': 43
+  'BASE': 43,
   'ICP': 28,
 }

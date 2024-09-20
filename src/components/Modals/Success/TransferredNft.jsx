@@ -89,16 +89,17 @@ const TransferredNft = ({
           if (
             txnStatus !== "Completed" &&
             from.type !== "Hedera" &&
-            from.type !== "DFINITY"
+            from.type !== "DFINITY" &&
             from.type !== "Tezos"
           ) {
             setTxnStatus(tx?.status?.toLowerCase());
           }
-
-          setHashes({
-            depHash: tx.hash,
-            destHash: toChain.adaptHashView(tx.toHash, receiver),
-          });
+          if (to.type !== "DFINITY") {
+            setHashes({
+              depHash: tx.hash,
+              destHash: toChain.adaptHashView(tx.toHash, receiver),
+            });
+          }
         }
       }
     } catch (e) {
@@ -117,7 +118,7 @@ const TransferredNft = ({
 
   const depHash = fromChain?.adaptHashView(
     hashes?.depHash || txn?.hash,
-    account
+    account,
   );
 
   useEffect(() => {
@@ -132,7 +133,11 @@ const TransferredNft = ({
   }, [tagetCanister, workarond_dest_hash]);
 
   useEffect(() => {
-    if (from.type === "Hedera" || from.type === "Tezos" || from.type === "DFINITY") {
+    if (
+      from.type === "Hedera" ||
+      from.type === "Tezos" ||
+      from.type === "DFINITY"
+    ) {
       setTxnStatus("completed");
     } else {
       evmTxStatus(txn.provider, txn.hash)
@@ -150,7 +155,7 @@ const TransferredNft = ({
   const targetCollection = mintWith || tagetCanister;
 
   const v3BridgeTx = Boolean(
-    depHash && fromChain?.v3Bridge && toChain?.v3Bridge
+    depHash && fromChain?.v3Bridge && toChain?.v3Bridge,
   );
   const completed = Boolean(
     (to.type === "TON" && txnStatus === "completed") ||
@@ -158,7 +163,7 @@ const TransferredNft = ({
       (v3BridgeTx && txnStatus !== "claimed") ||
       (to.type === "Tezos" && txnStatus === "completed") ||
       (to.type === "Cosmos" && txnStatus === "completed") ||
-      (to.type === "EVM" && txnStatus === "completed")
+      (to.type === "EVM" && txnStatus === "completed"),
   );
 
   return (
