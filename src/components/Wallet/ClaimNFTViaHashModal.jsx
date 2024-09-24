@@ -26,7 +26,7 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
   const dest = useSelector((state) => state.general.to);
   const isAssociated = useSelector((state) => state.general.isAssociated);
   const transferModalLoader = useSelector(
-    (state) => state.general.transferModalLoader
+    (state) => state.general.transferModalLoader,
   );
   const network = useSelector((state) => state.general.testNet);
 
@@ -46,19 +46,21 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
 
   const getNFTData = async () => {
     const originChain = await xpDecentralizedUtility.getChainFromFactory(
-      v3_ChainId[origin.nonce].name
+      v3_ChainId[origin.nonce].name,
     );
     const res = await xpDecentralizedUtility.getClaimData(
       origin.nonce,
       originChain,
-      hash
+      hash,
     );
     setNFTData(res);
   };
 
   const claimHandler = async () => {
-    if(dest.type.toLowerCase() === "evm"){
-      await switchNetwork(getChainObject(v3_getChainNonce[nftData?.destinationChain]))
+    if (dest.type.toLowerCase() === "evm") {
+      await switchNetwork(
+        getChainObject(v3_getChainNonce[nftData?.destinationChain]),
+      );
     }
 
     if (!nftData) {
@@ -73,12 +75,12 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
         v3_getChainNonce[nftData?.destinationChain],
         network,
         bridge,
-        activate
+        activate,
       );
 
       const originChainIdentifier = await bridge.getChain(origin.nonce);
       const targetChainIdentifier = await bridge.getChain(
-        v3_getChainNonce[nftData.destinationChain]
+        v3_getChainNonce[nftData.destinationChain],
       );
 
       if (nftData.destinationChain === "HEDERA" && !isAssociated) {
@@ -89,25 +91,25 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
         return;
       }
 
-      const claimed = await xpDecentralizedUtility.claimNFT_V3(
+      const { hash: claimedHash } = await xpDecentralizedUtility.claimNFT_V3(
         originChainIdentifier,
         hash,
-        bridge
+        bridge,
       );
 
-      console.log({ claimed });
+      console.log({ claimedHash });
       setHash("");
       if (nftData?.destinationChain === "ICP") {
         const claimData = await xpDecentralizedUtility.readClaimed721Event(
           targetChainIdentifier,
-          claimed
+          claimedHash,
         );
         dispatch(setTransferLoaderModal(false));
         dispatch(
           setIcpClaimSuccess({
             showModal: true,
             canisterId: claimData?.nft_contract,
-          })
+          }),
         );
       } else {
         dispatch(setTransferLoaderModal(false));
