@@ -163,7 +163,8 @@ const TransferredNft = ({
       (v3BridgeTx && txnStatus !== "claimed") ||
       (to.type === "Tezos" && txnStatus === "completed") ||
       (to.type === "Cosmos" && txnStatus === "completed") ||
-      (to.type === "EVM" && txnStatus === "completed"),
+      (to.type === "EVM" && txnStatus === "completed") ||
+      (to.type === "DFINITY" && txnStatus === "completed"),
   );
 
   return (
