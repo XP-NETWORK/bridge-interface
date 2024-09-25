@@ -73,6 +73,11 @@ export const sockets = {
     testnet: "wss://tools.xp.network::/testnet-explorer/ws", //"https://testnet-tx-socket.herokuapp.com/", //"wss://testnet-bridge-explorer.herokuapp.com/",
 };
 
+export const icpNetworks = {
+    testnet: "https://tools.xp.network/",
+    mainnet: "https://ic0.app"
+}
+
 export const getChainObject = (nonce) => chains.find((chain) => chain.nonce === nonce);
 
 export const secretnodes = "https://secretnodes.com/secret/accounts";
@@ -320,7 +325,7 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
-        isDisabled: true,
+        isDisabled: false,
     },
     {
         type: "EVM",
@@ -506,19 +511,20 @@ export const chains = [
         isDisabled: true,
     },
     {
-        type: "ICP",
-        key: "ICP",
+        type: "DFINITY",
+        key: "DFINITY",
         text: "ICP",
         nonce: 28,
         order: -7,
-        // chainId: 1564830818,
-        //tnChainId: 1305754875840118,
+        chainId: 1564830818,
+        tnChainId: 1305754875840118,
         image: { avatar: true, src: InternetComputer },
         testNet: true,
         mainnet: true,
         newChain: true,
         coming: false,
-        isDisabled: true,
+        isDisabled: false,
+        hideOnMobile: true
     },
     {
         type: "APTOS",
@@ -654,10 +660,10 @@ export const chains = [
         testNet: true,
         mainnet: true,
         coming: false,
-        newChain: true,
+        newChain: false,
         chainId: 8453,
         tnChainId: 84531,
-        isDisabled: true,
+        isDisabled: false,
     },
     {
         type: "EVM",

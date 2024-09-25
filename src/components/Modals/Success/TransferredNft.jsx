@@ -88,14 +88,20 @@ const TransferredNft = ({
           (from.type === "Elrond" && new RegExp(`^${tx.tokenId}`).test(t)) ||
           (from.type === "TON" && address === tx.contract)
         ) {
-          if (txnStatus !== "Completed" && from.type !== "Hedera") {
+          if (
+            txnStatus !== "Completed" &&
+            from.type !== "Hedera" &&
+            from.type !== "DFINITY" &&
+            from.type !== "Tezos"
+          ) {
             setTxnStatus(tx?.status?.toLowerCase());
           }
-
-          setHashes({
-            depHash: tx.hash,
-            destHash: toChain.adaptHashView(tx.toHash, receiver),
-          });
+          if (to.type !== "DFINITY") {
+            setHashes({
+              depHash: tx.hash,
+              destHash: toChain.adaptHashView(tx.toHash, receiver),
+            });
+          }
         }
       }
     } catch (e) {
@@ -144,7 +150,11 @@ const TransferredNft = ({
   }, []);
 
   useEffect(() => {
-    if (from.type === "Hedera") {
+    if (
+      from.type === "Hedera" ||
+      from.type === "Tezos" ||
+      from.type === "DFINITY"
+    ) {
       setTxnStatus("completed");
     } else {
       evmTxStatus(txn.provider, txn.hash)
@@ -170,7 +180,8 @@ const TransferredNft = ({
       (v3BridgeTx && txnStatus !== "claimed") ||
       (to.type === "Tezos" && txnStatus === "completed") ||
       (to.type === "Cosmos" && txnStatus === "completed") ||
-      (to.type === "EVM" && txnStatus === "completed"),
+      (to.type === "EVM" && txnStatus === "completed") ||
+      (to.type === "DFINITY" && txnStatus === "completed"),
   );
 
   return (
@@ -225,7 +236,7 @@ const TransferredNft = ({
           serviceContainer={serviceContainer}
           fromChain={from.nonce}
           toChain={to.nonce}
-          hash={depHash}
+          hash={from.type === "DFINITY" ? txn?.hash : depHash}
           setDestHash={(hash) => {
             setHashes({
               ...hashes,

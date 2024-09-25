@@ -4,6 +4,7 @@ import { TIME } from "../constants/time";
 import { isTestnet, v3_bridge_mode } from "../components/values";
 import { v3_ChainId, v3_getChainNonce } from "./chainsTypes";
 import { ethers } from "ethers";
+import { CHAIN_INFO } from "xp.network";
 
 export class XPDecentralizedUtility {
   isV3Enabled = false;
@@ -111,6 +112,9 @@ export class XPDecentralizedUtility {
   };
   lockNFT_V3 = async (fromChain, toChain, nft, receiver) => {
     let { tokenId } = nft.native;
+    if (fromChain.nonce === 28) {
+      tokenId = BigInt(tokenId)
+    }
     const signer = fromChain.getSigner();
 
     const originChain = await this.getChainFromFactory(
@@ -145,9 +149,9 @@ export class XPDecentralizedUtility {
       receiver,
       tokenId,
       nft.uri,
-      {
-        gasLimit: 5_000_000
-      }
+      // {
+      //   gasLimit: 5_000_000
+      // }
     );
     console.log({ res });
     const hash = await res.hash();
@@ -242,9 +246,10 @@ export class XPDecentralizedUtility {
     return resultObject;
   };
   claimNFT_V3 = async (originChainIdentifier, hashs, bridge) => {
-    const hash =
-      originChainIdentifier.nonce == 29 ? "0x" + hashs.slice(0, 64) : hashs;
-
+    let hash = hashs;
+    if (originChainIdentifier.nonce == 29) {
+      hash = "0x" + hashs.replace("0x", "").slice(0, 64);
+    }
     const originChain = await this.getChainFromFactory(
       v3_ChainId[originChainIdentifier?.nonce].name
     );
@@ -262,7 +267,7 @@ export class XPDecentralizedUtility {
 
     const signatures = await this.getLockNftSignatures(
       targetChain,
-      hash,
+      nftData.lockTxChain === "TEZOS" ? nftData.transactionHash : hash,
       originChainIdentifier
     );
 
@@ -300,7 +305,9 @@ export class XPDecentralizedUtility {
     console.log("claimed: ", claim);
     if (
       v3_ChainId[targetChainIdentifier?.nonce].name === "TON" ||
-      v3_ChainId[targetChainIdentifier?.nonce].name === "HEDERA"
+      v3_ChainId[targetChainIdentifier?.nonce].name === "HEDERA" ||
+      v3_ChainId[targetChainIdentifier?.nonce].name === "ICP" ||
+      v3_ChainId[targetChainIdentifier?.nonce].name === "TEZOS"
     ) {
       return {
         hash: claim?.hash(),
@@ -343,4 +350,26 @@ export class XPDecentralizedUtility {
     );
     return originChain.getTransactionStatus(txHash)
   }
+  readClaimed721Event = async (destChainIdentifier, hash) => {
+    const destChain = await this.getChainFromFactory(
+      v3_ChainId[destChainIdentifier?.nonce].name
+    );
+    return await destChain.readClaimed721Event(hash)
+  }
+
+  nftList = async (chainNonce, address, contract) => {
+    const destChain = await this.getChainFromFactory(
+      v3_ChainId[chainNonce].name
+    );
+    return await destChain.nftList(address, contract)
+  };
+
+  getBalance = async (chainNonce, signer) => {
+    const destChain = await this.getChainFromFactory(
+      v3_ChainId[chainNonce].name
+    );
+    const res = await destChain.getBalance(signer)
+    const decimals = CHAIN_INFO.get(chainNonce)?.decimals;
+    return Number(res) / decimals;
+  };
 }

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setQuietConnection } from "../../store/reducers/signersSlice";
 import {
   setError,
+  setIcpClaimSuccess,
   setIsAssociated,
   setSuccess,
   setTransferLoaderModal,
@@ -12,6 +13,8 @@ import {
 import { connectWalletByChain } from "../../utils";
 import { useWeb3React } from "@web3-react/core";
 import { v3_ChainId, v3_getChainNonce } from "../../utils/chainsTypes";
+import { switchNetwork } from "../../services/chains/evm/evmService";
+import { getChainObject } from "../values";
 
 export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
   const xpDecentralizedUtility = new XPDecentralizedUtility();
@@ -20,10 +23,10 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
   const dispatch = useDispatch();
 
   const origin = useSelector((state) => state.general.from);
-  // const dest = useSelector((state) => state.general.to);
+  const dest = useSelector((state) => state.general.to);
   const isAssociated = useSelector((state) => state.general.isAssociated);
   const transferModalLoader = useSelector(
-    (state) => state.general.transferModalLoader
+    (state) => state.general.transferModalLoader,
   );
   const network = useSelector((state) => state.general.testNet);
 
@@ -43,13 +46,23 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
 
   const getNFTData = async () => {
     const originChain = await xpDecentralizedUtility.getChainFromFactory(
-      v3_ChainId[origin.nonce].name
+      v3_ChainId[origin.nonce].name,
     );
-    const res = await xpDecentralizedUtility.getClaimData(origin.nonce, originChain, hash);
+    const res = await xpDecentralizedUtility.getClaimData(
+      origin.nonce,
+      originChain,
+      hash,
+    );
     setNFTData(res);
   };
 
   const claimHandler = async () => {
+    if (dest.type.toLowerCase() === "evm") {
+      await switchNetwork(
+        getChainObject(v3_getChainNonce[nftData?.destinationChain]),
+      );
+    }
+
     if (!nftData) {
       return;
     }
@@ -62,12 +75,12 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
         v3_getChainNonce[nftData?.destinationChain],
         network,
         bridge,
-        activate
+        activate,
       );
 
       const originChainIdentifier = await bridge.getChain(origin.nonce);
       const targetChainIdentifier = await bridge.getChain(
-        v3_getChainNonce[nftData.destinationChain]
+        v3_getChainNonce[nftData.destinationChain],
       );
 
       if (nftData.destinationChain === "HEDERA" && !isAssociated) {
@@ -78,16 +91,30 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
         return;
       }
 
-      const claimed = await xpDecentralizedUtility.claimNFT_V3(
+      const { hash: claimedHash } = await xpDecentralizedUtility.claimNFT_V3(
         originChainIdentifier,
         hash,
-        bridge
+        bridge,
       );
 
-      console.log({ claimed });
+      console.log({ claimedHash });
       setHash("");
-      dispatch(setTransferLoaderModal(false));
-      dispatch(setSuccess("NFT Claimed Successfully"));
+      if (nftData?.destinationChain === "ICP") {
+        const claimData = await xpDecentralizedUtility.readClaimed721Event(
+          targetChainIdentifier,
+          claimedHash,
+        );
+        dispatch(setTransferLoaderModal(false));
+        dispatch(
+          setIcpClaimSuccess({
+            showModal: true,
+            canisterId: claimData?.nft_contract,
+          }),
+        );
+      } else {
+        dispatch(setTransferLoaderModal(false));
+        dispatch(setSuccess("NFT Claimed Successfully"));
+      }
     } catch (e) {
       console.log("in catch block", e);
       dispatch(setError({ message: e.message }));

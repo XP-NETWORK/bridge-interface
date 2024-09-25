@@ -11,6 +11,7 @@ import { getChainObject } from "./components/values";
 import { injected } from "./wallet/connectors";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { connectExtension } from "./components/Wallet/MultiversXWallet/HigherMultiversX";
+import { connectPlugWallet } from "./components/Wallet/IcpConnections";
 
 /*const testnet = window.location.pathname.includes("testnet");
 const staging = window.location.pathname.includes("staging");
@@ -320,7 +321,7 @@ const connectWallet = {
       throw new Error("Temple Wallet not installed");
     }
     const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
-    await wallet.connect("ghostnet");
+    await wallet.connect("mainnet");
     account = wallet;
     chain.setSigner(account);
   },
@@ -332,6 +333,12 @@ const connectWallet = {
     );
     chain.setSigner(signer);
   },
+  ICP: async (bridge, nonce) => {
+    const { testNet: testnet } = store.getState().general
+    const chainWrapper = await bridge.getChain(nonce);
+    const signer = await connectPlugWallet(chainWrapper, testnet); // Connect to the ICP wallet and get the signer
+    chainWrapper.setSigner(signer); // Set the signer in the chainWrapper
+  }
 };
 
 export const connectWalletByChain = async (
@@ -356,6 +363,9 @@ export const connectWalletByChain = async (
       await connectWallet[type](bridge, nonce);
       break;
     case "MULTIVERSX":
+      await connectWallet[type](bridge, nonce);
+      break;
+    case "ICP":
       await connectWallet[type](bridge, nonce);
       break;
   }

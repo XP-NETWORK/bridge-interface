@@ -143,7 +143,7 @@ export default function WalletList({ connected, input, discount }) {
       desktop: true,
       order: 4,
       keyName: "Temple Wallet",
-      isDisabled: true,
+      isDisabled: false,
     },
     {
       Component: (
@@ -403,13 +403,13 @@ export default function WalletList({ connected, input, discount }) {
     },
     {
       Component: <IcpWallet key="ICP" close={connected} />,
-      name: "ICP",
+      name: "DFINITY",
       mobile: false,
       desktop: true,
       order: 1,
-      type: "ICP",
+      type: "DFINITY",
       keyName: "ICPPlug",
-      isDisabled: true,
+      isDisabled: false,
     },
     {
       Component: <CasperWallet key="Casper" close={connected} />,

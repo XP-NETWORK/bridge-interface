@@ -65,6 +65,8 @@ function Approval({ serviceContainer }) {
       }
       handleGA4Event(googleAnalyticsCategories.Approve, `Approve success`);
     } catch (e) {
+      console.log("in catch block");
+      console.log(e);
       dispatch(setApproveLoader(false));
       setApprovedLoading(false);
       setFinishedApproving(arr);

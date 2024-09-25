@@ -162,6 +162,7 @@ export default withServices(function ButtonToTransfer({ serviceContainer }) {
         `${receiver} Success transfer`
       );
     } catch (e) {
+      console.log(e);
       const resultError = fromChain.handlerError(e);
       dispatch(setError(resultError));
       handleGA4Event(

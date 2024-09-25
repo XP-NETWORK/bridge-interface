@@ -31,6 +31,7 @@ import { withServices } from "../App/hocs/withServices";
 import { googleAnalyticsCategories, handleGA4Event } from "../../services/GA4";
 import { useNavigate } from "react-router-dom";
 import { setWalletAddress } from "../../store/reducers/signersSlice";
+import { useCheckMobileScreen } from "../Settings/hooks";
 
 function ChainListBox({ serviceContainer }) {
   const { bridge } = serviceContainer;
@@ -58,6 +59,7 @@ function ChainListBox({ serviceContainer }) {
     (state) => state.general.connectedWalletType
   );
   const { account } = useWeb3React();
+  const isMobile = useCheckMobileScreen();
 
   const nftChainListRef = useRef(null);
   const [reached, setReached] = useState(false);
@@ -345,7 +347,10 @@ function ChainListBox({ serviceContainer }) {
               fromChains
                 .filter(
                   (chain) =>
-                    connectedWalletType ? (connectedWalletType === chain?.type && !chain.isDisabled) : (!chain.isDisabled)
+                    (isMobile ? !chain.hideOnMobile : true) &&
+                    (connectedWalletType
+                      ? connectedWalletType === chain?.type && !chain.isDisabled
+                      : !chain.isDisabled)
                 )
                 .map((chain) => {
                   const {
@@ -386,7 +391,10 @@ function ChainListBox({ serviceContainer }) {
             departureOrDestination === "destination" &&
               !globalTestnet &&
               toChains
-                .filter((chain) => !chain.isDisabled)
+                .filter(
+                  (chain) =>
+                    !chain.isDisabled && (isMobile ? !chain.hideOnMobile : true)
+                )
                 .map((chain) => {
                   const {
                     image,
@@ -431,7 +439,10 @@ function ChainListBox({ serviceContainer }) {
               fromChains
                 .filter(
                   (chain) =>
-                    connectedWalletType ? (connectedWalletType === chain?.type && !chain.isDisabled) : (!chain.isDisabled)
+                    (isMobile ? !chain.hideOnMobile : true) &&
+                    (connectedWalletType
+                      ? connectedWalletType === chain?.type && !chain.isDisabled
+                      : !chain.isDisabled)
                 )
                 .map((chain) => {
                   const {
@@ -472,7 +483,10 @@ function ChainListBox({ serviceContainer }) {
             departureOrDestination === "destination" &&
               globalTestnet &&
               toChains
-                .filter((chain) => !chain.isDisabled)
+                .filter(
+                  (chain) =>
+                    !chain.isDisabled && (isMobile ? !chain.hideOnMobile : true)
+                )
                 .map((chain) => {
                   const {
                     image,

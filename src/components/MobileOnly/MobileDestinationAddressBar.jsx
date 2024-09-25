@@ -38,6 +38,7 @@ function MobileDestinationAddressBar() {
                         dispatch(setIsInvalidAddress(validateFunc(address)));
                         dispatch(setReceiver(address));
                     }
+                    dispatch(setReceiver(address));
                 }
             }
         } catch (error) {
