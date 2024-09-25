@@ -464,7 +464,7 @@ export const chains = [
         test: false,
         newChain: false,
         coming: false,
-        isDisabled: true,
+        isDisabled: false,
     },
     {
         type: "Hedera",

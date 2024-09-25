@@ -268,7 +268,7 @@ export default function WalletList({ connected, input, discount }) {
       desktop: true,
       order: 14,
       keyName: "Keplr",
-      isDisabled: true,
+      isDisabled: false,
     },
     {
       Component: (
@@ -465,7 +465,7 @@ export default function WalletList({ connected, input, discount }) {
         .filter(
           (wallet) =>
             wallet.keyName.toLowerCase().includes(input.toLowerCase()) &&
-            !wallet.isDisabled
+            !wallet.isDisabled,
         )
     : from
     ? sortWallet(walletComponents)
