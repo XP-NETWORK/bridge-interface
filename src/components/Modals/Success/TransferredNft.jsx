@@ -193,7 +193,9 @@ const TransferredNft = ({
           ) : (
             <img src={image} alt={name} />
           )}
-          <div className="transferred-nft-name">{name}</div>
+          <div className="transferred-nft-name">
+            {name || nft?.native?.name}
+          </div>
         </div>
 
         <TxStatus status={txn ? txnStatus : "processing"} />
