@@ -11,7 +11,6 @@ import github from "../assets/img/nav/github.svg";
 import video from "../assets/img/nav/vid.svg";
 import xpnet from "../assets/img/nav/xpnet.svg";
 import message from "../assets/img/nav/helper.svg";
-import redirect from "../assets/img/icons/link-external-new-window.svg";
 import receive from "../assets/img/icons/receive.svg";
 // import deposits from "../assets/img/nav/deposites.svg";
 import security from "../assets/img/nav/security.svg";
@@ -66,7 +65,7 @@ function NavBar() {
           <LinkContainer to={testnet ? "/testnet/connect" : "/connect"}>
             <Navbar.Brand>
               <img src={Logo} alt="Xp Network" />
-              <div>MULTICHAIN NFT BRIDGE V4</div>
+              <div>DECENTRALIZED NFT BRIDGE</div>
               <Network />
             </Navbar.Brand>
           </LinkContainer>
@@ -170,21 +169,6 @@ function NavBar() {
                   <img className="nav-link__icon__image" src={message} alt="" />
                 </div>
                 <div className="nav-link__txt">Help Center</div>
-              </a>
-              <a
-                rel="noreferrer"
-                className="nav-link help-center"
-                target="_blank"
-                href="https://bridge.xp.network/"
-              >
-                <div className="nav-link__icon" style={{ marginTop: "-2px" }}>
-                  <img
-                    className="nav-link__icon__image"
-                    src={redirect}
-                    alt=""
-                  />
-                </div>
-                <div className="nav-link__txt">Multichain NFT bridge V3</div>
               </a>
               <Nav.Link
                 className="mob-link"
