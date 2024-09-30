@@ -19,6 +19,7 @@ import vk from "../../../assets//img/icons/vkey.svg";
 import PropTypes from "prop-types";
 
 import { withServices } from "../../App/hocs/withServices";
+import { XPDecentralizedUtility } from "../../../utils/xpDecentralizedUtility";
 
 const SecretAuth = ({ setLogdIn, serviceContainer }) => {
   const { bridge } = serviceContainer;
@@ -29,6 +30,8 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
   // const [contract, setContract] = useState();
   const [contractOnBlur, setContractOnBlur] = useState(false);
   const [importBlocked, setImportBlocked] = useState(false);
+  const xPDecentralizedUtility = new XPDecentralizedUtility();
+
   const { account, checkWallet, secretCred, NFTSetToggler, from } = useSelector(
     ({
       general: { account, checkWallet, secretCred, NFTSetToggler, from },
@@ -38,7 +41,7 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
       secretCred,
       NFTSetToggler,
       from,
-    })
+    }),
   );
   const fetchSecretNfts = async () => {
     if (!secretCred.viewKey || !secretCred.contract) return;
@@ -50,7 +53,7 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
       let secretNFTs = await chainWrapper.chain.nftList(
         checkWallet || account,
         secretCred.viewKey,
-        secretCred.contract
+        secretCred.contract,
       );
 
       secretNFTs = secretNFTs.map((nft) => ({
@@ -80,10 +83,11 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
       setImportBlocked(true);
       const x = await bridge.getChain(Chain.SECRET);
 
-      const created = await x.chain.setViewingKey(
+      const created = await xPDecentralizedUtility.setViewingKey(
+        Chain.SECRET,
         x.signer,
         secretCred.contract,
-        secretCred.viewKey
+        secretCred.viewKey,
       );
       console.log("Viewing Key was created: ", created);
       if (created) {
@@ -115,7 +119,10 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
       }
     }
     dispatch(setSecretCred({ ...secretCred, contract: value }));
-    if (value.length === 0 || (value.length === 45 && value.startsWith("secret1"))) {
+    if (
+      value.length === 0 ||
+      (value.length === 45 && value.startsWith("secret1"))
+    ) {
       setValidContract(true);
     } else {
       setValidContract(false);
@@ -213,7 +220,7 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
                   setSecretCred({
                     ...secretCred,
                     viewKey: e.target.value,
-                  })
+                  }),
                 )
               }
             />
@@ -281,7 +288,7 @@ export const SecretContractPanned = () => {
             {isMobile
               ? `${secretCred.contract.slice(
                   0,
-                  5
+                  5,
                 )}...${secretCred.contract.slice(-6)}`
               : secretCred.contract}
           </a>
