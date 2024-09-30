@@ -385,11 +385,11 @@ export class XPDecentralizedUtility {
     return await destChain.readClaimed721Event(hash)
   }
 
-  nftList = async (chainNonce, address, contract) => {
+  nftList = async (chainNonce, address, contract, extraArgs) => {
     const destChain = await this.getChainFromFactory(
       v3_ChainId[chainNonce].name
     );
-    return await destChain.nftList(address, contract)
+    return destChain.nftList(address, contract, extraArgs)
   };
 
   getBalance = async (chainNonce, signer) => {
