@@ -19703,28 +19703,6 @@ secp256k1@^4.0.1, secp256k1@^4.0.2, secp256k1@^4.0.3:
     node-addon-api "^2.0.0"
     node-gyp-build "^4.2.0"
 
-secretjs@=1.12.3:
-  version "1.12.3"
-  resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.12.3.tgz#45bdbfe7c37f59e02aba4d9c88b9bcb5a212d34d"
-  integrity sha512-zvvllDGU4f/nrgYCqDFahZHlzPqwaNW1GWkvSaedidWDvOI9TB4/WEbz6ODLIM/OQnqD4K8sp5HVgDxP7Cl+nQ==
-  dependencies:
-    "@cosmjs/encoding" "0.27.1"
-    "@cosmjs/math" "0.27.1"
-    "@noble/hashes" "1.0.0"
-    "@noble/secp256k1" "1.7.0"
-    bech32 "2.0.0"
-    big-integer "1.6.51"
-    bignumber.js "9.0.2"
-    bip32 "2.0.6"
-    bip39 "3.0.4"
-    cross-fetch "3.1.5"
-    curve25519-js "0.0.4"
-    google-protobuf "^3.14.0"
-    miscreant "0.3.2"
-    pako "2.0.4"
-    protobufjs "7.2.5"
-    secure-random "1.1.2"
-
 secretjs@=1.4.7:
   version "1.4.7"
   resolved "https://registry.yarnpkg.com/secretjs/-/secretjs-1.4.7.tgz#4f9120142c4e269a678edc54165807adf30762fe"
@@ -23001,7 +22979,7 @@ xmlhttprequest@1.8.0:
 
 "xp-decentralized-sdk@git+https://github.com/XP-NETWORK/xp-decentralized-client-library#bleeding-edge":
   version "1.0.0"
-  resolved "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#8d2732f64827f9d1794f57634d26768009c7ab3a"
+  resolved "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#6d9891ae43516a2285de96dd0deaefdab5acd680"
   dependencies:
     "@aptos-labs/ts-sdk" "^1.22.2"
     "@cosmjs/amino" "^0.32.3"

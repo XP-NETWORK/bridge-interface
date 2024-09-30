@@ -20,6 +20,7 @@ import PropTypes from "prop-types";
 
 import { withServices } from "../../App/hocs/withServices";
 import { XPDecentralizedUtility } from "../../../utils/xpDecentralizedUtility";
+import { getChainObject } from "../../values";
 
 const SecretAuth = ({ setLogdIn, serviceContainer }) => {
   const { bridge } = serviceContainer;
@@ -31,6 +32,7 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
   const [contractOnBlur, setContractOnBlur] = useState(false);
   const [importBlocked, setImportBlocked] = useState(false);
   const xPDecentralizedUtility = new XPDecentralizedUtility();
+  const testnet = useSelector((state) => state.general.testNet);
 
   const { account, checkWallet, secretCred, NFTSetToggler, from } = useSelector(
     ({
@@ -43,29 +45,42 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
       from,
     }),
   );
+
+  const getNfts = async () => {
+    let secretNFTs = await xPDecentralizedUtility.nftList(
+      Chain.SECRET,
+      checkWallet || account,
+      secretCred.contract,
+      { viewingKey: secretCred.viewKey },
+    );
+
+    const chain = getChainObject(Chain.SECRET);
+    const chainId = testnet ? chain.tnChainId : chain.chainId;
+
+    return secretNFTs.map((nft) => ({
+      ...nft,
+      native: {
+        ...nft.native,
+        chainId,
+      },
+      metaData: !nft?.uri
+        ? {
+            ...nft?.metaData,
+            image: nft?.metaData?.media[0]?.url,
+            imageFormat: nft?.metaData?.media[0]?.extension,
+          }
+        : null,
+    }));
+  };
+
   const fetchSecretNfts = async () => {
     if (!secretCred.viewKey || !secretCred.contract) return;
 
     try {
       setImportBlocked(true);
-      const chainWrapper = await bridge.getChain(Chain.SECRET);
+      // const chainWrapper = await bridge.getChain(Chain.SECRET);
 
-      let secretNFTs = await chainWrapper.chain.nftList(
-        checkWallet || account,
-        secretCred.viewKey,
-        secretCred.contract,
-      );
-
-      secretNFTs = secretNFTs.map((nft) => ({
-        ...nft,
-        metaData: !nft?.uri
-          ? {
-              ...nft?.metaData,
-              image: nft?.metaData?.media[0]?.url,
-              imageFormat: nft?.metaData?.media[0]?.extension,
-            }
-          : null,
-      }));
+      let secretNFTs = await getNfts();
       dispatch(addImportedNFTtoNFTlist(secretNFTs));
 
       setLogdIn(true);
@@ -91,15 +106,16 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
       );
       console.log("Viewing Key was created: ", created);
       if (created) {
-        let secretNFTs = await x.getNFTs(checkWallet || account, secretCred);
-        secretNFTs = x.filterNFTs(secretNFTs);
+        let secretNFTs = await getNfts();
         dispatch(addImportedNFTtoNFTlist(secretNFTs));
+        setLogdIn(true);
       }
     } catch (error) {
       console.log(error);
       dispatch(setError(error));
     }
     setImportBlocked(false);
+    dispatch(setBigLoader(false));
   };
 
   const handleContractChange = (value) => {
