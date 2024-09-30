@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
+
 /*@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');*/
 html,
 body {
@@ -38,14 +39,17 @@ body {
 .address-text {
     color: black !important;
 }
+
 .widgetWhite {
     color: white !important;
 }
 
 .bridgeBody::-webkit-scrollbar {
     display: none;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 ul {
@@ -76,15 +80,66 @@ div#root {
     overflow: hidden;
 }
 
+.first-step__container__top {
+    margin-top: 30px;
+}
+
 .first-step__container {
     display: flex;
     justify-content: center;
     gap: 24px;
-    margin-top: 78px;
 }
+
+.first-step__trynow__button {
+    background-color: #395feb;
+    color: white;
+    width: 100px;
+    padding: 6px 12px;
+    border-radius: 62px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+}
+
+.first-step__banner__chains {
+    margin-left: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.first-step__trynow__button:hover {
+    color: white;
+}
+
+.first-step__banner {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.first-step__banner__inner {
+    width: 1024px;
+    padding: 16px;
+    background: #E0E3F2;
+    color: #14161a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 16px;
+}
+
+.first-step__banner__left {
+    display: flex;
+    align-items: center;
+}
+
 .slider {
     width: 500px;
 }
+
 .stickers {
     width: 1024px;
     margin: 24px auto;
@@ -99,15 +154,14 @@ div#root {
 }
 
 .changeBtn.disabled {
-    background: linear-gradient(
-        0deg,
-        rgba(73, 82, 108, 0.1),
-        rgba(73, 82, 108, 0.1)
-    );
+    background: linear-gradient(0deg,
+            rgba(73, 82, 108, 0.1),
+            rgba(73, 82, 108, 0.1));
     border: 1px solid #37405b;
     color: #5a6177;
     pointer-events: none;
 }
+
 .about-btn {
     letter-spacing: 0.03em;
     color: #14161a;
@@ -121,6 +175,7 @@ div#root {
     display: inline-block;
     position: relative;
 }
+
 .about-btn:hover {
     color: #395feb;
 }
@@ -134,11 +189,13 @@ div#root {
     left: -20px;
     background-image: url("./assets/img/icons/text.svg");
 }
+
 .about-text:hover::before {
     background-image: url("./assets/img/icons/inf_hovered.svg");
     background-repeat: no-repeat;
     background-position: center;
 }
+
 .about-video::before {
     position: absolute;
     content: "";
@@ -149,10 +206,12 @@ div#root {
     background-image: url("./assets/img/icons/vid.svg");
     background-repeat: no-repeat;
 }
+
 .about-video:hover::before {
     background-image: url("./assets/img/icons/vid_hovered.svg");
     background-repeat: no-repeat;
 }
+
 .sliderContainer {
     max-width: 1170px;
     margin: 0 auto;
@@ -213,6 +272,7 @@ div#root {
 .Close img {
     width: 18px;
 }
+
 span.closeBox {
     height: 20px;
     width: 22px;
@@ -241,6 +301,7 @@ span.closeBox svg {
     margin-bottom: 6px;
     margin-top: 6px;
 }
+
 .chain-search__button {
     position: absolute;
     right: 15px;
@@ -264,6 +325,7 @@ span.closeBox svg {
 .searchChain input:focus {
     background-color: #fff;
 }
+
 .searchChain input::placeholder {
     color: #62718a;
 }
@@ -363,17 +425,20 @@ span.closeBox svg {
 .seleDestiSele {
     color: white;
 }
+
 .chain--identifier {
     white-space: nowrap;
     display: flex;
     gap: 2px;
     margin-left: auto;
 }
+
 .coll-ident {
     display: flex;
     gap: 10px;
     align-items: center;
 }
+
 .tooltip__wrapper {
     position: absolute;
     width: 150px;
@@ -412,6 +477,7 @@ span.closeBox svg {
     box-shadow: 0px 4px 24px rgba(180, 185, 199, 0.25);
     border-radius: 38px;
 }
+
 .yourNft__chain span:first-child {
     color: rgb(0, 0, 0);
     font-size: 18px;
@@ -482,6 +548,7 @@ span.closeBox svg {
 .reloadNfts img:last-child {
     margin: 0 0 0 8px !important;
 }
+
 .nftImage {
     cursor: pointer;
     width: 100%;
@@ -489,6 +556,7 @@ span.closeBox svg {
     display: flex;
     justify-content: center;
 }
+
 .nftImageBox {
     position: relative;
     display: flex;
@@ -617,7 +685,7 @@ span.NFTInf:hover img {
     padding: 0px 9px;
 }
 
-.nftEmptyListBox > .row > div {
+.nftEmptyListBox>.row>div {
     margin-bottom: 24px;
 }
 
@@ -629,24 +697,20 @@ span.NFTInf:hover img {
     position: absolute;
     top: 0;
     width: 90%;
-    background: linear-gradient(
-        242.44deg,
-        #62718a -3.49%,
-        #383f56 46.4%,
-        #62718a 102.48%
-    );
+    background: linear-gradient(242.44deg,
+            #62718a -3.49%,
+            #383f56 46.4%,
+            #62718a 102.48%);
 }
 
 .nft-sceleton.nftName {
     height: 20px;
     width: 100%;
     border-radius: 10px;
-    background: linear-gradient(
-        242.44deg,
-        #62718a -3.49%,
-        #383f56 46.4%,
-        #62718a 102.48%
-    );
+    background: linear-gradient(242.44deg,
+            #62718a -3.49%,
+            #383f56 46.4%,
+            #62718a 102.48%);
 }
 
 .nft-sceleton.nftNumber {
@@ -654,12 +718,10 @@ span.NFTInf:hover img {
     width: 50%;
 
     border-radius: 10px;
-    background: linear-gradient(
-        242.44deg,
-        #62718a -3.49%,
-        #383f56 46.4%,
-        #62718a 102.48%
-    );
+    background: linear-gradient(242.44deg,
+            #62718a -3.49%,
+            #383f56 46.4%,
+            #62718a 102.48%);
 }
 
 .nftCont span {
@@ -754,11 +816,13 @@ span.NFTInf:hover img {
     color: #fff;
     position: relative;
 }
+
 .nftListed:hover {
     background: #ececf1;
 }
-li.nftListed > img,
-li.nftListed > video {
+
+li.nftListed>img,
+li.nftListed>video {
     display: block;
     height: 32px;
     width: 32px;
@@ -791,12 +855,13 @@ li.nftListed > video {
     padding: 6px 16px;
     color: #fff;
 }
+
 .nftSelecItem:hover {
     cursor: pointer;
 }
 
-li.nftSelecItem > img,
-li.nftSelecItem > video {
+li.nftSelecItem>img,
+li.nftSelecItem>video {
     display: block;
     height: 32px;
     margin-right: 13px;
@@ -879,8 +944,7 @@ li.nftSelecItem .Close:hover {
     padding: 0px 10px;
 }
 
-.NftDetails {
-}
+.NftDetails {}
 
 .NftDetails .modal-dialog {
     max-width: 630px;
@@ -1126,8 +1190,7 @@ span.statComp img {
     width: 28px;
 }
 
-.select-chain__text {
-}
+.select-chain__text {}
 
 .nftSelecItem__name {
     width: 80%;
@@ -1208,9 +1271,11 @@ span.statComp img {
     word-break: break-all;
     color: #ffffff;
 }
+
 .switchingAcc {
     margin-bottom: -24px;
 }
+
 .switchingAcc p {
     color: #62718a;
     margin-top: 9px;
@@ -1256,11 +1321,9 @@ span.statComp img {
 }
 
 .transTableCont {
-    background: linear-gradient(
-        316.2deg,
-        #232833 -4.13%,
-        rgba(35, 40, 51, 0) 136.63%
-    );
+    background: linear-gradient(316.2deg,
+            #232833 -4.13%,
+            rgba(35, 40, 51, 0) 136.63%);
     box-shadow: 0px 4px 14px rgba(47, 61, 84, 0.05);
     border-radius: 20px;
     padding: 15px 0 23px;
@@ -1319,11 +1382,9 @@ table.transferTable.table {
 }
 
 .transferTable.table thead {
-    background: linear-gradient(
-        309.48deg,
-        #232833 -3.65%,
-        rgba(35, 40, 51, 0) 122.77%
-    );
+    background: linear-gradient(309.48deg,
+            #232833 -3.65%,
+            rgba(35, 40, 51, 0) 122.77%);
 }
 
 .transferTable.table img.nftImg {
@@ -1397,6 +1458,7 @@ span.statComp img {
     line-height: 38px;
     color: #14161a;
 }
+
 .nonftAcc span {
     padding-top: 6px;
     font-family: Inter;
@@ -1507,6 +1569,7 @@ span.invalid img {
     height: 40px;
     font-size: 14px;
 }
+
 .serchInput:focus,
 .mobile-search-input__box input.serchInput:focus {
     background-color: #fff;
@@ -1516,7 +1579,7 @@ span.invalid img {
     width: 100%;
 }
 
-.serchInputConatainer > div {
+.serchInputConatainer>div {
     margin-left: 10px;
 }
 
@@ -1618,11 +1681,9 @@ a.disconBtn {
     padding: 0px 30px;
     height: 40px;
     display: inherit;
-    background: linear-gradient(
-        0deg,
-        rgba(73, 82, 108, 0.1),
-        rgba(73, 82, 108, 0.1)
-    );
+    background: linear-gradient(0deg,
+            rgba(73, 82, 108, 0.1),
+            rgba(73, 82, 108, 0.1));
     border: 1px solid #37405b;
     pointer-events: none;
 }
@@ -1675,6 +1736,7 @@ span.transPend {
     -webkit-animation: load7 1.8s infinite ease-in-out;
     animation: load7 1.8s infinite ease-in-out;
 }
+
 .loader {
     top: 200px;
     transition: calc(0.5);
@@ -1689,36 +1751,45 @@ span.transPend {
     -webkit-animation-delay: -0.16s;
     animation-delay: -0.16s;
 }
+
 .loader:before,
 .loader:after {
     content: "";
     position: absolute;
     top: 0;
 }
+
 .loader:before {
     left: -1.5em;
     -webkit-animation-delay: -0.32s;
     animation-delay: -0.32s;
 }
+
 .loader:after {
     left: 1.5em;
 }
+
 @-webkit-keyframes load7 {
+
     0%,
     80%,
     100% {
         box-shadow: 0 2.5em 0 -1.3em;
     }
+
     40% {
         box-shadow: 0 2.5em 0 0;
     }
 }
+
 @keyframes load7 {
+
     0%,
     80%,
     100% {
         box-shadow: 0 2.5em 0 -1.3em;
     }
+
     40% {
         box-shadow: 0 2.5em 0 0;
     }
@@ -1738,6 +1809,7 @@ span.transPend {
     width: 20em;
     height: 20em;
 }
+
 .approve-loader {
     margin: 60px auto;
     font-size: 10px;
@@ -1753,21 +1825,25 @@ span.transPend {
     -webkit-animation: load8 2.1s infinite linear;
     animation: load8 2.1s infinite linear;
 }
+
 @-webkit-keyframes load8 {
     0% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
 }
+
 @keyframes load8 {
     0% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
@@ -1830,6 +1906,7 @@ span.closeBox:hover svg path {
     -webkit-animation: load7 1.8s infinite ease-in-out;
     animation: load7 1.8s infinite ease-in-out;
 }
+
 .changeNetwork-loader {
     color: #3e64ed;
     font-size: 4px;
@@ -1842,37 +1919,45 @@ span.closeBox:hover svg path {
     -webkit-animation-delay: -0.16s;
     animation-delay: -0.16s;
 }
+
 .changeNetwork-loader:before,
 .changeNetwork-loader:after {
     content: "";
     position: absolute;
     top: 0;
 }
+
 .changeNetwork-loader:before {
     left: -3.5em;
     -webkit-animation-delay: -0.32s;
     animation-delay: -0.32s;
 }
+
 .changeNetwork-loader:after {
     left: 3.5em;
 }
 
 @-webkit-keyframes load7 {
+
     0%,
     80%,
     100% {
         box-shadow: 0 2.5em 0 -1.3em;
     }
+
     40% {
         box-shadow: 0 2.5em 0 0;
     }
 }
+
 @keyframes load7 {
+
     0%,
     80%,
     100% {
         box-shadow: 0 2.5em 0 -1.3em;
     }
+
     40% {
         box-shadow: 0 2.5em 0 0;
     }
@@ -1917,7 +2002,8 @@ span.closeBox:hover svg path {
 
 .video-responsive {
     position: relative;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    padding-bottom: 56.25%;
+    /* 16:9 aspect ratio */
     height: 0;
 }
 
@@ -1929,12 +2015,14 @@ span.closeBox:hover svg path {
     left: 0;
     width: 100%;
     height: 100%;
-    border: 0; /* Remove the border around the iframe */
+    border: 0;
+    /* Remove the border around the iframe */
 }
 
 .tron-modal__copyIcon {
     margin: 0 4px;
 }
+
 .claimsbut div {
     color: #3763ff !important;
     width: fit-content;
@@ -1951,6 +2039,7 @@ span.closeBox:hover svg path {
 .noimagenft {
     height: 100px;
 }
+
 .tron-modal__link {
     margin: 0 auto;
     width: 260px;
@@ -2030,14 +2119,17 @@ span.closeBox:hover svg path {
     justify-content: center;
     margin-bottom: 16px;
 }
+
 .claimablealgornadnftss {
     display: flex;
     justify-content: center;
 }
+
 .claimablealgornadnftss tr {
     width: 100%;
     min-width: 100%;
 }
+
 .claimablealgornadnftss td {
     display: flex;
     flex-direction: column;
@@ -2050,6 +2142,7 @@ span.closeBox:hover svg path {
     font-weight: 500;
     line-height: 27px;
 }
+
 .algo-opt-in__name {
     font-family: Inter;
     font-size: 16px;
@@ -2058,12 +2151,14 @@ span.closeBox:hover svg path {
     color: #14161a;
     text-align: center;
 }
+
 .algo-opt-in__btns {
     display: flex;
     margin: 20px auto 0 auto;
     width: 100%;
     gap: 12px;
 }
+
 .algo-opt-in__button {
     width: 160px;
     height: 40px;
@@ -2130,11 +2225,13 @@ span.closeBox:hover svg path {
     filter: brightness(2.5);
     color: white;
 }
+
 /* widget */
 
 .widget div#root:after {
     display: none;
 }
+
 .widget .aleartBox {
     opacity: 0;
     pointer-events: none;
@@ -2176,6 +2273,7 @@ span.closeBox:hover svg path {
     height: 30px;
     transform: scale(0.4);
 }
+
 .lds-ellipsis div {
     position: absolute;
     top: 13px;
@@ -2185,91 +2283,146 @@ span.closeBox:hover svg path {
     background: rgb(131, 129, 129);
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
+
 .lds-ellipsis div:nth-child(1) {
     left: 8px;
     animation: lds-ellipsis1 0.6s infinite;
 }
+
 .lds-ellipsis div:nth-child(2) {
     left: 8px;
     animation: lds-ellipsis2 0.6s infinite;
 }
+
 .lds-ellipsis div:nth-child(3) {
     left: 32px;
     animation: lds-ellipsis2 0.6s infinite;
 }
+
 .lds-ellipsis div:nth-child(4) {
     left: 56px;
     animation: lds-ellipsis3 0.6s infinite;
 }
+
 @keyframes lds-ellipsis1 {
     0% {
         transform: scale(0);
     }
+
     100% {
         transform: scale(1);
     }
 }
+
 @keyframes lds-ellipsis3 {
     0% {
         transform: scale(1);
     }
+
     100% {
         transform: scale(0);
     }
 }
+
 @keyframes lds-ellipsis2 {
     0% {
         transform: translate(0, 0);
     }
+
     100% {
         transform: translate(24px, 0);
     }
 }
+
+@media screen and (max-width: 1024px) {
+    .first-step__banner__inner {
+        width: 768px;
+    }
+}
+
 @media only screen and (width: 1024px) and (height: 600px) {
-    .first-step__container {
+    .first-step__container__top {
         margin: 39px 13% !important;
     }
 }
+
 @media screen and (max-height: 750px) {
-    .first-step__container {
+    .first-step__container__top {
         margin: 39px 0;
     }
+
     .stickers {
         padding-right: 0;
     }
+
     .aleartBox {
         bottom: 12.5vh;
     }
+
     .modal {
         top: 40px;
     }
 }
+
 /* IPAD MINI */
 @media only screen and (width: 768px) and (height: 1024px) and (orientation: portrait) {
-    .first-step__container {
+    .first-step__container__top {
         margin-left: 14px;
         margin-right: 14px;
     }
+
+    .first-step__banner__inner {
+        width: calc(100% - 10px);
+    }
+
     .modal-open .modal {
         top: 15vh;
     }
+
     .nonftAcc {
         top: -100px;
     }
 }
+
 @media only screen and (width: 820px) and (height: 1180px) {
     .modal-open .modal {
         top: 15vh;
     }
 }
+
 @media only screen and (width: 540px) and (height: 720px) {
     .nonftAcc {
         top: -100px;
     }
 }
+
 @media screen and (max-width: 700px) {
-    .first-step__container {
+    .first-step__container__top {
         margin-top: 0;
+    }
+
+    .first-step__banner__inner {
+        width: 390px;
+        display: block;
+        text-align: center;
+    }
+
+    .first-step__trynow__button {
+        width: 80%;
+        margin: 0 auto 0 auto;
+    }
+
+    .first-step__banner__left {
+        display: block;
+    }
+
+    .first-step__banner__chains {
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 20px 0;
+    }
+
+    .first-step__container {
         flex-wrap: wrap;
     }
 
@@ -2285,6 +2438,7 @@ span.closeBox:hover svg path {
     .nftContainer {
         margin-top: 30px !important;
     }
+
     .nonftAcc {
         top: -100px;
     }
@@ -2294,15 +2448,26 @@ span.closeBox:hover svg path {
     .singleNft.missing {
         width: 100%;
     }
+
     .stickers {
         width: calc(100% - 10px);
     }
+
     .bridgeBody {
         background-position: left 50% top 80px,
-            /*Ellipse\ 235*/left 50% top 177.15px,
-            /*Ellipse\ 236*/left 2% top 27%, /*l-figure*/ right 26% top 18%,
-            /*r-figure*/ left 22% top 22%, /*l-sphere*/ right 1% top 12%,
-            /*r-sphere*/ right 5% top 29%; /*r-triangle*/
+            /*Ellipse\ 235*/
+            left 50% top 177.15px,
+            /*Ellipse\ 236*/
+            left 2% top 27%,
+            /*l-figure*/
+            right 26% top 18%,
+            /*r-figure*/
+            left 22% top 22%,
+            /*l-sphere*/
+            right 1% top 12%,
+            /*r-sphere*/
+            right 5% top 29%;
+        /*r-triangle*/
     }
 }
 
@@ -2314,9 +2479,11 @@ span.closeBox:hover svg path {
     .modal-content {
         margin-top: 13vh;
     }
+
     .video-responsive iframe {
         height: 280px;
     }
+
     .loader {
         top: -20px;
     }
@@ -2324,9 +2491,11 @@ span.closeBox:hover svg path {
     .navMenu.navbar-nav .nav-link:first-child {
         border-radius: 18px 18px 0px 0px;
     }
+
     .navMenu.navbar-nav .nav-link:last-child {
         border-radius: 0px 0px 18px 18px;
     }
+
     .desChain {
         justify-content: space-between;
     }
@@ -2364,11 +2533,25 @@ span.closeBox:hover svg path {
 @media screen and (max-width: 375px) {
     .bridgeBody {
         background-position: left 50% top 80px,
-            /*Ellipse\ 235*/left 50% top 177.15px,
-            /*Ellipse\ 236*/left 2% top 5%, /*l-figure*/ right -5% top 20%,
-            /*r-figure*/ left -10% top 25%, /*l-sphere*/ right 5% top 5%,
-            /*r-sphere*/ right -55% top 39%; /*r-triangle*/
+            /*Ellipse\ 235*/
+            left 50% top 177.15px,
+            /*Ellipse\ 236*/
+            left 2% top 5%,
+            /*l-figure*/
+            right -5% top 20%,
+            /*r-figure*/
+            left -10% top 25%,
+            /*l-sphere*/
+            right 5% top 5%,
+            /*r-sphere*/
+            right -55% top 39%;
+        /*r-triangle*/
     }
+
+    .first-step__banner__inner {
+        width: 344px;
+    }
+
     .approve-loader__container__text {
         left: 37% !important;
     }
