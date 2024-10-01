@@ -139,7 +139,8 @@ export class XPDecentralizedUtility {
       originChain.injectSDK(sdk);
     }
     console.log("originChain", originChain);
-    const res = await originChain.lockNft(
+    const res = await this.factory.lockNft(
+      originChain,
       signer,
       nft.contract || nft.collectionIdent,
       v3_ChainId[toChain?.nonce].name,

@@ -15,10 +15,12 @@ import {
     setTronPopUp,
     setWC,
     setAccount,
+    setRedirectModal,
 } from "../../store/reducers/generalSlice";
 
 import { MainNetRpcUri, TestNetRpcUri } from "xp.network";
 import { switchNetwork } from "../../services/chains/evm/evmService";
+import { promisify } from "../../utils";
 
 export const wallets = [
     "MetaMask",
@@ -60,9 +62,8 @@ export const connectMetaMask = async (
     try {
         if (!window.ethereum && mobile) {
             const event = window.location.pathname === "/crossroads";
-            const link = `dapp://${window.location.host}${
-                event ? "/crossroads" : ""
-            }?to=${to}&from=${from}/`;
+            const link = `dapp://${window.location.host}${event ? "/crossroads" : ""
+                }?to=${to}&from=${from}/`;
             window.open(link);
         }
         //d/
@@ -282,5 +283,44 @@ export const connectAlgoWallet = async () => {
     let connector = getAlgoConnector();
     if (!connector.connected) {
         connector.createSession();
+    }
+};
+
+export const connectKeplr = async (testnet, chain) => {
+    const chainId = testnet ? chain.tnChainId : chain.chainId;
+    const key = chain.key.toUpperCase();
+    const isMobile = window.innerWidth <= 600;
+
+    if (window.keplr) {
+        try {
+            await window.keplr.enable(chainId);
+            const offlineSigner = window.keplr.getOfflineSigner(chainId);
+
+            const accounts = await offlineSigner.getAccounts();
+
+            const { address } = accounts[0];
+
+            const secretjs = await promisify(() => import("secretjs"));
+            const signer = new secretjs.SecretNetworkClient({
+                url: testnet ? TestNetRpcUri[key] : MainNetRpcUri[key],
+                chainId,
+                wallet: offlineSigner,
+                walletAddress: address,
+            });
+            return signer;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    } else {
+        if (isMobile) {
+            store.dispatch(setRedirectModal("Fina"));
+        } else
+            store.dispatch(
+                setError({
+                    message: "Please install Keplr extension",
+                })
+            );
+        return false;
     }
 };
