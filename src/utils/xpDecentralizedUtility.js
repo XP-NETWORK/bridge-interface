@@ -146,9 +146,6 @@ export class XPDecentralizedUtility {
       receiver,
       tokenId,
       nft.uri,
-      // {
-      //   gasLimit: 5_000_000
-      // }
     );
     console.log({ res });
     const hash = await res.hash();
