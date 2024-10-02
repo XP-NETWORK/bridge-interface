@@ -1,0 +1,101 @@
+.switch-modal .modal-dialog {
+    max-width: 586px;
+    min-height: 500px;
+    color: #14161a;
+}
+
+.switch-modal .modal-content {
+    padding: 0 30px;
+}
+
+.switch-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.switch-modal-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    cursor: pointer;
+    z-index: 20;
+}
+
+.switch-info-text {
+    text-align: center;
+    margin-top: 16px;
+}
+
+.switch-info-text-h {
+    color: #14161A;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.switch-info-text-p {
+    color: #14161A;
+    font-size: 16px;
+}
+
+.switch-info-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.switch-info-btn-link {
+    background-color: #395feb;
+    color: white;
+    width: 70%;
+    padding: 13px 24px;
+    border-radius: 62px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+    text-align: center;
+}
+
+.switch-info-btn-link:hover {
+    color: white;
+}
+
+.switch-info-btn-stay {
+    color: #3E64ED;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {
+
+    .switch-modal-close {
+        top: 32px;
+        right: 15px;
+    }
+
+    .switch-info-btn-link {
+        width: 100%;
+    }
+
+    .switch-info-text-h {
+        font-size: 16px;
+    }
+
+    .switch-info-text-p {
+        font-size: 14px;
+    }
+
+    .switch-modal .modal-content {
+        padding: 0 10px;
+    }
+
+    .switch-modal .modal-dialog {
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+}

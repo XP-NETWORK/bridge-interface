@@ -34,12 +34,16 @@ const initialState = {
     ICPCanisterSearch: "",
     showChainSelect: false,
     selectedChain: undefined,
+    showSwitchToV4Modal: true
 };
 
 const generalSlice = createSlice({
     name: "general",
     initialState,
     reducers: {
+        setShowSwitchToV4Modal(state, action) {
+            state.showSwitchToV4Modal = action.payload
+        },
         setCheckDestinationAddress(state, action) {
             state.checkDestinationAddress = action.payload;
         },
@@ -766,6 +770,7 @@ export const {
     setICPCanisterSearch,
     toggleChainSelect,
     setSelectedChain,
+    setShowSwitchToV4Modal
 } = generalSlice.actions;
 
 export default generalSlice.reducer;
