@@ -44,7 +44,7 @@ import { useWeb3Modal } from "@web3modal/react";
 
 import PlainChainListBox from "../Chains/PlainChainListBox";
 import Success from "../innercomponents/Success";
-import IcpClaimSuccessModal from "./IcpClaimSuccessModal/IcpClaimSuccessModal";
+import ClaimedNftContractModal from "./ClaimedNftContractModal/ClaimedNftContractModal";
 
 export default function Modals() {
   const dispatch = useDispatch();
@@ -57,12 +57,12 @@ export default function Modals() {
 
   const qrCodeString = useSelector((state) => state.general.qrCodeString);
   const transferModalLoader = useSelector(
-    (state) => state.general.transferModalLoader
+    (state) => state.general.transferModalLoader,
   );
   const authModalLoader = useSelector((state) => state.general.authModalLoader);
   const changeWallet = useSelector((state) => state.general.changeWallet);
   const algorandAddresses = useSelector(
-    (state) => state.general.algorandAddresses
+    (state) => state.general.algorandAddresses,
   );
 
   const error = useSelector((state) => state.general.error);
@@ -71,7 +71,9 @@ export default function Modals() {
   const redirectModal = useSelector((state) => state.general.redirectModal);
   const loader = useSelector((state) => state.general.approveLoader);
   const messageLoader = useSelector((state) => state.general.messageLoader);
-  const icpClaimSuccess = useSelector((state) => state.general.icpClaimSuccess);
+  const claimedNftContractModal = useSelector(
+    (state) => state.general.claimedNftContractModal,
+  );
 
   const handleCloseRedirectModal = () => {
     dispatch(setRedirectModal(false));
@@ -146,7 +148,7 @@ export default function Modals() {
           )
         );
       }),
-    []
+    [],
   );
 
   return (
@@ -287,10 +289,10 @@ export default function Modals() {
       </Modal>
       <Modal
         animation={false}
-        show={icpClaimSuccess.showModal}
+        show={claimedNftContractModal.show}
         className="error__modal"
       >
-        <IcpClaimSuccessModal />
+        <ClaimedNftContractModal />
       </Modal>
     </>
   );

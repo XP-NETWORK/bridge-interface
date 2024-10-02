@@ -18,6 +18,8 @@ const feeMultiplier = 1.1;
 class AbstractChain {
   chain;
   showMintWith = false;
+  showClaimedNftContract = false;
+
   constructor({ chainParams, nonce, chain, bridge }) {
     this.chainParams = chainParams;
     this.nonce = nonce;
@@ -831,7 +833,9 @@ class V3_Tezos extends AbstractChain {
 }
 
 class Cosmos extends AbstractChain {
-  showMintWith = true;
+  showMintWith = false;
+  showClaimedNftContract = true;
+  v3Bridge = true
   XpNft = this.chain.XpNft.split(",")[0];
   constructor(params) {
     super(params);
@@ -1207,6 +1211,7 @@ class HEDERA extends EVM {
 
 class ICP extends AbstractChain {
   v3Bridge = true;
+  showClaimedNftContract = true;
 
   constructor(params) {
     super(params);

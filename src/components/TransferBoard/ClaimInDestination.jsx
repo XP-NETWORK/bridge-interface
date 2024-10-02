@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setQuietConnection } from "../../store/reducers/signersSlice";
 import {
   setError,
-  setIcpClaimSuccess,
+  setClaimedNftContractModal,
   setIsAssociated,
   setTempleClaimed,
   setTempleWalletData,
@@ -93,18 +93,18 @@ export const ClaimInDestination = (connection) => {
           chainWapper,
           fromChainWapper,
         );
-        if (to.text === "ICP") {
+        if (targetChainIdentifier.showClaimedNftContract) {
           await sleep(TIME.FIVE_SECONDS);
           const claimData = await xPDecentralizedUtility.readClaimed721Event(
             targetChainIdentifier,
-            claimedHash
+            claimedHash,
           );
           dispatch(setTransferLoaderModal(false));
           dispatch(
-            setIcpClaimSuccess({
-              showModal: true,
-              canisterId: claimData?.nft_contract,
-            })
+            setClaimedNftContractModal({
+              show: true,
+              nftContract: claimData?.nft_contract,
+            }),
           );
         } else {
           dispatch(setTransferLoaderModal(false));

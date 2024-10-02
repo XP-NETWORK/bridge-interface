@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setQuietConnection } from "../../store/reducers/signersSlice";
 import {
   setError,
-  setIcpClaimSuccess,
+  setClaimedNftContractModal,
   setIsAssociated,
   setSuccess,
   setTransferLoaderModal,
@@ -99,16 +99,16 @@ export default function ClaimNFTViaHashModal({ handleClose, bridge }) {
 
       console.log({ claimedHash });
       setHash("");
-      if (nftData?.destinationChain === "ICP") {
+      if (targetChainIdentifier.showClaimedNftContract) {
         const claimData = await xpDecentralizedUtility.readClaimed721Event(
           targetChainIdentifier,
           claimedHash,
         );
         dispatch(setTransferLoaderModal(false));
         dispatch(
-          setIcpClaimSuccess({
-            showModal: true,
-            canisterId: claimData?.nft_contract,
+          setClaimedNftContractModal({
+            show: true,
+            nftContract: claimData?.nft_contract,
           }),
         );
       } else {
