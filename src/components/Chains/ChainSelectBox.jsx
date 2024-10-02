@@ -45,7 +45,7 @@ export default function ChainSelectBox() {
   const handleSwitch = async (e) => {
     handleGA4Event(
       googleAnalyticsCategories.Chain,
-      `Swap chains ${(from?.text, to?.text)}`
+      `Swap chains ${(from?.text, to?.text)}`,
     );
     e.preventDefault();
     const temp = to;
@@ -63,7 +63,6 @@ export default function ChainSelectBox() {
       dispatch(setTemporaryFrom(temp));
       dispatch(setTemporaryTo(from));
       // dispatch(setChangeWallet(true));
-
     }
   };
 
@@ -71,8 +70,8 @@ export default function ChainSelectBox() {
     <>
       <ChainListBox switchNetwork={switchNetwork} />
       <div className="chain-select__box">
-        Transfer NFTs
-        <br /> between blockchains
+        Welcome to the new
+        <br /> decentralized NFT bridge!
       </div>
       <div className="nftSelectBox">
         <SetDeparture />
