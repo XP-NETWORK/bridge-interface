@@ -42,9 +42,9 @@ const initialState = {
   isAssociated: false,
   isClaimViaHash: false,
   successMsg: null,
-  icpClaimSuccess: {
-    showModal: false,
-    canisterId: null
+  claimedNftContractModal: {
+    show: false,
+    nftContract: null
   }
 };
 
@@ -620,8 +620,8 @@ const generalSlice = createSlice({
     setImportModal(state, action) {
       state.importModal = action.payload;
     },
-    setIcpClaimSuccess(state, action) {
-      state.icpClaimSuccess = action.payload;
+    setClaimedNftContractModal(state, action) {
+      state.claimedNftContractModal = action.payload;
     },
     addImportedNFTtoNFTlist(state, action) {
       state.NFTList = action.payload;
@@ -796,7 +796,7 @@ export const {
   setICPCanisterSearch,
   toggleChainSelect,
   setSelectedChain,
-  setIcpClaimSuccess
+  setClaimedNftContractModal
 } = generalSlice.actions;
 
 export default generalSlice.reducer;

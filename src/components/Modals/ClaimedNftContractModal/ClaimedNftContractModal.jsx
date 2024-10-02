@@ -2,20 +2,22 @@ import React, { useState } from "react";
 import { Form, InputGroup, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Close } from "../../../assets/img/icons/close.svg";
-import { setIcpClaimSuccess } from "../../../store/reducers/generalSlice";
+import { setClaimedNftContractModal } from "../../../store/reducers/generalSlice";
 import SUCCESS from "../../../assets/img/icons/Success.svg";
 
-export default function IcpClaimSuccessModal() {
+export default function ClaimedNftContractModal() {
   const dispatch = useDispatch();
   const [copied, setCopied] = useState();
-  const icpClaimSuccess = useSelector((state) => state.general.icpClaimSuccess);
+  const claimedNftContractModal = useSelector(
+    (state) => state.general.claimedNftContractModal,
+  );
 
   const handleClose = () => {
     dispatch(
-      setIcpClaimSuccess({
-        showModal: false,
-        canisterId: null,
-      })
+      setClaimedNftContractModal({
+        show: false,
+        nftContract: null,
+      }),
     );
   };
 
@@ -23,9 +25,15 @@ export default function IcpClaimSuccessModal() {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
     if ("clipboard" in navigator) {
-      return await navigator.clipboard.writeText(icpClaimSuccess?.canisterId);
+      return await navigator.clipboard.writeText(
+        claimedNftContractModal?.nftContract,
+      );
     } else {
-      return document.execCommand("copy", true, icpClaimSuccess?.canisterId);
+      return document.execCommand(
+        "copy",
+        true,
+        claimedNftContractModal?.nftContract,
+      );
     }
   };
 
@@ -61,7 +69,7 @@ export default function IcpClaimSuccessModal() {
             aria-label="Recipient's username"
             aria-describedby="basic-addon2"
             readOnly
-            value={icpClaimSuccess?.canisterId}
+            value={claimedNftContractModal?.nftContract}
             style={{ background: "rgb(249 250 251)" }}
           />
           <InputGroup.Text id="basic-addon2" onClick={copyTextToClipboard}>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setQuietConnection } from "../../store/reducers/signersSlice";
 import {
   setError,
-  setIcpClaimSuccess,
+  setClaimedNftContractModal,
   setIsAssociated,
   setTempleClaimed,
   setTempleWalletData,
@@ -38,10 +38,10 @@ export const ClaimInDestination = (connection) => {
     const [showModal, setShowModal] = useState(false);
 
     const { account, isTempleWallet } = useSelector(
-      (state) => state.general.templeWalletData
+      (state) => state.general.templeWalletData,
     );
     const templeIsClaimed = useSelector(
-      (state) => state.general.templeIsClaimed
+      (state) => state.general.templeIsClaimed,
     );
 
     const isAssociated = useSelector((state) => state.general.isAssociated);
@@ -91,20 +91,20 @@ export const ClaimInDestination = (connection) => {
           bridge,
           hash,
           chainWapper,
-          fromChainWapper
+          fromChainWapper,
         );
-        if (to.text === "ICP") {
+        if (targetChainIdentifier.showClaimedNftContract) {
           await sleep(TIME.FIVE_SECONDS);
           const claimData = await xPDecentralizedUtility.readClaimed721Event(
             targetChainIdentifier,
-            claimedHash
+            claimedHash,
           );
           dispatch(setTransferLoaderModal(false));
           dispatch(
-            setIcpClaimSuccess({
-              showModal: true,
-              canisterId: claimData?.nft_contract,
-            })
+            setClaimedNftContractModal({
+              show: true,
+              nftContract: claimData?.nft_contract,
+            }),
           );
         } else {
           dispatch(setTransferLoaderModal(false));
@@ -156,7 +156,7 @@ export const ClaimInDestination = (connection) => {
           bridge,
           hash,
           chainWapper,
-          fromChainWapper
+          fromChainWapper,
         );
 
         setDestHash(claimedHash);
@@ -168,7 +168,7 @@ export const ClaimInDestination = (connection) => {
             account: {},
             isTempleWallet: false,
             isClaimed: false,
-          })
+          }),
         );
       } catch (e) {
         console.log("in catch block");
@@ -179,7 +179,7 @@ export const ClaimInDestination = (connection) => {
     };
 
     const transferModalLoader = useSelector(
-      (state) => state.general.transferModalLoader
+      (state) => state.general.transferModalLoader,
     );
 
     return (
