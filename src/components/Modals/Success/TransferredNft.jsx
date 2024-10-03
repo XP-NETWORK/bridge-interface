@@ -140,25 +140,23 @@ const TransferredNft = ({
     }
   }, [tagetCanister, workarond_dest_hash]);
 
-  useEffect(() => {
-    if (
-      from.type === "Hedera" ||
-      from.type === "Tezos" ||
-      from.type === "DFINITY"
-    ) {
-      setTxnStatus("completed");
-    } else {
-      evmTxStatus(txn.provider, txn.hash)
-        .then((res) => {
-          if (res) {
-            setTxnStatus("completed");
-          }
-        })
-        .catch((err) => {
-          console.log("error: ", err);
-        });
-    }
-  }, []);
+  if (
+    from.type === "Hedera" ||
+    from.type === "Tezos" ||
+    from.type === "DFINITY"
+  ) {
+    setTxnStatus("completed");
+  } else if (txn?.provider && txn?.hash) {
+    evmTxStatus(txn?.provider, txn?.hash)
+      .then((res) => {
+        if (res) {
+          setTxnStatus("completed");
+        }
+      })
+      .catch((err) => {
+        console.log("error: ", err);
+      });
+  }
 
   const targetCollection = mintWith || tagetCanister;
 
