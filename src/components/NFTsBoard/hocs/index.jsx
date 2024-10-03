@@ -15,13 +15,14 @@ import { withCosmos as Cosmos } from "./cosmosHOC";
 import { useSelector } from "react-redux";
 
 import { v3_ChainId } from "../../../utils/chainsTypes";
+import { withNear as NEAR } from "./nearHOC";
 
 const withChains = (NFTaccount, options = {}) =>
   function CB(props) {
     const { withDestinationChains } = options;
     const { chainSpecific, chainSpecificRender } = props;
     const _chain = useSelector((state) =>
-      withDestinationChains ? state.general.to : state.general.from
+      withDestinationChains ? state.general.to : state.general.from,
     );
     const type = v3_ChainId[_chain.nonce].type;
 
@@ -45,6 +46,7 @@ export default compose(
   Cosmos,
   Ton,
   Algo,
+  NEAR,
   EVM,
-  withChains
+  withChains,
 );

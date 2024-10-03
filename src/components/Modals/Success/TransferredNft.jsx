@@ -116,7 +116,7 @@ const TransferredNft = ({
 
   const depHash = fromChain?.adaptHashView(
     hashes?.depHash || txn?.hash,
-    account
+    account,
   );
 
   useEffect(() => {
@@ -149,15 +149,16 @@ const TransferredNft = ({
   const targetCollection = mintWith || tagetCanister;
 
   const v3BridgeTx = Boolean(
-    depHash && fromChain?.v3Bridge && toChain?.v3Bridge
+    depHash && fromChain?.v3Bridge && toChain?.v3Bridge,
   );
   const completed = Boolean(
     (to.type === "TON" && txnStatus === "completed") ||
+      (to.type === "NEAR" && txnStatus === "completed") ||
       (to.type === "Hedera" && txnStatus === "completed") ||
       (v3BridgeTx && txnStatus !== "claimed") ||
       (to.type === "Tezos" && txnStatus === "completed") ||
       (to.type === "Cosmos" && txnStatus === "completed") ||
-      (to.type === "EVM" && txnStatus === "completed")
+      (to.type === "EVM" && txnStatus === "completed"),
   );
 
   return (

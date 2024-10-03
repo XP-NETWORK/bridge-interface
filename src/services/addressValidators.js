@@ -64,8 +64,12 @@ const addressValidateNear = (address) => {
             String(address)
                 .substring(address.length, address.length - 5)
                 .toLowerCase() === ".near"
+            ||
+            String(address)
+                .substring(address.length, address.length - 8)
+                .toLowerCase() === ".testnet"
         ) {
-            return /^[a-zA-Z]+(\.[a-zA-Z]+)+$/.test(address);
+            return /^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)+$/.test(address);
         }
         return false;
     }
@@ -120,9 +124,9 @@ export const generalValidation = (e, receiver) => {
             /^[ A-Za-z/]*$/.test() &&
             receiver.length >= 3 &&
             receiver.charAt(receiver.length - 1) ===
-                receiver.charAt(receiver.length - 2) &&
+            receiver.charAt(receiver.length - 2) &&
             receiver.charAt(receiver.length - 1) ===
-                receiver.charAt(receiver.length - 3)
+            receiver.charAt(receiver.length - 3)
         ) {
             isValid = false;
         }
@@ -133,9 +137,9 @@ export const generalValidation = (e, receiver) => {
             /^[ A-Za-z/]*$/.test() &&
             receiver.length >= 3 &&
             receiver.charAt(receiver.length - 1) ===
-                receiver.charAt(receiver.length - 2) &&
+            receiver.charAt(receiver.length - 2) &&
             receiver.charAt(receiver.length - 1) ===
-                receiver.charAt(receiver.length - 3)
+            receiver.charAt(receiver.length - 3)
         ) {
             isValid = false;
         }
