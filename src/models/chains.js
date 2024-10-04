@@ -604,7 +604,7 @@ class Elrond extends AbstractChain {
   handlerResult(res) {
     if (Array.isArray(res)) {
       res = res[0];
-    } else if (typeof res === "string"){
+    } else if (typeof res === "string") {
       return { hash: res }
     }
     return {
@@ -645,13 +645,6 @@ class Elrond extends AbstractChain {
       );
   }
 
-  async getNFTs(address) {
-    try {
-      return await super.getNFTs(address);
-    } catch (e) {
-      return [];
-    }
-  }
 
   async unwrap(nft, data) {
     let nonce =

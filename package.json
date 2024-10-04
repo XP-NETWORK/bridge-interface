@@ -88,7 +88,7 @@
     "web3": "^1.8.2",
     "web3-providers-connex": "^0.7.4",
     "web3modal": "^1.9.12",
-    "xp-decentralized-sdk": "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#bleeding-edge",
+    "xp-decentralized-sdk": "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#decentralized-bleeding-edge",
     "xp.network": "git+https://github.com/XP-NETWORK/xpjs#bleeding-edge"
   },
   "scripts": {
