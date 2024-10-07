@@ -9,6 +9,7 @@ import Tooltip from "../AccountModal/Tooltip";
 
 import withChains from "../../NFTsBoard/hocs";
 import { TIME } from "../../../constants/time";
+import { XPDecentralizedUtility } from "../../../utils/xpDecentralizedUtility";
 
 //import { biz } from "../../values";
 
@@ -63,6 +64,7 @@ const TransferredNft = ({
 
   const depText = window.innerWidth <= 600 ? "Dep" : "Departure Hash";
   const desText = window.innerWidth <= 600 ? "Des" : "Destination Hash";
+  const xPDecentralizedUtility = new XPDecentralizedUtility();
 
   const RenderClaimInDestination =
     chainSpecificRender?.RenderClaimInDestination;
@@ -133,6 +135,21 @@ const TransferredNft = ({
   }, [tagetCanister, workarond_dest_hash]);
 
   useEffect(() => {
+    if (txn && from.type === "Elrond") {
+      xPDecentralizedUtility
+        .getTransactionStatus(from.nonce, txn.hash)
+        .then((res) => {
+          if (res === "success") {
+            setTxnStatus("completed");
+          }
+        })
+        .catch((err) => {
+          console.log("error: ", err);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
     if (
       from.type === "Hedera" ||
       from.type === "Tezos" ||
@@ -176,7 +193,9 @@ const TransferredNft = ({
           ) : (
             <img src={image} alt={name} />
           )}
-          <div className="transferred-nft-name">{name}</div>
+          <div className="transferred-nft-name">
+            {name || nft?.native?.name}
+          </div>
         </div>
 
         <TxStatus status={txn ? txnStatus : "processing"} />

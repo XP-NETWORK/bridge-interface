@@ -138,6 +138,9 @@ export class XPDecentralizedUtility {
       const sdk = await import("@hashgraph/sdk");
       originChain.injectSDK(sdk);
     }
+    if (fromChain.nonce === 2) {
+      tokenId = nft?.native?.nonce || tokenId
+    }
     console.log("originChain", originChain);
     const res = await originChain.lockNft(
       signer,
@@ -290,7 +293,10 @@ export class XPDecentralizedUtility {
     claim = await targetChain.claimNft(
       targetChainSigner,
       targetChain.transform(nftData),
-      signatures
+      signatures,
+      {
+        gasLimit: 5_000_000
+      }
     );
 
     console.log("claimed: ", claim);
@@ -335,6 +341,12 @@ export class XPDecentralizedUtility {
     return await this.factory.inner(chain);
   };
 
+  getTransactionStatus = async (chainNonce, txHash) => {
+    const originChain = await this.getChainFromFactory(
+      v3_ChainId[chainNonce].name
+    );
+    return originChain.getTransactionStatus(txHash)
+  }
   readClaimed721Event = async (destChainIdentifier, hash) => {
     const destChain = await this.getChainFromFactory(
       v3_ChainId[destChainIdentifier?.nonce].name
