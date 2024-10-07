@@ -19,6 +19,8 @@ import {
 
 import { MainNetRpcUri, TestNetRpcUri } from "xp.network";
 import { switchNetwork } from "../../services/chains/evm/evmService";
+import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
+import { setupWalletSelector } from "@near-wallet-selector/core";
 
 export const wallets = [
     "MetaMask",
@@ -60,9 +62,8 @@ export const connectMetaMask = async (
     try {
         if (!window.ethereum && mobile) {
             const event = window.location.pathname === "/crossroads";
-            const link = `dapp://${window.location.host}${
-                event ? "/crossroads" : ""
-            }?to=${to}&from=${from}/`;
+            const link = `dapp://${window.location.host}${event ? "/crossroads" : ""
+                }?to=${to}&from=${from}/`;
             window.open(link);
         }
         //d/
@@ -282,5 +283,22 @@ export const connectAlgoWallet = async () => {
     let connector = getAlgoConnector();
     if (!connector.connected) {
         connector.createSession();
+    }
+};
+
+
+export const connectMyNearWallet = async (testnet) => {
+    try {
+        const myNearWallet = setupMyNearWallet({});
+
+        const selector = await setupWalletSelector({
+            network: testnet ? "testnet" : "mainnet",
+            modules: [myNearWallet],
+        });
+        const wallet = await selector.wallet();
+        return wallet;
+    } catch (error) {
+        console.error(error);
+        return false;
     }
 };

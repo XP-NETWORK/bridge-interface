@@ -23087,7 +23087,7 @@ xmlhttprequest@1.8.0:
 
 "xp-decentralized-sdk@git+https://github.com/XP-NETWORK/xp-decentralized-client-library#bleeding-edge":
   version "1.0.0"
-  resolved "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#f38d574ec5e785495a56d371889bf8b7ce1596a9"
+  resolved "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#1defd9cba5b14be8da1759fec24c77c1b8f25339"
   dependencies:
     "@aptos-labs/ts-sdk" "^1.22.2"
     "@cosmjs/amino" "^0.32.3"
@@ -23116,35 +23116,6 @@ xmlhttprequest@1.8.0:
     ethers "^6.10.0"
     hashconnect "^0.2.9"
     near-api-js "^5.0.0"
-    secretjs "^1.12.4-beta.0"
-
-"xp-decentralized-sdk@git+https://github.com/XP-NETWORK/xp-decentralized-client-library#decentralized-bleeding-edge":
-  version "1.0.0"
-  resolved "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#9d2baf707b3d0cc31c37bc1d816bcdafac220bff"
-  dependencies:
-    "@aptos-labs/ts-sdk" "^1.22.2"
-    "@cosmjs/amino" "^0.32.3"
-    "@cosmjs/cosmwasm-stargate" "^0.32.3"
-    "@dfinity/agent" "^1.4.0"
-    "@dfinity/candid" "^1.4.0"
-    "@dfinity/ledger-icp" "^2.3.1"
-    "@dfinity/nns" "^5.1.2"
-    "@dfinity/principal" "^1.4.0"
-    "@multiversx/sdk-core" "^13.2.1"
-    "@multiversx/sdk-network-providers" "^2.2.1"
-    "@multiversx/sdk-wallet" "^4.3.0"
-    "@taquito/taquito" "^19.0.0"
-    "@taquito/tzip16" "^19.0.0"
-    "@taquito/utils" "^19.0.0"
-    "@ton/core" "=0.56.3"
-    "@ton/crypto" "=3.2.0"
-    "@ton/ton" "=13.11.1"
-    "@tzkt/sdk-api" "^2.2.1"
-    "@xp/cosmos-client" "git+https://github.com/XP-NETWORK/cosmos-client#bleeding-edge"
-    aptos "^1.21.0"
-    axios "^1.6.7"
-    ethers "^6.10.0"
-    hashconnect "^0.2.9"
     secretjs "^1.12.4-beta.0"
 
 "xp.network@git+https://github.com/XP-NETWORK/xpjs#bleeding-edge":
