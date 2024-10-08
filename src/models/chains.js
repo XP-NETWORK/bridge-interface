@@ -841,31 +841,13 @@ class Cosmos extends AbstractChain {
     super(params);
   }
 
-  async getNFTs(account, secretCred) {
-    let secretNFTs = await this.chain.nftList(
-      account,
-      secretCred.viewKey,
-      secretCred.contract
-    );
-
-    secretNFTs = secretNFTs.map((nft) => ({
-      ...nft,
-      native: {
-        ...nft.native,
-        name: nft?.native?.metadata?.name,
-        description: nft?.native?.metadata?.description,
-      },
-      metaData: !nft?.uri
-        ? {
-          ...nft?.native?.metadata,
-          image: nft?.native?.metadata?.media[0]?.url,
-          imageFormat: nft?.native?.metadata?.media[0]?.extension,
-        }
-        : null,
-    }));
-
-    return secretNFTs;
+  async getNFTs(address, secretCred) {
+    const xPDecentralizedUtility = new XPDecentralizedUtility();
+    return xPDecentralizedUtility.nftList(ChainNonce.SECRET, address, secretCred.contract, {
+      viewingKey: secretCred.viewKey,
+    })
   }
+
 
   async balance() {
     if (!this.signer)
