@@ -142,32 +142,18 @@ export class XPDecentralizedUtility {
       tokenId = nft?.native?.nonce || tokenId
     }
     console.log("originChain", originChain);
-    let res;
-    if (nft.native?.amount) {
-      console.log("locking sft", nft.amountToTransfer)
-      res = await originChain.lockSft(
-        signer,
-        nft.contract || nft.collectionIdent,
-        v3_ChainId[toChain?.nonce].name,
-        receiver,
-        tokenId,
-        nft.amountToTransfer,
-        nft.uri,
-      );
-    } else {
-      console.log("locking nft")
-      res = await originChain.lockNft(
-        signer,
-        nft.contract || nft.collectionIdent,
-        v3_ChainId[toChain?.nonce].name,
-        receiver,
-        tokenId,
-        nft.uri,
-        // {
-        //   gasLimit: 5_000_000
-        // }
-      );
-    }
+    const res = await this.factory.lockNft(
+      originChain,
+      signer,
+      nft.contract || nft.collectionIdent,
+      v3_ChainId[toChain?.nonce].name,
+      receiver,
+      tokenId,
+      nft.uri,
+      // {
+      //   gasLimit: 5_000_000
+      // }
+    );
     console.log({ res });
     const hash = await res.hash();
     console.log({ hash });
