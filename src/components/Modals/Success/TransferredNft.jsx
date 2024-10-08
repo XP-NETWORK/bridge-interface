@@ -164,8 +164,8 @@ const TransferredNft = ({
       from.type === "DFINITY"
     ) {
       setTxnStatus("completed");
-    } else if (txn?.provider && txn?.hash) {
-      evmTxStatus(txn?.provider, txn?.hash)
+    } else {
+      evmTxStatus(txn.provider, txn.hash)
         .then((res) => {
           if (res) {
             setTxnStatus("completed");
