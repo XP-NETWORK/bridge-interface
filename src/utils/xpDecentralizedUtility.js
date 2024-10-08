@@ -334,7 +334,8 @@ export class XPDecentralizedUtility {
       v3_ChainId[targetChainIdentifier?.nonce].name === "TON" ||
       v3_ChainId[targetChainIdentifier?.nonce].name === "HEDERA" ||
       v3_ChainId[targetChainIdentifier?.nonce].name === "ICP" ||
-      v3_ChainId[targetChainIdentifier?.nonce].name === "TEZOS"
+      v3_ChainId[targetChainIdentifier?.nonce].name === "TEZOS" ||
+      v3_ChainId[targetChainIdentifier?.nonce].name === "SECRET"
     ) {
       return {
         hash: claim?.hash(),
@@ -399,4 +400,15 @@ export class XPDecentralizedUtility {
     const decimals = CHAIN_INFO.get(chainNonce)?.decimals;
     return Number(res) / decimals;
   };
+
+  setViewingKey = async (chainNonce, signer, contract, viewKey) => {
+    const destChain = await this.getChainFromFactory(
+      v3_ChainId[chainNonce].name
+    );
+    return destChain.setViewingKey(
+      signer,
+      contract,
+      viewKey
+    )
+  }
 }
