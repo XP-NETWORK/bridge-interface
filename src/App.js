@@ -25,6 +25,7 @@ import {
     setIsInvalidAddress,
     setShowAbout,
     setShowVideo,
+    setShowSwitchToV4Modal
 } from "./store/reducers/generalSlice";
 //  import { setQRCodeModal } from "../../Wallet/TONWallet/tonStore";
 import { bridgeUrl, chains } from "./components/values";
@@ -71,6 +72,11 @@ function App() {
     let location = useLocation();
 
     useEffect(() => {
+        if (location.pathname.includes("minting")) {
+            dispatch(setShowSwitchToV4Modal(false));
+        } else {
+            dispatch(setShowSwitchToV4Modal(true));
+        }
         if (modalArray.indexOf(true) !== -1) {
             dispatch(setChainModal(false));
             dispatch(setImportModal(false));
@@ -88,7 +94,7 @@ function App() {
         if (!location.pathname.includes("account")) {
             dispatch(setIsInvalidAddress(true));
         }
-        window.onpopstate = function() {
+        window.onpopstate = function () {
             dispatch(setShowAbout(false));
             dispatch(setShowVideo(false));
             dispatch(setError(false));

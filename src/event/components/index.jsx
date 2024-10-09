@@ -16,8 +16,6 @@ import close from "../../assets/img/icons/close.svg";
 
 import { setSuccess } from "../../store/reducers/eventSlice";
 
-import { useNavigate } from "react-router";
-
 export const EventPage = withServices(
   ({
     serviceContainer,
@@ -27,11 +25,10 @@ export const EventPage = withServices(
     headerClass,
     className,
     useContractVariable,
-    successImage
+    successImage,
   }) => {
     const { bridge } = serviceContainer;
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { success } = useSelector((state) => state.events);
 
     return (
@@ -52,7 +49,15 @@ export const EventPage = withServices(
               <img className="successImg" src={successImage} alt="" />
               <h3>🎉 The NFT is in your wallet</h3>
               <div className="controls">
-                <button className="" onClick={() => navigate("/connect")}>
+                <button
+                  className=""
+                  onClick={() =>
+                    window.open(
+                      "https://decentralized.bridge.xp.network/",
+                      "_blank",
+                    )
+                  }
+                >
                   Bridge NFT
                 </button>
                 <button
@@ -77,5 +82,5 @@ export const EventPage = withServices(
         </div>
       </>
     );
-  }
+  },
 );

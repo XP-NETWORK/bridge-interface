@@ -34,7 +34,7 @@ const initialState = {
     ICPCanisterSearch: "",
     showChainSelect: false,
     selectedChain: undefined,
-    showSwitchToV4Modal: true
+    showSwitchToV4Modal: false
 };
 
 const generalSlice = createSlice({
