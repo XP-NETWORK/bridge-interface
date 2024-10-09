@@ -142,18 +142,32 @@ export class XPDecentralizedUtility {
       tokenId = nft?.native?.nonce || tokenId
     }
     console.log("originChain", originChain);
-    const res = await this.factory.lockNft(
-      originChain,
-      signer,
-      nft.contract || nft.collectionIdent,
-      v3_ChainId[toChain?.nonce].name,
-      receiver,
-      tokenId,
-      nft.uri,
-      // {
-      //   gasLimit: 5_000_000
-      // }
-    );
+    let res;
+    if (nft.native?.amount) {
+      console.log("locking sft", nft.amountToTransfer)
+      res = await originChain.lockSft(
+        signer,
+        nft.contract || nft.collectionIdent,
+        v3_ChainId[toChain?.nonce].name,
+        receiver,
+        tokenId,
+        nft.amountToTransfer,
+        nft.uri,
+      );
+    } else {
+      console.log("locking nft")
+      res = await originChain.lockNft(
+        signer,
+        nft.contract || nft.collectionIdent,
+        v3_ChainId[toChain?.nonce].name,
+        receiver,
+        tokenId,
+        nft.uri,
+        // {
+        //   gasLimit: 5_000_000
+        // }
+      );
+    }
     console.log({ res });
     const hash = await res.hash();
     console.log({ hash });
@@ -306,14 +320,27 @@ export class XPDecentralizedUtility {
       );
     } else {
       console.log("claiming nft")
-      claim = await targetChain.claimNft(
-        targetChainSigner,
-        targetChain.transform(nftData),
-        signatures,
-        {
-          gasLimit: 5_000_000
-        }
-      );
+      if (nftData.nftType === "multiple") {
+        console.log("claiming sft", nftData?.tokenAmount)
+        claim = await targetChain.claimSft(
+          targetChainSigner,
+          targetChain.transform(nftData),
+          signatures,
+          {
+            gasLimit: 5_000_000
+          }
+        );
+      } else {
+        console.log("claiming nft")
+        claim = await targetChain.claimNft(
+          targetChainSigner,
+          targetChain.transform(nftData),
+          signatures,
+          {
+            gasLimit: 5_000_000
+          }
+        );
+      }
     }
     console.log("claimed: ", claim);
     if (

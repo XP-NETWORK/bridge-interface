@@ -86,7 +86,7 @@ export const ClaimInDestination = (connection) => {
           return;
         }
 
-        const claimRes = await xPDecentralizedUtility.claimNFT(
+        const { hash: claimedHash } = await xPDecentralizedUtility.claimNFT(
           originChainIdentifier,
           bridge,
           hash,
@@ -109,8 +109,6 @@ export const ClaimInDestination = (connection) => {
         } else {
           dispatch(setTransferLoaderModal(false));
         }
-
-        const claimedHash = claimRes?.hash || claimRes;
 
         setDestHash(claimedHash);
       } catch (e) {
