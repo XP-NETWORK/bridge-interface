@@ -103,7 +103,6 @@ function NFTaccount(props) {
         fromChain.getNFTs(bridge.checkWallet || _account, contract),
         chainSpecific && chainSpecific(dispatch, fromChain, _account),
       ]);
-      console.log({ nfts });
       nfts = fromChain.filterNFTs(nfts);
 
       //fromChain.estimateDeployUserStore();

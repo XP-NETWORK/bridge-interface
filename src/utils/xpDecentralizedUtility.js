@@ -45,7 +45,7 @@ export class XPDecentralizedUtility {
     );
   };
   approveNFT_V3 = async (fromChain, nft) => {
-    const { tokenId, contract } = nft.native;
+    const { tokenId, contract, amount } = nft.native;
 
     const signer = fromChain.getSigner();
     console.log({ fromChain, chain: v3_ChainId[fromChain.nonce].name });
@@ -58,7 +58,9 @@ export class XPDecentralizedUtility {
       const sdk = await import("@hashgraph/sdk");
       originChain.injectSDK(sdk);
     }
-    await originChain.approveNft(signer, tokenId, contract);
+    const nftType = amount ? "sft" : "nft"
+    console.log("approving ", nftType)
+    await originChain.approveNft(signer, tokenId, contract, nftType);
 
     await sleep(TIME.TEN_SECONDS);
   };
