@@ -86,31 +86,30 @@ export const ClaimInDestination = (connection) => {
           return;
         }
 
-        const claimRes = await xPDecentralizedUtility.claimNFT(
+        const { hash: claimedHash } = await xPDecentralizedUtility.claimNFT(
           originChainIdentifier,
           bridge,
           hash,
           chainWapper,
           fromChainWapper,
         );
+        console.log({ claimedHash });
         if (to.text === "ICP") {
           await sleep(TIME.FIVE_SECONDS);
           const claimData = await xPDecentralizedUtility.readClaimed721Event(
             targetChainIdentifier,
-            claimedHash
+            claimedHash,
           );
           dispatch(setTransferLoaderModal(false));
           dispatch(
             setIcpClaimSuccess({
               showModal: true,
               canisterId: claimData?.nft_contract,
-            })
+            }),
           );
         } else {
           dispatch(setTransferLoaderModal(false));
         }
-
-        const claimedHash = claimRes?.hash || claimRes;
 
         setDestHash(claimedHash);
       } catch (e) {
