@@ -322,27 +322,14 @@ export class XPDecentralizedUtility {
       );
     } else {
       console.log("claiming nft")
-      if (nftData.nftType === "multiple") {
-        console.log("claiming sft", nftData?.tokenAmount)
-        claim = await targetChain.claimSft(
-          targetChainSigner,
-          targetChain.transform(nftData),
-          signatures,
-          {
-            gasLimit: 5_000_000
-          }
-        );
-      } else {
-        console.log("claiming nft")
-        claim = await targetChain.claimNft(
-          targetChainSigner,
-          targetChain.transform(nftData),
-          signatures,
-          {
-            gasLimit: 5_000_000
-          }
-        );
-      }
+      claim = await targetChain.claimNft(
+        targetChainSigner,
+        targetChain.transform(nftData),
+        signatures,
+        {
+          gasLimit: 5_000_000
+        }
+      );
     }
     console.log("claimed: ", claim);
     if (
@@ -354,9 +341,13 @@ export class XPDecentralizedUtility {
     ) {
       return {
         hash: claim?.hash(),
+        nftType: nftData.nftType
       };
     }
-    return claim?.ret;
+    return {
+      ...claim?.ret,
+      nftType: nftData.nftType
+    };
   };
 
   associateTokens = async (targetChainIdentifier) => {
@@ -398,6 +389,13 @@ export class XPDecentralizedUtility {
       v3_ChainId[destChainIdentifier?.nonce].name
     );
     return await destChain.readClaimed721Event(hash)
+  }
+
+  readClaimed1155Event = async (destChainIdentifier, hash) => {
+    const destChain = await this.getChainFromFactory(
+      v3_ChainId[destChainIdentifier?.nonce].name
+    );
+    return await destChain.readClaimed1155Event(hash)
   }
 
   nftList = async (chainNonce, address, contract, extraArgs) => {
