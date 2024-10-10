@@ -189,8 +189,10 @@ const TransferredNft = ({
       (to.type === "Tezos" && txnStatus === "completed") ||
       (to.type === "Cosmos" && txnStatus === "completed") ||
       (to.type === "EVM" && txnStatus === "completed") ||
+      (to.type === "Elrond" && txnStatus === "completed") ||
       (to.type === "DFINITY" && txnStatus === "completed"),
   );
+  console.log({ completed, to, v3BridgeTx, txnStatus });
 
   return (
     <div className="success-nft-info__wrapper">

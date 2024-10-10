@@ -523,7 +523,7 @@ export const chains = [
         mainnet: true,
         newChain: true,
         coming: false,
-        isDisabled: false,
+        isDisabled: true,
         hideOnMobile: true
     },
     {
