@@ -357,6 +357,54 @@ export const allchains = [
     },
 
     {
+        name: "BLAST Mainnet",
+        chain: "BLAST",
+        network: "mainnet",
+        rpcUrls: [
+            "https://rpc.blast.io",
+            "https://rpc.ankr.com/blast",
+            "https://blast.din.dev/rpc",
+            "https://blastl2-mainnet.public.blastapi.io",
+            "https://blast.blockpi.network/v1/rpc/public",
+        ],
+        faucets: ["https://testnet.binance.org/faucet-smart"],
+        nativeCurrency: {
+            name: "ETH",
+            symbol: "ETH",
+            decimals: 18,
+        },
+        chainId: 81457,
+    },
+
+    {
+        name: "Blast Testnet Sepolia",
+        chain: "BLAST",
+        network: "testnet",
+        rpcUrls: [
+            "https://data-seed-prebsc-1-s1.binance.org:8545",
+            "https://data-seed-prebsc-2-s1.binance.org:8545",
+            "https://data-seed-prebsc-1-s2.binance.org:8545",
+            "https://data-seed-prebsc-2-s2.binance.org:8545",
+            "https://data-seed-prebsc-1-s3.binance.org:8545",
+            "https://data-seed-prebsc-2-s3.binance.org:8545",
+        ],
+        faucets: ["https://blastapi.io/faucets/blastl2-testnet"],
+        nativeCurrency: {
+            name: "ETH",
+            symbol: "ETH",
+            decimals: 18,
+        },
+        chainId: 168587773,
+        explorers: [
+            {
+                name: "blast-sepolia",
+                url: "https://sepolia.blastexplorer.io",
+                standard: "EIP3091",
+            },
+        ],
+    },
+
+    {
         name: "Gnosis",
         chain: "Gnosis",
         network: "mainnet",

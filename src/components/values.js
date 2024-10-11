@@ -2,6 +2,7 @@ import Ethereum from "../assets/img/chain/Etherium.svg";
 import Ton from "../assets/img/chain/ton.svg";
 import Elrond from "../assets/img/chain/multiverseX.png";
 import Binance from "../assets/img/chain/Binance.svg";
+import Blast from "../assets/img/chain/blast.webp";
 import Cardano from "../assets/img/chain/Cardano.svg";
 import Algorand from "../assets/img/chain/Algarand.svg";
 import Tron from "../assets/img/chain/Tron.svg";
@@ -111,6 +112,22 @@ export const chains = [
         tnChainId: 97,
         order: 2,
         image: { avatar: true, src: Binance },
+        maintenance: false,
+        //maintenanceTo: !biz,
+        testNet: true,
+        mainnet: true,
+        isDisabled: false,
+    },
+    {
+        type: "EVM",
+        key: "BLAST",
+        text: "BLAST",
+        value: "BLAST",
+        nonce: 45,
+        chainId: 81457,
+        tnChainId: 168587773,
+        order: 2,
+        image: { avatar: true, src: Blast },
         maintenance: false,
         //maintenanceTo: !biz,
         testNet: true,
