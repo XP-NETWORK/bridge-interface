@@ -9,12 +9,16 @@ import {
   setTempleWalletData,
   setTemporaryFrom,
   setTransferLoaderModal,
+  removeFromSelectedNFTList,
+  cleanTxnHashArr,
+  setNFTSetToggler,
 } from "../../store/reducers/generalSlice";
 import { XPDecentralizedUtility } from "../../utils/xpDecentralizedUtility";
 import { Modal, Spinner } from "react-bootstrap";
 import WalletList from "../Wallet/WalletList";
 import { sleep } from "../../utils";
 import { TIME } from "../../constants/time";
+import { setQRCodeModal } from "../Wallet/TONWallet/tonStore";
 
 export const ClaimInDestination = (connection) => {
   return function CB({
@@ -45,6 +49,9 @@ export const ClaimInDestination = (connection) => {
     );
 
     const isAssociated = useSelector((state) => state.general.isAssociated);
+    const selectedNFTList = useSelector(
+      (state) => state.general.selectedNFTList,
+    );
 
     const handler = async () => {
       if (to.text === "Tezos") {
@@ -119,6 +126,14 @@ export const ClaimInDestination = (connection) => {
               nftContract: claimData?.nft_contract,
             }),
           );
+
+          selectedNFTList?.forEach((nft) => {
+            const { txn } = nft;
+            if (txn) dispatch(removeFromSelectedNFTList(nft));
+          });
+          dispatch(cleanTxnHashArr());
+          dispatch(setNFTSetToggler());
+          dispatch(setQRCodeModal(false));
         } else {
           dispatch(setTransferLoaderModal(false));
         }
