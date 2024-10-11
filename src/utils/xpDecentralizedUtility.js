@@ -153,7 +153,7 @@ export class XPDecentralizedUtility {
       tokenId = nft?.native?.nonce || tokenId
     }
     // validate collection name and symbol for mx
-    if (toChain?.nonce === 2) {
+    if (toChain?.nonce === 2 && !nft.native?.amount) {
       await this.validateNftData(toChain?.nonce, {
         name,
         symbol
@@ -332,9 +332,9 @@ export class XPDecentralizedUtility {
         targetChainSigner,
         targetChain.transform(nftData),
         signatures,
-        {
-          gasLimit: 5_000_000
-        }
+        // {
+        //   gasLimit: 5_000_000
+        // }
       );
     } else {
       console.log("claiming nft")
@@ -342,9 +342,9 @@ export class XPDecentralizedUtility {
         targetChainSigner,
         targetChain.transform(nftData),
         signatures,
-        {
-          gasLimit: 5_000_000
-        }
+        // {
+        //   gasLimit: 5_000_000
+        // }
       );
     }
     console.log("claimed: ", claim);
