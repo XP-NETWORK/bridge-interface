@@ -65,6 +65,13 @@ export class XPDecentralizedUtility {
     await sleep(TIME.TEN_SECONDS);
   };
 
+  validateNftData = async (chainNonce, data) => {
+    const destChain = await this.getChainFromFactory(
+      v3_ChainId[chainNonce].name
+    );
+    return await destChain.validateNftData(data)
+  }
+
   lockNFT = async (
     fromChain,
     toChain,
@@ -113,7 +120,7 @@ export class XPDecentralizedUtility {
     };
   };
   lockNFT_V3 = async (fromChain, toChain, nft, receiver) => {
-    let { tokenId } = nft.native;
+    let { tokenId, name, symbol } = nft.native;
     if (fromChain.nonce === 28) {
       tokenId = BigInt(tokenId)
     }
@@ -140,8 +147,16 @@ export class XPDecentralizedUtility {
       const sdk = await import("@hashgraph/sdk");
       originChain.injectSDK(sdk);
     }
+    // send nonce as token id for mx
     if (fromChain.nonce === 2) {
       tokenId = nft?.native?.nonce || tokenId
+    }
+    // validate collection name and symbol for mx
+    if (toChain?.nonce === 2 && !nft.native?.amount) {
+      await this.validateNftData(toChain?.nonce, {
+        name,
+        symbol
+      })
     }
     console.log("originChain", originChain);
     let res;
@@ -316,9 +331,9 @@ export class XPDecentralizedUtility {
         targetChainSigner,
         targetChain.transform(nftData),
         signatures,
-        {
-          gasLimit: 5_000_000
-        }
+        // {
+        //   gasLimit: 5_000_000
+        // }
       );
     } else {
       console.log("claiming nft")
@@ -326,9 +341,9 @@ export class XPDecentralizedUtility {
         targetChainSigner,
         targetChain.transform(nftData),
         signatures,
-        {
-          gasLimit: 5_000_000
-        }
+        // {
+        //   gasLimit: 5_000_000
+        // }
       );
     }
     console.log("claimed: ", claim);
@@ -338,6 +353,7 @@ export class XPDecentralizedUtility {
       v3_ChainId[targetChainIdentifier?.nonce].name === "ICP" ||
       v3_ChainId[targetChainIdentifier?.nonce].name === "TEZOS" ||
       v3_ChainId[targetChainIdentifier?.nonce].name === "SECRET"
+      v3_ChainId[targetChainIdentifier?.nonce].name === "MULTIVERSX"
     ) {
       return {
         hash: claim?.hash(),
