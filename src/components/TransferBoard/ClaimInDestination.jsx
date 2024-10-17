@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setQuietConnection } from "../../store/reducers/signersSlice";
 import {
   setError,
+  setIcpClaimSuccess,
   setIsAssociated,
   setTempleClaimed,
   setTempleWalletData,
@@ -12,6 +13,8 @@ import {
 import { XPDecentralizedUtility } from "../../utils/xpDecentralizedUtility";
 import { Modal, Spinner } from "react-bootstrap";
 import WalletList from "../Wallet/WalletList";
+import { sleep } from "../../utils";
+import { TIME } from "../../constants/time";
 
 export const ClaimInDestination = (connection) => {
   return function CB({
@@ -35,10 +38,10 @@ export const ClaimInDestination = (connection) => {
     const [showModal, setShowModal] = useState(false);
 
     const { account, isTempleWallet } = useSelector(
-      (state) => state.general.templeWalletData
+      (state) => state.general.templeWalletData,
     );
     const templeIsClaimed = useSelector(
-      (state) => state.general.templeIsClaimed
+      (state) => state.general.templeIsClaimed,
     );
 
     const isAssociated = useSelector((state) => state.general.isAssociated);
@@ -88,11 +91,27 @@ export const ClaimInDestination = (connection) => {
           bridge,
           hash,
           chainWapper,
-          fromChainWapper
+          fromChainWapper,
         );
+        console.log({ claimedHash });
+        if (to.text === "ICP") {
+          await sleep(TIME.FIVE_SECONDS);
+          const claimData = await xPDecentralizedUtility.readClaimed721Event(
+            targetChainIdentifier,
+            claimedHash,
+          );
+          dispatch(setTransferLoaderModal(false));
+          dispatch(
+            setIcpClaimSuccess({
+              showModal: true,
+              canisterId: claimData?.nft_contract,
+            }),
+          );
+        } else {
+          dispatch(setTransferLoaderModal(false));
+        }
 
         setDestHash(claimedHash);
-        dispatch(setTransferLoaderModal(false));
       } catch (e) {
         console.log("in catch block", e);
         dispatch(setError({ message: e.message }));
@@ -138,7 +157,7 @@ export const ClaimInDestination = (connection) => {
           bridge,
           hash,
           chainWapper,
-          fromChainWapper
+          fromChainWapper,
         );
 
         setDestHash(claimedHash);
@@ -150,7 +169,7 @@ export const ClaimInDestination = (connection) => {
             account: {},
             isTempleWallet: false,
             isClaimed: false,
-          })
+          }),
         );
       } catch (e) {
         console.log("in catch block");
@@ -161,7 +180,7 @@ export const ClaimInDestination = (connection) => {
     };
 
     const transferModalLoader = useSelector(
-      (state) => state.general.transferModalLoader
+      (state) => state.general.transferModalLoader,
     );
 
     return (

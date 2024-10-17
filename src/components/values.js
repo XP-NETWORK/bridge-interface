@@ -2,6 +2,7 @@ import Ethereum from "../assets/img/chain/Etherium.svg";
 import Ton from "../assets/img/chain/ton.svg";
 import Elrond from "../assets/img/chain/multiverseX.png";
 import Binance from "../assets/img/chain/Binance.svg";
+import Blast from "../assets/img/chain/blast.webp";
 import Cardano from "../assets/img/chain/Cardano.svg";
 import Algorand from "../assets/img/chain/Algarand.svg";
 import Tron from "../assets/img/chain/Tron.svg";
@@ -73,6 +74,11 @@ export const sockets = {
     testnet: "wss://tools.xp.network::/testnet-explorer/ws", //"https://testnet-tx-socket.herokuapp.com/", //"wss://testnet-bridge-explorer.herokuapp.com/",
 };
 
+export const icpNetworks = {
+    testnet: "https://tools.xp.network/",
+    mainnet: "https://ic0.app"
+}
+
 export const getChainObject = (nonce) => chains.find((chain) => chain.nonce === nonce);
 
 export const secretnodes = "https://secretnodes.com/secret/accounts";
@@ -113,6 +119,22 @@ export const chains = [
         isDisabled: false,
     },
     {
+        type: "EVM",
+        key: "BLAST",
+        text: "BLAST",
+        value: "BLAST",
+        nonce: 45,
+        chainId: 81457,
+        tnChainId: 168587773,
+        order: 2,
+        image: { avatar: true, src: Blast },
+        maintenance: false,
+        //maintenanceTo: !biz,
+        testNet: true,
+        mainnet: true,
+        isDisabled: false,
+    },
+    {
         type: "Tron",
         key: "Tron",
         text: "Tron",
@@ -137,7 +159,7 @@ export const chains = [
         maintenance: false,
         testNet: true,
         mainnet: true,
-        isDisabled: true,
+        isDisabled: false,
     },
     {
         type: "EVM",
@@ -506,19 +528,20 @@ export const chains = [
         isDisabled: true,
     },
     {
-        type: "ICP",
-        key: "ICP",
+        type: "DFINITY",
+        key: "DFINITY",
         text: "ICP",
         nonce: 28,
         order: -7,
-        // chainId: 1564830818,
-        //tnChainId: 1305754875840118,
+        chainId: 1564830818,
+        tnChainId: 1305754875840118,
         image: { avatar: true, src: InternetComputer },
         testNet: true,
         mainnet: true,
         newChain: true,
         coming: false,
         isDisabled: true,
+        hideOnMobile: true
     },
     {
         type: "APTOS",

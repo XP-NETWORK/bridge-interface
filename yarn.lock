@@ -1633,6 +1633,18 @@
     buffer "^6.0.3"
     simple-cbor "^0.4.1"
 
+"@dfinity/agent@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@dfinity/agent/-/agent-2.0.0.tgz#2c28d52b179af09f8b8998761ddaf81fcbd6d9c6"
+  integrity sha512-Cc2VDAMfxCNIQoaEeKPf0rbS/Y21HAF+eEFj6GfijNnUxS42i4zwUF2PUvEJZqaB2FQwA9SC7MDyuwL8BR2oJA==
+  dependencies:
+    "@noble/curves" "^1.4.0"
+    "@noble/hashes" "^1.3.1"
+    base64-arraybuffer "^0.2.0"
+    borc "^2.1.1"
+    buffer "^6.0.3"
+    simple-cbor "^0.4.1"
+
 "@dfinity/candid@^0.15.5":
   version "0.15.7"
   resolved "https://registry.yarnpkg.com/@dfinity/candid/-/candid-0.15.7.tgz#c395d0fa353c4df653edd0aaebc9ff1f253cc5ba"
@@ -1679,6 +1691,11 @@
   resolved "https://registry.yarnpkg.com/@dfinity/ledger-icp/-/ledger-icp-2.4.0.tgz#3e8305fe708e0585aa3ee867528ccf62f9df8c6c"
   integrity sha512-uWw9gsPwvrmviI6mp0wXUX59D3ytiwOsEgoXAWFOwybO9qVbwLb/ucZYcNYso7GpI91hXawT/jd2A/fcGTXebQ==
 
+"@dfinity/ledger-icp@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@dfinity/ledger-icp/-/ledger-icp-2.5.0.tgz#f563779f39e346d2e6365554e15727f9d99ba906"
+  integrity sha512-1IItBQDSFAJRXrH0CUO6DqhgU9wzE2ChUkqjreJ7h41bVDBhVP0xMwMQHXiP88pdAAdpITw8RGzKYoZg7Bhcwg==
+
 "@dfinity/nns@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@dfinity/nns/-/nns-0.14.0.tgz#a73ca5b9db776c6ee753180dd67c92208843154b"
@@ -1718,15 +1735,28 @@
   dependencies:
     "@noble/hashes" "^1.3.1"
 
+"@dfinity/principal@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@dfinity/principal/-/principal-2.1.1.tgz#a61abec1a556e865244de26aa992d15b19fc1736"
+  integrity sha512-XKoQRgL7S7MRPwabY6z2wJ1Mn0WQqe9ZQIMK2wtRq48f5nL1m0rZejf8kR9JsZCNCYK6ss4b09FCRNGC20J8Bg==
+  dependencies:
+    "@noble/hashes" "^1.3.1"
+
 "@dfinity/utils@^0.0.12":
   version "0.0.12"
   resolved "https://registry.yarnpkg.com/@dfinity/utils/-/utils-0.0.12.tgz#05a25161ad6dbd098de36b859750340ff4dde7d9"
   integrity sha512-vAarfmHzt31saDjDyoeY1HnzumHEHwrLFr0UFLzONkFgjAf9o7Z+YNOHmY8EjiF3NbuQ0C09aamJ1xV8POs+KQ==
 
 "@dfinity/utils@^2.5.0":
+<<<<<<< HEAD
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/@dfinity/utils/-/utils-2.5.1.tgz#c5f3ec95cae0e93f00bb50ab7ba6f7d4f2e9de73"
   integrity sha512-ypu63xSX/7f79rVVe/T/2eiEwwi2+XvPNEuHz+isj8zf4jvEoG8DDDBZF9hedDgYC5uxuBDm1UJqHGYUcaCmRg==
+=======
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@dfinity/utils/-/utils-2.5.0.tgz#142c04eac630a5cef7a925a12690e694aaecc196"
+  integrity sha512-M4kVOdJvpJJdXrB3CgF4nXkDGOGCo0KeR5Z6QznNPpPwlz9FEThvVWZz+6y9Fs6ksWg1G8Oj7Fxbul5BMn2iAg==
+>>>>>>> decentralized-stable
 
 "@elrondnetwork/bls-wasm@0.3.3":
   version "0.3.3"
@@ -16813,7 +16843,7 @@ next-tick@^1.1.0:
 
 "nft-parser@git+https://github.com/xp-network/nft-parser#bleeding-edge":
   version "0.2.0"
-  resolved "git+https://github.com/xp-network/nft-parser#ddc9d939392e3d2d3a252ea002ec897be232511f"
+  resolved "git+https://github.com/xp-network/nft-parser#372024a5940f8027ee9761615c4c0a94671ab078"
   dependencies:
     "@ethersproject/providers" "^5.7.2"
     "@moralisweb3/common-evm-utils" "^2.17.0"
@@ -23087,7 +23117,7 @@ xmlhttprequest@1.8.0:
 
 "xp-decentralized-sdk@git+https://github.com/XP-NETWORK/xp-decentralized-client-library#bleeding-edge":
   version "1.0.0"
-  resolved "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#1defd9cba5b14be8da1759fec24c77c1b8f25339"
+  resolved "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#4e9984b13fc8f3298df4e089dcde83aa4d83f5d5"
   dependencies:
     "@aptos-labs/ts-sdk" "^1.22.2"
     "@cosmjs/amino" "^0.32.3"
@@ -23120,7 +23150,7 @@ xmlhttprequest@1.8.0:
 
 "xp.network@git+https://github.com/XP-NETWORK/xpjs#bleeding-edge":
   version "4.3.3"
-  resolved "git+https://github.com/XP-NETWORK/xpjs#d76c32b86311140213220cd84c2e39b136c51bf3"
+  resolved "git+https://github.com/XP-NETWORK/xpjs#44803241b435b18205b88d4112694369e98aacd7"
   dependencies:
     "@dfinity/agent" "^0.15.5"
     "@dfinity/candid" "^0.15.5"

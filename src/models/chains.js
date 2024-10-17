@@ -10,6 +10,7 @@ import xpchallenge from "../services/xpchallenge";
 import { extractType, formatAddress, setupURI } from "../utils";
 import { switchNetwork } from "../services/chains/evm/evmService";
 import { getChainObject } from "../components/values";
+import { XPDecentralizedUtility } from "../utils/xpDecentralizedUtility";
 
 const Xpchallenge = xpchallenge();
 const feeMultiplier = 1.1;
@@ -603,9 +604,11 @@ class Elrond extends AbstractChain {
   handlerResult(res) {
     if (Array.isArray(res)) {
       res = res[0];
+    } else if (typeof res === "string") {
+      return { hash: res }
     }
     return {
-      hash: ethers.utils.hexlify(res.hash?.hash)?.replace(/^0x/, ""),
+      hash: ethers.utils.hexlify(res?.hash?.hash)?.replace(/^0x/, ""),
     };
   }
 
@@ -642,13 +645,6 @@ class Elrond extends AbstractChain {
       );
   }
 
-  async getNFTs(address) {
-    try {
-      return await super.getNFTs(address);
-    } catch (e) {
-      return [];
-    }
-  }
 
   async unwrap(nft, data) {
     let nonce =
@@ -1211,24 +1207,19 @@ class HEDERA extends EVM {
 }
 
 class ICP extends AbstractChain {
+  v3Bridge = true;
+
   constructor(params) {
     super(params);
   }
 
   async getNFTs(address, contract) {
-    const dab = contract === "default";
-    const [defaults, wrappedNfts, userCanister] = await Promise.allSettled([
-      dab && super.getNFTs(address),
-      this.chain.nftList(address),
-      contract && !dab && this.chain.nftList(address, contract),
-      //this.chain.nftList(address, this.chain.getParams().umt.toText()),
-    ]);
+    const xPDecentralizedUtility = new XPDecentralizedUtility();
+    return xPDecentralizedUtility.nftList(ChainNonce.DFINITY, address, contract)
+  }
 
-    return (defaults.status === "fulfilled" ? defaults.value || [] : [])
-      .concat(wrappedNfts.status === "fulfilled" ? wrappedNfts.value || [] : [])
-      .concat(
-        userCanister.status === "fulfilled" ? userCanister.value || [] : []
-      );
+  filterNFTs(nfts) {
+    return nfts;
   }
 
   async preParse(nft) {
@@ -1251,11 +1242,12 @@ class ICP extends AbstractChain {
       ...nft,
       native: {
         ...nft.native,
+        tokenId: nft.native?.tokenId || nft?.tokenId,
         contract: nft.collectionIdent,
         chainId: String(ChainNonce.DFINITY),
       },
       chainId: String(ChainNonce.DFINITY),
-      tokenId: nft.native?.tokenId,
+      tokenId: nft.native?.tokenId || nft?.tokenId,
       contract: nft.collectionIdent,
       metaData:
         Object.keys(metadata).length > 0
@@ -1329,6 +1321,19 @@ class ICP extends AbstractChain {
 
       executedSocket.on("tx_executed_event", handler);
     });
+  }
+
+  async balance() {
+    if (!this.signer)
+      throw new Error("No signer for ", this.chainParams.text);
+    try {
+      const xPDecentralizedUtility = new XPDecentralizedUtility();
+      const bal = xPDecentralizedUtility.getBalance(ChainNonce.DFINITY, this.signer)
+      return bal;
+    } catch (e) {
+      console.log(e)
+      return 0;
+    }
   }
 
   /*handlerResult(_, address) {

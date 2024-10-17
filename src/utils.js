@@ -10,6 +10,8 @@ import { switchNetwork } from "./services/chains/evm/evmService";
 import { getChainObject } from "./components/values";
 import { injected } from "./wallet/connectors";
 import { TempleWallet } from "@temple-wallet/dapp";
+import { connectExtension } from "./components/Wallet/MultiversXWallet/HigherMultiversX";
+import { connectPlugWallet } from "./components/Wallet/IcpConnections";
 
 /*const testnet = window.location.pathname.includes("testnet");
 const staging = window.location.pathname.includes("staging");
@@ -55,7 +57,7 @@ export const fetchXPUpdate = () => {
     .then((response) => {
       return response.data;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       // handle error
       console.log(error);
     });
@@ -67,7 +69,7 @@ export const checkValidators = () => {
     .then((response) => {
       return response.data;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       // handle error
       console.log(error);
     });
@@ -170,8 +172,8 @@ const getSubstringValue = (length) => {
 export const StringShortener = (str, length) =>
   str
     ? `${str.substring(0, getSubstringValue(length) || 5)}...${str.substring(
-        str.length - length
-      )}`
+      str.length - length
+    )}`
     : "";
 
 export const promisify = (cb) => new Promise((r) => cb().then((res) => r(res)));
@@ -195,9 +197,9 @@ export const fixify = (number) => {
 
   return digitsAfterDot
     ? number
-        .toFixed(Math.min(digitsAfterDot))
-        .match(/\d*\.(0*)(\d{0,3})/)
-        .at(0)
+      .toFixed(Math.min(digitsAfterDot))
+      .match(/\d*\.(0*)(\d{0,3})/)
+      .at(0)
     : number;
 };
 
@@ -209,25 +211,25 @@ export const setupURI = (uri) => {
 };
 
 export const isMobile = {
-  Android: function() {
+  Android: function () {
     return navigator.userAgent.match(/Android/i);
   },
-  BlackBerry: function() {
+  BlackBerry: function () {
     return navigator.userAgent.match(/BlackBerry/i);
   },
-  iOS: function() {
+  iOS: function () {
     return navigator.userAgent.match(/iPhone|iPad|iPod/i);
   },
-  Opera: function() {
+  Opera: function () {
     return navigator.userAgent.match(/Opera Mini/i);
   },
-  Windows: function() {
+  Windows: function () {
     return (
       navigator.userAgent.match(/IEMobile/i) ||
       navigator.userAgent.match(/WPDesktop/i)
     );
   },
-  any: function() {
+  any: function () {
     return (
       isMobile.Android() ||
       isMobile.BlackBerry() ||
@@ -319,10 +321,24 @@ const connectWallet = {
       throw new Error("Temple Wallet not installed");
     }
     const wallet = new TempleWallet("XP.NETWORK Cross-Chain NFT Bridge");
-    await wallet.connect("ghostnet");
+    await wallet.connect("mainnet");
     account = wallet;
     chain.setSigner(account);
   },
+
+  MULTIVERSX: async (bridge, nonce) => {
+    const chain = await bridge.getChain(nonce);
+    const signer = await connectExtension(
+      bridge.network === "testnet" ? "D" : "1"
+    );
+    chain.setSigner(signer);
+  },
+  ICP: async (bridge, nonce) => {
+    const { testNet: testnet } = store.getState().general
+    const chainWrapper = await bridge.getChain(nonce);
+    const signer = await connectPlugWallet(chainWrapper, testnet); // Connect to the ICP wallet and get the signer
+    chainWrapper.setSigner(signer); // Set the signer in the chainWrapper
+  }
 };
 
 export const connectWalletByChain = async (
@@ -344,6 +360,12 @@ export const connectWalletByChain = async (
       await connectWallet[type](bridge, nonce, activate);
       break;
     case "TEZOS":
+      await connectWallet[type](bridge, nonce);
+      break;
+    case "MULTIVERSX":
+      await connectWallet[type](bridge, nonce);
+      break;
+    case "ICP":
       await connectWallet[type](bridge, nonce);
       break;
   }
