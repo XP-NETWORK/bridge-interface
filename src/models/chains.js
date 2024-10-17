@@ -977,31 +977,35 @@ class Near extends AbstractChain {
     }
   }
 
-  async getNFTs(address) {
-    const nfts = await super.getNFTs(address);
-    // debugger;
-    return nfts.map((nft) => {
-      const media = nft.native.metadata.media;
-      let image;
-      if (media)
-        image = /^https?/.test(media)
-          ? media
-          : `https://ipfs.io/ipfs/${media.replace(/^ipfs:\/\/(ipfs\/)?/, "")}`;
+  // async getNFTs(address) {
+  //   const nfts = await super.getNFTs(address);
+  //   // debugger;
+  //   return nfts.map((nft) => {
+  //     const media = nft.native.metadata.media;
+  //     let image;
+  //     if (media)
+  //       image = /^https?/.test(media)
+  //         ? media
+  //         : `https://ipfs.io/ipfs/${media.replace(/^ipfs:\/\/(ipfs\/)?/, "")}`;
 
-      return {
-        ...nft.native.metadata,
-        image,
-        uri: nft.uri || nft.native.metadata?.reference,
-        name: nft.native.metadata?.title,
-        collectionIdent: nft.collectionIdent,
-        native: {
-          ...nft.native,
-          chainId: String(ChainNonce.NEAR),
-          tokenId: nft.native.token_id,
-          contract: nft.native.contract_id,
-        },
-      };
-    });
+  //     return {
+  //       ...nft.native.metadata,
+  //       image,
+  //       uri: nft.uri || nft.native.metadata?.reference,
+  //       name: nft.native.metadata?.title,
+  //       collectionIdent: nft.collectionIdent,
+  //       native: {
+  //         ...nft.native,
+  //         chainId: String(ChainNonce.NEAR),
+  //         tokenId: nft.native.token_id,
+  //         contract: nft.native.contract_id,
+  //       },
+  //     };
+  //   });
+  // }
+  async getNFTs(address, contract) {
+    const xPDecentralizedUtility = new XPDecentralizedUtility();
+    return xPDecentralizedUtility.nftList(ChainNonce.NEAR, address, contract)
   }
 
   async unwrap(nft, data) {

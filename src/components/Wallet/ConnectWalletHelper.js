@@ -21,6 +21,7 @@ import { MainNetRpcUri, TestNetRpcUri } from "xp.network";
 import { switchNetwork } from "../../services/chains/evm/evmService";
 import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
 import { setupWalletSelector } from "@near-wallet-selector/core";
+import { setupModal } from "@near-wallet-selector/modal-ui";
 
 export const wallets = [
     "MetaMask",
@@ -287,15 +288,20 @@ export const connectAlgoWallet = async () => {
 };
 
 
-export const connectMyNearWallet = async (testnet) => {
+export const connectMyNearWallet = async (testnet, chainWrapper) => {
+    console.log({ chainParams: chainWrapper.chainParams })
     try {
-        const myNearWallet = setupMyNearWallet({});
+        const myNearWallet = setupMyNearWallet();
 
-        const selector = await setupWalletSelector({
+        const _selector = await setupWalletSelector({
             network: testnet ? "testnet" : "mainnet",
             modules: [myNearWallet],
         });
-        const wallet = await selector.wallet();
+        window.wallet_selector_modal = setupModal(_selector, {
+            contractId: chainWrapper.chainParams,
+        });
+        window.wallet_selector = _selector;
+        const wallet = await _selector.wallet();
         return wallet;
     } catch (error) {
         console.error(error);
