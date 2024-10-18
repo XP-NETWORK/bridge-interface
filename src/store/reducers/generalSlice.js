@@ -32,6 +32,7 @@ const initialState = {
   preFetchData: null,
   messageLoader: "",
   ICPCanisterSearch: "",
+  NEARContractSearch: "",
   showChainSelect: false,
   selectedChain: undefined,
   templeWalletData: { account: {}, isTempleWallet: false },
@@ -644,6 +645,9 @@ const generalSlice = createSlice({
     setICPCanisterSearch(state, action) {
       state.ICPCanisterSearch = action.payload;
     },
+    setNEARContractSearch(state, action) {
+      state.NEARContractSearch = action.payload;
+    },
     toggleChainSelect(state, action) {
       state.showChainSelect = action.payload;
     },
@@ -794,6 +798,7 @@ export const {
   setSelectedNFT,
   setShowSearchNFTCanisterModal,
   setICPCanisterSearch,
+  setNEARContractSearch,
   toggleChainSelect,
   setSelectedChain,
   setIcpClaimSuccess
