@@ -67,11 +67,14 @@ const PreNftFech = ({ show }) => {
 export const withNear = (Wrapped) =>
   function CBU(props) {
     const network = useSelector((state) => state.general.testNet);
+    const { serviceContainer } = props;
+    const { bridge } = serviceContainer;
+    const nearParams = bridge.config.nearParams;
 
     const connectionCallback = async (bridge) => {
       console.log("inside connectionCallback");
       const chainWrapper = await bridge.getChain(Chain.NEAR);
-      const signer = await connectMyNearWallet(network, chainWrapper);
+      const signer = await connectMyNearWallet(network, nearParams?.bridge);
       console.log("signer: ", signer);
       chainWrapper.setSigner(signer);
       return chainWrapper;
