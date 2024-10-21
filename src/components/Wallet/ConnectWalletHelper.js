@@ -15,6 +15,7 @@ import {
     setTronPopUp,
     setWC,
     setAccount,
+    setTransferLoaderModal,
 } from "../../store/reducers/generalSlice";
 
 import { MainNetRpcUri, TestNetRpcUri } from "xp.network";
@@ -293,13 +294,14 @@ export const connectMyNearWallet = async (_testnet, contract) => {
                     message: "Please install Sender Wallet extension",
                 })
             );
+            store.dispatch(setTransferLoaderModal(false));
             return false
         }
         await window.near.requestSignIn({
             contractId: contract, // contract requesting access
         });
-        return window.near.account()
 
+        return window.near.account()
     } catch (error) {
         console.error(error);
         return false;

@@ -12,6 +12,7 @@ import { injected } from "./wallet/connectors";
 import { TempleWallet } from "@temple-wallet/dapp";
 import { connectExtension } from "./components/Wallet/MultiversXWallet/HigherMultiversX";
 import { connectPlugWallet } from "./components/Wallet/IcpConnections";
+import { connectMyNearWallet } from "./components/Wallet/ConnectWalletHelper";
 
 /*const testnet = window.location.pathname.includes("testnet");
 const staging = window.location.pathname.includes("staging");
@@ -338,6 +339,13 @@ const connectWallet = {
     const chainWrapper = await bridge.getChain(nonce);
     const signer = await connectPlugWallet(chainWrapper, testnet); // Connect to the ICP wallet and get the signer
     chainWrapper.setSigner(signer); // Set the signer in the chainWrapper
+  },
+  NEAR: async (bridge, nonce) => {
+    const { testNet: testnet } = store.getState().general
+    const chainWrapper = await bridge.getChain(nonce);
+    const nearParams = bridge.config.nearParams;
+    const signer = await connectMyNearWallet(testnet, nearParams?.bridge); // Connect to the ICP wallet and get the signer
+    chainWrapper.setSigner(signer); // Set the signer in the chainWrapper
   }
 };
 
@@ -366,6 +374,9 @@ export const connectWalletByChain = async (
       await connectWallet[type](bridge, nonce);
       break;
     case "ICP":
+      await connectWallet[type](bridge, nonce);
+      break;
+    case "NEAR":
       await connectWallet[type](bridge, nonce);
       break;
   }

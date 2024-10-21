@@ -92,7 +92,8 @@ const TransferredNft = ({
             txnStatus !== "Completed" &&
             from.type !== "Hedera" &&
             from.type !== "DFINITY" &&
-            from.type !== "Tezos"
+            from.type !== "Tezos" &&
+            from.type !== "NEAR"
           ) {
             setTxnStatus(tx?.status?.toLowerCase());
           }

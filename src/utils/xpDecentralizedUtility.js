@@ -45,8 +45,8 @@ export class XPDecentralizedUtility {
     );
   };
   approveNFT_V3 = async (fromChain, nft) => {
-    const { tokenId, contract, amount } = nft.native;
-
+    const { tokenId, amount } = nft.native;
+    const contract = nft.native?.contract || nft.contract
     const signer = fromChain.getSigner();
     console.log({ fromChain, chain: v3_ChainId[fromChain.nonce].name });
 

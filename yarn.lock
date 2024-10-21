@@ -1677,7 +1677,7 @@
     secp256k1 "^4.0.2"
     tweetnacl "^1.0.1"
 
-"@dfinity/identity@^2.1.2":
+"@dfinity/identity@^2.0.0", "@dfinity/identity@^2.1.2":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@dfinity/identity/-/identity-2.1.2.tgz#4f579ffada8ce140288dabbd72724237179530c5"
   integrity sha512-LgskXJzyqm1UVsobAkF8bL1/SdLKFYW2kTIsKw7UOhuBy/COpnf3HZYmKeFCnxvharyIyq23W3WBhIpu9FeAvw==
@@ -1748,15 +1748,9 @@
   integrity sha512-vAarfmHzt31saDjDyoeY1HnzumHEHwrLFr0UFLzONkFgjAf9o7Z+YNOHmY8EjiF3NbuQ0C09aamJ1xV8POs+KQ==
 
 "@dfinity/utils@^2.5.0":
-<<<<<<< HEAD
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/@dfinity/utils/-/utils-2.5.1.tgz#c5f3ec95cae0e93f00bb50ab7ba6f7d4f2e9de73"
-  integrity sha512-ypu63xSX/7f79rVVe/T/2eiEwwi2+XvPNEuHz+isj8zf4jvEoG8DDDBZF9hedDgYC5uxuBDm1UJqHGYUcaCmRg==
-=======
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/@dfinity/utils/-/utils-2.5.0.tgz#142c04eac630a5cef7a925a12690e694aaecc196"
   integrity sha512-M4kVOdJvpJJdXrB3CgF4nXkDGOGCo0KeR5Z6QznNPpPwlz9FEThvVWZz+6y9Fs6ksWg1G8Oj7Fxbul5BMn2iAg==
->>>>>>> decentralized-stable
 
 "@elrondnetwork/bls-wasm@0.3.3":
   version "0.3.3"
@@ -23117,7 +23111,7 @@ xmlhttprequest@1.8.0:
 
 "xp-decentralized-sdk@git+https://github.com/XP-NETWORK/xp-decentralized-client-library#bleeding-edge":
   version "1.0.0"
-  resolved "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#4e9984b13fc8f3298df4e089dcde83aa4d83f5d5"
+  resolved "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#98cff0d245f9a75501c87dd743eaa3b060fd2dea"
   dependencies:
     "@aptos-labs/ts-sdk" "^1.22.2"
     "@cosmjs/amino" "^0.32.3"
