@@ -20,6 +20,9 @@ import {
 
 import { MainNetRpcUri, TestNetRpcUri } from "xp.network";
 import { switchNetwork } from "../../services/chains/evm/evmService";
+import { Account } from "near-api-js";
+import { XPDecentralizedUtility } from "../../utils/xpDecentralizedUtility";
+import { v3_ChainId } from "../../utils/chainsTypes";
 
 export const wallets = [
     "MetaMask",
@@ -286,7 +289,7 @@ export const connectAlgoWallet = async () => {
 };
 
 
-export const connectMyNearWallet = async (_testnet, contract) => {
+export const connectMyNearWallet = async (_testnet, contract, nonce) => {
     try {
         if (!window.near) {
             store.dispatch(
@@ -301,7 +304,15 @@ export const connectMyNearWallet = async (_testnet, contract) => {
             contractId: contract, // contract requesting access
         });
 
-        return window.near.account()
+        const xpDecentralizedUtility = new XPDecentralizedUtility();
+        const near = await xpDecentralizedUtility.getChainFromFactory(
+            v3_ChainId[nonce].name,
+        );
+        const provider = near.getProvider();
+        provider.connection.signer = window.near.account()
+        const account = new Account(provider.connection, window.near.getAccountId());
+
+        return account
     } catch (error) {
         console.error(error);
         return false;

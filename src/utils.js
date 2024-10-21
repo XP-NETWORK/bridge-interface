@@ -344,7 +344,7 @@ const connectWallet = {
     const { testNet: testnet } = store.getState().general
     const chainWrapper = await bridge.getChain(nonce);
     const nearParams = bridge.config.nearParams;
-    const signer = await connectMyNearWallet(testnet, nearParams?.bridge); // Connect to the ICP wallet and get the signer
+    const signer = await connectMyNearWallet(testnet, nearParams?.bridge, nonce); // Connect to the ICP wallet and get the signer
     chainWrapper.setSigner(signer); // Set the signer in the chainWrapper
   }
 };
