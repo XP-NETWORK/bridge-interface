@@ -23,7 +23,7 @@ import { useNavigate } from "react-router";
 import { getRightPath } from "../../../utils";
 
 import { setupWalletSelector } from "@near-wallet-selector/core";
-//import { setupNightly } from "@near-wallet-selector/nightly";
+// import { setupNightly } from "@near-wallet-selector/nightly";
 // import { setupNearWallet } from "@near-wallet-selector/near-wallet";
 import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
 import { setupModal } from "@near-wallet-selector/modal-ui";
@@ -32,6 +32,7 @@ import { setupMeteorWallet } from "@near-wallet-selector/meteor-wallet";
 import { setupSender } from "@near-wallet-selector/sender";
 import { distinctUntilChanged, map } from "rxjs";
 import { adaptToWalletSelector } from "./utils";
+import { XPDecentralizedUtility } from "../../../utils/xpDecentralizedUtility";
 
 export const withNearConnection = (Wrapped) =>
   function CB(props) {
@@ -40,6 +41,7 @@ export const withNearConnection = (Wrapped) =>
     //const [accounts, setAccounts] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const xpDecentralizedUtility = new XPDecentralizedUtility();
 
     const saveWallet = (address, bridge, chain, signer) => {
       dispatch(setAccount(address));
@@ -55,8 +57,7 @@ export const withNearConnection = (Wrapped) =>
         selectedNFTList: state.general.selectedNFTList,
         afterNearRedirect: state.general.afterNearRedirect,
         to: state.general.to,
-      }),
-    );
+    }));
 
     const params = new URLSearchParams(location.search.replace("?", ""));
     const nearAuth = params.get("all_keys") && params.get("account_id"); // && !params.get("WLS");
@@ -66,12 +67,12 @@ export const withNearConnection = (Wrapped) =>
     const approve = params.get("type") === "approve";
     const send =
       params.get("type") === "transfer" || params.get("type") === "unfreeze";
-    //Selector store flow
+    // Selector store flow
     useEffect(() => {
       if (serviceContainer.bridge.config && to) {
         const { bridge } = serviceContainer;
         (async () => {
-          const nearParams = bridge.config.nearParams;
+          const nearParams = xpDecentralizedUtility.config.nearParams;
           const url = window.location.href;
           const [_selector, chainWrapper] = await Promise.all([
             setupWalletSelector({
@@ -150,9 +151,13 @@ export const withNearConnection = (Wrapped) =>
           const isMyNearWallet = window.location.search.includes(
             "selectedNearWallet=mnw",
           );
-
+          const testnet = window.location.pathname.includes("testnet");
           const walletConnection = await chainWrapper?.connect(
-            isMyNearWallet ? "https://app.mynearwallet.com/" : undefined,
+            isMyNearWallet
+              ? testnet
+                ? "https://testnet.mynearwallet.com/"
+                : "https://app.mynearwallet.com/"
+              : undefined,
           );
 
           let address = walletConnection.getAccountId();

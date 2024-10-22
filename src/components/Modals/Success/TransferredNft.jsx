@@ -154,7 +154,8 @@ const TransferredNft = ({
     if (
       from.type === "Hedera" ||
       from.type === "Tezos" ||
-      from.type === "DFINITY"
+      from.type === "DFINITY" ||
+      from.type === "NEAR"
     ) {
       setTxnStatus("completed");
     } else {

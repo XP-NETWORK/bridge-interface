@@ -10,6 +10,7 @@ import {
   setNEARContractSearch,
   setPreFetchData,
 } from "../../../store/reducers/generalSlice";
+import { XPDecentralizedUtility } from "../../../utils/xpDecentralizedUtility";
 
 const PreNftFech = ({ show }) => {
   const dispatch = useDispatch();
@@ -66,20 +67,12 @@ const PreNftFech = ({ show }) => {
 
 export const withNear = (Wrapped) =>
   function CBU(props) {
-    const network = useSelector((state) => state.general.testNet);
-    const { serviceContainer } = props;
-    const { bridge } = serviceContainer;
-    const nearParams = bridge.config.nearParams;
+    const xpDecentralizedUtility = new XPDecentralizedUtility();
+    const nearParams = xpDecentralizedUtility.config.nearParams;
 
     const connectionCallback = async (bridge) => {
-      console.log("inside connectionCallback");
       const chainWrapper = await bridge.getChain(Chain.NEAR);
-      const signer = await connectMyNearWallet(
-        network,
-        nearParams?.bridge,
-        Chain.NEAR,
-      );
-      console.log("signer: ", signer);
+      const signer = await connectMyNearWallet(nearParams?.bridge);
       chainWrapper.setSigner(signer);
       return chainWrapper;
     };

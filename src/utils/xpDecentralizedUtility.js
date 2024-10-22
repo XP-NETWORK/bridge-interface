@@ -12,8 +12,11 @@ export class XPDecentralizedUtility {
     isTestnet ? ChainFactoryConfigs.TestNet() : ChainFactoryConfigs.MainNet()
   );
 
+  config;
+
   constructor() {
     this.isV3Enabled = v3_bridge_mode;
+    this.config = isTestnet ? ChainFactoryConfigs.TestNet() : ChainFactoryConfigs.MainNet()
   }
 
   approveNFT = async (
