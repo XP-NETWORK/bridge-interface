@@ -356,7 +356,8 @@ export class XPDecentralizedUtility {
       v3_ChainId[targetChainIdentifier?.nonce].name === "HEDERA" ||
       v3_ChainId[targetChainIdentifier?.nonce].name === "ICP" ||
       v3_ChainId[targetChainIdentifier?.nonce].name === "TEZOS" ||
-      v3_ChainId[targetChainIdentifier?.nonce].name === "MULTIVERSX"
+      v3_ChainId[targetChainIdentifier?.nonce].name === "MULTIVERSX" ||
+      v3_ChainId[targetChainIdentifier?.nonce].name === "NEAR"
     ) {
       return {
         hash: claim?.hash(),

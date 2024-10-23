@@ -51,13 +51,14 @@ export const withNearConnection = (Wrapped) =>
       dispatch(setConnectedWallet("Near Wallet"));
     };
 
-    const { NFTList, selectedNFTList, afterNearRedirect, to } = useSelector(
-      (state) => ({
+    const { NFTList, selectedNFTList, afterNearRedirect, to, from } =
+      useSelector((state) => ({
         NFTList: state.general.NFTList,
         selectedNFTList: state.general.selectedNFTList,
         afterNearRedirect: state.general.afterNearRedirect,
         to: state.general.to,
-    }));
+        from: state.general.from,
+      }));
 
     const params = new URLSearchParams(location.search.replace("?", ""));
     const nearAuth = params.get("all_keys") && params.get("account_id"); // && !params.get("WLS");
@@ -69,7 +70,7 @@ export const withNearConnection = (Wrapped) =>
       params.get("type") === "transfer" || params.get("type") === "unfreeze";
     // Selector store flow
     useEffect(() => {
-      if (serviceContainer.bridge.config && to) {
+      if (serviceContainer.bridge.config && to && from.type === "NEAR") {
         const { bridge } = serviceContainer;
         (async () => {
           const nearParams = xpDecentralizedUtility.config.nearParams;
