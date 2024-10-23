@@ -72,7 +72,10 @@ export const withNear = (Wrapped) =>
 
     const connectionCallback = async (bridge) => {
       const chainWrapper = await bridge.getChain(Chain.NEAR);
-      const signer = await connectMyNearWallet(nearParams?.bridge);
+      const signer = await connectMyNearWallet(
+        nearParams?.bridge,
+        chainWrapper,
+      );
       chainWrapper.setSigner(signer);
       return chainWrapper;
     };

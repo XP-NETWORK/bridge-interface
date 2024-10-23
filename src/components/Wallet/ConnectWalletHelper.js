@@ -20,9 +20,9 @@ import {
 
 import { MainNetRpcUri, TestNetRpcUri } from "xp.network";
 import { switchNetwork } from "../../services/chains/evm/evmService";
-// import { Account } from "near-api-js";
-// import { XPDecentralizedUtility } from "../../utils/xpDecentralizedUtility";
-// import { v3_ChainId } from "../../utils/chainsTypes";
+import { adaptToWalletSelector } from "./NEARWallet/utils";
+import { setupWalletSelector } from "@near-wallet-selector/core";
+import { setupSender } from "@near-wallet-selector/sender";
 
 export const wallets = [
     "MetaMask",
@@ -289,7 +289,7 @@ export const connectAlgoWallet = async () => {
 };
 
 
-export const connectMyNearWallet = async (contract) => {
+export const connectMyNearWallet = async (contract, chainWrapper) => {
     try {
         if (!window.near) {
             store.dispatch(
@@ -300,21 +300,21 @@ export const connectMyNearWallet = async (contract) => {
             store.dispatch(setTransferLoaderModal(false));
             return false
         }
-        await window.near.requestSignIn({
-            contractId: contract, // contract requesting access
-        });
-
-        // const xpDecentralizedUtility = new XPDecentralizedUtility();
-
-        // const near = await xpDecentralizedUtility.getChainFromFactory(
-        //     v3_ChainId[nonce].name,
-        // );
-        // const provider = near.getProvider();
-        // console.log({ provider, getAccountId: window.near.getAccountId() })
-        // provider.connection.signer = window.near.account()
-        // const account = new Account(provider.connection, window.near.getAccountId());
-
-        return window.near
+        const selector = await setupWalletSelector({
+            network: window.location.pathname.includes("testnet")
+                ? "testnet"
+                : "mainnet",
+            debug: true,
+            modules: [
+                setupSender(),
+            ],
+        })
+        const wallet = await selector.wallet("sender");
+        await wallet.signIn({ contractId: contract });
+        return adaptToWalletSelector(
+            wallet,
+            chainWrapper.chain.getProvider(),
+        )
     } catch (error) {
         console.error(error);
         return false;
