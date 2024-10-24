@@ -9,7 +9,7 @@ import xpchallenge from "../services/xpchallenge";
 
 import { extractType, formatAddress, setupURI } from "../utils";
 import { switchNetwork } from "../services/chains/evm/evmService";
-import { getChainObject } from "../components/values";
+import { getChainObject, isTestnet } from "../components/values";
 import { XPDecentralizedUtility } from "../utils/xpDecentralizedUtility";
 
 const Xpchallenge = xpchallenge();
@@ -846,6 +846,26 @@ class Cosmos extends AbstractChain {
     return xPDecentralizedUtility.nftList(ChainNonce.SECRET, address, secretCred.contract, {
       viewingKey: secretCred.viewKey,
     })
+  }
+
+
+  filterNFTs(nfts) {
+    const chain = getChainObject(ChainNonce.SECRET);
+    const chainId = isTestnet ? chain.tnChainId : chain.chainId;
+    return nfts.map((nft) => ({
+      ...nft,
+      native: {
+        ...nft.native,
+        chainId,
+      },
+      metaData: !nft?.uri
+        ? {
+          ...nft?.metaData,
+          image: nft?.metaData?.media[0]?.url,
+          imageFormat: nft?.metaData?.media[0]?.extension,
+        }
+        : null,
+    }));
   }
 
 

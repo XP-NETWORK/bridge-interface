@@ -33,15 +33,11 @@ export default withServices(function Refresh({ serviceContainer }) {
       const fromChain = await bridge.getChain(from.nonce);
       dispatch(setBigLoader(true));
       try {
-        let nfts = await fromChain.getNFTs(
-          bridge.checkWallet || w,
-          secretCred.contract || preFetchData?.contract,
-          {
-            viewingKey: secretCred?.viewKey,
-          },
-        );
+        let nfts = await fromChain.getNFTs(bridge.checkWallet || w, {
+          contract: secretCred.contract || preFetchData?.contract,
+          viewKey: secretCred?.viewKey,
+        });
         nfts = fromChain.filterNFTs(nfts);
-
         if (nfts.length < 1) {
           dispatch(setIsEmpty(true));
         } else {

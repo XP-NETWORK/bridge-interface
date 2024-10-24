@@ -6529,6 +6529,11 @@
   dependencies:
     nanoid "^3.1.30"
 
+"@thalalabs/surf@^1.7.3":
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/@thalalabs/surf/-/surf-1.7.3.tgz#461ad6b658bb8341c8570ac467108f3e5602d70c"
+  integrity sha512-bhZzQgVCVGiYaUwuIclseO0UXZJh6YkjfFi8iuKcpclbIfxELOJPPvDKCdsIKYN+BVTw8UeOXQvfuLJYwRszhA==
+
 "@tokenizer/token@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@tokenizer/token/-/token-0.3.0.tgz#fe98a93fe789247e998c75e74e9c7c63217aa276"
@@ -23189,7 +23194,7 @@ xmlhttprequest@1.8.0:
 
 "xp-decentralized-sdk@git+https://github.com/XP-NETWORK/xp-decentralized-client-library#bleeding-edge":
   version "1.0.0"
-  resolved "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#3d9ad45278c5c0e3fb0aeaf90fc36493a999d383"
+  resolved "git+https://github.com/XP-NETWORK/xp-decentralized-client-library#d523f254ae3167f7f1f01083d0171de52f2e2a55"
   dependencies:
     "@aptos-labs/ts-sdk" "^1.22.2"
     "@cosmjs/amino" "^0.32.3"
@@ -23208,6 +23213,7 @@ xmlhttprequest@1.8.0:
     "@taquito/taquito" "^19.0.0"
     "@taquito/tzip16" "^19.0.0"
     "@taquito/utils" "^19.0.0"
+    "@thalalabs/surf" "^1.7.3"
     "@ton/core" "=0.56.3"
     "@ton/crypto" "=3.2.0"
     "@ton/ton" "=13.11.1"

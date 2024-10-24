@@ -20,7 +20,6 @@ import PropTypes from "prop-types";
 
 import { withServices } from "../../App/hocs/withServices";
 import { XPDecentralizedUtility } from "../../../utils/xpDecentralizedUtility";
-import { getChainObject } from "../../values";
 
 const SecretAuth = ({ setLogdIn, serviceContainer }) => {
   const { bridge } = serviceContainer;
@@ -32,7 +31,6 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
   const [contractOnBlur, setContractOnBlur] = useState(false);
   const [importBlocked, setImportBlocked] = useState(false);
   const xPDecentralizedUtility = new XPDecentralizedUtility();
-  const testnet = useSelector((state) => state.general.testNet);
 
   const { account, checkWallet, secretCred, NFTSetToggler, from } = useSelector(
     ({
@@ -54,23 +52,8 @@ const SecretAuth = ({ setLogdIn, serviceContainer }) => {
       { viewingKey: secretCred.viewKey },
     );
 
-    const chain = getChainObject(Chain.SECRET);
-    const chainId = testnet ? chain.tnChainId : chain.chainId;
-
-    return secretNFTs.map((nft) => ({
-      ...nft,
-      native: {
-        ...nft.native,
-        chainId,
-      },
-      metaData: !nft?.uri
-        ? {
-            ...nft?.metaData,
-            image: nft?.metaData?.media[0]?.url,
-            imageFormat: nft?.metaData?.media[0]?.extension,
-          }
-        : null,
-    }));
+    const fromChain = await bridge.getChain(Chain.SECRET);
+    return fromChain.filterNFTs(secretNFTs);
   };
 
   const fetchSecretNfts = async () => {
